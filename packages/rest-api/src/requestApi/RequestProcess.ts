@@ -157,7 +157,7 @@ class RequestProcess {
 
       const responseData = response.data;
       this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
-      return responseData ? { payload: responseData } : { payload: [] };
+      return responseData ? { payload: responseData } : { payload: undefined };
     } catch (error) {
       const { response } = error;
       if (response.status === 401 && response.headers && response.headers.location) {

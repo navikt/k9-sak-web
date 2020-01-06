@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -27,7 +28,7 @@ const EMPTY_LIST = [];
 const getAksjonspunkt = (aksjonspunkter) => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)[0].begrunnelse;
 
 const utledFormSectionName = (arbeidsforhold) => {
-  let navn = arbeidsforhold.arbeidsgiverNavn;
+  let navn = arbeidsforhold.arbeidsgiverNavn.replace(new RegExp(/\./, 'g'), '_');
   if (arbeidsforhold.arbeidsgiverIdent) {
     navn += arbeidsforhold.arbeidsgiverIdent;
   }
@@ -174,7 +175,7 @@ const finnAntallDatoerMappedByDato = (datoer) => datoer.reduce((acc, dato) => ({
 }), {});
 
 export const validateForm = (values, arbeidsforhold) => {
-  const errors = {};
+  let errors = {};
   if (Object.keys(values).length === 0) {
     return errors;
   }
@@ -185,6 +186,22 @@ export const validateForm = (values, arbeidsforhold) => {
     // eslint-disable-next-line no-underscore-dangle
     errors._error = 'FodselOgTilretteleggingFaktaForm.MinstEnTilretteleggingMåBrukes';
   }
+
+  const { termindato } = values;
+  Object.keys(values)
+    .filter((key) => formSectionNames.includes(key))
+    .filter((key) => values[key].skalBrukes)
+    .forEach((key) => {
+      if (!moment(termindato).isAfter(moment(values[key].tilretteleggingBehovFom))) {
+        errors[key] = {
+          tilretteleggingBehovFom: [{ id: 'FodselOgTilretteleggingFaktaForm.TermindatoForDato' }],
+        };
+        errors = {
+          ...errors,
+          termindato: [{ id: 'FodselOgTilretteleggingFaktaForm.TermindatoForDato' }],
+        };
+      }
+    });
 
   Object.keys(values)
     .filter((key) => formSectionNames.includes(key))
