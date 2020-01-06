@@ -73,8 +73,8 @@
     "@types/react-redux": "^7.1.4",
     "@types/react-router-dom": "^5.1.2",
     "@types/sinon": "^7.5.1",
-    "@typescript-eslint/eslint-plugin": "^2.8.0",
-    "@typescript-eslint/parser": "^2.8.0",
+    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "@typescript-eslint/parser": "^2.14.0",
     "axios-mock-adapter": "^1.16.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
@@ -90,6 +90,7 @@
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.7.0",
     "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-import-resolver-lerna": "^1.1.0",
     "eslint-import-resolver-webpack": "^0.11.1",
     "eslint-loader": "^3.0.2",
@@ -99,6 +100,7 @@
     "file-loader": "^4.3.0",
     "full-icu": "^1.3.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.1.0",
     "ignore-styles": "^5.0.1",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jsdom": "^15.2.1",
@@ -106,12 +108,14 @@
     "lerna": "^3.19.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "lint-staged": "^9.5.0",
     "mini-css-extract-plugin": "^0.8.0",
     "mocha": "^6.2.1",
     "mochapack": "^1.1.11",
     "null-loader": "^3.0.0",
     "nyc": "^14.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "prettier": "^1.19.1",
     "react-test-renderer": "^16.12.0",
     "redux-mock-store": "^1.5.3",
     "sinon": "^7.3.2",
@@ -159,5 +163,17 @@
       "packages/**/*.spec.tsx",
       "packages/**/*.spec.ts"
     ]
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

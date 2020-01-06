@@ -18,10 +18,7 @@ const config = {
 
   plugins: ['@typescript-eslint'],
 
-  extends: [
-    'airbnb',
-    'plugin:@typescript-eslint/recommended',
-  ],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint', 'prettier'],
 
   parserOptions: {
     sourceType: 'module',
@@ -71,6 +68,7 @@ const config = {
       rules: {
         'no-unused-expressions': OFF,
       },
-    }],
+    },
+  ],
 };
 module.exports = config;
