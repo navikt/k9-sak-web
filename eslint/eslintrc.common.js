@@ -69,6 +69,12 @@ const config = {
         'no-unused-expressions': OFF,
       },
     },
+    {
+      files: ['*.tsx'],
+      rules: {
+        'react/prop-types': OFF,
+      },
+    },
   ],
 };
 module.exports = config;

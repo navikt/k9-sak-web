@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import {
@@ -11,7 +12,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { createSelector } from 'reselect';
 import medlemskapAksjonspunkterPropType from '../propTypes/medlemskapAksjonspunkterPropType';
 import medlemskapMedlemskaPropType from '../propTypes/medlemskapMedlemskapPropType';
 import medlemskapSoknadPropType from '../propTypes/medlemskapSoknadPropType';
@@ -111,6 +111,7 @@ export const MedlemskapInfoPanel = ({
       { (!hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
         && (
         <OppholdInntektOgPerioderForm
+          soknad={soknad}
           readOnly={readOnly}
           submitCallback={submitCallback}
           submittable={submittable}
@@ -122,7 +123,6 @@ export const MedlemskapInfoPanel = ({
           alleKodeverk={alleKodeverk}
           medlemskap={medlemskap}
           medlemskapV2={medlemskapV2}
-          soknad={soknad}
           fagsakPerson={fagsakPerson}
         />
         )}
