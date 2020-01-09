@@ -8,6 +8,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import InnlagtBarnPeriodeFieldArray from './InnlagtBarnPeriodeFieldArray';
 import Legeerklaering from './Legeerklaering';
@@ -20,7 +21,14 @@ interface MedisinskVilkarFormProps {
   behandlingVersjon: number;
   readOnly: boolean;
   submitCallback: (props: SubmitCallbackProps[]) => void;
+  hasOpenAksjonspunkter: boolean;
+  submittable: boolean;
 }
+
+interface StateProps {
+  initialValues: any;
+}
+
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
@@ -30,7 +38,9 @@ const MedisinskVilkarForm = ({
   handleSubmit,
   form,
   readOnly,
-}: MedisinskVilkarFormProps & InjectedFormProps) => {
+  hasOpenAksjonspunkter,
+  submittable,
+}: MedisinskVilkarFormProps & StateProps & InjectedFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
       <FlexContainer wrap>
@@ -40,7 +50,13 @@ const MedisinskVilkarForm = ({
               <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
             </Element>
             <VerticalSpacer eightPx />
-            <RadioGroupField direction="vertical" name="innlagt" bredde="M" validate={[required]} readOnly={readOnly}>
+            <RadioGroupField
+              direction="vertical"
+              name="innlagtField"
+              bredde="M"
+              validate={[required]}
+              readOnly={readOnly}
+            >
               <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
               <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
             </RadioGroupField>
@@ -53,7 +69,7 @@ const MedisinskVilkarForm = ({
             <VerticalSpacer eightPx />
             <RadioGroupField
               direction="vertical"
-              name="omsorgspersoner"
+              name="omsorgspersonerField"
               bredde="M"
               validate={[required]}
               readOnly={readOnly}
@@ -72,7 +88,13 @@ const MedisinskVilkarForm = ({
               <FormattedMessage id="MedisinskVilkarForm.Beredskap" />
             </Element>
             <VerticalSpacer eightPx />
-            <RadioGroupField direction="vertical" name="nattevaak" bredde="M" validate={[required]} readOnly={readOnly}>
+            <RadioGroupField
+              direction="vertical"
+              name="nattevaakField"
+              bredde="M"
+              validate={[required]}
+              readOnly={readOnly}
+            >
               <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
               <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
             </RadioGroupField>
@@ -83,12 +105,18 @@ const MedisinskVilkarForm = ({
               <FormattedMessage id="MedisinskVilkarForm.AlvorligSykdom" />
             </Element>
             <VerticalSpacer eightPx />
-            <RadioGroupField direction="vertical" name="sykdom" bredde="M" validate={[required]} readOnly={readOnly}>
+            <RadioGroupField
+              direction="vertical"
+              name="sykdomField"
+              bredde="M"
+              validate={[required]}
+              readOnly={readOnly}
+            >
               <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
               <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
             </RadioGroupField>
             <TextAreaField
-              name="begrunnelse_sykdom"
+              name="begrunnelseSykdomField"
               label={<FormattedMessage id="MedisinskVilkarForm.NotatKommentar" />}
               validate={[required, minLength3, maxLength1500, hasValidText]}
               maxLength={1500}
@@ -101,7 +129,13 @@ const MedisinskVilkarForm = ({
               <FormattedMessage id="MedisinskVilkarForm.Tilsyn" />
             </Element>
             <VerticalSpacer eightPx />
-            <RadioGroupField direction="vertical" name="tilsyn" bredde="M" validate={[required]} readOnly={readOnly}>
+            <RadioGroupField
+              direction="vertical"
+              name="tilsynField"
+              bredde="M"
+              validate={[required]}
+              readOnly={readOnly}
+            >
               <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
               <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
             </RadioGroupField>
@@ -109,7 +143,14 @@ const MedisinskVilkarForm = ({
 
           <FlexColumn className={styles.fieldColumn}>
             <Legeerklaering readOnly={readOnly} />
-            <MedisinskVilkarFormButtons behandlingId={behandlingId} behandlingVersjon={behandlingVersjon} form={form} />
+            <MedisinskVilkarFormButtons
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              form={form}
+              hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+              readOnly={readOnly}
+              submittable={submittable}
+            />
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
@@ -117,19 +158,21 @@ const MedisinskVilkarForm = ({
   );
 };
 
-const transformValues = (values, isOverstyring) => ({
-  kode: isOverstyring
-    ? aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO // TODO
-    : aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, // TODO
+const transformValues = values => ({
+  kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, // TODO
   begrunnelse: values.begrunnelse,
+  ...values,
 });
+
+const buildInitialValues = createSelector([], () => ({}));
 
 const mapStateToPropsFactory = (state, props: MedisinskVilkarFormProps) => {
   const { submitCallback } = props;
-  const onSubmit = values => submitCallback([transformValues(values, false)]);
+  const onSubmit = values => submitCallback([transformValues(values)]);
 
   return () => ({
     onSubmit,
+    initialValues: buildInitialValues(props),
   });
 };
 

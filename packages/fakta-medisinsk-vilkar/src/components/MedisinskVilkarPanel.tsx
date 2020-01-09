@@ -2,36 +2,8 @@ import { FaktaEkspandertpanel, faktaPanelCodes, withDefaultToggling } from '@fps
 import * as React from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
+import { SubmitCallbackProps, Behandling } from '../MedisinskVilkarIndex';
 import MedisinskVilkarForm from './MedisinskVilkarForm';
-
-interface Soknad {
-  soknadType: Status;
-}
-
-interface Status {
-  kode: string;
-  navn: string;
-}
-
-interface Vilkar {
-  vilkarType: Status;
-  avslagKode: string;
-  lovReferanse: string;
-}
-
-interface Behandling {
-  id: number;
-  versjon: number;
-  aksjonspunkter: any[]; // TODO: Foreløpig ikke i bruk her, men må få riktig type
-  type: Status;
-  status: Status;
-  fagsakId: number;
-  opprettet: string;
-  soknad: Soknad;
-  vilkar: Vilkar[];
-  behandlingPaaVent: boolean;
-}
 
 interface MedisinskVilkarPanelProps {
   readOnly: boolean;
@@ -41,6 +13,7 @@ interface MedisinskVilkarPanelProps {
   intl: IntlShape;
   hasOpenAksjonspunkter: boolean;
   openInfoPanels: string[];
+  submittable: boolean;
 }
 
 const MedisinskVilkarPanel: React.FunctionComponent<MedisinskVilkarPanelProps> = ({
@@ -49,6 +22,7 @@ const MedisinskVilkarPanel: React.FunctionComponent<MedisinskVilkarPanelProps> =
   behandling,
   submitCallback,
   intl,
+  submittable,
 }: // hasOpenAksjonspunkter,
 // openInfoPanels,
 MedisinskVilkarPanelProps) => {
@@ -62,7 +36,11 @@ MedisinskVilkarPanelProps) => {
       faktaId="123" // TODO sett riktig faktaPanelCode
       readOnly={readOnly}
     >
-      <MedisinskVilkarForm {...props} />
+      <MedisinskVilkarForm
+        hasOpenAksjonspunkter // TODO ={hasOpenAksjonspunkter}
+        submittable={submittable}
+        {...props}
+      />
     </FaktaEkspandertpanel>
   );
 };

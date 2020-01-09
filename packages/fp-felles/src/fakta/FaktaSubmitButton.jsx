@@ -57,6 +57,12 @@ FaktaSubmitButton.propTypes = {
   hasEmptyRequiredFields: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
+  /* eslint-disable react/no-unused-prop-types */
+  formName: PropTypes.string,
+  formNames: PropTypes.arrayOf(PropTypes.string),
+  behandlingId: PropTypes.number,
+  behandlingVersjon: PropTypes.number,
+  /* eslint-enable react/no-unused-prop-types */
 };
 
 FaktaSubmitButton.defaultProps = {

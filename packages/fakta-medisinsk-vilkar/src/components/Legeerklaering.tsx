@@ -18,7 +18,13 @@ const Legeerklaering = ({ readOnly }: LegeerklaeringProps) => (
       <FormattedMessage id="MedisinskVilkarForm.LegeErklaering" />
     </Element>
     <VerticalSpacer eightPx />
-    <RadioGroupField direction="vertical" name="legeerklaering" bredde="M" validate={[required]} readOnly={readOnly}>
+    <RadioGroupField
+      direction="vertical"
+      name="legeerklaeringField"
+      bredde="M"
+      validate={[required]}
+      readOnly={readOnly}
+    >
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappSykehuslege' }} value="Sykehuslege" />
       <RadioOption
         label={{ id: 'MedisinskVilkarForm.RadioknappLegeISpesialhelsetjenesten' }}
@@ -28,7 +34,7 @@ const Legeerklaering = ({ readOnly }: LegeerklaeringProps) => (
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappAnnenYrkesgruppe' }} value="annenyrkesgruppe" />
     </RadioGroupField>
     <TextAreaField
-      name="begrunnelse_legeerklaering"
+      name="begrunnelse"
       label={<FormattedMessage id="MedisinskVilkarForm.NotatKommentar" />}
       validate={[required, minLength3, maxLength1500, hasValidText]}
       maxLength={1500}

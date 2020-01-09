@@ -1,7 +1,35 @@
 import * as React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import MedisinskVilkarPanel from './components/MedisinskVilkarPanel';
+
+export interface Soknad {
+  soknadType: Status;
+}
+
+export interface Status {
+  kode: string;
+  navn: string;
+}
+
+export interface Vilkar {
+  vilkarType: Status;
+  avslagKode: string;
+  lovReferanse: string;
+}
+
+export interface Behandling {
+  id: number;
+  versjon: number;
+  aksjonspunkter: any[]; // TODO: Foreløpig ikke i bruk her, men må få riktig type
+  type: Status;
+  status: Status;
+  fagsakId: number;
+  opprettet: string;
+  soknad: Soknad;
+  vilkar: Vilkar[];
+  behandlingPaaVent: boolean;
+}
 
 const cache = createIntlCache();
 
@@ -21,7 +49,7 @@ export interface SubmitCallbackProps {
 interface MedisinskVilkarIndexProps {
   readOnly: boolean;
   toggleInfoPanelCallback: () => void;
-  behandling: any;
+  behandling: Behandling;
   submitCallback: (props: SubmitCallbackProps[]) => void;
 }
 

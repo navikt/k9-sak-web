@@ -7,9 +7,19 @@ interface MedisinskVilkarFormButtonsProps {
   behandlingId: number;
   behandlingVersjon: number;
   form: string;
+  hasOpenAksjonspunkter: boolean;
+  readOnly: boolean;
+  submittable: boolean;
 }
 
-const MedisinskVilkarFormButtons = ({ behandlingId, behandlingVersjon, form }: MedisinskVilkarFormButtonsProps) => (
+const MedisinskVilkarFormButtons = ({
+  behandlingId,
+  behandlingVersjon,
+  form,
+  hasOpenAksjonspunkter,
+  readOnly,
+  submittable,
+}: MedisinskVilkarFormButtonsProps) => (
   <FlexContainer fluid>
     <FlexRow>
       <FlexColumn>
@@ -18,9 +28,9 @@ const MedisinskVilkarFormButtons = ({ behandlingId, behandlingVersjon, form }: M
           formName={form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
-          isSubmittable
-          isReadOnly={false} // TODO: Mangler && overstyringDisabled
-          hasOpenAksjonspunkter={false}
+          isSubmittable={submittable}
+          isReadOnly={readOnly} // TODO: Mangler && overstyringDisabled
+          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         />
       </FlexColumn>
       <FlexColumn>
