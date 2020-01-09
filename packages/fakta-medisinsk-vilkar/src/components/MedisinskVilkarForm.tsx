@@ -160,7 +160,7 @@ const MedisinskVilkarForm = ({
 
 const transformValues = values => ({
   kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, // TODO
-  begrunnelse: values.begrunnelse,
+  begrunnelse: values.begrunnelseLegeerklaering,
   ...values,
 });
 

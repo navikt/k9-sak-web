@@ -34,7 +34,7 @@ const Legeerklaering = ({ readOnly }: LegeerklaeringProps) => (
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappAnnenYrkesgruppe' }} value="annenyrkesgruppe" />
     </RadioGroupField>
     <TextAreaField
-      name="begrunnelse"
+      name="begrunnelseLegeerklaering"
       label={<FormattedMessage id="MedisinskVilkarForm.NotatKommentar" />}
       validate={[required, minLength3, maxLength1500, hasValidText]}
       maxLength={1500}
