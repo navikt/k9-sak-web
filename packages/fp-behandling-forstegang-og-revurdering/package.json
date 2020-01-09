@@ -16,6 +16,7 @@
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",
     "@fpsak-frontend/fakta-omsorg": "1.0.0",
     "@fpsak-frontend/fakta-omsorg-og-foreldreansvar": "1.0.0",
+    "@fpsak-frontend/fakta-omsorgen-for": "1.0.0",
     "@fpsak-frontend/fakta-opptjening": "1.0.0",
     "@fpsak-frontend/fakta-person": "1.0.0",
     "@fpsak-frontend/fakta-tilleggsopplysninger": "1.0.0",
