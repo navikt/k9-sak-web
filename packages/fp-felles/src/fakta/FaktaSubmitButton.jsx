@@ -34,8 +34,7 @@ export const FaktaSubmitButton = ({
   onClick,
 }) => (
   <ElementWrapper>
-    {!isReadOnly
-      && (
+    {!isReadOnly && (
       <Hovedknapp
         mini
         spinner={isSubmitting}
@@ -45,7 +44,7 @@ export const FaktaSubmitButton = ({
       >
         <FormattedMessage id={buttonTextId} />
       </Hovedknapp>
-      )}
+    )}
   </ElementWrapper>
 );
 
@@ -68,12 +67,17 @@ FaktaSubmitButton.defaultProps = {
 const mapStateToProps = (state, ownProps) => {
   const { behandlingId, behandlingVersjon } = ownProps;
   const fNames = ownProps.formNames ? ownProps.formNames : [ownProps.formName];
-  const formNames = fNames.map((f) => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
+  const formNames = fNames.map(f => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
   return {
-    isSubmitting: formNames.some((formName) => isBehandlingFormSubmitting(formName, behandlingId, behandlingVersjon)(state)),
-    isDirty: formNames.some((formName) => isBehandlingFormDirty(formName, behandlingId, behandlingVersjon)(state)),
+    isSubmitting: formNames.some(formName =>
+      isBehandlingFormSubmitting(formName, behandlingId, behandlingVersjon)(state),
+    ),
+    isDirty: formNames.some(formName => isBehandlingFormDirty(formName, behandlingId, behandlingVersjon)(state)),
     hasEmptyRequiredFields: ownProps.doNotCheckForRequiredFields
-      ? false : formNames.some((formName) => hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())(state)),
+      ? false
+      : formNames.some(formName =>
+          hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())(state),
+        ),
   };
 };
 

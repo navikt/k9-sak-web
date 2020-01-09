@@ -21,7 +21,9 @@
 		"packages/behandling-anke",
 		"packages/behandling-tilbakekreving",
 		"packages/behandling-papirsoknad",
-		"@types"
+    "@types",
+    "packages/fakta-medisinsk-vilkar",
+    "packages/fp-felles"
 	],
 
 }

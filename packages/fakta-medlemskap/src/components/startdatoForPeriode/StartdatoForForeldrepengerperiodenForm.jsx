@@ -9,9 +9,7 @@ import { FieldArray, formPropTypes } from 'redux-form';
 
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FaktaGruppe, FaktaSubmitButton, behandlingForm } from '@fpsak-frontend/fp-felles';
-import {
-  hasValidDate, hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils';
+import { hasValidDate, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -42,13 +40,15 @@ export const StartdatoForForeldrepengerperiodenForm = ({
   ...formProps
 }) => (
   <div className={hasOpenAksjonspunkt || !hasOpenMedlemskapAksjonspunkter ? undefined : styles.inactiveAksjonspunkt}>
-    <form className={hasOpenAksjonspunkt || !hasOpenMedlemskapAksjonspunkter ? undefined : styles.container} onSubmit={formProps.handleSubmit}>
-      {hasAksjonspunkt
-        && (
+    <form
+      className={hasOpenAksjonspunkt || !hasOpenMedlemskapAksjonspunkter ? undefined : styles.container}
+      onSubmit={formProps.handleSubmit}
+    >
+      {hasAksjonspunkt && (
         <AksjonspunktHelpText isAksjonspunktOpen={submittable && hasOpenAksjonspunkt}>
           {[<FormattedMessage key="PeriodenAvviker" id="StartdatoForForeldrepengerperiodenForm.PeriodenAvviker" />]}
         </AksjonspunktHelpText>
-        )}
+      )}
       <FaktaGruppe
         aksjonspunktCode={aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN}
         titleCode="StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden"
@@ -75,10 +75,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
           </Column>
           {/* do not touch this xs-value. react-collapse in chrome 90% update error */}
           <Column xs="6">
-            <FieldArray
-              component={ArbeidsgiverInfo}
-              name="arbeidsgivere"
-            />
+            <FieldArray component={ArbeidsgiverInfo} name="arbeidsgivere" />
           </Column>
         </Row>
       </FaktaGruppe>
@@ -112,12 +109,16 @@ StartdatoForForeldrepengerperiodenForm.propTypes = {
 };
 
 const buildInitialValues = createSelector(
-  [(ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.soknad.oppgittFordeling,
-    (ownProps) => ownProps.inntektArbeidYtelse],
+  [
+    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.soknad.oppgittFordeling,
+    ownProps => ownProps.inntektArbeidYtelse,
+  ],
   (aksjonspunkter, oppgittFordeling = {}, inntektArbeidYtelse = {}) => {
-    const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
-    const overstyringAp = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO);
+    const aksjonspunkt = aksjonspunkter.find(
+      ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+    );
+    const overstyringAp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO);
     return {
       opprinneligDato: oppgittFordeling.startDatoForPermisjon,
       startdatoFraSoknad: oppgittFordeling.startDatoForPermisjon,
@@ -128,7 +129,9 @@ const buildInitialValues = createSelector(
 );
 
 const transformValues = (values, isOverstyring) => ({
-  kode: isOverstyring ? aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO : aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+  kode: isOverstyring
+    ? aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO
+    : aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
   opprinneligDato: values.opprinneligDato,
   startdatoFraSoknad: values.startdatoFraSoknad,
   begrunnelse: values.begrunnelse,
@@ -137,32 +140,34 @@ const transformValues = (values, isOverstyring) => ({
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const { aksjonspunkt, submitCallback } = initialOwnProps;
   const hasAksjonspunkt = aksjonspunkt !== undefined;
-  const isOverstyring = !hasAksjonspunkt || aksjonspunkt.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO;
+  const isOverstyring =
+    !hasAksjonspunkt || aksjonspunkt.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO;
   const hasOpenAksjonspunkt = hasAksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
-  const onSubmit = (values) => submitCallback([transformValues(values, isOverstyring)]);
+  const onSubmit = values => submitCallback([transformValues(values, isOverstyring)]);
   return (state, ownProps) => ({
     hasAksjonspunkt,
     hasOpenAksjonspunkt,
     onSubmit,
-    overstyringDisabled: ownProps.readOnlyBehandling || ownProps.behandlingStatus.kode !== behandlingStatus.BEHANDLING_UTREDES,
+    overstyringDisabled:
+      ownProps.readOnlyBehandling || ownProps.behandlingStatus.kode !== behandlingStatus.BEHANDLING_UTREDES,
     initialValues: buildInitialValues(ownProps),
   });
 };
 
-const isBefore2019 = (startdato) => (
-  moment(startdato).isBefore(moment('2019-01-01'))
-);
+const isBefore2019 = startdato => moment(startdato).isBefore(moment('2019-01-01'));
 
-const validateDates = (values) => {
+const validateDates = values => {
   const errors = {};
   if (!values) {
     return errors;
   }
   const { arbeidsgivere, startdatoFraSoknad } = values;
 
-  const isStartdatoEtterArbeidsgiverdato = arbeidsgivere && arbeidsgivere
-    .map((a) => a.arbeidsgiverStartdato)
-    .some((datoFraInntektsmelding) => moment(datoFraInntektsmelding).isBefore(moment(startdatoFraSoknad)));
+  const isStartdatoEtterArbeidsgiverdato =
+    arbeidsgivere &&
+    arbeidsgivere
+      .map(a => a.arbeidsgiverStartdato)
+      .some(datoFraInntektsmelding => moment(datoFraInntektsmelding).isBefore(moment(startdatoFraSoknad)));
 
   if (isStartdatoEtterArbeidsgiverdato) {
     errors.startdatoFraSoknad = [{ id: 'StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato' }];
@@ -173,7 +178,9 @@ const validateDates = (values) => {
   return errors;
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
-  form: 'StartdatoForForeldrepengerperiodenForm',
-  validate: validateDates,
-})(StartdatoForForeldrepengerperiodenForm));
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: 'StartdatoForForeldrepengerperiodenForm',
+    validate: validateDates,
+  })(StartdatoForForeldrepengerperiodenForm),
+);

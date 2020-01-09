@@ -31,20 +31,23 @@ export {
   pathToMissingPage,
 } from './src/paths';
 
-export {
-  RETTSKILDE_URL,
-  LINK_TIL_BESTE_BEREGNING_REGNEARK,
-  SYSTEMRUTINE_URL,
-} from './src/eksterneLenker';
+export { RETTSKILDE_URL, LINK_TIL_BESTE_BEREGNING_REGNEARK, SYSTEMRUTINE_URL } from './src/eksterneLenker';
 
+export { setRequestPollingMessage, getRequestPollingMessage } from './src/pollingMessageDuck';
 export {
-  setRequestPollingMessage,
-  getRequestPollingMessage,
-} from './src/pollingMessageDuck';
-export {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, getBehandlingFormName,
-  isBehandlingFormSubmitting, getBehandlingFormValues, getBehandlingFormInitialValues, getBehandlingFormSyncErrors, getBehandlingFormPrefix,
+  behandlingForm,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  getBehandlingFormName,
+  isBehandlingFormSubmitting,
+  getBehandlingFormValues,
+  getBehandlingFormInitialValues,
+  getBehandlingFormSyncErrors,
+  getBehandlingFormPrefix,
 } from './src/behandlingForm';
+export { behandlingForm as behandlingFormTs } from './src/behandlingFormTS';
+
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
 export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';
 export { default as OverstyrBekreftKnappPanel } from './src/overstyr/OverstyrBekreftKnappPanel';

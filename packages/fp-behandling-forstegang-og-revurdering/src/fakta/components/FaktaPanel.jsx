@@ -19,7 +19,7 @@ import { featureToggle } from '@fpsak-frontend/fp-felles';
 import vilkarType, { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import MedisinskVilkarFaktaIndex from '../../../../fakta-medisinsk-vilkar';
+import MedisinskVilkarFaktaIndex from '@fpsak-frontend/fakta-medisinsk-vilkar';
 import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from '../duckFaktaForstegangOgRev';
 import {
@@ -117,7 +117,7 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={personData}
-        render={(props) => (
+        render={props => (
           <PersonFaktaIndex
             fagsakPerson={fagsakPerson}
             aksjonspunkter={aksjonspunkter}
@@ -138,7 +138,7 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={arbeidsforholdData}
-        render={(componentProps) => (
+        render={componentProps => (
           <>
             {componentProps.personopplysninger && (
               <ArbeidsforholdFaktaIndex
@@ -156,15 +156,27 @@ export const FaktaPanel = ({
           </>
         )}
       />
-
       <OmsorgenForFaktaIndex />
-      <MedisinskVilkarFaktaIndex />
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={vergeData}
+        showComponent // FIX
+        render={props => (
+          <MedisinskVilkarFaktaIndex
+            readOnly={readOnly}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            openInfoPanels={openInfoPanels}
+            {...props}
+          />
+        )}
+      />
 
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={vergeData}
-        showComponent={aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)}
-        render={(props) => (
+        showComponent={aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)}
+        render={props => (
           <VergeFaktaIndex
             alleKodeverk={alleKodeverk}
             alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -181,8 +193,8 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={tilleggsopplysningerData}
-        showComponent={aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.TILLEGGSOPPLYSNINGER)}
-        render={(props) => (
+        showComponent={aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.TILLEGGSOPPLYSNINGER)}
+        render={props => (
           <TilleggsopplysningerFaktaIndex
             submitCallback={submitCallback}
             openInfoPanels={openInfoPanels}
@@ -197,8 +209,8 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={omsorgOgForeldreansvarData}
-        showComponent={aksjonspunkter.some((ap) => omsorgOgForeldreansvarAksjonspunkter.includes(ap.definisjon.kode))}
-        render={(props) => (
+        showComponent={aksjonspunkter.some(ap => omsorgOgForeldreansvarAksjonspunkter.includes(ap.definisjon.kode))}
+        render={props => (
           <OmsorgOgForeldreansvarFaktaIndex
             alleKodeverk={alleKodeverk}
             alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -215,8 +227,8 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={fodselOgTilretteleggingData}
-        showComponent={aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)}
-        render={(props) => (
+        showComponent={aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)}
+        render={props => (
           <FodselOgTilretteleggingFaktaIndex
             aksjonspunkter={aksjonspunkter}
             openInfoPanels={openInfoPanels}
@@ -233,10 +245,10 @@ export const FaktaPanel = ({
         behandlingVersjon={1}
         data={adopsjonData}
         showComponent={
-          aksjonspunkter.some((ap) => adopsjonAksjonspunkter.includes(ap.definisjon.kode))
-          || vilkarCodes.some((code) => adopsjonsvilkarene.includes(code))
+          aksjonspunkter.some(ap => adopsjonAksjonspunkter.includes(ap.definisjon.kode)) ||
+          vilkarCodes.some(code => adopsjonsvilkarene.includes(code))
         }
-        render={(props) => (
+        render={props => (
           <AdopsjonFaktaIndex
             alleKodeverk={alleKodeverk}
             alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -254,7 +266,7 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={medlemskapData}
-        render={(componentProps) => {
+        render={componentProps => {
           if (componentProps.personopplysninger && componentProps.soknad) {
             return (
               <MedlemskapFaktaIndex
@@ -279,8 +291,8 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={opptjeningData}
-        showComponent={vilkarCodes.some((code) => code === vilkarType.OPPTJENINGSVILKARET)}
-        render={(props) => (
+        showComponent={vilkarCodes.some(code => code === vilkarType.OPPTJENINGSVILKARET)}
+        render={props => (
           <OpptjeningFaktaIndex
             aksjonspunkter={aksjonspunkter}
             openInfoPanels={openInfoPanels}
@@ -298,7 +310,7 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={beregningData}
-        render={(props) => (
+        render={props => (
           <BeregningFaktaIndex
             openInfoPanels={openInfoPanels}
             toggleInfoPanelCallback={toggleInfoPanelCallback}
@@ -316,8 +328,8 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={fordelBeregningsgrunnlagData}
-        showComponent={aksjonspunkter.some((ap) => fordelBeregningsgrunnlagAksjonspunkter.includes(ap.definisjon.kode))}
-        render={(props) => (
+        showComponent={aksjonspunkter.some(ap => fordelBeregningsgrunnlagAksjonspunkter.includes(ap.definisjon.kode))}
+        render={props => (
           <FordelBeregningsgrunnlagFaktaIndex
             alleKodeverk={alleKodeverk}
             alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -334,8 +346,8 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={omsorgData}
-        showComponent={aksjonspunkter.some((ap) => omsorgAksjonspunkter.includes(ap.definisjon.kode))}
-        render={(props) => (
+        showComponent={aksjonspunkter.some(ap => omsorgAksjonspunkter.includes(ap.definisjon.kode))}
+        render={props => (
           <OmsorgFaktaIndex
             alleKodeverk={alleKodeverk}
             alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -377,7 +389,7 @@ FaktaPanel.defaultProps = {
   soknad: undefined,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const rettigheter = behandlingSelectors.getRettigheter(state);
   const aksjonspunkter = behandlingSelectors.getAksjonspunkter(state);
   return {
@@ -386,9 +398,9 @@ const mapStateToProps = (state) => {
     ytelsesType: getFagsakYtelseType(state),
     openInfoPanels: getOpenInfoPanels(state),
     readOnly:
-      !rettigheter.writeAccess.isEnabled
-      || behandlingSelectors.getBehandlingIsOnHold(state)
-      || behandlingSelectors.hasReadOnlyBehandling(state),
+      !rettigheter.writeAccess.isEnabled ||
+      behandlingSelectors.getBehandlingIsOnHold(state) ||
+      behandlingSelectors.hasReadOnlyBehandling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     fagsakPerson: getFagsakPerson(state),
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
