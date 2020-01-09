@@ -5,6 +5,7 @@
 		"allowJs": true,
 		"noEmit": true,
 		"strict": false,
+    "resolveJsonModule": true,
 		"esModuleInterop": true,
 		"sourceMap": true,
 		"jsx": "react",
@@ -21,7 +22,8 @@
 		"packages/behandling-anke",
 		"packages/behandling-tilbakekreving",
 		"packages/behandling-papirsoknad",
+		"packages/fakta-omsorgen-for",
 		"@types"
-	],
+	]
 
 }
