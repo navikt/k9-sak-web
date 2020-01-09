@@ -3,16 +3,20 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 import { DateUtils } from 'react-day-picker';
+import classnames from 'classnames/bind';
 import { DDMMYYYY_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
 import CalendarToggleButton from '../datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
-import styles from './periodpicker.less';
+import styles from '../datepicker/datepicker.less';
 
-const getStartDateInput = (props) => haystack(props, props.names[0]).input;
-const getEndDateInput = (props) => haystack(props, props.names[1]).input;
-const isValidDate = (date) => moment(date, DDMMYYYY_DATE_FORMAT, true).isValid();
-const createPeriod = (startDay, endDay) => `${moment(startDay).format(DDMMYYYY_DATE_FORMAT)} - ${moment(endDay).format(DDMMYYYY_DATE_FORMAT)}`;
+const classNames = classnames.bind(styles);
+
+const getStartDateInput = props => haystack(props, props.names[0]).input;
+const getEndDateInput = props => haystack(props, props.names[1]).input;
+const isValidDate = date => moment(date, DDMMYYYY_DATE_FORMAT, true).isValid();
+const createPeriod = (startDay, endDay) =>
+  `${moment(startDay).format(DDMMYYYY_DATE_FORMAT)} - ${moment(endDay).format(DDMMYYYY_DATE_FORMAT)}`;
 
 class Periodpicker extends Component {
   constructor(props) {
@@ -137,12 +141,8 @@ class Periodpicker extends Component {
   }
 
   render() {
-    const {
-      label, placeholder, feil, names, disabled, disabledDays,
-    } = this.props;
-    const {
-      period, inputOffsetTop, inputOffsetWidth, showCalendar,
-    } = this.state;
+    const { label, placeholder, feil, names, disabled, disabledDays } = this.props;
+    const { period, inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
 
     return (
       <>
@@ -169,19 +169,18 @@ class Periodpicker extends Component {
             disabled={disabled}
           />
         </div>
-        {showCalendar
-        && (
-        <PeriodCalendarOverlay
-          disabled={disabled}
-          startDate={this.parseToDate(names[0])}
-          endDate={this.parseToDate(names[1])}
-          onDayChange={this.handleDayChange}
-          elementIsCalendarButton={this.elementIsCalendarButton}
-          className={styles.calendarRoot}
-          dayPickerClassName={styles.calendarWrapper}
-          onClose={this.hideCalendar}
-          disabledDays={disabledDays}
-        />
+        {showCalendar && (
+          <PeriodCalendarOverlay
+            disabled={disabled}
+            startDate={this.parseToDate(names[0])}
+            endDate={this.parseToDate(names[1])}
+            onDayChange={this.handleDayChange}
+            elementIsCalendarButton={this.elementIsCalendarButton}
+            className={styles.calendarRoot}
+            dayPickerClassName={classNames('calendarWrapper calendarWrapper--period')}
+            onClose={this.hideCalendar}
+            disabledDays={disabledDays}
+          />
         )}
       </>
     );
