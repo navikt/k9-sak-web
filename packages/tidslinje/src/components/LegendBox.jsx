@@ -23,7 +23,12 @@ const LegendBox = ({ legends }) => (
 );
 
 LegendBox.propTypes = {
-  legends: PropTypes.arrayOf(Legend).isRequired,
+  legends: PropTypes.arrayOf(
+    PropTypes.shape({
+      src: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default LegendBox;
