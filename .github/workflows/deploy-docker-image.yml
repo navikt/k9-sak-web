@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - k9-sak-frontend
+      - master
 jobs:
   deploy-docker-image:
     name: Deploy Docker image
