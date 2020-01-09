@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import Table from '@fpsak-frontend/shared-components/src/table/Table';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import checkSvg from '@fpsak-frontend/assets/images/check.svg';
@@ -9,8 +8,20 @@ import { useIntl } from 'react-intl';
 import styles from './sokerinfoTable.less';
 import EksternLink from './EksternLink';
 
-// TODO: Samme lengde på tables
-const SokerinfoTable = ({ header, forhold }) => {
+interface SokerinfoTableProps {
+  header: string;
+  forhold: {
+    forholdstekst: string,
+    forholdskode: string,
+    erOppfylt: boolean,
+    link: {
+      to: string,
+      text: string,
+    },
+  }[];
+}
+
+const SokerinfoTable: FunctionComponent<SokerinfoTableProps> = ({ header, forhold }) => {
   // const alleForholdOppfylt = !forhold.find(forholdet => !forholdet.erOppfylt);
   const intl = useIntl();
   return (
@@ -42,21 +53,6 @@ const SokerinfoTable = ({ header, forhold }) => {
       ))}
     </Table>
   );
-};
-
-SokerinfoTable.propTypes = {
-  header: PropTypes.string.isRequired,
-  forhold: PropTypes.arrayOf(
-    PropTypes.shape({
-      forholdstekst: PropTypes.string,
-      forholdskode: PropTypes.string,
-      erOppfylt: PropTypes.bool,
-      link: PropTypes.shape({
-        to: PropTypes.string,
-        text: PropTypes.string,
-      }),
-    }),
-  ).isRequired,
 };
 
 export default SokerinfoTable;
