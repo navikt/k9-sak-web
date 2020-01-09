@@ -2,7 +2,7 @@ import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/for
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Element } from 'nav-frontend-typografi';
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 const minLength3 = minLength(3);

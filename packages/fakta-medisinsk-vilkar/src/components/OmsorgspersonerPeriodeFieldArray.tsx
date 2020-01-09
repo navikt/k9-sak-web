@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { PeriodFieldArray, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
 import { PeriodpickerField } from '@fpsak-frontend/form';
 import { required, hasValidDate, dateRangesNotOverlapping } from '@fpsak-frontend/utils';
@@ -15,7 +15,7 @@ interface OmsorgspersonerPeriodeFieldArrayProps {
 }
 
 const OmsorgspersonerPeriodeFieldArray = ({ readOnly, fields }: OmsorgspersonerPeriodeFieldArrayProps) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (fields.length === 0) {
       fields.push({ fom: '', tom: '' });
     }

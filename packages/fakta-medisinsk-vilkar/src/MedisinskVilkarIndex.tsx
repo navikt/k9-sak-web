@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import MedisinskVilkarPanel from './components/MedisinskVilkarPanel';

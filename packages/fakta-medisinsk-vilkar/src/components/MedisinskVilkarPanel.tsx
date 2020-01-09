@@ -1,5 +1,5 @@
 import { FaktaEkspandertpanel, faktaPanelCodes, withDefaultToggling } from '@fpsak-frontend/fp-felles';
-import * as React from 'react';
+import React from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { SubmitCallbackProps, Behandling } from '../MedisinskVilkarIndex';

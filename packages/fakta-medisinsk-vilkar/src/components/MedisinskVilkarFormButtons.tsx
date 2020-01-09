@@ -1,7 +1,7 @@
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { Knapp } from 'nav-frontend-knapper';
-import * as React from 'react';
+import React from 'react';
 
 interface MedisinskVilkarFormButtonsProps {
   behandlingId: number;
