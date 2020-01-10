@@ -1,9 +1,8 @@
 # k9-sak-frontend
 Monorepo for Frontend kode for k9-sak.
-[![CircleCI](https://circleci.com/gh/navikt/fpsak-frontend/tree/master.svg?style=svg)](https://circleci.com/gh/navikt/fpsak-frontend/tree/master)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_fpsak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_fpsak-frontend)
-[![Known Vulnerabilities](https://snyk.io/test/github/navikt/fpsak-frontend/badge.svg)](https://snyk.io/test/github/navikt/fpsak-frontend)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_fpsak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_k9-sak-frontend)
+[![Known Vulnerabilities](https://snyk.io/test/github/navikt/fpsak-frontend/badge.svg)](https://snyk.io/test/github/navikt/k9-sak-frontend)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Komme i gang
@@ -15,6 +14,7 @@ yarn build
 
 #### TODO
 * velge namespace, bruker scoped nå(@fpsak-frontend)
+* lage et felles repo for felles moduler som er brukt i fpsak-frontend.
 * legge pakker ut på npm.
 
 ## Intellj og stubs
