@@ -19,8 +19,8 @@ import { featureToggle } from '@fpsak-frontend/fp-felles';
 import vilkarType, { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import MedisinskVilkarFaktaIndex from '@fpsak-frontend/fakta-medisinsk-vilkar';
 import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for';
-import MedisinskVilkarFaktaIndex from '../../../../fakta-medisinsk-vilkar';
 import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from '../duckFaktaForstegangOgRev';
 import {
@@ -171,7 +171,21 @@ export const FaktaPanel = ({
       >
         {/*  TODO: bruker nå feil data, bruk riktig når endepunkt er klart */}
       </DataFetcherWithCache>
-      <MedisinskVilkarFaktaIndex />
+
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={vergeData}
+        showComponent // FIX
+        render={props => (
+          <MedisinskVilkarFaktaIndex
+            readOnly={readOnly}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            openInfoPanels={openInfoPanels}
+            {...props}
+          />
+        )}
+      />
 
       <DataFetcherWithCache
         behandlingVersjon={1}

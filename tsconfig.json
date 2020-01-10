@@ -11,7 +11,7 @@
 		"jsx": "react",
 		"typeRoots": ["./node_modules/@types", "./@types"],
 		"baseUrl": "packages/",
-		"skipLibCheck": true, //TODO Fjern denne
+    "skipLibCheck": true, //TODO Fjern denne,
 	},
 	"include": [
 		"packages/rest-api",
@@ -22,8 +22,9 @@
 		"packages/behandling-anke",
 		"packages/behandling-tilbakekreving",
 		"packages/behandling-papirsoknad",
+    "packages/fakta-medisinsk-vilkar",
+    "packages/fp-felles",
 		"packages/fakta-omsorgen-for",
-		"@types"
+    "@types",
 	]
-
 }

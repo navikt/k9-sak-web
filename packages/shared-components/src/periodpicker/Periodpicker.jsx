@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 import { DateUtils } from 'react-day-picker';
-import classnames from 'classnames/bind';
 import { DDMMYYYY_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
 import CalendarToggleButton from '../datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
-import styles from '../datepicker/datepicker.less';
-
-const classNames = classnames.bind(styles);
+import styles from './periodpicker.less';
 
 const getStartDateInput = props => haystack(props, props.names[0]).input;
 const getEndDateInput = props => haystack(props, props.names[1]).input;
@@ -177,7 +174,7 @@ class Periodpicker extends Component {
             onDayChange={this.handleDayChange}
             elementIsCalendarButton={this.elementIsCalendarButton}
             className={styles.calendarRoot}
-            dayPickerClassName={classNames('calendarWrapper calendarWrapper--period')}
+            dayPickerClassName={styles.calendarWrapper}
             onClose={this.hideCalendar}
             disabledDays={disabledDays}
           />
