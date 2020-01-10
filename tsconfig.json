@@ -5,13 +5,13 @@
 		"allowJs": true,
 		"noEmit": true,
 		"strict": false,
+    "resolveJsonModule": true,
 		"esModuleInterop": true,
 		"sourceMap": true,
 		"jsx": "react",
 		"typeRoots": ["./node_modules/@types", "./@types"],
 		"baseUrl": "packages/",
     "skipLibCheck": true, //TODO Fjern denne,
-    "resolveJsonModule": true
 	},
 	"include": [
 		"packages/rest-api",
@@ -22,9 +22,9 @@
 		"packages/behandling-anke",
 		"packages/behandling-tilbakekreving",
 		"packages/behandling-papirsoknad",
-    "@types",
     "packages/fakta-medisinsk-vilkar",
-    "packages/fp-felles"
-	],
-
+    "packages/fp-felles",
+		"packages/fakta-omsorgen-for",
+    "@types",
+	]
 }

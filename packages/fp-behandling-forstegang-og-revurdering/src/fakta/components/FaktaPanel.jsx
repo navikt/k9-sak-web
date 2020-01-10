@@ -20,6 +20,7 @@ import vilkarType, { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vil
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import MedisinskVilkarFaktaIndex from '@fpsak-frontend/fakta-medisinsk-vilkar';
+import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for';
 import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from '../duckFaktaForstegangOgRev';
 import {
@@ -29,10 +30,9 @@ import {
   getFeatureToggles,
 } from '../../duckBehandlingForstegangOgRev';
 import fpsakApi from '../../data/fpsakBehandlingApi';
-import DataFetcherWithCache from '../../DataFetcherWithCache';
 
+import DataFetcherWithCache from '../../DataFetcherWithCache';
 import styles from './faktaPanel.less';
-import OmsorgenForFaktaIndex from '../../../../fakta-omsorgen-for';
 
 const adopsjonAksjonspunkter = [
   aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE,
@@ -156,7 +156,6 @@ export const FaktaPanel = ({
           </>
         )}
       />
-      <OmsorgenForFaktaIndex />
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={vergeData}
@@ -171,6 +170,21 @@ export const FaktaPanel = ({
           />
         )}
       />
+
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={arbeidsforholdData}
+        render={componentProps => (
+          <OmsorgenForFaktaIndex
+            openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            {...componentProps}
+          />
+        )}
+      >
+        {/*  TODO: bruker nå feil data, bruk riktig når endepunkt er klart */}
+      </DataFetcherWithCache>
 
       <DataFetcherWithCache
         behandlingVersjon={1}

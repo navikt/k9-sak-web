@@ -9,7 +9,7 @@ import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components'
 
 import styles from './personYtelserTable.less';
 
-const formatDateToDDMMYYYY = (date) => {
+const formatDateToDDMMYYYY = date => {
   const parsedDate = moment(date, ISO_DATE_FORMAT, true);
   return parsedDate.isValid() ? parsedDate.format(DDMMYYYY_DATE_FORMAT) : date;
 };
@@ -20,9 +20,7 @@ const formatDateToDDMMYYYY = (date) => {
  * Presentasjonskomponent som viser tilgrensede ytelser for valgt person.
  *
  */
-export const PersonYtelserTable = ({
-  intl, ytelser, relatertYtelseTypes, relatertYtelseStatus,
-}) => {
+export const PersonYtelserTable = ({ intl, ytelser, relatertYtelseTypes, relatertYtelseStatus }) => {
   const headerTextCodes = [
     'PersonYtelserTable.Ytelse',
     'PersonYtelserTable.Periode',
@@ -30,44 +28,57 @@ export const PersonYtelserTable = ({
     'PersonYtelserTable.Saksnummer',
   ];
 
-  const ytelseRows = ytelser && ytelser.map((ytelse) => {
-    const ytelseNavn = relatertYtelseTypes.filter((type) => type.kode === ytelse.relatertYtelseType)[0].navn;
-    if (ytelse.tilgrensendeYtelserListe.length === 0) {
-      return ({
-        navn: ytelseNavn,
-        periode: intl.formatMessage({ id: 'PersonYtelserTable.Ingen' }),
-        status: '',
-        saksnummer: '',
-      });
-    }
+  const ytelseRows =
+    ytelser &&
+    ytelser
+      .map(ytelse => {
+        const ytelseNavn =
+          relatertYtelseTypes && relatertYtelseTypes.filter(type => type.kode === ytelse.relatertYtelseType)[0].navn;
+        if (ytelse.tilgrensendeYtelserListe.length === 0) {
+          return {
+            navn: ytelseNavn,
+            periode: intl.formatMessage({ id: 'PersonYtelserTable.Ingen' }),
+            status: '',
+            saksnummer: '',
+          };
+        }
 
-    return ytelse.tilgrensendeYtelserListe.map((ytelseInfo, innerIndex) => {
-      const tilDato = formatDateToDDMMYYYY(ytelseInfo.periodeTilDato) || '';
-      const fraDato = formatDateToDDMMYYYY(ytelseInfo.periodeFraDato) || '';
+        return ytelse.tilgrensendeYtelserListe.map((ytelseInfo, innerIndex) => {
+          const tilDato = formatDateToDDMMYYYY(ytelseInfo.periodeTilDato) || '';
+          const fraDato = formatDateToDDMMYYYY(ytelseInfo.periodeFraDato) || '';
 
-      const statusNavn = relatertYtelseStatus.filter((status) => status.kode === ytelseInfo.status)[0].navn;
+          const statusNavn = relatertYtelseStatus.filter(status => status.kode === ytelseInfo.status)[0].navn;
 
-      return {
-        navn: innerIndex === 0 ? ytelseNavn : '',
-        periode: `${fraDato} - ${tilDato}`,
-        status: statusNavn,
-        saksnummer: ytelseInfo.saksNummer,
-      };
-    });
-  }).reduce((a, b) => a.concat(b), []);
+          return {
+            navn: innerIndex === 0 ? ytelseNavn : '',
+            periode: `${fraDato} - ${tilDato}`,
+            status: statusNavn,
+            saksnummer: ytelseInfo.saksNummer,
+          };
+        });
+      })
+      .reduce((a, b) => a.concat(b), []);
 
   return (
     <Table headerTextCodes={headerTextCodes} classNameTable={styles.tableStyle} noHover>
-      {ytelseRows && ytelseRows.map((ytelse, index) => (
-        <TableRow key={`index${index + 1}`}>
-          <TableColumn><Normaltekst>{ytelse.navn}</Normaltekst></TableColumn>
-          <TableColumn><Normaltekst>{ytelse.periode}</Normaltekst></TableColumn>
-          <TableColumn><Normaltekst>{ytelse.status}</Normaltekst></TableColumn>
-          <TableColumn><Normaltekst>{ytelse.saksnummer}</Normaltekst></TableColumn>
-        </TableRow>
-      ))}
+      {ytelseRows &&
+        ytelseRows.map((ytelse, index) => (
+          <TableRow key={`index${index + 1}`}>
+            <TableColumn>
+              <Normaltekst>{ytelse.navn}</Normaltekst>
+            </TableColumn>
+            <TableColumn>
+              <Normaltekst>{ytelse.periode}</Normaltekst>
+            </TableColumn>
+            <TableColumn>
+              <Normaltekst>{ytelse.status}</Normaltekst>
+            </TableColumn>
+            <TableColumn>
+              <Normaltekst>{ytelse.saksnummer}</Normaltekst>
+            </TableColumn>
+          </TableRow>
+        ))}
     </Table>
-
   );
 };
 
