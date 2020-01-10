@@ -1,5 +1,6 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { Aksjonspunkt } from '@fpsak-frontend/types';
 import messages from '../i18n/nb_NO.json';
 import MedisinskVilkarPanel from './components/MedisinskVilkarPanel';
 
@@ -21,7 +22,7 @@ export interface Vilkar {
 export interface Behandling {
   id: number;
   versjon: number;
-  aksjonspunkter: any[]; // TODO: Foreløpig ikke i bruk her, men må få riktig type
+  aksjonspunkter: Aksjonspunkt[];
   type: Status;
   status: Status;
   fagsakId: number;
@@ -51,6 +52,7 @@ interface MedisinskVilkarIndexProps {
   toggleInfoPanelCallback: () => void;
   behandling: Behandling;
   submitCallback: (props: SubmitCallbackProps[]) => void;
+  shouldOpenDefaultInfoPanels: boolean;
 }
 
 const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => (

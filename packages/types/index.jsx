@@ -1,0 +1,9 @@
+export { default as Aksjonspunkt } from './src/aksjonspunktTsType';
+export { default as Behandling } from './src/behandlingTsType';
+export { default as Dokument } from './src/dokumentTsType';
+export { default as FagsakInfo } from './src/fagsakInfoTsType';
+export { default as Kodeverk } from './src/kodeverkTsType';
+export { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
+export { default as NavAnsatt } from './src/navAnsattTsType';
+export { default as Vilkar } from './src/vilkarTsType';
+export { default as SettPaVentParams } from './src/settPaVentParamsTsType';

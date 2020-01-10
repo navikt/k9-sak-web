@@ -25,6 +25,7 @@ describe('<FaktaEkspandertpanel>', () => {
     const panel = wrapper.find(EkspanderbartpanelPure);
     expect(panel).to.have.length(1);
     expect(panel.prop('tittel')).to.eql('faktapanelTitle');
+    // eslint-disable-next-line no-unused-expressions
     expect(panel.prop('apen')).is.true;
     expect(panel.children()).has.length(1);
     expect(panel.childAt(0).text()).is.eql('test');

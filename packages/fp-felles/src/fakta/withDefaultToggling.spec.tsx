@@ -7,9 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import withDefaultToggling from './withDefaultToggling';
 
-const TestComp = () => (
-  <div className="component" />
-);
+const TestComp = () => <div className="component" />;
 
 const TogglingComp = withDefaultToggling('adopsjon', [aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD])(TestComp);
 
@@ -19,22 +17,24 @@ describe('HOC: withDefaultToggling', () => {
       id: 1,
       definisjon: {
         kode: aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
-        navn: 'test',
+        kodeverk: 'test',
       },
       status: {
         kode: aksjonspunktStatus.OPPRETTET,
-        navn: 'test',
+        kodeverk: 'test',
       },
       kanLoses: true,
       erAktivt: true,
     };
     const toggleCallback = sinon.spy();
-    const wrapper = mount(<TogglingComp
-      aksjonspunkter={[aksjonspunkt]}
-      toggleInfoPanelCallback={toggleCallback}
-      shouldOpenDefaultInfoPanels
-      readOnly={false}
-    />);
+    const wrapper = mount(
+      <TogglingComp
+        aksjonspunkter={[aksjonspunkt]}
+        toggleInfoPanelCallback={toggleCallback}
+        shouldOpenDefaultInfoPanels
+        readOnly={false}
+      />,
+    );
 
     expect(toggleCallback).to.have.property('callCount', 1);
     const { args } = toggleCallback.getCalls()[0];
@@ -43,6 +43,7 @@ describe('HOC: withDefaultToggling', () => {
 
     const newTestComp = wrapper.find('TestComp');
     expect(newTestComp).to.have.length(1);
+    // eslint-disable-next-line no-unused-expressions
     expect(newTestComp.prop('hasOpenAksjonspunkter')).is.true;
   });
 
@@ -51,26 +52,29 @@ describe('HOC: withDefaultToggling', () => {
       id: 1,
       definisjon: {
         kode: aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
-        navn: 'test',
+        kodeverk: 'test',
       },
       status: {
         kode: aksjonspunktStatus.AVBRUTT,
-        navn: 'test',
+        kodeverk: 'test',
       },
       kanLoses: true,
       erAktivt: true,
     };
     const toggleCallback = sinon.spy();
-    const wrapper = mount(<TogglingComp
-      aksjonspunkter={[aksjonspunkt]}
-      toggleInfoPanelCallback={toggleCallback}
-      shouldOpenDefaultInfoPanels
-      readOnly={false}
-    />);
+    const wrapper = mount(
+      <TogglingComp
+        aksjonspunkter={[aksjonspunkt]}
+        toggleInfoPanelCallback={toggleCallback}
+        shouldOpenDefaultInfoPanels
+        readOnly={false}
+      />,
+    );
 
     expect(toggleCallback).to.have.property('callCount', 0);
     const newTestComp = wrapper.find('TestComp');
     expect(newTestComp).to.have.length(1);
+    // eslint-disable-next-line no-unused-expressions
     expect(newTestComp.prop('hasOpenAksjonspunkter')).is.false;
   });
 });

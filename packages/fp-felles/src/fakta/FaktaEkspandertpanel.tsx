@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactChild } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
@@ -7,7 +6,6 @@ import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import styles from './faktaEkspandertpanel.less';
-
 
 /**
  * FaktaEkspandertpanel
@@ -30,7 +28,7 @@ const FaktaEkspandertpanel = ({
   disabledTextCode,
   ekstraClass,
   children,
-}) => {
+}: FaktaEkspandertpanelProps) => {
   if (disabled && disabledTextCode) {
     return (
       <Panel className={styles.disabledPanel}>
@@ -43,7 +41,11 @@ const FaktaEkspandertpanel = ({
 
   return (
     <EkspanderbartpanelPure
-      className={hasOpenAksjonspunkter && !readOnly ? classNames('statusAksjonspunkt', `aksjonspunkt--${faktaId}`, ekstraClass) : styles.statusOk}
+      className={
+        hasOpenAksjonspunkter && !readOnly
+          ? classNames('statusAksjonspunkt', `aksjonspunkt--${faktaId}`, ekstraClass)
+          : styles.statusOk
+      }
       tittel={title}
       tag="h2"
       apen={isInfoPanelOpen}
@@ -54,30 +56,23 @@ const FaktaEkspandertpanel = ({
   );
 };
 
-FaktaEkspandertpanel.propTypes = {
+interface FaktaEkspandertpanelProps {
   /**
    * Tittel på faktapanelet
    */
-  title: PropTypes.node.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  isInfoPanelOpen: PropTypes.bool,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
+  title: string;
+  hasOpenAksjonspunkter: boolean;
+  isInfoPanelOpen?: boolean;
+  toggleInfoPanelCallback: (faktaId: string) => void;
   /**
    * Indikerer faktatype. For eksempel 'medlemskapsvilkaret'
    */
-  faktaId: PropTypes.string.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  disabled: PropTypes.bool,
-  disabledTextCode: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-  ekstraClass: PropTypes.string,
-};
-
-FaktaEkspandertpanel.defaultProps = {
-  isInfoPanelOpen: false,
-  disabled: false,
-  disabledTextCode: undefined,
-  ekstraClass: undefined,
-};
+  faktaId: string;
+  readOnly: boolean;
+  disabled?: boolean;
+  disabledTextCode?: string;
+  children: ReactChild;
+  ekstraClass?: string;
+}
 
 export default FaktaEkspandertpanel;
