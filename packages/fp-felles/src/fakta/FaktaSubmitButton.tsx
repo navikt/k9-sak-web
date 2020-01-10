@@ -57,9 +57,9 @@ interface FaktaSubmitButtonProps {
   buttonTextId?: string;
   isReadOnly: boolean;
   isSubmittable: boolean;
-  isSubmitting: boolean;
-  isDirty: boolean;
-  hasEmptyRequiredFields: boolean;
+  isSubmitting?: boolean;
+  isDirty?: boolean;
+  hasEmptyRequiredFields?: boolean;
   hasOpenAksjonspunkter: boolean;
   onClick?: () => void;
   formName?: string;

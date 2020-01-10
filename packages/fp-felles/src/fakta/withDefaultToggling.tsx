@@ -10,7 +10,11 @@ const checkIfAksjonspunkterIsSolveable = (aksjonspunkter: Aksjonspunkt[]) => aks
 
 const isInactiv = (aksjonspunkter: Aksjonspunkt[]) => !aksjonspunkter.some(a => a.erAktivt);
 
-const withDefaultToggling = (infoPanelId, aksjonspunktCodes, skalKunneOverstyre = false) => WrappedComponent => {
+const withDefaultToggling = (
+  infoPanelId: string,
+  aksjonspunktCodes: string[],
+  skalKunneOverstyre = false,
+) => WrappedComponent => {
   class InfoPanel extends React.Component<InfoPanelProps> {
     static displayName = `InfoPanel(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
 
