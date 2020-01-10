@@ -156,20 +156,6 @@ export const FaktaPanel = ({
           </>
         )}
       />
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={vergeData}
-        showComponent // FIX
-        render={props => (
-          <MedisinskVilkarFaktaIndex
-            readOnly={readOnly}
-            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-            submitCallback={submitCallback}
-            openInfoPanels={openInfoPanels}
-            {...props}
-          />
-        )}
-      />
 
       <DataFetcherWithCache
         behandlingVersjon={1}
@@ -185,6 +171,21 @@ export const FaktaPanel = ({
       >
         {/*  TODO: bruker nå feil data, bruk riktig når endepunkt er klart */}
       </DataFetcherWithCache>
+
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={vergeData}
+        showComponent // FIX
+        render={props => (
+          <MedisinskVilkarFaktaIndex
+            readOnly={readOnly}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            openInfoPanels={openInfoPanels}
+            {...props}
+          />
+        )}
+      />
 
       <DataFetcherWithCache
         behandlingVersjon={1}
