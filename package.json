@@ -19,7 +19,6 @@
     "lerna:publish": "(lerna updated && lerna publish --cd-version patch --yes -m \"publish [ci skip]\") || echo \"Ingen endringer avslutter OK\"",
     "less:lint": "stylelint \"packages/**/*.less\"",
     "ts-check": "tsc --pretty",
-    "doc": "react-asciidoc-generator ./packages/ -o ../../docs/generated/react.adoc --handlebar-template src/docs/asciidoc-template.handlebars",
     "up": "docker-compose up -d --remove-orphans --build",
     "down": "docker-compose down",
     "lint": "./node_modules/.bin/eslint ./packages/**/*.jsx",

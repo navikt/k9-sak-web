@@ -11,7 +11,7 @@ import AvregningProsessIndex from './AvregningProsessIndex';
 
 describe('<AvregningProsessIndex>', () => {
   const fagsak = {
-    saksnummer: 123,
+    saksnummer: '123',
     ytelseType: {
       kode: fagsakYtelseType.FORELDREPENGER,
     },
@@ -25,26 +25,30 @@ describe('<AvregningProsessIndex>', () => {
     },
   };
 
-  const aksjonspunkter = [{
-    definisjon: {
-      kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+  const aksjonspunkter = [
+    {
+      definisjon: {
+        kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+      },
+      begrunnelse: 'test',
     },
-    begrunnelse: 'test',
-  }];
+  ];
 
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallow(<AvregningProsessIndex
-      fagsak={fagsak}
-      behandling={behandling}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={sinon.spy()}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen
-      previewCallback={sinon.spy()}
-      featureToggles={{}}
-    />);
+    const wrapper = shallow(
+      <AvregningProsessIndex
+        fagsak={fagsak}
+        behandling={behandling}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={sinon.spy()}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        apCodes={[]}
+        isApOpen
+        previewCallback={sinon.spy()}
+        featureToggles={{}}
+      />,
+    );
     expect(wrapper.find(AvregningPanel)).has.length(1);
   });
 });
