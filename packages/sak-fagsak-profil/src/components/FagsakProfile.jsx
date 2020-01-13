@@ -12,7 +12,7 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import styles from './fagsakProfile.less';
 
-const hasLink = (link) => link && link.saksnr && link.saksnr.verdi && link.behandlingId;
+const hasLink = link => link && link.saksnr && link.saksnr.verdi && link.behandlingId;
 
 const visSakDekningsgrad = (saksKode, dekningsgrad) => {
   const erForeldrepenger = saksKode === fagsakYtelseType.FORELDREPENGER;
@@ -45,18 +45,14 @@ export const FagsakProfile = ({
       <Row>
         <Column xs="6">
           <div className={styles.bottomMargin}>
-            <Systemtittel>
-              Pleiepenger
-            </Systemtittel>
+            <Systemtittel>{getKodeverknavn(sakstype)}</Systemtittel>
             {visSakDekningsgrad(sakstype.kode, dekningsgrad) && (
               <EtikettInfo title={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}>
                 {`${dekningsgrad}%`}
               </EtikettInfo>
             )}
           </div>
-          <Normaltekst>
-            {`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}
-          </Normaltekst>
+          <Normaltekst>{`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}</Normaltekst>
         </Column>
         <Column xs="6">
           <div className={styles.floatRight}>

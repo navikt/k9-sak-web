@@ -8,10 +8,9 @@ import FagsakSearch from './FagsakSearch';
 import FagsakList from './FagsakList';
 import SearchForm from './SearchForm';
 
-
 describe('<FagsakSearch>', () => {
   const fagsak = {
-    saksnummer: 12345,
+    saksnummer: '12345',
     sakstype: {
       navn: 'Engangsstonad',
       kode: 'TEST',
@@ -34,15 +33,17 @@ describe('<FagsakSearch>', () => {
 
   it('skal kun vise søkefelt før søk er startet', () => {
     const searchFagsakFunction = sinon.spy();
-    const wrapper = shallow(<FagsakSearch
-      fagsaker={[]}
-      searchFagsakCallback={searchFagsakFunction}
-      searchResultReceived={false}
-      selectFagsakCallback={sinon.spy()}
-      spinner
-      searchStarted
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <FagsakSearch
+        fagsaker={[]}
+        searchFagsakCallback={searchFagsakFunction}
+        searchResultReceived={false}
+        selectFagsakCallback={sinon.spy()}
+        spinner
+        searchStarted
+        alleKodeverk={{}}
+      />,
+    );
 
     const searchComp = wrapper.find(SearchForm);
     expect(searchComp).to.have.length(1);
@@ -52,15 +53,17 @@ describe('<FagsakSearch>', () => {
   });
 
   it('skal vise søkefelt og label for ingen søketreff når ingen fagsaker blir hentet', () => {
-    const wrapper = shallow(<FagsakSearch
-      fagsaker={[]}
-      searchFagsakCallback={sinon.spy()}
-      searchResultReceived
-      selectFagsakCallback={sinon.spy()}
-      spinner
-      searchStarted
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <FagsakSearch
+        fagsaker={[]}
+        searchFagsakCallback={sinon.spy()}
+        searchResultReceived
+        selectFagsakCallback={sinon.spy()}
+        spinner
+        searchStarted
+        alleKodeverk={{}}
+      />,
+    );
 
     expect(wrapper.find(SearchForm)).to.have.length(1);
     const labelComp = wrapper.find('Normaltekst');
@@ -71,15 +74,17 @@ describe('<FagsakSearch>', () => {
   it('skal vise søkefelt og søketreff der person og to fagsaker blir vist', () => {
     const searchFagsakFunction = sinon.spy();
     const selectFagsakFunction = sinon.spy();
-    const wrapper = shallow(<FagsakSearch
-      fagsaker={[fagsak, fagsak]}
-      searchFagsakCallback={searchFagsakFunction}
-      searchResultReceived
-      selectFagsakCallback={selectFagsakFunction}
-      spinner
-      searchStarted
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <FagsakSearch
+        fagsaker={[fagsak, fagsak]}
+        searchFagsakCallback={searchFagsakFunction}
+        searchResultReceived
+        selectFagsakCallback={selectFagsakFunction}
+        spinner
+        searchStarted
+        alleKodeverk={{}}
+      />,
+    );
 
     expect(wrapper.find(SearchForm)).to.have.length(1);
     expect(wrapper.find('Label')).to.have.length(0);

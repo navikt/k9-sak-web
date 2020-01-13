@@ -25,7 +25,7 @@ const LegendBox = ({ legends }) => (
 LegendBox.propTypes = {
   legends: PropTypes.arrayOf(
     PropTypes.shape({
-      src: PropTypes.string.isRequired,
+      src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
       text: PropTypes.string.isRequired,
     }),
   ).isRequired,
