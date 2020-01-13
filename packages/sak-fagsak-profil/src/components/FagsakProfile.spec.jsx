@@ -12,17 +12,20 @@ import { FagsakProfile } from './FagsakProfile';
 
 describe('<FagsakProfile>', () => {
   const alleKodeverk = {
-    [kodeverkTyper.FAGSAK_YTELSE]: [{
-      kode: 'ES',
-      navn: 'Engangsstønad',
-      kodeverk: 'FAGSAK_YTELSE',
-    },
+    [kodeverkTyper.FAGSAK_YTELSE]: [
+      {
+        kode: 'ES',
+        navn: 'Engangsstønad',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
     ],
-    [kodeverkTyper.FAGSAK_STATUS]: [{
-      kode: 'OPPR',
-      navn: 'Opprettet',
-      kodeverk: 'FAGSAK_STATUS',
-    }],
+    [kodeverkTyper.FAGSAK_STATUS]: [
+      {
+        kode: 'OPPR',
+        navn: 'Opprettet',
+        kodeverk: 'FAGSAK_STATUS',
+      },
+    ],
   };
 
   it('skal vise en fagsak med tilhørende informasjon', () => {
@@ -34,24 +37,26 @@ describe('<FagsakProfile>', () => {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
     };
-    const wrapper = shallowWithIntl(<FagsakProfile
-      saksnummer={12345}
-      sakstype={sakstype}
-      fagsakStatus={status}
-      toggleShowAll={sinon.spy()}
-      alleKodeverk={alleKodeverk}
-      createLink={() => 'lenke'}
-      renderBehandlingMeny={sinon.spy()}
-      renderBehandlingVelger={sinon.spy()}
-      annenPartLink={{
-        saksnr: {
-          verdi: 9876,
-        },
-        behandlingId: 123,
-      }}
-      dekningsgrad={100}
-      intl={intlMock}
-    />);
+    const wrapper = shallowWithIntl(
+      <FagsakProfile
+        saksnummer="12345"
+        sakstype={sakstype}
+        fagsakStatus={status}
+        toggleShowAll={sinon.spy()}
+        alleKodeverk={alleKodeverk}
+        createLink={() => 'lenke'}
+        renderBehandlingMeny={sinon.spy()}
+        renderBehandlingVelger={sinon.spy()}
+        annenPartLink={{
+          saksnr: {
+            verdi: 9876,
+          },
+          behandlingId: 123,
+        }}
+        dekningsgrad={100}
+        intl={intlMock}
+      />,
+    );
 
     const systemtittel = wrapper.find(Systemtittel);
     expect(systemtittel).to.have.length(1);

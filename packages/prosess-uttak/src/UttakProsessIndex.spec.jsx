@@ -11,7 +11,7 @@ import UttakProsessIndex from './UttakProsessIndex';
 
 describe('<UttakProsessIndex>', () => {
   const fagsak = {
-    saksnummer: 123,
+    saksnummer: '123',
     ytelseType: {
       kode: fagsakYtelseType.FORELDREPENGER,
     },
@@ -122,37 +122,41 @@ describe('<UttakProsessIndex>', () => {
     },
   };
 
-  const aksjonspunkter = [{
-    definisjon: {
-      kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+  const aksjonspunkter = [
+    {
+      definisjon: {
+        kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+      },
+      status: {
+        kode: '1',
+        kodeverk: '1',
+      },
     },
-    status: {
-      kode: '1',
-      kodeverk: '1',
-    },
-  }];
+  ];
 
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallow(<UttakProsessIndex
-      fagsak={fagsak}
-      behandling={behandling}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={sinon.spy()}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen
-      uttakStonadskontoer={{}}
-      soknad={{}}
-      familiehendelse={{}}
-      uttaksresultatPerioder={uttaksresultatPerioder}
-      personopplysninger={{}}
-      alleKodeverk={{}}
-      employeeHasAccess
-      tempUpdateStonadskontoer={sinon.spy()}
-      uttakPeriodeGrense={{}}
-      ytelsefordeling={{}}
-    />);
+    const wrapper = shallow(
+      <UttakProsessIndex
+        fagsak={fagsak}
+        behandling={behandling}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={sinon.spy()}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        apCodes={[]}
+        isApOpen
+        uttakStonadskontoer={{}}
+        soknad={{}}
+        familiehendelse={{}}
+        uttaksresultatPerioder={uttaksresultatPerioder}
+        personopplysninger={{}}
+        alleKodeverk={{}}
+        employeeHasAccess
+        tempUpdateStonadskontoer={sinon.spy()}
+        uttakPeriodeGrense={{}}
+        ytelsefordeling={{}}
+      />,
+    );
     expect(wrapper.find(UttakPanel)).has.length(1);
   });
 });

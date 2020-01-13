@@ -30,12 +30,12 @@ jobs:
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
       - name: Tester og linting
-        run: yarn less:lint
+        run: yarn test && yarn less:lint
       - name: Bygge dist
         run: yarn build
       - name: Sette Docker-navn og -tag
         env:
-          DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/k9-sak-frontend
+          DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/k9-sak-web
         run: |
           echo $DOCKER_IMAGE > .docker_image
           echo "$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)" > .docker_tag
