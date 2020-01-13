@@ -183,6 +183,7 @@ export const FaktaPanel = ({
             shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
             submitCallback={submitCallback}
             openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
             {...props}
           />
         )}
