@@ -4,7 +4,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { FieldArrayFieldsProps, FieldArrayMetaProps, WrappedFieldArrayProps } from 'redux-form';
+import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Image from './Image';
 import styles from './periodFieldArray.less';
 import VerticalSpacer from './VerticalSpacer';
@@ -91,16 +91,18 @@ const PeriodFieldArray = ({
 );
 
 interface EmptyPeriodTemplate {
-  periodeFom: string;
-  periodeTom: string;
+  periodeFom?: string;
+  periodeTom?: string;
+  fom?: string;
+  tom?: string;
 }
 
-interface PeriodFieldArrayProps extends WrappedFieldArrayProps {
+interface PeriodFieldArrayProps {
   intl: IntlShape;
   children: (
     periodeElementFieldId: string,
     index: number,
-    getRemoveButton: (index: number, fields: FieldArrayFieldsProps<any>) => JSX.Element,
+    getRemoveButton: (index?: number, fields?: FieldArrayFieldsProps<any>) => JSX.Element,
   ) => void;
   readOnly?: boolean;
   titleTextCode?: string;
@@ -108,6 +110,8 @@ interface PeriodFieldArrayProps extends WrappedFieldArrayProps {
   emptyPeriodTemplate?: EmptyPeriodTemplate;
   shouldShowAddButton?: boolean;
   createAddButtonInsteadOfImageLink?: boolean;
+  meta?: FieldArrayMetaProps;
+  fields: FieldArrayFieldsProps<any>;
 }
 
 PeriodFieldArray.defaultProps = {
