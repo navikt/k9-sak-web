@@ -23,17 +23,17 @@ const MedisinskVilkarPanel: React.FunctionComponent<MedisinskVilkarPanelProps> =
   submitCallback,
   intl,
   submittable,
+  openInfoPanels,
 }: // hasOpenAksjonspunkter,
-// openInfoPanels,
 MedisinskVilkarPanelProps) => {
   const props = { readOnly: false, submitCallback, behandlingId: behandling.id, behandlingVersjon: behandling.versjon }; // TODO readOnly skal sendes videre
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'MedisinskVilkarPanel.MedisinskVilkar' })}
       hasOpenAksjonspunkter // TODO ={hasOpenAksjonspunkter}
-      isInfoPanelOpen // TODO ={openInfoPanels.includes(faktaPanelCodes.MEDLEMSKAPSVILKARET)} sett riktig faktaPanelCode
+      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.MEDISINSKVILKAAR)} // sett riktig faktaPanelCode
       toggleInfoPanelCallback={toggleInfoPanelCallback}
-      faktaId="123" // TODO sett riktig faktaPanelCode
+      faktaId={faktaPanelCodes.MEDISINSKVILKAAR} // TODO sett riktig faktaPanelCode
       readOnly={readOnly}
     >
       <MedisinskVilkarForm
