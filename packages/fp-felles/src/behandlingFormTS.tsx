@@ -1,29 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createSelector } from 'reselect';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import React, { ComponentType } from 'react';
 import { connect } from 'react-redux';
 import {
-  reduxForm,
   formValueSelector,
-  isDirty,
-  getFormSyncErrors,
-  isSubmitting,
-  getFormValues,
   getFormInitialValues,
+  getFormSyncErrors,
+  getFormValues,
+  InjectedFormProps,
+  isDirty,
+  isSubmitting,
+  reduxForm,
 } from 'redux-form';
-
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { createSelector } from 'reselect';
 import requireProps from './requireProps';
 
-export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) =>
+export const getBehandlingFormPrefix = (behandlingId: number, behandlingVersjon: number) =>
   `behandling_${behandlingId}_v${behandlingVersjon}`;
-export const getBehandlingFormName = (behandlingId, behandlingVersjon, form) =>
+export const getBehandlingFormName = (behandlingId: number, behandlingVersjon: number, form: string) =>
   `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${form}`;
 
 interface BehandlingFormProps {
   behandlingId: number;
   behandlingVersjon: number;
   behandlingFormName: string;
+  form?: string;
 }
 
 /**
@@ -32,7 +32,9 @@ interface BehandlingFormProps {
  * Higher-order component som lager forms innen konteksten av en gitt behandling. BehandlingIndex har ansvaret for å styre livssyklusen til disse skjemaene.
  * @see BehandlingIndex
  */
-export const behandlingForm = (config: { form?: any } = {}) => WrappedComponent => {
+export const behandlingForm = (config: { form?: string } = {}) => (
+  WrappedComponent: ComponentType<InjectedFormProps>,
+) => {
   const { form, ...reduxFormConfig } = config;
   // Default configuration lets BehandlingIndex manage the lifecycle of the forms
   const defaultReduxFormConfig = {
@@ -48,13 +50,13 @@ export const behandlingForm = (config: { form?: any } = {}) => WrappedComponent 
     <FormComponent {...otherProps} key={behandlingFormName} form={behandlingFormName} />
   );
 
-  WithBehandlingForm.propTypes = {
-    behandlingId: PropTypes.number.isRequired,
-    behandlingVersjon: PropTypes.number.isRequired,
-    behandlingFormName: PropTypes.string.isRequired,
-  };
+  // WithBehandlingForm.propTypes = {
+  //   behandlingId: PropTypes.number.isRequired,
+  //   behandlingVersjon: PropTypes.number.isRequired,
+  //   behandlingFormName: PropTypes.string.isRequired,
+  // };
 
-  const mapStateToProps = (state, ownProps) => ({
+  const mapStateToProps = (state, ownProps: BehandlingFormProps) => ({
     behandlingFormName: getBehandlingFormName(ownProps.behandlingId, ownProps.behandlingVersjon, form || ownProps.form),
   });
 
@@ -63,29 +65,40 @@ export const behandlingForm = (config: { form?: any } = {}) => WrappedComponent 
   );
 };
 
-const getFormName = (formName, behandlingId, behandlingVersjon) =>
-  behandlingId && behandlingVersjon ? getBehandlingFormName(behandlingId, behandlingVersjon, formName) : {};
+const getFormName = (formName: string, behandlingId: number, behandlingVersjon: number) =>
+  behandlingId && behandlingVersjon ? getBehandlingFormName(behandlingId, behandlingVersjon, formName) : '';
 
-export const behandlingFormValueSelector = (formName, behandlingId, behandlingVersjon) => (state, ...fieldNames) =>
-  formValueSelector(getFormName(formName, behandlingId, behandlingVersjon))(state, ...fieldNames);
+export const behandlingFormValueSelector = (formName: string, behandlingId: number, behandlingVersjon: number) => (
+  state,
+  ...fieldNames
+) => formValueSelector(getFormName(formName, behandlingId, behandlingVersjon))(state, ...fieldNames);
 
-export const isBehandlingFormDirty = (formName, behandlingId, behandlingVersjon) => state =>
+export const isBehandlingFormDirty = (formName: string, behandlingId: number, behandlingVersjon: number) => state =>
   isDirty(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
-export const isBehandlingFormSubmitting = (formName, behandlingId, behandlingVersjon) => state =>
-  isSubmitting(getFormName(formName, behandlingId, behandlingVersjon))(state);
+export const isBehandlingFormSubmitting = (
+  formName: string,
+  behandlingId: number,
+  behandlingVersjon: number,
+) => state => isSubmitting(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
-export const getBehandlingFormValues = (formName, behandlingId, behandlingVersjon) => state =>
+export const getBehandlingFormValues = (formName: string, behandlingId: number, behandlingVersjon: number) => state =>
   getFormValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
-export const getBehandlingFormInitialValues = (formName, behandlingId, behandlingVersjon) => state =>
-  getFormInitialValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
+export const getBehandlingFormInitialValues = (
+  formName: string,
+  behandlingId: number,
+  behandlingVersjon: number,
+) => state => getFormInitialValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
-export const getBehandlingFormSyncErrors = (formName, behandlingId, behandlingVersjon) => state =>
-  getFormSyncErrors(getFormName(formName, behandlingId, behandlingVersjon))(state);
+export const getBehandlingFormSyncErrors = (
+  formName: string,
+  behandlingId: number,
+  behandlingVersjon: number,
+) => state => getFormSyncErrors(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
 const getFormState = state => state.form;
-export const getBehandlingFormRegisteredFields = (formName, behandlingId, behandlingVersjon) =>
+export const getBehandlingFormRegisteredFields = (formName: string, behandlingId: number, behandlingVersjon: number) =>
   createSelector([getFormState], (formState = {}) => {
     const behandlingFormId = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     return formState[behandlingFormId] && formState[behandlingFormId][formName]
@@ -93,7 +106,8 @@ export const getBehandlingFormRegisteredFields = (formName, behandlingId, behand
       : {};
   });
 
-const traverseAndFindValue = (error, idParts) => idParts.reduce((o, i) => (o[i] ? o[i] : []), error);
+const traverseAndFindValue = (error: { [x: string]: string }, idParts: any[]) =>
+  idParts.reduce((o, i) => (o[i] ? o[i] : []), error);
 
 export const hasBehandlingFormErrorsOfType = (formName, behandlingId, behandlingVersjon, errorMsg) =>
   createSelector(
