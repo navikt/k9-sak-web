@@ -10,7 +10,7 @@ import FagsakSearchIndex, { getSearchFagsakerAccessDenied } from './FagsakSearch
 
 describe('<FagsakSearchIndex>', () => {
   const fagsak = {
-    saksnummer: 12345,
+    saksnummer: '12345',
     sakstype: {
       kode: 'ES',
       navn: 'test',
@@ -30,18 +30,20 @@ describe('<FagsakSearchIndex>', () => {
     opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
     dekningsgrad: 100,
   };
-  const fagsaker = [fagsak, { ...fagsak, saksnummer: 23456 }];
+  const fagsaker = [fagsak, { ...fagsak, saksnummer: '23456' }];
 
   it('skal sette opp søkeskjermbilde for fagsaker', () => {
-    const wrapper = shallowWithIntl(<FagsakSearchIndex.WrappedComponent
-      fagsaker={fagsaker}
-      push={sinon.spy()}
-      searchFagsaker={sinon.spy()}
-      searchResultReceived={false}
-      searchStarted
-      resetFagsakSearch={sinon.spy()}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <FagsakSearchIndex.WrappedComponent
+        fagsaker={fagsaker}
+        push={sinon.spy()}
+        searchFagsaker={sinon.spy()}
+        searchResultReceived={false}
+        searchStarted
+        resetFagsakSearch={sinon.spy()}
+        alleKodeverk={{}}
+      />,
+    );
 
     const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
     expect(fagsakSearchIndex).to.have.length(1);
@@ -50,15 +52,17 @@ describe('<FagsakSearchIndex>', () => {
 
   it('skal gå til valgt fagsak', () => {
     const pushCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<FagsakSearchIndex.WrappedComponent
-      fagsaker={fagsaker}
-      push={pushCallback}
-      searchFagsaker={sinon.spy()}
-      searchResultReceived={false}
-      searchStarted
-      resetFagsakSearch={sinon.spy()}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <FagsakSearchIndex.WrappedComponent
+        fagsaker={fagsaker}
+        push={pushCallback}
+        searchFagsaker={sinon.spy()}
+        searchResultReceived={false}
+        searchStarted
+        resetFagsakSearch={sinon.spy()}
+        alleKodeverk={{}}
+      />,
+    );
 
     const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
     fagsakSearchIndex.prop('selectFagsakCallback')('', fagsak.saksnummer);
@@ -71,14 +75,16 @@ describe('<FagsakSearchIndex>', () => {
 
   it('skal gå direkte til fagsak når søkeresultatet returnerer kun en fagsak', () => {
     const pushCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<FagsakSearchIndex.WrappedComponent
-      push={pushCallback}
-      searchFagsaker={sinon.spy()}
-      searchResultReceived={false}
-      searchStarted
-      resetFagsakSearch={sinon.spy()}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <FagsakSearchIndex.WrappedComponent
+        push={pushCallback}
+        searchFagsaker={sinon.spy()}
+        searchResultReceived={false}
+        searchStarted
+        resetFagsakSearch={sinon.spy()}
+        alleKodeverk={{}}
+      />,
+    );
 
     wrapper.setProps({
       fagsaker: [fagsak],
@@ -95,14 +101,16 @@ describe('<FagsakSearchIndex>', () => {
 
   it('skal ikke gå direkte til fagsak når søkeresultatet returnerer flere fagsaker', () => {
     const pushCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<FagsakSearchIndex.WrappedComponent
-      push={pushCallback}
-      searchFagsaker={sinon.spy()}
-      searchResultReceived={false}
-      searchStarted
-      resetFagsakSearch={sinon.spy()}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <FagsakSearchIndex.WrappedComponent
+        push={pushCallback}
+        searchFagsaker={sinon.spy()}
+        searchResultReceived={false}
+        searchStarted
+        resetFagsakSearch={sinon.spy()}
+        alleKodeverk={{}}
+      />,
+    );
 
     wrapper.setProps({
       fagsaker,
