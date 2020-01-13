@@ -14,6 +14,10 @@ jobs:
     steps:
       - name: Hente kode
         uses: actions/checkout@v1
+      - name: Sette opp Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
       - name: Get yarn cache
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -26,10 +30,6 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-      - name: Sette opp Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
       - name: Tester og linting
