@@ -109,10 +109,6 @@ module.exports = async ({ config, mode }) => {
       include: [CSS_DIR, CORE_DIR],
     },
     {
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    },
-    {
       test: /\.(jpg|png|svg)$/,
       loader: 'file-loader',
       options: {

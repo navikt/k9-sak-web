@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import Table from '@fpsak-frontend/shared-components/src/table/Table';
-import { ReactComponent as CheckSvg } from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import checkSvg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import Image from '@fpsak-frontend/shared-components/src/Image';
 import TableRow from '@fpsak-frontend/shared-components/src/table/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/src/table/TableColumn';
 import { useIntl } from 'react-intl';
@@ -29,7 +30,7 @@ const SokerinfoTable: FunctionComponent<SokerinfoTableProps> = ({ header, forhol
         <>
           <span className={styles.tableheader}>
             {/* TODO: Riktig src ihht skisse. src for ikke alle forhold oppfylt? */}
-            <CheckSvg />
+            <Image src={checkSvg} />
             <span>{header}</span>
           </span>
         </>,

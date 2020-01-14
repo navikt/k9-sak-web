@@ -62,7 +62,6 @@
     "@storybook/react": "^5.2.6",
     "@storybook/storybook-deployer": "^2.8.1",
     "@storybook/theming": "^5.2.6",
-    "@svgr/webpack": "^5.0.1",
     "@types/chai": "^4.2.5",
     "@types/classnames": "^2.2.8",
     "@types/enzyme": "^3.9.3",
