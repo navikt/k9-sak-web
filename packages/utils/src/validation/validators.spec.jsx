@@ -421,6 +421,7 @@ describe('Validators', () => {
   describe('hasValidText', () => {
     it('skal ikke feile når tekst ikke har ugyldig tegn', () => {
       const result = hasValidText(
+        // eslint-disable-next-line no-useless-concat
         'Hei hei\n' + 'Áá Čč Đđ Ŋŋ Šš Ŧŧ Žž Ää Ææ Øø Åå\n' + 'Lorem + ipsum_dolor, - (sit) amet?! 100%: §2&3="I\'m";',
       );
       expect(result).is.null;
@@ -436,6 +437,7 @@ describe('Validators', () => {
 
   describe('hasValidName', () => {
     it('skal ikke feile når navn ikke har ugyldig tegn', () => {
+      // eslint-disable-next-line no-useless-concat
       const result = hasValidName('Navn navn' + 'Áá Čč Đđ Ŋŋ Šš Ŧŧ Žž Ää Ææ Øø Åå' + " - . ' ");
       expect(result).is.null;
     });
