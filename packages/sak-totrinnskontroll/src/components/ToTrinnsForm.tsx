@@ -6,6 +6,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import {BehandlingKlageVurdering, BehandlingStatusType} from '@fpsak-frontend/types';
 import { InjectedFormProps } from 'redux-form';
 
 import ApprovalField from './ApprovalField';
@@ -15,8 +16,7 @@ import { Approvals } from './ApprovalPanel';
 import {
   TotrinnskontrollAksjonspunkter,
   KlageVuderingResultat,
-  BehandlingKlageVurdering,
-  BehandlingStatusType,
+
 } from '../TotrinnskontrollSakIndex';
 
 const allApproved = (formState: FormState[]) =>
@@ -166,6 +166,6 @@ const mapStateToProps = (state: any, ownProps: { behandlingId: string, behandlin
 });
 const ToTrinnsForm = behandlingForm({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
 
-ToTrinnsForm.formName = formName;
+(ToTrinnsForm as any).formName = formName;
 
 export default ToTrinnsForm;

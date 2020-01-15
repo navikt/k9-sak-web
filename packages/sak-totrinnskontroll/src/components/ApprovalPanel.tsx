@@ -5,16 +5,17 @@ import { FormattedMessage } from 'react-intl';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
+import { BehandlingStatusType } from '@fpsak-frontend/types';
+import { TotrinnskontrollAksjonspunkter, SkjermlenkeTyper } from '../TotrinnskontrollSakIndex';
 
 import ToTrinnsForm from './ToTrinnsForm';
 
 import styles from './approvalPanel.less';
-import { TotrinnskontrollAksjonspunkter, BehandlingStatusType, SkjemalenkeTyper } from '../TotrinnskontrollSakIndex';
 
 export const mapPropsToContext = (
   toTrinnsBehandling: boolean,
   props: ApprovalPanelProps,
-  skjemalenkeTyper: SkjemalenkeTyper[],
+  skjemalenkeTyper: SkjermlenkeTyper[],
 ) => {
   if (toTrinnsBehandling) {
     let skjermlenkeContext;
@@ -129,7 +130,7 @@ interface ApprovalPanelProps {
   behandlingStatus: BehandlingStatusType;
   toTrinnsBehandling: boolean;
   location: object;
-  skjemalenkeTyper: SkjemalenkeTyper[];
+  skjemalenkeTyper: SkjermlenkeTyper[];
   onSubmit: () => void;
   readOnly: boolean;
   forhandsvisVedtaksbrev: () => void;

@@ -4,12 +4,12 @@ import { ElementWrapper, Image } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import {FormattedMessage, injectIntl, IntlShape} from 'react-intl';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { BehandlingKlageVurdering, BehandlingStatusType } from '../TotrinnskontrollSakIndex';
-import { Aksjonspunkt, getAksjonspunktTextSelector } from './ApprovalTextUtils';
-import styles from './ToTrinnsFormReadOnly.less';
+import { BehandlingKlageVurdering, BehandlingStatusType } from '@fpsak-frontend/types';
+import { Aksjonspunkt, getAksjonspunktTextSelector } from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
+import styles from '@fpsak-frontend/sak-totrinnskontroll/src/components/ToTrinnsFormReadOnly.less';
 
 /*
  * ToTrinnsFormReadOnly
@@ -74,10 +74,25 @@ const renderAksjonspunkt = (
   </div>
 );
 
-export const TilbakemeldingerFraTotrinnskontroll = ({
+interface TilbakemeldingerFraTotrinnskontrollProps {
+  approvalList: { contextCode: string, skjermlenke: string, skjermlenkeNavn: string, aksjonspunkter: Aksjonspunkt[] }[];
+  isForeldrepengerFagsak: boolean;
+  behandlingKlageVurdering?: BehandlingKlageVurdering;
+  behandlingStatus: BehandlingStatusType;
+  alleKodeverk: object;
+}
+
+interface StateProps {
+  getAksjonspunktText?: (aksjonspunkt: Aksjonspunkt) => (JSX.Element | null)[] | null;
+  intl?: IntlShape;
+}
+
+type Props = TilbakemeldingerFraTotrinnskontrollProps & StateProps;
+
+export const TilbakemeldingerFraTotrinnskontroll: React.FunctionComponent<Props> = ({
   approvalList,
   getAksjonspunktText,
-}: ToTrinnsFormReadOnlyImplProps & StateProps) => {
+}) => {
   if (!approvalList || approvalList.length === 0) {
     return null;
   }
@@ -98,21 +113,8 @@ export const TilbakemeldingerFraTotrinnskontroll = ({
   );
 };
 
-interface ToTrinnsFormReadOnlyImplProps {
-  approvalList: { contextCode: string, skjermlenke: string, skjermlenkeNavn: string, aksjonspunkter: Aksjonspunkt[] }[];
-}
-
-interface StateProps {
-  getAksjonspunktText: (aksjonspunkt: Aksjonspunkt) => (JSX.Element | null)[] | null;
-  isForeldrepengerFagsak: boolean;
-  behandlingKlageVurdering?: BehandlingKlageVurdering;
-  behandlingStatus: BehandlingStatusType;
-  alleKodeverk: object;
-  intl: IntlShape;
-}
-
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps): StateProps => ({
   getAksjonspunktText: getAksjonspunktTextSelector(ownProps),
 });
 
-export default connect(mapStateToProps)(injectIntl(TilbakemeldingerFraTotrinnskontroll));
+export default connect(mapStateToProps)(injectIntl(TilbakemeldingerFraTotrinnskontroll as any));

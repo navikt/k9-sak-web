@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
-import { BehandlingKlageVurdering, BehandlingStatusType } from '../TotrinnskontrollSakIndex';
+import { SkjermlenkeTyper } from '@fpsak-frontend/sak-totrinnskontroll/src/TotrinnskontrollSakIndex';
+import { BehandlingKlageVurdering, BehandlingStatusType, TotrinnskontrollAksjonspunkter } from '@fpsak-frontend/types';
 import { TilbakemeldingerFraTotrinnskontroll } from './TilbakemeldingerFraTotrinnskontroll';
+import styles from './approvalPanel.less';
 
 const createApprovalList = (skjermlenkeTyper, location, totrinnskontrollContext) =>
   totrinnskontrollContext.map(context => {
@@ -22,6 +24,9 @@ interface TilbakemeldingerFraTotrinnskontrollContainerProps {
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   behandlingStatus: BehandlingStatusType;
   alleKodeverk: object;
+  location: object;
+  skjermlenkeTyper: SkjermlenkeTyper[];
+  totrinnskontrollContext: TotrinnskontrollAksjonspunkter[];
 }
 
 const TilbakemeldingerFraTotrinnskontrollContainer = ({

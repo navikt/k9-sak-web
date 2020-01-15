@@ -1,5 +1,6 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { BehandlingKlageVurdering, BehandlingStatusType } from '@fpsak-frontend/types';
 
 import ApprovalPanel from './components/ApprovalPanel';
 import messages from '../i18n/nb_NO.json';
@@ -18,7 +19,6 @@ const TotrinnskontrollSakIndex = ({
   behandlingId,
   behandlingVersjon,
   totrinnskontrollSkjermlenkeContext,
-  totrinnskontrollReadOnlySkjermlenkeContext,
   behandlingStatus,
   location,
   readOnly,
@@ -37,7 +37,6 @@ const TotrinnskontrollSakIndex = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-      totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollReadOnlySkjermlenkeContext}
       behandlingStatus={behandlingStatus}
       location={location}
       readOnly={readOnly}
@@ -77,24 +76,13 @@ export interface VurderPaNyttArsaker {
   navn: string;
 }
 
-export interface SkjemalenkeTyper {
+export interface SkjermlenkeTyper {
   kode: string;
   navn: string;
 }
 
-export interface BehandlingStatusType {
-  kode: string;
-}
-
 export interface KlageVuderingResultat {
   klageVurdering: string;
-}
-
-export interface BehandlingKlageVurdering {
-  klageVurdering: string;
-  klageVurderingOmgjoer: string;
-  klageVurderingResultatNFP: KlageVuderingResultat;
-  klageVurderingResultatNK: KlageVuderingResultat;
 }
 
 interface TotrinnskontrollSakIndexProps {
@@ -105,7 +93,7 @@ interface TotrinnskontrollSakIndexProps {
   behandlingStatus: BehandlingStatusType;
   toTrinnsBehandling: boolean;
   location: object;
-  skjemalenkeTyper: SkjemalenkeTyper[];
+  skjemalenkeTyper: SkjermlenkeTyper[];
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   alleKodeverk: object;

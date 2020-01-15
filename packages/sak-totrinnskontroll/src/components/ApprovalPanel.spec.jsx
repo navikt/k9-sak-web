@@ -6,7 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import ToTrinnsForm from './ToTrinnsForm';
-import ToTrinnsFormReadOnly from './TilbakemeldingerFraTotrinnskontroll';
+import ToTrinnsFormReadOnly from '../../../sak-totrinnskontroll-tilbakemeldinger/src/TilbakemeldingerFraTotrinnskontroll';
 import { ApprovalPanel, mapPropsToContext } from './ApprovalPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 

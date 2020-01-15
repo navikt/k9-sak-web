@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { TilbakemeldingerFraTotrinnskontrollContainer } from '@fpsak-frontend/sak-totrinnskontroll-tilbakemeldinger';
 
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
@@ -20,8 +21,7 @@ import styles from './behandlingSupportIndex.less';
 const renderSupportPanel = supportPanel => {
   switch (supportPanel) {
     case supportPanels.RETURNED:
-      // return <TilbakemeldingerFraTotrinnskontroll />;
-      return null;
+      return <TilbakemeldingerFraTotrinnskontrollContainer />;
     case supportPanels.APPROVAL:
       return <Totrinnskontroll />;
     case supportPanels.HISTORY:
