@@ -11146,6 +11146,16 @@ nav-frontend-skjema@1.0.78:
   version "1.0.78"
   resolved "https://registry.npmjs.org/nav-frontend-skjema/-/nav-frontend-skjema-1.0.78.tgz#589cd264b94c79c67b7599bbf56e52ffebd40c74"
 
+nav-frontend-snakkeboble-style@0.2.23:
+  version "0.2.23"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.23.tgz#3880a94df9f94b032afcb4cb3d751209b0723e72"
+  integrity sha512-AY8f3ttUEOvL2zMXyzcVHkJH/uxbuwIWwOpd5s28/fytii6h7nu82J/p16XWDLlrWIobJxJ3PTSe1JnbDE8nfg==
+
+nav-frontend-snakkeboble@1.0.33:
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.33.tgz#daaa25ed8c269334216d1fb18fe8e68a9328e37b"
+  integrity sha512-kOtER0fcXkqZnrfiVqQsM235foi5rHz5e6k9CS0LZwWtwYsAmlV4t45R0jw9eM+i+yWOppKIPcFJGa3LyrDDow==
+
 nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
   resolved "https://registry.npmjs.org/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.5.tgz#c782c63589776e768a45d6049047b1a60b6805be"

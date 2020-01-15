@@ -40,7 +40,7 @@ FEATURE_TOGGLES=my.toggle,my.second.toggle
 ### Overstyr enkeltrute (webpack/mocks/fake-error.js)
 Nyttig for å teste feilsituasjoner. Overstyres som følger:
 ```
-FAKE_ERROR_PATH=/fpsak/api/behandling/person/personopplysninger
+FAKE_ERROR_PATH=/sak/api/behandling/person/personopplysninger
 FAKE_ERROR_CODE=401
 FAKE_ERROR_BODY={"error":"dette fikk galt"}
 ```

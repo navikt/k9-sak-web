@@ -19,26 +19,32 @@ export const KlageBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/fpsak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/sak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE, {
+    fetchLinkDataAutomatically: false,
+  })
   .withInjectedPath('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
   .withInjectedPath('vilkar', KlageBehandlingApiKeys.VILKAR)
   .withInjectedPath('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
 
-  .withPost('/fpsak/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fpsak/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING, {
+  .withPost('/sak/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/sak/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/sak/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING, {
     storeResultKey: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
   })
-  .withPost('/fpsak/api/behandlinger/sett-pa-vent', KlageBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/sak/api/behandlinger/sett-pa-vent', KlageBehandlingApiKeys.BEHANDLING_ON_HOLD)
 
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+  .withPost('/sak/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/sak/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
     storeResultKey: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
   })
-  .withAsyncPost('/fpsak/api/behandling/klage/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
-  .withAsyncPost('/fpsak/api/behandling/klage/mellomlagre-gjennapne-klage', KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING, {
-    storeResultKey: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
-  })
+  .withAsyncPost('/sak/api/behandling/klage/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
+  .withAsyncPost(
+    '/sak/api/behandling/klage/mellomlagre-gjennapne-klage',
+    KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING,
+    {
+      storeResultKey: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
+    },
+  )
 
   /* fpformidling */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
@@ -47,9 +53,11 @@ const endpoints = new RestApiConfigBuilder()
 const reducerName = 'dataContextKlageBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withReduxEvents(new ReduxEvents()
-    .withErrorActionCreator(errorHandler.getErrorActionCreator())
-    .withPollingMessageActionCreator(setRequestPollingMessage))
+  .withReduxEvents(
+    new ReduxEvents()
+      .withErrorActionCreator(errorHandler.getErrorActionCreator())
+      .withPollingMessageActionCreator(setRequestPollingMessage),
+  )
   .build();
 
 reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
