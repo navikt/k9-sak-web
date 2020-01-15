@@ -24,7 +24,9 @@
 		"packages/behandling-papirsoknad",
     "packages/fakta-medisinsk-vilkar",
     "packages/fp-felles",
-		"packages/fakta-omsorgen-for",
+    "packages/fakta-omsorgen-for",
+    "packages/types",
+    "packages/sak-totrinnskontroll",
     "@types",
 	]
 }
