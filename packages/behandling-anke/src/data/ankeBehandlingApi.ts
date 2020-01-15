@@ -19,27 +19,31 @@ export const AnkeBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/fpsak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/sak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE, { fetchLinkDataAutomatically: false })
   .withInjectedPath('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
   .withInjectedPath('vilkar', AnkeBehandlingApiKeys.VILKAR)
   .withInjectedPath('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
-  .withPost('/fpsak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fpsak/api/behandlinger/henlegg', AnkeBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', AnkeBehandlingApiKeys.RESUME_BEHANDLING, {
+  .withPost('/sak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/sak/api/behandlinger/henlegg', AnkeBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/sak/api/behandlinger/gjenoppta', AnkeBehandlingApiKeys.RESUME_BEHANDLING, {
     storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
   })
-  .withPost('/fpsak/api/behandlinger/sett-pa-vent', AnkeBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/sak/api/behandlinger/sett-pa-vent', AnkeBehandlingApiKeys.BEHANDLING_ON_HOLD)
 
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+  .withPost('/sak/api/behandlinger/endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/sak/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
     storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
   })
 
-  .withAsyncPost('/fpsak/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
-  .withAsyncPost('/fpsak/api/behandling/anke/mellomlagre-gjennapne-anke', AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING, {
-    storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
-  })
+  .withAsyncPost('/sak/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
+  .withAsyncPost(
+    '/sak/api/behandling/anke/mellomlagre-gjennapne-anke',
+    AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING,
+    {
+      storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
+    },
+  )
 
   /* fpformidling */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
@@ -48,9 +52,11 @@ const endpoints = new RestApiConfigBuilder()
 const reducerName = 'dataContextAnkeBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withReduxEvents(new ReduxEvents()
-    .withErrorActionCreator(errorHandler.getErrorActionCreator())
-    .withPollingMessageActionCreator(setRequestPollingMessage))
+  .withReduxEvents(
+    new ReduxEvents()
+      .withErrorActionCreator(errorHandler.getErrorActionCreator())
+      .withPollingMessageActionCreator(setRequestPollingMessage),
+  )
   .build();
 
 reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());

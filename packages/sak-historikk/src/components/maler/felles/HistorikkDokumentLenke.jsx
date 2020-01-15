@@ -4,12 +4,10 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 
 import styles from '../historikkMalType.less';
 
-const DOCUMENT_SERVER_URL = '/fpsak/api/dokument/hent-dokument';
+const DOCUMENT_SERVER_URL = '/sak/api/dokument/hent-dokument';
 
 const HistorikkDokumentLenke = ({ dokumentLenke, saksNr }) => {
-  const {
-    tag, journalpostId, dokumentId, utgått,
-  } = dokumentLenke;
+  const { tag, journalpostId, dokumentId, utgått } = dokumentLenke;
 
   if (utgått) {
     return (

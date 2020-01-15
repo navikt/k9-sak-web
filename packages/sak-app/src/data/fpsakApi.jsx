@@ -52,13 +52,13 @@ export const FpsakApiKeys = {
 const endpoints = new RestApiConfigBuilder()
 
   /* /api/fagsak */
-  .withPost('/fpsak/api/fagsak/sok', FpsakApiKeys.SEARCH_FAGSAK)
-  .withGet('/fpsak/api/fagsak', FpsakApiKeys.FETCH_FAGSAK)
+  .withPost('/sak/api/fagsak/sok', FpsakApiKeys.SEARCH_FAGSAK)
+  .withGet('/sak/api/fagsak', FpsakApiKeys.FETCH_FAGSAK)
 
-  /* /fpsak/api/behandlinger */
-  .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
-  .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK, { fetchLinkDataAutomatically: false })
-  .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
+  /* /sak/api/behandlinger */
+  .withGet('/sak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
+  .withAsyncPut('/sak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK, { fetchLinkDataAutomatically: false })
+  .withGet('/sak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
   .withInjectedPath('bytt-behandlende-enhet', FpsakApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withInjectedPath('opne-for-endringer', FpsakApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
   .withInjectedPath('henlegg-behandling', FpsakApiKeys.HENLEGG_BEHANDLING)
@@ -102,27 +102,27 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('lagre-risikoklassifisering-aksjonspunkt', FpsakApiKeys.LAGRE_RISIKO_AKSJONSPUNKT)
 
   /* /api/dokument */
-  .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
-  .withGet('/fpsak/api/dokument/hent-dokument', FpsakApiKeys.DOCUMENT)
+  .withGet('/sak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
+  .withGet('/sak/api/dokument/hent-dokument', FpsakApiKeys.DOCUMENT)
 
   /* /api/historikk */
-  .withGet('/fpsak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
+  .withGet('/sak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
   .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
 
   /* /api/kodeverk */
-  .withGet('/fpsak/api/kodeverk', FpsakApiKeys.KODEVERK)
+  .withGet('/sak/api/kodeverk', FpsakApiKeys.KODEVERK)
   .withGet('/fptilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
-  .withGet('/fpsak/api/kodeverk/behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
+  .withGet('/sak/api/kodeverk/behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
 
   /* /api/nav-ansatt */
-  .withGet('/fpsak/api/nav-ansatt', FpsakApiKeys.NAV_ANSATT)
+  .withGet('/sak/api/nav-ansatt', FpsakApiKeys.NAV_ANSATT)
 
   /* /api/integrasjon */
-  .withGet('/fpsak/api/integrasjon/status', FpsakApiKeys.INTEGRATION_STATUS)
-  .withGet('/fpsak/api/integrasjon/status/vises', FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES)
+  .withGet('/sak/api/integrasjon/status', FpsakApiKeys.INTEGRATION_STATUS)
+  .withGet('/sak/api/integrasjon/status/vises', FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES)
 
   /* /api/aktoer */
-  .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
+  .withGet('/sak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
   /* fpformidling/api/brev */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
@@ -132,7 +132,7 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
 
   /* /api/feature-toggle */
-  .withPost('/fpsak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+  .withPost('/sak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
 
   .build();
 

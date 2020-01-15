@@ -14,26 +14,30 @@ export const PapirsoknadApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/fpsak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/sak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD, {
+    fetchLinkDataAutomatically: false,
+  })
   .withInjectedPath('aksjonspunkter', PapirsoknadApiKeys.AKSJONSPUNKTER)
 
-  .withPost('/fpsak/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fpsak/api/behandlinger/henlegg', PapirsoknadApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', PapirsoknadApiKeys.RESUME_BEHANDLING, {
+  .withPost('/sak/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/sak/api/behandlinger/henlegg', PapirsoknadApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/sak/api/behandlinger/gjenoppta', PapirsoknadApiKeys.RESUME_BEHANDLING, {
     storeResultKey: PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD,
   })
-  .withPost('/fpsak/api/behandlinger/sett-pa-vent', PapirsoknadApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', PapirsoknadApiKeys.UPDATE_ON_HOLD)
+  .withPost('/sak/api/behandlinger/sett-pa-vent', PapirsoknadApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/sak/api/behandlinger/endre-pa-vent', PapirsoknadApiKeys.UPDATE_ON_HOLD)
 
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/sak/api/behandling/aksjonspunkt', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)
   .build();
 
 const reducerName = 'dataContextPapirsoknad';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withReduxEvents(new ReduxEvents()
-    .withErrorActionCreator(errorHandler.getErrorActionCreator())
-    .withPollingMessageActionCreator(setRequestPollingMessage))
+  .withReduxEvents(
+    new ReduxEvents()
+      .withErrorActionCreator(errorHandler.getErrorActionCreator())
+      .withPollingMessageActionCreator(setRequestPollingMessage),
+  )
   .build();
 
 reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
