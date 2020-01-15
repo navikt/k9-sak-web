@@ -5,11 +5,12 @@ import { withKnobs, boolean } from '@storybook/addon-knobs';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 
+import { TilbakemeldingerFraTotrinnskontrollContainer } from '@fpsak-frontend/sak-totrinnskontroll-tilbakemeldinger';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
-const data = [
+const dataReadOnly = [
   {
     skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
     totrinnskontrollAksjonspunkter: [
@@ -20,9 +21,18 @@ const data = [
           fastsattVarigEndringNaering: false,
           faktaOmBeregningTilfeller: null,
         },
-        besluttersBegrunnelse: null,
-        totrinnskontrollGodkjent: null,
-        vurderPaNyttArsaker: [],
+        besluttersBegrunnelse: 'asdfa',
+        totrinnskontrollGodkjent: false,
+        vurderPaNyttArsaker: [
+          {
+            kode: 'FEIL_REGEL',
+            navn: 'Feil regelforståelse',
+          },
+          {
+            kode: 'FEIL_FAKTA',
+            navn: 'Feil fakta',
+          },
+        ],
         uttakPerioder: [],
         arbeidforholdDtos: [],
       },
@@ -30,34 +40,33 @@ const data = [
   },
 ];
 
-const skjemalenkeTyper = [
+const skjermlenkeTyper = [
   {
     kode: 'FORMKRAV_KLAGE_NFP',
   },
 ];
 
 export default {
-  title: 'sak/sak-totrinnskontroll',
+  title: 'sak/sak-totrinnskontroll-tilbakemeldinger',
   component: TotrinnskontrollSakIndex,
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
 
-export const visTotrinnskontrollForBeslutter = () => (
+export const visTotrinnskontrollTilbakemeldingForSaksbehandler = () => (
   <div style={{ width: '600px', margin: '50px' }}>
-    <TotrinnskontrollSakIndex
+    <TilbakemeldingerFraTotrinnskontrollContainer
       behandlingId={1}
       behandlingVersjon={2}
-      totrinnskontrollSkjermlenkeContext={data}
-      totrinnskontrollReadOnlySkjermlenkeContext={[]}
+      totrinnskontrollContext={dataReadOnly}
       behandlingStatus={{
-        kode: behandlingStatus.FATTER_VEDTAK,
+        kode: behandlingStatus.BEHANDLING_UTREDES,
       }}
       location={{}}
-      readOnly={boolean('readOnly', false)}
+      readOnly
       onSubmit={action('button-click')}
       forhandsvisVedtaksbrev={action('button-click')}
       toTrinnsBehandling
-      skjemalenkeTyper={skjemalenkeTyper}
+      skjermlenkeTyper={skjermlenkeTyper}
       isForeldrepengerFagsak
       behandlingKlageVurdering={{
         klageVurderingResultatNFP: {

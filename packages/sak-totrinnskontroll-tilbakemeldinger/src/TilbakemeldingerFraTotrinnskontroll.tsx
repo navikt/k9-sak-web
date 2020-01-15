@@ -1,15 +1,17 @@
+import * as React from 'react';
 import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
 import checkImg from '@fpsak-frontend/assets/images/check.svg'; //
 import { ElementWrapper, Image } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
-import {FormattedMessage, injectIntl, IntlShape} from 'react-intl';
-import { connect } from 'react-redux';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { BehandlingKlageVurdering, BehandlingStatusType } from '@fpsak-frontend/types';
-import { Aksjonspunkt, getAksjonspunktTextSelector } from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
-import styles from '@fpsak-frontend/sak-totrinnskontroll/src/components/ToTrinnsFormReadOnly.less';
+import {
+  Aksjonspunkt,
+  getAksjonspunktTextSelector,
+} from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
+import styles from './tilbakemeldingerFraTotrinnskontroll.less';
 
 /*
  * ToTrinnsFormReadOnly
@@ -82,17 +84,10 @@ interface TilbakemeldingerFraTotrinnskontrollProps {
   alleKodeverk: object;
 }
 
-interface StateProps {
-  getAksjonspunktText?: (aksjonspunkt: Aksjonspunkt) => (JSX.Element | null)[] | null;
-  intl?: IntlShape;
-}
+type Props = TilbakemeldingerFraTotrinnskontrollProps & WrappedComponentProps;
 
-type Props = TilbakemeldingerFraTotrinnskontrollProps & StateProps;
-
-export const TilbakemeldingerFraTotrinnskontroll: React.FunctionComponent<Props> = ({
-  approvalList,
-  getAksjonspunktText,
-}) => {
+const TilbakemeldingerFraTotrinnskontroll: React.FunctionComponent<Props> = props => {
+  const { approvalList } = props;
   if (!approvalList || approvalList.length === 0) {
     return null;
   }
@@ -103,7 +98,7 @@ export const TilbakemeldingerFraTotrinnskontroll: React.FunctionComponent<Props>
           return (
             <ElementWrapper key={contextCode}>
               <NavLink to={skjermlenke}>{skjermlenkeNavn}</NavLink>
-              {aksjonspunkter.map(aksjonspunkt => renderAksjonspunkt(aksjonspunkt, getAksjonspunktText))}
+              {aksjonspunkter.map(aksjonspunkt => renderAksjonspunkt(aksjonspunkt, getAksjonspunktTextSelector(props)))}
             </ElementWrapper>
           );
         }
@@ -113,8 +108,4 @@ export const TilbakemeldingerFraTotrinnskontroll: React.FunctionComponent<Props>
   );
 };
 
-const mapStateToProps = (state, ownProps): StateProps => ({
-  getAksjonspunktText: getAksjonspunktTextSelector(ownProps),
-});
-
-export default connect(mapStateToProps)(injectIntl(TilbakemeldingerFraTotrinnskontroll as any));
+export default injectIntl(TilbakemeldingerFraTotrinnskontroll);

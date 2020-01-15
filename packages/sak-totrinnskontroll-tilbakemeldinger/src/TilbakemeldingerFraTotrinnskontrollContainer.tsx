@@ -1,10 +1,21 @@
 import * as React from 'react';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage, RawIntlProvider, createIntlCache, createIntl } from 'react-intl';
 import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { SkjermlenkeTyper } from '@fpsak-frontend/sak-totrinnskontroll/src/TotrinnskontrollSakIndex';
 import { BehandlingKlageVurdering, BehandlingStatusType, TotrinnskontrollAksjonspunkter } from '@fpsak-frontend/types';
-import { TilbakemeldingerFraTotrinnskontroll } from './TilbakemeldingerFraTotrinnskontroll';
+import TilbakemeldingerFraTotrinnskontroll from './TilbakemeldingerFraTotrinnskontroll';
 import styles from './approvalPanel.less';
+import messages from '../i18n/nb_NO.json';
+
+const cache = createIntlCache();
+
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const createApprovalList = (skjermlenkeTyper, location, totrinnskontrollContext) =>
   totrinnskontrollContext.map(context => {
@@ -43,18 +54,20 @@ const TilbakemeldingerFraTotrinnskontrollContainer = ({
     setApprovals(createApprovalList(skjermlenkeTyper, location, totrinnskontrollContext));
   }, [totrinnskontrollContext]);
   return (
-    <>
-      <div className={styles.resultatFraGodkjenningTextContainer}>
-        <FormattedHTMLMessage id="ToTrinnsForm.LøstAksjonspunkt" />
+    <RawIntlProvider value={intl}>
+      <div className={styles.approvalContainer}>
+        <div className={styles.resultatFraGodkjenningTextContainer}>
+          <FormattedHTMLMessage id="ToTrinnsForm.LøstAksjonspunkt" />
+        </div>
+        <TilbakemeldingerFraTotrinnskontroll
+          approvalList={approvals}
+          isForeldrepengerFagsak={isForeldrepengerFagsak}
+          behandlingKlageVurdering={behandlingKlageVurdering}
+          behandlingStatus={behandlingStatus}
+          alleKodeverk={alleKodeverk}
+        />
       </div>
-      <TilbakemeldingerFraTotrinnskontroll
-        approvalList={approvals}
-        isForeldrepengerFagsak={isForeldrepengerFagsak}
-        behandlingKlageVurdering={behandlingKlageVurdering}
-        behandlingStatus={behandlingStatus}
-        alleKodeverk={alleKodeverk}
-      />
-    </>
+    </RawIntlProvider>
   );
 };
 
