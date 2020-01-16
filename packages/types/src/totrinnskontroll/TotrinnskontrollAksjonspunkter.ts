@@ -9,6 +9,7 @@ interface TotrinnskontrollAksjonspunkter {
   arbeidforholdDtos: any[];
   skjermlenkeType: string;
   totrinnskontrollAksjonspunkter: TotrinnskontrollAksjonspunkter[];
+  navn?: string;
 }
 
 export interface BeregningDto {

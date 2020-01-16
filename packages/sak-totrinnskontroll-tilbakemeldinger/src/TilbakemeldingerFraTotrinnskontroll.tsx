@@ -6,11 +6,13 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-import { BehandlingKlageVurdering, BehandlingStatusType, Kodeverk } from '@fpsak-frontend/types';
 import {
-  Aksjonspunkt,
-  getAksjonspunktTextSelector,
-} from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
+  BehandlingKlageVurdering,
+  BehandlingStatusType,
+  Kodeverk,
+  TotrinnskontrollAksjonspunkter,
+} from '@fpsak-frontend/types';
+import { getAksjonspunktTextSelector } from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
 import styles from './tilbakemeldingerFraTotrinnskontroll.less';
 
 /*
@@ -25,7 +27,7 @@ import styles from './tilbakemeldingerFraTotrinnskontroll.less';
  */
 
 /* eslint-disable react/no-array-index-key */
-const godkjendAksjonspunkt = (aksjonspunkt: Aksjonspunkt) => {
+const godkjendAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkter) => {
   const { vurderPaNyttArsaker } = aksjonspunkt;
   return (
     <div className={styles.approvalItem}>
@@ -56,8 +58,8 @@ const godkjendAksjonspunkt = (aksjonspunkt: Aksjonspunkt) => {
 /* eslint-enable react/no-array-index-key */
 
 const renderAksjonspunkt = (
-  aksjonspunkt: Aksjonspunkt,
-  getAksjonspunktText: (aksjonspunkt: Aksjonspunkt) => (JSX.Element | null)[] | null,
+  aksjonspunkt: TotrinnskontrollAksjonspunkter,
+  getAksjonspunktText: (aksjonspunkt: TotrinnskontrollAksjonspunkter) => (JSX.Element | null)[] | null,
 ) => (
   <div key={aksjonspunkt.aksjonspunktKode} className={styles.approvalItemContainer}>
     <span>{aksjonspunkt.navn}</span>
@@ -77,7 +79,12 @@ const renderAksjonspunkt = (
 );
 
 interface TilbakemeldingerFraTotrinnskontrollProps {
-  approvalList: { contextCode: string, skjermlenke: string, skjermlenkeNavn: string, aksjonspunkter: Aksjonspunkt[] }[];
+  approvalList: {
+    contextCode: string,
+    skjermlenke: string,
+    skjermlenkeNavn: string,
+    aksjonspunkter: TotrinnskontrollAksjonspunkter[],
+  }[];
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   behandlingStatus: BehandlingStatusType;
