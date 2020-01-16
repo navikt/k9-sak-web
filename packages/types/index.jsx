@@ -9,3 +9,4 @@ export {
 export { default as SkjermlenkeTyper } from './src/totrinnskontroll/SkjermlenkeType';
 export { default as KlageVurderingResultat } from './src/totrinnskontroll/KlageVurderingResultat';
 export { default as Behandlingsresultat } from './src/totrinnskontroll/Behandlingsresultat';
+export { default as Approval } from './src/totrinnskontroll/Approval';

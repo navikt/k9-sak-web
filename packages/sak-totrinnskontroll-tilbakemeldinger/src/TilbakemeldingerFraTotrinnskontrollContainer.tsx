@@ -5,6 +5,7 @@ import {
   SkjermlenkeTyper,
   TotrinnskontrollAksjonspunkter,
   AlleKodeverk,
+  Approval,
 } from '@fpsak-frontend/types';
 import * as React from 'react';
 import { createIntl, createIntlCache, FormattedHTMLMessage, RawIntlProvider } from 'react-intl';
@@ -22,7 +23,11 @@ const intl = createIntl(
   cache,
 );
 
-const createApprovalList = (skjermlenkeTyper, location, totrinnskontrollContext) =>
+const createApprovalList = (
+  skjermlenkeTyper: SkjermlenkeTyper[],
+  location: Location,
+  totrinnskontrollContext: TotrinnskontrollAksjonspunkter[],
+): Approval[] =>
   totrinnskontrollContext.map(context => {
     const skjermlenkeTypeKodeverk = skjermlenkeTyper.find(
       skjermlenkeType => skjermlenkeType.kode === context.skjermlenkeType,
@@ -30,7 +35,7 @@ const createApprovalList = (skjermlenkeTyper, location, totrinnskontrollContext)
     return {
       contextCode: context.skjermlenkeType,
       skjermlenke: createLocationForHistorikkItems(location, context.skjermlenkeType),
-      skjermlenkeNavn: skjermlenkeTypeKodeverk?.navn,
+      skjermlenkeNavn: skjermlenkeTypeKodeverk?.navn || '',
       aksjonspunkter: context.totrinnskontrollAksjonspunkter,
     };
   });
@@ -54,7 +59,7 @@ const TilbakemeldingerFraTotrinnskontrollContainer = ({
   behandlingStatus,
   alleKodeverk,
 }: TilbakemeldingerFraTotrinnskontrollContainerProps) => {
-  const [approvals, setApprovals] = React.useState([]);
+  const [approvals, setApprovals] = React.useState([] as Approval[]);
   React.useEffect(() => {
     setApprovals(createApprovalList(skjermlenkeTyper, location, totrinnskontrollContext));
   }, [totrinnskontrollContext]);

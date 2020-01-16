@@ -11,6 +11,7 @@ import {
   BehandlingStatusType,
   TotrinnskontrollAksjonspunkter,
   AlleKodeverk,
+  Approval,
 } from '@fpsak-frontend/types';
 import { getAksjonspunktTextSelector } from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
 import styles from './tilbakemeldingerFraTotrinnskontroll.less';
@@ -79,12 +80,7 @@ const renderAksjonspunkt = (
 );
 
 interface TilbakemeldingerFraTotrinnskontrollProps {
-  approvalList: {
-    contextCode: string,
-    skjermlenke: string,
-    skjermlenkeNavn: string,
-    aksjonspunkter: TotrinnskontrollAksjonspunkter[],
-  }[];
+  approvalList: Approval[];
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   behandlingStatus: BehandlingStatusType;
