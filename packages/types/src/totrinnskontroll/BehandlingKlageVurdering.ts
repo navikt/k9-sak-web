@@ -1,8 +1,10 @@
-import { KlageVuderingResultat } from "@fpsak-frontend/sak-totrinnskontroll/src/TotrinnskontrollSakIndex";
+import KlageVurderingResultat from './KlageVurderingResultat';
 
-export default interface BehandlingKlageVurdering {
+interface BehandlingKlageVurdering {
   klageVurdering: string;
   klageVurderingOmgjoer: string;
-  klageVurderingResultatNFP: KlageVuderingResultat;
-  klageVurderingResultatNK: KlageVuderingResultat;
+  klageVurderingResultatNFP: KlageVurderingResultat;
+  klageVurderingResultatNK: KlageVurderingResultat;
 }
+
+export default BehandlingKlageVurdering;

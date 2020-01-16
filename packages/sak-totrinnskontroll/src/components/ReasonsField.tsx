@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
@@ -21,7 +21,12 @@ const maxLength2000 = maxLength(2000);
  * <ReasonsField fieldName={fieldName} showOnlyBegrunnelse={showBegrunnelse} />
  * ```
  */
-const ReasonsField = ({ fieldName, godkjentHosKA, showOnlyBegrunnelse, intl }: ReasonsFieldProps) => (
+const ReasonsField = ({
+  fieldName,
+  godkjentHosKA,
+  showOnlyBegrunnelse,
+  intl,
+}: ReasonsFieldProps & WrappedComponentProps) => (
   <>
     <ArrowBox alignOffset={godkjentHosKA ? 1 : 110}>
       {!showOnlyBegrunnelse && (
@@ -71,7 +76,6 @@ interface ReasonsFieldProps {
   fieldName: string;
   showOnlyBegrunnelse: boolean;
   godkjentHosKA: boolean;
-  intl: IntlShape;
 }
 
 export default injectIntl(ReasonsField);

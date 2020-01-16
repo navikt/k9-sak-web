@@ -1,8 +1,7 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-
+import { Kodeverk, Behandlingsresultat } from '@fpsak-frontend/types';
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
 import messages from '../i18n/nb_NO.json';
 
@@ -50,10 +49,10 @@ interface FatterVedtakApprovalModalSakIndexProps {
   showModal: boolean;
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
-  fagsakYtelseType: kodeverkObjektPropType;
+  fagsakYtelseType: Kodeverk;
   erGodkjenningFerdig: boolean;
   erKlageWithKA?: boolean;
-  behandlingsresultat: any;
+  behandlingsresultat: Behandlingsresultat;
   behandlingId: number;
   behandlingStatusKode: string;
   behandlingTypeKode: string;

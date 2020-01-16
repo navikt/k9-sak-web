@@ -1,9 +1,14 @@
+import {
+  BehandlingKlageVurdering,
+  BehandlingStatusType,
+  SkjermlenkeTyper,
+  TotrinnskontrollAksjonspunkter,
+  Kodeverk,
+} from '@fpsak-frontend/types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { BehandlingKlageVurdering, BehandlingStatusType } from '@fpsak-frontend/types';
-
-import ApprovalPanel from './components/ApprovalPanel';
 import messages from '../i18n/nb_NO.json';
+import ApprovalPanel from './components/ApprovalPanel';
 
 const cache = createIntlCache();
 
@@ -53,38 +58,6 @@ const TotrinnskontrollSakIndex = ({
   </RawIntlProvider>
 );
 
-export interface TotrinnskontrollAksjonspunkter {
-  aksjonspunktKode: string;
-  opptjeningAktiviteter: any[];
-  beregningDto: BeregningDto;
-  besluttersBegrunnelse: string;
-  totrinnskontrollGodkjent: boolean;
-  vurderPaNyttArsaker: VurderPaNyttArsaker[];
-  uttakPerioder: any[];
-  arbeidforholdDtos: any[];
-  skjermlenkeType: string;
-  totrinnskontrollAksjonspunkter: TotrinnskontrollAksjonspunkter[];
-}
-
-export interface BeregningDto {
-  fastsattVarigEndringNaering: boolean;
-  faktaOmBeregningTilfeller: { kode: string }[];
-}
-
-export interface VurderPaNyttArsaker {
-  kode: string;
-  navn: string;
-}
-
-export interface SkjermlenkeTyper {
-  kode: string;
-  navn: string;
-}
-
-export interface KlageVuderingResultat {
-  klageVurdering: string;
-}
-
 interface TotrinnskontrollSakIndexProps {
   behandlingId: number;
   behandlingVersjon: number;
@@ -92,11 +65,11 @@ interface TotrinnskontrollSakIndexProps {
   totrinnskontrollReadOnlySkjermlenkeContext: TotrinnskontrollAksjonspunkter[];
   behandlingStatus: BehandlingStatusType;
   toTrinnsBehandling: boolean;
-  location: object;
+  location: Location;
   skjemalenkeTyper: SkjermlenkeTyper[];
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
-  alleKodeverk: object;
+  alleKodeverk: Kodeverk;
   erBehandlingEtterKlage: boolean;
   readOnly: boolean;
   onSubmit: () => void;

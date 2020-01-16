@@ -1,4 +1,4 @@
-export default interface TotrinnskontrollAksjonspunkter {
+interface TotrinnskontrollAksjonspunkter {
   aksjonspunktKode: string;
   opptjeningAktiviteter: any[];
   beregningDto: BeregningDto;
@@ -20,3 +20,5 @@ export interface VurderPaNyttArsaker {
   kode: string;
   navn: string;
 }
+
+export default TotrinnskontrollAksjonspunkter;

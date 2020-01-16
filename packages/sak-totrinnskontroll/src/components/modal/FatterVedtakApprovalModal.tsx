@@ -1,19 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { Image } from '@fpsak-frontend/shared-components';
+import { Behandlingsresultat, Kodeverk } from '@fpsak-frontend/types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-
-import { Image } from '@fpsak-frontend/shared-components';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import styles from './fatterVedtakApprovalModal.less';
 
 /**
@@ -30,7 +29,7 @@ const FatterVedtakApprovalModal = ({
   resolveProsessAksjonspunkterSuccess,
   intl,
   modalDescriptionTextCode,
-}: FatterVedtakApprovalModalProps) => {
+}: FatterVedtakApprovalModalProps & WrappedComponentProps) => {
   let localShowModal = false;
 
   if (showModal !== undefined) {
@@ -74,17 +73,22 @@ const FatterVedtakApprovalModal = ({
 };
 
 interface FatterVedtakApprovalModalProps {
-  closeEvent: () => void;
-  infoTextCode: string;
   altImgTextCode: string;
+  behandlingsresultat: Behandlingsresultat;
+  behandlingStatusKode: string;
+  behandlingTypeKode: string;
+  closeEvent: () => void;
+  erKlageWithKA: boolean;
+  fagsakYtelseType: Kodeverk;
+  harSammeResultatSomOriginalBehandling?: boolean;
+  infoTextCode: string;
   modalDescriptionTextCode: string;
   resolveProsessAksjonspunkterSuccess?: boolean;
-  intl: IntlShape;
   showModal?: boolean;
 }
 
 const isBehandlingsresultatOpphor = createSelector(
-  [ownProps => ownProps.behandlingsresultat],
+  [(ownProps: FatterVedtakApprovalModalProps) => ownProps.behandlingsresultat],
   behandlingsresultat => behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
 );
 
@@ -95,7 +99,7 @@ const getModalDescriptionTextCode = createSelector(
     ownProps => ownProps.erKlageWithKA,
     ownProps => ownProps.behandlingTypeKode,
   ],
-  (isOpphor, ytelseType, behandlingTypeKode) => {
+  (isOpphor, ytelseType, erKlageWithKA, behandlingTypeKode) => {
     if (behandlingTypeKode === BehandlingType.KLAGE) {
       if (erKlageWithKA) {
         return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
@@ -115,10 +119,12 @@ const getModalDescriptionTextCode = createSelector(
   },
 );
 
-const getAltImgTextCode = createSelector([ownProps => ownProps.fagsakYtelseType], ytelseType =>
-  ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-    ? 'FatterVedtakApprovalModal.InnvilgetES'
-    : 'FatterVedtakApprovalModal.InnvilgetFP',
+const getAltImgTextCode = createSelector(
+  [(ownProps: FatterVedtakApprovalModalProps) => ownProps.fagsakYtelseType],
+  ytelseType =>
+    ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
+      ? 'FatterVedtakApprovalModal.InnvilgetES'
+      : 'FatterVedtakApprovalModal.InnvilgetFP',
 );
 
 const getInfoTextCode = createSelector(
@@ -173,7 +179,7 @@ const getInfoTextCode = createSelector(
 );
 
 const isStatusFatterVedtak = createSelector(
-  [ownProps => ownProps.behandlingStatusKode],
+  [(ownProps: FatterVedtakApprovalModalProps) => ownProps.behandlingStatusKode],
   behandlingStatusKode => behandlingStatusKode === behandlingStatus.FATTER_VEDTAK,
 );
 

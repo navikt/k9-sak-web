@@ -1,3 +1,5 @@
-export default interface BehandlingStatusType {
+interface BehandlingStatusType {
   kode: string;
 }
+
+export default BehandlingStatusType;

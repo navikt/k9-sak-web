@@ -27,6 +27,7 @@
     "packages/fakta-omsorgen-for",
     "packages/types",
     "packages/sak-totrinnskontroll",
+    "packages/sak-totrinnskontroll-tilbakemeldinger",
     "@types",
 	]
 }

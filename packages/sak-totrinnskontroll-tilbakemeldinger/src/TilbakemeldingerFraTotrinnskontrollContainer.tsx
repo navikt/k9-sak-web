@@ -1,11 +1,16 @@
-import * as React from 'react';
-import { FormattedHTMLMessage, RawIntlProvider, createIntlCache, createIntl } from 'react-intl';
 import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
-import { SkjermlenkeTyper } from '@fpsak-frontend/sak-totrinnskontroll/src/TotrinnskontrollSakIndex';
-import { BehandlingKlageVurdering, BehandlingStatusType, TotrinnskontrollAksjonspunkter } from '@fpsak-frontend/types';
-import TilbakemeldingerFraTotrinnskontroll from './TilbakemeldingerFraTotrinnskontroll';
-import styles from './approvalPanel.less';
+import {
+  BehandlingKlageVurdering,
+  BehandlingStatusType,
+  SkjermlenkeTyper,
+  TotrinnskontrollAksjonspunkter,
+  Kodeverk,
+} from '@fpsak-frontend/types';
+import * as React from 'react';
+import { createIntl, createIntlCache, FormattedHTMLMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
+import TilbakemeldingerFraTotrinnskontroll from './TilbakemeldingerFraTotrinnskontroll';
+import styles from './tilbakemeldingerFraTotrinnskontrollContainer.less';
 
 const cache = createIntlCache();
 
@@ -34,8 +39,8 @@ interface TilbakemeldingerFraTotrinnskontrollContainerProps {
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   behandlingStatus: BehandlingStatusType;
-  alleKodeverk: object;
-  location: object;
+  alleKodeverk: Kodeverk;
+  location: Location;
   skjermlenkeTyper: SkjermlenkeTyper[];
   totrinnskontrollContext: TotrinnskontrollAksjonspunkter[];
 }

@@ -1,27 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
 import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
-import { TilbakemeldingerFraTotrinnskontrollContainer } from '@fpsak-frontend/sak-totrinnskontroll-tilbakemeldinger';
-
-import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
-import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
-import supportPanels from './supportPanels';
+import styles from './behandlingSupportIndex.less';
+import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import LinkRow from './components/LinkRow';
 import SupportPanelLink from './components/SupportPanelLink';
+import DocumentIndex from './documents/DocumentIndex';
+import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
-import DocumentIndex from './documents/DocumentIndex';
+import supportPanels from './supportPanels';
 import Totrinnskontroll from './totrinnskontroll/Totrinnskontroll';
-
-import styles from './behandlingSupportIndex.less';
+import TotrinnskontrollTilbakemelding from './totrinnskontroll/TotrinnskontrollTilbakemelding';
 
 const renderSupportPanel = supportPanel => {
   switch (supportPanel) {
     case supportPanels.RETURNED:
-      return <TilbakemeldingerFraTotrinnskontrollContainer />;
+      return <TotrinnskontrollTilbakemelding />;
     case supportPanels.APPROVAL:
       return <Totrinnskontroll />;
     case supportPanels.HISTORY:

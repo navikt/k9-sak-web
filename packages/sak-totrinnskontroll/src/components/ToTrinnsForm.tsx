@@ -6,18 +6,19 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
-import {BehandlingKlageVurdering, BehandlingStatusType} from '@fpsak-frontend/types';
+import {
+  BehandlingKlageVurdering,
+  BehandlingStatusType,
+  TotrinnskontrollAksjonspunkter,
+  KlageVurderingResultat,
+  Kodeverk,
+} from '@fpsak-frontend/types';
 import { InjectedFormProps } from 'redux-form';
 
 import ApprovalField from './ApprovalField';
 
 import styles from './ToTrinnsForm.less';
 import { Approvals } from './ApprovalPanel';
-import {
-  TotrinnskontrollAksjonspunkter,
-  KlageVuderingResultat,
-
-} from '../TotrinnskontrollSakIndex';
 
 const allApproved = (formState: FormState[]) =>
   formState
@@ -118,13 +119,13 @@ interface ToTrinnsFormImplProps extends InjectedFormProps {
   totrinnskontrollContext: Approvals[];
   formState: FormState[];
   forhandsvisVedtaksbrev: () => void;
-  klageVurderingResultatNFP?: KlageVuderingResultat;
-  klageVurderingResultatNK?: KlageVuderingResultat;
+  klageVurderingResultatNFP?: KlageVurderingResultat;
+  klageVurderingResultatNK?: KlageVurderingResultat;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   erBehandlingEtterKlage?: boolean;
   readOnly: boolean;
   disableGodkjennKnapp: boolean;
-  alleKodeverk: object;
+  alleKodeverk: Kodeverk;
   isForeldrepengerFagsak: boolean;
   behandlingStatus: BehandlingStatusType;
 }
@@ -136,7 +137,11 @@ interface Aksjonspunkter {
   annet: boolean;
 }
 
-const validate = (values: { approvals: { aksjonspunkter: Aksjonspunkter[] }[] }) => {
+interface Approval {
+  aksjonspunkter: Aksjonspunkter[];
+}
+
+const validate = (values: { approvals: Approval[] }) => {
   const errors: { approvals: object } = { approvals: {} };
   if (!values.approvals) {
     return errors;

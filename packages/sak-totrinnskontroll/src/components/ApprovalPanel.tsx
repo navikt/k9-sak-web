@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
-
-import { FormattedMessage } from 'react-intl';
-
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
-import { BehandlingStatusType } from '@fpsak-frontend/types';
-import { TotrinnskontrollAksjonspunkter, SkjermlenkeTyper } from '../TotrinnskontrollSakIndex';
-
-import ToTrinnsForm from './ToTrinnsForm';
-
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import {
+  BehandlingStatusType,
+  SkjermlenkeTyper,
+  TotrinnskontrollAksjonspunkter,
+  BehandlingKlageVurdering,
+  Kodeverk,
+} from '@fpsak-frontend/types';
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import styles from './approvalPanel.less';
+import ToTrinnsForm from './ToTrinnsForm';
 
 export const mapPropsToContext = (
   toTrinnsBehandling: boolean,
@@ -129,17 +130,14 @@ interface ApprovalPanelProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollAksjonspunkter[];
   behandlingStatus: BehandlingStatusType;
   toTrinnsBehandling: boolean;
-  location: object;
+  location: Location;
   skjemalenkeTyper: SkjermlenkeTyper[];
   onSubmit: () => void;
   readOnly: boolean;
   forhandsvisVedtaksbrev: () => void;
   isForeldrepengerFagsak: boolean;
-  behandlingKlageVurdering?: {
-    klageVurdering: string,
-    klageVurderingOmgjoer: string,
-  };
-  alleKodeverk: object;
+  behandlingKlageVurdering?: BehandlingKlageVurdering;
+  alleKodeverk: Kodeverk;
   erBehandlingEtterKlage: boolean;
   disableGodkjennKnapp: boolean;
 }
@@ -147,7 +145,7 @@ interface ApprovalPanelProps {
 export interface Approvals {
   contextCode: string;
   skjermlenke: string;
-  aksjonspunkter: { aksjonspunktKode: string }[];
+  aksjonspunkter: TotrinnskontrollAksjonspunkter[];
   skjermlenkeNavn?: string;
 }
 

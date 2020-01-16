@@ -1,15 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { injectIntl, IntlShape } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
-
 import { NavFieldGroup, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
+import { TotrinnskontrollAksjonspunkter } from '@fpsak-frontend/types';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import styles from './ApprovalField.less';
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
 import ReasonsField from './ReasonsField';
-
-import styles from './ApprovalField.less';
 
 /*
  * ApprovalField
@@ -37,7 +35,7 @@ export const ApprovalFieldImpl = ({
   showBegrunnelse,
   getAksjonspunktText,
   klageKA,
-}: ApprovalFieldImplProps) => {
+}: ApprovalFieldImplProps & WrappedComponentProps) => {
   const fieldName = `approvals[${contextIndex}].aksjonspunkter[${approvalIndex}]`;
   const erKlageKA = klageKA && currentValue && currentValue.totrinnskontrollGodkjent;
   const erAnke =
@@ -71,15 +69,14 @@ export const ApprovalFieldImpl = ({
 };
 
 interface ApprovalFieldImplProps {
-  aksjonspunkt: { aksjonspunktKode: string };
+  aksjonspunkt: TotrinnskontrollAksjonspunkter;
   getAksjonspunktText: (aksjonspunkt: any) => (JSX.Element | null)[] | null;
   readOnly: boolean;
   approvalIndex?: number;
   contextIndex?: number;
-  currentValue?: any;
+  currentValue?: TotrinnskontrollAksjonspunkter;
   showBegrunnelse?: boolean;
   klageKA?: boolean;
-  intl: IntlShape;
 }
 
 const mapStateToProps = (state, ownProps) => ({

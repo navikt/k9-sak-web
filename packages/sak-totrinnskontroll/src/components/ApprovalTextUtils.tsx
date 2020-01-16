@@ -1,25 +1,27 @@
-import React from 'react';
+import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import {
+  AlleKodeverk,
+  BeregningDto,
+  KlageVurderingResultat,
+  Kodeverk,
+  TotrinnskontrollAksjonspunkter,
+  BehandlingStatusType,
+} from '@fpsak-frontend/types';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
+import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-
 import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
 const formatDate = (date: Date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-
-interface BeregningDto {
-  fastsattVarigEndringNaering: boolean;
-}
 
 const buildVarigEndringBeregningText = (beregningDto: BeregningDto) => {
   if (beregningDto.fastsattVarigEndringNaering) {
@@ -56,7 +58,7 @@ export const getFaktaOmArbeidsforholdMessages = (
 };
 
 const buildArbeidsforholdText = (
-  aksjonspunkt: Aksjonspunkt,
+  aksjonspunkt: TotrinnskontrollAksjonspunkter,
   arbeidsforholdHandlingTyper: ArbeidsforholdHandlingTyper[],
 ) =>
   aksjonspunkt.arbeidforholdDtos.map(arbeidforholdDto => {
@@ -80,7 +82,7 @@ const buildArbeidsforholdText = (
     );
   });
 
-const buildUttakText = (aksjonspunkt: Aksjonspunkt) =>
+const buildUttakText = (aksjonspunkt: TotrinnskontrollAksjonspunkter) =>
   aksjonspunkt.uttakPerioder.map(uttakperiode => {
     const fom = formatDate(uttakperiode.fom);
     const tom = formatDate(uttakperiode.tom);
@@ -111,10 +113,10 @@ const buildUttakText = (aksjonspunkt: Aksjonspunkt) =>
   });
 
 /* eslint-disable-next-line max-len */
-const buildOpptjeningText = (aksjonspunkt: Aksjonspunkt) =>
+const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkter) =>
   aksjonspunkt.opptjeningAktiviteter.map(aktivitet => <OpptjeningTotrinnText aktivitet={aktivitet} />);
 
-const getTextFromAksjonspunktkode = (aksjonspunkt: Aksjonspunkt) => {
+const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkter) => {
   const aksjonspunktTextId = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
   return aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null;
 };
@@ -178,21 +180,12 @@ const getTextForKlageHelper = (klageVurderingResultat: KlageVurderingResultat) =
   return <FormattedMessage id={aksjonspunktTextId} />;
 };
 
-interface KlageVurderingResultat {
-  klageVurdering: string;
-  klageVurderingOmgjoer: string;
-}
-
 interface KlagebehandlingVurdering {
   klageVurderingResultatNK: KlageVurderingResultat;
   klageVurderingResultatNFP: KlageVurderingResultat;
 }
 
-interface BehandlingStaus {
-  kode: string;
-}
-
-const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingVurdering, behandlingStaus: BehandlingStaus) => {
+const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingVurdering, behandlingStaus: BehandlingStatusType) => {
   if (behandlingStaus.kode === behandlingStatusCode.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
       return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
@@ -206,55 +199,15 @@ const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingVurdering, beh
 
 const buildAvklarAnnenForelderText = () => <FormattedMessage id="ToTrinnsForm.AvklarUttak.AnnenForelderHarRett" />;
 
-interface BeregningDto {
-  faktaOmBeregningTilfeller: {
-    kode: number,
-  }[];
-}
-
-interface Aktivitet {
-  erEndring: boolean;
-  aktivitetType: string;
-  arbeidsgiverNavn: string;
-  orgnr: string;
-  godkjent: boolean;
-}
-
-interface UttakPerioder {
-  fom: any;
-  tom: any;
-  erSlettet: boolean;
-  erLagtTil: boolean;
-  erEndret: boolean;
-}
-
 export interface ArbeidsforholdDto {
   navn: string;
   organisasjonsnummer: string;
   arbeidsforholdId: string;
-  arbeidsforholdHandlingType: ArbeidsforholdHandlingType;
+  arbeidsforholdHandlingType: Kodeverk;
   brukPermisjon: boolean;
 }
 
-export interface ArbeidsforholdHandlingType {
-  kode: string;
-  navn: string;
-  kodeverk: string;
-}
-
-export interface Aksjonspunkt {
-  aksjonspunktKode: string;
-  beregningDto: BeregningDto;
-  uttakPerioder: UttakPerioder[];
-  opptjeningAktiviteter: Aktivitet[];
-  arbeidforholdDtos: ArbeidsforholdDto[];
-  navn: string;
-  besluttersBegrunnelse: string;
-  totrinnskontrollGodkjent: boolean;
-  vurderPaNyttArsaker: { navn: string, kode: string }[];
-}
-
-const erKlageAksjonspunkt = (aksjonspunkt: Aksjonspunkt) =>
+const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkter) =>
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP ||
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ||
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ||
@@ -262,9 +215,9 @@ const erKlageAksjonspunkt = (aksjonspunkt: Aksjonspunkt) =>
 
 interface OwnProps {
   isForeldrepengerFagsak: boolean;
-  behandlingKlageVurdering: KlagebehandlingVurdering;
-  behandlingStatus: BehandlingStaus;
-  alleKodeverk: any[];
+  behandlingKlageVurdering?: KlagebehandlingVurdering;
+  behandlingStatus: BehandlingStatusType;
+  alleKodeverk: AlleKodeverk;
 }
 
 export const getAksjonspunktTextSelector = createSelector(
@@ -275,7 +228,7 @@ export const getAksjonspunktTextSelector = createSelector(
     (ownProps: OwnProps) => ownProps.alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE],
   ],
   (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper) => (
-    aksjonspunkt: Aksjonspunkt,
+    aksjonspunkt: TotrinnskontrollAksjonspunkter,
   ) => {
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
       return buildOpptjeningText(aksjonspunkt);

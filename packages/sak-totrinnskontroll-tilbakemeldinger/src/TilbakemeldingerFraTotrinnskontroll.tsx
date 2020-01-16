@@ -6,7 +6,7 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-import { BehandlingKlageVurdering, BehandlingStatusType } from '@fpsak-frontend/types';
+import { BehandlingKlageVurdering, BehandlingStatusType, Kodeverk } from '@fpsak-frontend/types';
 import {
   Aksjonspunkt,
   getAksjonspunktTextSelector,
@@ -81,7 +81,7 @@ interface TilbakemeldingerFraTotrinnskontrollProps {
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   behandlingStatus: BehandlingStatusType;
-  alleKodeverk: object;
+  alleKodeverk: Kodeverk;
 }
 
 type Props = TilbakemeldingerFraTotrinnskontrollProps & WrappedComponentProps;
