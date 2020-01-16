@@ -7,35 +7,29 @@ import { findHendelseText } from './felles/historikkUtils';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
-const HistorikkMalType1 = ({
-  historikkinnslagDeler,
-  dokumentLinks,
-  saksNr,
-  getKodeverknavn,
-}) => (
-  <div>
-    {historikkinnslagDeler[0] && historikkinnslagDeler[0].hendelse
-      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>}
+const HistorikkMalType1 = ({ historikkinnslagDeler, dokumentLinks, saksNr, getKodeverknavn }) => (
+  <>
+    {historikkinnslagDeler[0] && historikkinnslagDeler[0].hendelse && (
+      <Element>{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>
+    )}
 
     {historikkinnslagDeler[0].begrunnelse && (
-      <BubbleText
-        bodyText={getKodeverknavn(historikkinnslagDeler[0].begrunnelse)}
-        cutOffLength={70}
-        className="snakkeboble-panel__tekst"
-      />
+      <BubbleText bodyText={getKodeverknavn(historikkinnslagDeler[0].begrunnelse)} cutOffLength={70} />
     )}
-    {historikkinnslagDeler[0].begrunnelseFritekst
-    && <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
+    {historikkinnslagDeler[0].begrunnelseFritekst && (
+      <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} />
+    )}
     <div>
-      {dokumentLinks && dokumentLinks.map((dokumentLenke) => (
-        <HistorikkDokumentLenke
-          key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
-          dokumentLenke={dokumentLenke}
-          saksNr={saksNr}
-        />
-      ))}
+      {dokumentLinks &&
+        dokumentLinks.map(dokumentLenke => (
+          <HistorikkDokumentLenke
+            key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+            dokumentLenke={dokumentLenke}
+            saksNr={saksNr}
+          />
+        ))}
     </div>
-  </div>
+  </>
 );
 
 HistorikkMalType1.propTypes = {
