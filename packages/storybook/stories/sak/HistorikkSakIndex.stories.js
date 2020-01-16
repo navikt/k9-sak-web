@@ -2,6 +2,7 @@ import React from 'react';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const history = [
@@ -167,11 +168,14 @@ const history = [
         },
         opplysninger: null,
         soeknadsperiode: null,
-        skjermlenke: null,
+        skjermlenke: {
+          kode: 'FAKTA_FOR_OMSORG',
+          kodeverk: 'SKJERMLENKE_TYPE',
+        },
         aarsak: null,
         tema: null,
         gjeldendeFra: null,
-        resultat: null,
+        resultat: 'DELVIS_TILBAKEBETALING',
         endredeFelter: null,
         aksjonspunkter: null,
       },
@@ -180,7 +184,7 @@ const history = [
   {
     behandlingId: 999955,
     type: {
-      kode: 'BEH_VENT',
+      kode: 'SAK_RETUR',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
     },
     aktoer: {
@@ -197,7 +201,7 @@ const history = [
     historikkinnslagDeler: [
       {
         begrunnelse: null,
-        begrunnelseFritekst: 'Tekst fra arbeidsgiver',
+        begrunnelseFritekst: 'Dummy begrunnelsesfritekst',
         hendelse: {
           navn: {
             kode: 'ANKEBEH_STARTET',
@@ -207,13 +211,26 @@ const history = [
         },
         opplysninger: null,
         soeknadsperiode: null,
-        skjermlenke: null,
+        skjermlenke: {
+          kode: 'FAKTA_FOR_OMSORG',
+          kodeverk: 'SKJERMLENKE_TYPE',
+        },
         aarsak: null,
         tema: null,
         gjeldendeFra: null,
         resultat: null,
         endredeFelter: null,
-        aksjonspunkter: null,
+        aksjonspunkter: [
+          {
+            godkjent: true,
+            aksjonspunktKode: aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+          },
+          {
+            godkjent: false,
+            aksjonspunktKode: aksjonspunktCodes.AVKLAR_UTTAK,
+            aksjonspunktBegrunnelse: 'Dummybegrunnelse for punktet over',
+          },
+        ],
       },
     ],
   },
@@ -237,7 +254,7 @@ export const visHistorikk = () => (
         key={h.behandlingId}
         historieInnslag={h}
         selectedBehandlingId="1"
-        saksnummer={2}
+        saksnummer="2"
         location={{
           pathname: 'historikk',
         }}

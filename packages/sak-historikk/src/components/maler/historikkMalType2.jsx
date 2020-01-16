@@ -16,32 +16,29 @@ const scrollUp = () => {
   return false;
 };
 
-const HistorikkMalType2 = ({
-  historikkinnslagDeler,
-  behandlingLocation,
-  intl,
-  getKodeverknavn,
-}) => (
+const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn }) => (
   <div>
-    {historikkinnslagDeler[0].skjermlenke
-    && (
-    <Element className="snakkeboble-panel__tekst">
-      <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
-        onClick={scrollUp}
-      >
-        {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
-      </NavLink>
-    </Element>
-    )}
-    {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse
-      && (
-      <Element className="snakkeboble-panel__tekst">
-        {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}: ${findResultatText(historikkinnslagDeler[0].resultat, intl)}`}
+    {historikkinnslagDeler[0].skjermlenke && (
+      <Element>
+        <NavLink
+          to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+          onClick={scrollUp}
+        >
+          {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
+        </NavLink>
       </Element>
-      )}
-    {!historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse
-      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>}
+    )}
+    {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
+      <Element>
+        {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}: ${findResultatText(
+          historikkinnslagDeler[0].resultat,
+          intl,
+        )}`}
+      </Element>
+    )}
+    {!historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
+      <Element>{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>
+    )}
   </div>
 );
 
