@@ -11,7 +11,7 @@ import {
   BehandlingStatusType,
   TotrinnskontrollAksjonspunkter,
   KlageVurderingResultat,
-  Kodeverk,
+  AlleKodeverk,
 } from '@fpsak-frontend/types';
 import { InjectedFormProps } from 'redux-form';
 
@@ -125,7 +125,7 @@ interface ToTrinnsFormImplProps extends InjectedFormProps {
   erBehandlingEtterKlage?: boolean;
   readOnly: boolean;
   disableGodkjennKnapp: boolean;
-  alleKodeverk: Kodeverk;
+  alleKodeverk: AlleKodeverk;
   isForeldrepengerFagsak: boolean;
   behandlingStatus: BehandlingStatusType;
 }

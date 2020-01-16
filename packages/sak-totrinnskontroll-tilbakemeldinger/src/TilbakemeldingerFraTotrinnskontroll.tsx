@@ -9,8 +9,8 @@ import { NavLink } from 'react-router-dom';
 import {
   BehandlingKlageVurdering,
   BehandlingStatusType,
-  Kodeverk,
   TotrinnskontrollAksjonspunkter,
+  AlleKodeverk,
 } from '@fpsak-frontend/types';
 import { getAksjonspunktTextSelector } from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
 import styles from './tilbakemeldingerFraTotrinnskontroll.less';
@@ -88,7 +88,7 @@ interface TilbakemeldingerFraTotrinnskontrollProps {
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   behandlingStatus: BehandlingStatusType;
-  alleKodeverk: Kodeverk;
+  alleKodeverk: AlleKodeverk;
 }
 
 type Props = TilbakemeldingerFraTotrinnskontrollProps & WrappedComponentProps;

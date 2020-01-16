@@ -3,7 +3,7 @@ import {
   BehandlingStatusType,
   SkjermlenkeTyper,
   TotrinnskontrollAksjonspunkter,
-  Kodeverk,
+  AlleKodeverk,
 } from '@fpsak-frontend/types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
@@ -69,7 +69,7 @@ interface TotrinnskontrollSakIndexProps {
   skjemalenkeTyper: SkjermlenkeTyper[];
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
-  alleKodeverk: Kodeverk;
+  alleKodeverk: AlleKodeverk;
   erBehandlingEtterKlage: boolean;
   readOnly: boolean;
   onSubmit: () => void;

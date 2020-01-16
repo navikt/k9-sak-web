@@ -4,7 +4,7 @@ import {
   BehandlingStatusType,
   SkjermlenkeTyper,
   TotrinnskontrollAksjonspunkter,
-  Kodeverk,
+  AlleKodeverk,
 } from '@fpsak-frontend/types';
 import * as React from 'react';
 import { createIntl, createIntlCache, FormattedHTMLMessage, RawIntlProvider } from 'react-intl';
@@ -39,7 +39,7 @@ interface TilbakemeldingerFraTotrinnskontrollContainerProps {
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
   behandlingStatus: BehandlingStatusType;
-  alleKodeverk: Kodeverk;
+  alleKodeverk: AlleKodeverk;
   location: Location;
   skjermlenkeTyper: SkjermlenkeTyper[];
   totrinnskontrollContext: TotrinnskontrollAksjonspunkter[];

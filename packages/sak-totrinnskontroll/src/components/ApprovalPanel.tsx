@@ -6,7 +6,7 @@ import {
   SkjermlenkeTyper,
   TotrinnskontrollAksjonspunkter,
   BehandlingKlageVurdering,
-  Kodeverk,
+  AlleKodeverk,
 } from '@fpsak-frontend/types';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -137,7 +137,7 @@ interface ApprovalPanelProps {
   forhandsvisVedtaksbrev: () => void;
   isForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: BehandlingKlageVurdering;
-  alleKodeverk: Kodeverk;
+  alleKodeverk: AlleKodeverk;
   erBehandlingEtterKlage: boolean;
   disableGodkjennKnapp: boolean;
 }
