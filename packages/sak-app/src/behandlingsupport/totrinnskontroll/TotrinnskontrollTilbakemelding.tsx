@@ -30,7 +30,7 @@ interface TotrinnskontrollTilbakemeldingProps {
   behandlingIdentifier: BehandlingIdentifier;
   selectedBehandlingVersjon?: number;
   behandlingStatus: BehandlingStatusType;
-  location: any;
+  location: Location;
   skjemalenkeTyper: SkjermlenkeTyper[];
   alleKodeverk: AlleKodeverk;
   isForeldrepenger: boolean;

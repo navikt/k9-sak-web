@@ -7,6 +7,7 @@ import {
   TotrinnskontrollAksjonspunkter,
   BehandlingKlageVurdering,
   AlleKodeverk,
+  Approval,
 } from '@fpsak-frontend/types';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -17,7 +18,7 @@ export const mapPropsToContext = (
   toTrinnsBehandling: boolean,
   props: ApprovalPanelProps,
   skjemalenkeTyper: SkjermlenkeTyper[],
-) => {
+): Approval[] => {
   if (toTrinnsBehandling) {
     let skjermlenkeContext;
     if (props.behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && props.totrinnskontrollSkjermlenkeContext) {
@@ -46,6 +47,29 @@ export const mapPropsToContext = (
  *
  * Containerklass ansvarlig for att rita opp vilkår og aksjonspunkter med toTrinnskontroll
  */
+
+interface ApprovalPanelProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  totrinnskontrollSkjermlenkeContext: TotrinnskontrollAksjonspunkter[];
+  behandlingStatus: BehandlingStatusType;
+  toTrinnsBehandling: boolean;
+  location: Location;
+  skjemalenkeTyper: SkjermlenkeTyper[];
+  onSubmit: () => void;
+  readOnly: boolean;
+  forhandsvisVedtaksbrev: () => void;
+  isForeldrepengerFagsak: boolean;
+  behandlingKlageVurdering?: BehandlingKlageVurdering;
+  alleKodeverk: AlleKodeverk;
+  erBehandlingEtterKlage: boolean;
+  disableGodkjennKnapp: boolean;
+}
+
+interface ApprovalPanelState {
+  approvals: Approval[];
+}
+
 export class ApprovalPanel extends Component<ApprovalPanelProps, ApprovalPanelState> {
   constructor(props: ApprovalPanelProps) {
     super(props);
@@ -122,35 +146,6 @@ export class ApprovalPanel extends Component<ApprovalPanelProps, ApprovalPanelSt
 
     return null;
   }
-}
-
-interface ApprovalPanelProps {
-  behandlingId: number;
-  behandlingVersjon: number;
-  totrinnskontrollSkjermlenkeContext: TotrinnskontrollAksjonspunkter[];
-  behandlingStatus: BehandlingStatusType;
-  toTrinnsBehandling: boolean;
-  location: Location;
-  skjemalenkeTyper: SkjermlenkeTyper[];
-  onSubmit: () => void;
-  readOnly: boolean;
-  forhandsvisVedtaksbrev: () => void;
-  isForeldrepengerFagsak: boolean;
-  behandlingKlageVurdering?: BehandlingKlageVurdering;
-  alleKodeverk: AlleKodeverk;
-  erBehandlingEtterKlage: boolean;
-  disableGodkjennKnapp: boolean;
-}
-
-export interface Approvals {
-  contextCode: string;
-  skjermlenke: string;
-  aksjonspunkter: TotrinnskontrollAksjonspunkter[];
-  skjermlenkeNavn?: string;
-}
-
-interface ApprovalPanelState {
-  approvals: Approvals[] | null;
 }
 
 export default ApprovalPanel;

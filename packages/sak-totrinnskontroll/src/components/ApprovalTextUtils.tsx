@@ -6,11 +6,11 @@ import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurder
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   AlleKodeverk,
+  ArbeidsforholdDto,
+  BehandlingStatusType,
   BeregningDto,
   KlageVurderingResultat,
-  Kodeverk,
   TotrinnskontrollAksjonspunkter,
-  BehandlingStatusType,
 } from '@fpsak-frontend/types';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
@@ -21,7 +21,7 @@ import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspun
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
-const formatDate = (date: Date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date: Date | string) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const buildVarigEndringBeregningText = (beregningDto: BeregningDto) => {
   if (beregningDto.fastsattVarigEndringNaering) {
@@ -198,14 +198,6 @@ const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingVurdering, beh
 };
 
 const buildAvklarAnnenForelderText = () => <FormattedMessage id="ToTrinnsForm.AvklarUttak.AnnenForelderHarRett" />;
-
-export interface ArbeidsforholdDto {
-  navn: string;
-  organisasjonsnummer: string;
-  arbeidsforholdId: string;
-  arbeidsforholdHandlingType: Kodeverk;
-  brukPermisjon: boolean;
-}
 
 const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkter) =>
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP ||

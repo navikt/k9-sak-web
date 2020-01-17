@@ -10,3 +10,6 @@ export { default as SkjermlenkeTyper } from './src/totrinnskontroll/SkjermlenkeT
 export { default as KlageVurderingResultat } from './src/totrinnskontroll/KlageVurderingResultat';
 export { default as Behandlingsresultat } from './src/totrinnskontroll/Behandlingsresultat';
 export { default as Approval } from './src/totrinnskontroll/Approval';
+export { default as Uttak } from './src/totrinnskontroll/Uttak';
+export { default as ArbeidsforholdDto } from './src/totrinnskontroll/ArbeidsforholdDto';
+export { default as Aktivitet } from './src/totrinnskontroll/Aktivitet';

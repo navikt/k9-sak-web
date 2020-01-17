@@ -1,20 +1,28 @@
+import Uttak from './Uttak';
+import ArbeidsforholdDto from './ArbeidsforholdDto';
+import Aktivitet from './Aktivitet';
+
 interface TotrinnskontrollAksjonspunkter {
   aksjonspunktKode: string;
-  opptjeningAktiviteter: any[];
+  opptjeningAktiviteter: Aktivitet[];
   beregningDto: BeregningDto;
   besluttersBegrunnelse: string;
   totrinnskontrollGodkjent: boolean;
   vurderPaNyttArsaker: VurderPaNyttArsaker[];
-  uttakPerioder: any[];
-  arbeidforholdDtos: any[];
+  uttakPerioder: Uttak[];
+  arbeidforholdDtos: ArbeidsforholdDto[];
   skjermlenkeType: string;
   totrinnskontrollAksjonspunkter: TotrinnskontrollAksjonspunkter[];
   navn?: string;
 }
 
+interface FaktaOmBeregningTilfeller {
+  kode: string;
+}
+
 export interface BeregningDto {
   fastsattVarigEndringNaering: boolean;
-  faktaOmBeregningTilfeller: { kode: string }[];
+  faktaOmBeregningTilfeller: FaktaOmBeregningTilfeller[];
 }
 
 export interface VurderPaNyttArsaker {

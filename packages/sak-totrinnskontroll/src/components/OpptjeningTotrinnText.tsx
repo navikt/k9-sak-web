@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { Aktivitet } from '@fpsak-frontend/types';
 
 const mapAktivitetTextEndring = (arbeidsgiverNavn: string, orgnr: string, aktivitetType: string | null) => {
   if (arbeidsgiverNavn && orgnr) {
@@ -83,14 +84,6 @@ export const OpptjeningTotrinnText = ({ aktivitet }: OpptjeningTotrinnTextProps)
     aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
   );
 };
-
-interface Aktivitet {
-  erEndring: boolean;
-  aktivitetType: string;
-  arbeidsgiverNavn: string;
-  orgnr: string;
-  godkjent: boolean;
-}
 
 interface OpptjeningTotrinnTextProps {
   aktivitet: Aktivitet;
