@@ -62,7 +62,7 @@ const TilbakemeldingerFraTotrinnskontrollContainer = ({
   const [approvals, setApprovals] = React.useState([] as Approval[]);
   React.useEffect(() => {
     setApprovals(createApprovalList(skjermlenkeTyper, location, totrinnskontrollContext));
-  }, [totrinnskontrollContext]);
+  }, [location, skjermlenkeTyper, totrinnskontrollContext]);
   return (
     <RawIntlProvider value={intl}>
       <div className={styles.approvalContainer}>

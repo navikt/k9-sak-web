@@ -15,6 +15,7 @@ import {
 } from '@fpsak-frontend/types';
 import { InjectedFormProps } from 'redux-form';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import ApprovalField from './ApprovalField';
 
 import styles from './ToTrinnsForm.less';
@@ -76,7 +77,7 @@ export const ToTrinnsFormImpl = ({
                     isForeldrepengerFagsak={isForeldrepengerFagsak}
                     behandlingKlageVurdering={behandlingKlageVurdering}
                     behandlingStatus={behandlingStatus}
-                    alleKodeverk={alleKodeverk}
+                    arbeidsforholdHandlingTyper={alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE]}
                   />
                 </div>
               ))}

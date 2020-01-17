@@ -1,12 +1,16 @@
 import { NavFieldGroup, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { TotrinnskontrollAksjonspunkter } from '@fpsak-frontend/types';
+import {
+  BehandlingKlageVurdering,
+  BehandlingStatusType,
+  Kodeverk,
+  TotrinnskontrollAksjonspunkter,
+} from '@fpsak-frontend/types';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
 import styles from './ApprovalField.less';
-import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
+import getAksjonspunktText from './ApprovalTextUtils';
 import ReasonsField from './ReasonsField';
 
 /*
@@ -33,9 +37,23 @@ export const ApprovalFieldImpl = ({
   approvalIndex,
   contextIndex,
   showBegrunnelse,
-  getAksjonspunktText,
   klageKA,
+  isForeldrepengerFagsak,
+  behandlingKlageVurdering,
+  behandlingStatus,
+  arbeidsforholdHandlingTyper,
 }: ApprovalFieldImplProps & WrappedComponentProps) => {
+  const aksjonspunktText = useMemo(
+    () =>
+      getAksjonspunktText(
+        isForeldrepengerFagsak,
+        behandlingKlageVurdering,
+        behandlingStatus,
+        arbeidsforholdHandlingTyper,
+        aksjonspunkt,
+      ),
+    [isForeldrepengerFagsak, behandlingKlageVurdering, behandlingStatus, arbeidsforholdHandlingTyper, aksjonspunkt],
+  );
   const fieldName = `approvals[${contextIndex}].aksjonspunkter[${approvalIndex}]`;
   const erKlageKA = klageKA && currentValue && currentValue.totrinnskontrollGodkjent;
   const erAnke =
@@ -45,7 +63,7 @@ export const ApprovalFieldImpl = ({
   const showReasons = erAnke || (currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA;
   return (
     <div className={styles.approvalItemContainer}>
-      {getAksjonspunktText(aksjonspunkt)?.map((formattedMessage, index) => (
+      {aksjonspunktText.map((formattedMessage, index) => (
         <div
           key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(`${index}`))}
           className={styles.aksjonspunktTextContainer}
@@ -70,17 +88,16 @@ export const ApprovalFieldImpl = ({
 
 interface ApprovalFieldImplProps {
   aksjonspunkt: TotrinnskontrollAksjonspunkter;
-  getAksjonspunktText: (aksjonspunkt: any) => (JSX.Element | null)[] | null;
   readOnly: boolean;
   approvalIndex?: number;
   contextIndex?: number;
   currentValue?: TotrinnskontrollAksjonspunkter;
   showBegrunnelse?: boolean;
   klageKA?: boolean;
+  isForeldrepengerFagsak: boolean;
+  behandlingKlageVurdering?: BehandlingKlageVurdering;
+  behandlingStatus: BehandlingStatusType;
+  arbeidsforholdHandlingTyper: Kodeverk[];
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  getAksjonspunktText: getAksjonspunktTextSelector(ownProps),
-});
-
-export default connect(mapStateToProps)(injectIntl(ApprovalFieldImpl));
+export default injectIntl(ApprovalFieldImpl);

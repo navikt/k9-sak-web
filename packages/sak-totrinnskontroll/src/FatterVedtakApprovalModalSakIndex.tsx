@@ -23,7 +23,6 @@ const FatterVedtakApprovalModalSakIndex = ({
   erGodkjenningFerdig,
   erKlageWithKA,
   behandlingsresultat,
-  behandlingId,
   behandlingStatusKode,
   behandlingTypeKode,
   harSammeResultatSomOriginalBehandling,
@@ -33,11 +32,10 @@ const FatterVedtakApprovalModalSakIndex = ({
       showModal={showModal}
       closeEvent={closeEvent}
       allAksjonspunktApproved={allAksjonspunktApproved}
-      fagsakYtelseType={fagsakYtelseType}
+      fagsakYtelse={fagsakYtelseType}
       erGodkjenningFerdig={erGodkjenningFerdig}
       erKlageWithKA={erKlageWithKA}
       behandlingsresultat={behandlingsresultat}
-      behandlingId={behandlingId}
       behandlingStatusKode={behandlingStatusKode}
       behandlingTypeKode={behandlingTypeKode}
       harSammeResultatSomOriginalBehandling={harSammeResultatSomOriginalBehandling}
@@ -53,7 +51,6 @@ interface FatterVedtakApprovalModalSakIndexProps {
   erGodkjenningFerdig: boolean;
   erKlageWithKA?: boolean;
   behandlingsresultat: Behandlingsresultat;
-  behandlingId: number;
   behandlingStatusKode: string;
   behandlingTypeKode: string;
   harSammeResultatSomOriginalBehandling?: boolean;

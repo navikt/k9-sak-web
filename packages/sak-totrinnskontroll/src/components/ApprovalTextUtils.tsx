@@ -3,20 +3,18 @@ import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforh
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  AlleKodeverk,
   ArbeidsforholdDto,
   BehandlingStatusType,
   BeregningDto,
   KlageVurderingResultat,
+  Kodeverk,
   TotrinnskontrollAksjonspunkter,
 } from '@fpsak-frontend/types';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
-import { createSelector } from 'reselect';
 import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
@@ -185,8 +183,11 @@ interface KlagebehandlingVurdering {
   klageVurderingResultatNFP: KlageVurderingResultat;
 }
 
-const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingVurdering, behandlingStaus: BehandlingStatusType) => {
-  if (behandlingStaus.kode === behandlingStatusCode.FATTER_VEDTAK) {
+const getTextForKlage = (
+  klagebehandlingVurdering: KlagebehandlingVurdering,
+  behandlingStatus: BehandlingStatusType,
+) => {
+  if (behandlingStatus.kode === behandlingStatusCode.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
       return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
     }
@@ -205,57 +206,46 @@ const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkter) =>
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ||
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
-interface OwnProps {
-  isForeldrepengerFagsak: boolean;
-  behandlingKlageVurdering?: KlagebehandlingVurdering;
-  behandlingStatus: BehandlingStatusType;
-  alleKodeverk: AlleKodeverk;
-}
+export const getAksjonspunktText = (
+  isForeldrepenger: boolean,
+  klagebehandlingVurdering: KlagebehandlingVurdering,
+  behandlingStatus: BehandlingStatusType,
+  arbeidsforholdHandlingTyper: Kodeverk[],
+  aksjonspunkt: TotrinnskontrollAksjonspunkter,
+) => {
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
+    return buildOpptjeningText(aksjonspunkt);
+  }
+  if (
+    aksjonspunkt.aksjonspunktKode ===
+    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
+  ) {
+    return [buildVarigEndringBeregningText(aksjonspunkt.beregningDto)];
+  }
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
+    return getFaktaOmBeregningText(aksjonspunkt.beregningDto);
+  }
+  if (
+    isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode) &&
+    aksjonspunkt.uttakPerioder &&
+    aksjonspunkt.uttakPerioder.length > 0
+  ) {
+    return buildUttakText(aksjonspunkt);
+  }
 
-export const getAksjonspunktTextSelector = createSelector(
-  [
-    (ownProps: OwnProps) => ownProps.isForeldrepengerFagsak,
-    (ownProps: OwnProps) => ownProps.behandlingKlageVurdering,
-    (ownProps: OwnProps) => ownProps.behandlingStatus,
-    (ownProps: OwnProps) => ownProps.alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE],
-  ],
-  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper) => (
-    aksjonspunkt: TotrinnskontrollAksjonspunkter,
-  ) => {
-    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
-      return buildOpptjeningText(aksjonspunkt);
-    }
-    if (
-      aksjonspunkt.aksjonspunktKode ===
-      aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
-    ) {
-      return [buildVarigEndringBeregningText(aksjonspunkt.beregningDto)];
-    }
-    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
-      return getFaktaOmBeregningText(aksjonspunkt.beregningDto);
-    }
-    if (
-      isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode) &&
-      aksjonspunkt.uttakPerioder &&
-      aksjonspunkt.uttakPerioder.length > 0
-    ) {
-      return buildUttakText(aksjonspunkt);
-    }
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT) {
+    return [buildAvklarAnnenForelderText()];
+  }
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD) {
+    return getTextForForeldreansvarsvilkåretAndreLedd(isForeldrepenger);
+  }
+  if (erKlageAksjonspunkt(aksjonspunkt)) {
+    return [getTextForKlage(klagebehandlingVurdering, behandlingStatus)];
+  }
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
+    return buildArbeidsforholdText(aksjonspunkt, arbeidsforholdHandlingTyper);
+  }
+  return [getTextFromAksjonspunktkode(aksjonspunkt)];
+};
 
-    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT) {
-      return [buildAvklarAnnenForelderText()];
-    }
-    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD) {
-      return getTextForForeldreansvarsvilkåretAndreLedd(isForeldrepenger);
-    }
-    if (erKlageAksjonspunkt(aksjonspunkt)) {
-      return [getTextForKlage(klagebehandlingVurdering, behandlingStatus)];
-    }
-    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
-      return buildArbeidsforholdText(aksjonspunkt, arbeidsforholdHandlingTyper);
-    }
-    return [getTextFromAksjonspunktkode(aksjonspunkt)];
-  },
-);
-
-export default getAksjonspunktTextSelector;
+export default getAksjonspunktText;

@@ -1,4 +1,4 @@
-import getAksjonspunktTextSelector from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
+import getAksjonspunktText from '@fpsak-frontend/sak-totrinnskontroll/src/components/ApprovalTextUtils';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -102,7 +102,7 @@ describe('<ToTrinnsFormReadOnly>', () => {
     const wrapper = shallow(
       <TilbakemeldingerFraTotrinnskontroll
         approvalList={approvalList}
-        getAksjonspunktText={getAksjonspunktTextSelector.resultFunc(true, null, null, null)}
+        getAksjonspunktText={getAksjonspunktText.resultFunc(true, null, null, null)}
       />,
     );
     const navFieldGroup = wrapper.find('NavLink');
