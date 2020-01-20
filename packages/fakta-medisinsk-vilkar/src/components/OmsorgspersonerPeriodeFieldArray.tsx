@@ -12,14 +12,24 @@ interface Fields {
 interface OmsorgspersonerPeriodeFieldArrayProps {
   readOnly: boolean;
   fields: FieldArrayFieldsProps<Fields>;
+  toOmsorgspersoner: boolean;
 }
 
-const OmsorgspersonerPeriodeFieldArray = ({ readOnly, fields }: OmsorgspersonerPeriodeFieldArrayProps) => {
+const OmsorgspersonerPeriodeFieldArray = ({
+  readOnly,
+  fields,
+  toOmsorgspersoner,
+}: OmsorgspersonerPeriodeFieldArrayProps) => {
   useEffect(() => {
     if (fields.length === 0) {
       fields.push({ fom: '', tom: '' });
     }
   }, []);
+
+  if (!toOmsorgspersoner) {
+    return null;
+  }
+
   return (
     <PeriodFieldArray
       fields={fields}
@@ -38,7 +48,7 @@ const OmsorgspersonerPeriodeFieldArray = ({ readOnly, fields }: OmsorgspersonerP
               validate={[required, hasValidDate, dateRangesNotOverlapping]}
               defaultValue={null}
               readOnly={readOnly}
-              label={index === 0 ? { id: 'MedisinskVilkarForm.FraTil' } : ''}
+              label={index === 0 ? { id: 'MedisinskVilkarForm.Periode' } : ''}
             />
           </FlexColumn>
           <FlexColumn>{getRemoveButton()}</FlexColumn>

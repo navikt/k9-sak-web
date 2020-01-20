@@ -26,7 +26,13 @@ const MedisinskVilkarPanel: React.FunctionComponent<MedisinskVilkarPanelProps> =
   openInfoPanels,
 }: // hasOpenAksjonspunkter,
 MedisinskVilkarPanelProps) => {
-  const props = { readOnly: false, submitCallback, behandlingId: behandling.id, behandlingVersjon: behandling.versjon }; // TODO readOnly skal sendes videre
+  const props = {
+    readOnly: false,
+    submitCallback,
+    behandlingId: behandling.id,
+    behandlingVersjon: behandling.versjon,
+    intl,
+  }; // TODO readOnly skal sendes videre
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'MedisinskVilkarPanel.MedisinskVilkar' })}

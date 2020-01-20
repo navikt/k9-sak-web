@@ -12,14 +12,19 @@ interface Fields {
 interface InnlagtBarnPeriodeFieldArrayProps {
   readOnly: boolean;
   fields: FieldArrayFieldsProps<Fields>;
+  isInnlagt: boolean;
 }
 
-const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields }: InnlagtBarnPeriodeFieldArrayProps) => {
+const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, isInnlagt }: InnlagtBarnPeriodeFieldArrayProps) => {
   useEffect(() => {
     if (fields.length === 0) {
       fields.push({ fom: '', tom: '' });
     }
   }, []);
+
+  if (!isInnlagt) {
+    return null;
+  }
   return (
     <PeriodFieldArray
       fields={fields}
@@ -38,7 +43,7 @@ const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields }: InnlagtBarnPeriodeFi
               validate={[required, hasValidDate, dateRangesNotOverlapping]}
               defaultValue={null}
               readOnly={readOnly}
-              label={index === 0 ? { id: 'MedisinskVilkarForm.FraTil' } : ''}
+              label={index === 0 ? { id: 'MedisinskVilkarForm.Periode' } : ''}
             />
           </FlexColumn>
           <FlexColumn>{getRemoveButton()}</FlexColumn>
