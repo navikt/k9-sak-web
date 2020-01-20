@@ -1,22 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl } from 'react-intl';
-import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
-
 import {
-  findEndretFeltNavn, findEndretFeltVerdi, findHendelseText, findIdForOpplysningCode, findResultatText,
+  findEndretFeltNavn,
+  findEndretFeltVerdi,
+  findHendelseText,
+  findIdForOpplysningCode,
+  findResultatText,
 } from './felles/historikkUtils';
 import BubbleText from './felles/bubbleText';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
+import Skjermlenke from './felles/Skjermlenke';
 
 const HistorikkMalType7 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn,
+  historikkinnslagDeler,
+  behandlingLocation,
+  dokumentLinks,
+  intl,
+  saksNr,
+  getKodeverknavn,
 }) => {
-  const formatChangedField = (endretFelt) => {
+  const formatChangedField = endretFelt => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
     const sub1 = fieldName.substring(0, fieldName.lastIndexOf(';'));
     const sub2 = fieldName.substring(fieldName.lastIndexOf(';') + 1);
@@ -41,53 +48,59 @@ const HistorikkMalType7 = ({
     return false;
   };
 
-  return (
-    historikkinnslagDeler
-      .map((historikkinnslagDel, historikkinnslagDelIndex) => (
-        <div key={
-          `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
-        }
-        >
-          <div>
-            {historikkinnslagDel.skjermlenke
-            && (
-              <Element>
-                <NavLink
-                  to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
-                >
-                  {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
-                </NavLink>
-              </Element>
-            )}
+  return historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
+    <div
+      key={
+        `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
+      }
+    >
+      <>
+        <Skjermlenke
+          skjermlenke={historikkinnslagDel.skjermlenke}
+          behandlingLocation={behandlingLocation}
+          getKodeverknavn={getKodeverknavn}
+          scrollUpOnClick={false}
+        />
 
-            {historikkinnslagDel.hendelse
-            && <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>}
+        {historikkinnslagDel.hendelse && (
+          <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
+        )}
 
-            {historikkinnslagDel.resultat
-            && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>}
+        {historikkinnslagDel.resultat && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>}
 
-            {historikkinnslagDel.endredeFelter && historikkinnslagDel.endredeFelter
-              .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
+        {historikkinnslagDel.endredeFelter &&
+          historikkinnslagDel.endredeFelter.map((endretFelt, i) => (
+            <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>
+          ))}
 
-            {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger
-              .map((opplysning) => (<FormattedHTMLMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />))}
+        {historikkinnslagDel.opplysninger &&
+          historikkinnslagDel.opplysninger.map(opplysning => (
+            <FormattedHTMLMessage
+              id={findIdForOpplysningCode(opplysning)}
+              values={{ antallBarn: opplysning.tilVerdi }}
+            />
+          ))}
 
-            {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
-            {historikkinnslagDel.begrunnelse && <BubbleText bodyText={(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
-            {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
-            <div>
-              {dokumentLinks && dokumentLinks.map((dokumentLenke) => (
-                <HistorikkDokumentLenke
-                  key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
-                  dokumentLenke={dokumentLenke}
-                  saksNr={saksNr}
-                />
-              ))}
-            </div>
-          </div>
+        {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
+        {historikkinnslagDel.begrunnelse && (
+          <BubbleText bodyText={historikkinnslagDel.begrunnelse} className="snakkeboble-panel__tekst" />
+        )}
+        {historikkinnslagDel.begrunnelseFritekst && (
+          <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />
+        )}
+        <div>
+          {dokumentLinks &&
+            dokumentLinks.map(dokumentLenke => (
+              <HistorikkDokumentLenke
+                key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+                dokumentLenke={dokumentLenke}
+                saksNr={saksNr}
+              />
+            ))}
         </div>
-
-      )));
+      </>
+    </div>
+  ));
 };
 
 HistorikkMalType7.propTypes = {

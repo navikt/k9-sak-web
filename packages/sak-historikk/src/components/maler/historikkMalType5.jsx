@@ -155,6 +155,7 @@ const HistorikkMalType5 = ({
         behandlingLocation={behandlingLocation}
         skjermlenke={historikkinnslagDel.skjermlenke}
         getKodeverknavn={getKodeverknavn}
+        scrollUpOnClick
       />
 
       {lageElementInnhold(historikkinnslagDel).map(tekst => (

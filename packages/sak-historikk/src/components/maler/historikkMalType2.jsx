@@ -1,33 +1,20 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
-
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText, findResultatText } from './felles/historikkUtils';
-
-const scrollUp = () => {
-  if (window.innerWidth < 1305) {
-    window.scroll(0, 0);
-  }
-  return false;
-};
+import Skjermlenke from './felles/Skjermlenke';
 
 const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn }) => (
-  <div>
-    {historikkinnslagDeler[0].skjermlenke && (
-      <Element>
-        <NavLink
-          to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
-          onClick={scrollUp}
-        >
-          {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
-        </NavLink>
-      </Element>
-    )}
+  <>
+    <Skjermlenke
+      skjermlenke={historikkinnslagDeler[0].skjermlenke}
+      behandlingLocation={behandlingLocation}
+      getKodeverknavn={getKodeverknavn}
+      scrollUpOnClick
+    />
     {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
       <Element>
         {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}: ${findResultatText(
@@ -39,7 +26,7 @@ const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl, ge
     {!historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
       <Element>{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>
     )}
-  </div>
+  </>
 );
 
 HistorikkMalType2.propTypes = {
