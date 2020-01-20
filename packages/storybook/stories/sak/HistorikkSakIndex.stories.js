@@ -9,7 +9,7 @@ const history = [
   {
     behandlingId: 999951,
     type: {
-      kode: 'NYE_REGOPPLYSNINGER',
+      kode: 'NYE_REGOPPLYSNINGER', // historikktype 1
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
     },
     aktoer: {
@@ -52,7 +52,7 @@ const history = [
   {
     behandlingId: null,
     type: {
-      kode: 'INNSYN_OPPR',
+      kode: 'INNSYN_OPPR', // historikktype 1
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
     },
     aktoer: {
@@ -93,7 +93,7 @@ const history = [
   {
     behandlingId: 999952,
     type: {
-      kode: 'BEH_STARTET',
+      kode: 'BEH_STARTET', // historikktype 1
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
     },
     aktoer: {
@@ -141,7 +141,7 @@ const history = [
   {
     behandlingId: 999954,
     type: {
-      kode: 'FORSLAG_VEDTAK',
+      kode: 'FORSLAG_VEDTAK', // historikktype 2
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
     },
     aktoer: {
@@ -184,7 +184,7 @@ const history = [
   {
     behandlingId: 999955,
     type: {
-      kode: 'SAK_RETUR',
+      kode: 'SAK_RETUR', // historikktype 3
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
     },
     aktoer: {
@@ -229,6 +229,68 @@ const history = [
             godkjent: false,
             aksjonspunktKode: aksjonspunktCodes.AVKLAR_UTTAK,
             aksjonspunktBegrunnelse: 'Dummybegrunnelse for punktet over',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    behandlingId: 999956,
+    type: {
+      kode: 'UTTAK', // historikktype 5
+      kodeverk: 'HISTORIKKINNSLAG_TYPE',
+    },
+    aktoer: {
+      kode: 'VL',
+      kodeverk: 'HISTORIKK_AKTOER',
+    },
+    kjoenn: {
+      kode: '-',
+      kodeverk: 'BRUKER_KJOENN',
+    },
+    opprettetAv: 'Z991110',
+    opprettetTidspunkt: '2019-09-18T15:25:31.291',
+    dokumentLinks: [],
+    historikkinnslagDeler: [
+      {
+        begrunnelse: null,
+        begrunnelseFritekst: 'Dummy begrunnelsesfritekst',
+        hendelse: {
+          navn: {
+            kode: 'ANKEBEH_STARTET',
+            kodeverk: 'HISTORIKKINNSLAG_TYPE',
+          },
+          verdi: null,
+        },
+        opplysninger: null,
+        soeknadsperiode: {
+          soeknadsperiodeType: {
+            kode: 'GRADERING',
+            kodeverk: 'HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE',
+          },
+          navnVerdi: 'navnVerdi',
+          tilVerdi: 'tilVerdi',
+        },
+        skjermlenke: {
+          kode: 'FAKTA_FOR_OMSORG',
+          kodeverk: 'SKJERMLENKE_TYPE',
+        },
+        aarsak: null,
+        tema: null,
+        gjeldendeFra: {
+          navn: 'INNTEKT_FRA_ARBEIDSFORHOLD',
+          verdi: 'noe jobb eller no',
+          fra: '21.04.2019',
+        },
+        resultat: 'DELVIS_TILBAKEBETALING',
+        endredeFelter: [
+          {
+            endretFeltNavn: {
+              kode: 'AKTIVITET',
+            },
+            navnVerdi: 'aktiviteten',
+            fraVerdi: 'BENYTT',
+            tilVerdi: false,
           },
         ],
       },

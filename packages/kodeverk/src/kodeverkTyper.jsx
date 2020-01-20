@@ -49,6 +49,7 @@ const kodeverkTyper = {
   HISTORIKK_ENDRET_FELT_TYPE: 'HistorikkEndretFeltType',
   HISTORIKKINNSLAG_TYPE: 'HistorikkinnslagType',
   HISTORIKK_AKTOER: 'HistorikkAktør',
+  HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE: 'HistorikkAvklartSoeknadsperiodeType',
   BEHANDLING_STATUS: 'BehandlingStatus',
   FAR_SOEKER_TYPE: 'FarSøkerType',
   MEDLEMSKAP_DEKNING: 'MedlemskapDekningType',

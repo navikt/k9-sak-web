@@ -6714,5 +6714,77 @@
       "navn": "Mor",
       "kodeverk": "FORELDRE_TYPE"
     }
+  ],
+  "HistorikkAvklartSoeknadsperiodeType": [
+    {
+      "kode": "UTSETTELSE_INSTITUSJON_BARN",
+      "navn": "Utsettelse: innleggelse av barn",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "OVERFOERING_SKYDOM",
+      "navn": "Overføring: sykdom/skade",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "UTSETTELSE_ARBEID",
+      "navn": "Utsettelse: arbeid",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "GRADERING",
+      "navn": "Uttak: gradering",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "UTSETTELSE_SKYDOM",
+      "navn": "Utsettelse: sykdom/skade",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "SLETTET_SOEKNASPERIODE",
+      "navn": "Perioden er slettet",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "OPPHOLD",
+      "navn": "Opphold: annen foreldres uttak",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "UTTAK",
+      "navn": "Uttak",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "NY_SOEKNADSPERIODE",
+      "navn": "Ny periode er lagt til",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "UTSETTELSE_FERIE",
+      "navn": "Utsettelse: ferie",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "OVERFOERING_IKKE_RETT",
+      "navn": "Overføring: annen forelder har ikke rett",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "UTSETTELSE_INSTITUSJON_SØKER",
+      "navn": "Utsettelse: innleggelse av forelder",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "OVERFOERING_ALENEOMSORG",
+      "navn": "Overføring: søker har aleneomsorg",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    },
+    {
+      "kode": "OVERFOERING_INNLEGGELSE",
+      "navn": "Overføring: innleggelse",
+      "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
+    }
   ]
 }
