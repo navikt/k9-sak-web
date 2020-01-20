@@ -12,9 +12,9 @@ interface Kodeverk {
 interface SkjermlenkeProps {
   skjermlenke?: Kodeverk;
   behandlingLocation?: {
-    pathname: string;
+    pathname: string,
   };
-  getKodeverknavn?: (Kodeverk) => string;
+  getKodeverknavn?: (kodeverkObjekt: Kodeverk, undertype?: string) => string;
   scrollUpOnClick?: boolean;
 }
 

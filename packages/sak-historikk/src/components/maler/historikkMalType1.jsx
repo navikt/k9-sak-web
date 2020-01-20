@@ -35,7 +35,7 @@ const HistorikkMalType1 = ({ historikkinnslagDeler, dokumentLinks, saksNr, getKo
 HistorikkMalType1.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  saksNr: PropTypes.number.isRequired,
+  saksNr: PropTypes.string.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
