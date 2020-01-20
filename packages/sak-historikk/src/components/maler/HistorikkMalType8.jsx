@@ -1,19 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import {
-  findEndretFeltNavn,
-  findEndretFeltVerdi,
-  findHendelseText,
-  findIdForOpplysningCode,
-  findResultatText,
-} from './felles/historikkUtils';
-import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
-import BubbleText from './felles/bubbleText';
+import { findEndretFeltNavn, findEndretFeltVerdi } from './felles/historikkUtils';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
-import Skjermlenke from './felles/Skjermlenke';
+import HistorikkMalFelles7og8 from './HistorikkmalFelles7og8';
 
 const HistorikkMalType8 = ({
   historikkinnslagDeler,
@@ -55,62 +46,20 @@ const HistorikkMalType8 = ({
     );
   };
 
-  return historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
-    <div
-      key={
-        `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
-      }
-    >
-      <>
-        <Skjermlenke
-          skjermlenke={historikkinnslagDel.skjermlenke}
-          behandlingLocation={behandlingLocation}
-          getKodeverknavn={getKodeverknavn}
-          scrollUpOnClick={false}
-        />
+  const formatBegrunnelse = begrunnelse => getKodeverknavn(begrunnelse);
 
-        {historikkinnslagDel.hendelse && (
-          <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
-        )}
-
-        {historikkinnslagDel.resultat && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>}
-
-        {historikkinnslagDel.endredeFelter &&
-          historikkinnslagDel.endredeFelter.map((endretFelt, i) => (
-            <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>
-          ))}
-
-        {historikkinnslagDel.opplysninger &&
-          historikkinnslagDel.opplysninger.map(opplysning => (
-            <FormattedHTMLMessage
-              id={findIdForOpplysningCode(opplysning)}
-              values={{ antallBarn: opplysning.tilVerdi }}
-            />
-          ))}
-
-        {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
-        {historikkinnslagDel.begrunnelse && (
-          <BubbleText
-            bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)}
-            className="snakkeboble-panel__tekst"
-          />
-        )}
-        {historikkinnslagDel.begrunnelseFritekst && (
-          <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />
-        )}
-        <div>
-          {dokumentLinks &&
-            dokumentLinks.map(dokumentLenke => (
-              <HistorikkDokumentLenke
-                key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
-                dokumentLenke={dokumentLenke}
-                saksNr={saksNr}
-              />
-            ))}
-        </div>
-      </>
-    </div>
-  ));
+  return (
+    <HistorikkMalFelles7og8
+      historikkinnslagDeler={historikkinnslagDeler}
+      behandlingLocation={behandlingLocation}
+      dokumentLinks={dokumentLinks}
+      saksNr={saksNr}
+      intl={intl}
+      getKodeverknavn={getKodeverknavn}
+      formatChangedField={formatChangedField}
+      formatBegrunnelse={formatBegrunnelse}
+    />
+  );
 };
 
 HistorikkMalType8.propTypes = {
