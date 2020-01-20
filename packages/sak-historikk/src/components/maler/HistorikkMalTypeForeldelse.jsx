@@ -59,7 +59,7 @@ export const HistorikkMalTypeForeldelse = ({ historikkinnslagDeler, behandlingLo
                 );
               })}
             <VerticalSpacer eightPx />
-            <Normaltekst>{begrunnelseFritekst && begrunnelseFritekst}</Normaltekst>
+            {begrunnelseFritekst && <Normaltekst>{begrunnelseFritekst}</Normaltekst>}
             <VerticalSpacer eightPx />
           </div>
         );
