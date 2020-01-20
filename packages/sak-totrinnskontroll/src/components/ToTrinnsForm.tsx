@@ -19,7 +19,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import ApprovalField from './ApprovalField';
 
 import styles from './ToTrinnsForm.less';
-import { Approvals } from './ApprovalPanel';
 
 const allApproved = (formState: FormState[]) =>
   formState
@@ -117,7 +116,7 @@ interface FormState {
 }
 
 interface ToTrinnsFormImplProps extends InjectedFormProps {
-  totrinnskontrollContext: Approvals[];
+  totrinnskontrollContext: TotrinnskontrollAksjonspunkter[];
   formState: FormState[];
   forhandsvisVedtaksbrev: () => void;
   klageVurderingResultatNFP?: KlageVurderingResultat;

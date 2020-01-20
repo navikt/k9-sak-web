@@ -20,22 +20,16 @@ const godkjendAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkter) => {
     <div className={styles.approvalItem}>
       {aksjonspunkt.totrinnskontrollGodkjent ? (
         <div>
-          <span>
-            <Image src={checkImg} className={styles.image} />
-          </span>
-          <span>
-            <FormattedMessage id="ToTrinnsForm.Godkjent" />
-          </span>
+          <Image src={checkImg} className={styles.image} />
+          <FormattedMessage id="ToTrinnsForm.Godkjent" />
         </div>
       ) : (
         <div className={styles.approvalItem}>
           {vurderPaNyttArsaker.map((item, index) => (
             /* eslint-disable-next-line react/no-array-index-key */
             <div key={`${item.kode}${index}`}>
-              <span>
-                <Image src={avslattImg} className={styles.image} />
-              </span>
-              <span>{item.navn}</span>
+              <Image src={avslattImg} className={styles.image} />
+              {item.navn}
             </div>
           ))}
         </div>
