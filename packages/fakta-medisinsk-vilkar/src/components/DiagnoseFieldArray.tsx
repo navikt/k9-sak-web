@@ -49,8 +49,7 @@ const DiagnoseFieldArray = ({ readOnly, fields, intl, hasDiagnose }: DiagnoseFie
               placeholder={intl.formatMessage({ id: 'MedisinskVilkarForm.DiagnoseArray' })}
               selectValues={[
                 <option value="lol" key="lol">
-                  {/* <FormattedMessage id="MedisinskVilkarForm.F-90" /> */}
-                  test
+                  {/* <FormattedMessage id="MedisinskVilkarForm.F-90" /> */}F 90 - Hyberkinetiske forstyrrelser
                 </option>,
                 // <option
                 //   value={tilretteleggingType.DELVIS_TILRETTELEGGING}
