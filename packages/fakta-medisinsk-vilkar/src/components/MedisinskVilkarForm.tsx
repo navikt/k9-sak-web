@@ -34,6 +34,21 @@ interface StateProps {
   toOmsorgspersoner: boolean;
 }
 
+interface Periode {
+  fom: string;
+  tom: string;
+}
+
+interface LegeerklaeringDto {
+  beredskapNattevak: boolean;
+  diagnose: boolean;
+  innlagt: boolean;
+  innlagtBarnPerioder: Periode[];
+  legeerklaeringSignatar: string;
+  omsorgspersoner: boolean;
+  omsorgspersonerPerioder: Periode[];
+}
+
 // const minLength3 = minLength(3);
 // const maxLength1500 = maxLength(1500);
 
@@ -58,7 +73,7 @@ const MedisinskVilkarForm = ({
         <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
       </Element>
       <VerticalSpacer eightPx />
-      <RadioGroupField name="innlagtField" bredde="M" validate={[required]} readOnly={readOnly}>
+      <RadioGroupField name="innlagt" bredde="M" validate={[required]} readOnly={readOnly}>
         <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
         <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
       </RadioGroupField>
@@ -69,7 +84,7 @@ const MedisinskVilkarForm = ({
         <FormattedMessage id="MedisinskVilkarForm.Omsorgspersoner" />
       </Element>
       <VerticalSpacer eightPx />
-      <RadioGroupField name="omsorgspersonerField" bredde="M" validate={[required]} readOnly={readOnly}>
+      <RadioGroupField name="omsorgspersoner" bredde="M" validate={[required]} readOnly={readOnly}>
         <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
         <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
       </RadioGroupField>
@@ -84,7 +99,7 @@ const MedisinskVilkarForm = ({
         <FormattedMessage id="MedisinskVilkarForm.Beredskap" />
       </Element>
       <VerticalSpacer eightPx />
-      <RadioGroupField name="nattevaakField" bredde="M" validate={[required]} readOnly={readOnly}>
+      <RadioGroupField name="beredskapNattevak" bredde="M" validate={[required]} readOnly={readOnly}>
         <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
         <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
       </RadioGroupField>
@@ -106,7 +121,7 @@ const MedisinskVilkarForm = ({
         <FormattedMessage id="MedisinskVilkarForm.Diagnose" />
       </Element>
       <VerticalSpacer eightPx />
-      <RadioGroupField name="diagnoseField" bredde="M" validate={[required]} readOnly={readOnly}>
+      <RadioGroupField name="diagnose" bredde="M" validate={[required]} readOnly={readOnly}>
         <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
         <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
       </RadioGroupField>
@@ -179,41 +194,73 @@ const MedisinskVilkarForm = ({
   );
 };
 
+const getValidLegeerklaeringSignatar = (signatar: string) => {
+  const validLegeerklaeringSignatar = ['sykehuslege', 'legeispesialisthelsetjenesten', 'fastlege', 'annenyrkesgruppe'];
+  return validLegeerklaeringSignatar.includes(signatar) ? signatar : '';
+};
+
 const transformValues = values => ({
   kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, // TODO
   begrunnelse: values.begrunnelseLegeerklaering,
   ...values,
 });
 
-const buildInitialValues = createSelector([], () => ({}));
+const buildInitialValues = createSelector(
+  [(props: { legeerklaeringDto: LegeerklaeringDto }) => props.legeerklaeringDto],
+  legeerklaeringDto => {
+    const legeerklaeringSignatar = getValidLegeerklaeringSignatar(legeerklaeringDto.legeerklaeringSignatar);
+
+    return {
+      ...legeerklaeringDto,
+      legeerklaeringSignatar,
+    };
+  },
+);
 
 const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
   const { submitCallback } = props;
   const onSubmit = values => submitCallback([transformValues(values)]);
 
+  const legeerklaeringDto = {
+    innlagt: true,
+    innlagtBarnPerioder: [
+      {
+        fom: '2019-09-16',
+        tom: '2019-10-16',
+      },
+    ],
+    omsorgspersoner: true,
+    omsorgspersonerPerioder: [
+      {
+        fom: '2019-11-09',
+        tom: '2019-12-24',
+      },
+    ],
+    beredskapNattevak: true,
+    diagnose: true,
+    legeerklaeringSignatar: 'fastlege',
+  };
+
   return state => ({
     onSubmit,
-    initialValues: buildInitialValues(props),
+    initialValues: buildInitialValues({ legeerklaeringDto }),
     hasDiagnose: !!behandlingFormValueSelector(
       formName,
       props.behandlingId,
       props.behandlingVersjon,
-    )(state, 'diagnoseField'),
-    isInnlagt: !!behandlingFormValueSelector(
-      formName,
-      props.behandlingId,
-      props.behandlingVersjon,
-    )(state, 'innlagtField'),
+    )(state, 'diagnose'),
+    isInnlagt: !!behandlingFormValueSelector(formName, props.behandlingId, props.behandlingVersjon)(state, 'innlagt'),
     toOmsorgspersoner: !!behandlingFormValueSelector(
       formName,
       props.behandlingId,
       props.behandlingVersjon,
-    )(state, 'omsorgspersonerField'),
+    )(state, 'omsorgspersoner'),
   });
 };
 
 export default connect(mapStateToPropsFactory)(
   behandlingFormTs({
     form: formName,
+    enableReinitialize: true,
   })(MedisinskVilkarForm),
 );

@@ -20,12 +20,12 @@ const Legeerklaering = ({ readOnly }: LegeerklaeringProps) => (
     <VerticalSpacer eightPx />
     <RadioGroupField
       direction="vertical"
-      name="legeerklaeringField"
+      name="legeerklaeringSignatar"
       bredde="M"
       validate={[required]}
       readOnly={readOnly}
     >
-      <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappSykehuslege' }} value="Sykehuslege" />
+      <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappSykehuslege' }} value="sykehuslege" />
       <RadioOption
         label={{ id: 'MedisinskVilkarForm.RadioknappLegeISpesialhelsetjenesten' }}
         value="legeispesialisthelsetjenesten"
