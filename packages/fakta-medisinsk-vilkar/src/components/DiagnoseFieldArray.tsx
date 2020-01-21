@@ -1,13 +1,12 @@
 import { SelectField } from '@fpsak-frontend/form';
-import { FlexColumn, FlexRow, PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, SelectFieldArray } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import React, { useEffect } from 'react';
 import { IntlShape } from 'react-intl';
 import { FieldArrayFieldsProps } from 'redux-form';
 
 interface Fields {
-  fom: string;
-  tom: string;
+  value: string;
 }
 
 interface DiagnoseFieldArrayProps {
@@ -20,7 +19,7 @@ interface DiagnoseFieldArrayProps {
 const DiagnoseFieldArray = ({ readOnly, fields, intl, hasDiagnose }: DiagnoseFieldArrayProps) => {
   useEffect(() => {
     if (fields.length === 0) {
-      fields.push({ fom: '', tom: '' });
+      fields.push({ value: '' });
     }
   }, []);
 
@@ -28,12 +27,8 @@ const DiagnoseFieldArray = ({ readOnly, fields, intl, hasDiagnose }: DiagnoseFie
     return null;
   }
   return (
-    <PeriodFieldArray
+    <SelectFieldArray
       fields={fields}
-      // emptyPeriodTemplate={{
-      //   fom: '',
-      //   tom: '',
-      // }}
       shouldShowAddButton
       readOnly={readOnly}
       textCode="MedisinskVilkarForm.LeggTilDiagnose"
@@ -43,13 +38,16 @@ const DiagnoseFieldArray = ({ readOnly, fields, intl, hasDiagnose }: DiagnoseFie
           <FlexColumn>
             <SelectField
               readOnly={readOnly}
-              name={`diagnoseFieldArray_${fieldId}`}
+              name={`${fieldId}.value`}
               label=""
               validate={[required]}
               placeholder={intl.formatMessage({ id: 'MedisinskVilkarForm.DiagnoseArray' })}
               selectValues={[
                 <option value="lol" key="lol">
-                  {/* <FormattedMessage id="MedisinskVilkarForm.F-90" /> */}F 90 - Hyberkinetiske forstyrrelser
+                  {intl.formatMessage({ id: 'MedisinskVilkarForm.F-90' })}
+                </option>,
+                <option value="hei" key="hei">
+                  test
                 </option>,
                 // <option
                 //   value={tilretteleggingType.DELVIS_TILRETTELEGGING}
@@ -69,7 +67,7 @@ const DiagnoseFieldArray = ({ readOnly, fields, intl, hasDiagnose }: DiagnoseFie
           <FlexColumn>{getRemoveButton()}</FlexColumn>
         </FlexRow>
       )}
-    </PeriodFieldArray>
+    </SelectFieldArray>
   );
 };
 
