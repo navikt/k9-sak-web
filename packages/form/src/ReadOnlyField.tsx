@@ -1,17 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Normaltekst } from 'nav-frontend-typografi';
-
 import { EditedIcon } from '@fpsak-frontend/shared-components';
-import Label, { labelPropType } from './Label';
-
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import Label from './Label';
+import LabelType from './LabelType';
 import styles from './readOnlyField.less';
 
-const hasValue = (value) => value !== undefined && value !== null && value !== '';
+interface ReadOnlyFieldProps {
+  label?: LabelType;
+  input: { value: string | number };
+  isEdited?: boolean;
+}
 
-export const ReadOnlyField = ({
-  label, input, isEdited,
-}) => {
+const hasValue = (value: string | number) => value !== undefined && value !== null && value !== '';
+
+export const ReadOnlyField = ({ label, input, isEdited }: ReadOnlyFieldProps): JSX.Element => {
   if (!hasValue(input.value)) {
     return null;
   }
@@ -24,14 +26,6 @@ export const ReadOnlyField = ({
       </Normaltekst>
     </div>
   );
-};
-
-ReadOnlyField.propTypes = {
-  label: labelPropType,
-  input: PropTypes.shape({
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  }).isRequired,
-  isEdited: PropTypes.bool,
 };
 
 ReadOnlyField.defaultProps = {

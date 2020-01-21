@@ -1,15 +1,28 @@
-import React, { Component } from 'react';
-import { Field as reduxFormField } from 'redux-form';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
 import { Input as NavInput } from 'nav-frontend-skjema';
-import renderNavField from './renderNavField';
+import React, { Component } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { Field as reduxFormField } from 'redux-form';
+import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import { labelPropType } from './Label';
+import renderNavField from './renderNavField';
 
-const createNormalizeOnBlurField = (WrappedNavFieldComponent) => {
-  class FieldComponent extends Component {
-    constructor(props) {
+interface DecimalFieldProps {
+  name: string;
+  type?: string;
+  label?: LabelType;
+  validate?: () => void[];
+  readOnly?: boolean;
+  isEdited?: boolean;
+  normalizeOnBlur: () => void;
+}
+
+const createNormalizeOnBlurField = WrappedNavFieldComponent => {
+  interface FieldComponent {
+    normalizeOnBlur: (value: any) => void;
+    component?: () => reduxFormField;
+  }
+  class FieldComponent extends Component<FieldComponent & WrappedComponentProps> {
+    constructor(props: FieldComponent & WrappedComponentProps) {
       super(props);
       this.blurHandler = this.blurHandler.bind(this);
     }
@@ -21,10 +34,11 @@ const createNormalizeOnBlurField = (WrappedNavFieldComponent) => {
           {...props}
           input={{
             ...input,
-            onBlur: (event) => {
-              const value = event && event.target && Object.prototype.hasOwnProperty.call(event.target, 'value')
-                ? event.target.value
-                : event;
+            onBlur: event => {
+              const value =
+                event && event.target && Object.prototype.hasOwnProperty.call(event.target, 'value')
+                  ? event.target.value
+                  : event;
               const newValue = normalizeOnBlur ? normalizeOnBlur(value) : value;
               onBlur(newValue);
             },
@@ -42,15 +56,6 @@ const createNormalizeOnBlurField = (WrappedNavFieldComponent) => {
     }
   }
 
-  FieldComponent.propTypes = {
-    normalizeOnBlur: PropTypes.func.isRequired,
-    component: PropTypes.func,
-    intl: PropTypes.shape().isRequired,
-  };
-  FieldComponent.defaultProps = {
-    component: undefined,
-  };
-
   const FieldComponentWithIntl = injectIntl(FieldComponent);
 
   FieldComponentWithIntl.WrappedComponent = FieldComponent;
@@ -62,8 +67,15 @@ const renderNavInput = renderNavField(NavInput);
 const NormalizeOnBlurField = createNormalizeOnBlurField(reduxFormField);
 
 const DecimalField = ({
-  name, type, label, validate, readOnly, isEdited, normalizeOnBlur, ...otherProps
-}) => (
+  name,
+  type,
+  label,
+  validate,
+  readOnly,
+  isEdited,
+  normalizeOnBlur,
+  ...otherProps
+}: DecimalFieldProps) => (
   <NormalizeOnBlurField
     name={name}
     validate={validate}
@@ -78,16 +90,6 @@ const DecimalField = ({
     autoComplete="off"
   />
 );
-
-DecimalField.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  label: labelPropType,
-  validate: PropTypes.arrayOf(PropTypes.func),
-  readOnly: PropTypes.bool,
-  isEdited: PropTypes.bool,
-  normalizeOnBlur: PropTypes.func.isRequired,
-};
 
 DecimalField.defaultProps = {
   type: 'number',

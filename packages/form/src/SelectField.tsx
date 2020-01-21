@@ -1,25 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import CustomNavSelect from './CustomNavSelect';
-
-import renderNavField from './renderNavField';
-import { labelPropType } from './Label';
+import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
+import renderNavField from './renderNavField';
+
+interface SelectFieldProps {
+  name: string;
+  selectValues: object[];
+  label: LabelType;
+  validate?: () => void[];
+  readOnly?: boolean;
+  placeholder?: string;
+  hideValueOnDisable?: boolean;
+}
 
 /* eslint-disable-next-line react/prop-types */
 const renderReadOnly = () => ({ input, selectValues, ...otherProps }) => {
   /* eslint-disable-next-line react/prop-types */
-  const option = selectValues.map((sv) => sv.props).find((o) => o.value === input.value);
+  const option = selectValues.map(sv => sv.props).find(o => o.value === input.value);
   const value = option ? option.children : undefined;
   return <ReadOnlyField input={{ value }} {...otherProps} />;
 };
 
 const renderNavSelect = renderNavField(CustomNavSelect);
 
-const SelectField = ({
-  name, label, selectValues, validate, readOnly, ...otherProps
-}) => (
+const SelectField = ({ name, label, selectValues, validate, readOnly, ...otherProps }: SelectFieldProps) => (
   <Field
     name={name}
     validate={validate}
@@ -32,16 +38,6 @@ const SelectField = ({
     readOnlyHideEmpty
   />
 );
-
-SelectField.propTypes = {
-  name: PropTypes.string.isRequired,
-  selectValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-  label: labelPropType.isRequired,
-  validate: PropTypes.arrayOf(PropTypes.func),
-  readOnly: PropTypes.bool,
-  placeholder: PropTypes.string,
-  hideValueOnDisable: PropTypes.bool,
-};
 
 SelectField.defaultProps = {
   validate: null,
