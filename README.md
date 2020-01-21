@@ -1,6 +1,7 @@
 # k9-sak-frontend
 Monorepo for Frontend kode for k9-sak.
 
+![](https://github.com/navikt/k9-sak-web/workflows/Deploy%20Docker%20image/badge.svg)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-sak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_k9-sak-frontend)
 [![Known Vulnerabilities](https://snyk.io/test/github/navikt/k9-sak-frontend/badge.svg)](https://snyk.io/test/github/navikt/k9-sak-frontend)
