@@ -15,10 +15,21 @@ export const findIdForOpplysningCode = opplysning => {
   return opplysningCode.feltId;
 };
 
-export const findResultatText = (resultat, intl) => {
+export const findResultatText = (resultat, intl, getKodeverknavn) => {
   if (!resultat) {
     return null;
   }
+
+  const historikkResultatNavn = getKodeverknavn({ kode: resultat, kodeverk: 'HISTORIKK_RESULTAT_TYPE' });
+  if (historikkResultatNavn) {
+    return historikkResultatNavn;
+  }
+
+  const vedtakResultatNavn = getKodeverknavn({ kode: resultat, kodeverk: 'VEDTAK_RESULTAT_TYPE' });
+  if (vedtakResultatNavn) {
+    return vedtakResultatNavn;
+  }
+
   const resultatCode = historikkResultatTypeCodes[resultat];
   if (!resultatCode) {
     return `ResultatTypeCode ${resultat} finnes ikke-LEGG DET INN`;

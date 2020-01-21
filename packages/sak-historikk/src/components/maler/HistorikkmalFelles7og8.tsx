@@ -55,7 +55,9 @@ const HistorikkMalFelles7og8: React.FunctionComponent<HistorikkmalFelles7og8Prop
           <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
         )}
 
-        {historikkinnslagDel.resultat && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>}
+        {historikkinnslagDel.resultat && (
+          <Element>{findResultatText(historikkinnslagDel.resultat, intl, getKodeverknavn)}</Element>
+        )}
 
         {historikkinnslagDel.endredeFelter &&
           historikkinnslagDel.endredeFelter.map((endretFelt, i) => (

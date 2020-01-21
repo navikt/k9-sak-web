@@ -80,7 +80,7 @@ const HistorikkMalType5 = ({
       list.push(findHendelseText(historikkDel.hendelse, getKodeverknavn));
     }
     if (historikkDel.resultat) {
-      list.push(findResultatText(historikkDel.resultat, intl));
+      list.push(findResultatText(historikkDel.resultat, intl, getKodeverknavn));
     }
     return list;
   };

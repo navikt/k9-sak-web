@@ -20,6 +20,7 @@ const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl, ge
         {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}: ${findResultatText(
           historikkinnslagDeler[0].resultat,
           intl,
+          getKodeverknavn,
         )}`}
       </Element>
     )}

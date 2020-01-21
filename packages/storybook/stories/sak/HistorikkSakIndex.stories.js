@@ -282,7 +282,7 @@ const history = [
           verdi: 'noe jobb eller no',
           fra: '21.04.2019',
         },
-        resultat: 'DELVIS_TILBAKEBETALING',
+        resultat: 'KLAGE_HJEMSENDE_UTEN_OPPHEVE',
         endredeFelter: [
           {
             endretFeltNavn: {

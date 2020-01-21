@@ -6786,5 +6786,134 @@
       "navn": "Overføring: innleggelse",
       "kodeverk": "HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE"
     }
+  ],
+  "HistorikkResultatType": [
+    {
+      "kode": "STADFESTET_VEDTAK",
+      "navn": "Vedtaket er stadfestet",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "ANKE_STADFESTET_VEDTAK",
+      "navn": "Vedtaket er stadfestet",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "ANKE_AVVIS",
+      "navn": "Anken er avvist",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "ANKE_OPPHEVE_OG_HJEMSENDE",
+      "navn": "Ytelsesvedtaket oppheve og hjemsende",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "BEREGNET_AARSINNTEKT",
+      "navn": "Grunnlag for beregnet årsinntekt",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "MEDHOLD_I_KLAGE",
+      "navn": "Vedtaket er omgjort, til gunst",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "ANKE_TIL_GUNST",
+      "navn": "Til gunst omgjør i anke",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "OPPRETTHOLDT_VEDTAK",
+      "navn": "Vedtaket er opprettholdt",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "AVVIS_KLAGE",
+      "navn": "Klagen er avvist",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "KLAGE_HJEMSENDE_UTEN_OPPHEVE",
+      "navn": "Behandling er hjemsendt",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "DELVIS_MEDHOLD_I_KLAGE",
+      "navn": "Vedtaket er delvis omgjort",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "ANKE_DELVIS_OMGJOERING_TIL_GUNST",
+      "navn": "Delvis omgjøring, til gunst i anke",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "UGUNST_MEDHOLD_I_KLAGE",
+      "navn": "Vedtaket er omgjort til ugunst",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "OPPHEVE_VEDTAK",
+      "navn": "Vedtaket er opphevet",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "UTFALL_UENDRET",
+      "navn": "Overstyrt vurdering: Utfall er uendret",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "ANKE_OMGJOER",
+      "navn": "Omgjør i anke",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "OVERSTYRING_FAKTA_UTTAK",
+      "navn": "Overstyrt vurdering:",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "ANKE_TIL_UGUNST",
+      "navn": "Ugunst omgjør i anke",
+      "kodeverk": "HISTORIKK_RESULTAT_TYPE"
+    }
+  ],
+  "VedtakResultatType": [
+    {
+      "kode": "DELVIS_INNVILGET",
+      "navn": "delvis innvilget",
+      "kodeverk": "VEDTAK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "INNVILGET",
+      "navn": "Innvilget",
+      "kodeverk": "VEDTAK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "VEDTAK_I_INNSYNBEHANDLING",
+      "navn": "vedtak i innsynbehandling",
+      "kodeverk": "VEDTAK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "OPPHØR",
+      "navn": "Opphør",
+      "kodeverk": "VEDTAK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "VEDTAK_I_KLAGEBEHANDLING",
+      "navn": "vedtak i klagebehandling",
+      "kodeverk": "VEDTAK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "VEDTAK_I_ANKEBEHANDLING",
+      "navn": "vedtak i ankebehandling",
+      "kodeverk": "VEDTAK_RESULTAT_TYPE"
+    },
+    {
+      "kode": "AVSLAG",
+      "navn": "Avslag",
+      "kodeverk": "VEDTAK_RESULTAT_TYPE"
+    }
   ]
 }
