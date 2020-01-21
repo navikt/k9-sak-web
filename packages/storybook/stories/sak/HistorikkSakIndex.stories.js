@@ -262,7 +262,14 @@ const history = [
           },
           verdi: null,
         },
-        opplysninger: null,
+        opplysninger: [
+          {
+            tilVerdi: '2',
+            opplysningType: {
+              kode: 'ANTALL_BARN',
+            },
+          },
+        ],
         soeknadsperiode: {
           soeknadsperiodeType: {
             kode: 'GRADERING',
