@@ -5685,6 +5685,553 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     }
   ],
+  "HistorikkEndretFeltVerdiType": [
+    {
+      "kode": "ARBEIDSTAKER_UTEN_FERIEPENGER",
+      "navn": "Arbeidstaker uten feriepenger",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ABNR",
+      "navn": "Aktivt BOSTNR",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "SOEKER",
+      "navn": "Søker",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "LOVLIG_OPPHOLD",
+      "navn": "Søker har lovlig opphold",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FASTSETT_RESULTAT_ENDRE_SOEKNADSPERIODEN",
+      "navn": "Endre søknadsperioden",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FISKER",
+      "navn": "Selvstendig næringsdrivende - Fisker",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_NYOPPSTARTET",
+      "navn": "ikke nyoppstartet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "JORDBRUKER",
+      "navn": "Selvstendig næringsdrivende - Jordbruker",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_BOSATT_I_NORGE",
+      "navn": "Søker er ikke bosatt i Norge",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "OMSORGSVILKARET_TITTEL",
+      "navn": "Omsorgsvilkår §14-17 tredje ledd",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ADOPTERER_IKKE_ALENE",
+      "navn": "adopterer ikke alene",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "OPPFYLT",
+      "navn": "oppfylt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "BEGGE",
+      "navn": "Søker og verge/fullmektig",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "BARN",
+      "navn": "Verge for barn under 18 år",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "LAGT_TIL_AV_SAKSBEHANDLER",
+      "navn": "Arbeidsforholdet er lagt til av saksbehandler",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "SELVSTENDIG_NÆRINGSDRIVENDE",
+      "navn": "Selvstendig næringsdrivende",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "HENLEGG_BEHANDLING",
+      "navn": "Henlegg behandling",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "NY_I_ARBEIDSLIVET",
+      "navn": "ny i arbeidslivet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "UFUL",
+      "navn": "Ufullstendig fødselsnr",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "MØDREKVOTE",
+      "navn": "Mødrekvote",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ARBEIDSAVKLARINGSPENGER",
+      "navn": "Arbeidsavklaringspenger",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "BENYTT",
+      "navn": "Benytt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "DØD",
+      "navn": "Død",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FEDREKVOTE",
+      "navn": "Fedrekvote",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "PERIODE_UNNTAK",
+      "navn": "Perioder uten medlemskap",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "TIDSBEGRENSET_ARBEIDSFORHOLD",
+      "navn": "tidsbegrenset arbeidsforhold",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "EØS_BOSATT_NORGE",
+      "navn": "EØS bosatt Norge",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_OPPFYLT",
+      "navn": "ikke oppfylt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "UTPE",
+      "navn": "Utgått person",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "TILBAKEKR_IGNORER",
+      "navn": "Avvent samordning, ingen tilbakekreving",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "HINDRE_TILBAKETREKK",
+      "navn": "Ikke tilbakekrev fra søker",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "UREG",
+      "navn": "Uregistrert person",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "INNTEKT_IKKE_MED_I_BG",
+      "navn": "Benytt i behandligen. Inntekten er ikke med i beregningsgrunnlaget",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "BOSATT_UTLAND",
+      "navn": "Bosatt utland",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "UTVA",
+      "navn": "Utvandret",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "VILKAR_OPPFYLT",
+      "navn": "Vilkåret er oppfylt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FORELDREPENGER",
+      "navn": "Foreldrepenger",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "PERIODE_MEDLEM",
+      "navn": "Periode med medlemskap",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "BRUK_MED_OVERSTYRTE_PERIODER",
+      "navn": "Bruk arbeidsforholdet med overstyrt periode",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "INNVIRKNING",
+      "navn": "Faresignalene hadde innvirkning på behandlingen",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ADVOKAT",
+      "navn": "Advokat/advokatfullmektig",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "DAGPENGER",
+      "navn": "Dagpenger",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "VARIG_ENDRET_NAERING",
+      "navn": "Varig endret eller nystartet næring",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_BENYTT",
+      "navn": "Ikke benytt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_ALENEOMSORG",
+      "navn": "Søker har ikke aleneomsorg for barnet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_TIDSBEGRENSET_ARBEIDSFORHOLD",
+      "navn": "ikke tidsbegrenset",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "DOKUMENTERT",
+      "navn": "dokumentert",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ANNEN_F",
+      "navn": "Annen fullmektig",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_DOKUMENTERT",
+      "navn": "ikke dokumentert",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FASTSETT_RESULTAT_PERIODEN_AVKLARES_IKKE",
+      "navn": "Perioden kan ikke avklares",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_LOVLIG_OPPHOLD",
+      "navn": "Søker har ikke lovlig opphold",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "NASJONAL",
+      "navn": "Nasjonal",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "SJØMANN",
+      "navn": "Arbeidstaker - Sjømann",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FASTSETT_RESULTAT_UTSETTELSE_AVKLARES",
+      "navn": "Perioden er ok",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "OPPHOLDSRETT",
+      "navn": "Søker har oppholdsrett",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "UTFØR_TILBAKETREKK",
+      "navn": "Tilbakekrev fra søker",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FASTSETT_RESULTAT_GRADERING_AVKLARES",
+      "navn": "Perioden er ok",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ANNEN_FORELDER_HAR_RETT",
+      "navn": "Annen forelder har rett",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "NYOPPSTARTET",
+      "navn": "nyoppstartet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "NYTT_ARBEIDSFORHOLD",
+      "navn": "Arbeidsforholdet er ansett som nytt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "VILKAR_IKKE_OPPFYLT",
+      "navn": "Vilkåret er ikke oppfylt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "AVSLÅTT",
+      "navn": "Ikke oppfylt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "INGEN_INNVIRKNING",
+      "navn": "Faresignalene hadde ingen innvirkning på behandlingen",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FELLESPERIODE",
+      "navn": "Fellesperiode",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "BOSATT_I_NORGE",
+      "navn": "Søker er bosatt i Norge",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "UTAN",
+      "navn": "Utgått person annullert tilgang Fnr",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FORTSETT_BEHANDLING",
+      "navn": "Fortsett behandling",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "BENYTT_A_INNTEKT_I_BG",
+      "navn": "Benytt i behandlingen. Inntekt fra A-inntekt benyttes i beregningsgrunnlaget",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FORELDREANSVAR_2_TITTEL",
+      "navn": "Foreldreansvarsvilkåret §14-17 andre ledd",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_BRUK",
+      "navn": "Ikke bruk",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "GRADERING_PÅ_ANDEL_UTEN_BG_IKKE_SATT_PÅ_VENT",
+      "navn": "Riktig",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_NY_I_ARBEIDSLIVET",
+      "navn": "til ikke ny i arbeidslivet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ANNEN_FORELDER_HAR_IKKE_RETT",
+      "navn": "Annen forelder har ikke rett",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "INNVILGET",
+      "navn": "Oppfylt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "INGEN_VARIG_ENDRING_NAERING",
+      "navn": "Ingen varig endret eller nyoppstartet næring",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "VERGE",
+      "navn": "Verge/fullmektig",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "DAGMAMMA",
+      "navn": "Selvstendig næringsdrivende - Dagmamma",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FØDR",
+      "navn": "Fødselsregistrert",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ARBEIDSTAKER",
+      "navn": "Arbeidstaker",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "TILBAKEKR_INFOTRYGD",
+      "navn": "Behandle tilbakekreving i infotrygd",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "VOKSEN",
+      "navn": "Verge for voksen",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "SLÅTT_SAMMEN_MED_ANNET",
+      "navn": "Arbeidsforholdet er slått sammen med annet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FASTSETT_RESULTAT_PERIODEN_INNLEGGELSEN_DOKUMENTERT_IKKE",
+      "navn": "Innleggelsen er ikke dokumentert",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FASTSETT_RESULTAT_PERIODEN_SYKDOM_DOKUMENTERT_IKKE",
+      "navn": "Sykdommen/skaden er ikke dokumentert",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_EKTEFELLES_BARN",
+      "navn": "ikke ektefelles barn",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ADOPTERER_ALENE",
+      "navn": "adopterer alene",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "GRADERING_IKKE_OPPFYLT",
+      "navn": "Ikke oppfylt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FASTSETT_RESULTAT_PERIODEN_SYKDOM_DOKUMENTERT",
+      "navn": "Sykdommen/skaden er dokumentert, angi avklart periode",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FORELDREANSVAR_4_TITTEL",
+      "navn": "Foreldreansvarsvilkåret §14-17 fjerde ledd",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_FASTSATT",
+      "navn": "ikke fastsatt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_OMSORG_FOR_BARNET",
+      "navn": "Søker har ikke omsorg for barnet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "GRADERING_OPPFYLT",
+      "navn": "Oppfylt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FASTSETT_RESULTAT_PERIODEN_INNLEGGELSEN_DOKUMENTERT",
+      "navn": "Innleggelsen er dokumentert, angi avklart periode",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "SØKER_ER_I_PERMISJON",
+      "navn": "Søker er i permisjon",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FBARN",
+      "navn": "Verge for foreldreløst barn under 18 år",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "HAR_IKKE_GYLDIG_GRUNN",
+      "navn": "Ingen gyldig grunn for sen fremsetting av søknaden",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "SØKER_ER_IKKE_I_PERMISJON",
+      "navn": "Søker er ikke i permisjon",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FORELDREPENGER_FØR_FØDSEL",
+      "navn": "Foreldrepenger før fødsel",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "EKTEFELLES_BARN",
+      "navn": "ektefelles barn",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FRILANSER",
+      "navn": "Frilanser",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "MANGLENDE_OPPLYSNINGER",
+      "navn": "Benytt i behandlingen, men har manglende opplysninger",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "FOSV",
+      "navn": "Forsvunnet/savnet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "OMSORG_FOR_BARNET",
+      "navn": "Søker har omsorg for barnet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "BOSA",
+      "navn": "Bosatt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_OPPHOLDSRETT",
+      "navn": "Søker har ikke oppholdsrett",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "HAR_GYLDIG_GRUNN",
+      "navn": "Gyldig grunn for sen fremsetting av søknaden",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ADNR",
+      "navn": "Aktivt",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "IKKE_RELEVANT_PERIODE",
+      "navn": "Ikke relevant periode",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
+      "kode": "ALENEOMSORG",
+      "navn": "Søker har aleneomsorg for barnet",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    }
+  ],
   "RelatertYtelseTilstand": [
     {
       "kode": "ÅPEN",

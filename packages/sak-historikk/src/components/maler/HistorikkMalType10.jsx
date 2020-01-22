@@ -21,8 +21,8 @@ const HistorikkMalType10 = ({
   getKodeverknavn,
 }) => {
   const historikkFromToValues = (endretFelt, fieldName) => {
-    const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl);
-    const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl);
+    const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
+    const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
     let messageId = fromValue ? 'Historikk.Template.10.ChangedFromTo' : 'Historikk.Template.10.FieldSetTo';
     if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PROSENT_UTBETALING.kode && fromValue) {
       messageId = 'Historikk.Template.10.ChangedFromToProsentUtbetaling';

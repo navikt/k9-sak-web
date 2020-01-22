@@ -87,8 +87,8 @@ const HistorikkMalType5 = ({
 
   const formatChangedField = endretFelt => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
-    const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl);
-    const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl);
+    const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
+    const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
 
     if (
       endretFelt.fraVerdi !== null &&

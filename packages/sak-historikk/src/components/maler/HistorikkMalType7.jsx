@@ -18,8 +18,8 @@ const HistorikkMalType7 = ({
     const fieldName = findEndretFeltNavn(endretFelt, intl);
     const sub1 = fieldName.substring(0, fieldName.lastIndexOf(';'));
     const sub2 = fieldName.substring(fieldName.lastIndexOf(';') + 1);
-    const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl);
-    const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl);
+    const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
+    const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
 
     if (endretFelt.fraVerdi !== null) {
       return (

@@ -297,7 +297,7 @@ const history = [
             },
             navnVerdi: 'aktiviteten',
             fraVerdi: 'BENYTT',
-            tilVerdi: false,
+            tilVerdi: 'NY_REFUSJONSFRIST',
           },
         ],
       },

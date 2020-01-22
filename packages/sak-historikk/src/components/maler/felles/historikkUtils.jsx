@@ -50,7 +50,7 @@ export const findHendelseText = (hendelse, getKodeverknavn) => {
 
 const convertToBoolean = verdi => (verdi === true ? 'Ja' : 'Nei');
 
-export const findEndretFeltVerdi = (endretFelt, verdi, intl) => {
+export const findEndretFeltVerdi = (endretFelt, verdi, intl, getKodeverknavn = () => null) => {
   if (verdi === null) {
     return null;
   }
@@ -58,6 +58,16 @@ export const findEndretFeltVerdi = (endretFelt, verdi, intl) => {
     return convertToBoolean(verdi);
   }
   if (endretFelt.klTilVerdi !== null) {
+    const historikkFeltVerdiNavn = getKodeverknavn({ kode: verdi, kodeverk: 'HISTORIKK_ENDRET_FELT_VERDI_TYPE' });
+    if (historikkFeltVerdiNavn) {
+      return historikkFeltVerdiNavn;
+    }
+
+    const historikkFeltNavn = getKodeverknavn({ kode: verdi, kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE' });
+    if (historikkFeltNavn) {
+      return historikkFeltNavn;
+    }
+
     const verdiCode = historikkEndretFeltVerdiTypeCodes[verdi];
     if (!verdiCode) {
       return `EndretFeltVerdiTypeCode ${verdi} finnes ikke-LEGG DET INN`;

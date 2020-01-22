@@ -72,7 +72,7 @@ export const HistorikkMalType9 = ({ historikkinnslagDeler, behandlingLocation, o
                   id="Historikk.Template.9.TilbakekrViderebehandling"
                   values={{
                     felt: getKodeverknavn(endretFelt.endretFeltNavn),
-                    verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl),
+                    verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn),
                   }}
                 />
               </div>

@@ -47,6 +47,7 @@ const kodeverkTyper = {
   ARBEIDSFORHOLD_HANDLING_TYPE: 'ArbeidsforholdHandlingType',
   HISTORIKK_OPPLYSNING_TYPE: 'HistorikkOpplysningType',
   HISTORIKK_ENDRET_FELT_TYPE: 'HistorikkEndretFeltType',
+  HISTORIKK_ENDRET_FELT_VERDI_TYPE: 'HistorikkEndretFeltVerdiType',
   HISTORIKKINNSLAG_TYPE: 'HistorikkinnslagType',
   HISTORIKK_AKTOER: 'HistorikkAktør',
   HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE: 'HistorikkAvklartSoeknadsperiodeType',
