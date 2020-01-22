@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
@@ -21,16 +20,14 @@ const intl = createIntl(
 );
 
 const HistorikkSakIndex = ({ historieInnslag, saksnummer, location, alleKodeverk }) => (
-  <Router>
-    <RawIntlProvider value={intl}>
-      <History
-        historieInnslag={historieInnslag}
-        saksNr={saksnummer}
-        location={location}
-        getKodeverknavn={getKodeverknavnFn(alleKodeverk, kodeverkTyper)}
-      />
-    </RawIntlProvider>
-  </Router>
+  <RawIntlProvider value={intl}>
+    <History
+      historieInnslag={historieInnslag}
+      saksNr={saksnummer}
+      location={location}
+      getKodeverknavn={getKodeverknavnFn(alleKodeverk, kodeverkTyper)}
+    />
+  </RawIntlProvider>
 );
 
 HistorikkSakIndex.propTypes = {

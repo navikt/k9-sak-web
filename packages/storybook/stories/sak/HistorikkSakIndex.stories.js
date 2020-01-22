@@ -1,7 +1,7 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
@@ -318,17 +318,19 @@ export const visHistorikk = () => (
       padding: '30px',
     }}
   >
-    {history.map(h => (
-      <HistorikkSakIndex
-        key={h.behandlingId}
-        historieInnslag={h}
-        selectedBehandlingId="1"
-        saksnummer="2"
-        location={{
-          pathname: 'historikk',
-        }}
-        alleKodeverk={alleKodeverk}
-      />
-    ))}
+    <Router>
+      {history.map(h => (
+        <HistorikkSakIndex
+          key={h.behandlingId}
+          historieInnslag={h}
+          selectedBehandlingId="1"
+          saksnummer="2"
+          location={{
+            pathname: 'historikk',
+          }}
+          alleKodeverk={alleKodeverk}
+        />
+      ))}
+    </Router>
   </div>
 );
