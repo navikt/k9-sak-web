@@ -23,6 +23,7 @@ export const HistorikkMalType9 = ({ historikkinnslagDeler, behandlingLocation, o
         text += `${felt.tilVerdi}, `;
       }
     });
+
     return text;
   };
 
