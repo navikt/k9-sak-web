@@ -5,14 +5,17 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import fodselSammenligningSoknadPropType from './propTypes/fodselSammenligningSoknadPropType';
 import fodselSammenligningOriginalBehandlingPropType from './propTypes/fodselSammenligningOriginalBehandlingPropType';
 import FodselSammenligningPanel from './components/FodselSammenligningPanel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const FNR_DODFODT_PART = '00001';
 
@@ -24,7 +27,10 @@ const FodselSammenligningIndex = ({
   soknad,
   originalBehandling,
 }) => {
-  const nrOfDodfodteBarn = avklartBarn.reduce((ab, barn) => ab + (barn.fnr && barn.fnr.endsWith(FNR_DODFODT_PART) ? 1 : 0), 0);
+  const nrOfDodfodteBarn = avklartBarn.reduce(
+    (ab, barn) => ab + (barn.fnr && barn.fnr.endsWith(FNR_DODFODT_PART) ? 1 : 0),
+    0,
+  );
   return (
     <RawIntlProvider value={intl}>
       <FodselSammenligningPanel

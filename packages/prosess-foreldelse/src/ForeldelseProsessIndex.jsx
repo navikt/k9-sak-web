@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import ForeldelseForm from './components/ForeldelseForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import foreldelsePerioderPropType from './propTypes/foreldelsePerioderPropType';
 import foreldelseBehandlingPropType from './propTypes/foreldelseBehandlingPropType';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const ForeldelseProsessIndex = ({
   behandling,

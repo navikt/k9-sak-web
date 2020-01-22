@@ -6,14 +6,17 @@ import InnsynVedtakForm from './components/InnsynVedtakForm';
 import innsynPropType from './propTypes/innsynPropType';
 import vedtakInnsynBehandlingPropType from './propTypes/vedtakInnsynBehandlingPropType';
 import vedtakInnsynAksjonspunkterPropType from './propTypes/vedtakInnsynAksjonspunkterPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VedtakInnsynProsessIndex = ({
   behandling,

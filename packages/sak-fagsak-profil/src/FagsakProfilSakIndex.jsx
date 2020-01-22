@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import FagsakProfile from './components/FagsakProfile';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const FagsakProfilSakIndex = ({
   saksnummer,

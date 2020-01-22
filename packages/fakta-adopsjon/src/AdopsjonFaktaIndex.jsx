@@ -8,14 +8,17 @@ import adopsjonPersonopplysningerPropType from './propTypes/adopsjonPersonopplys
 import adopsjonFamilieHendelsePropType from './propTypes/adopsjonFamilieHendelsePropType';
 import adopsjonBehandlingPropType from './propTypes/adopsjonBehandlingPropType';
 import adopsjonSoknadPropType from './propTypes/adopsjonSoknadPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const AdopsjonFaktaIndex = ({
   behandling,

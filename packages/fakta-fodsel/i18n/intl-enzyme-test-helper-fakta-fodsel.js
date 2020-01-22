@@ -2,6 +2,6 @@ import { shallowWithIntl as globalShallowWithIntl } from '@fpsak-frontend/utils-
 
 import messages from './nb_NO.json';
 
-const shallowWithIntl = (node) => globalShallowWithIntl(node, null, messages);
+const shallowWithIntl = node => globalShallowWithIntl(node, null, messages);
 
 export default shallowWithIntl;

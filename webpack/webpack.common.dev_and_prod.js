@@ -72,15 +72,17 @@ const config = {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
-              modules: true,
-              localIdentName: '[name]_[local]_[contenthash:base64:5]',
+              modules: {
+                localIdentName: '[name]_[local]_[contenthash:base64:5]',
+              },
             },
           },
           {
             loader: 'less-loader',
             options: {
-              modules: true,
-              localIdentName: '[name]_[local]_[contenthash:base64:5]',
+              modules: {
+                localIdentName: '[name]_[local]_[contenthash:base64:5]',
+              },
               modifyVars: {
                 nodeModulesPath: '~',
                 coreModulePath: '~',

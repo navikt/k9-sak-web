@@ -6,14 +6,17 @@ import FordelBeregningsgrunnlagPanel from './components/FordelBeregningsgrunnlag
 import fordelBeregningsgrunnlagAksjonspunkterPropType from './propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import fordelBeregningsgrunnlagBehandlingPropType from './propTypes/fordelBeregningsgrunnlagBehandlingPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const FordelBeregningsgrunnlagFaktaIndex = ({
   behandling,

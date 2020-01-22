@@ -7,14 +7,17 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import foreldreansvarVilkarAksjonspunkterPropType from './propTypes/foreldreansvarVilkarAksjonspunkterPropType';
 import foreldreansvarVilkarBehandlingPropType from './propTypes/foreldreansvarVilkarBehandlingPropType';
 import ErForeldreansvarVilkaarOppfyltForm from './components/ErForeldreansvarVilkaarOppfyltForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const ForeldreansvarVilkarProsessIndex = ({
   behandling,

@@ -5,14 +5,17 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import omsorgVilkarAksjonspunkterPropType from './propTypes/omsorgVilkarAksjonspunkterPropType';
 import omsorgVilkarBehandlingPropType from './propTypes/omsorgVilkarBehandlingPropType';
 import ErOmsorgVilkaarOppfyltForm from './components/ErOmsorgVilkaarOppfyltForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const OmsorgVilkarProsessIndex = ({
   behandling,

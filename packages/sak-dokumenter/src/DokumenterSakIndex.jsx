@@ -4,26 +4,21 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import dokumentPropType from './propTypes/dokumentPropType';
 import DocumentList from './components/DocumentList';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
-const DokumenterSakIndex = ({
-  documents,
-  selectDocumentCallback,
-  behandlingId,
-}) => (
+const DokumenterSakIndex = ({ documents, selectDocumentCallback, behandlingId }) => (
   <RawIntlProvider value={intl}>
-    <DocumentList
-      documents={documents}
-      selectDocumentCallback={selectDocumentCallback}
-      behandlingId={behandlingId}
-    />
+    <DocumentList documents={documents} selectDocumentCallback={selectDocumentCallback} behandlingId={behandlingId} />
   </RawIntlProvider>
 );
 

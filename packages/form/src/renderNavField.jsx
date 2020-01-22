@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 
 import Label, { labelPropType } from './Label';
 
-const renderNavField = (WrappedNavFieldComponent) => {
+const renderNavField = WrappedNavFieldComponent => {
   class FieldComponent extends Component {
     constructor(props) {
       super(props);
@@ -15,14 +15,20 @@ const renderNavField = (WrappedNavFieldComponent) => {
     formatError(submitFailed, error) {
       const { intl } = this.props;
       if (submitFailed && error) {
-        return { feilmelding: intl.formatMessage(...error) };
+        return intl.formatMessage(...error);
       }
       return undefined;
     }
 
     render() {
       const {
-        input, meta: { submitFailed, error }, label, readOnly, isEdited, readOnlyHideEmpty, ...otherProps
+        input,
+        meta: { submitFailed, error },
+        label,
+        readOnly,
+        isEdited,
+        readOnlyHideEmpty,
+        ...otherProps
       } = this.props;
       const isEmpty = input.value === null || input.value === undefined || input.value === '';
       if (readOnly && readOnlyHideEmpty && isEmpty) {
@@ -36,7 +42,9 @@ const renderNavField = (WrappedNavFieldComponent) => {
       if (!readOnly) {
         return <WrappedNavFieldComponent {...fieldProps} {...input} {...otherProps} readOnly={readOnly} />;
       }
-      return <WrappedNavFieldComponent {...fieldProps} {...input} isEdited={isEdited} {...otherProps} readOnly={readOnly} />;
+      return (
+        <WrappedNavFieldComponent {...fieldProps} {...input} isEdited={isEdited} {...otherProps} readOnly={readOnly} />
+      );
     }
   }
 

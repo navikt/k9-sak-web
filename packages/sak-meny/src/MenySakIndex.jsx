@@ -8,14 +8,17 @@ import BehandlingMenu from './components/BehandlingMenu';
 import MenyKodeverk from './MenyKodeverk';
 import MenyBehandlingData from './MenyBehandlingData';
 import MenyRettigheter from './MenyRettigheter';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const MenySakIndex = ({
   saksnummer,
@@ -73,10 +76,12 @@ MenySakIndex.propTypes = {
   saksnummer: PropTypes.string.isRequired,
   behandlingData: PropTypes.instanceOf(MenyBehandlingData).isRequired,
   ytelseType: kodeverkObjektPropType.isRequired,
-  behandlendeEnheter: PropTypes.arrayOf(PropTypes.shape({
-    enhetId: PropTypes.string.isRequired,
-    enhetNavn: PropTypes.string.isRequired,
-  })),
+  behandlendeEnheter: PropTypes.arrayOf(
+    PropTypes.shape({
+      enhetId: PropTypes.string.isRequired,
+      enhetNavn: PropTypes.string.isRequired,
+    }),
+  ),
   navAnsatt: navAnsattPropType.isRequired,
   kanTilbakekrevingOpprettes: PropTypes.shape({
     kanBehandlingOpprettes: PropTypes.bool.isRequired,

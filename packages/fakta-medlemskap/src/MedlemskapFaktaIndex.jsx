@@ -8,14 +8,17 @@ import medlemskapMedlemskapPropType from './propTypes/medlemskapMedlemskapPropTy
 import medlemskapBehandlingPropType from './propTypes/medlemskapBehandlingPropType';
 import medlemskapSoknadPropType from './propTypes/medlemskapSoknadPropType';
 import medlemskapInntektArbeidYtelsePropType from './propTypes/medlemskapInntektArbeidYtelsePropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const MedlemskapFaktaIndex = ({
   behandling,

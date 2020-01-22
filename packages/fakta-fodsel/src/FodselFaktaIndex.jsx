@@ -9,14 +9,17 @@ import fodselFamilieHendelsePropType from './propTypes/fodselFamilieHendelseProp
 import fodselOriginalBehandlingPropType from './propTypes/fodselOriginalBehandlingPropType';
 import fodselBehandlingPropType from './propTypes/fodselBehandlingPropType';
 import fodselSoknadPropType from './propTypes/fodselSoknadPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const FodselFaktaIndex = ({
   behandling,

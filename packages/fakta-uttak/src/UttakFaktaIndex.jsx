@@ -5,14 +5,17 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import UttakInfoPanel from './components/UttakInfoPanel';
 import uttakAksjonspunkterPropType from './propTypes/uttakAksjonspunkterPropType';
 import uttakBehandlingPropType from './propTypes/uttakBehandlingPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const UttakFaktaIndex = ({
   behandling,

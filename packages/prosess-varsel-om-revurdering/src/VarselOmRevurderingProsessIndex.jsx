@@ -8,14 +8,17 @@ import revurderingFamilieHendelsePropType from './propTypes/revurderingFamilieHe
 import revurderingSoknadPropType from './propTypes/revurderingSoknadPropType';
 import revurderingOriginalBehandlingPropType from './propTypes/revurderingOriginalBehandlingPropType';
 import VarselOmRevurderingForm from './components/VarselOmRevurderingForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VarselOmRevurderingProsessIndex = ({
   behandling,

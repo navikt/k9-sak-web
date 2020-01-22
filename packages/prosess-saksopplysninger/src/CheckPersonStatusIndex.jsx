@@ -7,14 +7,17 @@ import saksopplysningBehandlingPropType from './propTypes/saksopplysningBehandli
 import saksopplysningMedlemskapPropType from './propTypes/saksopplysningMedlemskapPropType';
 import saksopplysningPersonsopplysningerPropType from './propTypes/saksopplysningPersonsopplysningerPropType';
 import CheckPersonStatusForm from './components/CheckPersonStatusForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const CheckPersonStatusIndex = ({
   behandling,

@@ -5,14 +5,17 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import beregningsresultatAksjonspunkterPropType from './propTypes/beregningsresultatAksjonspunkterPropType';
 import beregningsresultatBehandlingPropType from './propTypes/beregningsresultatBehandlingPropType';
 import BeregningsresultatEngangsstonadForm from './components/BeregningsresultatEngangsstonadForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const BeregningsresultatProsessIndex = ({
   behandling,

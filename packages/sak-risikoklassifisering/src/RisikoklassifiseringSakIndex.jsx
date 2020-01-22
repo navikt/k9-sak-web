@@ -8,14 +8,17 @@ import risikoklassifiseringPropType from './propTypes/risikoklassifiseringPropTy
 import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const harResultatkode = (risikoklassifisering, resultatkode) => {
   if (!risikoklassifisering || !risikoklassifisering.kontrollresultat) {
@@ -45,10 +48,8 @@ const RisikoklassifiseringSakIndex = ({
   const harHoyRisikoklassifisering = harResultatkode(risikoklassifisering, kontrollresultatKode.HOY);
   return (
     <RawIntlProvider value={intl}>
-      { harIkkeHoyRisikoklassifisering && (
-        <IngenRisikoPanel />
-      )}
-      { harHoyRisikoklassifisering && (
+      {harIkkeHoyRisikoklassifisering && <IngenRisikoPanel />}
+      {harHoyRisikoklassifisering && (
         <HoyRisikoTittel
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
@@ -60,9 +61,7 @@ const RisikoklassifiseringSakIndex = ({
           toggleRiskPanel={toggleRiskPanel}
         />
       )}
-      {(!harIkkeHoyRisikoklassifisering && !harHoyRisikoklassifisering) && (
-        <ManglendeKlassifiseringPanel />
-      )}
+      {!harIkkeHoyRisikoklassifisering && !harHoyRisikoklassifisering && <ManglendeKlassifiseringPanel />}
     </RawIntlProvider>
   );
 };

@@ -3,24 +3,21 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import MessagesModal from './components/MessagesModal';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
-const MessagesModalSakIndex = ({
-  showModal,
-  closeEvent,
-}) => (
+const MessagesModalSakIndex = ({ showModal, closeEvent }) => (
   <RawIntlProvider value={intl}>
-    <MessagesModal
-      showModal={showModal}
-      closeEvent={closeEvent}
-    />
+    <MessagesModal showModal={showModal} closeEvent={closeEvent} />
   </RawIntlProvider>
 );
 

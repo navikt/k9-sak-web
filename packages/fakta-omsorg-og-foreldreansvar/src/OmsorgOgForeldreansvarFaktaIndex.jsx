@@ -9,14 +9,17 @@ import omsorgOgForeldrePersonopplysningerPropType from './propTypes/omsorgOgFore
 import omsorgOgForeldreFamilieHendelsePropType from './propTypes/omsorgOgForeldreFamilieHendelsePropType';
 import omsorgOgForeldreBehandlingPropType from './propTypes/omsorgOgForeldreBehandlingPropType';
 import omsorgOgForeldreSoknadPropType from './propTypes/omsorgOgForeldreSoknadPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const OmsorgOgForeldreansvarFaktaIndex = ({
   behandling,
@@ -41,7 +44,9 @@ const OmsorgOgForeldreansvarFaktaIndex = ({
       soknad={soknad}
       personopplysninger={personopplysninger}
       aksjonspunkter={aksjonspunkter}
-      innvilgetRelatertTilgrensendeYtelserForAnnenForelder={inntektArbeidYtelse.innvilgetRelatertTilgrensendeYtelserForAnnenForelder}
+      innvilgetRelatertTilgrensendeYtelserForAnnenForelder={
+        inntektArbeidYtelse.innvilgetRelatertTilgrensendeYtelserForAnnenForelder
+      }
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       submitCallback={submitCallback}
       openInfoPanels={openInfoPanels}

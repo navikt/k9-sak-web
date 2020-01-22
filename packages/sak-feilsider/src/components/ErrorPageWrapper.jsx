@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  createIntl, createIntlCache, FormattedMessage, RawIntlProvider,
-} from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { pageContainer } from './errorPageWrapper.less';
-import messages from '../../i18n/nb_NO';
+import messages from '../../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 /**
  * FeilsideContainer
@@ -34,10 +35,7 @@ const ErrorPageWrapper = ({ children, titleCode }) => (
 );
 
 ErrorPageWrapper.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
   titleCode: PropTypes.string,
 };
 

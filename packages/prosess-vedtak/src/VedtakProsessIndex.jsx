@@ -6,7 +6,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import VedtakPanels from './components/VedtakPanels';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import vedtakBehandlingPropType from './propTypes/vedtakBehandlingPropType';
 import vedtakBeregningsresultatPropType from './propTypes/vedtakBeregningsresultatPropType';
 import vedtakAksjonspunkterPropType from './propTypes/vedtakAksjonspunkterPropType';
@@ -18,10 +18,13 @@ import vedtakOriginalBehandlingPropType from './propTypes/vedtakOriginalBehandli
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VedtakProsessIndex = ({
   behandling,
@@ -43,9 +46,10 @@ const VedtakProsessIndex = ({
 }) => {
   let resultatstrukturOriginalBehandling;
   if (originalBehandling) {
-    resultatstrukturOriginalBehandling = ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-      ? originalBehandling['beregningsresultat-engangsstonad']
-      : originalBehandling['beregningsresultat-foreldrepenger'];
+    resultatstrukturOriginalBehandling =
+      ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
+        ? originalBehandling['beregningsresultat-engangsstonad']
+        : originalBehandling['beregningsresultat-foreldrepenger'];
   }
   return (
     <RawIntlProvider value={intl}>
@@ -62,8 +66,11 @@ const VedtakProsessIndex = ({
         vilkar={vilkar}
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}
-        resultatstruktur={ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-          ? beregningresultatEngangsstonad : beregningresultatForeldrepenger}
+        resultatstruktur={
+          ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
+            ? beregningresultatEngangsstonad
+            : beregningresultatForeldrepenger
+        }
         sendVarselOmRevurdering={sendVarselOmRevurdering}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskapFom={medlemskap ? medlemskap.fom : undefined}

@@ -6,14 +6,17 @@ import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
 import arbeidsforholdAksjonspunkterPropType from './propTypes/arbeidsforholdAksjonspunkterPropType';
 import arbeidsforholdBehandlingPropType from './propTypes/arbeidsforholdBehandlingPropType';
 import arbeidsforholdInntektArbeidYtelsePropType from './propTypes/arbeidsforholdInntektArbeidYtelsePropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const ArbeidsforholdFaktaIndex = ({
   behandling,
@@ -33,7 +36,9 @@ const ArbeidsforholdFaktaIndex = ({
       behandlingVersjon={behandling.versjon}
       arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={
+        inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding
+      }
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}

@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import {
-  FlexColumn, FlexContainer, FlexRow, Image,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, Image } from '@fpsak-frontend/shared-components';
 
 import logoUrl from '@fpsak-frontend/assets/images/nav.svg';
 import navAnsattIkonUrl from '@fpsak-frontend/assets/images/nav_ansatt.svg';
@@ -13,14 +11,17 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import styles from './header.less';
 import ErrorMessagePanel from './ErrorMessagePanel';
 
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 /**
  * Header
  *
@@ -55,7 +56,7 @@ const Header = ({
           <Systemtittel>{systemTittel}</Systemtittel>
           <FlexColumn className="justifyItemsToFlexEnd">
             <FlexRow className="justifyItemsToFlexEnd">
-              {iconLinks.map((iconLink) => (
+              {iconLinks.map(iconLink => (
                 <FlexColumn key={iconLink.text}>
                   <Image
                     className={styles.headerIkon}

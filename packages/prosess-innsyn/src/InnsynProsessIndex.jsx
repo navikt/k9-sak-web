@@ -3,17 +3,20 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import InnsynForm from './components/InnsynForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import innsynBehandlingPropType from './propTypes/innsynBehandlingPropType';
 import innsynAksjonspunkterPropType from './propTypes/innsynAksjonspunkterPropType';
 import innsynPropType from './propTypes/innsynPropType';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const InnsynProsessIndex = ({
   behandling,

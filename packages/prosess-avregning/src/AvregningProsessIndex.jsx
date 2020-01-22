@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import AvregningPanel from './components/AvregningPanel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import avregningFagsakPropType from './propTypes/avregningFagsakPropType';
 import avregningBehandlingPropType from './propTypes/avregningBehandlingPropType';
 import avregningAksjonspunkterPropType from './propTypes/avregningAksjonspunkterPropType';
@@ -11,10 +11,13 @@ import avregningSimuleringResultatPropType from './propTypes/avregningSimulering
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const AvregningProsessIndex = ({
   fagsak,

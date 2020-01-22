@@ -8,14 +8,17 @@ import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOver
 import vilkarOverstyringAksjonspunkterPropType from './propTypes/vilkarOverstyringAksjonspunkterPropType';
 import vilkarOverstyringBehandlingPropType from './propTypes/vilkarOverstyringBehandlingPropType';
 import vilkarOverstyringMedlemskapPropType from './propTypes/vilkarOverstyringMedlemskapPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VilkarresultatMedOverstyringProsessIndex = ({
   behandling,

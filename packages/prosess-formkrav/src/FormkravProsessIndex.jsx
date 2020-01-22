@@ -4,7 +4,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import FormkravKlageFormNfp from './components/FormkravKlageFormNfp';
 import FormkravKlageFormKa from './components/FormkravKlageFormKa';
 import formkravBehandlingPropType from './propTypes/formkravBehandlingPropType';
@@ -13,10 +13,13 @@ import formkravKlageVurderingPropType from './propTypes/formkravKlageVurderingPr
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const FormkravProsessIndex = ({
   behandling,

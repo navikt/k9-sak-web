@@ -1,6 +1,8 @@
 const OFF = 0;
+// eslint-disable-next-line
 const ON = 1;
 const ERROR = 2;
+// eslint-disable-next-line
 const { resolve } = require('path');
 
 const config = {
@@ -39,6 +41,7 @@ const config = {
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
     'max-len': [ERROR, 160],
+
     'react/require-default-props': OFF,
     'react/jsx-filename-extension': OFF,
     'no-undef': OFF,
@@ -52,7 +55,6 @@ const config = {
     // TODO (TOR) Midlertidig utkommentert
     'max-classes-per-file': OFF,
     'jsx-a11y/control-has-associated-label': OFF,
-
     '@typescript-eslint/no-unused-vars': ERROR,
     '@typescript-eslint/indent': OFF,
 
@@ -61,6 +63,17 @@ const config = {
     '@typescript-eslint/explicit-function-return-type': OFF,
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-ignore': OFF,
+
+    'import/extensions': [
+      'error',
+      {
+        js: 'never',
+        tsx: 'never',
+        jsx: 'never',
+        less: 'always',
+        json: 'always',
+      },
+    ],
   },
   overrides: [
     {

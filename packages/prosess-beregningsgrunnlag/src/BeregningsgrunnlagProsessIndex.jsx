@@ -8,14 +8,17 @@ import beregningsgrunnlagAksjonspunkterPropType from './propTypes/beregningsgrun
 import BeregningFP from './components/BeregningFP';
 import BeregningFP2 from './components/BeregningFP_V2';
 
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const BeregningsgrunnlagProsessIndex = ({
   behandling,

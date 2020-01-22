@@ -8,14 +8,17 @@ import soknadsfristVilkarSoknadPropType from './propTypes/soknadsfristVilkarSokn
 import soknadsfristVilkarFamilieHendelsePropType from './propTypes/soknadsfristVilkarFamilieHendelsePropType';
 import soknadsfristVilkarBehandlingPropType from './propTypes/soknadsfristVilkarBehandlingPropType';
 import ErSoknadsfristVilkaretOppfyltForm from './components/ErSoknadsfristVilkaretOppfyltForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const SoknadsfristVilkarProsessIndex = ({
   behandling,

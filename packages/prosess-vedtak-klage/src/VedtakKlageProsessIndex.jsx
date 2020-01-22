@@ -6,14 +6,17 @@ import VedtakKlageForm from './components/VedtakKlageForm';
 import vedtakKlageVurderingPropType from './propTypes/vedtakKlageVurderingPropType';
 import vedtakKlageBehandlingPropType from './propTypes/vedtakKlageBehandlingPropType';
 import vedtakKlageAksjonspunkterPropType from './propTypes/vedtakKlageAksjonspunkterPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VedtakKlageProsessIndex = ({
   behandling,

@@ -15,7 +15,7 @@ export class ApiStateBuilder {
         name: api,
       },
     ];
-    const requestApi = new RequestApi(getAxiosHttpClientApi(), 'fpsak', configs);
+    const requestApi = new RequestApi(getAxiosHttpClientApi(), 'sak', configs);
     const d = new RestDuck(requestApi.getRequestRunner(api));
 
     const afterStartState = d.reducer(d.reducer(), d.actionCreators.requestStarted(params));

@@ -7,21 +7,19 @@ import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
 import History from './components/History';
 import historikkinnslagPropType from './propTypes/historikkinnslagPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
-const HistorikkSakIndex = ({
-  historieInnslag,
-  saksnummer,
-  location,
-  alleKodeverk,
-}) => (
+const HistorikkSakIndex = ({ historieInnslag, saksnummer, location, alleKodeverk }) => (
   <RawIntlProvider value={intl}>
     <History
       historieInnslag={historieInnslag}
