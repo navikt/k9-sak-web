@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element } from 'nav-frontend-typografi';
 
@@ -7,7 +7,7 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import { findHendelseText, findResultatText } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
 
-const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn }) => (
+const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => (
   <>
     <Skjermlenke
       skjermlenke={historikkinnslagDeler[0].skjermlenke}
@@ -19,7 +19,7 @@ const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl, ge
       <Element>
         {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}: ${findResultatText(
           historikkinnslagDeler[0].resultat,
-          intl,
+          useIntl(),
           getKodeverknavn,
         )}`}
       </Element>
@@ -34,10 +34,9 @@ HistorikkMalType2.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  intl: PropTypes.shape().isRequired,
 };
 
-export default injectIntl(HistorikkMalType2);
+export default HistorikkMalType2;
 
 /*
 
