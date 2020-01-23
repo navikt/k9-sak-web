@@ -94,7 +94,7 @@ RadioGroupField.propTypes = {
   rows: PropTypes.number,
   direction: PropTypes.string,
   DOMName: PropTypes.string,
-  validate: PropTypes.arrayOf(PropTypes.func),
+  validate: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.func), PropTypes.func]),
   readOnly: PropTypes.bool,
 };
 
