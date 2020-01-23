@@ -29,10 +29,9 @@ interface MedisinskVilkarFormProps {
 }
 
 interface StateProps {
-  initialValues?: any;
-  hasDiagnose?: boolean;
-  isInnlagt?: boolean;
-  toOmsorgspersoner?: boolean;
+  hasDiagnose: boolean;
+  isInnlagt: boolean;
+  toOmsorgspersoner: boolean;
 }
 
 interface Periode {

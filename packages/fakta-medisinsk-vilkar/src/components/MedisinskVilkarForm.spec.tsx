@@ -23,6 +23,9 @@ describe('<MedisinskVilkarIndex>', () => {
         hasOpenAksjonspunkter
         submittable
         intl={intlMock}
+        hasDiagnose
+        isInnlagt
+        toOmsorgspersoner
       />,
     );
     expect(wrapper.find(InnlagtBarnRadio)).has.length(1);
