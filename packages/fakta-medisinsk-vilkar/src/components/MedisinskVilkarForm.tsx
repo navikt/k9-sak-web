@@ -29,10 +29,10 @@ interface MedisinskVilkarFormProps {
 }
 
 interface StateProps {
-  initialValues: any;
-  hasDiagnose: boolean;
-  isInnlagt: boolean;
-  toOmsorgspersoner: boolean;
+  initialValues?: any;
+  hasDiagnose?: boolean;
+  isInnlagt?: boolean;
+  toOmsorgspersoner?: boolean;
 }
 
 interface Periode {
@@ -55,7 +55,7 @@ interface LegeerklaeringDto {
 
 const formName = 'MedisinskVilkarForm';
 
-const MedisinskVilkarForm = ({
+export const MedisinskVilkarForm = ({
   behandlingId,
   behandlingVersjon,
   handleSubmit,
