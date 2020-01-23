@@ -1,13 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { Undertekst } from 'nav-frontend-typografi';
-import { Panel } from 'nav-frontend-paneler';
+import Snakkeboble from 'nav-frontend-snakkeboble';
 
-import Snakkeboble from './snakkeboble';
+import SnakkebobleContainer from './SnakkebobleContainer';
 
 // TODO: AA - refactor to before()? Har provat men fungerer ikke så bra
-describe('Snakkeboble', () => {
+describe('SnakkebobleContainer', () => {
   it('skal vise opp boble med korrekt class', () => {
     const tekst = 'Min tekst';
     const opprettetTidspunkt = '2017-12-10';
@@ -18,7 +17,7 @@ describe('Snakkeboble', () => {
     const location = { pathname: 'myPath' };
 
     const wrapper = shallow(
-      <Snakkeboble
+      <SnakkebobleContainer
         key={opprettetTidspunkt}
         tekst={tekst}
         rolle={aktoer.kode}
@@ -30,11 +29,13 @@ describe('Snakkeboble', () => {
         location={location}
       >
         <div />
-      </Snakkeboble>,
+      </SnakkebobleContainer>,
     );
 
-    const panel = wrapper.find(Panel);
-    expect(panel.prop('className')).to.be.equal('snakkeboble__panel snakkeboble-panel snakkeboble__snakkebole-panel--saksbehandler');
+    const snakkebobla = wrapper.find(Snakkeboble);
+    expect(snakkebobla.prop('className')).to.be.equal(
+      'snakkeboble__kompakt snakkeboble__panel snakkeboble-panel snakkeboble__saksbehandler',
+    );
   });
 
   it('skal innehalla korrekt type, id og tidpunkt', () => {
@@ -47,7 +48,7 @@ describe('Snakkeboble', () => {
     const location = { pathname: 'myPath' };
 
     const wrapper = shallow(
-      <Snakkeboble
+      <SnakkebobleContainer
         key={opprettetTidspunkt}
         tekst={tekst}
         rolle={aktoer.kode}
@@ -59,10 +60,10 @@ describe('Snakkeboble', () => {
         location={location}
       >
         <div />
-      </Snakkeboble>,
+      </SnakkebobleContainer>,
     );
 
-    const undertekst = wrapper.find(Undertekst);
-    expect(undertekst.childAt(0).text()).to.contain('10.12.2017 -  // Saksbehandler');
+    const snakkebobla = wrapper.find(Snakkeboble);
+    expect(snakkebobla.prop('topp')).to.contain('10.12.2017 -  // Saksbehandler');
   });
 });

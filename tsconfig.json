@@ -25,6 +25,8 @@
     "packages/fakta-medisinsk-vilkar",
     "packages/fp-felles",
 		"packages/fakta-omsorgen-for",
-    "@types",
+    "packages/sak-historikk",
+    "packages/shared-components",
+		"@types"
 	]
 }

@@ -1,48 +1,33 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
-
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText, findResultatText } from './felles/historikkUtils';
+import Skjermlenke from './felles/Skjermlenke';
 
-const scrollUp = () => {
-  if (window.innerWidth < 1305) {
-    window.scroll(0, 0);
-  }
-  return false;
-};
-
-const HistorikkMalType2 = ({
-  historikkinnslagDeler,
-  behandlingLocation,
-  intl,
-  getKodeverknavn,
-}) => (
-  <div>
-    {historikkinnslagDeler[0].skjermlenke
-    && (
-    <Element className="snakkeboble-panel__tekst">
-      <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
-        onClick={scrollUp}
-      >
-        {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
-      </NavLink>
-    </Element>
-    )}
-    {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse
-      && (
-      <Element className="snakkeboble-panel__tekst">
-        {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}: ${findResultatText(historikkinnslagDeler[0].resultat, intl)}`}
+const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn }) => (
+  <>
+    <Skjermlenke
+      skjermlenke={historikkinnslagDeler[0].skjermlenke}
+      behandlingLocation={behandlingLocation}
+      getKodeverknavn={getKodeverknavn}
+      scrollUpOnClick
+    />
+    {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
+      <Element>
+        {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}: ${findResultatText(
+          historikkinnslagDeler[0].resultat,
+          intl,
+          getKodeverknavn,
+        )}`}
       </Element>
-      )}
-    {!historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse
-      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>}
-  </div>
+    )}
+    {!historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
+      <Element>{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>
+    )}
+  </>
 );
 
 HistorikkMalType2.propTypes = {

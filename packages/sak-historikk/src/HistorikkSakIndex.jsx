@@ -11,17 +11,15 @@ import messages from '../i18n/nb_NO';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
-const HistorikkSakIndex = ({
-  historieInnslag,
-  saksnummer,
-  location,
-  alleKodeverk,
-}) => (
+const HistorikkSakIndex = ({ historieInnslag, saksnummer, location, alleKodeverk }) => (
   <RawIntlProvider value={intl}>
     <History
       historieInnslag={historieInnslag}
