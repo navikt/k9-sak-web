@@ -43,24 +43,12 @@ const DiagnoseFieldArray = ({ readOnly, fields, intl, hasDiagnose }: DiagnoseFie
               validate={[required]}
               placeholder={intl.formatMessage({ id: 'MedisinskVilkarForm.DiagnoseArray' })}
               selectValues={[
-                <option value="lol" key="lol">
+                <option value="f90" key="f90">
                   {intl.formatMessage({ id: 'MedisinskVilkarForm.F-90' })}
                 </option>,
-                <option value="hei" key="hei">
+                <option value="test" key="test">
                   test
                 </option>,
-                // <option
-                //   value={tilretteleggingType.DELVIS_TILRETTELEGGING}
-                //   key={tilretteleggingType.DELVIS_TILRETTELEGGING}
-                // >
-                //   {intl.formatMessage({ id: 'TilretteleggingFieldArray.RedusertArbeid' })}
-                // </option>,
-                // <option
-                //   value={tilretteleggingType.INGEN_TILRETTELEGGING}
-                //   key={tilretteleggingType.INGEN_TILRETTELEGGING}
-                // >
-                //   {intl.formatMessage({ id: 'TilretteleggingFieldArray.KanIkkeGjennomfores' })}
-                // </option>,
               ]}
             />
           </FlexColumn>

@@ -1,21 +1,22 @@
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
-import { Element } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage, IntlShape } from 'react-intl';
+import { IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
+import BeredskapRadio from './BeredskapRadio';
 import DiagnoseFieldArray from './DiagnoseFieldArray';
+import DiagnoseRadio from './DiagnoseRadio';
 import InnlagtBarnPeriodeFieldArray from './InnlagtBarnPeriodeFieldArray';
+import InnlagtBarnRadio from './InnlagtBarnRadio';
 import Legeerklaering from './Legeerklaering';
+import styles from './medisinskVilkar.less';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
 import OmsorgspersonerPeriodeFieldArray from './OmsorgspersonerPeriodeFieldArray';
+import OmsorgspersonerRadio from './OmsorgspersonerRadio';
 
 interface MedisinskVilkarFormProps {
   behandlingId: number;
@@ -69,119 +70,32 @@ const MedisinskVilkarForm = ({
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Element>
-        <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
-      </Element>
-      <VerticalSpacer eightPx />
-      <RadioGroupField name="innlagt" bredde="M" validate={[required]} readOnly={readOnly}>
-        <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-        <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-      </RadioGroupField>
-      <FieldArray name="innlagtBarnPerioder" component={InnlagtBarnPeriodeFieldArray} props={{ readOnly, isInnlagt }} />
-      <VerticalSpacer twentyPx />
-
-      <Element>
-        <FormattedMessage id="MedisinskVilkarForm.Omsorgspersoner" />
-      </Element>
-      <VerticalSpacer eightPx />
-      <RadioGroupField name="omsorgspersoner" bredde="M" validate={[required]} readOnly={readOnly}>
-        <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-        <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-      </RadioGroupField>
-      <FieldArray
-        name="omsorgspersonerPerioder"
-        component={OmsorgspersonerPeriodeFieldArray}
-        props={{ readOnly, toOmsorgspersoner }}
-      />
-      <VerticalSpacer twentyPx />
-
-      <Element>
-        <FormattedMessage id="MedisinskVilkarForm.Beredskap" />
-      </Element>
-      <VerticalSpacer eightPx />
-      <RadioGroupField name="beredskapNattevak" bredde="M" validate={[required]} readOnly={readOnly}>
-        <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-        <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-      </RadioGroupField>
-
-      <VerticalSpacer twentyPx />
-
-      {/* <Element>
-              <FormattedMessage id="MedisinskVilkarForm.Beredskap" />
-            </Element>
-            <VerticalSpacer eightPx />
-            <RadioGroupField name="nattevaakField" bredde="M" validate={[required]} readOnly={readOnly}>
-              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-            </RadioGroupField>
-
-            <VerticalSpacer twentyPx /> */}
-
-      <Element>
-        <FormattedMessage id="MedisinskVilkarForm.Diagnose" />
-      </Element>
-      <VerticalSpacer eightPx />
-      <RadioGroupField name="diagnose" bredde="M" validate={[required]} readOnly={readOnly}>
-        <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-        <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-      </RadioGroupField>
-      <FieldArray name="diagnoser" component={DiagnoseFieldArray} props={{ readOnly, intl, hasDiagnose }} />
-      {/* <SelectField
-              readOnly={readOnly}
-              name="diagnoseFieldArray"
-              label=""
-              validate={[required]}
-              placeholder={intl.formatMessage({ id: 'MedisinskVilkarForm.DiagnoseArray' })}
-              selectValues={[
-                <option value="lol" key="lol">
-                   <FormattedMessage id="MedisinskVilkarForm.F-90" />
-                  test
-                </option>,
-              ]}
-            /> */}
-
-      <VerticalSpacer twentyPx />
-
-      {/* <Element>
-              <FormattedMessage id="MedisinskVilkarForm.AlvorligSykdom" />
-            </Element>
-            <VerticalSpacer eightPx />
-            <RadioGroupField
-
-              name="sykdomField"
-              bredde="M"
-              validate={[required]}
-              readOnly={readOnly}
-            >
-              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-            </RadioGroupField>
-            <TextAreaField
-              name="begrunnelseSykdomField"
-              label={<FormattedMessage id="MedisinskVilkarForm.NotatKommentar" />}
-              validate={[required, minLength3, maxLength1500, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly} // TODO  && overstyringDisabled
-            />
-
-            <VerticalSpacer twentyPx /> */}
-
-      {/* <Element>
-              <FormattedMessage id="MedisinskVilkarForm.Tilsyn" />
-            </Element>
-            <VerticalSpacer eightPx />
-            <RadioGroupField
-
-              name="tilsynField"
-              bredde="M"
-              validate={[required]}
-              readOnly={readOnly}
-            >
-              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-            </RadioGroupField> */}
-      <Legeerklaering readOnly={readOnly} />
-      <VerticalSpacer twentyPx />
+      <div className={styles.fieldContainer}>
+        <InnlagtBarnRadio readOnly={readOnly} isInnlagt={isInnlagt} />
+        <FieldArray
+          name="innlagtBarnPerioder"
+          component={InnlagtBarnPeriodeFieldArray}
+          props={{ readOnly, isInnlagt }}
+        />
+      </div>
+      <div className={styles.fieldContainer}>
+        <OmsorgspersonerRadio readOnly={readOnly} toOmsorgspersoner={toOmsorgspersoner} />
+        <FieldArray
+          name="omsorgspersonerPerioder"
+          component={OmsorgspersonerPeriodeFieldArray}
+          props={{ readOnly, toOmsorgspersoner }}
+        />
+      </div>
+      <div className={styles.fieldContainer}>
+        <BeredskapRadio readOnly={readOnly} />
+      </div>
+      <div className={styles.fieldContainer}>
+        <DiagnoseRadio readOnly={readOnly} />
+        <FieldArray name="diagnoser" component={DiagnoseFieldArray} props={{ readOnly, intl, hasDiagnose }} />
+      </div>
+      <div className={styles.fieldContainer}>
+        <Legeerklaering readOnly={readOnly} />
+      </div>
       <MedisinskVilkarFormButtons
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
