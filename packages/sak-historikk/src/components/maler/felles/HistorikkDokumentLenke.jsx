@@ -32,7 +32,7 @@ const HistorikkDokumentLenke = ({ dokumentLenke, saksNr }) => {
 
 HistorikkDokumentLenke.propTypes = {
   dokumentLenke: PropTypes.shape().isRequired,
-  saksNr: PropTypes.number.isRequired,
+  saksNr: PropTypes.string.isRequired,
 };
 
 export default injectIntl(HistorikkDokumentLenke);
