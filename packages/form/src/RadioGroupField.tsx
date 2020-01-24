@@ -20,6 +20,8 @@ interface RadioGroupFieldProps {
   rows?: number;
   direction?: string;
   DOMName?: string;
+  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  readOnly?: boolean;
 }
 
 const classNames = classnames.bind(styles);

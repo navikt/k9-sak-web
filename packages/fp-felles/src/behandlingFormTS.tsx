@@ -26,13 +26,18 @@ interface BehandlingFormProps {
   behandlingFormName: string;
 }
 
+interface Config {
+  form?: string;
+  enableReinitialize?: boolean;
+}
+
 /**
  * behandlingForm
  *
  * Higher-order component som lager forms innen konteksten av en gitt behandling. BehandlingIndex har ansvaret for å styre livssyklusen til disse skjemaene.
  * @see BehandlingIndex
  */
-export const behandlingForm = (config: { form?: any } = {}) => WrappedComponent => {
+export const behandlingForm = (config: Config = {}) => WrappedComponent => {
   const { form, ...reduxFormConfig } = config;
   // Default configuration lets BehandlingIndex manage the lifecycle of the forms
   const defaultReduxFormConfig = {
