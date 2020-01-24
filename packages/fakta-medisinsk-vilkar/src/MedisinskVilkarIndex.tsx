@@ -1,6 +1,6 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { Aksjonspunkt } from '@fpsak-frontend/types';
+import { Aksjonspunkt } from '@k9-frontend/types';
 import messages from '../i18n/nb_NO.json';
 import MedisinskVilkarPanel from './components/MedisinskVilkarPanel';
 

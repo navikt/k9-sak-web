@@ -3,7 +3,7 @@ import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '
 import { TextAreaField } from '@fpsak-frontend/form';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
-import { Aksjonspunkt } from '@fpsak-frontend/types';
+import { Aksjonspunkt } from '@k9-frontend/types';
 import styles from './faktaBegrunnelseTextField.less';
 
 const minLength3 = minLength(3);

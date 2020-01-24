@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Aksjonspunkt } from '@fpsak-frontend/types';
+import { Aksjonspunkt } from '@k9-frontend/types';
 
 const isInfoPanelOpen = (aksjonspunkter: Aksjonspunkt[]) =>
   aksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode)).length > 0;
