@@ -1,5 +1,5 @@
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
-import { AlleKodeverk, Approval, BehandlingKlageVurdering, BehandlingStatusType } from '@fpsak-frontend/types';
+import { AlleKodeverk, Approval, BehandlingKlageVurdering, BehandlingStatusType } from '@k9-frontend/types';
 import * as React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { NavLink } from 'react-router-dom';

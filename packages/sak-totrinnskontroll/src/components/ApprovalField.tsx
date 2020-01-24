@@ -5,7 +5,7 @@ import {
   BehandlingStatusType,
   Kodeverk,
   TotrinnskontrollAksjonspunkter,
-} from '@fpsak-frontend/types';
+} from '@k9-frontend/types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';

@@ -4,7 +4,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Behandlingsresultat, Kodeverk } from '@fpsak-frontend/types';
+import { Behandlingsresultat, Kodeverk } from '@k9-frontend/types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';

@@ -7,7 +7,7 @@ import {
   BehandlingStatusType,
   Kodeverk,
   TotrinnskontrollAksjonspunkter,
-} from '@fpsak-frontend/types';
+} from '@k9-frontend/types';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import * as React from 'react';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
-import { Aktivitet } from '@fpsak-frontend/types';
+import { Aktivitet } from '@k9-frontend/types';
 
 const mapAktivitetTextEndring = (arbeidsgiverNavn: string, orgnr: string, aktivitetType: string | null) => {
   if (arbeidsgiverNavn && orgnr) {

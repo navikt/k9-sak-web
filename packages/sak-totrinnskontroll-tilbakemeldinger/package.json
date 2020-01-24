@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
-    "@fpsak-frontend/types": "1.0.0",
+    "@k9-frontend/types": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.10.0",
     "sinon": "^7.3.2"

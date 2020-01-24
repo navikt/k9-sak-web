@@ -10,7 +10,7 @@ import {
   KlageVurderingResultat,
   Kodeverk,
   TotrinnskontrollAksjonspunkter,
-} from '@fpsak-frontend/types';
+} from '@k9-frontend/types';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import React from 'react';

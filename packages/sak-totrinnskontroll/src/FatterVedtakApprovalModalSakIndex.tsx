@@ -1,7 +1,7 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Kodeverk, Behandlingsresultat } from '@fpsak-frontend/types';
+import { Kodeverk, Behandlingsresultat } from '@k9-frontend/types';
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
 import messages from '../i18n/nb_NO.json';
 

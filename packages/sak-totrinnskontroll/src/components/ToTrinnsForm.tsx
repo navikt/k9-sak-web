@@ -12,7 +12,7 @@ import {
   TotrinnskontrollAksjonspunkter,
   KlageVurderingResultat,
   AlleKodeverk,
-} from '@fpsak-frontend/types';
+} from '@k9-frontend/types';
 import { InjectedFormProps } from 'redux-form';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
