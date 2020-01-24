@@ -1,4 +1,5 @@
 import React from 'react';
+import sinon from 'sinon';
 import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
@@ -15,7 +16,6 @@ import ArbeidsforholdField from './ArbeidsforholdField';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-beregning';
 
-
 const aksjonspunkter = [
   {
     definisjon: { kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN },
@@ -24,21 +24,23 @@ const aksjonspunkter = [
 ];
 
 const alleKodeverk = {
-  [kodeverkTyper.INNTEKTSKATEGORI]: [{
-    kode: inntektskategorier.ARBEIDSTAKER,
-    navn: 'Arbeidstaker',
-  }, {
-    kode: inntektskategorier.FRILANSER,
-    navn: 'Frilanser',
-  },
-  {
-    kode: inntektskategorier.DAGPENGER,
-    navn: 'Dagpenger',
-  },
-  {
-    kode: inntektskategorier.SELVSTENDIG_NÆRINGSDRIVENDE,
-    navn: 'Selvstendig næringsdrivende',
-  },
+  [kodeverkTyper.INNTEKTSKATEGORI]: [
+    {
+      kode: inntektskategorier.ARBEIDSTAKER,
+      navn: 'Arbeidstaker',
+    },
+    {
+      kode: inntektskategorier.FRILANSER,
+      navn: 'Frilanser',
+    },
+    {
+      kode: inntektskategorier.DAGPENGER,
+      navn: 'Dagpenger',
+    },
+    {
+      kode: inntektskategorier.SELVSTENDIG_NÆRINGSDRIVENDE,
+      navn: 'Selvstendig næringsdrivende',
+    },
   ],
 };
 
@@ -71,27 +73,40 @@ const beregningsgrunnlag = {
   beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel: [{ andelsnr: 1 }] }],
 };
 const ownProps = {
-  alleKodeverk, behandlingId, behandlingVersjon, beregningsgrunnlag, fields, index: 0, isAksjonspunktClosed: false,
+  alleKodeverk,
+  behandlingId,
+  behandlingVersjon,
+  beregningsgrunnlag,
+  fields,
+  index: 0,
+  isAksjonspunktClosed: false,
 };
-const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, beregningsgrunnlag, formNameVurderFaktaBeregning, initial, initial);
+const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
+  aksjonspunkter,
+  beregningsgrunnlag,
+  formNameVurderFaktaBeregning,
+  initial,
+  initial,
+);
 const props = mapStateToProps(state, ownProps);
 
-
 it('skal vise komponent med arbeidsperiode og refusjonskrav', () => {
-  const wrapper = shallowWithIntl(<AndelRowImpl
-    intl={intlMock}
-    fields={fields}
-    readOnly={false}
-    skalVisePeriode
-    skalViseRefusjon
-    skalViseSletteknapp={false}
-    skalRedigereInntekt
-    andelElementFieldId="fieldArrayName[0]"
-    removeAndel={() => {}}
-    index={0}
-    {...ownProps}
-    {...props}
-  />);
+  const wrapper = shallowWithIntl(
+    <AndelRowImpl
+      intl={intlMock}
+      fields={fields}
+      readOnly={false}
+      skalVisePeriode
+      skalViseRefusjon
+      skalViseSletteknapp={false}
+      skalRedigereInntekt
+      andelElementFieldId="fieldArrayName[0]"
+      removeAndel={sinon.spy()}
+      index={0}
+      {...ownProps}
+      {...props}
+    />,
+  );
   const rows = wrapper.find(TableRow);
   expect(rows.length).to.eql(1);
   const columns = rows.first().find(TableColumn);
@@ -121,22 +136,24 @@ it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
 
   const fields2 = new MockFieldsWithContent('fieldArrayName', [andelField2]);
 
-  const wrapper = shallowWithIntl(<AndelRowImpl
-    intl={intlMock}
-    fields={fields2}
-    readOnly={false}
-    skalVisePeriode={false}
-    skalViseSletteknapp={false}
-    skalViseRefusjon={false}
-    skalRedigereInntekt
-    andelElementFieldId="fieldArrayName[0]"
-    removeAndel={() => {}}
-    index={0}
-    inntektskategoriKoder={[]}
-    isAksjonspunktClosed={false}
-    skalRedigereInntektskategori={false}
-    {...ownProps}
-  />);
+  const wrapper = shallowWithIntl(
+    <AndelRowImpl
+      intl={intlMock}
+      fields={fields2}
+      readOnly={false}
+      skalVisePeriode={false}
+      skalViseSletteknapp={false}
+      skalViseRefusjon={false}
+      skalRedigereInntekt
+      andelElementFieldId="fieldArrayName[0]"
+      removeAndel={sinon.spy()}
+      index={0}
+      inntektskategoriKoder={[]}
+      isAksjonspunktClosed={false}
+      skalRedigereInntektskategori={false}
+      {...ownProps}
+    />,
+  );
   const row = wrapper.find(TableRow);
   expect(row.length).to.eql(1);
   const columns = row.first().find(TableColumn);
@@ -149,7 +166,6 @@ it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
   const btn = columns.at(3).find('button');
   expect(btn.length).to.eql(0);
 });
-
 
 it('skal vise komponent med readOnly beløp', () => {
   const andelField2 = {
@@ -167,23 +183,24 @@ it('skal vise komponent med readOnly beløp', () => {
 
   const fields2 = new MockFieldsWithContent('fieldArrayName', [andelField2]);
 
-  const wrapper = shallowWithIntl(<AndelRowImpl
-    intl={intlMock}
-    fields={fields2}
-    readOnly={false}
-    skalVisePeriode={false}
-    skalViseSletteknapp={false}
-    skalViseRefusjon={false}
-    skalRedigereInntekt={false}
-    andelElementFieldId="fieldArrayName[0]"
-    removeAndel={() => {}}
-    index={0}
-    inntektskategoriKoder={[]}
-    isAksjonspunktClosed={false}
-    skalRedigereInntektskategori={false}
-    {...ownProps}
-
-  />);
+  const wrapper = shallowWithIntl(
+    <AndelRowImpl
+      intl={intlMock}
+      fields={fields2}
+      readOnly={false}
+      skalVisePeriode={false}
+      skalViseSletteknapp={false}
+      skalViseRefusjon={false}
+      skalRedigereInntekt={false}
+      andelElementFieldId="fieldArrayName[0]"
+      removeAndel={sinon.spy()}
+      index={0}
+      inntektskategoriKoder={[]}
+      isAksjonspunktClosed={false}
+      skalRedigereInntektskategori={false}
+      {...ownProps}
+    />,
+  );
   const row = wrapper.find(TableRow);
   expect(row.length).to.eql(1);
   const columns = row.first().find(TableColumn);
@@ -196,7 +213,6 @@ it('skal vise komponent med readOnly beløp', () => {
   const btn = columns.at(3).find('button');
   expect(btn.length).to.eql(0);
 });
-
 
 it('skal vise komponent med sletteknapp', () => {
   const andelField2 = {
@@ -213,20 +229,22 @@ it('skal vise komponent med sletteknapp', () => {
 
   const fields2 = new MockFieldsWithContent('fieldArrayName', [andelField2]);
 
-  const wrapper = shallowWithIntl(<AndelRowImpl
-    intl={intlMock}
-    fields={fields2}
-    readOnly={false}
-    skalVisePeriode={false}
-    skalViseSletteknapp
-    skalViseRefusjon={false}
-    skalRedigereInntekt
-    andelElementFieldId="fieldArrayName[0]"
-    removeAndel={() => {}}
-    index={0}
-    {...ownProps}
-    {...props}
-  />);
+  const wrapper = shallowWithIntl(
+    <AndelRowImpl
+      intl={intlMock}
+      fields={fields2}
+      readOnly={false}
+      skalVisePeriode={false}
+      skalViseSletteknapp
+      skalViseRefusjon={false}
+      skalRedigereInntekt
+      andelElementFieldId="fieldArrayName[0]"
+      removeAndel={sinon.spy()}
+      index={0}
+      {...ownProps}
+      {...props}
+    />,
+  );
   const row = wrapper.find(TableRow);
   expect(row.length).to.eql(1);
   const columns = row.first().find(TableColumn);

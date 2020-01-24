@@ -12,6 +12,7 @@ import { FagsakResolver } from './FagsakResolver';
 
 const fagsak = dummyFagsak();
 const location = {};
+const saksnummer = '12345';
 
 const getRequiredProps = () => ({
   selectedSaksnummer: fagsak.saksnummer,
@@ -37,14 +38,18 @@ describe('<FagsakResolver>', () => {
     expect(fetchFagsak).to.have.property('callCount', 1);
     const { args } = fetchFagsak.getCalls()[0];
     expect(args).to.have.length(2);
-    expect(args[0]).to.eql({ saksnummer: 12345 });
+    expect(args[0]).to.eql({ saksnummer });
   });
 
   it('skal rendre children når all informasjon er hentet', () => {
     const props = getRequiredProps();
 
     const ChildComponent = () => 'Innhold';
-    const wrapper = shallow(<FagsakResolver {...props}><ChildComponent /></FagsakResolver>);
+    const wrapper = shallow(
+      <FagsakResolver {...props}>
+        <ChildComponent />
+      </FagsakResolver>,
+    );
 
     expect(wrapper.find(ChildComponent)).to.have.length(0);
 

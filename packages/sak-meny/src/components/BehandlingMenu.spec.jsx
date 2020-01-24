@@ -14,12 +14,16 @@ import MenyKodeverk from '../MenyKodeverk';
 import MenyBehandlingData from '../MenyBehandlingData';
 import MenyRettigheter from '../MenyRettigheter';
 
+const saksnummer = '12345';
+
 describe('<BehandlingMenu>', () => {
-  const behandlendeEnheter = [{
-    enhetId: '001',
-    enhetNavn: 'NAV',
-    status: 'Aktiv',
-  }];
+  const behandlendeEnheter = [
+    {
+      enhetId: '001',
+      enhetNavn: 'NAV',
+      status: 'Aktiv',
+    },
+  ];
 
   const fullAccess = {
     employeeHasAccess: true,
@@ -38,7 +42,7 @@ describe('<BehandlingMenu>', () => {
     navn: '',
   };
 
-  const behandlingIdentifier = new BehandlingIdentifier(23, 1);
+  const behandlingIdentifier = new BehandlingIdentifier(saksnummer, 1);
   const type = { kode: behandlingType.FORSTEGANGSSOKNAD };
   const behandlingData = new MenyBehandlingData(1, '3', 2, type, false, false, 'enhetsid', 'Enhetsnavn', false);
   const kodeverk = new MenyKodeverk();
@@ -60,28 +64,30 @@ describe('<BehandlingMenu>', () => {
   const previewCallback = sinon.spy();
 
   it('skal rendre behandlingsmeny med visning av alle valg bortsett fra "fortsett behandling" når behandling ikke er satt på vent', () => {
-    const wrapper = shallow(<BehandlingMenu
-      saksnummer={23}
-      behandlingData={behandlingData}
-      menyKodeverk={kodeverk}
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      previewHenleggBehandling={previewCallback}
-      rettigheter={rettigheter}
-      resumeBehandling={sinon.spy()}
-      shelveBehandling={shelveBehandlingCallback}
-      nyBehandlendeEnhet={sinon.spy()}
-      createNewBehandling={sinon.spy()}
-      behandlendeEnheter={behandlendeEnheter}
-      erTilbakekrevingAktivert={false}
-      setBehandlingOnHold={behandlingOnHoldCallback}
-      openBehandlingForChanges={sinon.spy()}
-      sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-      push={pushCallback}
-      navAnsatt={navAnsatt}
-    />);
+    const wrapper = shallow(
+      <BehandlingMenu
+        saksnummer={saksnummer}
+        behandlingData={behandlingData}
+        menyKodeverk={kodeverk}
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+        previewHenleggBehandling={previewCallback}
+        rettigheter={rettigheter}
+        resumeBehandling={sinon.spy()}
+        shelveBehandling={shelveBehandlingCallback}
+        nyBehandlendeEnhet={sinon.spy()}
+        createNewBehandling={sinon.spy()}
+        behandlendeEnheter={behandlendeEnheter}
+        erTilbakekrevingAktivert={false}
+        setBehandlingOnHold={behandlingOnHoldCallback}
+        openBehandlingForChanges={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        push={pushCallback}
+        navAnsatt={navAnsatt}
+      />,
+    );
 
     const behandlingOnHoldMenuItem = wrapper.find(PauseBehandlingMenuItem);
     expect(behandlingOnHoldMenuItem).has.length(1);
@@ -99,28 +105,30 @@ describe('<BehandlingMenu>', () => {
   });
 
   it('skal vise menyvalg "fortsett behandling" men ikke "Sett på vent" og "Kan henlegges" når behandling er satt på vent', () => {
-    const wrapper = shallow(<BehandlingMenu
-      saksnummer={23}
-      behandlingData={new MenyBehandlingData(1, '3', 2, type, true, false, 'enhetsid', 'Enhetsnavn', false)}
-      menyKodeverk={kodeverk}
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      previewHenleggBehandling={previewCallback}
-      rettigheter={rettigheter}
-      resumeBehandling={sinon.spy()}
-      shelveBehandling={shelveBehandlingCallback}
-      nyBehandlendeEnhet={sinon.spy()}
-      createNewBehandling={sinon.spy()}
-      behandlendeEnheter={behandlendeEnheter}
-      erTilbakekrevingAktivert={false}
-      setBehandlingOnHold={behandlingOnHoldCallback}
-      openBehandlingForChanges={sinon.spy()}
-      sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-      push={pushCallback}
-      navAnsatt={navAnsatt}
-    />);
+    const wrapper = shallow(
+      <BehandlingMenu
+        saksnummer={saksnummer}
+        behandlingData={new MenyBehandlingData(1, '3', 2, type, true, false, 'enhetsid', 'Enhetsnavn', false)}
+        menyKodeverk={kodeverk}
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+        previewHenleggBehandling={previewCallback}
+        rettigheter={rettigheter}
+        resumeBehandling={sinon.spy()}
+        shelveBehandling={shelveBehandlingCallback}
+        nyBehandlendeEnhet={sinon.spy()}
+        createNewBehandling={sinon.spy()}
+        behandlendeEnheter={behandlendeEnheter}
+        erTilbakekrevingAktivert={false}
+        setBehandlingOnHold={behandlingOnHoldCallback}
+        openBehandlingForChanges={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        push={pushCallback}
+        navAnsatt={navAnsatt}
+      />,
+    );
 
     expect(wrapper.find('PauseBehandlingMenuItem')).has.length(0);
 
@@ -130,30 +138,31 @@ describe('<BehandlingMenu>', () => {
     expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
   });
 
-
   it('skal vise knapp med lukket-tekst når meny er synlig', () => {
-    const wrapper = shallow(<BehandlingMenu
-      saksnummer={23}
-      behandlingData={behandlingData}
-      menyKodeverk={kodeverk}
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      previewHenleggBehandling={previewCallback}
-      rettigheter={rettigheter}
-      resumeBehandling={sinon.spy()}
-      shelveBehandling={shelveBehandlingCallback}
-      nyBehandlendeEnhet={sinon.spy()}
-      createNewBehandling={sinon.spy()}
-      behandlendeEnheter={behandlendeEnheter}
-      erTilbakekrevingAktivert={false}
-      setBehandlingOnHold={behandlingOnHoldCallback}
-      openBehandlingForChanges={sinon.spy()}
-      sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-      push={pushCallback}
-      navAnsatt={navAnsatt}
-    />);
+    const wrapper = shallow(
+      <BehandlingMenu
+        saksnummer={saksnummer}
+        behandlingData={behandlingData}
+        menyKodeverk={kodeverk}
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+        previewHenleggBehandling={previewCallback}
+        rettigheter={rettigheter}
+        resumeBehandling={sinon.spy()}
+        shelveBehandling={shelveBehandlingCallback}
+        nyBehandlendeEnhet={sinon.spy()}
+        createNewBehandling={sinon.spy()}
+        behandlendeEnheter={behandlendeEnheter}
+        erTilbakekrevingAktivert={false}
+        setBehandlingOnHold={behandlingOnHoldCallback}
+        openBehandlingForChanges={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        push={pushCallback}
+        navAnsatt={navAnsatt}
+      />,
+    );
 
     wrapper.setState({ menuVisible: true });
 
@@ -163,28 +172,30 @@ describe('<BehandlingMenu>', () => {
   });
 
   it('skal vise knapp med åpne-tekst når meny ikke er synlig', () => {
-    const wrapper = shallow(<BehandlingMenu
-      saksnummer={23}
-      behandlingData={behandlingData}
-      menyKodeverk={kodeverk}
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      previewHenleggBehandling={previewCallback}
-      rettigheter={rettigheter}
-      resumeBehandling={sinon.spy()}
-      shelveBehandling={shelveBehandlingCallback}
-      nyBehandlendeEnhet={sinon.spy()}
-      createNewBehandling={sinon.spy()}
-      behandlendeEnheter={behandlendeEnheter}
-      erTilbakekrevingAktivert={false}
-      setBehandlingOnHold={behandlingOnHoldCallback}
-      openBehandlingForChanges={sinon.spy()}
-      sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-      push={pushCallback}
-      navAnsatt={navAnsatt}
-    />);
+    const wrapper = shallow(
+      <BehandlingMenu
+        saksnummer={saksnummer}
+        behandlingData={behandlingData}
+        menyKodeverk={kodeverk}
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+        previewHenleggBehandling={previewCallback}
+        rettigheter={rettigheter}
+        resumeBehandling={sinon.spy()}
+        shelveBehandling={shelveBehandlingCallback}
+        nyBehandlendeEnhet={sinon.spy()}
+        createNewBehandling={sinon.spy()}
+        behandlendeEnheter={behandlendeEnheter}
+        erTilbakekrevingAktivert={false}
+        setBehandlingOnHold={behandlingOnHoldCallback}
+        openBehandlingForChanges={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        push={pushCallback}
+        navAnsatt={navAnsatt}
+      />,
+    );
 
     wrapper.setState({ menuVisible: false });
 

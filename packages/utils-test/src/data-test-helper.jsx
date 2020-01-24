@@ -2,17 +2,19 @@ import RestDuck from '@fpsak-frontend/rest-api-redux/src/redux/RestDuck';
 import getAxiosHttpClientApi from '@fpsak-frontend/rest-api/src/axios/getAxiosHttpClientApi';
 import RequestApi from '@fpsak-frontend/rest-api/src/requestApi/RequestApi';
 
-export const withoutRestActions = (actions) => actions.filter((a) => !a.type.match(/^@@REST/));
+export const withoutRestActions = actions => actions.filter(a => !a.type.match(/^@@REST/));
 
-export const ignoreRestErrors = (e) => (e.config && e.response ? e : Promise.reject(e));
+export const ignoreRestErrors = e => (e.config && e.response ? e : Promise.reject(e));
 
 export class ApiStateBuilder {
   stateParts = {};
 
   withData = (api, params, data, dataContextName = 'dataContext') => {
-    const configs = [{
-      name: api,
-    }];
+    const configs = [
+      {
+        name: api,
+      },
+    ];
     const requestApi = new RequestApi(getAxiosHttpClientApi(), 'fpsak', configs);
     const d = new RestDuck(requestApi.getRequestRunner(api));
 
@@ -27,19 +29,22 @@ export class ApiStateBuilder {
     };
 
     return this;
-  }
+  };
 
   build = () => {
-    const state = Object.keys(this.stateParts).reduce((acc, key) => ({
-      ...acc,
-      [key]: this.stateParts[key],
-    }), {});
+    const state = Object.keys(this.stateParts).reduce(
+      (acc, key) => ({
+        ...acc,
+        [key]: this.stateParts[key],
+      }),
+      {},
+    );
 
     return { default: state };
   };
 }
 
-export const dummyFagsak = (saksnummer = 12345) => ({
+export const dummyFagsak = (saksnummer = '12345') => ({
   saksnummer,
   sakstype: { kode: 'ES', navn: 'test' },
   status: { kode: 'OPPR', navn: 'test' },

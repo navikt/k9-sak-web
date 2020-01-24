@@ -37,6 +37,11 @@ server {
     add_header Content-Type text/plain;
   }
 
+  # TODO K9 Fjern mock:
+  location "/fpoppdrag/api" {
+    return 200 "";
+  }
+
   location  "/${APP_PATH_PREFIX}" {
     proxy_set_header Host       $http_host;
     proxy_hide_header       Content-Security-Policy;
@@ -55,7 +60,7 @@ server {
 
   location @401_json {
     default_type application/json;
-    add_header Location /fpsak/resource/login always;
+    add_header Location /${APP_PATH_PREFIX}/resource/login always;
     return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
   }
 

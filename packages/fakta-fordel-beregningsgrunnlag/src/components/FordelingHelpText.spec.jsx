@@ -1,7 +1,8 @@
 import { expect } from 'chai';
+import sinon from 'sinon';
 import { createFordelArbeidsforholdString, textCase } from './FordelingHelpText';
 
-const fn = () => {};
+const fn = sinon.spy();
 
 const arbeidsforhold = {
   arbeidsgiverNavn: 'Sopra Steria',
@@ -38,13 +39,17 @@ describe('<FordelingHelpText>', () => {
   });
   it('skal lage endret arbeidsforhold for permisjon når permisjonTom er undefined', () => {
     const string = createFordelArbeidsforholdString(
-      [{
-        ...arbeidsforhold,
-        permisjon: {
-          permisjonFom: '2016-10-01',
-          permisjonTom: undefined,
+      [
+        {
+          ...arbeidsforhold,
+          permisjon: {
+            permisjonFom: '2016-10-01',
+            permisjonTom: undefined,
+          },
         },
-      }], textCase.PERMISJON, fn,
+      ],
+      textCase.PERMISJON,
+      fn,
     );
     expect(string.navnOgOrgnr).to.eql('Sopra Steria (123456789)...6789');
     expect(string.dato).to.eql('-');

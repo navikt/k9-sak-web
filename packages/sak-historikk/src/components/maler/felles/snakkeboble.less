@@ -2,84 +2,10 @@
 @import '@{coreModulePath}nav-frontend-core/less/_mixins';
 @import '@{coreModulePath}nav-frontend-core/less/utilities';
 @import '@{coreModulePath}nav-frontend-core/less/hide-text';
+@import '@{coreModulePath}nav-frontend-snakkeboble-style/src/snakkeboble-style';
 
 .snakkeboble {
-  display: flex;
-  margin-bottom: 16px;
-  white-space: pre-line;
-
-  &--hoyre {
-    flex-direction: row-reverse;
-    margin-right: 16px;
-  }
-
-  &--venstre {
-    flex-direction: row;
-  }
-
-  &__snakkeboble-pil-container {
-    margin-top: 1rem;
-    overflow: hidden;
-    position: relative;
-    width: 1.2rem;
-  }
-
-  &__snakkebole-pil {
-    background: @white;
-    height: 1rem;
-    position: absolute;
-    top: 1px;
-    transform: rotate(54deg) skew(17deg);
-    width: 1rem;
-  }
-
-  &__snakkebole-pil--hoyre {
-    box-shadow: 0 1px 4px 1px @navGra20;
-    right: 72%;
-  }
-
-  &__snakkebole-pil--venstre {
-    box-shadow: 0 2px 4px -1px @navGra20;
-    left: 72%;
-  }
-
-  &__snakkebole-pil--hoyre--saksbehandler {
-    background-color: @navLillaLighten80;
-    box-shadow: 0 1px 4px 1px @navGra20;
-    right: 72%;
-  }
-
-  &__snakkebole-pil--hoyre--beslutter {
-    background-color: @navGronnLighten80;
-    box-shadow: 0 1px 4px 1px @navGra20;
-    right: 72%;
-  }
-
-  &__snakkebole-pil--hoyre--losningen {
-    background-color: @grayBackground;
-    box-shadow: 0 1px 4px 1px @navGra20;
-    right: 72%;
-  }
-
-  &__snakkebole-pil--venstre--bruker {
-    background-color: @orangeFocusLighten80;
-    box-shadow: 0 2px 4px -1px @navGra20;
-    left: 72%;
-  }
-
-  &__snakkebole-pil--venstre--ekstern {
-    background-color: @navLysBlaLighten80;
-    box-shadow: 0 2px 4px -1px @navGra20;
-    left: 72%;
-  }
-
   &__ikon {
-    border-radius: 50%;
-    flex-shrink: 0;
-    height: 45px;
-    margin-top: 2px;
-    width: 45px;
-
     &--veileder {
       background: @navLysBlaDarken80;
     }
@@ -117,98 +43,79 @@
       background-size: contain;
     }
   }
-}
 
-.hide {
-  display: none;
-}
+  .hide {
+    display: none;
+  }
 
-.show {
-  display: inline;
-}
+  .show {
+    display: inline;
+  }
 
-.snakkeboble-panel {
-  .blokk-s();
+  .hoyrejustert-tekst {
+    text-align: right;
+  }
 
-  box-shadow: 0 2px 4px 0 @navGra20;
-  display: inline-flex;
-  flex-direction: column;
-  padding: 0.5rem 1rem 1rem;
-}
+  .snakkeboble__snakkebole-panel--saksbehandler {
+    background-color: @navLillaLighten80;
+  }
 
-.hoyrejustert-tekst {
-  text-align: right;
-}
+  .snakkeboble__snakkebole-panel--beslutter {
+    background-color: @navGronnLighten80;
+  }
 
-.snakkeboble-width {
-  flex: 0 1 350px;
-  width: 20rem;
-}
+  .snakkeboble__snakkebole-panel--losningen {
+    background-color: @grayBackground;
+  }
 
-.snakkeboble__snakkebole-panel--saksbehandler {
-  background-color: @navLillaLighten80;
-  .snakkeboble-width;
-}
+  .snakkeboble__snakkebole-panel--bruker {
+    background-color: @orangeFocusLighten80;
+  }
 
-.snakkeboble__snakkebole-panel--beslutter {
-  background-color: @navGronnLighten80;
-  .snakkeboble-width;
-}
+  .snakkeboble__snakkebole-panel--ekstern {
+    background-color: @navLysBlaLighten80;
+  }
 
-.snakkeboble__snakkebole-panel--losningen {
-  background-color: @grayBackground;
-  .snakkeboble-width;
-}
+  // IE-specific css to make the icon fit in place
+  // IE-11 specific css to make the icon fit in place
 
-.snakkeboble__snakkebole-panel--bruker {
-  background-color: @orangeFocusLighten80;
-  .snakkeboble-width;
-}
-
-.snakkeboble__snakkebole-panel--ekstern {
-  background-color: @navLysBlaLighten80;
-  .snakkeboble-width;
-}
-
-// IE-specific css to make the icon fit in place
-// IE-11 specific css to make the icon fit in place
-
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .snakkeboble {
-    &__ikon {
-      &--saksbehandler {
-        background-position-x: 8px;
-        background-position-y: 4px;
-        background-repeat: no-repeat;
-        background-size: 40px;
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .snakkeboble {
+      &__ikon {
+        &--saksbehandler {
+          background-position-x: 8px;
+          background-position-y: 4px;
+          background-repeat: no-repeat;
+          background-size: 40px;
+        }
       }
     }
   }
-}
 
-// IE Edge specifics
-@supports (-ms-ime-align:auto) {
-  .snakkeboble {
-    &__ikon {
-      &--saksbehandler {
-        background-position-x: 8px;
-        background-position-y: 4px;
-        background-repeat: no-repeat;
-        background-size: 40px;
-      }
+  // IE Edge specifics
+  @supports (-ms-ime-align:auto) {
+    .snakkeboble {
+      &__ikon {
+        &--saksbehandler {
+          background-position-x: 8px;
+          background-position-y: 4px;
+          background-repeat: no-repeat;
+          background-size: 40px;
+        }
 
-      &--brukerKvinne {
-        background-position-x: 8px;
-        background-position-y: 8px;
-        background-repeat: no-repeat;
-        background-size: 32px;
-      }
+        &--brukerKvinne {
+          background-position-x: 8px;
+          background-position-y: 8px;
+          background-repeat: no-repeat;
+          background-size: 32px;
+        }
 
-      &--brukerMann {
-        background-position-x: 8px;
-        background-position-y: 8px;
-        background-repeat: no-repeat;
-        background-size: 32px;
+        &--brukerMann {
+          background-position-x: 8px;
+          background-position-y: 8px;
+          background-repeat: no-repeat;
+          background-size: 32px;
+        }
       }
     }
   }

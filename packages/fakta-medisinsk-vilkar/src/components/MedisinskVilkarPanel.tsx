@@ -1,8 +1,8 @@
 import { FaktaEkspandertpanel, faktaPanelCodes, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import React from 'react';
-import { injectIntl, IntlShape } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { SubmitCallbackProps, Behandling } from '../MedisinskVilkarIndex';
+import { Behandling, SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import MedisinskVilkarForm from './MedisinskVilkarForm';
 
 interface MedisinskVilkarPanelProps {
@@ -21,19 +21,25 @@ const MedisinskVilkarPanel: React.FunctionComponent<MedisinskVilkarPanelProps> =
   toggleInfoPanelCallback,
   behandling,
   submitCallback,
-  intl,
   submittable,
+  openInfoPanels,
 }: // hasOpenAksjonspunkter,
-// openInfoPanels,
 MedisinskVilkarPanelProps) => {
-  const props = { readOnly: false, submitCallback, behandlingId: behandling.id, behandlingVersjon: behandling.versjon }; // TODO readOnly skal sendes videre
+  const intl = useIntl();
+  const props = {
+    readOnly: false,
+    submitCallback,
+    behandlingId: behandling.id,
+    behandlingVersjon: behandling.versjon,
+    intl,
+  }; // TODO readOnly skal sendes videre
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'MedisinskVilkarPanel.MedisinskVilkar' })}
       hasOpenAksjonspunkter // TODO ={hasOpenAksjonspunkter}
-      isInfoPanelOpen // TODO ={openInfoPanels.includes(faktaPanelCodes.MEDLEMSKAPSVILKARET)} sett riktig faktaPanelCode
+      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.MEDISINSKVILKAAR)} // sett riktig faktaPanelCode
       toggleInfoPanelCallback={toggleInfoPanelCallback}
-      faktaId="123" // TODO sett riktig faktaPanelCode
+      faktaId={faktaPanelCodes.MEDISINSKVILKAAR} // TODO sett riktig faktaPanelCode
       readOnly={readOnly}
     >
       <MedisinskVilkarForm
@@ -47,6 +53,6 @@ MedisinskVilkarPanelProps) => {
 
 const mapStateToProps = () => ({});
 
-const ConnectedComponent = connect(mapStateToProps)(injectIntl(MedisinskVilkarPanel));
+const ConnectedComponent = connect(mapStateToProps)(MedisinskVilkarPanel);
 
 export default withDefaultToggling(faktaPanelCodes.MEDLEMSKAPSVILKARET, [])(ConnectedComponent);

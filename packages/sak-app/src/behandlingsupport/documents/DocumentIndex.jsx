@@ -13,14 +13,17 @@ import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 
 // TODO (hb) lag linker, ikke callback
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
-const selectDocument = (saksNr) => (e, id, document) => {
-  window.open(`/fpsak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`, '_blank');
+const selectDocument = saksNr => (e, id, document) => {
+  window.open(
+    `/sak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`,
+    '_blank',
+  );
 };
 
 const dokumentData = [fpsakApi.ALL_DOCUMENTS];
 
-const getSortedDocuments = createSelector([(allDocuments) => allDocuments], (alleDokumenter) => (alleDokumenter || [])
-  .sort((a, b) => {
+const getSortedDocuments = createSelector([allDocuments => allDocuments], alleDokumenter =>
+  (alleDokumenter || []).sort((a, b) => {
     if (!a.tidspunkt) {
       return +1;
     }
@@ -29,19 +32,15 @@ const getSortedDocuments = createSelector([(allDocuments) => allDocuments], (all
       return -1;
     }
     return b.tidspunkt.localeCompare(a.tidspunkt);
-  }));
-
+  }),
+);
 
 /**
  * DocumentIndex
  *
  * Container komponent. Har ansvar for å hente sakens dokumenter fra state og rendre det i en liste.
  */
-export const DocumentIndex = ({
-  behandlingId,
-  behandlingVersjon,
-  saksNr,
-}) => (
+export const DocumentIndex = ({ behandlingId, behandlingVersjon, saksNr }) => (
   <DataFetcher
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
@@ -50,7 +49,7 @@ export const DocumentIndex = ({
     behandlingNotRequired
     endpointParams={{ saksnummer: saksNr }}
     keepDataWhenRefetching
-    render={(dataProps) => (
+    render={dataProps => (
       <DokumenterSakIndex
         documents={getSortedDocuments(dataProps.allDocuments)}
         selectDocumentCallback={selectDocument(saksNr)}
@@ -71,7 +70,7 @@ DocumentIndex.defaultProps = {
   behandlingVersjon: undefined,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   saksNr: getSelectedSaksnummer(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),
