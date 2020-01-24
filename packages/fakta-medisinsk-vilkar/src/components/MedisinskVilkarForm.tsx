@@ -49,9 +49,6 @@ interface LegeerklaeringDto {
   omsorgspersonerPerioder: Periode[];
 }
 
-// const minLength3 = minLength(3);
-// const maxLength1500 = maxLength(1500);
-
 const formName = 'MedisinskVilkarForm';
 
 export const MedisinskVilkarForm = ({

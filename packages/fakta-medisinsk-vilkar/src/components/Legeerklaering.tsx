@@ -5,9 +5,6 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-// const minLength3 = minLength(3);
-// const maxLength1500 = maxLength(1500);
-
 interface LegeerklaeringProps {
   readOnly: boolean;
 }
@@ -33,13 +30,6 @@ const Legeerklaering = ({ readOnly }: LegeerklaeringProps) => (
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappFastlege' }} value="fastlege" />
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappAnnenYrkesgruppe' }} value="annenyrkesgruppe" />
     </RadioGroupField>
-    {/* <TextAreaField
-      name="begrunnelseLegeerklaering"
-      label={<FormattedMessage id="MedisinskVilkarForm.NotatKommentar" />}
-      validate={[required, minLength3, maxLength1500, hasValidText]}
-      maxLength={1500}
-      readOnly={readOnly}
-    /> */}
   </>
 );
 
