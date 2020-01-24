@@ -165,6 +165,7 @@ export const FaktaPanel = ({
             openInfoPanels={openInfoPanels}
             toggleInfoPanelCallback={toggleInfoPanelCallback}
             shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            readOnly
             {...componentProps}
           />
         )}

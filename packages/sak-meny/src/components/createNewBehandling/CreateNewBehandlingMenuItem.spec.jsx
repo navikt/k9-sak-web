@@ -9,49 +9,55 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import MenyKodeverk from '../../MenyKodeverk';
 import CreateNewBehandlingMenuItem from './CreateNewBehandlingMenuItem';
 
+const saksnummer = '12345';
+
 describe('<CreateNewBehandlingMenuItem>', () => {
   const menyKodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
     .medFpSakKodeverk({})
     .medFpTilbakeKodeverk({});
 
   it('skal ikke vise modal ved rendring', () => {
-    const wrapper = shallow(<CreateNewBehandlingMenuItem
-      saksnummer={23}
-      submitNyBehandling={sinon.spy()}
-      toggleBehandlingsmeny={sinon.spy()}
-      opprettNyForstegangsBehandlingEnabled
-      push={sinon.spy()}
-      menyKodeverk={menyKodeverk}
-      opprettRevurderingEnabled
-      ikkeVisOpprettNyBehandling
-      sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-      erTilbakekrevingAktivert
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-    />);
+    const wrapper = shallow(
+      <CreateNewBehandlingMenuItem
+        saksnummer={saksnummer}
+        submitNyBehandling={sinon.spy()}
+        toggleBehandlingsmeny={sinon.spy()}
+        opprettNyForstegangsBehandlingEnabled
+        push={sinon.spy()}
+        menyKodeverk={menyKodeverk}
+        opprettRevurderingEnabled
+        ikkeVisOpprettNyBehandling
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        erTilbakekrevingAktivert
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+      />,
+    );
 
     expect(wrapper.find('Connect(ReduxForm)')).has.length(0);
   });
 
   it('skal vise modal ved trykk på meny-lenke', () => {
-    const wrapper = shallow(<CreateNewBehandlingMenuItem
-      saksnummer={23}
-      submitNyBehandling={sinon.spy()}
-      toggleBehandlingsmeny={sinon.spy()}
-      opprettNyForstegangsBehandlingEnabled
-      push={sinon.spy()}
-      menyKodeverk={menyKodeverk}
-      erTilbakekrevingAktivert
-      opprettRevurderingEnabled
-      ikkeVisOpprettNyBehandling
-      sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-    />);
+    const wrapper = shallow(
+      <CreateNewBehandlingMenuItem
+        saksnummer={saksnummer}
+        submitNyBehandling={sinon.spy()}
+        toggleBehandlingsmeny={sinon.spy()}
+        opprettNyForstegangsBehandlingEnabled
+        push={sinon.spy()}
+        menyKodeverk={menyKodeverk}
+        erTilbakekrevingAktivert
+        opprettRevurderingEnabled
+        ikkeVisOpprettNyBehandling
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+      />,
+    );
 
     const button = wrapper.find('MenuButton');
     expect(button).has.length(1);

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import Table from '@fpsak-frontend/shared-components/src/table/Table';
+import checkSvg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import Image from '@fpsak-frontend/shared-components/src/Image';
-import checkSvg from '@fpsak-frontend/assets/images/check.svg';
 import TableRow from '@fpsak-frontend/shared-components/src/table/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/src/table/TableColumn';
 import { useIntl } from 'react-intl';
@@ -36,6 +36,7 @@ const SokerinfoTable: FunctionComponent<SokerinfoTableProps> = ({ header, forhol
         </>,
       ]}
       allowFormattedHeader
+      noHover
     >
       {forhold.map(forholdet => (
         <TableRow key={forholdet.forholdskode}>

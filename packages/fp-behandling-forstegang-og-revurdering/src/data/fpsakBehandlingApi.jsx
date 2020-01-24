@@ -39,16 +39,22 @@ export const BehandlingFpsakApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   /* /api/behandlinger */
-  .withAsyncPost('/fpsak/api/behandlinger', BehandlingFpsakApiKeys.BEHANDLING)
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', BehandlingFpsakApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/sak/api/behandlinger', BehandlingFpsakApiKeys.BEHANDLING)
+  .withPost('/sak/api/behandlinger/endre-pa-vent', BehandlingFpsakApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', BehandlingFpsakApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', BehandlingFpsakApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
-  .withPost('/fpsak/api/behandling/uttak/stonadskontoerGittUttaksperioder', BehandlingFpsakApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
+  .withAsyncPost('/sak/api/behandling/aksjonspunkt', BehandlingFpsakApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/sak/api/behandling/aksjonspunkt/overstyr', BehandlingFpsakApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
+  .withPost(
+    '/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
+    BehandlingFpsakApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
+  )
 
   /* fptilbake/api/dokument */
-  .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', BehandlingFpsakApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)
+  .withPostAndOpenBlob(
+    '/fptilbake/api/dokument/forhandsvis-varselbrev',
+    BehandlingFpsakApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+  )
 
   /* /api/brev */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', BehandlingFpsakApiKeys.PREVIEW_MESSAGE)
@@ -85,9 +91,11 @@ const endpoints = new RestApiConfigBuilder()
 const reducerName = 'dataContextForstegangOgRevurderingBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withReduxEvents(new ReduxEvents()
-    .withErrorActionCreator(errorHandler.getErrorActionCreator())
-    .withPollingMessageActionCreator(setRequestPollingMessage))
+  .withReduxEvents(
+    new ReduxEvents()
+      .withErrorActionCreator(errorHandler.getErrorActionCreator())
+      .withPollingMessageActionCreator(setRequestPollingMessage),
+  )
   .build();
 
 reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());

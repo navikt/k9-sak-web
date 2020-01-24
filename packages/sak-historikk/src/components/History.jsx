@@ -5,7 +5,7 @@ import { pathToBehandling } from '@fpsak-frontend/fp-felles';
 
 import historikkinnslagPropType from '../propTypes/historikkinnslagPropType';
 import historikkinnslagType from '../kodeverk/historikkinnslagType';
-import Snakkeboble from './maler/felles/snakkeboble';
+import SnakkebobleContainer from './maler/felles/SnakkebobleContainer';
 import HistorikkMalType1 from './maler/historikkMalType1';
 import HistorikkMalType2 from './maler/historikkMalType2';
 import HistorikkMalType3 from './maler/historikkMalType3';
@@ -21,8 +21,11 @@ import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekrevi
 import HistorikkMalTypeForeldelse from './maler/HistorikkMalTypeForeldelse';
 import PlaceholderHistorikkMal from './maler/placeholderHistorikkMal';
 
-const velgHistorikkMal = (histType) => { // NOSONAR
-  switch (histType.kode) { // NOSONAR
+const velgHistorikkMal = histType => {
+  // NOSONAR
+  switch (
+    histType.kode // NOSONAR
+  ) {
     case historikkinnslagType.BEH_GJEN:
     case historikkinnslagType.KOET_BEH_GJEN:
     case historikkinnslagType.BEH_MAN_GJEN:
@@ -96,26 +99,18 @@ const velgHistorikkMal = (histType) => { // NOSONAR
  *
  * Historikken for en behandling
  */
-const History = ({
-  historieInnslag,
-  saksNr,
-  location,
-  getKodeverknavn,
-}) => {
+const History = ({ historieInnslag, saksNr, location, getKodeverknavn }) => {
   const HistorikkMal = velgHistorikkMal(historieInnslag.type);
   const aktorIsVL = historieInnslag.aktoer.kode === 'VL';
   const aktorIsSOKER = historieInnslag.aktoer.kode === 'SOKER';
   const aktorIsArbeidsgiver = historieInnslag.aktoer.kode === 'ARBEIDSGIVER';
   return (
-    <Snakkeboble
-      historikkinnslagDeler={historieInnslag.historikkinnslagDeler}
+    <SnakkebobleContainer
       rolle={historieInnslag.aktoer.kode}
       rolleNavn={getKodeverknavn(historieInnslag.aktoer)}
       dato={historieInnslag.opprettetTidspunkt}
       kjoennKode={historieInnslag.kjoenn ? historieInnslag.kjoenn.kode : ''}
-      opprettetAv={(aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL) ? null : historieInnslag.opprettetAv}
-      histType={historieInnslag.type}
-      dokumentLinks={historieInnslag.dokumentLinks}
+      opprettetAv={aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL ? null : historieInnslag.opprettetAv}
     >
       <HistorikkMal
         historikkinnslagDeler={historieInnslag.historikkinnslagDeler}
@@ -128,7 +123,7 @@ const History = ({
         saksNr={saksNr}
         getKodeverknavn={getKodeverknavn}
       />
-    </Snakkeboble>
+    </SnakkebobleContainer>
   );
 };
 

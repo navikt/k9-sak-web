@@ -58,109 +58,109 @@
   },
   "links": [
     {
-      "href": "/fpsak/api/fagsak?saksnummer=124123804",
+      "href": "/sak/api/fagsak?saksnummer=124123804",
       "rel": "fagsak",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/aksjonspunkt-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/aksjonspunkt-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "aksjonspunkter",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/vilkar-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/vilkar-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "vilkar",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/soknad?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/soknad?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "soknad",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/dokument/hent-mottattdokumentliste?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/dokument/hent-mottattdokumentliste?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "mottattdokument",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/familiehendelse?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/familiehendelse?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "familiehendelse",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/familiehendelse/v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/familiehendelse/v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "familiehendelse-v2",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/person/personopplysninger?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/person/personopplysninger?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "soeker-personopplysninger",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/person/medlemskap-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/person/medlemskap-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "soeker-medlemskap-v2",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/person/medlemskap?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/person/medlemskap?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "soeker-medlemskap",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/inntekt-arbeid-ytelse?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/inntekt-arbeid-ytelse?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "inntekt-arbeid-ytelse",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/ytelsefordeling?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/ytelsefordeling?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "ytelsefordeling",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/opptjening?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/opptjening?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "opptjening",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/beregningsgrunnlag?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/beregningsgrunnlag?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "beregningsgrunnlag",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/uttak/fakta-arbeidsforhold?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/uttak/fakta-arbeidsforhold?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "fakta-arbeidsforhold",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/uttak/periode-grense?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/uttak/periode-grense?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "uttak-periode-grense",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/fpsak/api/behandling/uttak/kontroller-fakta-perioder?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "href": "/sak/api/behandling/uttak/kontroller-fakta-perioder?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
       "rel": "uttak-kontroller-fakta-perioder",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "http://localhost:9000/fpsak/jetty/dummy/fpoppdrag/simulering/resultat-uten-inntrekk",
+      "href": "http://localhost:9000/sak/jetty/dummy/fpoppdrag/simulering/resultat-uten-inntrekk",
       "rel": "simuleringResultat",
       "requestPayload": {
         "behandlingId": 1000604
