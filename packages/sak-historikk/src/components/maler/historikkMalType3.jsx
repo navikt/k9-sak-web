@@ -1,33 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
-import { NavLink } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText } from './felles/historikkUtils';
+import Skjermlenke from './felles/Skjermlenke';
 
 const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.TERMINBEKREFTELSE]: 'Historikk.TermindatoFaktaForm.ApplicationInformation',
   [aksjonspunktCodes.ADOPSJONSDOKUMENTAJON]: 'Historikk.DokumentasjonFaktaForm.ApplicationInformation',
   [aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN]: 'Historikk.EktefelleFaktaForm.ApplicationInformation',
-  [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE]: 'HistorikkEndretFelt.MannAdoptererAleneFaktaForm.ApplicationInformation',
-  [aksjonspunktCodes.SOKNADSFRISTVILKARET]: 'HistorikkEndretFelt.ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
-  [aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]: 'HistorikkEndretFelt.ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
+  [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE]:
+    'HistorikkEndretFelt.MannAdoptererAleneFaktaForm.ApplicationInformation',
+  [aksjonspunktCodes.SOKNADSFRISTVILKARET]:
+    'HistorikkEndretFelt.ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
+  [aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]:
+    'HistorikkEndretFelt.ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
   [aksjonspunktCodes.OMSORGSOVERTAKELSE]: 'Historikk.OmsorgOgForeldreansvarInfoPanel.Omsorg',
   [aksjonspunktCodes.TILLEGGSOPPLYSNINGER]: 'Historikk.TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
   [aksjonspunktCodes.MEDLEMSKAP]: 'Historikk.MedlemskapInfoPanel.Medlemskap',
   [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: 'Historikk.Behandlingspunkt.Opptjeningsvilkaret',
   [aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET]: 'HistorikkEndretFeltVerdiType.ApplicationInformation',
   [aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD]: 'Historikk.RegistrerePapirSoknadAksPkt',
-  [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD]:
-    'Historikk.Foreldreansvar',
-  [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD]:
-    'Historikk.Foreldreansvar',
+  [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD]: 'Historikk.Foreldreansvar',
+  [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD]: 'Historikk.Foreldreansvar',
   [aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL]: 'VarselOmRevurderingInfoPanel.Etterkontroll',
   [aksjonspunktCodes.VARSEL_REVURDERING_MANUELL]: 'VarselOmRevurderingInfoPanel.Manuell',
   [aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN]: 'HistorikkAksjonpunktMapping.SokersStonadGjelderSammeBarn',
@@ -55,8 +55,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER]: 'Historikk.uttak',
   [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK]: 'Historikk.FaktaUttak',
   [aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK]: 'Historikk.FaktaUttak',
-  [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]:
-    'Historikk.Aleneomsorg.ApplicationInformation',
+  [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]: 'Historikk.Aleneomsorg.ApplicationInformation',
   [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: 'Historikk.Omsorg.ApplicationInformation',
   [aksjonspunktCodes.AVKLAR_UTTAK]: 'Historikk.FaktaUttak',
   [aksjonspunktCodes.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK]: 'Historikk.FaktaUttak',
@@ -87,13 +86,6 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT]: 'Historikk.FaktaUttak.VurderAnnenForelder',
 };
 
-const scrollUp = () => {
-  if (window.innerWidth < 1305) {
-    window.scroll(0, 0);
-  }
-  return false;
-};
-
 const formaterAksjonspunkt = (aksjonspunkt, intl) => {
   const aksjonspktText = aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode];
   const { formatMessage } = intl;
@@ -109,7 +101,8 @@ const formaterAksjonspunkt = (aksjonspunkt, intl) => {
   return (
     <span>
       <Element>
-        {aksjonspktText && `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Historikk.ikkeGodkjent' })}`}
+        {aksjonspktText &&
+          `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Historikk.ikkeGodkjent' })}`}
         {!aksjonspktText && formatMessage({ id: 'Historikk.ikkeGodkjentKomplett' })}
       </Element>
       <Normaltekst>{aksjonspunkt.aksjonspunktBegrunnelse}</Normaltekst>
@@ -117,49 +110,39 @@ const formaterAksjonspunkt = (aksjonspunkt, intl) => {
   );
 };
 
-const HistorikkMalType3 = ({
-  historikkinnslagDeler,
-  behandlingLocation,
-  intl,
-  getKodeverknavn,
-}) => (
-  <div>
-    {historikkinnslagDeler && historikkinnslagDeler.map((historikkinnslagDel, index) => (
-      <div key={`totrinnsvurdering${index + 1}`}>
-        {historikkinnslagDel.hendelse && (
-          <div>
-            <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
-            <VerticalSpacer fourPx />
-          </div>
-        )}
-        {historikkinnslagDel.skjermlenke
-          ? (
-            <Element>
-              <NavLink
-                to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
-                onClick={scrollUp}
-              >
-                {getKodeverknavn(historikkinnslagDel.skjermlenke)}
-              </NavLink>
-            </Element>
-          )
-          : null}
-        {historikkinnslagDel.aksjonspunkter && historikkinnslagDel.aksjonspunkter.map((aksjonspunkt) => (
-          <div key={aksjonspunkt.aksjonspunktKode}>
-            {formaterAksjonspunkt(aksjonspunkt, intl)}
-            <VerticalSpacer fourPx />
-          </div>
-        ))}
-      </div>
-    ))}
-  </div>
+const HistorikkMalType3 = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => (
+  <>
+    {historikkinnslagDeler &&
+      historikkinnslagDeler.map((historikkinnslagDel, index) => (
+        <div key={`totrinnsvurdering${index + 1}`}>
+          {historikkinnslagDel.hendelse && (
+            <div>
+              <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
+              <VerticalSpacer fourPx />
+            </div>
+          )}
+          <Skjermlenke
+            skjermlenke={historikkinnslagDel.skjermlenke}
+            behandlingLocation={behandlingLocation}
+            getKodeverknavn={getKodeverknavn}
+            scrollUpOnClick
+          />
+          {historikkinnslagDel.aksjonspunkter &&
+            historikkinnslagDel.aksjonspunkter.map(aksjonspunkt => (
+              <div key={aksjonspunkt.aksjonspunktKode}>
+                {formaterAksjonspunkt(aksjonspunkt, useIntl())}
+                <VerticalSpacer fourPx />
+              </div>
+            ))}
+        </div>
+      ))}
+  </>
 );
 
 HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  intl: PropTypes.shape().isRequired,
 };
 
-export default injectIntl(HistorikkMalType3);
+export default HistorikkMalType3;

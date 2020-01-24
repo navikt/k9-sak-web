@@ -2,11 +2,11 @@ FROM nginx
 ADD k8s/proxy.nginx /etc/nginx/conf.d/app.conf.template
 
 ENV APP_DIR="/app" \
-	APP_PATH_PREFIX="/fpsak" \
-	APP_CALLBACK_PATH="/fpsak/cb" \
-	APP_URL_FPTILBAKE="http://fptilbake" \
-	APP_URL_FPOPPDRAG="http://fpoppdrag" \
-	APP_URL_FPSAK="http://fpsak"
+  APP_PATH_PREFIX="/sak" \
+  APP_CALLBACK_PATH="/sak/cb" \
+  APP_URL_FPTILBAKE="http://fptilbake" \
+  APP_URL_FPOPPDRAG="http://fpoppdrag" \
+  APP_URL_SAK="http://k9-sak"
 
 COPY dist /usr/share/nginx/html
 

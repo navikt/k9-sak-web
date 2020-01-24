@@ -28,6 +28,8 @@
     "packages/types",
     "packages/sak-totrinnskontroll",
     "packages/sak-totrinnskontroll-tilbakemeldinger",
+    "packages/sak-historikk",
+    "packages/shared-components",
     "@types",
 	]
 }
