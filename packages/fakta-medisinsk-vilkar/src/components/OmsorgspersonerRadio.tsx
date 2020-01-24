@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 
 interface OmsorgspersonerRadioProps {
   readOnly: boolean;
-  toOmsorgspersoner: boolean;
 }
 
 const OmsorgspersonerRadio: React.FunctionComponent<OmsorgspersonerRadioProps> = ({ readOnly }) => (
