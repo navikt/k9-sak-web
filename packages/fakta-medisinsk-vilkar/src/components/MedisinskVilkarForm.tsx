@@ -67,7 +67,7 @@ export const MedisinskVilkarForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.fieldContainer}>
-        <InnlagtBarnRadio readOnly={readOnly} isInnlagt={isInnlagt} />
+        <InnlagtBarnRadio readOnly={readOnly} />
         <FieldArray
           name="innlagtBarnPerioder"
           component={InnlagtBarnPeriodeFieldArray}
@@ -75,7 +75,7 @@ export const MedisinskVilkarForm = ({
         />
       </div>
       <div className={styles.fieldContainer}>
-        <OmsorgspersonerRadio readOnly={readOnly} toOmsorgspersoner={toOmsorgspersoner} />
+        <OmsorgspersonerRadio readOnly={readOnly} />
         <FieldArray
           name="omsorgspersonerPerioder"
           component={OmsorgspersonerPeriodeFieldArray}

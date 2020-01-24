@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 
 interface InnlagtBarnRadioProps {
   readOnly: boolean;
-  isInnlagt: boolean;
 }
 
 const InnlagtBarnRadio: React.FunctionComponent<InnlagtBarnRadioProps> = ({ readOnly }) => (
