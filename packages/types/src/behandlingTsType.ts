@@ -1,4 +1,4 @@
-import Kodeverk from './kodeverkTsType';
+import Kodeverk from './kodeverk';
 
 type Behandling = Readonly<{
   id: number,

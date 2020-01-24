@@ -30,20 +30,23 @@ const config = {
         options: {
           failOnWarning: false,
           failOnError: !isDevelopment,
-          configFile: path.resolve(__dirname, isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
+          configFile: path.resolve(
+            __dirname,
+            isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
+          ),
           fix: isDevelopment,
           cache: true,
         },
         include: [PACKAGES_DIR],
-      }, {
+      },
+      {
         test: /\.(jsx?|js?|tsx?|ts?)$/,
         use: [
           { loader: 'cache-loader' },
           {
             loader: 'thread-loader',
             options: {
-              workers: process.env.CIRCLE_NODE_TOTAL || require('os')
-                .cpus() - 1,
+              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
               workerParallelJobs: 50,
             },
           },
@@ -55,7 +58,8 @@ const config = {
           },
         ],
         include: PACKAGES_DIR,
-      }, {
+      },
+      {
         test: /\.(less|css)?$/,
         use: [
           {
@@ -63,14 +67,16 @@ const config = {
             options: {
               publicPath: isDevelopment ? './' : '.',
             },
-          }, {
+          },
+          {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
               modules: true,
               localIdentName: '[name]_[local]_[contenthash:base64:5]',
             },
-          }, {
+          },
+          {
             loader: 'less-loader',
             options: {
               modules: true,
@@ -80,10 +86,12 @@ const config = {
                 coreModulePath: '~',
               },
             },
-          }],
+          },
+        ],
         include: [PACKAGES_DIR],
         exclude: [CSS_DIR],
-      }, {
+      },
+      {
         test: /\.(less|css)?$/,
         use: [
           {
@@ -91,9 +99,11 @@ const config = {
             options: {
               publicPath: isDevelopment ? './' : '.',
             },
-          }, {
+          },
+          {
             loader: 'css-loader',
-          }, {
+          },
+          {
             loader: 'less-loader',
             options: {
               modifyVars: {
@@ -101,16 +111,19 @@ const config = {
                 coreModulePath: '~',
               },
             },
-          }],
+          },
+        ],
         include: [CSS_DIR, CORE_DIR],
-      }, {
+      },
+      {
         test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
         options: {
           name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
         include: [CORE_DIR, IMAGE_DIR],
-      }],
+      },
+    ],
   },
 
   plugins: [
@@ -134,12 +147,9 @@ const config = {
         cache: {
           key: '[hash]',
         },
-      }
+      },
     ]),
-    new webpack.ContextReplacementPlugin(
-      /moment[\/\\]locale$/,
-      /nb/,
-    ),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /nb/),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
       failOnError: true,

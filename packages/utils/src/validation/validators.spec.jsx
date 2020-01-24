@@ -296,14 +296,20 @@ describe('Validators', () => {
 
   describe('dateRangesNotOverlapping', () => {
     it('skal feile når perioder overlapper', () => {
-      const periods = [['2017-10-10', '2017-12-10'], ['2017-01-10', '2017-10-11']];
+      const periods = [
+        ['2017-10-10', '2017-12-10'],
+        ['2017-01-10', '2017-10-11'],
+      ];
       const result = dateRangesNotOverlapping(periods);
       expect(result).has.length(1);
       expect(result[0]).is.eql({ id: 'ValidationMessage.DateRangesOverlapping' });
     });
 
     it('skal ikke feile når perioder ikke overlapper', () => {
-      const periods = [['2017-10-10', '2017-12-10'], ['2017-01-10', '2017-10-09']];
+      const periods = [
+        ['2017-10-10', '2017-12-10'],
+        ['2017-01-10', '2017-10-09'],
+      ];
       const result = dateRangesNotOverlapping(periods);
       expect(result).is.null;
     });
@@ -414,9 +420,10 @@ describe('Validators', () => {
 
   describe('hasValidText', () => {
     it('skal ikke feile når tekst ikke har ugyldig tegn', () => {
-      const result = hasValidText('Hei hei\n'
-        + 'Áá Čč Đđ Ŋŋ Šš Ŧŧ Žž Ää Ææ Øø Åå\n'
-        + 'Lorem + ipsum_dolor, - (sit) amet?! 100%: §2&3="I\'m";');
+      const result = hasValidText(
+        // eslint-disable-next-line no-useless-concat
+        'Hei hei\n' + 'Áá Čč Đđ Ŋŋ Šš Ŧŧ Žž Ää Ææ Øø Åå\n' + 'Lorem + ipsum_dolor, - (sit) amet?! 100%: §2&3="I\'m";',
+      );
       expect(result).is.null;
     });
 
@@ -430,9 +437,8 @@ describe('Validators', () => {
 
   describe('hasValidName', () => {
     it('skal ikke feile når navn ikke har ugyldig tegn', () => {
-      const result = hasValidName('Navn navn'
-        + 'Áá Čč Đđ Ŋŋ Šš Ŧŧ Žž Ää Ææ Øø Åå'
-        + ' - . \' ');
+      // eslint-disable-next-line no-useless-concat
+      const result = hasValidName('Navn navn' + 'Áá Čč Đđ Ŋŋ Šš Ŧŧ Žž Ää Ææ Øø Åå' + " - . ' ");
       expect(result).is.null;
     });
 
@@ -451,7 +457,7 @@ describe('Validators', () => {
     });
 
     it('skal feile når saksnummer eller fødselsnummer har ugyldig pattern', () => {
-      const result = hasValidSaksnummerOrFodselsnummerFormat('0501851212-d');
+      const result = hasValidSaksnummerOrFodselsnummerFormat('0501851212-d!');
       expect(result).has.length(1);
       expect(result[0]).is.eql({ id: 'ValidationMessage.InvalidSaksnummerOrFodselsnummerFormat' });
     });
@@ -512,7 +518,7 @@ describe('Validators', () => {
   });
 
   describe('dateIsBefore', () => {
-    const errorMessageFunction = (dato) => ([{ id: 'ErrorMsg.Msg' }, { dato }]);
+    const errorMessageFunction = dato => [{ id: 'ErrorMsg.Msg' }, { dato }];
     const dateToCheckAgainst = '2019-08-05';
     it('skal ikke feile når input datoene er før datoen som blir sjekket mot', () => {
       const result = dateIsBefore(dateToCheckAgainst, errorMessageFunction)('2019-08-04');

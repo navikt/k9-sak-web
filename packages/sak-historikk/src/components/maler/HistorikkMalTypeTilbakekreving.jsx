@@ -1,88 +1,90 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
-import { NavLink } from 'react-router-dom';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
+import Skjermlenke from './felles/Skjermlenke';
 
-const scrollUp = () => {
-  if (window.innerWidth < 1305) {
-    window.scroll(0, 0);
-  }
-  return false;
-};
-
-export const HistorikkMalTypeTilbakekreving = ({
-  historikkinnslagDeler,
-  behandlingLocation,
-  getKodeverknavn,
-}) => {
+export const HistorikkMalTypeTilbakekreving = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => {
   if (historikkinnslagDeler.length === 0) {
     return null;
   }
   return (
     <>
-      <Element>
-        <NavLink
-          to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
-          onClick={scrollUp}
-        >
-          {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
-        </NavLink>
-      </Element>
-      {historikkinnslagDeler.map((historikkinnslagDel) => {
+      <Skjermlenke
+        skjermlenke={historikkinnslagDeler[0].skjermlenke}
+        behandlingLocation={behandlingLocation}
+        getKodeverknavn={getKodeverknavn}
+        scrollUpOnClick
+      />
+      {historikkinnslagDeler.map(historikkinnslagDel => {
         const { opplysninger, endredeFelter, begrunnelseFritekst } = historikkinnslagDel;
-        const periodeFom = opplysninger.find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
-        const periodeTom = opplysninger.find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
-        const begrunnelse = opplysninger
-          .find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode).tilVerdi;
+        const periodeFom = opplysninger.find(
+          o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode,
+        ).tilVerdi;
+        const periodeTom = opplysninger.find(
+          o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode,
+        ).tilVerdi;
+        const begrunnelse = opplysninger.find(
+          o => o.opplysningType.kode === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
+        ).tilVerdi;
 
         return (
           <div key={periodeFom + periodeTom}>
             <Normaltekst>
-              <FormattedHTMLMessage id="Historikk.Template.Tilbakekreving.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
+              <FormattedHTMLMessage
+                id="Historikk.Template.Tilbakekreving.VurderingAvPerioden"
+                values={{ periodeFom, periodeTom }}
+              />
             </Normaltekst>
             <VerticalSpacer eightPx />
-            {endredeFelter && endredeFelter.map((felt, index) => {
-              const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
+            {endredeFelter &&
+              endredeFelter.map((felt, index) => {
+                const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
 
-              const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === endretFeltNavn.kode;
-              const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === endretFeltNavn.kode;
-              const visIleggRenter = historikkEndretFeltType.ILEGG_RENTER === endretFeltNavn.kode;
-              if ((visBelopTilbakekreves || visProsentverdi || visIleggRenter) && !tilVerdi) {
-                return null;
-              }
+                const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === endretFeltNavn.kode;
+                const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === endretFeltNavn.kode;
+                const visIleggRenter = historikkEndretFeltType.ILEGG_RENTER === endretFeltNavn.kode;
+                if ((visBelopTilbakekreves || visProsentverdi || visIleggRenter) && !tilVerdi) {
+                  return null;
+                }
 
-              const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === endretFeltNavn.kode;
-              const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
-              const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
-              const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
+                const visBegrunnelse =
+                  historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === endretFeltNavn.kode;
+                const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
+                const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
+                const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
 
-              return (
-                <React.Fragment key={endretFeltNavn.kode}>
-                  <Normaltekst>
-                    <FormattedHTMLMessage
-                      id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
-                      values={{ navn: getKodeverknavn(endretFeltNavn), fraVerdi: formatertFraVerdi, tilVerdi: formatertTilVerdi }}
-                    />
-                  </Normaltekst>
-                  <VerticalSpacer eightPx />
-                  {visBegrunnelse && begrunnelse}
-                  {visBegrunnelse && <VerticalSpacer eightPx />}
-                  {visAktsomhetBegrunnelse && begrunnelseFritekst}
-                  {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
-                </React.Fragment>
-              );
-            })}
-            <Normaltekst>
-              {(!endredeFelter && begrunnelseFritekst) && begrunnelseFritekst}
-            </Normaltekst>
+                return (
+                  <React.Fragment key={endretFeltNavn.kode}>
+                    <Normaltekst>
+                      <FormattedHTMLMessage
+                        id={
+                          felt.fraVerdi
+                            ? 'Historikk.Template.Tilbakekreving.ChangedFromTo'
+                            : 'Historikk.Template.Tilbakekreving.FieldSetTo'
+                        }
+                        values={{
+                          navn: getKodeverknavn(endretFeltNavn),
+                          fraVerdi: formatertFraVerdi,
+                          tilVerdi: formatertTilVerdi,
+                        }}
+                      />
+                    </Normaltekst>
+                    <VerticalSpacer eightPx />
+                    {visBegrunnelse && begrunnelse}
+                    {visBegrunnelse && <VerticalSpacer eightPx />}
+                    {visAktsomhetBegrunnelse && begrunnelseFritekst}
+                    {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
+                  </React.Fragment>
+                );
+              })}
+            <Normaltekst>{!endredeFelter && begrunnelseFritekst && begrunnelseFritekst}</Normaltekst>
             <VerticalSpacer eightPx />
           </div>
         );

@@ -9,7 +9,7 @@ import FagsakResolver from './FagsakResolver';
 
 describe('<FagsakIndex>', () => {
   it('skal rendre FagsakResolver', () => {
-    const wrapper = shallow(<FagsakIndex selectedSaksnummer={123} />);
+    const wrapper = shallow(<FagsakIndex selectedSaksnummer="123" />);
 
     const fagsakResolver = wrapper.find(FagsakResolver);
 
@@ -17,7 +17,7 @@ describe('<FagsakIndex>', () => {
   });
 
   it('skal rendre modal for oppdatering av saksopplysninger', () => {
-    const wrapper = shallow(<FagsakIndex selectedSaksnummer={123} />);
+    const wrapper = shallow(<FagsakIndex selectedSaksnummer="123" />);
 
     expect(wrapper.find(DataFetchPendingModal)).to.have.length(0);
 

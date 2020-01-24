@@ -17,7 +17,7 @@ const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
 
 describe('<VedtakAvslagPanel>', () => {
-  const behandling = ({
+  const behandling = {
     id: 1,
     versjon: 1,
     fagsakId: 1,
@@ -40,17 +40,19 @@ describe('<VedtakAvslagPanel>', () => {
       },
       avslagsarsakFritekst: null,
     },
-    vilkar: [{
-      vilkarType: {
-        kode: vilkarType.MEDLEMSKAPSVILKARET,
-        navn: 'Medlemskapsvilkåret',
+    vilkar: [
+      {
+        vilkarType: {
+          kode: vilkarType.MEDLEMSKAPSVILKARET,
+          navn: 'Medlemskapsvilkåret',
+        },
+        vilkarStatus: {
+          kode: vilkarUtfallType.IKKE_OPPFYLT,
+          navn: 'test',
+        },
+        lovReferanse: '§ 22-13, 2. ledd',
       },
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
-        navn: 'test',
-      },
-      lovReferanse: '§ 22-13, 2. ledd',
-    }],
+    ],
     status: {
       kode: behandlingStatus.BEHANDLING_UTREDES,
       navn: 'test',
@@ -60,7 +62,7 @@ describe('<VedtakAvslagPanel>', () => {
       navn: 'test',
     },
     opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
-  });
+  };
 
   const sprakkode = {
     kode: 'NO',
@@ -78,7 +80,8 @@ describe('<VedtakAvslagPanel>', () => {
         navn: 'test',
       },
       lovReferanse: '§ 22-13, 2. ledd',
-    }];
+    },
+  ];
 
   const behandlingsresultat = {
     id: 1,
@@ -105,111 +108,161 @@ describe('<VedtakAvslagPanel>', () => {
     lovReferanse: '§ 13-37, 2. ledd',
   };
 
-  const aksjonspunktForBeregning = [{
-    definisjon: {
-      kode: aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+  const aksjonspunktForBeregning = [
+    {
+      definisjon: {
+        kode: aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+      },
+      status: {
+        kode: aksjonspunktStatus.UTFORT,
+      },
     },
-    status: {
-      kode: aksjonspunktStatus.UTFORT,
-    },
-  }];
+  ];
 
   it('skal rendre avslagspanel for engangsstønad', () => {
-    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
-      intl={intlMock}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={[soknadVilkar]}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
-      sprakkode={sprakkode}
-      readOnly
-      behandlinger={[behandling]}
-      ytelseTypeKode={engangsstonad}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakAvslagPanelImpl
+        intl={intlMock}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        vilkar={[soknadVilkar]}
+        aksjonspunkter={[]}
+        behandlingsresultat={behandlingsresultat}
+        sprakkode={sprakkode}
+        readOnly
+        behandlinger={[behandling]}
+        ytelseTypeKode={engangsstonad}
+        alleKodeverk={{}}
+      />,
+    );
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(
+      undertekstFields
+        .first()
+        .childAt(0)
+        .text(),
+    ).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er avslått');
+    expect(
+      normaltekstFields
+        .first()
+        .childAt(0)
+        .text(),
+    ).to.eql('Engangsstønad er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
   });
 
   it('skal rendre avslagspanel uten fritekstpanel for engangsstønad', () => {
-    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
-      intl={intlMock}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={vilkarUtenSoknadsfrist}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
-      sprakkode={sprakkode}
-      readOnly
-      behandlinger={[behandling]}
-      ytelseTypeKode={engangsstonad}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakAvslagPanelImpl
+        intl={intlMock}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        vilkar={vilkarUtenSoknadsfrist}
+        aksjonspunkter={[]}
+        behandlingsresultat={behandlingsresultat}
+        sprakkode={sprakkode}
+        readOnly
+        behandlinger={[behandling]}
+        ytelseTypeKode={engangsstonad}
+        alleKodeverk={{}}
+      />,
+    );
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(
+      undertekstFields
+        .first()
+        .childAt(0)
+        .text(),
+    ).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er avslått');
+    expect(
+      normaltekstFields
+        .first()
+        .childAt(0)
+        .text(),
+    ).to.eql('Engangsstønad er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
 
   it('skal rendre avslagspanel uten fritekstpanel for foreldrepenger', () => {
-    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
-      intl={intlMock}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={vilkarUtenSoknadsfrist}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
-      sprakkode={sprakkode}
-      readOnly
-      behandlinger={[behandling]}
-      ytelseTypeKode={foreldrepenger}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakAvslagPanelImpl
+        intl={intlMock}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        vilkar={vilkarUtenSoknadsfrist}
+        aksjonspunkter={[]}
+        behandlingsresultat={behandlingsresultat}
+        sprakkode={sprakkode}
+        readOnly
+        behandlinger={[behandling]}
+        ytelseTypeKode={foreldrepenger}
+        alleKodeverk={{}}
+      />,
+    );
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(
+      undertekstFields
+        .first()
+        .childAt(0)
+        .text(),
+    ).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Foreldrepenger er avslått');
+    expect(
+      normaltekstFields
+        .first()
+        .childAt(0)
+        .text(),
+    ).to.eql('Pleiepenger er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
 
   it('skal rendre avslagspanel med fritekstpanel for foreldrepenger', () => {
-    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
-      intl={intlMock}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={vilkarUtenSoknadsfrist}
-      aksjonspunkter={aksjonspunktForBeregning}
-      behandlingsresultat={behandlingsresultat}
-      sprakkode={sprakkode}
-      readOnly
-      behandlinger={[behandling]}
-      ytelseTypeKode={foreldrepenger}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakAvslagPanelImpl
+        intl={intlMock}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        vilkar={vilkarUtenSoknadsfrist}
+        aksjonspunkter={aksjonspunktForBeregning}
+        behandlingsresultat={behandlingsresultat}
+        sprakkode={sprakkode}
+        readOnly
+        behandlinger={[behandling]}
+        ytelseTypeKode={foreldrepenger}
+        alleKodeverk={{}}
+      />,
+    );
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(
+      undertekstFields
+        .first()
+        .childAt(0)
+        .text(),
+    ).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Foreldrepenger er avslått');
+    expect(
+      normaltekstFields
+        .first()
+        .childAt(0)
+        .text(),
+    ).to.eql('Pleiepenger er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
   });

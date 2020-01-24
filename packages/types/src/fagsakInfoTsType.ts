@@ -1,4 +1,4 @@
-import Kodeverk from './kodeverkTsType';
+import Kodeverk from './kodeverk';
 import FagsakPerson from './fagsakPersonTsType';
 
 type FagsakInfo = Readonly<{

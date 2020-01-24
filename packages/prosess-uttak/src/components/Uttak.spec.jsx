@@ -14,83 +14,93 @@ import { FormattedMessage } from 'react-intl';
 import UttakTimeLineData from './UttakTimeLineData';
 import { UttakImpl as Uttak } from './Uttak';
 
+const saksnummer = '12345';
+
 describe('<Uttak>', () => {
-  const uttakActivities = [{
-    id: 1,
-    hovedsoker: true,
-    group: 1,
-    fom: '',
-    tom: '',
-    periodeResultatType: {
-      kode: '',
-      navn: '',
-      kodeverk: '',
-    },
-    aktiviteter: [{
-      stønadskontoType: {
+  const uttakActivities = [
+    {
+      id: 1,
+      hovedsoker: true,
+      group: 1,
+      fom: '',
+      tom: '',
+      periodeResultatType: {
         kode: '',
         navn: '',
         kodeverk: '',
       },
-    }],
-  }, {
-    id: 2,
-    group: 1,
-    hovedsoker: true,
-    fom: '',
-    tom: '',
-    periodeResultatType: {
-      kode: '',
-      navn: '',
-      kodeverk: '',
+      aktiviteter: [
+        {
+          stønadskontoType: {
+            kode: '',
+            navn: '',
+            kodeverk: '',
+          },
+        },
+      ],
     },
-    aktiviteter: [{
-      stønadskontoType: {
+    {
+      id: 2,
+      group: 1,
+      hovedsoker: true,
+      fom: '',
+      tom: '',
+      periodeResultatType: {
         kode: '',
         navn: '',
         kodeverk: '',
       },
-    }],
-  }];
+      aktiviteter: [
+        {
+          stønadskontoType: {
+            kode: '',
+            navn: '',
+            kodeverk: '',
+          },
+        },
+      ],
+    },
+  ];
 
   const stonadskonto = {
     stonadskontoer: {},
   };
 
-
   it('skal rendre uttak, uten selected timeline', () => {
-    const wrapper = shallow(<Uttak
-      readOnly={false}
-      formName="UttakForm"
-      behandlingFormPrefix=""
-      soknadDate="2018-03-02"
-      familiehendelseDate="2018-02-02"
-      endringsdato="2018-01-12"
-      hovedsokerKjonnKode=""
-      behandlingVersjon={1}
-      periodeTyper={[]}
-      uttaksresultatActivity={[]}
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      submitting={false}
-      isDirty={false}
-      manuellOverstyring={false}
-      kanOverstyre
-      isApOpen={false}
-      stonadskonto={stonadskonto}
-      allAksjonspunkter={[]}
-      intl={intlMock}
-      soknadsType="ST-001"
-      uttakPerioder={[]}
-      harSoktOmFlerbarnsdager={false}
-      annenForelderSoktOmFlerbarnsdager={false}
-      tempUpdateStonadskontoer={sinon.spy()}
-      saksnummer={123}
-      behandlingId={999}
-      alleKodeverk={{}}
-      behandlingsresultat={{}}
-      uttakStonadskontoer={{}}
-    />);
+    const wrapper = shallow(
+      <Uttak
+        readOnly={false}
+        formName="UttakForm"
+        behandlingFormPrefix=""
+        soknadDate="2018-03-02"
+        familiehendelseDate="2018-02-02"
+        endringsdato="2018-01-12"
+        hovedsokerKjonnKode=""
+        behandlingVersjon={1}
+        periodeTyper={[]}
+        uttaksresultatActivity={[]}
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        submitting={false}
+        isDirty={false}
+        manuellOverstyring={false}
+        kanOverstyre
+        isApOpen={false}
+        stonadskonto={stonadskonto}
+        allAksjonspunkter={[]}
+        intl={intlMock}
+        soknadsType="ST-001"
+        uttakPerioder={[]}
+        harSoktOmFlerbarnsdager={false}
+        annenForelderSoktOmFlerbarnsdager={false}
+        tempUpdateStonadskontoer={sinon.spy()}
+        saksnummer={saksnummer}
+        behandlingId={999}
+        alleKodeverk={{}}
+        behandlingsresultat={{}}
+        uttakStonadskontoer={{}}
+      />,
+    );
     wrapper.setState({ selectedItem: null });
     const rows = wrapper.find(Row);
     expect(rows).has.length(3);
@@ -106,38 +116,40 @@ describe('<Uttak>', () => {
   });
 
   it('skal rendre uttak, med manuell overstyring', () => {
-    const wrapper = shallow(<Uttak
-      readOnly={false}
-      formName="UttakForm"
-      behandlingFormPrefix=""
-      soknadDate="2018-03-02"
-      familiehendelseDate="2018-02-02"
-      endringsdato="2018-01-12"
-      hovedsokerKjonnKode=""
-      periodeTyper={[]}
-      uttaksresultatActivity={uttakActivities}
-      uttakPerioder={uttakActivities}
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      submitting={false}
-      isDirty={false}
-      manuellOverstyring
-      kanOverstyre
-      isApOpen={false}
-      stonadskonto={stonadskonto}
-      allAksjonspunkter={[]}
-      intl={intlMock}
-      soknadsType="ST-001"
-      harSoktOmFlerbarnsdager={false}
-      annenForelderSoktOmFlerbarnsdager={false}
-      tempUpdateStonadskontoer={sinon.spy()}
-      saksnummer={123}
-      behandlingId={999}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      behandlingsresultat={{}}
-      uttakStonadskontoer={{}}
-    />);
+    const wrapper = shallow(
+      <Uttak
+        readOnly={false}
+        formName="UttakForm"
+        behandlingFormPrefix=""
+        soknadDate="2018-03-02"
+        familiehendelseDate="2018-02-02"
+        endringsdato="2018-01-12"
+        hovedsokerKjonnKode=""
+        periodeTyper={[]}
+        uttaksresultatActivity={uttakActivities}
+        uttakPerioder={uttakActivities}
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        submitting={false}
+        isDirty={false}
+        manuellOverstyring
+        kanOverstyre
+        isApOpen={false}
+        stonadskonto={stonadskonto}
+        allAksjonspunkter={[]}
+        intl={intlMock}
+        soknadsType="ST-001"
+        harSoktOmFlerbarnsdager={false}
+        annenForelderSoktOmFlerbarnsdager={false}
+        tempUpdateStonadskontoer={sinon.spy()}
+        saksnummer={saksnummer}
+        behandlingId={999}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        behandlingsresultat={{}}
+        uttakStonadskontoer={{}}
+      />,
+    );
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find(CheckboxField);
     expect(checkBox).to.have.length(1);
@@ -155,37 +167,39 @@ describe('<Uttak>', () => {
   });
 
   it('skal rendre uttak, uten overstyrerrolle, uten aksjonspunkt', () => {
-    const wrapper = shallow(<Uttak
-      readOnly={false}
-      formName="UttakForm"
-      behandlingFormPrefix=""
-      soknadDate="2018-03-02"
-      familiehendelseDate="2018-02-02"
-      endringsdato="2018-01-12"
-      hovedsokerKjonnKode=""
-      periodeTyper={[]}
-      uttaksresultatActivity={uttakActivities}
-      uttakPerioder={[]}
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      submitting={false}
-      isDirty={false}
-      manuellOverstyring={false}
-      kanOverstyre={false}
-      stonadskonto={stonadskonto}
-      allAksjonspunkter={[]}
-      intl={intlMock}
-      soknadsType="ST-001"
-      harSoktOmFlerbarnsdager={false}
-      annenForelderSoktOmFlerbarnsdager={false}
-      tempUpdateStonadskontoer={sinon.spy()}
-      saksnummer={123}
-      behandlingId={999}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      behandlingsresultat={{}}
-      uttakStonadskontoer={{}}
-    />);
+    const wrapper = shallow(
+      <Uttak
+        readOnly={false}
+        formName="UttakForm"
+        behandlingFormPrefix=""
+        soknadDate="2018-03-02"
+        familiehendelseDate="2018-02-02"
+        endringsdato="2018-01-12"
+        hovedsokerKjonnKode=""
+        periodeTyper={[]}
+        uttaksresultatActivity={uttakActivities}
+        uttakPerioder={[]}
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        submitting={false}
+        isDirty={false}
+        manuellOverstyring={false}
+        kanOverstyre={false}
+        stonadskonto={stonadskonto}
+        allAksjonspunkter={[]}
+        intl={intlMock}
+        soknadsType="ST-001"
+        harSoktOmFlerbarnsdager={false}
+        annenForelderSoktOmFlerbarnsdager={false}
+        tempUpdateStonadskontoer={sinon.spy()}
+        saksnummer={saksnummer}
+        behandlingId={999}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        behandlingsresultat={{}}
+        uttakStonadskontoer={{}}
+      />,
+    );
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find(CheckboxField);
     expect(checkBox).to.have.length(0);
@@ -201,54 +215,58 @@ describe('<Uttak>', () => {
   });
 
   it('skal rendre uttak, med aksjonspunkt', () => {
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        kode: aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
-        navn: 'ap1',
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          kode: aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
+          navn: 'ap1',
+        },
+        status: {
+          kode: 'OPPR',
+          navn: 's1',
+        },
+        toTrinnsBehandling: true,
+        toTrinnsBehandlingGodkjent: false,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: 'OPPR',
-        navn: 's1',
-      },
-      toTrinnsBehandling: true,
-      toTrinnsBehandlingGodkjent: false,
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallow(<Uttak
-      readOnly={false}
-      aksjonspunkter={aksjonspunkter}
-      formName="UttakForm"
-      behandlingFormPrefix=""
-      soknadDate="2018-03-02"
-      familiehendelseDate="2018-02-02"
-      endringsdato="2018-01-12"
-      hovedsokerKjonnKode=""
-      periodeTyper={[]}
-      uttaksresultatActivity={uttakActivities}
-      uttakPerioder={[]}
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      submitting={false}
-      isDirty={false}
-      manuellOverstyring={false}
-      kanOverstyre={false}
-      isApOpen
-      stonadskonto={stonadskonto}
-      allAksjonspunkter={[]}
-      intl={intlMock}
-      soknadsType="ST-001"
-      harSoktOmFlerbarnsdager={false}
-      annenForelderSoktOmFlerbarnsdager={false}
-      tempUpdateStonadskontoer={sinon.spy()}
-      saksnummer={123}
-      behandlingId={999}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      behandlingsresultat={{}}
-      uttakStonadskontoer={{}}
-    />);
+    ];
+    const wrapper = shallow(
+      <Uttak
+        readOnly={false}
+        aksjonspunkter={aksjonspunkter}
+        formName="UttakForm"
+        behandlingFormPrefix=""
+        soknadDate="2018-03-02"
+        familiehendelseDate="2018-02-02"
+        endringsdato="2018-01-12"
+        hovedsokerKjonnKode=""
+        periodeTyper={[]}
+        uttaksresultatActivity={uttakActivities}
+        uttakPerioder={[]}
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        submitting={false}
+        isDirty={false}
+        manuellOverstyring={false}
+        kanOverstyre={false}
+        isApOpen
+        stonadskonto={stonadskonto}
+        allAksjonspunkter={[]}
+        intl={intlMock}
+        soknadsType="ST-001"
+        harSoktOmFlerbarnsdager={false}
+        annenForelderSoktOmFlerbarnsdager={false}
+        tempUpdateStonadskontoer={sinon.spy()}
+        saksnummer={saksnummer}
+        behandlingId={999}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        behandlingsresultat={{}}
+        uttakStonadskontoer={{}}
+      />,
+    );
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find(CheckboxField);
     expect(checkBox).to.have.length(0);
@@ -264,54 +282,58 @@ describe('<Uttak>', () => {
   });
 
   it('skal rendre uttak, med uttakTimeLineData', () => {
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        kode: aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
-        navn: 'ap1',
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          kode: aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
+          navn: 'ap1',
+        },
+        status: {
+          kode: 'UTFO',
+          navn: 's1',
+        },
+        toTrinnsBehandling: true,
+        toTrinnsBehandlingGodkjent: false,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: 'UTFO',
-        navn: 's1',
-      },
-      toTrinnsBehandling: true,
-      toTrinnsBehandlingGodkjent: false,
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallow(<Uttak
-      readOnly={false}
-      aksjonspunkter={aksjonspunkter}
-      formName="UttakForm"
-      behandlingFormPrefix=""
-      soknadDate="2018-03-02"
-      familiehendelseDate="2018-02-02"
-      endringsdato="2018-01-12"
-      hovedsokerKjonnKode=""
-      periodeTyper={[]}
-      uttaksresultatActivity={uttakActivities}
-      uttakPerioder={uttakActivities}
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      submitting={false}
-      isDirty={false}
-      manuellOverstyring={false}
-      kanOverstyre={false}
-      isApOpen
-      stonadskonto={stonadskonto}
-      allAksjonspunkter={[]}
-      intl={intlMock}
-      soknadsType="ST-001"
-      harSoktOmFlerbarnsdager={false}
-      annenForelderSoktOmFlerbarnsdager={false}
-      tempUpdateStonadskontoer={sinon.spy()}
-      saksnummer={123}
-      behandlingId={999}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      behandlingsresultat={{}}
-      uttakStonadskontoer={{}}
-    />);
+    ];
+    const wrapper = shallow(
+      <Uttak
+        readOnly={false}
+        aksjonspunkter={aksjonspunkter}
+        formName="UttakForm"
+        behandlingFormPrefix=""
+        soknadDate="2018-03-02"
+        familiehendelseDate="2018-02-02"
+        endringsdato="2018-01-12"
+        hovedsokerKjonnKode=""
+        periodeTyper={[]}
+        uttaksresultatActivity={uttakActivities}
+        uttakPerioder={uttakActivities}
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        submitting={false}
+        isDirty={false}
+        manuellOverstyring={false}
+        kanOverstyre={false}
+        isApOpen
+        stonadskonto={stonadskonto}
+        allAksjonspunkter={[]}
+        intl={intlMock}
+        soknadsType="ST-001"
+        harSoktOmFlerbarnsdager={false}
+        annenForelderSoktOmFlerbarnsdager={false}
+        tempUpdateStonadskontoer={sinon.spy()}
+        saksnummer={saksnummer}
+        behandlingId={999}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        behandlingsresultat={{}}
+        uttakStonadskontoer={{}}
+      />,
+    );
     wrapper.setState({ selectedItem: uttakActivities[0] });
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);
 
@@ -323,11 +345,19 @@ describe('<Uttak>', () => {
     wrapper.update();
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);
 
-    uttakTimeLineData.prop('callbackForward')({ preventDefault() { return undefined; } });
+    uttakTimeLineData.prop('callbackForward')({
+      preventDefault() {
+        return undefined;
+      },
+    });
     wrapper.update();
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[1]);
 
-    uttakTimeLineData.prop('callbackBackward')({ preventDefault() { return undefined; } });
+    uttakTimeLineData.prop('callbackBackward')({
+      preventDefault() {
+        return undefined;
+      },
+    });
     wrapper.update();
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);
 
