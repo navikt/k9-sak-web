@@ -61,6 +61,7 @@ const config = {
     '@typescript-eslint/explicit-function-return-type': OFF,
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-ignore': OFF,
+    '@typescript-eslint/camelcase': OFF,
   },
   overrides: [
     {
