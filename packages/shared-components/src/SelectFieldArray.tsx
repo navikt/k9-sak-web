@@ -3,7 +3,7 @@ import NavFieldGroup from '@fpsak-frontend/form/src/NavFieldGroup';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Image from './Image';
 import styles from './selectFieldArray.less';
@@ -67,7 +67,6 @@ const showErrorMessage = meta => meta && meta.error && (meta.dirty || meta.submi
  * Overbygg over FieldArray (Redux-form) som håndterer å legge til og fjerne perioder
  */
 const SelectFieldArray = ({
-  intl,
   fields,
   readOnly,
   meta,
@@ -77,41 +76,50 @@ const SelectFieldArray = ({
   shouldShowAddButton,
   createAddButtonInsteadOfImageLink,
   children,
-}: SelectFieldArrayProps & WrappedComponentProps) => (
-  <NavFieldGroup
-    title={titleTextCode ? intl.formatMessage({ id: titleTextCode }) : undefined}
-    errorMessage={showErrorMessage(meta) ? intl.formatMessage(...meta.error) : null}
-  >
-    {fields.map((selectElementFieldId, index) => children(selectElementFieldId, index, getRemoveButton(index, fields)))}
-    {shouldShowAddButton && (
-      <Row className="">
-        <Column xs="12">
-          {!createAddButtonInsteadOfImageLink && !readOnly && (
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-            <div
-              onClick={onClick(fields, emptySelectTemplate)}
-              onKeyDown={onKeyDown(fields, emptySelectTemplate)}
-              className={styles.addSelect}
-              role="button"
-              tabIndex={0}
-            >
-              <Image className={styles.addCircleIcon} src={addCircleIcon} alt={intl.formatMessage({ id: textCode })} />
-              <Undertekst className={styles.imageText}>
+}: SelectFieldArrayProps) => {
+  const intl = useIntl();
+  return (
+    <NavFieldGroup
+      title={titleTextCode ? intl.formatMessage({ id: titleTextCode }) : undefined}
+      errorMessage={showErrorMessage(meta) ? intl.formatMessage(...meta.error) : null}
+    >
+      {fields.map((selectElementFieldId, index) =>
+        children(selectElementFieldId, index, getRemoveButton(index, fields)),
+      )}
+      {shouldShowAddButton && (
+        <Row className="">
+          <Column xs="12">
+            {!createAddButtonInsteadOfImageLink && !readOnly && (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+              <div
+                onClick={onClick(fields, emptySelectTemplate)}
+                onKeyDown={onKeyDown(fields, emptySelectTemplate)}
+                className={styles.addSelect}
+                role="button"
+                tabIndex={0}
+              >
+                <Image
+                  className={styles.addCircleIcon}
+                  src={addCircleIcon}
+                  alt={intl.formatMessage({ id: textCode })}
+                />
+                <Undertekst className={styles.imageText}>
+                  <FormattedMessage id={textCode} />
+                </Undertekst>
+              </div>
+            )}
+            {createAddButtonInsteadOfImageLink && !readOnly && (
+              <button type="button" onClick={onClick(fields, emptySelectTemplate)} className={styles.buttonAdd}>
                 <FormattedMessage id={textCode} />
-              </Undertekst>
-            </div>
-          )}
-          {createAddButtonInsteadOfImageLink && !readOnly && (
-            <button type="button" onClick={onClick(fields, emptySelectTemplate)} className={styles.buttonAdd}>
-              <FormattedMessage id={textCode} />
-            </button>
-          )}
-          <VerticalSpacer sixteenPx />
-        </Column>
-      </Row>
-    )}
-  </NavFieldGroup>
-);
+              </button>
+            )}
+            <VerticalSpacer sixteenPx />
+          </Column>
+        </Row>
+      )}
+    </NavFieldGroup>
+  );
+};
 
 SelectFieldArray.defaultProps = {
   readOnly: true,
@@ -123,4 +131,4 @@ SelectFieldArray.defaultProps = {
   createAddButtonInsteadOfImageLink: false,
 };
 
-export default injectIntl(SelectFieldArray);
+export default SelectFieldArray;
