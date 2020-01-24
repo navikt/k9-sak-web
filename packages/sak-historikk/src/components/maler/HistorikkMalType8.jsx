@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedHTMLMessage, useIntl } from 'react-intl';
 
 import { findEndretFeltNavn, findEndretFeltVerdi } from './felles/historikkUtils';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import HistorikkMalFelles7og8 from './HistorikkmalFelles7og8';
 
-const HistorikkMalType8 = ({
-  historikkinnslagDeler,
-  behandlingLocation,
-  dokumentLinks,
-  intl,
-  saksNr,
-  getKodeverknavn,
-}) => {
+const HistorikkMalType8 = ({ historikkinnslagDeler, behandlingLocation, dokumentLinks, saksNr, getKodeverknavn }) => {
+  const intl = useIntl();
   const formatChangedField = endretFelt => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
     const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
@@ -66,9 +60,8 @@ HistorikkMalType8.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType8);
+export default HistorikkMalType8;

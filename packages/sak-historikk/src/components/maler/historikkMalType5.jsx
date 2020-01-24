@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedHTMLMessage, useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -66,14 +66,9 @@ const lagGjeldendeFraInnslag = historikkinnslagDel => {
   return undefined;
 };
 
-const HistorikkMalType5 = ({
-  historikkinnslagDeler,
-  behandlingLocation,
-  dokumentLinks,
-  intl,
-  saksNr,
-  getKodeverknavn,
-}) => {
+const HistorikkMalType5 = ({ historikkinnslagDeler, behandlingLocation, dokumentLinks, saksNr, getKodeverknavn }) => {
+  const intl = useIntl();
+
   const lageElementInnhold = historikkDel => {
     const list = [];
     if (historikkDel.hendelse) {
@@ -211,9 +206,8 @@ HistorikkMalType5.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.string.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType5);
+export default HistorikkMalType5;
