@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedHTMLMessage, useIntl } from 'react-intl';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
@@ -11,7 +11,8 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import styles from './historikkMalType.less';
 import Skjermlenke from './felles/Skjermlenke';
 
-export const HistorikkMalType9 = ({ historikkinnslagDeler, behandlingLocation, originType, intl, getKodeverknavn }) => {
+export const HistorikkMalType9 = ({ historikkinnslagDeler, behandlingLocation, originType, getKodeverknavn }) => {
+  const intl = useIntl();
   const getSplitPeriods = endredeFelter => {
     let text = '';
     endredeFelter.forEach((felt, index) => {
@@ -95,9 +96,8 @@ export const HistorikkMalType9 = ({ historikkinnslagDeler, behandlingLocation, o
 HistorikkMalType9.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
-  intl: PropTypes.shape().isRequired,
   originType: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType9);
+export default HistorikkMalType9;

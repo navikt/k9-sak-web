@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedHTMLMessage, useIntl } from 'react-intl';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
@@ -15,11 +15,11 @@ const HistorikkMalType10 = ({
   historikkinnslagDeler,
   behandlingLocation,
   dokumentLinks,
-  intl,
   originType,
   saksNr,
   getKodeverknavn,
 }) => {
+  const intl = useIntl();
   const historikkFromToValues = (endretFelt, fieldName) => {
     const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
     const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
@@ -176,10 +176,9 @@ HistorikkMalType10.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  intl: PropTypes.shape().isRequired,
   originType: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HistorikkMalType10);
+export default HistorikkMalType10;

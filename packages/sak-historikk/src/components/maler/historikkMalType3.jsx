@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -110,7 +110,7 @@ const formaterAksjonspunkt = (aksjonspunkt, intl) => {
   );
 };
 
-const HistorikkMalType3 = ({ historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn }) => (
+const HistorikkMalType3 = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => (
   <>
     {historikkinnslagDeler &&
       historikkinnslagDeler.map((historikkinnslagDel, index) => (
@@ -130,7 +130,7 @@ const HistorikkMalType3 = ({ historikkinnslagDeler, behandlingLocation, intl, ge
           {historikkinnslagDel.aksjonspunkter &&
             historikkinnslagDel.aksjonspunkter.map(aksjonspunkt => (
               <div key={aksjonspunkt.aksjonspunktKode}>
-                {formaterAksjonspunkt(aksjonspunkt, intl)}
+                {formaterAksjonspunkt(aksjonspunkt, useIntl())}
                 <VerticalSpacer fourPx />
               </div>
             ))}
@@ -143,7 +143,6 @@ HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  intl: PropTypes.shape().isRequired,
 };
 
-export default injectIntl(HistorikkMalType3);
+export default HistorikkMalType3;
