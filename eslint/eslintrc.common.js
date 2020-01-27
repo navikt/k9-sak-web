@@ -1,6 +1,8 @@
 const OFF = 0;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ON = 1;
 const ERROR = 2;
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { resolve } = require('path');
 
 const config = {
@@ -18,7 +20,13 @@ const config = {
 
   plugins: ['@typescript-eslint'],
 
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint', 'prettier'],
+  extends: [
+    'airbnb',
+    'plugin:@typescript-eslint/recommended',
+    'prettier/@typescript-eslint',
+    'prettier',
+    'prettier/react',
+  ],
 
   parserOptions: {
     sourceType: 'module',
@@ -61,6 +69,7 @@ const config = {
     '@typescript-eslint/explicit-function-return-type': OFF,
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-ignore': OFF,
+    '@typescript-eslint/camelcase': OFF,
   },
   overrides: [
     {
