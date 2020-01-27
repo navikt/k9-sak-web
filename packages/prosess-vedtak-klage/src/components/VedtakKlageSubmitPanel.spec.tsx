@@ -3,10 +3,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { isMedholdIKlage, VedtakKlageSubmitPanelImpl } from './VedtakKlageSubmitPanel';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-proses-vedtak-klage';
+import { mountWithIntl } from '../../i18n/intl-enzyme-test-helper-proses-vedtak-klage';
 
 describe('<VedtakKlageSubmitPanel>', () => {
   const forhandsvisVedtaksbrevFunc = sinon.spy();
@@ -24,15 +23,17 @@ describe('<VedtakKlageSubmitPanel>', () => {
   it('skal rendre submit panel uten medhold i klagevurdering', () => {
     const klageVurderingResultatNK = {
       klageVurdering: 'TEST',
+      klageVurdertAv: 'saksbehandler',
+      godkjentAvMedunderskriver: false,
+      klageVurderingOmgjoer: 'klageVurderingOmgjoer',
     };
 
-    const wrapper = shallowWithIntl(
+    const wrapper = mountWithIntl(
       <VedtakKlageSubmitPanelImpl
-        intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
         behandlingPaaVent={false}
-        klageVurderingResultatNK={klageVurderingResultatNK}
+        klageResultat={klageVurderingResultatNK}
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
     );
@@ -53,15 +54,17 @@ describe('<VedtakKlageSubmitPanel>', () => {
   it('skal rendre submit panel med medhold i klagevurdering', () => {
     const klageVurderingResultatNK = {
       klageVurdering: klageVurdering.MEDHOLD_I_KLAGE,
+      klageVurdertAv: 'saksbehandler',
+      godkjentAvMedunderskriver: true,
+      klageVurderingOmgjoer: 'klageVurderingOmgjoer',
     };
 
-    const wrapper = shallowWithIntl(
+    const wrapper = mountWithIntl(
       <VedtakKlageSubmitPanelImpl
-        intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
         behandlingPaaVent={false}
-        klageVurderingResultatNK={klageVurderingResultatNK}
+        klageResultat={klageVurderingResultatNK}
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
     );
@@ -74,9 +77,8 @@ describe('<VedtakKlageSubmitPanel>', () => {
   });
 
   it('skal rendre submit panel med behandling på vent', () => {
-    const wrapper = shallowWithIntl(
+    const wrapper = mountWithIntl(
       <VedtakKlageSubmitPanelImpl
-        intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
         behandlingPaaVent
@@ -87,6 +89,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    /* eslint-disable-next-line no-unused-expressions */
     expect(hovedknapp.prop('disabled')).is.true;
 
     const a = wrapper.find('a');

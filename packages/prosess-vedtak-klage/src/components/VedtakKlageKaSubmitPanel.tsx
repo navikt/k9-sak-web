@@ -1,25 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import classNames from 'classnames';
+import { InjectedFormProps } from 'redux-form';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Row } from 'nav-frontend-grid';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import KlageVurderingResultat from '@k9-frontend/types/src/klage/klageVurderingResultatType';
 
 import styles from './vedtakKlageSubmitPanel.less';
 
-const medholdIKlage = (klageVurderingResultat) => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE);
+interface VedtakKlageKaSubmitPanelProps {
+  behandlingPaaVent: boolean;
+  previewVedtakCallback: (data: {
+    gjelderVedtak: boolean,
+  }) => Promise<any>;
+  begrunnelse?: string;
+  klageResultat: KlageVurderingResultat;
+  formProps: InjectedFormProps;
+  readOnly: boolean;
+}
 
-export const isMedholdIKlage = (
-  klageVurderingResultatNFP, klageVurderingResultatNK,
-) => medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
+const medholdIKlage = klageVurderingResultat =>
+  klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE;
+
+export const isMedholdIKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) =>
+  medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
 
 const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
   switch (klageVurdering) {
     case klageVurderingType.STADFESTE_YTELSESVEDTAK:
-      return klageVurdertAvKa ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
+      return klageVurdertAvKa
+        ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK
+        : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
     case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
       return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
@@ -33,7 +47,7 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
   }
 };
 
-const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
+const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => e => {
   const klageVurdertAvNK = klageResultat.klageVurdertAv === 'KA';
   const data = {
     fritekst: begrunnelse || '',
@@ -50,8 +64,7 @@ const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klage
   e.preventDefault();
 };
 
-export const VedtakKlageKaSubmitPanelImpl = ({
-  intl,
+export const VedtakKlageKaSubmitPanelImpl: React.FunctionComponent<VedtakKlageKaSubmitPanelProps> = ({
   behandlingPaaVent,
   previewVedtakCallback,
   begrunnelse,
@@ -60,24 +73,23 @@ export const VedtakKlageKaSubmitPanelImpl = ({
   readOnly,
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback, klageResultat);
+  const intl = useIntl();
 
   return (
     <Row>
       <Column xs="8">
-        {!readOnly
-        && (
-        <Hovedknapp
-          mini
-          className={styles.mainButton}
-          onClick={formProps.handleSubmit}
-          disabled={behandlingPaaVent || formProps.submitting || klageResultat.godkjentAvMedunderskriver}
-          spinner={formProps.submitting}
-        >
-          {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenningKa' })}
-        </Hovedknapp>
+        {!readOnly && (
+          <Hovedknapp
+            mini
+            className={styles.mainButton}
+            onClick={formProps.handleSubmit}
+            disabled={behandlingPaaVent || formProps.submitting || klageResultat.godkjentAvMedunderskriver}
+            spinner={formProps.submitting}
+          >
+            {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenningKa' })}
+          </Hovedknapp>
         )}
-        {!readOnly
-        && (
+        {!readOnly && (
           <Hovedknapp
             mini
             className={styles.mainButton}
@@ -91,7 +103,7 @@ export const VedtakKlageKaSubmitPanelImpl = ({
         <a
           href=""
           onClick={previewBrev}
-          onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
+          onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
           className={classNames('lenke lenke--frittstaende')}
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
@@ -101,19 +113,9 @@ export const VedtakKlageKaSubmitPanelImpl = ({
   );
 };
 
-VedtakKlageKaSubmitPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-  behandlingPaaVent: PropTypes.bool.isRequired,
-  begrunnelse: PropTypes.string,
-  klageResultat: PropTypes.shape(),
-  readOnly: PropTypes.bool.isRequired,
-  formProps: PropTypes.shape().isRequired,
-};
-
 VedtakKlageKaSubmitPanelImpl.defaultProps = {
   begrunnelse: undefined,
   klageResultat: undefined,
 };
 
-export default injectIntl(VedtakKlageKaSubmitPanelImpl);
+export default VedtakKlageKaSubmitPanelImpl;

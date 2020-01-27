@@ -2,6 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { InjectedFormProps } from 'redux-form';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -32,7 +33,9 @@ type AvvistArsak = {
 interface VedtakKlageFormProps {
   readOnly: boolean;
   omgjortAarsak?: string;
-  previewVedtakCallback: () => any; // TODO: types
+  previewVedtakCallback: (data: {
+    gjelderVedtak: boolean,
+  }) => Promise<any>;
   isAvvist: boolean;
   isOmgjort: boolean;
   fritekstTilBrev?: string;
@@ -49,7 +52,7 @@ interface VedtakKlageFormProps {
  *
  * Redux-form-komponent for klage-vedtak.
  */
-export const VedtakKlageFormImpl: React.FunctionComponent<VedtakKlageFormProps> = ({
+export const VedtakKlageFormImpl: React.FunctionComponent<VedtakKlageFormProps & InjectedFormProps> = ({
   readOnly,
   omgjortAarsak,
   previewVedtakCallback,
