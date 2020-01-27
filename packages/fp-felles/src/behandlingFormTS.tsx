@@ -53,12 +53,6 @@ export const behandlingForm = (config: Config = {}) => (WrappedComponent: Compon
     <FormComponent {...otherProps} key={behandlingFormName} form={behandlingFormName} />
   );
 
-  // WithBehandlingForm.propTypes = {
-  //   behandlingId: PropTypes.number.isRequired,
-  //   behandlingVersjon: PropTypes.number.isRequired,
-  //   behandlingFormName: PropTypes.string.isRequired,
-  // };
-
   const mapStateToProps = (state, ownProps: BehandlingFormProps) => ({
     behandlingFormName: getBehandlingFormName(ownProps.behandlingId, ownProps.behandlingVersjon, form || ownProps.form),
   });
