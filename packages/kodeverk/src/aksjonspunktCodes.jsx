@@ -103,6 +103,7 @@ const aksjonspunktCodes = {
   FODSELTILRETTELEGGING: '5091',
   SVANGERSKAPSVILKARET: '5092',
   VURDER_FARESIGNALER: '5095',
+  MEDISINSK_VILKAAR: '9001',
 };
 
 const klageAksjonspunkter = [
@@ -133,9 +134,7 @@ const beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt = [
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
 ];
 
-const isVilkarForSykdomOppfyltAksjonspunkter = [
-  aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT,
-];
+const isVilkarForSykdomOppfyltAksjonspunkter = [aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
 
 const beregningAksjonspunkter = [
   aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
@@ -146,12 +145,16 @@ const beregningAksjonspunkter = [
   aksjonspunktCodes.VURDER_DEKNINGSGRAD,
 ];
 
-const aksjonspunktIsOfType = (validAksjonspunktCodes) => (aksjonspunktCode) => validAksjonspunktCodes.includes(aksjonspunktCode);
+const aksjonspunktIsOfType = validAksjonspunktCodes => aksjonspunktCode =>
+  validAksjonspunktCodes.includes(aksjonspunktCode);
 
-export const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode);
+export const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
+  aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 export const isKlageAksjonspunkt = aksjonspunktIsOfType(klageAksjonspunkter);
-export const isBGAksjonspunktSomGirFritekstfelt = aksjonspunktIsOfType(beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt);
+export const isBGAksjonspunktSomGirFritekstfelt = aksjonspunktIsOfType(
+  beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt,
+);
 export const isVilkarForSykdomOppfylt = aksjonspunktIsOfType(isVilkarForSykdomOppfyltAksjonspunkter);
 export const isUttakAksjonspunkt = aksjonspunktIsOfType(uttakAksjonspunkter);
 export const isBeregningAksjonspunkt = aksjonspunktIsOfType(beregningAksjonspunkter);
