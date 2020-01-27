@@ -10,6 +10,7 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import KlageVurderingResultat from '@k9-frontend/types/src/klage/klageVurderingResultatType';
 
 import styles from './vedtakKlageSubmitPanel.less';
+import { PreviewVedtakCallbackProps } from '../VedtakKlageProsessIndex';
 
 const medholdIKlage = klageVurderingResultat =>
   klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE;
@@ -55,9 +56,7 @@ const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klage
 
 interface VedtakKlageSubmitPanelProps {
   behandlingPaaVent: boolean;
-  previewVedtakCallback: (data: {
-    gjelderVedtak: boolean,
-  }) => Promise<any>;
+  previewVedtakCallback: (data: PreviewVedtakCallbackProps) => Promise<any>;
   begrunnelse?: string;
   klageResultat?: KlageVurderingResultat;
   formProps: InjectedFormProps;

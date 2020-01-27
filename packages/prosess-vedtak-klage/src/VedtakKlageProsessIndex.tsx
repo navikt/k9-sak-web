@@ -18,19 +18,21 @@ const intl = createIntl(
   cache,
 );
 
+export interface AksjonspunktCallbackProps {
+  kode: string;
+  begrunnelse: string;
+}
+
+export interface PreviewVedtakCallbackProps {
+  gjelderVedtak: boolean;
+}
+
 interface VedtakKlageProsessIndexProps {
   behandling: Behandling;
   klageVurdering: KlageVurdering;
   aksjonspunkter: Aksjonspunkt[];
-  submitCallback: (
-    aksjonspunktModels: {
-      kode: string,
-      begrunnelse: string,
-    }[],
-  ) => Promise<any>;
-  previewVedtakCallback: (data: {
-    gjelderVedtak: boolean,
-  }) => Promise<any>;
+  submitCallback: (aksjonspunktModels: AksjonspunktCallbackProps[]) => Promise<any>;
+  previewVedtakCallback: (data: PreviewVedtakCallbackProps) => Promise<any>;
   readOnly: boolean;
   alleKodeverk: AlleKodeverk;
 }

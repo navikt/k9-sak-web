@@ -18,6 +18,7 @@ import Aksjonspunkt from '@k9-frontend/types/src/aksjonspunktTsType';
 
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
+import { PreviewVedtakCallbackProps } from '../VedtakKlageProsessIndex';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
@@ -33,9 +34,7 @@ type AvvistArsak = {
 interface VedtakKlageFormProps {
   readOnly: boolean;
   omgjortAarsak?: string;
-  previewVedtakCallback: (data: {
-    gjelderVedtak: boolean,
-  }) => Promise<any>;
+  previewVedtakCallback: (data: PreviewVedtakCallbackProps) => Promise<any>;
   isAvvist: boolean;
   isOmgjort: boolean;
   fritekstTilBrev?: string;

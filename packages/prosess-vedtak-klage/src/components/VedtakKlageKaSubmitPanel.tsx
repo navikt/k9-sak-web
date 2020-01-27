@@ -9,13 +9,12 @@ import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import KlageVurderingResultat from '@k9-frontend/types/src/klage/klageVurderingResultatType';
 
+import { PreviewVedtakCallbackProps } from '../VedtakKlageProsessIndex';
 import styles from './vedtakKlageSubmitPanel.less';
 
 interface VedtakKlageKaSubmitPanelProps {
   behandlingPaaVent: boolean;
-  previewVedtakCallback: (data: {
-    gjelderVedtak: boolean,
-  }) => Promise<any>;
+  previewVedtakCallback: (data: PreviewVedtakCallbackProps) => Promise<any>;
   begrunnelse?: string;
   klageResultat: KlageVurderingResultat;
   formProps: InjectedFormProps;
