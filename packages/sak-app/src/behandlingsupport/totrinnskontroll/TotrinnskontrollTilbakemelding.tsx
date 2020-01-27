@@ -7,7 +7,7 @@ import {
   BehandlingStatusType,
   SkjermlenkeTyper,
   TotrinnskontrollAksjonspunkter,
-} from '@fpsak-frontend/types';
+} from '@k9-frontend/types';
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
