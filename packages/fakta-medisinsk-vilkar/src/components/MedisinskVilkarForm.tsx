@@ -110,7 +110,7 @@ const getValidLegeerklaeringSignatar = (signatar: string) => {
 };
 
 const transformValues = values => ({
-  kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, // TODO
+  kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
   begrunnelse: values.begrunnelseLegeerklaering,
   ...values,
 });
