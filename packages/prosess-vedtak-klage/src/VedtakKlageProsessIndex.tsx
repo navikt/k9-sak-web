@@ -22,12 +22,15 @@ interface VedtakKlageProsessIndexProps {
   behandling: Behandling;
   klageVurdering: KlageVurdering;
   aksjonspunkter: Aksjonspunkt[];
-  submitCallback: () => void; // TODO: hva er parametre og returtype?
-  // submitCallback: ({
-  //   kode: apCode,
-  //   begrunnelse: values.fritekstTilBrev
-  // }[]) => void
-  previewVedtakCallback: () => void; // TODO: hva er parametre og returtype?
+  submitCallback: (
+    aksjonspunktModels: {
+      kode: string,
+      begrunnelse: string,
+    }[],
+  ) => Promise<any>;
+  previewVedtakCallback: (data: {
+    gjelderVedtak: boolean,
+  }) => Promise<any>;
   readOnly: boolean;
   alleKodeverk: AlleKodeverk;
 }
