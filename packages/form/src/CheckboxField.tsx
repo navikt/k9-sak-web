@@ -8,7 +8,7 @@ import LabelType from './LabelType';
 interface CheckboxFieldProps {
   name: string;
   label: LabelType;
-  validate?: () => void[];
+  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;
 }
 
