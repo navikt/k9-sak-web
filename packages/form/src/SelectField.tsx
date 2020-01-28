@@ -9,7 +9,7 @@ interface SelectFieldProps {
   name: string;
   selectValues: object[];
   label: LabelType;
-  validate?: () => void[];
+  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;
   placeholder?: string;
   hideValueOnDisable?: boolean;
