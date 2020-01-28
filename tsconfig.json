@@ -28,6 +28,7 @@
     "packages/sak-historikk",
     "packages/shared-components",
     "packages/form",
+    "packages/types",
 		"@types"
 	]
 }
