@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import UttakPeriode from '@k9-frontend/types/src/uttak/UttakPeriode';
+
 import TimeLineControl from './components/TimeLineControl';
 import TimeLineSoker from './components/TimeLineSoker';
 import TimeLineSokerEnsamSoker from './components/TimeLineSokerEnsamSoker';
-
 import styles from './tidslinje.less';
+
+interface EventProps {
+  items: string[];
+  event: Event;
+}
+
+interface TidslinjeProps {
+  customTimes: {
+    soknad: string,
+    fodsel: string,
+    revurdering: string,
+    dodSoker: string,
+  };
+  hovedsokerKjonnKode: navBrukerKjonn.KVINNE | navBrukerKjonn.MANN | navBrukerKjonn.UDEFINERT;
+  medsokerKjonnKode?: navBrukerKjonn.KVINNE | navBrukerKjonn.MANN | navBrukerKjonn.UDEFINERT;
+  openPeriodInfo: (event: Event) => void;
+  selectedPeriod?: UttakPeriode;
+  selectPeriodCallback: (eventProps: EventProps) => void;
+  uttakPerioder: UttakPeriode[];
+  children?: React.ReactNode;
+}
 
 const getOptions = (customTimes, sortedUttakPeriods) => ({
   end: moment(sortedUttakPeriods[sortedUttakPeriods.length - 1].tom).add(2, 'days'),
@@ -31,7 +53,7 @@ const getOptions = (customTimes, sortedUttakPeriods) => ({
   zoomMin: 1000 * 60 * 60 * 24 * 30,
 });
 
-const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 
 function sortByDate(a, b) {
   if (a.fom < b.fom) {
@@ -43,7 +65,7 @@ function sortByDate(a, b) {
   return 0;
 }
 
-const parseDates = (item) => ({
+const parseDates = item => ({
   ...item,
   start: parseDateString(item.fom),
   end: parseDateString(item.tomMoment),
@@ -53,7 +75,7 @@ const formatItems = (periodItems = []) => {
   const itemsWithDates = periodItems.map(parseDates);
   const formattedItemsArray = [];
   formattedItemsArray.length = 0;
-  itemsWithDates.forEach((item) => {
+  itemsWithDates.forEach(item => {
     formattedItemsArray.push(item);
   });
   return formattedItemsArray;
@@ -61,11 +83,11 @@ const formatItems = (periodItems = []) => {
 
 const formatGroups = (periodItems = []) => {
   const duplicatesRemoved = periodItems.reduce((accPeriods, period) => {
-    const hasPeriod = accPeriods.some((p) => p.group === period.group);
+    const hasPeriod = accPeriods.some(p => p.group === period.group);
     if (!hasPeriod) accPeriods.push(period);
     return accPeriods;
   }, []);
-  return duplicatesRemoved.map((activity) => ({
+  return duplicatesRemoved.map(activity => ({
     id: activity.group,
     content: '',
   }));
@@ -76,9 +98,11 @@ const formatGroups = (periodItems = []) => {
  *
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for uttak
  */
-class Tidslinje extends Component {
-  constructor() {
-    super();
+class Tidslinje extends Component<TidslinjeProps> {
+  timelineRef: React.RefObject<any>;
+
+  constructor(props) {
+    super(props);
 
     this.goForward = this.goForward.bind(this);
     this.goBackward = this.goBackward.bind(this);
@@ -145,19 +169,10 @@ class Tidslinje extends Component {
       <div className={styles.timelineContainer}>
         <Row>
           <Column xs="1" className={styles.sokerContainer}>
-            {medsokerKjonnKode
-              && (
-                <TimeLineSoker
-                  hovedsokerKjonnKode={hovedsokerKjonnKode}
-                  medsokerKjonnKode={medsokerKjonnKode}
-                />
-              )}
-            {!medsokerKjonnKode
-              && (
-                <TimeLineSokerEnsamSoker
-                  hovedsokerKjonnKode={hovedsokerKjonnKode}
-                />
-              )}
+            {medsokerKjonnKode && (
+              <TimeLineSoker hovedsokerKjonnKode={hovedsokerKjonnKode} medsokerKjonnKode={medsokerKjonnKode} />
+            )}
+            {!medsokerKjonnKode && <TimeLineSokerEnsamSoker hovedsokerKjonnKode={hovedsokerKjonnKode} />}
           </Column>
           <Column xs="11">
             <div className={styles.timeLineWrapper}>
@@ -193,17 +208,6 @@ class Tidslinje extends Component {
     );
   }
 }
-
-Tidslinje.propTypes = {
-  customTimes: PropTypes.shape().isRequired,
-  hovedsokerKjonnKode: PropTypes.string.isRequired,
-  medsokerKjonnKode: PropTypes.string,
-  openPeriodInfo: PropTypes.func.isRequired,
-  selectedPeriod: PropTypes.shape(),
-  selectPeriodCallback: PropTypes.func.isRequired,
-  uttakPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  children: PropTypes.node,
-};
 
 Tidslinje.defaultProps = {
   medsokerKjonnKode: undefined,
