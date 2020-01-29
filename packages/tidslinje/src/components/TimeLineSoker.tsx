@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Row } from 'nav-frontend-grid';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import Kjønnkode from '@k9-frontend/types/src/Kjønnkode';
 import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlUkjent from '@fpsak-frontend/assets/images/ukjent.svg';
@@ -16,7 +16,12 @@ import styles from './timeLineSoker.less';
  * Presentationskomponent. Viser korrekt ikon for soker/medsoker
  */
 
-const getKjønn = (kode) => {
+interface TimeLineSokerProps {
+  hovedsokerKjonnKode: Kjønnkode;
+  medsokerKjonnKode: Kjønnkode;
+}
+
+const getKjønn = kode => {
   switch (kode) {
     case navBrukerKjonn.KVINNE:
       return { src: urlKvinne, title: 'Person.Woman' };
@@ -29,10 +34,7 @@ const getKjønn = (kode) => {
   }
 };
 
-const TimeLineSoker = ({
-  hovedsokerKjonnKode,
-  medsokerKjonnKode,
-}) => {
+const TimeLineSoker: React.FunctionComponent<TimeLineSokerProps> = ({ hovedsokerKjonnKode, medsokerKjonnKode }) => {
   const intl = useIntl();
   return (
     <div className={styles.timelineSokerContatiner}>
@@ -53,13 +55,7 @@ const TimeLineSoker = ({
         />
       </Row>
     </div>
-
   );
-};
-
-TimeLineSoker.propTypes = {
-  hovedsokerKjonnKode: PropTypes.string.isRequired,
-  medsokerKjonnKode: PropTypes.string.isRequired,
 };
 
 export default TimeLineSoker;

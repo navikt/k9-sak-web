@@ -4,7 +4,7 @@ import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import Kjønnkode from '@k9-frontend/types/src/Kjønnkode';
 import UttakPeriode from '@k9-frontend/types/src/uttak/UttakPeriode';
 
 import TimeLineControl from './components/TimeLineControl';
@@ -24,8 +24,8 @@ interface TidslinjeProps {
     revurdering: string,
     dodSoker: string,
   };
-  hovedsokerKjonnKode: navBrukerKjonn.KVINNE | navBrukerKjonn.MANN | navBrukerKjonn.UDEFINERT;
-  medsokerKjonnKode?: navBrukerKjonn.KVINNE | navBrukerKjonn.MANN | navBrukerKjonn.UDEFINERT;
+  hovedsokerKjonnKode: Kjønnkode;
+  medsokerKjonnKode?: Kjønnkode;
   openPeriodInfo: (event: Event) => void;
   selectedPeriod?: UttakPeriode;
   selectPeriodCallback: (eventProps: EventProps) => void;
