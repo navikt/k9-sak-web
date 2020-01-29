@@ -81,7 +81,9 @@ describe('<ProsessStegPanel>', () => {
         isAksjonspunktOpen: false,
         overrideReadOnly: false,
         kanOverstyreAccess: false,
-        toggleOverstyring: () => {},
+        toggleOverstyring: () => {
+          return undefined;
+        },
       },
     }],
   };

@@ -51,7 +51,7 @@ class RequestProcess {
   isPollingRequest = false;
 
   constructor(httpClientApi: HttpClientApi, restMethod: (url: string, params: any, responseType?: string) => Promise<Response>,
-    path: string, config: RequestAdditionalConfig) {
+              path: string, config: RequestAdditionalConfig) {
     this.httpClientApi = httpClientApi;
     this.restMethod = restMethod;
     this.path = path;
@@ -129,10 +129,6 @@ class RequestProcess {
       this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
       return responseData ? { payload: responseData } : { payload: undefined };
     } catch (error) {
-      const { response } = error;
-      if (response.status === 401 && response.headers && response.headers.location) {
-        window.location = response.headers.location;
-      }
       new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;
     }

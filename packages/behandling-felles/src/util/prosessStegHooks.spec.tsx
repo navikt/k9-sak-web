@@ -114,7 +114,7 @@ describe('<prosessStegHooks>', () => {
       aksjonspunkter,
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
-      isReadOnly: true,
+      isReadOnly: false,
       prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
       panelData: [{
         aksjonspunktHelpTextCodes: [
@@ -124,11 +124,11 @@ describe('<prosessStegHooks>', () => {
         code: 'opplysningsplikt',
         endpoints: [],
         isAksjonspunktOpen: true,
-        isReadOnly: true,
+        isReadOnly: false,
         komponentData: {
           aksjonspunkter,
           isAksjonspunktOpen: true,
-          isReadOnly: true,
+          isReadOnly: false,
           readOnlySubmitButton: false,
           soknad: ekstraPanelData.soknad,
           status: vilkarUtfallType.IKKE_VURDERT,
@@ -280,7 +280,9 @@ describe('<prosessStegHooks>', () => {
 
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
-    const lagringSideEffectsCallback = () => {};
+    const lagringSideEffectsCallback = () => {
+      return undefined;
+    };
     const behandlingApi = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),

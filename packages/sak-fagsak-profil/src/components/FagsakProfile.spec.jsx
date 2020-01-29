@@ -86,7 +86,7 @@ describe('<FagsakProfile>', () => {
       kodeverk: 'FAGSAK_STATUS',
     };
     const wrapper = shallowWithIntl(<FagsakProfile
-      saksnummer={12345}
+      saksnummer="12345"
       sakstype={sakstype}
       fagsakStatus={status}
       toggleShowAll={sinon.spy()}
@@ -131,7 +131,7 @@ describe('<FagsakProfile>', () => {
       kodeverk: 'FAGSAK_STATUS',
     };
     const wrapper = shallowWithIntl(<FagsakProfile
-      saksnummer={12345}
+      saksnummer="12345"
       sakstype={sakstype}
       fagsakStatus={status}
       toggleShowAll={sinon.spy()}
@@ -175,7 +175,7 @@ describe('<FagsakProfile>', () => {
       kodeverk: 'FAGSAK_STATUS',
     };
     const wrapper = shallowWithIntl(<FagsakProfile
-      saksnummer={12345}
+      saksnummer="12345"
       sakstype={sakstype}
       fagsakStatus={status}
       toggleShowAll={sinon.spy()}

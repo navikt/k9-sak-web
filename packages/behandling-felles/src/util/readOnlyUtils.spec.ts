@@ -147,17 +147,6 @@ describe('<readOnlyUtils>', () => {
     expect(erReadOnly).is.true;
   });
 
-  it('skal være readonly når en har minst ett ikke overstyrbart vilkar', () => {
-    const nyeVilkar = [{
-      ...vilkar[0],
-      overstyrbar: false,
-    }];
-    const hasFetchError = false;
-    const erReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkter, nyeVilkar, navAnsatt, fagsak, hasFetchError);
-
-    expect(erReadOnly).is.true;
-  });
-
   it('skal være readonly når behandlingen har status AVSLUTTET', () => {
     const nyBehandling = {
       ...behandling,

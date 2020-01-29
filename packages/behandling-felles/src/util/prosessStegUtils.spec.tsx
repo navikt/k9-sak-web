@@ -134,7 +134,7 @@ describe('<prosessStegUtils>', () => {
       aksjonspunkter,
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
-      isReadOnly: true,
+      isReadOnly: false,
       prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
       panelData: [{
         aksjonspunktHelpTextCodes: [
@@ -144,11 +144,11 @@ describe('<prosessStegUtils>', () => {
         code: 'opplysningsplikt',
         endpoints: [],
         isAksjonspunktOpen: true,
-        isReadOnly: true,
+        isReadOnly: false,
         komponentData: {
           aksjonspunkter,
           isAksjonspunktOpen: true,
-          isReadOnly: true,
+          isReadOnly: false,
           readOnlySubmitButton: false,
           soknad: ekstraPanelData.soknad,
           status: vilkarUtfallType.IKKE_VURDERT,

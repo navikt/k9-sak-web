@@ -1,8 +1,6 @@
 import React, { useMemo } from 'react';
-import { injectIntl } from "react-intl";
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -27,8 +25,8 @@ const skalKunneLoseUtenAksjonpunkter = (isForeldrepenger, aksjonspunkterMinusAvk
   && (aksjonspunkterMinusAvklarStartDato.length === 0 || !hasOpenAksjonspunkter));
 
 const harAksjonspunkterForAvklarStartdato = (aksjonspunkter) => aksjonspunkter
-  .find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)
-|| aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
+    .find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)
+  || aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
 
 const skalViseAvklarStartdatoPanel = (
   aksjonspunkter,
@@ -44,26 +42,26 @@ const skalViseAvklarStartdatoPanel = (
  * Presentasjonskomponent. Har ansvar for å vise faktapanelene for medlemskap.
  */
 const MedlemskapInfoPanel = ({
-  hasOpenAksjonspunkter,
-  submittable,
-  aksjonspunkter,
-  readOnly,
-  submitCallback,
-  isForeldrepenger,
-  alleMerknaderFraBeslutter,
-  behandlingId,
-  behandlingVersjon,
-  behandlingType,
-  behandlingStatus,
-  soknad,
-  inntektArbeidYtelse,
-  alleKodeverk,
-  medlemskap,
-  medlemskapV2,
-  fagsakPerson,
-  behandlingPaaVent,
-  readOnlyBehandling,
-}) => {
+                               hasOpenAksjonspunkter,
+                               submittable,
+                               aksjonspunkter,
+                               readOnly,
+                               submitCallback,
+                               isForeldrepenger,
+                               alleMerknaderFraBeslutter,
+                               behandlingId,
+                               behandlingVersjon,
+                               behandlingType,
+                               behandlingStatus,
+                               soknad,
+                               inntektArbeidYtelse,
+                               alleKodeverk,
+                               medlemskap,
+                               medlemskapV2,
+                               fagsakPerson,
+                               behandlingPaaVent,
+                               readOnlyBehandling,
+                             }) => {
   const avklarStartdatoAksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   const avklarStartdatoOverstyring = aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
   const aksjonspunkterMinusAvklarStartDato = useMemo(() => aksjonspunkter
@@ -72,29 +70,29 @@ const MedlemskapInfoPanel = ({
   return (
     <>
       {skalViseAvklarStartdatoPanel(aksjonspunkter, isForeldrepenger, aksjonspunkterMinusAvklarStartDato, hasOpenAksjonspunkter)
-        && (
-          <>
-            <StartdatoForForeldrepengerperiodenForm
-              readOnly={readOnly}
-              aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
-              submitCallback={submitCallback}
-              submittable={submittable}
-              hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
-              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              behandlingStatus={behandlingStatus}
-              behandlingPaaVent={behandlingPaaVent}
-              aksjonspunkter={aksjonspunkter}
-              soknad={soknad}
-              inntektArbeidYtelse={inntektArbeidYtelse}
-              readOnlyBehandling={readOnlyBehandling}
-            />
-            <VerticalSpacer twentyPx />
-          </>
-        )}
+      && (
+        <>
+          <StartdatoForForeldrepengerperiodenForm
+            readOnly={readOnly}
+            aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
+            submitCallback={submitCallback}
+            submittable={submittable}
+            hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            behandlingStatus={behandlingStatus}
+            behandlingPaaVent={behandlingPaaVent}
+            aksjonspunkter={aksjonspunkter}
+            soknad={soknad}
+            inntektArbeidYtelse={inntektArbeidYtelse}
+            readOnlyBehandling={readOnlyBehandling}
+          />
+          <VerticalSpacer twentyPx />
+        </>
+      )}
       { (!hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
-        && (
+      && (
         <OppholdInntektOgPerioderForm
           soknad={soknad}
           readOnly={readOnly}
@@ -110,7 +108,7 @@ const MedlemskapInfoPanel = ({
           medlemskapV2={medlemskapV2}
           fagsakPerson={fagsakPerson}
         />
-        )}
+      )}
     </>
   );
 };
@@ -143,13 +141,4 @@ MedlemskapInfoPanel.defaultProps = {
   isForeldrepenger: true,
 };
 
-export const getAksjonspunkter = createSelector(
-  [(ownProps) => ownProps.aksjonspunkter],
-  (aksjonspunkter = {}) => (aksjonspunkter.filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode))),
-);
-
-const mapStateToProps = (initialState, ownProps) => ({
-  aksjonspunkterMinusAvklarStartDato: getAksjonspunkter(ownProps),
-});
-
-export default connect(mapStateToProps)(injectIntl(MedlemskapInfoPanel));
+export default MedlemskapInfoPanel;
