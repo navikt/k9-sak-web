@@ -4,17 +4,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-
 import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
-import behandlingUpdater from '../behandling/BehandlingUpdater';
 import {
-  behandlingMenuReducer,
-  createNewBehandling,
-  openBehandlingForChanges,
-  resetBehandlingMenuData,
-  setHasSubmittedPaVentForm,
-} from './duck';
+  createNewBehandling} from './duck';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -28,45 +20,10 @@ describe('BehandlingMenu-reducer', () => {
 
   afterEach(() => {
     mockAxios.reset();
-    behandlingUpdater.reset();
   });
 
   after(() => {
     mockAxios.restore();
-    behandlingUpdater.reset();
-  });
-
-  it('skal returnere initial state', () => {
-    expect(behandlingMenuReducer(undefined, {})).to.eql({
-      hasSubmittedPaVentForm: false,
-    });
-  });
-
-  it('skal markere i state at behandling er satt på vent', () => {
-    const store = mockStore();
-
-    store.dispatch(setHasSubmittedPaVentForm());
-
-    expect(store.getActions()).to.have.length(1);
-
-    expect(behandlingMenuReducer(undefined, store.getActions()[0])).to.eql({
-      hasSubmittedPaVentForm: true,
-    });
-  });
-
-  it('skal resette state for behandlingsmeny', () => {
-    const state = {
-      hasSubmittedPaVentForm: true,
-    };
-    const store = mockStore();
-
-    store.dispatch(resetBehandlingMenuData());
-
-    expect(store.getActions()).to.have.length(1);
-
-    expect(behandlingMenuReducer(state, store.getActions()[0])).to.eql({
-      hasSubmittedPaVentForm: false,
-    });
   });
 
   it('skal ved opprettelse av ny behandling returnere fagsak og velge siste behandling fra behandlinglisten', () => {
@@ -83,11 +40,6 @@ describe('BehandlingMenu-reducer', () => {
         opprettet: '2017-08-15',
       },
     ];
-
-    const updater = {
-      resetBehandling: () => () => Promise.resolve(sinon.spy()),
-    };
-    behandlingUpdater.setUpdater(updater);
 
     const data = {
       resource: 'resource',
@@ -149,11 +101,6 @@ describe('BehandlingMenu-reducer', () => {
         opprettet: '2017-08-15',
       },
     ];
-
-    const updater = {
-      resetBehandling: () => () => Promise.resolve(sinon.spy()),
-    };
-    behandlingUpdater.setUpdater(updater);
 
     mockAxios.onPut(fpsakApi.NEW_BEHANDLING_FPSAK.path).reply(200, behandling);
     mockAxios.onGet(fpsakApi.BEHANDLINGER_FPSAK.path).replyOnce(200, behandlinger);

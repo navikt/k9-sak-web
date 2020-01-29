@@ -18,6 +18,12 @@ const uaktsomhetCodes = [
   Aktsomhet.FORSETT,
 ];
 
+const forstoBurdeForstattTekster = {
+  [Aktsomhet.FORSETT]: 'AktsomhetFormPanel.AktsomhetTyperLabel.Forsett',
+  [Aktsomhet.GROVT_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt',
+  [Aktsomhet.SIMPEL_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom',
+};
+
 const AktsomhetFormPanel = ({
   readOnly,
   resetFields,
@@ -25,6 +31,7 @@ const AktsomhetFormPanel = ({
   handletUaktsomhetGrad,
   harGrunnerTilReduksjon,
   erSerligGrunnAnnetValgt,
+  erValgtResultatTypeForstoBurdeForstaatt,
   aktsomhetTyper,
   sarligGrunnTyper,
   antallYtelser,
@@ -46,7 +53,7 @@ const AktsomhetFormPanel = ({
       {aktsomhetTyper.map((vrt) => (
         <RadioOption
           key={vrt.kode}
-          label={vrt.navn}
+          label={erValgtResultatTypeForstoBurdeForstaatt ? <FormattedMessage id={forstoBurdeForstattTekster[vrt.kode]} /> : vrt.navn}
           value={vrt.kode}
         />
       ))}
@@ -58,6 +65,7 @@ const AktsomhetFormPanel = ({
           readOnly={readOnly}
           handletUaktsomhetGrad={handletUaktsomhetGrad}
           erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
+          erValgtResultatTypeForstoBurdeForstaatt={erValgtResultatTypeForstoBurdeForstaatt}
           resetAnnetTextField={resetAnnetTextField}
           sarligGrunnTyper={sarligGrunnTyper}
           harMerEnnEnYtelse={antallYtelser > 1}
@@ -76,6 +84,7 @@ AktsomhetFormPanel.propTypes = {
   resetAnnetTextField: PropTypes.func.isRequired,
   harGrunnerTilReduksjon: PropTypes.bool,
   erSerligGrunnAnnetValgt: PropTypes.bool,
+  erValgtResultatTypeForstoBurdeForstaatt: PropTypes.bool,
   handletUaktsomhetGrad: PropTypes.string,
   antallYtelser: PropTypes.number.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
@@ -87,6 +96,7 @@ AktsomhetFormPanel.propTypes = {
 
 AktsomhetFormPanel.defaultProps = {
   erSerligGrunnAnnetValgt: false,
+  erValgtResultatTypeForstoBurdeForstaatt: false,
   harGrunnerTilReduksjon: undefined,
   handletUaktsomhetGrad: undefined,
   andelSomTilbakekreves: undefined,
@@ -116,6 +126,7 @@ const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
     sarligGrunner: sarligeGrunner.length > 0 ? sarligeGrunner : undefined,
     tilbakekrevesBelop: aktsomhet.harGrunnerTilReduksjon ? removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves) : undefined,
     annetBegrunnelse: aktsomhet.annetBegrunnelse,
+    sarligGrunnerBegrunnelse: aktsomhet.sarligGrunnerBegrunnelse,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
     ...andelSomTilbakekreves,
   };
@@ -143,6 +154,7 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
       skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
       belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
       annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
+      sarligGrunnerBegrunnelse: aktsomhetInfo.sarligGrunnerBegrunnelse,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
       ...(aktsomhetInfo.sarligGrunner ? aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [(sg.kode ? sg.kode : sg)]: true }), {}) : {}),
     },

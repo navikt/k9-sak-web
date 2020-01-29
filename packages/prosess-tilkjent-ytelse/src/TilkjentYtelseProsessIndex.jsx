@@ -26,7 +26,7 @@ const TilkjentYtelseProsessIndex = ({
   fagsak,
   aksjonspunkter,
   alleKodeverk,
-  readOnly,
+  isReadOnly,
   submitCallback,
   readOnlySubmitButton,
 }) => (
@@ -37,10 +37,10 @@ const TilkjentYtelseProsessIndex = ({
       beregningresultat={beregningresultat}
       personopplysninger={personopplysninger}
       soknad={soknad}
-      fagsakYtelseTypeKode={fagsak.ytelseType.kode}
+      fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
     />
@@ -55,7 +55,7 @@ TilkjentYtelseProsessIndex.propTypes = {
   fagsak: tilkjentYtelseFagsakPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(tilkjentYtelseAksjonspunkterPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
 };
