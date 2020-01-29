@@ -176,7 +176,7 @@ export const FaktaPanel = ({
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={vergeData}
-        showComponent // FIX
+        showComponent={aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.MEDISINSK_VILKAAR)}
         render={props => (
           <MedisinskVilkarFaktaIndex
             readOnly={readOnly}
