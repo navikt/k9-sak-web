@@ -29,6 +29,7 @@
     "packages/shared-components",
     "packages/tidslinje",
     "packages/types",
+		"packages/behandling-fp",
 		"@types"
 	]
 }
