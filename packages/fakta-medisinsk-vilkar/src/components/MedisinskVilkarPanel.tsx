@@ -1,7 +1,5 @@
-import { FaktaEkspandertpanel, faktaPanelCodes, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import React from 'react';
-import { IntlShape, useIntl } from 'react-intl';
-import { connect } from 'react-redux';
+import {injectIntl, IntlShape, useIntl} from 'react-intl';
 import { Behandling, SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import MedisinskVilkarForm from './MedisinskVilkarForm';
 
@@ -17,13 +15,10 @@ interface MedisinskVilkarPanelProps {
 }
 
 const MedisinskVilkarPanel: React.FunctionComponent<MedisinskVilkarPanelProps> = ({
-  readOnly,
-  toggleInfoPanelCallback,
   behandling,
   submitCallback,
   submittable,
-  openInfoPanels,
-}: // hasOpenAksjonspunkter,
+}:
 MedisinskVilkarPanelProps) => {
   const intl = useIntl();
   const props = {
@@ -34,25 +29,12 @@ MedisinskVilkarPanelProps) => {
     intl,
   }; // TODO readOnly skal sendes videre
   return (
-    <FaktaEkspandertpanel
-      title={intl.formatMessage({ id: 'MedisinskVilkarPanel.MedisinskVilkar' })}
-      hasOpenAksjonspunkter // TODO ={hasOpenAksjonspunkter}
-      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.MEDISINSKVILKAAR)} // sett riktig faktaPanelCode
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      faktaId={faktaPanelCodes.MEDISINSKVILKAAR} // TODO sett riktig faktaPanelCode
-      readOnly={readOnly}
-    >
       <MedisinskVilkarForm
         hasOpenAksjonspunkter // TODO ={hasOpenAksjonspunkter}
         submittable={submittable}
         {...props}
       />
-    </FaktaEkspandertpanel>
   );
 };
 
-const mapStateToProps = () => ({});
-
-const ConnectedComponent = connect(mapStateToProps)(MedisinskVilkarPanel);
-
-export default withDefaultToggling(faktaPanelCodes.MEDLEMSKAPSVILKARET, [])(ConnectedComponent);
+export default injectIntl(MedisinskVilkarPanel);
