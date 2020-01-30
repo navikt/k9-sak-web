@@ -19,10 +19,10 @@ interface EventProps {
 
 interface TidslinjeProps {
   customTimes: {
-    soknad: string,
-    fodsel: string,
-    revurdering: string,
-    dodSoker: string,
+    soknad: string;
+    fodsel: string;
+    revurdering: string;
+    dodSoker: string;
   };
   hovedsokerKjonnKode: Kjønnkode;
   medsokerKjonnKode?: Kjønnkode;
@@ -121,14 +121,24 @@ class Tidslinje extends Component<TidslinjeProps> {
     }
   }
 
+  zoomOut() {
+    const timeline = this.timelineRef.current.$el;
+    timeline.zoomOut(0.5);
+  }
+
   zoomIn() {
     const timeline = this.timelineRef.current.$el;
     timeline.zoomIn(0.5);
   }
 
-  zoomOut() {
+  goBackward() {
     const timeline = this.timelineRef.current.$el;
-    timeline.zoomOut(0.5);
+    const currentWindowTimes = timeline.getWindow();
+    const newWindowTimes = {
+      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),
+      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 42),
+    };
+    timeline.setWindow(newWindowTimes);
   }
 
   goForward() {
@@ -139,16 +149,6 @@ class Tidslinje extends Component<TidslinjeProps> {
       end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() + 42),
     };
 
-    timeline.setWindow(newWindowTimes);
-  }
-
-  goBackward() {
-    const timeline = this.timelineRef.current.$el;
-    const currentWindowTimes = timeline.getWindow();
-    const newWindowTimes = {
-      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),
-      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 42),
-    };
     timeline.setWindow(newWindowTimes);
   }
 
