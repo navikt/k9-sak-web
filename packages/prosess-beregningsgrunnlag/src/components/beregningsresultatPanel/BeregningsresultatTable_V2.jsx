@@ -18,6 +18,7 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
 import styles from './beregningsresultatTable_V2.less';
+import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 
 
 const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entry, index) => (
@@ -47,7 +48,9 @@ const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entr
 );
 const lineRow = (key) => (
   <Row key={key || 'separator'}>
-    <Column xs="11" className={styles.colLine} />
+    <Column xs="11" className={beregningStyles.noPaddingRight}>
+      <div className={beregningStyles.colDevider} />
+    </Column>
   </Row>
 );
 
@@ -83,39 +86,51 @@ const createRowsRedusert = (listOfEntries, verdierLike) => {
     </Row>
   );
 };
-const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => (
-  <React.Fragment key="beregningOppsummeringWrapper">
-    <Row key="beregningOppsummering">
-      <Column xs="8" key="beregningOppsummeringLedetekst">
-        <Normaltekst>
-          <span className={beregningStyles.semiBoldText}>
-            { erVurdert && (
-            <FormattedMessage
-              id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
-              values={{ dagSats: formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) }}
-            />
-            )}
-            { !erVurdert && (
+const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => {
+  if (!listOfEntries || listOfEntries.length === 0) {
+    return null;
+  }
+  if (erVurdert && (listOfDagsatser.length === 0 || !listOfDagsatser[0])) {
+    return null;
+  }
+  const dagsats = listOfEntries[listOfEntries.length - 1].verdi !== undefined
+    ? formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) : 0;
+  return (
+    <React.Fragment key="beregningOppsummeringWrapper">
+      <Row key="beregningOppsummering">
+        <Column xs="8" key="beregningOppsummeringLedetekst">
+          <Normaltekst>
+            <span className={beregningStyles.semiBoldText}>
+              { erVurdert && (
+              <FormattedMessage
+                id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
+                values={{ dagSats: dagsats }}
+              />
+              )}
+              { !erVurdert && (
               <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
-            )}
-          </span>
+              )}
+            </span>
 
 
-        </Normaltekst>
-      </Column>
-      {erVurdert && listOfDagsatser.map((dag, index) => (
-        <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
-          <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
+          </Normaltekst>
         </Column>
-      ))}
-      {!erVurdert && (
+        {erVurdert && listOfDagsatser.map((dag, index) => (
+          <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
+            {dag && (
+            <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
+            )}
+          </Column>
+        ))}
+        {!erVurdert && (
         <Column xs="3" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
           <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
         </Column>
-      )}
-    </Row>
-  </React.Fragment>
-);
+        )}
+      </Row>
+    </React.Fragment>
+  );
+};
 
 const createRowsForklaringer = (forklaringsListe) => (
   forklaringsListe.map((forklaring) => (
@@ -145,14 +160,14 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
     }
   }
   rows.push(createRowsRedusert(listOfEntries));
-  rows.push(lineRow('redusertLinje'));
-  if (listOfEntries.length === 0) {
-    rows.push(summaryRow(listOfDagsatser, listofAndeler, true));
-  } else {
-    rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
+  if (listofAndeler.length > 0 || listOfEntries.length > 0) {
+    rows.push(lineRow('redusertLinje'));
+    if (listOfEntries.length === 0) {
+      rows.push(summaryRow(listOfDagsatser, listofAndeler, true));
+    } else {
+      rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
+    }
   }
-
-
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
@@ -172,16 +187,27 @@ const createPeriodeHeader = (header) => (
     <Normaltekst className={beregningStyles.semiBoldText}>{header}</Normaltekst>
   </>
 );
-const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders) => (
-  <React.Fragment key={`Wr${tableData.dagsatser[0]}`}>
-    {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
+const lagKeyForPeriode = (dagsats, header) => {
+  if (dagsats) {
+    return dagsats;
+  }
+  if (header && header.key) {
+    return header.key;
+  }
+  return 'key';
+};
+const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, halvGVerdi) => {
+  const key = lagKeyForPeriode(tableData.dagsatser[0], tableData.headers[0]);
+  return (
+    <React.Fragment key={`Wr${key}`}>
+      {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
   && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser, tableData.rowsForklaringer)}
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
   && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
   && (
-    <React.Fragment key={`IVR2${tableData.dagsatser[0]}`}>
+    <React.Fragment key={`IVR2${key}`}>
       {createRowsAndeler(tableData.rowsAndeler)}
       <VerticalSpacer twentyPx />
       <Normaltekst className={beregningStyles.redError}>
@@ -197,8 +223,9 @@ const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders) => (
       </Normaltekst>
     </React.Fragment>
   )}
-  </React.Fragment>
-);
+    </React.Fragment>
+  );
+};
 
 const constructPeriod = (fom, tom) => (
   <FormattedMessage
@@ -233,16 +260,12 @@ const opprettAndelElement = (andel, andelType, vilkarStatus) => {
       skalFastsetteGrunnlag = andel.some((atAndel) => atAndel.skalFastsetteGrunnlag === true);
       inntekt = andel && andel.length > 0 ? andel.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
       break;
-    case 'SN':
-      inntekt = andel && andel.pgiSnitt ? andel.pgiSnitt : undefined;
-      skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
-      break;
     default:
-      inntekt = andel && andel.bruttoPrAar ? andel.bruttoPrAar : undefined;
+      inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
   }
 
-  if (inntekt) {
+  if (inntekt || inntekt === 0) {
     andelElement.verdi = inntekt;
     andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
     const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
@@ -250,7 +273,12 @@ const opprettAndelElement = (andel, andelType, vilkarStatus) => {
   }
   return andelElement;
 };
-
+const hentVerdiFraAndel = (andel) => {
+  if (!andel || !andel.verdi) {
+    return 0;
+  }
+  return andel.verdi;
+};
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
@@ -267,10 +295,11 @@ export const createBeregningTableData = createSelector(
       const avkortetRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Avkortet6g" /> };
       const redusertRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.RedusertProsent" values={{ redusert: dekningsgrad }} /> };
       const dagsatserRad = [];
-
+      const harBortfallNaturalYtelse = periode.periodeAarsaker.some((aarsaak) => aarsaak.kode === periodeAarsak.NATURALYTELSE_BORTFALT);
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
+
       if (dekningsgrad !== dekningsgradKode.HUNDRE) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
@@ -283,7 +312,9 @@ export const createBeregningTableData = createSelector(
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
+            periode.beregningsgrunnlagPrStatusOgAndel
+              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
             'AT',
             vilkarStatus,
           );
@@ -307,7 +338,9 @@ export const createBeregningTableData = createSelector(
         }
         case 'AT_FL_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
+            periode.beregningsgrunnlagPrStatusOgAndel
+              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
             'AT',
             vilkarStatus,
           );
@@ -321,14 +354,12 @@ export const createBeregningTableData = createSelector(
             'FL',
             vilkarStatus,
           );
-
           if (!harAksjonspunkter) {
-            if (((atElement && atElement.verdi) + (flElement && flElement.verdi)) > (snElement && snElement.verdi)) {
+            if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
               rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);
               rowsAndeler.push(atElement);
               rowsAndeler.push(flElement);
-            }
-            if (((atElement && atElement.verdi) + (flElement && flElement.verdi)) < (snElement && snElement.verdi)) {
+            } else {
               // setter SN ledetekst til Pensjonsgibevnde årsintekt
               snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
               rowsAndeler.push(atElement);
@@ -361,7 +392,7 @@ export const createBeregningTableData = createSelector(
             vilkarStatus,
           );
 
-          if (((dpElement && dpElement.verdi) + (flElement && flElement.verdi)) > (snElement && snElement.verdi)) {
+          if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
             rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
             rowsAndeler.push(flElement);
           } else {
@@ -372,7 +403,9 @@ export const createBeregningTableData = createSelector(
         }
         case 'AT_DP_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
+            periode.beregningsgrunnlagPrStatusOgAndel
+              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
             'AT',
             vilkarStatus,
           );
@@ -387,7 +420,7 @@ export const createBeregningTableData = createSelector(
             vilkarStatus,
           );
 
-          if (((dpElement && dpElement.verdi) + (atElement && atElement.verdi)) > (snElement && snElement.verdi)) {
+          if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(atElement)) > hentVerdiFraAndel(snElement)) {
             rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
             rowsAndeler.push(atElement);
           } else {
@@ -397,22 +430,11 @@ export const createBeregningTableData = createSelector(
           }
           break;
         }
-
-        case 'KUN_YTELSE': {
-          const ytElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.KUN_YTELSE),
-            'YT',
-            vilkarStatus,
-          );
-          if (ytElement && ytElement.verdi) {
-            rowsAndeler.push(ytElement);
-          }
-          break;
-        }
-
         default: {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
+            periode.beregningsgrunnlagPrStatusOgAndel
+              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
             'AT',
             vilkarStatus,
           );
@@ -436,12 +458,28 @@ export const createBeregningTableData = createSelector(
             'DP',
             vilkarStatus,
           );
+          const baElement = opprettAndelElement(
+            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL),
+            'BA',
+            vilkarStatus,
+          );
+          if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
           if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
           if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }
           if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }
           if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
           if (dpElement && dpElement.verdi !== undefined) { rowsAndeler.push(dpElement); }
         }
+          if (harBortfallNaturalYtelse) {
+            const ntElement = {};
+            const atAndel = periode.beregningsgrunnlagPrStatusOgAndel.filter(
+              (andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.bortfaltNaturalytelse,
+            );
+            ntElement.verdi = atAndel && atAndel.length > 0 ? atAndel.reduce((sum, andel) => sum + andel.bortfaltNaturalytelse, 0) : undefined;
+            ntElement.skalFastsetteGrunnlag = false;
+            ntElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Naturalytelser" />;
+            rowsAndeler.push(ntElement);
+          }
       }
       const rows = [];
       if (isMS) {
@@ -453,6 +491,7 @@ export const createBeregningTableData = createSelector(
         rows.push(msElement);
       }
       const seksG = grunnbelop * 6;
+
       if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {
         rows.push(avkortetRad);
       }
@@ -484,8 +523,10 @@ export const createBeregningTableData = createSelector(
  * Dersom vilkåret ble avslått vil grunnen til dette vises istedenfor tabellen
  */
 const BeregningsresultatTable2 = ({
+  intl,
   vilkaarBG,
   periodeResultatTabeller,
+  halvGVerdi,
 }) => {
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
   return (
@@ -493,12 +534,14 @@ const BeregningsresultatTable2 = ({
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
-      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders))}
+      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders, intl, halvGVerdi))}
     </Panel>
   );
 };
 
 BeregningsresultatTable2.propTypes = {
+  intl: PropTypes.shape().isRequired,
+  halvGVerdi: PropTypes.number.isRequired,
   vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   periodeResultatTabeller: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
