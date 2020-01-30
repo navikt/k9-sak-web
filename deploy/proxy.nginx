@@ -41,6 +41,9 @@ server {
   location "/fpoppdrag/api" {
     return 200 "";
   }
+  location "/k9-oppdrag/api" {
+    return 200 "";
+  }
 
   location  "/${APP_PATH_PREFIX}" {
     proxy_set_header Host       $http_host;

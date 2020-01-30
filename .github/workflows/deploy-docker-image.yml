@@ -7,6 +7,8 @@ on:
       - 'CODEOWNERS'
     branches:
       - master
+env:
+  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/k9-sak-web
 jobs:
   deploy-docker-image:
     name: Deploy Docker image
@@ -35,20 +37,36 @@ jobs:
       - name: Bygge dist
         run: yarn build
       - name: Sette Docker-navn og -tag
-        env:
-          DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/k9-sak-web
         run: |
-          echo $DOCKER_IMAGE > .docker_image
-          echo "$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)" > .docker_tag
-      - name: Bygge Docker image
-        run: docker build . --pull -t $(cat .docker_image):$(cat .docker_tag)
-      - name: Laste opp Docker image
+          echo "::set-env name=TAG::$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
+          echo "::set-env name=IMAGE::$IMAGE_BASE:$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
+      - name: Bygg og laste opp docker-image
         run: |
-          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker push $(cat .docker_image):$(cat .docker_tag)
-          docker tag $(cat .docker_image):$(cat .docker_tag) $(cat .docker_image):latest
-          docker push $(cat .docker_image):latest
+          docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
+          echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
+          docker push ${IMAGE}
+          docker push ${IMAGE_BASE}:latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Trigger verdikjede test
+        if: success()
+        shell: bash
+        run: |
+          curl -XPOST -u "x-access-token:${{secrets.GITHUB_ACCESS_TOKEN}}" \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Content-Type: application/json" \
+          https://api.github.com/repos/navikt/k9-verdikjede/dispatches \
+          --data '{"event_type": "saksbehandling-verdikjede", 
+                   "client_payload": {
+                      "trigger": "${{ github.repository }}",
+                      "version": "${{ env.TAG }}",
+                      "image": "${{ env.IMAGE }}"
+                  }}'
+      - name: Deploy til testmiljø
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.DEPLOY_KEY }}
+          CLUSTER: dev-fss
+          RESOURCE: deploy/dev-fss.yml
 
 
