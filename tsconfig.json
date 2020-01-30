@@ -27,6 +27,7 @@
 		"packages/fakta-omsorgen-for",
     "packages/sak-historikk",
     "packages/shared-components",
+    "packages/tidslinje",
     "packages/types",
 		"packages/behandling-fp",
 		"@types"

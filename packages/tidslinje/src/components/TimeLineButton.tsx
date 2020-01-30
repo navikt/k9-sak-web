@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import { Image } from '@fpsak-frontend/shared-components';
@@ -13,9 +12,24 @@ import arrowDownImageUrl from '@fpsak-frontend/assets/images/arrow_down.svg';
 import arrowDownFilledImageUrl from '@fpsak-frontend/assets/images/arrow_down_filled.svg';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
+import EventCallback from '@k9-frontend/types/src/EventCallback';
 import styles from './timeLineButton.less';
 
-export const buttonTypes = {
+interface ButtonType<T extends Element> {
+  src: T;
+  srcHover: T;
+}
+
+type ButtonTypes = {
+  prev: ButtonType<SVGElement>;
+  next: ButtonType<SVGElement>;
+  zoomIn: ButtonType<SVGElement>;
+  zoomOut: ButtonType<SVGElement>;
+  openData: ButtonType<SVGElement>;
+  question: ButtonType<SVGElement>;
+};
+
+export const buttonTypes: ButtonTypes = {
   prev: {
     src: arrowLeftImageUrl,
     srcHover: arrowLeftFilledImageUrl,
@@ -42,12 +56,14 @@ export const buttonTypes = {
   },
 };
 
-const TimeLineButton = ({
-  callback,
-  inverted,
-  text,
-  type,
-}) => (
+interface TimeLineButtonProps {
+  callback?: EventCallback;
+  inverted?: boolean;
+  text: string;
+  type: keyof ButtonTypes;
+}
+
+const TimeLineButton: React.FunctionComponent<TimeLineButtonProps> = ({ callback, inverted, text, type }) => (
   <Image
     {...buttonTypes[type]}
     tabIndex="0"
@@ -58,14 +74,9 @@ const TimeLineButton = ({
     onKeyDown={callback}
   />
 );
-TimeLineButton.propTypes = {
-  callback: PropTypes.func,
-  inverted: PropTypes.bool,
-  text: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(Object.keys(buttonTypes)).isRequired,
-};
 
 TimeLineButton.defaultProps = {
   inverted: false,
 };
+
 export default TimeLineButton;

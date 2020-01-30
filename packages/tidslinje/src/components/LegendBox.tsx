@@ -1,10 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Image } from '@fpsak-frontend/shared-components';
 import styles from './legendBox.less';
 import TimeLineButton from './TimeLineButton';
 
-const LegendBox = ({ legends }) => (
+interface LegendBoxProps {
+  legends: {
+    src: string | object,
+    text: string,
+  }[];
+}
+
+const LegendBox: React.FunctionComponent<LegendBoxProps> = ({ legends }) => (
   <span className={styles.popUnder}>
     <span>
       <TimeLineButton type="question" text="Question" />
@@ -21,14 +27,5 @@ const LegendBox = ({ legends }) => (
     </div>
   </span>
 );
-
-LegendBox.propTypes = {
-  legends: PropTypes.arrayOf(
-    PropTypes.shape({
-      src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-      text: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-};
 
 export default LegendBox;
