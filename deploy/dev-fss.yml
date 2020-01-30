@@ -2,6 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: k9-sak-web
+  namespace: default
   labels:
     team: k9saksbehandling
 spec:
