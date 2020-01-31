@@ -32,7 +32,8 @@ spec:
       cpu: 200m
       memory: 32Mi
   ingresses:
-    - "https://k9-sak-web.nais.preprod.local/"
+    - "https://app-q1.adeo.no/k9-sak"
+    # - "https://k9-sak-web.nais.preprod.local/"
   env:
     - name: APP_NAME
       value: k9-sak-web
