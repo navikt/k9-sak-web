@@ -30,6 +30,11 @@ const options = {
       secure: false,
       changeOrigin: !!process.env.APP_URL_FPOPPDRAG,
     },
+    '/oppdrag/**': {
+      target: process.env.APP_URL_FPOPPDRAG || 'http://localhost:8070',
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_FPOPPDRAG,
+    },
     '/fptilbake/**': {
       target: process.env.APP_URL_FPTILBAKE || 'http://localhost:8030',
       secure: false,
