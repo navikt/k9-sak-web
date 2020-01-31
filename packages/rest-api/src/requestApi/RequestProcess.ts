@@ -139,7 +139,7 @@ class RequestProcess {
       return responseData ? { payload: responseData } : { payload: undefined };
     } catch (error) {
       const { response } = error;
-      if (response.status === 401 && response.headers && response.headers.location) {
+      if (response && response.status === 401 && response.headers && response.headers.location) {
         window.location = response.headers.location;
       }
       new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
