@@ -43,7 +43,14 @@ export default {
 };
 
 export const visTotrinnskontrollForBeslutter = () => (
-  <div style={{ width: '600px', margin: '50px' }}>
+  <div
+    style={{
+      width: '600px',
+      margin: '50px',
+      padding: '20px',
+      backgroundColor: 'white',
+    }}
+  >
     <TotrinnskontrollSakIndex
       behandlingId={1}
       behandlingVersjon={2}

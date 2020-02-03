@@ -36,6 +36,7 @@ const TotrinnskontrollSakIndex = ({
   alleKodeverk,
   erBehandlingEtterKlage,
   disableGodkjennKnapp,
+  erTilbakekreving,
 }: TotrinnskontrollSakIndexProps) => (
   <RawIntlProvider value={intl}>
     <ApprovalPanel
@@ -54,6 +55,7 @@ const TotrinnskontrollSakIndex = ({
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage={erBehandlingEtterKlage}
       disableGodkjennKnapp={disableGodkjennKnapp}
+      erTilbakekreving={erTilbakekreving}
     />
   </RawIntlProvider>
 );
@@ -75,6 +77,7 @@ interface TotrinnskontrollSakIndexProps {
   onSubmit: () => void;
   forhandsvisVedtaksbrev: () => void;
   disableGodkjennKnapp: boolean;
+  erTilbakekreving?: boolean;
 }
 
 export default TotrinnskontrollSakIndex;

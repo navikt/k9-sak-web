@@ -153,6 +153,7 @@ export class Totrinnskontroll extends Component {
       behandlingsresultat,
       behandlingId,
       behandlingTypeKode,
+      erTilbakekreving
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
@@ -186,6 +187,7 @@ export class Totrinnskontroll extends Component {
               behandlingKlageVurdering={props.totrinnsKlageVurdering}
               erBehandlingEtterKlage={erBehandlingEtterKlage}
               disableGodkjennKnapp={disableGodkjennKnapp}
+              erTilbakekreving={erTilbakekreving}
             />
             {showBeslutterModal && (
               <DataFetcher

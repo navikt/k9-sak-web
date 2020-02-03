@@ -64,7 +64,9 @@ export const BehandlingSupportIndex = ({
           ))}
         </LinkRow>
       </div>
-      {renderSupportPanel(activeSupportPanel)}
+      <div className={styles.container}>
+        {renderSupportPanel(activeSupportPanel)}
+      </div>
     </div>
   </BehandlingsupportDataResolver>
 );

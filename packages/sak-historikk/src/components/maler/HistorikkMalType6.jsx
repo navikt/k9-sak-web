@@ -14,8 +14,7 @@ const HistorikkMalType6 = ({ historikkinnslagDeler, getKodeverknavn }) => {
   const formaterOpplysning = (opplysning, index) => (
     <div key={`opplysning${index}`}>
       <Normaltekst className={styles.keyValuePair}>
-        {formatMessage({ id: getKodeverknavn(opplysning.opplysningType) })}
-:
+        {formatMessage({ id: getKodeverknavn(opplysning.opplysningType) })}:
       </Normaltekst>
       &ensp;
       <Element className={styles.keyValuePair}>{opplysning.tilVerdi}</Element>

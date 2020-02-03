@@ -64,6 +64,7 @@ interface ApprovalPanelProps {
   alleKodeverk: AlleKodeverk;
   erBehandlingEtterKlage: boolean;
   disableGodkjennKnapp: boolean;
+  erTilbakekreving?: boolean;
 }
 
 interface ApprovalPanelState {
@@ -112,13 +113,14 @@ export class ApprovalPanel extends Component<ApprovalPanelProps, ApprovalPanelSt
       alleKodeverk,
       erBehandlingEtterKlage,
       disableGodkjennKnapp,
+      erTilbakekreving,
     } = this.props;
     const { approvals } = this.state;
     const hasApprovals = approvals && approvals.length > 0;
 
     if (hasApprovals) {
       return (
-        <div className={styles.approvalContainer}>
+        <>
           {!readOnly && (
             <AksjonspunktHelpText isAksjonspunktOpen marginBottom>
               {[<FormattedMessage key={1} id="HelpText.ToTrinnsKontroll" />]}
@@ -139,8 +141,9 @@ export class ApprovalPanel extends Component<ApprovalPanelProps, ApprovalPanelSt
             alleKodeverk={alleKodeverk}
             erBehandlingEtterKlage={erBehandlingEtterKlage}
             disableGodkjennKnapp={disableGodkjennKnapp}
+            erTilbakekreving={erTilbakekreving}
           />
-        </div>
+        </>
       );
     }
 

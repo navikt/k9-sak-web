@@ -45,6 +45,7 @@ export const ToTrinnsFormImpl = ({
   isForeldrepengerFagsak,
   alleKodeverk,
   disableGodkjennKnapp,
+  erTilbakekreving,
   ...formProps
 }: ToTrinnsFormImplProps) => {
   if (formState.length !== totrinnskontrollContext.length) {
@@ -101,7 +102,7 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!erKlage && !erBehandlingEtterKlage && (
+        {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving && (
           <button type="button" className={styles.buttonLink} onClick={forhandsvisVedtaksbrev}>
             <FormattedMessage id="ToTrinnsForm.ForhandvisBrev" />
           </button>
@@ -128,6 +129,7 @@ interface ToTrinnsFormImplProps extends InjectedFormProps {
   alleKodeverk: AlleKodeverk;
   isForeldrepengerFagsak: boolean;
   behandlingStatus: BehandlingStatusType;
+  erTilbakekreving: boolean;
 }
 
 interface Aksjonspunkter {
@@ -162,7 +164,7 @@ const validate = (values: { approvals: Approval[] }) => {
 
 const formName = 'toTrinnForm';
 
-const mapStateToProps = (state: any, ownProps: { behandlingId: string, behandlingVersjon: string }) => ({
+const mapStateToProps = (state: any, ownProps: { behandlingId: string; behandlingVersjon: string }) => ({
   formState: behandlingFormValueSelector(
     formName,
     ownProps.behandlingId,
