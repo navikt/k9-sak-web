@@ -13,6 +13,7 @@
   "UttakPanel.Overstyrt.KontrollerPaNytt": "Perioden var overstyrt i forrige behandling, vurder om perioden fortsatt må overstyres.",
   "UttakPanel.Overstyrt.Utfort": "Perioder er overstyrt.",
   "UttakPanel.Title": "Uttak",
+  "UttakPanel.Gradering": "gradering",
   "UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold": "{arbeidsforhold} er tom for stønadsdager. Vurder å endre stønadskonto eller sette trekkdager og utbetalingsgrad til null. Kontakt søker ved behov.",
   "UttakPanel.manuellBehandlingÅrsakArbeidsforhold": "{arbeidsforhold} er tomme for stønadsdager. Vurder å endre stønadskonto eller sette trekkdager og utbetalingsgrad til null. Kontakt søker ved behov.",
   "PeriodeResultatType.INNVILGET": "Innvilget",
