@@ -121,7 +121,8 @@ module.exports = async ({ config, mode }) => {
   config.plugins.push(
     new MiniCssExtractPlugin({
       filename: 'style.css',
-    }),
+    ignoreOrder: true,
+  }),
   );
   config.resolve.extensions.push('.ts', '.tsx');
 
