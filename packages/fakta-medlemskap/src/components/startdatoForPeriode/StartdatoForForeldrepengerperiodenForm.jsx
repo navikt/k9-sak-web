@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { FieldArray, formPropTypes } from 'redux-form';
 
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FaktaGruppe, FaktaSubmitButton, behandlingForm } from '@fpsak-frontend/fp-felles';
 import { hasValidDate, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
@@ -45,9 +45,9 @@ export const StartdatoForForeldrepengerperiodenForm = ({
       onSubmit={formProps.handleSubmit}
     >
       {hasAksjonspunkt && (
-        <AksjonspunktHelpText isAksjonspunktOpen={submittable && hasOpenAksjonspunkt}>
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={submittable && hasOpenAksjonspunkt}>
           {[<FormattedMessage key="PeriodenAvviker" id="StartdatoForForeldrepengerperiodenForm.PeriodenAvviker" />]}
-        </AksjonspunktHelpText>
+        </AksjonspunktHelpTextTemp>
       )}
       <FaktaGruppe
         aksjonspunktCode={aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN}
@@ -178,9 +178,7 @@ const validateDates = values => {
   return errors;
 };
 
-export default connect(mapStateToPropsFactory)(
-  behandlingForm({
-    form: 'StartdatoForForeldrepengerperiodenForm',
-    validate: validateDates,
-  })(StartdatoForForeldrepengerperiodenForm),
-);
+export default connect(mapStateToPropsFactory)(behandlingForm({
+  form: 'StartdatoForForeldrepengerperiodenForm',
+  validate: validateDates,
+})(StartdatoForForeldrepengerperiodenForm));

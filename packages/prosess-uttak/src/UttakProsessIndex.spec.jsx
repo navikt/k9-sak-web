@@ -141,10 +141,9 @@ describe('<UttakProsessIndex>', () => {
         behandling={behandling}
         aksjonspunkter={aksjonspunkter}
         submitCallback={sinon.spy()}
-        readOnly={false}
+        isReadOnly={false}
         readOnlySubmitButton={false}
-        apCodes={[]}
-        isApOpen
+        isAksjonspunktOpen
         uttakStonadskontoer={{}}
         soknad={{}}
         familiehendelse={{}}

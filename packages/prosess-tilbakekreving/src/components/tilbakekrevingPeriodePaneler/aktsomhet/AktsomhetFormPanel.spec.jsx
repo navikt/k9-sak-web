@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
+import { FormattedMessage } from 'react-intl';
+
 import { RadioOption } from '@fpsak-frontend/form';
 
 import sarligGrunn from '../../../kodeverk/sarligGrunn';
@@ -87,6 +89,59 @@ describe('<AktsomhetFormPanel>', () => {
     expect(wrapper.find(AktsomhetGradFormPanel)).to.have.length(0);
   });
 
+  it('skal vise riktig labels når valg resultattype ikke er Forsto/Burde forstått', () => {
+    const wrapper = shallow(<AktsomhetFormPanel
+      readOnly={false}
+      resetFields={sinon.spy()}
+      resetAnnetTextField={sinon.spy()}
+      handletUaktsomhetGrad={undefined}
+      erValgtResultatTypeForstoBurdeForstaatt={false}
+      harGrunnerTilReduksjon
+      erSerligGrunnAnnetValgt={false}
+      aktsomhetTyper={aktsomhetTyper}
+      sarligGrunnTyper={sarligGrunnTyper}
+      antallYtelser={2}
+      feilutbetalingBelop={100}
+      erTotalBelopUnder4Rettsgebyr={false}
+    />);
+
+    expect(wrapper.find(RadioOption)).to.have.length(3);
+    expect(wrapper.find(RadioOption).find({ value: 'SIMPEL_UAKTSOM' }).prop('label')).to.equal('simpel');
+    expect(wrapper.find(RadioOption).find({ value: 'GROVT_UAKTSOM' }).prop('label')).to.equal('grovt');
+    expect(wrapper.find(RadioOption).find({ value: 'FORSETT' }).prop('label')).to.equal('forsett');
+  });
+
+  it('skal vise riktig labels når valg resultattype er Forsto/Burde forstått', () => {
+    const wrapper = shallow(<AktsomhetFormPanel
+      readOnly={false}
+      resetFields={sinon.spy()}
+      resetAnnetTextField={sinon.spy()}
+      handletUaktsomhetGrad={undefined}
+      erValgtResultatTypeForstoBurdeForstaatt
+      harGrunnerTilReduksjon
+      erSerligGrunnAnnetValgt={false}
+      aktsomhetTyper={aktsomhetTyper}
+      sarligGrunnTyper={sarligGrunnTyper}
+      antallYtelser={2}
+      feilutbetalingBelop={100}
+      erTotalBelopUnder4Rettsgebyr={false}
+    />);
+
+    const radioOptions = wrapper.find(RadioOption);
+    expect(radioOptions).to.have.length(3);
+
+    const simpelUaksomLabel = radioOptions.find({ value: 'SIMPEL_UAKTSOM' }).prop('label');
+    const grovtUaktsomLabel = radioOptions.find({ value: 'GROVT_UAKTSOM' }).prop('label');
+    const forsettLabel = radioOptions.find({ value: 'FORSETT' }).prop('label');
+
+    expect(simpelUaksomLabel.type).is.equal(FormattedMessage);
+    expect(simpelUaksomLabel.props.id).is.equal('AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom');
+    expect(grovtUaktsomLabel.type).is.equal(FormattedMessage);
+    expect(grovtUaktsomLabel.props.id).is.equal('AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt');
+    expect(forsettLabel.type).is.equal(FormattedMessage);
+    expect(forsettLabel.props.id).is.equal('AktsomhetFormPanel.AktsomhetTyperLabel.Forsett');
+  });
+
   it('skal lage form-initialvalues fra struktur når en har aktsomhetsgrad FORSETT', () => {
     const vilkarResultatInfo = {
       begrunnelse: 'test',
@@ -127,6 +182,7 @@ describe('<AktsomhetFormPanel>', () => {
         belopSomSkalTilbakekreves: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
+        sarligGrunnerBegrunnelse: undefined,
       },
     });
   });
@@ -143,6 +199,7 @@ describe('<AktsomhetFormPanel>', () => {
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
         sarligGrunner: sarligGrunnTyper,
+        sarligGrunnerBegrunnelse: 'sarlig grunner begrunnelse',
       },
     };
     const initialValues = AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo);
@@ -159,6 +216,7 @@ describe('<AktsomhetFormPanel>', () => {
         belopSomSkalTilbakekreves: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
+        sarligGrunnerBegrunnelse: 'sarlig grunner begrunnelse',
       },
     });
   });
@@ -191,6 +249,7 @@ describe('<AktsomhetFormPanel>', () => {
         belopSomSkalTilbakekreves: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
+        sarligGrunnerBegrunnelse: 'sarlig grunner begrunnelse',
       },
     };
     const vurderingBegrunnelse = 'test';
@@ -202,6 +261,7 @@ describe('<AktsomhetFormPanel>', () => {
       aktsomhetInfo: {
         harGrunnerTilReduksjon: true,
         ileggRenter: undefined,
+        sarligGrunnerBegrunnelse: 'sarlig grunner begrunnelse',
         sarligGrunner: [sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL],
         andelTilbakekreves: 70,
         tilbakekrevesBelop: 100,

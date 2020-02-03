@@ -129,6 +129,7 @@ const config = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: isDevelopment ? 'style.css' : 'style_[contenthash].css',
+      ignoreOrder: true,
     }),
     new HtmlWebpackPlugin({
       filename: isDevelopment ? 'index.html' : '../index.html',
