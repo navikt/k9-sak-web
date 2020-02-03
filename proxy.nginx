@@ -41,7 +41,7 @@ server {
   location "/fpoppdrag/api" {
     return 200 "";
   }
-  location "/k9-oppdrag/api" {
+  location "/oppdrag/api" {
     return 200 "";
   }
 

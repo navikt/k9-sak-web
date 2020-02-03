@@ -1,17 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
 import { Input as NavInput } from 'nav-frontend-skjema';
-
-import renderNavField from './renderNavField';
+import React from 'react';
+import { Field } from 'redux-form';
+import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import { labelPropType } from './Label';
+import renderNavField from './renderNavField';
 
 const renderNavInput = renderNavField(NavInput);
 
-const InputField = ({
-  name, type, label, validate, readOnly, isEdited, ...otherProps
-}) => (
+interface InputFieldProps {
+  name: string;
+  type?: string;
+  label?: LabelType;
+  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  readOnly?: boolean;
+  isEdited?: boolean;
+}
+
+const InputField = ({ name, type, label, validate, readOnly, isEdited, ...otherProps }: InputFieldProps) => (
   <Field
     name={name}
     validate={validate}
@@ -25,15 +30,6 @@ const InputField = ({
     autoComplete="off"
   />
 );
-
-InputField.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  label: labelPropType,
-  validate: PropTypes.arrayOf(PropTypes.func),
-  readOnly: PropTypes.bool,
-  isEdited: PropTypes.bool,
-};
 
 InputField.defaultProps = {
   type: 'text',
