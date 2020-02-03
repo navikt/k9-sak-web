@@ -23,14 +23,8 @@ export const FpsakApiKeys = {
   INTEGRATION_STATUS: 'INTEGRATION_STATUS',
   FEATURE_TOGGLE: 'FEATURE_TOGGLE',
   AKTOER_INFO: 'AKTOER_INFO',
-  BEHANDLING_NY_BEHANDLENDE_ENHET: 'BEHANDLING_NY_BEHANDLENDE_ENHET',
-  OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
-  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
-  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
-  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
   KONTROLLRESULTAT: 'KONTROLLRESULTAT',
   RISIKO_AKSJONSPUNKT: 'RISIKO_AKSJONSPUNKT',
-  LAGRE_RISIKO_AKSJONSPUNKT: 'LAGRE_RISIKO_AKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER: 'TOTRINNSAKSJONSPUNKT_ARSAKER',
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY: 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
@@ -41,8 +35,6 @@ export const FpsakApiKeys = {
   KAN_TILBAKEKREVING_OPPRETTES: 'KAN_TILBAKEKREVING_OPPRETTES',
   KAN_TILBAKEKREVING_REVURDERING_OPPRETTES: 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
   VERGE_MENYVALG: 'VERGE_MENYVALG',
-  VERGE_OPPRETT: 'VERGE_OPPRETT',
-  VERGE_FJERN: 'VERGE_FJERN',
   MENYHANDLING_RETTIGHETER: 'MENYHANDLING_RETTIGHETER',
   HAR_APENT_KONTROLLER_REVURDERING_AP: 'HAR_APENT_KONTROLLER_REVURDERING_AP',
   TOTRINNS_KLAGE_VURDERING: 'TOTRINNS_KLAGE_VURDERING',
@@ -65,15 +57,16 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('gjenoppta-behandling', FpsakApiKeys.RESUME_BEHANDLING)
   .withInjectedPath('sett-behandling-pa-vent', FpsakApiKeys.BEHANDLING_ON_HOLD)
   .withInjectedPath('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
-  .withInjectedPath('opprett-verge', FpsakApiKeys.VERGE_OPPRETT, { fetchLinkDataAutomatically: false })
-  .withInjectedPath('fjern-verge', FpsakApiKeys.VERGE_FJERN, { fetchLinkDataAutomatically: false })
   .withInjectedPath('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
 
   /* /fptilbake/api/behandlinger */
+  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
   .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE, {
     fetchLinkDataAutomatically: false,
   })
   .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
+  .withGet('/fptilbake/api/behandlinger/kan-revurdering-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
+  .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
   .withGet(
     '/fptilbake/api/behandlinger/kan-revurdering-opprettes',
     FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES,
@@ -99,7 +92,6 @@ const endpoints = new RestApiConfigBuilder()
   /* Kontrollresultat */
   .withInjectedPath('kontrollresultat', FpsakApiKeys.KONTROLLRESULTAT)
   .withInjectedPath('risikoklassifisering-aksjonspunkt', FpsakApiKeys.RISIKO_AKSJONSPUNKT)
-  .withInjectedPath('lagre-risikoklassifisering-aksjonspunkt', FpsakApiKeys.LAGRE_RISIKO_AKSJONSPUNKT)
 
   /* /api/dokument */
   .withGet('/sak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)

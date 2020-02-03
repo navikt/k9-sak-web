@@ -1,8 +1,5 @@
 import React from 'react';
-import FaktaEkspandertpanel from '@fpsak-frontend/fp-felles/src/fakta/FaktaEkspandertpanel';
-import { faktaPanelCodes, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
-import { useIntl } from 'react-intl';
 import './omsorgenForInfo.less';
 import SokerinfoTable from './SokerinfoTable';
 
@@ -87,29 +84,17 @@ const sokerinfo = [
   },
 ];
 
-const OmsorgenForInfoPanelImpl = ({ openInfoPanels, toggleInfoPanelCallback, readOnly, hasOpenAksjonspunkter }) => {
-  const intl = useIntl();
-  return (
-    <FaktaEkspandertpanel
-      title={intl.formatMessage({ id: 'FaktaOmAlderOgOmsorg.header' })}
-      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-      readOnly={readOnly}
-      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.OMSORGEN_FOR)}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      faktaId={faktaPanelCodes.OMSORGEN_FOR}
-    >
-      <FlexContainer>
-        <FlexRow wrap>
-          {sokerinfo.map(info => (
-            <FlexColumn className="flexColumn--1-2" key={info.header}>
-              <SokerinfoTable forhold={info.forhold} header={info.header} />
-            </FlexColumn>
-          ))}
-        </FlexRow>
-      </FlexContainer>
-    </FaktaEkspandertpanel>
-  );
-};
+const OmsorgenForInfoPanelImpl = () => (
+  <FlexContainer>
+    <FlexRow wrap>
+      {sokerinfo.map(info => (
+        <FlexColumn className="flexColumn--1-2" key={info.header}>
+          <SokerinfoTable forhold={info.forhold} header={info.header} />
+        </FlexColumn>
+      ))}
+    </FlexRow>
+  </FlexContainer>
+);
 
 // TODO: state
 // function mapStateToProps() {
@@ -119,6 +104,4 @@ const OmsorgenForInfoPanelImpl = ({ openInfoPanels, toggleInfoPanelCallback, rea
 // }
 // const connectedComponent = connect(mapStateToProps)(OmsorgenForInfoPanelImpl);
 
-const OmsorgenForInfoPanel = withDefaultToggling(faktaPanelCodes.OMSORGEN_FOR, [])(OmsorgenForInfoPanelImpl);
-
-export default OmsorgenForInfoPanel;
+export default OmsorgenForInfoPanelImpl;

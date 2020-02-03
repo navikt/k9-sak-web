@@ -1,5 +1,5 @@
 FROM nginx
-ADD k8s/proxy.nginx /etc/nginx/conf.d/app.conf.template
+ADD proxy.nginx /etc/nginx/conf.d/app.conf.template
 
 ENV APP_DIR="/app" \
   APP_PATH_PREFIX="/sak" \
