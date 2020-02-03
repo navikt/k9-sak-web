@@ -1,10 +1,23 @@
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
+import React, { ReactNode, ReactNodeArray } from 'react';
+import Label from './Label';
+import LabelType from './LabelType';
 
-import Label, { labelPropType } from './Label';
+export interface RadioOptionProps {
+  name?: string;
+  label: LabelType;
+  value: string[] | string | number;
+  actualValue?: string[] | string | number;
+  className?: string;
+  disabled?: boolean;
+  groupDisabled?: boolean;
+  onChange?: (value: string[] | string | number) => void;
+  children: ReactNode | ReactNodeArray;
+  style: object;
+  manualHideChildren?: boolean;
+}
 
 export const RadioOption = ({
   name,
@@ -18,7 +31,7 @@ export const RadioOption = ({
   children,
   style,
   manualHideChildren,
-}) => {
+}: RadioOptionProps) => {
   const stringifiedValue = JSON.stringify(value);
   const actualStringifiedValue = JSON.stringify(actualValue);
   const checked = stringifiedValue === actualStringifiedValue;
@@ -36,20 +49,6 @@ export const RadioOption = ({
       {(checked || manualHideChildren) && children}
     </div>
   );
-};
-
-RadioOption.propTypes = {
-  name: PropTypes.string,
-  label: labelPropType,
-  value: PropTypes.any.isRequired,
-  actualValue: PropTypes.any,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  groupDisabled: PropTypes.bool,
-  onChange: PropTypes.func,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
-  style: PropTypes.shape(),
-  manualHideChildren: PropTypes.bool,
 };
 
 RadioOption.defaultProps = {

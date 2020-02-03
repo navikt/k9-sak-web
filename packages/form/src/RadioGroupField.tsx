@@ -1,14 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import { Field } from 'redux-form';
 import { SkjemaGruppe as NavSkjemaGruppe } from 'nav-frontend-skjema';
-
-import RadioOption from './RadioOption';
-import renderNavField from './renderNavField';
+import React from 'react';
+import { Field } from 'redux-form';
 import OptionGrid from './OptionGrid';
-
 import styles from './radioGroupField.less';
+import { RadioOptionProps } from './RadioOption';
+import renderNavField from './renderNavField';
+
+interface RadioGroupFieldProps {
+  name: string;
+  label?: React.ReactNode;
+  /**
+   * columns: Antall kolonner som valgene skal fordeles på. Default er samme som antall valg.
+   */
+  columns?: number;
+  bredde?: string;
+  children?: React.ReactElement<RadioOptionProps>[];
+  spaceBetween?: boolean;
+  rows?: number;
+  direction?: string;
+  DOMName?: string;
+  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  readOnly?: boolean;
+}
 
 const classNames = classnames.bind(styles);
 
@@ -68,35 +82,18 @@ const renderRadioGroupField = renderNavField(
   },
 );
 
-export const RadioGroupField = props => <Field component={renderRadioGroupField} {...props} />;
+export const RadioGroupField = (props: RadioGroupFieldProps) => <Field component={renderRadioGroupField} {...props} />;
 
-const radioOptionsOnly = (options, key) => {
-  const option = options[key];
-  if (option) {
-    const type = option.type || {};
-    if (type.displayName !== RadioOption.displayName) {
-      return new Error('RadioGroupField children should be of type "RadioOption"');
-    }
-  }
-  return undefined;
-};
-
-RadioGroupField.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.node,
-  /**
-   * columns: Antall kolonner som valgene skal fordeles på. Default er samme som antall valg.
-   */
-  columns: PropTypes.number,
-  bredde: PropTypes.string,
-  children: PropTypes.arrayOf(radioOptionsOnly).isRequired,
-  spaceBetween: PropTypes.bool,
-  rows: PropTypes.number,
-  direction: PropTypes.string,
-  DOMName: PropTypes.string,
-  validate: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.func), PropTypes.func]),
-  readOnly: PropTypes.bool,
-};
+// const radioOptionsOnly = (options, key) => {
+//   const option = options[key];
+//   if (option) {
+//     const type = option.type || {};
+//     if (type.displayName !== RadioOption.displayName) {
+//       return new Error('RadioGroupField children should be of type "RadioOption"');
+//     }
+//   }
+//   return undefined;
+// };
 
 RadioGroupField.defaultProps = {
   columns: 0,
@@ -106,8 +103,6 @@ RadioGroupField.defaultProps = {
   spaceBetween: false,
   direction: 'horizontal',
   DOMName: undefined,
-  validate: undefined,
-  readOnly: false,
 };
 
 export default RadioGroupField;
