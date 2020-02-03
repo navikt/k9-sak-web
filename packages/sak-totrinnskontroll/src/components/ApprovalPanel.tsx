@@ -11,7 +11,6 @@ import {
 } from '@k9-frontend/types';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './approvalPanel.less';
 import ToTrinnsForm from './ToTrinnsForm';
 
 export const mapPropsToContext = (
