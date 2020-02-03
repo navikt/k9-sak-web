@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -9,7 +8,13 @@ import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import { isBehandlingFormDirty, isBehandlingFormSubmitting, hasBehandlingFormErrorsOfType } from '../behandlingForm';
 
-const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter) => {
+const isDisabled = (
+  isDirty: boolean,
+  isSubmitting: boolean,
+  isSubmittable: boolean,
+  hasEmptyRequiredFields: boolean,
+  hasOpenAksjonspunkter: boolean,
+) => {
   if (!isSubmittable || isSubmitting) {
     return true;
   }
@@ -30,9 +35,9 @@ export const FaktaSubmitButton = ({
   isDirty,
   hasEmptyRequiredFields,
   hasOpenAksjonspunkter,
-  buttonTextId,
+  buttonTextId = 'SubmitButton.ConfirmInformation',
   onClick,
-}) => (
+}: FaktaSubmitButtonProps) => (
   <ElementWrapper>
     {!isReadOnly && (
       <Hovedknapp
@@ -48,29 +53,23 @@ export const FaktaSubmitButton = ({
   </ElementWrapper>
 );
 
-FaktaSubmitButton.propTypes = {
-  buttonTextId: PropTypes.string,
-  isReadOnly: PropTypes.bool.isRequired,
-  isSubmittable: PropTypes.bool.isRequired,
-  isSubmitting: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool.isRequired,
-  hasEmptyRequiredFields: PropTypes.bool.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  onClick: PropTypes.func,
-  /* eslint-disable react/no-unused-prop-types */
-  formName: PropTypes.string,
-  formNames: PropTypes.arrayOf(PropTypes.string),
-  behandlingId: PropTypes.number,
-  behandlingVersjon: PropTypes.number,
-  /* eslint-enable react/no-unused-prop-types */
-};
+interface FaktaSubmitButtonProps {
+  buttonTextId?: string;
+  isReadOnly: boolean;
+  isSubmittable: boolean;
+  isSubmitting?: boolean;
+  isDirty?: boolean;
+  hasEmptyRequiredFields?: boolean;
+  hasOpenAksjonspunkter: boolean;
+  onClick?: () => void;
+  formName?: string;
+  formNames?: string[];
+  behandlingId?: number;
+  behandlingVersjon?: number;
+  doNotCheckForRequiredFields?: boolean;
+}
 
-FaktaSubmitButton.defaultProps = {
-  buttonTextId: 'SubmitButton.ConfirmInformation',
-  onClick: undefined,
-};
-
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ownProps: FaktaSubmitButtonProps) => {
   const { behandlingId, behandlingVersjon } = ownProps;
   const fNames = ownProps.formNames ? ownProps.formNames : [ownProps.formName];
   const formNames = fNames.map(f => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
