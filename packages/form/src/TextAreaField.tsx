@@ -58,6 +58,7 @@ const TextAreaField = ({ name, label, validate, readOnly, ...otherProps }: TextA
     readOnly={readOnly}
     readOnlyHideEmpty
     autoComplete="off"
+    type="textarea"
   />
 );
 

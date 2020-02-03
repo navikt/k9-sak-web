@@ -10,15 +10,14 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+  trackRouteParam, requireProps, getBehandlingspunktLocation, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
 } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
-import { getHasSubmittedPaVentForm } from '../behandlingmenu/duck';
 import {
-  getSelectedSaksnummer, getSelectedFagsakStatus, getFagsakPerson, getSaksnummer,
+  getSelectedFagsakStatus, getFagsakPerson, getSaksnummer,
   getFagsakYtelseType, isForeldrepengerFagsak, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
 } from '../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
@@ -31,11 +30,10 @@ import {
   getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
   getBehandlingerLinksMappedById,
 } from './selectors/behandlingerSelectors';
-import behandlingUpdater from './BehandlingUpdater';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
 
-const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
+const BehandlingForeldrepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-fp'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
@@ -43,7 +41,7 @@ const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/behandling-papirsoknad'));
 
 const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
-const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
+const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
 /**
  * BehandlingIndex
@@ -126,13 +124,35 @@ export class BehandlingIndex extends Component {
     resetBehandlingContext();
   }
 
+  goToValgtProsessStegOgFaktaPanel = (prosessStegId, faktaPanelId) => {
+    const { push: pushLocation, location } = this.props;
+    let newLocation;
+    if (prosessStegId === 'default') {
+      newLocation = getLocationWithDefaultBehandlingspunktAndFakta(location);
+    } else if (prosessStegId) {
+      newLocation = getBehandlingspunktLocation(location)(formatName(prosessStegId));
+    } else {
+      newLocation = getBehandlingspunktLocation(location)(null);
+    }
+
+    if (faktaPanelId === 'default') {
+      newLocation = getFaktaLocation(newLocation)('default');
+    } else if (faktaPanelId) {
+      newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
+    } else {
+      newLocation = getFaktaLocation(newLocation)(null);
+    }
+
+    pushLocation(newLocation);
+  };
+
+
   goToValgtProsessSteg = (prosessId) => {
     const { push: pushLocation, location } = this.props;
     if (prosessId === 'default') {
       pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
-    }
-    if (prosessId) {
-      pushLocation(getBehandlingspunktLocation(location)(formatBehandlingspunktName(prosessId)));
+    } else if (prosessId) {
+      pushLocation(getBehandlingspunktLocation(location)(formatName(prosessId)));
     } else {
       pushLocation(getBehandlingspunktLocation(location)(null));
     }
@@ -145,14 +165,12 @@ export class BehandlingIndex extends Component {
 
   render() {
     const {
-      saksnummer,
       behandlingId,
       behandlingType,
       location,
       oppdaterBehandlingVersjon,
       erAktivPapirsoknad,
       featureToggles,
-      hasSubmittedPaVentForm,
       kodeverk,
       fagsak,
       fagsakBehandlingerInfo,
@@ -167,7 +185,6 @@ export class BehandlingIndex extends Component {
       kodeverk,
       fagsak,
       navAnsatt,
-      oppdaterProsessStegIUrl: this.goToValgtProsessSteg,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
       key: behandlingId,
@@ -177,7 +194,10 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
-            <BehandlingPapirsoknadIndex {...defaultProps} />
+            <BehandlingPapirsoknadIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              {...defaultProps}
+            />
           </ErrorBoundary>
         </Suspense>
       );
@@ -187,7 +207,10 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
-            <BehandlingInnsynIndex {...defaultProps} />
+            <BehandlingInnsynIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              {...defaultProps}
+            />
           </ErrorBoundary>
         </Suspense>
       );
@@ -198,6 +221,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
             />
@@ -211,6 +235,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingAnkeIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
             />
@@ -224,6 +249,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingTilbakekrevingIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               harApenRevurdering={fagsakBehandlingerInfo
                 .some((b) => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== behandlingStatus.AVSLUTTET)}
               {...defaultProps}
@@ -233,23 +259,16 @@ export class BehandlingIndex extends Component {
       );
     }
 
-
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <BehandlingForstegangOgRevurderingIndex
-          key={behandlingId}
-          saksnummer={saksnummer}
-          behandlingId={behandlingId}
-          location={location}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          behandlingUpdater={behandlingUpdater}
-          featureToggles={featureToggles}
-          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-          kodeverk={kodeverk}
-          fagsak={fagsak}
-          fagsakBehandlingerInfo={fagsakBehandlingerInfo}
-          navAnsatt={navAnsatt}
-        />
+        <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <BehandlingForeldrepengerIndex
+            featureToggles={featureToggles}
+            oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
+            valgtFaktaSteg={location.query.fakta}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
       </Suspense>
     );
   }
@@ -276,11 +295,9 @@ const mapStateToProps = (state) => {
     behandlingId,
     behandlingType,
     behandlingVersjon: getTempBehandlingVersjon(state),
-    saksnummer: getSelectedSaksnummer(state),
     location: state.router.location,
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
     featureToggles: getFeatureToggles(state),
-    hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
     kodeverk: erTilbakekreving(behandlingType) ? getAlleFpTilbakeKodeverk(state) : getAlleFpSakKodeverk(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
