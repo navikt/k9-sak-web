@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import moment from 'moment';
 import { FormattedMessage, useIntl } from 'react-intl';
+import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
@@ -8,11 +9,13 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import svgKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import svgMann from '@fpsak-frontend/assets/images/mann.svg';
 import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/TimeLineControl';
-import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 
 import Behandlinger from './types/UttakTypes';
 import BehandlingPersonMap from './types/BehandlingPersonMap';
+import { ResultattypeEnum } from './types/Resultattype';
+import UttakPeriode from './types/UttakPeriode';
 
 interface UttakkPPProps {
   behandlinger: Behandlinger;
@@ -21,7 +24,7 @@ interface UttakkPPProps {
 
 const erKvinne = kjønnkode => kjønnkode === navBrukerKjonn.KVINNE;
 
-export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl) =>
+export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl): TidslinjeRad<UttakPeriode>[] =>
   Object.entries(behandlinger).map(([behandlingsId, behandling]) => {
     const { kjønnkode } = behandlingPersonMap[behandlingsId];
     const kvinne = erKvinne(kjønnkode);
@@ -33,13 +36,20 @@ export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl) 
 
     const perioder = Object.entries(behandling.perioder).map(([fomTom, periode], index) => {
       const [fom, tom] = fomTom.split('/');
+      const resultat = periode.resultat_type;
+
       return {
         fom,
         tom,
         id: `${behandlingsId}-${index}`,
         hoverText: `${periode.grad}% ${intl.formatMessage({ id: 'UttakPanel.Gradering' })}`,
-        className: periode.grad < 100 ? 'gradert' : 'godkjentPeriode',
-        grad: periode.grad,
+        className: classNames({
+          gradert: periode.grad < 100,
+          godkjentPeriode: resultat === ResultattypeEnum.INNVILGET,
+          avvistPeriode: resultat === ResultattypeEnum.AVSLÅTT,
+          undefined: resultat === ResultattypeEnum.UAVKLART,
+        }),
+        periodeinfo: periode,
       };
     });
 
@@ -51,7 +61,7 @@ export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl) 
   });
 
 const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPersonMap }) => {
-  const [valgtPeriode, velgPeriode] = useState<Periode | null>();
+  const [valgtPeriode, velgPeriode] = useState<UttakPeriode | null>();
   const [timelineRef, setTimelineRef] = useState();
   const intl = useIntl();
 
@@ -98,6 +108,18 @@ const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPer
     timeline.zoomOut(0.5);
   };
 
+  // TODO (Anders): bruk kodeverk for tekster
+  const resultattekst = () => {
+    switch (valgtPeriode.periodeinfo.resultat_type) {
+      case ResultattypeEnum.INNVILGET:
+        return 'Resultat: Innvilget';
+      case ResultattypeEnum.AVSLÅTT:
+        return 'Resultat: Avslått';
+      default:
+        return 'Resultat: Uavklart';
+    }
+  };
+
   return (
     <Row>
       <Column xs="12">
@@ -133,8 +155,10 @@ const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPer
               />
             </Normaltekst>
             <Normaltekst>
-              <FormattedMessage id="UttakPanel.GraderingProsent" values={{ grad: valgtPeriode.grad }} />
+              <FormattedMessage id="UttakPanel.GraderingProsent" values={{ grad: valgtPeriode.periodeinfo.grad }} />
             </Normaltekst>
+            <Normaltekst>{resultattekst()}</Normaltekst>
+            {valgtPeriode.periodeinfo.årsak && <Normaltekst>{`Årsak: ${valgtPeriode.periodeinfo.årsak}`}</Normaltekst>}
           </>
         )}
       </Column>

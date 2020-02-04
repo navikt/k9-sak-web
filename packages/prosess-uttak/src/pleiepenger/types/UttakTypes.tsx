@@ -1,7 +1,13 @@
+import Resultattype from './Resultattype';
+
+export interface Periodeinfo {
+  grad: number;
+  resultat_type: Resultattype;
+  årsak?: string;
+}
+
 export interface Perioder {
-  [fomTom: string]: {
-    grad: number;
-  };
+  [fomTom: string]: Periodeinfo;
 }
 
 export interface BehandlingUttak {

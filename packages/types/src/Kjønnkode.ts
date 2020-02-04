@@ -1,6 +1,5 @@
-function stringEnum<T extends { [index: string]: U }, U extends string>(x: T) {
-  return x;
-}
+import stringEnum from './tsUtils';
+
 const KjønnkodeEnum = stringEnum({
   KVINNE: 'K',
   MANN: 'M',

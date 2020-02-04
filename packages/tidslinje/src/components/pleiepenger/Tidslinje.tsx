@@ -9,17 +9,12 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Image } from '@fpsak-frontend/shared-components';
 import styles from './tidslinje.less';
 import Periode from './types/Periode';
+import TidslinjeRad from './types/TidslinjeRad';
 
 export interface TidslinjeIkon {
   imageTextKey: string;
   titleKey: string;
   src: SVGElement;
-}
-
-interface TidslinjeRad {
-  ikon: TidslinjeIkon;
-  id: string;
-  perioder: Periode[];
 }
 
 interface EventProps {
@@ -28,7 +23,7 @@ interface EventProps {
 }
 
 interface TidslinjeProps {
-  rader: TidslinjeRad[];
+  rader: TidslinjeRad<Periode>[];
   customTimes?: {
     [value: string]: string;
   };
@@ -59,7 +54,7 @@ const getOptions = (perioderSortert: Periode[]) => ({
   zoomMin: 1000 * 60 * 60 * 24 * 30,
 });
 
-const createGroups = (rader: TidslinjeRad[]) => {
+const createGroups = (rader: TidslinjeRad<Periode>[]) => {
   return rader.map(rad => ({
     id: rad.id,
     content: '',
@@ -76,7 +71,7 @@ const createItems = (perioder: Periode[]) =>
     title: periode.hoverText,
   }));
 
-const leggPåGroupId = (rad: TidslinjeRad) => {
+const leggPåGroupId = (rad: TidslinjeRad<Periode>) => {
   const groupId = rad.id;
   const perioderMedId = rad.perioder.map(periode => ({
     ...periode,

@@ -4,7 +4,6 @@ interface Periode {
   id: string;
   className?: string;
   hoverText?: string;
-  grad: number;
 }
 
 export default Periode;
