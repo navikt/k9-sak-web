@@ -43,11 +43,11 @@ jobs:
       - name: Bygg og laste opp docker-image
         run: |
           docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
-          echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
+          echo "$GITHUB_ACCESS_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
           docker push ${IMAGE_BASE}:latest
           docker push ${IMAGE}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
       - name: Trigger verdikjede test
         if: success()
         shell: bash
