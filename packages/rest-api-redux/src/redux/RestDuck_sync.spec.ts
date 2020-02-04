@@ -147,7 +147,7 @@ describe('RestDuck (sync)', () => {
         data: undefined,
         meta: { params, timestamp: stateAfterRequestError.meta.timestamp },
         error: {
-          location: '/k9/sak/api/ressurs',
+          location: '/sak/api/ressurs',
         },
         started: false,
         finished: true,
