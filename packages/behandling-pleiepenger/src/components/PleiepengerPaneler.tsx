@@ -4,21 +4,28 @@ import { useDispatch } from 'react-redux';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, BehandlingPaVent, SettPaVentParams, TempPersonPanel,
+  Kodeverk,
+  NavAnsatt,
+  Behandling,
+  FagsakInfo,
+  BehandlingPaVent,
+  SettPaVentParams,
+  TempPersonPanel,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
-import fpBehandlingApi from '../data/fpBehandlingApi';
-import ForeldrepengerProsess from './ForeldrepengerProsess';
-import ForeldrepengerFakta from './ForeldrepengerFakta';
+import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
+import ForeldrepengerProsess from './PleiepengerProsess';
+import ForeldrepengerFakta from './PleiepengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fetchedData: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
+
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
@@ -30,7 +37,7 @@ interface OwnProps {
   featureToggles: {};
 }
 
-const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
+const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
   fetchedData,
   fagsak,
   behandling,
@@ -85,7 +92,7 @@ const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
         featureToggleUtland={featureToggles[FeatureToggle.MARKER_UTENLANDSSAK]}
         alleKodeverk={alleKodeverk}
         dispatch={dispatch}
-        behandlingApi={fpBehandlingApi}
+        behandlingApi={pleiepengerBehandlingApi}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       />
       <VerticalSpacer sixteenPx />
@@ -106,4 +113,4 @@ const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default ForeldrepengerPaneler;
+export default PleiepengerPaneler;

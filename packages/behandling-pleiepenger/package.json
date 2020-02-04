@@ -1,7 +1,7 @@
 {
-  "name": "@fpsak-frontend/behandling-fp",
+  "name": "@fpsak-frontend/behandling-pleiepenger",
   "version": "1.0.0",
-  "module": "index.jsx",
+  "module": "index.tsx",
   "license": "MIT",
   "private": true,
   "dependencies": {
