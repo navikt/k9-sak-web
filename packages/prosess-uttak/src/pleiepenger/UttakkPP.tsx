@@ -1,50 +1,23 @@
 import React, { FunctionComponent, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import svgKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import svgMann from '@fpsak-frontend/assets/images/mann.svg';
-import Kjønnkode from '@k9-frontend/types/src/Kjønnkode';
 import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/TimeLineControl';
-import messages from '../../i18n/nb_NO.json';
 
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
-
-interface Perioder {
-  [fomTom: string]: {
-    grad: number;
-  };
-}
-
-interface BehandlingUttak {
-  perioder: Perioder;
-}
-
-interface Behandlinger {
-  [behandlingId: string]: BehandlingUttak;
-}
+import Behandlinger from './types/UttakTypes';
+import BehandlingPersonMap from './types/BehandlingPersonMap';
 
 interface UttakkPPProps {
   behandlinger: Behandlinger;
-  behandlingPersonMap: {
-    [behandlingId: string]: {
-      kjønnkode: Kjønnkode;
-    };
-  };
+  behandlingPersonMap: BehandlingPersonMap;
 }
 
 const erKvinne = kjønnkode => kjønnkode === navBrukerKjonn.KVINNE;
 
-export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap) =>
+export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl) =>
   Object.entries(behandlinger).map(([behandlingsId, behandling]) => {
     const { kjønnkode } = behandlingPersonMap[behandlingsId];
     const kvinne = erKvinne(kjønnkode);
@@ -75,8 +48,9 @@ export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap) =>
 const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPersonMap }) => {
   const [valgtPeriode, velgPeriode] = useState();
   const [timelineRef, setTimelineRef] = useState();
+  const intl = useIntl();
 
-  const rader = mapRader(behandlinger, behandlingPersonMap);
+  const rader = mapRader(behandlinger, behandlingPersonMap, intl);
 
   const selectHandler = eventProps => {
     const nyValgtPeriode = rader.flatMap(rad => rad.perioder).find(item => item.id === eventProps.items[0]);
@@ -121,26 +95,24 @@ const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPer
   };
 
   return (
-    <RawIntlProvider value={intl}>
-      <Row>
-        <Column xs="12">
-          <Tidslinje
-            rader={rader}
-            velgPeriode={selectHandler}
-            valgtPeriode={valgtPeriode}
-            setTimelineRef={setTimelineRef}
-          />
-          <TimeLineControl
-            goBackwardCallback={goBackward}
-            goForwardCallback={goForward}
-            zoomInCallback={zoomIn}
-            zoomOutCallback={zoomOut}
-            openPeriodInfo={openPeriodInfo}
-            selectedPeriod={valgtPeriode}
-          />
-        </Column>
-      </Row>
-    </RawIntlProvider>
+    <Row>
+      <Column xs="12">
+        <Tidslinje
+          rader={rader}
+          velgPeriode={selectHandler}
+          valgtPeriode={valgtPeriode}
+          setTimelineRef={setTimelineRef}
+        />
+        <TimeLineControl
+          goBackwardCallback={goBackward}
+          goForwardCallback={goForward}
+          zoomInCallback={zoomIn}
+          zoomOutCallback={zoomOut}
+          openPeriodInfo={openPeriodInfo}
+          selectedPeriod={valgtPeriode}
+        />
+      </Column>
+    </Row>
   );
 };
 
