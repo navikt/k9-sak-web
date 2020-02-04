@@ -2,7 +2,7 @@ import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import React from 'react';
-import { useIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -61,8 +61,8 @@ export const MedisinskVilkarForm = ({
   hasDiagnose,
   isInnlagt,
   toOmsorgspersoner,
-}: MedisinskVilkarFormProps & StateProps & InjectedFormProps) => {
-  const intl = useIntl();
+  intl,
+}: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.fieldContainer}>
@@ -167,9 +167,11 @@ const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(
+const connectedComponent = connect(mapStateToPropsFactory)(
   behandlingFormTs({
     form: formName,
     enableReinitialize: true,
   })(MedisinskVilkarForm),
 );
+
+export default injectIntl(connectedComponent);
