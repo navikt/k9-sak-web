@@ -46,17 +46,17 @@ export const FpBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   /* /api/behandlinger */
-  .withAsyncPost('/sak/api/behandlinger', FpBehandlingApiKeys.BEHANDLING_FP)
-  .withPost('/sak/api/behandlinger/endre-pa-vent', FpBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/k9/sak/api/behandlinger', FpBehandlingApiKeys.BEHANDLING_FP)
+  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', FpBehandlingApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('/sak/api/behandling/aksjonspunkt', FpBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', FpBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withAsyncPost('/sak/api/behandling/aksjonspunkt/overstyr', FpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt/overstyr', FpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder', FpBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
+  .withPost('/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder', FpBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
 
   /* fptilbake/api/dokument */
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', FpBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)
@@ -90,19 +90,19 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('uttak-stonadskontoer', FpBehandlingApiKeys.UTTAK_STONADSKONTOER)
   .withInjectedPath('uttak-kontroller-fakta-perioder', FpBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
 
-  .withPost('/sak/api/behandlinger/bytt-enhet', FpBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/sak/api/behandlinger/henlegg', FpBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/sak/api/behandlinger/gjenoppta', FpBehandlingApiKeys.RESUME_BEHANDLING, {
+  .withPost('/k9/sak/api/behandlinger/bytt-enhet', FpBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/k9/sak/api/behandlinger/henlegg', FpBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', FpBehandlingApiKeys.RESUME_BEHANDLING, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/sak/api/behandlinger/sett-pa-vent', FpBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/sak/api/behandlinger/opne-for-endringer', FpBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
+  .withPost('/k9/sak/api/behandlinger/sett-pa-vent', FpBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', FpBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/sak/api/verge/opprett', FpBehandlingApiKeys.VERGE_OPPRETT, {
+  .withPost('/k9/sak/api/verge/opprett', FpBehandlingApiKeys.VERGE_OPPRETT, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/sak/api/verge/fjern', FpBehandlingApiKeys.VERGE_FJERN, {
+  .withPost('/k9/sak/api/verge/fjern', FpBehandlingApiKeys.VERGE_FJERN, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
 

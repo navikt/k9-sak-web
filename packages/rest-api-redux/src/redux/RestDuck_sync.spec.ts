@@ -19,8 +19,8 @@ interface Action {
   type: string;
   meta?: {
     options: {
-      keepData: boolean,
-    },
+      keepData: boolean;
+    };
   };
   payload?: any;
 }
@@ -147,7 +147,7 @@ describe('RestDuck (sync)', () => {
         data: undefined,
         meta: { params, timestamp: stateAfterRequestError.meta.timestamp },
         error: {
-          location: '/sak/api/ressurs',
+          location: '/k9/sak/api/ressurs',
         },
         started: false,
         finished: true,

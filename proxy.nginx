@@ -38,17 +38,14 @@ server {
   }
 
   # TODO K9 Fjern mock:
-  location "/fpoppdrag/api" {
-    return 200 "";
-  }
-  location "/oppdrag/api" {
+  location "/oppdrag/" {
     return 200 "";
   }
 
-  location  "/${APP_PATH_PREFIX}" {
+  location  "/k9/sak/" {
     proxy_set_header Host       $http_host;
     proxy_hide_header       Content-Security-Policy;
-    proxy_pass "${APP_URL}/${APP_PATH_PREFIX}";
+    proxy_pass "${APP_URL}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
     error_page 403 = @403_json;
@@ -58,12 +55,12 @@ server {
 
   # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
   location @rewrites {
-    rewrite ^(.+)$ "/index.html" last;
+    rewrite ^(.+)$ "/k9/web/index.html" last;
   }
 
   location @401_json {
     default_type application/json;
-    add_header Location /${APP_PATH_PREFIX}/resource/login always;
+    add_header Location /k9/sak/resource/login always;
     return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
   }
 
@@ -81,7 +78,7 @@ server {
     default_type application/json;
     return 504 '{"feilmelding":"Timet ut","type":"GENERELL_FEIL"}';
   }
-
+  
   location / {
     # beholder default root slik at vi kan swappe ut med stock nginx
     root   /usr/share/nginx/html;

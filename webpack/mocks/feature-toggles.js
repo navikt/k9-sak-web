@@ -16,7 +16,7 @@ if (process.env.FEATURE_TOGGLES) {
   });
 }
 module.exports = function(app) {
-  app.all('/sak/api/feature-toggle', function(req, res) {
+  app.all('/k9/sak/api/feature-toggle', function(req, res) {
     res.json(toggles);
   });
 };

@@ -15,7 +15,7 @@ import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokumen
 import styles from './documentListInnsyn.less';
 
 // TODO (TOR) Flytt url ut av komponent
-const DOCUMENT_SERVER_URL = '/sak/api/dokument/hent-dokument';
+const DOCUMENT_SERVER_URL = '/k9/sak/api/dokument/hent-dokument';
 const getLink = (document, saksNr) =>
   `${DOCUMENT_SERVER_URL}?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
