@@ -35,7 +35,7 @@ describe('<UttakPP>', () => {
   };
 
   it('mapper periodeformat', () => {
-    const mappet = mapRader(behandlinger, behandlingPersonMap);
+    const mappet = mapRader(behandlinger, behandlingPersonMap, { formatMessage: () => 'gradering' });
     const expected = [
       {
         ikon: {
@@ -49,6 +49,7 @@ describe('<UttakPP>', () => {
             fom: '2020-01-01',
             tom: '2020-01-14',
             id: '123-0',
+            grad: 50,
             hoverText: '50% gradering',
             className: 'gradert',
           },
@@ -56,6 +57,7 @@ describe('<UttakPP>', () => {
             fom: '2020-02-01',
             tom: '2020-02-14',
             id: '123-1',
+            grad: 73.5,
             hoverText: '73.5% gradering',
             className: 'gradert',
           },
@@ -73,6 +75,7 @@ describe('<UttakPP>', () => {
             fom: '2020-01-01',
             tom: '2020-01-14',
             id: '456-0',
+            grad: 50,
             hoverText: '50% gradering',
             className: 'gradert',
           },
@@ -80,6 +83,7 @@ describe('<UttakPP>', () => {
             fom: '2020-02-01',
             tom: '2020-02-14',
             id: '456-1',
+            grad: 73.5,
             hoverText: '73.5% gradering',
             className: 'gradert',
           },

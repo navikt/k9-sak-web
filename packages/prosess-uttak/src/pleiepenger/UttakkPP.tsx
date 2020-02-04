@@ -63,8 +63,7 @@ const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPer
     eventProps.event.preventDefault();
   };
 
-  const openPeriodInfo = event => {
-    console.log(event);
+  const openPeriodInfo = () => {
     // TODO: er det vits i å ha en egen knapp for å velge/lukke første periode. lukker selv om det ikke er første som er valgt
   };
 
