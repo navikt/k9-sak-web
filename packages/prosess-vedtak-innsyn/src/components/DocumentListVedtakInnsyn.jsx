@@ -9,7 +9,7 @@ import { ElementWrapper, Table, TableColumn, TableRow } from '@fpsak-frontend/sh
 import styles from './documentListVedtakInnsyn.less';
 
 // TODO (TOR) Flytt url ut av komponent
-const DOCUMENT_SERVER_URL = '/sak/api/dokument/hent-dokument';
+const DOCUMENT_SERVER_URL = '/k9/sak/api/dokument/hent-dokument';
 const getLink = (document, saksNr) =>
   `${DOCUMENT_SERVER_URL}?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 

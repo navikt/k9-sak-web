@@ -18,12 +18,10 @@ const config = {
   ],
   output: {
     path: ROOT_DIR,
-    publicPath: '/',
+    publicPath: '/k9/web/',
     filename: '[name].js',
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   optimization: {
     namedModules: true,
     splitChunks: {

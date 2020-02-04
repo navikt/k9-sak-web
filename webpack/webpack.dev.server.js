@@ -25,13 +25,8 @@ const options = {
     }
   },
   proxy: {
-    '/fpoppdrag/**': {
-      target: process.env.APP_URL_FPOPPDRAG || 'http://localhost:8070',
-      secure: false,
-      changeOrigin: !!process.env.APP_URL_FPOPPDRAG,
-    },
     '/oppdrag/**': {
-      target: process.env.APP_URL_FPOPPDRAG || 'http://localhost:8070',
+      target: process.env.APP_URL_FPOPPDRAG || 'https://vtp:8063/rest/dummy/fpoppdrag',
       secure: false,
       changeOrigin: !!process.env.APP_URL_FPOPPDRAG,
     },
@@ -45,7 +40,7 @@ const options = {
       secure: false,
       changeOrigin: !!process.env.APP_URL_FPFORMIDLING,
     },
-    '/sak/**': {
+    '/k9/sak/**': {
       target: process.env.APP_URL_SAK || 'http://localhost:8080',
       secure: false,
       changeOrigin: !!process.env.APP_URL_SAK,
@@ -55,7 +50,7 @@ const options = {
           proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_SAK)[1];
         }
         if (proxyRes.statusCode === 401) {
-          proxyRes.headers.location = '/sak/resource/login';
+          proxyRes.headers.location = '/k9/sak/resource/login';
         }
       },
     },
@@ -63,7 +58,9 @@ const options = {
   publicPath: config.output.publicPath,
   hot: true,
   noInfo: true,
-  historyApiFallback: true,
+  historyApiFallback: {
+    index: '/k9/web/',
+  },
   stats: {
     children: false,
     colors: true,

@@ -15,7 +15,7 @@ import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
 const selectDocument = saksNr => (e, id, document) => {
   window.open(
-    `/sak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`,
+    `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`,
     '_blank',
   );
 };
