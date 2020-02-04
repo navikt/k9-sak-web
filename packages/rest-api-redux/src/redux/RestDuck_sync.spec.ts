@@ -19,8 +19,8 @@ interface Action {
   type: string;
   meta?: {
     options: {
-      keepData: boolean,
-    },
+      keepData: boolean;
+    };
   };
   payload?: any;
 }

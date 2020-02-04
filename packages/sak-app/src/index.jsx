@@ -43,7 +43,7 @@ init({
 });
 
 const history = createBrowserHistory({
-  basename: '/',
+  basename: '/k9/web/',
 });
 const store = configureStore(history);
 

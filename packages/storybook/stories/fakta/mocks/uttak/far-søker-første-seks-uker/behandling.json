@@ -58,103 +58,103 @@
   },
   "links": [
     {
-      "href": "/sak/api/fagsak?saksnummer=124123802",
+      "href": "/k9/sak/api/fagsak?saksnummer=124123802",
       "rel": "fagsak",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/aksjonspunkt-v2?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/aksjonspunkt-v2?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "aksjonspunkter",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/vilkar-v2?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/vilkar-v2?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "vilkar",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/soknad?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/soknad?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "soknad",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/dokument/hent-mottattdokumentliste?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/dokument/hent-mottattdokumentliste?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "mottattdokument",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/familiehendelse?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/familiehendelse?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "familiehendelse",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/familiehendelse/v2?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/familiehendelse/v2?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "familiehendelse-v2",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/person/personopplysninger?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/person/personopplysninger?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "soeker-personopplysninger",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/person/medlemskap-v2?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/person/medlemskap-v2?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "soeker-medlemskap-v2",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/person/medlemskap?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/person/medlemskap?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "soeker-medlemskap",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/inntekt-arbeid-ytelse?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/inntekt-arbeid-ytelse?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "inntekt-arbeid-ytelse",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/ytelsefordeling?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/ytelsefordeling?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "ytelsefordeling",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/opptjening?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/opptjening?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "opptjening",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/beregningsgrunnlag?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/beregningsgrunnlag?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "beregningsgrunnlag",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/uttak/fakta-arbeidsforhold?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/uttak/fakta-arbeidsforhold?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "fakta-arbeidsforhold",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/uttak/periode-grense?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/uttak/periode-grense?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "uttak-periode-grense",
       "requestPayload": null,
       "type": "GET"
     },
     {
-      "href": "/sak/api/behandling/uttak/kontroller-fakta-perioder?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
+      "href": "/k9/sak/api/behandling/uttak/kontroller-fakta-perioder?uuid=55013b8a-ee7c-4fe7-8673-273af29c1bbb",
       "rel": "uttak-kontroller-fakta-perioder",
       "requestPayload": null,
       "type": "GET"

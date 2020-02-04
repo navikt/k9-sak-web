@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 /* TODO Ta i bruk fpsakApi - Flytt url ut av komponent */
-const DOCUMENT_SERVER_URL = '/sak/api/vedtak/hent-vedtaksdokument';
+const DOCUMENT_SERVER_URL = '/k9/sak/api/vedtak/hent-vedtaksdokument';
 const getLink = document => `${DOCUMENT_SERVER_URL}?behandlingId=${document.dokumentId}`;
 
 /**

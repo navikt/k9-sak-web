@@ -2,7 +2,7 @@ import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import React from 'react';
-import { IntlShape } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -25,7 +25,6 @@ interface MedisinskVilkarFormProps {
   submitCallback: (props: SubmitCallbackProps[]) => void;
   hasOpenAksjonspunkter: boolean;
   submittable: boolean;
-  intl: IntlShape;
 }
 
 interface StateProps {
@@ -59,11 +58,11 @@ export const MedisinskVilkarForm = ({
   readOnly,
   hasOpenAksjonspunkter,
   submittable,
-  intl,
   hasDiagnose,
   isInnlagt,
   toOmsorgspersoner,
-}: MedisinskVilkarFormProps & StateProps & InjectedFormProps) => {
+  intl,
+}: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.fieldContainer}>
@@ -168,9 +167,11 @@ const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(
+const connectedComponent = connect(mapStateToPropsFactory)(
   behandlingFormTs({
     form: formName,
     enableReinitialize: true,
   })(MedisinskVilkarForm),
 );
+
+export default injectIntl(connectedComponent);

@@ -14,20 +14,20 @@ export const PapirsoknadApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/sak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD, {
+  .withAsyncPost('/k9/sak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD, {
     fetchLinkDataAutomatically: false,
   })
   .withInjectedPath('aksjonspunkter', PapirsoknadApiKeys.AKSJONSPUNKTER)
 
-  .withPost('/sak/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/sak/api/behandlinger/henlegg', PapirsoknadApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/sak/api/behandlinger/gjenoppta', PapirsoknadApiKeys.RESUME_BEHANDLING, {
+  .withPost('/k9/sak/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/k9/sak/api/behandlinger/henlegg', PapirsoknadApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PapirsoknadApiKeys.RESUME_BEHANDLING, {
     storeResultKey: PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD,
   })
-  .withPost('/sak/api/behandlinger/sett-pa-vent', PapirsoknadApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/sak/api/behandlinger/endre-pa-vent', PapirsoknadApiKeys.UPDATE_ON_HOLD)
+  .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PapirsoknadApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', PapirsoknadApiKeys.UPDATE_ON_HOLD)
 
-  .withAsyncPost('/sak/api/behandling/aksjonspunkt', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)
   .build();
 
 const reducerName = 'dataContextPapirsoknad';

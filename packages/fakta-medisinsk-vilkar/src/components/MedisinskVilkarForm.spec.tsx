@@ -1,17 +1,18 @@
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { expect } from 'chai';
 import React from 'react';
 import sinon from 'sinon';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medisinsk-vilkar';
 import BeredskapRadio from './BeredskapRadio';
 import DiagnoseRadio from './DiagnoseRadio';
 import InnlagtBarnRadio from './InnlagtBarnRadio';
 import Legeerklaering from './Legeerklaering';
 import { MedisinskVilkarForm } from './MedisinskVilkarForm';
-import OmsorgspersonerRadio from './OmsorgspersonerRadio';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
+import OmsorgspersonerRadio from './OmsorgspersonerRadio';
 
-describe('<MedisinskVilkarIndex>', () => {
+describe('<MedisinskVilkarForm>', () => {
   it('skal rendre form', () => {
     const wrapper = shallowWithIntl(
       <MedisinskVilkarForm

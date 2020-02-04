@@ -6,17 +6,15 @@ import { createBrowserHistory } from 'history';
 import configureStore from '@fpsak-frontend/sak-app/src/configureStore';
 
 const history = createBrowserHistory({
-  basename: '/',
+  basename: '/k9/web/',
 });
 
-const withReduxAndRouterProvider = (story) => {
+const withReduxAndRouterProvider = story => {
   const store = configureStore(history);
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        { story() }
-      </ConnectedRouter>
+      <ConnectedRouter history={history}>{story()}</ConnectedRouter>
     </Provider>
   );
 };

@@ -18,7 +18,7 @@ const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
 const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
 
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
-const PUBLIC_PATH = isDevelopment ? 'public/' : '';
+const PUBLIC_PATH = '';
 
 const config = {
   module: {
@@ -65,7 +65,7 @@ const config = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: isDevelopment ? './' : '.',
+              publicPath: isDevelopment ? './' : '/k9/web/',
             },
           },
           {
@@ -97,7 +97,7 @@ const config = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: isDevelopment ? './' : '.',
+              publicPath: isDevelopment ? './' : '/k9/web/',
             },
           },
           {
@@ -132,7 +132,7 @@ const config = {
       ignoreOrder: true,
     }),
     new HtmlWebpackPlugin({
-      filename: isDevelopment ? 'index.html' : '../index.html',
+      filename: 'index.html',
       favicon: path.join(ROOT_DIR, 'favicon.ico'),
       template: path.join(ROOT_DIR, 'index.html'),
       version: VERSION,
@@ -143,7 +143,7 @@ const config = {
     new CopyWebpackPlugin([
       {
         from: LANG_DIR,
-        to: PUBLIC_PATH + 'sprak/[name].[ext]',
+        to: 'sprak/[name].[ext]',
         force: true,
         cache: {
           key: '[hash]',
