@@ -1,11 +1,15 @@
 import React, { FunctionComponent, useState } from 'react';
-import { useIntl } from 'react-intl';
+import moment from 'moment';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import svgKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import svgMann from '@fpsak-frontend/assets/images/mann.svg';
 import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/TimeLineControl';
+import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import Behandlinger from './types/UttakTypes';
 import BehandlingPersonMap from './types/BehandlingPersonMap';
@@ -35,6 +39,7 @@ export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl) 
         id: `${behandlingsId}-${index}`,
         hoverText: `${periode.grad}% ${intl.formatMessage({ id: 'UttakPanel.Gradering' })}`,
         className: periode.grad < 100 ? 'gradert' : 'godkjentPeriode',
+        grad: periode.grad,
       };
     });
 
@@ -46,7 +51,7 @@ export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl) 
   });
 
 const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPersonMap }) => {
-  const [valgtPeriode, velgPeriode] = useState();
+  const [valgtPeriode, velgPeriode] = useState<Periode | null>();
   const [timelineRef, setTimelineRef] = useState();
   const intl = useIntl();
 
@@ -111,6 +116,28 @@ const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPer
           openPeriodInfo={openPeriodInfo}
           selectedPeriod={valgtPeriode}
         />
+        {valgtPeriode && (
+          <>
+            <Undertittel>
+              <FormattedMessage id="UttakPanel.ValgtPeriode" />
+            </Undertittel>
+            <Normaltekst>
+              <FormattedMessage
+                id="UttakPanel.FOM"
+                values={{ fom: moment(valgtPeriode.fom).format(DDMMYYYY_DATE_FORMAT) }}
+              />
+            </Normaltekst>
+            <Normaltekst>
+              <FormattedMessage
+                id="UttakPanel.TOM"
+                values={{ tom: moment(valgtPeriode.tom).format(DDMMYYYY_DATE_FORMAT) }}
+              />
+            </Normaltekst>
+            <Normaltekst>
+              <FormattedMessage id="UttakPanel.GraderingProsent" values={{ grad: valgtPeriode.grad }} />
+            </Normaltekst>
+          </>
+        )}
       </Column>
     </Row>
   );

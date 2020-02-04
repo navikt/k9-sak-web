@@ -5,24 +5,15 @@ import Timeline from 'react-visjs-timeline';
 import { useIntl } from 'react-intl';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import EventCallback from '@k9-frontend/types/src/EventCallback';
 import { Column, Row } from 'nav-frontend-grid';
 import { Image } from '@fpsak-frontend/shared-components';
 import styles from './tidslinje.less';
+import Periode from './types/Periode';
 
 export interface TidslinjeIkon {
   imageTextKey: string;
   titleKey: string;
   src: SVGElement;
-}
-
-interface Periode {
-  fom: string;
-  tom: string;
-  id: string;
-  className?: string;
-  hoverText?: string;
-  onClick?: EventCallback; // TODO: Denne trengs ikke når velgPeriode finnes. bytt ut eller fjern
 }
 
 interface TidslinjeRad {
