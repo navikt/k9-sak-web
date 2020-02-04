@@ -2,12 +2,13 @@ import React, { FunctionComponent, useEffect, useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
+import { useIntl } from 'react-intl';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import EventCallback from '@k9-frontend/types/src/EventCallback';
 import { Column, Row } from 'nav-frontend-grid';
-import styles from '../../tidslinje.less';
-import Ikon from './TidslinjeIkon';
+import { Image } from '@fpsak-frontend/shared-components';
+import styles from './tidslinje.less';
 
 export interface TidslinjeIkon {
   imageTextKey: string;
@@ -78,7 +79,9 @@ const createItems = (perioder: Periode[]) =>
   perioder.map(periode => ({
     ...periode,
     start: momentDate(periode.fom).toDate(),
-    end: momentDate(periode.tom).toDate(),
+    end: momentDate(periode.tom)
+      .add(1, 'days') // Timeline sin end har til, men ikke med
+      .toDate(),
     title: periode.hoverText,
   }));
 
@@ -122,13 +125,20 @@ const Tidslinje: FunctionComponent<TidslinjeProps> = ({
       .sort((p1, p2) => momentDate(p1.fom).diff(momentDate(p2.fom)));
   }, [rader]);
 
+  const intl = useIntl();
+
   return (
     <div className={styles.timelineContainer}>
       <Row>
-        <Column xs="1" className={styles.sokerContainer}>
-          <div className={styles.timelineSokerContatiner}>
-            {rader.map(rad => (
-              <Ikon key={rad.id} imageTextKey={rad.ikon.imageTextKey} src={rad.ikon.src} titleKey={rad.ikon.titleKey} />
+        <Column xs="1">
+          <div className={styles.timelineIkonContainer}>
+            {rader.map(({ ikon, id }) => (
+              <Image
+                key={id}
+                src={ikon.src}
+                alt={intl.formatMessage({ id: ikon.imageTextKey })}
+                title={intl.formatMessage({ id: ikon.titleKey })}
+              />
             ))}
           </div>
         </Column>
