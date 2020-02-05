@@ -14,17 +14,17 @@ interface DiagnoseFieldArrayProps {
   readOnly: boolean;
   fields: FieldArrayFieldsProps<Fields>;
   intl: IntlShape;
-  hasDiagnose: boolean;
+  harDiagnose: boolean;
 }
 
-const DiagnoseFieldArray = ({ readOnly, fields, intl, hasDiagnose }: DiagnoseFieldArrayProps) => {
+const DiagnoseFieldArray = ({ readOnly, fields, intl, harDiagnose }: DiagnoseFieldArrayProps) => {
   useEffect(() => {
     if (fields.length === 0) {
       fields.push({ value: '' });
     }
   }, []);
 
-  if (!hasDiagnose) {
+  if (!harDiagnose) {
     return null;
   }
   return (

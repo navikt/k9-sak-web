@@ -1,6 +1,7 @@
 {
   "MedisinskVilkarPanel.MedisinskVilkar": "Fakta om legeerklæring",
-
+  "MedisinskVilkarForm.Fakta": "Fakta",
+  "MedisinskVilkarForm.Vilkår": "Vilkår",
   "MedisinskVilkarForm.Innlagt": "Skal barnet være innlagt på sykehuset?",
   "MedisinskVilkarForm.Omsorgspersoner": "Framgår det av legeerklæringen at begge foreldre må passe barnet?",
   "MedisinskVilkarForm.Beredskap": "Framgår det av legeerklæringen at brukeren må være i beredskap/nattevåken?",
@@ -22,7 +23,8 @@
 
   "MedisinskVilkarForm.Begrunnelse": "Begrunnelse",
   "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie": "Har barnet behov for kontinuerlig tilsyn og pleie?",
-  "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder": "I hvilke perioder har barnet behov for kontinuerlig tilsyn og pleie?",
+  "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder": "I hvilken periode har barnet behov for kontinuerlig tilsyn og pleie?",
+  "MedisinskVilkarForm.BehovForEnEllerToOmsorgspersoner": "Er det behov for to omsorgspersoner i denne perioden?",
 
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",

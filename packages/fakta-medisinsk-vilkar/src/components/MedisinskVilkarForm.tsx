@@ -1,13 +1,16 @@
 import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
-import BeredskapRadio from './BeredskapRadio';
+import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
+// import BehovForEnEllerToOmsorgspersonerFields from './BehovForEnEllerToOmsorgspersonerFields';
+import BehovForKontinuerligTilsynOgPleieFields from './BehovForKontinuerligTilsynOgPleieFields';
+// import BeredskapRadio from './BeredskapRadio';
 import DiagnoseFieldArray from './DiagnoseFieldArray';
 import DiagnoseRadio from './DiagnoseRadio';
 import InnlagtBarnPeriodeFieldArray from './InnlagtBarnPeriodeFieldArray';
@@ -15,9 +18,8 @@ import InnlagtBarnRadio from './InnlagtBarnRadio';
 import Legeerklaering from './Legeerklaering';
 import styles from './medisinskVilkar.less';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
-import OmsorgspersonerPeriodeFieldArray from './OmsorgspersonerPeriodeFieldArray';
-import OmsorgspersonerRadio from './OmsorgspersonerRadio';
-import BehovForKontinuerligTilsynOgPleieFields from './BehovForKontinuerligTilsynOgPleieFields';
+// import OmsorgspersonerPeriodeFieldArray from './OmsorgspersonerPeriodeFieldArray';
+// import OmsorgspersonerRadio from './OmsorgspersonerRadio';
 import PerioderMedBehovForKontinuerligTilsynOgPleieFieldArray from './PerioderMedBehovForKontinuerligTilsynOgPleieFieldArray';
 
 interface MedisinskVilkarFormProps {
@@ -30,9 +32,10 @@ interface MedisinskVilkarFormProps {
 }
 
 interface StateProps {
-  hasDiagnose: boolean;
-  isInnlagt: boolean;
-  toOmsorgspersoner: boolean;
+  harDiagnose: boolean;
+  erInnlagt: boolean;
+  harBehovForToOmsorgspersoner: boolean;
+  harBehovForKontinuerligTilsynOgPleie: boolean;
 }
 
 interface Periode {
@@ -61,56 +64,68 @@ export const MedisinskVilkarForm = ({
   readOnly,
   hasOpenAksjonspunkter,
   submittable,
-  hasDiagnose,
-  isInnlagt,
+  harDiagnose,
+  erInnlagt,
   harBehovForKontinuerligTilsynOgPleie,
-  toOmsorgspersoner,
+  // harBehovForToOmsorgspersoner,
   intl,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
   return (
     <form onSubmit={handleSubmit}>
+      <div className={styles.headingContainer}>
+        <Systemtittel>
+          <FormattedMessage id="MedisinskVilkarForm.Fakta" />
+        </Systemtittel>
+      </div>
       <div className={styles.fieldContainer}>
         <InnlagtBarnRadio readOnly={readOnly} />
         <FieldArray
-          name="innlagtBarnPerioder"
+          name={MedisinskVilkårValues.INNLEGGELSESPERIODER}
           component={InnlagtBarnPeriodeFieldArray}
-          props={{ readOnly, isInnlagt }}
+          props={{ readOnly, erInnlagt }}
         />
       </div>
-      <div className={styles.fieldContainer}>
+      {/* <div className={styles.fieldContainer}>
         <OmsorgspersonerRadio readOnly={readOnly} />
         <FieldArray
           name="omsorgspersonerPerioder"
           component={OmsorgspersonerPeriodeFieldArray}
-          props={{ readOnly, toOmsorgspersoner }}
+          props={{ readOnly, harBehovForToOmsorgspersoner }}
         />
-      </div>
-      <div className={styles.fieldContainer}>
+      </div> */}
+      {/* <div className={styles.fieldContainer}>
         <BeredskapRadio readOnly={readOnly} />
-      </div>
+      </div> */}
       <div className={styles.fieldContainer}>
         <DiagnoseRadio readOnly={readOnly} />
-        <FieldArray name="diagnoser" component={DiagnoseFieldArray} props={{ readOnly, intl, hasDiagnose }} />
+        <FieldArray name="diagnoser" component={DiagnoseFieldArray} props={{ readOnly, intl, harDiagnose }} />
       </div>
       <div className={styles.fieldContainer}>
         <Legeerklaering readOnly={readOnly} />
       </div>
-      <div className={styles.fieldContainer}>
-        <BehovForKontinuerligTilsynOgPleieFields readOnly={readOnly} />
-        <FieldArray
-          name="perioderMedBehovForKontinuerligTilsynOgPleie"
-          component={PerioderMedBehovForKontinuerligTilsynOgPleieFieldArray}
-          props={{ readOnly }}
-        />
+      <div className={styles.headingContainer}>
+        <Systemtittel>
+          <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
+        </Systemtittel>
       </div>
       <div className={styles.fieldContainer}>
+        <BehovForKontinuerligTilsynOgPleieFields readOnly={readOnly} />
+        {harBehovForKontinuerligTilsynOgPleie && (
+          <FieldArray
+            name={MedisinskVilkårValues.PERIODER_MED_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
+            component={PerioderMedBehovForKontinuerligTilsynOgPleieFieldArray}
+            props={{ readOnly }}
+          />
+        )}
+      </div>
+      {/* <div className={styles.fieldContainer}>
         <BehovForEnEllerToOmsorgspersonerFields readOnly={readOnly} />
         <FieldArray
           name="perioderMedBehovForEnEllerToOmsorgspersoner"
           component={PerioderMedBehovForEnEllerToOmsorgspersonerFieldArray}
           props={{ readOnly }}
         />
-      </div>
+      </div> */}
       <MedisinskVilkarFormButtons
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
@@ -123,10 +138,10 @@ export const MedisinskVilkarForm = ({
   );
 };
 
-const getValidLegeerklaeringSignatar = (signatar: string) => {
-  const validLegeerklaeringSignatar = ['sykehuslege', 'legeispesialisthelsetjenesten', 'fastlege', 'annenyrkesgruppe'];
-  return validLegeerklaeringSignatar.includes(signatar) ? signatar : '';
-};
+// const getValidLegeerklaeringSignatar = (signatar: string) => {
+//   const validLegeerklaeringSignatar = ['sykehuslege', 'legeispesialisthelsetjenesten', 'fastlege', 'annenyrkesgruppe'];
+//   return validLegeerklaeringSignatar.includes(signatar) ? signatar : '';
+// };
 
 const transformValues = values => ({
   kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
@@ -134,56 +149,65 @@ const transformValues = values => ({
   ...values,
 });
 
-const buildInitialValues = createSelector(
-  [(props: { legeerklaeringDto: LegeerklaeringDto }) => props.legeerklaeringDto],
-  legeerklaeringDto => {
-    const legeerklaeringSignatar = getValidLegeerklaeringSignatar(legeerklaeringDto.legeerklaeringSignatar);
+// const buildInitialValues = createSelector(
+//   [(props: { legeerklaeringDto: LegeerklaeringDto }) => props.legeerklaeringDto],
+//   legeerklaeringDto => {
+//     const legeerklaeringSignatar = getValidLegeerklaeringSignatar(legeerklaeringDto.legeerklaeringSignatar);
 
-    return {
-      ...legeerklaeringDto,
-      legeerklaeringSignatar,
-    };
-  },
-);
+//     return {
+//       ...legeerklaeringDto,
+//       legeerklaeringSignatar,
+//     };
+//   },
+// );
 
 const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
   const { submitCallback } = props;
   const onSubmit = values => submitCallback([transformValues(values)]);
 
-  const legeerklaeringDto = {
-    innlagt: true,
-    innlagtBarnPerioder: [
-      {
-        fom: '2019-09-16',
-        tom: '2019-10-16',
-      },
-    ],
-    omsorgspersoner: true,
-    omsorgspersonerPerioder: [
-      {
-        fom: '2019-11-09',
-        tom: '2019-12-24',
-      },
-    ],
-    beredskapNattevak: true,
-    diagnose: true,
-    legeerklaeringSignatar: 'fastlege',
-  };
+  // const legeerklaeringDto = {
+  //   erInnlagt: true,
+  //   innlagtBarnPerioder: [
+  //     {
+  //       fom: '2019-09-16',
+  //       tom: '2019-10-16',
+  //     },
+  //   ],
+  //   harBehovForToOmsorgspersoner: true,
+  //   omsorgspersonerPerioder: [
+  //     {
+  //       fom: '2019-11-09',
+  //       tom: '2019-12-24',
+  //     },
+  //   ],
+  //   harBehovForBeredskapNattevaak: true,
+  //   harDiagnose: true,
+  //   legeerklaeringSignatar: 'fastlege',
+  // };
 
   return state => ({
     onSubmit,
-    initialValues: buildInitialValues({ legeerklaeringDto }),
-    hasDiagnose: !!behandlingFormValueSelector(
+    // initialValues: buildInitialValues({ legeerklaeringDto }),
+    [MedisinskVilkårValues.HAR_DIAGNOSE]: !!behandlingFormValueSelector(
       formName,
       props.behandlingId,
       props.behandlingVersjon,
-    )(state, 'diagnose'),
-    isInnlagt: !!behandlingFormValueSelector(formName, props.behandlingId, props.behandlingVersjon)(state, 'innlagt'),
-    toOmsorgspersoner: !!behandlingFormValueSelector(
+    )(state, MedisinskVilkårValues.HAR_DIAGNOSE),
+    [MedisinskVilkårValues.ER_INNLAGT]: !!behandlingFormValueSelector(
       formName,
       props.behandlingId,
       props.behandlingVersjon,
-    )(state, 'omsorgspersoner'),
+    )(state, MedisinskVilkårValues.ER_INNLAGT),
+    [MedisinskVilkårValues.HAR_BEHOV_FOR_TO_OMSORGSPERSONER]: !!behandlingFormValueSelector(
+      formName,
+      props.behandlingId,
+      props.behandlingVersjon,
+    )(state, MedisinskVilkårValues.HAR_BEHOV_FOR_TO_OMSORGSPERSONER),
+    [MedisinskVilkårValues.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]: !!behandlingFormValueSelector(
+      formName,
+      props.behandlingId,
+      props.behandlingVersjon,
+    )(state, MedisinskVilkårValues.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE),
   });
 };
 

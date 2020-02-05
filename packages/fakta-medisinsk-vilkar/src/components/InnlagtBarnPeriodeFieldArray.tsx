@@ -13,17 +13,17 @@ interface Fields {
 interface InnlagtBarnPeriodeFieldArrayProps {
   readOnly: boolean;
   fields: FieldArrayFieldsProps<Fields>;
-  isInnlagt: boolean;
+  erInnlagt: boolean;
 }
 
-const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, isInnlagt }: InnlagtBarnPeriodeFieldArrayProps) => {
+const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, erInnlagt }: InnlagtBarnPeriodeFieldArrayProps) => {
   useEffect(() => {
     if (fields.length === 0) {
       fields.push({ fom: '', tom: '' });
     }
   }, []);
 
-  if (!isInnlagt) {
+  if (!erInnlagt) {
     return null;
   }
   return (

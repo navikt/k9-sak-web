@@ -24,8 +24,8 @@ describe('<MedisinskVilkarForm>', () => {
         hasOpenAksjonspunkter
         submittable
         intl={intlMock}
-        hasDiagnose
-        isInnlagt
+        harDiagnose
+        erInnlagt
         toOmsorgspersoner
       />,
     );
