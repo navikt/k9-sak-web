@@ -9,7 +9,7 @@ const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.resolve(PACKAGES_DIR, 'sak-app/src');
 
 const config = {
-  mode: 'development',
+  mode: 'production',
   devtool: 'source-map',
   performance: { hints: false },
 
