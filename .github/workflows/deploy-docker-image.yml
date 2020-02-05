@@ -44,8 +44,8 @@ jobs:
         run: |
           docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
           echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
-          docker push ${IMAGE}
           docker push ${IMAGE_BASE}:latest
+          docker push ${IMAGE}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Trigger verdikjede test
