@@ -14,8 +14,8 @@ import {
   Kodeverk, NavAnsatt, FagsakInfo, prosessStegHooks, IverksetterVedtakStatusModal, Behandling, FatterVedtakStatusModal, ProsessStegPanel,
 } from '@fpsak-frontend/behandling-felles';
 
-import fpBehandlingApi from '../data/fpBehandlingApi';
-import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFpPanelDefinisjoner';
+import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
+import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
@@ -43,7 +43,7 @@ const getForhandsvisCallback = (dispatch, behandling) => (data) => {
     behandling: behandling.uuid,
     ytelseType: fagsakYtelseType.FORELDREPENGER,
   };
-  return dispatch(fpBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+  return dispatch(pleiepengerBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };
 
 const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (mottaker, brevmalkode, fritekst, saksnummer) => {
@@ -55,7 +55,7 @@ const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (motta
     brevmalkode,
     saksnummer,
   };
-  return dispatch(fpBehandlingApi.PREVIEW_TILBAKEKREVING_MESSAGE.makeRestApiRequest()(data));
+  return dispatch(pleiepengerBehandlingApi.PREVIEW_TILBAKEKREVING_MESSAGE.makeRestApiRequest()(data));
 };
 
 const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
@@ -84,7 +84,7 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtak
   };
 };
 
-const ForeldrepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const PleiepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   data,
   fagsak,
@@ -107,7 +107,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps>
     previewCallback: useCallback(getForhandsvisCallback(dispatch, behandling), [behandling.versjon]),
     previewFptilbakeCallback: useCallback(getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), [behandling.versjon]),
     dispatchSubmitFailed: useCallback((formName) => dispatch(setSubmitFailed(formName)), []),
-    tempUpdateStonadskontoer: useCallback((params) => dispatch(fpBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params)),
+    tempUpdateStonadskontoer: useCallback((params) => dispatch(pleiepengerBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params)),
       [behandling.versjon]),
     alleKodeverk,
     featureToggles,
@@ -149,11 +149,11 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps>
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         lagringSideeffekterCallback={lagringSideeffekterCallback}
-        behandlingApi={fpBehandlingApi}
+        behandlingApi={pleiepengerBehandlingApi}
         dispatch={dispatch}
       />
     </>
   );
 };
 
-export default injectIntl(ForeldrepengerProsess);
+export default injectIntl(PleiepengerProsess);

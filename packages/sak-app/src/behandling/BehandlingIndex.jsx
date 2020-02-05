@@ -33,7 +33,7 @@ import {
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
 
-const BehandlingForeldrepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-fp'));
+const BehandlingPleiepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-pleiepenger'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
@@ -262,7 +262,7 @@ export class BehandlingIndex extends Component {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
-          <BehandlingForeldrepengerIndex
+          <BehandlingPleiepengerIndex
             featureToggles={featureToggles}
             oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
             valgtFaktaSteg={location.query.fakta}

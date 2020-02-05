@@ -13,7 +13,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
-import ForeldrepengerFakta from './ForeldrepengerFakta';
+import ForeldrepengerFakta from './PleiepengerFakta';
 
 describe('<ForeldrepengerFakta>', () => {
   const fagsak = {

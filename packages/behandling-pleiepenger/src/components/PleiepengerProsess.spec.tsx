@@ -18,7 +18,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
-import ForeldrepengerProsess from './ForeldrepengerProsess';
+import ForeldrepengerProsess from './PleiepengerProsess';
 
 describe('<ForeldrepengerProsess>', () => {
   const fagsak = {
