@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import MedisinskVilkarPanel from './components/MedisinskVilkarPanel';
+import MedisinskVilkarForm from './components/MedisinskVilkarForm';
 
 describe('<MedisinskVilkarIndex>', () => {
   it('skal rendre form', () => {
@@ -26,6 +26,6 @@ describe('<MedisinskVilkarIndex>', () => {
         aksjonspunkter={[]}
       />,
     );
-    expect(wrapper.find(MedisinskVilkarPanel)).has.length(1);
+    expect(wrapper.find(MedisinskVilkarForm)).has.length(1);
   });
 });
