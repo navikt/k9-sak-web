@@ -11082,9 +11082,9 @@ nav-frontend-etiketter-style@0.3.19:
   version "0.3.19"
   resolved "https://registry.npmjs.org/nav-frontend-etiketter-style/-/nav-frontend-etiketter-style-0.3.19.tgz#a92f270568bb24ed161cc1d80e75482bca885bcc"
 
-nav-frontend-etiketter@1.0.28:
-  version "1.0.28"
-  resolved "https://registry.npmjs.org/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.28.tgz#467b3898b35023f2688b3593e64767c1bee05c90"
+nav-frontend-etiketter@1.0.30:
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.30.tgz#c699e4e2d5942d975aae6c353e45464b2e00510c"
 
 nav-frontend-grid-style@0.2.18:
   version "0.2.18"
