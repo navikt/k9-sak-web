@@ -41,6 +41,9 @@ server {
   location "/oppdrag/" {
     return 200 "";
   }
+  location "/k9/oppdrag/" {
+    return 200 "";
+  }
 
   location  "/k9/sak/" {
     proxy_set_header Host       $http_host;
