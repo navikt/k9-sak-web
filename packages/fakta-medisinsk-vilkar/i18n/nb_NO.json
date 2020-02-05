@@ -20,6 +20,10 @@
   "MedisinskVilkarForm.LeggTilDiagnose": "Legg til diagnose",
   "MedisinskVilkarForm.F-90": "F 90 - Hyberkinetiske forstyrrelser",
 
+  "MedisinskVilkarForm.Begrunnelse": "Begrunnelse",
+  "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie": "Har barnet behov for kontinuerlig tilsyn og pleie?",
+  "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder": "I hvilke perioder har barnet behov for kontinuerlig tilsyn og pleie?",
+
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",
   "Calendar.Day.2": "tirsdag",

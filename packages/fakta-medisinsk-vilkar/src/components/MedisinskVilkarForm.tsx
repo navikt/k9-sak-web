@@ -17,6 +17,8 @@ import styles from './medisinskVilkar.less';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
 import OmsorgspersonerPeriodeFieldArray from './OmsorgspersonerPeriodeFieldArray';
 import OmsorgspersonerRadio from './OmsorgspersonerRadio';
+import BehovForKontinuerligTilsynOgPleieFields from './BehovForKontinuerligTilsynOgPleieFields';
+import PerioderMedBehovForKontinuerligTilsynOgPleieFieldArray from './PerioderMedBehovForKontinuerligTilsynOgPleieFieldArray';
 
 interface MedisinskVilkarFormProps {
   behandlingId: number;
@@ -43,6 +45,7 @@ interface LegeerklaeringDto {
   diagnose: boolean;
   innlagt: boolean;
   innlagtBarnPerioder: Periode[];
+  harBehovForKontinuerligTilsynOgPleie: boolean;
   legeerklaeringSignatar: string;
   omsorgspersoner: boolean;
   omsorgspersonerPerioder: Periode[];
@@ -60,6 +63,7 @@ export const MedisinskVilkarForm = ({
   submittable,
   hasDiagnose,
   isInnlagt,
+  harBehovForKontinuerligTilsynOgPleie,
   toOmsorgspersoner,
   intl,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
@@ -90,6 +94,22 @@ export const MedisinskVilkarForm = ({
       </div>
       <div className={styles.fieldContainer}>
         <Legeerklaering readOnly={readOnly} />
+      </div>
+      <div className={styles.fieldContainer}>
+        <BehovForKontinuerligTilsynOgPleieFields readOnly={readOnly} />
+        <FieldArray
+          name="perioderMedBehovForKontinuerligTilsynOgPleie"
+          component={PerioderMedBehovForKontinuerligTilsynOgPleieFieldArray}
+          props={{ readOnly }}
+        />
+      </div>
+      <div className={styles.fieldContainer}>
+        <BehovForEnEllerToOmsorgspersonerFields readOnly={readOnly} />
+        <FieldArray
+          name="perioderMedBehovForEnEllerToOmsorgspersoner"
+          component={PerioderMedBehovForEnEllerToOmsorgspersonerFieldArray}
+          props={{ readOnly }}
+        />
       </div>
       <MedisinskVilkarFormButtons
         behandlingId={behandlingId}
