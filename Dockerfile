@@ -1,4 +1,4 @@
-FROM nginx:1.17.8
+FROM nginx:1.17.8-alpine
 ADD proxy.nginx /etc/nginx/conf.d/app.conf.template
 
 ENV APP_DIR="/app" \
