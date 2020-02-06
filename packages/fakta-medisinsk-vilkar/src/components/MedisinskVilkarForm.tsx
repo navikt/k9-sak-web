@@ -10,8 +10,7 @@ import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 // import BehovForEnEllerToOmsorgspersonerFields from './BehovForEnEllerToOmsorgspersonerFields';
 import BehovForKontinuerligTilsynOgPleieFields from './BehovForKontinuerligTilsynOgPleieFields';
-// import BeredskapRadio from './BeredskapRadio';
-import DiagnoseFieldArray from './DiagnoseFieldArray';
+import DiagnosekodeSelector from './DiagnosekodeSelector';
 import DiagnoseRadio from './DiagnoseRadio';
 import InnlagtBarnPeriodeFieldArray from './InnlagtBarnPeriodeFieldArray';
 import InnlagtBarnRadio from './InnlagtBarnRadio';
@@ -66,9 +65,8 @@ export const MedisinskVilkarForm = ({
   submittable,
   harDiagnose,
   erInnlagt,
-  harBehovForKontinuerligTilsynOgPleie,
   // harBehovForToOmsorgspersoner,
-  intl,
+  harBehovForKontinuerligTilsynOgPleie,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -98,7 +96,7 @@ export const MedisinskVilkarForm = ({
       </div> */}
       <div className={styles.fieldContainer}>
         <DiagnoseRadio readOnly={readOnly} />
-        <FieldArray name="diagnoser" component={DiagnoseFieldArray} props={{ readOnly, intl, harDiagnose }} />
+        {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
       </div>
       <div className={styles.fieldContainer}>
         <Legeerklaering readOnly={readOnly} />
