@@ -19,8 +19,6 @@ jobs:
         with:
           path: ${{ steps.yarn-cache.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
       - name: Tester og linting
