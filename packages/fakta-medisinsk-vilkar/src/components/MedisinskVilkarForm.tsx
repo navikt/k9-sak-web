@@ -251,6 +251,11 @@ const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
       props.behandlingId,
       props.behandlingVersjon,
     ),
+    harDiagnose: !!behandlingFormValueSelector(
+      formName,
+      props.behandlingId,
+      props.behandlingVersjon,
+    )(state, 'harDiagnose'),
   });
 };
 
