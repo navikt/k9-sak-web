@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:1.17.8
 ADD proxy.nginx /etc/nginx/conf.d/app.conf.template
 
 ENV APP_DIR="/app" \

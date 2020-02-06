@@ -7,7 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/behandling-anke": "1.0.0",
-    "@fpsak-frontend/behandling-fp": "1.0.0",
+    "@fpsak-frontend/behandling-pleiepenger": "1.0.0",
     "@fpsak-frontend/behandling-innsyn": "1.0.0",
     "@fpsak-frontend/behandling-klage": "1.0.0",
     "@fpsak-frontend/behandling-papirsoknad": "1.0.0",

@@ -30,7 +30,7 @@
     "packages/form",
     "packages/tidslinje",
     "packages/types",
-    "packages/behandling-fp",
+    "packages/behandling-pleiepenger",
     "@types"
   ]
 }
