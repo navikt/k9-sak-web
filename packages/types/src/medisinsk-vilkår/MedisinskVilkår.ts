@@ -16,7 +16,7 @@ const diagnosekode = 'diagnosekode';
 export interface Legeerklæring {
   [diagnosekode]: string;
   kilde: LegeerklæringKilde;
-  gyldighetsperiode: Periode;
+  gjelderForPeriode: Periode;
   innleggelsesperioder: Periode[];
 
 }
