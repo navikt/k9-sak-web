@@ -17,7 +17,7 @@ const Legeerklaering = ({ readOnly }: LegeerklaeringProps) => (
     <VerticalSpacer eightPx />
     <RadioGroupField
       direction="vertical"
-      name="legeerklaeringSignatar"
+      name="legeerklaeringkilde"
       bredde="M"
       validate={[required]}
       readOnly={readOnly}
