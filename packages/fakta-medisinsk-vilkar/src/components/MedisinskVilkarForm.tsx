@@ -19,7 +19,7 @@ import { PeriodpickerField, RadioGroupField, RadioOption, TextAreaField } from '
 import MedisinskVilkårConsts from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import BehovForKontinuerligTilsynOgPleieFields from './BehovForKontinuerligTilsynOgPleieFields';
-import DiagnoseFieldArray from './DiagnoseFieldArray';
+import DiagnosekodeSelector from './DiagnosekodeSelector';
 import DiagnoseRadio from './DiagnoseRadio';
 import InnlagtBarnPeriodeFieldArray from './InnlagtBarnPeriodeFieldArray';
 import InnlagtBarnRadio from './InnlagtBarnRadio';
@@ -44,22 +44,6 @@ interface StateProps {
   [MedisinskVilkårConsts.PERIODER_MED_TILSYN_OG_PLEIE]: any;
 }
 
-interface Periode {
-  fom: string;
-  tom: string;
-}
-
-interface LegeerklaeringDto {
-  beredskapNattevak: boolean;
-  diagnose: boolean;
-  innlagt: boolean;
-  innlagtBarnPerioder: Periode[];
-  harBehovForKontinuerligTilsynOgPleie: boolean;
-  legeerklaeringSignatar: string;
-  omsorgspersoner: boolean;
-  omsorgspersonerPerioder: Periode[];
-}
-
 const formName = 'MedisinskVilkarForm';
 
 export const MedisinskVilkarForm = ({
@@ -73,8 +57,6 @@ export const MedisinskVilkarForm = ({
   harDiagnose,
   erInnlagt,
   harBehovForKontinuerligTilsynOgPleie,
-  // behovForToOmsorgspersoner,
-  intl,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -93,7 +75,7 @@ export const MedisinskVilkarForm = ({
       </div>
       <div className={styles.fieldContainer}>
         <DiagnoseRadio readOnly={readOnly} />
-        <FieldArray name="diagnoser" component={DiagnoseFieldArray} props={{ readOnly, intl, harDiagnose }} />
+        {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
       </div>
       <div className={styles.fieldContainer}>
         <Legeerklaering readOnly={readOnly} />
@@ -223,11 +205,6 @@ export const MedisinskVilkarForm = ({
   );
 };
 
-// const getValidLegeerklaeringSignatar = (signatar: string) => {
-//   const validLegeerklaeringSignatar = ['sykehuslege', 'legeispesialisthelsetjenesten', 'fastlege', 'annenyrkesgruppe'];
-//   return validLegeerklaeringSignatar.includes(signatar) ? signatar : '';
-// };
-
 const transformValues = values => ({
   kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
   begrunnelse: values.begrunnelseLegeerklaering,
@@ -249,26 +226,6 @@ const transformValues = values => ({
 const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
   const { submitCallback } = props;
   const onSubmit = values => submitCallback([transformValues(values)]);
-
-  // const legeerklaeringDto = {
-  //   erInnlagt: true,
-  //   innlagtBarnPerioder: [
-  //     {
-  //       fom: '2019-09-16',
-  //       tom: '2019-10-16',
-  //     },
-  //   ],
-  //   behovForToOmsorgspersoner: true,
-  //   omsorgspersonerPerioder: [
-  //     {
-  //       fom: '2019-11-09',
-  //       tom: '2019-12-24',
-  //     },
-  //   ],
-  //   harBehovForBeredskapNattevaak: true,
-  //   harDiagnose: true,
-  //   legeerklaeringSignatar: 'fastlege',
-  // };
 
   return state => ({
     onSubmit,
