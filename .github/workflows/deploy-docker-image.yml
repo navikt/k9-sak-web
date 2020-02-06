@@ -40,7 +40,7 @@ jobs:
           echo "::set-env name=IMAGE::$IMAGE_BASE:$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
       - name: Bygg og laste opp docker-image
         run: |
-          docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
+          docker build --no-cache --force-rm --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
           echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
           docker push ${IMAGE_BASE}:latest
           docker push ${IMAGE}
