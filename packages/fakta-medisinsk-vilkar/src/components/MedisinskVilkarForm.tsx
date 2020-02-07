@@ -74,19 +74,19 @@ export const MedisinskVilkarForm = ({
           readOnly={readOnly}
           label={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder' }}
         />
+        <div className={styles.fieldContainer}>
+          <DiagnoseRadio readOnly={readOnly} />
+          {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
+        </div>
+        <div className={styles.fieldContainer}>
+          <Legeerklaering readOnly={readOnly} />
+        </div>
         <InnlagtBarnRadio readOnly={readOnly} />
         <FieldArray
           name={MedisinskVilkårConsts.INNLEGGELSESPERIODER}
           component={InnlagtBarnPeriodeFieldArray}
           props={{ readOnly, erInnlagt }}
         />
-      </div>
-      <div className={styles.fieldContainer}>
-        <DiagnoseRadio readOnly={readOnly} />
-        {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
-      </div>
-      <div className={styles.fieldContainer}>
-        <Legeerklaering readOnly={readOnly} />
       </div>
       <div className={styles.headingContainer}>
         <Systemtittel>

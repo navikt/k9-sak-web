@@ -2546,6 +2546,14 @@
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
+"@navikt/nap-expandable-panel@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-expandable-panel/-/nap-expandable-panel-1.0.1.tgz#8d41519b694ef75464156a145e0f63f947c969f3"
+  integrity sha512-zu5+4wlRD+Q1azjwLzQ12Yg3AadZo8DgOyvZSx8cCNAXPbYk/xJDKQ+ONE7ux/bryyfHTcs3qKcKn/ArmLXe7w==
+  dependencies:
+    "@navikt/nap-bem-utils" "1.0.1"
+    react-collapse "^5.0.1"
+
 "@navikt/nap-process-menu@1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.0.9.tgz#0f8dd811fdf25e6087dd2ea7c9dd5a1a08dff0c6"
@@ -13107,6 +13115,11 @@ react-clientside-effect@^1.2.0:
 react-collapse@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/react-collapse/-/react-collapse-5.0.0.tgz#6e62da4750866d1668a3426a79df4535543487e6"
+
+react-collapse@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-collapse/-/react-collapse-5.0.1.tgz#f763b7207aee73baa1ff778b2d0b4ffb49d900a0"
+  integrity sha512-cN2tkxBWizhPQ2JHfe0aUSJtmMthKA17NZkTElpiQ2snQAAi1hssXZ2fv88rAPNNvG5ss4t0PbOZT0TIl9Lk3Q==
 
 react-color@^2.17.0:
   version "2.17.3"

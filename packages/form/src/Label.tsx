@@ -11,6 +11,7 @@ interface LabelProps {
   input?: LabelType;
   typographyElement?: React.ComponentType<TypografiProps>;
   readOnly?: boolean;
+  visible?: boolean;
 }
 
 export const Label = (props: LabelProps & WrappedComponentProps) => {
@@ -22,12 +23,12 @@ export const Label = (props: LabelProps & WrappedComponentProps) => {
     return label;
   };
 
-  const { input, readOnly, typographyElement: TypoElem } = props;
+  const { input, readOnly, typographyElement: TypoElem, visible } = props;
   if (!input) {
     return null;
   }
   return (
-    <span className={classNames('labelWrapper', { readOnly })}>
+    <span className={classNames('labelWrapper', { readOnly, visuallyHidden: visible === false })}>
       <TypoElem tag="span" className={styles.label}>
         {format(input)}
       </TypoElem>

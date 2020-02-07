@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { PeriodFieldArray, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
 import { PeriodpickerField } from '@fpsak-frontend/form';
-import { required, hasValidDate, dateRangesNotOverlapping } from '@fpsak-frontend/utils';
+import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { dateRangesNotOverlapping, hasValidDate, required } from '@fpsak-frontend/utils';
+import ExpandablePanel from '@navikt/nap-expandable-panel';
+import React, { useEffect } from 'react';
 import { FieldArrayFieldsProps } from 'redux-form';
 import styles from './medisinskVilkar.less';
 
@@ -36,20 +37,24 @@ const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, erInnlagt }: InnlagtBa
         }}
         shouldShowAddButton
         readOnly={readOnly}
+        fieldGroupClassName={styles.fieldGroup}
       >
         {(fieldId, index, getRemoveButton) => (
-          <FlexRow key={fieldId} wrap>
-            <FlexColumn>
-              <PeriodpickerField
-                names={[`${fieldId}.fom`, `${fieldId}.tom`]}
-                validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                defaultValue={null}
-                readOnly={readOnly}
-                label={index === 0 ? { id: 'MedisinskVilkarForm.Periode' } : ''}
-              />
-            </FlexColumn>
-            <FlexColumn>{getRemoveButton()}</FlexColumn>
-          </FlexRow>
+          <ExpandablePanel
+            isOpen
+            renderHeader={() => <b>Oppgi periode hvor barnet er innlagt på sykehus</b>}
+            onClick={() => console.log(123)}
+          >
+            <PeriodpickerField
+              names={[`${fieldId}.fom`, `${fieldId}.tom`]}
+              validate={[required, hasValidDate, dateRangesNotOverlapping]}
+              defaultValue={null}
+              readOnly={readOnly}
+              label={index === 0 ? { id: 'MedisinskVilkarForm.Periode' } : ''}
+              hideLabel
+            />
+            {getRemoveButton()}
+          </ExpandablePanel>
         )}
       </PeriodFieldArray>
     </div>

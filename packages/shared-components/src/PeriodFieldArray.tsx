@@ -52,10 +52,12 @@ const PeriodFieldArray = ({
   shouldShowAddButton,
   createAddButtonInsteadOfImageLink,
   children,
+  fieldGroupClassName,
 }: PeriodFieldArrayProps) => (
   <NavFieldGroup
     title={titleTextCode ? intl.formatMessage({ id: titleTextCode }) : undefined}
     errorMessage={showErrorMessage(meta) ? intl.formatMessage({ ...meta.error }) : null}
+    className={fieldGroupClassName}
   >
     {fields.map((periodeElementFieldId, index) =>
       children(periodeElementFieldId, index, getRemoveButton(index, fields)),
@@ -112,6 +114,7 @@ interface PeriodFieldArrayProps {
   createAddButtonInsteadOfImageLink?: boolean;
   meta?: FieldArrayMetaProps;
   fields: FieldArrayFieldsProps<any>;
+  fieldGroupClassName?: string;
 }
 
 PeriodFieldArray.defaultProps = {
