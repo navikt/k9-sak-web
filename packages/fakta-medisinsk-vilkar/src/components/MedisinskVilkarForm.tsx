@@ -19,7 +19,6 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
-import BehovForKontinuerligTilsynOgPleieFields from './BehovForKontinuerligTilsynOgPleieFields';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
 import DiagnoseRadio from './DiagnoseRadio';
 import InnlagtBarnPeriodeFieldArray from './InnlagtBarnPeriodeFieldArray';
@@ -27,6 +26,7 @@ import InnlagtBarnRadio from './InnlagtBarnRadio';
 import Legeerklaering from './Legeerklaering';
 import styles from './medisinskVilkar.less';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
+import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 
 interface MedisinskVilkarFormProps {
   behandlingId: number;
@@ -94,7 +94,29 @@ export const MedisinskVilkarForm = ({
         </Systemtittel>
       </div>
       <div className={styles.fieldContainer}>
-        <BehovForKontinuerligTilsynOgPleieFields readOnly={readOnly} />
+        <FlexRow>
+          <FlexColumn>
+            <Element>
+              <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie" />
+            </Element>
+            <VerticalSpacer eightPx />
+            <TextAreaField
+              name="begrunnelse"
+              label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
+              validate={[required, minLength(3), maxLength(400), hasValidText]}
+              readOnly={readOnly}
+            />
+            <RadioGroupField
+              name={MedisinskVilkårValues.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
+              bredde="M"
+              validate={[required]}
+              readOnly={readOnly}
+            >
+              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
+              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
+            </RadioGroupField>
+          </FlexColumn>
+        </FlexRow>
         {harBehovForKontinuerligTilsynOgPleie && (
           <FieldArray
             name={MedisinskVilkårConsts.PERIODER_MED_TILSYN_OG_PLEIE}
@@ -172,17 +194,15 @@ export const MedisinskVilkarForm = ({
                                       readOnly={readOnly}
                                     >
                                       {fieldProps => (
-                                        <>
-                                          <FlexColumn>
-                                            <PeriodpickerField
-                                              names={[`${fieldProps}.fom`, `${fieldProps}.tom`]}
-                                              validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                                              defaultValue={null}
-                                              readOnly={readOnly}
-                                              label={{ id: 'MedisinskVilkarForm.BehovForTo.Periode' }}
-                                            />
-                                          </FlexColumn>
-                                        </>
+                                        <FlexColumn>
+                                          <PeriodpickerField
+                                            names={[`${fieldProps}.fom`, `${fieldProps}.tom`]}
+                                            validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                                            defaultValue={null}
+                                            readOnly={readOnly}
+                                            label={{ id: 'MedisinskVilkarForm.BehovForTo.Periode' }}
+                                          />
+                                        </FlexColumn>
                                       )}
                                     </PeriodFieldArray>
                                   );
