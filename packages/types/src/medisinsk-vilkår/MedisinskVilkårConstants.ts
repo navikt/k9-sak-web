@@ -1,4 +1,3 @@
-
 enum MedisinskVilkårConsts {
   LEGEERKLÆRING = 'legeerklæring',
   DIAGNOSEKODE = 'diagnosekode',
@@ -10,8 +9,9 @@ enum MedisinskVilkårConsts {
   PERIODER_MED_TILSYN_OG_PLEIE = 'perioderMedTilsynOgPleie',
   PERIODER_MED_UTVIDET_TILSYN_OG_PLEIE = 'perioderMedUtvidetTilsynOgPleie',
   PERIODE = 'periode',
-  BEGRUNNELSE = 'begrunnelse'
+  BEGRUNNELSE = 'begrunnelse',
+  LEGEERKLÆRING_FOM = 'legeerklæringFom',
+  LEGEERKLÆRING_TOM = 'legeerklæringTom',
 }
-
 
 export default MedisinskVilkårConsts;

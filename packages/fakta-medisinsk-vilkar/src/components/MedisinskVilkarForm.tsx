@@ -1,22 +1,23 @@
+import { PeriodpickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FlexColumn, FlexRow, PeriodFieldArray, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   dateRangesNotOverlapping,
   hasValidDate,
-  required,
-  minLength,
-  maxLength,
   hasValidText,
+  maxLength,
+  minLength,
+  required,
 } from '@fpsak-frontend/utils';
+import { TransformValues } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
+import MedisinskVilkårConsts from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import { Element, Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
-import { FlexColumn, FlexRow, PeriodFieldArray, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { PeriodpickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import MedisinskVilkårConsts from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import BehovForKontinuerligTilsynOgPleieFields from './BehovForKontinuerligTilsynOgPleieFields';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
@@ -66,6 +67,13 @@ export const MedisinskVilkarForm = ({
         </Systemtittel>
       </div>
       <div className={styles.fieldContainer}>
+        <PeriodpickerField
+          names={[`${MedisinskVilkårConsts.LEGEERKLÆRING_FOM}`, `${MedisinskVilkårConsts.LEGEERKLÆRING_TOM}`]}
+          validate={[required, hasValidDate, dateRangesNotOverlapping]}
+          defaultValue={null}
+          readOnly={readOnly}
+          label={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder' }}
+        />
         <InnlagtBarnRadio readOnly={readOnly} />
         <FieldArray
           name={MedisinskVilkårConsts.INNLEGGELSESPERIODER}
@@ -205,11 +213,13 @@ export const MedisinskVilkarForm = ({
   );
 };
 
-const transformValues = values => ({
-  kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
-  begrunnelse: values.begrunnelseLegeerklaering,
-  ...values,
-});
+const transformValues = (values: TransformValues) => {
+  return {
+    kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
+    begrunnelse: values.begrunnelse,
+    ...values,
+  };
+};
 
 // const buildInitialValues = createSelector(
 //   [(props: { legeerklaeringDto: LegeerklaeringDto }) => props.legeerklaeringDto],
