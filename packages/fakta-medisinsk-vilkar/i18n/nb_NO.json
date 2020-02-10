@@ -30,6 +30,8 @@
   "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.IPerioden": "Er det behov for kontinuerlig tilsyn og pleie i denne perioden?",
   "MedisinskVilkarForm.BehovForEnEllerToOmsorgspersoner": "Er det behov for to omsorgspersoner i denne perioden?",
   "MedisinskVilkarForm.BehovForTo.Periode": "I hvilken periode er det behov for to omsorgspersoner?",
+  "MedisinskVilkarForm.BehovForTo.Lagre": "Lagre",
+  "MedisinskVilkarForm.BehovForTo.Avbryt": "Avbryt",
 
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",

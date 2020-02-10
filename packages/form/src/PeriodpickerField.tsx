@@ -17,6 +17,7 @@ interface PeriodpickerFieldProps {
   parse?: (value: string) => string;
   isEdited?: boolean;
   renderIfMissingDateOnReadOnly?: boolean;
+  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
 }
 
 const formatError = (intl: IntlShape, otherProps: object, names: string[]) => {
@@ -78,11 +79,11 @@ const renderPeriodpicker = (hideLabel?: boolean) =>
       const fieldProps = {
         id: `${names[0]}-${names[1]}`,
         feil: formatError(intl, otherProps, names),
-        label: <Label input={label} readOnly={false} visible={hideLabel !== true} />,
+        label: <Label input={label} readOnly={false} />,
         names,
         isEdited,
       };
-      return <Periodpicker {...fieldProps} {...otherProps} />;
+      return <Periodpicker {...fieldProps} {...otherProps} hideLabel={hideLabel} />;
     },
   );
 

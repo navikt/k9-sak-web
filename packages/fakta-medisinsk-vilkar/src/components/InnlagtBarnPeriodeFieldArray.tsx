@@ -1,7 +1,6 @@
 import { PeriodpickerField } from '@fpsak-frontend/form';
-import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { dateRangesNotOverlapping, hasValidDate, required } from '@fpsak-frontend/utils';
-import ExpandablePanel from '@navikt/nap-expandable-panel';
 import React, { useEffect } from 'react';
 import { FieldArrayFieldsProps } from 'redux-form';
 import styles from './medisinskVilkar.less';
@@ -40,21 +39,19 @@ const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, erInnlagt }: InnlagtBa
         fieldGroupClassName={styles.fieldGroup}
       >
         {(fieldId, index, getRemoveButton) => (
-          <ExpandablePanel
-            isOpen
-            renderHeader={() => <b>Oppgi periode hvor barnet er innlagt på sykehus</b>}
-            onClick={() => console.log(123)}
-          >
-            <PeriodpickerField
-              names={[`${fieldId}.fom`, `${fieldId}.tom`]}
-              validate={[required, hasValidDate, dateRangesNotOverlapping]}
-              defaultValue={null}
-              readOnly={readOnly}
-              label={index === 0 ? { id: 'MedisinskVilkarForm.Periode' } : ''}
-              hideLabel
-            />
-            {getRemoveButton()}
-          </ExpandablePanel>
+          <FlexRow wrap>
+            <FlexColumn>
+              <PeriodpickerField
+                names={[`${fieldId}.fom`, `${fieldId}.tom`]}
+                validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                defaultValue={null}
+                readOnly={readOnly}
+                label={index === 0 ? { id: 'MedisinskVilkarForm.Periode' } : ''}
+                hideLabel
+              />
+            </FlexColumn>
+            <FlexColumn>{getRemoveButton()}</FlexColumn>
+          </FlexRow>
         )}
       </PeriodFieldArray>
     </div>

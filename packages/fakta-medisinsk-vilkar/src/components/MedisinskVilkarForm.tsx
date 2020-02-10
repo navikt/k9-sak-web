@@ -18,6 +18,8 @@ import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
+import ExpandablePanel from '@navikt/nap-expandable-panel';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
 import DiagnoseRadio from './DiagnoseRadio';
@@ -74,6 +76,12 @@ export const MedisinskVilkarForm = ({
           readOnly={readOnly}
           label={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder' }}
         />
+        <InnlagtBarnRadio readOnly={readOnly} />
+        <FieldArray
+          name={MedisinskVilkårConsts.INNLEGGELSESPERIODER}
+          component={InnlagtBarnPeriodeFieldArray}
+          props={{ readOnly, erInnlagt }}
+        />
         <div className={styles.fieldContainer}>
           <DiagnoseRadio readOnly={readOnly} />
           {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
@@ -81,12 +89,6 @@ export const MedisinskVilkarForm = ({
         <div className={styles.fieldContainer}>
           <Legeerklaering readOnly={readOnly} />
         </div>
-        <InnlagtBarnRadio readOnly={readOnly} />
-        <FieldArray
-          name={MedisinskVilkårConsts.INNLEGGELSESPERIODER}
-          component={InnlagtBarnPeriodeFieldArray}
-          props={{ readOnly, erInnlagt }}
-        />
       </div>
       <div className={styles.headingContainer}>
         <Systemtittel>
@@ -136,80 +138,114 @@ export const MedisinskVilkarForm = ({
                     shouldShowAddButton
                     readOnly={readOnly}
                   >
-                    {(fieldId, index, getRemoveButton) => {
+                    {(fieldId, index) => {
                       return (
-                        <div className={styles.periodeContainer}>
-                          <FlexRow key={fieldId} wrap>
-                            <FlexColumn>
-                              <PeriodpickerField
-                                names={[
-                                  `${fieldId}.${MedisinskVilkårConsts.FOM}`,
-                                  `${fieldId}.${MedisinskVilkårConsts.TOM}`,
-                                ]}
-                                validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                                defaultValue={null}
-                                readOnly={readOnly}
-                                label={{ id: 'MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder' }}
-                              />
-                            </FlexColumn>
-                            <FlexColumn>{getRemoveButton()}</FlexColumn>
-                          </FlexRow>
-                          <FlexRow>
-                            <FlexColumn>
-                              <Element>
-                                <FormattedMessage id="MedisinskVilkarForm.BehovForEnEllerToOmsorgspersoner" />
-                              </Element>
-                              <VerticalSpacer eightPx />
-                              <TextAreaField
-                                name={`${fieldId}.${MedisinskVilkårConsts.BEGRUNNELSE}`}
-                                label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                                validate={[required, minLength(3), maxLength(400), hasValidText]}
-                                readOnly={readOnly}
-                              />
-                              <RadioGroupField
-                                name={`${fieldId}.behovForToOmsorgspersoner`}
-                                bredde="M"
-                                validate={[required]}
-                                readOnly={readOnly}
-                              >
-                                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }} value="jaHele" />
-                                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }} value="jaDeler" />
-                                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value="nei" />
-                              </RadioGroupField>
-                            </FlexColumn>
-                          </FlexRow>
-                          {fields.get(index).behovForToOmsorgspersoner === 'jaDeler' && (
-                            <FlexRow>
-                              <FieldArray
-                                name={MedisinskVilkårConsts.PERIODER_MED_UTVIDET_TILSYN_OG_PLEIE}
-                                component={utvidetTilsynFieldProps => {
-                                  return (
-                                    <PeriodFieldArray
-                                      fields={utvidetTilsynFieldProps.fields}
-                                      emptyPeriodTemplate={{
-                                        fom: '',
-                                        tom: '',
-                                      }}
-                                      shouldShowAddButton
-                                      readOnly={readOnly}
-                                    >
-                                      {fieldProps => (
-                                        <FlexColumn>
-                                          <PeriodpickerField
-                                            names={[`${fieldProps}.fom`, `${fieldProps}.tom`]}
-                                            validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                                            defaultValue={null}
-                                            readOnly={readOnly}
-                                            label={{ id: 'MedisinskVilkarForm.BehovForTo.Periode' }}
-                                          />
-                                        </FlexColumn>
-                                      )}
-                                    </PeriodFieldArray>
-                                  );
-                                }}
-                              />
-                            </FlexRow>
-                          )}
+                        <div className={styles.expandablePanelContainer}>
+                          <ExpandablePanel
+                            isOpen
+                            renderHeader={() => <b>Oppgi periode hvor barnet er innlagt på sykehus</b>}
+                            onClick={() => null}
+                            key={fieldId}
+                          >
+                            <div className={styles.periodeContainer}>
+                              <FlexRow key={fieldId} wrap>
+                                <FlexColumn>
+                                  <PeriodpickerField
+                                    names={[
+                                      `${fieldId}.${MedisinskVilkårConsts.FOM}`,
+                                      `${fieldId}.${MedisinskVilkårConsts.TOM}`,
+                                    ]}
+                                    validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                                    defaultValue={null}
+                                    readOnly={readOnly}
+                                    label={{ id: 'MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder' }}
+                                  />
+                                </FlexColumn>
+                              </FlexRow>
+                              <FlexRow>
+                                <FlexColumn>
+                                  <Element>
+                                    <FormattedMessage id="MedisinskVilkarForm.BehovForEnEllerToOmsorgspersoner" />
+                                  </Element>
+                                  <VerticalSpacer eightPx />
+                                  <TextAreaField
+                                    name={`${fieldId}.${MedisinskVilkårConsts.BEGRUNNELSE}`}
+                                    label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
+                                    validate={[required, minLength(3), maxLength(400), hasValidText]}
+                                    readOnly={readOnly}
+                                  />
+                                  <RadioGroupField
+                                    name={`${fieldId}.behovForToOmsorgspersoner`}
+                                    bredde="M"
+                                    validate={[required]}
+                                    readOnly={readOnly}
+                                  >
+                                    <RadioOption
+                                      label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }}
+                                      value="jaHele"
+                                    />
+                                    <RadioOption
+                                      label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }}
+                                      value="jaDeler"
+                                    />
+                                    <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value="nei" />
+                                  </RadioGroupField>
+                                </FlexColumn>
+                              </FlexRow>
+                              {fields.get(index).behovForToOmsorgspersoner === 'jaDeler' && (
+                                <FlexRow>
+                                  <FieldArray
+                                    name={MedisinskVilkårConsts.PERIODER_MED_UTVIDET_TILSYN_OG_PLEIE}
+                                    component={utvidetTilsynFieldProps => {
+                                      return (
+                                        <PeriodFieldArray
+                                          fields={utvidetTilsynFieldProps.fields}
+                                          emptyPeriodTemplate={{
+                                            fom: '',
+                                            tom: '',
+                                          }}
+                                          shouldShowAddButton
+                                          readOnly={readOnly}
+                                        >
+                                          {fieldProps => (
+                                            <FlexColumn>
+                                              <PeriodpickerField
+                                                names={[`${fieldProps}.fom`, `${fieldProps}.tom`]}
+                                                validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                                                defaultValue={null}
+                                                readOnly={readOnly}
+                                                label={{ id: 'MedisinskVilkarForm.BehovForTo.Periode' }}
+                                              />
+                                            </FlexColumn>
+                                          )}
+                                        </PeriodFieldArray>
+                                      );
+                                    }}
+                                  />
+                                </FlexRow>
+                              )}
+                              <FlexRow>
+                                <FlexColumn>
+                                  <Hovedknapp
+                                    mini
+                                    // disabled={isDisabled(
+                                    // )}
+                                    // onClick={onClick}
+                                    htmlType="button"
+                                  >
+                                    <FormattedMessage id="MedisinskVilkarForm.BehovForTo.Lagre" />
+                                  </Hovedknapp>
+                                </FlexColumn>
+                                {index > 0 && (
+                                  <FlexColumn>
+                                    <Knapp mini htmlType="button" onClick={() => fields.remove(index)} disabled={false}>
+                                      <FormattedMessage id="MedisinskVilkarForm.BehovForTo.Avbryt" />
+                                    </Knapp>
+                                  </FlexColumn>
+                                )}
+                              </FlexRow>
+                            </div>
+                          </ExpandablePanel>
                         </div>
                       );
                     }}
