@@ -23,6 +23,14 @@
   "MedisinskVilkarForm.LeggTilDiagnose": "Legg til diagnose",
   "MedisinskVilkarForm.F-90": "F 90 - Hyberkinetiske forstyrrelser",
 
+  "ValidationMessage.NotEmpty": "Feltet må fylles ut",
+  "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
+  "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
+  "ValidationMessage.MinValue": "Feltet må være større eller lik {length}",
+  "ValidationMessage.MaxValue": "Feltet må være mindre eller lik {length}",
+  "ValidationMessage.InvalidDate": "Dato må skrives slik : dd.mm.åååå",
+  "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
+
   "MedisinskVilkarForm.Legeerklæring.Perioder": "Hvilke datoer gjelder legeerklæringen for?",
   "MedisinskVilkarForm.Begrunnelse": "Begrunnelse",
   "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie": "Har barnet behov for kontinuerlig tilsyn og pleie?",
