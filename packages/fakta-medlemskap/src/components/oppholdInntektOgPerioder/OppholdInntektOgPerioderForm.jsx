@@ -232,7 +232,7 @@ export const transformValues = (values, aksjonspunkter) => {
 
   return aktiveMedlemAksjonspunkter.map((ap) => ({
     kode: ap.definisjon.kode,
-    begrunnelse: '',
+    // begrunnelse: '', //TODO (Hallvard): Kan vi fjerne denne?
     bekreftedePerioder: values.perioder.map((periode) => {
       // TODO Kor mange felt er det i bekreftetPeriode? Kan ein heller laga nytt objekt med det ein treng?
       const {

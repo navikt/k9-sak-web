@@ -13,19 +13,15 @@ interface Fields {
 interface InnlagtBarnPeriodeFieldArrayProps {
   readOnly: boolean;
   fields: FieldArrayFieldsProps<Fields>;
-  erInnlagt: boolean;
 }
 
-const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, erInnlagt }: InnlagtBarnPeriodeFieldArrayProps) => {
+const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields }: InnlagtBarnPeriodeFieldArrayProps) => {
   useEffect(() => {
     if (fields.length === 0) {
       fields.push({ fom: '', tom: '' });
     }
   }, []);
 
-  if (!erInnlagt) {
-    return null;
-  }
   return (
     <div className={styles.pickerContainer}>
       <PeriodFieldArray

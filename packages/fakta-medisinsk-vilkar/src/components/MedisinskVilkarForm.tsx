@@ -1,34 +1,24 @@
-import { PeriodpickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FlexColumn, FlexRow, PeriodFieldArray, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  dateRangesNotOverlapping,
-  hasValidDate,
-  hasValidText,
-  maxLength,
-  minLength,
-  required,
-} from '@fpsak-frontend/utils';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
 import { TransformValues } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
-import { Element, Systemtittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
-import ExpandablePanel from '@navikt/nap-expandable-panel';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import DatepickerField from '../../../form/src/DatepickerField';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
 import DiagnoseRadio from './DiagnoseRadio';
 import InnlagtBarnPeriodeFieldArray from './InnlagtBarnPeriodeFieldArray';
 import InnlagtBarnRadio from './InnlagtBarnRadio';
+import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
 import Legeerklaering from './Legeerklaering';
 import styles from './medisinskVilkar.less';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
-import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 
 interface MedisinskVilkarFormProps {
   behandlingId: number;
@@ -69,19 +59,21 @@ export const MedisinskVilkarForm = ({
         </Systemtittel>
       </div>
       <div className={styles.fieldContainer}>
-        <PeriodpickerField
-          names={[`${MedisinskVilkårConsts.LEGEERKLÆRING_FOM}`, `${MedisinskVilkårConsts.LEGEERKLÆRING_TOM}`]}
-          validate={[required, hasValidDate, dateRangesNotOverlapping]}
+        <DatepickerField
+          name={MedisinskVilkårConsts.LEGEERKLÆRING_FOM}
+          validate={[required, hasValidDate]}
           defaultValue={null}
           readOnly={readOnly}
           label={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder' }}
         />
         <InnlagtBarnRadio readOnly={readOnly} />
-        <FieldArray
-          name={MedisinskVilkårConsts.INNLEGGELSESPERIODER}
-          component={InnlagtBarnPeriodeFieldArray}
-          props={{ readOnly, erInnlagt }}
-        />
+        {erInnlagt && (
+          <FieldArray
+            name={MedisinskVilkårConsts.INNLEGGELSESPERIODER}
+            component={InnlagtBarnPeriodeFieldArray}
+            props={{ readOnly }}
+          />
+        )}
         <div className={styles.fieldContainer}>
           <DiagnoseRadio readOnly={readOnly} />
           {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
@@ -96,166 +88,10 @@ export const MedisinskVilkarForm = ({
         </Systemtittel>
       </div>
       <div className={styles.fieldContainer}>
-        <FlexRow>
-          <FlexColumn>
-            <Element>
-              <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie" />
-            </Element>
-            <VerticalSpacer eightPx />
-            <TextAreaField
-              name="begrunnelse"
-              label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-              validate={[required, minLength(3), maxLength(400), hasValidText]}
-              readOnly={readOnly}
-            />
-            <RadioGroupField
-              name={MedisinskVilkårValues.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
-              bredde="M"
-              validate={[required]}
-              readOnly={readOnly}
-            >
-              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-              <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-            </RadioGroupField>
-          </FlexColumn>
-        </FlexRow>
-        {harBehovForKontinuerligTilsynOgPleie && (
-          <FieldArray
-            name={MedisinskVilkårConsts.PERIODER_MED_TILSYN_OG_PLEIE}
-            rerenderOnEveryChange
-            component={({ fields }) => {
-              if (fields.length === 0) {
-                fields.push({ fom: '', tom: '', behovForToOmsorgspersoner: undefined });
-              }
-              return (
-                <div className={styles.pickerContainer}>
-                  <PeriodFieldArray
-                    fields={fields}
-                    emptyPeriodTemplate={{
-                      fom: '',
-                      tom: '',
-                    }}
-                    shouldShowAddButton
-                    readOnly={readOnly}
-                  >
-                    {(fieldId, index) => {
-                      return (
-                        <div className={styles.expandablePanelContainer}>
-                          <ExpandablePanel
-                            isOpen
-                            renderHeader={() => <b>Oppgi periode hvor barnet er innlagt på sykehus</b>}
-                            onClick={() => null}
-                            key={fieldId}
-                          >
-                            <div className={styles.periodeContainer}>
-                              <FlexRow key={fieldId} wrap>
-                                <FlexColumn>
-                                  <PeriodpickerField
-                                    names={[
-                                      `${fieldId}.${MedisinskVilkårConsts.FOM}`,
-                                      `${fieldId}.${MedisinskVilkårConsts.TOM}`,
-                                    ]}
-                                    validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                                    defaultValue={null}
-                                    readOnly={readOnly}
-                                    label={{ id: 'MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder' }}
-                                  />
-                                </FlexColumn>
-                              </FlexRow>
-                              <FlexRow>
-                                <FlexColumn>
-                                  <Element>
-                                    <FormattedMessage id="MedisinskVilkarForm.BehovForEnEllerToOmsorgspersoner" />
-                                  </Element>
-                                  <VerticalSpacer eightPx />
-                                  <TextAreaField
-                                    name={`${fieldId}.${MedisinskVilkårConsts.BEGRUNNELSE}`}
-                                    label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                                    validate={[required, minLength(3), maxLength(400), hasValidText]}
-                                    readOnly={readOnly}
-                                  />
-                                  <RadioGroupField
-                                    name={`${fieldId}.behovForToOmsorgspersoner`}
-                                    bredde="M"
-                                    validate={[required]}
-                                    readOnly={readOnly}
-                                  >
-                                    <RadioOption
-                                      label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }}
-                                      value="jaHele"
-                                    />
-                                    <RadioOption
-                                      label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }}
-                                      value="jaDeler"
-                                    />
-                                    <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value="nei" />
-                                  </RadioGroupField>
-                                </FlexColumn>
-                              </FlexRow>
-                              {fields.get(index).behovForToOmsorgspersoner === 'jaDeler' && (
-                                <FlexRow>
-                                  <FieldArray
-                                    name={MedisinskVilkårConsts.PERIODER_MED_UTVIDET_TILSYN_OG_PLEIE}
-                                    component={utvidetTilsynFieldProps => {
-                                      return (
-                                        <PeriodFieldArray
-                                          fields={utvidetTilsynFieldProps.fields}
-                                          emptyPeriodTemplate={{
-                                            fom: '',
-                                            tom: '',
-                                          }}
-                                          shouldShowAddButton
-                                          readOnly={readOnly}
-                                        >
-                                          {fieldProps => (
-                                            <FlexColumn>
-                                              <PeriodpickerField
-                                                names={[`${fieldProps}.fom`, `${fieldProps}.tom`]}
-                                                validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                                                defaultValue={null}
-                                                readOnly={readOnly}
-                                                label={{ id: 'MedisinskVilkarForm.BehovForTo.Periode' }}
-                                              />
-                                            </FlexColumn>
-                                          )}
-                                        </PeriodFieldArray>
-                                      );
-                                    }}
-                                  />
-                                </FlexRow>
-                              )}
-                              <FlexRow>
-                                <FlexColumn>
-                                  <Hovedknapp
-                                    mini
-                                    // disabled={isDisabled(
-                                    // )}
-                                    // onClick={onClick}
-                                    htmlType="button"
-                                  >
-                                    <FormattedMessage id="MedisinskVilkarForm.BehovForTo.Lagre" />
-                                  </Hovedknapp>
-                                </FlexColumn>
-                                {index > 0 && (
-                                  <FlexColumn>
-                                    <Knapp mini htmlType="button" onClick={() => fields.remove(index)} disabled={false}>
-                                      <FormattedMessage id="MedisinskVilkarForm.BehovForTo.Avbryt" />
-                                    </Knapp>
-                                  </FlexColumn>
-                                )}
-                              </FlexRow>
-                            </div>
-                          </ExpandablePanel>
-                        </div>
-                      );
-                    }}
-                  </PeriodFieldArray>
-                </div>
-              );
-            }}
-            props={{ readOnly }}
-          />
-        )}
+        <KontinuerligTilsynOgPleie
+          readOnly={readOnly}
+          harBehovForKontinuerligTilsynOgPleie={harBehovForKontinuerligTilsynOgPleie}
+        />
       </div>
       <MedisinskVilkarFormButtons
         behandlingId={behandlingId}
@@ -273,7 +109,39 @@ const transformValues = (values: TransformValues) => {
   return {
     kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
     begrunnelse: values.begrunnelse,
-    ...values,
+    legeerklæring: [
+      {
+        identifikator: null,
+        diagnosekode: values.diagnosekode,
+        kilde: values.legeerklaeringkilde,
+        fom: values.legeerklæringFom,
+        tom: values.legeerklæringFom,
+        innleggelsesperioder: values.innleggelsesperioder,
+      },
+    ],
+    pleiebehov: {
+      perioderMedTilsynOgPleie: values.perioderMedTilsynOgPleie
+        ?.filter(periodeMedTilsyonOgPleie => !!periodeMedTilsyonOgPleie.fom && !!periodeMedTilsyonOgPleie.tom)
+        .map(periodeMedTilsyonOgPleie => ({
+          periode: {
+            fom: periodeMedTilsyonOgPleie.fom,
+            tom: periodeMedTilsyonOgPleie.tom,
+          },
+          begrunnelse: values.begrunnelse, // TODO (Hallvard): Denne skal kanskje være noe annet
+        })),
+      perioderMedUtvidetTilsynOgPleie: values.perioderMedUtvidetTilsynOgPleie
+        ?.filter(
+          periodeMedUtvidetTilsyonOgPleie =>
+            !!periodeMedUtvidetTilsyonOgPleie.fom && !!periodeMedUtvidetTilsyonOgPleie.tom,
+        )
+        .map((periodeMedUtvidetTilsyonOgPleie, idx: number) => ({
+          periode: {
+            fom: periodeMedUtvidetTilsyonOgPleie.fom,
+            tom: periodeMedUtvidetTilsyonOgPleie.tom,
+          },
+          begrunnelse: values.perioderMedTilsynOgPleie[idx].begrunnelse,
+        })),
+    },
   };
 };
 
@@ -290,7 +158,7 @@ const transformValues = (values: TransformValues) => {
 // );
 
 const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
-  const { submitCallback } = props;
+  const { submitCallback, behandlingId, behandlingVersjon } = props;
   const onSubmit = values => submitCallback([transformValues(values)]);
 
   return state => ({
@@ -298,30 +166,26 @@ const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
     // initialValues: buildInitialValues({ legeerklaeringDto }),
     [MedisinskVilkårConsts.DIAGNOSEKODE]: !!behandlingFormValueSelector(
       formName,
-      props.behandlingId,
-      props.behandlingVersjon,
+      behandlingId,
+      behandlingVersjon,
     )(state, MedisinskVilkårConsts.DIAGNOSEKODE),
-    erInnlagt: !!behandlingFormValueSelector(formName, props.behandlingId, props.behandlingVersjon)(state, 'erInnlagt'),
+    erInnlagt: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erInnlagt'),
     behovForToOmsorgspersoner: !!behandlingFormValueSelector(
       formName,
-      props.behandlingId,
-      props.behandlingVersjon,
+      behandlingId,
+      behandlingVersjon,
     )(state, 'behovForToOmsorgspersoner'),
     harBehovForKontinuerligTilsynOgPleie: !!behandlingFormValueSelector(
       formName,
-      props.behandlingId,
-      props.behandlingVersjon,
+      behandlingId,
+      behandlingVersjon,
     )(state, 'harBehovForKontinuerligTilsynOgPleie'),
     [MedisinskVilkårConsts.PERIODER_MED_TILSYN_OG_PLEIE]: !!behandlingFormValueSelector(
       formName,
-      props.behandlingId,
-      props.behandlingVersjon,
+      behandlingId,
+      behandlingVersjon,
     ),
-    harDiagnose: !!behandlingFormValueSelector(
-      formName,
-      props.behandlingId,
-      props.behandlingVersjon,
-    )(state, 'harDiagnose'),
+    harDiagnose: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'harDiagnose'),
   });
 };
 
