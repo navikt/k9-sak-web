@@ -24,7 +24,11 @@ interface UttakkPPProps {
 
 const erKvinne = kjønnkode => kjønnkode === navBrukerKjonn.KVINNE;
 
-export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl): TidslinjeRad<UttakPeriode>[] =>
+export const mapRader = (
+  behandlinger: Behandlinger,
+  behandlingPersonMap: BehandlingPersonMap,
+  intl,
+): TidslinjeRad<UttakPeriode>[] =>
   Object.entries(behandlinger).map(([behandlingsId, behandling]) => {
     const { kjønnkode } = behandlingPersonMap[behandlingsId];
     const kvinne = erKvinne(kjønnkode);
