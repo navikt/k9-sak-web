@@ -49,7 +49,10 @@ export const mapRader = (behandlinger: Behandlinger, behandlingPersonMap, intl):
           avvistPeriode: resultat === ResultattypeEnum.AVSLÅTT,
           undefined: resultat === ResultattypeEnum.UAVKLART,
         }),
-        periodeinfo: periode,
+        periodeinfo: {
+          ...periode,
+          behandlingsId,
+        },
       };
     });
 
@@ -142,6 +145,9 @@ const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPer
             <Undertittel>
               <FormattedMessage id="UttakPanel.ValgtPeriode" />
             </Undertittel>
+            <Normaltekst>
+              {`Fødselsnummer: ${behandlingPersonMap[valgtPeriode.periodeinfo.behandlingsId].fnr}`}
+            </Normaltekst>
             <Normaltekst>
               <FormattedMessage
                 id="UttakPanel.FOM"
