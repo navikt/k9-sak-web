@@ -54,7 +54,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
 
     {harBehovForKontinuerligTilsynOgPleie && (
       <FieldArray
-        name={MedisinskVilkårConsts.PERIODER_MED_TILSYN_OG_PLEIE}
+        name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
         rerenderOnEveryChange
         component={({ fields }) => {
           if (fields.length === 0) {
@@ -74,12 +74,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                 {(fieldId, index) => {
                   return (
                     <div className={styles.expandablePanelContainer}>
-                      <ExpandablePanel
-                        isOpen
-                        renderHeader={() => <b>Oppgi periode hvor barnet er innlagt på sykehus</b>}
-                        onClick={() => null}
-                        key={fieldId}
-                      >
+                      <ExpandablePanel isOpen renderHeader={() => null} onClick={() => null} key={fieldId}>
                         <div className={styles.periodeContainer}>
                           <FlexRow key={fieldId} wrap>
                             <FlexColumn>
@@ -114,15 +109,18 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                 readOnly={readOnly}
                               >
                                 <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }} value="jaHele" />
-                                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }} value="jaDeler" />
+                                <RadioOption
+                                  label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }}
+                                  value={MedisinskVilkårConsts.JA_DELER}
+                                />
                                 <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value="nei" />
                               </RadioGroupField>
                             </FlexColumn>
                           </FlexRow>
-                          {fields.get(index).behovForToOmsorgspersoner === 'jaDeler' && (
+                          {fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_DELER && (
                             <FlexRow>
                               <FieldArray
-                                name={MedisinskVilkårConsts.PERIODER_MED_UTVIDET_TILSYN_OG_PLEIE}
+                                name={MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}
                                 component={utvidetTilsynFieldProps => {
                                   return (
                                     <PeriodFieldArray
@@ -134,16 +132,19 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                       shouldShowAddButton
                                       readOnly={readOnly}
                                     >
-                                      {fieldProps => (
-                                        <FlexColumn>
-                                          <PeriodpickerField
-                                            names={[`${fieldProps}.fom`, `${fieldProps}.tom`]}
-                                            validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                                            defaultValue={null}
-                                            readOnly={readOnly}
-                                            label={{ id: 'MedisinskVilkarForm.BehovForTo.Periode' }}
-                                          />
-                                        </FlexColumn>
+                                      {(utvidetTilsynFieldId, idx, getRemoveButton) => (
+                                        <FlexRow wrap>
+                                          <FlexColumn>
+                                            <PeriodpickerField
+                                              names={[`${utvidetTilsynFieldId}.fom`, `${utvidetTilsynFieldId}.tom`]}
+                                              validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                                              defaultValue={null}
+                                              readOnly={readOnly}
+                                              label={idx === 0 ? { id: 'MedisinskVilkarForm.BehovForTo.Periode' } : ''}
+                                            />
+                                          </FlexColumn>
+                                          <FlexColumn>{getRemoveButton()}</FlexColumn>
+                                        </FlexRow>
                                       )}
                                     </PeriodFieldArray>
                                   );
