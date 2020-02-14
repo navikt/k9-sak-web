@@ -13,7 +13,7 @@ import MedisinskVilkarIndex from "@fpsak-frontend/fakta-medisinsk-vilkar/src/Med
 
 import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
 
-import fpBehandlingApi from '../data/fpBehandlingApi';
+import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 
 const faktaPanelDefinisjoner = [{
   urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
@@ -47,7 +47,7 @@ const faktaPanelDefinisjoner = [{
   aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
     aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE, aksjonspunktCodes.AVKLAR_OPPHOLDSRETT, aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO],
-  endpoints: [fpBehandlingApi.MEDLEMSKAP, fpBehandlingApi.MEDLEMSKAP_V2],
+  endpoints: [pleiepengerBehandlingApi.MEDLEMSKAP, pleiepengerBehandlingApi.MEDLEMSKAP_V2],
   renderComponent: (props) => <MedlemskapFaktaIndex {...props} />,
   showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
   getData: ({
@@ -64,7 +64,7 @@ const faktaPanelDefinisjoner = [{
   urlCode: faktaPanelCodes.OPPTJENINGSVILKARET,
   textCode: 'OpptjeningInfoPanel.KontrollerFaktaForOpptjening',
   aksjonspunkterCodes: [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING],
-  endpoints: [fpBehandlingApi.OPPTJENING],
+  endpoints: [pleiepengerBehandlingApi.OPPTJENING],
   renderComponent: (props) => <OpptjeningFaktaIndex {...props} />,
   showComponent: ({ vilkar }) => vilkar.some((v) => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET)
     && vilkar.some((v) => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && v.vilkarStatus.kode === vilkarUtfallType.OPPFYLT),
