@@ -1,4 +1,4 @@
-interface Periode {
+export interface Periode {
   fom: Date | string;
   tom: Date | string;
 }
@@ -16,8 +16,10 @@ const diagnosekode = 'diagnosekode';
 export interface Legeerklæring {
   [diagnosekode]: string;
   kilde: LegeerklæringKilde;
-  gjelderForPeriode: Periode;
+  fom: string;
+  tom: string;
   innleggelsesperioder: Periode[];
+  identifikator: string;
 }
 
 export interface PeriodeMedTilsynOgPleie extends Periode {
@@ -26,8 +28,8 @@ export interface PeriodeMedTilsynOgPleie extends Periode {
 }
 
 export interface Pleiebehov {
-  perioderMedTilsynOgPleie: PeriodeMedTilsynOgPleie[];
-  perioderMedUtvidetTilsynOgPleie: PeriodeMedTilsynOgPleie[];
+  perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
+  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
 }
 
 export interface MedisinskVilkår {
@@ -45,6 +47,12 @@ export interface TransformValues {
   legeerklaeringkilde: string;
   legeerklæringFom: string;
   legeerklæringTom: string;
-  perioderMedTilsynOgPleie?: PeriodeMedTilsynOgPleie[];
-  perioderMedUtvidetTilsynOgPleie?: Periode[];
+  perioderMedKontinuerligTilsynOgPleie?: PeriodeMedTilsynOgPleie[];
+  perioderMedUtvidetKontinuerligTilsynOgPleie?: Periode[];
+}
+
+export interface Sykdom {
+  legeerklæringer: Legeerklæring[];
+  perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
+  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
 }

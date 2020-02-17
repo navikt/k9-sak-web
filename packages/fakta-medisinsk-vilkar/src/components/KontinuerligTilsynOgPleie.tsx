@@ -15,6 +15,7 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
+import moment from 'moment';
 import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 import styles from './medisinskVilkar.less';
 
@@ -54,7 +55,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
 
     {harBehovForKontinuerligTilsynOgPleie && (
       <FieldArray
-        name={MedisinskVilkårConsts.PERIODER_MED_TILSYN_OG_PLEIE}
+        name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
         rerenderOnEveryChange
         component={({ fields }) => {
           if (fields.length === 0) {
@@ -72,16 +73,12 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                 readOnly={readOnly}
               >
                 {(fieldId, index) => {
+                  const isPeriodeDefined = !!fields.get(index).fom && !!fields.get(index).tom;
                   return (
-                    <div className={styles.expandablePanelContainer}>
-                      <ExpandablePanel
-                        isOpen
-                        renderHeader={() => <b>Oppgi periode hvor barnet er innlagt på sykehus</b>}
-                        onClick={() => null}
-                        key={fieldId}
-                      >
+                    <div key={fieldId} className={styles.expandablePanelContainer}>
+                      <ExpandablePanel isOpen renderHeader={() => null} onClick={() => null}>
                         <div className={styles.periodeContainer}>
-                          <FlexRow key={fieldId} wrap>
+                          <FlexRow wrap>
                             <FlexColumn>
                               <PeriodpickerField
                                 names={[
@@ -111,18 +108,21 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                 name={`${fieldId}.behovForToOmsorgspersoner`}
                                 bredde="M"
                                 validate={[required]}
-                                readOnly={readOnly}
+                                readOnly={readOnly || !isPeriodeDefined}
                               >
                                 <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }} value="jaHele" />
-                                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }} value="jaDeler" />
+                                <RadioOption
+                                  label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }}
+                                  value={MedisinskVilkårConsts.JA_DELER}
+                                />
                                 <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value="nei" />
                               </RadioGroupField>
                             </FlexColumn>
                           </FlexRow>
-                          {fields.get(index).behovForToOmsorgspersoner === 'jaDeler' && (
+                          {fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_DELER && (
                             <FlexRow>
                               <FieldArray
-                                name={MedisinskVilkårConsts.PERIODER_MED_UTVIDET_TILSYN_OG_PLEIE}
+                                name={MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}
                                 component={utvidetTilsynFieldProps => {
                                   return (
                                     <PeriodFieldArray
@@ -134,16 +134,23 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                       shouldShowAddButton
                                       readOnly={readOnly}
                                     >
-                                      {fieldProps => (
-                                        <FlexColumn>
-                                          <PeriodpickerField
-                                            names={[`${fieldProps}.fom`, `${fieldProps}.tom`]}
-                                            validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                                            defaultValue={null}
-                                            readOnly={readOnly}
-                                            label={{ id: 'MedisinskVilkarForm.BehovForTo.Periode' }}
-                                          />
-                                        </FlexColumn>
+                                      {(utvidetTilsynFieldId, idx, getRemoveButton) => (
+                                        <FlexRow key={utvidetTilsynFieldId} wrap>
+                                          <FlexColumn>
+                                            <PeriodpickerField
+                                              names={[`${utvidetTilsynFieldId}.fom`, `${utvidetTilsynFieldId}.tom`]}
+                                              validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                                              defaultValue={null}
+                                              readOnly={readOnly}
+                                              label={idx === 0 ? { id: 'MedisinskVilkarForm.BehovForTo.Periode' } : ''}
+                                              disabledDays={{
+                                                before: moment(fields.get(index).fom).toDate(),
+                                                after: moment(fields.get(index).tom).toDate(),
+                                              }}
+                                            />
+                                          </FlexColumn>
+                                          <FlexColumn>{getRemoveButton()}</FlexColumn>
+                                        </FlexRow>
                                       )}
                                     </PeriodFieldArray>
                                   );

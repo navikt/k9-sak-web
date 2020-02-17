@@ -1,6 +1,7 @@
+import { Aksjonspunkt } from '@k9-frontend/types';
+import { Sykdom } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { Aksjonspunkt } from '@k9-frontend/types';
 import messages from '../i18n/nb_NO.json';
 import MedisinskVilkarForm from './components/MedisinskVilkarForm';
 
@@ -54,6 +55,8 @@ interface MedisinskVilkarIndexProps {
   shouldOpenDefaultInfoPanels: boolean;
   hasOpenAksjonspunkter: boolean;
   submittable: boolean;
+  sykdom: Sykdom;
+  aksjonspunkter: Aksjonspunkt[];
 }
 
 const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
@@ -63,6 +66,8 @@ const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
     submitCallback,
     hasOpenAksjonspunkter,
     submittable,
+    sykdom,
+    aksjonspunkter,
   } = props;
   return (
     <RawIntlProvider value={intlConfig}>
@@ -73,6 +78,8 @@ const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
         submitCallback={submitCallback}
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         submittable={submittable}
+        sykdom={sykdom}
+        aksjonspunkter={aksjonspunkter}
       />
     </RawIntlProvider>
   );
