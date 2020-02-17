@@ -2,7 +2,6 @@ import React, { FunctionComponent, useEffect, useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
-import { useIntl } from 'react-intl';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
@@ -12,8 +11,8 @@ import Periode from './types/Periode';
 import TidslinjeRad from './types/TidslinjeRad';
 
 export interface TidslinjeIkon {
-  imageTextKey: string;
-  titleKey: string;
+  imageText: string;
+  title: string;
   src: SVGElement;
 }
 
@@ -111,20 +110,13 @@ const Tidslinje: FunctionComponent<TidslinjeProps> = ({
       .sort((p1, p2) => momentDate(p1.fom).diff(momentDate(p2.fom)));
   }, [rader]);
 
-  const intl = useIntl();
-
   return (
     <div className={styles.timelineContainer}>
       <Row>
         <Column xs="1">
           <div className={styles.timelineIkonContainer}>
             {rader.map(({ ikon, id }) => (
-              <Image
-                key={id}
-                src={ikon.src}
-                alt={intl.formatMessage({ id: ikon.imageTextKey })}
-                title={intl.formatMessage({ id: ikon.titleKey })}
-              />
+              <Image key={id} src={ikon.src} alt={ikon.imageText} title={ikon.title} />
             ))}
           </div>
         </Column>

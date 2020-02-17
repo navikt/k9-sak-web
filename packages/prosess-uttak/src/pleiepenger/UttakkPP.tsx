@@ -33,8 +33,8 @@ export const mapRader = (
     const { kjønnkode } = behandlingPersonMap[behandlingsId];
     const kvinne = erKvinne(kjønnkode);
     const ikon = {
-      imageTextKey: 'Person.ImageText',
-      titleKey: kvinne ? 'Person.Woman' : 'Person.Man',
+      imageText: intl.formatMessage({ id: 'Person.ImageText' }),
+      title: intl.formatMessage({ id: kvinne ? 'Person.Woman' : 'Person.Man' }),
       src: kvinne ? svgKvinne : svgMann,
     };
 
