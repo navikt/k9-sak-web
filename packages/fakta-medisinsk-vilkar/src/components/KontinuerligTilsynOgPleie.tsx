@@ -15,6 +15,7 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
+import moment from 'moment';
 import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 import styles from './medisinskVilkar.less';
 
@@ -72,11 +73,12 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                 readOnly={readOnly}
               >
                 {(fieldId, index) => {
+                  const isPeriodeDefined = !!fields.get(index).fom && !!fields.get(index).tom;
                   return (
-                    <div className={styles.expandablePanelContainer}>
-                      <ExpandablePanel isOpen renderHeader={() => null} onClick={() => null} key={fieldId}>
+                    <div key={fieldId} className={styles.expandablePanelContainer}>
+                      <ExpandablePanel isOpen renderHeader={() => null} onClick={() => null}>
                         <div className={styles.periodeContainer}>
-                          <FlexRow key={fieldId} wrap>
+                          <FlexRow wrap>
                             <FlexColumn>
                               <PeriodpickerField
                                 names={[
@@ -106,7 +108,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                 name={`${fieldId}.behovForToOmsorgspersoner`}
                                 bredde="M"
                                 validate={[required]}
-                                readOnly={readOnly}
+                                readOnly={readOnly || !isPeriodeDefined}
                               >
                                 <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }} value="jaHele" />
                                 <RadioOption
@@ -133,7 +135,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                       readOnly={readOnly}
                                     >
                                       {(utvidetTilsynFieldId, idx, getRemoveButton) => (
-                                        <FlexRow wrap>
+                                        <FlexRow key={utvidetTilsynFieldId} wrap>
                                           <FlexColumn>
                                             <PeriodpickerField
                                               names={[`${utvidetTilsynFieldId}.fom`, `${utvidetTilsynFieldId}.tom`]}
@@ -141,6 +143,10 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                               defaultValue={null}
                                               readOnly={readOnly}
                                               label={idx === 0 ? { id: 'MedisinskVilkarForm.BehovForTo.Periode' } : ''}
+                                              disabledDays={{
+                                                before: moment(fields.get(index).fom).toDate(),
+                                                after: moment(fields.get(index).tom).toDate(),
+                                              }}
                                             />
                                           </FlexColumn>
                                           <FlexColumn>{getRemoveButton()}</FlexColumn>
