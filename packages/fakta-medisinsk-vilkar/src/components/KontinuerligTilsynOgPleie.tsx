@@ -8,25 +8,28 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
+import { Periode } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import ExpandablePanel from '@navikt/nap-expandable-panel';
+import moment from 'moment';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
-import moment from 'moment';
 import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 import styles from './medisinskVilkar.less';
 
 interface KontinuerligTilsynOgPleieProps {
   readOnly: boolean;
   harBehovForKontinuerligTilsynOgPleie: boolean;
+  periodeTilVurdering: Periode;
 }
 
 const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPleieProps> = ({
   readOnly,
   harBehovForKontinuerligTilsynOgPleie,
+  periodeTilVurdering,
 }) => (
   <>
     <FlexRow>
@@ -89,6 +92,10 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                 defaultValue={null}
                                 readOnly={readOnly}
                                 label={{ id: 'MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder' }}
+                                disabledDays={{
+                                  before: moment(periodeTilVurdering.fom).toDate(),
+                                  after: moment(periodeTilVurdering.tom).toDate(),
+                                }}
                               />
                             </FlexColumn>
                           </FlexRow>
@@ -110,7 +117,10 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                 validate={[required]}
                                 readOnly={readOnly || !isPeriodeDefined}
                               >
-                                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }} value="jaHele" />
+                                <RadioOption
+                                  label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }}
+                                  value={MedisinskVilkårConsts.JA_HELE}
+                                />
                                 <RadioOption
                                   label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }}
                                   value={MedisinskVilkårConsts.JA_DELER}

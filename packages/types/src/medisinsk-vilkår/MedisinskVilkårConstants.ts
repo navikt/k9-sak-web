@@ -13,6 +13,7 @@ enum MedisinskVilkårConsts {
   LEGEERKLÆRING_FOM = 'legeerklæringFom',
   LEGEERKLÆRING_TOM = 'legeerklæringTom',
   JA_DELER = 'jaDeler',
+  JA_HELE = 'jaHele',
 }
 
 export default MedisinskVilkårConsts;

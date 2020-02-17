@@ -52,6 +52,7 @@ export interface TransformValues {
 }
 
 export interface Sykdom {
+  periodeTilVurdering: Periode;
   legeerklæringer: Legeerklæring[];
   perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
   perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
