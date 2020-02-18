@@ -45,7 +45,10 @@ const Autocomplete = ({
         suggestions={suggestions}
         value={inputValue}
         onChange={onInputValueChange}
-        onSelect={onChange}
+        onSelect={e => {
+          onChange(e);
+          onInputValueChange(e.value);
+        }}
         ariaLabel={ariaLabel}
         placeholder={placeholder}
         name={name}
