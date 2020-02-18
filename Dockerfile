@@ -1,4 +1,8 @@
-FROM nginx
+FROM nginx:1.17.8-alpine
+
+# bash er ikke standard i alpine:
+RUN apk add --no-cache bash
+
 ADD proxy.nginx /etc/nginx/conf.d/app.conf.template
 
 ENV APP_DIR="/app" \
