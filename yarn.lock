@@ -2542,9 +2542,20 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@navikt/nap-autocomplete@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-autocomplete/-/nap-autocomplete-1.0.2.tgz#42c835e9c3362a1fa81da978ee8d64b7bf46f73a"
+
 "@navikt/nap-bem-utils@1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
+
+"@navikt/nap-expandable-panel@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-expandable-panel/-/nap-expandable-panel-1.0.1.tgz#8d41519b694ef75464156a145e0f63f947c969f3"
+  dependencies:
+    "@navikt/nap-bem-utils" "1.0.1"
+    react-collapse "^5.0.1"
 
 "@navikt/nap-process-menu@1.0.9":
   version "1.0.9"
@@ -13117,6 +13128,10 @@ react-clientside-effect@^1.2.0:
     "@babel/runtime" "^7.0.0"
 
 react-collapse@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-collapse/-/react-collapse-5.0.1.tgz#f763b7207aee73baa1ff778b2d0b4ffb49d900a0"
+
+react-collapse@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-collapse/-/react-collapse-5.0.1.tgz#f763b7207aee73baa1ff778b2d0b4ffb49d900a0"
 
