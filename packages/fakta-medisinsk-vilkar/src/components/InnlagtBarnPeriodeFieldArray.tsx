@@ -38,7 +38,7 @@ const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, periodeTilVurdering }:
         fieldGroupClassName={styles.fieldGroup}
       >
         {(fieldId, index, getRemoveButton) => (
-          <FlexRow wrap>
+          <FlexRow key={fieldId} wrap>
             <FlexColumn>
               <PeriodpickerField
                 names={[`${fieldId}.fom`, `${fieldId}.tom`]}

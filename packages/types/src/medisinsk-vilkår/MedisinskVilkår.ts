@@ -37,9 +37,14 @@ export interface MedisinskVilkår {
   pleiebehov: Pleiebehov;
 }
 
+interface Diagnosekode {
+  key: string;
+  value: string;
+}
+
 export interface TransformValues {
   begrunnelse: string;
-  diagnosekode?: string;
+  diagnosekode?: Diagnosekode;
   erInnlagt: boolean;
   harBehovForKontinuerligTilsynOgPleie: boolean;
   harDiagnose: boolean;
