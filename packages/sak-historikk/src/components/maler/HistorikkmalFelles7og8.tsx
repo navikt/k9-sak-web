@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { FormattedHTMLMessage, IntlFormatters } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Kodeverk from '@fpsak-frontend/behandling-felles/src/types/kodeverkTsType';
+import { Kodeverk } from '@k9-sak-web/types';
 
 import Skjermlenke from './felles/Skjermlenke';
 import { findHendelseText, findIdForOpplysningCode, findResultatText } from './felles/historikkUtils';
@@ -17,7 +17,7 @@ interface EndretFelt {
 interface HistorikkmalFelles7og8Props {
   historikkinnslagDeler: any; // TODO (ANDERS) bruk interface som kommer i master snart
   behandlingLocation: {
-    pathname: string,
+    pathname: string;
   };
   dokumentLinks: Dokumentlenke[];
   intl: IntlFormatters;
