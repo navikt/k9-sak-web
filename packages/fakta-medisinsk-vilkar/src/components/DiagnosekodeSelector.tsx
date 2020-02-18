@@ -1,30 +1,40 @@
 import { AutocompleteField } from '@fpsak-frontend/form';
 import * as React from 'react';
 import { FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
+import axios from 'axios';
+import styles from './medisinskVilkar.less';
 
-// const fetchDiagnosekoderByQuery = (queryString: string) => axios.get('');
+const fetchDiagnosekoderByQuery = (queryString: string) =>
+  axios.get(`http://localhost:8100/diagnosekoder?query=${queryString}&max=8`);
+
+const getUpdatedSuggestions = async (queryString: string) => {
+  if (queryString.length >= 3) {
+    const diagnosekoder = await fetchDiagnosekoderByQuery(queryString);
+    return diagnosekoder.data.map(({ kode, beskrivelse }) => ({
+      key: kode,
+      value: `${kode} - ${beskrivelse}`,
+    }));
+  }
+  return [];
+};
 
 const DiagnosekodeSelector = ({ readOnly }) => {
-  const [suggestions] = React.useState([
-    { key: 'key1', value: '1st value' },
-    { key: 'key2', value: '2nd value' },
-  ]);
+  const [suggestions, setSuggestions] = React.useState([]);
   const [inputValue, setInputValue] = React.useState('');
 
   return (
     <FlexRow wrap>
-      <FlexColumn>
+      <FlexColumn className={styles.diagnosekodeColumn}>
         <AutocompleteField
           suggestions={suggestions}
           inputValue={inputValue}
           onInputValueChange={async v => {
             setInputValue(v);
-            // todo: http-call and setSuggestions
-            // const diagnosekoder = await fetchDiagnosekoderByQuery(v);
-            // setSuggestions([]);
+            const newSuggestionList = await getUpdatedSuggestions(v);
+            setSuggestions(newSuggestionList);
           }}
           id="test"
-          placeholder="Søk etter diagnose her"
+          placeholder="Søk etter diagnose"
           ariaLabel="test"
           label="Hvilken diagnose?"
           readOnly={readOnly}

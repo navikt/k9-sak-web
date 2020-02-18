@@ -1,9 +1,11 @@
 import React from 'react';
+import { Element } from 'nav-frontend-typografi';
 import { Field, WrappedFieldInputProps } from 'redux-form';
 // eslint-disable-next-line import/no-named-default
 import { default as NAPAutocomplete } from '@navikt/nap-autocomplete';
 import { Suggestion as NAPSuggestion } from '@navikt/nap-autocomplete/dist/types/Suggestion';
 import ReadOnlyField from './ReadOnlyField';
+import styles from './autocompleteField.less';
 
 interface AutocompleteFieldProps {
   onChange: () => void;
@@ -37,7 +39,7 @@ const Autocomplete = ({
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label className="skjemaelement__label" htmlFor={id}>
-      {label}
+      <Element className={styles.typoElement}>{label}</Element>
       <NAPAutocomplete
         id={id}
         suggestions={suggestions}
