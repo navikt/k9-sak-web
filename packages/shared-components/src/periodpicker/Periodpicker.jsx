@@ -4,9 +4,9 @@ import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 import { DateUtils } from 'react-day-picker';
 import { DDMMYYYY_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
+import classnames from 'classnames';
 import CalendarToggleButton from '../datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
-
 import styles from './periodpicker.less';
 
 const getStartDateInput = props => haystack(props, props.names[0]).input;
@@ -138,14 +138,17 @@ class Periodpicker extends Component {
   }
 
   render() {
-    const { label, placeholder, feil, names, disabled, disabledDays } = this.props;
+    const { label, placeholder, feil, names, disabled, disabledDays, hideLabel } = this.props;
     const { period, inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
+    const inputWrapperCls = classnames(styles.dateInput, {
+      [styles.visuallyHidden]: hideLabel
+    });
 
     return (
       <>
         <div className={styles.inputWrapper}>
           <Input
-            className={styles.dateInput}
+            className={inputWrapperCls}
             inputRef={this.handleInputRef}
             autoComplete="off"
             bredde="L"
@@ -191,6 +194,7 @@ Periodpicker.propTypes = {
   feil: PropTypes.shape({ feilmelding: PropTypes.string }),
   disabled: PropTypes.bool,
   disabledDays: PropTypes.shape(),
+  hideLabel: PropTypes.bool
 };
 
 Periodpicker.defaultProps = {
@@ -199,6 +203,7 @@ Periodpicker.defaultProps = {
   feil: null,
   disabled: false,
   disabledDays: {},
+  hideLabel: false
 };
 
 export default Periodpicker;

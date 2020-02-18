@@ -4,6 +4,7 @@ import { required } from '@fpsak-frontend/utils';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 
 interface InnlagtBarnRadioProps {
   readOnly: boolean;
@@ -15,7 +16,7 @@ const InnlagtBarnRadio: React.FunctionComponent<InnlagtBarnRadioProps> = ({ read
       <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
     </Element>
     <VerticalSpacer eightPx />
-    <RadioGroupField name="innlagt" bredde="M" validate={[required]} readOnly={readOnly}>
+    <RadioGroupField name={MedisinskVilkårValues.ER_INNLAGT} bredde="M" validate={[required]} readOnly={readOnly}>
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
     </RadioGroupField>

@@ -1,17 +1,17 @@
-import Kodeverk from './kodeverk';
+import { Kodeverk } from './kodeverk';
 
 type Aksjonspunkt = Readonly<{
-  definisjon: Kodeverk,
-  status: Kodeverk,
-  begrunnelse?: string,
-  vilkarType?: Kodeverk,
-  toTrinnsBehandling?: boolean,
-  toTrinnsBehandlingGodkjent?: boolean,
-  vurderPaNyttArsaker?: Kodeverk[],
-  besluttersBegrunnelse?: string,
-  aksjonspunktType?: Kodeverk,
-  kanLoses: boolean,
-  erAktivt: boolean,
+  definisjon: Kodeverk;
+  status: Kodeverk;
+  begrunnelse?: string;
+  vilkarType?: Kodeverk;
+  toTrinnsBehandling?: boolean;
+  toTrinnsBehandlingGodkjent?: boolean;
+  vurderPaNyttArsaker?: Kodeverk[];
+  besluttersBegrunnelse?: string;
+  aksjonspunktType?: Kodeverk;
+  kanLoses: boolean;
+  erAktivt: boolean;
 }>;
 
 export default Aksjonspunkt;

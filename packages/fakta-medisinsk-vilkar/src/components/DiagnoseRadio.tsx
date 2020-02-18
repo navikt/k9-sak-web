@@ -15,7 +15,7 @@ const DiagnoseRadio: React.FunctionComponent<DiagnoseRadioProps> = ({ readOnly }
       <FormattedMessage id="MedisinskVilkarForm.Diagnose" />
     </Element>
     <VerticalSpacer eightPx />
-    <RadioGroupField name="diagnose" bredde="M" validate={[required]} readOnly={readOnly}>
+    <RadioGroupField name="harDiagnose" bredde="M" validate={[required]} readOnly={readOnly}>
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
       <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
     </RadioGroupField>

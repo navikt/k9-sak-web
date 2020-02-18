@@ -31,6 +31,7 @@ const foreldrepengerData = [
   pleiepengerBehandlingApi.UTTAK_STONADSKONTOER,
   pleiepengerBehandlingApi.UTTAKSRESULTAT_PERIODER,
   pleiepengerBehandlingApi.SIMULERING_RESULTAT,
+  pleiepengerBehandlingApi.SYKDOM,
 ];
 
 interface OwnProps {

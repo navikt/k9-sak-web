@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
-import { PeriodFieldArray, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
 import { PeriodpickerField } from '@fpsak-frontend/form';
-import { required, hasValidDate, dateRangesNotOverlapping } from '@fpsak-frontend/utils';
+import { FlexColumn, FlexRow, PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { dateRangesNotOverlapping, hasValidDate, required } from '@fpsak-frontend/utils';
+import { Periode } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
+import moment from 'moment';
+import React, { useEffect } from 'react';
 import { FieldArrayFieldsProps } from 'redux-form';
 import styles from './medisinskVilkar.less';
 
@@ -13,19 +15,16 @@ interface Fields {
 interface InnlagtBarnPeriodeFieldArrayProps {
   readOnly: boolean;
   fields: FieldArrayFieldsProps<Fields>;
-  isInnlagt: boolean;
+  periodeTilVurdering: Periode;
 }
 
-const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, isInnlagt }: InnlagtBarnPeriodeFieldArrayProps) => {
+const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, periodeTilVurdering }: InnlagtBarnPeriodeFieldArrayProps) => {
   useEffect(() => {
     if (fields.length === 0) {
       fields.push({ fom: '', tom: '' });
     }
   }, []);
 
-  if (!isInnlagt) {
-    return null;
-  }
   return (
     <div className={styles.pickerContainer}>
       <PeriodFieldArray
@@ -36,6 +35,7 @@ const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, isInnlagt }: InnlagtBa
         }}
         shouldShowAddButton
         readOnly={readOnly}
+        fieldGroupClassName={styles.fieldGroup}
       >
         {(fieldId, index, getRemoveButton) => (
           <FlexRow key={fieldId} wrap>
@@ -46,6 +46,11 @@ const InnlagtBarnPeriodeFieldArray = ({ readOnly, fields, isInnlagt }: InnlagtBa
                 defaultValue={null}
                 readOnly={readOnly}
                 label={index === 0 ? { id: 'MedisinskVilkarForm.Periode' } : ''}
+                hideLabel
+                disabledDays={{
+                  before: moment(periodeTilVurdering.fom).toDate(),
+                  after: moment(periodeTilVurdering.tom).toDate(),
+                }}
               />
             </FlexColumn>
             <FlexColumn>{getRemoveButton()}</FlexColumn>

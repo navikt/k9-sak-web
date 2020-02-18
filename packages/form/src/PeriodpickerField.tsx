@@ -12,10 +12,12 @@ interface PeriodpickerFieldProps {
   names: string[];
   label?: LabelType;
   readOnly?: boolean;
+  hideLabel?: boolean;
   format?: (value: string) => string;
   parse?: (value: string) => string;
   isEdited?: boolean;
   renderIfMissingDateOnReadOnly?: boolean;
+  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
 }
 
 const formatError = (intl: IntlShape, otherProps: object, names: string[]) => {
@@ -59,7 +61,7 @@ const renderReadOnly = () => ({
   return null;
 };
 
-const renderPeriodpicker = () =>
+const renderPeriodpicker = (hideLabel?: boolean) =>
   injectIntl(
     ({
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -69,10 +71,10 @@ const renderPeriodpicker = () =>
       names,
       ...otherProps
     }: {
-      intl: IntlShape,
-      label: LabelType,
-      isEdited: boolean,
-      names: string[],
+      intl: IntlShape;
+      label: LabelType;
+      isEdited: boolean;
+      names: string[];
     }) => {
       const fieldProps = {
         id: `${names[0]}-${names[1]}`,
@@ -81,12 +83,9 @@ const renderPeriodpicker = () =>
         names,
         isEdited,
       };
-      return <Periodpicker {...fieldProps} {...otherProps} />;
+      return <Periodpicker {...fieldProps} {...otherProps} hideLabel={hideLabel} />;
     },
   );
-
-const PeriodpickerWrapped = renderPeriodpicker();
-const ReadOnlyFieldWrapped = renderReadOnly();
 
 const isoToDdMmYyyy = (string: string) => {
   const parsedDate = moment(string, ISO_DATE_FORMAT, true);
@@ -115,11 +114,12 @@ const PeriodpickerField = ({
   format,
   parse,
   isEdited,
+  hideLabel,
   ...otherProps
 }: PeriodpickerFieldProps) => (
   <Fields
     names={names}
-    component={readOnly ? ReadOnlyFieldWrapped : PeriodpickerWrapped}
+    component={readOnly ? renderReadOnly() : renderPeriodpicker(hideLabel)}
     label={label}
     {...otherProps}
     format={formatValue(format)}
