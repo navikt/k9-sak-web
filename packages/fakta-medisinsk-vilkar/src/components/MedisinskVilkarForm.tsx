@@ -154,7 +154,7 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
     legeerklæring: [
       {
         identifikator: identifikator ?? null,
-        diagnosekode: values.diagnosekode,
+        diagnosekode: values.diagnosekode.value,
         kilde: values.legeerklaeringkilde,
         fom: values.legeerklæringFom,
         tom: values.legeerklæringFom,
