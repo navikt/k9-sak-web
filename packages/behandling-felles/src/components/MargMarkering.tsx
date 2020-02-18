@@ -3,9 +3,7 @@ import classnames from 'classnames/bind';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-
-import Aksjonspunkt from '../types/aksjonspunktTsType';
-import Kodeverk from '../types/kodeverkTsType';
+import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
 
 import styles from './margMarkering.less';
 
@@ -27,24 +25,21 @@ const MargMarkering: FunctionComponent<OwnProps> = ({
   children,
 }) => {
   if (aksjonspunkter.length === 0) {
-    return (
-      <div className={styles.prosesspunkt}>
-        {children}
-      </div>
-    );
+    return <div className={styles.prosesspunkt}>{children}</div>;
   }
 
-  const ikkeAkseptertAvBeslutter = behandlingStatus.kode === BehandlingStatus.BEHANDLING_UTREDES
-    && aksjonspunkter[0].toTrinnsBehandling && aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
+  const ikkeAkseptertAvBeslutter =
+    behandlingStatus.kode === BehandlingStatus.BEHANDLING_UTREDES &&
+    aksjonspunkter[0].toTrinnsBehandling &&
+    aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
 
-  const harApnentAksjonspunktSomKanLoses = useMemo(() => aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses), [aksjonspunkter]);
+  const harApnentAksjonspunktSomKanLoses = useMemo(
+    () => aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses),
+    [aksjonspunkter],
+  );
   const visAksjonspunkt = visAksjonspunktMarkering && harApnentAksjonspunktSomKanLoses && !isReadOnly;
 
-  return (
-    <div className={classNames('prosesspunkt', { ikkeAkseptertAvBeslutter, visAksjonspunkt })}>
-      {children}
-    </div>
-  );
+  return <div className={classNames('prosesspunkt', { ikkeAkseptertAvBeslutter, visAksjonspunkt })}>{children}</div>;
 };
 
 export default MargMarkering;

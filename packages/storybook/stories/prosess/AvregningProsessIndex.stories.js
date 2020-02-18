@@ -1,8 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import {
-  withKnobs, object, boolean, array,
-} from '@storybook/addon-knobs';
+import { withKnobs, object, boolean, array } from '@storybook/addon-knobs';
 
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -34,71 +32,92 @@ const simuleringResultat = {
     sumFeilutbetaling: -49863,
     sumInntrekk: -10899,
     ingenPerioderMedAvvik: false,
-    perioderPerMottaker: [{
-      mottakerType: {
-        kode: 'BRUKER',
-        navn: null,
-        kodeverk: 'MOTTAKER_TYPE',
-      },
-      mottakerNummer: null,
-      mottakerNavn: null,
-      resultatPerFagområde: [{
-        fagOmrådeKode: {
-          kode: 'FP',
-          navn: 'Foreldrepenger',
-          kodeverk: 'FAG_OMRAADE_KODE',
+    perioderPerMottaker: [
+      {
+        mottakerType: {
+          kode: 'BRUKER',
+          navn: null,
+          kodeverk: 'MOTTAKER_TYPE',
         },
-        rader: [{
-          feltnavn: 'nyttBeløp',
-          resultaterPerMåned: [{
-            periode: {
-              fom: '2019-01-01',
-              tom: '2019-01-31',
+        mottakerNummer: null,
+        mottakerNavn: null,
+        resultatPerFagområde: [
+          {
+            fagOmrådeKode: {
+              kode: 'FP',
+              navn: 'Foreldrepenger',
+              kodeverk: 'FAG_OMRAADE_KODE',
             },
-            beløp: 52619,
-          }],
-        }, {
-          feltnavn: 'tidligereUtbetalt',
-          resultaterPerMåned: [{
-            periode: {
-              fom: '2019-01-01',
-              tom: '2019-01-31',
-            },
-            beløp: 61795,
-          }],
-        }, {
-          feltnavn: 'differanse',
-          resultaterPerMåned: [{
-            periode: {
-              fom: '2019-01-01',
-              tom: '2019-01-31',
-            },
-            beløp: -9176,
-          }],
-        }],
-      }],
-      resultatOgMotregningRader: [{
-        feltnavn: 'inntrekkNesteMåned',
-        resultaterPerMåned: [{
-          periode: {
-            fom: '2019-01-01',
-            tom: '2019-01-31',
+            rader: [
+              {
+                feltnavn: 'nyttBeløp',
+                resultaterPerMåned: [
+                  {
+                    periode: {
+                      fom: '2019-01-01',
+                      tom: '2019-01-31',
+                    },
+                    beløp: 52619,
+                  },
+                ],
+              },
+              {
+                feltnavn: 'tidligereUtbetalt',
+                resultaterPerMåned: [
+                  {
+                    periode: {
+                      fom: '2019-01-01',
+                      tom: '2019-01-31',
+                    },
+                    beløp: 61795,
+                  },
+                ],
+              },
+              {
+                feltnavn: 'differanse',
+                resultaterPerMåned: [
+                  {
+                    periode: {
+                      fom: '2019-01-01',
+                      tom: '2019-01-31',
+                    },
+                    beløp: -9176,
+                  },
+                ],
+              },
+            ],
           },
-          beløp: 0,
-        }],
-      }, {
-        feltnavn: 'resultat',
-        resultaterPerMåned: [{
-          periode: {
-            fom: '2019-01-01',
-            tom: '2019-01-31',
+        ],
+        resultatOgMotregningRader: [
+          {
+            feltnavn: 'inntrekkNesteMåned',
+            resultaterPerMåned: [
+              {
+                periode: {
+                  fom: '2019-01-01',
+                  tom: '2019-01-31',
+                },
+                beløp: 0,
+              },
+            ],
           },
-          beløp: -26486,
-        }],
-      }],
-      nesteUtbPeriodeFom: '2019-10-01',
-      nestUtbPeriodeTom: '2019-10-31',
-    }],
+          {
+            feltnavn: 'resultat',
+            resultaterPerMåned: [
+              {
+                periode: {
+                  fom: '2019-01-01',
+                  tom: '2019-01-31',
+                },
+                beløp: -26486,
+              },
+            ],
+          },
+        ],
+        nesteUtbPeriodeFom: '2019-10-01',
+        nestUtbPeriodeTom: '2019-10-31',
+      },
+    ],
   },
   simuleringResultatUtenInntrekk: null,
   slåttAvInntrekk: false,
@@ -118,15 +137,17 @@ export const visAksjonspunktVurderFeilutbetaling = () => (
   <AvregningProsessIndex
     fagsak={object('fagsak', fagsak)}
     behandling={behandling}
-    aksjonspunkter={object('aksjonspunkter', [{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+    aksjonspunkter={object('aksjonspunkter', [
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+        },
+        begrunnelse: undefined,
       },
-      begrunnelse: undefined,
-    }])}
+    ])}
     simuleringResultat={object('simuleringResultat', simuleringResultat)}
     submitCallback={action('button-click')}
-    previewCallback={action('button-click')}
+    previewFptilbakeCallback={action('button-click')}
     isReadOnly={boolean('isReadOnly', false)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
@@ -147,7 +168,7 @@ export const visSimuleringspanelUtenAksjonspunkt = () => (
       varseltekst: 'varsel-eksempel',
     })}
     submitCallback={action('button-click')}
-    previewCallback={action('button-click')}
+    previewFptilbakeCallback={action('button-click')}
     isReadOnly={boolean('isReadOnly', false)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}

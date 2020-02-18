@@ -14,10 +14,10 @@ export const PapirsoknadApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD, {
-    fetchLinkDataAutomatically: false,
-  })
-  .withInjectedPath('aksjonspunkter', PapirsoknadApiKeys.AKSJONSPUNKTER)
+  .withAsyncPost('/k9/sak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD)
+
+  // behandlingsdata
+  .withRel('aksjonspunkter', PapirsoknadApiKeys.AKSJONSPUNKTER)
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', PapirsoknadApiKeys.HENLEGG_BEHANDLING)

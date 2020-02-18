@@ -19,12 +19,10 @@ export const AnkeBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE, {
-    fetchLinkDataAutomatically: false,
-  })
-  .withInjectedPath('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vilkar', AnkeBehandlingApiKeys.VILKAR)
-  .withInjectedPath('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
+  .withAsyncPost('/k9/sak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE)
+  .withRel('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', AnkeBehandlingApiKeys.VILKAR)
+  .withRel('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', AnkeBehandlingApiKeys.HENLEGG_BEHANDLING)
@@ -47,7 +45,7 @@ const endpoints = new RestApiConfigBuilder()
     },
   )
 
-  /* fpformidling */
+  /* FPFORMIDLING */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();
 

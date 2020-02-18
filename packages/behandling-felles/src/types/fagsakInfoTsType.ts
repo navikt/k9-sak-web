@@ -1,4 +1,5 @@
-import Kodeverk from './kodeverkTsType';
+import { Kodeverk } from '@k9-sak-web/types';
+
 import FagsakPerson from './fagsakPersonTsType';
 
 type FagsakInfo = Readonly<{
@@ -6,6 +7,6 @@ type FagsakInfo = Readonly<{
   fagsakYtelseType: Kodeverk;
   fagsakPerson: FagsakPerson;
   fagsakStatus: Kodeverk;
-}>
+}>;
 
 export default FagsakInfo;

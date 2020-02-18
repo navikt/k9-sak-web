@@ -92,6 +92,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
     <form className={styles.marginTop} onSubmit={formProps.handleSubmit}>
       <div>
         <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+        <VerticalSpacer sixteenPx />
         <div>
           <RadioGroupField name="gyldigSenFremsetting" validate={[required]} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, gyldigSenFremsetting)}>
             <RadioOption value label={<FormattedMessage id="VurderSoknadsfristForeldrepengerForm.GyldigGrunn" />} />
@@ -148,7 +149,7 @@ export const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.aksjonspunkter,
     (state, ownProps) => ownProps.uttakPeriodeGrense,
     (state, ownProps) => ownProps.mottattDato],
-  (aksjonspunkter, uttaksperiodegrense, mottattDato) => ({
+  (aksjonspunkter, uttaksperiodegrense = {}, mottattDato) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : uttaksperiodegrense.mottattDato !== mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),

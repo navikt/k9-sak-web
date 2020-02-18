@@ -31,6 +31,7 @@ describe('<VedtakInnvilgetPanel>', () => {
         behandlingsresultat={behandlingsresultat}
         skalBrukeOverstyrendeFritekstBrev
         readOnly
+        beregningErManueltFastsatt={false}
       />,
     );
 
@@ -95,6 +96,7 @@ describe('<VedtakInnvilgetPanel>', () => {
         behandlingsresultat={behandlingsresultat}
         skalBrukeOverstyrendeFritekstBrev
         readOnly
+        beregningErManueltFastsatt={false}
       />,
     );
 

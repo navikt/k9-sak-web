@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 // eslint-disable-next-line import/extensions
-import Kjønnkode from '@k9-frontend/types/src/Kjønnkode';
+import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
 import TimeLineSoker from './TimeLineSoker';
 
 describe('<TimeLineSoker>', () => {

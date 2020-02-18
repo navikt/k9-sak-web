@@ -1,9 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
-import {
-  formValueSelector, getFormValues, reduxForm,
-} from 'redux-form';
+import { formValueSelector, getFormValues, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
@@ -16,20 +14,18 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
-import { KodeverkMedNavn } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk } from '@k9-sak-web/types';
 
 import styles from './soknadTypePickerForm.less';
 
 const SOKNAD_TYPE_PICKER_FORM = 'SoknadTypePickerForm';
 
-export const soeknadsTyper = [
-  familieHendelseType.ADOPSJON,
-  familieHendelseType.FODSEL];
+export const soeknadsTyper = [familieHendelseType.ADOPSJON, familieHendelseType.FODSEL];
 
 interface OwnProps {
-  fagsakYtelseTyper: KodeverkMedNavn[];
-  familieHendelseTyper: KodeverkMedNavn[];
-  foreldreTyper: KodeverkMedNavn[];
+  fagsakYtelseTyper: Kodeverk[];
+  familieHendelseTyper: Kodeverk[];
+  foreldreTyper: Kodeverk[];
   handleSubmit: () => undefined;
   selectedFagsakYtelseType?: string;
   ytelseErSatt: boolean;
@@ -58,28 +54,36 @@ export const SoknadTypePickerForm: FunctionComponent<OwnProps> = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="4">
-          <Undertekst><FormattedMessage id="Registrering.Omsoknaden.soknadstype" /></Undertekst>
+          <Undertekst>
+            <FormattedMessage id="Registrering.Omsoknaden.soknadstype" />
+          </Undertekst>
           <VerticalSpacer fourPx />
           <RadioGroupField name="fagsakYtelseType" validate={[required]} direction="vertical">
-            { fagsakYtelseTyper.map((fyt) => <RadioOption disabled={ytelseErSatt} key={fyt.kode} label={fyt.navn} value={fyt.kode} />) }
+            {fagsakYtelseTyper.map(fyt => (
+              <RadioOption disabled={ytelseErSatt} key={fyt.kode} label={fyt.navn} value={fyt.kode} />
+            ))}
           </RadioGroupField>
         </Column>
         <Column xs="4">
-          <Undertekst><FormattedMessage id="Registrering.Omsoknaden.Tema" /></Undertekst>
+          <Undertekst>
+            <FormattedMessage id="Registrering.Omsoknaden.Tema" />
+          </Undertekst>
           <VerticalSpacer fourPx />
           <RadioGroupField
             name="familieHendelseType"
             validate={selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? [] : [required]}
             direction="vertical"
           >
-            { familieHendelseTyper.filter(({ kode }) => soeknadsTyper.includes(kode)).map((bmt) => (
-              <RadioOption
-                key={bmt.kode}
-                label={bmt.navn}
-                value={bmt.kode}
-                disabled={selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER}
-              />
-            ))}
+            {familieHendelseTyper
+              .filter(({ kode }) => soeknadsTyper.includes(kode))
+              .map(bmt => (
+                <RadioOption
+                  key={bmt.kode}
+                  label={bmt.navn}
+                  value={bmt.kode}
+                  disabled={selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER}
+                />
+              ))}
           </RadioGroupField>
         </Column>
         <Column xs="4">
@@ -87,17 +91,9 @@ export const SoknadTypePickerForm: FunctionComponent<OwnProps> = ({
             <FormattedMessage id="Registrering.Omsoknaden.Soker" />
           </Undertekst>
           <VerticalSpacer fourPx />
-          <RadioGroupField
-            name="foreldreType"
-            validate={[required]}
-            direction="vertical"
-          >
-            { foreldreTyper.map((ft) => (
-              <RadioOption
-                key={ft.kode}
-                label={ft.navn}
-                value={ft.kode}
-              />
+          <RadioGroupField name="foreldreType" validate={[required]} direction="vertical">
+            {foreldreTyper.map(ft => (
+              <RadioOption key={ft.kode} label={ft.navn} value={ft.kode} />
             ))}
           </RadioGroupField>
         </Column>
@@ -105,11 +101,7 @@ export const SoknadTypePickerForm: FunctionComponent<OwnProps> = ({
       <Row>
         <Column xs="12">
           <div className={styles.right}>
-            <Hovedknapp
-              mini
-              onClick={ariaCheck}
-              disabled={submitSucceeded}
-            >
+            <Hovedknapp mini onClick={ariaCheck} disabled={submitSucceeded}>
               <FormattedMessage id="Registrering.Omsoknaden.VisSkjema" />
             </Hovedknapp>
           </div>
@@ -143,7 +135,10 @@ const buildInitialValues = createSelector<any, any, any>(
 );
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.setSoknadData(new SoknadData(values.fagsakYtelseType, values.familieHendelseType, values.foreldreType));
+  const onSubmit = values =>
+    initialOwnProps.setSoknadData(
+      new SoknadData(values.fagsakYtelseType, values.familieHendelseType, values.foreldreType),
+    );
   return (state, ownProps) => ({
     selectedFagsakYtelseType: formValueSelector(SOKNAD_TYPE_PICKER_FORM)(state, 'fagsakYtelseType'),
     ytelseErSatt: !!ownProps.fagsakYtelseType.kode,
@@ -155,4 +150,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(reduxForm({ form: SOKNAD_TYPE_PICKER_FORM, enableReinitialize: true })(SoknadTypePickerForm));
+export default connect(mapStateToPropsFactory)(
+  reduxForm({ form: SOKNAD_TYPE_PICKER_FORM, enableReinitialize: true })(SoknadTypePickerForm),
+);

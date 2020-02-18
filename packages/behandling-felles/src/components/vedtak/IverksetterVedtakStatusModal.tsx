@@ -8,8 +8,7 @@ import Modal from 'nav-frontend-modal';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-
-import Kodeverk from '../../types/kodeverkTsType';
+import { Kodeverk } from '@k9-sak-web/types';
 
 import styles from './iverksetterVedtakStatusModal.less';
 
@@ -34,7 +33,9 @@ const IverksetterVedtakStatusModal: FunctionComponent<OwnProps & WrappedComponen
   behandlingsresultat,
 }) => {
   const erVedtakAvslatt = behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT;
-  const imageAltText = intl.formatMessage({ id: erVedtakAvslatt ? 'IverksetterVedtakStatusModal.Avslatt' : 'IverksetterVedtakStatusModal.Innvilget' });
+  const imageAltText = intl.formatMessage({
+    id: erVedtakAvslatt ? 'IverksetterVedtakStatusModal.Avslatt' : 'IverksetterVedtakStatusModal.Innvilget',
+  });
 
   return (
     <Modal
@@ -47,32 +48,28 @@ const IverksetterVedtakStatusModal: FunctionComponent<OwnProps & WrappedComponen
     >
       <Row className="">
         <Column xs="1">
-          <Image
-            className={styles.image}
-            alt={imageAltText}
-            src={innvilgetImageUrl}
-          />
+          <Image className={styles.image} alt={imageAltText} src={innvilgetImageUrl} />
           <div className={styles.divider} />
         </Column>
         <Column xs="9">
           <Normaltekst>
-            <FormattedMessage id={erVedtakAvslatt ? 'IverksetterVedtakStatusModal.VedtakAvslatt' : 'IverksetterVedtakStatusModal.VedtakInnvilet'} />
+            <FormattedMessage
+              id={
+                erVedtakAvslatt
+                  ? 'IverksetterVedtakStatusModal.VedtakAvslatt'
+                  : 'IverksetterVedtakStatusModal.VedtakInnvilet'
+              }
+            />
           </Normaltekst>
           <Normaltekst>
             <FormattedMessage id="IverksetterVedtakStatusModal.GoToSearchPage" />
           </Normaltekst>
         </Column>
         <Column xs="2">
-          <Hovedknapp
-            mini
-            className={styles.button}
-            onClick={lukkModal}
-            autoFocus
-          >
+          <Hovedknapp mini className={styles.button} onClick={lukkModal} autoFocus>
             {intl.formatMessage({ id: 'IverksetterVedtakStatusModal.Ok' })}
           </Hovedknapp>
         </Column>
-
       </Row>
     </Modal>
   );

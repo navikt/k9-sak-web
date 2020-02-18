@@ -1,4 +1,4 @@
-import Kodeverk from './kodeverkTsType';
+import { Kodeverk } from '@k9-sak-web/types';
 
 type FagsakPerson = Readonly<{
   alder: number;
@@ -9,6 +9,6 @@ type FagsakPerson = Readonly<{
   navn: string;
   personnummer: string;
   personstatusType: Kodeverk;
-}>
+}>;
 
 export default FagsakPerson;

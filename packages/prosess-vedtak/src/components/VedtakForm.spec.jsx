@@ -65,8 +65,8 @@ describe('<VedtakForm>', () => {
       erBehandlingEtterKlage={false}
       initialValues={initialValues}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -124,8 +124,8 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
     const label = wrapper.find('Element');
@@ -179,8 +179,8 @@ describe('<VedtakForm>', () => {
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -236,8 +236,8 @@ describe('<VedtakForm>', () => {
       erBehandlingEtterKlage={false}
       initialValues={initialValues}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -289,8 +289,8 @@ describe('<VedtakForm>', () => {
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -345,8 +345,8 @@ describe('<VedtakForm>', () => {
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -404,8 +404,8 @@ describe('<VedtakForm>', () => {
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -461,8 +461,8 @@ describe('<VedtakForm>', () => {
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -516,8 +516,8 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -572,8 +572,8 @@ describe('<VedtakForm>', () => {
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
 
@@ -737,8 +737,8 @@ describe('<VedtakForm>', () => {
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -766,8 +766,8 @@ describe('<VedtakForm>', () => {
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -795,8 +795,8 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      erBehandlingHenlagt={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
       vilkar={[]}
     />);
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');

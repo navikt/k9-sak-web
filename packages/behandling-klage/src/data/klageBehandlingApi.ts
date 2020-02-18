@@ -19,12 +19,12 @@ export const KlageBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE, {
-    fetchLinkDataAutomatically: false,
-  })
-  .withInjectedPath('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vilkar', KlageBehandlingApiKeys.VILKAR)
-  .withInjectedPath('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
+  .withAsyncPost('/k9/sak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE)
+
+  // behandlingsdata
+  .withRel('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', KlageBehandlingApiKeys.VILKAR)
+  .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
@@ -46,7 +46,7 @@ const endpoints = new RestApiConfigBuilder()
     },
   )
 
-  /* fpformidling */
+  /* FPFORMIDLING */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();
 

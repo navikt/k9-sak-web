@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import Panel from 'nav-frontend-paneler';
 
 import {
-  FlexContainer, FlexRow, FlexColumn,
-  BorderBox, DateLabel, TimeLabel, Image, VerticalSpacer,
+  FlexContainer, FlexRow, FlexColumn, DateLabel, TimeLabel, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
@@ -83,6 +84,13 @@ const getÅrsak = (årsak) => {
   }
 };
 
+const tilbakekrevingÅrsakTyperKlage = [
+  behandlingArsakType.RE_KLAGE_KA,
+  behandlingArsakType.RE_KLAGE_NFP,
+];
+
+const erTilbakekrevingÅrsakKlage = (årsak) => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
+
 const renderChevron = (chevron, messageId) => (
   <FormattedMessage id={messageId}>
     {(altText) => <Image src={chevron} alt={altText} />}
@@ -104,13 +112,12 @@ const BehandlingPickerItemContent = ({
   behandlingsstatus,
   behandlingTypeNavn,
   erGjeldendeVedtak,
-  isSelected,
   behandlingsresultatTypeKode,
   behandlingsresultatTypeNavn,
   førsteÅrsak,
   behandlingTypeKode,
 }) => (
-  <BorderBox className={isSelected ? styles.boxPaddingWithSelected : styles.boxPadding}>
+  <Panel border>
     <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.arsakPadding}>
@@ -122,6 +129,16 @@ const BehandlingPickerItemContent = ({
             <FlexColumn>
               <Normaltekst>
                 <FormattedMessage id={getÅrsak(førsteÅrsak)} />
+              </Normaltekst>
+            </FlexColumn>
+          </>
+        )}
+        {behandlingTypeKode === behandlingType.TILBAKEKREVING_REVURDERING && erTilbakekrevingÅrsakKlage(førsteÅrsak.behandlingArsakType) && (
+          <>
+            <FlexColumn className={styles.arsakPadding}>-</FlexColumn>
+            <FlexColumn>
+              <Normaltekst>
+                <FormattedMessage id="Behandlingspunkt.Årsak.Klage" />
               </Normaltekst>
             </FlexColumn>
           </>
@@ -193,7 +210,7 @@ const BehandlingPickerItemContent = ({
       </FlexRow>
     </FlexContainer>
     <VerticalSpacer fourPx />
-  </BorderBox>
+  </Panel>
 );
 
 BehandlingPickerItemContent.propTypes = {
@@ -212,7 +229,6 @@ BehandlingPickerItemContent.propTypes = {
     manueltOpprettet: PropTypes.bool,
   }),
   erGjeldendeVedtak: PropTypes.bool,
-  isSelected: PropTypes.bool.isRequired,
   behandlingsresultatTypeKode: PropTypes.string,
   behandlingsresultatTypeNavn: PropTypes.string,
 };

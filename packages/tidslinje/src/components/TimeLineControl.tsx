@@ -1,8 +1,8 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { Row } from 'nav-frontend-grid';
 import { useIntl } from 'react-intl';
-import UttakPeriode from '@k9-frontend/types/src/uttak/UttakPeriode';
-import EventCallback from '@k9-frontend/types/src/EventCallback';
+import UttakPeriode from '@k9-sak-web/types/src/uttak/UttakPeriode';
+import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import TimeLineButton from './TimeLineButton';
 import styles from './timeLineControl.less';
 

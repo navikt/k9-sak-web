@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  createIntl, createIntlCache, FormattedMessage, RawIntlProvider,
+  createIntl, createIntlCache, FormattedHTMLMessage, RawIntlProvider,
 } from 'react-intl';
 
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { pageContainer } from './errorPageWrapper.less';
-import messages from '../../i18n/nb_NO';
+import messages from '../../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
@@ -25,7 +25,7 @@ const ErrorPageWrapper = ({ children, titleCode }) => (
   <RawIntlProvider value={intl}>
     <div className={pageContainer}>
       <Innholdstittel>
-        <FormattedMessage id={titleCode} />
+        <FormattedHTMLMessage id={titleCode} />
       </Innholdstittel>
       <br />
       {children}

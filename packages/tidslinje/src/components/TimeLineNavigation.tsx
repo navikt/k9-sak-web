@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { useIntl } from 'react-intl';
-import EventCallback from '@k9-frontend/types/src/EventCallback';
+import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import TimeLineButton from './TimeLineButton';
 
 const TimeLineNavigation: FunctionComponent<{ openPeriodInfo: EventCallback }> = ({ openPeriodInfo }) => {

@@ -113,7 +113,7 @@ export class MessagesIndex extends Component {
       mottaker,
       dokumentMal,
     };
-    fetchPreview(erTilbakekreving, data);
+    fetchPreview(erTilbakekreving, false, data);
   }
 
   afterSubmit() {
@@ -125,7 +125,10 @@ export class MessagesIndex extends Component {
 
   resetMessage() {
     const { resetSubmitMessage: resetMessage } = this.props;
-    return resetMessage();
+    resetMessage();
+
+    // FIXME temp fiks for å unngå prod-feil (her skjer det ein oppdatering av behandling, så må oppdatera)
+    window.location.reload();
   }
 
   render() {

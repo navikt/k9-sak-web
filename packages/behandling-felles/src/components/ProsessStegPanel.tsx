@@ -4,11 +4,10 @@ import { Dispatch } from 'redux';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { Behandling, Kodeverk } from '@k9-sak-web/types';
 
 import ProsessStegData from '../types/prosessStegDataTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import Behandling from '../types/behandlingTsType';
-import Kodeverk from '../types/kodeverkTsType';
 import MargMarkering from './MargMarkering';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
@@ -19,12 +18,12 @@ import prosessStegHooks from '../util/prosessStegHooks';
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: { [key: string]: Kodeverk[] };
   valgtProsessSteg?: ProsessStegData;
-  apentFaktaPanelInfo?: { urlCode: string; textCode: string};
+  apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   lagringSideeffekterCallback: (aksjonspunktModeller: []) => any;
-  behandlingApi: {[name: string]: EndpointOperations};
+  behandlingApi: { [name: string]: EndpointOperations };
   dispatch: Dispatch;
 }
 
@@ -39,13 +38,20 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   behandlingApi,
   dispatch,
 }) => {
-  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtProsessSteg.urlCode === bpc.VEDTAK;
-  const bekreftAksjonspunktCallback = prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling, behandlingApi, lagringSideeffekterCallback,
-    dispatch, valgtProsessSteg);
+  const erHenlagtOgVedtakStegValgt =
+    behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.urlCode === bpc.VEDTAK;
+  const bekreftAksjonspunktCallback = prosessStegHooks.useBekreftAksjonspunkt(
+    fagsak,
+    behandling,
+    behandlingApi,
+    lagringSideeffekterCallback,
+    dispatch,
+    valgtProsessSteg,
+  );
 
   return (
     <>
-      {valgtProsessSteg && valgtProsessSteg.erStegBehandlet && (
+      {valgtProsessSteg && valgtProsessSteg.erStegBehandlet && !erHenlagtOgVedtakStegValgt && (
         <MargMarkering
           behandlingStatus={behandling.status}
           aksjonspunkter={valgtProsessSteg.aksjonspunkter}
@@ -58,13 +64,15 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
                 key={valgtProsessSteg.panelData[0].code}
                 behandlingVersion={behandling.versjon}
                 endpoints={valgtProsessSteg.panelData[0].endpoints}
-                render={(dataProps) => valgtProsessSteg.panelData[0].renderComponent({
-                  ...dataProps,
-                  behandling,
-                  alleKodeverk,
-                  submitCallback: bekreftAksjonspunktCallback,
-                  ...valgtProsessSteg.panelData[0].komponentData,
-                })}
+                render={dataProps =>
+                  valgtProsessSteg.panelData[0].renderComponent({
+                    ...dataProps,
+                    behandling,
+                    alleKodeverk,
+                    submitCallback: bekreftAksjonspunktCallback,
+                    ...valgtProsessSteg.panelData[0].komponentData,
+                  })
+                }
               />
             </FadingPanel>
           )}
@@ -80,13 +88,11 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
           )}
         </MargMarkering>
       )}
-      {erHenlagtOgVedtakStegValgt && (
-        <BehandlingHenlagtPanel />
-      )}
-      {(valgtProsessSteg && valgtProsessSteg.urlCode
-        && !valgtProsessSteg.erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
-        <ProsessStegIkkeBehandletPanel />
-      )}
+      {erHenlagtOgVedtakStegValgt && <BehandlingHenlagtPanel />}
+      {valgtProsessSteg &&
+        valgtProsessSteg.urlCode &&
+        !valgtProsessSteg.erStegBehandlet &&
+        !erHenlagtOgVedtakStegValgt && <ProsessStegIkkeBehandletPanel />}
     </>
   );
 };

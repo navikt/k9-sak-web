@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 import {
   Element, Normaltekst, Undertekst, EtikettLiten,
 } from 'nav-frontend-typografi';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
 import {
-  DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import Lesmerpanel2 from '../redesign/LesmerPanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const finnvirksomhetsTypeKode = (naring) => {
   const { virksomhetType } = naring;
@@ -58,25 +59,9 @@ const lagIntroTilEndringspanel = (naring) => {
     return null;
   }
   return (
-    <>
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <Normaltekst>
-              <FormattedMessage id={hendelseTekst} />
-            </Normaltekst>
-          </FlexColumn>
-          <FlexColumn>
-            {hendelseDato
-            && (
-            <Normaltekst className={beregningStyles.semiBoldText}>
-              <DateLabel dateString={hendelseDato} />
-            </Normaltekst>
-            )}
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    </>
+    <span>
+      <FormattedHTMLMessage id={hendelseTekst} values={{ dato: dateFormat(hendelseDato) }} />
+    </span>
   );
 };
 
@@ -89,19 +74,23 @@ const erNæringNyoppstartetEllerVarigEndret = (naring) => {
 
 const lagBeskrivelsePanel = (naringsAndel, intl) => (
   <>
-    <Lesmerpanel
+    <VerticalSpacer fourPx />
+    <Lesmerpanel2
       className={styles.lesMer}
       intro={lagIntroTilEndringspanel(naringsAndel)}
       lukkTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.SkjulBegrunnelse' })}
       apneTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VisBegrunnelse' })}
       defaultApen
     >
-      <Normaltekst className={styles.beskrivelse}>
+      {naringsAndel.begrunnelse && naringsAndel.begrunnelse !== '' && (
+      <Normaltekst>
         {naringsAndel.begrunnelse}
       </Normaltekst>
-    </Lesmerpanel>
+      )}
+    </Lesmerpanel2>
   </>
 );
+
 
 const søkerHarOppgittInntekt = (naring) => naring.oppgittInntekt || naring.oppgittInntekt === 0;
 
@@ -117,9 +106,10 @@ export const NaeringsopplysningsPanel = ({
 
   return (
     <>
+      <AvsnittSkiller luftOver luftUnder />
       <FlexRow key="SNNareingOverskrift">
         <FlexColumn>
-          <Element className={beregningStyles.semiBoldText}>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
           </Element>
         </FlexColumn>
@@ -129,8 +119,7 @@ export const NaeringsopplysningsPanel = ({
           )}
         </FlexColumn>
       </FlexRow>
-
-      <VerticalSpacer fourPx />
+      <VerticalSpacer eightPx />
       {snAndel.næringer.map((naring) => (
         <React.Fragment key={`NaringsWrapper${naring.orgnr}`}>
           <Row key="SNInntektIngress">
@@ -154,7 +143,7 @@ export const NaeringsopplysningsPanel = ({
                 <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
               </EtikettLiten>
             </Column>
-            <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
+            <Column xs="2" className={beregningStyles.colAarText}>
               {søkerHarOppgittInntekt(naring)
                 && (
                 <Normaltekst className={beregningStyles.semiBoldText}>

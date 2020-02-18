@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import {
   getLocationWithDefaultBehandlingspunktAndFakta,
   pathToBehandling,
@@ -20,16 +21,14 @@ const saksnummer = '12345';
 
 describe('<FagsakProfileIndex>', () => {
   it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', () => {
-    const showAllCallback = sinon.spy();
+
     const wrapper = shallow(
       <FagsakProfileIndex
         saksnummer={saksnummer}
-        sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
-        fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
+        sakstype={{kode: fagsakYtelseType.FORELDREPENGER}}
+        fagsakStatus={{kode: fagsakStatus.OPPRETTET}}
         noExistingBehandlinger
-        showAll={false}
-        toggleShowAll={showAllCallback}
-        reset={sinon.spy()}
+
         alleKodeverk={{}}
         enabledApis={[]}
         shouldRedirectToBehandlinger={false}
@@ -46,7 +45,6 @@ describe('<FagsakProfileIndex>', () => {
       .renderProp('render')({})
       .find(FagsakProfilSakIndex);
     expect(fagsakProfile).has.length(1);
-    expect(showAllCallback.getCalls()).has.length(1);
   });
 
   it('skal ikke slå på visning av alle behandlinger når behandling allerede er valgt', () => {
@@ -70,10 +68,13 @@ describe('<FagsakProfileIndex>', () => {
     );
 
     expect(showAllCallback.getCalls()).has.length(0);
+    const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')({
+    }).find(BehandlingVelgerSakIndex);
+    expect(behandlingVelger).has.length(1);
+    expect(behandlingVelger.prop('showAll')).is.true;
   });
 
-  it('skal resette visning av alle behandlinger når komponent blir fjernet', () => {
-    const resetCallback = sinon.spy();
+  it('skal ikke vise alle behandlinger når behandling er valgt', () => {
     const wrapper = shallow(
       <FagsakProfileIndex
         saksnummer={saksnummer}
@@ -81,9 +82,7 @@ describe('<FagsakProfileIndex>', () => {
         fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
         selectedBehandlingId={1}
         noExistingBehandlinger
-        showAll
-        toggleShowAll={sinon.spy()}
-        reset={resetCallback}
+
         alleKodeverk={{}}
         enabledApis={[]}
         shouldRedirectToBehandlinger={false}
@@ -92,9 +91,17 @@ describe('<FagsakProfileIndex>', () => {
       />,
     );
 
-    wrapper.unmount();
+    const dataFetchers = wrapper.find(DataFetcher);
+    expect(dataFetchers.at(1).prop('showComponent')).is.false;
 
-    expect(resetCallback.getCalls()).has.length(1);
+    const fagsakProfile = dataFetchers.at(0).renderProp('render')({
+    }).find(FagsakProfilSakIndex);
+    expect(fagsakProfile).has.length(1);
+
+    const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')({
+    }).find(BehandlingVelgerSakIndex);
+    expect(behandlingVelger).has.length(1);
+    expect(behandlingVelger.prop('showAll')).is.false;
   });
 
   it('skal omdirigere til behandling hvis flagget er satt', () => {

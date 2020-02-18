@@ -2,7 +2,7 @@ import React from 'react';
 import { Row } from 'nav-frontend-grid';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import Kjønnkode from '@k9-frontend/types/src/Kjønnkode';
+import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
 import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlUkjent from '@fpsak-frontend/assets/images/ukjent.svg';

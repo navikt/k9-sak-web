@@ -122,6 +122,7 @@ const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
   );
 };
 
+
 DocumentListInnsyn.propTypes = {
   intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
@@ -129,9 +130,9 @@ DocumentListInnsyn.propTypes = {
     PropTypes.shape({
       journalpostId: PropTypes.string.isRequired,
       dokumentId: PropTypes.string.isRequired,
-      tittel: PropTypes.string.isRequired,
+      tittel: PropTypes.string,
       tidspunkt: PropTypes.string,
-      kommunikasjonsretning: PropTypes.string.isRequired,
+      kommunikasjonsretning: PropTypes.string,
     }).isRequired,
   ).isRequired,
   readOnly: PropTypes.bool,
