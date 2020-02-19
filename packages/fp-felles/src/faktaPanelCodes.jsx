@@ -3,8 +3,9 @@ const faktaPanelCodes = {
   ADOPSJONSVILKARET: 'adopsjonsvilkaaret',
   ARBEIDSFORHOLD: 'arbeidsforhold',
   BEREGNING: 'beregning',
-  FORDELING: 'fordeling',
   DEFAULT: 'default',
+  FORDELING: 'fordeling',
+  FEILUTBETALING: 'feilutbetaling',
   FODSELSVILKARET: 'foedselsvilkaaret',
   FODSELTILRETTELEGGING: 'fodseltilrettelegging',
   MEDLEMSKAPSVILKARET: 'medlemskapsvilkaaret',
@@ -15,9 +16,9 @@ const faktaPanelCodes = {
   OPPTJENINGSVILKARET: 'opptjeningsvilkaaret',
   PERSON: 'person',
   TILLEGGSOPPLYSNINGER: 'tilleggsopplysninger',
-  VERGE: 'verge',
   UTTAK: 'uttak',
-  FEILUTBETALING: 'feilutbetaling',
+  VERGE: 'verge',
+  YTELSER: 'ytelser',
 };
 
 export default faktaPanelCodes;

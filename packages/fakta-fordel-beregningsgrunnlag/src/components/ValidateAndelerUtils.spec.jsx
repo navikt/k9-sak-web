@@ -232,13 +232,31 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal ikkje gi error om det er ingen andeler lagt til av saksbehandler og ingen har lik inntektskategori og andelsnr', () => {
     const andeler = [{
-      andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, lagtTilAvSaksbehandler: false, aktivitetStatus: 'ARBEIDSTAKER', inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 1,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      lagtTilAvSaksbehandler: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: '2974239',
     },
     {
-      andelsnr: 2, andel: 'Virksomheten 2', nyAndel: false, lagtTilAvSaksbehandler: false, aktivitetStatus: 'ARBEIDSTAKER', inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 2,
+      andel: 'Virksomheten 2',
+      nyAndel: false,
+      lagtTilAvSaksbehandler: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: '433f34',
     },
     {
-      andelsnr: 3, andel: 'Virksomheten 3', nyAndel: false, lagtTilAvSaksbehandler: false, aktivitetStatus: 'ARBEIDSTAKER', inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 3,
+      andel: 'Virksomheten 3',
+      nyAndel: false,
+      lagtTilAvSaksbehandler: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: 'egg4g232',
     },
     ];
     const ulikeAndelerError = validateUlikeAndeler(andeler);
@@ -247,13 +265,25 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal ikkje gi error om det er andeler lagt til av saksbehandler og ingen har lik inntektskategori og andelsnr', () => {
     const andeler = [{
-      andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 1,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: '433f34',
     },
     {
-      andelsnr: 2, andel: 'Virksomheten 2', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 2,
+      andel: 'Virksomheten 2',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: '34r343f',
     },
     {
-      andelsnr: null, andel: '2', nyAndel: true, lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER_SJØMANN',
+      andelsnr: null, andel: '2', nyAndel: true, lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER_SJØMANN', arbeidsforholdId: '34r343f',
     },
     ];
     const ulikeAndelerError = validateUlikeAndeler(andeler);
@@ -262,18 +292,54 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal gi error om det er nye andeler to har lik inntektskategori og andelsnr', () => {
     const andeler = [{
-      andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 1,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: '353453',
     },
     {
-      andelsnr: 2, andel: 'Virksomheten 2', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 2,
+      andel: 'Virksomheten 2',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: '433f34',
     },
     {
-      andelsnr: null, andel: '2', nyAndel: true, lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: null, andel: '2', nyAndel: true, lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER', arbeidsforholdId: '433f34',
     },
     ];
     const ulikeAndelerError = validateUlikeAndeler(andeler);
     expect(ulikeAndelerError).to.have.length(1);
     expect(ulikeAndelerError[0].id).to.equal(ulikeAndelerErrorMessage()[0].id);
+  });
+
+  it('skal ikkje gi error om to andeler har lik inntektskategori men ulik arbeidsforholdId', () => {
+    const andeler = [{
+      andelsnr: 1,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: '353453',
+    },
+    {
+      andelsnr: 2,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
+      arbeidsforholdId: '433f34',
+    },
+    ];
+    const ulikeAndelerError = validateUlikeAndeler(andeler);
+    expect(ulikeAndelerError).to.equal(null);
   });
 
   it('skal gi error om det er nye andeler to har lik inntektskategori og andelsnr når det finnes to eksisterende andeler med samme virksomhet', () => {
@@ -313,10 +379,20 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal ikkje gi error om det er nye andeler der to har lik andelstype og ulik inntektskategori', () => {
     const andeler = [{
-      andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 1,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
-      andelsnr: 2, andel: 'Virksomheten 2', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 2,
+      andel: 'Virksomheten 2',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
       andelsnr: null, andel: 'BRUKERS_ANDEL', nyAndel: true, lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER',
@@ -331,10 +407,20 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal gi error om det er nye andeler der to har lik inntektskategori og andelstype', () => {
     const andeler = [{
-      andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 1,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
-      andelsnr: 2, andel: 'Virksomheten 2', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 2,
+      andel: 'Virksomheten 2',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
       andelsnr: null, andel: 'BRUKERS_ANDEL', nyAndel: true, lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER',
@@ -350,10 +436,20 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal gi error om det er ingen nye andeler, men andel lagt til av saksbehandler der to har lik inntektskategori og andelstype', () => {
     const andeler = [{
-      andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 1,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
-      andelsnr: 2, andel: 'Virksomheten 2', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 2,
+      andel: 'Virksomheten 2',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
       andelsnr: 3, andel: 'Brukers andel', nyAndel: false, aktivitetStatus: 'BA', lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER',
@@ -369,16 +465,35 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal gi error om det er ein ny brukers andel, og ein eksisterende der begge har lik inntektskategori', () => {
     const andeler = [{
-      andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 1,
+      andel: 'Virksomheten 1',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
-      andelsnr: 2, andel: 'Virksomheten 2', nyAndel: false, aktivitetStatus: 'ARBEIDSTAKER', lagtTilAvSaksbehandler: false, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 2,
+      andel: 'Virksomheten 2',
+      nyAndel: false,
+      aktivitetStatus: 'ARBEIDSTAKER',
+      lagtTilAvSaksbehandler: false,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
-      andelsnr: 3, andel: 'Brukers andel', aktivitetStatus: 'BA', nyAndel: false, lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 3,
+      andel: 'Brukers andel',
+      aktivitetStatus: 'BA',
+      nyAndel: false,
+      lagtTilAvSaksbehandler: true,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     {
-      andelsnr: 4, andel: 'BRUKERS_ANDEL', nyAndel: true, lagtTilAvSaksbehandler: true, inntektskategori: 'ARBEIDSTAKER',
+      andelsnr: 4,
+      andel: 'BRUKERS_ANDEL',
+      nyAndel: true,
+      lagtTilAvSaksbehandler: true,
+      inntektskategori: 'ARBEIDSTAKER',
     },
     ];
     const ulikeAndelerError = validateUlikeAndeler(andeler);
@@ -619,48 +734,63 @@ describe('<ValidateAndelerUtils>', () => {
   });
 
 
-  it('skal returnere error om det er satt 0 i beregningsgrunnlag for andel med gradering', () => {
+  it('skal returnere error om det er satt 0 i beregningsgrunnlag for andel med gradering og arbeidsforhold ikke opphørt', () => {
     const andelValue = {
       andel: 'Selvstendig næringsgivende',
       fastsattBelop: '0',
       andelIArbeid: '50.00',
+      arbeidsperiodeTom: null,
     };
     const inntektList = [{
       key: 'Selvstendig næringsgivende',
       beregningsgrunnlagPrAar: null,
       fastsattBelop: 0,
     }];
-    const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false);
+    const periodeDato = [{
+      fom: '2020-01-01',
+      tom: null,
+    }];
+    const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError[0].id).to.equal(kanIkkjeHaNullBeregningsgrunnlagError()[0].id);
   });
 
-  it('skal returnere error om det er satt 0 i beregningsgrunnlag for andel med gradering i deler av perioden', () => {
+  it('skal returnere error om det er satt 0 i beregningsgrunnlag for andel med gradering i deler av perioden og arbeidsforhold ikke opphørt', () => {
     const andelValue = {
       andel: 'Selvstendig næringsgivende',
       fastsattBelop: '0',
       andelIArbeid: '0 - 50',
+      arbeidsperiodeTom: '2020-12-01',
     };
     const inntektList = [{
       key: 'Selvstendig næringsgivende',
       beregningsgrunnlagPrAar: null,
       fastsattBelop: 0,
     }];
-    const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false);
+    const periodeDato = [{
+      fom: '2020-01-01',
+      tom: null,
+    }];
+    const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError[0].id).to.equal(kanIkkjeHaNullBeregningsgrunnlagError()[0].id);
   });
 
-  it('skal ikkje returnere error om det er satt 0 i beregningsgrunnlag for andel med uten gradering', () => {
+  it('skal ikkje returnere error om det er satt 0 i beregningsgrunnlag for andel med uten gradering og arbeidsforhold ikke opphørt', () => {
     const andelValue = {
       andel: 'Selvstendig næringsgivende',
       fastsattBelop: '0',
       andelIArbeid: '0',
+      arbeidsperiodeTom: undefined,
     };
     const inntektList = [{
       key: 'Selvstendig næringsgivende',
       beregningsgrunnlagPrAar: null,
       fastsattBelop: 0,
     }];
-    const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false);
+    const periodeDato = [{
+      fom: '2015-01-01',
+      tom: null,
+    }];
+    const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError).to.equal(null);
   });
 
@@ -676,6 +806,26 @@ describe('<ValidateAndelerUtils>', () => {
       fastsattBelop: 0,
     }];
     const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false);
+    expect(fastsattError).to.equal(null);
+  });
+
+  it('skal ikke returnere error om det er satt 0 i beregningsgrunnlag for andel med gradering i deler av perioden og arbeidsforhold er opphørt', () => {
+    const andelValue = {
+      andel: 'Selvstendig næringsgivende',
+      fastsattBelop: '0',
+      andelIArbeid: '0 - 50',
+      arbeidsperiodeTom: '2019-12-31',
+    };
+    const inntektList = [{
+      key: 'Selvstendig næringsgivende',
+      beregningsgrunnlagPrAar: null,
+      fastsattBelop: 0,
+    }];
+    const periodeDato = [{
+      fom: '2020-01-01',
+      tom: null,
+    }];
+    const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError).to.equal(null);
   });
 });

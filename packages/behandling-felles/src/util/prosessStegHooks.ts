@@ -1,20 +1,18 @@
-import {
-  useState, useMemo, useCallback, useEffect,
-} from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Dispatch } from 'redux';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { Behandling, NavAnsatt, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 
-import Behandling from '../types/behandlingTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import NavAnsatt from '../types/navAnsattTsType';
-import Aksjonspunkt from '../types/aksjonspunktTsType';
-import Vilkar from '../types/vilkarTsType';
 import ProsessStegDefinisjon from '../types/prosessStegDefinisjonTsType';
 import ProsessStegData from '../types/prosessStegDataTsType';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 import {
-  utledProsessStegPaneler, finnValgtPanel, formaterPanelerForProsessmeny, getBekreftAksjonspunktCallback,
+  utledProsessStegPaneler,
+  finnValgtPanel,
+  formaterPanelerForProsessmeny,
+  getBekreftAksjonspunktCallback,
 } from './prosessStegUtils';
 
 const useProsessStegPaneler = (
@@ -28,7 +26,7 @@ const useProsessStegPaneler = (
   hasFetchError: boolean,
   intl,
   valgtProsessSteg?: string,
-  apentFaktaPanelInfo?: { urlCode: string; textCode: string},
+  apentFaktaPanelInfo?: { urlCode: string; textCode: string },
 ): [ProsessStegData[], ProsessStegData, ProsessStegMenyRad[]] => {
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
   const ekstraPanelData = { ...panelData, overstyrteAksjonspunktKoder };
@@ -39,16 +37,34 @@ const useProsessStegPaneler = (
     }
   }, [behandling.versjon]);
 
-  const prosessStegPaneler = useMemo(() => utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    overstyrteAksjonspunktKoder, fagsak, navAnsatt, behandling, aksjonspunkter, vilkar, hasFetchError),
-  [behandling.versjon, overstyrteAksjonspunktKoder]);
+  const prosessStegPaneler = useMemo(
+    () =>
+      utledProsessStegPaneler(
+        prosessStegPanelDefinisjoner,
+        ekstraPanelData,
+        toggleOverstyring,
+        overstyrteAksjonspunktKoder,
+        fagsak,
+        navAnsatt,
+        behandling,
+        aksjonspunkter,
+        vilkar,
+        hasFetchError,
+      ),
+    [behandling.versjon, overstyrteAksjonspunktKoder],
+  );
 
-  const valgtPanel = useMemo(() => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
-    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo]);
+  const valgtPanel = useMemo(
+    () => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
+    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo],
+  );
 
   const urlCode = valgtPanel ? valgtPanel.urlCode : undefined;
-  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, intl, urlCode),
-    [behandling.versjon, urlCode, overstyrteAksjonspunktKoder]);
+  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, intl, urlCode), [
+    behandling.versjon,
+    urlCode,
+    overstyrteAksjonspunktKoder,
+  ]);
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };
@@ -59,26 +75,47 @@ const useProsessStegVelger = (
   behandling: Behandling,
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void,
   valgtProsessSteg: string,
-) => useCallback((index) => {
-  const { urlCode } = prosessStegPaneler[index];
-  const nyvalgtProsessSteg = !valgtProsessSteg || urlCode !== valgtProsessSteg ? urlCode : undefined;
-  oppdaterProsessStegOgFaktaPanelIUrl(nyvalgtProsessSteg, valgtFaktaSteg);
-}, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
+  valgtPanel?: ProsessStegData,
+) =>
+  useCallback(
+    index => {
+      const { urlCode } = prosessStegPaneler[index];
+
+      const erNyvalgtPanelDetSammeSomForrige = valgtPanel && valgtPanel.urlCode === urlCode;
+      const erNyvalgtPanelUlikForrige = urlCode !== valgtProsessSteg;
+
+      const nyvalgtProsessSteg =
+        !erNyvalgtPanelDetSammeSomForrige && (!valgtProsessSteg || erNyvalgtPanelUlikForrige) ? urlCode : undefined;
+      oppdaterProsessStegOgFaktaPanelIUrl(nyvalgtProsessSteg, valgtFaktaSteg);
+    },
+    [behandling.versjon, valgtProsessSteg, valgtFaktaSteg],
+  );
 
 const useBekreftAksjonspunkt = (
   fagsak: FagsakInfo,
   behandling: Behandling,
-  behandlingApi: {[name: string]: EndpointOperations},
+  behandlingApi: { [name: string]: EndpointOperations },
   lagringSideEffectsCallback: (aksjonspunktModeller: {}) => () => void,
   dispatch: Dispatch,
   valgtPanel?: ProsessStegData,
-) => useCallback((
-  aksjonspunktModels,
-) => getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak,
-  behandling, valgtPanel ? valgtPanel.aksjonspunkter : [], behandlingApi)(aksjonspunktModels),
-[behandling.versjon, valgtPanel]);
+) =>
+  useCallback(
+    aksjonspunktModels =>
+      getBekreftAksjonspunktCallback(
+        dispatch,
+        lagringSideEffectsCallback,
+        fagsak,
+        behandling,
+        valgtPanel ? valgtPanel.aksjonspunkter : [],
+        behandlingApi,
+      )(aksjonspunktModels),
+    [behandling.versjon, valgtPanel],
+  );
 
-const useOppdateringAvBehandlingsversjon = (behandlingVersjon: number, oppdaterBehandlingVersjon: (versjon: number) => void) => {
+const useOppdateringAvBehandlingsversjon = (
+  behandlingVersjon: number,
+  oppdaterBehandlingVersjon: (versjon: number) => void,
+) => {
   const [skalOppdatereFagsakKontekst, toggleSkalOppdatereFagsakContext] = useState(true);
   useEffect(() => {
     if (skalOppdatereFagsakKontekst) {

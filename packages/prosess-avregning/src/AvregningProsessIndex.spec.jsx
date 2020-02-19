@@ -44,7 +44,7 @@ describe('<AvregningProsessIndex>', () => {
         isReadOnly={false}
         readOnlySubmitButton={false}
         isAksjonspunktOpen
-        previewCallback={sinon.spy()}
+        previewFptilbakeCallback={sinon.spy()}
         featureToggles={{}}
       />,
     );

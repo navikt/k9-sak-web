@@ -2,9 +2,8 @@ import React, { FunctionComponent, useState, useCallback } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { allAccessRights } from '@fpsak-frontend/fp-felles';
-import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams,
-} from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
+import { Behandling, Aksjonspunkt, Kodeverk, NavAnsatt } from '@k9-sak-web/types';
 
 import SoknadRegistrertModal from './SoknadRegistrertModal';
 import RegistrerPapirsoknadPanel from './RegistrerPapirsoknadPanel';
@@ -13,7 +12,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -21,20 +20,33 @@ interface OwnProps {
   erAksjonspunktLagret: boolean;
 }
 
-const getAktivtPapirsoknadApKode = (aksjonspunkter) => aksjonspunkter.filter((a) => a.erAktivt).map((ap) => ap.definisjon.kode)
-  .filter((kode) => kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD
-      || kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER
-      || kode === aksjonspunktCodes.REGISTRER_PAPIR_ENDRINGSØKNAD_FORELDREPENGER
-      || kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_SVANGERSKAPSPENGER)[0];
+const getAktivtPapirsoknadApKode = aksjonspunkter =>
+  aksjonspunkter
+    .filter(a => a.erAktivt)
+    .map(ap => ap.definisjon.kode)
+    .filter(
+      kode =>
+        kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD ||
+        kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER ||
+        kode === aksjonspunktCodes.REGISTRER_PAPIR_ENDRINGSØKNAD_FORELDREPENGER ||
+        kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_SVANGERSKAPSPENGER,
+    )[0];
 
-const lagLagreFunksjon = (soknadData, behandling, aksjonspunkter, fagsak, lagreAksjonspunkt) => (valuesForRegisteredFieldsOnly) => {
-  const manuellRegistreringDtoList = [{
-    '@type': getAktivtPapirsoknadApKode(aksjonspunkter),
-    tema: soknadData.getFamilieHendelseType(),
-    soknadstype: soknadData.getFagsakYtelseType(),
-    soker: soknadData.getForeldreType(),
-    ...valuesForRegisteredFieldsOnly,
-  },
+const lagLagreFunksjon = (
+  soknadData,
+  behandling,
+  aksjonspunkter,
+  fagsak,
+  lagreAksjonspunkt,
+) => valuesForRegisteredFieldsOnly => {
+  const manuellRegistreringDtoList = [
+    {
+      '@type': getAktivtPapirsoknadApKode(aksjonspunkter),
+      tema: soknadData.getFamilieHendelseType(),
+      soknadstype: soknadData.getFagsakYtelseType(),
+      soker: soknadData.getForeldreType(),
+      ...valuesForRegisteredFieldsOnly,
+    },
   ];
 
   const params = {
@@ -69,7 +81,10 @@ export const RegistrerPapirsoknad: FunctionComponent<OwnProps> = ({
   const readOnly = !rettigheter.writeAccess.isEnabled || behandling.behandlingPaaVent;
 
   const lagre = lagLagreFunksjon(soknadData, behandling, aksjonspunkter, fagsak, lagreAksjonspunkt);
-  const lagreFullstendig = useCallback((_formValues, _dispatch, { valuesForRegisteredFieldsOnly }) => lagre(valuesForRegisteredFieldsOnly), [soknadData]);
+  const lagreFullstendig = useCallback(
+    (_formValues, _dispatch, { valuesForRegisteredFieldsOnly }) => lagre(valuesForRegisteredFieldsOnly),
+    [soknadData],
+  );
   const lagreUfullstendig = useCallback(() => lagre({ ufullstendigSoeknad: true }), [soknadData]);
 
   return (

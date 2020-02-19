@@ -7,16 +7,30 @@
   padding-right: 12px;
 }
 
-.beregningForm {
-  padding: 20px 0 20px 0;
+.avsnittOverskrift {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.aksjonsPunktHjelpeTekst {
+  padding: 0 20px 0 20px;
 }
 
 .panelLeft {
-  padding: 0 20px 0 20px;
+  padding: 0 40px 0 0;
+
+  @media (max-width: 992px) {
+    padding: 0;
+  }
 }
 
 .panelRight {
-  padding: 0 20px 0 20px;
+  background-color: transparent;
+  padding: 0 0 0 40px;
+
+  @media (max-width: 992px) {
+    padding: 0;
+  }
 }
 
 .semiBoldText {
@@ -24,7 +38,7 @@
 }
 
 .rightAlignElement {
-  padding-right: 0;
+  padding-left: 0;
 
   && p {
     text-align: right;
@@ -36,7 +50,7 @@
 }
 
 .rightAlignElementNoWrap {
-  padding: 0;
+  padding-left: 0;
 
   && p {
     text-align: right;
@@ -77,10 +91,11 @@
   padding-right: 0;
   position: relative;
   text-align: right;
+  white-space: nowrap;
 }
 
 .colDevider {
-  border-top: 1px inset @navGra40;
+  border-top: 1px solid @navMorkGra;
   margin-top: 4px;
   min-height: 8px;
 }
@@ -105,4 +120,12 @@
 
 .noPaddingRight {
   padding-right: 0;
+}
+
+.paragrafSkiller {
+  display: none;
+
+  @media (max-width: 990px) {
+    display: inherit;
+  }
 }

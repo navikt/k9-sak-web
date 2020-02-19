@@ -8,8 +8,8 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
-import { Periode } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
-import MedisinskVilkårConsts from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
+import { Periode } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
+import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import ExpandablePanel from '@navikt/nap-expandable-panel';
 import moment from 'moment';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';

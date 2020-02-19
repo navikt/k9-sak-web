@@ -119,6 +119,7 @@ const config = {
         test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
         options: {
+          esModule: false,
           name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
         include: [CORE_DIR, IMAGE_DIR],

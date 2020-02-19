@@ -6,9 +6,13 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix, ErrorTypes } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Aksjonspunkt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  FagsakInfo,
+  SettPaVentParams,
+  ReduxFormStateCleaner,
+  DataFetcherBehandlingData,
   BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk, NavAnsatt, Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 
 import papirsoknadApi, { reduxRestApi, PapirsoknadApiKeys } from './data/papirsoknadApi';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
@@ -23,11 +27,11 @@ interface DataProps {
 interface OwnProps {
   behandlingId: number;
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
   location: {};
   behandlingEventHandler: {
-    setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
+    setHandler: (events: { [key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
   };
 }
@@ -52,33 +56,37 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingPapirsoknadIndex extends PureComponent<Props> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
+  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache();
 
   componentDidMount = () => {
     const {
-      behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
+      behandlingEventHandler,
+      nyBehandlendeEnhet,
+      settBehandlingPaVent,
+      taBehandlingAvVent,
+      henleggBehandling,
+      hentBehandling,
+      behandlingId,
     } = this.props;
     behandlingEventHandler.setHandler({
-      endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
-        .then(() => hentBehandling({ behandlingId }, { keepData: true })),
-      settBehandlingPaVent: (params) => settBehandlingPaVent(params)
-        .then(() => hentBehandling({ behandlingId }, { keepData: true })),
-      taBehandlingAvVent: (params) => taBehandlingAvVent(params, { keepData: true }),
-      henleggBehandling: (params) => henleggBehandling(params),
+      endreBehandlendeEnhet: params =>
+        nyBehandlendeEnhet(params).then(() => hentBehandling({ behandlingId }, { keepData: true })),
+      settBehandlingPaVent: params =>
+        settBehandlingPaVent(params).then(() => hentBehandling({ behandlingId }, { keepData: true })),
+      taBehandlingAvVent: params => taBehandlingAvVent(params, { keepData: true }),
+      henleggBehandling: params => henleggBehandling(params),
     });
 
     this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
-  }
+  };
 
   componentWillUnmount = () => {
-    const {
-      behandlingEventHandler, resetRestApiContext, destroyReduxForm, behandling,
-    } = this.props;
+    const { behandlingEventHandler, resetRestApiContext, destroyReduxForm, behandling } = this.props;
     behandlingEventHandler.clear();
     resetRestApiContext();
     setTimeout(() => destroyReduxForm(getBehandlingFormPrefix(behandling.id, behandling.versjon)), 1000);
-  }
+  };
 
   render() {
     const {
@@ -111,7 +119,10 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
         endpoints={papirsoknadData}
         render={(dataProps: DataProps) => (
           <>
-            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+            <ReduxFormStateCleaner
+              behandlingId={dataProps.behandling.id}
+              behandlingVersjon={dataProps.behandling.versjon}
+            />
             <RegistrerPapirsoknad
               fagsak={fagsak}
               kodeverk={kodeverk}
@@ -129,33 +140,39 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
   }
 }
 
-const hasAccessError = (error) => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
+const hasAccessError = error => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   behandling: papirsoknadApi.BEHANDLING_PAPIRSOKNAD.getRestApiData()(state),
-  erAksjonspunktLagret: papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
-  || hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
+  erAksjonspunktLagret:
+    papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state) ||
+    hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
 });
 
-const getResetRestApiContext = () => (dispatch) => {
-  Object.values(PapirsoknadApiKeys)
-    .forEach((value) => {
-      dispatch(papirsoknadApi[value].resetRestApi()());
-    });
+const getResetRestApiContext = () => dispatch => {
+  Object.values(PapirsoknadApiKeys).forEach(value => {
+    dispatch(papirsoknadApi[value].resetRestApi()());
+  });
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  ...bindActionCreators({
-    nyBehandlendeEnhet: papirsoknadApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest(),
-    settBehandlingPaVent: papirsoknadApi.BEHANDLING_ON_HOLD.makeRestApiRequest(),
-    taBehandlingAvVent: papirsoknadApi.RESUME_BEHANDLING.makeRestApiRequest(),
-    henleggBehandling: papirsoknadApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
-    settPaVent: papirsoknadApi.UPDATE_ON_HOLD.makeRestApiRequest(),
-    hentBehandling: papirsoknadApi.BEHANDLING_PAPIRSOKNAD.makeRestApiRequest(),
-    lagreAksjonspunkt: papirsoknadApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
-    resetRestApiContext: getResetRestApiContext,
-    destroyReduxForm: destroy,
-  }, dispatch),
+  ...bindActionCreators(
+    {
+      nyBehandlendeEnhet: papirsoknadApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest(),
+      settBehandlingPaVent: papirsoknadApi.BEHANDLING_ON_HOLD.makeRestApiRequest(),
+      taBehandlingAvVent: papirsoknadApi.RESUME_BEHANDLING.makeRestApiRequest(),
+      henleggBehandling: papirsoknadApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
+      settPaVent: papirsoknadApi.UPDATE_ON_HOLD.makeRestApiRequest(),
+      hentBehandling: papirsoknadApi.BEHANDLING_PAPIRSOKNAD.makeRestApiRequest(),
+      lagreAksjonspunkt: papirsoknadApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
+      resetRestApiContext: getResetRestApiContext,
+      destroyReduxForm: destroy,
+    },
+    dispatch,
+  ),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingPapirsoknadIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BehandlingPapirsoknadIndex);

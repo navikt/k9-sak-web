@@ -2,9 +2,8 @@ import React, { FunctionComponent } from 'react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
-import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams,
-} from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
+import { Behandling, Aksjonspunkt, Kodeverk, NavAnsatt } from '@k9-sak-web/types';
 
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
@@ -17,7 +16,7 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
   perioderForeldelse?: PerioderForeldelse;
   beregningsresultat?: Beregningsresultat;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;

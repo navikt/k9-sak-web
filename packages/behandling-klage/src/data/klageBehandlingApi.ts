@@ -19,34 +19,34 @@ export const KlageBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE, {
-    fetchLinkDataAutomatically: false,
-  })
-  .withInjectedPath('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vilkar', KlageBehandlingApiKeys.VILKAR)
-  .withInjectedPath('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
+  .withAsyncPost('/k9/sak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE)
+
+  // behandlingsdata
+  .withRel('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', KlageBehandlingApiKeys.VILKAR)
+  .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
+    saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
   })
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', KlageBehandlingApiKeys.BEHANDLING_ON_HOLD)
 
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
+    saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
   })
   .withAsyncPost('/k9/sak/api/behandling/klage/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
   .withAsyncPost(
     '/k9/sak/api/behandling/klage/mellomlagre-gjennapne-klage',
     KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING,
     {
-      storeResultKey: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
+      saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
     },
   )
 
-  /* fpformidling */
+  /* FPFORMIDLING */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();
 

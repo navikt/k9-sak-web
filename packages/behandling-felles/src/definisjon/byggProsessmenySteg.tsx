@@ -2,12 +2,9 @@ import { createSelector } from 'reselect';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { Behandling, Aksjonspunkt, Vilkar, NavAnsatt } from '@k9-sak-web/types';
 
-import Behandling from '../types/behandlingTsType';
-import Aksjonspunkt from '../types/aksjonspunktTsType';
-import Vilkar from '../types/vilkarTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import NavAnsatt from '../types/navAnsattTsType';
 import readOnlyUtils from '../util/readOnlyUtils';
 
 // TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om
@@ -23,7 +20,8 @@ const finnProsessmenyType = (status, harApentAksjonspunkt) => {
   }
   if (status === vilkarUtfallType.OPPFYLT) {
     return SUCCESS;
-  } if (status === vilkarUtfallType.IKKE_OPPFYLT) {
+  }
+  if (status === vilkarUtfallType.IKKE_OPPFYLT) {
     return DANGER;
   }
   return DEFAULT;
@@ -42,34 +40,39 @@ interface OwnProps {
 }
 
 const byggProsessmenySteg = createSelector<OwnProps, any, any>(
-  [(ownProps) => ownProps.alleSteg,
-    (ownProps) => ownProps.valgtProsessSteg,
-    (ownProps) => ownProps.behandling,
-    (ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.vilkar,
-    (ownProps) => ownProps.navAnsatt,
-    (ownProps) => ownProps.fagsak,
-    (ownProps) => ownProps.hasFetchError,
-    (ownProps) => ownProps.intl],
+  [
+    ownProps => ownProps.alleSteg,
+    ownProps => ownProps.valgtProsessSteg,
+    ownProps => ownProps.behandling,
+    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.vilkar,
+    ownProps => ownProps.navAnsatt,
+    ownProps => ownProps.fagsak,
+    ownProps => ownProps.hasFetchError,
+    ownProps => ownProps.intl,
+  ],
   (alleSteg, valgtStegKode, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl) => {
-    const indexTilStegMedApentAksjonspunkt = alleSteg
-      .findIndex((steg) => aksjonspunkter.filter((ap) => steg.apCodes.includes(ap.definisjon.kode))
-        .some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET));
+    const indexTilStegMedApentAksjonspunkt = alleSteg.findIndex(steg =>
+      aksjonspunkter
+        .filter(ap => steg.apCodes.includes(ap.definisjon.kode))
+        .some(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET),
+    );
 
-    const indexTilValgtSteg = alleSteg.findIndex((p) => p.code === valgtStegKode);
+    const indexTilValgtSteg = alleSteg.findIndex(p => p.code === valgtStegKode);
 
     return alleSteg.map((steg, mapIndex) => {
       const harApentAp = indexTilStegMedApentAksjonspunkt === mapIndex;
       const type = finnProsessmenyType(steg.status, harApentAp);
 
-      const apForSteg = aksjonspunkter.filter((a) => steg.apCodes.includes(a.definisjon.kode));
-      const vilkarForBp = vilkar.filter((v) => steg.vilkarene.includes(v));
+      const apForSteg = aksjonspunkter.filter(a => steg.apCodes.includes(a.definisjon.kode));
+      const vilkarForBp = vilkar.filter(v => steg.vilkarene.includes(v));
       const isReadOnly = readOnlyUtils.erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
-      const isSubmittable = apForSteg.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
+      const isSubmittable = apForSteg.some(ap => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
 
       const erValgtSteg = indexTilValgtSteg === mapIndex;
       const harApentApOgDefaultStegValgt = valgtStegKode === 'default' && harApentAp;
-      const erHenlagtOgSisteSteg = valgtStegKode === 'default' && behandling.behandlingHenlagt && mapIndex === alleSteg.length - 1;
+      const erHenlagtOgSisteSteg =
+        valgtStegKode === 'default' && behandling.behandlingHenlagt && mapIndex === alleSteg.length - 1;
       const erAktiv = erHenlagtOgSisteSteg || erValgtSteg || harApentApOgDefaultStegValgt;
 
       return {

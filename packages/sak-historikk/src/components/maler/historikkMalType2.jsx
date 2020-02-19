@@ -37,14 +37,3 @@ HistorikkMalType2.propTypes = {
 };
 
 export default HistorikkMalType2;
-
-/*
-
-URL:
- http://[HOSTNAME]<:PORT>/#[/fagsak/FAGSAK_ID]</behandling/[BEHANDLING_ID]></punkt/[PUNKT_NAVN]></fakta/[FAKTA_NAVN]></SIDOPANEL_NAVN>
-
- PUNKT_NAVN: default | beregningsresultat | vedtak | vilkår-type navn uten norske tegn
- FAKTA_NAVN: default | tilleggsopplysninger | vilkår-type navn uten norske tegn ("-" er separator hvis flere)
- SIDOPANEL_NAVN: historikk, meldinger, etc
-
- */

@@ -11,7 +11,8 @@ import EngangsstonadPapirsoknadIndex from '@fpsak-frontend/papirsoknad-es';
 import ForeldrepengerPapirsoknadIndex from '@fpsak-frontend/papirsoknad-fp';
 import SvangerskapspengerPapirsoknadIndex from '@fpsak-frontend/papirsoknad-svp';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
-import { Kodeverk, FagsakInfo } from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk } from '@k9-sak-web/types';
 
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 
@@ -19,7 +20,7 @@ import styles from './registrerPapirsoknadPanel.less';
 
 interface OwnProps {
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: { [key: string]: Kodeverk[] };
   readOnly: boolean;
   setSoknadData: (SoknadData) => void;
   soknadData: SoknadData;
@@ -40,7 +41,9 @@ const RegistrerPapirsoknadPanel: FunctionComponent<OwnProps> = ({
     <PersonIndex medPanel person={fagsak.fagsakPerson} />
     <Panel className={styles.panelWithActionNeeded}>
       <Container fluid>
-        <Undertittel><FormattedMessage id="Registrering.RegistrereSoknad" /></Undertittel>
+        <Undertittel>
+          <FormattedMessage id="Registrering.RegistrereSoknad" />
+        </Undertittel>
         <VerticalSpacer sixteenPx />
         <AksjonspunktHelpText isAksjonspunktOpen={!readOnly}>
           {[<FormattedMessage key="regOpplysninger" id="Registrering.RegistrerAlleOpplysninger" />]}

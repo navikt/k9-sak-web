@@ -1,5 +1,5 @@
-import { Aksjonspunkt } from '@k9-frontend/types';
-import { Sykdom } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { Sykdom } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';

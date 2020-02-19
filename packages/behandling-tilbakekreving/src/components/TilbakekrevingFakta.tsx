@@ -1,15 +1,18 @@
-import React, {
-  FunctionComponent, useMemo, useCallback,
-} from 'react';
+import React, { FunctionComponent, useMemo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  DataFetcherBehandlingData, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, readOnlyUtils,
-  getAlleMerknaderFraBeslutter, Kodeverk, NavAnsatt, BehandlingDataCache,
+  DataFetcherBehandlingData,
+  FagsakInfo,
+  FaktaPanel,
+  readOnlyUtils,
+  getAlleMerknaderFraBeslutter,
+  BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
+import { Behandling, Aksjonspunkt, Kodeverk, NavAnsatt } from '@k9-sak-web/types';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
@@ -27,14 +30,14 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
   hasFetchError: boolean;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
 }
 
-const getBekreftFaktaCallback = (dispatch, fagsak, behandling, oppdaterProsessStegIUrl) => (aksjonspunkter) => {
-  const model = aksjonspunkter.map((ap) => ({
+const getBekreftFaktaCallback = (dispatch, fagsak, behandling, oppdaterProsessStegIUrl) => aksjonspunkter => {
+  const model = aksjonspunkter.map(ap => ({
     '@type': ap.kode,
     ...ap,
   }));
@@ -46,8 +49,9 @@ const getBekreftFaktaCallback = (dispatch, fagsak, behandling, oppdaterProsessSt
     bekreftedeAksjonspunktDtoer: model,
   };
 
-  return dispatch(tilbakekrevingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
-    .then(() => oppdaterProsessStegIUrl('default'));
+  return dispatch(tilbakekrevingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true })).then(() =>
+    oppdaterProsessStegIUrl('default'),
+  );
 };
 
 const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
@@ -60,23 +64,33 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegIUrl,
 }) => {
   const intl = useIntl();
-  const apForPanel = useMemo(() => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING),
-    [aksjonspunkter]);
-  const harApneAksjonspunkter = apForPanel.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
+  const apForPanel = useMemo(
+    () =>
+      aksjonspunkter.filter(
+        ap => ap.definisjon.kode === aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+      ),
+    [aksjonspunkter],
+  );
+  const harApneAksjonspunkter = apForPanel.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
   const readOnly = readOnlyUtils.erReadOnly(behandling, apForPanel, [], navAnsatt, fagsak, hasFetchError);
 
   const dispatch = useDispatch();
-  const bekreftCallback = useCallback(getBekreftFaktaCallback(dispatch, fagsak, behandling, oppdaterProsessStegIUrl), [behandling.versjon]);
+  const bekreftCallback = useCallback(getBekreftFaktaCallback(dispatch, fagsak, behandling, oppdaterProsessStegIUrl), [
+    behandling.versjon,
+  ]);
 
   const cache = new BehandlingDataCache();
   cache.setVersion(behandling.versjon);
 
   return (
-    <FaktaPanel paneler={[{
-      tekst: intl.formatMessage({ id: 'TilbakekrevingFakta.FaktaFeilutbetaling' }),
-      erAktiv: true,
-      harAksjonspunkt: harApneAksjonspunkter,
-    }]}
+    <FaktaPanel
+      paneler={[
+        {
+          tekst: intl.formatMessage({ id: 'TilbakekrevingFakta.FaktaFeilutbetaling' }),
+          erAktiv: true,
+          harAksjonspunkt: harApneAksjonspunkter,
+        },
+      ]}
     >
       <DataFetcherBehandlingData
         behandlingDataCache={cache}
@@ -93,9 +107,11 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
                 alleKodeverk={kodeverk}
                 behandling={behandling}
                 feilutbetalingFakta={dataProps.feilutbetalingFakta}
-                feilutbetalingAarsak={dataProps.feilutbetalingAarsak.find((a) => a.ytelseType.kode === fagsak.fagsakYtelseType.kode)}
+                feilutbetalingAarsak={dataProps.feilutbetalingAarsak.find(
+                  a => a.ytelseType.kode === fagsak.fagsakYtelseType.kode,
+                )}
                 hasOpenAksjonspunkter={harApneAksjonspunkter}
-                submittable={apForPanel.some((ap) => !isAksjonspunktOpen(ap.status.kode) || ap.kanLoses)}
+                submittable={apForPanel.some(ap => !isAksjonspunktOpen(ap.status.kode) || ap.kanLoses)}
               />
             );
           }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
-import Kodeverk from '@fpsak-frontend/behandling-felles/src/types/kodeverkTsType';
+import { Kodeverk } from '@k9-sak-web/types';
 import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles/src/skjermlenkeCodes';
 import { scrollUp } from './historikkUtils';
 
 interface SkjermlenkeProps {
   skjermlenke?: Kodeverk;
   behandlingLocation?: {
-    pathname: string,
+    pathname: string;
   };
   getKodeverknavn?: (kodeverkObjekt: Kodeverk, undertype?: string) => string;
   scrollUpOnClick?: boolean;

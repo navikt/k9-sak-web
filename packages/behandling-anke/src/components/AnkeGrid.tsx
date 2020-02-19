@@ -2,9 +2,8 @@ import React, { FunctionComponent } from 'react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
-import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, BehandlingPaVent, SettPaVentParams,
-} from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
+import { Behandling, Kodeverk, NavAnsatt, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 
 import AnkeProsess from './AnkeProsess';
 import AnkeVurdering from '../types/ankeVurderingTsType';
@@ -16,7 +15,7 @@ interface OwnProps {
   vilkar: Vilkar[];
   ankeVurdering: AnkeVurdering;
   navAnsatt: NavAnsatt;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: { [key: string]: Kodeverk[] };
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
