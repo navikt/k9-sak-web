@@ -9,8 +9,8 @@ import styles from './readOnlyField_V2.less';
 const hasValue = (value) => value !== undefined && value !== null && value !== '';
 
 export const ReadOnlyFieldV2 = ({
-  label, input, endrettekst,
-}) => {
+                                  label, input, endrettekst,
+                                }) => {
   if (!hasValue(input.value)) {
     return null;
   }
@@ -21,25 +21,25 @@ export const ReadOnlyFieldV2 = ({
         {input.value}
       </Normaltekst>
       {endrettekst && (
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <EditedIcon2 />
-          </FlexColumn>
-          <FlexColumn className={styles.endretAvContent}>
-            <Undertekst>
-              {endrettekst}
-            </Undertekst>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
+        <FlexContainer>
+          <FlexRow>
+            <FlexColumn>
+              <EditedIcon2 />
+            </FlexColumn>
+            <FlexColumn className={styles.endretAvContent}>
+              <Undertekst>
+                {endrettekst}
+              </Undertekst>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
       )}
     </div>
   );
 };
 
 ReadOnlyFieldV2.propTypes = {
-  label: PropTypes.shape(),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.shape()]),
   input: PropTypes.shape({
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,

@@ -54,7 +54,7 @@ const TextAreaFieldV2 = ({
 
 TextAreaFieldV2.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.shape()]).isRequired,
   validate: PropTypes.arrayOf(PropTypes.func),
   readOnly: PropTypes.bool,
 };

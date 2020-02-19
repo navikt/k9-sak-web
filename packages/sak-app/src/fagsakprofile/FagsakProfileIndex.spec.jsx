@@ -17,7 +17,7 @@ import { FagsakProfileIndex } from './FagsakProfileIndex';
 describe('<FagsakProfileIndex>', () => {
   it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', () => {
     const wrapper = shallow(<FagsakProfileIndex
-      saksnummer={123}
+      saksnummer="123"
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
       noExistingBehandlinger
@@ -43,7 +43,7 @@ describe('<FagsakProfileIndex>', () => {
 
   it('skal ikke vise alle behandlinger når behandling er valgt', () => {
     const wrapper = shallow(<FagsakProfileIndex
-      saksnummer={123}
+      saksnummer="123"
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
       selectedBehandlingId={1}
@@ -70,7 +70,7 @@ describe('<FagsakProfileIndex>', () => {
 
   it('skal omdirigere til behandling hvis flagget er satt', () => {
     const behandlingId = 67890;
-    const saksnummer = 123;
+    const saksnummer = '123';
     const location = {};
     const pathToBehandlingerForFagsak = pathToBehandlinger(saksnummer);
     const locationForBehandling = getLocationWithDefaultBehandlingspunktAndFakta({ ...location, pathname: pathToBehandling(saksnummer, behandlingId) });

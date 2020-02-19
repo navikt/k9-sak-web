@@ -9,7 +9,7 @@ import renderNavField from './renderNavField';
 const MockField = () => <div />;
 const RenderedMockField = renderNavField(MockField).WrappedComponent;
 
-const FORMATTED_MESSAGE = { feilmelding: 'En formatert melding' };
+const FORMATTED_MESSAGE = 'En formatert melding';
 const intl = { ...intlMock, formatMessage: () => FORMATTED_MESSAGE };
 
 describe('renderNavField', () => {
