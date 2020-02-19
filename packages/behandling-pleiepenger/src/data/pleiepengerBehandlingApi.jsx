@@ -52,10 +52,10 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/behandling */
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
   })
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt/overstyr', PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
-    storeResultKey: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
   })
   .withPost('/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder', PleiepengerBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
 
@@ -95,17 +95,17 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', PleiepengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PleiepengerBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
   })
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PleiepengerBehandlingApiKeys.BEHANDLING_ON_HOLD)
   .withPost('/k9/sak/api/behandlinger/opne-for-endringer', PleiepengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
-    storeResultKey: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
   })
   .withPost('/k9/sak/api/verge/opprett', PleiepengerBehandlingApiKeys.VERGE_OPPRETT, {
-    storeResultKey: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
   })
   .withPost('/k9/sak/api/verge/fjern', PleiepengerBehandlingApiKeys.VERGE_FJERN, {
-    storeResultKey: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
   })
 
   .build();

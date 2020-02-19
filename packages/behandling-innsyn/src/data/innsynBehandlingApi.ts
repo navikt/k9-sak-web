@@ -28,7 +28,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', InnsynBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', InnsynBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
+    saveResponseIn: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
   })
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', InnsynBehandlingApiKeys.BEHANDLING_ON_HOLD)
   .withGet('/k9/sak/api/dokument/hent-dokumentliste', InnsynBehandlingApiKeys.INNSYN_DOKUMENTER)
@@ -53,7 +53,7 @@ const endpoints = new RestApiConfigBuilder()
 
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', InnsynBehandlingApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
+    saveResponseIn: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
   })
   // TODO (TOR) Bør få lenke fra backend og så åpne blob (Flytt open blob ut av rest-apis)
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)

@@ -27,13 +27,13 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', AnkeBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', AnkeBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
+    saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
   })
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', AnkeBehandlingApiKeys.BEHANDLING_ON_HOLD)
 
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
+    saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
   })
 
   .withAsyncPost('/k9/sak/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
@@ -41,7 +41,7 @@ const endpoints = new RestApiConfigBuilder()
     '/k9/sak/api/behandling/anke/mellomlagre-gjennapne-anke',
     AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING,
     {
-      storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
+      saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
     },
   )
 

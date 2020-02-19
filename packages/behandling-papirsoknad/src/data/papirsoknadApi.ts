@@ -22,7 +22,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', PapirsoknadApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PapirsoknadApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD,
+    saveResponseIn: PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD,
   })
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PapirsoknadApiKeys.BEHANDLING_ON_HOLD)
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', PapirsoknadApiKeys.UPDATE_ON_HOLD)
