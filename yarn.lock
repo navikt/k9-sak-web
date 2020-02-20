@@ -11296,9 +11296,9 @@ nav-frontend-skjema@2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-2.0.8.tgz#823174e8d7f28d86fd635abf0cb727d7a2b4a5fa"
 
-nav-frontend-snakkeboble-style@0.2.23:
-  version "0.2.23"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.23.tgz#3880a94df9f94b032afcb4cb3d751209b0723e72"
+nav-frontend-snakkeboble-style@0.2.24:
+  version "0.2.24"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.24.tgz#9ba7f4909f199f3bf5f996a016a720a1172fbf05"
 
 nav-frontend-snakkeboble@1.0.34:
   version "1.0.34"
