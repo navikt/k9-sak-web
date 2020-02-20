@@ -25,12 +25,12 @@ const formatError = (intl: IntlShape, otherProps: object, names: string[]) => {
   const meta1 = getField1.meta;
 
   if (meta1.submitFailed && meta1.error) {
-    return { feilmelding: intl.formatMessage(...meta1.error) };
+    return intl.formatMessage(...meta1.error);
   }
   const getField2 = haystack(otherProps, names[1]);
   const meta2 = getField2.meta;
   if (meta2.submitFailed && meta2.error) {
-    return { feilmelding: intl.formatMessage(...meta2.error) };
+    return intl.formatMessage(...meta2.error);
   }
   return undefined;
 };

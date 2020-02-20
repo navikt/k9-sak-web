@@ -44,6 +44,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
           validate={[required, minLength(3), maxLength(400), hasValidText]}
           readOnly={readOnly}
         />
+        <VerticalSpacer eightPx />
         <RadioGroupField
           name={MedisinskVilkårValues.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
           bredde="M"
@@ -75,18 +76,18 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                 shouldShowAddButton
                 readOnly={readOnly}
               >
-                {(fieldId, index) => {
+                {(periodeMedBehovForKontinuerligTilsyn, index) => {
                   const isPeriodeDefined = !!fields.get(index).fom && !!fields.get(index).tom;
                   return (
-                    <div key={fieldId} className={styles.expandablePanelContainer}>
+                    <div key={periodeMedBehovForKontinuerligTilsyn} className={styles.expandablePanelContainer}>
                       <ExpandablePanel isOpen renderHeader={() => null} onClick={() => null}>
                         <div className={styles.periodeContainer}>
                           <FlexRow wrap>
                             <FlexColumn>
                               <PeriodpickerField
                                 names={[
-                                  `${fieldId}.${MedisinskVilkårConsts.FOM}`,
-                                  `${fieldId}.${MedisinskVilkårConsts.TOM}`,
+                                  `${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.FOM}`,
+                                  `${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.TOM}`,
                                 ]}
                                 validate={[required, hasValidDate, dateRangesNotOverlapping]}
                                 defaultValue={null}
@@ -106,13 +107,13 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                               </Element>
                               <VerticalSpacer eightPx />
                               <TextAreaField
-                                name={`${fieldId}.${MedisinskVilkårConsts.BEGRUNNELSE}`}
+                                name={`${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.BEGRUNNELSE}`}
                                 label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
                                 validate={[required, minLength(3), maxLength(400), hasValidText]}
                                 readOnly={readOnly}
                               />
                               <RadioGroupField
-                                name={`${fieldId}.behovForToOmsorgspersoner`}
+                                name={`${periodeMedBehovForKontinuerligTilsyn}.behovForToOmsorgspersoner`}
                                 bredde="M"
                                 validate={[required]}
                                 readOnly={readOnly || !isPeriodeDefined}
@@ -125,14 +126,17 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                   label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }}
                                   value={MedisinskVilkårConsts.JA_DELER}
                                 />
-                                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value="nei" />
+                                <RadioOption
+                                  label={{ id: 'MedisinskVilkarForm.RadioknappNei' }}
+                                  value={MedisinskVilkårConsts.NEI}
+                                />
                               </RadioGroupField>
                             </FlexColumn>
                           </FlexRow>
                           {fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_DELER && (
                             <FlexRow>
                               <FieldArray
-                                name={MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}
+                                name={`${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}`}
                                 component={utvidetTilsynFieldProps => {
                                   return (
                                     <PeriodFieldArray
@@ -144,11 +148,14 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                                       shouldShowAddButton
                                       readOnly={readOnly}
                                     >
-                                      {(utvidetTilsynFieldId, idx, getRemoveButton) => (
-                                        <FlexRow key={utvidetTilsynFieldId} wrap>
+                                      {(periodeMedBehovForUtvidetKontinuerligTilsyn, idx, getRemoveButton) => (
+                                        <FlexRow key={periodeMedBehovForUtvidetKontinuerligTilsyn} wrap>
                                           <FlexColumn>
                                             <PeriodpickerField
-                                              names={[`${utvidetTilsynFieldId}.fom`, `${utvidetTilsynFieldId}.tom`]}
+                                              names={[
+                                                `${periodeMedBehovForUtvidetKontinuerligTilsyn}.fom`,
+                                                `${periodeMedBehovForUtvidetKontinuerligTilsyn}.tom`,
+                                              ]}
                                               validate={[required, hasValidDate, dateRangesNotOverlapping]}
                                               defaultValue={null}
                                               readOnly={readOnly}

@@ -5,13 +5,13 @@ import { hasValidDate, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Sykdom, TransformValues } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
+import moment from 'moment';
 import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import moment from 'moment';
 import DatepickerField from '../../../form/src/DatepickerField';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
@@ -22,6 +22,10 @@ import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
 import Legeerklaering from './Legeerklaering';
 import styles from './medisinskVilkar.less';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
+import {
+  getPerioderMedKontinuerligTilsynOgPleie,
+  getPerioderMedUtvidetKontinuerligTilsynOgPleie,
+} from './MedisinskVilkarUtils';
 
 interface MedisinskVilkarFormProps {
   behandlingId: number;
@@ -117,44 +121,13 @@ export const MedisinskVilkarForm = ({
 };
 
 const transformValues = (values: TransformValues, identifikator?: string) => {
-  const getPerioderMedUtvidetKontinuerligTilsynOgPleie = () => {
-    const helePerioder = values.perioderMedKontinuerligTilsynOgPleie
-      ?.filter(
-        periodeMedKontinuerligTilsynOgPleie =>
-          !!periodeMedKontinuerligTilsynOgPleie.fom &&
-          !!periodeMedKontinuerligTilsynOgPleie.tom &&
-          periodeMedKontinuerligTilsynOgPleie.behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE,
-      )
-      .map(perioderMedKontinuerligTilsynOgPleie => ({
-        periode: {
-          fom: perioderMedKontinuerligTilsynOgPleie.fom,
-          tom: perioderMedKontinuerligTilsynOgPleie.tom,
-        },
-        begrunnelse: perioderMedKontinuerligTilsynOgPleie.begrunnelse,
-      }));
-    const delvisePerioder = values.perioderMedUtvidetKontinuerligTilsynOgPleie
-      ?.filter(
-        periodeMedUtvidetKontinuerligTilsynOgPleie =>
-          !!periodeMedUtvidetKontinuerligTilsynOgPleie.fom && !!periodeMedUtvidetKontinuerligTilsynOgPleie.tom,
-      )
-      .map((periodeMedUtvidetKontinuerligTilsynOgPleie, idx: number) => ({
-        periode: {
-          fom: periodeMedUtvidetKontinuerligTilsynOgPleie.fom,
-          tom: periodeMedUtvidetKontinuerligTilsynOgPleie.tom,
-        },
-        begrunnelse: values.perioderMedKontinuerligTilsynOgPleie[idx].begrunnelse,
-      }));
-
-    return helePerioder.concat(delvisePerioder);
-  };
-
   return {
     kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
     begrunnelse: values.begrunnelse,
     legeerklæring: [
       {
         identifikator: identifikator ?? null,
-        diagnosekode: values.diagnosekode.value,
+        diagnosekode: 'values.diagnosekode.value',
         kilde: values.legeerklaeringkilde,
         fom: values.legeerklæringFom,
         tom: values.legeerklæringFom,
@@ -174,10 +147,7 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
           },
           begrunnelse: values.begrunnelse, // TODO (Hallvard): Denne skal kanskje være noe annet
         })),
-      perioderMedUtvidetKontinuerligTilsynOgPleie:
-        values.perioderMedKontinuerligTilsynOgPleie?.length > 0
-          ? getPerioderMedUtvidetKontinuerligTilsynOgPleie()
-          : undefined,
+      perioderMedUtvidetKontinuerligTilsynOgPleie: getPerioderMedUtvidetKontinuerligTilsynOgPleie(values),
     },
   };
 };
@@ -191,12 +161,7 @@ const buildInitialValues = createSelector(
     if (!harTidligereBehandling) {
       return {};
     }
-    const getPerioderMedKontinuerligTilsynOgPleie = () =>
-      sykdom.perioderMedKontinuerligTilsynOgPleie.map(periode => ({
-        fom: periode.fom,
-        tom: periode.tom,
-        behovForToOmsorgspersoner: !!periode.fom && !!periode.tom ? MedisinskVilkårConsts.JA_DELER : undefined,
-      }));
+
     return {
       [MedisinskVilkårConsts.DIAGNOSEKODE]: legeerklæring.diagnosekode,
       legeerklaeringkilde: legeerklæring.kilde,
@@ -207,8 +172,7 @@ const buildInitialValues = createSelector(
       erInnlagt: legeerklæring.fom && legeerklæring.innleggelsesperioder.length > 0,
       harBehovForKontinuerligTilsynOgPleie: sykdom.perioderMedKontinuerligTilsynOgPleie?.length > 0,
       begrunnelse: aksjonspunkt.begrunnelse,
-      perioderMedKontinuerligTilsynOgPleie: getPerioderMedKontinuerligTilsynOgPleie(),
-      perioderMedUtvidetKontinuerligTilsynOgPleie: sykdom.perioderMedUtvidetKontinuerligTilsynOgPleie,
+      perioderMedKontinuerligTilsynOgPleie: getPerioderMedKontinuerligTilsynOgPleie(sykdom),
     };
   },
 );
