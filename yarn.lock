@@ -11208,11 +11208,7 @@ nav-frontend-grid@1.0.26:
   version "1.0.26"
   resolved "https://registry.yarnpkg.com/nav-frontend-grid/-/nav-frontend-grid-1.0.26.tgz#e20d89799fc875e97ed31261aae32d7f17ff9c73"
 
-nav-frontend-ikoner-assets@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-1.0.3.tgz#fca3d5c689524416ca25c7dd1d207c2f5effea2f"
-
-nav-frontend-ikoner-assets@^1.0.3:
+nav-frontend-ikoner-assets@1.0.4, nav-frontend-ikoner-assets@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-1.0.4.tgz#3eeb9dbd2aa944aac1cdaac350bb39a140328f9b"
 
