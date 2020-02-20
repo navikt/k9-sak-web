@@ -127,7 +127,7 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
     legeerklæring: [
       {
         identifikator: identifikator ?? null,
-        diagnosekode: 'values.diagnosekode.value',
+        diagnosekode: 'values.diagnosekode.value', // TODO (Hallvard): Rett opp i dette når endepunkt for diagnosekoder er ferdig
         kilde: values.legeerklaeringkilde,
         fom: values.legeerklæringFom,
         tom: values.legeerklæringFom,
