@@ -147,7 +147,10 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
           },
           begrunnelse: values.begrunnelse, // TODO (Hallvard): Denne skal kanskje være noe annet
         })),
-      perioderMedUtvidetKontinuerligTilsynOgPleie: getPerioderMedUtvidetKontinuerligTilsynOgPleie(values),
+      perioderMedUtvidetKontinuerligTilsynOgPleie:
+        values.perioderMedKontinuerligTilsynOgPleie?.length > 0
+          ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
+          : undefined,
     },
   };
 };
