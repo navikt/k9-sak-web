@@ -213,6 +213,22 @@ const prosessStegPanelDefinisjoner = [
         renderComponent: props => <OmsorgVilkarProsessIndex {...props} />,
       },
       {
+        code: 'OMSORGENFOR',
+        textCode: 'Inngangsvilkar.OmsorgenFor',
+        aksjonspunkterCodes: ['hei'], // TODO (Hallvard): Sett riktig verdi her
+        vilkarCodes: [vt.OMSORGENFORVILKARET],
+        // endpoints: [api.MEDLEMSKAP],
+        ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+      },
+      {
+        code: 'MEDISINSKVILKAR',
+        textCode: 'Inngangsvilkar.Medisinskvilkaret',
+        aksjonspunkterCodes: ['hei'], // TODO (Hallvard): Sett riktig verdi her
+        vilkarCodes: [vt.MEDISINSKVILKARET],
+        // endpoints: [api.MEDLEMSKAP],
+        ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+      },
+      {
         code: 'MEDLEMSKAP',
         textCode: 'Inngangsvilkar.Medlemskapsvilkaret',
         aksjonspunkterCodes: [ac.OVERSTYR_MEDLEMSKAPSVILKAR],
