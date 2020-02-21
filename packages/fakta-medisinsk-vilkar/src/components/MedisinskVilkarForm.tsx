@@ -57,7 +57,7 @@ export const MedisinskVilkarForm = ({
   sykdom,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
   const { periodeTilVurdering, legeerklæringer } = sykdom;
-  const diagnosekode = legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';
+  const diagnosekode = legeerklæringer && legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.headingContainer}>
