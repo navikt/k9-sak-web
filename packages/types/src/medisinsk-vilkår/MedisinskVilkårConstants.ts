@@ -1,6 +1,5 @@
 enum MedisinskVilkårConsts {
   LEGEERKLÆRING = 'legeerklæring',
-  DIAGNOSEKODE = 'diagnosekode',
   KILDE = 'kilde',
   FOM = 'fom',
   TOM = 'tom',
