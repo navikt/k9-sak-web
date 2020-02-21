@@ -11,10 +11,8 @@ export enum LegeerklæringKilde {
   ANNEN_YRKESGRUPPE = 'ANNEN_YRKESGRUPPE',
 }
 
-const diagnosekode = 'diagnosekode';
-
 export interface Legeerklæring {
-  [diagnosekode]: string;
+  diagnosekode: string;
   kilde: LegeerklæringKilde;
   fom: string;
   tom: string;

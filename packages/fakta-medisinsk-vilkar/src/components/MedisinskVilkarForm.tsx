@@ -60,7 +60,8 @@ export const MedisinskVilkarForm = ({
   harBehovForKontinuerligTilsynOgPleie,
   sykdom,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
-  const { periodeTilVurdering } = sykdom;
+  const { periodeTilVurdering, legeerklæringer } = sykdom;
+  const diagnosekode = legeerklæringer && legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.headingContainer}>
@@ -90,7 +91,7 @@ export const MedisinskVilkarForm = ({
         )}
         <div className={styles.fieldContainer}>
           <DiagnoseRadio readOnly={readOnly} />
-          {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
+          {harDiagnose && <DiagnosekodeSelector initialDiagnosekodeValue={diagnosekode} readOnly={readOnly} />}
         </div>
         <div className={styles.fieldContainer}>
           <Legeerklaering readOnly={readOnly} />
@@ -152,6 +153,7 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
           ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
           : undefined,
     },
+    diagnosekode: values.diagnosekode.key,
   };
 };
 
@@ -166,7 +168,7 @@ const buildInitialValues = createSelector(
     }
 
     return {
-      [MedisinskVilkårConsts.DIAGNOSEKODE]: legeerklæring.diagnosekode,
+      diagnosekode: legeerklæring.diagnosekode,
       legeerklaeringkilde: legeerklæring.kilde,
       legeerklæringFom: legeerklæring.fom,
       legeerklæringTom: legeerklæring.tom,
@@ -187,11 +189,7 @@ const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
   return state => ({
     onSubmit,
     initialValues: buildInitialValues({ sykdom, aksjonspunkter }),
-    [MedisinskVilkårConsts.DIAGNOSEKODE]: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, MedisinskVilkårConsts.DIAGNOSEKODE),
+    diagnosekode: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'diagnosekode'),
     erInnlagt: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erInnlagt'),
     harBehovForKontinuerligTilsynOgPleie: !!behandlingFormValueSelector(
       formName,
