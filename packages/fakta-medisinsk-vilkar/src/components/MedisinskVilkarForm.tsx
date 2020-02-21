@@ -56,7 +56,8 @@ export const MedisinskVilkarForm = ({
   harBehovForKontinuerligTilsynOgPleie,
   sykdom,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
-  const { periodeTilVurdering } = sykdom;
+  const { periodeTilVurdering, legeerklæringer } = sykdom;
+  const { diagnosekode } = legeerklæringer[0];
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.headingContainer}>
@@ -86,7 +87,7 @@ export const MedisinskVilkarForm = ({
         )}
         <div className={styles.fieldContainer}>
           <DiagnoseRadio readOnly={readOnly} />
-          {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
+          {harDiagnose && <DiagnosekodeSelector initialDiagnosekodeValue={diagnosekode} readOnly={readOnly} />}
         </div>
         <div className={styles.fieldContainer}>
           <Legeerklaering readOnly={readOnly} />
@@ -144,7 +145,6 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
         },
         begrunnelse: values.perioderMedKontinuerligTilsynOgPleie[idx].begrunnelse,
       }));
-
     return helePerioder.concat(delvisePerioder);
   };
 
@@ -179,6 +179,7 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
           ? getPerioderMedUtvidetKontinuerligTilsynOgPleie()
           : undefined,
     },
+    diagnosekode: values.diagnosekode.key,
   };
 };
 
@@ -198,7 +199,7 @@ const buildInitialValues = createSelector(
         behovForToOmsorgspersoner: !!periode.fom && !!periode.tom ? MedisinskVilkårConsts.JA_DELER : undefined,
       }));
     return {
-      [MedisinskVilkårConsts.DIAGNOSEKODE]: legeerklæring.diagnosekode,
+      diagnosekode: legeerklæring.diagnosekode,
       legeerklaeringkilde: legeerklæring.kilde,
       legeerklæringFom: legeerklæring.fom,
       legeerklæringTom: legeerklæring.tom,
@@ -220,11 +221,7 @@ const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
   return state => ({
     onSubmit,
     initialValues: buildInitialValues({ sykdom, aksjonspunkter }),
-    [MedisinskVilkårConsts.DIAGNOSEKODE]: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, MedisinskVilkårConsts.DIAGNOSEKODE),
+    diagnosekode: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'diagnosekode'),
     erInnlagt: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erInnlagt'),
     harBehovForKontinuerligTilsynOgPleie: !!behandlingFormValueSelector(
       formName,
