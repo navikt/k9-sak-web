@@ -11308,9 +11308,9 @@ nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.5.tgz#c782c63589776e768a45d6049047b1a60b6805be"
 
-nav-frontend-spinner@1.0.21:
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-1.0.21.tgz#bd47723499b385cd2a491f91e329ac8f8f7c238a"
+nav-frontend-spinner@1.0.22:
+  version "1.0.22"
+  resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-1.0.22.tgz#f5f27760ae0108a4d92cb517eba49d50957a3301"
 
 nav-frontend-typografi-style@1.0.17:
   version "1.0.17"
