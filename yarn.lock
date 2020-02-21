@@ -14793,8 +14793,8 @@ simplebar@^4.2.3:
     resize-observer-polyfill "^1.5.1"
 
 sinon-chai@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/sinon-chai/-/sinon-chai-3.4.0.tgz#06fb88dee80decc565106a3061d380007f21e18d"
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/sinon-chai/-/sinon-chai-3.5.0.tgz#c9a78304b0e15befe57ef68e8a85a00553f5c60e"
 
 sinon@^7.3.2:
   version "7.5.0"
