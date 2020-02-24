@@ -12,7 +12,7 @@ import getAksjonspunktText from './ApprovalTextUtils';
 const lagAksjonspunkt = (
   aksjonspunktKode, opptjeningAktiviteter, beregningDto,
   besluttersBegrunnelse, totrinnskontrollGodkjent,
-  vurderPaNyttArsaker, status, uttakPerioder, arbeidforholdDtos,
+  vurderPaNyttArsaker, status, uttakPerioder, arbeidsforholdDtos,
 ) => ({
   aksjonspunktKode,
   opptjeningAktiviteter,
@@ -22,7 +22,7 @@ const lagAksjonspunkt = (
   vurderPaNyttArsaker,
   status,
   uttakPerioder,
-  arbeidforholdDtos,
+  arbeidsforholdDtos,
 });
 
 const medholdIKlage = {
@@ -165,7 +165,7 @@ describe('<ApprovalTextUtils2>', () => {
 
 
   it('skal vise korrekt tekst for aksjonspunkt 5080', () => {
-    const arbeidforholdDtos = [{
+    const arbeidsforholdDtos = [{
       navn: 'COLOR LINE CREW AS',
       organisasjonsnummer: '973135678',
       arbeidsforholdId: 'e3602f7b-bf36-40d4-8e3a-22333daf664b',
@@ -186,7 +186,7 @@ describe('<ApprovalTextUtils2>', () => {
     }];
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, undefined,
-      undefined, undefined, false, undefined, 'status', undefined, arbeidforholdDtos,
+      undefined, undefined, false, undefined, 'status', undefined, arbeidsforholdDtos,
     );
     const messages = getAksjonspunktText.resultFunc(true, null, null, [])(aksjonspunkt);
     expect(messages[0].props.children[0].props.id).to.eql('ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold');
