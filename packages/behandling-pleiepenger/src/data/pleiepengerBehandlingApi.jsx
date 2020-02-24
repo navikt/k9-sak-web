@@ -63,7 +63,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)
 
   /* /api/brev */
-  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
 
   .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar', PleiepengerBehandlingApiKeys.VILKAR)

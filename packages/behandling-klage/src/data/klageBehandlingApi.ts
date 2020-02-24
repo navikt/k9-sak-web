@@ -46,8 +46,8 @@ const endpoints = new RestApiConfigBuilder()
     },
   )
 
-  /* FPFORMIDLING */
-  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
+  /* K9FORMIDLING */
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();
 
 const reducerName = 'dataContextKlageBehandling';

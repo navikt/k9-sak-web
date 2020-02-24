@@ -56,7 +56,7 @@ const endpoints = new RestApiConfigBuilder()
     saveResponseIn: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
   })
   // TODO (TOR) Bør få lenke fra backend og så åpne blob (Flytt open blob ut av rest-apis)
-  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();
 
 const reducerName = 'dataContextInnsynBehandling';
