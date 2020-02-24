@@ -71,9 +71,11 @@ export const MedisinskVilkarForm = ({
   const { periodeTilVurdering, legeerklæringer } = sykdom;
   const diagnosekode = legeerklæringer && legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';
   const isApOpen = harApneAksjonspunkter || !submittable;
+  const getAksjonspunktHelpText = (
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpTextTemp>
+  );
   return (
     <>
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpTextTemp>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.headingContainer}>
           <Systemtittel>
@@ -132,6 +134,7 @@ export const MedisinskVilkarForm = ({
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               formName={formName}
+              renderAksjonspunktHelpText={getAksjonspunktHelpText}
             />
           </div>
         </div>

@@ -17,6 +17,7 @@ interface KontinuerligTilsynOgPleieProps {
   behandlingId: number;
   behandlingVersjon: number;
   formName: string;
+  renderAksjonspunktHelpText: JSX.Element;
 }
 
 interface StateProps {
@@ -27,6 +28,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
   readOnly,
   periodeTilVurdering,
   innleggelsesperiode,
+  renderAksjonspunktHelpText,
 }) => {
   const getPolseForInnleggelsesperiode = () =>
     innleggelsesperiode ? (
@@ -137,147 +139,8 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                           ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
                           : ''
                       }
+                      renderAksjonspunktHelpText={renderAksjonspunktHelpText}
                     />
-                    // <div key={periodeMedBehovForKontinuerligTilsyn} className={styles.expandablePanelContainer}>
-                    //   <PeriodePolse theme="warn">
-                    //     <div className={styles.periodeContainer}>
-                    //       <FlexRow wrap>
-                    //         <FlexColumn>
-                    //           <Element>
-                    //             <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie" />
-                    //           </Element>
-                    //           <VerticalSpacer eightPx />
-                    //           <TextAreaField
-                    //             name={`${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.BEGRUNNELSE}`}
-                    //             label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                    //             validate={[required, minLength(3), maxLength(400), hasValidText]}
-                    //             readOnly={readOnly}
-                    //           />
-                    //           <VerticalSpacer eightPx />
-                    //           <RadioGroupField
-                    //             name={`${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårValues.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}`}
-                    //             bredde="M"
-                    //             validate={[required]}
-                    //             readOnly={readOnly}
-                    //           >
-                    //             <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
-                    //             <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
-                    //           </RadioGroupField>
-                    //         </FlexColumn>
-                    //       </FlexRow>
-                    //       {harBehovForKontinuerligTilsynOgPleie && (
-                    //         <>
-                    //           <FlexRow wrap>
-                    //             <FlexColumn>
-                    //               <PeriodpickerField
-                    //                 names={[
-                    //                   `${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.FOM}`,
-                    //                   `${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.TOM}`,
-                    //                 ]}
-                    //                 validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                    //                 defaultValue={null}
-                    //                 readOnly={readOnly}
-                    //                 label={{ id: 'MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder' }}
-                    //                 disabledDays={{
-                    //                   before: moment(periodeTilVurdering.fom).toDate(),
-                    //                   after: moment(periodeTilVurdering.tom).toDate(),
-                    //                 }}
-                    //               />
-                    //             </FlexColumn>
-                    //           </FlexRow>
-                    //           <FlexRow>
-                    //             <FlexColumn>
-                    //               <Element>
-                    //                 <FormattedMessage id="MedisinskVilkarForm.BehovForEnEllerToOmsorgspersoner" />
-                    //               </Element>
-                    //               <VerticalSpacer eightPx />
-                    //               <RadioGroupField
-                    //                 name={`${periodeMedBehovForKontinuerligTilsyn}.behovForToOmsorgspersoner`}
-                    //                 bredde="M"
-                    //                 validate={[required]}
-                    //                 readOnly={readOnly || !isPeriodeDefined}
-                    //                 direction="vertical"
-                    //               >
-                    //                 <RadioOption
-                    //                   label={{ id: 'MedisinskVilkarForm.RadioknappNei' }}
-                    //                   value={MedisinskVilkårConsts.NEI}
-                    //                 />
-                    //                 <RadioOption
-                    //                   label={{ id: 'MedisinskVilkarForm.RadioknappJaHele' }}
-                    //                   value={MedisinskVilkårConsts.JA_HELE}
-                    //                 />
-                    //                 <RadioOption
-                    //                   label={{ id: 'MedisinskVilkarForm.RadioknappJaDeler' }}
-                    //                   value={MedisinskVilkårConsts.JA_DELER}
-                    //                 />
-                    //               </RadioGroupField>
-                    //               {harBehovForToOmsorgspersonerDelerAvPerioden ||
-                    //               harBehovForToOmsorgspersonerHelePerioden ? (
-                    //                 <TextAreaField
-                    //                   name={`${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.BEGRUNNELSE_UTVIDET}`}
-                    //                   label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                    //                   validate={[required, minLength(3), maxLength(400), hasValidText]}
-                    //                   readOnly={readOnly}
-                    //                 />
-                    //               ) : null}
-                    //             </FlexColumn>
-                    //           </FlexRow>
-                    //           {harBehovForToOmsorgspersonerDelerAvPerioden && (
-                    //             <FieldArray
-                    //               name={`${periodeMedBehovForKontinuerligTilsyn}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}`}
-                    //               component={utvidetTilsynFieldProps => {
-                    //                 return (
-                    //                   <PeriodFieldArray
-                    //                     fields={utvidetTilsynFieldProps.fields}
-                    //                     emptyPeriodTemplate={{
-                    //                       fom: '',
-                    //                       tom: '',
-                    //                     }}
-                    //                     shouldShowAddButton
-                    //                     readOnly={readOnly}
-                    //                   >
-                    //                     {(periodeMedBehovForUtvidetKontinuerligTilsyn, idx, getRemoveButton) => (
-                    //                       <FlexRow key={periodeMedBehovForUtvidetKontinuerligTilsyn} wrap>
-                    //                         <FlexColumn>
-                    //                           <PeriodpickerField
-                    //                             names={[
-                    //                               `${periodeMedBehovForUtvidetKontinuerligTilsyn}.fom`,
-                    //                               `${periodeMedBehovForUtvidetKontinuerligTilsyn}.tom`,
-                    //                             ]}
-                    //                             validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                    //                             defaultValue={null}
-                    //                             readOnly={readOnly}
-                    //                             label={
-                    //                               idx === 0 ? { id: 'MedisinskVilkarForm.BehovForTo.Periode' } : ''
-                    //                             }
-                    //                             disabledDays={{
-                    //                               before: moment(fields.get(index).fom).toDate(),
-                    //                               after: moment(fields.get(index).tom).toDate(),
-                    //                             }}
-                    //                           />
-                    //                         </FlexColumn>
-                    //                         <FlexColumn>{getRemoveButton()}</FlexColumn>
-                    //                       </FlexRow>
-                    //                     )}
-                    //                   </PeriodFieldArray>
-                    //                 );
-                    //               }}
-                    //             />
-                    //           )}
-                    //         </>
-                    //       )}
-                    //       {index > 0 && (
-                    //         <FlexRow>
-                    //           <FlexColumn>
-                    //             <Knapp mini htmlType="button" onClick={() => fields.remove(index)} disabled={false}>
-                    //               <FormattedMessage id="MedisinskVilkarForm.BehovForTo.Avbryt" />
-                    //             </Knapp>
-                    //           </FlexColumn>
-                    //         </FlexRow>
-                    //       )}
-                    //     </div>
-                    //   </PeriodePolse>
-                    // </div>
                   );
                 }}
               </PeriodFieldArray>

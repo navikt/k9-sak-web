@@ -33,6 +33,7 @@ interface TilsynsperioderProps {
   index: number;
   valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom: string;
   valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom: string;
+  renderAksjonspunktHelpText: JSX.Element;
 }
 
 const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.memo(
@@ -50,10 +51,12 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
     index,
     valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom,
     valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom,
+    renderAksjonspunktHelpText,
   }) => (
-    <div className={styles.expandablePanelContainer}>
+    <div className={styles.tilsynContainer}>
       <PeriodePolse theme="warn">
         <div className={styles.periodeContainer}>
+          <div className={styles.helpTextContainer}>{renderAksjonspunktHelpText}</div>
           <FlexRow wrap>
             <FlexColumn>
               <Element>
@@ -72,9 +75,10 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 bredde="M"
                 validate={[required]}
                 readOnly={readOnly}
+                direction="vertical"
               >
-                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
                 <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
+                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
               </RadioGroupField>
             </FlexColumn>
           </FlexRow>
@@ -82,6 +86,9 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
             <>
               <FlexRow wrap>
                 <FlexColumn>
+                  <Element>
+                    <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder" />
+                  </Element>
                   <PeriodpickerField
                     names={[
                       `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.FOM}`,
@@ -90,7 +97,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     validate={[required, hasValidDate, dateRangesNotOverlapping]}
                     defaultValue={null}
                     readOnly={readOnly}
-                    label={{ id: 'MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder' }}
+                    label={{ id: 'MedisinskVilkarForm.Periode' }}
                     disabledDays={{
                       before: moment(datoBegrensningFom).toDate(),
                       after: moment(datoBegrensningTom).toDate(),
