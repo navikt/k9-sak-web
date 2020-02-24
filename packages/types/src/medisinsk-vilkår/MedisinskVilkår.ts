@@ -24,6 +24,8 @@ export interface PeriodeMedTilsynOgPleie extends Periode {
   begrunnelse: string;
   behovForToOmsorgspersoner: string;
   perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedUtvidetTilsynOgPleie[];
+  begrunnelseUtvidet: string;
+  harBehovForKontinuerligTilsynOgPleie: boolean;
 }
 
 export interface PeriodeMedTilsynOgPleieResponse {
@@ -33,6 +35,11 @@ export interface PeriodeMedTilsynOgPleieResponse {
 
 export interface PeriodeMedUtvidetTilsynOgPleie extends Periode {
   begrunnelse: string;
+}
+
+export interface PeriodeMedUtvidetTilsynOgPleieResponse {
+  begrunnelse: string;
+  periode: Periode;
 }
 
 export interface Pleiebehov {
@@ -50,12 +57,12 @@ interface Diagnosekode {
 }
 
 export interface TransformValues {
-  begrunnelse: string;
+  // begrunnelse: string;
   diagnosekode?: Diagnosekode;
   erInnlagt: boolean;
   harBehovForKontinuerligTilsynOgPleie: boolean;
   harDiagnose: boolean;
-  innleggelsesperioder?: Periode[];
+  innleggelsesperiode?: Periode;
   legeerklaeringkilde: string;
   legeerklæringFom: string;
   legeerklæringTom: string;
@@ -66,5 +73,5 @@ export interface Sykdom {
   periodeTilVurdering: Periode;
   legeerklæringer: Legeerklæring[];
   perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse[];
-  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse[];
+  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedUtvidetTilsynOgPleieResponse[];
 }

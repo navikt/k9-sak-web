@@ -13,12 +13,11 @@
   "UttakInfoPanel.FaktaUttak": "Uttak",
   "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fødsel og tilrettelegging",
   "FaktaOmAlderOgOmsorg.header": "Alder og omsorg",
-  "MedisinskVilkarPanel.MedisinskVilkar": "Legeerklæring",
+  "MedisinskVilkarPanel.MedisinskVilkar": "Sykdom",
 
   "Personspanel.Arbeidsforhold": "Opplysninger om søker",
 
-
-  "BostedBarnView.DodsDato" : "Barnets dødsdato",
+  "BostedBarnView.DodsDato": "Barnets dødsdato",
   "YtelserFaktaIndex.Ytelser": "Ytelser",
 
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
@@ -261,7 +260,6 @@
   "SettBehandlingPaVentModal.SelectPlaceholder": "Velg årsak",
   "SettBehandlingPaVentModal.Avbryt": "Avbryt",
   "SettBehandlingPaVentModal.Lukk": "Lukk",
-
 
   "PeriodLabel.DateToday": "d.d.",
 

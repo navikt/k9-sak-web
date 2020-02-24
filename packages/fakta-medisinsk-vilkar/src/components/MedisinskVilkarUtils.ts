@@ -19,7 +19,7 @@ const getHelePerioder = (values: TransformValues) =>
         fom: periodeMedKontinuerligTilsynOgPleie.fom,
         tom: periodeMedKontinuerligTilsynOgPleie.tom,
       },
-      begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
+      begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelseUtvidet,
     }));
 
 const getDelvisePerioder = (values: TransformValues) => {
@@ -35,28 +35,13 @@ const getDelvisePerioder = (values: TransformValues) => {
           fom: periodeMedUtvidetKontinuerligTilsynOgPleie.fom,
           tom: periodeMedUtvidetKontinuerligTilsynOgPleie.tom,
         },
-        begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
+        begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelseUtvidet,
       }));
     if (res) {
       delvisePerioder = delvisePerioder.concat(res);
     }
   });
   return delvisePerioder;
-};
-
-const getBegrunnelseForperioderUtenUtvidetKontinuerligPleie = (values: TransformValues) => {
-  const begrunnelseForPerioderUtenUtvidetKontinuerligPleie = [];
-  values.perioderMedKontinuerligTilsynOgPleie
-    .filter(
-      periodeMedKontinuerligTilsynOgPleie =>
-        periodeMedKontinuerligTilsynOgPleie.behovForToOmsorgspersoner === MedisinskVilkårConsts.NEI,
-    )
-    .forEach(periodeMedKontinuerligTilsynOgPleie => {
-      begrunnelseForPerioderUtenUtvidetKontinuerligPleie.push({
-        begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
-      });
-    });
-  return [] ?? begrunnelseForPerioderUtenUtvidetKontinuerligPleie; // TODO (Hallvard): Rett opp i dette. Midlertidig fiks for å ikke brekke POST til backend
 };
 
 // eslint-disable-next-line import/prefer-default-export
@@ -67,12 +52,7 @@ export const getPerioderMedUtvidetKontinuerligTilsynOgPleie = (values: Transform
   /** Finn alle perioder med utvidet kontinuerlig tilsyn deler av perioden */
   const delvisePerioder = getDelvisePerioder(values);
 
-  /** Sett begrunnelse dersom det ikke behøves utvidet kontinuerlig tilsyn */
-  const begrunnelseForPerioderUtenUtvidetKontinuerligPleie = getBegrunnelseForperioderUtenUtvidetKontinuerligPleie(
-    values,
-  );
-
-  return helePerioder.concat(delvisePerioder).concat(begrunnelseForPerioderUtenUtvidetKontinuerligPleie);
+  return helePerioder.concat(delvisePerioder);
 };
 
 export const buildPerioderMedUtvidetKontinuerligTilsynOgPleie = (
@@ -85,10 +65,14 @@ export const buildPerioderMedUtvidetKontinuerligTilsynOgPleie = (
         moment(pUtvidet.periode.fom).isBetween(
           periodeMedKontinuerligTilsynOgPleie.periode.fom,
           periodeMedKontinuerligTilsynOgPleie.periode.tom,
+          null,
+          '[]',
         ) &&
         moment(pUtvidet.periode.tom).isBetween(
           periodeMedKontinuerligTilsynOgPleie.periode.fom,
           periodeMedKontinuerligTilsynOgPleie.periode.tom,
+          null,
+          '[]',
         ),
     )
     .map(pUtvidet => pUtvidet.periode);
@@ -113,16 +97,42 @@ export const getBehovForToOmsorgspersoner = (
         moment(pUtvidet.periode.fom).isBetween(
           periodeMedKontinuerligTilsynOgPleie.periode.fom,
           periodeMedKontinuerligTilsynOgPleie.periode.tom,
+          null,
+          '[]',
         ) &&
         moment(pUtvidet.periode.tom).isBetween(
           periodeMedKontinuerligTilsynOgPleie.periode.fom,
           periodeMedKontinuerligTilsynOgPleie.periode.tom,
+          null,
+          '[]',
         ),
     )
   ) {
     return MedisinskVilkårConsts.JA_DELER;
   }
   return MedisinskVilkårConsts.NEI;
+};
+
+const getBegrunnelseForUtvidetTilsyn = (
+  periodeMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse,
+  sykdom: Sykdom,
+) => {
+  const overlappendePeriodeMedUtvidetTilsyn = sykdom.perioderMedUtvidetKontinuerligTilsynOgPleie.find(
+    pUtvidet =>
+      moment(pUtvidet.periode.fom).isBetween(
+        periodeMedKontinuerligTilsynOgPleie.periode.fom,
+        periodeMedKontinuerligTilsynOgPleie.periode.tom,
+        null,
+        '[]',
+      ) &&
+      moment(pUtvidet.periode.tom).isBetween(
+        periodeMedKontinuerligTilsynOgPleie.periode.fom,
+        periodeMedKontinuerligTilsynOgPleie.periode.tom,
+        null,
+        '[]',
+      ),
+  );
+  return overlappendePeriodeMedUtvidetTilsyn?.begrunnelse;
 };
 
 export const getPerioderMedKontinuerligTilsynOgPleie = (sykdom: Sykdom) =>
@@ -132,4 +142,6 @@ export const getPerioderMedKontinuerligTilsynOgPleie = (sykdom: Sykdom) =>
     begrunnelse: p.begrunnelse,
     behovForToOmsorgspersoner: getBehovForToOmsorgspersoner(p, sykdom),
     perioderMedUtvidetKontinuerligTilsynOgPleie: buildPerioderMedUtvidetKontinuerligTilsynOgPleie(p, sykdom),
+    begrunnelseUtvidet: getBegrunnelseForUtvidetTilsyn(p, sykdom),
+    harBehovForKontinuerligTilsynOgPleie: !!p.periode.fom,
   }));

@@ -1,7 +1,9 @@
 {
   "MedisinskVilkarPanel.MedisinskVilkar": "Fakta om legeerklæring",
+  "MedisinskVilkarPanel.VurderBehov": "Vurder behov for tilsyn og pleie",
+  "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "MedisinskVilkarForm.Fakta": "Fakta",
-  "MedisinskVilkarForm.Vilkår": "Vilkår",
+  "MedisinskVilkarForm.Vilkår": "Vilkårsvurdering",
   "MedisinskVilkarForm.Innlagt": "Skal barnet være innlagt på sykehuset?",
   "MedisinskVilkarForm.Omsorgspersoner": "Framgår det av legeerklæringen at begge foreldre må passe barnet?",
   "MedisinskVilkarForm.Beredskap": "Framgår det av legeerklæringen at brukeren må være i beredskap/nattevåken?",

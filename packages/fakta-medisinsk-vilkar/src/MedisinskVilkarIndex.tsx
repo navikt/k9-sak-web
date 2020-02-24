@@ -53,7 +53,7 @@ interface MedisinskVilkarIndexProps {
   behandling: Behandling;
   submitCallback: (props: SubmitCallbackProps[]) => void;
   shouldOpenDefaultInfoPanels: boolean;
-  hasOpenAksjonspunkter: boolean;
+  harApneAksjonspunkter: boolean;
   submittable: boolean;
   sykdom: Sykdom;
   aksjonspunkter: Aksjonspunkt[];
@@ -64,7 +64,7 @@ const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
     // readOnly,
     behandling: { id: behandlingId, versjon: behandlingVersjon },
     submitCallback,
-    hasOpenAksjonspunkter,
+    harApneAksjonspunkter,
     submittable,
     sykdom,
     aksjonspunkter,
@@ -76,7 +76,7 @@ const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         submitCallback={submitCallback}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+        harApneAksjonspunkter={harApneAksjonspunkter}
         submittable={submittable}
         sykdom={sykdom}
         aksjonspunkter={aksjonspunkter}

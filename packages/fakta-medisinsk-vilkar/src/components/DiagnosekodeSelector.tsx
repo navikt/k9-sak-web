@@ -36,7 +36,7 @@ const DiagnosekodeSelector = ({ readOnly, initialDiagnosekodeValue }) => {
           id="test"
           placeholder="Søk etter diagnose"
           ariaLabel="test"
-          label="Hvilken diagnose?"
+          label="Er det fastsatt en diagnose?"
           readOnly={readOnly}
           name="diagnosekode"
         />
