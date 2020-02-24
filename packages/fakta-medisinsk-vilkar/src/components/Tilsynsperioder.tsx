@@ -1,5 +1,5 @@
 import { PeriodpickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { FlexColumn, FlexRow, PeriodFieldArray, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   dateRangesNotOverlapping,
   hasValidDate,
@@ -14,7 +14,6 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { FieldArray } from 'redux-form';
 import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 import styles from './medisinskVilkar.less';
 import PeriodePolse from './PeriodePolse';
@@ -142,44 +141,58 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 </FlexColumn>
               </FlexRow>
               {harBehovForToOmsorgspersonerDelerAvPerioden && (
-                <FieldArray
-                  name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}`}
-                  component={utvidetTilsynFieldProps => {
-                    return (
-                      <PeriodFieldArray
-                        fields={utvidetTilsynFieldProps.fields}
-                        emptyPeriodTemplate={{
-                          fom: '',
-                          tom: '',
-                        }}
-                        shouldShowAddButton
-                        readOnly={readOnly}
-                      >
-                        {(periodeMedBehovForUtvidetKontinuerligTilsyn, idx, getRemoveButton) => (
-                          <FlexRow key={periodeMedBehovForUtvidetKontinuerligTilsyn} wrap>
-                            <FlexColumn>
-                              <PeriodpickerField
-                                names={[
-                                  `${periodeMedBehovForUtvidetKontinuerligTilsyn}.fom`,
-                                  `${periodeMedBehovForUtvidetKontinuerligTilsyn}.tom`,
-                                ]}
-                                validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                                defaultValue={null}
-                                readOnly={readOnly}
-                                label={idx === 0 ? { id: 'MedisinskVilkarForm.BehovForTo.Periode' } : ''}
-                                disabledDays={{
-                                  before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
-                                  after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
-                                }}
-                              />
-                            </FlexColumn>
-                            <FlexColumn>{getRemoveButton()}</FlexColumn>
-                          </FlexRow>
-                        )}
-                      </PeriodFieldArray>
-                    );
+                <PeriodpickerField
+                  names={[
+                    `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}.fom`,
+                    `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}.tom`,
+                  ]}
+                  validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                  defaultValue={null}
+                  readOnly={readOnly}
+                  label={{ id: 'MedisinskVilkarForm.Periode' }}
+                  disabledDays={{
+                    before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
+                    after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
                   }}
                 />
+                // <FieldArray
+                //   name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}`}
+                //   component={utvidetTilsynFieldProps => {
+                //     return (
+                //       <PeriodFieldArray
+                //         fields={utvidetTilsynFieldProps.fields}
+                //         emptyPeriodTemplate={{
+                //           fom: '',
+                //           tom: '',
+                //         }}
+                //         shouldShowAddButton
+                //         readOnly={readOnly}
+                //       >
+                //         {(periodeMedBehovForUtvidetKontinuerligTilsyn, idx, getRemoveButton) => (
+                //           <FlexRow key={periodeMedBehovForUtvidetKontinuerligTilsyn} wrap>
+                //             <FlexColumn>
+                //               <PeriodpickerField
+                //                 names={[
+                //                   `${periodeMedBehovForUtvidetKontinuerligTilsyn}.fom`,
+                //                   `${periodeMedBehovForUtvidetKontinuerligTilsyn}.tom`,
+                //                 ]}
+                //                 validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                //                 defaultValue={null}
+                //                 readOnly={readOnly}
+                //                 label={idx === 0 ? { id: 'MedisinskVilkarForm.BehovForTo.Periode' } : ''}
+                //                 disabledDays={{
+                //                   before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
+                //                   after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
+                //                 }}
+                //               />
+                //             </FlexColumn>
+                //             <FlexColumn>{getRemoveButton()}</FlexColumn>
+                //           </FlexRow>
+                //         )}
+                //       </PeriodFieldArray>
+                //     );
+                //   }}
+                // />
               )}
             </>
           )}
