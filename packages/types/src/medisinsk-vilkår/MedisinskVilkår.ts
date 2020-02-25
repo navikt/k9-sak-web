@@ -57,7 +57,6 @@ interface Diagnosekode {
 }
 
 export interface TransformValues {
-  // begrunnelse: string;
   diagnosekode?: Diagnosekode;
   innleggelsesperiode?: Periode;
   legeerklaeringkilde: string;

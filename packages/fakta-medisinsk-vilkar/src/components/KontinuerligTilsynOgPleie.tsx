@@ -78,7 +78,6 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
         </FlexColumn>
       </FlexRow>
 
-      {/* {harBehovForKontinuerligTilsynOgPleie && ( */}
       <FieldArray
         name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
         rerenderOnEveryChange
@@ -147,7 +146,6 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
         }}
         props={{ readOnly }}
       />
-      {/* )} */}
     </>
   );
 };

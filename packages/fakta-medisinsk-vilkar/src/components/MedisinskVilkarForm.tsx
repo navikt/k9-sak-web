@@ -203,7 +203,6 @@ const buildInitialValues = createSelector(
       legeerklæringTom: legeerklæring.tom,
       innleggelsesperiode: legeerklæring.innleggelsesperioder[0],
       harDiagnose: !!legeerklæring.diagnosekode,
-      // harBehovForKontinuerligTilsynOgPleie: sykdom.perioderMedKontinuerligTilsynOgPleie?.length > 0,
       begrunnelse: aksjonspunkt.begrunnelse,
       perioderMedKontinuerligTilsynOgPleie: getPerioderMedKontinuerligTilsynOgPleie(sykdom),
     };

@@ -38,7 +38,6 @@ export const getDelvisePerioder = (values: TransformValues) => {
   return delvisePerioder;
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export const getPerioderMedUtvidetKontinuerligTilsynOgPleie = (values: TransformValues) => {
   /** Finn alle perioder med utvidet kontinuerlig tilsyn hele perioden */
   const helePerioder = getHelePerioder(values);
