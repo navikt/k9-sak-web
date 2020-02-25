@@ -41,3 +41,5 @@ spec:
       value: "http://k9-sak"
     - name: APP_PORT
       value: "9000"
+    - name: APP_URL_K9FORMIDLING
+      value: "http://k9-formidling"

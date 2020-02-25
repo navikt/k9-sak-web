@@ -117,8 +117,8 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/aktoer */
   .withGet('/k9/sak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
-  /* fpformidling/api/brev */
-  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
+  /* k9/formidling/api/brev */
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
   .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-henleggelsesbrev', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE)
 
