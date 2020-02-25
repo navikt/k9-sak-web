@@ -28,7 +28,7 @@ const PeriodePolse: React.FunctionComponent<PeriodePolseProps> = ({
     blue: theme === 'blue',
   });
   return (
-    <div className={styles.peridePolse}>
+    <div className={styles.periodePolse}>
       <div className={themeBorder} />
       <div className={styles.contentWrapper}>
         {dates || lengthInText || status ? (

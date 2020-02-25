@@ -22,7 +22,6 @@ interface TilsynsperioderProps {
   periodeMedBehovForKontinuerligTilsynId: string;
   readOnly: boolean;
   harBehovForKontinuerligTilsynOgPleie: boolean;
-  // isPeriodeDefined,
   harBehovForToOmsorgspersonerDelerAvPerioden: boolean;
   harBehovForToOmsorgspersonerHelePerioden: boolean;
   datoBegrensningFom: string | Date;
@@ -40,7 +39,6 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
     periodeMedBehovForKontinuerligTilsynId,
     readOnly,
     harBehovForKontinuerligTilsynOgPleie,
-    // isPeriodeDefined,
     harBehovForToOmsorgspersonerDelerAvPerioden,
     harBehovForToOmsorgspersonerHelePerioden,
     datoBegrensningFom,
@@ -131,12 +129,15 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     />
                   </RadioGroupField>
                   {harBehovForToOmsorgspersonerDelerAvPerioden || harBehovForToOmsorgspersonerHelePerioden ? (
-                    <TextAreaField
-                      name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.BEGRUNNELSE_UTVIDET}`}
-                      label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                      validate={[required, minLength(3), maxLength(400), hasValidText]}
-                      readOnly={readOnly}
-                    />
+                    <>
+                      <VerticalSpacer fourPx />
+                      <TextAreaField
+                        name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.BEGRUNNELSE_UTVIDET}`}
+                        label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
+                        validate={[required, minLength(3), maxLength(400), hasValidText]}
+                        readOnly={readOnly}
+                      />
+                    </>
                   ) : null}
                 </FlexColumn>
               </FlexRow>
@@ -155,44 +156,6 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
                   }}
                 />
-                // <FieldArray
-                //   name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}`}
-                //   component={utvidetTilsynFieldProps => {
-                //     return (
-                //       <PeriodFieldArray
-                //         fields={utvidetTilsynFieldProps.fields}
-                //         emptyPeriodTemplate={{
-                //           fom: '',
-                //           tom: '',
-                //         }}
-                //         shouldShowAddButton
-                //         readOnly={readOnly}
-                //       >
-                //         {(periodeMedBehovForUtvidetKontinuerligTilsyn, idx, getRemoveButton) => (
-                //           <FlexRow key={periodeMedBehovForUtvidetKontinuerligTilsyn} wrap>
-                //             <FlexColumn>
-                //               <PeriodpickerField
-                //                 names={[
-                //                   `${periodeMedBehovForUtvidetKontinuerligTilsyn}.fom`,
-                //                   `${periodeMedBehovForUtvidetKontinuerligTilsyn}.tom`,
-                //                 ]}
-                //                 validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                //                 defaultValue={null}
-                //                 readOnly={readOnly}
-                //                 label={idx === 0 ? { id: 'MedisinskVilkarForm.BehovForTo.Periode' } : ''}
-                //                 disabledDays={{
-                //                   before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
-                //                   after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
-                //                 }}
-                //               />
-                //             </FlexColumn>
-                //             <FlexColumn>{getRemoveButton()}</FlexColumn>
-                //           </FlexRow>
-                //         )}
-                //       </PeriodFieldArray>
-                //     );
-                //   }}
-                // />
               )}
             </>
           )}

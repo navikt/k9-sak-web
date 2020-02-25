@@ -52,12 +52,14 @@ describe('<ForeldrepengerFakta>', () => {
     kanBehandleKode7: false,
     kanBehandleKodeEgenAnsatt: false,
   };
-  const aksjonspunkter = [{
-    definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
-    status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
-    kanLoses: true,
-    erAktivt: true,
-  }];
+  const aksjonspunkter = [
+    {
+      definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
+      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      kanLoses: true,
+      erAktivt: true,
+    },
+  ];
   const vilkar = [];
   const inntektArbeidYtelse = {
     skalKunneLeggeTilNyeArbeidsforhold: true,
@@ -84,19 +86,23 @@ describe('<ForeldrepengerFakta>', () => {
     );
 
     const panel = wrapper.find(FaktaPanel);
-    expect(panel.prop('paneler')).is.eql([{
-      erAktiv: true,
-      harAksjonspunkt: true,
-      tekst: 'Arbeidsforhold',
-    },{
-      erAktiv: false,
-      harAksjonspunkt: false,
-      tekst: 'Alder og omsorg'
-    },{
-      erAktiv: false,
-      harAksjonspunkt: false,
-      tekst: 'Legeerklæring'
-    }]);
+    expect(panel.prop('paneler')).is.eql([
+      {
+        erAktiv: true,
+        harAksjonspunkt: true,
+        tekst: 'Arbeidsforhold',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Alder og omsorg',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Sykdom',
+      },
+    ]);
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
@@ -152,9 +158,14 @@ describe('<ForeldrepengerFakta>', () => {
     expect(dataFetcher.prop('behandlingVersion')).is.eql(behandling.versjon);
     expect(dataFetcher.prop('endpoints')).is.eql([]);
 
-    const arbeidsforholdPanel = dataFetcher.renderProp('render')({}).find(ArbeidsforholdFaktaIndex);
+    const arbeidsforholdPanel = dataFetcher
+      .renderProp('render')({})
+      .find(ArbeidsforholdFaktaIndex);
+    // eslint-disable-next-line
     expect(arbeidsforholdPanel.prop('readOnly')).is.false;
+    // eslint-disable-next-line
     expect(arbeidsforholdPanel.prop('submittable')).is.true;
+    // eslint-disable-next-line
     expect(arbeidsforholdPanel.prop('harApneAksjonspunkter')).is.true;
   });
 });

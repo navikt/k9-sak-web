@@ -23,7 +23,7 @@ export interface Legeerklæring {
 export interface PeriodeMedTilsynOgPleie extends Periode {
   begrunnelse: string;
   behovForToOmsorgspersoner: string;
-  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedUtvidetTilsynOgPleie[];
+  perioderMedUtvidetKontinuerligTilsynOgPleie?: PeriodeMedUtvidetTilsynOgPleie;
   begrunnelseUtvidet: string;
   harBehovForKontinuerligTilsynOgPleie: boolean;
 }
@@ -34,7 +34,7 @@ export interface PeriodeMedTilsynOgPleieResponse {
 }
 
 export interface PeriodeMedUtvidetTilsynOgPleie extends Periode {
-  begrunnelse: string;
+  begrunnelse?: string;
 }
 
 export interface PeriodeMedUtvidetTilsynOgPleieResponse {
@@ -59,13 +59,9 @@ interface Diagnosekode {
 export interface TransformValues {
   // begrunnelse: string;
   diagnosekode?: Diagnosekode;
-  erInnlagt: boolean;
-  harBehovForKontinuerligTilsynOgPleie: boolean;
-  harDiagnose: boolean;
   innleggelsesperiode?: Periode;
   legeerklaeringkilde: string;
   legeerklæringFom: string;
-  legeerklæringTom: string;
   perioderMedKontinuerligTilsynOgPleie?: PeriodeMedTilsynOgPleie[];
 }
 

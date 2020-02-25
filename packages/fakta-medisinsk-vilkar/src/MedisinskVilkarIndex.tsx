@@ -61,7 +61,7 @@ interface MedisinskVilkarIndexProps {
 
 const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
   const {
-    // readOnly,
+    readOnly,
     behandling: { id: behandlingId, versjon: behandlingVersjon },
     submitCallback,
     harApneAksjonspunkter,
@@ -72,7 +72,7 @@ const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
   return (
     <RawIntlProvider value={intlConfig}>
       <MedisinskVilkarForm
-        readOnly={false} // TODO Hallvard: Denne skal ikke være hardkodet
+        readOnly={readOnly}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         submitCallback={submitCallback}

@@ -6,7 +6,7 @@ import {
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment from 'moment';
 
-const getHelePerioder = (values: TransformValues) =>
+export const getHelePerioder = (values: TransformValues) =>
   values.perioderMedKontinuerligTilsynOgPleie
     ?.filter(
       periodeMedKontinuerligTilsynOgPleie =>
@@ -22,23 +22,17 @@ const getHelePerioder = (values: TransformValues) =>
       begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelseUtvidet,
     }));
 
-const getDelvisePerioder = (values: TransformValues) => {
-  let delvisePerioder = [];
+export const getDelvisePerioder = (values: TransformValues) => {
+  const delvisePerioder = [];
   values.perioderMedKontinuerligTilsynOgPleie.forEach(periodeMedKontinuerligTilsynOgPleie => {
-    const res = periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie
-      ?.filter(
-        periodeMedUtvidetKontinuerligTilsynOgPleie =>
-          !!periodeMedUtvidetKontinuerligTilsynOgPleie.fom && !!periodeMedUtvidetKontinuerligTilsynOgPleie.tom,
-      )
-      .map(periodeMedUtvidetKontinuerligTilsynOgPleie => ({
+    if (periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie?.fom) {
+      delvisePerioder.push({
         periode: {
-          fom: periodeMedUtvidetKontinuerligTilsynOgPleie.fom,
-          tom: periodeMedUtvidetKontinuerligTilsynOgPleie.tom,
+          fom: periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie.fom,
+          tom: periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie.tom,
         },
         begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelseUtvidet,
-      }));
-    if (res) {
-      delvisePerioder = delvisePerioder.concat(res);
+      });
     }
   });
   return delvisePerioder;
@@ -58,24 +52,29 @@ export const getPerioderMedUtvidetKontinuerligTilsynOgPleie = (values: Transform
 export const buildPerioderMedUtvidetKontinuerligTilsynOgPleie = (
   periodeMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse,
   sykdom: Sykdom,
-) =>
-  sykdom.perioderMedUtvidetKontinuerligTilsynOgPleie
-    .filter(
-      pUtvidet =>
-        moment(pUtvidet.periode.fom).isBetween(
-          periodeMedKontinuerligTilsynOgPleie.periode.fom,
-          periodeMedKontinuerligTilsynOgPleie.periode.tom,
-          null,
-          '[]',
-        ) &&
-        moment(pUtvidet.periode.tom).isBetween(
-          periodeMedKontinuerligTilsynOgPleie.periode.fom,
-          periodeMedKontinuerligTilsynOgPleie.periode.tom,
-          null,
-          '[]',
-        ),
-    )
-    .map(pUtvidet => pUtvidet.periode);
+) => {
+  const utvidetPeriode = sykdom.perioderMedUtvidetKontinuerligTilsynOgPleie.find(
+    pUtvidet =>
+      moment(pUtvidet.periode.fom).isBetween(
+        periodeMedKontinuerligTilsynOgPleie.periode.fom,
+        periodeMedKontinuerligTilsynOgPleie.periode.tom,
+        null,
+        '[]',
+      ) &&
+      moment(pUtvidet.periode.tom).isBetween(
+        periodeMedKontinuerligTilsynOgPleie.periode.fom,
+        periodeMedKontinuerligTilsynOgPleie.periode.tom,
+        null,
+        '[]',
+      ),
+  );
+  if (utvidetPeriode) {
+    return {
+      ...utvidetPeriode.periode,
+    };
+  }
+  return undefined;
+};
 
 export const getBehovForToOmsorgspersoner = (
   periodeMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse,
@@ -113,7 +112,7 @@ export const getBehovForToOmsorgspersoner = (
   return MedisinskVilkårConsts.NEI;
 };
 
-const getBegrunnelseForUtvidetTilsyn = (
+export const getBegrunnelseForUtvidetTilsyn = (
   periodeMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse,
   sykdom: Sykdom,
 ) => {

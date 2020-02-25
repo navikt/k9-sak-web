@@ -99,7 +99,6 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                 readOnly={readOnly}
               >
                 {(periodeMedBehovForKontinuerligTilsynId, index) => {
-                  // const isPeriodeDefined = !!fields.get(index).fom && !!fields.get(index).tom;
                   const harBehovForToOmsorgspersonerHelePerioden =
                     fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE;
                   const harBehovForToOmsorgspersonerDelerAvPerioden =
@@ -120,10 +119,9 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                       harBehovForKontinuerligTilsynOgPleie={harBehovForKontinuerligTilsynOgPleie}
                       datoBegrensningFom={datoBegrensningFom}
                       datoBegrensningTom={periodeTilVurdering.tom}
-                      // isPeriodeDefined={isPeriodeDefined}
                       harBehovForToOmsorgspersonerDelerAvPerioden={harBehovForToOmsorgspersonerDelerAvPerioden}
                       harBehovForToOmsorgspersonerHelePerioden={harBehovForToOmsorgspersonerHelePerioden}
-                      readOnly={false}
+                      readOnly={readOnly}
                       showCancelButton={index > 0}
                       removeIndex={removeIndex}
                       index={index}

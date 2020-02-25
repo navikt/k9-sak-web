@@ -39,7 +39,6 @@ interface MedisinskVilkarFormProps {
 
 interface StateProps {
   harDiagnose: boolean;
-  erInnlagt: boolean;
   harBehovForKontinuerligTilsynOgPleie: boolean;
   [MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE]: any;
   innleggelsesperiode: Periode;
@@ -204,7 +203,6 @@ const buildInitialValues = createSelector(
       legeerklæringTom: legeerklæring.tom,
       innleggelsesperiode: legeerklæring.innleggelsesperioder[0],
       harDiagnose: !!legeerklæring.diagnosekode,
-      erInnlagt: legeerklæring.fom && legeerklæring.innleggelsesperioder.length > 0,
       // harBehovForKontinuerligTilsynOgPleie: sykdom.perioderMedKontinuerligTilsynOgPleie?.length > 0,
       begrunnelse: aksjonspunkt.begrunnelse,
       perioderMedKontinuerligTilsynOgPleie: getPerioderMedKontinuerligTilsynOgPleie(sykdom),
@@ -220,14 +218,6 @@ const mapStateToProps = (_, props: MedisinskVilkarFormProps) => {
     onSubmit,
     initialValues: buildInitialValues({ sykdom, aksjonspunkter }),
     diagnosekode: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'diagnosekode'),
-    // erInnlagt: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erInnlagt'),
-    // harBehovForKontinuerligTilsynOgPleie: !!behandlingFormValueSelector(
-    //   formName,
-    //   behandlingId,
-    //   behandlingVersjon,
-    // )(state, 'harBehovForKontinuerligTilsynOgPleie'),
-    // perioderMedKontinuerligTilsynOgPleie: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon),
-    // harDiagnose: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'harDiagnose'),
   });
 };
 
