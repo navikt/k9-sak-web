@@ -23,11 +23,27 @@ export interface Legeerklæring {
 export interface PeriodeMedTilsynOgPleie extends Periode {
   begrunnelse: string;
   behovForToOmsorgspersoner: string;
+  perioderMedUtvidetKontinuerligTilsynOgPleie?: PeriodeMedUtvidetTilsynOgPleie;
+  begrunnelseUtvidet: string;
+  harBehovForKontinuerligTilsynOgPleie: boolean;
+}
+
+export interface PeriodeMedTilsynOgPleieResponse {
+  periode: Periode;
+  begrunnelse: string;
+}
+
+export interface PeriodeMedUtvidetTilsynOgPleie extends Periode {
+  begrunnelse?: string;
+}
+
+export interface PeriodeMedUtvidetTilsynOgPleieResponse {
+  begrunnelse: string;
+  periode: Periode;
 }
 
 export interface Pleiebehov {
   perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
-  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
 }
 
 export interface MedisinskVilkår {
@@ -41,22 +57,16 @@ interface Diagnosekode {
 }
 
 export interface TransformValues {
-  begrunnelse: string;
   diagnosekode?: Diagnosekode;
-  erInnlagt: boolean;
-  harBehovForKontinuerligTilsynOgPleie: boolean;
-  harDiagnose: boolean;
-  innleggelsesperioder?: Periode[];
+  innleggelsesperiode?: Periode;
   legeerklaeringkilde: string;
   legeerklæringFom: string;
-  legeerklæringTom: string;
   perioderMedKontinuerligTilsynOgPleie?: PeriodeMedTilsynOgPleie[];
-  perioderMedUtvidetKontinuerligTilsynOgPleie?: Periode[];
 }
 
 export interface Sykdom {
   periodeTilVurdering: Periode;
   legeerklæringer: Legeerklæring[];
-  perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
-  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
+  perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse[];
+  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedUtvidetTilsynOgPleieResponse[];
 }

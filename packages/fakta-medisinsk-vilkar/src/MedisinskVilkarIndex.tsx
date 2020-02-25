@@ -53,7 +53,7 @@ interface MedisinskVilkarIndexProps {
   behandling: Behandling;
   submitCallback: (props: SubmitCallbackProps[]) => void;
   shouldOpenDefaultInfoPanels: boolean;
-  hasOpenAksjonspunkter: boolean;
+  harApneAksjonspunkter: boolean;
   submittable: boolean;
   sykdom: Sykdom;
   aksjonspunkter: Aksjonspunkt[];
@@ -61,10 +61,10 @@ interface MedisinskVilkarIndexProps {
 
 const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
   const {
-    // readOnly,
+    readOnly,
     behandling: { id: behandlingId, versjon: behandlingVersjon },
     submitCallback,
-    hasOpenAksjonspunkter,
+    harApneAksjonspunkter,
     submittable,
     sykdom,
     aksjonspunkter,
@@ -72,11 +72,11 @@ const MedisinskVilkarIndex = (props: MedisinskVilkarIndexProps) => {
   return (
     <RawIntlProvider value={intlConfig}>
       <MedisinskVilkarForm
-        readOnly={false} // TODO Hallvard: Denne skal ikke være hardkodet
+        readOnly={readOnly}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         submitCallback={submitCallback}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+        harApneAksjonspunkter={harApneAksjonspunkter}
         submittable={submittable}
         sykdom={sykdom}
         aksjonspunkter={aksjonspunkter}

@@ -3,16 +3,18 @@ enum MedisinskVilkårConsts {
   KILDE = 'kilde',
   FOM = 'fom',
   TOM = 'tom',
-  INNLEGGELSESPERIODER = 'innleggelsesperioder',
+  INNLEGGELSESPERIODE = 'innleggelsesperiode',
   PLEIEBEHOV = 'pleiebehov',
   PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE = 'perioderMedKontinuerligTilsynOgPleie',
   PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE = 'perioderMedUtvidetKontinuerligTilsynOgPleie',
   PERIODE = 'periode',
   BEGRUNNELSE = 'begrunnelse',
+  BEGRUNNELSE_UTVIDET = 'begrunnelseUtvidet',
   LEGEERKLÆRING_FOM = 'legeerklæringFom',
   LEGEERKLÆRING_TOM = 'legeerklæringTom',
   JA_DELER = 'jaDeler',
   JA_HELE = 'jaHele',
+  NEI = 'nei',
 }
 
 export default MedisinskVilkårConsts;

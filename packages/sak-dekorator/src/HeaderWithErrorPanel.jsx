@@ -92,7 +92,7 @@ const HeaderWithErrorPanel = ({
     <header className={styles.container}>
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
-          <Header title={systemTittel} titleHref="/fpsak">
+          <Header title={systemTittel} titleHref="/k9/web">
             <Popover
               popperIsVisible={erLenkepanelApent}
               renderArrowElement
