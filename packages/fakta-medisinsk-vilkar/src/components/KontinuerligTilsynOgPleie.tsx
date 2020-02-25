@@ -44,9 +44,15 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
     ) : null;
 
   const getPolseForPeriodeSomMaaVurderes = () => {
-    const periodStart = innleggelsesperiode
-      ? moment(innleggelsesperiode.tom).add(1, 'days')
-      : moment(periodeTilVurdering.fom);
+    let periodStart;
+    if (innleggelsesperiode) {
+      if (moment(innleggelsesperiode.tom).isSame(moment(periodeTilVurdering.tom))) {
+        return null;
+      }
+      periodStart = moment(innleggelsesperiode.tom).add(1, 'days');
+    } else {
+      periodStart = moment(periodeTilVurdering.fom);
+    }
     return (
       <PeriodePolse
         dates={`${periodStart.format(DDMMYYYY_DATE_FORMAT)} - ${moment(periodeTilVurdering.tom).format(
