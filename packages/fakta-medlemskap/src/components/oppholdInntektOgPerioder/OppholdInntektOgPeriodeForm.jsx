@@ -130,7 +130,7 @@ OppholdInntektOgPeriodeForm.defaultProps = {
 };
 
 const transformValues = (values) => ({
-  begrunnelse: values.begrunnelse,
+  begrunnelse: values.begrunnelse || '---',
   ...values,
 });
 

@@ -135,7 +135,7 @@ const transformValues = (values, isOverstyring) => ({
     : aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
   opprinneligDato: values.opprinneligDato,
   startdatoFraSoknad: values.startdatoFraSoknad,
-  begrunnelse: values.begrunnelse,
+  begrunnelse: values.begrunnelse || '---',
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
