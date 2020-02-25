@@ -46,7 +46,7 @@ export const getFaktaOmArbeidsforholdMessages = (arbeidforholdDto, arbeidsforhol
   return formattedMessages;
 };
 
-const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => aksjonspunkt.arbeidforholdDtos.map((arbeidforholdDto) => {
+const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => aksjonspunkt.arbeidsforholdDtos.map((arbeidforholdDto) => {
   const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
   return (
     <>
