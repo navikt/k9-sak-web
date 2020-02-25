@@ -43,3 +43,5 @@ spec:
       value: "9000"
     - name: APP_URL_K9FORMIDLING
       value: "http://k9-formidling"
+    - name: APP_URL_K9OPPDRAG
+      value: "http://k9-oppdrag"
