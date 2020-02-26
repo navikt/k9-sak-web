@@ -27,3 +27,4 @@ ssh.exe.stackdump
 tmp/
 .scannerwork
 node_modules_bak
+.yarn/
