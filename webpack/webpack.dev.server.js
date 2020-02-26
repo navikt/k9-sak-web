@@ -54,6 +54,11 @@ const options = {
         }
       },
     },
+    '/k9/oppdrag/**': {
+      target: process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070',
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_K9OPPDRAG,
+    },
   },
   publicPath: config.output.publicPath,
   hot: true,
