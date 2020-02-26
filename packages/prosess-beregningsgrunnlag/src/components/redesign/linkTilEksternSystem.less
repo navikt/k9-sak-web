@@ -2,7 +2,7 @@
 
 .linkText {
   align-items: center;
-  background: url('@fpsak-frontend/assets/images/ekstern_link_pil.svg') no-repeat center right 3px;
+  background: url('@{nodeModulesPath}@fpsak-frontend/assets/images/ekstern_link_pil.svg') no-repeat center right 3px;
   background-color: transparent;
   border: 1px solid @navBla;
   border-radius: 3px;
@@ -19,13 +19,17 @@
   width: 35px;
 
   &:hover {
-    background: url('@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center right 3px;
+    // stylelint-disable-next-line
+    background: url('@{nodeModulesPath}@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center
+      right 3px;
     background-color: @navBla;
     color: white;
   }
 
   &:active {
-    background: url('@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center right 3px;
+    // stylelint-disable-next-line
+    background: url('@{nodeModulesPath}@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center
+      right 3px;
     background-color: @navDypBla;
     color: white;
   }
