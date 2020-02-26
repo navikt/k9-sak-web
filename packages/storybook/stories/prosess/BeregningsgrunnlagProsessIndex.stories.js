@@ -19,12 +19,6 @@ import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const standardFom = '2019-09-16';
 const standardTom = undefined;
-const togglesFalse = {
-  'fpsak.redesign.beregningsgrunnlag': false,
-};
-const togglesTrue = {
-  'fpsak.redesign.beregningsgrunnlag': true,
-};
 const behandling = {
   id: 1,
   versjon: 1,
@@ -433,7 +427,6 @@ export const arbeidstakerUtenAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -461,7 +454,6 @@ export const brukersAndelUtenAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -487,7 +479,6 @@ export const arbeidstakerMedAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -514,7 +505,6 @@ export const arbeidstakerFrilansMedAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -546,7 +536,6 @@ export const arbeidstakerFrilansMedAvvikMedGradering = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -567,7 +556,6 @@ export const militær = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -589,7 +577,6 @@ export const arbeidstakerOgAAP = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -654,7 +641,6 @@ export const selvstendigNæringsdrivende = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -695,7 +681,6 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -726,7 +711,6 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -748,7 +732,6 @@ export const infoTrygdYtelse = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -802,7 +785,6 @@ export const naturalYtelse = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -831,7 +813,6 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -855,7 +836,6 @@ export const FrilansMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -883,7 +863,6 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -914,7 +893,6 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -963,7 +941,6 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -1021,7 +998,6 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -1074,7 +1050,6 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -1102,7 +1077,6 @@ export const arbeidstakerIkkeOppfylt = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -1137,7 +1111,6 @@ export const arbeidstakerDagpengerMedBesteberegningUtenAksjonspunkt = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -1171,7 +1144,6 @@ export const tidsbegrensetArbeidsforholdMedAvvikOrgDesign = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesFalse}
     />
   );
 };
