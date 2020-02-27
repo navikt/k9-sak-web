@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
+import moment from 'moment';
 import {
   getPerioderMedKontinuerligTilsynOgPleie,
   getBegrunnelseForUtvidetTilsyn,
@@ -8,6 +9,7 @@ import {
   getHelePerioder,
   getDelvisePerioder,
   getPerioderMedUtvidetKontinuerligTilsynOgPleie,
+  getMomentConvertedDate,
 } from './MedisinskVilkarUtils';
 
 const partialFormState = {
@@ -205,5 +207,19 @@ describe('medisinskVilkarUtils', () => {
       },
     ];
     expect(result).to.deep.equal(expectedResult);
+  });
+
+  it('skal formatere en dato likt med ulik input', () => {
+    const expectedResult = new Date('Wed, 19 Feb 2020 23:00:00 GMT');
+    expect(getMomentConvertedDate('2020-02-20')).to.deep.equal(expectedResult);
+    expect(getMomentConvertedDate(moment('2020-02-20'))).to.deep.equal(expectedResult);
+    expect(getMomentConvertedDate(moment('2020-02-20').toDate())).to.deep.equal(expectedResult);
+    expect(
+      getMomentConvertedDate(
+        moment('2020-02-20')
+          .toDate()
+          .toString(),
+      ),
+    ).to.deep.equal(expectedResult);
   });
 });
