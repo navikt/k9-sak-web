@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { getBehandlingIsRevurdering } from '../selectors/uttakSelectors';
 
-const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
 
 /**
  * Uttak
@@ -19,7 +18,6 @@ const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
 export class UttakImpl extends Component {
   constructor(props) {
     super(props);
-    this.initializeActivityForm = this.initializeActivityForm.bind(this);
     this.isConfirmButtonDisabled = this.isConfirmButtonDisabled.bind(this);
     this.isReadOnly = this.isReadOnly.bind(this);
     // this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
@@ -41,30 +39,6 @@ export class UttakImpl extends Component {
   //   }
   // }
 
-
-  setSelectedUttakActivity(uttakActivity, isMounting) {
-    if (!isMounting) {
-      this.initializeActivityForm(uttakActivity);
-    }
-    this.setState({ selectedItem: uttakActivity });
-  }
-
-  setFormField(fieldName, fieldValue) {
-    const { reduxFormChange: formChange, behandlingFormPrefix, formName } = this.props;
-    formChange(`${behandlingFormPrefix}.${formName}`, fieldName, fieldValue);
-  }
-
-
-  initializeActivityForm(uttakActivity) {
-    const { reduxFormInitialize: formInitialize, behandlingFormPrefix } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${ACTIVITY_PANEL_NAME}`, uttakActivity);
-  }
-
-
-  cancelSelectedActivity() {
-    this.initializeActivityForm({});
-    this.setState({ selectedItem: undefined });
-  }
 
   testForReadOnly(aksjonspunkter, kanOverstyre) {
     const { manuellOverstyring } = this.props;
@@ -129,11 +103,11 @@ export class UttakImpl extends Component {
 
 UttakImpl.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()),
-  behandlingFormPrefix: PropTypes.string.isRequired,
+  // behandlingFormPrefix: PropTypes.string.isRequired,
   // behandlingId: PropTypes.number.isRequired,
   // behandlingVersjon: PropTypes.number.isRequired,
   endringsdato: PropTypes.string.isRequired,
-  formName: PropTypes.string.isRequired,
+  // formName: PropTypes.string.isRequired,
   // isApOpen: PropTypes.bool,
   isDirty: PropTypes.bool.isRequired,
   isRevurdering: PropTypes.bool,
@@ -141,8 +115,8 @@ UttakImpl.propTypes = {
   manuellOverstyring: PropTypes.bool,
   // person: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
-  reduxFormChange: PropTypes.func.isRequired,
-  reduxFormInitialize: PropTypes.func.isRequired,
+  // reduxFormChange: PropTypes.func.isRequired,
+  // reduxFormInitialize: PropTypes.func.isRequired,
   // saksnummer: PropTypes.string.isRequired,
   submitting: PropTypes.bool.isRequired,
   // alleKodeverk: PropTypes.shape().isRequired,
