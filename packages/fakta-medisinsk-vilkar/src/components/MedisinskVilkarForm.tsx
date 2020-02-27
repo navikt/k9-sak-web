@@ -95,6 +95,7 @@ export const MedisinskVilkarForm = ({
               before: moment(periodeTilVurdering.fom).toDate(),
               after: moment(periodeTilVurdering.tom).toDate(),
             }}
+            dataId="legeerklaeringsdato"
           />
         </div>
         <div className={styles.fieldContainer}>
@@ -118,6 +119,7 @@ export const MedisinskVilkarForm = ({
               before: moment(periodeTilVurdering.fom).toDate(),
               after: moment(periodeTilVurdering.tom).toDate(),
             }}
+            dataId="sykehusInnlagtDato"
           />
         </div>
         <div className={styles.vilkarsContainer}>

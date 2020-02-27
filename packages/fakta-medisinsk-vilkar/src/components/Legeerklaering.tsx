@@ -22,7 +22,11 @@ const Legeerklaering = ({ readOnly }: LegeerklaeringProps) => (
       validate={[required]}
       readOnly={readOnly}
     >
-      <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappSykehuslege' }} value="SYKEHUSLEGE" />
+      <RadioOption
+        dataId="sykehuslege"
+        label={{ id: 'MedisinskVilkarForm.RadioknappSykehuslege' }}
+        value="SYKEHUSLEGE"
+      />
       <RadioOption
         label={{ id: 'MedisinskVilkarForm.RadioknappLegeISpesialhelsetjenesten' }}
         value="SPESIALISTHELSETJENESTE"

@@ -18,6 +18,7 @@ interface PeriodpickerFieldProps {
   isEdited?: boolean;
   renderIfMissingDateOnReadOnly?: boolean;
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  dataId?: string;
 }
 
 const formatError = (intl: IntlShape, otherProps: object, names: string[]) => {

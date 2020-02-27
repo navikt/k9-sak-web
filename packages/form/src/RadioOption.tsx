@@ -17,6 +17,7 @@ export interface RadioOptionProps {
   children: ReactNode | ReactNodeArray;
   style: object;
   manualHideChildren?: boolean;
+  dataId?: string;
 }
 
 export const RadioOption = ({
@@ -31,6 +32,7 @@ export const RadioOption = ({
   children,
   style,
   manualHideChildren,
+  dataId,
 }: RadioOptionProps) => {
   const stringifiedValue = JSON.stringify(value);
   const actualStringifiedValue = JSON.stringify(actualValue);
@@ -45,6 +47,7 @@ export const RadioOption = ({
         checked={checked}
         disabled={disabled || groupDisabled}
         onChange={() => onChange(value)}
+        data-id={dataId}
       />
       {(checked || manualHideChildren) && children}
     </div>

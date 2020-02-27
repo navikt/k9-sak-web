@@ -65,6 +65,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
                 validate={[required, minLength(3), maxLength(400), hasValidText]}
                 readOnly={readOnly}
+                dataId={`begrunnelseForKontinuerligTilsyn[${index}]`}
               />
               <VerticalSpacer eightPx />
               <RadioGroupField
@@ -74,7 +75,11 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 readOnly={readOnly}
                 direction="vertical"
               >
-                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappNei' }} value={false} />
+                <RadioOption
+                  label={{ id: 'MedisinskVilkarForm.RadioknappNei' }}
+                  value={false}
+                  dataId="behovForKontinuerligTilsynRadioNei"
+                />
                 <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
               </RadioGroupField>
             </FlexColumn>
