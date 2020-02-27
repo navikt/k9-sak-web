@@ -1,31 +1,29 @@
-import * as React from 'react';
-
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
-import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
-import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
-import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening';
-import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
-import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
-import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
-import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
-import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
-import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
-import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
-import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
-import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
-import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
-import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-
-import findStatusForVedtak from './vedtakStatusUtlederPleiepenger';
+import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
+import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
+import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
+import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
+import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
+import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
+import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
+import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
+import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
+import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
+import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
+import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening';
+import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
+import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
+import * as React from 'react';
 import api from '../data/pleiepengerBehandlingApi';
+import findStatusForVedtak from './vedtakStatusUtlederPleiepenger';
 
 const faktaUttakAp = [
   ac.AVKLAR_UTTAK,
@@ -56,20 +54,19 @@ const getStatusFromResultatstruktur = (resultatstruktur, uttaksresultat) => {
   return vut.IKKE_VURDERT;
 };
 
-const getStatusFromUttakresultat = (uttaksresultat, aksjonspunkter) => {
-  if (
-    !uttaksresultat ||
-    aksjonspunkter.some(ap => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')
-  ) {
+const getStatusFromUttakresultat = aksjonspunkter => {
+  if (aksjonspunkter.some(ap => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')) {
     return vut.IKKE_VURDERT;
   }
-  if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
-    const oppfylt = uttaksresultat.perioderSøker.some(p => p.periodeResultatType.kode !== prt.AVSLATT);
-    if (oppfylt) {
-      return vut.OPPFYLT;
-    }
-  }
-  return vut.IKKE_OPPFYLT;
+
+  // TODO (Erik og Frode): FIXME
+  // if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
+  //   const oppfylt = uttaksresultat.perioderSøker.some(p => p.periodeResultatType.kode !== prt.AVSLATT);
+  //   if (oppfylt) {
+  //     return vut.OPPFYLT;
+  //   }
+  // }
+  return vut.OPPFYLT;
 };
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
@@ -337,30 +334,16 @@ const prosessStegPanelDefinisjoner = [
           ac.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET,
           ac.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
         ],
-        endpoints: [api.FAKTA_ARBEIDSFORHOLD, api.FAMILIEHENDELSE, api.UTTAK_PERIODE_GRENSE],
+        endpoints: [api.FAKTA_ARBEIDSFORHOLD],
         renderComponent: props => <UttakProsessIndex {...props} />,
-        getData: ({
+        getData: ({ fagsak, rettigheter, soknad, personopplysninger }) => ({
           fagsak,
-          rettigheter,
-          tempUpdateStonadskontoer,
-          uttaksresultatPerioder,
-          uttakStonadskontoer,
-          soknad,
-          personopplysninger,
-          ytelsefordeling,
-        }) => ({
-          fagsak,
-          tempUpdateStonadskontoer,
           employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-          uttaksresultatPerioder,
-          uttakStonadskontoer,
           soknad,
           personopplysninger,
-          ytelsefordeling,
         }),
         showComponent: () => true,
-        overrideStatus: ({ uttaksresultatPerioder, aksjonspunkter }) =>
-          getStatusFromUttakresultat(uttaksresultatPerioder, aksjonspunkter),
+        overrideStatus: ({ aksjonspunkter }) => getStatusFromUttakresultat(aksjonspunkter),
       },
     ],
   },

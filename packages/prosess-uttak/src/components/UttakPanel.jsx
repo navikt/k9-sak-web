@@ -1,23 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
-import { createSelector } from 'reselect';
-import { formPropTypes } from 'redux-form';
-
-import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-types';
-import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
-import {
-  AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-
+import { AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 import Uttak from './Uttak';
-import styles from './uttakPanel.less';
+
+
 
 const formName = 'UttakForm';
 
@@ -73,13 +67,9 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
 };
 
 export const UttakPanelImpl = ({
-  uttaksresultat,
   aksjonspunkter,
   soknad,
   person,
-  familiehendelse,
-  uttakPeriodeGrense,
-  ytelsefordeling,
   behandlingId,
   behandlingType,
   behandlingStatus,
@@ -87,7 +77,6 @@ export const UttakPanelImpl = ({
   behandlingVersjon,
   employeeHasAccess,
   behandlingsresultat,
-  tempUpdateStonadskontoer,
   readOnly,
   manuellOverstyring,
   fagsak,
@@ -109,7 +98,7 @@ export const UttakPanelImpl = ({
             <VerticalSpacer twentyPx />
           </ElementWrapper>
         )}
-    {uttaksresultat
+    {true
         && (
           <form onSubmit={formProps.handleSubmit}>
             <Uttak
@@ -119,9 +108,6 @@ export const UttakPanelImpl = ({
               formName={formName}
               manuellOverstyring={manuellOverstyring}
               person={person}
-              familiehendelse={familiehendelse}
-              uttakPeriodeGrense={uttakPeriodeGrense}
-              ytelsefordeling={ytelsefordeling}
               behandlingId={behandlingId}
               behandlingType={behandlingType}
               behandlingVersjon={behandlingVersjon}
@@ -132,16 +118,9 @@ export const UttakPanelImpl = ({
               isApOpen={isApOpen}
               aksjonspunkter={aksjonspunkter}
               employeeHasAccess={employeeHasAccess}
-              uttaksresultat={uttaksresultat}
               behandlingsresultat={behandlingsresultat}
-              dekningsgrad={soknad.dekningsgrad}
               mottattDato={soknad.mottattDato}
-              fodselsdatoer={soknad.fodselsdatoer}
-              termindato={soknad.termindato}
-              adopsjonFodelsedatoer={soknad.adopsjonFodelsedatoer}
-              soknadsType={soknad.soknadType.kode}
-              omsorgsovertakelseDato={soknad.omsorgsovertakelseDato}
-              tempUpdateStonadskontoer={tempUpdateStonadskontoer}
+
             />
           </form>
         )}
@@ -153,16 +132,12 @@ export const UttakPanelImpl = ({
 UttakPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  uttaksresultat: uttaksresultaltPerioderSøkerPropType,
-  stonadskonto: PropTypes.shape().isRequired,
   soknad: PropTypes.shape().isRequired,
   manuellOverstyring: PropTypes.bool,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   isApOpen: PropTypes.bool,
-  familiehendelse: PropTypes.shape().isRequired,
   person: PropTypes.shape().isRequired,
   uttakPeriodeGrense: PropTypes.shape().isRequired,
-  ytelsefordeling: PropTypes.shape().isRequired,
   behandlingType: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingStatus: PropTypes.shape().isRequired,
@@ -171,158 +146,23 @@ UttakPanelImpl.propTypes = {
   fagsak: PropTypes.shape().isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
-  tempUpdateStonadskontoer: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 
 UttakPanelImpl.defaultProps = {
-  uttaksresultat: undefined,
   apCodes: undefined,
   isApOpen: false,
   manuellOverstyring: undefined,
 };
 
-const getResult = (uttaksresultatActivity) => {
-  const uttakResult = {};
-  uttaksresultatActivity.forEach((uttak) => {
-    uttak.aktiviteter.forEach((a, index) => {
-      const aktivitetDays = (typeof a.days !== 'undefined' && typeof a.weeks !== 'undefined')
-        ? ((a.weeks * 5) + parseFloat(a.days))
-        : a.trekkdagerDesimaler;
-
-      if ((`${a.stønadskontoType.kode}_${index}`) in uttakResult) {
-        const trekkdagerDesimaler = uttakResult[`${a.stønadskontoType.kode}_${index}`].trekkdagerDesimaler + aktivitetDays;
-        uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-          trekkdagerDesimaler,
-          konto: a.stønadskontoType.kode,
-        };
-      } else {
-        uttakResult[`${a.stønadskontoType.kode}_${index}`] = {
-          trekkdagerDesimaler: aktivitetDays,
-          konto: a.stønadskontoType.kode,
-        };
-      }
-    });
-  });
-  return uttakResult;
-};
 
 
-const convertToArray = (uttakResult) => Object.values(uttakResult)
-  .map((u) => {
-    const uttakElement = { ...u };
-    uttakElement.trekkdagerDesimaler = u.trekkdagerDesimaler;
-    uttakElement.saldo = u.saldo;
-    return uttakElement;
-  });
 
-const getGjeldendeStønadskonto = (stonadskontoTypeKode, stonadskontoer) => {
-  switch (stonadskontoTypeKode) {
-    case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
-      return stonadskontoer.FORELDREPENGER_FØR_FØDSEL;
-    case stonadskontoType.FORELDREPENGER:
-      return stonadskontoer.FORELDREPENGER;
-    case stonadskontoType.FELLESPERIODE:
-      return stonadskontoer.FELLESPERIODE;
-    case stonadskontoType.MØDREKVOTE:
-      return stonadskontoer.MØDREKVOTE;
-    case stonadskontoType.FEDREKVOTE:
-      return stonadskontoer.FEDREKVOTE;
-    default:
-      return undefined;
-  }
-};
-
-const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
-  let errors = null;
-  const uttakResult = getResult(uttaksresultatActivity);
-  const uttakResultArray = convertToArray(uttakResult);
-  uttakResultArray
-    .filter((res) => !(res.konto === stonadskontoType.UDEFINERT && res.trekkdagerDesimaler === 0))
-    .forEach((value) => {
-      const gjeldendeStønadskonto = getGjeldendeStønadskonto(value.konto, stonadskonto.stonadskontoer);
-      if (gjeldendeStønadskonto && !gjeldendeStønadskonto.gyldigForbruk) {
-        const minsteSaldo = gjeldendeStønadskonto.aktivitetSaldoDtoList.reduce((min, akt) => {
-          if (akt.saldo < min) {
-            return akt.saldo;
-          }
-
-          return min;
-        }, 0);
-
-        errors = {
-          _error: (
-            <AlertStripe type="advarsel" className={styles.marginTop}>
-              <FormattedMessage
-                id="ValidationMessage.NegativeSaldo"
-                values={{
-                  periode: uttakPeriodeNavn[value.konto],
-                  days: minsteSaldo * -1,
-                }}
-              />
-            </AlertStripe>
-          ),
-        };
-      }
-    });
-  return errors;
-};
-
-const checkFlerbarnsMaksDager = (stonadskonto = {}) => {
-  let errors = null;
-  if (stonadskonto.FLERBARNSDAGER && !stonadskonto.FLERBARNSDAGER.gyldigForbruk) {
-    errors = {
-      _error:
-  <AlertStripe type="advarsel" className={styles.marginTop}>
-    <FormattedMessage
-      id="ValidationMessage.InvalidTrekkDagerFlerbarnsdager"
-      values={{
-        maxDays: stonadskonto.FLERBARNSDAGER.maxDager,
-      }}
-    />
-  </AlertStripe>,
-    };
-  }
-  return errors;
-};
-
-const checkValidStonadKonto = (uttakPerioder, stonadskontoer) => {
-  let errors = null;
-  uttakPerioder.forEach((periode) => {
-    const ikkeGyldigKonto = periode.aktiviteter.filter((a) => !(Object.prototype.hasOwnProperty.call(stonadskontoer, a.stønadskontoType.kode))
-      && (a.days >= 0 || a.weeks >= 0));
-    if (ikkeGyldigKonto && ikkeGyldigKonto.length > 0) {
-      errors = {
-        _error:
-  <AlertStripe type="advarsel" className={styles.marginTop}>
-    <FormattedMessage
-      id="ValidationMessage.InvalidStonadskonto"
-      values={{
-        konto: uttakPeriodeNavn[ikkeGyldigKonto[0].stønadskontoType.kode],
-      }}
-    />
-  </AlertStripe>,
-      };
-    }
-  });
-  return errors;
-};
 
 const validateUttakPanelForm = (values) => {
-  const { uttaksresultatActivity, stonadskonto = {} } = values;
+  const { uttaksresultatActivity } = values;
   if (uttaksresultatActivity) {
-    const stonadkontoError = checkValidStonadKonto(uttaksresultatActivity, stonadskonto.stonadskontoer);
-    if (stonadkontoError) {
-      return stonadkontoError;
-    }
-    const maxDagerError = checkMaxDager(uttaksresultatActivity, stonadskonto);
-    if (maxDagerError) {
-      return maxDagerError;
-    }
-    const flerbarnsMaksDager = checkFlerbarnsMaksDager(stonadskonto.stonadskontoer);
-    if (flerbarnsMaksDager) {
-      return flerbarnsMaksDager;
-    }
+// TODO (Hallvard): FIXME
   }
   return null;
 };
@@ -379,13 +219,11 @@ const mapStateToPropsFactory = (_initialState, initOwnProps) => {
   const validate = (values) => validateUttakPanelForm(values);
   const onSubmit = (values) => initOwnProps.submitCallback(transformValues(values, initOwnProps.apCodes, aksjonspunkter));
 
-  return (state, ownProps) => {
-    const initialValues = buildInitialValues(ownProps);
+  return (state) => {
 
     return {
       validate,
       onSubmit,
-      initialValues,
       manuellOverstyring: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'manuellOverstyring'),
     };
   };

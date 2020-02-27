@@ -23,13 +23,11 @@ const foreldrepengerData = [
   pleiepengerBehandlingApi.AKSJONSPUNKTER,
   pleiepengerBehandlingApi.VILKAR,
   pleiepengerBehandlingApi.PERSONOPPLYSNINGER,
-  pleiepengerBehandlingApi.YTELSEFORDELING,
+  // TODO (Hallvard): FIXME
   pleiepengerBehandlingApi.SOKNAD,
   pleiepengerBehandlingApi.INNTEKT_ARBEID_YTELSE,
   pleiepengerBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,
   pleiepengerBehandlingApi.BEREGNINGSGRUNNLAG,
-  pleiepengerBehandlingApi.UTTAK_STONADSKONTOER,
-  pleiepengerBehandlingApi.UTTAKSRESULTAT_PERIODER,
   pleiepengerBehandlingApi.SIMULERING_RESULTAT,
   pleiepengerBehandlingApi.SYKDOM,
 ];
