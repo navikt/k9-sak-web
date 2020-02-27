@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { ProsessStegProperties, Behandling, Aksjonspunkt } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegProperties } from '@fpsak-frontend/behandling-felles';
+import { Behandling, Aksjonspunkt } from '@k9-sak-web/types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -9,13 +10,16 @@ import VedtakResultatType from '../kodeverk/vedtakResultatType';
 import PerioderForeldelse from '../types/perioderForeldelseTsType';
 import Beregningsresultat from '../types/beregningsresultatTsType';
 
-export const getForeldelseStatus = ({ foreldelseResultat }) => (foreldelseResultat ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT);
+export const getForeldelseStatus = ({ foreldelseResultat }) =>
+  foreldelseResultat ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT;
 const getVedtakStatus = ({ beregningsresultat }) => {
   if (!beregningsresultat) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
   const { vedtakResultatType } = beregningsresultat;
-  return vedtakResultatType.kode === VedtakResultatType.INGEN_TILBAKEBETALING ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
+  return vedtakResultatType.kode === VedtakResultatType.INGEN_TILBAKEBETALING
+    ? vilkarUtfallType.IKKE_OPPFYLT
+    : vilkarUtfallType.OPPFYLT;
 };
 
 /**
@@ -36,10 +40,11 @@ const tilbakekrevingBuilders = [
     .withStatus(getVedtakStatus),
 ];
 
-const createTilbakekrevingStegProps = (builderData) => tilbakekrevingBuilders.reduce((currentEbs, eb) => {
-  const res = eb.build(builderData, currentEbs.length);
-  return res.isVisible ? currentEbs.concat([res]) : currentEbs;
-}, []);
+const createTilbakekrevingStegProps = builderData =>
+  tilbakekrevingBuilders.reduce((currentEbs, eb) => {
+    const res = eb.build(builderData, currentEbs.length);
+    return res.isVisible ? currentEbs.concat([res]) : currentEbs;
+  }, []);
 
 interface OwnProps {
   behandling: Behandling;
@@ -49,10 +54,12 @@ interface OwnProps {
 }
 
 const finnTilbakekrevingSteg = createSelector(
-  [(ownProps: OwnProps) => ownProps.behandling,
+  [
+    (ownProps: OwnProps) => ownProps.behandling,
     (ownProps: OwnProps) => ownProps.aksjonspunkter,
     (ownProps: OwnProps) => ownProps.perioderForeldelse,
-    (ownProps: OwnProps) => ownProps.beregningsresultat],
+    (ownProps: OwnProps) => ownProps.beregningsresultat,
+  ],
   (behandling, aksjonspunkter, foreldelseResultat, beregningsresultat) => {
     if (!behandling.type) {
       return undefined;

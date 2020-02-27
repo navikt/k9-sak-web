@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
@@ -18,7 +18,6 @@ import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel2, { RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN } from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
 import VurderOgFastsettSN2 from '../selvstendigNaeringsdrivende/VurderOgFastsettSN_V2';
-import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -28,10 +27,9 @@ import BeregningsresultatTable2 from '../beregningsresultatPanel/Beregningsresul
 
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
-
-// TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
 
 // ------------------------------------------------------------------------------------------ //
 // Variables
@@ -97,15 +95,18 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpTextHTML>
-          { apneAksjonspunkt.map((ap) => (
-            <FormattedHTMLMessage
-              key={ap.definisjon.kode}
-              id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
-              values={{ verdi: avvikProsent }}
-            />
-          ))}
-        </AksjonspunktHelpTextHTML>
+        <>
+          <AksjonspunktHelpTextHTML>
+            { apneAksjonspunkt.map((ap) => (
+              <FormattedHTMLMessage
+                key={ap.definisjon.kode}
+                id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
+                values={{ verdi: avvikProsent }}
+              />
+            ))}
+          </AksjonspunktHelpTextHTML>
+          <VerticalSpacer thirtyTwoPx />
+        </>
       )}
 
     </div>
@@ -125,14 +126,15 @@ export const buildInitialValues = createSelector(
     const arbeidstakerAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
     const frilanserAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
     const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-    return {
+    const initialValues = {
       ...Beregningsgrunnlag2.buildInitialValues(gjeldendeAksjonspunkter),
       ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
+      ...AksjonspunktBehandlerFL.buildInitialValues((frilanserAndeler)),
       ...VurderOgFastsettSN2.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
-      ...GrunnlagForAarsinntektPanelFL2.buildInitialValues(frilanserAndeler),
       ...GrunnlagForAarsinntektPanelAT2.buildInitialValues(arbeidstakerAndeler),
       ...SkjeringspunktOgStatusPanel2.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
     };
+    return initialValues;
   },
 );
 
@@ -250,21 +252,23 @@ export const BeregningFormImpl2 = ({
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
+
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
         && (
-        <ElementWrapper>
-          <VerticalSpacer eightPx />
-          { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
-        </ElementWrapper>
+          <>
+            <VerticalSpacer eightPx />
+            { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
+          </>
+
         )}
       <Row>
         <Column xs="12" md="6">
           <Undertittel className={beregningStyles.panelLeft}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
           </Undertittel>
-          <VerticalSpacer fourtyPx />
+          <VerticalSpacer twentyPx />
           <SkjeringspunktOgStatusPanel2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -275,7 +279,6 @@ export const BeregningFormImpl2 = ({
           />
           { relevanteStatuser.skalViseBeregningsgrunnlag && (
             <>
-              <VerticalSpacer fourtyPx />
               <Beregningsgrunnlag2
                 relevanteStatuser={relevanteStatuser}
                 readOnly={readOnly}
@@ -295,10 +298,14 @@ export const BeregningFormImpl2 = ({
           )}
         </Column>
         <Column xs="12" md="6">
+          <div className={beregningStyles.paragrafSkiller}>
+            <AvsnittSkiller luftOver luftUnder dividerParagraf />
+          </div>
           <Undertittel className={beregningStyles.panelRight}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
           </Undertittel>
-          <VerticalSpacer fourtyPx />
+          <VerticalSpacer twentyPx />
+
           <AvviksopplysningerPanel
             sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
             relevanteStatuser={relevanteStatuser}
@@ -309,7 +316,7 @@ export const BeregningFormImpl2 = ({
           {harAksjonspunkter
           && (
             <>
-              <VerticalSpacer fourtyPx />
+              <AvsnittSkiller luftOver luftUnder rightPanel />
               <AksjonspunktBehandler
                 readOnly={readOnly}
                 readOnlySubmitButton={readOnlySubmitButton}
@@ -325,7 +332,7 @@ export const BeregningFormImpl2 = ({
             </>
           )}
           <>
-            <VerticalSpacer fourtyPx />
+            <AvsnittSkiller luftOver luftUnder rightPanel />
             <BeregningsresultatTable2
               beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
               dekningsgrad={dekningsgrad}

@@ -1,4 +1,4 @@
-import { Kodeverk } from './kodeverk';
+import Kodeverk from './kodeverkTsType';
 
 type Behandling = Readonly<{
   id: number;
@@ -19,6 +19,9 @@ type Behandling = Readonly<{
     requestPayload?: any;
     type: string;
   }[];
+  taskStatus?: {
+    readOnly: boolean;
+  };
 }>;
 
 export default Behandling;

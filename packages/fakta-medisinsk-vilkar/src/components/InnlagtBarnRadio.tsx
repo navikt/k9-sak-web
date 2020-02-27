@@ -12,6 +12,7 @@ interface InnlagtBarnRadioProps {
 
 const InnlagtBarnRadio: React.FunctionComponent<InnlagtBarnRadioProps> = ({ readOnly }) => (
   <>
+    <VerticalSpacer twentyPx />
     <Element>
       <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
     </Element>

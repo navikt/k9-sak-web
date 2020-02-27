@@ -29,23 +29,23 @@ const behandling: Behandling = {
 };
 
 const arbeidsgivere: Arbeidsgiver[] = [
-  // {
-  //   arbeidsforhold: [
-  //     {
-  //       stillingsnavn: 'Vaskehjelp',
-  //       perioder: [
-  //         {
-  //           fom: '2020-02-02',
-  //           tom: '2020-03-02',
-  //           timerIJobbTilVanlig: 37.5,
-  //           timerFårJobbet: 40,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  //   navn: 'Norsk Hydro',
-  //   organisasjonsnummer: '90545120125',
-  // },
+  {
+    arbeidsforhold: [
+      {
+        stillingsnavn: 'Vaskehjelp',
+        perioder: [
+          {
+            fom: '2020-02-02',
+            tom: '2020-03-02',
+            timerIJobbTilVanlig: 37.5,
+            timerFårJobbet: 40,
+          },
+        ],
+      },
+    ],
+    navn: 'Norsk Hydro',
+    organisasjonsnummer: '90545120125',
+  },
   {
     arbeidsforhold: [
       {

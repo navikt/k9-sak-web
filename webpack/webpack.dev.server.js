@@ -35,10 +35,10 @@ const options = {
       secure: false,
       changeOrigin: !!process.env.APP_URL_FPTILBAKE,
     },
-    '/fpformidling/**': {
-      target: process.env.APP_URL_FPFORMIDLING || 'http://localhost:8010',
+    '/k9/formidling/**': {
+      target: process.env.APP_URL_K9FORMIDLING || 'http://localhost:8290',
       secure: false,
-      changeOrigin: !!process.env.APP_URL_FPFORMIDLING,
+      changeOrigin: !!process.env.APP_URL_K9FORMIDLING,
     },
     '/k9/sak/**': {
       target: process.env.APP_URL_SAK || 'http://localhost:8080',
@@ -53,6 +53,11 @@ const options = {
           proxyRes.headers.location = '/k9/sak/resource/login';
         }
       },
+    },
+    '/k9/oppdrag/**': {
+      target: process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070',
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_K9OPPDRAG,
     },
   },
   publicPath: config.output.publicPath,

@@ -1,7 +1,7 @@
 import { PeriodpickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow, PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { dateRangesNotOverlapping, hasValidDate, required } from '@fpsak-frontend/utils';
-import { Periode } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
+import { Periode } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { FieldArrayFieldsProps } from 'redux-form';

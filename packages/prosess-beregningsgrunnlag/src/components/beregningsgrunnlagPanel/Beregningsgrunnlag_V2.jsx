@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
@@ -10,6 +9,7 @@ import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import YtelserFraInfotrygd2 from '../tilstotendeYtelser/YtelserFraInfotrygd_V2';
 import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN_V2';
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
+
 import MilitaerPanel2 from '../militær/MilitaerPanel_V2';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -19,6 +19,7 @@ import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinnte
 
 import NaeringsopplysningsPanel from '../selvstendigNaeringsdrivende/NaeringsOpplysningsPanel';
 import beregningStyles from './beregningsgrunnlag_V2.less';
+
 // ------------------------------------------------------------------------------------------ //
 // Variables
 // ------------------------------------------------------------------------------------------ //
@@ -55,6 +56,7 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   return undefined;
 };
 
+
 const createRelevantePaneler = (alleAndelerIForstePeriode,
   gjeldendeAksjonspunkter,
   relevanteStatuser,
@@ -63,7 +65,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
-
   alleKodeverk,
   sammenligningsGrunnlagInntekter,
   skjeringstidspunktDato) => (
@@ -84,7 +85,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
-              <VerticalSpacer fourtyPx />
             </>
           )}
           { harPerioderMedAvsluttedeArbeidsforhold(allePerioder)
@@ -100,7 +100,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
-              <VerticalSpacer fourtyPx />
             </>
           )}
         </>
@@ -114,10 +113,8 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           readOnly={readOnly}
           isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
         />
-        <VerticalSpacer fourtyPx />
       </>
     )}
-
       {(relevanteStatuser.harDagpengerEllerAAP)
       && (
         <div>
@@ -126,7 +123,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
             relevanteStatuser={relevanteStatuser}
             gjelderBesteberegning={gjelderBesteberegning}
           />
-          <VerticalSpacer fourtyPx />
         </div>
       )}
       {(relevanteStatuser.isMilitaer)
@@ -135,7 +131,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           <MilitaerPanel2
             alleAndeler={alleAndelerIForstePeriode}
           />
-          <VerticalSpacer fourtyPx />
         </>
       )}
       {(relevanteStatuser.harAndreTilstotendeYtelser)
@@ -144,16 +139,15 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           <YtelserFraInfotrygd2
             bruttoPrAar={allePerioder[0].bruttoPrAar}
           />
-          <VerticalSpacer fourtyPx />
         </>
       )}
+
       { relevanteStatuser.isSelvstendigNaeringsdrivende
       && (
         <>
           <GrunnlagForAarsinntektPanelSN2
             alleAndeler={alleAndelerIForstePeriode}
           />
-          <VerticalSpacer fourtyPx />
           <NaeringsopplysningsPanel
             alleAndelerIForstePeriode={alleAndelerIForstePeriode}
           />
@@ -170,12 +164,11 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
             relevanteStatuser={relevanteStatuser}
             skjeringstidspunktDato={skjeringstidspunktDato}
           />
-          <VerticalSpacer fourtyPx />
         </>
       )}
-
     </div>
 );
+
 
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningsgrunnlagImpl
@@ -214,8 +207,6 @@ export const BeregningsgrunnlagImpl2 = ({
       sammenligningsGrunnlagInntekter,
       skjeringstidspunktDato,
     )
-
-
   );
 };
 
@@ -253,7 +244,7 @@ Beregningsgrunnlag2.transformValues = (values, allePerioder) => ({
   kode: FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   begrunnelse: values.ATFLVurdering,
   fastsatteTidsbegrensedePerioder: AksjonspunktBehandlerTB.transformValues(values, allePerioder),
-  frilansInntekt: values.inntektFrilanser ? removeSpacesFromNumber(values.inntektFrilanser) : null,
+  frilansInntekt: values.inntektFrilanser !== undefined ? removeSpacesFromNumber(values.inntektFrilanser) : null,
 });
 
 export default Beregningsgrunnlag2;

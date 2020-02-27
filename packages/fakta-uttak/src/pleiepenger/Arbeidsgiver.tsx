@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { FieldArray, WrappedFieldArrayProps } from 'redux-form';
-import { Undertittel } from 'nav-frontend-typografi';
 import { ArbeidsforholdPeriode, Arbeidsgiver as ArbeidsgiverType } from './UttakFaktaIndex2';
 import Arbeidsforhold from './Arbeidsforhold';
 
@@ -18,7 +17,6 @@ const Arbeidsgiver: FunctionComponent<WrappedFieldArrayProps<ArbeidsgiverType> &
   <>
     {fields.map((fieldId, index) => (
       <React.Fragment key={fieldId}>
-        <Undertittel>{fields.get(index).navn}</Undertittel>
         <FieldArray
           name={`${fieldId}.arbeidsforhold`}
           component={Arbeidsforhold}

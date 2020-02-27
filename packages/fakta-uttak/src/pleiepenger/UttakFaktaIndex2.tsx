@@ -43,7 +43,6 @@ const UttakFaktaIndex: FunctionComponent<UttakFaktaIndexProps> = ({ behandling, 
     <UttakFaktaForm2
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      id="njkn"
       arbeidsgivere={arbeidsgivere}
       submitCallback={values => {
         console.log(JSON.stringify(values));

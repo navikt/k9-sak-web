@@ -1,23 +1,22 @@
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { notNull } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
-import Aksjonspunkt from '../types/aksjonspunktTsType';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 
 // TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om
 
 class ProsessStegProperties {
-  code: string
+  code: string;
 
-  titleCode: string
+  titleCode: string;
 
-  isVisible: boolean
+  isVisible: boolean;
 
-  status?: boolean
+  status?: boolean;
 
-  vilkarene?: string[]
+  vilkarene?: string[];
 
-  apCodes?: string[]
+  apCodes?: string[];
 
   constructor(code, titleCode, isVisible, status?, bpVilkar?, bpAksjonspunkter?) {
     this.code = code;
@@ -25,26 +24,26 @@ class ProsessStegProperties {
     this.isVisible = isVisible;
     this.status = status;
     this.vilkarene = bpVilkar;
-    this.apCodes = bpAksjonspunkter ? bpAksjonspunkter.map((ap) => ap.definisjon.kode) : [];
+    this.apCodes = bpAksjonspunkter ? bpAksjonspunkter.map(ap => ap.definisjon.kode) : [];
   }
 
   static get Builder() {
     class Builder {
-      bpCode: string
+      bpCode: string;
 
-      titleCode: string
+      titleCode: string;
 
-      apCodes: string[]
+      apCodes: string[];
 
-      vilkarTypes: string[]
+      vilkarTypes: string[];
 
-      vilkarIsOptional: boolean
+      vilkarIsOptional: boolean;
 
-      visibilityFunctions: ((data: {}, length: number) => undefined)[]
+      visibilityFunctions: ((data: {}, length: number) => undefined)[];
 
-      defaultVisibilityFallback: boolean
+      defaultVisibilityFallback: boolean;
 
-      statusFunction: (builderData: {}, bpAksjonspunkter: Aksjonspunkt[]) => undefined
+      statusFunction: (builderData: {}, bpAksjonspunkter: Aksjonspunkt[]) => undefined;
 
       /**
        * @param {string} bpCode - Obligatorisk streng som er en unik identifikator for behandlingspunktet.
@@ -114,17 +113,18 @@ class ProsessStegProperties {
       }
 
       // Internal use only
-      $$findStatus(bpVilkar, bpAksjonspunkter) { /* eslint-disable-line class-methods-use-this */
+      /* eslint-disable-next-line class-methods-use-this */
+      $$findStatus(bpVilkar, bpAksjonspunkter) {
         if (bpVilkar.length > 0) {
-          const vilkarStatusCodes = bpVilkar.map((v) => v.vilkarStatus.kode);
-          if (vilkarStatusCodes.some((vsc) => vsc === vut.IKKE_VURDERT)) {
+          const vilkarStatusCodes = bpVilkar.map(v => v.vilkarStatus.kode);
+          if (vilkarStatusCodes.some(vsc => vsc === vut.IKKE_VURDERT)) {
             return vut.IKKE_VURDERT;
           }
-          return vilkarStatusCodes.every((vsc) => vsc === vut.OPPFYLT) ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
+          return vilkarStatusCodes.every(vsc => vsc === vut.OPPFYLT) ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
         }
 
         if (bpAksjonspunkter.length > 0) {
-          return bpAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) ? vut.IKKE_VURDERT : vut.OPPFYLT;
+          return bpAksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode)) ? vut.IKKE_VURDERT : vut.OPPFYLT;
         }
         return vut.IKKE_VURDERT;
       }
@@ -140,12 +140,16 @@ class ProsessStegProperties {
       }
 
       build(builderData, bpLength) {
-        const bpVilkar = builderData.vilkar.filter((vilkar) => this.vilkarTypes && this.vilkarTypes.includes(vilkar.vilkarType.kode));
-        const bpAksjonspunkter = builderData.aksjonspunkter.filter((ap) => this.apCodes && this.apCodes.includes(ap.definisjon.kode));
+        const bpVilkar = builderData.vilkar.filter(
+          vilkar => this.vilkarTypes && this.vilkarTypes.includes(vilkar.vilkarType.kode),
+        );
+        const bpAksjonspunkter = builderData.aksjonspunkter.filter(
+          ap => this.apCodes && this.apCodes.includes(ap.definisjon.kode),
+        );
 
         let isVisible = false;
         if (this.visibilityFunctions) {
-          isVisible = this.visibilityFunctions.every((f) => f(builderData, bpLength));
+          isVisible = this.visibilityFunctions.every(f => f(builderData, bpLength));
           if (this.defaultVisibilityFallback) {
             isVisible = isVisible ? this.$$isVisible(bpVilkar, bpAksjonspunkter) : false;
           }
@@ -156,7 +160,9 @@ class ProsessStegProperties {
           return new ProsessStegProperties(this.bpCode, this.titleCode, isVisible);
         }
 
-        const status = this.statusFunction ? this.statusFunction(builderData, bpAksjonspunkter) : this.$$findStatus(bpVilkar, bpAksjonspunkter);
+        const status = this.statusFunction
+          ? this.statusFunction(builderData, bpAksjonspunkter)
+          : this.$$findStatus(bpVilkar, bpAksjonspunkter);
         return new ProsessStegProperties(this.bpCode, this.titleCode, isVisible, status, bpVilkar, bpAksjonspunkter);
       }
     }

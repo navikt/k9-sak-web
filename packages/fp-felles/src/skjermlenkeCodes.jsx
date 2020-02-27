@@ -210,6 +210,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: behandlingspunktCodes.FORTSATTMEDLEMSKAP,
   },
+  FAKTA_OM_MEDISINSK: {
+    kode: 'FAKTA_OM_MEDISINSK',
+    faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR,
+    punktNavn: behandlingspunktCodes.MEDISINSKVILKAAR
+  }
 };
 
 export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {

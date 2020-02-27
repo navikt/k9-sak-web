@@ -4,8 +4,8 @@ import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import Kjønnkode from '@k9-frontend/types/src/Kjønnkode';
-import UttakPeriode from '@k9-frontend/types/src/uttak/UttakPeriode';
+import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
+import UttakPeriode from '@k9-sak-web/types/src/uttak/UttakPeriode';
 
 import TimeLineControl from './components/TimeLineControl';
 import TimeLineSoker from './components/TimeLineSoker';

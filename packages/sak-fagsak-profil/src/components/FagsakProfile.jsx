@@ -32,7 +32,6 @@ export const FagsakProfile = ({
   saksnummer,
   sakstype,
   fagsakStatus,
-  toggleShowAll,
   annenPartLink,
   alleKodeverk,
   createLink,
@@ -68,7 +67,7 @@ export const FagsakProfile = ({
           {hasLink(annenPartLink) && (
           <FlexColumn className={styles.pushRight}>
             <Element>
-              <NavLink to={createLink(annenPartLink)} target="_blank" onClick={toggleShowAll}>
+              <NavLink to={createLink(annenPartLink)} target="_blank">
                 <FormattedMessage id="FagsakProfile.AnnenPartSak" />
               </NavLink>
             </Element>
@@ -85,7 +84,6 @@ FagsakProfile.propTypes = {
   saksnummer: PropTypes.string.isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
   sakstype: PropTypes.shape().isRequired,
-  toggleShowAll: PropTypes.func.isRequired,
   annenPartLink: PropTypes.shape(),
   alleKodeverk: PropTypes.shape().isRequired,
   createLink: PropTypes.func.isRequired,

@@ -72,15 +72,17 @@ const config = {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
-              modules: true,
-              localIdentName: '[name]_[local]_[contenthash:base64:5]',
+              modules: {
+                localIdentName: '[name]_[local]_[contenthash:base64:5]',
+              },
             },
           },
           {
             loader: 'less-loader',
             options: {
-              modules: true,
-              localIdentName: '[name]_[local]_[contenthash:base64:5]',
+              modules: {
+                localIdentName: '[name]_[local]_[contenthash:base64:5]',
+              },
               modifyVars: {
                 nodeModulesPath: '~',
                 coreModulePath: '~',
@@ -119,6 +121,7 @@ const config = {
         test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
         options: {
+          esModule: false,
           name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
         include: [CORE_DIR, IMAGE_DIR],

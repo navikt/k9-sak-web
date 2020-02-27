@@ -11,6 +11,7 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
 import { Column, Row } from 'nav-frontend-grid';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 
 const createHeaderRow = () => (
@@ -91,10 +92,11 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
   const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
   return (
     <>
-      <Element className={beregningStyles.semiBoldText}>
+      <AvsnittSkiller luftOver luftUnder />
+      <Element className={beregningStyles.avsnittOverskrift}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
       </Element>
-      <VerticalSpacer fourPx />
+      <VerticalSpacer eightPx />
       <Row key="SNInntektIngress">
         <Column xs="8">
           <Normaltekst>

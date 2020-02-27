@@ -17,6 +17,7 @@ import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-comp
 import NaturalytelsePanel2 from './NaturalytelsePanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 
 const formName = 'BeregningForm';
@@ -137,9 +138,11 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) =
           </Column>
         )}
       </Row>
-      <Row key={`indexSp${andel.arbeidsforhold.arbeidsgiverId}`}>
-        <VerticalSpacer eightPx />
-      </Row>
+      {(index < relevanteAndeler.length) && (
+        <Row key={`indexSp${andel.arbeidsforhold.arbeidsgiverId}`}>
+          <VerticalSpacer eightPx />
+        </Row>
+      )}
     </React.Fragment>
   ));
   if (relevanteAndeler.length > 1) {
@@ -190,9 +193,10 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
+      <AvsnittSkiller luftOver luftUnder />
       <FlexRow>
         <FlexColumn>
-          <Element>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
           </Element>
         </FlexColumn>
@@ -202,6 +206,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           )}
         </FlexColumn>
       </FlexRow>
+      <VerticalSpacer eightPx />
       <Row key="Header">
         <Column xs="7" key="ATempthy1" />
         <Column key="ATMndHead" className={beregningStyles.colMaanedText} xs="2">

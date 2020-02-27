@@ -10,7 +10,7 @@ interface TotrinnskontrollAksjonspunkter {
   totrinnskontrollGodkjent: boolean;
   vurderPaNyttArsaker: VurderPaNyttArsaker[];
   uttakPerioder: Uttak[];
-  arbeidforholdDtos: ArbeidsforholdDto[];
+  arbeidsforholdDtos: ArbeidsforholdDto[];
   skjermlenkeType: string;
   totrinnskontrollAksjonspunkter: TotrinnskontrollAksjonspunkter[];
   navn?: string;

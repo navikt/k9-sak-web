@@ -1,11 +1,12 @@
 import { AutocompleteField } from '@fpsak-frontend/form';
-import * as React from 'react';
-import { FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 import axios from 'axios';
+import * as React from 'react';
 import styles from './medisinskVilkar.less';
 
 const fetchDiagnosekoderByQuery = (queryString: string) =>
-  axios.get(`http://localhost:8100/diagnosekoder?query=${queryString}&max=8`);
+  axios.get(`http://localhost:8300/diagnosekoder?query=${queryString}&max=8`);
 
 const getUpdatedSuggestions = async (queryString: string) => {
   if (queryString.length >= 3) {
@@ -18,9 +19,9 @@ const getUpdatedSuggestions = async (queryString: string) => {
   return [];
 };
 
-const DiagnosekodeSelector = ({ readOnly }) => {
+const DiagnosekodeSelector = ({ readOnly, initialDiagnosekodeValue }) => {
   const [suggestions, setSuggestions] = React.useState([]);
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState(initialDiagnosekodeValue || '');
 
   return (
     <FlexRow wrap>
@@ -36,9 +37,10 @@ const DiagnosekodeSelector = ({ readOnly }) => {
           id="test"
           placeholder="Søk etter diagnose"
           ariaLabel="test"
-          label="Hvilken diagnose?"
+          label="Er det fastsatt en diagnose?"
           readOnly={readOnly}
           name="diagnosekode"
+          validate={[required]}
         />
       </FlexColumn>
     </FlexRow>

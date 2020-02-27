@@ -1,4 +1,4 @@
-import { Kodeverk } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk } from '@k9-sak-web/types';
 
 type PerioderForeldelse = Readonly<{
   perioder: {
@@ -7,6 +7,6 @@ type PerioderForeldelse = Readonly<{
     belop: number;
     foreldelseVurderingType: Kodeverk;
   };
-}>
+}>;
 
 export default PerioderForeldelse;

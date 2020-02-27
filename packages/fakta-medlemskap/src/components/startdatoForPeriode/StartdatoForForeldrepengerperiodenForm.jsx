@@ -63,6 +63,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
             readOnly={readOnly && overstyringDisabled}
           />
         </div>
+        <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="4">
             <DatepickerField
@@ -134,7 +135,7 @@ const transformValues = (values, isOverstyring) => ({
     : aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
   opprinneligDato: values.opprinneligDato,
   startdatoFraSoknad: values.startdatoFraSoknad,
-  begrunnelse: values.begrunnelse,
+  begrunnelse: values.begrunnelse || '---',
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {

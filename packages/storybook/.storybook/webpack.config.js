@@ -65,15 +65,17 @@ module.exports = async ({ config, mode }) => {
           loader: 'css-loader',
           options: {
             importLoaders: 1,
-            modules: true,
-            localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            modules: {
+              localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            },
           },
         },
         {
           loader: 'less-loader',
           options: {
-            modules: true,
-            localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            modules: {
+              localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            },
             modifyVars: {
               nodeModulesPath: '~',
               coreModulePath: '~',
@@ -86,6 +88,7 @@ module.exports = async ({ config, mode }) => {
     },
     {
       test: /\.(less)?$/,
+      include: [CSS_DIR, CORE_DIR],
       use: [
         {
           loader: MiniCssExtractPlugin.loader,
@@ -106,7 +109,6 @@ module.exports = async ({ config, mode }) => {
           },
         },
       ],
-      include: [CSS_DIR, CORE_DIR],
     },
     {
       test: /\.(jpg|png|svg)$/,
@@ -121,8 +123,8 @@ module.exports = async ({ config, mode }) => {
   config.plugins.push(
     new MiniCssExtractPlugin({
       filename: 'style.css',
-    ignoreOrder: true,
-  }),
+      ignoreOrder: true,
+    }),
   );
   config.resolve.extensions.push('.ts', '.tsx');
 

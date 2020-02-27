@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-
-import Aksjonspunkt from './aksjonspunktTsType';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 
 interface FaktaPanelUtledet {
   urlCode: string;

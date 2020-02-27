@@ -1,4 +1,4 @@
-import { Kodeverk } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk } from '@k9-sak-web/types';
 
 type Innsyn = Readonly<{
   dokumenter: {
@@ -13,6 +13,6 @@ type Innsyn = Readonly<{
     tittel: string;
     opprettetDato: string;
   };
-}>
+}>;
 
 export default Innsyn;
