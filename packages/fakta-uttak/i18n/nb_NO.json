@@ -1,4 +1,9 @@
 {
+  "FaktaOmUttakForm.FomTom": "Periode",
+  "FaktaOmUttakForm.Perioder": "Perioder",
+  "FaktaOmUttakForm.EndrePeriode": "Endre",
+  "FaktaOmUttakForm.timerIJobbTilVanlig": "Timer i uka i jobb til vanlig",
+  "FaktaOmUttakForm.timerFårJobbet": "Timer i uka bruker får jobbet",
   "UttakInfoPanel.FaktaUttak": "Fakta om uttak",
   "UttakInfoPanel.Aksjonspunkt.5070": "Fastsett korrekt og dokumentert søknadsperiode og andel i arbeid. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.5070.ugyldigGradering": "Bruker har søkt om gradering på et arbeidsforhold som ikke er registrert i Aa–registeret. Gradering kan derfor ikke innvilges på dette arbeidsforholdet. Kontakt bruker for å avklare hvor han/hun skal gradere. For å avslå graderingen, må du fjerne graderingen fra perioden, og overstyre vedtaket.",
@@ -123,7 +128,7 @@
   "Calendar.Month.10": "November",
   "Calendar.Month.11": "Desember",
   "ValidationMessage.InvalidDatesInPeriod": "Periode må skrives slik : dd.mm.åååå - dd.mm.åååå",
-  "ValidationMessage.InvalidDecimal": "Tallet kan ikke inneholde mer enn to desimaler",
+  "ValidationMessage.InvalidDecimal": "Desimaltallet skrives med punktum og inneholder maks {maxNumberOfDecimals} desimal(er)",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
@@ -135,6 +140,7 @@
   "ValidationMessage.InvalidText": "Feltet inneholder ugyldige tegn: {text}",
   "ValidationMessage.InvalidDate": "Dato må skrives slik : dd.mm.åååå",
   "ValidationMessage.InvalidPeriod": "Startdato må være før eller lik sluttdato",
+  "ValidationMessage.InvalidNumber": "Feltet kan kun inneholde tall",
   "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
   "PeriodFieldArray.LeggTilBarn": "Legg til barn",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett"
