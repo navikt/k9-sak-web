@@ -121,9 +121,9 @@ describe('<ForeldrepengerProsess>', () => {
     }, {
       isActive: false,
       isDisabled: false,
-      isFinished: false,
+      isFinished: true,
       label: 'Uttak',
-      type: 'default',
+      type: 'success',
     }, {
       isActive: false,
       isDisabled: false,
