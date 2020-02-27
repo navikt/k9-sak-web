@@ -15,6 +15,7 @@ import {
   hasValidDecimal,
   hasValidFodselsnummer,
   hasValidFodselsnummerFormat,
+  hasValidDecimalMaxNumberOfDecimals,
   hasValidInteger,
   hasValidName,
   hasValidPeriod,
@@ -207,6 +208,19 @@ describe('Validators', () => {
       expect(result).has.length(2);
       expect(result[0]).is.eql({ id: 'ValidationMessage.InvalidNumber' });
       expect(result[1]).is.eql({ text: 'test' });
+    });
+  });
+
+  describe('hasValidDecimalMaxNumberOfDecimals', () => {
+    it('skal feile for fler desimaler enn max oppgitt', () => {
+      const skalFeile = hasValidDecimalMaxNumberOfDecimals(2)('12.256');
+      expect(skalFeile).to.eql([
+        { id: 'ValidationMessage.InvalidDecimal' },
+        { text: '12.256', 'maxNumberOfDecimals': 2}
+      ]);
+
+      const skalFunke = hasValidDecimalMaxNumberOfDecimals(2)('12.12');
+      expect(skalFunke).to.be.null;
     });
   });
 
