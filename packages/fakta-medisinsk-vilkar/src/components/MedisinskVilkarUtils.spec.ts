@@ -210,16 +210,18 @@ describe('medisinskVilkarUtils', () => {
   });
 
   it('skal formatere en dato likt med ulik input', () => {
-    const expectedResult = new Date('Wed, 19 Feb 2020 23:00:00 GMT');
-    expect(getMomentConvertedDate('2020-02-20')).to.deep.equal(expectedResult);
-    expect(getMomentConvertedDate(moment('2020-02-20'))).to.deep.equal(expectedResult);
-    expect(getMomentConvertedDate(moment('2020-02-20').toDate())).to.deep.equal(expectedResult);
-    expect(
-      getMomentConvertedDate(
-        moment('2020-02-20')
-          .toDate()
-          .toString(),
-      ),
-    ).to.deep.equal(expectedResult);
+    const expectedResult = new Date('Wed, 19 Feb 2020 23:00:00 GMT').toISOString();
+    const result1 = getMomentConvertedDate('2020-02-20');
+    expect(result1.toISOString()).to.deep.equal(expectedResult);
+    const result2 = getMomentConvertedDate(moment('2020-02-20'));
+    expect(result2.toISOString()).to.deep.equal(expectedResult);
+    const result3 = getMomentConvertedDate(moment('2020-02-20').toDate());
+    expect(result3.toISOString()).to.deep.equal(expectedResult);
+    const result4 = getMomentConvertedDate(
+      moment('2020-02-20')
+        .toDate()
+        .toString(),
+    );
+    expect(result4.toISOString()).to.deep.equal(expectedResult);
   });
 });
