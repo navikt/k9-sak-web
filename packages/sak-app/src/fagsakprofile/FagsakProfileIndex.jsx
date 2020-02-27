@@ -141,7 +141,7 @@ FagsakProfileIndex.propTypes = {
   behandlingVersjon: PropTypes.number,
   shouldRedirectToBehandlinger: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
-  dekningsgrad: PropTypes.number.isRequired,
+  dekningsgrad: PropTypes.number,
 };
 
 FagsakProfileIndex.defaultProps = {
