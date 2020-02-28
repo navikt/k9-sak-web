@@ -4,7 +4,7 @@ import {
   Sykdom,
 } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 
 export const getHelePerioder = (values: TransformValues) =>
   values.perioderMedKontinuerligTilsynOgPleie
@@ -143,3 +143,19 @@ export const getPerioderMedKontinuerligTilsynOgPleie = (sykdom: Sykdom) =>
     begrunnelseUtvidet: getBegrunnelseForUtvidetTilsyn(p, sykdom),
     harBehovForKontinuerligTilsynOgPleie: !!p.periode.fom,
   }));
+
+export const getMomentConvertedDate = (date: string | Date | Moment) => {
+  const regex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/gm;
+  if (typeof date === 'string') {
+    if (regex.test(date)) {
+      return moment(date, 'YYYY-MM-DD').toDate();
+    }
+    return moment(new Date(date)).toDate();
+  }
+  if (moment.isMoment(date)) {
+    return date.toDate();
+  }
+
+  // fungerer, men blir deprecated i senere versjoner av moment
+  return moment(date).toDate();
+};

@@ -9,7 +9,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
@@ -17,6 +17,7 @@ import { FormattedMessage } from 'react-intl';
 import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
 import styles from './medisinskVilkar.less';
 import PeriodePolse from './PeriodePolse';
+import { getMomentConvertedDate } from './MedisinskVilkarUtils';
 
 interface TilsynsperioderProps {
   periodeMedBehovForKontinuerligTilsynId: string;
@@ -24,8 +25,8 @@ interface TilsynsperioderProps {
   harBehovForKontinuerligTilsynOgPleie: boolean;
   harBehovForToOmsorgspersonerDelerAvPerioden: boolean;
   harBehovForToOmsorgspersonerHelePerioden: boolean;
-  datoBegrensningFom: string | Date;
-  datoBegrensningTom: string | Date;
+  datoBegrensningFom: string | Date | Moment;
+  datoBegrensningTom: string | Date | Moment;
   showCancelButton: boolean;
   removeIndex: (index: number) => void;
   index: number;
@@ -96,8 +97,8 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     readOnly={readOnly}
                     label={{ id: 'MedisinskVilkarForm.Periode' }}
                     disabledDays={{
-                      before: moment(datoBegrensningFom).toDate(),
-                      after: moment(datoBegrensningTom).toDate(),
+                      before: getMomentConvertedDate(datoBegrensningFom),
+                      after: getMomentConvertedDate(datoBegrensningTom),
                     }}
                   />
                 </FlexColumn>
