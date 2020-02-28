@@ -31,7 +31,7 @@ describe('<PermisjonGraderingPanel>', () => {
     const errorsWithValidNumber = PermisjonGraderingPanel.validate([getPeriodDaysFromToday(periodeForGradering, validDecimal, -20, -15)]);
 
     expect(errorsWithInvalidDecimal).to.be.an('array');
-    expect(errorsWithInvalidDecimal[0].prosentandelArbeid).to.be.an('array').that.eql(invalidDecimalMessage(invalidDecimal));
+    expect(errorsWithInvalidDecimal[0].prosentandelArbeid).to.be.an('array').that.eql(invalidDecimalMessage(invalidDecimal, 2));
     expect(errorsWithInvalidDecimal[1]).to.not.exist;
 
     expect(errorsWithValidNumber).to.not.exist;

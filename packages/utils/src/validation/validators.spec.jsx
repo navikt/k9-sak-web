@@ -200,7 +200,7 @@ describe('Validators', () => {
       const result = hasValidDecimal(2.233);
       expect(result).has.length(2);
       expect(result[0]).is.eql({ id: 'ValidationMessage.InvalidDecimal' });
-      expect(result[1]).is.eql({ text: 2.233 });
+      expect(result[1]).is.eql({ text: 2.233, maxNumberOfDecimals: 2 });
     });
 
     it('skal feile når input ikke er et gyldig tall', () => {
