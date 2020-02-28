@@ -53,7 +53,6 @@ const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCas
  */
 export class BehandlingIndex extends Component {
   static propTypes = {
-    saksnummer: PropTypes.string.isRequired,
     behandlingId: PropTypes.number.isRequired,
     behandlingType: PropTypes.string.isRequired,
     behandlingVersjon: PropTypes.number.isRequired,
@@ -63,14 +62,6 @@ export class BehandlingIndex extends Component {
     resetBehandlingContext: PropTypes.func.isRequired,
     setBehandlingIdOgVersjon: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
-    hasSubmittedPaVentForm: PropTypes.bool.isRequired,
-    allDocuments: PropTypes.arrayOf(PropTypes.shape({
-      journalpostId: PropTypes.string.isRequired,
-      dokumentId: PropTypes.string.isRequired,
-      tittel: PropTypes.string,
-      tidspunkt: PropTypes.string,
-      kommunikasjonsretning: PropTypes.string.isRequired,
-    })).isRequired,
     kodeverk: PropTypes.shape().isRequired,
     fagsak: PropTypes.shape({
       fagsakStatus: PropTypes.shape().isRequired,
