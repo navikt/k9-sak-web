@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
+import moment from 'moment';
 import {
   getPerioderMedKontinuerligTilsynOgPleie,
   getBegrunnelseForUtvidetTilsyn,
@@ -8,6 +9,7 @@ import {
   getHelePerioder,
   getDelvisePerioder,
   getPerioderMedUtvidetKontinuerligTilsynOgPleie,
+  getMomentConvertedDate,
 } from './MedisinskVilkarUtils';
 
 const partialFormState = {
@@ -205,5 +207,34 @@ describe('medisinskVilkarUtils', () => {
       },
     ];
     expect(result).to.deep.equal(expectedResult);
+  });
+
+  // TODO (Hallvard): Finn en bedre måte å teste dette på
+  it('skal formatere en dato likt med ulik input', () => {
+    const expectedResult = new Date('2020-02-20').toLocaleString('nb-NO', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    const result1 = getMomentConvertedDate('2020-02-20');
+    expect(result1.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
+      expectedResult,
+    );
+    const result2 = getMomentConvertedDate(moment('2020-02-20'));
+    expect(result2.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
+      expectedResult,
+    );
+    const result3 = getMomentConvertedDate(moment('2020-02-20').toDate());
+    expect(result3.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
+      expectedResult,
+    );
+    const result4 = getMomentConvertedDate(
+      moment('2020-02-20')
+        .toDate()
+        .toString(),
+    );
+    expect(result4.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
+      expectedResult,
+    );
   });
 });
