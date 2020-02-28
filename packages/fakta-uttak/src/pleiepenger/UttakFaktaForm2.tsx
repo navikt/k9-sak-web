@@ -5,7 +5,12 @@ import { bindActionCreators } from 'redux';
 import { FormAction } from 'redux-form/lib/actions';
 import Hovedknapp from 'nav-frontend-knapper/lib/hovedknapp';
 
-import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles/src/behandlingForm';
+import {
+  behandlingForm,
+  getBehandlingFormPrefix,
+  behandlingFormValueSelector,
+} from '@fpsak-frontend/fp-felles/src/behandlingForm';
+import { createSelector } from 'reselect';
 import { useIntl } from 'react-intl';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { Arbeidsgiver as ArbeidsgiverType } from './UttakFaktaIndex2';
@@ -89,18 +94,34 @@ interface FormProps {
   onSubmit: (values: any) => any;
 }
 
-const mapStateToPropsFactory = (_initialState, initialOwnProps: UttakFaktaFormProps): (() => FormProps) => {
+const arbeidsgivereSelector = createSelector(
+  [
+    (state, ownProps) =>
+      behandlingFormValueSelector(
+        uttakFaktaFormName,
+        ownProps.behandlingId,
+        ownProps.behandlingVersjon,
+      )(state, 'arbeidsgivere'),
+  ],
+  arbeidsgivere => arbeidsgivere,
+);
+
+const mapStateToPropsFactory = (
+  _initialState,
+  initialOwnProps: UttakFaktaFormProps,
+): ((state, ownProps) => FormProps) => {
   const { behandlingId, behandlingVersjon, arbeidsgivere, submitCallback } = initialOwnProps;
   const onSubmit = (values: ArbeidsgiverType[]) => submitCallback(values);
   const initialValues = { arbeidsgivere };
 
-  return () => {
+  return (state, ownProps) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
 
     return {
       initialValues,
       behandlingFormPrefix,
       onSubmit,
+      arbeidsgivere: arbeidsgivereSelector(state, ownProps),
     };
   };
 };

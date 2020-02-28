@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { behandlingForm } from '@fpsak-frontend/fp-felles/src/behandlingForm';
-import { required, hasValidDecimalMaxNumberOfDecimals, hasValidInteger } from '@fpsak-frontend/utils';
+import { required, hasValidDecimalMaxNumberOfDecimals } from '@fpsak-frontend/utils';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import FlexColumn from '@fpsak-frontend/shared-components/src/flexGrid/FlexColumn';
 import PeriodpickerField from '@fpsak-frontend/form/src/PeriodpickerField';
@@ -48,7 +48,7 @@ const NyArbeidsperiode: FunctionComponent<NyArbeidsperiodeProps & InjectedFormPr
         <FlexColumn>
           <InputField
             name="timerFårJobbet"
-            validate={[required, hasValidInteger]}
+            validate={[required, hasValidDecimalMaxNumberOfDecimals(1)]}
             label={{ id: 'FaktaOmUttakForm.timerFårJobbet' }}
             bredde="S"
             inputMode="decimal"
@@ -83,8 +83,8 @@ interface NyArbeidsperiodeForm {
 
 const transformValues = (values: NyArbeidsperiodeForm): ArbeidsforholdPeriode => ({
   ...values,
-  timerIJobbTilVanlig: Number.parseFloat(values.timerIJobbTilVanlig),
-  timerFårJobbet: Number.parseFloat(values.timerFårJobbet),
+  timerIJobbTilVanlig: Number.parseFloat(values.timerIJobbTilVanlig.replace(',', '.')),
+  timerFårJobbet: Number.parseFloat(values.timerFårJobbet.replace(',', '.')),
 });
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: NyArbeidsperiodeProps) => {

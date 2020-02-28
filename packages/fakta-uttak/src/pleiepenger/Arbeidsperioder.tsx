@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { WrappedFieldArrayProps } from 'redux-form';
-import { required, hasValidDecimal, hasValidInteger } from '@fpsak-frontend/utils';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import FlexColumn from '@fpsak-frontend/shared-components/src/flexGrid/FlexColumn';
 import PeriodpickerField from '@fpsak-frontend/form/src/PeriodpickerField';
@@ -30,7 +29,6 @@ const Arbeidsperioder: FunctionComponent<WrappedFieldArrayProps<ArbeidsforholdPe
             <InputField
               readOnly={readOnly}
               name={`${fieldId}.timerIJobbTilVanlig`}
-              validate={[required, hasValidDecimal]}
               label={{ id: 'FaktaOmUttakForm.timerIJobbTilVanlig' }}
               bredde="S"
             />
@@ -39,7 +37,6 @@ const Arbeidsperioder: FunctionComponent<WrappedFieldArrayProps<ArbeidsforholdPe
             <InputField
               readOnly={readOnly}
               name={`${fieldId}.timerFårJobbet`}
-              validate={[required, hasValidInteger]}
               label={{ id: 'FaktaOmUttakForm.timerFårJobbet' }}
               bredde="S"
             />

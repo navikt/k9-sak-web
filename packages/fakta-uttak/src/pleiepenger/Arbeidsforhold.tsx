@@ -16,6 +16,82 @@ import Arbeidsperioder from './Arbeidsperioder';
 import styles from './arbeidsforhold.less';
 import { uttakFaktaFormName } from './UttakFaktaForm2';
 
+interface EttArbeidsforholdOwnProps {
+  arbeidsgiver: Arbeidsgiver;
+  arbeidsforhold: ArbeidsforholdType;
+  oppdaterPerioder: (nyPeriode: ArbeidsforholdPeriode) => ArbeidsforholdPeriode[];
+  behandlingId: number;
+  behandlingVersjon: number;
+  resetForm: (formName: string) => void;
+  fieldId: string;
+  formName: string;
+}
+
+const EttArbeidsforhold: FunctionComponent<EttArbeidsforholdOwnProps> = ({
+  fieldId,
+  arbeidsforhold,
+  arbeidsgiver,
+  behandlingId,
+  behandlingVersjon,
+  oppdaterPerioder,
+  resetForm,
+  formName,
+}) => {
+  const intl = useIntl();
+  const [lagerNyPeriode, setLagerNyPeriode] = useState<boolean>(false);
+
+  return (
+    <div className={styles.arbeidsforhold}>
+      <Ekspanderbartpanel tittel={`${arbeidsforhold.stillingsnavn} (${arbeidsgiver.navn})`}>
+        <FlexRow>
+          <FlexColumn>
+            <Normaltekst>
+              <FormattedMessage id="FaktaOmUttakForm.Perioder" />
+            </Normaltekst>
+          </FlexColumn>
+        </FlexRow>
+        <FieldArray props={{ readOnly: true }} name={`${fieldId}.perioder`} component={Arbeidsperioder} />
+        {!lagerNyPeriode && (
+          <>
+            <VerticalSpacer sixteenPx />
+            <Flatknapp mini htmlType="button" onClick={() => setLagerNyPeriode(true)} form="kompakt">
+              {intl.formatMessage({ id: 'FaktaOmUttakForm.EndrePeriode' })}
+            </Flatknapp>
+          </>
+        )}
+        {lagerNyPeriode && (
+          <>
+            <VerticalSpacer twentyPx />
+            <NyArbeidsperiode
+              id={formName}
+              oppdaterPerioder={oppdaterPerioder}
+              behandlingVersjon={behandlingVersjon}
+              behandlingId={behandlingId}
+              avbryt={() => {
+                setLagerNyPeriode(false);
+                resetForm(
+                  `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${uttakFaktaFormName}-${formName}`,
+                );
+              }}
+            />
+            <VerticalSpacer twentyPx />
+          </>
+        )}
+      </Ekspanderbartpanel>
+    </div>
+  );
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(
+    {
+      resetForm: reset,
+    },
+    dispatch,
+  );
+
+const EttArbeidsforholdImpl = connect(null, mapDispatchToProps)(EttArbeidsforhold);
+
 interface ArbeidsforholdOwnProps {
   arbeidsgiver: Arbeidsgiver;
   oppdaterPerioder: (
@@ -34,68 +110,26 @@ const Arbeidsforhold: FunctionComponent<WrappedFieldArrayProps<ArbeidsforholdTyp
   arbeidsgiver,
   behandlingVersjon,
   behandlingId,
-  resetForm,
 }) => {
-  const intl = useIntl();
-  const [lagerNyPeriode, setLagerNyPeriode] = useState(false);
   const formName = formIndex => `${arbeidsgiver.organisasjonsnummer}-${formIndex}`;
 
   return (
     <>
       {fields.map((fieldId, index) => (
-        <div className={styles.arbeidsforhold} key={fieldId}>
-          <Ekspanderbartpanel tittel={`${fields.get(index).stillingsnavn} (${arbeidsgiver.navn})`}>
-            <FlexRow>
-              <FlexColumn>
-                <Normaltekst>
-                  <FormattedMessage id="FaktaOmUttakForm.Perioder" />
-                </Normaltekst>
-              </FlexColumn>
-            </FlexRow>
-            <FieldArray props={{ readOnly: true }} name={`${fieldId}.perioder`} component={Arbeidsperioder} />
-            {!lagerNyPeriode && (
-              <>
-                <VerticalSpacer sixteenPx />
-                <Flatknapp mini htmlType="button" onClick={() => setLagerNyPeriode(true)} form="kompakt">
-                  {intl.formatMessage({ id: 'FaktaOmUttakForm.EndrePeriode' })}
-                </Flatknapp>
-              </>
-            )}
-            {lagerNyPeriode && (
-              <>
-                <VerticalSpacer twentyPx />
-                <NyArbeidsperiode
-                  id={formName(index)}
-                  oppdaterPerioder={(nyPeriode: ArbeidsforholdPeriode) =>
-                    oppdaterPerioder(arbeidsgiver.organisasjonsnummer, index, nyPeriode)
-                  }
-                  behandlingVersjon={behandlingVersjon}
-                  behandlingId={behandlingId}
-                  avbryt={() => {
-                    setLagerNyPeriode(false);
-                    resetForm(
-                      `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${uttakFaktaFormName}-${formName(
-                        index,
-                      )}`,
-                    );
-                  }}
-                />
-                <VerticalSpacer twentyPx />
-              </>
-            )}
-          </Ekspanderbartpanel>
-        </div>
+        <EttArbeidsforholdImpl
+          arbeidsforhold={fields.get(index)}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          arbeidsgiver={arbeidsgiver}
+          fieldId={fieldId}
+          oppdaterPerioder={(nyPeriode: ArbeidsforholdPeriode) =>
+            oppdaterPerioder(arbeidsgiver.organisasjonsnummer, index, nyPeriode)
+          }
+          formName={formName(index)}
+        />
       ))}
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(
-    {
-      resetForm: reset,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(Arbeidsforhold);
+export default Arbeidsforhold;
