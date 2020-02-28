@@ -21,7 +21,17 @@ const getUpdatedSuggestions = async (queryString: string) => {
 
 const DiagnosekodeSelector = ({ readOnly, initialDiagnosekodeValue }) => {
   const [suggestions, setSuggestions] = React.useState([]);
-  const [inputValue, setInputValue] = React.useState(initialDiagnosekodeValue || '');
+  const [inputValue, setInputValue] = React.useState('');
+
+  React.useEffect(() => {
+    const getInitialDiagnosekode = async () => {
+      const diagnosekode = await getUpdatedSuggestions(initialDiagnosekodeValue);
+      if (diagnosekode.length > 0 && diagnosekode[0].value) {
+        setInputValue(diagnosekode[0].value);
+      }
+    };
+    getInitialDiagnosekode();
+  }, []);
 
   return (
     <FlexRow wrap>
