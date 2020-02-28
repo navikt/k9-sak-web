@@ -22,7 +22,7 @@ interface NyArbeidsperiodeProps {
   avbryt: () => void;
 }
 
-const formName = id => `UttakFaktaForm-${id}`;
+export const formName = id => `UttakFaktaForm-${id}`;
 
 // TODO anders: vis % av vanlig arbeid når begge er fylt inn
 const NyArbeidsperiode: FunctionComponent<NyArbeidsperiodeProps & InjectedFormProps> = ({

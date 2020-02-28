@@ -12,7 +12,8 @@ interface ArbeidsgiverProps {
 const Arbeidsgiver: FunctionComponent<WrappedFieldArrayProps<ArbeidsgiverType> & ArbeidsgiverProps> = ({
   fields,
   oppdaterPerioder,
-  ...behandlingProps
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <>
     {fields.map((fieldId, index) => (
@@ -20,7 +21,7 @@ const Arbeidsgiver: FunctionComponent<WrappedFieldArrayProps<ArbeidsgiverType> &
         <FieldArray
           name={`${fieldId}.arbeidsforhold`}
           component={Arbeidsforhold}
-          props={{ oppdaterPerioder, arbeidsgiver: fields.get(index), ...behandlingProps }}
+          props={{ oppdaterPerioder, arbeidsgiver: fields.get(index), behandlingId, behandlingVersjon }}
         />
       </React.Fragment>
     ))}

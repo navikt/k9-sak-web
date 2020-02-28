@@ -1,13 +1,13 @@
 import React from 'react';
 import UttakFaktaIndex, { Arbeidsgiver } from '@fpsak-frontend/fakta-uttak/src/pleiepenger/UttakFaktaIndex2';
-import { withKnobs } from '@storybook/addon-knobs';
-import Behandling from '@k9-frontend/types/src/behandlingTsType';
+import { action } from '@storybook/addon-actions';
+import { Behandling } from '@k9-sak-web/types';
 import withReduxProvider from '../../../decorators/withRedux';
 
 export default {
   title: 'fakta/pleiepenger/fakta-uttak',
   component: UttakFaktaIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
 const behandling: Behandling = {
@@ -42,9 +42,20 @@ const arbeidsgivere: Arbeidsgiver[] = [
           },
         ],
       },
+      {
+        stillingsnavn: 'Ingeniør',
+        perioder: [
+          {
+            fom: '2020-02-02',
+            tom: '2020-03-02',
+            timerIJobbTilVanlig: 37.5,
+            timerFårJobbet: 40,
+          },
+        ],
+      },
     ],
     navn: 'Norsk Hydro',
-    organisasjonsnummer: '90545120125',
+    organisasjonsnummer: '982156156456',
   },
   {
     arbeidsforhold: [
@@ -71,4 +82,10 @@ const arbeidsgivere: Arbeidsgiver[] = [
   },
 ];
 
-export const avklarArbeidsforhold = () => <UttakFaktaIndex behandling={behandling} arbeidsgivere={arbeidsgivere} />;
+export const avklarArbeidsforhold = () => (
+  <UttakFaktaIndex
+    behandling={behandling}
+    arbeidsgivere={arbeidsgivere}
+    submitCallback={action('Bekreft og fortsett')}
+  />
+);

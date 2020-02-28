@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps, change as reduxFormChange } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { FormAction } from 'redux-form/lib/actions';
+import Hovedknapp from 'nav-frontend-knapper/lib/hovedknapp';
 
 import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles/src/behandlingForm';
-import { SubmitCallbackProps } from '@fpsak-frontend/fakta-medisinsk-vilkar/src/MedisinskVilkarIndex';
+import { useIntl } from 'react-intl';
+import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { Arbeidsgiver as ArbeidsgiverType } from './UttakFaktaIndex2';
 import Arbeidsgiver from './Arbeidsgiver';
 import { beregnNyePerioder } from './uttakUtils';
@@ -16,7 +18,7 @@ interface UttakFaktaFormProps {
   arbeidsgivere: ArbeidsgiverType[];
   behandlingId: number;
   behandlingVersjon: number;
-  submitCallback: (props: SubmitCallbackProps[]) => void;
+  submitCallback: (values: ArbeidsgiverType[]) => void;
   behandlingFormPrefix?: string;
   reduxFormChange?: (
     form: string,
@@ -32,8 +34,13 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
   arbeidsgivere,
   behandlingFormPrefix,
   reduxFormChange: formChange,
-  ...behandlingProps
+  behandlingVersjon,
+  behandlingId,
+  ...formProps
 }) => {
+  const intl = useIntl();
+  const { pristine } = formProps;
+
   const oppdaterPerioder = (arbeidsgiversOrgNr, arbeidsforholdIndex, nyPeriode) => {
     const oppdatert = arbeidsgivere.map(arbeidsgiver => {
       if (arbeidsgiver.organisasjonsnummer === arbeidsgiversOrgNr) {
@@ -57,7 +64,19 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
 
   return (
     <form onSubmit={handleSubmit}>
-      <FieldArray name="arbeidsgivere" component={Arbeidsgiver} props={{ oppdaterPerioder, ...behandlingProps }} />
+      <FieldArray
+        name="arbeidsgivere"
+        component={Arbeidsgiver}
+        props={{ oppdaterPerioder, behandlingVersjon, behandlingId }}
+      />
+      {!pristine && (
+        <>
+          <VerticalSpacer twentyPx />
+          <Hovedknapp onClick={handleSubmit}>
+            {intl.formatMessage({ id: 'SubmitButton.ConfirmInformation' })}
+          </Hovedknapp>
+        </>
+      )}
     </form>
   );
 };
@@ -72,7 +91,7 @@ interface FormProps {
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: UttakFaktaFormProps): (() => FormProps) => {
   const { behandlingId, behandlingVersjon, arbeidsgivere, submitCallback } = initialOwnProps;
-  const onSubmit = (values: any[]) => submitCallback(values);
+  const onSubmit = (values: ArbeidsgiverType[]) => submitCallback(values);
   const initialValues = { arbeidsgivere };
 
   return () => {
