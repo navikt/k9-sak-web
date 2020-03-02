@@ -8,13 +8,10 @@ import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjen
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
 import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
-import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
-import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -162,22 +159,6 @@ const prosessStegPanelDefinisjoner = [
     textCode: 'Behandlingspunkt.Inngangsvilkar',
     panels: [
       {
-        code: 'FODSEL',
-        textCode: 'Inngangsvilkar.Fodselsvilkaret',
-        aksjonspunkterCodes: [
-          ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-          ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-        ],
-        aksjonspunkterTextCodes: ['FodselVilkarForm.VurderGjelderSammeBarn', 'FodselVilkarForm.VurderGjelderSammeBarn'],
-        vilkarCodes: [vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR],
-        renderComponent: props => <FodselVilkarProsessIndex {...props} />,
-        getData: () => ({ ytelseTypeKode: fagsakYtelseType.FORELDREPENGER }),
-        overridePanel: {
-          aksjonspunkterCodes: [ac.OVERSTYR_FODSELSVILKAR, ac.OVERSTYR_FODSELSVILKAR_FAR_MEDMOR],
-          ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-        },
-      },
-      {
         code: 'ADOPSJON',
         textCode: 'Inngangsvilkar.Adopsjonsvilkaret',
         aksjonspunkterCodes: [
@@ -195,22 +176,6 @@ const prosessStegPanelDefinisjoner = [
           aksjonspunkterCodes: [ac.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP],
           ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
         },
-      },
-      {
-        code: 'OMSORG',
-        textCode: 'Inngangsvilkar.Omsorgsvilkaret',
-        aksjonspunkterCodes: [
-          ac.MANUELL_VURDERING_AV_OMSORGSVILKARET,
-          ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-          ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-        ],
-        aksjonspunkterTextCodes: [
-          'ErOmsorgVilkaarOppfyltForm.Paragraf',
-          'ErOmsorgVilkaarOppfyltForm.Vurder',
-          'ErOmsorgVilkaarOppfyltForm.Vurder',
-        ],
-        vilkarCodes: [vt.OMSORGSVILKARET],
-        renderComponent: props => <OmsorgVilkarProsessIndex {...props} />,
       },
       {
         code: 'OMSORGENFOR',
@@ -235,28 +200,6 @@ const prosessStegPanelDefinisjoner = [
         vilkarCodes: [vt.MEDLEMSKAPSVILKARET],
         endpoints: [api.MEDLEMSKAP],
         ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-      },
-      {
-        code: 'FORELDREANSVARSVILKARET',
-        textCode: 'Inngangsvilkar.Foreldreansvar',
-        aksjonspunkterCodes: [
-          ac.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD,
-          ac.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
-          ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-          ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-        ],
-        aksjonspunkterTextCodes: [
-          'ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafForeldrepenger',
-          'ErForeldreansvarVilkaarOppfyltForm.4LeddParagraf',
-          'ErForeldreansvarVilkaarOppfyltForm.Vurder',
-          'ErForeldreansvarVilkaarOppfyltForm.Vurder',
-        ],
-        vilkarCodes: [vt.FORELDREANSVARSVILKARET_2_LEDD, vt.FORELDREANSVARSVILKARET_4_LEDD],
-        renderComponent: props => <ForeldreansvarVilkarProsessIndex {...props} />,
-        getData: ({ vilkarForSteg }) => ({
-          isEngangsstonad: false,
-          isForeldreansvar2Ledd: vilkarForSteg.map(v => v.vilkarType.kode).includes(vt.FORELDREANSVARSVILKARET_2_LEDD),
-        }),
       },
       {
         code: 'OPPTJENINGSVILKARET',
