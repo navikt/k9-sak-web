@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
@@ -28,30 +27,6 @@ const originalBehandling = {
 };
 
 describe('<VarselOmRevurderingFormImpl>', () => {
-  it('skal vise fodselsammenligningpanel når automatisk revurdering', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      previewCallback={sinon.spy()}
-      dispatchSubmitFailed={sinon.spy()}
-      erAutomatiskRevurdering
-      languageCode="NN"
-      readOnly={false}
-      sendVarsel
-      frist="2017-05-15"
-      aksjonspunktStatus="OPPR"
-      begrunnelse="Begrunnelse"
-      avklartBarn={[]}
-      behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      soknad={soknad}
-      termindato="2019-01-01"
-      soknadOriginalBehandling={originalBehandling.soknad}
-      familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
-      vedtaksDatoSomSvangerskapsuke="2019-01-01"
-    />);
-    const fodselPanel = wrapper.find(FodselSammenligningIndex);
-    expect(fodselPanel).to.have.length(1);
-  });
 
   it('skal vise fritekst og forhåndsvis av brev når varsel skal sendes', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
@@ -74,8 +49,6 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
       vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
-    const fodselPanel = wrapper.find(FodselSammenligningIndex);
-    expect(fodselPanel).to.have.length(0);
 
     const textarea = wrapper.find('TextAreaField');
     const forhandsvis = wrapper.find('a');
