@@ -55,7 +55,6 @@ export default HistorikkMalType1;
  | VEDLEGG_MOTTATT            |
  | BREV_SENT                  |
  | BREV_BESTILT               |
- | REGISTRER_PAPIRSØK         |
  | MANGELFULL_SØKNAD          |
  +----------------------------+
  <tidspunkt> // <rolle> <id>

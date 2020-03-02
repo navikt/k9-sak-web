@@ -9,7 +9,6 @@
     "@fpsak-frontend/behandling-anke": "1.0.0",
     "@fpsak-frontend/behandling-innsyn": "1.0.0",
     "@fpsak-frontend/behandling-klage": "1.0.0",
-    "@fpsak-frontend/behandling-papirsoknad": "1.0.0",
     "@fpsak-frontend/behandling-pleiepenger": "1.0.0",
     "@fpsak-frontend/behandling-tilbakekreving": "1.0.0",
     "@fpsak-frontend/error-api-redux": "1.0.0",
