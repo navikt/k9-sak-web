@@ -107,7 +107,7 @@ const arbeidsgivereSelector = createSelector(
 );
 
 const mapStateToPropsFactory = (
-  _initialState,
+  _initialState: undefined,
   initialOwnProps: UttakFaktaFormProps,
 ): ((state, ownProps) => FormProps) => {
   const { behandlingId, behandlingVersjon, arbeidsgivere, submitCallback } = initialOwnProps;
