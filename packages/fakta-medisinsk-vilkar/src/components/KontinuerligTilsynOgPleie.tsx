@@ -65,6 +65,70 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
     );
   };
 
+  const renderTilsynsperiodeFieldArray = ({ fields }) => {
+    if (fields.length === 0) {
+      fields.push({ fom: '', tom: '', behovForToOmsorgspersoner: undefined });
+    }
+    const removeIndex = useCallback(index => fields.remove(index), []);
+    return (
+      <div className={styles.pickerContainer}>
+        <PeriodFieldArray
+          fields={fields}
+          emptyPeriodTemplate={{
+            fom: '',
+            tom: '',
+          }}
+          shouldShowAddButton
+          readOnly={readOnly}
+        >
+          {(periodeMedBehovForKontinuerligTilsynId, index) => {
+            const harBehovForToOmsorgspersonerHelePerioden =
+              fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE;
+            const harBehovForToOmsorgspersonerDelerAvPerioden =
+              fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_DELER;
+            const { harBehovForKontinuerligTilsynOgPleie } = fields.get(index);
+            const valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom = fields.get(index).fom;
+            const valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom = fields.get(index).tom;
+            const datoBegrensningFom = innleggelsesperiode
+              ? moment(innleggelsesperiode.tom)
+                  .add(1, 'days')
+                  .toString()
+              : periodeTilVurdering.fom;
+
+            return (
+              <Tilsynsperioder
+                key={periodeMedBehovForKontinuerligTilsynId}
+                periodeMedBehovForKontinuerligTilsynId={periodeMedBehovForKontinuerligTilsynId}
+                harBehovForKontinuerligTilsynOgPleie={harBehovForKontinuerligTilsynOgPleie}
+                datoBegrensningFom={datoBegrensningFom}
+                datoBegrensningTom={periodeTilVurdering.tom}
+                harBehovForToOmsorgspersonerDelerAvPerioden={harBehovForToOmsorgspersonerDelerAvPerioden}
+                harBehovForToOmsorgspersonerHelePerioden={harBehovForToOmsorgspersonerHelePerioden}
+                readOnly={readOnly}
+                showCancelButton={index > 0}
+                removeIndex={removeIndex}
+                index={index}
+                valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom={
+                  valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom !==
+                  valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
+                    ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom
+                    : ''
+                }
+                valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom={
+                  valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom !==
+                  valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
+                    ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
+                    : ''
+                }
+                renderAksjonspunktHelpText={renderAksjonspunktHelpText}
+              />
+            );
+          }}
+        </PeriodFieldArray>
+      </div>
+    );
+  };
+
   return (
     <>
       <FlexRow>
@@ -87,69 +151,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
       <FieldArray
         name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
         rerenderOnEveryChange
-        component={({ fields }) => {
-          if (fields.length === 0) {
-            fields.push({ fom: '', tom: '', behovForToOmsorgspersoner: undefined });
-          }
-          const removeIndex = useCallback(index => fields.remove(index), []);
-          return (
-            <div className={styles.pickerContainer}>
-              <PeriodFieldArray
-                fields={fields}
-                emptyPeriodTemplate={{
-                  fom: '',
-                  tom: '',
-                }}
-                shouldShowAddButton
-                readOnly={readOnly}
-              >
-                {(periodeMedBehovForKontinuerligTilsynId, index) => {
-                  const harBehovForToOmsorgspersonerHelePerioden =
-                    fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE;
-                  const harBehovForToOmsorgspersonerDelerAvPerioden =
-                    fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_DELER;
-                  const { harBehovForKontinuerligTilsynOgPleie } = fields.get(index);
-                  const valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom = fields.get(index).fom;
-                  const valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom = fields.get(index).tom;
-                  const datoBegrensningFom = innleggelsesperiode
-                    ? moment(innleggelsesperiode.tom)
-                        .add(1, 'days')
-                        .toString()
-                    : periodeTilVurdering.fom;
-
-                  return (
-                    <Tilsynsperioder
-                      key={periodeMedBehovForKontinuerligTilsynId}
-                      periodeMedBehovForKontinuerligTilsynId={periodeMedBehovForKontinuerligTilsynId}
-                      harBehovForKontinuerligTilsynOgPleie={harBehovForKontinuerligTilsynOgPleie}
-                      datoBegrensningFom={datoBegrensningFom}
-                      datoBegrensningTom={periodeTilVurdering.tom}
-                      harBehovForToOmsorgspersonerDelerAvPerioden={harBehovForToOmsorgspersonerDelerAvPerioden}
-                      harBehovForToOmsorgspersonerHelePerioden={harBehovForToOmsorgspersonerHelePerioden}
-                      readOnly={readOnly}
-                      showCancelButton={index > 0}
-                      removeIndex={removeIndex}
-                      index={index}
-                      valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom={
-                        valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom !==
-                        valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
-                          ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom
-                          : ''
-                      }
-                      valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom={
-                        valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom !==
-                        valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
-                          ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
-                          : ''
-                      }
-                      renderAksjonspunktHelpText={renderAksjonspunktHelpText}
-                    />
-                  );
-                }}
-              </PeriodFieldArray>
-            </div>
-          );
-        }}
+        component={renderTilsynsperiodeFieldArray}
         props={{ readOnly }}
       />
     </>

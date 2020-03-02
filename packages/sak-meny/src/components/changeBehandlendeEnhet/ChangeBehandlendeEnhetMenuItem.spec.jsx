@@ -22,7 +22,6 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
       behandlendeEnheter={behandlendeEnheter}
       nyBehandlendeEnhet={sinon.spy()}
       byttBehandlendeEnhetEnabled
-      erPapirsoknad={false}
     />);
 
     expect(wrapper.find('Connect(ReduxForm)')).has.length(0);
@@ -37,7 +36,6 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
       behandlendeEnheter={behandlendeEnheter}
       nyBehandlendeEnhet={sinon.spy()}
       byttBehandlendeEnhetEnabled
-      erPapirsoknad={false}
     />);
 
     const button = wrapper.find('MenuButton');
@@ -63,7 +61,6 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
       behandlendeEnheter={behandlendeEnheter}
       nyBehandlendeEnhet={sinon.spy()}
       byttBehandlendeEnhetEnabled
-      erPapirsoknad={false}
     />);
 
     wrapper.setState({ showModal: true });
@@ -90,7 +87,6 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
       behandlendeEnheter={behandlendeEnheter}
       nyBehandlendeEnhet={nyBehandlendeEnhetCallback}
       byttBehandlendeEnhetEnabled
-      erPapirsoknad={false}
     />);
 
     wrapper.setState({ nyEnhet });
