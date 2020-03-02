@@ -1,10 +1,13 @@
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
+import checkIkonUrl from '@fpsak-frontend/assets/images/check.svg';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
-import { FlexColumn, FlexRow, PeriodFieldArray, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, PeriodFieldArray, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Periode } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment from 'moment';
 import React, { useCallback } from 'react';
+import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import styles from './medisinskVilkar.less';
@@ -17,7 +20,6 @@ interface KontinuerligTilsynOgPleieProps {
   behandlingId: number;
   behandlingVersjon: number;
   formName: string;
-  renderAksjonspunktHelpText: JSX.Element;
 }
 
 interface StateProps {
@@ -28,19 +30,28 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
   readOnly,
   periodeTilVurdering,
   innleggelsesperiode,
-  renderAksjonspunktHelpText,
 }) => {
+  const intl = useIntl();
   const getPolseForInnleggelsesperiode = () =>
     innleggelsesperiode ? (
-      <PeriodePolse
-        dates={`${moment(innleggelsesperiode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
-          innleggelsesperiode.tom,
-        ).format(DDMMYYYY_DATE_FORMAT)}`}
-        lengthInText={`${Math.abs(moment(innleggelsesperiode.tom).diff(moment(innleggelsesperiode.fom), 'days')) +
-          1} dager`}
-        status="Innlagt"
-        theme="success"
-      />
+      <div className={styles.polseContainer}>
+        <PeriodePolse
+          dates={`${moment(innleggelsesperiode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
+            innleggelsesperiode.tom,
+          ).format(DDMMYYYY_DATE_FORMAT)}`}
+          lengthInText={`${Math.abs(moment(innleggelsesperiode.tom).diff(moment(innleggelsesperiode.fom), 'days')) +
+            1} dager`}
+          status="Innlagt"
+          theme="success"
+          icon={
+            <Image
+              className={styles.polseIcon}
+              alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+              src={checkIkonUrl}
+            />
+          }
+        />
+      </div>
     ) : null;
 
   const getPolseForPeriodeSomMaaVurderes = () => {
@@ -61,6 +72,13 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
         lengthInText={`${Math.abs(periodStart.diff(moment(periodeTilVurdering.tom), 'days')) + 1} dager`}
         status="Perioden som må vurderes"
         theme="warn"
+        icon={
+          <Image
+            className={styles.polseIcon}
+            alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+            src={advarselIkonUrl}
+          />
+        }
       />
     );
   };
@@ -86,7 +104,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
               fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE;
             const harBehovForToOmsorgspersonerDelerAvPerioden =
               fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_DELER;
-            const { harBehovForKontinuerligTilsynOgPleie } = fields.get(index);
+            const { harBehovForKontinuerligTilsynOgPleie, sammenhengMellomSykdomOgTilsyn } = fields.get(index);
             const valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom = fields.get(index).fom;
             const valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom = fields.get(index).tom;
             const datoBegrensningFom = innleggelsesperiode
@@ -120,7 +138,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                     ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
                     : ''
                 }
-                renderAksjonspunktHelpText={renderAksjonspunktHelpText}
+                sammenhengMellomSykdomOgTilsyn={sammenhengMellomSykdomOgTilsyn}
               />
             );
           }}
@@ -131,22 +149,18 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
 
   return (
     <>
-      <FlexRow>
-        <FlexColumn>
-          <PeriodePolse
-            dates={`${moment(periodeTilVurdering.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
-              periodeTilVurdering.tom,
-            ).format(DDMMYYYY_DATE_FORMAT)}`}
-            lengthInText={`${Math.abs(moment(periodeTilVurdering.tom).diff(moment(periodeTilVurdering.fom), 'days')) +
-              1} dager`}
-            status="Søknadsperiode"
-            theme="blue"
-          />
-          {getPolseForInnleggelsesperiode()}
-          {getPolseForPeriodeSomMaaVurderes()}
-          <VerticalSpacer twentyPx />
-        </FlexColumn>
-      </FlexRow>
+      <PeriodePolse
+        dates={`${moment(periodeTilVurdering.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
+          periodeTilVurdering.tom,
+        ).format(DDMMYYYY_DATE_FORMAT)}`}
+        lengthInText={`${Math.abs(moment(periodeTilVurdering.tom).diff(moment(periodeTilVurdering.fom), 'days')) +
+          1} dager`}
+        status="Søknadsperiode"
+        theme="gray"
+      />
+      {getPolseForInnleggelsesperiode()}
+      {getPolseForPeriodeSomMaaVurderes()}
+      <VerticalSpacer twentyPx />
 
       <FieldArray
         name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
