@@ -19,7 +19,7 @@ const erMarkertUtenlandssak = (aksjonspunkter) => aksjonspunkter.some((ap) => ap
 
 /**
  * Viser grunnleggende personinformasjon. Dette panelet blir
- * vist som del av søkeresultatet, når fagsaken ikke har behandling eller ved papirsøknad
+ * vist som del av søkeresultatet, når fagsaken ikke har behandling
  */
 const GrunnleggendePersoninfoPanel = ({
   person,
