@@ -7,7 +7,6 @@ const faktaPanelCodes = {
   FORDELING: 'fordeling',
   FEILUTBETALING: 'feilutbetaling',
   FODSELSVILKARET: 'foedselsvilkaaret',
-  FODSELTILRETTELEGGING: 'fodseltilrettelegging',
   MEDLEMSKAPSVILKARET: 'medlemskapsvilkaaret',
   MEDISINSKVILKAAR: 'medisinskvilkaar',
   OMSORG: 'omsorg',
