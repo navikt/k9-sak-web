@@ -17,7 +17,7 @@ const HeadingMedHjelpetekst = ({ headingId, helpTextId }) => {
   const getHelpText = () => {
     if (Array.isArray(helpTextId)) {
       return helpTextId.map(id => (
-        <span>
+        <span key={id}>
           <FormattedMessage id={id} />
         </span>
       ));
