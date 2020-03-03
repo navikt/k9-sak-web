@@ -2292,38 +2292,42 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sentry/browser@^5.12.5":
-  version "5.12.5"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.12.5.tgz#3764523e7721fe4654e91c8256a3d35a9ae326ff"
+"@sentry/browser@^5.13.0":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.13.0.tgz#399b0a09d6603726d787b746bcc70659010bc50c"
+  integrity sha512-adiW9gG/gCrl6FQAA6Fk8osXMHxP3pYltszRK0mr55O7GcTC8RQNI3mEW/YuQV9IySUL8dFWQ0v8n0lfssHf/A==
   dependencies:
-    "@sentry/core" "5.12.5"
+    "@sentry/core" "5.13.0"
     "@sentry/types" "5.12.4"
-    "@sentry/utils" "5.12.5"
+    "@sentry/utils" "5.13.0"
     tslib "^1.9.3"
 
-"@sentry/core@5.12.5":
-  version "5.12.5"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-5.12.5.tgz#5ea70d8ad5a74de9978e17ad4c768c2a4876b835"
+"@sentry/core@5.13.0":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-5.13.0.tgz#144beb2d48b53244774a7fd809f9b5b672920971"
+  integrity sha512-e0olbaHBmANO1RIBc7xynSkBZ6BsK7drycz0TawLUnx+0H3aEau3K9U2QVdbjwLNPdydcIS+UgYfTBtXfe0E+A==
   dependencies:
-    "@sentry/hub" "5.12.5"
-    "@sentry/minimal" "5.12.5"
+    "@sentry/hub" "5.13.0"
+    "@sentry/minimal" "5.13.0"
     "@sentry/types" "5.12.4"
-    "@sentry/utils" "5.12.5"
+    "@sentry/utils" "5.13.0"
     tslib "^1.9.3"
 
-"@sentry/hub@5.12.5":
-  version "5.12.5"
-  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-5.12.5.tgz#a488b33146a6bd1ff50f1d5f35c0dd886a4d2e6d"
+"@sentry/hub@5.13.0":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-5.13.0.tgz#f48e3e4e273f40316391cd6190e22ea69cb20c7e"
+  integrity sha512-MeytooJ5g91zxq4/LU1LHj7KxpggAEn1dybEsWG31QVy67J4a40zIGfYgGGIVAFSv0WVlk5Ei5C159LhgW59/w==
   dependencies:
     "@sentry/types" "5.12.4"
-    "@sentry/utils" "5.12.5"
+    "@sentry/utils" "5.13.0"
     tslib "^1.9.3"
 
-"@sentry/minimal@5.12.5":
-  version "5.12.5"
-  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-5.12.5.tgz#224a152e2a929a91099cdbcac7205f6968740236"
+"@sentry/minimal@5.13.0":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-5.13.0.tgz#ee906191e3c2a1f7d0925fbfa0a4e96261013764"
+  integrity sha512-6D2Mu4TrmJmGlvb+z1Pp6yI2fUmdY1RvwK0MqmBP+QJdrd0as7cpGuwFSXgUs6CLUflDzlpn3n6WcgGV8oEDYA==
   dependencies:
-    "@sentry/hub" "5.12.5"
+    "@sentry/hub" "5.13.0"
     "@sentry/types" "5.12.4"
     tslib "^1.9.3"
 
@@ -2331,9 +2335,10 @@
   version "5.12.4"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.12.4.tgz#6e52639bc3b4e136e9a0da5385890f8f78bb7697"
 
-"@sentry/utils@5.12.5":
-  version "5.12.5"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.12.5.tgz#7c6227a2090bef8969476bf06ea9befac46809fc"
+"@sentry/utils@5.13.0":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.13.0.tgz#6463e53b6178dbbd3b90e671517cbca82744b055"
+  integrity sha512-BcmNQN+IfFbVWGnEwXHku69zqJc97sjBRYVxpStKMaO/4aLVIQcOJCMWxVJtVoSVAHQaigBZmFutWH7EJMRJxg==
   dependencies:
     "@sentry/types" "5.12.4"
     tslib "^1.9.3"
@@ -2979,9 +2984,10 @@
   dependencies:
     "@types/babel-types" "*"
 
-"@types/chai@^4.2.8":
-  version "4.2.9"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.9.tgz#194332625ed2ae914aef00b8d5ca3b77e7924cc6"
+"@types/chai@^4.2.10":
+  version "4.2.10"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.10.tgz#1122da40faabb81795580dc9f06c1e71e2ebbbe4"
+  integrity sha512-TlWWgb21+0LdkuFqEqfmy7NEgfB/7Jjux15fWQAh3P93gbmXuwTM/vxEdzW89APIcI2BgKR48yjeAkdeH+4qvQ==
 
 "@types/cheerio@*":
   version "0.22.16"
@@ -3222,36 +3228,40 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^2.21.0":
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.21.0.tgz#a34de84a0791cae0357c4dda805c5b4e8203b6c6"
+"@typescript-eslint/eslint-plugin@^2.22.0":
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.22.0.tgz#218ce6d4aa0244c6a40baba39ca1e021b26bb017"
+  integrity sha512-BvxRLaTDVQ3N+Qq8BivLiE9akQLAOUfxNHIEhedOcg8B2+jY8Rc4/D+iVprvuMX1AdezFYautuGDwr9QxqSxBQ==
   dependencies:
-    "@typescript-eslint/experimental-utils" "2.21.0"
+    "@typescript-eslint/experimental-utils" "2.22.0"
     eslint-utils "^1.4.3"
     functional-red-black-tree "^1.0.1"
     regexpp "^3.0.0"
     tsutils "^3.17.1"
 
-"@typescript-eslint/experimental-utils@2.21.0":
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-2.21.0.tgz#71de390a3ec00b280b69138d80733406e6e86bfa"
+"@typescript-eslint/experimental-utils@2.22.0":
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-2.22.0.tgz#4d00c91fbaaa68e56e7869be284999a265707f85"
+  integrity sha512-sJt1GYBe6yC0dWOQzXlp+tiuGglNhJC9eXZeC8GBVH98Zv9jtatccuhz0OF5kC/DwChqsNfghHx7OlIDQjNYAQ==
   dependencies:
     "@types/json-schema" "^7.0.3"
-    "@typescript-eslint/typescript-estree" "2.21.0"
+    "@typescript-eslint/typescript-estree" "2.22.0"
     eslint-scope "^5.0.0"
 
-"@typescript-eslint/parser@^2.21.0":
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-2.21.0.tgz#4f200995517c3d5fc5ef51b17527bc948992e438"
+"@typescript-eslint/parser@^2.22.0":
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-2.22.0.tgz#8eeb6cb6de873f655e64153397d4790898e149d0"
+  integrity sha512-FaZKC1X+nvD7qMPqKFUYHz3H0TAioSVFGvG29f796Nc5tBluoqfHgLbSFKsh7mKjRoeTm8J9WX2Wo9EyZWjG7w==
   dependencies:
     "@types/eslint-visitor-keys" "^1.0.0"
-    "@typescript-eslint/experimental-utils" "2.21.0"
-    "@typescript-eslint/typescript-estree" "2.21.0"
+    "@typescript-eslint/experimental-utils" "2.22.0"
+    "@typescript-eslint/typescript-estree" "2.22.0"
     eslint-visitor-keys "^1.1.0"
 
-"@typescript-eslint/typescript-estree@2.21.0":
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-2.21.0.tgz#7e4be29f2e338195a2e8c818949ed0ff727cc943"
+"@typescript-eslint/typescript-estree@2.22.0":
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-2.22.0.tgz#a16ed45876abf743e1f5857e2f4a1c3199fd219e"
+  integrity sha512-2HFZW2FQc4MhIBB8WhDm9lVFaBDy6h9jGrJ4V2Uzxe/ON29HCHBTj3GkgcsgMWfsl2U5as+pTOr30Nibaw7qRQ==
   dependencies:
     debug "^4.1.1"
     eslint-visitor-keys "^1.1.0"
@@ -11295,13 +11305,15 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-nav-frontend-alertstriper-style@2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.8.tgz#74793c188bbc2f7bb2ddb1d94b72210db4cbd42a"
+nav-frontend-alertstriper-style@2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.10.tgz#524b24fc03ce1a84701ac4bae3084f3d233bd731"
+  integrity sha512-tpvbKBNgPSqLosb2BCCBLddyGom7OvEJ28ZMAy/mM6Caz3MueSJjEV6W6Dwa7l40gEuHafmO+Jyowh21sMzFIg==
 
-nav-frontend-alertstriper@3.0.10:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.10.tgz#c002fb612d73cc15afe2fa70fac0cc7280d20425"
+nav-frontend-alertstriper@3.0.12:
+  version "3.0.12"
+  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.12.tgz#f7a66f89025c11723aece341a81bc3f8b01da6a6"
+  integrity sha512-NN79NS+IMIq1bD9fn2LA86k0/6ChJPvUj6Aft7jUcH2wQJeNEbph5kh0KuPffhuskUwxEpW3bDYf02BYB1gqaA==
 
 nav-frontend-chevron-style@0.3.5, nav-frontend-chevron-style@^0.3.5:
   version "0.3.5"
@@ -11311,7 +11323,12 @@ nav-frontend-chevron@1.0.10, nav-frontend-chevron@^1.0.10:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/nav-frontend-chevron/-/nav-frontend-chevron-1.0.10.tgz#6d38caa5231c3bb164005c7f95c4c39979d86fe4"
 
-nav-frontend-core@4.0.11, nav-frontend-core@^4.0.11:
+nav-frontend-core@4.0.12, nav-frontend-core@^4.0.12:
+  version "4.0.12"
+  resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-4.0.12.tgz#e0577ddec4f81f1f411a0a0c3fad8e5fa215bbba"
+  integrity sha512-xgkTQ2PzN8qYMkLZ+5qj5Dy6kpMHbfAW/y8suvsiLNAGq/KD/gTCzrGb6ypQ6i0CKMQO7cy9w8Kc8/MmhVpSNw==
+
+nav-frontend-core@^4.0.11:
   version "4.0.11"
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-4.0.11.tgz#826a242141fedfee54337cbf1578d1d7be7da3e2"
 
@@ -11323,23 +11340,31 @@ nav-frontend-ekspanderbartpanel@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-2.0.2.tgz#21ba43a54f89bf98d12e4b4ff2b138dc4ad7b440"
 
-nav-frontend-etiketter-style@0.3.19:
-  version "0.3.19"
-  resolved "https://registry.yarnpkg.com/nav-frontend-etiketter-style/-/nav-frontend-etiketter-style-0.3.19.tgz#a92f270568bb24ed161cc1d80e75482bca885bcc"
+nav-frontend-etiketter-style@0.3.20:
+  version "0.3.20"
+  resolved "https://registry.yarnpkg.com/nav-frontend-etiketter-style/-/nav-frontend-etiketter-style-0.3.20.tgz#955ddfef8af13c9e4e5b53eabdd819b185c1aaff"
+  integrity sha512-DoOXDD4MDmKLo7yGJWqdtN+flRVik+Yjvy/TeOVW6gRtf0bZOYl0uE5c/0HzcmXdqZn6verO4SsQkv6AdDiA4A==
 
-nav-frontend-etiketter@1.0.30:
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.30.tgz#c699e4e2d5942d975aae6c353e45464b2e00510c"
+nav-frontend-etiketter@1.0.31:
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/nav-frontend-etiketter/-/nav-frontend-etiketter-1.0.31.tgz#26263eae5cce9b608c8430784bca6bbd38c59185"
+  integrity sha512-hBO/mvQoAU+RfPEivaE1ennqUDvGl+hl5fg4AQ2U6HzNCb6d8EHz9OEtzlpDvD8uqQa+1kjZy6OeN84K+vrBXg==
 
 nav-frontend-grid-style@0.2.20:
   version "0.2.20"
   resolved "https://registry.yarnpkg.com/nav-frontend-grid-style/-/nav-frontend-grid-style-0.2.20.tgz#d744455a2417a0f26b9498e320140cbd99e7235b"
 
-nav-frontend-grid@1.0.26:
-  version "1.0.26"
-  resolved "https://registry.yarnpkg.com/nav-frontend-grid/-/nav-frontend-grid-1.0.26.tgz#e20d89799fc875e97ed31261aae32d7f17ff9c73"
+nav-frontend-grid@1.0.27:
+  version "1.0.27"
+  resolved "https://registry.yarnpkg.com/nav-frontend-grid/-/nav-frontend-grid-1.0.27.tgz#68e54b138ccf4c416ad12faa95ae5d3bb4d013ad"
+  integrity sha512-0iMVIYck9k4pPk/Djn5JgH4/XnzPf21rlZlR821aYDTJC9SYKK8e+lnbyY1shgygbmdbWM9Xu/cVpih1rnBjTA==
 
-nav-frontend-ikoner-assets@1.0.4, nav-frontend-ikoner-assets@^1.0.3:
+nav-frontend-ikoner-assets@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-1.0.5.tgz#03216fd6c3e16590c9c43ca01d404f2b05a9dad9"
+  integrity sha512-SPXDdvz8dhamhImf2aLQ3jOdXeNPedgnc/5MAd9RRr8T/EBjoZIWHCCg88GiXk6HC1T5MgjohHSFntkk5/phGg==
+
+nav-frontend-ikoner-assets@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-1.0.4.tgz#3eeb9dbd2aa944aac1cdaac350bb39a140328f9b"
 
@@ -11351,29 +11376,43 @@ nav-frontend-js-utils@1.0.8, nav-frontend-js-utils@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.8.tgz#1c1ecec8d90b125157097b22b227ef0b53045432"
 
-nav-frontend-knapper-style@0.3.34, nav-frontend-knapper-style@^0.3.32:
+nav-frontend-knapper-style@0.3.35:
+  version "0.3.35"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.35.tgz#841ca892207ca4668dcd9f06ae3b0c19e4753659"
+  integrity sha512-UNGuzXw6Y1vLzxTryE5itvGt1+9fZFcmCWAIdacdgUTy3xIh6Cj/VMEh5n84+O/h+mKa1uWm0MquBzdwUODo8w==
+
+nav-frontend-knapper-style@^0.3.32:
   version "0.3.34"
   resolved "https://registry.yarnpkg.com/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.34.tgz#a25adfd375937cd751fd9ad73bba67258f5eaed3"
 
-nav-frontend-knapper@1.0.39, nav-frontend-knapper@^1.0.37:
+nav-frontend-knapper@1.0.40:
+  version "1.0.40"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper/-/nav-frontend-knapper-1.0.40.tgz#21e2b5556bf68b7cb179c13947f780700c77799a"
+  integrity sha512-BTbPqcQIFas+it6KjFIVixnLtj/zoZTPCtF7+sLv3N6wPpggoaZJ4tEx6y0al2VYMvz5FWwT5H4oc3Iky6Pdug==
+
+nav-frontend-knapper@^1.0.37:
   version "1.0.39"
   resolved "https://registry.yarnpkg.com/nav-frontend-knapper/-/nav-frontend-knapper-1.0.39.tgz#d5ee321a573efa7f78b661200f69473485a4bacc"
 
-nav-frontend-lenkepanel-style@^0.3.27:
-  version "0.3.27"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel-style/-/nav-frontend-lenkepanel-style-0.3.27.tgz#d9595aa8bd168fcf02543169a428745882dd0d1e"
+nav-frontend-lenkepanel-style@^0.3.28:
+  version "0.3.28"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel-style/-/nav-frontend-lenkepanel-style-0.3.28.tgz#3df51546fdd8ce8dce43281ecc5bf764d640c098"
+  integrity sha512-tCp4xqZPfidPX3MG/5k/Z/N1J+wv5hTyeN+JcPJUci9hkDt+Wb9n3YWrhlbydCOS2jwzRZ8bOI/yljfQjdXaWQ==
 
-nav-frontend-lenkepanel@^1.0.37:
-  version "1.0.37"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel/-/nav-frontend-lenkepanel-1.0.37.tgz#e96454351ab348a9c1c25e98a97f519bc3163657"
+nav-frontend-lenkepanel@^1.0.38:
+  version "1.0.38"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel/-/nav-frontend-lenkepanel-1.0.38.tgz#98ed4afc691b66d574c1fbf2e2250a8dfb486fc0"
+  integrity sha512-hHs5Zg99lpPbt+hFPEdli132CnSFpAhtXD0xZ5hkoOpNdhx8Rn4BTuo8hUACO9CGhcmWT7EEfYBUWLL7cIPeXg==
 
-nav-frontend-lenker-style@0.2.24:
-  version "0.2.24"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.24.tgz#c4ea13384d0257520cdc6c3f526eb0f0dae81a95"
+nav-frontend-lenker-style@0.2.25:
+  version "0.2.25"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.25.tgz#788e8b0057176d088699f85bd2f2ab9b318ac400"
+  integrity sha512-23ZdGPoCGG5OjqqrMmJ7AqzFXEjKtaF6T6JdZFEb6ZJfl1HSSwjcpJK+oktxNJbkXeJZsKtM808arcM7t+XgjQ==
 
-nav-frontend-lenker@1.0.33:
-  version "1.0.33"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenker/-/nav-frontend-lenker-1.0.33.tgz#bcaa1cc529e3cda2b0067c29399bec5f96f35ee5"
+nav-frontend-lenker@1.0.34:
+  version "1.0.34"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lenker/-/nav-frontend-lenker-1.0.34.tgz#422dab50f21339da758618451fdf5043c70569da"
+  integrity sha512-5jJ0ijbSMeKjF5lPd3rxtB455+LM36M8E/LvnXtZkVQ/WhPWiEtJHfjVuVcF2xOfZXVLZOvcEm2AF5IbjHK2wg==
 
 nav-frontend-lesmerpanel-style@0.0.27:
   version "0.0.27"
@@ -11383,45 +11422,55 @@ nav-frontend-lesmerpanel@0.0.34:
   version "0.0.34"
   resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel/-/nav-frontend-lesmerpanel-0.0.34.tgz#f603a9c548122a80a9ca402ca95d2789ff3a205e"
 
-nav-frontend-lukknapp-style@0.2.21:
-  version "0.2.21"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.21.tgz#6fdd8b61428a5def9181fc77cffea688e3bfd13f"
+nav-frontend-lukknapp-style@0.2.22:
+  version "0.2.22"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.22.tgz#59f6b2306e4df51d5af97c6491de47ee0d1bf7f8"
+  integrity sha512-N+aoTAXFUobZ01cnydEZfd+ORZ8BJ5hJuf1RJz8TFBNkVnoSy3o518Sf5UgYITEcMXK3Hp59hT1uY45JY6HJZw==
 
-nav-frontend-lukknapp@1.0.24:
+nav-frontend-lukknapp@1.0.25:
+  version "1.0.25"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.25.tgz#04db4352e000ac692b638d95567caf2eae1e25f4"
+  integrity sha512-jvCAGT+b3H//N/L+3tVo/Ub+ci10HFhUXJwFe47geXiQ6T0c1yKq2XPOa5KnMUHRN0oHvhLS2FMNxL1ijcctQQ==
+
+nav-frontend-modal-style@0.3.32:
+  version "0.3.32"
+  resolved "https://registry.yarnpkg.com/nav-frontend-modal-style/-/nav-frontend-modal-style-0.3.32.tgz#3827a308777cbcc83e6469a175d0b154677bcefe"
+  integrity sha512-RFU7j82kpReLCrD2yZ0aVEN3k6whovrRu7KKMordnE2BbLykEsUIy/mH7E7mpVEQ1k7A7ZcR+P8dNp2KA/FNpg==
+
+nav-frontend-modal@1.0.33:
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/nav-frontend-modal/-/nav-frontend-modal-1.0.33.tgz#7d45e607cb9b4136ccd9f7987e984fa6870eeb88"
+  integrity sha512-BGL8nDXhaLde5VoZ/RN63RukxINFIbPluEppRlryTkhIK6b8A4ovsFfQo+eJcShYAHE2cWdWx9OO7w5TbU0rfg==
+
+nav-frontend-paneler-style@0.3.18:
+  version "0.3.18"
+  resolved "https://registry.yarnpkg.com/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.18.tgz#a01b14b2759383a00c37057d936287954b45c249"
+  integrity sha512-YDqgkS8QdSr9ScBiogm5h8yIBzcMFnWvQ4alF0OyXFw1gDSSVpE15uHsJZtR0+mz4ORWCx+0aT/ivdbT6eEcUg==
+
+nav-frontend-paneler@1.0.24:
   version "1.0.24"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.24.tgz#8e86624a3ef7006629150a7e608e13f0a7176df9"
+  resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-1.0.24.tgz#c3f777fc4aa589a341dd6d1fa6bd9415eead690a"
+  integrity sha512-M2GpIEo9IPrMSbBOx/5ipPSm8nfKOK9+CALgRMFwbw/VqU+S0mB3+sTXDkoTmlXwOf0n//UQG7+jQqQMJFU4tg==
 
-nav-frontend-modal-style@0.3.31:
-  version "0.3.31"
-  resolved "https://registry.yarnpkg.com/nav-frontend-modal-style/-/nav-frontend-modal-style-0.3.31.tgz#e30b73d6e9a5ae89d86c78a6386d3644ceb8f12c"
+nav-frontend-skjema-style@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-2.0.4.tgz#b519aece05a134865d5bfd9634480780166dfb1e"
+  integrity sha512-wrgAMxja18frONbjxY8soVVxrKUPktKlnzHIwRChOXPI7YIf8YzWHtYWhzCKYFdXqxyiZIgAz0DaX8JBmyIyqg==
 
-nav-frontend-modal@1.0.32:
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/nav-frontend-modal/-/nav-frontend-modal-1.0.32.tgz#d00ecee97be37f6e882bca7a79fb4b2f4fd0a7ed"
+nav-frontend-skjema@2.0.12:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-2.0.12.tgz#a86a51979bb58015ff069657bc4e5fd54809a96e"
+  integrity sha512-Vid5U3xs/HFfZVeixfHhqABOzFdja+GPq+k5h+Ma9UP3bXgGixnXKXMh8b6RW4wk5Hg8kXvgKlugKclKIbI0LA==
 
-nav-frontend-paneler-style@0.3.17:
-  version "0.3.17"
-  resolved "https://registry.yarnpkg.com/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.17.tgz#8da78dd40ee8c470fbea7a88a4e9d89bfacc53f6"
+nav-frontend-snakkeboble-style@0.2.25:
+  version "0.2.25"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.25.tgz#4aaa58122d0af8079d2933906f17fd42cb65a9ec"
+  integrity sha512-vC2bHLV4nDyeO2wVIUJFxabthRDgBu6iR3gtmQ07ONhADjd2xvn7ZOym7VIBlsdQUyY8HLdoGfdO0jIzBH67uw==
 
-nav-frontend-paneler@1.0.23:
-  version "1.0.23"
-  resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-1.0.23.tgz#25577a3a7ba72536271601951dfc117eb230b53e"
-
-nav-frontend-skjema-style@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-2.0.3.tgz#c4ef75e825733d844352421d2271dbc2f818990f"
-
-nav-frontend-skjema@2.0.11:
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-2.0.11.tgz#6c7cb209f4c56d4e8cf7aaa2881cd25f4279e678"
-
-nav-frontend-snakkeboble-style@0.2.24:
-  version "0.2.24"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.24.tgz#9ba7f4909f199f3bf5f996a016a720a1172fbf05"
-
-nav-frontend-snakkeboble@1.0.36:
-  version "1.0.36"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.36.tgz#4b32697dc6bb667f21a6c71c57c08123fcbf7fef"
+nav-frontend-snakkeboble@1.0.37:
+  version "1.0.37"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.37.tgz#9bb80d068ed9a1d8eae75a77af10bcc71c0a5b1d"
+  integrity sha512-7wh1fO0GaWlvetxK9VtNnDvnUC2+24BRgUKwmaYDu2pWLEwuOf5TwzT05L2Xktk41ah7aan6Xq9+mjpDj3icfA==
 
 nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
@@ -11431,13 +11480,25 @@ nav-frontend-spinner@1.0.22:
   version "1.0.22"
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-1.0.22.tgz#f5f27760ae0108a4d92cb517eba49d50957a3301"
 
-nav-frontend-typografi-style@1.0.18, nav-frontend-typografi-style@^1.0.17:
+nav-frontend-typografi-style@1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.19.tgz#d143ca06f086b1a5838954f1a18ee7611b359889"
+  integrity sha512-J5KuYqbbSQ+RtSmcjsiGv2COuwcy8a8XOr1vEfyAT12AvfAP5gkVehfL3rCRZzAwGK1zqRdEkfb5WpBHyFcG4w==
+  dependencies:
+    nav-frontend-core "^4.0.12"
+
+nav-frontend-typografi-style@^1.0.17:
   version "1.0.18"
   resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.18.tgz#cf43052d90ba119da80a348210f861aecc4f5ed6"
   dependencies:
     nav-frontend-core "^4.0.11"
 
-nav-frontend-typografi@2.0.17, nav-frontend-typografi@^2.0.16:
+nav-frontend-typografi@2.0.18:
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-2.0.18.tgz#a5250de53727f16e7be5c5da783608e42aa00954"
+  integrity sha512-NZtLy4+jHTFTsPd3deL7v5km/k+faWhkzKjl0bXcYq4CEvNigtGkZM5lF57fKNqm+1w7gJFweve2E0yaMiUC1Q==
+
+nav-frontend-typografi@^2.0.16:
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-2.0.17.tgz#4830eef48440df26c2bc66a0897c3eda0484ddd9"
 
@@ -16034,9 +16095,10 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@3.8.2:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.2.tgz#91d6868aaead7da74f493c553aeff76c0c0b1d5a"
+typescript@3.8.3:
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
+  integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
 
 uglify-js@3.4.x:
   version "3.4.10"
@@ -16730,9 +16792,38 @@ webpack-virtual-modules@^0.2.0:
   dependencies:
     debug "^3.0.0"
 
-webpack@^4.33.0, webpack@^4.38.0, webpack@^4.41.5:
+webpack@^4.33.0, webpack@^4.38.0:
   version "4.41.6"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.41.6.tgz#12f2f804bf6542ef166755050d4afbc8f66ba7e1"
+  dependencies:
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/helper-module-context" "1.8.5"
+    "@webassemblyjs/wasm-edit" "1.8.5"
+    "@webassemblyjs/wasm-parser" "1.8.5"
+    acorn "^6.2.1"
+    ajv "^6.10.2"
+    ajv-keywords "^3.4.1"
+    chrome-trace-event "^1.0.2"
+    enhanced-resolve "^4.1.0"
+    eslint-scope "^4.0.3"
+    json-parse-better-errors "^1.0.2"
+    loader-runner "^2.4.0"
+    loader-utils "^1.2.3"
+    memory-fs "^0.4.1"
+    micromatch "^3.1.10"
+    mkdirp "^0.5.1"
+    neo-async "^2.6.1"
+    node-libs-browser "^2.2.1"
+    schema-utils "^1.0.0"
+    tapable "^1.1.3"
+    terser-webpack-plugin "^1.4.3"
+    watchpack "^1.6.0"
+    webpack-sources "^1.4.1"
+
+webpack@^4.42.0:
+  version "4.42.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.42.0.tgz#b901635dd6179391d90740a63c93f76f39883eb8"
+  integrity sha512-EzJRHvwQyBiYrYqhyjW9AqM90dE4+s1/XtCfn7uWg6cS72zH+2VPFAlsnW0+W0cDi0XRjNKUMoJtpSi50+Ph6w==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
