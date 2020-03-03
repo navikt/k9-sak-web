@@ -15,7 +15,7 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
-import styles from './medisinskVilkar.less';
+import styles from './tilsynsperioder.less';
 import PeriodePolse from './PeriodePolse';
 import { getMomentConvertedDate } from './MedisinskVilkarUtils';
 import HeadingMedHjelpetekst from './HeadingMedHjelpetekst';
@@ -34,6 +34,7 @@ interface TilsynsperioderProps {
   valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom: string;
   valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom: string;
   sammenhengMellomSykdomOgTilsyn: boolean;
+  brukSoknadsdato: (fieldNameFom: string, fieldNameTom: string) => void;
 }
 
 const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.memo(
@@ -51,6 +52,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
     valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom,
     valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom,
     sammenhengMellomSykdomOgTilsyn,
+    brukSoknadsdato,
   }) => (
     <div className={styles.tilsynContainer}>
       <PeriodePolse theme="warn" hideIcon>
@@ -124,12 +126,12 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
           )}
           {harBehovForKontinuerligTilsynOgPleie && sammenhengMellomSykdomOgTilsyn && (
             <>
+              <VerticalSpacer twentyPx />
+              <Element>
+                <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder" />
+              </Element>
               <FlexRow wrap>
                 <FlexColumn>
-                  <VerticalSpacer twentyPx />
-                  <Element>
-                    <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder" />
-                  </Element>
                   <PeriodpickerField
                     names={[
                       `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.FOM}`,
@@ -144,6 +146,22 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                       after: getMomentConvertedDate(datoBegrensningTom),
                     }}
                   />
+                </FlexColumn>
+                <FlexColumn>
+                  <div className={styles.sokandsperiodeButtonContainer}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        brukSoknadsdato(
+                          `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.FOM}`,
+                          `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.TOM}`,
+                        )
+                      }
+                      className={styles.soknadsperiodeButton}
+                    >
+                      <FormattedMessage id="MedisinskVilkarForm.BrukSoknadsperiodeButton" />
+                    </button>
+                  </div>
                 </FlexColumn>
               </FlexRow>
               <FlexRow>

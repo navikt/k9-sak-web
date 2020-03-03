@@ -3,7 +3,7 @@ import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import axios from 'axios';
 import * as React from 'react';
-import styles from './medisinskVilkar.less';
+import styles from './diagnosekodeSelector.less';
 
 const fetchDiagnosekoderByQuery = (queryString: string) =>
   axios.get(`http://localhost:8300/diagnosekoder?query=${queryString}&max=8`);
