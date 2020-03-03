@@ -10,7 +10,7 @@
     "url": "git+https://github.com/navikt/fpsak-frontend.git"
   },
   "scripts": {
-    "test": "cross-env NODE_ICU_DATA=./node_modules/full-icu mochapack --colors --webpack-config webpack/webpack.test.js \"packages/**/*.spec.*\"",
+    "test": "cross-env NODE_ICU_DATA=./node_modules/full-icu mochapack --colors --webpack-config webpack/webpack.common.test.js \"packages/**/*.spec.*\"",
     "test:watch": "cross-env NODE_ICU_DATA=./node_modules/full-icu mochapack --watch --webpack-config webpack/webpack.test.watch.js \"packages/**/*.spec.*\"",
     "test:coverage": "cross-env NODE_ICU_DATA=./node_modules/full-icu nyc mochapack --webpack-config webpack/webpack.test.coverage.js \"packages/**/*.spec.*\"",
     "dev": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
@@ -64,6 +64,7 @@
     "@storybook/react": "^5.3.14",
     "@storybook/storybook-deployer": "^2.8.3",
     "@storybook/theming": "^5.3.14",
+    "@svgr/webpack": "^5.2.0",
     "@types/chai": "^4.2.8",
     "@types/classnames": "^2.2.8",
     "@types/enzyme": "^3.10.4",

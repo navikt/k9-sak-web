@@ -40,6 +40,7 @@ export const FpsakApiKeys = {
   HAR_APENT_KONTROLLER_REVURDERING_AP: 'HAR_APENT_KONTROLLER_REVURDERING_AP',
   TOTRINNS_KLAGE_VURDERING: 'TOTRINNS_KLAGE_VURDERING',
   HAR_REVURDERING_SAMME_RESULTAT: 'HAR_REVURDERING_SAMME_RESULTAT',
+  BEHANDLING_PERSONOPPLYSNINGER: 'BEHANDLING_PERSONOPPLYSNINGER'
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -59,6 +60,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sett-behandling-pa-vent', FpsakApiKeys.BEHANDLING_ON_HOLD)
   .withRel('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
   .withRel('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
+  .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
 
   /* /fptilbake/api/behandlinger */
   .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)

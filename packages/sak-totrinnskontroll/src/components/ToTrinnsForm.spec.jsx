@@ -113,10 +113,10 @@ describe('<ToTrinnsForm>', () => {
       contextCode: 'test',
       aksjonspunkter: [],
     },
-    {
-      contextCode: 'test2',
-      aksjonspunkter: [],
-    }];
+      {
+        contextCode: 'test2',
+        aksjonspunkter: [],
+      }];
 
     const totrinnskontrollContext = [{
       contextCode: 'test',
@@ -197,14 +197,14 @@ describe('<ToTrinnsForm>', () => {
       contextCode: 'test',
       aksjonspunkter: [],
     },
-    {
-      contextCode: 'test',
-      aksjonspunkter: [],
-    },
-    {
-      contextCode: 'test',
-      aksjonspunkter: [],
-    }];
+      {
+        contextCode: 'test',
+        aksjonspunkter: [],
+      },
+      {
+        contextCode: 'test',
+        aksjonspunkter: [],
+      }];
 
     const totrinnskontrollContext = [{
       contextCode: 'FOEDSEL',
@@ -212,18 +212,18 @@ describe('<ToTrinnsForm>', () => {
       skjermlenke: 'testLocation',
       aksjonspunkter: aksjonspunkterFoedsel,
     },
-    {
-      contextCode: 'OMSORG',
-      skjermlenkeId: 'Behandlingspunkt.Omsorgsvilkaret',
-      skjermlenke: 'testLocation',
-      aksjonspunkter: aksjonspunkterOmsorg,
-    },
-    {
-      contextCode: 'FORELDREANSVAR',
-      skjermlenkeId: 'Behandlingspunkt.Foreldreansvar',
-      skjermlenke: 'testLocation',
-      aksjonspunkter: aksjonspunkterForeldreansvar,
-    },
+      {
+        contextCode: 'OMSORG',
+        skjermlenkeId: 'Behandlingspunkt.Omsorgsvilkaret',
+        skjermlenke: 'testLocation',
+        aksjonspunkter: aksjonspunkterOmsorg,
+      },
+      {
+        contextCode: 'FORELDREANSVAR',
+        skjermlenkeId: 'Behandlingspunkt.Foreldreansvar',
+        skjermlenke: 'testLocation',
+        aksjonspunkter: aksjonspunkterForeldreansvar,
+      },
     ];
 
     const behandling = getBehandling();
@@ -247,6 +247,7 @@ describe('<ToTrinnsForm>', () => {
     expect(form).to.have.length(1);
 
     const navLink = wrapper.find('NavLink');
+    console.log(wrapper.debug());
     expect(navLink).to.have.length(3);
 
     const approvalField = wrapper.find(ApprovalField);

@@ -2,8 +2,6 @@ import React, { FunctionComponent, useState, useCallback, useMemo } from 'react'
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
-import ProcessMenu from '@navikt/nap-process-menu';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -13,6 +11,7 @@ import {
   IverksetterVedtakStatusModal,
   FatterVedtakStatusModal,
   ProsessStegPanel,
+  ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
 import { Kodeverk, NavAnsatt, Behandling } from '@k9-sak-web/types';
 
@@ -200,18 +199,22 @@ const PleiepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> = 
         }, [])}
         tekstkode={fatterVedtakTextCode}
       />
-      <ProcessMenu steps={formaterteProsessStegPaneler} onClick={velgProsessStegPanelCallback} />
-      <ProsessStegPanel
-        valgtProsessSteg={valgtPanel}
-        fagsak={fagsak}
-        behandling={behandling}
-        alleKodeverk={alleKodeverk}
-        apentFaktaPanelInfo={apentFaktaPanelInfo}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        lagringSideeffekterCallback={lagringSideeffekterCallback}
-        behandlingApi={pleiepengerBehandlingApi}
-        dispatch={dispatch}
-      />
+      <ProsessStegContainer
+        formaterteProsessStegPaneler={formaterteProsessStegPaneler}
+        velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+      >
+        <ProsessStegPanel
+          valgtProsessSteg={valgtPanel}
+          fagsak={fagsak}
+          behandling={behandling}
+          alleKodeverk={alleKodeverk}
+          apentFaktaPanelInfo={apentFaktaPanelInfo}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          lagringSideeffekterCallback={lagringSideeffekterCallback}
+          behandlingApi={pleiepengerBehandlingApi}
+          dispatch={dispatch}
+        />
+      </ProsessStegContainer>
     </>
   );
 };
