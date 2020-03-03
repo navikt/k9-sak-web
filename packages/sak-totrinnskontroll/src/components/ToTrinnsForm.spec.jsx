@@ -247,7 +247,6 @@ describe('<ToTrinnsForm>', () => {
     expect(form).to.have.length(1);
 
     const navLink = wrapper.find('NavLink');
-    console.log(wrapper.debug());
     expect(navLink).to.have.length(3);
 
     const approvalField = wrapper.find(ApprovalField);
