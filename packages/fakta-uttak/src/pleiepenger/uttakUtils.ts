@@ -1,8 +1,10 @@
 import moment from 'moment';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ArbeidsforholdPeriode } from './UttakFaktaIndex2';
 
 export const momentDato = (datoString: string): moment.Moment => moment(datoString, ISO_DATE_FORMAT);
+
+export const visningsdato = datoIsoFormat => momentDato(datoIsoFormat).format(DDMMYYYY_DATE_FORMAT);
 
 export const beregnNyePerioder = (perioder: ArbeidsforholdPeriode[], nyPeriode: ArbeidsforholdPeriode) => {
   const oppdatertePerioder: ArbeidsforholdPeriode[] = perioder.reduce((tmpPerioder, periode) => {

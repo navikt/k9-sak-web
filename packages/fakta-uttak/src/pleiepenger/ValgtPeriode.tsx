@@ -9,6 +9,7 @@ import styles from './uttakFaktaForm.less';
 import NyArbeidsperiode, { nyArbeidsperiodeFormName } from './NyArbeidsperiode';
 import { useUttakContext } from './UttakFaktaForm2';
 import { ArbeidsforholdPeriode, Arbeidsgiver } from './UttakFaktaIndex2';
+import { visningsdato } from './uttakUtils';
 
 interface ValgtPeriodeProps {
   endreValgtPeriodeCallback: () => void;
@@ -57,7 +58,7 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
     ? {
         periodeLabelText: `${intl.formatMessage({ id: 'FaktaOmUttakForm.Periode' })} ${`${valgtPeriodeIndex +
           1}`.padStart(2, '0')}:`,
-        fomTom: ` ${valgtPeriode.fom} - ${valgtPeriode.tom}`,
+        fomTom: ` ${visningsdato(valgtPeriode.fom)} - ${visningsdato(valgtPeriode.tom)}`,
         timerFårJobbet: formaterTimer(valgtPeriode.timerFårJobbet),
         timerIJobbTilVanlig: formaterTimer(valgtPeriode.timerIJobbTilVanlig),
       }

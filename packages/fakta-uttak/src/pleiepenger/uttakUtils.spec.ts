@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { ArbeidsforholdPeriode } from './UttakFaktaIndex2';
-import { beregnNyePerioder } from './uttakUtils';
+import { beregnNyePerioder, visningsdato } from './uttakUtils';
 
 describe('beregner nye perioder fra en periodeendring', () => {
   const periode1 = {
@@ -116,5 +116,15 @@ describe('beregner nye perioder fra en periodeendring', () => {
     const nyePerioder = beregnNyePerioder(eksiterendePerioder, nyPeriode);
 
     expect(nyePerioder).to.eql([eksiterendePerioder[0], nyPeriode, eksiterendePerioder[1]]);
+  });
+});
+
+describe('visningsdato', () => {
+  it('formaterer ISO-dato til visningsdato', () => {
+    const isodato = '2020-03-14';
+
+    const visning = visningsdato(isodato);
+
+    expect(visning).to.equal('14.03.2020');
   });
 });
