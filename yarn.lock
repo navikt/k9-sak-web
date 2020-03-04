@@ -11625,9 +11625,10 @@ nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.5.tgz#c782c63589776e768a45d6049047b1a60b6805be"
 
-nav-frontend-spinner@1.0.22:
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-1.0.22.tgz#f5f27760ae0108a4d92cb517eba49d50957a3301"
+nav-frontend-spinner@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.1.tgz#fbc399abbf6b8b764586724a4cd5bf9968b13938"
+  integrity sha512-HSROgw8innzkSBg4UxtKS4EnD4TwzqUqAmW7Nt5ujGBAbSdNARDLAILw97pgfjyqtkXdphhu2AiYve9V4r7M5w==
 
 nav-frontend-typografi-style@1.0.18, nav-frontend-typografi-style@^1.0.17:
   version "1.0.18"
@@ -13983,6 +13984,7 @@ react-syntax-highlighter@^11.0.2:
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.12.0, react-test-renderer@^16.13.0:
   version "16.13.0"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.13.0.tgz#39ba3bf72cedc8210c3f81983f0bb061b14a3014"
+  integrity sha512-NQ2S9gdMUa7rgPGpKGyMcwl1d6D9MCF0lftdI3kts6kkiX+qvpC955jNjAZXlIDTjnN9jwFI8A8XhRh/9v0spA==
   dependencies:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
