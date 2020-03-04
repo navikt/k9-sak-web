@@ -17,7 +17,6 @@
   "endretAvBrukernavn": "im-just-a-fake-code",
   "behandlendeEnhetId": "0300",
   "behandlendeEnhetNavn": "NAV Oslo",
-  "erAktivPapirsoknad": false,
   "førsteÅrsak": {
     "erAutomatiskRevurdering": false,
     "behandlingArsakType": {

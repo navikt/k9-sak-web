@@ -5,7 +5,7 @@ import PersonInfo from './PersonInfo';
 
 /**
  * Viser grunnleggende personinformasjon. Dette panelet blir
- * vist som del av søkeresultatet, når fagsaken ikke har behandling eller ved papirsøknad
+ * vist som del av søkeresultatet, når fagsaken ikke har behandling
  */
 const PersonIndex = ({
   person,
@@ -21,7 +21,7 @@ PersonIndex.propTypes = {
 
 PersonIndex.defaultProps = {
   person: undefined,
-  medPanel: false,
-};
+  medPanel: false};
 
 export default PersonIndex;
+

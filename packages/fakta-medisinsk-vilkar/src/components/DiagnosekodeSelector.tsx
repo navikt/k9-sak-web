@@ -5,8 +5,10 @@ import axios from 'axios';
 import * as React from 'react';
 import styles from './medisinskVilkar.less';
 
-const fetchDiagnosekoderByQuery = (queryString: string) =>
-  axios.get(`http://localhost:8300/diagnosekoder?query=${queryString}&max=8`);
+const fetchDiagnosekoderByQuery = (queryString: string) => {
+  const pathPrefix = window.location.hostname === 'localhost' ? 'http://localhost:8300' : '';
+  return axios.get(`${pathPrefix}/diagnosekoder?query=${queryString}&max=8`);
+};
 
 const getUpdatedSuggestions = async (queryString: string) => {
   if (queryString.length >= 3) {
