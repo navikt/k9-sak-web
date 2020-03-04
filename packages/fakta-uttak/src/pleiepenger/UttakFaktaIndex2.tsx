@@ -15,6 +15,7 @@ const intl = createIntl(
   cache,
 );
 
+// TODO: interfaces inn i types/uttakfakta elns
 export interface ArbeidsforholdPeriode {
   fom: string;
   tom: string;
@@ -23,7 +24,8 @@ export interface ArbeidsforholdPeriode {
 }
 
 export interface Arbeidsforhold {
-  stillingsnavn: string;
+  stillingsnavn?: string; // TODO: fjern - har ikke denne infoen
+  arbeidsgiversArbeidsforholdId: string;
   perioder: ArbeidsforholdPeriode[];
 }
 

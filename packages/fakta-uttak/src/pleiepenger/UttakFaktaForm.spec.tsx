@@ -73,6 +73,23 @@ describe('<UttakFaktaForm2>', () => {
       .findWhere(button => button.text() === 'Legg til' && button.type() === 'button');
     await leggTilKnapp.simulate('click');
 
+    // TODO: assert faktiske verdier i skjermbildet
+    // arbeidsgivere.forEach((arbeidsgiver, arbeidsgiverIndex) => {
+    //   arbeidsgiver.arbeidsforhold.forEach((arbeidsforhold, arbeidsforholdIndex) => {
+    //     arbeidsforhold.perioder.forEach((periode, periodeIndex) => {
+    //       const fieldNamePrefix = `arbeidsgivere[${arbeidsgiverIndex}].arbeidsforhold[${arbeidsforholdIndex}].perioder[${periodeIndex}]`;
+    //       const felt = wrapper.find(`Field[name="${fieldNamePrefix}.timerIJobbTilVanlig"]`);
+    //     });
+    //   });
+    // });
+    //
+    // wrapper.find('fieldset').forEach(periodeElement => {
+    //   // console.log(periode.debug());
+    //   // const periode = periodeElement.find('p[className="typo-normal"]').text();
+    //   console.log(periodeElement.debug());
+    // });
+    // console.log(perioder.debug());
+
     const oppdaterteArbeidsgivere = wrapper.props().store.getState().form[getBehandlingFormPrefix(1, 1)][
       uttakFaktaFormName
     ].values.arbeidsgivere;

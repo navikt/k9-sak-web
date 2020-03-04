@@ -1,31 +1,47 @@
 import React, { FunctionComponent } from 'react';
-import { FieldArray, WrappedFieldArrayProps } from 'redux-form';
-import { ArbeidsforholdPeriode, Arbeidsgiver as ArbeidsgiverType } from './UttakFaktaIndex2';
-import Arbeidsforhold from './Arbeidsforhold';
+import { FormattedMessage } from 'react-intl';
+import classnames from 'classnames/bind';
+import { Element } from 'nav-frontend-typografi';
+import { Arbeidsgiver as ArbeidsgiverType } from './UttakFaktaIndex2';
+import { useUttakContext } from './UttakFaktaForm2';
+import styles from './uttakFaktaForm.less';
+
+const classNames = classnames.bind(styles);
 
 interface ArbeidsgiverProps {
-  oppdaterPerioder: (arbeidsgiversOrgNr: string, arbeidsforholdIndex: number, nyPeriode: ArbeidsforholdPeriode) => void;
-  behandlingId: number;
-  behandlingVersjon: number;
+  arbeidsgiver: ArbeidsgiverType;
 }
 
-const Arbeidsgiver: FunctionComponent<WrappedFieldArrayProps<ArbeidsgiverType> & ArbeidsgiverProps> = ({
-  fields,
-  oppdaterPerioder,
-  behandlingId,
-  behandlingVersjon,
-}) => (
-  <>
-    {fields.map((fieldId, index) => (
-      <React.Fragment key={fieldId}>
-        <FieldArray
-          name={`${fieldId}.arbeidsforhold`}
-          component={Arbeidsforhold}
-          props={{ oppdaterPerioder, arbeidsgiver: fields.get(index), behandlingId, behandlingVersjon }}
-        />
-      </React.Fragment>
-    ))}
-  </>
-);
+const Arbeidsgiver: FunctionComponent<ArbeidsgiverProps> = ({ arbeidsgiver }) => {
+  const {
+    valgtArbeidsgiversOrgNr,
+    setValgtArbeidsgiversOrgNr,
+    setValgtArbeidsforholdId,
+    setValgtPeriodeIndex,
+  } = useUttakContext();
+
+  const velgArbeidsgiver = () => {
+    setValgtArbeidsgiversOrgNr(arbeidsgiver.organisasjonsnummer);
+    setValgtPeriodeIndex(null);
+    // TODO: Kun ett arb.forh. til MVP 27. mars. Støtte flere etter det
+    setValgtArbeidsforholdId(arbeidsgiver.arbeidsforhold[0].arbeidsgiversArbeidsforholdId);
+  };
+  const erValgt = valgtArbeidsgiversOrgNr === arbeidsgiver.organisasjonsnummer;
+
+  return (
+    <button
+      onClick={velgArbeidsgiver}
+      type="button"
+      className={classNames('arbeidsgiver', {
+        'arbeidsgiver--erValgt': erValgt,
+      })}
+    >
+      <Element tag="div">
+        <div>{arbeidsgiver.navn}</div>
+        <FormattedMessage values={{ orgNr: arbeidsgiver.organisasjonsnummer }} id="FaktaOmUttakForm.OrgNr" />
+      </Element>
+    </button>
+  );
+};
 
 export default Arbeidsgiver;
