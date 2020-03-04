@@ -11229,9 +11229,9 @@ nav-frontend-core@4.0.11, nav-frontend-core@^4.0.11:
   version "4.0.11"
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-4.0.11.tgz#826a242141fedfee54337cbf1578d1d7be7da3e2"
 
-nav-frontend-ekspanderbartpanel-style@0.3.23:
-  version "0.3.23"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.23.tgz#dbe5328069958d55018f23effc3312a81989be90"
+nav-frontend-ekspanderbartpanel-style@1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-1.0.7.tgz#f8db9c98836b23b442614d5dbc88d1b19a19ca17"
 
 nav-frontend-ekspanderbartpanel@2.0.2:
   version "2.0.2"
