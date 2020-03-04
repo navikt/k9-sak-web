@@ -1,12 +1,16 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import ProcessMenu from '@navikt/nap-process-menu';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { omit } from '@fpsak-frontend/utils';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { ProsessStegPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/behandling-felles';
+import {
+  ProsessStegPanel,
+  FatterVedtakStatusModal,
+  IverksetterVedtakStatusModal,
+  ProsessStegContainer,
+} from '@fpsak-frontend/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -18,11 +22,11 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
-import ForeldrepengerProsess from './PleiepengerProsess';
+import PleiepengerProsess from './PleiepengerProsess';
 
-describe('<ForeldrepengerProsess>', () => {
+describe('<PleiepengerProsess>', () => {
   const fagsak = {
-    saksnummer: 123456,
+    saksnummer: '123456',
     fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
     fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
     fagsakPerson: {
@@ -57,17 +61,21 @@ describe('<ForeldrepengerProsess>', () => {
     kanBehandleKode7: false,
     kanBehandleKodeEgenAnsatt: false,
   };
-  const aksjonspunkter = [{
-    definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
-    status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
-    kanLoses: true,
-    erAktivt: true,
-  }];
-  const vilkar = [{
-    vilkarType: { kode: vilkarType.ADOPSJONSVILKARET_FORELDREPENGER, kodeverk: 'test' },
-    vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-    overstyrbar: true,
-  }];
+  const aksjonspunkter = [
+    {
+      definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
+      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      kanLoses: true,
+      erAktivt: true,
+    },
+  ];
+  const vilkar = [
+    {
+      vilkarType: { kode: vilkarType.ADOPSJONSVILKARET_FORELDREPENGER, kodeverk: 'test' },
+      vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+      overstyrbar: true,
+    },
+  ];
   const soknad = {
     fodselsdatoer: {
       0: '2019-01-01',
@@ -81,7 +89,7 @@ describe('<ForeldrepengerProsess>', () => {
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -99,56 +107,64 @@ describe('<ForeldrepengerProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProcessMenu);
-    expect(meny.prop('steps')).is.eql([{
-      isActive: false,
-      isDisabled: false,
-      isFinished: false,
-      label: 'Opplysningsplikt',
-      type: 'default',
-    }, {
-      isActive: true,
-      isDisabled: false,
-      isFinished: false,
-      label: 'Inngangsvilkår',
-      type: 'warning',
-    }, {
-      isActive: false,
-      isDisabled: false,
-      isFinished: false,
-      label: 'Beregning',
-      type: 'default',
-    }, {
-      isActive: false,
-      isDisabled: false,
-      isFinished: false,
-      label: 'Uttak',
-      type: 'default',
-    }, {
-      isActive: false,
-      isDisabled: false,
-      isFinished: false,
-      label: 'Tilkjent ytelse',
-      type: 'default',
-    }, {
-      isActive: false,
-      isDisabled: false,
-      isFinished: false,
-      label: 'Simulering',
-      type: 'default',
-    }, {
-      isActive: false,
-      isDisabled: false,
-      isFinished: false,
-      label: 'Vedtak',
-      type: 'default',
-    }]);
+    const meny = wrapper.find(ProsessStegContainer);
+    expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        label: 'Opplysningsplikt',
+        type: 'default',
+      },
+      {
+        isActive: true,
+        isDisabled: false,
+        isFinished: false,
+        label: 'Inngangsvilkår',
+        type: 'warning',
+      },
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        label: 'Beregning',
+        type: 'default',
+      },
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        label: 'Uttak',
+        type: 'default',
+      },
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        label: 'Tilkjent ytelse',
+        type: 'default',
+      },
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        label: 'Simulering',
+        type: 'default',
+      },
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        label: 'Vedtak',
+        type: 'default',
+      },
+    ]);
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -166,9 +182,9 @@ describe('<ForeldrepengerProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProcessMenu);
+    const meny = wrapper.find(ProsessStegContainer);
 
-    meny.prop('onClick')(3);
+    meny.prop('velgProsessStegPanelCallback')(3);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).to.have.length(1);
@@ -179,7 +195,7 @@ describe('<ForeldrepengerProsess>', () => {
 
   it('skal vise prosesspanel for inngangsvilkår siden det er et åpent aksjonspunkt for adopsjon', () => {
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -231,12 +247,14 @@ describe('<ForeldrepengerProsess>', () => {
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', () => {
-    const vedtakAksjonspunkter = [{
-      definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
-      kanLoses: true,
-      erAktivt: true,
-    }];
+    const vedtakAksjonspunkter = [
+      {
+        definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
+        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        kanLoses: true,
+        erAktivt: true,
+      },
+    ];
     const vedtakBehandling = {
       ...behandling,
       status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
@@ -245,7 +263,7 @@ describe('<ForeldrepengerProsess>', () => {
     const opneSokeside = sinon.spy();
 
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -281,17 +299,19 @@ describe('<ForeldrepengerProsess>', () => {
   });
 
   it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', () => {
-    const vedtakAksjonspunkter = [{
-      definisjon: { kode: aksjonspunktCodes.FATTER_VEDTAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
-      kanLoses: true,
-      erAktivt: true,
-    }];
+    const vedtakAksjonspunkter = [
+      {
+        definisjon: { kode: aksjonspunktCodes.FATTER_VEDTAK, kodeverk: 'test' },
+        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        kanLoses: true,
+        erAktivt: true,
+      },
+    ];
 
     const opneSokeside = sinon.spy();
 
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -327,17 +347,19 @@ describe('<ForeldrepengerProsess>', () => {
   });
 
   it('skal gå til søkeside når en har revurderingsaksjonspunkt', () => {
-    const vedtakAksjonspunkter = [{
-      definisjon: { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
-      kanLoses: true,
-      erAktivt: true,
-    }];
+    const vedtakAksjonspunkter = [
+      {
+        definisjon: { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, kodeverk: 'test' },
+        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        kanLoses: true,
+        erAktivt: true,
+      },
+    ];
 
     const opneSokeside = sinon.spy();
 
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -358,7 +380,9 @@ describe('<ForeldrepengerProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    panel.prop('lagringSideeffekterCallback')([{ kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, sendVarsel: true }])();
+    panel.prop('lagringSideeffekterCallback')([
+      { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, sendVarsel: true },
+    ])();
 
     const opppdaterKall = opneSokeside.getCalls();
     expect(opppdaterKall).to.have.length(1);
@@ -367,7 +391,7 @@ describe('<ForeldrepengerProsess>', () => {
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -398,7 +422,7 @@ describe('<ForeldrepengerProsess>', () => {
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
     const dispatch = sinon.spy();
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -429,7 +453,7 @@ describe('<ForeldrepengerProsess>', () => {
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
     const dispatch = sinon.spy();
     const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
+      <PleiepengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}

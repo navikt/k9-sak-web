@@ -21,7 +21,8 @@ const config = {
           cache: true,
         },
         include: [PACKAGES_DIR],
-      }],
+      },
+    ],
   },
 };
 
