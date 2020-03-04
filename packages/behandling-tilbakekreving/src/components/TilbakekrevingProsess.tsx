@@ -217,64 +217,68 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
           lukkModal={this.toggleFatterVedtakModal}
           tekstkode="FatterTilbakekrevingVedtakStatusModal.Sendt"
         />
-        <ProcessMenu
-          steps={alleProsessMenySteg.map(p => p.prosessmenySteg)}
-          onClick={index => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-        />
-        {erStegBehandlet && (
-          <MargMarkering
-            behandlingStatus={behandling.status}
-            aksjonspunkter={valgtSteg.aksjonspunkter}
-            isReadOnly={valgtSteg.isReadOnly}
-          >
-            {valgtStegKode === bpc.FORELDELSE && (
-              <ForeldelseProsessIndex
-                perioderForeldelse={perioderForeldelse}
-                apCodes={apCodes}
-                readOnlySubmitButton={readOnlySubmitButton}
-                navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
-                alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
-                beregnBelop={beregnBelop}
-                {...fellesProps}
-              />
-            )}
-            <DataFetcherBehandlingData
-              behandlingDataCache={this.behandlingDataCache}
-              behandlingVersion={behandling.versjon}
-              endpoints={tilbakekrevingData}
-              showComponent={valgtStegKode === bpc.TILBAKEKREVING}
-              render={dataProps => (
-                <TilbakekrevingProsessIndex
+        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
+          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
+            <ProcessMenu
+              steps={alleProsessMenySteg.map(p => p.prosessmenySteg)}
+              onClick={index => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
+            />
+          </div>
+          {erStegBehandlet && (
+            <MargMarkering
+              behandlingStatus={behandling.status}
+              aksjonspunkter={valgtSteg.aksjonspunkter}
+              isReadOnly={valgtSteg.isReadOnly}
+            >
+              {valgtStegKode === bpc.FORELDELSE && (
+                <ForeldelseProsessIndex
+                  perioderForeldelse={perioderForeldelse}
                   apCodes={apCodes}
                   readOnlySubmitButton={readOnlySubmitButton}
                   navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
                   alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
                   beregnBelop={beregnBelop}
-                  perioderForeldelse={perioderForeldelse}
-                  {...dataProps}
                   {...fellesProps}
                 />
               )}
-            />
-            <DataFetcherBehandlingData
-              behandlingDataCache={this.behandlingDataCache}
-              behandlingVersion={behandling.versjon}
-              endpoints={vedtakData}
-              showComponent={vedtakStegVises && !behandling.behandlingHenlagt}
-              render={dataProps => (
-                <VedtakTilbakekrevingProsessIndex
-                  beregningsresultat={beregningsresultat}
-                  fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
-                  aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
-                  {...dataProps}
-                  {...fellesProps}
-                />
-              )}
-            />
-          </MargMarkering>
-        )}
-        {vedtakStegVises && behandling.behandlingHenlagt && <BehandlingHenlagtPanel />}
-        {valgtStegKode && !erStegBehandlet && !behandling.behandlingHenlagt && <ProsessStegIkkeBehandletPanel />}
+              <DataFetcherBehandlingData
+                behandlingDataCache={this.behandlingDataCache}
+                behandlingVersion={behandling.versjon}
+                endpoints={tilbakekrevingData}
+                showComponent={valgtStegKode === bpc.TILBAKEKREVING}
+                render={dataProps => (
+                  <TilbakekrevingProsessIndex
+                    apCodes={apCodes}
+                    readOnlySubmitButton={readOnlySubmitButton}
+                    navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
+                    alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
+                    beregnBelop={beregnBelop}
+                    perioderForeldelse={perioderForeldelse}
+                    {...dataProps}
+                    {...fellesProps}
+                  />
+                )}
+              />
+              <DataFetcherBehandlingData
+                behandlingDataCache={this.behandlingDataCache}
+                behandlingVersion={behandling.versjon}
+                endpoints={vedtakData}
+                showComponent={vedtakStegVises && !behandling.behandlingHenlagt}
+                render={dataProps => (
+                  <VedtakTilbakekrevingProsessIndex
+                    beregningsresultat={beregningsresultat}
+                    fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
+                    aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
+                    {...dataProps}
+                    {...fellesProps}
+                  />
+                )}
+              />
+            </MargMarkering>
+          )}
+          {vedtakStegVises && behandling.behandlingHenlagt && <BehandlingHenlagtPanel />}
+          {valgtStegKode && !erStegBehandlet && !behandling.behandlingHenlagt && <ProsessStegIkkeBehandletPanel />}
+        </div>
       </>
     );
   }
