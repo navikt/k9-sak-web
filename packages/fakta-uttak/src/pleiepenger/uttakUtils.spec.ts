@@ -89,4 +89,32 @@ describe('beregner nye perioder fra en periodeendring', () => {
 
     expect(nyePerioder).to.eql([nyPeriode]);
   });
+
+  it('ny periode legges til mellom perioder', () => {
+    const eksiterendePerioder: ArbeidsforholdPeriode[] = [
+      {
+        fom: '2019-02-02',
+        tom: '2019-03-02',
+        timerIJobbTilVanlig: 20,
+        timerFårJobbet: 20,
+      },
+      {
+        fom: '2019-04-01',
+        tom: '2019-05-02',
+        timerIJobbTilVanlig: 40,
+        timerFårJobbet: 40,
+      },
+    ];
+
+    const nyPeriode: ArbeidsforholdPeriode = {
+      fom: '2019-03-13',
+      tom: '2019-03-13',
+      timerIJobbTilVanlig: 50,
+      timerFårJobbet: 50,
+    };
+
+    const nyePerioder = beregnNyePerioder(eksiterendePerioder, nyPeriode);
+
+    expect(nyePerioder).to.eql([eksiterendePerioder[0], nyPeriode, eksiterendePerioder[1]]);
+  });
 });

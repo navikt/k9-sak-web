@@ -8,6 +8,12 @@ export const beregnNyePerioder = (perioder: ArbeidsforholdPeriode[], nyPeriode: 
   const oppdatertePerioder: ArbeidsforholdPeriode[] = perioder.reduce((tmpPerioder, periode) => {
     const eksisterendePeriodeStarterFørNyPeriode = momentDato(periode.fom).isBefore(momentDato(nyPeriode.fom));
     const eksisterendePeriodeSlutterEtterNyPeriode = momentDato(periode.tom).isAfter(momentDato(nyPeriode.tom));
+    const eksisterendePeriodeSlutterFørNyStarter = momentDato(periode.tom).isBefore(momentDato(nyPeriode.fom));
+
+    if (eksisterendePeriodeSlutterFørNyStarter) {
+      tmpPerioder.push(periode);
+      return tmpPerioder;
+    }
 
     if (eksisterendePeriodeStarterFørNyPeriode) {
       if (eksisterendePeriodeSlutterEtterNyPeriode) {
