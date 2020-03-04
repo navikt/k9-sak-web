@@ -13,16 +13,17 @@ import { InjectedFormProps } from 'redux-form';
 import { FlexContainer } from '@fpsak-frontend/shared-components/index';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { ArbeidsforholdPeriode } from './UttakFaktaIndex2';
+import { uttakFaktaFormName } from './UttakFaktaForm2';
 
 interface NyArbeidsperiodeProps {
-  oppdaterPerioder: (nyPeriode: ArbeidsforholdPeriode) => ArbeidsforholdPeriode[];
-  id: string;
+  oppdaterPerioder: (nyPeriode: ArbeidsforholdPeriode) => void;
   behandlingId: number;
   behandlingVersjon: number;
   avbryt: () => void;
+  initialPeriodeValues?: ArbeidsforholdPeriode;
 }
 
-export const formName = id => `UttakFaktaForm-${id}`;
+export const nyArbeidsperiodeFormName = `${uttakFaktaFormName}-NyPeriode`;
 
 // TODO anders: vis % av vanlig arbeid når begge er fylt inn
 const NyArbeidsperiode: FunctionComponent<NyArbeidsperiodeProps & InjectedFormProps> = ({
@@ -83,12 +84,12 @@ interface NyArbeidsperiodeForm {
 
 const transformValues = (values: NyArbeidsperiodeForm): ArbeidsforholdPeriode => ({
   ...values,
-  timerIJobbTilVanlig: Number.parseFloat(values.timerIJobbTilVanlig.replace(',', '.')),
-  timerFårJobbet: Number.parseFloat(values.timerFårJobbet.replace(',', '.')),
+  timerIJobbTilVanlig: Number.parseFloat(`${values.timerIJobbTilVanlig}`.replace(',', '.')),
+  timerFårJobbet: Number.parseFloat(`${values.timerFårJobbet}`.replace(',', '.')),
 });
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: NyArbeidsperiodeProps) => {
-  const { oppdaterPerioder, id, avbryt } = initialOwnProps;
+  const { oppdaterPerioder, avbryt, initialPeriodeValues = {} } = initialOwnProps;
   const onSubmit = (values: NyArbeidsperiodeForm) => {
     oppdaterPerioder(transformValues(values));
     avbryt();
@@ -96,8 +97,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: NyArbeidsperiode
 
   return () => ({
     onSubmit,
-    form: formName(id),
-    initialValues: {},
+    form: nyArbeidsperiodeFormName,
+    initialValues: initialPeriodeValues,
   });
 };
 

@@ -1,0 +1,48 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.arbeidsgivere {
+  display: flex;
+  flex-direction: column;
+}
+
+.arbeidsgiver {
+  background: transparent;
+  border: none;
+  color: black;
+  margin-bottom: 1.5em;
+  max-width: fit-content;
+  text-align: left;
+  text-decoration: underline;
+
+  &:hover {
+    color: @navBla;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  &--erValgt {
+    color: @navBla;
+    text-decoration: none;
+  }
+}
+
+.kursiv {
+  font-style: italic;
+}
+
+.image {
+  margin-right: 0.5em;
+
+  &.disabled {
+    color: white;
+  }
+}
+
+.periodeLabel {
+  color: @navBla;
+  font-weight: bold;
+}
+
+.timerLabel {
+  font-weight: bold;
+}

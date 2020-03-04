@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { createContext, FunctionComponent, useContext, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps, change as reduxFormChange } from 'redux-form';
 import { bindActionCreators } from 'redux';
@@ -18,6 +18,22 @@ import Arbeidsgiver from './Arbeidsgiver';
 import { beregnNyePerioder } from './uttakUtils';
 
 export const uttakFaktaFormName = 'UttakFaktaForm';
+
+interface UttakContextProps {
+  valgtArbeidsgiversOrgNr?: string;
+  setValgtArbeidsgiversOrgNr?: (orgNr: string) => void;
+  valgtArbeidsforholdId?: string;
+  setValgtArbeidsforholdId?: (arbeidsforholdId: string) => void;
+  valgtPeriodeIndex?: number;
+  setValgtPeriodeIndex?: (periodeIndex: number) => void;
+  redigererPeriode?: boolean;
+  setRedigererPeriode: (redigererPeriode: boolean) => void;
+}
+
+export const UttakFaktaFormContext = createContext<UttakContextProps>(null);
+export function useUttakContext() {
+  return useContext(UttakFaktaFormContext);
+}
 
 interface UttakFaktaFormProps {
   arbeidsgivere: ArbeidsgiverType[];
