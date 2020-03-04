@@ -3070,7 +3070,7 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/redux-form@^8.2.0":
+"@types/redux-form@^8.2.0", "@types/redux-form@^8.2.2":
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-8.2.2.tgz#9a12e63eb82fa29c8e0cb6da390acd4cfe3fc282"
   dependencies:

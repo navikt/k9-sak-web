@@ -121,6 +121,8 @@ export const MedisinskVilkarForm = ({
           />
         </div>
         <div className={styles.vilkarsContainer}>
+          <div className={styles.helpTextContainer}>{getAksjonspunktHelpText}</div>
+
           <div className={styles.headingContainer}>
             <Systemtittel>
               <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
@@ -133,7 +135,6 @@ export const MedisinskVilkarForm = ({
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               formName={formName}
-              renderAksjonspunktHelpText={getAksjonspunktHelpText}
             />
           </div>
         </div>
