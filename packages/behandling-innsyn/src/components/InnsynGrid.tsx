@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { PersonIndex } from '@fpsak-frontend/person-info';
 import { FagsakInfo, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
 import { Kodeverk, Dokument, NavAnsatt, Behandling, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 
@@ -63,8 +61,6 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
       oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
       opneSokeside={opneSokeside}
     />
-    <VerticalSpacer sixteenPx />
-    <PersonIndex medPanel person={fagsak.fagsakPerson} />
   </>
 );
 

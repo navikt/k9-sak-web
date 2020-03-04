@@ -29,6 +29,7 @@ export {
   pathToBehandlinger,
   pathToBehandling,
   pathToMissingPage,
+  pathToAnnenPart,
 } from './src/paths';
 
 export { RETTSKILDE_URL, LINK_TIL_BESTE_BEREGNING_REGNEARK, SYSTEMRUTINE_URL } from './src/eksterneLenker';
