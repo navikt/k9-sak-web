@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { ArbeidsforholdPeriode } from './UttakFaktaIndex2';
-import { beregnNyePerioder, visningsdato } from './uttakUtils';
+import { arbeidsprosent, beregnNyePerioder, visningsdato } from './uttakUtils';
 
 describe('beregner nye perioder fra en periodeendring', () => {
   const periode1 = {
@@ -127,4 +127,20 @@ describe('visningsdato', () => {
 
     expect(visning).to.equal('14.03.2020');
   });
+});
+
+describe('arbeidsprosent', () => {
+  it('regner ut prosent i forhold normaluke på 37,5 timer og formaterer med 1 desimal hvis det finnes', () => {
+    const test1 = 20;
+    const resultat1 = arbeidsprosent(test1);
+    expect(resultat1).to.equal('53.3');
+
+    const test2 = 37.5;
+    const resultat2 = arbeidsprosent(test2);
+    expect(resultat2).to.equal('100');
+  });
+
+  const test3 = 15;
+  const resultat3 = arbeidsprosent(test3);
+  expect(resultat3).to.equal('40');
 });

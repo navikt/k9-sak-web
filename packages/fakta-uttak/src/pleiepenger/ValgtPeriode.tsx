@@ -9,7 +9,7 @@ import styles from './uttakFaktaForm.less';
 import NyArbeidsperiode, { nyArbeidsperiodeFormName } from './NyArbeidsperiode';
 import { useUttakContext } from './UttakFaktaForm2';
 import { ArbeidsforholdPeriode, Arbeidsgiver } from './UttakFaktaIndex2';
-import { visningsdato } from './uttakUtils';
+import { arbeidsprosent, visningsdato } from './uttakUtils';
 
 interface ValgtPeriodeProps {
   endreValgtPeriodeCallback: () => void;
@@ -20,8 +20,6 @@ interface ValgtPeriodeProps {
   avbryt: () => void;
   arbeidsgivere: Arbeidsgiver[];
 }
-
-const arbeidsprosent = timer => ((timer / 37.5) * 100).toFixed(1).replace(/\.0+$/, '');
 
 const formaterTimer = timer => ` ${timer}t (${arbeidsprosent(timer)}%)`;
 

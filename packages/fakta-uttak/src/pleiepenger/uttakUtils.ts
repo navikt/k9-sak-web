@@ -65,3 +65,5 @@ export const beregnNyePerioder = (perioder: ArbeidsforholdPeriode[], nyPeriode: 
   oppdatertePerioder.push(nyPeriode);
   return oppdatertePerioder.sort((p1, p2) => moment(p1.fom).diff(moment(p2.fom)));
 };
+
+export const arbeidsprosent = timer => ((timer / 37.5) * 100).toFixed(1).replace(/\.0+$/, '');
