@@ -3,7 +3,6 @@ import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   byttBehandlendeEnhetAccess,
   gjenopptaBehandlingAccess,
@@ -97,67 +96,6 @@ describe('accessMenu', () => {
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
     it('saksbehandler skal ha tilgang til å sette behandling på vent', () => {
-      const accessForSaksbehandler = settBehandlingPaVentAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus, behandling);
-
-      expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
-      expect(accessForSaksbehandler).to.have.property('isEnabled', true);
-    });
-
-    it('veileder skal ikke ha aktivert tilgang til å sette behandling på vent', () => {
-      const accessForVeileder = settBehandlingPaVentAccess(veilederAnsatt, validFagsakStatus, validBehandlingStatus, behandling);
-
-      expect(accessForVeileder).to.have.property('employeeHasAccess', true);
-      expect(accessForVeileder).to.have.property('isEnabled', false);
-    });
-
-    forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
-      const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
-      it(getTestName('tilgang til å sette behandling på vent', expected, fagsakStatus, behandlingStatus), () => {
-        const access = settBehandlingPaVentAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus }, behandling);
-
-        expect(access).to.have.property('isEnabled', expected);
-      });
-    });
-  });
-
-  describe('saksbehandler skal ha tilgang til å sette behandling på vent når aksjonspunkt er REGISTRER_PAPIRSOKNAD', () => {
-    const behandling = {
-      id: 1,
-      versjon: 123,
-      aksjonspunkter: [
-        {
-          id: 0,
-          definisjon: {
-            kode: aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD,
-            navn: 'Registrer papirsøknad engangsstønad',
-          },
-          status: {
-            kode: 'OPPR',
-            navn: 'Opprettet',
-          },
-        },
-      ],
-      type: {
-        kode: '',
-        navn: '',
-      },
-      soknad: [],
-      status: {
-        kode: behandlingStatusCode.BEHANDLING_UTREDES,
-        navn: '',
-      },
-      fagsakId: 1,
-      opprettet: '15.10.2017',
-      behandlingPaaVent: false,
-    };
-
-    const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
-    const validFagsakStatus = { kode: validFagsakStatuser[0] };
-
-    const validBehandlingStatuser = [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES, behandlingStatusCode.FORESLA_VEDTAK];
-    const validBehandlingStatus = { kode: validBehandlingStatuser[1] };
-
-    it('saksbehandler skal ha tilgang til å sette behandling på vent når aksjonspunkt er REGISTRER_PAPIRSOKNAD', () => {
       const accessForSaksbehandler = settBehandlingPaVentAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus, behandling);
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);

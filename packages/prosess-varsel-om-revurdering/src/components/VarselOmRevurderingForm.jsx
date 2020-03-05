@@ -19,7 +19,6 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import {
   hasValidText, ISO_DATE_FORMAT, minLength, required, getLanguageCodeFromSprakkode,
 } from '@fpsak-frontend/utils';
-import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 
 import revurderingFamilieHendelsePropType from '../propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from '../propTypes/revurderingSoknadPropType';
@@ -95,7 +94,6 @@ export class VarselOmRevurderingFormImpl extends React.Component {
     const {
       intl,
       previewCallback,
-      erAutomatiskRevurdering,
       languageCode,
       readOnly,
       sendVarsel,
@@ -107,13 +105,6 @@ export class VarselOmRevurderingFormImpl extends React.Component {
       originalVentearsak,
       originalFrist,
       ventearsaker,
-      avklartBarn,
-      behandlingTypeKode,
-      soknad,
-      termindato,
-      soknadOriginalBehandling,
-      familiehendelseOriginalBehandling,
-      vedtaksDatoSomSvangerskapsuke,
       ...formProps
     } = this.props;
     const { showSettPaVentModal } = this.state;
@@ -132,21 +123,6 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                 {[<FormattedMessage key="1" id="VarselOmRevurderingForm.VarselOmRevurderingVurder" />]}
               </AksjonspunktHelpTextTemp>
               <VerticalSpacer twentyPx />
-              { erAutomatiskRevurdering
-              && (
-              <div>
-                <FodselSammenligningIndex
-                  behandlingsTypeKode={behandlingTypeKode}
-                  avklartBarn={avklartBarn}
-                  termindato={termindato}
-                  vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
-                  soknad={soknad}
-                  soknadOriginalBehandling={soknadOriginalBehandling}
-                  familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
-                />
-                <VerticalSpacer sixteenPx />
-              </div>
-              )}
               <RadioGroupField name="sendVarsel" validate={[required]}>
                 <RadioOption label={{ id: 'VarselOmRevurderingForm.SendVarsel' }} value />
                 <RadioOption label={{ id: 'VarselOmRevurderingForm.IkkeSendVarsel' }} value={false} />

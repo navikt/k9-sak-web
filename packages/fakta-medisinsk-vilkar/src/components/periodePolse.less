@@ -1,11 +1,12 @@
 .periodePolse {
   display: flex;
+  flex: 1;
   margin-top: 4px;
 
   .contentWrapper {
     display: flex;
     flex: 1;
-    padding: 0 1rem;
+    margin: 0 1rem;
   }
 
   .expandedContent {
@@ -16,7 +17,7 @@
 
 .headerContainer {
   display: flex;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
 }
 
 .themeBorder {
@@ -40,6 +41,10 @@
   &.blue {
     background-color: #00c3fb;
   }
+
+  &.gray {
+    background-color: #c5c2bf;
+  }
 }
 
 .dates {
@@ -53,4 +58,11 @@
 
 .lengthInText {
   margin-right: 2rem;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  margin-right: 0.625rem;
+  width: 24px;
 }

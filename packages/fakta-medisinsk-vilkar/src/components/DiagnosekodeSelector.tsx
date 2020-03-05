@@ -3,10 +3,12 @@ import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import axios from 'axios';
 import * as React from 'react';
-import styles from './medisinskVilkar.less';
+import styles from './diagnosekodeSelector.less';
 
-const fetchDiagnosekoderByQuery = (queryString: string) =>
-  axios.get(`http://localhost:8300/diagnosekoder?query=${queryString}&max=8`);
+const fetchDiagnosekoderByQuery = (queryString: string) => {
+  const pathPrefix = window.location.hostname === 'localhost' ? 'http://localhost:8300' : '';
+  return axios.get(`${pathPrefix}/diagnosekoder?query=${queryString}&max=8`);
+};
 
 const getUpdatedSuggestions = async (queryString: string) => {
   if (queryString.length >= 3) {
@@ -21,7 +23,17 @@ const getUpdatedSuggestions = async (queryString: string) => {
 
 const DiagnosekodeSelector = ({ readOnly, initialDiagnosekodeValue }) => {
   const [suggestions, setSuggestions] = React.useState([]);
-  const [inputValue, setInputValue] = React.useState(initialDiagnosekodeValue || '');
+  const [inputValue, setInputValue] = React.useState('');
+
+  React.useEffect(() => {
+    const getInitialDiagnosekode = async () => {
+      const diagnosekode = await getUpdatedSuggestions(initialDiagnosekodeValue);
+      if (diagnosekode.length > 0 && diagnosekode[0].value) {
+        setInputValue(diagnosekode[0].value);
+      }
+    };
+    getInitialDiagnosekode();
+  }, []);
 
   return (
     <FlexRow wrap>

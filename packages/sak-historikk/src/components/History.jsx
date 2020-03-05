@@ -35,7 +35,6 @@ const velgHistorikkMal = histType => {
     case historikkinnslagType.BREV_SENT:
     case historikkinnslagType.BREV_BESTILT:
     case historikkinnslagType.REVURD_OPPR:
-    case historikkinnslagType.REGISTRER_PAPIRSOK:
     case historikkinnslagType.MANGELFULL_SOKNAD:
     case historikkinnslagType.INNSYN_OPPR:
     case historikkinnslagType.VRS_REV_IKKE_SNDT:

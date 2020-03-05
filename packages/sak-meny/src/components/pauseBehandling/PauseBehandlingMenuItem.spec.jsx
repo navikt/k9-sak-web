@@ -28,7 +28,6 @@ describe('<PauseBehandlingMenuItem>', () => {
       behandlingType={{
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
-      erPapirsoknad={false}
     />);
 
     expect(wrapper.find(SettBehandlingPaVentForm)).has.length(0);
@@ -46,7 +45,6 @@ describe('<PauseBehandlingMenuItem>', () => {
       behandlingType={{
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
-      erPapirsoknad={false}
     />);
 
     const button = wrapper.find(MenuButton);
@@ -74,7 +72,6 @@ describe('<PauseBehandlingMenuItem>', () => {
       behandlingType={{
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
-      erPapirsoknad={false}
     />);
 
     wrapper.setState({ showModal: true });
@@ -100,7 +97,6 @@ describe('<PauseBehandlingMenuItem>', () => {
       behandlingType={{
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
-      erPapirsoknad={false}
     />);
 
     wrapper.setState({ showModal: true });

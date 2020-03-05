@@ -2,9 +2,7 @@ import React, { FunctionComponent, ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import SideMenu from '@navikt/nap-side-menu';
 
-import {
-  FlexColumn, FlexContainer, FlexRow,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 
 import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
@@ -17,19 +15,14 @@ interface OwnProps {
   children: ReactNode;
 }
 
-const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
-  paneler,
-  onClick,
-  children,
-}) => (
+const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({ intl, paneler, onClick, children }) => (
   <div className={styles.container}>
-    <FlexContainer>
+    <FlexContainer fullHeight>
       <FlexRow>
-        <FlexColumn>
+        <FlexColumn className={styles.sideMenu}>
           <SideMenu
             heading={intl.formatMessage({ id: 'FaktaPanel.FaktaOm' })}
-            links={paneler.map((panel) => ({
+            links={paneler.map(panel => ({
               label: panel.tekst,
               active: panel.erAktiv,
               iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
@@ -38,9 +31,7 @@ const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
             onClick={onClick}
           />
         </FlexColumn>
-        <FlexColumn className={styles.content}>
-          {children}
-        </FlexColumn>
+        <FlexColumn className={styles.content}>{children}</FlexColumn>
       </FlexRow>
     </FlexContainer>
   </div>

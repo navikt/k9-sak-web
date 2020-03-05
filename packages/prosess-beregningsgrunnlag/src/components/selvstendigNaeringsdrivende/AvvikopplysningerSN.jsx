@@ -5,16 +5,16 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { FlexRow } from '@fpsak-frontend/shared-components';
-
-import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
+import AvvikopplysningerATFLSN from '../fellesPaneler/AvvikopplysningerATFLSN';
 
 const AvviksopplysningerSN = ({
-  sammenligningsgrunnlagPrStatus, alleAndelerIForstePeriode, harAksjonspunkter,
+  sammenligningsgrunnlagPrStatus, alleAndelerIForstePeriode, relevanteStatuser,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   const { pgiSnitt } = snAndel;
   const erNyArbLivet = snAndel.erNyIArbeidslivet;
   const erVarigEndring = snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+  const erNyoppstartet = snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
   const sammenligningsGrunnlagSN = sammenligningsgrunnlagPrStatus
     ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_SN'
       || status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_ATFL_SN')
@@ -45,7 +45,7 @@ const AvviksopplysningerSN = ({
       </FlexRow>
     );
   }
-  if (!erVarigEndring && !harAksjonspunkter) {
+  if (!erVarigEndring && !erNyoppstartet) {
     return (
       <FlexRow>
         <Column xs="12">
@@ -56,24 +56,13 @@ const AvviksopplysningerSN = ({
       </FlexRow>
     );
   }
-  if (!harAksjonspunkter) {
-    return (
-      <FlexRow>
-        <Column xs="12">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.SN.IngenEndring" />
-          </Normaltekst>
-        </Column>
-      </FlexRow>
-    );
-  }
   if (sammenligningsgrunnlagSumSN) {
     return (
-      <AvvikopplysningerATFL
+      <AvvikopplysningerATFLSN
         beregnetAarsinntekt={pgiSnitt}
         avvikProsentAvrundet={avvikRoundedSN}
         differanseBeregnet={differanseBeregnet}
-        relevanteStatuser={{}}
+        relevanteStatuser={relevanteStatuser}
         visPanel={visPaneler}
         sammenligningsgrunnlagSum={sammenligningsgrunnlagSumSN}
       />
@@ -84,12 +73,12 @@ const AvviksopplysningerSN = ({
 
 
 AvviksopplysningerSN.propTypes = {
-  harAksjonspunkter: PropTypes.bool,
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
-  sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
+  relevanteStatuser: PropTypes.shape().isRequired,
+};
+AvviksopplysningerSN.defaultProps = {
+  sammenligningsgrunnlagPrStatus: undefined,
 };
 
-AvviksopplysningerSN.defaultProps = {
-  harAksjonspunkter: false,
-};
 export default AvviksopplysningerSN;

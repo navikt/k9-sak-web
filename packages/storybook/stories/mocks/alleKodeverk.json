@@ -146,11 +146,6 @@
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
     },
     {
-      "kode": "REGISTRER_PAPIRSØK",
-      "navn": "Registrer papirsøknad",
-      "kodeverk": "HISTORIKKINNSLAG_TYPE"
-    },
-    {
       "kode": "SAK_RETUR",
       "navn": "Sak retur",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"

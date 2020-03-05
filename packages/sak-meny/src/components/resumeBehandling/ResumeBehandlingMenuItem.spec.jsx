@@ -21,7 +21,6 @@ describe('<ResumeBehandlingMenuItem>', () => {
       behandlingType={{
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
-      erPapirsoknad={false}
     />);
     expect(wrapper.find('MenuButton')).has.length(1);
   });
@@ -36,7 +35,6 @@ describe('<ResumeBehandlingMenuItem>', () => {
       behandlingType={{
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
-      erPapirsoknad={false}
     />);
 
     wrapper.find('MenuButton').prop('onMouseDown')();

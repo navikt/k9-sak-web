@@ -172,38 +172,42 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
           lukkModal={this.toggleIverksetterVedtakModal}
           behandlingsresultat={behandling.behandlingsresultat}
         />
-        <ProcessMenu
-          steps={alleProsessMenySteg.map(p => p.prosessmenySteg)}
-          onClick={index => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-        />
-        {valgtSteg && (
-          <MargMarkering
-            behandlingStatus={behandling.status}
-            aksjonspunkter={valgtSteg.aksjonspunkter}
-            isReadOnly={valgtSteg.isReadOnly}
-          >
-            {!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN && (
-              <InnsynProsessIndex
-                isSubmittable={valgtSteg.isSubmittable}
-                aksjonspunkter={valgtSteg.aksjonspunkter}
-                alleKodeverk={kodeverk}
-                {...fellesProps}
-              />
-            )}
-            {vedtakStegVises && valgtSteg.aksjonspunkter.length > 0 && (
-              <VedtakInnsynProsessIndex
-                aksjonspunkter={aksjonspunkter}
-                alleDokumenter={alleDokumenter}
-                previewCallback={this.previewCallback}
-                {...fellesProps}
-              />
-            )}
-          </MargMarkering>
-        )}
-        {vedtakStegVises && behandling.behandlingHenlagt && <BehandlingHenlagtPanel />}
-        {vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0 && (
-          <ProsessStegIkkeBehandletPanel />
-        )}
+        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
+          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
+            <ProcessMenu
+              steps={alleProsessMenySteg.map(p => p.prosessmenySteg)}
+              onClick={index => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
+            />
+          </div>
+          {valgtSteg && (
+            <MargMarkering
+              behandlingStatus={behandling.status}
+              aksjonspunkter={valgtSteg.aksjonspunkter}
+              isReadOnly={valgtSteg.isReadOnly}
+            >
+              {!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN && (
+                <InnsynProsessIndex
+                  isSubmittable={valgtSteg.isSubmittable}
+                  aksjonspunkter={valgtSteg.aksjonspunkter}
+                  alleKodeverk={kodeverk}
+                  {...fellesProps}
+                />
+              )}
+              {vedtakStegVises && valgtSteg.aksjonspunkter.length > 0 && (
+                <VedtakInnsynProsessIndex
+                  aksjonspunkter={aksjonspunkter}
+                  alleDokumenter={alleDokumenter}
+                  previewCallback={this.previewCallback}
+                  {...fellesProps}
+                />
+              )}
+            </MargMarkering>
+          )}
+          {vedtakStegVises && behandling.behandlingHenlagt && <BehandlingHenlagtPanel />}
+          {vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0 && (
+            <ProsessStegIkkeBehandletPanel />
+          )}
+        </div>
       </>
     );
   }
