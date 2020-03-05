@@ -11,7 +11,6 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
-import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -134,8 +133,8 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.OPPLYSNINGSPLIKT,
-    textCode: 'Behandlingspunkt.Opplysningsplikt',
+    urlCode: bpc.INNGANGSVILKAR,
+    textCode: 'Behandlingspunkt.Inngangsvilkar',
     panels: [
       {
         aksjonspunkterCodes: [ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU],
@@ -152,30 +151,11 @@ const prosessStegPanelDefinisjoner = [
         renderComponent: props => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
         getData: ({ soknad }) => ({ soknad }),
       },
-    ],
-  },
-  {
-    urlCode: bpc.INNGANGSVILKAR,
-    textCode: 'Behandlingspunkt.Inngangsvilkar',
-    panels: [
       {
-        code: 'ADOPSJON',
-        textCode: 'Inngangsvilkar.Adopsjonsvilkaret',
-        aksjonspunkterCodes: [
-          ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-          ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-        ],
-        aksjonspunkterTextCodes: [
-          'AdopsjonVilkarForm.VurderGjelderSammeBarn',
-          'AdopsjonVilkarForm.VurderGjelderSammeBarn',
-        ],
-        vilkarCodes: [vt.ADOPSJONSVILKARET_FORELDREPENGER],
-        renderComponent: props => <AdopsjonVilkarProsessIndex {...props} />,
-        getData: ({ vilkarForSteg }) => ({ vilkar: vilkarForSteg }),
-        overridePanel: {
-          aksjonspunkterCodes: [ac.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP],
-          ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-        },
+        aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
+        endpoints: [api.UTTAK_PERIODE_GRENSE],
+        renderComponent: props => <VurderSoknadsfristForeldrepengerIndex {...props} />,
+        getData: ({ soknad }) => ({ soknad }),
       },
       {
         code: 'OMSORGENFOR',
@@ -237,18 +217,6 @@ const prosessStegPanelDefinisjoner = [
         renderComponent: props => <BeregningsgrunnlagProsessIndex {...props} />,
         showComponent: () => true,
         getData: ({ fagsak, featureToggles, beregningsgrunnlag }) => ({ fagsak, featureToggles, beregningsgrunnlag }),
-      },
-    ],
-  },
-  {
-    urlCode: bpc.SOEKNADSFRIST,
-    textCode: 'Behandlingspunkt.Soknadsfristvilkaret',
-    panels: [
-      {
-        aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
-        endpoints: [api.UTTAK_PERIODE_GRENSE],
-        renderComponent: props => <VurderSoknadsfristForeldrepengerIndex {...props} />,
-        getData: ({ soknad }) => ({ soknad }),
       },
     ],
   },
