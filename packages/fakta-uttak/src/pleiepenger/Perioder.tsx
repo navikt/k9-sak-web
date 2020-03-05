@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Flatknapp } from 'nav-frontend-knapper';
-import endreSvg from '@fpsak-frontend/assets/images/endre.svg';
+import addSvg from '@fpsak-frontend/assets/images/add-circle.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import styles from './uttakFaktaForm.less';
 import PeriodeKnapp from './PeriodeKnapp';
@@ -35,7 +35,7 @@ const Perioder: FunctionComponent<PerioderProps> = ({ valgtArbeidsforhold, leggT
         />
       ))}
       <Flatknapp htmlType="button" onClick={leggTilPeriode} disabled={buttonDisabled} mini form="kompakt">
-        <Image src={endreSvg} className={styles.image} />
+        <Image src={addSvg} className={styles.image} />
         <span>{intl.formatMessage({ id: 'FaktaOmUttakForm.LeggTilPeriode' })}</span>
       </Flatknapp>
     </div>

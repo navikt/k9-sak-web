@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Flatknapp } from 'nav-frontend-knapper';
-import addSvg from '@fpsak-frontend/assets/images/add-circle.svg';
+import endreSvg from '@fpsak-frontend/assets/images/endre.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { Normaltekst } from 'nav-frontend-typografi';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
@@ -105,7 +105,7 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
       )}
       {!redigererPeriode && (
         <Flatknapp htmlType="button" onClick={endreValgtPeriodeCallback} mini form="kompakt">
-          <Image src={addSvg} className={styles.image} />
+          <Image src={endreSvg} className={styles.image} />
           <span>{intl.formatMessage({ id: 'FaktaOmUttakForm.EndrePeriode' })}</span>
         </Flatknapp>
       )}
