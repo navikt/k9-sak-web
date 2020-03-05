@@ -3,7 +3,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import Behandling from '@k9-sak-web/types/src/behandlingTsType';
 import messages from '../../i18n/nb_NO.json';
-import UttakFaktaForm2 from './UttakFaktaForm2';
+import UttakFaktaPanel from './UttakFaktaPanel';
 
 const cache = createIntlCache();
 
@@ -43,7 +43,7 @@ interface UttakFaktaIndexProps {
 
 const UttakFaktaIndex: FunctionComponent<UttakFaktaIndexProps> = ({ behandling, arbeidsgivere, submitCallback }) => (
   <RawIntlProvider value={intl}>
-    <UttakFaktaForm2
+    <UttakFaktaPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       arbeidsgivere={arbeidsgivere}

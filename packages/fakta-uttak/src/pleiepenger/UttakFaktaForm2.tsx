@@ -4,16 +4,18 @@ import { InjectedFormProps, change as reduxFormChange, reset } from 'redux-form'
 import { bindActionCreators } from 'redux';
 import { FormAction } from 'redux-form/lib/actions';
 import Hovedknapp from 'nav-frontend-knapper/lib/hovedknapp';
-
+import { minLength, maxLength, required, hasValidText } from '@fpsak-frontend/utils';
 import {
   behandlingForm,
   getBehandlingFormPrefix,
   behandlingFormValueSelector,
 } from '@fpsak-frontend/fp-felles/src/behandlingForm';
 import { createSelector } from 'reselect';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
+import { TextAreaField } from '@fpsak-frontend/form';
+import { Knapp } from 'nav-frontend-knapper';
 import { Arbeidsforhold, ArbeidsforholdPeriode, Arbeidsgiver as ArbeidsgiverType } from './UttakFaktaIndex2';
 import Arbeidsgiver from './Arbeidsgiver';
 import { beregnNyePerioder } from './uttakUtils';
@@ -136,6 +138,10 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
     return <div>Laster?</div>; // TODO
   }
 
+  const avbrytSkjemaInnfylling = () => {
+    return undefined; // TODO: bekrefte avbryt (i f eks en modal), og så resetForm
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <UttakFaktaFormContext.Provider value={formContext}>
@@ -178,9 +184,25 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
       {!pristine && (
         <>
           <VerticalSpacer twentyPx />
-          <Hovedknapp onClick={handleSubmit}>
-            {intl.formatMessage({ id: 'SubmitButton.ConfirmInformation' })}
-          </Hovedknapp>
+          <FlexRow className={styles.bekreftelseContainer}>
+            <div className={styles.textAreaStyle}>
+              <TextAreaField
+                label={intl.formatMessage({ id: 'FaktaOmUttakForm.Begrunnelse' })}
+                name="begrunnelse"
+                validate={[required, minLength(3), maxLength(400), hasValidText]}
+                textareaClass={styles.textAreaStyle}
+              />
+            </div>
+            <VerticalSpacer sixteenPx />
+            <FlexRow className={styles.submittKnapper}>
+              <Knapp htmlType="button" mini onClick={avbrytSkjemaInnfylling}>
+                <FormattedMessage id="FaktaOmUttakForm.Avbryt" />
+              </Knapp>
+              <Hovedknapp onClick={handleSubmit}>
+                {intl.formatMessage({ id: 'SubmitButton.ConfirmInformation' })}
+              </Hovedknapp>
+            </FlexRow>
+          </FlexRow>
         </>
       )}
     </form>
