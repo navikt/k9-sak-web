@@ -15,13 +15,13 @@ interface OwnProps {
   children: ReactNode;
 }
 
-const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({ intl, paneler, onClick, children }) => (
+const SideMenuWrapper: FunctionComponent<OwnProps & WrappedComponentProps> = ({ intl, paneler, onClick, children }) => (
   <div className={styles.container}>
     <FlexContainer fullHeight>
       <FlexRow>
         <FlexColumn className={styles.sideMenu}>
           <SideMenu
-            heading={intl.formatMessage({ id: 'FaktaPanel.FaktaOm' })}
+            heading={intl.formatMessage({ id: 'MainSideMenu.Heading' })}
             links={paneler.map(panel => ({
               label: panel.tekst,
               active: panel.erAktiv,
@@ -37,4 +37,4 @@ const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({ intl,
   </div>
 );
 
-export default injectIntl(FaktaPanel);
+export default injectIntl(SideMenuWrapper);
