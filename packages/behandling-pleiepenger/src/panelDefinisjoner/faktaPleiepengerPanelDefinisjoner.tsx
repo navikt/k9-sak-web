@@ -11,8 +11,6 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
 import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar/src/MedisinskVilkarIndex';
 
-import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
-
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 
 const faktaPanelDefinisjoner = [
@@ -58,13 +56,10 @@ const faktaPanelDefinisjoner = [
     endpoints: [pleiepengerBehandlingApi.MEDLEMSKAP, pleiepengerBehandlingApi.MEDLEMSKAP_V2],
     renderComponent: props => <MedlemskapFaktaIndex {...props} />,
     showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
-    getData: ({ fagsak, behandling, hasFetchError, soknad, personopplysninger, inntektArbeidYtelse }) => ({
-      isForeldrepengerFagsak: true,
+    getData: ({ fagsak, soknad, personopplysninger }) => ({
       fagsakPerson: fagsak.fagsakPerson,
-      readOnlyBehandling: hasFetchError || readOnlyUtils.harBehandlingReadOnlyStatus(behandling),
       soknad,
       personopplysninger,
-      inntektArbeidYtelse,
     }),
   },
   {
