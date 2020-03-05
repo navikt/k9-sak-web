@@ -99,7 +99,6 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
         return {
           ...arbeidsgiver,
           arbeidsforhold: arbeidsgiver.arbeidsforhold.map(arbeidsforhold => {
-            // TODO: velger her første arbeids
             if (arbeidsforhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId) {
               nyePerioder = beregnNyePerioder(arbeidsforhold.perioder, nyPeriode);
               const nyPeriodeIndex = nyePerioder.reduce(
@@ -116,7 +115,9 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
                 },
                 null,
               );
-              console.log('nyPeriodeIndex', nyPeriodeIndex);
+
+              setValgtPeriodeIndex(nyPeriodeIndex);
+
               return {
                 ...arbeidsforhold,
                 perioder: nyePerioder,
@@ -163,7 +164,7 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
               behandlingId={behandlingId}
               oppdaterPerioder={oppdaterPerioder}
               endreValgtPeriodeCallback={() => {
-                setRedigererPeriode(true); // TODO: Må egentlig resette verdier i formen også. Her eller ved avbryt
+                setRedigererPeriode(true);
               }}
               avbryt={() => {
                 resetForm(`${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${nyArbeidsperiodeFormName}`);
