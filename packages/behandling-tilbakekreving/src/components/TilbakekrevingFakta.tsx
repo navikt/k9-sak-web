@@ -7,7 +7,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import {
   DataFetcherBehandlingData,
   FagsakInfo,
-  FaktaPanel,
+  SideMenuWrapper,
   readOnlyUtils,
   getAlleMerknaderFraBeslutter,
   BehandlingDataCache,
@@ -83,7 +83,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
   cache.setVersion(behandling.versjon);
 
   return (
-    <FaktaPanel
+    <SideMenuWrapper
       paneler={[
         {
           tekst: intl.formatMessage({ id: 'TilbakekrevingFakta.FaktaFeilutbetaling' }),
@@ -118,7 +118,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
           return null;
         }}
       />
-    </FaktaPanel>
+    </SideMenuWrapper>
   );
 };
 
