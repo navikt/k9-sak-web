@@ -356,6 +356,7 @@ const prosessStegPanelDefinisjoner = [
           beregningresultatForeldrepenger,
           simuleringResultat,
           beregningsgrunnlag,
+          vedtakVarsel,
         }) => ({
           previewCallback,
           aksjonspunkter,
@@ -365,6 +366,7 @@ const prosessStegPanelDefinisjoner = [
           beregningsgrunnlag,
           ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
           employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+          vedtakVarsel,
         }),
         showComponent: () => true,
         overrideStatus: ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>

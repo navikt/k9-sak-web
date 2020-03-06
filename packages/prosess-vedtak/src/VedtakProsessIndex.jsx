@@ -41,6 +41,7 @@ const VedtakProsessIndex = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  vedtakVarsel
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -68,6 +69,7 @@ const VedtakProsessIndex = ({
       previewCallback={previewCallback}
       submitCallback={submitCallback}
       alleKodeverk={alleKodeverk}
+      vedtakVarsel={vedtakVarsel}
     />
   </RawIntlProvider>
 );
@@ -90,6 +92,7 @@ VedtakProsessIndex.propTypes = {
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
+  vedtakVarsel: PropTypes.shape()
 };
 
 VedtakProsessIndex.defaultProps = {

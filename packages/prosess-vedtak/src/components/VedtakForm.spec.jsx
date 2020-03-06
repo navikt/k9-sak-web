@@ -617,11 +617,15 @@ describe('<VedtakForm>', () => {
       },
       avslagsarsak: null,
       avslagsarsakFritekst: null,
+
+    };
+    const vedtakVarsel = {
       vedtaksbrev: {
         kode: 'FRITEKST',
       },
-    };
-    const model = buildInitialValues.resultFunc(behandlingStatus.BEHANDLING_UTREDES, undefined, aksjonspunkter, { kode: 'ES' }, behandlingsresultat, sprakkode);
+    }
+    // eslint-disable-next-line
+    const model = buildInitialValues.resultFunc(behandlingStatus.BEHANDLING_UTREDES, undefined, aksjonspunkter, { kode: 'ES' }, behandlingsresultat, sprakkode, vedtakVarsel);
 
     expect(model).to.eql({
       aksjonspunktKoder: ['5018', '5033'],
@@ -664,12 +668,15 @@ describe('<VedtakForm>', () => {
       },
       avslagsarsak: null,
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
       overskrift: 'Overskrift',
       fritekstbrev: 'Brødtekst',
     };
+
+    const vedtakVarsel = {
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    }
 
     const model = buildInitialValues.resultFunc(
       behandlingStatus.BEHANDLING_UTREDES,
@@ -678,6 +685,7 @@ describe('<VedtakForm>', () => {
       'ES',
       behandlingsresultat,
       sprakkode,
+      vedtakVarsel
     );
     expect(model).to.eql({
       aksjonspunktKoder: ['5033'],

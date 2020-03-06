@@ -15,8 +15,8 @@ const arbeidsforhold = {
   fomDato: '2012-01-01',
   tomDato: '2025-01-01',
   kilde: {
-    kode: 'INNTEKT',
-    navn: 'aa-registeret',
+    kodeverk: 'INNTEKT',
+    kode: 'aa-registeret',
   },
   mottattDatoInntektsmelding: undefined,
   brukArbeidsforholdet: true,
@@ -209,8 +209,8 @@ describe('<ArbeidsforholdRadioknapper>', () => {
       arbeidsforhold={{
         ...arbeidsforhold,
         kilde: {
-          kode: 'INNTEKT',
-          navn: 'noen-annet',
+          kodeverk: 'INNTEKT',
+          kode: 'noen-annet',
         },
       }}
       aktivtArbeidsforholdTillatUtenIM
