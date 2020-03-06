@@ -14,6 +14,8 @@
   "FaktaOmUttakForm.IngenArbeidsforholdValgt": "Klikk på en arbeidsgiver for å se detaljene",
   "FaktaOmUttakForm.LeggTilPeriode": "Legg til ny periode",
   "FaktaOmUttakForm.Begrunnelse": "Begrunn endringene",
+  "UttakPanel.Arbeidsgivere": "{antall} arbeidsgivere",
+  "UttakPanel.Arbeidsgiver": "1 arbeidsgiver",
   "UttakInfoPanel.FaktaUttak": "Fakta om uttak",
   "UttakInfoPanel.Aksjonspunkt.5070": "Fastsett korrekt og dokumentert søknadsperiode og andel i arbeid. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Rediger søknadsperiodene så de stemmer overens med startdato. Kontakt søker ved behov.",

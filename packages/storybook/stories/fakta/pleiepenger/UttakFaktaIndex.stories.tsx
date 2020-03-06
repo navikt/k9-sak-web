@@ -1,7 +1,8 @@
 import React from 'react';
-import UttakFaktaIndex, { Arbeidsgiver } from '@fpsak-frontend/fakta-uttak/src/pleiepenger/UttakFaktaIndex2';
+import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/pleiepenger/UttakFaktaIndex2';
 import { action } from '@storybook/addon-actions';
 import { Behandling } from '@k9-sak-web/types';
+import Arbeidsgiver from '@fpsak-frontend/fakta-uttak/src/pleiepenger/types/Arbeidsgiver';
 import withReduxProvider from '../../../decorators/withRedux';
 
 export default {
@@ -16,12 +17,10 @@ const behandling: Behandling = {
   status: {
     kode: '1',
     kodeverk: '1',
-    navn: 'dmj',
   },
   type: {
     kode: '1',
     kodeverk: '1',
-    navn: 'dmj',
   },
   behandlingPaaVent: false,
   behandlingHenlagt: false,
@@ -32,7 +31,6 @@ const arbeidsgivere: Arbeidsgiver[] = [
   {
     arbeidsforhold: [
       {
-        stillingsnavn: 'Vaskehjelp',
         perioder: [
           {
             fom: '2020-02-02',
@@ -44,7 +42,6 @@ const arbeidsgivere: Arbeidsgiver[] = [
         arbeidsgiversArbeidsforholdId: 'unik id 1',
       },
       {
-        stillingsnavn: 'Ingeniør',
         perioder: [
           {
             fom: '2020-02-02',
@@ -62,7 +59,6 @@ const arbeidsgivere: Arbeidsgiver[] = [
   {
     arbeidsforhold: [
       {
-        stillingsnavn: 'Oljeborer',
         perioder: [
           {
             fom: '2020-02-02',
