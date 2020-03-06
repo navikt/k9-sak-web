@@ -182,7 +182,7 @@ const prosessStegPanelDefinisjoner = [
       {
         code: 'MEDISINSKVILKAR',
         textCode: 'Inngangsvilkar.Medisinskvilkaret',
-        aksjonspunkterCodes: [ac.MEDISINSK_VILKAAR], // TODO (Hallvard): Sett riktig verdi her
+        aksjonspunkterCodes: [ac.MEDISINSK_VILKAAR],
         vilkarCodes: [vt.MEDISINSKVILKARET],
         // endpoints: [api.MEDLEMSKAP],
         ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
