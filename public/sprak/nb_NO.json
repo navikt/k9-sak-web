@@ -23,7 +23,7 @@
   "SakenFaktaPanel.Title": "Saken",
 
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
-  "Behandlingspunkt.MedisinskVilkar": "Medisinsk Vilkår",
+  "Behandlingspunkt.MedisinskVilkar": "Medisinske vilkår",
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.Inngangsvilkar": "Inngangsvilkår",
   "Behandlingspunkt.CheckVarselRevurdering": "Varsel",
@@ -57,6 +57,7 @@
   "Behandlingspunkt.Avregning": "Simulering",
   "Behandlingspunkt.Foreldelse": "Foreldelse",
   "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
+  "Behandlingspunkt.Opptjening": "Opptjening",
 
   "InngangsvilkarPanel.AvventerAvklaringAv": "Avventer avklaring av fakta om ",
   "OpptjeningVilkarView.VurderOmSøkerHarRett": "Vurder om søker har opptjent rett til foreldrepenger",
