@@ -16,6 +16,7 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Knapp } from 'nav-frontend-knapper';
+import { LoadingPanel } from '@fpsak-frontend/shared-components/index';
 import ArbeidsgiverType from './types/Arbeidsgiver';
 import Arbeidsgiver from './Arbeidsgiver';
 import { beregnNyePerioder, UttakFaktaFormContext } from './uttakUtils';
@@ -89,12 +90,12 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
               nyePerioder = beregnNyePerioder(arbeidsforhold.perioder, nyPeriode);
               const nyPeriodeIndex = nyePerioder.reduce(
                 (tmpIndex: number, periode: ArbeidsforholdPeriode, index: number) => {
-                  if (
+                  const periodeErLik =
                     periode.fom === nyPeriode.fom &&
                     periode.tom === nyPeriode.tom &&
                     periode.timerIJobbTilVanlig === nyPeriode.timerIJobbTilVanlig &&
-                    periode.timerFårJobbet === nyPeriode.timerFårJobbet
-                  ) {
+                    periode.timerFårJobbet === nyPeriode.timerFårJobbet;
+                  if (periodeErLik) {
                     return index;
                   }
                   return tmpIndex;
@@ -119,11 +120,12 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
   };
 
   if (!arbeidsgivere) {
-    return <div>Laster?</div>; // TODO
+    return <LoadingPanel />;
   }
 
   const avbrytSkjemaInnfylling = () => {
-    return undefined; // TODO: bekrefte avbryt (i f eks en modal), og så resetForm
+    // TODO: bekrefte avbryt (i f eks en modal), og så resetForm
+    resetForm(`${behandlingFormPrefix}.${uttakFaktaFormName}`);
   };
 
   return (
