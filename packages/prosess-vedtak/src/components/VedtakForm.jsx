@@ -270,14 +270,15 @@ export const buildInitialValues = createSelector(
     (ownProps) => ownProps.aksjonspunkter,
     (ownProps) => ownProps.ytelseTypeKode,
     (ownProps) => ownProps.behandlingresultat,
-    (ownProps) => ownProps.sprakkode],
-  (status, beregningResultat, aksjonspunkter, ytelseTypeKode, behandlingresultat, sprakkode) => ({
+    (ownProps) => ownProps.sprakkode,
+    (ownProps) => ownProps.vedtakVarsel],
+  (status, beregningResultat, aksjonspunkter, ytelseTypeKode, behandlingresultat, sprakkode, vedtakVarsel) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseTypeKode ? ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD : false,
     antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
     aksjonspunktKoder: aksjonspunkter.filter((ap) => ap.kanLoses)
       .map((ap) => ap.definisjon.kode),
-    skalBrukeOverstyrendeFritekstBrev: behandlingresultat.vedtaksbrev.kode === 'FRITEKST',
+    skalBrukeOverstyrendeFritekstBrev: vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
     overskrift: decodeHtmlEntity(behandlingresultat.overskrift),
     brødtekst: decodeHtmlEntity(behandlingresultat.fritekstbrev),
   }),

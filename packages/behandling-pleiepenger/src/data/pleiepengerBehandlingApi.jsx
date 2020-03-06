@@ -42,7 +42,8 @@ export const PleiepengerBehandlingApiKeys = {
   OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT: 'VERGE_OPPRETT',
   VERGE_FJERN: 'VERGE_FJERN',
-  SYKDOM: 'SYKDOM'
+  SYKDOM: 'SYKDOM',
+  VEDTAK_VARSEL: 'VEDTAK_VARSEL'
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -91,6 +92,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-stonadskontoer', PleiepengerBehandlingApiKeys.UTTAK_STONADSKONTOER)
   .withRel('uttak-kontroller-fakta-perioder', PleiepengerBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
+  .withRel('vedtak-varsel', PleiepengerBehandlingApiKeys.VEDTAK_VARSEL)
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', PleiepengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerBehandlingApiKeys.HENLEGG_BEHANDLING)

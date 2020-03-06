@@ -1,15 +1,11 @@
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import { Fagsak, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { Gender, PersonCard } from '@navikt/nap-person-card';
 import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { PersonCard, EmptyPersonCard, Gender } from '@navikt/nap-person-card';
-
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Kodeverk, Personopplysninger, Fagsak } from '@k9-sak-web/types';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
-
 import styles from './visittkortPanel.less';
 
 const utledKjonn = kjonn => {
@@ -28,10 +24,10 @@ interface OwnProps {
 }
 
 const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+  // intl,
   fagsak,
   personopplysninger,
-  lenkeTilAnnenPart,
+  // lenkeTilAnnenPart,
   alleKodeverk,
   sprakkode,
 }) => {
@@ -48,10 +44,10 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     );
   }
 
-  const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
+  // const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
 
-  const soker = erMor || !personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
-  const annenPart = !erMor && personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
+  const soker = personopplysninger;
+  // const annenPart = !erMor && personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
 
   return (
     <div className={styles.container}>
@@ -62,15 +58,15 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               name={soker.navn}
               fodselsnummer={soker.fnr}
               gender={utledKjonn(soker.navBrukerKjonn)}
-              url={lenkeTilAnnenPart}
+              // url={lenkeTilAnnenPart}
               renderMenuContent={(): JSX.Element => (
                 <VisittkortDetaljerPopup personopplysninger={soker} alleKodeverk={alleKodeverk} sprakkode={sprakkode} />
               )}
               renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={soker} />}
-              isActive={erMor}
+              // isActive={erMor}
             />
           </FlexColumn>
-          {annenPart && annenPart.aktoerId && (
+          {/* {annenPart && annenPart.aktoerId && (
             <FlexColumn>
               <PersonCard
                 name={annenPart.navn}
@@ -87,12 +83,12 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                 isActive={!erMor}
               />
             </FlexColumn>
-          )}
-          {annenPart && !annenPart.aktoerId && (
+          )} */}
+          {/* {annenPart && !annenPart.aktoerId && (
             <FlexColumn>
               <EmptyPersonCard namePlaceholder={intl.formatMessage({ id: 'VisittkortPanel.Ukjent' })} />
             </FlexColumn>
-          )}
+          )} */}
         </FlexRow>
       </FlexContainer>
     </div>
