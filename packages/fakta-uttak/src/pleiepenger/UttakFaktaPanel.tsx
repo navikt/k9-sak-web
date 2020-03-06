@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { useIntl } from 'react-intl';
-import { Arbeidsgiver } from './UttakFaktaIndex2';
 import UttakFaktaForm from './UttakFaktaForm2';
 import styles from './uttakFaktaPanel.less';
+import Arbeidsgiver from './types/Arbeidsgiver';
 
 interface UttakFaktaPanelProps {
   behandlingId: number;

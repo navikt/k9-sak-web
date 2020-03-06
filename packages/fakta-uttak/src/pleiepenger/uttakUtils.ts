@@ -1,6 +1,13 @@
+import { createContext, useContext } from 'react';
 import moment from 'moment';
 import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { ArbeidsforholdPeriode } from './UttakFaktaIndex2';
+import UttakContextProps from './types/UttakContextProps';
+import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
+
+export const UttakFaktaFormContext = createContext<UttakContextProps>(null);
+export function useUttakContext() {
+  return useContext(UttakFaktaFormContext);
+}
 
 export const momentDato = (datoString: string): moment.Moment => moment(datoString, ISO_DATE_FORMAT);
 

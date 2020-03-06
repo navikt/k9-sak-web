@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from 'react';
 
 import classnames from 'classnames/bind';
-import { ArbeidsforholdPeriode } from './UttakFaktaIndex2';
-import { useUttakContext } from './UttakFaktaForm2';
 
 import styles from './periodeKnapp.less';
-import { visningsdato } from './uttakUtils';
+import { useUttakContext, visningsdato } from './uttakUtils';
+import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 
 const classNames = classnames.bind(styles);
 

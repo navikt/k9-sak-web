@@ -1,4 +1,4 @@
-import React, { createContext, FunctionComponent, useContext, useMemo, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps, change as reduxFormChange, reset } from 'redux-form';
 import { bindActionCreators } from 'redux';
@@ -16,32 +16,16 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Knapp } from 'nav-frontend-knapper';
-import { Arbeidsforhold, ArbeidsforholdPeriode, Arbeidsgiver as ArbeidsgiverType } from './UttakFaktaIndex2';
+import ArbeidsgiverType from './types/Arbeidsgiver';
 import Arbeidsgiver from './Arbeidsgiver';
-import { beregnNyePerioder } from './uttakUtils';
+import { beregnNyePerioder, UttakFaktaFormContext } from './uttakUtils';
 import styles from './uttakFaktaForm.less';
 import ValgtPeriode from './ValgtPeriode';
 import UttakFormKolonne from './UttakFormKolonne';
 import Perioder from './Perioder';
-import { nyArbeidsperiodeFormName } from './NyArbeidsperiode';
-
-export const uttakFaktaFormName = 'UttakFaktaForm';
-
-interface UttakContextProps {
-  valgtArbeidsgiversOrgNr?: string;
-  setValgtArbeidsgiversOrgNr?: (orgNr: string) => void;
-  valgtArbeidsforholdId?: string;
-  setValgtArbeidsforholdId?: (arbeidsforholdId: string) => void;
-  valgtPeriodeIndex?: number;
-  setValgtPeriodeIndex?: (periodeIndex: number) => void;
-  redigererPeriode?: boolean;
-  setRedigererPeriode: (redigererPeriode: boolean) => void;
-}
-
-export const UttakFaktaFormContext = createContext<UttakContextProps>(null);
-export function useUttakContext() {
-  return useContext(UttakFaktaFormContext);
-}
+import UttakContextProps from './types/UttakContextProps';
+import ArbeidsforholdPeriode, { Arbeidsforhold } from './types/Arbeidfsforhold';
+import { uttakFaktaFormName, nyArbeidsperiodeFormName } from './constants';
 
 interface UttakFaktaFormProps {
   arbeidsgivere: ArbeidsgiverType[];

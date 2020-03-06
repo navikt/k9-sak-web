@@ -6,7 +6,7 @@ import addSvg from '@fpsak-frontend/assets/images/add-circle.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import styles from './uttakFaktaForm.less';
 import PeriodeKnapp from './PeriodeKnapp';
-import { Arbeidsforhold } from './UttakFaktaIndex2';
+import { Arbeidsforhold } from './types/Arbeidfsforhold';
 
 interface PerioderProps {
   valgtArbeidsforhold: Arbeidsforhold;

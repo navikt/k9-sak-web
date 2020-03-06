@@ -8,8 +8,9 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles/src/behandlingForm';
 
 import { mountWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
-import UttakFaktaForm, { uttakFaktaFormName } from './UttakFaktaForm2';
-import { Arbeidsgiver } from './UttakFaktaIndex2';
+import UttakFaktaForm from './UttakFaktaForm2';
+import Arbeidsgiver from './types/Arbeidsgiver';
+import { uttakFaktaFormName } from './constants';
 
 const history = createBrowserHistory({
   basename: '/k9/web/',
@@ -24,7 +25,7 @@ describe('<UttakFaktaForm2>', () => {
         organisasjonsnummer: '123',
         arbeidsforhold: [
           {
-            stillingsnavn: 'Utvikler',
+            arbeidsgiversArbeidsforholdId: '1234',
             perioder: [
               {
                 timerIJobbTilVanlig: 37.5,

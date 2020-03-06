@@ -4,6 +4,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import Behandling from '@k9-sak-web/types/src/behandlingTsType';
 import messages from '../../i18n/nb_NO.json';
 import UttakFaktaPanel from './UttakFaktaPanel';
+import Arbeidsgiver from './types/Arbeidsgiver';
 
 const cache = createIntlCache();
 
@@ -14,26 +15,6 @@ const intl = createIntl(
   },
   cache,
 );
-
-// TODO: interfaces inn i types/uttakfakta elns
-export interface ArbeidsforholdPeriode {
-  fom: string;
-  tom: string;
-  timerIJobbTilVanlig: number;
-  timerFårJobbet: number;
-}
-
-export interface Arbeidsforhold {
-  stillingsnavn?: string; // TODO: fjern - har ikke denne infoen
-  arbeidsgiversArbeidsforholdId: string;
-  perioder: ArbeidsforholdPeriode[];
-}
-
-export interface Arbeidsgiver {
-  organisasjonsnummer: string;
-  navn: string;
-  arbeidsforhold: Arbeidsforhold[];
-}
 
 interface UttakFaktaIndexProps {
   behandling: Behandling;

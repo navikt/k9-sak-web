@@ -6,10 +6,11 @@ import { Image } from '@fpsak-frontend/shared-components';
 import { Normaltekst } from 'nav-frontend-typografi';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import styles from './uttakFaktaForm.less';
-import NyArbeidsperiode, { nyArbeidsperiodeFormName } from './NyArbeidsperiode';
-import { useUttakContext } from './UttakFaktaForm2';
-import { ArbeidsforholdPeriode, Arbeidsgiver } from './UttakFaktaIndex2';
-import { arbeidsprosent, visningsdato } from './uttakUtils';
+import NyArbeidsperiode from './NyArbeidsperiode';
+import { arbeidsprosent, useUttakContext, visningsdato } from './uttakUtils';
+import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
+import Arbeidsgiver from './types/Arbeidsgiver';
+import { nyArbeidsperiodeFormName } from './constants';
 
 interface ValgtPeriodeProps {
   endreValgtPeriodeCallback: () => void;

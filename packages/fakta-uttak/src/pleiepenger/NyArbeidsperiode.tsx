@@ -15,10 +15,10 @@ import { FlexContainer } from '@fpsak-frontend/shared-components/index';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { ArbeidsforholdPeriode } from './UttakFaktaIndex2';
-import { uttakFaktaFormName } from './UttakFaktaForm2';
 import { arbeidsprosent } from './uttakUtils';
 import styles from './uttakFaktaForm.less';
+import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
+import { nyArbeidsperiodeFormName } from './constants';
 
 interface NyArbeidsperiodeProps {
   oppdaterPerioder: (nyPeriode: ArbeidsforholdPeriode) => void;
@@ -31,8 +31,6 @@ interface NyArbeidsperiodeProps {
     timerFårJobbet: string;
   };
 }
-
-export const nyArbeidsperiodeFormName = `${uttakFaktaFormName}-NyPeriode`;
 
 const timerProsent = timer =>
   numberRegex.test(`${timer}`) ? (

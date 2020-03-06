@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Element } from 'nav-frontend-typografi';
-import { Arbeidsgiver as ArbeidsgiverType } from './UttakFaktaIndex2';
-import { useUttakContext } from './UttakFaktaForm2';
+import ArbeidsgiverType from './types/Arbeidsgiver';
 import styles from './uttakFaktaForm.less';
+import { useUttakContext } from './uttakUtils';
 
 const classNames = classnames.bind(styles);
 
