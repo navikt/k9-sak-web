@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { omit } from '@fpsak-frontend/utils';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
   ProsessStegPanel,
@@ -96,8 +95,8 @@ describe('<PleiepengerProsess>', () => {
         behandling={behandling}
         alleKodeverk={{}}
         navAnsatt={navAnsatt}
-        valgtProsessSteg="default"
-        valgtFaktaSteg="default"
+        valgtProsessSteg="inngangsvilkar"
+        valgtFaktaSteg="arbeidsforhold"
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
@@ -110,18 +109,11 @@ describe('<PleiepengerProsess>', () => {
     const meny = wrapper.find(ProsessStegContainer);
     expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
       {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        label: 'Opplysningsplikt',
-        type: 'default',
-      },
-      {
         isActive: true,
         isDisabled: false,
         isFinished: false,
         label: 'Inngangsvilkår',
-        type: 'warning',
+        type: 'default',
       },
       {
         isActive: false,
@@ -184,66 +176,13 @@ describe('<PleiepengerProsess>', () => {
 
     const meny = wrapper.find(ProsessStegContainer);
 
-    meny.prop('velgProsessStegPanelCallback')(3);
+    meny.prop('velgProsessStegPanelCallback')(2);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).to.have.length(1);
     expect(opppdaterKall[0].args).to.have.length(2);
     expect(opppdaterKall[0].args[0]).to.eql('uttak');
     expect(opppdaterKall[0].args[1]).to.eql('default');
-  });
-
-  it('skal vise prosesspanel for inngangsvilkår siden det er et åpent aksjonspunkt for adopsjon', () => {
-    const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
-        fagsak={fagsak}
-        behandling={behandling}
-        alleKodeverk={{}}
-        navAnsatt={navAnsatt}
-        valgtProsessSteg="default"
-        valgtFaktaSteg="default"
-        hasFetchError={false}
-        oppdaterBehandlingVersjon={sinon.spy()}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
-        opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
-      />,
-    );
-
-    const panelData = {
-      code: 'ADOPSJON',
-      endpoints: [],
-      aksjonspunkter,
-      isAksjonspunktOpen: true,
-      aksjonspunktHelpTextCodes: ['AdopsjonVilkarForm.VurderGjelderSammeBarn'],
-      isReadOnly: false,
-      status: vilkarUtfallType.IKKE_VURDERT,
-      komponentData: {
-        status: vilkarUtfallType.IKKE_VURDERT,
-        isReadOnly: false,
-        readOnlySubmitButton: false,
-        aksjonspunkter,
-        vilkar,
-        isAksjonspunktOpen: true,
-      },
-    };
-
-    const data = {
-      urlCode: 'inngangsvilkar',
-      erStegBehandlet: true,
-      prosessStegTittelKode: 'Behandlingspunkt.Inngangsvilkar',
-      isAksjonspunktOpen: true,
-      isReadOnly: false,
-      aksjonspunkter,
-      status: vilkarUtfallType.IKKE_VURDERT,
-    };
-
-    const panel = wrapper.find(ProsessStegPanel);
-    expect(omit(panel.prop('valgtProsessSteg').panelData[0], 'renderComponent')).is.eql(panelData);
-    expect(omit(panel.prop('valgtProsessSteg'), 'panelData')).is.eql(data);
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', () => {
