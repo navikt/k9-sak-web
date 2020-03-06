@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { FaktaPanel, DataFetcherBehandlingDataV2 } from '@fpsak-frontend/behandling-felles';
+import { SideMenuWrapper, DataFetcherBehandlingDataV2 } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -85,7 +85,7 @@ describe('<ForeldrepengerFakta>', () => {
       />,
     );
 
-    const panel = wrapper.find(FaktaPanel);
+    const panel = wrapper.find(SideMenuWrapper);
     expect(panel.prop('paneler')).is.eql([
       {
         erAktiv: true,
@@ -124,7 +124,7 @@ describe('<ForeldrepengerFakta>', () => {
       />,
     );
 
-    const panel = wrapper.find(FaktaPanel);
+    const panel = wrapper.find(SideMenuWrapper);
 
     panel.prop('onClick')(0);
 
