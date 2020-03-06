@@ -6,9 +6,9 @@ interface FaktaPanelDefinisjon {
   textCode: string;
   aksjonspunkterCodes: string[];
   endpoints: EndpointOperations[];
-  renderComponent: (props: {}) => ReactNode;
-  showComponent: (data?: {}) => true | false;
-  getData: (data?: {}) => {};
+  renderComponent: (props: any) => ReactNode;
+  showComponent: (data?: any) => true | false;
+  getData: (data?: any) => {};
 }
 
 export default FaktaPanelDefinisjon;

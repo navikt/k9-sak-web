@@ -10,10 +10,12 @@ import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
 import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar/src/MedisinskVilkarIndex';
+import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/pleiepenger/UttakFaktaIndex2';
+import FaktaPanelDefinisjon from '@fpsak-frontend/behandling-felles/src/types/faktaPanelDefinisjonTsType';
 
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 
-const faktaPanelDefinisjoner = [
+const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
   {
     urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
     textCode: 'ArbeidsforholdInfoPanel.Title',
@@ -90,6 +92,42 @@ const faktaPanelDefinisjoner = [
     getData: ({ rettigheter, beregningsgrunnlag }) => ({
       erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
       beregningsgrunnlag,
+    }),
+  },
+  {
+    urlCode: faktaPanelCodes.UTTAK,
+    textCode: 'UttakInfoPanel.FaktaUttak',
+    aksjonspunkterCodes: [],
+    endpoints: [],
+    renderComponent: props => <UttakFaktaIndex {...props} />,
+    showComponent: ({ personopplysninger }) => !!personopplysninger,
+    getData: ({ personopplysninger }) => ({
+      personopplysninger,
+      arbeidsgivere: [
+        {
+          organisasjonsnummer: '905',
+          navn: 'NAV',
+          arbeidsforhold: [
+            {
+              perioder: [
+                {
+                  fom: '2020-02-02',
+                  tom: '2020-03-02',
+                  timerIJobbTilVanlig: 40,
+                  timerFårJobbet: 20,
+                },
+                {
+                  fom: '2020-04-02',
+                  tom: '2020-05-02',
+                  timerIJobbTilVanlig: 15,
+                  timerFårJobbet: 7.5,
+                },
+              ],
+              arbeidsgiversArbeidsforholdId: 'unik id 1',
+            },
+          ],
+        },
+      ],
     }),
   },
 ];
