@@ -3,6 +3,7 @@ import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/pleiepenger/UttakFa
 import { action } from '@storybook/addon-actions';
 import { Behandling } from '@k9-sak-web/types';
 import Arbeidsgiver from '@fpsak-frontend/fakta-uttak/src/pleiepenger/types/Arbeidsgiver';
+import Personopplysninger from '@k9-sak-web/types/src/personopplysningerTsType';
 import withReduxProvider from '../../../decorators/withRedux';
 
 export default {
@@ -81,10 +82,19 @@ const arbeidsgivere: Arbeidsgiver[] = [
   },
 ];
 
+const personopplysninger: Personopplysninger = {
+  navn: 'Reidar Rogersen',
+  navBrukerKjonn: {
+    kode: 'K',
+    kodeverk: 'BRUKER_KJOENN',
+  },
+};
+
 export const avklarArbeidsforhold = () => (
   <UttakFaktaIndex
     behandling={behandling}
     arbeidsgivere={arbeidsgivere}
     submitCallback={action('Bekreft og fortsett')}
+    personopplysninger={personopplysninger}
   />
 );

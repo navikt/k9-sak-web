@@ -78,6 +78,10 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
   };
   const { pristine } = formProps;
 
+  if (!arbeidsgivere) {
+    return <LoadingPanel />;
+  }
+
   // TODO: slå sammen perioder hvis de er tilstøtende og timer-inputs er like
   const oppdaterPerioder = (nyPeriode: ArbeidsforholdPeriode) => {
     let nyePerioder;
@@ -118,10 +122,6 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
     });
     formChange(`${behandlingFormPrefix}.${uttakFaktaFormName}`, 'arbeidsgivere', oppdatert);
   };
-
-  if (!arbeidsgivere) {
-    return <LoadingPanel />;
-  }
 
   const avbrytSkjemaInnfylling = () => {
     // TODO: bekrefte avbryt (i f eks en modal), og så resetForm
@@ -195,12 +195,17 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
   );
 };
 
+interface FormValues {
+  arbeidsgivere: ArbeidsgiverType[];
+  begrunnelse: string;
+}
+
 interface FormProps {
   initialValues: {
     arbeidsgivere: ArbeidsgiverType[];
   };
   behandlingFormPrefix: string;
-  onSubmit: (values: any) => any;
+  onSubmit: (values: FormValues) => any;
 }
 
 const arbeidsgivereSelector = createSelector(
@@ -215,12 +220,20 @@ const arbeidsgivereSelector = createSelector(
   arbeidsgivere => arbeidsgivere,
 );
 
+const transformValues: (formvalues: FormValues) => any[] = ({ arbeidsgivere, begrunnelse }) => [
+  {
+    begrunnelse,
+    arbeidsgivere,
+    kode: 'FAKE_CODE', // TODO
+  },
+];
+
 const mapStateToPropsFactory = (
   _initialState: null,
   initialOwnProps: UttakFaktaFormProps,
 ): ((state, ownProps) => FormProps) => {
   const { behandlingId, behandlingVersjon, arbeidsgivere, submitCallback } = initialOwnProps;
-  const onSubmit = (values: ArbeidsgiverType[]) => submitCallback(values);
+  const onSubmit = (formvalues: FormValues) => submitCallback(transformValues(formvalues));
   const initialValues = { arbeidsgivere };
 
   return (state, ownProps) => {
