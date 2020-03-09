@@ -11,20 +11,20 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import {
-  findAvslagResultatText,
-  findTilbakekrevingText,
-  hasIkkeOppfyltSoknadsfristvilkar,
-} from './VedtakHelper';
+import { findAvslagResultatText, findTilbakekrevingText, hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
 import VedtakFritekstPanel from './VedtakFritekstPanel';
+import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
-export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn) => {
-  const avslatteVilkar = vilkar.filter((v) => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
+export const getAvslagArsak = (vilkar, aksjonspunkter, vedtakVarsel, getKodeverknavn) => {
+  const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }
 
-  return `${getKodeverknavn(avslatteVilkar[0].vilkarType)}: ${getKodeverknavn(behandlingsresultat.avslagsarsak, avslatteVilkar[0].vilkarType.kode)}`;
+  return `${getKodeverknavn(avslatteVilkar[0].vilkarType)}: ${getKodeverknavn(
+    vedtakVarsel.avslagsarsak,
+    avslatteVilkar[0].vilkarType.kode,
+  )}`;
 };
 
 export const VedtakAvslagPanelImpl = ({
@@ -39,35 +39,34 @@ export const VedtakAvslagPanelImpl = ({
   tilbakekrevingText,
   alleKodeverk,
   beregningErManueltFastsatt,
+  vedtakVarsel,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  const fritekstfeltForSoknadsfrist = behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES
-    && hasIkkeOppfyltSoknadsfristvilkar(vilkar) && ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD;
+  const fritekstfeltForSoknadsfrist =
+    behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES &&
+    hasIkkeOppfyltSoknadsfristvilkar(vilkar) &&
+    ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD;
   const textCode = beregningErManueltFastsatt ? 'VedtakForm.Fritekst.Beregningsgrunnlag' : 'VedtakForm.Fritekst';
   return (
     <div>
       <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
       <Normaltekst>
         {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
-        {tilbakekrevingText && (
-          `. ${intl.formatMessage({ id: tilbakekrevingText })}`
-        )}
+        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
       </Normaltekst>
       <VerticalSpacer sixteenPx />
-      {getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn) && (
+      {getAvslagArsak(vilkar, aksjonspunkter, vedtakVarsel, getKodeverknavn) && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}</Undertekst>
-          <Normaltekst>
-            {getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn)}
-          </Normaltekst>
+          <Normaltekst>{getAvslagArsak(vilkar, aksjonspunkter, vedtakVarsel, getKodeverknavn)}</Normaltekst>
           <VerticalSpacer sixteenPx />
         </div>
       )}
-      {(fritekstfeltForSoknadsfrist || behandlingsresultat.avslagsarsakFritekst || beregningErManueltFastsatt) && (
+      {(fritekstfeltForSoknadsfrist || vedtakVarsel.avslagsarsakFritekst || beregningErManueltFastsatt) && (
         <VedtakFritekstPanel
           readOnly={readOnly}
           sprakkode={sprakkode}
-          behandlingsresultat={behandlingsresultat}
+          vedtakVarsel={vedtakVarsel}
           labelTextCode={textCode}
         />
       )}
@@ -87,6 +86,7 @@ VedtakAvslagPanelImpl.propTypes = {
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
+  vedtakVarsel: vedtakVarselPropType,
 };
 
 VedtakAvslagPanelImpl.defaultProps = {

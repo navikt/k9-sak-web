@@ -8,7 +8,10 @@ import { injectIntl } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, getKodeverknavnFn,
+  behandlingForm,
+  behandlingFormValueSelector,
+  getBehandlingFormPrefix,
+  getKodeverknavnFn,
 } from '@fpsak-frontend/fp-felles';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -26,12 +29,13 @@ import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
+import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
 const isVedtakSubmission = true;
 
-const getPreviewAutomatiskBrevCallback = (previewCallback, begrunnelse) => (e) => {
+const getPreviewAutomatiskBrevCallback = (previewCallback, begrunnelse) => e => {
   const data = {
     fritekst: begrunnelse,
     gjelderVedtak: true,
@@ -96,6 +100,7 @@ export class VedtakRevurderingFormImpl extends Component {
       behandlingArsaker,
       medlemskapFom,
       beregningErManueltFastsatt,
+      vedtakVarsel,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
@@ -117,7 +122,7 @@ export class VedtakRevurderingFormImpl extends Component {
             {visOverstyringKnapp && (
               <VedtakOverstyrendeKnapp
                 toggleCallback={this.onToggleOverstyring}
-                readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
+                readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
                 keyName="skalBrukeOverstyrendeFritekstBrev"
                 readOnlyHideEmpty={false}
               />
@@ -138,6 +143,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 alleKodeverk={alleKodeverk}
                 originaltBeregningResultat={resultatstrukturOriginalBehandling}
                 beregningErManueltFastsatt={beregningErManueltFastsatt}
+                vedtakVarsel={vedtakVarsel}
               />
             )}
             {isAvslag(behandlingresultat.type.kode) && (
@@ -153,6 +159,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 tilbakekrevingvalg={tilbakekrevingvalg}
                 simuleringResultat={simuleringResultat}
                 originaltBeregningResultat={resultatstrukturOriginalBehandling}
+                vedtakVarsel={vedtakVarsel}
               />
             )}
             {isOpphor(behandlingresultat.type.kode) && (
@@ -165,6 +172,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 medlemskapFom={medlemskapFom}
                 resultatstruktur={resultatstruktur}
                 beregningErManueltFastsatt={beregningErManueltFastsatt}
+                vedtakVarsel={vedtakVarsel}
               />
             )}
 
@@ -218,6 +226,7 @@ VedtakRevurderingFormImpl.propTypes = {
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
+  vedtakVarsel: vedtakVarselPropType,
   ...formPropTypes,
 };
 
@@ -233,17 +242,28 @@ VedtakRevurderingFormImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector(
-  [(ownProps) => ownProps.resultatstruktur,
-    (ownProps) => ownProps.behandlingStatusKode,
-    (ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.ytelseTypeKode,
-    (ownProps) => ownProps.behandlingresultat,
-    (ownProps) => ownProps.sprakkode],
-  (beregningResultat, behandlingstatusKode, aksjonspunkter, ytelseTypeKode, behandlingresultat, sprakkode) => {
+  [
+    ownProps => ownProps.resultatstruktur,
+    ownProps => ownProps.behandlingStatusKode,
+    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.ytelseTypeKode,
+    ownProps => ownProps.behandlingresultat,
+    ownProps => ownProps.sprakkode,
+    ownProps => ownProps.vedtakVarsel,
+  ],
+  (
+    beregningResultat,
+    behandlingstatusKode,
+    aksjonspunkter,
+    ytelseTypeKode,
+    behandlingresultat,
+    sprakkode,
+    vedtakVarsel,
+  ) => {
     const aksjonspunktKoder = aksjonspunkter
-      .filter((ap) => ap.erAktivt)
-      .filter((ap) => ap.kanLoses)
-      .map((ap) => ap.definisjon.kode);
+      .filter(ap => ap.erAktivt)
+      .filter(ap => ap.kanLoses)
+      .map(ap => ap.definisjon.kode);
 
     if (ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD) {
       if (beregningResultat) {
@@ -263,32 +283,34 @@ const buildInitialValues = createSelector(
     return {
       sprakkode,
       aksjonspunktKoder,
-      skalBrukeOverstyrendeFritekstBrev: behandlingresultat.vedtaksbrev.kode === 'FRITEKST',
-      overskrift: decodeHtmlEntity(behandlingresultat.overskrift),
-      brødtekst: decodeHtmlEntity(behandlingresultat.fritekstbrev),
+      skalBrukeOverstyrendeFritekstBrev: vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
+      overskrift: decodeHtmlEntity(vedtakVarsel.overskrift),
+      brødtekst: decodeHtmlEntity(vedtakVarsel.fritekstbrev),
     };
   },
 );
 
-const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
-  kode: apCode,
-  begrunnelse: values.begrunnelse,
-  fritekstBrev: values.brødtekst,
-  skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-  overskrift: values.overskrift,
-  isVedtakSubmission,
-}));
+const transformValues = values =>
+  values.aksjonspunktKoder.map(apCode => ({
+    kode: apCode,
+    begrunnelse: values.begrunnelse,
+    fritekstBrev: values.brødtekst,
+    skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+    overskrift: values.overskrift,
+    isVedtakSubmission,
+  }));
 
 const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
     return '';
   }
   const aarsakTekstList = [];
-  const endringFraBrukerAarsak = revurderingAarsaker
-    .find((aarsak) => aarsak.kode === BehandlingArsakType.RE_ENDRING_FRA_BRUKER);
+  const endringFraBrukerAarsak = revurderingAarsaker.find(
+    aarsak => aarsak.kode === BehandlingArsakType.RE_ENDRING_FRA_BRUKER,
+  );
   const alleAndreAarsakerNavn = revurderingAarsaker
-    .filter((aarsak) => aarsak.kode !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
-    .map((aarsak) => getKodeverknavn(aarsak));
+    .filter(aarsak => aarsak.kode !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
+    .map(aarsak => getKodeverknavn(aarsak));
   // Dersom en av årsakene er "RE_ENDRING_FRA_BRUKER" skal alltid denne vises først
   if (endringFraBrukerAarsak !== undefined) {
     aarsakTekstList.push(getKodeverknavn(endringFraBrukerAarsak));
@@ -298,10 +320,13 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values));
-  const aksjonspunktKoder = initialOwnProps.aksjonspunkter.map((ap) => ap.definisjon.kode);
+  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values));
+  const aksjonspunktKoder = initialOwnProps.aksjonspunkter.map(ap => ap.definisjon.kode);
   const behandlingArsaker = initialOwnProps.behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType);
-  const revurderingsAarsakString = createAarsakString(behandlingArsaker, getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper));
+  const revurderingsAarsakString = createAarsakString(
+    behandlingArsaker,
+    getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper),
+  );
 
   return (state, ownProps) => ({
     onSubmit,
@@ -321,14 +346,24 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators({
-    clearFields,
-  }, dispatch),
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      clearFields,
+    },
+    dispatch,
+  ),
 });
 
-const VedtakRevurderingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
-  form: VEDTAK_REVURDERING_FORM_NAME,
-})(VedtakRevurderingFormImpl)));
+const VedtakRevurderingForm = connect(
+  mapStateToPropsFactory,
+  mapDispatchToProps,
+)(
+  injectIntl(
+    behandlingForm({
+      form: VEDTAK_REVURDERING_FORM_NAME,
+    })(VedtakRevurderingFormImpl),
+  ),
+);
 
 export default VedtakRevurderingForm;
