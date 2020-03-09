@@ -218,6 +218,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
                     after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
                   }}
+                  renderUpwards
                 />
               )}
             </>
