@@ -181,12 +181,12 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
             </div>
             <VerticalSpacer sixteenPx />
             <FlexRow className={styles.submittKnapper}>
-              <Knapp htmlType="button" mini onClick={avbrytSkjemaInnfylling}>
-                <FormattedMessage id="FaktaOmUttakForm.Avbryt" />
-              </Knapp>
               <Hovedknapp onClick={handleSubmit}>
                 {intl.formatMessage({ id: 'SubmitButton.ConfirmInformation' })}
               </Hovedknapp>
+              <Knapp htmlType="button" mini onClick={avbrytSkjemaInnfylling}>
+                <FormattedMessage id="FaktaOmUttakForm.Avbryt" />
+              </Knapp>
             </FlexRow>
           </FlexRow>
         </>

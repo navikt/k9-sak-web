@@ -78,16 +78,16 @@ const NyArbeidsperiode: FunctionComponent<NyArbeidsperiodeProps & InjectedFormPr
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
-            <Knapp htmlType="button" mini onClick={avbryt}>
-              <FormattedMessage id="FaktaOmUttakForm.Avbryt" />
-            </Knapp>
-          </FlexColumn>
-          <FlexColumn>
             <Hovedknapp mini htmlType="button" onClick={handleSubmit} disabled={pristine}>
               <FormattedMessage
                 id={initialValues ? 'FaktaOmUttakForm.BekreftEndringer' : 'FaktaOmUttakForm.LeggTilPeriode'}
               />
             </Hovedknapp>
+          </FlexColumn>
+          <FlexColumn>
+            <Knapp htmlType="button" mini onClick={avbryt}>
+              <FormattedMessage id="FaktaOmUttakForm.Avbryt" />
+            </Knapp>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>

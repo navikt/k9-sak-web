@@ -37,7 +37,7 @@ const Perioder: FunctionComponent<PerioderProps> = ({ valgtArbeidsforhold, leggT
       ))}
       <Flatknapp htmlType="button" onClick={leggTilPeriode} disabled={buttonDisabled} mini form="kompakt">
         <Image src={buttonDisabled ? addDisabledSvg : addSvg} className={styles.image} />
-        <span>{intl.formatMessage({ id: 'FaktaOmUttakForm.LeggTilPeriode' })}</span>
+        <span>{intl.formatMessage({ id: 'FaktaOmUttakForm.LeggTilNyPeriode' })}</span>
       </Flatknapp>
     </div>
   );
