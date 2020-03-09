@@ -23,10 +23,9 @@
   "BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring": "Har søker hatt lønnsendring i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilansUtenFrilans": "Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilans": "Søker er frilanser. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
-  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger, omsorgspenger, opplæringspenger eller svangerskapspenger for arbeid i {arbeid}?",
+  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid": "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger, omsorgspenger, opplæringspenger eller svangerskapspenger for arbeid i {arbeid}?",
 
-  "BeregningInfoPanel.VurderBestebergning.HarBesteberegning" : "Søker har hatt dagpenger i opptjeningsperioden. Skal dette fordeles etter besteberegning?",
-
+  "BeregningInfoPanel.VurderBestebergning.HarBesteberegning": "Søker har hatt dagpenger i opptjeningsperioden. Skal dette fordeles etter besteberegning?",
 
   "BeregningInfoPanel.FastsettBBFodendeKvinne.RegnarkNavet": "Finn regneark på navet",
   "BeregningInfoPanel.FordelingBG.Sum": "Sum",
@@ -58,14 +57,12 @@
   "KunYtelsePanel.OverskriftBesteberegning": "Fastsett månedsbeløp for brutto beregningsgrunnlag etter besteberegning",
   "BeregningInfoPanel.FordelBG.Validation.UlikeAndeler": "Andeler for samme aktivitet må ha ulik inntektskategori",
 
-
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
 
   "BeregningInfoPanel.VurderMilitaer.HarSøkerMilitærinntekt": "Har søker vært i militær- eller sivilforsvarstjeneste i opptjeningsperioden?",
 
   "VurderRefusjonForm.ErRefusjonskravGyldig": "{arbeidsgiverVisningsnavn} har minst ett refusjonskrav som har kommet for sent. Skal refusjonskrav som ikke har kommet innen fristen tas med i beregning?",
-
 
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
@@ -81,7 +78,7 @@
   "ValidationMessage.DateNotBeforeOrEqual": "Dato må være før eller lik {limit}",
   "ValidationMessage.DateNotAfterOrEqual": "Dato må være etter eller lik {limit}",
   "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
-  "ValidationMessage.DateRangesOverlappingPeriodTypes" : "Perioder kan ikke overlappe i tid (uttak, utsettelse, gradering, overforing, opphold)" ,
+  "ValidationMessage.DateRangesOverlappingPeriodTypes": "Perioder kan ikke overlappe i tid (uttak, utsettelse, gradering, overforing, opphold)",
   "ValidationMessage.DatesNotEqual": "Dato må være lik {value}",
   "ValidationMessage.InvalidInteger": "Tallet kan ikke ha desimaler",
   "ValidationMessage.InvalidDecimal": "Tallet kan ikke inneholde mer enn to desimaler",
@@ -109,8 +106,7 @@
   "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Trekk minst en dag når utbetalingsgraden er høyre enn 0%",
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
-  "ValidationMessage.MerEnNullUtaksprosent" : "Uttak av foreldrepenger i denne perioden er avslått, utbetalingsgrad kan ikke være større enn 0.",
-  "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse" : "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
+  "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",

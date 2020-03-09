@@ -8,7 +8,6 @@ import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjen
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
@@ -22,15 +21,6 @@ import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
 import findStatusForVedtak from './vedtakStatusUtlederPleiepenger';
 import api from '../data/pleiepengerBehandlingApi';
-
-const faktaUttakAp = [
-  ac.AVKLAR_UTTAK,
-  ac.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK,
-  ac.AVKLAR_FØRSTE_UTTAKSDATO,
-  ac.AVKLAR_ANNEN_FORELDER_RETT,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-];
 
 const harPeriodeMedUtbetaling = perioder => {
   const periode = perioder.find(p => p.dagsats > 0);
@@ -50,22 +40,6 @@ const getStatusFromResultatstruktur = (resultatstruktur, uttaksresultat) => {
     }
   }
   return vut.IKKE_VURDERT;
-};
-
-const getStatusFromUttakresultat = (uttaksresultat, aksjonspunkter) => {
-  if (
-    !uttaksresultat ||
-    aksjonspunkter.some(ap => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')
-  ) {
-    return vut.IKKE_VURDERT;
-  }
-  if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
-    const oppfylt = uttaksresultat.perioderSøker.some(p => p.periodeResultatType.kode !== prt.AVSLATT);
-    if (oppfylt) {
-      return vut.OPPFYLT;
-    }
-  }
-  return vut.IKKE_OPPFYLT;
 };
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
@@ -248,42 +222,10 @@ const prosessStegPanelDefinisjoner = [
     textCode: 'Behandlingspunkt.Uttak',
     panels: [
       {
-        aksjonspunkterCodes: [
-          ac.FASTSETT_UTTAKPERIODER,
-          ac.OVERSTYRING_AV_UTTAKPERIODER,
-          ac.TILKNYTTET_STORTINGET,
-          ac.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE,
-          ac.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP,
-          ac.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN,
-          ac.KONTROLLER_OPPLYSNINGER_OM_DØD,
-          ac.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
-          ac.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET,
-          ac.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
-        ],
-        endpoints: [api.FAKTA_ARBEIDSFORHOLD, api.FAMILIEHENDELSE, api.UTTAK_PERIODE_GRENSE],
-        renderComponent: props => <UttakProsessIndex {...props} />,
-        getData: ({
-          fagsak,
-          rettigheter,
-          tempUpdateStonadskontoer,
-          uttaksresultatPerioder,
-          uttakStonadskontoer,
-          soknad,
-          personopplysninger,
-          ytelsefordeling,
-        }) => ({
-          fagsak,
-          tempUpdateStonadskontoer,
-          employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-          uttaksresultatPerioder,
-          uttakStonadskontoer,
-          soknad,
-          personopplysninger,
-          ytelsefordeling,
-        }),
+        aksjonspunkterCodes: [],
+        endpoints: [],
+        renderComponent: () => <span>Content</span>,
         showComponent: () => true,
-        overrideStatus: ({ uttaksresultatPerioder, aksjonspunkter }) =>
-          getStatusFromUttakresultat(uttaksresultatPerioder, aksjonspunkter),
       },
     ],
   },

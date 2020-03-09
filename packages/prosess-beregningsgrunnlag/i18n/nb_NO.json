@@ -169,7 +169,7 @@
   "Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt": "Dagsats (årsinntekt/260 dager)",
   "Beregningsgrunnlag.BeregningTable.Tittel": "Beregning av dagsats",
   "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt. Brutto beregningsgrunnlag er under en halv G ({halvG}).",
-  "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2": "Beløpet er under 1/2 G (G = 98 866) - søker har ikke rett til foreldrepenger",
+  "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2": "Beløpet er under 1/2 G (G = 98 866) - søker har ikke rett til pleiepenger",
   "Beregningsgrunnlag.BeregningTable.Dagpenger": "Beregningsgrunnlag - Dagpenger",
   "Beregningsgrunnlag.BeregningTable.Fastsatt.AT": "Beregningsgrunnlag - fastsatt årsinntekt arbeid",
   "Beregningsgrunnlag.BeregningTable.Omberegnet.AT": "Beregningsgrunnlag - beregnet årsinntekt arbeid",
@@ -250,7 +250,6 @@
   "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Trekk minst en dag når utbetalingsgraden er høyre enn 0%",
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
-  "ValidationMessage.MerEnNullUtaksprosent": "Uttak av foreldrepenger i denne perioden er avslått, utbetalingsgrad kan ikke være større enn 0.",
   "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer."
 }

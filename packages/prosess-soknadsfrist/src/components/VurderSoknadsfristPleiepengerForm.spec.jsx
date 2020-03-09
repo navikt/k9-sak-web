@@ -5,10 +5,10 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
-import { VurderSoknadsfristForeldrepengerFormImpl as UnwrappedForm } from './VurderSoknadsfristForeldrepengerForm';
+import { VurderSoknadsfristPleiepengerFormImpl as UnwrappedForm } from './VurderSoknadsfristPleiepengerForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-soknadsfrist';
 
-describe('<VurderSoknadsfristForeldrepengerForm>', () => {
+describe('<VurderSoknadsfristPleiepengerForm>', () => {
   it('skal rendre form og vise søknadsfristdato som er lik mottatt dato minus antallDagerSoknadLevertForSent', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
@@ -25,7 +25,7 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpTextTemp);
-    expect(helpText.childAt(0).prop('id')).to.eql('VurderSoknadsfristForeldrepengerForm.AksjonspunktHelpText');
+    expect(helpText.childAt(0).prop('id')).to.eql('VurderSoknadsfristPleiepengerForm.AksjonspunktHelpText');
     expect(helpText.childAt(0).prop('values')).to.eql({ numberOfDays: 9, soknadsfristdato: '30.09.2017' });
   });
 

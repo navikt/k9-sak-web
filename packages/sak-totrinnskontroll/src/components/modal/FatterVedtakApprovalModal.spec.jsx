@@ -65,7 +65,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Foreldrepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.');
+    expect(modal.prop('contentLabel')).is.eql('Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);

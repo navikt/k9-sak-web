@@ -66,7 +66,7 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.SvangerskapspengerIkkeInnvilget';
   }
 
-  return 'VedtakForm.ForeldrepengerIkkeInnvilget';
+  return 'VedtakForm.PleiepengerIkkeInnvilget';
 };
 
 
