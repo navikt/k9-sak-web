@@ -24,16 +24,16 @@ import {
   isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
 } from '@fpsak-frontend/fp-felles';
 
-import styles from './vurderSoknadsfristForeldrepengerForm.less';
+import styles from './vurderSoknadsfristPleiepengerForm.less';
 
 const isEdited = (hasAksjonspunkt, gyldigSenFremsetting) => hasAksjonspunkt && gyldigSenFremsetting !== undefined;
 
 /**
- * VurderSoknadsfristForeldrepengerForm
+ * VurderSoknadsfristPleiepengerForm
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for vurdering av søknadsfristvilkåret.
  */
-export const VurderSoknadsfristForeldrepengerFormImpl = ({
+export const VurderSoknadsfristPleiepengerFormImpl = ({
   readOnly,
   readOnlySubmitButton,
   mottattDato,
@@ -49,12 +49,12 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
   ...formProps
 }) => (
   <>
-    <Undertittel><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.Soknadsfrist" /></Undertittel>
+    <Undertittel><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Soknadsfrist" /></Undertittel>
     <VerticalSpacer twentyPx />
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
       {[<FormattedMessage
-        key="VurderSoknadsfristForeldrepengerForm"
-        id="VurderSoknadsfristForeldrepengerForm.AksjonspunktHelpText"
+        key="VurderSoknadsfristPleiepengerForm"
+        id="VurderSoknadsfristPleiepengerForm.AksjonspunktHelpText"
         values={{
           numberOfDays: antallDagerSoknadLevertForSent,
           soknadsfristdato: moment(soknadsfristdato).format(DDMMYYYY_DATE_FORMAT),
@@ -65,23 +65,23 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
     <Row>
       <Column xs="6">
         <Panel className={styles.panel}>
-          <Element><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.Vurder" /></Element>
+          <Element><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Vurder" /></Element>
           <ul className={styles.hyphen}>
-            <li><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.Punkt1" /></li>
-            <li><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.Punkt2" /></li>
-            <li><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.Punkt3" /></li>
+            <li><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt1" /></li>
+            <li><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt2" /></li>
+            <li><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt3" /></li>
           </ul>
         </Panel>
       </Column>
       <Column xs="6">
         <Row className={styles.marginBottom}>
           <Column xs="6">
-            <Undertekst><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.SoknadMottatt" /></Undertekst>
+            <Undertekst><FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadMottatt" /></Undertekst>
             {mottattDato
               && <Normaltekst>{moment(mottattDato).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>}
           </Column>
           <Column xs="6">
-            <Undertekst><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.SoknadPeriode" /></Undertekst>
+            <Undertekst><FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadPeriode" /></Undertekst>
             <Normaltekst>
               {`${moment(soknadsperiodeStart).format(DDMMYYYY_DATE_FORMAT)} - ${moment(soknadsperiodeSlutt).format(DDMMYYYY_DATE_FORMAT)}`}
             </Normaltekst>
@@ -95,8 +95,8 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
         <VerticalSpacer sixteenPx />
         <div>
           <RadioGroupField name="gyldigSenFremsetting" validate={[required]} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, gyldigSenFremsetting)}>
-            <RadioOption value label={<FormattedMessage id="VurderSoknadsfristForeldrepengerForm.GyldigGrunn" />} />
-            <RadioOption value={false} label={<FormattedMessage id="VurderSoknadsfristForeldrepengerForm.IkkeGyldigGrunn" />} />
+            <RadioOption value label={<FormattedMessage id="VurderSoknadsfristPleiepengerForm.GyldigGrunn" />} />
+            <RadioOption value={false} label={<FormattedMessage id="VurderSoknadsfristPleiepengerForm.IkkeGyldigGrunn" />} />
           </RadioGroupField>
         </div>
         {gyldigSenFremsetting
@@ -107,7 +107,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
                   <DatepickerField
                     name="ansesMottatt"
                     readOnly={readOnly}
-                    label={{ id: 'VurderSoknadsfristForeldrepengerForm.NyMottattDato' }}
+                    label={{ id: 'VurderSoknadsfristPleiepengerForm.NyMottattDato' }}
                     validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
                   />
                 </ArrowBox>
@@ -130,7 +130,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
   </>
 );
 
-VurderSoknadsfristForeldrepengerFormImpl.propTypes = {
+VurderSoknadsfristPleiepengerFormImpl.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   antallDagerSoknadLevertForSent: PropTypes.number,
   behandlingId: PropTypes.number.isRequired,
@@ -140,7 +140,7 @@ VurderSoknadsfristForeldrepengerFormImpl.propTypes = {
   ...formPropTypes,
 };
 
-VurderSoknadsfristForeldrepengerFormImpl.defaultProps = {
+VurderSoknadsfristPleiepengerFormImpl.defaultProps = {
   antallDagerSoknadLevertForSent: undefined,
   hasAksjonspunkt: false,
 };
@@ -163,7 +163,7 @@ const transformValues = (values, aksjonspunkter) => ({
   ...BehandlingspunktBegrunnelseTextField.transformValues(values),
 });
 
-const formName = 'VurderSoknadsfristForeldrepengerForm';
+const formName = 'VurderSoknadsfristPleiepengerForm';
 
 const mapStateToPropsFactory = (initialState, staticOwnProps) => {
   const uttaksperiodegrense = staticOwnProps.uttakPeriodeGrense;
@@ -188,4 +188,4 @@ const mapStateToPropsFactory = (initialState, staticOwnProps) => {
 
 export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
-})(VurderSoknadsfristForeldrepengerFormImpl));
+})(VurderSoknadsfristPleiepengerFormImpl));
