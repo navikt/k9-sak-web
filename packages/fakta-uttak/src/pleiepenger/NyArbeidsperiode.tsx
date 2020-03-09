@@ -15,7 +15,7 @@ import { FlexContainer } from '@fpsak-frontend/shared-components/index';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { arbeidsprosent } from './uttakUtils';
+import { arbeidsprosent, arbeidsprosentNormal } from './uttakUtils';
 import styles from './uttakFaktaForm.less';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 import { nyArbeidsperiodeFormName } from './constants';
@@ -32,10 +32,14 @@ interface NyArbeidsperiodeProps {
   };
 }
 
-const timerProsent = timer =>
-  numberRegex.test(`${timer}`) ? (
-    <Normaltekst>{`(${arbeidsprosent(`${timer}`.replace(',', '.'))}%)`}</Normaltekst>
+const timerProsent = (timer, timerNormal?: string) => {
+  const timerFormatert = `${timer}`.replace(',', '.');
+  return numberRegex.test(`${timer}`) ? (
+    <Normaltekst>
+      {`(${timerNormal ? arbeidsprosent(timerFormatert, timerNormal) : arbeidsprosentNormal(timerFormatert)}%)`}
+    </Normaltekst>
   ) : null;
+};
 
 const NyArbeidsperiode: FunctionComponent<NyArbeidsperiodeProps & InjectedFormProps> = ({
   handleSubmit,
@@ -72,7 +76,7 @@ const NyArbeidsperiode: FunctionComponent<NyArbeidsperiodeProps & InjectedFormPr
             inputMode="decimal"
           />
         </FlexColumn>
-        <FlexColumn className={styles.alignWithInput}>{timerProsent(timerFårJobbet)}</FlexColumn>
+        <FlexColumn className={styles.alignWithInput}>{timerProsent(timerFårJobbet, timerIJobbTilVanlig)}</FlexColumn>
       </FlexRow>
       <VerticalSpacer sixteenPx />
       <FlexContainer>

@@ -7,7 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import styles from './uttakFaktaForm.less';
 import NyArbeidsperiode from './NyArbeidsperiode';
-import { arbeidsprosent, useUttakContext, visningsdato } from './uttakUtils';
+import { arbeidsprosentNormal, arbeidsprosent, useUttakContext, visningsdato } from './uttakUtils';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 import Arbeidsgiver from './types/Arbeidsgiver';
 import { nyArbeidsperiodeFormName } from './constants';
@@ -22,7 +22,8 @@ interface ValgtPeriodeProps {
   arbeidsgivere: Arbeidsgiver[];
 }
 
-const formaterTimer = timer => ` ${timer}t (${arbeidsprosent(timer)}%)`;
+const formaterTimer = (timer, timerNormal?: number) =>
+  ` ${timer}t (${timerNormal ? arbeidsprosent(timer, timerNormal) : arbeidsprosentNormal(timer)}%)`;
 
 const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
   endreValgtPeriodeCallback,
@@ -58,7 +59,7 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
         periodeLabelText: `${intl.formatMessage({ id: 'FaktaOmUttakForm.Periode' })} ${`${valgtPeriodeIndex +
           1}`.padStart(2, '0')}:`,
         fomTom: ` ${visningsdato(valgtPeriode.fom)} - ${visningsdato(valgtPeriode.tom)}`,
-        timerFårJobbet: formaterTimer(valgtPeriode.timerFårJobbet),
+        timerFårJobbet: formaterTimer(valgtPeriode.timerFårJobbet, valgtPeriode.timerIJobbTilVanlig),
         timerIJobbTilVanlig: formaterTimer(valgtPeriode.timerIJobbTilVanlig),
       }
     : {
