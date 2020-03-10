@@ -199,11 +199,14 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
           <UttakFormKolonne tittel={intl.formatMessage({ id: 'FaktaOmUttakForm.Perioder' })} withBorderRight>
             <Perioder
               valgtArbeidsforhold={valgtArbeidsforhold}
-              leggTilPeriode={() => {
-                setValgtPeriodeIndex(null);
-                setRedigererPeriode(true);
-              }}
-              buttonDisabled={redigererPeriode}
+              leggTilPeriode={
+                redigererPeriode
+                  ? () => {
+                      setValgtPeriodeIndex(null);
+                      setRedigererPeriode(true);
+                    }
+                  : null
+              }
             />
           </UttakFormKolonne>
           <UttakFormKolonne tittel={intl.formatMessage({ id: 'FaktaOmUttakForm.Periodedetaljer' })}>
