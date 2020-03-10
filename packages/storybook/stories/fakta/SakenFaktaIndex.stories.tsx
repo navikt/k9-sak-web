@@ -7,7 +7,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import SakenFaktaIndex from '@fpsak-frontend/fakta-saken';
+import SakenFaktaIndex from '@fpsak-frontend/fakta-saken/src/SakenFaktaIndex';
 import withReduxProvider from '../../decorators/withRedux';
 
 const behandling = {
