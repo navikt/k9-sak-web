@@ -8,10 +8,8 @@ import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjen
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
-import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -23,15 +21,6 @@ import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
 import findStatusForVedtak from './vedtakStatusUtlederPleiepenger';
 import api from '../data/pleiepengerBehandlingApi';
-
-const faktaUttakAp = [
-  ac.AVKLAR_UTTAK,
-  ac.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK,
-  ac.AVKLAR_FØRSTE_UTTAKSDATO,
-  ac.AVKLAR_ANNEN_FORELDER_RETT,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-];
 
 const harPeriodeMedUtbetaling = perioder => {
   const periode = perioder.find(p => p.dagsats > 0);
@@ -51,22 +40,6 @@ const getStatusFromResultatstruktur = (resultatstruktur, uttaksresultat) => {
     }
   }
   return vut.IKKE_VURDERT;
-};
-
-const getStatusFromUttakresultat = (uttaksresultat, aksjonspunkter) => {
-  if (
-    !uttaksresultat ||
-    aksjonspunkter.some(ap => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')
-  ) {
-    return vut.IKKE_VURDERT;
-  }
-  if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
-    const oppfylt = uttaksresultat.perioderSøker.some(p => p.periodeResultatType.kode !== prt.AVSLATT);
-    if (oppfylt) {
-      return vut.OPPFYLT;
-    }
-  }
-  return vut.IKKE_OPPFYLT;
 };
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
@@ -134,8 +107,8 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.OPPLYSNINGSPLIKT,
-    textCode: 'Behandlingspunkt.Opplysningsplikt',
+    urlCode: bpc.INNGANGSVILKAR,
+    textCode: 'Behandlingspunkt.Inngangsvilkar',
     panels: [
       {
         aksjonspunkterCodes: [ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU],
@@ -152,44 +125,17 @@ const prosessStegPanelDefinisjoner = [
         renderComponent: props => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
         getData: ({ soknad }) => ({ soknad }),
       },
-    ],
-  },
-  {
-    urlCode: bpc.INNGANGSVILKAR,
-    textCode: 'Behandlingspunkt.Inngangsvilkar',
-    panels: [
       {
-        code: 'ADOPSJON',
-        textCode: 'Inngangsvilkar.Adopsjonsvilkaret',
-        aksjonspunkterCodes: [
-          ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-          ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-        ],
-        aksjonspunkterTextCodes: [
-          'AdopsjonVilkarForm.VurderGjelderSammeBarn',
-          'AdopsjonVilkarForm.VurderGjelderSammeBarn',
-        ],
-        vilkarCodes: [vt.ADOPSJONSVILKARET_FORELDREPENGER],
-        renderComponent: props => <AdopsjonVilkarProsessIndex {...props} />,
-        getData: ({ vilkarForSteg }) => ({ vilkar: vilkarForSteg }),
-        overridePanel: {
-          aksjonspunkterCodes: [ac.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP],
-          ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-        },
+        aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
+        endpoints: [api.UTTAK_PERIODE_GRENSE],
+        renderComponent: props => <VurderSoknadsfristForeldrepengerIndex {...props} />,
+        getData: ({ soknad }) => ({ soknad }),
       },
       {
         code: 'OMSORGENFOR',
         textCode: 'Inngangsvilkar.OmsorgenFor',
         aksjonspunkterCodes: ['hei'], // TODO (Hallvard): Sett riktig verdi her
         vilkarCodes: [vt.OMSORGENFORVILKARET],
-        // endpoints: [api.MEDLEMSKAP],
-        ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-      },
-      {
-        code: 'MEDISINSKVILKAR',
-        textCode: 'Inngangsvilkar.Medisinskvilkaret',
-        aksjonspunkterCodes: ['hei'], // TODO (Hallvard): Sett riktig verdi her
-        vilkarCodes: [vt.MEDISINSKVILKARET],
         // endpoints: [api.MEDLEMSKAP],
         ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
       },
@@ -201,6 +147,26 @@ const prosessStegPanelDefinisjoner = [
         endpoints: [api.MEDLEMSKAP],
         ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
       },
+    ],
+  },
+  {
+    urlCode: bpc.MEDISINSK_VILKAR,
+    textCode: 'Behandlingspunkt.MedisinskVilkar',
+    panels: [
+      {
+        code: 'MEDISINSKVILKAR',
+        textCode: 'Inngangsvilkar.Medisinskvilkaret',
+        aksjonspunkterCodes: [ac.MEDISINSK_VILKAAR],
+        vilkarCodes: [vt.MEDISINSKVILKARET],
+        // endpoints: [api.MEDLEMSKAP],
+        ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+      },
+    ],
+  },
+  {
+    urlCode: bpc.OPPTJENING,
+    textCode: 'Behandlingspunkt.Opptjening',
+    panels: [
       {
         code: 'OPPTJENINGSVILKARET',
         textCode: 'Inngangsvilkar.Opptjeningsvilkaret',
@@ -241,18 +207,6 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.SOEKNADSFRIST,
-    textCode: 'Behandlingspunkt.Soknadsfristvilkaret',
-    panels: [
-      {
-        aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
-        endpoints: [api.UTTAK_PERIODE_GRENSE],
-        renderComponent: props => <VurderSoknadsfristForeldrepengerIndex {...props} />,
-        getData: ({ soknad }) => ({ soknad }),
-      },
-    ],
-  },
-  {
     urlCode: bpc.FORTSATTMEDLEMSKAP,
     textCode: 'Behandlingspunkt.FortsattMedlemskap',
     panels: [
@@ -268,42 +222,10 @@ const prosessStegPanelDefinisjoner = [
     textCode: 'Behandlingspunkt.Uttak',
     panels: [
       {
-        aksjonspunkterCodes: [
-          ac.FASTSETT_UTTAKPERIODER,
-          ac.OVERSTYRING_AV_UTTAKPERIODER,
-          ac.TILKNYTTET_STORTINGET,
-          ac.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE,
-          ac.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP,
-          ac.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN,
-          ac.KONTROLLER_OPPLYSNINGER_OM_DØD,
-          ac.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
-          ac.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET,
-          ac.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
-        ],
-        endpoints: [api.FAKTA_ARBEIDSFORHOLD, api.FAMILIEHENDELSE, api.UTTAK_PERIODE_GRENSE],
-        renderComponent: props => <UttakProsessIndex {...props} />,
-        getData: ({
-          fagsak,
-          rettigheter,
-          tempUpdateStonadskontoer,
-          uttaksresultatPerioder,
-          uttakStonadskontoer,
-          soknad,
-          personopplysninger,
-          ytelsefordeling,
-        }) => ({
-          fagsak,
-          tempUpdateStonadskontoer,
-          employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-          uttaksresultatPerioder,
-          uttakStonadskontoer,
-          soknad,
-          personopplysninger,
-          ytelsefordeling,
-        }),
+        aksjonspunkterCodes: [],
+        endpoints: [],
+        renderComponent: () => <span>Content</span>,
         showComponent: () => true,
-        overrideStatus: ({ uttaksresultatPerioder, aksjonspunkter }) =>
-          getStatusFromUttakresultat(uttaksresultatPerioder, aksjonspunkter),
       },
     ],
   },
@@ -376,6 +298,7 @@ const prosessStegPanelDefinisjoner = [
           beregningresultatForeldrepenger,
           simuleringResultat,
           beregningsgrunnlag,
+          vedtakVarsel,
         }) => ({
           previewCallback,
           aksjonspunkter,
@@ -385,6 +308,7 @@ const prosessStegPanelDefinisjoner = [
           beregningsgrunnlag,
           ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
           employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+          vedtakVarsel,
         }),
         showComponent: () => true,
         overrideStatus: ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>

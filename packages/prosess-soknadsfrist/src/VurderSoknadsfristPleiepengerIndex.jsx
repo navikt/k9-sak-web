@@ -6,7 +6,7 @@ import soknadsfristAksjonspunkterPropType from './propTypes/soknadsfristAksjonsp
 import soknadsfristBehandlingPropType from './propTypes/soknadsfristBehandlingPropType';
 import soknadsfristUttakPeriodeGrensePropType from './propTypes/soknadsfristUttakPeriodeGrensePropType';
 import soknadsfristSoknadPropType from './propTypes/soknadsfristSoknadPropType';
-import VurderSoknadsfristForeldrepengerForm from './components/VurderSoknadsfristForeldrepengerForm';
+import VurderSoknadsfristPleiepengerForm from './components/VurderSoknadsfristPleiepengerForm';
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
@@ -16,7 +16,7 @@ const intl = createIntl({
   messages,
 }, cache);
 
-const VurderSoknadsfristForeldrepengerIndex = ({
+const VurderSoknadsfristPleiepengerIndex = ({
   behandling,
   uttakPeriodeGrense,
   soknad,
@@ -27,7 +27,7 @@ const VurderSoknadsfristForeldrepengerIndex = ({
   isAksjonspunktOpen,
 }) => (
   <RawIntlProvider value={intl}>
-    <VurderSoknadsfristForeldrepengerForm
+    <VurderSoknadsfristPleiepengerForm
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       uttakPeriodeGrense={uttakPeriodeGrense}
@@ -41,7 +41,7 @@ const VurderSoknadsfristForeldrepengerIndex = ({
   </RawIntlProvider>
 );
 
-VurderSoknadsfristForeldrepengerIndex.propTypes = {
+VurderSoknadsfristPleiepengerIndex.propTypes = {
   behandling: soknadsfristBehandlingPropType.isRequired,
   uttakPeriodeGrense: soknadsfristUttakPeriodeGrensePropType.isRequired,
   soknad: soknadsfristSoknadPropType.isRequired,
@@ -52,4 +52,4 @@ VurderSoknadsfristForeldrepengerIndex.propTypes = {
   isAksjonspunktOpen: PropTypes.bool.isRequired,
 };
 
-export default VurderSoknadsfristForeldrepengerIndex;
+export default VurderSoknadsfristPleiepengerIndex;

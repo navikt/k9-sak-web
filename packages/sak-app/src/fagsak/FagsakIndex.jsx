@@ -23,7 +23,7 @@ import {
 import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 
-const endepunkter = [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER, fpsakApi.ANNEN_PART_BEHANDLING];
+const endepunkter = [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER];
 const ingenEndepunkter = [];
 
 const finnLenkeTilAnnenPart = (annenPartBehandling) => pathToAnnenPart(annenPartBehandling.saksnr.verdi, annenPartBehandling.behandlingId);

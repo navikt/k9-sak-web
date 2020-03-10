@@ -58,7 +58,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       </>
     )}
   >
-    <Element><FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilForeldrepenger" /></Element>
+    <Element><FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" /></Element>
     <VilkarResultPicker
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}

@@ -11,7 +11,7 @@ describe('<PersonAksjonspunktText>', () => {
     id: '1',
     navn: 'Test',
     kilde: {
-      navn: 'Aa-reg',
+      kode: 'Aa-reg',
     },
     arbeidsgiverIdentifikator: '123423',
     arbeidsgiverIdentifiktorGUI: '123423',

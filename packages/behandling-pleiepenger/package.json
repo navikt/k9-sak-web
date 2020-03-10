@@ -7,7 +7,6 @@
   "dependencies": {
     "@fpsak-frontend/behandling-felles": "1.0.0",
     "@fpsak-frontend/error-api-redux": "1.0.0",
-    "@fpsak-frontend/fakta-adopsjon": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",
     "@fpsak-frontend/fakta-tilleggsopplysninger": "1.0.0",
@@ -20,7 +19,6 @@
     "@fpsak-frontend/prosess-soknadsfrist": "1.0.0",
     "@fpsak-frontend/prosess-varsel-om-revurdering": "1.0.0",
     "@fpsak-frontend/prosess-vedtak": "1.0.0",
-    "@fpsak-frontend/prosess-vilkar-adopsjon": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-omsorg": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-overstyring": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt": "1.0.0",
