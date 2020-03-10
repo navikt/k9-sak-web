@@ -178,6 +178,8 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
             tom: periodeMedKontinuerligTilsynOgPleie.tom,
           },
           begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
+          årsaksammenheng: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsyn,
+          årsaksammenhengBegrunnelse: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsynBegrunnelse,
         })),
       perioderMedUtvidetKontinuerligTilsynOgPleie:
         values.perioderMedKontinuerligTilsynOgPleie?.length > 0

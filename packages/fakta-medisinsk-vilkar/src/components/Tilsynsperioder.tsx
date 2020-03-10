@@ -106,7 +106,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 />
                 <VerticalSpacer eightPx />
                 <RadioGroupField
-                  name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårValues.SAMMENHENG_MELLOM_SYKDOM_OG_TILSYN}`}
+                  name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.SAMMENHENG_MELLOM_SYKDOM_OG_TILSYN}`}
                   bredde="M"
                   validate={[required]}
                   readOnly={readOnly}
