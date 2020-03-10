@@ -96,7 +96,11 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
     const removeIndex = useCallback(index => fields.remove(index), []);
     const brukSoknadsdato = useCallback((fieldNameFom, fieldNameTom) => {
       const formSelector = `${behandlingFormPrefix}.${formName}`;
-      formChange(formSelector, fieldNameFom, periodeTilVurdering.fom);
+      formChange(
+        formSelector,
+        fieldNameFom,
+        innleggelsesperiode ? moment(innleggelsesperiode.tom).add(1, 'days') : periodeTilVurdering.fom,
+      );
       formChange(formSelector, fieldNameTom, periodeTilVurdering.tom);
     }, []);
     return (
