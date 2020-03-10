@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import messages from '../i18n/nb_NO.json';
-import UttakPP from './pleiepenger/UttakkPP';
+import Uttak from './pleiepenger/Uttak';
 import Behandlinger from './pleiepenger/types/UttakTypes';
 import BehandlingPersonMap from './pleiepenger/types/BehandlingPersonMap';
 import UttakPanel from './pleiepenger/UttakPanel';
@@ -26,7 +26,7 @@ const UttakProsessIndex: FunctionComponent<UttakProsessIndexProps> = ({ behandli
   return (
     <RawIntlProvider value={intl}>
       <UttakPanel>
-        <UttakPP behandlinger={behandlinger} behandlingPersonMap={behandlingPersonMap} />
+        <Uttak behandlinger={behandlinger} behandlingPersonMap={behandlingPersonMap} />
       </UttakPanel>
     </RawIntlProvider>
   );

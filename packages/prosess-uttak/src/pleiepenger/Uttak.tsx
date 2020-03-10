@@ -67,7 +67,7 @@ export const mapRader = (
     };
   });
 
-const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPersonMap }) => {
+const Uttak: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPersonMap }) => {
   const [valgtPeriode, velgPeriode] = useState<UttakPeriode | null>();
   const [timelineRef, setTimelineRef] = useState();
   const intl = useIntl();
@@ -176,4 +176,4 @@ const UttakPP: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPer
   );
 };
 
-export default UttakPP;
+export default Uttak;
