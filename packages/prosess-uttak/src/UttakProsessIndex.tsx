@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import messages from '../../i18n/nb_NO.json';
-import UttakPP from './UttakkPP';
-import Behandlinger from './types/UttakTypes';
-import BehandlingPersonMap from './types/BehandlingPersonMap';
-import UttakPanel from './UttakPanel';
+import messages from '../i18n/nb_NO.json';
+import UttakPP from './pleiepenger/UttakkPP';
+import Behandlinger from './pleiepenger/types/UttakTypes';
+import BehandlingPersonMap from './pleiepenger/types/BehandlingPersonMap';
+import UttakPanel from './pleiepenger/UttakPanel';
 
 const cache = createIntlCache();
 
