@@ -6,7 +6,7 @@ interface UttakContextProps {
   valgtPeriodeIndex?: number;
   setValgtPeriodeIndex?: (periodeIndex: number) => void;
   redigererPeriode?: boolean;
-  setRedigererPeriode: (redigererPeriode: boolean) => void;
+  setRedigererPeriode?: (redigererPeriode: boolean) => void;
 }
 
 export default UttakContextProps;
