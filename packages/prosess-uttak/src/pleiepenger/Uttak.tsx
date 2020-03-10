@@ -17,7 +17,7 @@ import BehandlingPersonMap from './types/BehandlingPersonMap';
 import { ResultattypeEnum } from './types/Resultattype';
 import UttakPeriode from './types/UttakPeriode';
 
-interface UttakkPPProps {
+interface UttakkProps {
   behandlinger: Behandlinger;
   behandlingPersonMap: BehandlingPersonMap;
 }
@@ -67,7 +67,7 @@ export const mapRader = (
     };
   });
 
-const Uttak: FunctionComponent<UttakkPPProps> = ({ behandlinger, behandlingPersonMap }) => {
+const Uttak: FunctionComponent<UttakkProps> = ({ behandlinger, behandlingPersonMap }) => {
   const [valgtPeriode, velgPeriode] = useState<UttakPeriode | null>();
   const [timelineRef, setTimelineRef] = useState();
   const intl = useIntl();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import UttakProsessIndex from '@fpsak-frontend/prosess-uttak/src/pleiepenger/UttakProsessIndex';
+import UttakProsessIndex from '@fpsak-frontend/prosess-uttak/src/UttakProsessIndex';
 import { ResultattypeEnum } from '@fpsak-frontend/prosess-uttak/src/pleiepenger/types/Resultattype';
 import Behandlinger from '@fpsak-frontend/prosess-uttak/src/pleiepenger/types/UttakTypes';
 import BehandlingPersonMap from '@fpsak-frontend/prosess-uttak/src/pleiepenger/types/BehandlingPersonMap';

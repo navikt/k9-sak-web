@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { mapRader } from './UttakkPP';
+import { mapRader } from './Uttak';
 import { ResultattypeEnum } from './types/Resultattype';
 import Behandlinger from './types/UttakTypes';
 import BehandlingPersonMap from './types/BehandlingPersonMap';
