@@ -1,71 +1,82 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
+
+import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
+import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-import styles from './naturalytelsePanel.less';
-
-const createArbeidsforholdKey = (andel) => `${andel.arbeidsgiverNavn}${andel.arbeidsforholdId}`;
+const createArbeidsforholdKey = (arbeidsforhold) => `${arbeidsforhold.arbeidsgiverNavn}${arbeidsforhold.arbeidsgiverId}`;
 
 const findArbeidsforholdMedFrafaltYtelse = (periode) => periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.bortfaltNaturalytelse !== undefined
     && andel.bortfaltNaturalytelse !== null
     && andel.bortfaltNaturalytelse !== 0);
 
-const createHeaderData = (perioder) => perioder.map((periode) => periode.beregningsgrunnlagPeriodeFom);
+const createPeriodeTekst = (periode) => {
+  if (!periode) return '';
+  if (periode.beregningsgrunnlagPeriodeFom && periode.beregningsgrunnlagPeriodeTom) {
+    return `${dateFormat(periode.beregningsgrunnlagPeriodeFom)} - ${dateFormat(periode.beregningsgrunnlagPeriodeTom)}`;
+  }
+  return dateFormat(periode.beregningsgrunnlagPeriodeFom);
+};
 
-const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse) => {
+const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse, periodeTekst) => {
   let newMapValue = [];
   if (mapValue === undefined) {
     newMapValue = [andel.arbeidsforhold.arbeidsgiverNavn];
-    for (let i = 0; i < antallPerioderMedFrafaltYtelse; i += 1) {
-      newMapValue.push(' ');
-    }
   } else {
     newMapValue = mapValue.slice();
   }
-  newMapValue.push(formatCurrencyNoKr(andel.bortfaltNaturalytelse));
+  const maaned = andel.bortfaltNaturalytelse ? andel.bortfaltNaturalytelse / 12 : 0;
+  newMapValue.push({ periodeTekst, aar: andel.bortfaltNaturalytelse, maaned });
   return newMapValue;
 };
 
-const fillMapWithMissingPeriodes = (arbeidsforholdMap, antallPerioderMedFrafaltYtelse) => {
-  const copyOfMap = { ...arbeidsforholdMap };
-  Object.keys(copyOfMap).forEach((val) => {
-    const listeMedKolonneInnhold = copyOfMap[val];
-    // Fordi det første elementet i lista inneholder en liste length - 1 perioder
-    const antallPerioderForArbeidsgiver = listeMedKolonneInnhold.length - 1;
-    for (let i = antallPerioderForArbeidsgiver; i < antallPerioderMedFrafaltYtelse; i += 1) {
-      listeMedKolonneInnhold.push(' ');
-    }
-    copyOfMap[val] = listeMedKolonneInnhold;
-  });
-  return copyOfMap;
-};
-
 // Denne metoden lager data til naturalytelsetabellen. Returnerer et map der key er arbeidsgiver + orgNr
-// og value er summen av den frafalte ytelsen i de forskjellige periodene i kronologisk rekkefølge
+// med periodetekst og aar=bortfaltNaturalytelse og maaned=bortfaltNaturalytelse/12
 // Eksempel på hvordan et map returnert av denne metoden kan se ut:
 // arbeidsgivermap = {
-//  arbeidsgivernavn123: ['arbeidsgiver 1', 66 100, 24 000]
-//  arbeidsgivernavnTo651: ['arbeidsgiver 2', ' ', 21 000]
+//  arbeidsgiver1123: ['arbeidsgiver1', { periodeTekst: '01.09.2018 - 01.12.2018', aar: 1231, maaned: 103 }],
+//  arbeidsgiver2456: ['arbeidsgiver2', { periodeTekst: '01.07.2018', aar: 2231, maaned: 186 }],
+//  arbeidsgiver3789: ['arbeidsgiver3', { periodeTekst: '01.07.2018', aar: 3231, maaned: 269 }],
+
 // }
+
 
 const findAllePerioderMedBortfaltNaturalytelse = (allePerioder) => allePerioder
   .filter((periode) => periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT));
 
+const harBortfalteNaturalytelser = (allePerioder) => {
+  if (!allePerioder || allePerioder.length < 1) {
+    return false;
+  }
+
+  const naturalYtelseAndel = allePerioder.filter((perioder) => perioder.beregningsgrunnlagPrStatusOgAndel
+    .some((andel) => andel.bortfaltNaturalytelse !== undefined
+    && andel.bortfaltNaturalytelse !== null
+    && andel.bortfaltNaturalytelse !== 0));
+  if (!naturalYtelseAndel || naturalYtelseAndel.length < 1) {
+    return false;
+  }
+  return true;
+};
 export const createNaturalytelseTableData = (allePerioder) => {
   if (!allePerioder || allePerioder.length < 1) {
     return undefined;
   }
-  const relevantePerioder = findAllePerioderMedBortfaltNaturalytelse(allePerioder);
-  if (relevantePerioder.length === 0 || !relevantePerioder) {
+  let relevantePerioder = findAllePerioderMedBortfaltNaturalytelse(allePerioder);
+
+  if (!harBortfalteNaturalytelser(allePerioder)) {
     return undefined;
   }
-
-  const headers = createHeaderData(relevantePerioder);
+  if (!relevantePerioder || relevantePerioder.length < 1) {
+    relevantePerioder = allePerioder;
+  }
   const tempMap = {};
   let antallPerioderMedFrafaltYtelse = 0;
   relevantePerioder.forEach((periode) => {
@@ -73,52 +84,60 @@ export const createNaturalytelseTableData = (allePerioder) => {
     andelerMedFrafaltYtelse.forEach((andel) => {
       const mapKey = createArbeidsforholdKey(andel.arbeidsforhold);
       const mapValue = tempMap[mapKey];
-      tempMap[mapKey] = createOrEditMapValue(andel, mapValue, antallPerioderMedFrafaltYtelse);
+      const periodeText = createPeriodeTekst(periode);
+      tempMap[mapKey] = createOrEditMapValue(andel, mapValue, antallPerioderMedFrafaltYtelse, periodeText);
     });
     antallPerioderMedFrafaltYtelse += 1;
   });
-  const arbeidsforholdPeriodeMap = fillMapWithMissingPeriodes(tempMap, antallPerioderMedFrafaltYtelse);
+  const arbeidsforholdPeriodeMap = tempMap;
   return {
     arbeidsforholdPeriodeMap,
-    headers,
   };
 };
 
-const createNaturalYtelseRows = (arbeidsMap) => {
+
+const createNaturalYtelseRows = (tableData) => {
+  const { arbeidsforholdPeriodeMap } = tableData;
   const rows = [];
-  Object.keys(arbeidsMap).forEach((val) => {
-    const list = arbeidsMap[val];
+  Object.keys(arbeidsforholdPeriodeMap).sort().forEach((val) => {
+    const list = arbeidsforholdPeriodeMap[val];
     let valueKey = 0;
-    rows.push(
-      <TableRow key={val}>
-        {list.map((element) => {
-          valueKey += 1;
-          return (
-            <TableColumn key={`naturalytelse_val_${valueKey}`}>
-              <Normaltekst>{element}</Normaltekst>
-            </TableColumn>
-          );
-        })}
-      </TableRow>,
-    );
+    const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
+    const row = list.map((element) => {
+      valueKey += 1;
+      if (valueKey === 1) {
+        return (
+          <Row key={`naturalytelse_firma_rad_${val}_{valueKey}`}>
+            <Column xs="11" className={beregningStyles.noPaddingRight} key={`naturalytelse_firma_col_${val}_{valueKey}`}>
+              <Element>{element}</Element>
+            </Column>
+            <Column xs="1" className={beregningStyles.colLink} key={`naturalytelse_link_${valueKey}`}>
+              {userIdent && (
+              <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />
+              )}
+            </Column>
+          </Row>
+        );
+      }
+      return (
+        <Row key={`naturalytelse_periode_rad_${valueKey}`}>
+          <Column xs="7" key={`naturalytelse_vperiode_${valueKey}`}>
+            <Normaltekst>{element && element.periodeTekst && element.periodeTekst}</Normaltekst>
+          </Column>
+          <Column xs="2" className={beregningStyles.colMaanedText}>
+            <Normaltekst>{element && element.maaned && formatCurrencyNoKr(element.maaned)}</Normaltekst>
+          </Column>
+          <Column xs="2" className={beregningStyles.colAarText}>
+            <Element>{element && element.aar && formatCurrencyNoKr(element.aar)}</Element>
+          </Column>
+        </Row>
+      );
+    });
+    rows.push(row);
   });
   return rows;
 };
 
-const createHeaders = (listOfYears) => {
-  const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse" />];
-  const headerString = 'Beregningsgrunnlag.AarsinntektPanel.OpphortYtelse';
-  listOfYears.forEach((aar) => {
-    headers.push(
-      <FormattedMessage
-        id={headerString}
-        key={aar.toString()}
-        values={{ dato: moment(aar, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) }}
-      />,
-    );
-  });
-  return headers;
-};
 /**
  * NaturalytelsePanel
  *
@@ -133,9 +152,28 @@ const NaturalytelsePanel = ({
     return null;
   }
   return (
-    <Table headerTextCodes={createHeaders(tableData.headers)} noHover allowFormattedHeader classNameTable={styles.ytelseTable}>
-      {createNaturalYtelseRows(tableData.arbeidsforholdPeriodeMap)}
-    </Table>
+    <>
+      <AvsnittSkiller luftOver luftUnder />
+      <Element className={beregningStyles.avsnittOverskrift}>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse2" />
+      </Element>
+      <VerticalSpacer eightPx />
+      <Row>
+        <Column xs="7" key="ATempthy1" />
+        <Column xs="2" className={beregningStyles.colMaanedText}>
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
+          </Undertekst>
+        </Column>
+        <Column xs="2" className={beregningStyles.colAarText}>
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
+          </Undertekst>
+        </Column>
+        <Column className={beregningStyles.colLink} />
+      </Row>
+      {createNaturalYtelseRows(tableData)}
+    </>
   );
 };
 NaturalytelsePanel.propTypes = {

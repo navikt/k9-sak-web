@@ -1,34 +1,37 @@
+import { PeriodpickerField } from '@fpsak-frontend/form';
 import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { hasValidDate, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt } from '@k9-frontend/types';
-import { Sykdom, TransformValues } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
-import MedisinskVilkårConsts from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
-import { Systemtittel } from 'nav-frontend-typografi';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { dateRangesNotOverlapping, hasValidDate, required } from '@fpsak-frontend/utils';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { Periode, Sykdom, TransformValues } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
+import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
+import moment from 'moment';
+import { Element, Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
-import { FieldArray, InjectedFormProps } from 'redux-form';
+import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import moment from 'moment';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import DatepickerField from '../../../form/src/DatepickerField';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
-import DiagnoseRadio from './DiagnoseRadio';
-import InnlagtBarnPeriodeFieldArray from './InnlagtBarnPeriodeFieldArray';
-import InnlagtBarnRadio from './InnlagtBarnRadio';
 import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
 import Legeerklaering from './Legeerklaering';
 import styles from './medisinskVilkar.less';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
+import {
+  getPerioderMedKontinuerligTilsynOgPleie,
+  getPerioderMedUtvidetKontinuerligTilsynOgPleie,
+} from './MedisinskVilkarUtils';
 
 interface MedisinskVilkarFormProps {
   behandlingId: number;
   behandlingVersjon: number;
   readOnly: boolean;
   submitCallback: (props: SubmitCallbackProps[]) => void;
-  hasOpenAksjonspunkter: boolean;
+  harApneAksjonspunkter: boolean;
   submittable: boolean;
   sykdom?: Sykdom;
   aksjonspunkter: Aksjonspunkt[];
@@ -36,10 +39,20 @@ interface MedisinskVilkarFormProps {
 
 interface StateProps {
   harDiagnose: boolean;
-  erInnlagt: boolean;
   harBehovForKontinuerligTilsynOgPleie: boolean;
   [MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE]: any;
+  innleggelsesperiode: Periode;
 }
+
+const { MEDISINSK_VILKAAR } = aksjonspunktCodes;
+
+const getHelpTexts = aksjonspunkter => {
+  const helpTexts = [];
+  if (hasAksjonspunkt(MEDISINSK_VILKAAR, aksjonspunkter)) {
+    helpTexts.push(<FormattedMessage key="VurderBehov" id="MedisinskVilkarPanel.VurderBehov" />);
+  }
+  return helpTexts;
+};
 
 const formName = 'MedisinskVilkarForm';
 
@@ -49,116 +62,108 @@ export const MedisinskVilkarForm = ({
   handleSubmit,
   form,
   readOnly,
-  hasOpenAksjonspunkter,
+  harApneAksjonspunkter,
   submittable,
-  harDiagnose,
-  erInnlagt,
-  harBehovForKontinuerligTilsynOgPleie,
   sykdom,
+  aksjonspunkter,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
-  const { periodeTilVurdering } = sykdom;
+  const { periodeTilVurdering, legeerklæringer } = sykdom;
+  const diagnosekode = legeerklæringer && legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';
+  const isApOpen = harApneAksjonspunkter || !submittable;
+  const getAksjonspunktHelpText = (
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpTextTemp>
+  );
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={styles.headingContainer}>
-        <Systemtittel>
-          <FormattedMessage id="MedisinskVilkarForm.Fakta" />
-        </Systemtittel>
-      </div>
-      <div className={styles.fieldContainer}>
-        <DatepickerField
-          name={MedisinskVilkårConsts.LEGEERKLÆRING_FOM}
-          validate={[required, hasValidDate]}
-          defaultValue={null}
-          readOnly={readOnly}
-          label={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder' }}
-          disabledDays={{
-            before: moment(periodeTilVurdering.fom).toDate(),
-            after: moment(periodeTilVurdering.tom).toDate(),
-          }}
-        />
-        <InnlagtBarnRadio readOnly={readOnly} />
-        {erInnlagt && (
-          <FieldArray
-            name={MedisinskVilkårConsts.INNLEGGELSESPERIODER}
-            component={InnlagtBarnPeriodeFieldArray}
-            props={{ readOnly, periodeTilVurdering }}
-          />
-        )}
-        <div className={styles.fieldContainer}>
-          <DiagnoseRadio readOnly={readOnly} />
-          {harDiagnose && <DiagnosekodeSelector readOnly={readOnly} />}
+    <>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.headingContainer}>
+          <Systemtittel>
+            <FormattedMessage id="MedisinskVilkarForm.Fakta" />
+          </Systemtittel>
         </div>
         <div className={styles.fieldContainer}>
           <Legeerklaering readOnly={readOnly} />
         </div>
-      </div>
-      <div className={styles.headingContainer}>
-        <Systemtittel>
-          <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
-        </Systemtittel>
-      </div>
-      <div className={styles.fieldContainer}>
-        <KontinuerligTilsynOgPleie
+        <div className={styles.fieldContainer}>
+          <DatepickerField
+            name={MedisinskVilkårConsts.LEGEERKLÆRING_FOM}
+            validate={[required, hasValidDate]}
+            defaultValue={null}
+            readOnly={readOnly}
+            label={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder' }}
+            disabledDays={{
+              before: moment(periodeTilVurdering.fom).toDate(),
+              after: moment(periodeTilVurdering.tom).toDate(),
+            }}
+          />
+        </div>
+        <div className={styles.fieldContainer}>
+          <DiagnosekodeSelector initialDiagnosekodeValue={diagnosekode} readOnly={readOnly} />
+        </div>
+
+        <div className={styles.fieldContainer}>
+          <Element>
+            <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
+          </Element>
+          <PeriodpickerField
+            names={[
+              `${MedisinskVilkårConsts.INNLEGGELSESPERIODE}.fom`,
+              `${MedisinskVilkårConsts.INNLEGGELSESPERIODE}.tom`,
+            ]}
+            validate={[required, hasValidDate, dateRangesNotOverlapping]}
+            defaultValue={null}
+            readOnly={readOnly}
+            label={{ id: 'MedisinskVilkarForm.Periode' }}
+            disabledDays={{
+              before: moment(periodeTilVurdering.fom).toDate(),
+              after: moment(periodeTilVurdering.tom).toDate(),
+            }}
+          />
+        </div>
+        <div className={styles.vilkarsContainer}>
+          <div className={styles.helpTextContainer}>{getAksjonspunktHelpText}</div>
+
+          <div className={styles.headingContainer}>
+            <Systemtittel>
+              <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
+            </Systemtittel>
+          </div>
+          <div className={styles.fieldContainer}>
+            <KontinuerligTilsynOgPleie
+              readOnly={readOnly}
+              periodeTilVurdering={periodeTilVurdering}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              formName={formName}
+            />
+          </div>
+        </div>
+
+        <MedisinskVilkarFormButtons
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          form={form}
+          harApneAksjonspunkter={harApneAksjonspunkter}
           readOnly={readOnly}
-          harBehovForKontinuerligTilsynOgPleie={harBehovForKontinuerligTilsynOgPleie}
-          periodeTilVurdering={periodeTilVurdering}
+          submittable={submittable}
         />
-      </div>
-      <MedisinskVilkarFormButtons
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        form={form}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        readOnly={readOnly}
-        submittable={submittable}
-      />
-    </form>
+      </form>
+    </>
   );
 };
 
 const transformValues = (values: TransformValues, identifikator?: string) => {
-  const getPerioderMedUtvidetKontinuerligTilsynOgPleie = () => {
-    const helePerioder = values.perioderMedKontinuerligTilsynOgPleie
-      ?.filter(
-        periodeMedKontinuerligTilsynOgPleie =>
-          !!periodeMedKontinuerligTilsynOgPleie.fom &&
-          !!periodeMedKontinuerligTilsynOgPleie.tom &&
-          periodeMedKontinuerligTilsynOgPleie.behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE,
-      )
-      .map(perioderMedKontinuerligTilsynOgPleie => ({
-        periode: {
-          fom: perioderMedKontinuerligTilsynOgPleie.fom,
-          tom: perioderMedKontinuerligTilsynOgPleie.tom,
-        },
-        begrunnelse: perioderMedKontinuerligTilsynOgPleie.begrunnelse,
-      }));
-    const delvisePerioder = values.perioderMedUtvidetKontinuerligTilsynOgPleie
-      ?.filter(
-        periodeMedUtvidetKontinuerligTilsynOgPleie =>
-          !!periodeMedUtvidetKontinuerligTilsynOgPleie.fom && !!periodeMedUtvidetKontinuerligTilsynOgPleie.tom,
-      )
-      .map((periodeMedUtvidetKontinuerligTilsynOgPleie, idx: number) => ({
-        periode: {
-          fom: periodeMedUtvidetKontinuerligTilsynOgPleie.fom,
-          tom: periodeMedUtvidetKontinuerligTilsynOgPleie.tom,
-        },
-        begrunnelse: values.perioderMedKontinuerligTilsynOgPleie[idx].begrunnelse,
-      }));
-
-    return helePerioder.concat(delvisePerioder);
-  };
-
   return {
     kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
-    begrunnelse: values.begrunnelse,
+    begrunnelse: 'placeholder', // TODO (Hallvard): Finn ut hva vi skal gjøre her
     legeerklæring: [
       {
         identifikator: identifikator ?? null,
-        diagnosekode: values.diagnosekode.value,
+        diagnosekode: values.diagnosekode.key ?? values.diagnosekode,
         kilde: values.legeerklaeringkilde,
         fom: values.legeerklæringFom,
         tom: values.legeerklæringFom,
-        innleggelsesperioder: values.erInnlagt ? values.innleggelsesperioder : undefined,
+        innleggelsesperioder: values.innleggelsesperiode ? [values.innleggelsesperiode] : undefined,
       },
     ],
     pleiebehov: {
@@ -172,11 +177,11 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
             fom: periodeMedKontinuerligTilsynOgPleie.fom,
             tom: periodeMedKontinuerligTilsynOgPleie.tom,
           },
-          begrunnelse: values.begrunnelse, // TODO (Hallvard): Denne skal kanskje være noe annet
+          begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
         })),
       perioderMedUtvidetKontinuerligTilsynOgPleie:
         values.perioderMedKontinuerligTilsynOgPleie?.length > 0
-          ? getPerioderMedUtvidetKontinuerligTilsynOgPleie()
+          ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
           : undefined,
     },
   };
@@ -191,56 +196,32 @@ const buildInitialValues = createSelector(
     if (!harTidligereBehandling) {
       return {};
     }
-    const getPerioderMedKontinuerligTilsynOgPleie = () =>
-      sykdom.perioderMedKontinuerligTilsynOgPleie.map(periode => ({
-        fom: periode.fom,
-        tom: periode.tom,
-        behovForToOmsorgspersoner: !!periode.fom && !!periode.tom ? MedisinskVilkårConsts.JA_DELER : undefined,
-      }));
+
     return {
-      [MedisinskVilkårConsts.DIAGNOSEKODE]: legeerklæring.diagnosekode,
+      diagnosekode: legeerklæring.diagnosekode,
       legeerklaeringkilde: legeerklæring.kilde,
       legeerklæringFom: legeerklæring.fom,
       legeerklæringTom: legeerklæring.tom,
-      innleggelsesperioder: legeerklæring.innleggelsesperioder,
+      innleggelsesperiode: legeerklæring.innleggelsesperioder[0],
       harDiagnose: !!legeerklæring.diagnosekode,
-      erInnlagt: legeerklæring.fom && legeerklæring.innleggelsesperioder.length > 0,
-      harBehovForKontinuerligTilsynOgPleie: sykdom.perioderMedKontinuerligTilsynOgPleie?.length > 0,
       begrunnelse: aksjonspunkt.begrunnelse,
-      perioderMedKontinuerligTilsynOgPleie: getPerioderMedKontinuerligTilsynOgPleie(),
-      perioderMedUtvidetKontinuerligTilsynOgPleie: sykdom.perioderMedUtvidetKontinuerligTilsynOgPleie,
+      perioderMedKontinuerligTilsynOgPleie: getPerioderMedKontinuerligTilsynOgPleie(sykdom),
     };
   },
 );
 
-const mapStateToPropsFactory = (_, props: MedisinskVilkarFormProps) => {
+const mapStateToProps = (_, props: MedisinskVilkarFormProps) => {
   const { submitCallback, behandlingId, behandlingVersjon, sykdom, aksjonspunkter } = props;
   const onSubmit = values => submitCallback([transformValues(values, props.sykdom?.legeerklæringer[0]?.identifikator)]);
 
   return state => ({
     onSubmit,
     initialValues: buildInitialValues({ sykdom, aksjonspunkter }),
-    [MedisinskVilkårConsts.DIAGNOSEKODE]: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, MedisinskVilkårConsts.DIAGNOSEKODE),
-    erInnlagt: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erInnlagt'),
-    harBehovForKontinuerligTilsynOgPleie: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, 'harBehovForKontinuerligTilsynOgPleie'),
-    [MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE]: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    ),
-    harDiagnose: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'harDiagnose'),
+    diagnosekode: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'diagnosekode'),
   });
 };
 
-const connectedComponent = connect(mapStateToPropsFactory)(
+const connectedComponent = connect(mapStateToProps)(
   behandlingFormTs({
     form: formName,
     enableReinitialize: true,

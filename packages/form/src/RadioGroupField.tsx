@@ -7,6 +7,8 @@ import styles from './radioGroupField.less';
 import { RadioOptionProps } from './RadioOption';
 import renderNavField from './renderNavField';
 
+type Direction = 'horizontal' | 'vertical';
+
 interface RadioGroupFieldProps {
   name: string;
   label?: React.ReactNode;
@@ -18,7 +20,7 @@ interface RadioGroupFieldProps {
   children?: React.ReactElement<RadioOptionProps>[];
   spaceBetween?: boolean;
   rows?: number;
-  direction?: string;
+  direction?: Direction;
   DOMName?: string;
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;

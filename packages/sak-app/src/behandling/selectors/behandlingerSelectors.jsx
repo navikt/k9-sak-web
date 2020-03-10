@@ -29,6 +29,7 @@ export const getBehandlinger = createSelector(
 export const getBehandlingerInfo = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .map((behandling) => ({
     id: behandling.id,
+    uuid: behandling.uuid,
     type: behandling.type,
     status: behandling.status,
     opprettet: behandling.opprettet,
@@ -42,9 +43,6 @@ export const getBehandlingerTypesMappedById = createSelector([getBehandlinger], 
 
 export const getBehandlingerStatusMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((acc, b) => ({ ...acc, [b.id]: b.status.kode }), {}));
-
-export const getBehandlingerAktivPapirsoknadMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .reduce((a, b) => ({ ...a, [b.id]: b.erAktivPapirsoknad }), {}));
 
 export const getBehandlingerLinksMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.links }), {}));

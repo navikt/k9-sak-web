@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FlexContainer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
+
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
@@ -53,45 +55,11 @@ const lagRelevantePaneler = (
   if (gjelderBesteberegning) {
     return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Besteberegning" /></Normaltekst>);
   }
+  if (relevanteStatuser.isMilitaer) {
+    return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" /></Normaltekst>);
+  }
   return (
-    <>
-      {
-        relevanteStatuser.isArbeidstaker && (
-          <AvviksopplysningerAT
-            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.ARBEIDSTAKER)}
-            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-            relevanteStatuser={relevanteStatuser}
-          />
-        )
-      }
-      {
-        relevanteStatuser.isKombinasjonsstatus && (
-          <VerticalSpacer sixteenPx />
-        )
-      }
-      {
-        relevanteStatuser.isFrilanser && (
-          <AvviksopplysningerFL
-            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.FRILANSER)}
-            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-            relevanteStatuser={relevanteStatuser}
-          />
-        )
-      }
-      {
-        relevanteStatuser.isKombinasjonsstatus && (
-          <VerticalSpacer sixteenPx />
-        )
-      }
-      {
-        relevanteStatuser.isSelvstendigNaeringsdrivende && (
-          <AvviksopplysningerSN
-            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-            harAksjonspunkter={harAksjonspunkter}
-            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-          />
-        )
-      }
+    <FlexContainer>
       {
         relevanteStatuser.isAAP && (
           <Row>
@@ -115,17 +83,31 @@ const lagRelevantePaneler = (
         )
       }
       {
-        relevanteStatuser.isMilitaer && (
-          <Row>
-            <Column xs="12">
-              <Normaltekst>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" />
-              </Normaltekst>
-            </Column>
-          </Row>
+        relevanteStatuser.isArbeidstaker && (
+          <AvviksopplysningerAT
+            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.ARBEIDSTAKER)}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+            relevanteStatuser={relevanteStatuser}
+          />
         )
-}
-    </>
+      }
+      {
+        relevanteStatuser.isFrilanser && (
+          <AvviksopplysningerFL
+            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.FRILANSER)}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+            relevanteStatuser={relevanteStatuser}
+          />
+        )
+      }
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+        <AvviksopplysningerSN
+          alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+          sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+          relevanteStatuser={relevanteStatuser}
+        />
+      )}
+    </FlexContainer>
   );
 };
 
@@ -133,6 +115,7 @@ const lagRelevantePaneler = (
 const harRelevanteStatuserSatt = (relevanteStatuser) => {
   const statuser = relevanteStatuser;
   delete statuser.skalViseBeregningsgrunnlag;
+  delete statuser.harAndreTilstotendeYtelser;
   const statusVerdier = Object.values(statuser);
   return statusVerdier.some((verdi) => verdi === true);
 };
@@ -149,7 +132,8 @@ const AvviksopplysningerPanel = ({
 
   return (
     <Panel className={beregningStyles.panelRight}>
-      <Element>
+      <AvsnittSkiller luftUnder />
+      <Element className={beregningStyles.avsnittOverskrift}>
         <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
       </Element>
       <VerticalSpacer eightPx />

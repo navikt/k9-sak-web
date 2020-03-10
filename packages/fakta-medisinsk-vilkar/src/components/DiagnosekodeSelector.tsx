@@ -1,11 +1,14 @@
 import { AutocompleteField } from '@fpsak-frontend/form';
-import * as React from 'react';
-import { FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 import axios from 'axios';
-import styles from './medisinskVilkar.less';
+import * as React from 'react';
+import styles from './diagnosekodeSelector.less';
 
-const fetchDiagnosekoderByQuery = (queryString: string) =>
-  axios.get(`http://localhost:8100/diagnosekoder?query=${queryString}&max=8`);
+const fetchDiagnosekoderByQuery = (queryString: string) => {
+  const pathPrefix = window.location.hostname === 'localhost' ? 'http://localhost:8300' : '';
+  return axios.get(`${pathPrefix}/diagnosekoder?query=${queryString}&max=8`);
+};
 
 const getUpdatedSuggestions = async (queryString: string) => {
   if (queryString.length >= 3) {
@@ -18,9 +21,19 @@ const getUpdatedSuggestions = async (queryString: string) => {
   return [];
 };
 
-const DiagnosekodeSelector = ({ readOnly }) => {
+const DiagnosekodeSelector = ({ readOnly, initialDiagnosekodeValue }) => {
   const [suggestions, setSuggestions] = React.useState([]);
   const [inputValue, setInputValue] = React.useState('');
+
+  React.useEffect(() => {
+    const getInitialDiagnosekode = async () => {
+      const diagnosekode = await getUpdatedSuggestions(initialDiagnosekodeValue);
+      if (diagnosekode.length > 0 && diagnosekode[0].value) {
+        setInputValue(diagnosekode[0].value);
+      }
+    };
+    getInitialDiagnosekode();
+  }, []);
 
   return (
     <FlexRow wrap>
@@ -36,9 +49,10 @@ const DiagnosekodeSelector = ({ readOnly }) => {
           id="test"
           placeholder="Søk etter diagnose"
           ariaLabel="test"
-          label="Hvilken diagnose?"
+          label="Er det fastsatt en diagnose?"
           readOnly={readOnly}
           name="diagnosekode"
+          validate={[required]}
         />
       </FlexColumn>
     </FlexRow>

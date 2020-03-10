@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { Header } from '@fpsak-frontend/sak-dekorator';
+import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
 
 import Dekorator from './Dekorator';
 
@@ -17,8 +17,9 @@ describe('<Dekorator>', () => {
       navAnsattName={ansattNavn}
       removeErrorMessage={removeErrorMsg}
       showDetailedErrorMessages={false}
+      setSiteHeight={sinon.spy()}
     />);
-    const header = wrapper.find(Header);
+    const header = wrapper.find(HeaderWithErrorPanel);
     expect(header.length)
       .is
       .equal(1);

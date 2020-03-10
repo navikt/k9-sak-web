@@ -1,11 +1,9 @@
 'use strict';
 const path = require('path');
-const PACKAGES_DIR = path.resolve(__dirname, '../packages');
-const APP_DIR = path.join(PACKAGES_DIR, 'sak-app/src');
 
 const config = {
   resolve: {
-    extensions: ['.json', '.js', '.jsx', '.ts', '.tsx', '.less'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.less'],
   },
 
   externals: {

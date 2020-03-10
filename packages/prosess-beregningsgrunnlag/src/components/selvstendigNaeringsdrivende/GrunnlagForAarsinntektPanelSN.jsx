@@ -1,35 +1,80 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import {
+  Element, Normaltekst, EtikettLiten,
+} from 'nav-frontend-typografi';
 
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import styles from './grunnlagForAarsinntektPanelSN.less';
+import { Column, Row } from 'nav-frontend-grid';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-const createHeaders = (pgiVerdier, erNyIArbeidslivet) => {
-  const headers = [
-    <FormattedMessage
-      id="Beregningsgrunnlag.AarsinntektPanel.TomString"
-      key="TomStringITabellTittel"
-    />,
-  ];
-  pgiVerdier.forEach(({ årstall }) => {
-    headers.push(
-      <FormattedMessage
-        id="Beregningsgrunnlag.AarsinntektPanel.Aar"
-        values={{ aar: årstall.toString() }}
-        key={`InntektSistseTreÅr_${årstall.toString()}`}
-      />,
-    );
-  });
-  if (!erNyIArbeidslivet) {
-    headers.push(<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.BeregnetAarsinntekt" />);
-  }
-  return headers;
-};
+
+const createHeaderRow = () => (
+  <Row key="SNInntektHeader">
+    <Column xs="10">
+      <EtikettLiten className={beregningStyles.etikettLiten}>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AarHeader" />
+      </EtikettLiten>
+    </Column>
+    <Column xs="2" className={beregningStyles.colAarText}>
+
+      <EtikettLiten className={beregningStyles.etikettLiten}>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
+      </EtikettLiten>
+    </Column>
+  </Row>
+);
+const createSumRow = (pgiSnitt) => (
+  <>
+    {pgiSnitt !== undefined && (
+      <>
+        <Row key="grunnlagAarsinntektSNLine">
+          <Column xs="12" className={beregningStyles.noPaddingRight}>
+            <div className={beregningStyles.colDevider} />
+          </Column>
+        </Row>
+        <Row key="grunnlagAarsinntektSN">
+          <Column xs="10" className={beregningStyles.rightAlignTextInDiv}>
+            <Element>
+              <FormattedMessage
+                id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende"
+              />
+            </Element>
+          </Column>
+          <Column xs="2" className={beregningStyles.colAarText}>
+            <Element>
+              {formatCurrencyNoKr(pgiSnitt)}
+            </Element>
+          </Column>
+        </Row>
+      </>
+    )}
+  </>
+);
+const createInntektRows = (pgiVerdier) => (
+  <>
+    {pgiVerdier.map((element) => (
+      <Row key={element.årstall}>
+        <Column xs="7">
+          <EtikettLiten>
+            {element.årstall}
+          </EtikettLiten>
+        </Column>
+        <Column xs="5" className={beregningStyles.colAarText}>
+          <EtikettLiten>
+            {formatCurrencyNoKr(element.beløp)}
+          </EtikettLiten>
+        </Column>
+      </Row>
+    ))}
+  </>
+);
+
 
 /**
  * GrunnlagForAarsinntektPanelSN
@@ -44,27 +89,27 @@ export const GrunnlagForAarsinntektPanelSN = ({
   if (!snAndel) {
     return null;
   }
-  const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
-  const headers = createHeaders(pgiVerdier, erNyIArbeidslivet);
+  const { pgiVerdier, pgiSnitt } = snAndel;
   return (
-    <Table headerTextCodes={headers} allowFormattedHeader classNameTable={styles.inntektTable} noHover>
-      <TableRow>
-        <TableColumn>
+    <>
+      <AvsnittSkiller luftOver luftUnder />
+      <Element className={beregningStyles.avsnittOverskrift}>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
+      </Element>
+      <VerticalSpacer eightPx />
+      <Row key="SNInntektIngress">
+        <Column xs="8">
           <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivende" />
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.SN.sisteTreAar" />
           </Normaltekst>
-        </TableColumn>
-        {pgiVerdier.map((element) => (
-          <TableColumn key={element.årstall}>
-            <Normaltekst>
-              {element.beløp === undefined ? '' : formatCurrencyNoKr(element.beløp)}
-            </Normaltekst>
-          </TableColumn>
-        ))}
-        {pgiSnitt !== undefined && !erNyIArbeidslivet
-        && <TableColumn><Element>{formatCurrencyNoKr(pgiSnitt)}</Element></TableColumn>}
-      </TableRow>
-    </Table>
+        </Column>
+      </Row>
+      <VerticalSpacer fourPx />
+      {createHeaderRow()}
+      {createInntektRows(pgiVerdier)}
+      {createSumRow(pgiSnitt)}
+
+    </>
   );
 };
 

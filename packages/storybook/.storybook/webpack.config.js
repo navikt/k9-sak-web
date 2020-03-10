@@ -65,15 +65,17 @@ module.exports = async ({ config, mode }) => {
           loader: 'css-loader',
           options: {
             importLoaders: 1,
-            modules: true,
-            localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            modules: {
+              localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            },
           },
         },
         {
           loader: 'less-loader',
           options: {
-            modules: true,
-            localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            modules: {
+              localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            },
             modifyVars: {
               nodeModulesPath: '~',
               coreModulePath: '~',
@@ -109,22 +111,55 @@ module.exports = async ({ config, mode }) => {
       include: [CSS_DIR, CORE_DIR],
     },
     {
-      test: /\.(jpg|png|svg)$/,
+      test: /\.(svg)$/,
+      issuer: {
+        test: /\.less?$/,
+      },
       loader: 'file-loader',
       options: {
+        esModule: false,
         name: '[name]_[hash].[ext]',
       },
       include: [IMAGE_DIR],
+    },
+    {
+      test: /\.(svg)$/,
+      issuer: {
+        test: /\.(jsx?|js?|tsx?|ts?)?$/,
+      },
+      use: [
+        {
+          loader: '@svgr/webpack',
+        },
+        {
+          loader: 'file-loader',
+          options: {
+            esModule: false,
+            name: '[name]_[hash].[ext]',
+          },
+        },
+      ],
+      include: [IMAGE_DIR],
+    },
+    {
+      test: /\.(svg)$/,
+      loader: 'file-loader',
+      options: {
+        esModule: false,
+        name: '[name]_[hash].[ext]',
+      },
+      include: [CORE_DIR],
     },
   );
 
   config.plugins.push(
     new MiniCssExtractPlugin({
       filename: 'style.css',
-    ignoreOrder: true,
-  }),
+      ignoreOrder: true,
+    }),
   );
-  config.resolve.extensions.push('.ts', '.tsx');
+
+  config.resolve.extensions.push('.ts', '.tsx', '.less');
 
   // Return the altered config
   return config;

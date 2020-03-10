@@ -12,7 +12,7 @@ import arrowDownImageUrl from '@fpsak-frontend/assets/images/arrow_down.svg';
 import arrowDownFilledImageUrl from '@fpsak-frontend/assets/images/arrow_down_filled.svg';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
-import EventCallback from '@k9-frontend/types/src/EventCallback';
+import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import styles from './timeLineButton.less';
 
 interface ButtonType<T extends Element> {

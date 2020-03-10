@@ -6,7 +6,7 @@ import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
-import Kjønnkode from '@k9-frontend/types/src/Kjønnkode';
+import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
 import { useIntl } from 'react-intl';
 import styles from './timeLineSokerEnsamSoker.less';
 

@@ -44,6 +44,7 @@ const config = {
     },
   },
   rules: {
+    'import/extensions': ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
     'max-len': [ERROR, 160],
@@ -56,6 +57,7 @@ const config = {
     // TODO (TOR) Ignorert inntil videre grunnet kost/nytte
     'jsx-a11y/anchor-is-valid': OFF,
     'react/jsx-props-no-spreading': OFF,
+    '@typescript-eslint/no-empty-function': OFF,
 
     // TODO (TOR) Midlertidig utkommentert
     'max-classes-per-file': OFF,
@@ -73,7 +75,7 @@ const config = {
   },
   overrides: [
     {
-      files: ['*.spec.jsx'],
+      files: ['*.spec.jsx', '*.spec.tsx'],
       rules: {
         'no-unused-expressions': OFF,
       },

@@ -1,12 +1,20 @@
 @import '@{coreModulePath}nav-frontend-core/less/core';
 @import './dayPicker';
 
+html {
+  height: 100%;
+}
+
 body {
-  background-color: @navLysGra;
+  background-color: @white;
   color: @navMorkGra;
   height: 100%;
   line-height: 1.42857143;
   margin: 0;
+}
+
+:global(#app) {
+  height: 100%;
 }
 
 /*
@@ -73,24 +81,6 @@ som fra core/og muligen import fra alla andra komponenter
 :global(.currentDate) {
   display: none;
 }
-
-/*
-:global(.currentDate) {
-  background-color: grey;
-  margin-top: 12px;
-  pointer-events: none;
-
-  &:after {
-    background: transparent url('./../../assets/images/currentDay.svg') no-repeat;
-    content: '';
-    height: 20px;
-    position: absolute;
-    top: -10px;
-    left: -5px;
-    width: 10px;
-  }
-}
-*/
 
 // move these to teslineIndex.less?
 :global(.soknad) {
@@ -163,22 +153,6 @@ som fra core/og muligen import fra alla andra komponenter
 
 :global(.vis-item.vis-selected) {
   border: 1px solid #4a4a4a;
-  //  visibility: hidden;
-  // Man kan bruke dette om vi må få på plass en pixel avstånd mellan elementen
-
-  /*  &:after{
-      content: '';
-      background-color: inherit;
-      border: inherit;
-      border-radius: 6px;
-      box-shadow: inset 1px 1px 1px;
-      height: 30px;
-      left: 0;
-      position: absolute;
-      top: -5px;
-      visibility: visible !important; // stylelint-disable-line declaration-no-important
-      width: 100%;
-  } */
 }
 
 :global(.vis-item.vis-range) {

@@ -13,14 +13,17 @@
   "UttakInfoPanel.FaktaUttak": "Uttak",
   "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fødsel og tilrettelegging",
   "FaktaOmAlderOgOmsorg.header": "Alder og omsorg",
-  "MedisinskVilkarPanel.MedisinskVilkar": "Legeerklæring",
+  "MedisinskVilkarPanel.MedisinskVilkar": "Sykdom",
 
   "Personspanel.Arbeidsforhold": "Opplysninger om søker",
 
+  "BostedBarnView.DodsDato": "Barnets dødsdato",
+  "YtelserFaktaIndex.Ytelser": "Ytelser",
 
-  "BostedBarnView.DodsDato" : "Barnets dødsdato",
+  "SakenFaktaPanel.Title": "Saken",
+
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
-  "Behandlingspunkt.MedisinskVilkar": "Medisinsk Vilkår",
+  "Behandlingspunkt.MedisinskVilkar": "Sykdom",
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.Inngangsvilkar": "Inngangsvilkår",
   "Behandlingspunkt.CheckVarselRevurdering": "Varsel",
@@ -54,6 +57,7 @@
   "Behandlingspunkt.Avregning": "Simulering",
   "Behandlingspunkt.Foreldelse": "Foreldelse",
   "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
+  "Behandlingspunkt.Opptjening": "Opptjening",
 
   "InngangsvilkarPanel.AvventerAvklaringAv": "Avventer avklaring av fakta om ",
   "OpptjeningVilkarView.VurderOmSøkerHarRett": "Vurder om søker har opptjent rett til foreldrepenger",
@@ -260,7 +264,6 @@
   "SettBehandlingPaVentModal.Avbryt": "Avbryt",
   "SettBehandlingPaVentModal.Lukk": "Lukk",
 
-
   "PeriodLabel.DateToday": "d.d.",
 
   "Registrering.RegistrereSoknad": "Registrere søknad",
@@ -410,7 +413,7 @@
   "BehandlingHenlagtPanel.Henlagt": "Behandlingen er henlagt",
 
   "TilbakekrevingFakta.FaktaFeilutbetaling": "Feilutbetaling",
-  "FaktaPanel.FaktaOm": "Fakta om",
+  "MainSideMenu.Heading": "Saksopplysninger",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 

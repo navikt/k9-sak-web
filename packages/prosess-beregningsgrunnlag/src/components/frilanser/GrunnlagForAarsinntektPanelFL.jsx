@@ -1,28 +1,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-
-import { InputField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { formatCurrencyNoKr, parseCurrencyInput, required } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
+import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
-import styles from './grunnlagForAarsinntektPanelFL.less';
-
-const finnFrilansAksjonspunkt = (aksjonspunkter) => !!aksjonspunkter && aksjonspunkter.find(
-  (ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
-  || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-);
-
-const isFrilansAksjonspunktClosed = (aksjonspunkter) => {
-  const aksjonspunkt = finnFrilansAksjonspunkt(aksjonspunkter);
-  return aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
-};
 
 /**
  * GrunnlagForAarsinntektPanelFL
@@ -32,72 +19,71 @@ const isFrilansAksjonspunktClosed = (aksjonspunkter) => {
  * Vises også hvis status er en kombinasjonsstatus som inkluderer frilanser.
  */
 export const GrunnlagForAarsinntektPanelFL = ({
-  readOnly,
   alleAndeler,
-  aksjonspunkter,
-  isKombinasjonsstatus,
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
+  const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
-    <div className={styles.breddeFL}>
-      { isKombinasjonsstatus
-      && (
-      <div>
-        <Element><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilanser" /></Element>
+    <>
+      <>
+        <AvsnittSkiller luftOver luftUnder />
+        <Element className={beregningStyles.avsnittOverskrift}>
+          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" />
+        </Element>
         <VerticalSpacer eightPx />
-      </div>
-      )}
-      <Row>
-        <Column xs="4">
-          <Normaltekst><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" /></Normaltekst>
+      </>
+      {startDato && (
+      <Row className={beregningStyles.rows}>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2" />
+            <span className={beregningStyles.semiBoldText}>
+              {dateFormat(startDato)}
+            </span>
+          </Normaltekst>
         </Column>
-        { finnFrilansAksjonspunkt(aksjonspunkter)
-        && (
-        <Column xs="4">
-          <Normaltekst><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FastsattFrilans" /></Normaltekst>
-        </Column>
-        )}
       </Row>
-      <Row>
-        <Column xs="4">
+      )}
+      <VerticalSpacer eightPx />
+      <Row className={beregningStyles.rows}>
+        <Column xs="7" />
+        <Column xs="2" className={beregningStyles.colMaanedText}>
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
+          </Undertekst>
+        </Column>
+        <Column xs="2" className={beregningStyles.colAarText}>
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
+          </Undertekst>
+        </Column>
+        <Column xs="1" className={beregningStyles.colLink} />
+      </Row>
+      <Row className={beregningStyles.rows}>
+        <Column xs="7">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans" />
+          </Normaltekst>
+        </Column>
+        <Column xs="2" className={beregningStyles.colMaanedText}>
+          <Normaltekst>{formatCurrencyNoKr(beregnetAarsinntekt / 12)}</Normaltekst>
+        </Column>
+        <Column xs="2" className={beregningStyles.colAarText}>
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
-        { finnFrilansAksjonspunkt(aksjonspunkter)
-        && (
-        <Column xs="4" className={styles.rightAlignInput}>
-          <InputField
-            name="inntektFrilanser"
-            bredde="S"
-            isEdited={isFrilansAksjonspunktClosed(aksjonspunkter)}
-            validate={[required]}
-            parse={parseCurrencyInput}
-            readOnly={readOnly}
-          />
+        <Column xs="1" className={beregningStyles.colLink}>
+          {userIdent && (
+            <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} type="AI" />
+          )}
         </Column>
-        )}
       </Row>
-    </div>
+    </>
   );
 };
 GrunnlagForAarsinntektPanelFL.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  isKombinasjonsstatus: PropTypes.bool.isRequired,
-};
-
-GrunnlagForAarsinntektPanelFL.defaultProps = {
-
-};
-
-GrunnlagForAarsinntektPanelFL.buildInitialValues = (relevanteAndeler) => {
-  if (relevanteAndeler.length === 0) {
-    return undefined;
-  }
-  return {
-    inntektFrilanser: relevanteAndeler[0].overstyrtPrAar ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
-  };
 };
 
 export default GrunnlagForAarsinntektPanelFL;

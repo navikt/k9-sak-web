@@ -4,11 +4,28 @@ import { expect } from 'chai';
 import React from 'react';
 import sinon from 'sinon';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medisinsk-vilkar';
-import DiagnoseRadio from './DiagnoseRadio';
-import InnlagtBarnRadio from './InnlagtBarnRadio';
+import DiagnosekodeSelector from './DiagnosekodeSelector';
+import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
 import Legeerklaering from './Legeerklaering';
 import { MedisinskVilkarForm } from './MedisinskVilkarForm';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
+
+const aksjonspunkter = [
+  {
+    definisjon: { kode: '9001', kodeverk: 'AKSJONSPUNKT_DEF' },
+    status: { kode: 'UTFO', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    begrunnelse: 'placeholder',
+    vilkarType: { kode: 'PSB_VK_2_a', kodeverk: 'VILKAR_TYPE' },
+    toTrinnsBehandling: true,
+    toTrinnsBehandlingGodkjent: null,
+    vurderPaNyttArsaker: null,
+    besluttersBegrunnelse: null,
+    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    kanLoses: true,
+    erAktivt: true,
+    fristTid: null,
+  },
+];
 
 describe('<MedisinskVilkarForm>', () => {
   it('skal rendre form', () => {
@@ -26,10 +43,11 @@ describe('<MedisinskVilkarForm>', () => {
         erInnlagt
         toOmsorgspersoner
         sykdom={{ periodeTilVurdering: {} }}
+        aksjonspunkter={aksjonspunkter}
       />,
     );
-    expect(wrapper.find(InnlagtBarnRadio)).has.length(1);
-    expect(wrapper.find(DiagnoseRadio)).has.length(1);
+    expect(wrapper.find(KontinuerligTilsynOgPleie)).has.length(1);
+    expect(wrapper.find(DiagnosekodeSelector)).has.length(1);
     expect(wrapper.find(Legeerklaering)).has.length(1);
     expect(wrapper.find(MedisinskVilkarFormButtons)).has.length(1);
   });

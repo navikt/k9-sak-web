@@ -1,11 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { GrunnlagForAarsinntektPanelFL as UnwrappedForm } from './GrunnlagForAarsinntektPanelFL';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
+
 
 const periode = {
   bruttoPrAar: 300000,
@@ -17,98 +18,56 @@ const periode = {
       elementNavn: 'arbeidsgiver 1',
       beregnetPrAar: 200000,
       overstyrtPrAar: 100,
+      beregningsgrunnlagFom: '2019-06-01',
+      arbeidsforhold: {
+        startdato: null,
+      },
     },
   ],
 };
-const aktiveAksjonspunkter = [{
-  id: 55,
-  erAktivt: true,
-  definisjon: {
-    kode: '5038',
-    navn: 'Fastsett varig brutto beregning',
-  },
-  toTrinnsBehandling: false,
-  status: {
-    kode: 'OPPR',
-    navn: 'Opprettet',
-  },
-  begrunnelse: '',
-  vilkarType: null,
-  kanLoses: true,
-}];
-const lukkedeAksjonspunkter = [{
-  id: 55,
-  erAktivt: false,
-  definisjon: {
-    kode: '5038',
-    navn: 'Fastsett varig brutto beregning',
-  },
-  toTrinnsBehandling: false,
-  status: {
-    kode: 'UTFO',
-    navn: 'Utført',
-  },
-  begrunnelse: '',
-  vilkarType: null,
-  kanLoses: true,
-}];
+
 
 describe('<GrunnlagForAarsinntektPanelFL>', () => {
-  it('skal teste at korrekt brutto vises for frilanser', () => {
+  it('Skal teste tabellen får korrekt antall rader UTEN arbeidsforhold startdato', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
-      readOnly={false}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
-      isAksjonspunktClosed
-      aksjonspunkter={aktiveAksjonspunkter}
       isKombinasjonsstatus={false}
     />);
-    const elements = wrapper.find('Element');
-    expect(elements).to.have.length(1);
-    expect(elements.at(0).children().text()).to.equal(formatCurrencyNoKr(200000));
+    const rows = wrapper.find('Row');
+
+    expect(rows).to.have.length(2);
+
+    const ledeText = rows.at(1).find('FormattedMessage');
+    const mndAndelFL = rows.at(1).find('Normaltekst');
+    const aarAndelFL = rows.at(1).find('Element');
+    expect(ledeText.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans');
+    expect(mndAndelFL.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((periode.beregningsgrunnlagPrStatusOgAndel[0].beregnetPrAar / 12)));
+    expect(aarAndelFL.childAt(0).text()).to.equal(formatCurrencyNoKr(periode.beregningsgrunnlagPrStatusOgAndel[0].beregnetPrAar));
   });
-  it('skal teste at input felt ikke vises uten aksjonspunkt', () => {
+  it('Skal teste tabellen får korrekt antall rader ved arbeidsforhold startdato', () => {
+    periode.beregningsgrunnlagPrStatusOgAndel[0].arbeidsforhold.startdato = '2011-12-12';
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
-      readOnly={false}
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
-      aksjonspunkter={[]}
-      isAksjonspunktClosed
       isKombinasjonsstatus={false}
     />);
-    const textarea = wrapper.find('TextAreaField');
-    const inputfield = wrapper.find('InputField');
-    expect(textarea).to.have.length(0);
-    expect(inputfield).to.have.length(0);
-  });
-  it('skal teste at input felt vises med aktivt aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      aksjonspunkter={aktiveAksjonspunkter}
-      alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
-      isAksjonspunktClosed={false}
-      isKombinasjonsstatus={false}
-    />);
-    const inputfield = wrapper.find('InputField');
-    expect(inputfield).to.have.length(1);
-    expect(inputfield.props().isEdited).to.have.equal(false);
-  });
-  it('skal teste at input felt vises med lukket aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      aksjonspunkter={lukkedeAksjonspunkter}
-      alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
-      isAksjonspunktClosed
-      isKombinasjonsstatus={false}
-    />);
-    const inputfield = wrapper.find('InputField');
-    expect(inputfield).to.have.length(1);
-    expect(inputfield.props().isEdited).to.have.equal(true);
+    const rows = wrapper.find('Row');
+    const ledeTextStart = rows.at(0).find('FormattedMessage');
+    const ledeTextStartDato = rows.at(0).find('DateLabel');
+
+    expect(rows).to.have.length(3);
+    expect(ledeTextStart.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2');
+    expect(ledeTextStartDato.dateString).to.equal(periode.beregningsgrunnlagPrStatusOgAndel.beregningsgrunnlagFom);
+
+    const ledeText = rows.at(2).find('FormattedMessage');
+    const mndAndelFL = rows.at(2).find('Normaltekst');
+    const aarAndelFL = rows.at(2).find('Element');
+
+    expect(ledeText.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans');
+    expect(mndAndelFL.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((periode.beregningsgrunnlagPrStatusOgAndel[0].beregnetPrAar / 12)));
+    expect(aarAndelFL.childAt(0).text()).to.equal(formatCurrencyNoKr(periode.beregningsgrunnlagPrStatusOgAndel[0].beregnetPrAar));
   });
 });

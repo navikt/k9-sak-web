@@ -7,9 +7,8 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningFP from './BeregningFP';
-import BeregningTable from './beregningsresultatPanel/BeregningsresultatTable';
-import BeregningForm from './beregningForm/BeregningForm';
-import GraderingUtenBG from './gradering/GraderingUtenBG';
+import BeregningForm2 from './beregningForm/BeregningForm';
+import GraderingUtenBG2 from './gradering/GraderingUtenBG';
 
 
 const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille, gradering) => {
@@ -47,14 +46,6 @@ const vilkar = [{
   },
   vilkarStatus: {
     kode: vilkarUtfallType.OPPFYLT,
-  },
-}];
-const vilkarAvslått = [{
-  vilkarType: {
-    kode: 'FP_VK_41',
-  },
-  vilkarStatus: {
-    kode: vilkarUtfallType.IKKE_OPPFYLT,
   },
 }];
 
@@ -107,59 +98,6 @@ const alleKodeverk = {
 };
 
 describe('<BeregningFP>', () => {
-  it('skal teste at BeregningTable og BeregningForm får korrekte props fra BeregningFP', () => {
-    const wrapper = shallow(<BeregningFP
-      readOnly={false}
-      submitCallback={sinon.spy}
-      beregningsgrunnlag={lagBeregningsgrunnlag(true, 100000, 100000, 50, null)}
-      vilkar={vilkar}
-      behandling={behandling}
-      alleKodeverk={alleKodeverk}
-      aksjonspunkter={gjeldendeAksjonspunkter}
-      readOnlySubmitButton
-    />);
-    const beregningTable = wrapper.find(BeregningTable);
-    expect(beregningTable.props().halvGVerdi).to.have.equal(30000);
-    expect(beregningTable.props().ledetekstBrutto).to.have.equal('Brutto tekst');
-    expect(beregningTable.props().ledetekstAvkortet).to.have.equal('Avkortet tekst');
-    expect(beregningTable.props().ledetekstRedusert).to.have.equal('Redusert tekst');
-    const beregningForm = wrapper.find(BeregningForm);
-    expect(beregningForm.props().readOnly).to.have.equal(false);
-    expect(beregningForm.props().gjeldendeAksjonspunkter).to.eql(gjeldendeAksjonspunkter);
-    expect(beregningForm.props().relevanteStatuser.isArbeidstaker).to.eql(true);
-    expect(beregningForm.props().relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
-    expect(beregningForm.props().relevanteStatuser.isKombinasjonsstatus).to.eql(true);
-    expect(beregningForm.props().relevanteStatuser.skalViseBeregningsgrunnlag).to.eql(true);
-    expect(beregningForm.props().submitCallback).to.have.equal(sinon.spy);
-  });
-  it('skal teste at BeregningTable ikke vises dersom det ikke er dagsats på periodene', () => {
-    const wrapper = shallow(<BeregningFP
-      readOnly={false}
-      submitCallback={sinon.spy}
-      beregningsgrunnlag={lagBeregningsgrunnlag(false, 100000, 100000, 50, null)}
-      vilkar={vilkar}
-      behandling={behandling}
-      alleKodeverk={alleKodeverk}
-      aksjonspunkter={gjeldendeAksjonspunkter}
-      readOnlySubmitButton
-    />);
-    const beregningTable = wrapper.find(BeregningTable);
-    expect(beregningTable).to.be.lengthOf(0);
-  });
-  it('skal teste at BeregningTable vises dersom det ikke er dagsats på periodene men vilkåret er avslått', () => {
-    const wrapper = shallow(<BeregningFP
-      readOnly={false}
-      submitCallback={sinon.spy}
-      beregningsgrunnlag={lagBeregningsgrunnlag(true, 100000, 100000, 50, null)}
-      behandling={behandling}
-      alleKodeverk={alleKodeverk}
-      aksjonspunkter={gjeldendeAksjonspunkter}
-      vilkar={vilkarAvslått}
-      readOnlySubmitButton
-    />);
-    const beregningTable = wrapper.find(BeregningTable);
-    expect(beregningTable).to.be.lengthOf(1);
-  });
   it('skal teste at BeregningForm får korrekte props fra BeregningFP med beregnetAvvikPromille lik NULL', () => {
     const wrapper = shallow(<BeregningFP
       readOnly={false}
@@ -172,7 +110,7 @@ describe('<BeregningFP>', () => {
       readOnlySubmitButton
       sokerHarGraderingPaaAndelUtenBG={false}
     />);
-    const beregningForm = wrapper.find(BeregningForm);
+    const beregningForm = wrapper.find(BeregningForm2);
     expect(beregningForm.props().readOnly).to.have.equal(false);
     expect(beregningForm.props().gjeldendeAksjonspunkter).to.eql(gjeldendeAksjonspunkter);
     expect(beregningForm.props().relevanteStatuser.isArbeidstaker).to.eql(true);
@@ -192,7 +130,7 @@ describe('<BeregningFP>', () => {
       aksjonspunkter={gjeldendeAksjonspunkter}
       readOnlySubmitButton
     />);
-    const beregningForm = wrapper.find(BeregningForm);
+    const beregningForm = wrapper.find(BeregningForm2);
     expect(beregningForm).to.be.lengthOf(0);
     const messages = wrapper.find(FormattedMessage);
     expect(messages).to.be.lengthOf(3);
@@ -211,7 +149,7 @@ describe('<BeregningFP>', () => {
       behandling={behandling}
       readOnlySubmitButton
     />);
-    const beregningForm = wrapper.find(BeregningForm);
+    const beregningForm = wrapper.find(BeregningForm2);
     expect(beregningForm).to.be.lengthOf(1);
     const messages = wrapper.find(FormattedMessage);
     expect(messages).to.be.lengthOf(0);
@@ -227,7 +165,7 @@ describe('<BeregningFP>', () => {
       alleKodeverk={alleKodeverk}
       readOnlySubmitButton
     />);
-    const graderingUtenBG = wrapper.find(GraderingUtenBG);
+    const graderingUtenBG = wrapper.find(GraderingUtenBG2);
     expect(graderingUtenBG).to.be.lengthOf(1);
   });
   it('skal teste at GraderingUtenBG ikke vises når sokerHarGraderingPaaAndelUtenBG er false', () => {
@@ -241,7 +179,7 @@ describe('<BeregningFP>', () => {
       alleKodeverk={alleKodeverk}
       readOnlySubmitButton
     />);
-    const graderingUtenBG = wrapper.find(GraderingUtenBG);
+    const graderingUtenBG = wrapper.find(GraderingUtenBG2);
     expect(graderingUtenBG).to.be.lengthOf(0);
   });
 });

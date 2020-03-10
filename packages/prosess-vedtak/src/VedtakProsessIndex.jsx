@@ -5,7 +5,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import VedtakPanels from './components/VedtakPanels';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import vedtakBehandlingPropType from './propTypes/vedtakBehandlingPropType';
 import vedtakBeregningsresultatPropType from './propTypes/vedtakBeregningsresultatPropType';
 import vedtakAksjonspunkterPropType from './propTypes/vedtakAksjonspunkterPropType';
@@ -14,6 +14,7 @@ import vedtakMedlemskapPropType from './propTypes/vedtakMedlemskapPropType';
 import vedtakVilkarPropType from './propTypes/vedtakVilkarPropType';
 import vedtakTilbakekrevingvalgPropType from './propTypes/vedtakTilbakekrevingvalgPropType';
 import vedtakOriginalBehandlingPropType from './propTypes/vedtakOriginalBehandlingPropType';
+import vedtakBeregningsgrunnlagPropType from './propTypes/vedtakBeregningsgrunnlagPropType';
 
 const cache = createIntlCache();
 
@@ -28,6 +29,7 @@ const VedtakProsessIndex = ({
   beregningresultatEngangsstonad,
   tilbakekrevingvalg,
   simuleringResultat,
+  beregningsgrunnlag,
   vilkar,
   sendVarselOmRevurdering,
   beregningsresultatOriginalBehandling,
@@ -39,6 +41,7 @@ const VedtakProsessIndex = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  vedtakVarsel
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -49,8 +52,8 @@ const VedtakProsessIndex = ({
       sprakkode={behandling.sprakkode}
       behandlingresultat={behandling.behandlingsresultat}
       behandlingPaaVent={behandling.behandlingPaaVent}
-      erBehandlingHenlagt={behandling.behandlingHenlagt}
       behandlingArsaker={behandling.behandlingArsaker}
+      beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkar}
       tilbakekrevingvalg={tilbakekrevingvalg}
       simuleringResultat={simuleringResultat}
@@ -66,6 +69,7 @@ const VedtakProsessIndex = ({
       previewCallback={previewCallback}
       submitCallback={submitCallback}
       alleKodeverk={alleKodeverk}
+      vedtakVarsel={vedtakVarsel}
     />
   </RawIntlProvider>
 );
@@ -87,6 +91,8 @@ VedtakProsessIndex.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
+  vedtakVarsel: PropTypes.shape()
 };
 
 VedtakProsessIndex.defaultProps = {
@@ -96,6 +102,7 @@ VedtakProsessIndex.defaultProps = {
   simuleringResultat: undefined,
   tilbakekrevingvalg: undefined,
   sendVarselOmRevurdering: false,
+  beregningsgrunnlag: undefined,
 };
 
 export default VedtakProsessIndex;

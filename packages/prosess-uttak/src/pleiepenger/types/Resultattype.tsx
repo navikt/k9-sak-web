@@ -1,4 +1,4 @@
-import stringEnum from '@k9-frontend/types/src/tsUtils';
+import stringEnum from '@k9-sak-web/types/src/tsUtils';
 
 export const ResultattypeEnum = stringEnum({
   INNVILGET: 'INNVILGET',

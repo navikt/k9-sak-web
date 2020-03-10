@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { Row } from 'nav-frontend-grid';
 import { useIntl } from 'react-intl';
-import EventCallback from '@k9-frontend/types/src/EventCallback';
+import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import TimeLineButton from './TimeLineButton';
 import styles from './timeLineControl.less';
 import Periode from './pleiepenger/types/Periode';

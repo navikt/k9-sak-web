@@ -10,13 +10,19 @@ describe('<YtelserFraInfotrygd>', () => {
     const wrapper = shallowWithIntl(<YtelserFraInfotrygd
       bruttoPrAar={brutto}
     />);
-    const element = wrapper.find('Element');
+
     const formattedMessage = wrapper.find('FormattedMessage');
 
-    expect(formattedMessage).to.have.length(1);
-    expect(formattedMessage.at(0).prop('id')).to.equal('Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse');
-
-    expect(element).to.have.length(1);
-    expect(element.children().at(0).text()).to.equal(formatCurrencyNoKr(brutto));
+    expect(formattedMessage).to.have.length(4);
+    expect(formattedMessage.at(0).prop('id')).to.equal('Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse2');
+    expect(formattedMessage.at(1).prop('id')).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned');
+    expect(formattedMessage.at(2).prop('id')).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar');
+    expect(formattedMessage.at(3).prop('id')).to.equal('Beregningsgrunnlag.YtelserFraInfotrygd.YtelseNavn');
+    const maaned = wrapper.find('Normaltekst');
+    expect(maaned).to.have.length(2);
+    expect(maaned.children().at(1).text()).to.equal(formatCurrencyNoKr(brutto / 12));
+    const element = wrapper.find('Element');
+    expect(element).to.have.length(2);
+    expect(element.children().at(1).text()).to.equal(formatCurrencyNoKr(brutto));
   });
 });

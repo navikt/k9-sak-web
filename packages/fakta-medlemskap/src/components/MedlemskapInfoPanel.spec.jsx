@@ -8,7 +8,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
-import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
 
@@ -48,16 +47,13 @@ describe('<MedlemskapInfoPanel>', () => {
         kode: behandlingStatus.BEHANDLING_UTREDES,
       }}
       soknad={{}}
-      inntektArbeidYtelse={{}}
       alleKodeverk={{}}
       medlemskap={{}}
       medlemskapV2={{}}
       fagsakPerson={{}}
       behandlingPaaVent={false}
-      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
     expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(0);
   });
 
@@ -96,16 +92,13 @@ describe('<MedlemskapInfoPanel>', () => {
         kode: behandlingStatus.BEHANDLING_UTREDES,
       }}
       soknad={{}}
-      inntektArbeidYtelse={{}}
       alleKodeverk={{}}
       medlemskap={{}}
       medlemskapV2={{}}
       fagsakPerson={{}}
       behandlingPaaVent={false}
-      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
     expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(0);
   });
 
@@ -144,16 +137,13 @@ describe('<MedlemskapInfoPanel>', () => {
         kode: behandlingStatus.BEHANDLING_UTREDES,
       }}
       soknad={{}}
-      inntektArbeidYtelse={{}}
       alleKodeverk={{}}
       medlemskap={{}}
       medlemskapV2={{}}
       fagsakPerson={{}}
       behandlingPaaVent={false}
-      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
     expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(1);
   });
 
@@ -176,16 +166,13 @@ describe('<MedlemskapInfoPanel>', () => {
         kode: behandlingStatus.BEHANDLING_UTREDES,
       }}
       soknad={{}}
-      inntektArbeidYtelse={{}}
       alleKodeverk={{}}
       medlemskap={{}}
       medlemskapV2={{}}
       fagsakPerson={{}}
       behandlingPaaVent={false}
-      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
     expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(1);
   });
 });

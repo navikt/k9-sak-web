@@ -6,7 +6,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes, { isBeregningAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
+import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
   isStatusFrilanserOrKombinasjon,
@@ -15,14 +15,14 @@ import {
   isStatusSNOrKombinasjon,
   isStatusTilstotendeYtelse,
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import BeregningsresultatTable from './beregningsresultatPanel/BeregningsresultatTable';
-import BeregningForm from './beregningForm/BeregningForm';
-import GraderingUtenBG from './gradering/GraderingUtenBG';
+
+import BeregningForm2 from './beregningForm/BeregningForm';
+import GraderingUtenBG2 from './gradering/GraderingUtenBG';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
+
 
 const visningForManglendeBG = () => (
   <>
@@ -44,13 +44,14 @@ const visningForManglendeBG = () => (
 );
 
 const getAksjonspunkterForBeregning = (aksjonspunkter) => (aksjonspunkter ? aksjonspunkter.filter((ap) => isBeregningAksjonspunkt(ap.definisjon.kode)) : []);
-
 const getRelevanteStatuser = (bg) => (bg.aktivitetStatus ? ({
   isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
   isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
   isSelvstendigNaeringsdrivende: bg.aktivitetStatus.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
   harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
   harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
+  isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
+  isDagpenger: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.DAGPENGER),
   skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
   isKombinasjonsstatus: bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
   isMilitaer: bg.aktivitetStatus.some(({ kode }) => isStatusMilitaer(kode)),
@@ -58,21 +59,6 @@ const getRelevanteStatuser = (bg) => (bg.aktivitetStatus ? ({
 
 const getBGVilkar = (vilkar) => (vilkar ? vilkar.find((v) => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined);
 
-const getErBgVilkarOppfylt = (vilkar) => {
-  const bgVilkar = getBGVilkar(vilkar);
-  return bgVilkar ? bgVilkar.vilkarStatus.kode === vilkarUtfallType.OPPFYLT : false;
-};
-
-const dagsatsErSatt = (beregningsperioder) => {
-  if (!beregningsperioder) {
-    return false;
-  }
-  return beregningsperioder.some((p) => p.dagsats !== undefined && p.dagsats !== null);
-};
-
-const vilkarErAvslaatt = (vilkar) => vilkar && vilkar.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT;
-
-const getErBeregningFastsatt = (vilkar, bg) => dagsatsErSatt(bg.beregningsgrunnlagPeriode) || vilkarErAvslaatt(getBGVilkar(vilkar));
 
 const getAksjonspunktForGraderingPaaAndelUtenBG = (aksjonspunkter) => (aksjonspunkter
   ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
@@ -99,12 +85,11 @@ const BeregningFP = ({
   }
   const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
   const relevanteStatuser = getRelevanteStatuser(beregningsgrunnlag);
-  const isVilkarOppfylt = getErBgVilkarOppfylt(vilkar);
-  const beregningErFastsatt = getErBeregningFastsatt(vilkar, beregningsgrunnlag);
+  const vilkaarBG = getBGVilkar(vilkar);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
   return (
     <>
-      <BeregningForm
+      <BeregningForm2
         readOnly={readOnly}
         beregningsgrunnlag={beregningsgrunnlag}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -114,21 +99,12 @@ const BeregningFP = ({
         alleKodeverk={alleKodeverk}
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
+        vilkaarBG={vilkaarBG}
       />
-      { beregningErFastsatt
-        && (
-          <BeregningsresultatTable
-            halvGVerdi={beregningsgrunnlag.halvG}
-            beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
-            ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
-            ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
-            ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
-            isVilkarOppfylt={isVilkarOppfylt}
-          />
-        )}
+
       {sokerHarGraderingPaaAndelUtenBG
           && (
-          <GraderingUtenBG
+          <GraderingUtenBG2
             submitCallback={submitCallback}
             readOnly={readOnly}
             behandlingId={behandling.id}

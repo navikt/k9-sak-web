@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { GrunnlagForAarsinntektPanelSN } from './GrunnlagForAarsinntektPanelSN';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 
 const beregningsgrunnlagperioder = {
   bruttoPrAar: 300000,
@@ -38,30 +38,36 @@ const beregningsgrunnlagperioder = {
 };
 
 describe('<GrunnlagForAarsinntektPanelSN>', () => {
-  it('Skal teste tabellen får korrekt antall rader og kolonner', () => {
+  it('Skal teste tabellen får korrekt antall rader', () => {
     const wrapper = shallowWithIntl(<GrunnlagForAarsinntektPanelSN
       alleAndeler={beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel}
     />);
-    const rows = wrapper.find('TableRow');
-    const cols = wrapper.find('TableColumn');
-    expect(rows).to.have.length(1);
-    expect(cols).to.have.length(5);
-  });
 
+    const rows = wrapper.find('Row');
+    expect(rows).to.have.length(7);
+  });
   it('Skal teste tabellen får korrekt innhold', () => {
     const wrapper = shallowWithIntl(<GrunnlagForAarsinntektPanelSN
       alleAndeler={beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel}
     />);
-    const rows = wrapper.find('TableRow');
-    const formattedMessage = rows.find('FormattedMessage');
-    const normaltekst = rows.find('Normaltekst');
-    expect(formattedMessage).to.have.length(1);
-    expect(formattedMessage.first().prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivende');
-    expect(rows.find('Element').at(0).childAt(0).text()).to.equal(formatCurrencyNoKr(200000));
+    const rows = wrapper.find('Row');
+    const formattedMessage = wrapper.find('FormattedMessage');
+    expect(formattedMessage.first().prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt');
+    expect(formattedMessage.at(1).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.SN.sisteTreAar');
+    expect(formattedMessage.at(2).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.AarHeader');
+    expect(formattedMessage.at(3).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende');
 
-    expect(normaltekst).to.have.length(4);
-    expect(rows.find('Normaltekst').at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(320000));
-    expect(rows.find('Normaltekst').at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(500000));
-    expect(rows.find('Normaltekst').at(3).childAt(0).text()).to.equal(formatCurrencyNoKr(400000));
+    beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel[0].pgiVerdier.forEach((pgi, index) => {
+      const etikettLiten = rows.at(index + 2).find('EtikettLiten');
+      const expectedBelop = formatCurrencyNoKr(pgi.beløp);
+      const expectedAar = pgi.årstall.toString();
+      expect(etikettLiten.at(0).childAt(0).text()).to.equal(expectedAar);
+      expect(etikettLiten.at(1).childAt(0).text()).to.equal(expectedBelop);
+    });
+    const resultMessage = rows.at(6).find('FormattedMessage');
+    expect(resultMessage.first().prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende');
+    const resultSnitt = rows.at(6).find('Element');
+    const expectedSnitt = formatCurrencyNoKr(beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel[0].pgiSnitt);
+    expect(resultSnitt.at(1).childAt(0).text()).to.equal(expectedSnitt);
   });
 });

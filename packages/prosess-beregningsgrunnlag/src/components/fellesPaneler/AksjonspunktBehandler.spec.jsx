@@ -44,6 +44,7 @@ describe('<AksjonspunktBehandler>', () => {
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
     const readOnly = true;
     const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
+      intl={intlMock}
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
       formName={formName}
@@ -54,7 +55,6 @@ describe('<AksjonspunktBehandler>', () => {
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
-      intl={intlMock}
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
@@ -71,6 +71,7 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerSN).to.have.length(0);
     expect(wrapper.find('BehandlingspunktSubmitButton')).to.have.length(0);
   });
+
   it('Skal teste at submitButton blir rendret riktig når readOnly=false', () => {
     relevanteStatuser.isFrilanser = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';

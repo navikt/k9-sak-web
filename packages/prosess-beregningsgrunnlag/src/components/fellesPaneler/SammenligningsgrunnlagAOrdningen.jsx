@@ -6,16 +6,20 @@ import {
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import styles from './sammenligningsgrunnlagAOrdningen.less';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
+import Lesmerpanel from '../redesign/LesmerPanel';
+
 
 const grafFargeAT = '#99bdcd';
 const grafFargeFL = '#c1b5d0';
@@ -105,7 +109,7 @@ const lagRad = (relevanteStatuser, atAndel, flAndel, maksVerdi, aarMaaned) => {
   return (
     <React.Fragment key={`${dato}wrapper`}>
       { maaned === '01' && (
-        <Row>
+        <Row className={styles.aarDeviderRow}>
           <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '12' : '10'} className={styles.aarDevider} />
         </Row>
       )}
@@ -170,11 +174,33 @@ const lagRader = (andeler, relevanteStatuser, skjeringstidspunktDato) => {
   return rows;
 };
 
+const lagOverskrift = (andelStatus, userIdent) => (
+  <>
+    <FlexRow key="SamenenligningsGrunnlagOverskrift">
+      <FlexColumn>
+        <Element className={beregningStyles.avsnittOverskrift}>
+          <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel" />
+        </Element>
+      </FlexColumn>
+      <FlexColumn>
+        <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} type="AI" />
+      </FlexColumn>
+    </FlexRow>
+    <VerticalSpacer eightPx />
+    <FlexRow>
+      <FlexColumn>
+        <FormattedMessage id={`Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.${andelStatus}`} />
+      </FlexColumn>
+    </FlexRow>
+  </>
+);
+
 
 const SammenligningsgrunnlagAOrdningen = ({
   sammenligningsGrunnlagInntekter,
   relevanteStatuser,
   skjeringstidspunktDato,
+  intl,
 }) => {
   const andeler = sammenligningsGrunnlagInntekter;
   if ((!andeler || andeler.length === 0) || !skjeringstidspunktDato || relevanteStatuser.isSelvstendigNaeringsdrivende) return null;
@@ -182,38 +208,30 @@ const SammenligningsgrunnlagAOrdningen = ({
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
-      <FlexRow key="SamenenligningsGrunnlagOverskrift">
-        <FlexColumn>
-          <Element className={beregningStyles.semiBoldText}>
-            <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel" />
-          </Element>
-        </FlexColumn>
-        <FlexColumn>
-          <LinkTilEksterntSystem linkText="" userIdent={userIdent} type="AI" />
-        </FlexColumn>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumn>
-          <Normaltekst>
-            <FormattedMessage id={`Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.${andelStatus}`} />
-          </Normaltekst>
-        </FlexColumn>
-      </FlexRow>
-      <VerticalSpacer eightPx />
-      {relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser && (
-      <Row>
-        <Column xs="1" className={styles.maanedColumn} />
-        <Column xs="6" />
-        <Column xs="2" className={beregningStyles.colMaanedText}>
-          <Undertekst className={beregningStyles.semiBoldText}>Arbeid</Undertekst>
-        </Column>
-        <Column xs="2" className={beregningStyles.colAarText}>
-          <Undertekst className={beregningStyles.semiBoldText}>Frilans</Undertekst>
-        </Column>
-        <Column xs="1" />
-      </Row>
-      )}
-      {lagRader(andeler, relevanteStatuser, skjeringstidspunktDato)}
+      <AvsnittSkiller luftOver luftUnder />
+      <Lesmerpanel
+        className={styles.lesMer}
+        intro={lagOverskrift(andelStatus, userIdent)}
+        lukkTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SkjulMaaneder' })}
+        apneTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.VisMaaneder' })}
+        defaultApen
+      >
+        {relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser && (
+        <Row>
+          <Column xs="1" className={styles.maanedColumn} />
+          <Column xs="6" />
+          <Column xs="2" className={beregningStyles.colMaanedText}>
+            <Undertekst className={beregningStyles.semiBoldText}>Arbeid</Undertekst>
+          </Column>
+          <Column xs="2" className={beregningStyles.colAarText}>
+            <Undertekst className={beregningStyles.semiBoldText}>Frilans</Undertekst>
+          </Column>
+          <Column xs="1" />
+        </Row>
+        )}
+        {lagRader(andeler, relevanteStatuser, skjeringstidspunktDato)}
+
+      </Lesmerpanel>
       {lagSumRad(andeler, relevanteStatuser)}
     </>
   );
@@ -223,7 +241,8 @@ SammenligningsgrunnlagAOrdningen.propTypes = {
   sammenligningsGrunnlagInntekter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
   skjeringstidspunktDato: PropTypes.string.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 
-export default SammenligningsgrunnlagAOrdningen;
+export default injectIntl(SammenligningsgrunnlagAOrdningen);

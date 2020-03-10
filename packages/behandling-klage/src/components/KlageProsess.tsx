@@ -13,10 +13,15 @@ import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
+  FagsakInfo,
+  MargMarkering,
+  byggProsessmenySteg,
+  FatterVedtakStatusModal,
+  BehandlingHenlagtPanel,
+  ProsessStegIkkeBehandletPanel,
 } from '@fpsak-frontend/behandling-felles';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { Behandling, Kodeverk, NavAnsatt, Vilkar, Aksjonspunkt } from '@k9-sak-web/types';
 
 import klageApi from '../data/klageBehandlingApi';
 import finnKlageSteg from '../definition/klageStegDefinition';
@@ -30,19 +35,22 @@ interface OwnProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
   klageVurdering?: KlageVurdering;
-  alleBehandlinger: [{
-    id: number;
-    type: Kodeverk;
-    avsluttet?: string;
-    status: Kodeverk;
-  }];
+  alleBehandlinger: [
+    {
+      id: number;
+      type: Kodeverk;
+      avsluttet?: string;
+      status: Kodeverk;
+      uuid: string;
+    },
+  ];
 }
 
 interface StateProps {
@@ -58,7 +66,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps & WrappedComponentProps;
 
-interface KlageProsessState{
+interface KlageProsessState {
   visFatterVedtakModal: boolean;
   visModalKlageBehandling: boolean;
   skalOppdatereFagsakKontekst: boolean;
@@ -74,24 +82,18 @@ class KlageProsess extends Component<Props, KlageProsessState> {
     };
   }
 
-  componentDidUpdate = (prevProps) => {
-    const {
-      behandling, oppdaterBehandlingVersjon,
-    } = this.props;
-    const {
-      skalOppdatereFagsakKontekst,
-    } = this.state;
+  componentDidUpdate = prevProps => {
+    const { behandling, oppdaterBehandlingVersjon } = this.props;
+    const { skalOppdatereFagsakKontekst } = this.state;
     if (skalOppdatereFagsakKontekst && behandling.versjon !== prevProps.behandling.versjon) {
       oppdaterBehandlingVersjon(behandling.versjon);
     }
-  }
+  };
 
   setSteg = (nyttValg, forrigeSteg) => {
-    const {
-      oppdaterProsessStegIUrl,
-    } = this.props;
+    const { oppdaterProsessStegIUrl } = this.props;
     oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
-  }
+  };
 
   toggleFatterVedtakModal = () => {
     const { opneSokeside } = this.props;
@@ -100,8 +102,8 @@ class KlageProsess extends Component<Props, KlageProsessState> {
     if (visFatterVedtakModal) {
       opneSokeside();
     }
-    this.setState((state) => ({ ...state, visFatterVedtakModal: !state.visFatterVedtakModal }));
-  }
+    this.setState(state => ({ ...state, visFatterVedtakModal: !state.visFatterVedtakModal }));
+  };
 
   toggleKlageModal = () => {
     const { opneSokeside } = this.props;
@@ -110,52 +112,48 @@ class KlageProsess extends Component<Props, KlageProsessState> {
     if (visModalKlageBehandling) {
       opneSokeside();
     }
-    this.setState((state) => ({ ...state, visModalKlageBehandling: !state.visModalKlageBehandling }));
-  }
+    this.setState(state => ({ ...state, visModalKlageBehandling: !state.visModalKlageBehandling }));
+  };
 
   slaAvOppdateringAvFagsak = () => {
-    this.setState((state) => ({ ...state, skalOppdatereFagsakKontekst: false }));
-  }
+    this.setState(state => ({ ...state, skalOppdatereFagsakKontekst: false }));
+  };
 
-  saveKlageText = (aksjonspunktModel) => {
-    const {
-      behandling, saveKlage, resolveKlageTemp, aksjonspunkter,
-    } = this.props;
+  saveKlageText = aksjonspunktModel => {
+    const { behandling, saveKlage, resolveKlageTemp, aksjonspunkter } = this.props;
     const data = {
       behandlingId: behandling.id,
       ...aksjonspunktModel,
     };
 
     const getForeslaVedtakAp = aksjonspunkter
-      .filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET)
-      .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+      .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET)
+      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
     if (getForeslaVedtakAp.length === 1) {
       resolveKlageTemp(data);
     } else {
       saveKlage(data);
     }
-  }
+  };
 
-  submitAksjonspunkter = (aksjonspunktModels) => {
-    const {
-      fagsak,
-      behandling,
-      lagreAksjonspunkt,
-      oppdaterProsessStegIUrl,
-    } = this.props;
-    const skalByttTilKlageinstans = aksjonspunktModels
-      .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
-      && apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK);
-    const erVedtakAp = aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK
-      || aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
+  submitAksjonspunkter = aksjonspunktModels => {
+    const { fagsak, behandling, lagreAksjonspunkt, oppdaterProsessStegIUrl } = this.props;
+    const skalByttTilKlageinstans = aksjonspunktModels.some(
+      apValue =>
+        apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
+        apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK,
+    );
+    const erVedtakAp =
+      aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK ||
+      aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
 
     if (skalByttTilKlageinstans || erVedtakAp) {
       this.slaAvOppdateringAvFagsak();
     }
 
     const { id, versjon } = behandling;
-    const models = aksjonspunktModels.map((ap) => ({
+    const models = aksjonspunktModels.map(ap => ({
       '@type': ap.kode,
       ...ap,
     }));
@@ -167,19 +165,18 @@ class KlageProsess extends Component<Props, KlageProsessState> {
       bekreftedeAksjonspunktDtoer: models,
     };
 
-    return lagreAksjonspunkt(params, { keepData: true })
-      .then(() => {
-        if (skalByttTilKlageinstans) {
-          this.toggleKlageModal();
-        } else if (erVedtakAp) {
-          this.toggleFatterVedtakModal();
-        } else {
-          oppdaterProsessStegIUrl('default');
-        }
-      });
+    return lagreAksjonspunkt(params, { keepData: true }).then(() => {
+      if (skalByttTilKlageinstans) {
+        this.toggleKlageModal();
+      } else if (erVedtakAp) {
+        this.toggleFatterVedtakModal();
+      } else {
+        oppdaterProsessStegIUrl('default');
+      }
+    });
   };
 
-  previewCallback = (data) => {
+  previewCallback = data => {
     const { fagsak, behandling, forhandsvisMelding } = this.props;
     const brevData = {
       ...data,
@@ -206,19 +203,32 @@ class KlageProsess extends Component<Props, KlageProsessState> {
     const { visFatterVedtakModal, visModalKlageBehandling } = this.state;
 
     const alleSteg = finnKlageSteg({
-      behandling, aksjonspunkter, vilkar,
+      behandling,
+      aksjonspunkter,
+      vilkar,
     });
     const alleProsessMenySteg = byggProsessmenySteg({
-      alleSteg, valgtProsessSteg, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl,
+      alleSteg,
+      valgtProsessSteg,
+      behandling,
+      aksjonspunkter,
+      vilkar,
+      navAnsatt,
+      fagsak,
+      hasFetchError,
+      intl,
     });
 
-    const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
+    const valgtSteg = alleProsessMenySteg[alleProsessMenySteg.findIndex(p => p.prosessmenySteg.isActive)];
     const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
 
-    const readOnlySubmitButton = valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses));
+    const readOnlySubmitButton =
+      valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some(ap => ap.kanLoses));
 
-    const skalViseTilBeslutterTekst = klageVurdering && klageVurdering.klageVurderingResultatNK
-      && klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
+    const skalViseTilBeslutterTekst =
+      klageVurdering &&
+      klageVurdering.klageVurderingResultatNK &&
+      klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
 
     const fellesProps = {
       behandling,
@@ -232,58 +242,61 @@ class KlageProsess extends Component<Props, KlageProsessState> {
 
     return (
       <>
-        <KlageBehandlingModal
-          visModal={visModalKlageBehandling}
-          lukkModal={this.toggleKlageModal}
-        />
+        <KlageBehandlingModal visModal={visModalKlageBehandling} lukkModal={this.toggleKlageModal} />
         <FatterVedtakStatusModal
           visModal={visFatterVedtakModal}
           lukkModal={this.toggleFatterVedtakModal}
-          tekstkode={skalViseTilBeslutterTekst
-            ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver'}
+          tekstkode={
+            skalViseTilBeslutterTekst
+              ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter'
+              : 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver'
+          }
         />
-        <ProcessMenu
-          steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-        />
-        {valgtStegKode && (
-          <MargMarkering
-            behandlingStatus={behandling.status}
-            aksjonspunkter={valgtSteg.aksjonspunkter}
-            isReadOnly={valgtSteg.isReadOnly}
-          >
-            {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (
-              <FormkravProsessIndex
-                readOnlySubmitButton={readOnlySubmitButton}
-                apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
-                avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
-                {...fellesProps}
-              />
-            )}
-            {(valgtStegKode === bpc.KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.KLAGE_NAV_KLAGEINSTANS) && (
-              <KlagevurderingProsessIndex
-                saveKlage={this.saveKlageText}
-                previewCallback={this.previewCallback}
-                readOnlySubmitButton={readOnlySubmitButton}
-                apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
-                {...fellesProps}
-              />
-            )}
-            {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0) && (
-              <VedtakKlageProsessIndex
-                aksjonspunkter={valgtSteg.aksjonspunkter}
-                previewVedtakCallback={this.previewCallback}
-                {...fellesProps}
-              />
-            )}
-          </MargMarkering>
-        )}
-        {(vedtakStegVises && behandling.behandlingHenlagt) && (
-          <BehandlingHenlagtPanel />
-        )}
-        {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
-          <ProsessStegIkkeBehandletPanel />
-        )}
+        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
+          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
+            <ProcessMenu
+              steps={alleProsessMenySteg.map(p => p.prosessmenySteg)}
+              onClick={index => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
+            />
+          </div>
+          {valgtStegKode && (
+            <MargMarkering
+              behandlingStatus={behandling.status}
+              aksjonspunkter={valgtSteg.aksjonspunkter}
+              isReadOnly={valgtSteg.isReadOnly}
+            >
+              {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON ||
+                valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (
+                <FormkravProsessIndex
+                  readOnlySubmitButton={readOnlySubmitButton}
+                  apCodes={valgtSteg.aksjonspunkter.map(a => a.definisjon.kode)}
+                  avsluttedeBehandlinger={alleBehandlinger.filter(b => b.status.kode === behandlingStatus.AVSLUTTET)}
+                  {...fellesProps}
+                />
+              )}
+              {(valgtStegKode === bpc.KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.KLAGE_NAV_KLAGEINSTANS) && (
+                <KlagevurderingProsessIndex
+                  saveKlage={this.saveKlageText}
+                  previewCallback={this.previewCallback}
+                  readOnlySubmitButton={readOnlySubmitButton}
+                  apCodes={valgtSteg.aksjonspunkter.map(a => a.definisjon.kode)}
+                  {...fellesProps}
+                />
+              )}
+              {vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0 && (
+                <VedtakKlageProsessIndex
+                  aksjonspunkter={valgtSteg.aksjonspunkter}
+                  previewVedtakCallback={this.previewCallback}
+                  {...fellesProps}
+                />
+              )}
+            </MargMarkering>
+          )}
+          {vedtakStegVises && behandling.behandlingHenlagt && <BehandlingHenlagtPanel />}
+          {!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0 && (
+            <ProsessStegIkkeBehandletPanel />
+          )}
+        </div>
       </>
     );
   }
@@ -294,12 +307,18 @@ const mapStateToProps = (state): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch): DispatchProps => ({
-  ...bindActionCreators({
-    lagreAksjonspunkt: klageApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
-    forhandsvisMelding: klageApi.PREVIEW_MESSAGE.makeRestApiRequest(),
-    saveKlage: klageApi.SAVE_KLAGE_VURDERING.makeRestApiRequest(),
-    resolveKlageTemp: klageApi.SAVE_REOPEN_KLAGE_VURDERING.makeRestApiRequest(),
-  }, dispatch),
+  ...bindActionCreators(
+    {
+      lagreAksjonspunkt: klageApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
+      forhandsvisMelding: klageApi.PREVIEW_MESSAGE.makeRestApiRequest(),
+      saveKlage: klageApi.SAVE_KLAGE_VURDERING.makeRestApiRequest(),
+      resolveKlageTemp: klageApi.SAVE_REOPEN_KLAGE_VURDERING.makeRestApiRequest(),
+    },
+    dispatch,
+  ),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(KlageProsess));
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(injectIntl(KlageProsess));

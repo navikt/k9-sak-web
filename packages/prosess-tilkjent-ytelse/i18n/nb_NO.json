@@ -1,6 +1,6 @@
 {
   "TilkjentYtelse.Title": "Tilkjent ytelse",
-  "TilkjentYtelse.VurderTilbaketrekk.Aksjonspunkttekst": "Foreldrepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av foreldrepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og arbeidsgiver.",
+  "TilkjentYtelse.VurderTilbaketrekk.Aksjonspunkttekst": "Pleiepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av foreldrepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og arbeidsgiver.",
   "TilkjentYtelse.VurderTilbaketrekk.Utfør": "Tilbakekrev fra søker",
   "TilkjentYtelse.VurderTilbaketrekk.Hindre": "Ikke tilbakekrev fra søker",
   "TilkjentYtelse.Stonadinfo.Stonadsdager": "Stønadsdager",
@@ -25,7 +25,7 @@
   "TilkjentYtelse.PeriodeData.AAP": "Arbeidsavklaringspenger",
   "TilkjentYtelse.PeriodeData.Arbeidstaker": "Arbeidstaker",
   "TilkjentYtelse.PeriodeData.BrukersAndel": "Brukers andel",
-  
+
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",
@@ -61,7 +61,7 @@
   "ValidationMessage.DateNotBeforeOrEqual": "Dato må være før eller lik {limit}",
   "ValidationMessage.DateNotAfterOrEqual": "Dato må være etter eller lik {limit}",
   "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
-  "ValidationMessage.DateRangesOverlappingPeriodTypes" : "Perioder kan ikke overlappe i tid (uttak, utsettelse, gradering, overforing, opphold)" ,
+  "ValidationMessage.DateRangesOverlappingPeriodTypes": "Perioder kan ikke overlappe i tid (uttak, utsettelse, gradering, overforing, opphold)",
   "ValidationMessage.DatesNotEqual": "Dato må være lik {value}",
   "ValidationMessage.InvalidInteger": "Tallet kan ikke ha desimaler",
   "ValidationMessage.InvalidDecimal": "Tallet kan ikke inneholde mer enn to desimaler",
@@ -89,8 +89,7 @@
   "ValidationMessage.ukerOgDagerVidNullUtbetalningsgradMessage": "Trekk minst en dag når utbetalingsgraden er høyre enn 0%",
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
-  "ValidationMessage.MerEnNullUtaksprosent" : "Uttak av foreldrepenger i denne perioden er avslått, utbetalingsgrad kan ikke være større enn 0.",
-  "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse" : "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
+  "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
   "Person.ImageText": "Personinformasjon",
   "Person.Woman": "Kvinne",
@@ -109,13 +108,13 @@
   "Timeline.tooltip.periodetype": "Periodetype",
   "Timeline.tooltip.utsettelsePeriode": "Utsettelse",
   "Timeline.TidspunktFamiliehendelse": "Tidspunkt for familiehendelse",
-  "Timeline.OppfyltPeriode" : "Oppfylt periode",
-  "Timeline.IkkeOppfyltPeriode" : "Ikke oppfylt periode",
-  "Timeline.TidspunktMotakSoknad" : "Tidspunkt for mottatt søknad",
-  "Timeline.BelopTilbakereves" : "Beløp tilbakekreves",
-  "Timeline.IngenTilbakekreving" : "Ingen tilbakekreving",
-  "Timeline.IkkeAvklartPeriode" : "Uavklart periode",
-  "Timeline.TidspunktRevurdering" : "Startpunkt for revurdering",
-  "Timeline.GradertPeriode" : "Gradert periode",
-  "Timeline.ManueltAvklart" : "Manuelt avklart periode"
+  "Timeline.OppfyltPeriode": "Oppfylt periode",
+  "Timeline.IkkeOppfyltPeriode": "Ikke oppfylt periode",
+  "Timeline.TidspunktMotakSoknad": "Tidspunkt for mottatt søknad",
+  "Timeline.BelopTilbakereves": "Beløp tilbakekreves",
+  "Timeline.IngenTilbakekreving": "Ingen tilbakekreving",
+  "Timeline.IkkeAvklartPeriode": "Uavklart periode",
+  "Timeline.TidspunktRevurdering": "Startpunkt for revurdering",
+  "Timeline.GradertPeriode": "Gradert periode",
+  "Timeline.ManueltAvklart": "Manuelt avklart periode"
 }

@@ -37,18 +37,32 @@ server {
     add_header Content-Type text/plain;
   }
 
-  # TODO K9 Fjern mock:
-  location "/oppdrag/" {
-    return 200 "";
-  }
-  location "/k9/oppdrag/" {
-    return 200 "";
-  }
-
   location  "/k9/sak/" {
     proxy_set_header Host       $http_host;
     proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+  location  "/k9/formidling/" {
+    proxy_set_header Host       $http_host;
+    proxy_hide_header       Content-Security-Policy;
+    proxy_pass "${APP_URL_K9FORMIDLING}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+  
+  location "/k9/oppdrag/" {
+    proxy_set_header Host       $http_host;
+    proxy_hide_header       Content-Security-Policy;
+    proxy_pass "${APP_URL_K9OPPDRAG}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
     error_page 403 = @403_json;
@@ -81,7 +95,7 @@ server {
     default_type application/json;
     return 504 '{"feilmelding":"Timet ut","type":"GENERELL_FEIL"}';
   }
-  
+
   location / {
     # beholder default root slik at vi kan swappe ut med stock nginx
     root   /usr/share/nginx/html;

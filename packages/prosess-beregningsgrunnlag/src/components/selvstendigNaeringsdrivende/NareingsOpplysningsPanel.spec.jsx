@@ -1,10 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import NaeringsopplysningsPanel from './NaeringsOpplysningsPanel';
 
 
@@ -39,7 +38,7 @@ const andelerForstePeriode = {
 
 describe('NaeringsopplysningsPanel', () => {
   it('Skal teste at komponenten renderer riktige verdier', () => {
-    const wrapper = shallow(<NaeringsopplysningsPanel.WrappedComponent
+    const wrapper = shallowWithIntl(<NaeringsopplysningsPanel.WrappedComponent
       alleAndelerIForstePeriode={[andelerForstePeriode]}
       intl={intlMock}
     />);

@@ -132,6 +132,7 @@ describe('<VedtakAvslagPanel>', () => {
         behandlinger={[behandling]}
         ytelseTypeKode={engangsstonad}
         alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
       />,
     );
 
@@ -157,20 +158,19 @@ describe('<VedtakAvslagPanel>', () => {
   });
 
   it('skal rendre avslagspanel uten fritekstpanel for engangsstønad', () => {
-    const wrapper = shallowWithIntl(
-      <VedtakAvslagPanelImpl
-        intl={intlMock}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-        vilkar={vilkarUtenSoknadsfrist}
-        aksjonspunkter={[]}
-        behandlingsresultat={behandlingsresultat}
-        sprakkode={sprakkode}
-        readOnly
-        behandlinger={[behandling]}
-        ytelseTypeKode={engangsstonad}
-        alleKodeverk={{}}
-      />,
-    );
+    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
+      intl={intlMock}
+      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+      vilkar={vilkarUtenSoknadsfrist}
+      aksjonspunkter={[]}
+      behandlingsresultat={behandlingsresultat}
+      sprakkode={sprakkode}
+      readOnly
+      behandlinger={[behandling]}
+      ytelseTypeKode={engangsstonad}
+      alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
+    />);
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
@@ -194,20 +194,19 @@ describe('<VedtakAvslagPanel>', () => {
   });
 
   it('skal rendre avslagspanel uten fritekstpanel for foreldrepenger', () => {
-    const wrapper = shallowWithIntl(
-      <VedtakAvslagPanelImpl
-        intl={intlMock}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-        vilkar={vilkarUtenSoknadsfrist}
-        aksjonspunkter={[]}
-        behandlingsresultat={behandlingsresultat}
-        sprakkode={sprakkode}
-        readOnly
-        behandlinger={[behandling]}
-        ytelseTypeKode={foreldrepenger}
-        alleKodeverk={{}}
-      />,
-    );
+    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
+      intl={intlMock}
+      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+      vilkar={vilkarUtenSoknadsfrist}
+      aksjonspunkter={[]}
+      behandlingsresultat={behandlingsresultat}
+      sprakkode={sprakkode}
+      readOnly
+      behandlinger={[behandling]}
+      ytelseTypeKode={foreldrepenger}
+      alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
+    />);
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
@@ -243,6 +242,7 @@ describe('<VedtakAvslagPanel>', () => {
         behandlinger={[behandling]}
         ytelseTypeKode={foreldrepenger}
         alleKodeverk={{}}
+        beregningErManueltFastsatt
       />,
     );
 

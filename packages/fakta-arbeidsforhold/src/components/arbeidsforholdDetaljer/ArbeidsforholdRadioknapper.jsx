@@ -30,7 +30,7 @@ const AA_REGISTERET = 'aa-registeret';
 const arbeidsforholdTomDatoPickerErrorMsg = (dato) => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }]);
 const dateMustBeBeforeSkjaeringstidspunkt = (dato) => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeSkjaeringstidspunkt' }, { dato }]);
 
-const isKildeAaRegisteret = (arbeidsforhold) => arbeidsforhold.kilde && arbeidsforhold.kilde.navn.toLowerCase() === AA_REGISTERET;
+const isKildeAaRegisteret = (arbeidsforhold) => arbeidsforhold.kilde && arbeidsforhold.kilde.kode.toLowerCase() === AA_REGISTERET;
 
 const skalDisableOverstyrTom = (arbeidsforhold) => {
   const erTomDatoLikEllerEtterSkjaeringstidspunkt = moment(arbeidsforhold.tomDato).isSameOrAfter(arbeidsforhold.skjaeringstidspunkt);

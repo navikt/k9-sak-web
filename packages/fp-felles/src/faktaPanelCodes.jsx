@@ -3,21 +3,21 @@ const faktaPanelCodes = {
   ADOPSJONSVILKARET: 'adopsjonsvilkaaret',
   ARBEIDSFORHOLD: 'arbeidsforhold',
   BEREGNING: 'beregning',
-  FORDELING: 'fordeling',
   DEFAULT: 'default',
+  FORDELING: 'fordeling',
+  FEILUTBETALING: 'feilutbetaling',
   FODSELSVILKARET: 'foedselsvilkaaret',
-  FODSELTILRETTELEGGING: 'fodseltilrettelegging',
   MEDLEMSKAPSVILKARET: 'medlemskapsvilkaaret',
   MEDISINSKVILKAAR: 'medisinskvilkaar',
   OMSORG: 'omsorg',
   OMSORGEN_FOR: 'omsorgenfor', // FIXME: oppdater navn når det er landet
   OMSORGSVILKARET: 'omsorgsvilkaaret',
   OPPTJENINGSVILKARET: 'opptjeningsvilkaaret',
-  PERSON: 'person',
+  SAKEN: 'saken',
   TILLEGGSOPPLYSNINGER: 'tilleggsopplysninger',
-  VERGE: 'verge',
   UTTAK: 'uttak',
-  FEILUTBETALING: 'feilutbetaling',
+  VERGE: 'verge',
+  YTELSER: 'ytelser',
 };
 
 export default faktaPanelCodes;

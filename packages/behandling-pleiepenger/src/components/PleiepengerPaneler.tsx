@@ -1,8 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import {
   Kodeverk,
   NavAnsatt,
@@ -10,11 +8,8 @@ import {
   FagsakInfo,
   BehandlingPaVent,
   SettPaVentParams,
-  TempPersonPanel,
 } from '@fpsak-frontend/behandling-felles';
-import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
-import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 import ForeldrepengerProsess from './PleiepengerProsess';
 import ForeldrepengerFakta from './PleiepengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
@@ -82,20 +77,6 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
       />
-      <VerticalSpacer sixteenPx />
-      <TempPersonPanel
-        behandling={behandling}
-        fagsak={fagsak}
-        aksjonspunkter={fetchedData.aksjonspunkter}
-        personopplysninger={fetchedData.personopplysninger}
-        inntektArbeidYtelse={fetchedData.inntektArbeidYtelse}
-        featureToggleUtland={featureToggles[FeatureToggle.MARKER_UTENLANDSSAK]}
-        alleKodeverk={alleKodeverk}
-        dispatch={dispatch}
-        behandlingApi={pleiepengerBehandlingApi}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-      />
-      <VerticalSpacer sixteenPx />
       <ForeldrepengerFakta
         behandling={behandling}
         data={fetchedData}

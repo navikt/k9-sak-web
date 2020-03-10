@@ -10,8 +10,8 @@ import {
   UttakStonadskontoer,
   Vilkar,
   Ytelsefordeling,
-} from '@fpsak-frontend/behandling-felles';
-import { Sykdom } from '@k9-frontend/types/src/medisinsk-vilkår/MedisinskVilkår';
+} from '@k9-sak-web/types';
+import { Sykdom } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];

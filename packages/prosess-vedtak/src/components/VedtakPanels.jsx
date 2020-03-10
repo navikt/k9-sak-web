@@ -9,6 +9,8 @@ import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import VedtakForm from './VedtakForm';
 import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
+import { skalSkriveFritekstGrunnetFastsettingAvBeregning } from './VedtakHelper';
+import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
 
 /*
  * VedtakPanels
@@ -27,7 +29,6 @@ const VedtakPanels = ({
   behandlingStatus,
   behandlingPaaVent,
   behandlingArsaker,
-  erBehandlingHenlagt,
   tilbakekrevingvalg,
   simuleringResultat,
   resultatstruktur,
@@ -37,9 +38,12 @@ const VedtakPanels = ({
   employeeHasAccess,
   alleKodeverk,
   vilkar,
+  beregningsgrunnlag,
   sendVarselOmRevurdering,
   resultatstrukturOriginalBehandling,
+  vedtakVarsel
 }) => {
+  const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(beregningsgrunnlag, aksjonspunkter);
   if (behandlingTypeKode === behandlingType.REVURDERING) {
     return (
       <VedtakRevurderingForm
@@ -60,10 +64,10 @@ const VedtakPanels = ({
         sendVarselOmRevurdering={sendVarselOmRevurdering}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskapFom={medlemskapFom}
-        erBehandlingHenlagt={erBehandlingHenlagt}
         vilkar={vilkar}
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}
+        beregningErManueltFastsatt={beregningErManueltFastsatt}
       />
     );
   }
@@ -79,7 +83,6 @@ const VedtakPanels = ({
       behandlingStatus={behandlingStatus}
       sprakkode={sprakkode}
       behandlingPaaVent={behandlingPaaVent}
-      erBehandlingHenlagt={erBehandlingHenlagt}
       tilbakekrevingvalg={tilbakekrevingvalg}
       simuleringResultat={simuleringResultat}
       resultatstruktur={resultatstruktur}
@@ -89,6 +92,8 @@ const VedtakPanels = ({
       kanOverstyre={employeeHasAccess}
       alleKodeverk={alleKodeverk}
       vilkar={vilkar}
+      beregningErManueltFastsatt={beregningErManueltFastsatt}
+      vedtakVarsel={vedtakVarsel}
     />
   );
 };
@@ -101,7 +106,6 @@ VedtakPanels.propTypes = {
   behandlingStatus: kodeverkObjektPropType.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  erBehandlingHenlagt: PropTypes.bool.isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
   resultatstruktur: vedtakBeregningsresultatPropType,
@@ -117,6 +121,8 @@ VedtakPanels.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
+  beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
+  vedtakVarsel: PropTypes.shape()
 };
 
 VedtakPanels.defaultProps = {

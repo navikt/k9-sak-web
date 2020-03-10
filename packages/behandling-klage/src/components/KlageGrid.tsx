@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { PersonIndex } from '@fpsak-frontend/person-info';
-import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, BehandlingPaVent, SettPaVentParams,
-} from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
+import { Behandling, Kodeverk, NavAnsatt, Vilkar, Aksjonspunkt } from '@k9-sak-web/types';
 
 import KlageProsess from './KlageProsess';
 import KlageVurdering from '../types/klageVurderingTsType';
@@ -15,7 +12,7 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
   klageVurdering: KlageVurdering;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
@@ -23,12 +20,15 @@ interface OwnProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
-  alleBehandlinger: [{
-    id: number;
-    type: Kodeverk;
-    avsluttet?: string;
-    status: Kodeverk;
-  }];
+  alleBehandlinger: [
+    {
+      id: number;
+      type: Kodeverk;
+      avsluttet?: string;
+      status: Kodeverk;
+      uuid: string;
+    },
+  ];
 }
 
 const KlageGrid: FunctionComponent<OwnProps> = ({
@@ -69,8 +69,6 @@ const KlageGrid: FunctionComponent<OwnProps> = ({
       opneSokeside={opneSokeside}
       alleBehandlinger={alleBehandlinger}
     />
-    <VerticalSpacer sixteenPx />
-    <PersonIndex medPanel person={fagsak.fagsakPerson} />
   </>
 );
 

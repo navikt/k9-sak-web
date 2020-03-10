@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import AvregningPanel from './components/AvregningPanel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import avregningFagsakPropType from './propTypes/avregningFagsakPropType';
 import avregningBehandlingPropType from './propTypes/avregningBehandlingPropType';
 import avregningAksjonspunkterPropType from './propTypes/avregningAksjonspunkterPropType';
@@ -26,7 +26,7 @@ const AvregningProsessIndex = ({
   isReadOnly,
   readOnlySubmitButton,
   isAksjonspunktOpen,
-  previewCallback,
+  previewFptilbakeCallback,
   featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
@@ -44,7 +44,7 @@ const AvregningProsessIndex = ({
       readOnlySubmitButton={readOnlySubmitButton}
       apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
       isApOpen={isAksjonspunktOpen}
-      previewCallback={previewCallback}
+      previewCallback={previewFptilbakeCallback}
     />
   </RawIntlProvider>
 );
@@ -56,7 +56,7 @@ AvregningProsessIndex.propTypes = {
   simuleringResultat: avregningSimuleringResultatPropType,
   tilbakekrevingvalg: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
+  previewFptilbakeCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

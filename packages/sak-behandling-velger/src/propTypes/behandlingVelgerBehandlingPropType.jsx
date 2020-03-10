@@ -17,7 +17,6 @@ const behandlingVelgerBehandlingPropType = PropTypes.shape({
   endret: PropTypes.string,
   behandlendeEnhetId: PropTypes.string.isRequired,
   behandlendeEnhetNavn: PropTypes.string.isRequired,
-  erAktivPapirsoknad: PropTypes.bool,
   links: PropTypes.arrayOf(PropTypes.shape({
     href: PropTypes.string.isRequired,
     rel: PropTypes.string.isRequired,

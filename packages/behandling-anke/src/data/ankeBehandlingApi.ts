@@ -19,23 +19,21 @@ export const AnkeBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE, {
-    fetchLinkDataAutomatically: false,
-  })
-  .withInjectedPath('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vilkar', AnkeBehandlingApiKeys.VILKAR)
-  .withInjectedPath('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
+  .withAsyncPost('/k9/sak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE)
+  .withRel('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', AnkeBehandlingApiKeys.VILKAR)
+  .withRel('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', AnkeBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', AnkeBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
+    saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
   })
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', AnkeBehandlingApiKeys.BEHANDLING_ON_HOLD)
 
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
+    saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
   })
 
   .withAsyncPost('/k9/sak/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
@@ -43,12 +41,12 @@ const endpoints = new RestApiConfigBuilder()
     '/k9/sak/api/behandling/anke/mellomlagre-gjennapne-anke',
     AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING,
     {
-      storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
+      saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
     },
   )
 
-  /* fpformidling */
-  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
+  /* K9FORMIDLING */
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();
 
 const reducerName = 'dataContextAnkeBehandling';

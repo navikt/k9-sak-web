@@ -9,9 +9,15 @@ import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  BehandlingHenlagtPanel, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel,
+  FagsakInfo,
+  MargMarkering,
+  byggProsessmenySteg,
+  BehandlingHenlagtPanel,
+  IverksetterVedtakStatusModal,
+  ProsessStegIkkeBehandletPanel,
 } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk, Dokument, NavAnsatt, Behandling, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+
 import innsynApi from '../data/innsynBehandlingApi';
 import finnInnsynSteg from '../definition/innsynStegDefinition';
 import Innsyn from '../types/innsynTsType';
@@ -42,7 +48,7 @@ interface DispatchProps {
   forhandsvisMelding: (brevData: {}) => Promise<any>;
 }
 
-type Props = OwnProps & StateProps & DispatchProps & WrappedComponentProps
+type Props = OwnProps & StateProps & DispatchProps & WrappedComponentProps;
 
 interface InnsynProsessState {
   visIverksetterVedtakModal: boolean;
@@ -54,21 +60,17 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
     this.state = { visIverksetterVedtakModal: false };
   }
 
-  componentDidUpdate = (prevProps) => {
-    const {
-      behandling, oppdaterBehandlingVersjon,
-    } = this.props;
+  componentDidUpdate = prevProps => {
+    const { behandling, oppdaterBehandlingVersjon } = this.props;
     if (behandling.versjon !== prevProps.behandling.versjon) {
       oppdaterBehandlingVersjon(behandling.versjon);
     }
-  }
+  };
 
   setSteg = (nyttValg, forrigeSteg) => {
-    const {
-      oppdaterProsessStegIUrl,
-    } = this.props;
+    const { oppdaterProsessStegIUrl } = this.props;
     oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
-  }
+  };
 
   toggleIverksetterVedtakModal = () => {
     const { opneSokeside } = this.props;
@@ -77,19 +79,14 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
     if (visIverksetterVedtakModal) {
       opneSokeside();
     }
-    this.setState((state) => ({ ...state, visIverksetterVedtakModal: !state.visIverksetterVedtakModal }));
-  }
+    this.setState(state => ({ ...state, visIverksetterVedtakModal: !state.visIverksetterVedtakModal }));
+  };
 
-  submitAksjonspunkter = (aksjonspunktModels) => {
-    const {
-      fagsak,
-      behandling,
-      oppdaterProsessStegIUrl,
-      lagreAksjonspunkt,
-    } = this.props;
+  submitAksjonspunkter = aksjonspunktModels => {
+    const { fagsak, behandling, oppdaterProsessStegIUrl, lagreAksjonspunkt } = this.props;
 
     const { id, versjon } = behandling;
-    const models = aksjonspunktModels.map((ap) => ({
+    const models = aksjonspunktModels.map(ap => ({
       '@type': ap.kode,
       ...ap,
     }));
@@ -101,23 +98,18 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
       bekreftedeAksjonspunktDtoer: models,
     };
 
-    return lagreAksjonspunkt(params, { keepData: true })
-      .then(() => {
-        const isVedtak = aksjonspunktModels.some((a) => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
-        if (isVedtak) {
-          this.toggleIverksetterVedtakModal();
-        } else {
-          oppdaterProsessStegIUrl('default');
-        }
-      });
+    return lagreAksjonspunkt(params, { keepData: true }).then(() => {
+      const isVedtak = aksjonspunktModels.some(a => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+      if (isVedtak) {
+        this.toggleIverksetterVedtakModal();
+      } else {
+        oppdaterProsessStegIUrl('default');
+      }
+    });
   };
 
-  previewCallback = (data) => {
-    const {
-      fagsak,
-      behandling,
-      forhandsvisMelding,
-    } = this.props;
+  previewCallback = data => {
+    const { fagsak, behandling, forhandsvisMelding } = this.props;
     const brevData = {
       ...data,
       behandlingUuid: behandling.uuid,
@@ -144,13 +136,24 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
     const { visIverksetterVedtakModal } = this.state;
 
     const alleSteg = finnInnsynSteg({
-      behandling, aksjonspunkter, vilkar, innsyn,
+      behandling,
+      aksjonspunkter,
+      vilkar,
+      innsyn,
     });
     const alleProsessMenySteg = byggProsessmenySteg({
-      alleSteg, valgtProsessSteg, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl,
+      alleSteg,
+      valgtProsessSteg,
+      behandling,
+      aksjonspunkter,
+      vilkar,
+      navAnsatt,
+      fagsak,
+      hasFetchError,
+      intl,
     });
 
-    const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
+    const valgtSteg = alleProsessMenySteg[alleProsessMenySteg.findIndex(p => p.prosessmenySteg.isActive)];
     const vedtakStegVises = !!valgtSteg && valgtSteg.kode === bpc.VEDTAK;
 
     const fellesProps = {
@@ -169,40 +172,42 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
           lukkModal={this.toggleIverksetterVedtakModal}
           behandlingsresultat={behandling.behandlingsresultat}
         />
-        <ProcessMenu
-          steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-        />
-        {valgtSteg && (
-          <MargMarkering
-            behandlingStatus={behandling.status}
-            aksjonspunkter={valgtSteg.aksjonspunkter}
-            isReadOnly={valgtSteg.isReadOnly}
-          >
-            {(!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN) && (
-              <InnsynProsessIndex
-                isSubmittable={valgtSteg.isSubmittable}
-                aksjonspunkter={valgtSteg.aksjonspunkter}
-                alleKodeverk={kodeverk}
-                {...fellesProps}
-              />
-            )}
-            {(vedtakStegVises && valgtSteg.aksjonspunkter.length > 0) && (
-              <VedtakInnsynProsessIndex
-                aksjonspunkter={aksjonspunkter}
-                alleDokumenter={alleDokumenter}
-                previewCallback={this.previewCallback}
-                {...fellesProps}
-              />
-            )}
-          </MargMarkering>
-        )}
-        {(vedtakStegVises && behandling.behandlingHenlagt) && (
-          <BehandlingHenlagtPanel />
-        )}
-        {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
-          <ProsessStegIkkeBehandletPanel />
-        )}
+        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
+          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
+            <ProcessMenu
+              steps={alleProsessMenySteg.map(p => p.prosessmenySteg)}
+              onClick={index => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
+            />
+          </div>
+          {valgtSteg && (
+            <MargMarkering
+              behandlingStatus={behandling.status}
+              aksjonspunkter={valgtSteg.aksjonspunkter}
+              isReadOnly={valgtSteg.isReadOnly}
+            >
+              {!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN && (
+                <InnsynProsessIndex
+                  isSubmittable={valgtSteg.isSubmittable}
+                  aksjonspunkter={valgtSteg.aksjonspunkter}
+                  alleKodeverk={kodeverk}
+                  {...fellesProps}
+                />
+              )}
+              {vedtakStegVises && valgtSteg.aksjonspunkter.length > 0 && (
+                <VedtakInnsynProsessIndex
+                  aksjonspunkter={aksjonspunkter}
+                  alleDokumenter={alleDokumenter}
+                  previewCallback={this.previewCallback}
+                  {...fellesProps}
+                />
+              )}
+            </MargMarkering>
+          )}
+          {vedtakStegVises && behandling.behandlingHenlagt && <BehandlingHenlagtPanel />}
+          {vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0 && (
+            <ProsessStegIkkeBehandletPanel />
+          )}
+        </div>
       </>
     );
   }
@@ -213,10 +218,16 @@ const mapStateToProps = (state): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch): DispatchProps => ({
-  ...bindActionCreators({
-    lagreAksjonspunkt: innsynApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
-    forhandsvisMelding: innsynApi.PREVIEW_MESSAGE.makeRestApiRequest(),
-  }, dispatch),
+  ...bindActionCreators(
+    {
+      lagreAksjonspunkt: innsynApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
+      forhandsvisMelding: innsynApi.PREVIEW_MESSAGE.makeRestApiRequest(),
+    },
+    dispatch,
+  ),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(InnsynProsess));
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(injectIntl(InnsynProsess));

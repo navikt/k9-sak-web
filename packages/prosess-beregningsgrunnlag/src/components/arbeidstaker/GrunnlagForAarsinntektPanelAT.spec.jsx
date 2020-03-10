@@ -1,34 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import GrunnlagForAarsinntektPanelAT, { GrunnlagForAarsinntektPanelATImpl as UnwrappedForm } from './GrunnlagForAarsinntektPanelAT';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 
-const bruttoBeregningBegrunnelse = 'Dette er en begrunnelse';
-
-const mockAksjonspunkter = () => ([
-  {
-    id: 55,
-    erAktivt: true,
-    definisjon: {
-      kode: '5038',
-      navn: 'Fastsett varig brutto beregning',
-    },
-    toTrinnsBehandling: false,
-    status: {
-      kode: 'OPPR',
-      navn: 'Opprettet',
-    },
-    begrunnelse: bruttoBeregningBegrunnelse,
-    vilkarType: null,
-    kanLoses: true,
-  },
-]);
-
-const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, erTilkommetAndel) => ({
+const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, erTilkommetAndel, stillingsNavn, stillingsProsent) => ({
   aktivitetStatus: {
     kode: aktivitetStatus.ARBEIDSTAKER,
   },
@@ -37,6 +16,9 @@ const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, erTilkommetA
     arbeidsgiverId: '123',
     arbeidsforholdId: '123',
     eksternArbeidsforholdId: '345678',
+    startdato: '2018-10-09',
+    stillingsNavn,
+    stillingsProsent,
   },
   beregnetPrAar,
   overstyrtPrAar,
@@ -49,7 +31,9 @@ const perioder = [];
 
 describe('<GrunnlagForAarsinntektPanelAT>', () => {
   it('Skal teste tabellen får korrekt antall rader', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, false), mockAndel('Arbeidsgiver 2', 200000, 100, false)];
+    const andeler = [
+      mockAndel('Arbeidsgiver 1', 100, 200000, false),
+      mockAndel('Arbeidsgiver 2', 200000, 100, false)];
     const wrapper = shallowWithIntl(<UnwrappedForm
       intl={intlMock}
       readOnly
@@ -57,16 +41,55 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       isAksjonspunktClosed
       isKombinasjonsstatus={false}
       harAksjonspunkt={false}
-      aksjonspunkter={[]}
       allePerioder={perioder}
       getKodeverknavn={getKodeverknavn}
+      bruttoFastsattInntekt={0}
+
     />);
-    const rows = wrapper.find('TableRow');
+    const rows = wrapper.find('Row');
+    expect(rows).to.have.length(7);
+    const rowsFlex = wrapper.find('FlexRow');
+    expect(rowsFlex).to.have.length(3);
+  });
+
+  it('Skal teste at korrekte verdier settes i tabellen med EN arbeidsandel med opphørsdato', () => {
+    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200001, false, 'Ansattmann', 100)];
+    andeler[0].arbeidsforhold.opphoersdato = '2019-11-11';
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      readOnly
+      isKombinasjonsstatus={false}
+      isAksjonspunktClosed
+      allePerioder={perioder}
+      alleAndeler={andeler}
+      aksjonspunkter={[]}
+      getKodeverknavn={getKodeverknavn}
+      bruttoFastsattInntekt={0}
+    />);
+    const rows = wrapper.find('Row');
+    const rowsFlex = wrapper.find('FlexRow');
     expect(rows).to.have.length(3);
+    let rowNr = 1;
+    let rowNrFlex = 1;
+    andeler.forEach((andel) => {
+      const teksterAndel = rows.at(rowNr).find('Normaltekst');
+      expect(teksterAndel.at(0).childAt(0).text()).to.equal(createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn));
+      expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
+      expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
+
+      const teksterArbForholdTid = rowsFlex.at(rowNrFlex).find('Undertekst');
+      expect(teksterArbForholdTid.at(0).childAt(0).text()).to
+        .equal(`${dateFormat(andel.arbeidsforhold.startdato)} - ${dateFormat(andel.arbeidsforhold.opphoersdato)}`);
+      rowNr += 1;
+      rowNrFlex += 1;
+    });
   });
 
-  it('Skal teste at korrekte verdier settes i tabellen', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, false), mockAndel('Arbeidsgiver 2', 100, 100000, false)];
+  it('Skal teste at korrekte verdier settes i tabellen med to arbeidsandeler', () => {
+    const andeler = [
+      mockAndel('Arbeidsgiver 1', 100, 200000, false, 'Ansattmann', 100),
+      mockAndel('Arbeidsgiver 2', 100, 100000, false, 'Ansattmann', 100)];
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
@@ -77,79 +100,44 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       alleAndeler={andeler}
       aksjonspunkter={[]}
       getKodeverknavn={getKodeverknavn}
+      bruttoFastsattInntekt={0}
     />);
-    const rows = wrapper.find('TableRow');
-    expect(rows.find('Normaltekst').at(0).childAt(0).text()).to.equal('Arbeidsgiver 1 (123)...5678');
-    expect(rows.find('Normaltekst').at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(200000));
-    expect(rows.find('Normaltekst').at(2).childAt(0).text()).to.equal('Arbeidsgiver 2 (123)...5678');
-    expect(rows.find('Normaltekst').at(3).childAt(0).text()).to.equal(formatCurrencyNoKr(100000));
-  });
 
-  it('Skal teste rendering av komponent når vi ikke har aksjonspunkter', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, false), mockAndel('Arbeidsgiver 2', 100, 200000, false)];
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly
-      isKombinasjonsstatus={false}
-      isAksjonspunktClosed
-      allePerioder={perioder}
-      alleAndeler={andeler}
-      aksjonspunkter={[]}
-      getKodeverknavn={getKodeverknavn}
-    />);
-    const table = wrapper.find('Table');
-    expect(table.props().headerTextCodes).to.have.length(2);
-    expect(table.props().headerTextCodes[0]).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver');
-    expect(table.props().headerTextCodes[1]).to.equal('Beregningsgrunnlag.AarsinntektPanel.Inntekt');
-    const inputField = wrapper.find('InputField');
-    expect(inputField).to.have.length(0);
-  });
-
-  it('Skal teste rendering av komponent når vi har aksjonspunkter', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, false), mockAndel('Arbeidsgiver 2', 100, 200000, false)];
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      isAksjonspunktClosed={false}
-      readOnly={false}
-      isKombinasjonsstatus={false}
-      aksjonspunkter={mockAksjonspunkter()}
-      alleAndeler={andeler}
-      allePerioder={perioder}
-      getKodeverknavn={getKodeverknavn}
-    />);
-    const table = wrapper.find('Table');
-    expect(table.props().headerTextCodes).to.have.length(3);
-    expect(table.props().headerTextCodes[0]).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver');
-    expect(table.props().headerTextCodes[1]).to.equal('Beregningsgrunnlag.AarsinntektPanel.Inntekt');
-    expect(table.props().headerTextCodes[2]).to.equal('Beregningsgrunnlag.AarsinntektPanel.FastsattInntekt');
-    const inputField = wrapper.find('InputField');
-    expect(inputField).to.have.length(2);
-  });
-
-  it('Skal teste at andeler som ikke skal vises blir filtrert ut fra tabellen', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', null, 200000, true), mockAndel('Arbeidsgiver 2', 100, 200000, false)];
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      isAksjonspunktClosed={false}
-      readOnly={false}
-      isKombinasjonsstatus={false}
-      aksjonspunkter={mockAksjonspunkter()}
-      alleAndeler={andeler}
-      allePerioder={perioder}
-      getKodeverknavn={getKodeverknavn}
-    />);
-    const rows = wrapper.find('TableRow');
-    expect(rows).to.have.length(2);
-    const inputField = wrapper.find('InputField');
-    expect(inputField).to.have.length(1);
+    const rows = wrapper.find('Row');
+    const rowsFlex = wrapper.find('FlexRow');
+    let rowNr = 1;
+    let rowNrFlex = 1;
+    andeler.forEach((andel) => {
+      const teksterAndel = rows.at(rowNr).find('Normaltekst');
+      expect(teksterAndel.at(0).childAt(0).text()).to.equal(createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn));
+      expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
+      expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
+      const teksterArbForholdTid = rowsFlex.at(rowNrFlex).find('Undertekst');
+      let expectedDato;
+      const { arbeidsforhold } = andel;
+      if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'opphoersdato') && arbeidsforhold.opphoersdato) {
+        expectedDato = `${dateFormat(arbeidsforhold.startdato)} - ${dateFormat(arbeidsforhold.opphoersdato)}`;
+      } else {
+        expectedDato = dateFormat(arbeidsforhold.startdato);
+      }
+      expect(teksterArbForholdTid.at(0).childAt(0).text()).to.equal(expectedDato);
+      rowNr += 2;
+      rowNrFlex += 1;
+    });
+    rowNr += 1;
+    const mndSum = rows.at(rowNr).find('Normaltekst');
+    const aarSum = rows.at(rowNr).find('Element');
+    const ledetextSum = rows.at(rowNr).find('FormattedMessage');
+    const beregnetAarsinntekt = andeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
+    const beregnetMaanedsinntekt = beregnetAarsinntekt / 12;
+    expect(ledetextSum.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt');
+    expect(mndSum.childAt(0).text()).to.equal(formatCurrencyNoKr(beregnetMaanedsinntekt));
+    expect(aarSum.childAt(0).text()).to.equal(formatCurrencyNoKr(beregnetAarsinntekt));
   });
 
   it('Skal teste at initial values bygges korrekt', () => {
     const andeler = [mockAndel('Arbeidsgiver 1', 100, false), mockAndel('Arbeidsgiver 2', 200, false)];
-    const initialValues = GrunnlagForAarsinntektPanelAT.buildInitialValues(andeler, mockAksjonspunkter());
+    const initialValues = GrunnlagForAarsinntektPanelAT.buildInitialValues(andeler);
     expect(initialValues).to.eql({
       inntekt0: '100',
       inntekt1: '200',
