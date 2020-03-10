@@ -11,12 +11,11 @@ import {
   behandlingFormValueSelector,
 } from '@fpsak-frontend/fp-felles/src/behandlingForm';
 import { createSelector } from 'reselect';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlFormatters } from 'react-intl';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Knapp } from 'nav-frontend-knapper';
-import { LoadingPanel } from '@fpsak-frontend/shared-components/index';
 import ArbeidsgiverType from './types/Arbeidsgiver';
 import Arbeidsgiver from './Arbeidsgiver';
 import { beregnNyePerioder, UttakFaktaFormContext } from './uttakUtils';
@@ -42,9 +41,57 @@ interface UttakFaktaFormProps {
     persistentSubmitErrors?: boolean,
   ) => FormAction;
   resetForm: (formName: string) => void;
+  intl: IntlFormatters;
 }
 
-const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps> = ({
+// TODO: slå sammen perioder hvis de er tilstøtende og timer-inputs er like
+export const oppdaterPerioderFor = (
+  arbeidsgivere: ArbeidsgiverType[],
+  valgtArbeidsgiversOrgNr: string,
+  valgtArbeidsforholdId: string,
+  setValgtPeriodeIndex: (index: number) => void,
+  oppdaterForm: (oppdatert: ArbeidsgiverType[]) => void,
+) => (nyPeriode: ArbeidsforholdPeriode) => {
+  let nyePerioder;
+  const oppdatert = arbeidsgivere.map(arbeidsgiver => {
+    if (arbeidsgiver.organisasjonsnummer === valgtArbeidsgiversOrgNr) {
+      return {
+        ...arbeidsgiver,
+        arbeidsforhold: arbeidsgiver.arbeidsforhold.map(arbeidsforhold => {
+          if (arbeidsforhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId) {
+            nyePerioder = beregnNyePerioder(arbeidsforhold.perioder, nyPeriode);
+            const nyPeriodeIndex = nyePerioder.reduce(
+              (tmpIndex: number, periode: ArbeidsforholdPeriode, index: number) => {
+                const periodeErLik =
+                  periode.fom === nyPeriode.fom &&
+                  periode.tom === nyPeriode.tom &&
+                  periode.timerIJobbTilVanlig === nyPeriode.timerIJobbTilVanlig &&
+                  periode.timerFårJobbet === nyPeriode.timerFårJobbet;
+                if (periodeErLik) {
+                  return index;
+                }
+                return tmpIndex;
+              },
+              null,
+            );
+
+            setValgtPeriodeIndex(nyPeriodeIndex);
+
+            return {
+              ...arbeidsforhold,
+              perioder: nyePerioder,
+            };
+          }
+          return arbeidsforhold;
+        }),
+      };
+    }
+    return arbeidsgiver;
+  });
+  oppdaterForm(oppdatert);
+};
+
+export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & InjectedFormProps> = ({
   handleSubmit,
   arbeidsgivere,
   behandlingFormPrefix,
@@ -52,9 +99,9 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
   behandlingVersjon,
   behandlingId,
   resetForm,
+  intl,
   ...formProps
 }) => {
-  const intl = useIntl();
   const [valgtArbeidsgiversOrgNr, setValgtArbeidsgiversOrgNr] = useState<string>(null);
   const [valgtArbeidsforholdId, setValgtArbeidsforholdId] = useState<string>(null);
   const [valgtPeriodeIndex, setValgtPeriodeIndex] = useState<number>(null);
@@ -79,49 +126,59 @@ const UttakFaktaForm: FunctionComponent<UttakFaktaFormProps & InjectedFormProps>
   const { pristine } = formProps;
 
   if (!arbeidsgivere) {
-    return <LoadingPanel />;
+    return null;
   }
 
-  // TODO: slå sammen perioder hvis de er tilstøtende og timer-inputs er like
-  const oppdaterPerioder = (nyPeriode: ArbeidsforholdPeriode) => {
-    let nyePerioder;
-    const oppdatert = arbeidsgivere.map(arbeidsgiver => {
-      if (arbeidsgiver.organisasjonsnummer === valgtArbeidsgiversOrgNr) {
-        return {
-          ...arbeidsgiver,
-          arbeidsforhold: arbeidsgiver.arbeidsforhold.map(arbeidsforhold => {
-            if (arbeidsforhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId) {
-              nyePerioder = beregnNyePerioder(arbeidsforhold.perioder, nyPeriode);
-              const nyPeriodeIndex = nyePerioder.reduce(
-                (tmpIndex: number, periode: ArbeidsforholdPeriode, index: number) => {
-                  const periodeErLik =
-                    periode.fom === nyPeriode.fom &&
-                    periode.tom === nyPeriode.tom &&
-                    periode.timerIJobbTilVanlig === nyPeriode.timerIJobbTilVanlig &&
-                    periode.timerFårJobbet === nyPeriode.timerFårJobbet;
-                  if (periodeErLik) {
-                    return index;
-                  }
-                  return tmpIndex;
-                },
-                null,
-              );
-
-              setValgtPeriodeIndex(nyPeriodeIndex);
-
-              return {
-                ...arbeidsforhold,
-                perioder: nyePerioder,
-              };
-            }
-            return arbeidsforhold;
-          }),
-        };
-      }
-      return arbeidsgiver;
-    });
+  const oppdaterForm = oppdatert =>
     formChange(`${behandlingFormPrefix}.${uttakFaktaFormName}`, 'arbeidsgivere', oppdatert);
-  };
+  const oppdaterPerioder = oppdaterPerioderFor(
+    arbeidsgivere,
+    valgtArbeidsgiversOrgNr,
+    valgtArbeidsforholdId,
+    setValgtPeriodeIndex,
+    oppdaterForm,
+  );
+
+  // TODO: slå sammen perioder hvis de er tilstøtende og timer-inputs er like
+  // const oppdaterPerioder = (nyPeriode: ArbeidsforholdPeriode) => {
+  //   let nyePerioder;
+  //   const oppdatert = arbeidsgivere.map(arbeidsgiver => {
+  //     if (arbeidsgiver.organisasjonsnummer === valgtArbeidsgiversOrgNr) {
+  //       return {
+  //         ...arbeidsgiver,
+  //         arbeidsforhold: arbeidsgiver.arbeidsforhold.map(arbeidsforhold => {
+  //           if (arbeidsforhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId) {
+  //             nyePerioder = beregnNyePerioder(arbeidsforhold.perioder, nyPeriode);
+  //             const nyPeriodeIndex = nyePerioder.reduce(
+  //               (tmpIndex: number, periode: ArbeidsforholdPeriode, index: number) => {
+  //                 const periodeErLik =
+  //                   periode.fom === nyPeriode.fom &&
+  //                   periode.tom === nyPeriode.tom &&
+  //                   periode.timerIJobbTilVanlig === nyPeriode.timerIJobbTilVanlig &&
+  //                   periode.timerFårJobbet === nyPeriode.timerFårJobbet;
+  //                 if (periodeErLik) {
+  //                   return index;
+  //                 }
+  //                 return tmpIndex;
+  //               },
+  //               null,
+  //             );
+  //
+  //             setValgtPeriodeIndex(nyPeriodeIndex);
+  //
+  //             return {
+  //               ...arbeidsforhold,
+  //               perioder: nyePerioder,
+  //             };
+  //           }
+  //           return arbeidsforhold;
+  //         }),
+  //       };
+  //     }
+  //     return arbeidsgiver;
+  //   });
+  //   formChange(`${behandlingFormPrefix}.${uttakFaktaFormName}`, 'arbeidsgivere', oppdatert);
+  // };
 
   const avbrytSkjemaInnfylling = () => {
     // TODO: bekrefte avbryt (i f eks en modal), og så resetForm
@@ -261,8 +318,10 @@ export default connect(
   mapStateToPropsFactory,
   mapDispatchToProps,
 )(
-  behandlingForm({
-    form: uttakFaktaFormName,
-    enableReinitialize: true,
-  })(UttakFaktaForm),
+  injectIntl(
+    behandlingForm({
+      form: uttakFaktaFormName,
+      enableReinitialize: true,
+    })(UttakFaktaFormImpl),
+  ),
 );
