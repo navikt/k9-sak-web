@@ -10,7 +10,7 @@ import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
 import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar/src/MedisinskVilkarIndex';
-import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/pleiepenger/UttakFaktaIndex2';
+import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
 import FaktaPanelDefinisjon from '@fpsak-frontend/behandling-felles/src/types/faktaPanelDefinisjonTsType';
 
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';

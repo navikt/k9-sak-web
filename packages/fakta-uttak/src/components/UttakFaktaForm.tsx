@@ -139,47 +139,6 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
     oppdaterForm,
   );
 
-  // TODO: slå sammen perioder hvis de er tilstøtende og timer-inputs er like
-  // const oppdaterPerioder = (nyPeriode: ArbeidsforholdPeriode) => {
-  //   let nyePerioder;
-  //   const oppdatert = arbeidsgivere.map(arbeidsgiver => {
-  //     if (arbeidsgiver.organisasjonsnummer === valgtArbeidsgiversOrgNr) {
-  //       return {
-  //         ...arbeidsgiver,
-  //         arbeidsforhold: arbeidsgiver.arbeidsforhold.map(arbeidsforhold => {
-  //           if (arbeidsforhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId) {
-  //             nyePerioder = beregnNyePerioder(arbeidsforhold.perioder, nyPeriode);
-  //             const nyPeriodeIndex = nyePerioder.reduce(
-  //               (tmpIndex: number, periode: ArbeidsforholdPeriode, index: number) => {
-  //                 const periodeErLik =
-  //                   periode.fom === nyPeriode.fom &&
-  //                   periode.tom === nyPeriode.tom &&
-  //                   periode.timerIJobbTilVanlig === nyPeriode.timerIJobbTilVanlig &&
-  //                   periode.timerFårJobbet === nyPeriode.timerFårJobbet;
-  //                 if (periodeErLik) {
-  //                   return index;
-  //                 }
-  //                 return tmpIndex;
-  //               },
-  //               null,
-  //             );
-  //
-  //             setValgtPeriodeIndex(nyPeriodeIndex);
-  //
-  //             return {
-  //               ...arbeidsforhold,
-  //               perioder: nyePerioder,
-  //             };
-  //           }
-  //           return arbeidsforhold;
-  //         }),
-  //       };
-  //     }
-  //     return arbeidsgiver;
-  //   });
-  //   formChange(`${behandlingFormPrefix}.${uttakFaktaFormName}`, 'arbeidsgivere', oppdatert);
-  // };
-
   const avbrytSkjemaInnfylling = () => {
     // TODO: bekrefte avbryt (i f eks en modal), og så resetForm
     resetForm(`${behandlingFormPrefix}.${uttakFaktaFormName}`);
