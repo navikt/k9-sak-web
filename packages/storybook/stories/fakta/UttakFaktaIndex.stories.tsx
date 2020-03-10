@@ -1,10 +1,10 @@
 import React from 'react';
-import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/pleiepenger/UttakFaktaIndex2';
+import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
 import { action } from '@storybook/addon-actions';
 import { Behandling } from '@k9-sak-web/types';
-import Arbeidsgiver from '@fpsak-frontend/fakta-uttak/src/pleiepenger/types/Arbeidsgiver';
+import Arbeidsgiver from '@fpsak-frontend/fakta-uttak/src/components/types/Arbeidsgiver';
 import Personopplysninger from '@k9-sak-web/types/src/personopplysningerTsType';
-import withReduxProvider from '../../../decorators/withRedux';
+import withReduxProvider from '../../decorators/withRedux';
 
 export default {
   title: 'fakta/pleiepenger/fakta-uttak',

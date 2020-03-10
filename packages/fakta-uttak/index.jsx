@@ -1,1 +1,1 @@
-export { default } from './src/pleiepenger/UttakFaktaIndex2';
+export { default } from './src/UttakFaktaIndex';
