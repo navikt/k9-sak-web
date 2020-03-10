@@ -3,12 +3,12 @@ import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
-import { oppdaterPerioderFor, UttakFaktaFormImpl } from './UttakFaktaForm2';
+import { oppdaterPerioderFor, UttakFaktaFormImpl } from './UttakFaktaForm';
 import Arbeidsgiver from './types/Arbeidsgiver';
 import UttakFormKolonne from './UttakFormKolonne';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 
-describe('<UttakFaktaForm2>', () => {
+describe('<UttakFaktaForm>', () => {
   const arbeidsgivere: Arbeidsgiver[] = [
     {
       navn: 'NAV',

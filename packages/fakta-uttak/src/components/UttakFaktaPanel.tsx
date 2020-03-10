@@ -10,7 +10,7 @@ import urlUkjent from '@fpsak-frontend/assets/images/ukjent.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import urlBuilding from '@fpsak-frontend/assets/images/building-2.svg';
 import { Undertittel } from 'nav-frontend-typografi';
-import UttakFaktaForm from './UttakFaktaForm2';
+import UttakFaktaForm from './UttakFaktaForm';
 import styles from './uttakFaktaPanel.less';
 import Arbeidsgiver from './types/Arbeidsgiver';
 
