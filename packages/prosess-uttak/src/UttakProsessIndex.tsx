@@ -2,10 +2,10 @@ import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import messages from '../i18n/nb_NO.json';
-import Uttak from './pleiepenger/Uttak';
-import Behandlinger from './pleiepenger/types/UttakTypes';
-import BehandlingPersonMap from './pleiepenger/types/BehandlingPersonMap';
-import UttakPanel from './pleiepenger/UttakPanel';
+import Uttak from './components/Uttak';
+import Behandlinger from './components/types/UttakTypes';
+import BehandlingPersonMap from './components/types/BehandlingPersonMap';
+import UttakPanel from './components/UttakPanel';
 
 const cache = createIntlCache();
 
