@@ -24,6 +24,7 @@ interface RadioGroupFieldProps {
   DOMName?: string;
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;
+  onChange?: (value: string) => void;
 }
 
 const classNames = classnames.bind(styles);

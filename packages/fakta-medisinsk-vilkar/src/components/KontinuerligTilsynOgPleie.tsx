@@ -119,6 +119,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
           readOnly={readOnly}
         >
           {(periodeMedBehovForKontinuerligTilsynId, index) => {
+            // Finner initial state for radioknappene
             const harBehovForToOmsorgspersonerHelePerioden =
               fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE;
             const harBehovForToOmsorgspersonerDelerAvPerioden =
@@ -184,7 +185,6 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
 
       <FieldArray
         name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
-        rerenderOnEveryChange
         component={renderTilsynsperiodeFieldArray}
         props={{ readOnly }}
       />
