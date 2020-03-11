@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import { Label } from '@fpsak-frontend/form/src/Label';
 import DatepickerField from '../../../form/src/DatepickerField';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
@@ -66,6 +67,7 @@ export const MedisinskVilkarForm = ({
   submittable,
   sykdom,
   aksjonspunkter,
+  intl,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
   const { periodeTilVurdering, legeerklæringer } = sykdom;
   const diagnosekode = legeerklæringer && legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';
@@ -81,27 +83,33 @@ export const MedisinskVilkarForm = ({
             <FormattedMessage id="MedisinskVilkarForm.Fakta" />
           </Systemtittel>
         </div>
-        <div className={styles.fieldContainer}>
+        <div className={styles.fieldContainerLarge}>
           <Legeerklaering readOnly={readOnly} />
         </div>
-        <div className={styles.fieldContainer}>
+        <div className={styles.fieldContainerSmall}>
           <DatepickerField
             name={MedisinskVilkårConsts.LEGEERKLÆRING_FOM}
             validate={[required, hasValidDate]}
             defaultValue={null}
             readOnly={readOnly}
-            label={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder' }}
+            label={
+              <Label
+                input={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder', args: {} }}
+                typographyElement={Element}
+                intl={intl}
+              />
+            }
             disabledDays={{
               before: moment(periodeTilVurdering.fom).toDate(),
               after: moment(periodeTilVurdering.tom).toDate(),
             }}
           />
         </div>
-        <div className={styles.fieldContainer}>
+        <div className={styles.fieldContainerLarge}>
           <DiagnosekodeSelector initialDiagnosekodeValue={diagnosekode} readOnly={readOnly} />
         </div>
 
-        <div className={styles.fieldContainer}>
+        <div className={styles.fieldContainerLarge}>
           <Element>
             <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
           </Element>
@@ -128,7 +136,7 @@ export const MedisinskVilkarForm = ({
               <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
             </Systemtittel>
           </div>
-          <div className={styles.fieldContainer}>
+          <div className={styles.fieldContainerLarge}>
             <KontinuerligTilsynOgPleie
               readOnly={readOnly}
               periodeTilVurdering={periodeTilVurdering}
