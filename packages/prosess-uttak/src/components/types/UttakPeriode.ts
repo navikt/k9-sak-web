@@ -1,8 +1,8 @@
 import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
-import { Periodeinfo } from './UttakTypes';
+import Uttaksperiode from './Uttaksperiode';
 
 interface UttakPeriode extends Periode {
-  periodeinfo: Periodeinfo & {
+  periodeinfo: Uttaksperiode & {
     behandlingsId: string;
   };
 }

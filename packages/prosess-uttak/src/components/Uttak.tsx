@@ -12,24 +12,24 @@ import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/TimeLineCo
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 
-import Behandlinger from './types/UttakTypes';
 import BehandlingPersonMap from './types/BehandlingPersonMap';
-import { ResultattypeEnum } from './types/Resultattype';
 import UttakPeriode from './types/UttakPeriode';
+import Uttaksplaner from './types/Uttaksplaner';
+import { UtfallEnum } from './types/Utfall';
 
 interface UttakkProps {
-  behandlinger: Behandlinger;
+  uttaksplaner: Uttaksplaner;
   behandlingPersonMap: BehandlingPersonMap;
 }
 
 const erKvinne = kjønnkode => kjønnkode === navBrukerKjonn.KVINNE;
 
 export const mapRader = (
-  behandlinger: Behandlinger,
+  uttaksplaner: Uttaksplaner,
   behandlingPersonMap: BehandlingPersonMap,
   intl,
 ): TidslinjeRad<UttakPeriode>[] =>
-  Object.entries(behandlinger).map(([behandlingsId, behandling]) => {
+  Object.entries(uttaksplaner).map(([behandlingsId, behandling]) => {
     const { kjønnkode } = behandlingPersonMap[behandlingsId];
     const kvinne = erKvinne(kjønnkode);
     const ikon = {
@@ -40,7 +40,7 @@ export const mapRader = (
 
     const perioder = Object.entries(behandling.perioder).map(([fomTom, periode], index) => {
       const [fom, tom] = fomTom.split('/');
-      const resultat = periode.resultat_type;
+      const { utfall } = periode;
 
       return {
         fom,
@@ -49,9 +49,8 @@ export const mapRader = (
         hoverText: `${periode.grad}% ${intl.formatMessage({ id: 'UttakPanel.Gradering' })}`,
         className: classNames({
           gradert: periode.grad < 100,
-          godkjentPeriode: resultat === ResultattypeEnum.INNVILGET,
-          avvistPeriode: resultat === ResultattypeEnum.AVSLÅTT,
-          undefined: resultat === ResultattypeEnum.UAVKLART,
+          godkjentPeriode: utfall === UtfallEnum.INNVILGET,
+          avvistPeriode: utfall === UtfallEnum.AVSLÅTT,
         }),
         periodeinfo: {
           ...periode,
@@ -67,12 +66,12 @@ export const mapRader = (
     };
   });
 
-const Uttak: FunctionComponent<UttakkProps> = ({ behandlinger, behandlingPersonMap }) => {
+const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner, behandlingPersonMap }) => {
   const [valgtPeriode, velgPeriode] = useState<UttakPeriode | null>();
   const [timelineRef, setTimelineRef] = useState();
   const intl = useIntl();
 
-  const rader = mapRader(behandlinger, behandlingPersonMap, intl);
+  const rader: TidslinjeRad<UttakPeriode>[] = mapRader(uttaksplaner, behandlingPersonMap, intl);
 
   const selectHandler = eventProps => {
     const nyValgtPeriode = rader.flatMap(rad => rad.perioder).find(item => item.id === eventProps.items[0]);
@@ -85,6 +84,7 @@ const Uttak: FunctionComponent<UttakkProps> = ({ behandlinger, behandlingPersonM
   };
 
   const goBackward = () => {
+    // @ts-ignore
     const timeline = timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
@@ -95,6 +95,7 @@ const Uttak: FunctionComponent<UttakkProps> = ({ behandlinger, behandlingPersonM
   };
 
   const goForward = () => {
+    // @ts-ignore
     const timeline = timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
@@ -106,21 +107,23 @@ const Uttak: FunctionComponent<UttakkProps> = ({ behandlinger, behandlingPersonM
   };
 
   const zoomIn = () => {
+    // @ts-ignore
     const timeline = timelineRef.current.$el;
     timeline.zoomIn(0.5);
   };
 
   const zoomOut = () => {
+    // @ts-ignore
     const timeline = timelineRef.current.$el;
     timeline.zoomOut(0.5);
   };
 
   // TODO (Anders): bruk kodeverk for tekster
   const resultattekst = () => {
-    switch (valgtPeriode.periodeinfo.resultat_type) {
-      case ResultattypeEnum.INNVILGET:
+    switch (valgtPeriode.periodeinfo.utfall) {
+      case UtfallEnum.INNVILGET:
         return 'Resultat: Innvilget';
-      case ResultattypeEnum.AVSLÅTT:
+      case UtfallEnum.AVSLÅTT:
         return 'Resultat: Avslått';
       default:
         return 'Resultat: Uavklart';

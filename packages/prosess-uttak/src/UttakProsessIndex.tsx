@@ -3,9 +3,9 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import messages from '../i18n/nb_NO.json';
 import Uttak from './components/Uttak';
-import Behandlinger from './components/types/UttakTypes';
 import BehandlingPersonMap from './components/types/BehandlingPersonMap';
 import UttakPanel from './components/UttakPanel';
+import Uttaksplaner from './components/types/Uttaksplaner';
 
 const cache = createIntlCache();
 
@@ -18,15 +18,15 @@ const intl = createIntl(
 );
 
 interface UttakProsessIndexProps {
-  behandlinger: Behandlinger;
+  uttaksplaner: Uttaksplaner;
   behandlingPersonMap: BehandlingPersonMap;
 }
 
-const UttakProsessIndex: FunctionComponent<UttakProsessIndexProps> = ({ behandlinger, behandlingPersonMap }) => {
+const UttakProsessIndex: FunctionComponent<UttakProsessIndexProps> = ({ uttaksplaner, behandlingPersonMap }) => {
   return (
     <RawIntlProvider value={intl}>
       <UttakPanel>
-        <Uttak behandlinger={behandlinger} behandlingPersonMap={behandlingPersonMap} />
+        <Uttak uttaksplaner={uttaksplaner} behandlingPersonMap={behandlingPersonMap} />
       </UttakPanel>
     </RawIntlProvider>
   );
