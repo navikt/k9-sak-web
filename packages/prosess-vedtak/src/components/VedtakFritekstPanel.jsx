@@ -7,21 +7,21 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
+  decodeHtmlEntity,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
+  maxLength,
+  minLength,
+  requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 
 import styles from './vedtakAvslagPanel.less';
+import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
-const VedtakFritekstPanelImpl = ({
-  intl,
-  behandlingsresultat,
-  sprakkode,
-  readOnly,
-  labelTextCode,
-}) => (
+const VedtakFritekstPanelImpl = ({ intl, vedtakVarsel, sprakkode, readOnly, labelTextCode }) => (
   <>
     {!readOnly && (
       <Row>
@@ -33,21 +33,23 @@ const VedtakFritekstPanelImpl = ({
             validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
             maxLength={1500}
             readOnly={readOnly}
-            badges={[{
-              type: 'fokus',
-              textId: getLanguageCodeFromSprakkode(sprakkode),
-              title: 'Malform.Beskrivelse',
-            }]}
+            badges={[
+              {
+                type: 'fokus',
+                textId: getLanguageCodeFromSprakkode(sprakkode),
+                title: 'Malform.Beskrivelse',
+              },
+            ]}
           />
         </Column>
       </Row>
     )}
-    {readOnly && behandlingsresultat.avslagsarsakFritekst !== null && (
+    {readOnly && vedtakVarsel.avslagsarsakFritekst !== null && (
       <span>
         <VerticalSpacer twentyPx />
         <Undertekst>{intl.formatMessage({ id: labelTextCode })}</Undertekst>
         <VerticalSpacer eightPx />
-        <div className={styles.fritekstItem}>{decodeHtmlEntity(behandlingsresultat.avslagsarsakFritekst)}</div>
+        <div className={styles.fritekstItem}>{decodeHtmlEntity(vedtakVarsel.avslagsarsakFritekst)}</div>
       </span>
     )}
   </>
@@ -55,7 +57,7 @@ const VedtakFritekstPanelImpl = ({
 
 VedtakFritekstPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
+  vedtakVarsel: vedtakVarselPropType,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   labelTextCode: PropTypes.string.isRequired,

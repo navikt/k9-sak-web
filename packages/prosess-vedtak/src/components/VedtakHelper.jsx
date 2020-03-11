@@ -12,13 +12,12 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD
-  && (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
+const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
+  tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD &&
+  (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
-  [(ownProps) => ownProps.simuleringResultat,
-    (ownProps) => ownProps.tilbakekrevingvalg,
-    (ownProps) => ownProps.alleKodeverk],
+  [ownProps => ownProps.simuleringResultat, ownProps => ownProps.tilbakekrevingvalg, ownProps => ownProps.alleKodeverk],
   (simuleringResultat, tilbakekrevingValg, alleKodeverk) => {
     if (tilbakekrevingValg !== null && tilbakekrevingValg !== undefined) {
       if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
@@ -69,36 +68,39 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
   return 'VedtakForm.PleiepengerIkkeInnvilget';
 };
 
+export const hasIkkeOppfyltSoknadsfristvilkar = vilkar =>
+  vilkar.some(
+    v => v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET && v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT,
+  );
 
-export const hasIkkeOppfyltSoknadsfristvilkar = (vilkar) => vilkar.some((v) => v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET
-  && v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
-
-
-export const medholdIKlage = (klageVurderingResultat) => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE);
+export const medholdIKlage = klageVurderingResultat =>
+  klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
 
 export const hasKlageVurderingSomIkkeErAvvist = (klageVurderingResultatNFP, klageVurderingResultatNK) => {
-  const isKlageVurderingNfpAvvisKlage = klageVurderingResultatNFP
-    && klageVurderingResultatNFP.klageVurdering === klageVurdering.AVVIS_KLAGE;
-  const isKlageVurderingNkAvvisKlage = klageVurderingResultatNK
-    && klageVurderingResultatNK.klageVurdering === klageVurdering.AVVIS_KLAGE;
-  const isKlageVurderingNkMedholdKlage = klageVurderingResultatNK
-    && klageVurderingResultatNK.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
+  const isKlageVurderingNfpAvvisKlage =
+    klageVurderingResultatNFP && klageVurderingResultatNFP.klageVurdering === klageVurdering.AVVIS_KLAGE;
+  const isKlageVurderingNkAvvisKlage =
+    klageVurderingResultatNK && klageVurderingResultatNK.klageVurdering === klageVurdering.AVVIS_KLAGE;
+  const isKlageVurderingNkMedholdKlage =
+    klageVurderingResultatNK && klageVurderingResultatNK.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
   return !(isKlageVurderingNfpAvvisKlage || isKlageVurderingNkAvvisKlage || isKlageVurderingNkMedholdKlage);
 };
 
-export const shouldGiveBegrunnelse = (
-  klageVurderingResultatNK, klageVurderingResultatNFP, vilkar, behandlingStatus,
-) => behandlingStatus === behandlingStatusCode.BEHANDLING_UTREDES
-  && (hasIkkeOppfyltSoknadsfristvilkar(vilkar)
-    || hasKlageVurderingSomIkkeErAvvist(klageVurderingResultatNFP, klageVurderingResultatNK));
+export const shouldGiveBegrunnelse = (klageVurderingResultatNK, klageVurderingResultatNFP, vilkar, behandlingStatus) =>
+  behandlingStatus === behandlingStatusCode.BEHANDLING_UTREDES &&
+  (hasIkkeOppfyltSoknadsfristvilkar(vilkar) ||
+    hasKlageVurderingSomIkkeErAvvist(klageVurderingResultatNFP, klageVurderingResultatNK));
 
 export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnlag, aksjonspunkter) => {
   if (!beregningsgrunnlag || !aksjonspunkter) {
     return false;
   }
-  const behandlingHarLøstBGAP = aksjonspunkter.find((ap) => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode)
-    && ap.status.kode === aksjonspunktStatus.UTFORT);
+  const behandlingHarLøstBGAP = aksjonspunkter.find(
+    ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status.kode === aksjonspunktStatus.UTFORT,
+  );
   const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
-  const andelSomErManueltFastsatt = førstePeriode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.overstyrtPrAar || andel.overstyrtPrAar === 0);
-  return (!!behandlingHarLøstBGAP || !!andelSomErManueltFastsatt);
+  const andelSomErManueltFastsatt = førstePeriode.beregningsgrunnlagPrStatusOgAndel.find(
+    andel => andel.overstyrtPrAar || andel.overstyrtPrAar === 0,
+  );
+  return !!behandlingHarLøstBGAP || !!andelSomErManueltFastsatt;
 };

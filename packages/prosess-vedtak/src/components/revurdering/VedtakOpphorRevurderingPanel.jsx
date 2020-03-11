@@ -11,6 +11,7 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
+import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
 export const VedtakOpphorRevurderingPanelImpl = ({
   intl,
@@ -18,31 +19,32 @@ export const VedtakOpphorRevurderingPanelImpl = ({
   revurderingsAarsakString,
   sprakKode,
   readOnly,
-  behandlingsresultat,
+  vedtakVarsel,
   ytelseTypeKode,
   beregningErManueltFastsatt,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
-      {intl.formatMessage({
-        id: ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
-          : 'VedtakForm.RevurderingFP.PleiepengerOpphoerer',
-      }, { dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) })}
+      {intl.formatMessage(
+        {
+          id:
+            ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER
+              ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
+              : 'VedtakForm.RevurderingFP.PleiepengerOpphoerer',
+        },
+        { dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
+      )}
     </Normaltekst>
     <VerticalSpacer sixteenPx />
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
-    { revurderingsAarsakString !== undefined && (
-      <Normaltekst>
-        {revurderingsAarsakString}
-      </Normaltekst>
-    )}
+    {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
     {beregningErManueltFastsatt && (
       <VedtakFritekstPanel
         readOnly={readOnly}
         sprakkode={sprakKode}
-        behandlingsresultat={behandlingsresultat}
         labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
+        vedtakVarsel={vedtakVarsel}
       />
     )}
   </div>
@@ -54,7 +56,7 @@ VedtakOpphorRevurderingPanelImpl.propTypes = {
   revurderingsAarsakString: PropTypes.string,
   sprakKode: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
+  vedtakVarsel: vedtakVarselPropType,
   ytelseTypeKode: PropTypes.string.isRequired,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
 };
@@ -66,18 +68,15 @@ VedtakOpphorRevurderingPanelImpl.defaultProps = {
 };
 
 const getOpphorsdato = createSelector(
-  [(ownProps) => ownProps.resultatstruktur,
-    (ownProps) => ownProps.medlemskapFom,
-    (ownProps) => ownProps.behandlingsresultat],
-  (resultatstruktur, medlemskapFom, behandlingsresultat) => {
+  [ownProps => ownProps.resultatstruktur, ownProps => ownProps.medlemskapFom, ownProps => ownProps.vedtakVarsel],
+  (resultatstruktur, medlemskapFom, vedtakVarsel) => {
     if (resultatstruktur && resultatstruktur.opphoersdato) {
       return resultatstruktur.opphoersdato;
     }
     if (medlemskapFom) {
       return medlemskapFom;
     }
-    return behandlingsresultat.skjæringstidspunkt
-      ? behandlingsresultat.skjæringstidspunkt.dato : '';
+    return vedtakVarsel.skjæringstidspunkt ? vedtakVarsel.skjæringstidspunkt.dato : '';
   },
 );
 

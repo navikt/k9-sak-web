@@ -14,6 +14,7 @@ import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import { findTilbakekrevingText } from '../VedtakHelper';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
+import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
 const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;
@@ -40,7 +41,8 @@ const resultTextES = (beregningResultat, originaltBeregningResultat) => {
 export const lagKonsekvensForYtelsenTekst = (konsekvenser, getKodeverknavn) => {
   if (!konsekvenser || konsekvenser.length < 1) {
     return '';
-  } return konsekvenser.map((k) => getKodeverknavn(k)).join(' og ');
+  }
+  return konsekvenser.map(k => getKodeverknavn(k)).join(' og ');
 };
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
@@ -53,11 +55,10 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   revurderingsAarsakString,
   sprakKode,
   readOnly,
-  behandlingsresultat,
+  vedtakVarsel,
   tilbakekrevingText,
   alleKodeverk,
   beregningErManueltFastsatt,
-
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
@@ -71,51 +72,46 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
           </Normaltekst>
           <VerticalSpacer sixteenPx />
           <Row>
-            {beregningResultat
-            && (
-            <Column xs="4">
-              <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
-              <Element>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Element>
-            </Column>
+            {beregningResultat && (
+              <Column xs="4">
+                <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
+                <Element>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Element>
+              </Column>
             )}
-            {antallBarn
-            && (
-            <Column xs="8">
-              <Undertekst>{intl.formatMessage({ id: 'VedtakForm.AntallBarn' })}</Undertekst>
-              <Element>{antallBarn}</Element>
-            </Column>
+            {antallBarn && (
+              <Column xs="8">
+                <Undertekst>{intl.formatMessage({ id: 'VedtakForm.AntallBarn' })}</Undertekst>
+                <Element>{antallBarn}</Element>
+              </Column>
             )}
           </Row>
         </div>
       )}
-      {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && (
+      {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER ||
+        ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
           <Normaltekst>
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
-            {tilbakekrevingText && intl.formatMessage({
-              id: tilbakekrevingText,
-            })}
+            {tilbakekrevingText &&
+              intl.formatMessage({
+                id: tilbakekrevingText,
+              })}
           </Normaltekst>
           <VerticalSpacer sixteenPx />
           <Row>
             <Column xs="4">
               <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
-              {revurderingsAarsakString !== undefined
-              && (
-              <Normaltekst>
-                {revurderingsAarsakString}
-              </Normaltekst>
-              )}
+              {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
             </Column>
           </Row>
           {beregningErManueltFastsatt && (
             <VedtakFritekstPanel
               readOnly={readOnly}
               sprakkode={sprakKode}
-              behandlingsresultat={behandlingsresultat}
               labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
+              vedtakVarsel={vedtakVarsel}
             />
           )}
         </div>
@@ -134,7 +130,7 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   revurderingsAarsakString: PropTypes.string,
   sprakKode: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
+  vedtakVarsel: vedtakVarselPropType,
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
@@ -151,8 +147,8 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  konsekvenserForYtelsen: ownProps.behandlingsresultat !== undefined
-    ? ownProps.behandlingsresultat.konsekvenserForYtelsen : undefined,
+  konsekvenserForYtelsen:
+    ownProps.behandlingsresultat !== undefined ? ownProps.behandlingsresultat.konsekvenserForYtelsen : undefined,
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 

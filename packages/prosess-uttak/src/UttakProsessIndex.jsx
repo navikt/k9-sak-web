@@ -1,3 +1,3 @@
 import React from 'react';
 
-export default () => (<span>UttakProsessIndex</span>)
+export default () => <span>UttakProsessIndex</span>;
