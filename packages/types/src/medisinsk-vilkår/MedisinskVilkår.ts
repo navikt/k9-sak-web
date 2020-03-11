@@ -26,11 +26,15 @@ export interface PeriodeMedTilsynOgPleie extends Periode {
   perioderMedUtvidetKontinuerligTilsynOgPleie?: PeriodeMedUtvidetTilsynOgPleie;
   begrunnelseUtvidet: string;
   harBehovForKontinuerligTilsynOgPleie: boolean;
+  sammenhengMellomSykdomOgTilsyn: boolean;
+  sammenhengMellomSykdomOgTilsynBegrunnelse: string;
 }
 
 export interface PeriodeMedTilsynOgPleieResponse {
   periode: Periode;
   begrunnelse: string;
+  årsaksammenheng: boolean;
+  årsaksammenhengBegrunnelse: string;
 }
 
 export interface PeriodeMedUtvidetTilsynOgPleie extends Periode {
