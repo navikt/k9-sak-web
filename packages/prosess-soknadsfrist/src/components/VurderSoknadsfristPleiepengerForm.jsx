@@ -6,22 +6,21 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  Element, Normaltekst, Undertekst, Undertittel,
-} from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
-import {
-  AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import {
-  dateBeforeOrEqualToToday, DDMMYYYY_DATE_FORMAT, hasValidDate, required,
-} from '@fpsak-frontend/utils';
+import { dateBeforeOrEqualToToday, DDMMYYYY_DATE_FORMAT, hasValidDate, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
+  behandlingForm,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+  BehandlingspunktBegrunnelseTextField,
+  BehandlingspunktSubmitButton,
 } from '@fpsak-frontend/fp-felles';
 
 import styles from './vurderSoknadsfristPleiepengerForm.less';
@@ -49,41 +48,58 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
   ...formProps
 }) => (
   <>
-    <Undertittel><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Soknadsfrist" /></Undertittel>
+    <Undertittel>
+      <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Soknadsfrist" />
+    </Undertittel>
     <VerticalSpacer twentyPx />
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
-      {[<FormattedMessage
-        key="VurderSoknadsfristPleiepengerForm"
-        id="VurderSoknadsfristPleiepengerForm.AksjonspunktHelpText"
-        values={{
-          numberOfDays: antallDagerSoknadLevertForSent,
-          soknadsfristdato: moment(soknadsfristdato).format(DDMMYYYY_DATE_FORMAT),
-        }}
-      />]}
+      {[
+        <FormattedMessage
+          key="VurderSoknadsfristPleiepengerForm"
+          id="VurderSoknadsfristPleiepengerForm.AksjonspunktHelpText"
+          values={{
+            numberOfDays: antallDagerSoknadLevertForSent,
+            soknadsfristdato: moment(soknadsfristdato).format(DDMMYYYY_DATE_FORMAT),
+          }}
+        />,
+      ]}
     </AksjonspunktHelpTextTemp>
     <VerticalSpacer twentyPx />
     <Row>
       <Column xs="6">
         <Panel className={styles.panel}>
-          <Element><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Vurder" /></Element>
+          <Element>
+            <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Vurder" />
+          </Element>
           <ul className={styles.hyphen}>
-            <li><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt1" /></li>
-            <li><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt2" /></li>
-            <li><FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt3" /></li>
+            <li>
+              <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt1" />
+            </li>
+            <li>
+              <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt2" />
+            </li>
+            <li>
+              <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt3" />
+            </li>
           </ul>
         </Panel>
       </Column>
       <Column xs="6">
         <Row className={styles.marginBottom}>
           <Column xs="6">
-            <Undertekst><FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadMottatt" /></Undertekst>
-            {mottattDato
-              && <Normaltekst>{moment(mottattDato).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>}
+            <Undertekst>
+              <FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadMottatt" />
+            </Undertekst>
+            {mottattDato && <Normaltekst>{moment(mottattDato).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>}
           </Column>
           <Column xs="6">
-            <Undertekst><FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadPeriode" /></Undertekst>
+            <Undertekst>
+              <FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadPeriode" />
+            </Undertekst>
             <Normaltekst>
-              {`${moment(soknadsperiodeStart).format(DDMMYYYY_DATE_FORMAT)} - ${moment(soknadsperiodeSlutt).format(DDMMYYYY_DATE_FORMAT)}`}
+              {`${moment(soknadsperiodeStart).format(DDMMYYYY_DATE_FORMAT)} - ${moment(soknadsperiodeSlutt).format(
+                DDMMYYYY_DATE_FORMAT,
+              )}`}
             </Normaltekst>
           </Column>
         </Row>
@@ -94,26 +110,33 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
         <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
         <VerticalSpacer sixteenPx />
         <div>
-          <RadioGroupField name="gyldigSenFremsetting" validate={[required]} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, gyldigSenFremsetting)}>
+          <RadioGroupField
+            name="gyldigSenFremsetting"
+            validate={[required]}
+            readOnly={readOnly}
+            isEdited={isEdited(hasAksjonspunkt, gyldigSenFremsetting)}
+          >
             <RadioOption value label={<FormattedMessage id="VurderSoknadsfristPleiepengerForm.GyldigGrunn" />} />
-            <RadioOption value={false} label={<FormattedMessage id="VurderSoknadsfristPleiepengerForm.IkkeGyldigGrunn" />} />
+            <RadioOption
+              value={false}
+              label={<FormattedMessage id="VurderSoknadsfristPleiepengerForm.IkkeGyldigGrunn" />}
+            />
           </RadioGroupField>
         </div>
-        {gyldigSenFremsetting
-          && (
-            <Row>
-              <Column xs="4">
-                <ArrowBox>
-                  <DatepickerField
-                    name="ansesMottatt"
-                    readOnly={readOnly}
-                    label={{ id: 'VurderSoknadsfristPleiepengerForm.NyMottattDato' }}
-                    validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
-                  />
-                </ArrowBox>
-              </Column>
-            </Row>
-          )}
+        {gyldigSenFremsetting && (
+          <Row>
+            <Column xs="4">
+              <ArrowBox>
+                <DatepickerField
+                  name="ansesMottatt"
+                  readOnly={readOnly}
+                  label={{ id: 'VurderSoknadsfristPleiepengerForm.NyMottattDato' }}
+                  validate={[required, hasValidDate, dateBeforeOrEqualToToday]}
+                />
+              </ArrowBox>
+            </Column>
+          </Row>
+        )}
         <VerticalSpacer twentyPx />
         <BehandlingspunktSubmitButton
           formName={formProps.form}
@@ -146,11 +169,15 @@ VurderSoknadsfristPleiepengerFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.aksjonspunkter,
+  [
+    (state, ownProps) => ownProps.aksjonspunkter,
     (state, ownProps) => ownProps.uttakPeriodeGrense,
-    (state, ownProps) => ownProps.mottattDato],
+    (state, ownProps) => ownProps.mottattDato,
+  ],
   (aksjonspunkter, uttaksperiodegrense = {}, mottattDato) => ({
-    gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : uttaksperiodegrense.mottattDato !== mottattDato,
+    gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode)
+      ? undefined
+      : uttaksperiodegrense.mottattDato !== mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
@@ -168,14 +195,18 @@ const formName = 'VurderSoknadsfristPleiepengerForm';
 const mapStateToPropsFactory = (initialState, staticOwnProps) => {
   const uttaksperiodegrense = staticOwnProps.uttakPeriodeGrense;
   const { aksjonspunkter } = staticOwnProps;
-  const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  const onSubmit = values => staticOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
 
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon } = ownProps;
     return {
       onSubmit,
       initialValues: buildInitialValues(state, ownProps),
-      gyldigSenFremsetting: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'gyldigSenFremsetting'),
+      gyldigSenFremsetting: behandlingFormValueSelector(
+        formName,
+        behandlingId,
+        behandlingVersjon,
+      )(state, 'gyldigSenFremsetting'),
       antallDagerSoknadLevertForSent: uttaksperiodegrense ? uttaksperiodegrense.antallDagerLevertForSent : {},
       soknadsperiodeStart: uttaksperiodegrense ? uttaksperiodegrense.soknadsperiodeStart : {},
       soknadsperiodeSlutt: uttaksperiodegrense ? uttaksperiodegrense.soknadsperiodeSlutt : {},
@@ -186,6 +217,8 @@ const mapStateToPropsFactory = (initialState, staticOwnProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
-  form: formName,
-})(VurderSoknadsfristPleiepengerFormImpl));
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+  })(VurderSoknadsfristPleiepengerFormImpl),
+);
