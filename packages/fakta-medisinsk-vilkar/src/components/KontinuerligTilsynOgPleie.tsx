@@ -2,7 +2,7 @@ import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import checkIkonUrl from '@fpsak-frontend/assets/images/check.svg';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import { Image, PeriodFieldArray, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Periode } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment from 'moment';
@@ -96,8 +96,16 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
     const removeIndex = useCallback(index => fields.remove(index), []);
     const brukSoknadsdato = useCallback((fieldNameFom, fieldNameTom) => {
       const formSelector = `${behandlingFormPrefix}.${formName}`;
-      formChange(formSelector, fieldNameFom, periodeTilVurdering.fom);
-      formChange(formSelector, fieldNameTom, periodeTilVurdering.tom);
+      formChange(
+        formSelector,
+        fieldNameFom,
+        innleggelsesperiode
+          ? moment(innleggelsesperiode.tom)
+              .add(1, 'days')
+              .format(ISO_DATE_FORMAT)
+          : moment(periodeTilVurdering.fom).format(ISO_DATE_FORMAT),
+      );
+      formChange(formSelector, fieldNameTom, moment(periodeTilVurdering.tom).format(ISO_DATE_FORMAT));
     }, []);
     return (
       <div className={styles.pickerContainer}>

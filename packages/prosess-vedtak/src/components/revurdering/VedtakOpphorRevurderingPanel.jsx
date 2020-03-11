@@ -31,7 +31,7 @@ export const VedtakOpphorRevurderingPanelImpl = ({
           id:
             ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER
               ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
-              : 'VedtakForm.RevurderingFP.ForeldrepengerOpphoerer',
+              : 'VedtakForm.RevurderingFP.PleiepengerOpphoerer',
         },
         { dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
       )}

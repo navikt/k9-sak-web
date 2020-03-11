@@ -70,7 +70,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
               <TextAreaField
                 name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.BEGRUNNELSE}`}
                 label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                validate={[required, minLength(3), maxLength(400), hasValidText]}
+                validate={[required, minLength(3), maxLength(2000), hasValidText]}
                 readOnly={readOnly}
               />
               <VerticalSpacer eightPx />
@@ -101,12 +101,12 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 <TextAreaField
                   name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.SAMMENG_MELLOM_SYKDOM_OG_TILSYN_BEGRUNNELSE}`}
                   label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                  validate={[required, minLength(3), maxLength(400), hasValidText]}
+                  validate={[required, minLength(3), maxLength(2000), hasValidText]}
                   readOnly={readOnly}
                 />
                 <VerticalSpacer eightPx />
                 <RadioGroupField
-                  name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårValues.SAMMENHENG_MELLOM_SYKDOM_OG_TILSYN}`}
+                  name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.SAMMENHENG_MELLOM_SYKDOM_OG_TILSYN}`}
                   bredde="M"
                   validate={[required]}
                   readOnly={readOnly}
@@ -159,7 +159,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                       }
                       className={styles.soknadsperiodeButton}
                     >
-                      <FormattedMessage id="MedisinskVilkarForm.BrukSoknadsperiodeButton" />
+                      <FormattedMessage id="MedisinskVilkarForm.BrukPeriodenTilVurdering" />
                     </button>
                   </div>
                 </FlexColumn>
@@ -197,7 +197,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                       <TextAreaField
                         name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.BEGRUNNELSE_UTVIDET}`}
                         label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                        validate={[required, minLength(3), maxLength(400), hasValidText]}
+                        validate={[required, minLength(3), maxLength(2000), hasValidText]}
                         readOnly={readOnly}
                       />
                     </>
@@ -218,6 +218,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
                     after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
                   }}
+                  renderUpwards
                 />
               )}
             </>

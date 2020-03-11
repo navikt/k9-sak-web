@@ -4,7 +4,7 @@ import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
+import VurderSoknadsfristPleiepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -27,24 +27,26 @@ const uttakPeriodeGrense = {
 
 export default {
   title: 'prosess/prosess-soknadsfrist',
-  component: VurderSoknadsfristForeldrepengerIndex,
+  component: VurderSoknadsfristPleiepengerIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
 export const visPanelForSoknadsfrist = () => (
-  <VurderSoknadsfristForeldrepengerIndex
+  <VurderSoknadsfristPleiepengerIndex
     behandling={object('behandling', behandling)}
     uttakPeriodeGrense={object('uttakPeriodeGrense', uttakPeriodeGrense)}
     soknad={object('soknad', soknad)}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-    }]}
+    ]}
     submitCallback={action('button-click')}
     isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnly', true)}

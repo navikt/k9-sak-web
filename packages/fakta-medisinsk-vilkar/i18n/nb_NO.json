@@ -5,7 +5,7 @@
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "MedisinskVilkarForm.Fakta": "Fakta",
   "MedisinskVilkarForm.Vilkår": "Vilkårsvurdering",
-  "MedisinskVilkarForm.Innlagt": "Skal barnet være innlagt på sykehuset?",
+  "MedisinskVilkarForm.Innlagt": "Hvilke datoer gjelder innleggelsen?",
   "MedisinskVilkarForm.Omsorgspersoner": "Framgår det av legeerklæringen at begge foreldre må passe barnet?",
   "MedisinskVilkarForm.Beredskap": "Framgår det av legeerklæringen at brukeren må være i beredskap/nattevåken?",
   "MedisinskVilkarForm.AlvorligSykdom": "Har barnet alvorlig sykdom, skade eller funksjonshemming?",
@@ -40,7 +40,7 @@
   "ValidationMessage.InvalidDate": "Dato må skrives slik : dd.mm.åååå",
   "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
 
-  "MedisinskVilkarForm.Legeerklæring.Perioder": "Hvilke datoer gjelder legeerklæringen for?",
+  "MedisinskVilkarForm.Legeerklæring.Perioder": "Hvilken dato ble legeerklæringen signert?",
   "MedisinskVilkarForm.Begrunnelse": "Begrunnelse",
   "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie": "Er det behov for kontinuerlig tilsyn og pleie?",
   "MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleieHjelpetekstOne": "Kan barnet overlates til seg selv i lengre perioder?",
@@ -53,7 +53,7 @@
   "MedisinskVilkarForm.BehovForTo.Periode": "I hvilken periode er det behov for to omsorgspersoner?",
   "MedisinskVilkarForm.BehovForTo.Lagre": "Lagre",
   "MedisinskVilkarForm.BehovForTo.Avbryt": "Avbryt",
-  "MedisinskVilkarForm.BrukSoknadsperiodeButton": "Bruk søknadsperiode",
+  "MedisinskVilkarForm.BrukPeriodenTilVurdering": "Bruk perioden til vurdering",
 
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",
