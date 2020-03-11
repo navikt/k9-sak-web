@@ -47,7 +47,8 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   // const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
 
   const soker = personopplysninger;
-  // const annenPart = !erMor && personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
+  const annenPart = personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
+  const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
 
   return (
     <div className={styles.container}>
@@ -66,13 +67,12 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               // isActive={erMor}
             />
           </FlexColumn>
-          {/* {annenPart && annenPart.aktoerId && (
+          {annenPart && annenPart.aktoerId && (
             <FlexColumn>
               <PersonCard
                 name={annenPart.navn}
                 fodselsnummer={annenPart.fnr}
                 gender={utledKjonn(annenPart.navBrukerKjonn)}
-                url={lenkeTilAnnenPart}
                 renderMenuContent={(): JSX.Element => (
                   <VisittkortDetaljerPopup
                     personopplysninger={annenPart}
@@ -80,10 +80,25 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                     sprakkode={sprakkode}
                   />
                 )}
-                isActive={!erMor}
+                isActive={false}
               />
             </FlexColumn>
-          )} */}
+          )}
+          {barnSoktFor && (
+            <div className={styles.pushRight}>
+              {barnSoktFor.map(barn => (
+                <FlexColumn key={barn.aktoerId}>
+                  <PersonCard
+                    name={barn.navn}
+                    fodselsnummer={barn.fnr}
+                    gender={utledKjonn(barn.navBrukerKjonn)}
+                    renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={barn} />}
+                    isActive={false}
+                  />
+                </FlexColumn>
+              ))}
+            </div>
+          )}
           {/* {annenPart && !annenPart.aktoerId && (
             <FlexColumn>
               <EmptyPersonCard namePlaceholder={intl.formatMessage({ id: 'VisittkortPanel.Ukjent' })} />
