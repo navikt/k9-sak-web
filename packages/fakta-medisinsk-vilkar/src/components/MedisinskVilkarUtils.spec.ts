@@ -21,6 +21,8 @@ const partialFormState = {
       begrunnelse: 'hei',
       harBehovForKontinuerligTilsynOgPleie: true,
       begrunnelseUtvidet: 'begrunnelseEn',
+      sammenhengMellomSykdomOgTilsyn: true,
+      sammenhengMellomSykdomOgTilsynBegrunnelse: 'begrunnelseEn',
     },
     {
       fom: '2020-02-06',
@@ -29,6 +31,8 @@ const partialFormState = {
       begrunnelse: 'hei',
       harBehovForKontinuerligTilsynOgPleie: true,
       begrunnelseUtvidet: 'begrunnelseTo',
+      sammenhengMellomSykdomOgTilsyn: true,
+      sammenhengMellomSykdomOgTilsynBegrunnelse: 'begrunnelseTo',
     },
     {
       fom: '2020-02-11',
@@ -41,6 +45,8 @@ const partialFormState = {
         fom: '2020-02-12',
         tom: '2020-02-19',
       },
+      sammenhengMellomSykdomOgTilsyn: true,
+      sammenhengMellomSykdomOgTilsynBegrunnelse: 'begrunnelseTre',
     },
     {
       fom: '2020-02-21',
@@ -53,6 +59,8 @@ const partialFormState = {
         fom: '2020-02-22',
         tom: '2020-02-27',
       },
+      sammenhengMellomSykdomOgTilsyn: true,
+      sammenhengMellomSykdomOgTilsynBegrunnelse: 'begrunnelseFire',
     },
   ],
   legeerklaeringkilde: 'SPESIALISTHELSETJENESTE',
@@ -80,9 +88,24 @@ const sykdomRequestResponse = {
     },
   ],
   perioderMedKontinuerligTilsynOgPleie: [
-    { begrunnelse: 'hei', periode: { fom: '2020-02-01', tom: '2020-02-25' } },
-    { begrunnelse: 'hei', periode: { fom: '2020-03-01', tom: '2020-03-25' } },
-    { begrunnelse: 'hei', periode: { fom: '2020-02-02', tom: '2020-02-24' } },
+    {
+      begrunnelse: 'hei',
+      periode: { fom: '2020-02-01', tom: '2020-02-25' },
+      årsaksammenheng: true,
+      årsaksammenhengBegrunnelse: 'begrunnelse',
+    },
+    {
+      begrunnelse: 'hei',
+      periode: { fom: '2020-03-01', tom: '2020-03-25' },
+      årsaksammenheng: true,
+      årsaksammenhengBegrunnelse: 'begrunnelse',
+    },
+    {
+      begrunnelse: 'hei',
+      periode: { fom: '2020-02-02', tom: '2020-02-24' },
+      årsaksammenheng: true,
+      årsaksammenhengBegrunnelse: 'begrunnelse',
+    },
   ],
   perioderMedUtvidetKontinuerligTilsynOgPleie: [
     { begrunnelse: 'hallo', periode: { fom: '2020-02-02', tom: '2020-02-24' } },
@@ -186,6 +209,8 @@ describe('medisinskVilkarUtils', () => {
         perioderMedUtvidetKontinuerligTilsynOgPleie: { fom: '2020-02-02', tom: '2020-02-24' },
         begrunnelseUtvidet: 'hallo',
         harBehovForKontinuerligTilsynOgPleie: true,
+        sammenhengMellomSykdomOgTilsyn: true,
+        sammenhengMellomSykdomOgTilsynBegrunnelse: 'begrunnelse',
       },
       {
         fom: '2020-03-01',
@@ -195,6 +220,8 @@ describe('medisinskVilkarUtils', () => {
         perioderMedUtvidetKontinuerligTilsynOgPleie: undefined,
         begrunnelseUtvidet: undefined,
         harBehovForKontinuerligTilsynOgPleie: true,
+        sammenhengMellomSykdomOgTilsyn: true,
+        sammenhengMellomSykdomOgTilsynBegrunnelse: 'begrunnelse',
       },
       {
         fom: '2020-02-02',
@@ -204,6 +231,8 @@ describe('medisinskVilkarUtils', () => {
         perioderMedUtvidetKontinuerligTilsynOgPleie: { fom: '2020-02-02', tom: '2020-02-24' },
         begrunnelseUtvidet: 'hallo',
         harBehovForKontinuerligTilsynOgPleie: true,
+        sammenhengMellomSykdomOgTilsyn: true,
+        sammenhengMellomSykdomOgTilsynBegrunnelse: 'begrunnelse',
       },
     ];
     expect(result).to.deep.equal(expectedResult);
