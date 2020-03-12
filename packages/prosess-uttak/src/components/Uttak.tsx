@@ -11,8 +11,8 @@ import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/t
 
 import BehandlingPersonMap from './types/BehandlingPersonMap';
 import UttakTidslinjePeriode from './types/UttakTidslinjePeriode';
-import Uttaksplaner from './types/Uttaksplaner';
-import { UtfallEnum } from './types/Utfall';
+import Uttaksplaner from './dto/Uttaksplaner';
+import { UtfallEnum } from './dto/Utfall';
 import ValgtPeriode from './ValgtPeriode';
 
 interface UttakkProps {

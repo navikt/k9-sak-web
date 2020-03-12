@@ -1,7 +1,7 @@
 import BehandlingPersonMap from './BehandlingPersonMap';
-import Uttaksplaner from './Uttaksplaner';
-import {InnvilgetÅrsakEnum} from '../dto/InnvilgetÅrsak';
-import {AvslåttÅrsakEnum} from '../dto/AvslåttÅrsak';
+import Uttaksplaner from '../dto/Uttaksplaner';
+import { InnvilgetÅrsakEnum } from '../dto/InnvilgetÅrsak';
+import { AvslåttÅrsakEnum } from '../dto/AvslåttÅrsak';
 
 export const uttaksplaner: Uttaksplaner = {
   '123': {

@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import BehandlingPersonMap from './types/BehandlingPersonMap';
 import UttakTidslinjePeriode from './types/UttakTidslinjePeriode';
-import { UtfallEnum } from './types/Utfall';
+import { UtfallEnum } from './dto/Utfall';
 
 interface ValgtPeriodeProps {
   behandlingPersonMap: BehandlingPersonMap;

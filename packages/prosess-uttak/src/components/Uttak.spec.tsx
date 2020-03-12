@@ -3,7 +3,7 @@ import { mapRader } from './Uttak';
 import BehandlingPersonMap from './types/BehandlingPersonMap';
 import { InnvilgetÅrsakEnum } from './dto/InnvilgetÅrsak';
 import { AvslåttÅrsakEnum } from './dto/AvslåttÅrsak';
-import Uttaksplaner from './types/Uttaksplaner';
+import Uttaksplaner from './dto/Uttaksplaner';
 
 describe('<UttakPP>', () => {
   const uttaksplaner: Uttaksplaner = {

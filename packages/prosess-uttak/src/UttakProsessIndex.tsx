@@ -5,7 +5,7 @@ import messages from '../i18n/nb_NO.json';
 import Uttak from './components/Uttak';
 import BehandlingPersonMap from './components/types/BehandlingPersonMap';
 import UttakPanel from './components/UttakPanel';
-import Uttaksplaner from './components/types/Uttaksplaner';
+import Uttaksplaner from './components/dto/Uttaksplaner';
 
 const cache = createIntlCache();
 
