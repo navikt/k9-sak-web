@@ -13,30 +13,18 @@ import styles from './aldervisning.less';
  * Presentasjonskomponent. Definerer visning av personens alder. (Søker)
  */
 
-const renderDød = (dodsdato) => (
-  dodsdato ? <DateLabel dateString={dodsdato} /> : <FormattedMessage id="Person.ManglerDodsdato" />
-);
+const renderDød = dodsdato =>
+  dodsdato ? <DateLabel dateString={dodsdato} /> : <FormattedMessage id="Person.ManglerDodsdato" />;
 
-const AlderVisning = ({
-  erDod,
-  alder,
-  dodsdato,
-}) => {
+const AlderVisning = ({ erDod, alder, dodsdato }) => {
   if (erDod) {
-    return (
-      <Normaltekst className={styles.displayInline}>
-        (
-        {renderDød(dodsdato)}
-        )
-      </Normaltekst>
-    );
+    return <Normaltekst className={styles.displayInline}>({renderDød(dodsdato)})</Normaltekst>;
   }
 
   return (
     <span>
       (
-      <FormattedMessage id="Person.Age" values={{ age: alder }} />
-      )
+      <FormattedMessage id="Person.Age" values={{ age: alder }} />)
     </span>
   );
 };

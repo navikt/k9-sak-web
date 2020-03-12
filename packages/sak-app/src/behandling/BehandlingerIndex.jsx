@@ -9,9 +9,7 @@ import NoSelectedBehandling from './components/NoSelectedBehandling';
 import BehandlingIndex from './BehandlingIndex';
 import { getNumBehandlinger } from './selectors/behandlingerSelectors';
 
-export const BehandlingerIndex = ({
-  numBehandlinger,
-}) => (
+export const BehandlingerIndex = ({ numBehandlinger }) => (
   <Switch>
     <Route strict path={behandlingPath} component={BehandlingIndex} />
     <Route>
@@ -24,7 +22,7 @@ BehandlingerIndex.propTypes = {
   numBehandlinger: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   numBehandlinger: getNumBehandlinger(state),
 });
 

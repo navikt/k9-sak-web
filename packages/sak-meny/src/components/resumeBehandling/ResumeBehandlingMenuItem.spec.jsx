@@ -12,30 +12,34 @@ describe('<ResumeBehandlingMenuItem>', () => {
   const behandlingIdentifier = new BehandlingIdentifier(123, 1);
 
   it('skal rendre komponent', () => {
-    const wrapper = shallow(<ResumeBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={sinon.spy()}
-      resumeBehandling={sinon.spy()}
-      gjenopptaBehandlingEnabled
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-    />);
+    const wrapper = shallow(
+      <ResumeBehandlingMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={sinon.spy()}
+        resumeBehandling={sinon.spy()}
+        gjenopptaBehandlingEnabled
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+      />,
+    );
     expect(wrapper.find('MenuButton')).has.length(1);
   });
 
   it('skal sende data til server ved trykk på ok-knapp', () => {
     const resumeBehandlingCallback = sinon.spy();
-    const wrapper = shallow(<ResumeBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      resumeBehandling={resumeBehandlingCallback}
-      gjenopptaBehandlingEnabled
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-    />);
+    const wrapper = shallow(
+      <ResumeBehandlingMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        resumeBehandling={resumeBehandlingCallback}
+        gjenopptaBehandlingEnabled
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+      />,
+    );
 
     wrapper.find('MenuButton').prop('onMouseDown')();
     expect(resumeBehandlingCallback.called).is.true;

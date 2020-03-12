@@ -23,7 +23,6 @@ import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType'
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
 
-
 const visningForManglendeBG = () => (
   <>
     <Undertittel>
@@ -43,26 +42,32 @@ const visningForManglendeBG = () => (
   </>
 );
 
-const getAksjonspunkterForBeregning = (aksjonspunkter) => (aksjonspunkter ? aksjonspunkter.filter((ap) => isBeregningAksjonspunkt(ap.definisjon.kode)) : []);
-const getRelevanteStatuser = (bg) => (bg.aktivitetStatus ? ({
-  isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
-  isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
-  isSelvstendigNaeringsdrivende: bg.aktivitetStatus.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
-  harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
-  harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
-  isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
-  isDagpenger: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.DAGPENGER),
-  skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
-  isKombinasjonsstatus: bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
-  isMilitaer: bg.aktivitetStatus.some(({ kode }) => isStatusMilitaer(kode)),
-}) : null);
+const getAksjonspunkterForBeregning = aksjonspunkter =>
+  aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAksjonspunkt(ap.definisjon.kode)) : [];
+const getRelevanteStatuser = bg =>
+  bg.aktivitetStatus
+    ? {
+        isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
+        isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
+        isSelvstendigNaeringsdrivende: bg.aktivitetStatus.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
+        harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
+        harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
+        isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
+        isDagpenger: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.DAGPENGER),
+        skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
+        isKombinasjonsstatus:
+          bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
+        isMilitaer: bg.aktivitetStatus.some(({ kode }) => isStatusMilitaer(kode)),
+      }
+    : null;
 
-const getBGVilkar = (vilkar) => (vilkar ? vilkar.find((v) => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined);
+const getBGVilkar = vilkar =>
+  vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
 
-
-const getAksjonspunktForGraderingPaaAndelUtenBG = (aksjonspunkter) => (aksjonspunkter
-  ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
-  : undefined);
+const getAksjonspunktForGraderingPaaAndelUtenBG = aksjonspunkter =>
+  aksjonspunkter
+    ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
+    : undefined;
 
 /**
  * BeregningFP
@@ -102,19 +107,18 @@ const BeregningFP = ({
         vilkaarBG={vilkaarBG}
       />
 
-      {sokerHarGraderingPaaAndelUtenBG
-          && (
-          <GraderingUtenBG2
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            behandlingId={behandling.id}
-            behandlingVersjon={behandling.versjon}
-            aksjonspunkter={aksjonspunkter}
-            andelerMedGraderingUtenBG={beregningsgrunnlag.andelerMedGraderingUtenBG}
-            alleKodeverk={alleKodeverk}
-            venteaarsakKode={behandling.venteArsakKode}
-          />
-          )}
+      {sokerHarGraderingPaaAndelUtenBG && (
+        <GraderingUtenBG2
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          aksjonspunkter={aksjonspunkter}
+          andelerMedGraderingUtenBG={beregningsgrunnlag.andelerMedGraderingUtenBG}
+          alleKodeverk={alleKodeverk}
+          venteaarsakKode={behandling.venteArsakKode}
+        />
+      )}
     </>
   );
 };

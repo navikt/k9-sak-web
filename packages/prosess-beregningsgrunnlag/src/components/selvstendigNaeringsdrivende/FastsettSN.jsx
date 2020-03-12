@@ -12,9 +12,7 @@ import {
   required,
   formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
-import {
-  InputField,
-} from '@fpsak-frontend/form';
+import { InputField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -49,10 +47,12 @@ export const FastsettSN = ({
   endretTekst,
 }) => {
   const harGammeltAPFastsettBrutto = gjeldendeAksjonspunkter
-    ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE)
+    ? gjeldendeAksjonspunkter.find(
+        ap => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+      )
     : false;
   const harAPSNNyiArbLiv = gjeldendeAksjonspunkter
-    ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
+    ? gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
     : false;
 
   return (
@@ -82,8 +82,7 @@ export const FastsettSN = ({
         </>
       )}
 
-      {(harGammeltAPFastsettBrutto || harAPSNNyiArbLiv)
-      && (
+      {(harGammeltAPFastsettBrutto || harAPSNNyiArbLiv) && (
         <>
           <VerticalSpacer sixteenPx />
           <Row>
@@ -96,7 +95,9 @@ export const FastsettSN = ({
                   maxLength={1500}
                   readOnly={readOnly}
                   isEdited={isAksjonspunktClosed}
-                  placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
+                  placeholder={intl.formatMessage({
+                    id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder',
+                  })}
                   endrettekst={endretTekst}
                 />
               </div>
@@ -122,16 +123,20 @@ FastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
     return undefined;
   }
 
-  const snAndel = relevanteAndeler.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const snAndel = relevanteAndeler.find(
+    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+  );
 
   // Vi vil kun ha et av disse aksjonspunktene om gangen
-  const fastsettBruttoEtterVarigEndring = gjeldendeAksjonspunkter
-    .find((ap) => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE);
-  const fastsettBruttoNyIArbeidslivet = gjeldendeAksjonspunkter
-    .find((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET);
+  const fastsettBruttoEtterVarigEndring = gjeldendeAksjonspunkter.find(
+    ap => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  const fastsettBruttoNyIArbeidslivet = gjeldendeAksjonspunkter.find(
+    ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+  );
   const gjeldendeAP = fastsettBruttoEtterVarigEndring || fastsettBruttoNyIArbeidslivet;
 
-  if (gjeldendeAP || (snAndel.overstyrtPrAar || snAndel.overstyrtPrAar === 0)) {
+  if (gjeldendeAP || snAndel.overstyrtPrAar || snAndel.overstyrtPrAar === 0) {
     return {
       [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,
       [begrunnelseFieldname]: gjeldendeAP && gjeldendeAP.begrunnelse ? gjeldendeAP.begrunnelse : '',
@@ -140,11 +145,11 @@ FastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
   return undefined;
 };
 
-FastsettSN.transformValuesMedBegrunnelse = (values) => ({
+FastsettSN.transformValuesMedBegrunnelse = values => ({
   begrunnelse: values[begrunnelseFieldname],
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
-FastsettSN.transformValuesUtenBegrunnelse = (values) => ({
+FastsettSN.transformValuesUtenBegrunnelse = values => ({
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
 

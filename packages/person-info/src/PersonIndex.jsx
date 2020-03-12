@@ -7,12 +7,7 @@ import PersonInfo from './PersonInfo';
  * Viser grunnleggende personinformasjon. Dette panelet blir
  * vist som del av søkeresultatet, når fagsaken ikke har behandling
  */
-const PersonIndex = ({
-  person,
-  medPanel,
-}) => (person
-  ? <PersonInfo person={person} medPanel={medPanel} />
-  : null);
+const PersonIndex = ({ person, medPanel }) => (person ? <PersonInfo person={person} medPanel={medPanel} /> : null);
 
 PersonIndex.propTypes = {
   person: PropTypes.shape(),
@@ -21,7 +16,7 @@ PersonIndex.propTypes = {
 
 PersonIndex.defaultProps = {
   person: undefined,
-  medPanel: false};
+  medPanel: false,
+};
 
 export default PersonIndex;
-

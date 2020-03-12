@@ -6,20 +6,16 @@ import Label from '@fpsak-frontend/form/src/Label';
 import EditedIcon from './EditedIcon';
 import styles from './readOnlyField.less';
 
-const hasValue = (value) => value !== undefined && value !== null && value !== '';
+const hasValue = value => value !== undefined && value !== null && value !== '';
 
-export const ReadOnlyField = ({
-                                  label, input, endrettekst,
-                                }) => {
+export const ReadOnlyField = ({ label, input, endrettekst }) => {
   if (!hasValue(input.value)) {
     return null;
   }
   return (
     <div className={styles.readOnlyContainer}>
       <Label typographyElement={Normaltekst} input={label} readOnly />
-      <Normaltekst className={styles.readOnlyContent}>
-        {input.value}
-      </Normaltekst>
+      <Normaltekst className={styles.readOnlyContent}>{input.value}</Normaltekst>
       {endrettekst && (
         <FlexContainer>
           <FlexRow>
@@ -27,9 +23,7 @@ export const ReadOnlyField = ({
               <EditedIcon />
             </FlexColumn>
             <FlexColumn className={styles.endretAvContent}>
-              <Undertekst>
-                {endrettekst}
-              </Undertekst>
+              <Undertekst>{endrettekst}</Undertekst>
             </FlexColumn>
           </FlexRow>
         </FlexContainer>

@@ -6,7 +6,8 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import styles from './noSelectedBehandling.less';
 
-const getMessage = (numBehandlinger) => (numBehandlinger === 0 ? 'NoSelectedBehandling.ZeroBehandlinger' : 'FagsakGrid.PleaseSelectBehandling');
+const getMessage = numBehandlinger =>
+  numBehandlinger === 0 ? 'NoSelectedBehandling.ZeroBehandlinger' : 'FagsakGrid.PleaseSelectBehandling';
 
 /**
  * NoSelectedBehandling

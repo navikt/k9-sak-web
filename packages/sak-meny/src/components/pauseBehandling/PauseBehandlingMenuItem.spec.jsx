@@ -18,34 +18,38 @@ describe('<PauseBehandlingMenuItem>', () => {
     .medFpTilbakeKodeverk({});
 
   it('skal ikke vise modal ved rendring', () => {
-    const wrapper = shallow(<PauseBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={sinon.spy()}
-      setBehandlingOnHold={sinon.spy()}
-      settBehandlingPaVentEnabled
-      menyKodeverk={menyKodeverk}
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-    />);
+    const wrapper = shallow(
+      <PauseBehandlingMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={sinon.spy()}
+        setBehandlingOnHold={sinon.spy()}
+        settBehandlingPaVentEnabled
+        menyKodeverk={menyKodeverk}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+      />,
+    );
 
     expect(wrapper.find(SettBehandlingPaVentForm)).has.length(0);
   });
 
   it('skal vise modal ved trykk på meny-lenke', () => {
     const toggleBehandlingsmenyCallback = sinon.spy();
-    const wrapper = shallow(<PauseBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
-      setBehandlingOnHold={sinon.spy()}
-      settBehandlingPaVentEnabled
-      menyKodeverk={menyKodeverk}
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-    />);
+    const wrapper = shallow(
+      <PauseBehandlingMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
+        setBehandlingOnHold={sinon.spy()}
+        settBehandlingPaVentEnabled
+        menyKodeverk={menyKodeverk}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+      />,
+    );
 
     const button = wrapper.find(MenuButton);
     expect(button).has.length(1);
@@ -62,17 +66,19 @@ describe('<PauseBehandlingMenuItem>', () => {
   });
 
   it('skal skjule modal ved trykk på avbryt', () => {
-    const wrapper = shallow(<PauseBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={sinon.spy()}
-      setBehandlingOnHold={sinon.spy()}
-      settBehandlingPaVentEnabled
-      menyKodeverk={menyKodeverk}
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-    />);
+    const wrapper = shallow(
+      <PauseBehandlingMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={sinon.spy()}
+        setBehandlingOnHold={sinon.spy()}
+        settBehandlingPaVentEnabled
+        menyKodeverk={menyKodeverk}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+      />,
+    );
 
     wrapper.setState({ showModal: true });
     const modal = wrapper.find(SettBehandlingPaVentForm);
@@ -87,17 +93,19 @@ describe('<PauseBehandlingMenuItem>', () => {
 
   it('skal sende data til server ved trykk på ok-knapp', () => {
     const behandlingOnHoldCallback = sinon.spy();
-    const wrapper = shallow(<PauseBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={sinon.spy()}
-      setBehandlingOnHold={behandlingOnHoldCallback}
-      settBehandlingPaVentEnabled
-      menyKodeverk={menyKodeverk}
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-    />);
+    const wrapper = shallow(
+      <PauseBehandlingMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={sinon.spy()}
+        setBehandlingOnHold={behandlingOnHoldCallback}
+        settBehandlingPaVentEnabled
+        menyKodeverk={menyKodeverk}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+      />,
+    );
 
     wrapper.setState({ showModal: true });
     const modal = wrapper.find(SettBehandlingPaVentForm);

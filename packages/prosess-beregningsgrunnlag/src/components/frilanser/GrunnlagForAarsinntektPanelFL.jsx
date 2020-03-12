@@ -10,7 +10,6 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
 /**
  * GrunnlagForAarsinntektPanelFL
  *
@@ -18,10 +17,8 @@ import AvsnittSkiller from '../redesign/AvsnittSkiller';
  * Viser kun én frilanserinntekt og et inputfelt for å oversyre det ved aksjonspunkt.
  * Vises også hvis status er en kombinasjonsstatus som inkluderer frilanser.
  */
-export const GrunnlagForAarsinntektPanelFL = ({
-  alleAndeler,
-}) => {
-  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+export const GrunnlagForAarsinntektPanelFL = ({ alleAndeler }) => {
+  const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
@@ -35,16 +32,14 @@ export const GrunnlagForAarsinntektPanelFL = ({
         <VerticalSpacer eightPx />
       </>
       {startDato && (
-      <Row className={beregningStyles.rows}>
-        <Column xs="12">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2" />
-            <span className={beregningStyles.semiBoldText}>
-              {dateFormat(startDato)}
-            </span>
-          </Normaltekst>
-        </Column>
-      </Row>
+        <Row className={beregningStyles.rows}>
+          <Column xs="12">
+            <Normaltekst>
+              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2" />
+              <span className={beregningStyles.semiBoldText}>{dateFormat(startDato)}</span>
+            </Normaltekst>
+          </Column>
+        </Row>
       )}
       <VerticalSpacer eightPx />
       <Row className={beregningStyles.rows}>
@@ -74,9 +69,7 @@ export const GrunnlagForAarsinntektPanelFL = ({
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
         <Column xs="1" className={beregningStyles.colLink}>
-          {userIdent && (
-            <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} type="AI" />
-          )}
+          {userIdent && <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} type="AI" />}
         </Column>
       </Row>
     </>

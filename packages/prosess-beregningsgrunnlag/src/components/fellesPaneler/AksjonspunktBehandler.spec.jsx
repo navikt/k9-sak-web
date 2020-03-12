@@ -23,8 +23,10 @@ const allePerioder = [
           kodeverk: 'AKTIVITET_STATUS',
         },
         skalFastsetteGrunnlag: true,
-      }],
-  }];
+      },
+    ],
+  },
+];
 const formName = 'BeregningForm';
 const aksjonspunkter = [
   {
@@ -43,23 +45,43 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
     const readOnly = true;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
-      intl={intlMock}
-      readOnly={readOnly}
-      aksjonspunkter={aksjonspunkter}
-      formName={formName}
-      behandlingId={1}
-      behandlingVersjon={1}
-      readOnlySubmitButton
-      allePerioder={allePerioder}
-      alleKodeverk={alleKodeverk}
-      relevanteStatuser={relevanteStatuser}
-      tidsBegrensetInntekt={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <AksjonspunktBehandler.WrappedComponent
+        intl={intlMock}
+        readOnly={readOnly}
+        aksjonspunkter={aksjonspunkter}
+        formName={formName}
+        behandlingId={1}
+        behandlingVersjon={1}
+        readOnlySubmitButton
+        allePerioder={allePerioder}
+        alleKodeverk={alleKodeverk}
+        relevanteStatuser={relevanteStatuser}
+        tidsBegrensetInntekt={false}
+      />,
+    );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
+    expect(
+      rows
+        .first()
+        .find('FormattedMessage')
+        .first()
+        .props().id,
+    ).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
+    expect(
+      rows
+        .at(1)
+        .find('TextAreaField')
+        .first()
+        .props().name,
+    ).to.equal('ATFLVurdering');
+    expect(
+      rows
+        .at(1)
+        .find('TextAreaField')
+        .first()
+        .props().readOnly,
+    ).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -76,23 +98,43 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
     const readOnly = false;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
-      readOnly={readOnly}
-      aksjonspunkter={aksjonspunkter}
-      formName={formName}
-      behandlingId={1}
-      behandlingVersjon={1}
-      readOnlySubmitButton
-      allePerioder={allePerioder}
-      alleKodeverk={alleKodeverk}
-      relevanteStatuser={relevanteStatuser}
-      tidsBegrensetInntekt={false}
-      intl={intlMock}
-    />);
+    const wrapper = shallowWithIntl(
+      <AksjonspunktBehandler.WrappedComponent
+        readOnly={readOnly}
+        aksjonspunkter={aksjonspunkter}
+        formName={formName}
+        behandlingId={1}
+        behandlingVersjon={1}
+        readOnlySubmitButton
+        allePerioder={allePerioder}
+        alleKodeverk={alleKodeverk}
+        relevanteStatuser={relevanteStatuser}
+        tidsBegrensetInntekt={false}
+        intl={intlMock}
+      />,
+    );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
+    expect(
+      rows
+        .first()
+        .find('FormattedMessage')
+        .first()
+        .props().id,
+    ).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
+    expect(
+      rows
+        .at(1)
+        .find('TextAreaField')
+        .first()
+        .props().name,
+    ).to.equal('ATFLVurdering');
+    expect(
+      rows
+        .at(1)
+        .find('TextAreaField')
+        .first()
+        .props().readOnly,
+    ).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -101,7 +143,10 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerTB).to.have.length(0);
     expect(aksjonspunktBehandlerFL).to.have.length(1);
     expect(aksjonspunktBehandlerSN).to.have.length(0);
-    const submitButton = rows.at(2).first().childAt(0);
+    const submitButton = rows
+      .at(2)
+      .first()
+      .childAt(0);
     expect(submitButton).to.have.length(1);
   });
   it('Skal teste at riktig componenter blir renderet for AT readOnly false', () => {
@@ -110,23 +155,43 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isArbeidstaker = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
     const readOnly = true;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
-      readOnly={readOnly}
-      aksjonspunkter={aksjonspunkter}
-      formName={formName}
-      behandlingId={1}
-      behandlingVersjon={1}
-      readOnlySubmitButton
-      allePerioder={allePerioder}
-      alleKodeverk={alleKodeverk}
-      relevanteStatuser={relevanteStatuser}
-      tidsBegrensetInntekt={false}
-      intl={intlMock}
-    />);
+    const wrapper = shallowWithIntl(
+      <AksjonspunktBehandler.WrappedComponent
+        readOnly={readOnly}
+        aksjonspunkter={aksjonspunkter}
+        formName={formName}
+        behandlingId={1}
+        behandlingVersjon={1}
+        readOnlySubmitButton
+        allePerioder={allePerioder}
+        alleKodeverk={alleKodeverk}
+        relevanteStatuser={relevanteStatuser}
+        tidsBegrensetInntekt={false}
+        intl={intlMock}
+      />,
+    );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
+    expect(
+      rows
+        .first()
+        .find('FormattedMessage')
+        .first()
+        .props().id,
+    ).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
+    expect(
+      rows
+        .at(1)
+        .find('TextAreaField')
+        .first()
+        .props().name,
+    ).to.equal('ATFLVurdering');
+    expect(
+      rows
+        .at(1)
+        .find('TextAreaField')
+        .first()
+        .props().readOnly,
+    ).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -135,7 +200,10 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerTB).to.have.length(0);
     expect(aksjonspunktBehandlerFL).to.have.length(0);
     expect(aksjonspunktBehandlerSN).to.have.length(0);
-    const submitButton = rows.at(2).first().childAt(0);
+    const submitButton = rows
+      .at(2)
+      .first()
+      .childAt(0);
     expect(submitButton).to.have.length(1);
   });
   it('Skal teste at riktig componenter blir renderet for AT tidsbegrenset readOnly false', () => {
@@ -144,23 +212,43 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isArbeidstaker = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
     const readOnly = true;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
-      readOnly={readOnly}
-      aksjonspunkter={aksjonspunkter}
-      formName={formName}
-      behandlingId={1}
-      behandlingVersjon={1}
-      readOnlySubmitButton
-      allePerioder={allePerioder}
-      alleKodeverk={alleKodeverk}
-      relevanteStatuser={relevanteStatuser}
-      tidsBegrensetInntekt
-      intl={intlMock}
-    />);
+    const wrapper = shallowWithIntl(
+      <AksjonspunktBehandler.WrappedComponent
+        readOnly={readOnly}
+        aksjonspunkter={aksjonspunkter}
+        formName={formName}
+        behandlingId={1}
+        behandlingVersjon={1}
+        readOnlySubmitButton
+        allePerioder={allePerioder}
+        alleKodeverk={alleKodeverk}
+        relevanteStatuser={relevanteStatuser}
+        tidsBegrensetInntekt
+        intl={intlMock}
+      />,
+    );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
+    expect(
+      rows
+        .first()
+        .find('FormattedMessage')
+        .first()
+        .props().id,
+    ).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
+    expect(
+      rows
+        .at(1)
+        .find('TextAreaField')
+        .first()
+        .props().name,
+    ).to.equal('ATFLVurdering');
+    expect(
+      rows
+        .at(1)
+        .find('TextAreaField')
+        .first()
+        .props().readOnly,
+    ).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find(AksjonspunktBehandlerTB);
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -169,7 +257,10 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerTB).to.have.length(1);
     expect(aksjonspunktBehandlerFL).to.have.length(0);
     expect(aksjonspunktBehandlerSN).to.have.length(0);
-    const submitButton = rows.at(2).first().childAt(0);
+    const submitButton = rows
+      .at(2)
+      .first()
+      .childAt(0);
     expect(submitButton).to.have.length(1);
   });
   it('Skal teste at riktig componenter blir renderet for SN NyIArbeidslivet==true', () => {
@@ -177,10 +268,9 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
     relevanteStatuser.isArbeidstaker = false;
     const snPeriode = {
-      aktivitetStatus:
-     {
-       kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-     },
+      aktivitetStatus: {
+        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+      },
       næringer: [
         {
           erVarigEndret: false,
@@ -192,22 +282,30 @@ describe('<AksjonspunktBehandler>', () => {
     const readOnly = true;
     const perioderMedSNAndel = allePerioder;
     perioderMedSNAndel[0].beregningsgrunnlagPrStatusOgAndel[0] = snPeriode;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
-      readOnly={readOnly}
-      aksjonspunkter={aksjonspunkter}
-      formName={formName}
-      behandlingId={1}
-      behandlingVersjon={1}
-      readOnlySubmitButton
-      allePerioder={perioderMedSNAndel}
-      alleKodeverk={alleKodeverk}
-      relevanteStatuser={relevanteStatuser}
-      tidsBegrensetInntekt={false}
-      erNyArbLivet
-      intl={intlMock}
-    />);
+    const wrapper = shallowWithIntl(
+      <AksjonspunktBehandler.WrappedComponent
+        readOnly={readOnly}
+        aksjonspunkter={aksjonspunkter}
+        formName={formName}
+        behandlingId={1}
+        behandlingVersjon={1}
+        readOnlySubmitButton
+        allePerioder={perioderMedSNAndel}
+        alleKodeverk={alleKodeverk}
+        relevanteStatuser={relevanteStatuser}
+        tidsBegrensetInntekt={false}
+        erNyArbLivet
+        intl={intlMock}
+      />,
+    );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet');
+    expect(
+      rows
+        .first()
+        .find('FormattedMessage')
+        .first()
+        .props().id,
+    ).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet');
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find(AksjonspunktBehandlerTB);
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');

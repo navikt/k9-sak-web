@@ -7,17 +7,20 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { FlexRow } from '@fpsak-frontend/shared-components';
 import AvvikopplysningerATFLSN from '../fellesPaneler/AvvikopplysningerATFLSN';
 
-const AvviksopplysningerSN = ({
-  sammenligningsgrunnlagPrStatus, alleAndelerIForstePeriode, relevanteStatuser,
-}) => {
-  const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+const AvviksopplysningerSN = ({ sammenligningsgrunnlagPrStatus, alleAndelerIForstePeriode, relevanteStatuser }) => {
+  const snAndel = alleAndelerIForstePeriode.find(
+    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+  );
   const { pgiSnitt } = snAndel;
   const erNyArbLivet = snAndel.erNyIArbeidslivet;
-  const erVarigEndring = snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
-  const erNyoppstartet = snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  const erVarigEndring = snAndel.næringer && snAndel.næringer.some(naring => naring.erVarigEndret === true);
+  const erNyoppstartet = snAndel.næringer && snAndel.næringer.some(naring => naring.erNyoppstartet === true);
   const sammenligningsGrunnlagSN = sammenligningsgrunnlagPrStatus
-    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_SN'
-      || status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_ATFL_SN')
+    ? sammenligningsgrunnlagPrStatus.find(
+        status =>
+          status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_SN' ||
+          status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_ATFL_SN',
+      )
     : undefined;
   let avvikSN;
   let avvikRoundedSN;
@@ -25,7 +28,7 @@ const AvviksopplysningerSN = ({
   let differanseBeregnet;
   if (sammenligningsGrunnlagSN) {
     avvikSN = sammenligningsGrunnlagSN.avvikProsent;
-    avvikRoundedSN = avvikSN ? parseFloat((avvikSN.toFixed(1))) : 0;
+    avvikRoundedSN = avvikSN ? parseFloat(avvikSN.toFixed(1)) : 0;
     sammenligningsgrunnlagSumSN = sammenligningsGrunnlagSN.rapportertPrAar;
     differanseBeregnet = sammenligningsGrunnlagSN.differanseBeregnet;
   }
@@ -70,7 +73,6 @@ const AvviksopplysningerSN = ({
   }
   return null;
 };
-
 
 AvviksopplysningerSN.propTypes = {
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),

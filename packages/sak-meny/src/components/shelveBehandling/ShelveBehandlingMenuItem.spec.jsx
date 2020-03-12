@@ -12,46 +12,50 @@ import ShelveBehandlingMenuItem from './ShelveBehandlingMenuItem';
 
 describe('<ShelveBehandlingMenuItem>', () => {
   it('skal ikke vise modal ved rendring', () => {
-    const wrapper = shallow(<ShelveBehandlingMenuItem
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
-      behandlingUuid="1"
-      behandlingVersjon={2}
-      previewHenleggBehandling={sinon.spy()}
-      toggleBehandlingsmeny={sinon.spy()}
-      shelveBehandling={sinon.spy()}
-      push={sinon.spy()}
-      henleggBehandlingEnabled
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-      menyKodeverk={new MenyKodeverk()}
-    />);
+    const wrapper = shallow(
+      <ShelveBehandlingMenuItem
+        behandlingIdentifier={new BehandlingIdentifier(1, 2)}
+        behandlingUuid="1"
+        behandlingVersjon={2}
+        previewHenleggBehandling={sinon.spy()}
+        toggleBehandlingsmeny={sinon.spy()}
+        shelveBehandling={sinon.spy()}
+        push={sinon.spy()}
+        henleggBehandlingEnabled
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+        menyKodeverk={new MenyKodeverk()}
+      />,
+    );
 
     expect(wrapper.find('Connect(injectIntl(ReduxForm))')).has.length(0);
   });
 
   it('skal vise modal ved trykk på meny-lenke', () => {
     const toggleBehandlingsmenyCallback = sinon.spy();
-    const wrapper = shallow(<ShelveBehandlingMenuItem
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
-      behandlingUuid="1"
-      behandlingVersjon={2}
-      previewHenleggBehandling={sinon.spy()}
-      toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
-      shelveBehandling={sinon.spy()}
-      push={sinon.spy()}
-      henleggBehandlingEnabled
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-      menyKodeverk={new MenyKodeverk()}
-    />);
+    const wrapper = shallow(
+      <ShelveBehandlingMenuItem
+        behandlingIdentifier={new BehandlingIdentifier(1, 2)}
+        behandlingUuid="1"
+        behandlingVersjon={2}
+        previewHenleggBehandling={sinon.spy()}
+        toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
+        shelveBehandling={sinon.spy()}
+        push={sinon.spy()}
+        henleggBehandlingEnabled
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+        menyKodeverk={new MenyKodeverk()}
+      />,
+    );
 
     const button = wrapper.find('MenuButton');
     expect(button).has.length(1);
@@ -69,23 +73,25 @@ describe('<ShelveBehandlingMenuItem>', () => {
   });
 
   it('skal skjule modal ved trykk på avbryt', () => {
-    const wrapper = shallow(<ShelveBehandlingMenuItem
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
-      behandlingUuid="1"
-      behandlingVersjon={2}
-      previewHenleggBehandling={sinon.spy()}
-      toggleBehandlingsmeny={sinon.spy()}
-      shelveBehandling={sinon.spy()}
-      push={sinon.spy()}
-      henleggBehandlingEnabled
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-      menyKodeverk={new MenyKodeverk()}
-    />);
+    const wrapper = shallow(
+      <ShelveBehandlingMenuItem
+        behandlingIdentifier={new BehandlingIdentifier(1, 2)}
+        behandlingUuid="1"
+        behandlingVersjon={2}
+        previewHenleggBehandling={sinon.spy()}
+        toggleBehandlingsmeny={sinon.spy()}
+        shelveBehandling={sinon.spy()}
+        push={sinon.spy()}
+        henleggBehandlingEnabled
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+        menyKodeverk={new MenyKodeverk()}
+      />,
+    );
 
     wrapper.setState({ showModal: true });
     const modal = wrapper.find('Connect(injectIntl(ReduxForm))');
@@ -100,24 +106,30 @@ describe('<ShelveBehandlingMenuItem>', () => {
 
   it('skal sende data til server og vise "behandling er henlagt"-modal ved trykk på ok-knapp', () => {
     const shelveBehandlingCallback = sinon.stub();
-    const wrapper = shallow(<ShelveBehandlingMenuItem
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
-      behandlingUuid="1"
-      behandlingVersjon={2}
-      previewHenleggBehandling={sinon.spy()}
-      toggleBehandlingsmeny={sinon.spy()}
-      shelveBehandling={shelveBehandlingCallback}
-      push={sinon.spy()}
-      henleggBehandlingEnabled
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      behandlingType={{
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      }}
-      menyKodeverk={new MenyKodeverk()}
-    />);
-    shelveBehandlingCallback.returns({ then: () => { wrapper.setState({ showBehandlingErHenlagtModal: true }); } });
+    const wrapper = shallow(
+      <ShelveBehandlingMenuItem
+        behandlingIdentifier={new BehandlingIdentifier(1, 1)}
+        behandlingUuid="1"
+        behandlingVersjon={2}
+        previewHenleggBehandling={sinon.spy()}
+        toggleBehandlingsmeny={sinon.spy()}
+        shelveBehandling={shelveBehandlingCallback}
+        push={sinon.spy()}
+        henleggBehandlingEnabled
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+        }}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+        }}
+        menyKodeverk={new MenyKodeverk()}
+      />,
+    );
+    shelveBehandlingCallback.returns({
+      then: () => {
+        wrapper.setState({ showBehandlingErHenlagtModal: true });
+      },
+    });
 
     wrapper.setState({ showBehandlingErHenlagtModal: false });
     wrapper.setState({ showModal: true });

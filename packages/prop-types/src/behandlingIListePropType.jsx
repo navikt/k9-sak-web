@@ -15,12 +15,14 @@ const behandlingIListePropType = PropTypes.shape({
   endret: PropTypes.string,
   behandlendeEnhetId: PropTypes.string.isRequired,
   behandlendeEnhetNavn: PropTypes.string.isRequired,
-  links: PropTypes.arrayOf(PropTypes.shape({
-    href: PropTypes.string.isRequired,
-    rel: PropTypes.string.isRequired,
-    requestPayload: PropTypes.any,
-    type: PropTypes.string.isRequired,
-  })).isRequired,
+  links: PropTypes.arrayOf(
+    PropTypes.shape({
+      href: PropTypes.string.isRequired,
+      rel: PropTypes.string.isRequired,
+      requestPayload: PropTypes.any,
+      type: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   gjeldendeVedtak: PropTypes.bool,
 });
 

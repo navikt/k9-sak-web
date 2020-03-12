@@ -39,11 +39,13 @@ const relevanteStatuser = (erSN, erKombo) => ({
 const andeler = [dpAndel, aapAndel, urelatertAndel];
 describe('<TilstotendeYtelser>', () => {
   it('Skal teste at de korrekte ytelser for dagpenger / AAP vises og at urelaterte andeler ikke vises', () => {
-    const wrapper = shallowWithIntl(<TilstotendeYtelser2
-      alleAndeler={andeler}
-      relevanteStatuser={relevanteStatuser(false, false)}
-      gjelderBesteberegning={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <TilstotendeYtelser2
+        alleAndeler={andeler}
+        relevanteStatuser={relevanteStatuser(false, false)}
+        gjelderBesteberegning={false}
+      />,
+    );
     const formattedMessage = wrapper.find('FormattedMessage');
     expect(formattedMessage).to.have.length(4);
     expect(formattedMessage.at(0).prop('id')).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned');
@@ -52,10 +54,30 @@ describe('<TilstotendeYtelser>', () => {
     expect(formattedMessage.at(3).prop('id')).to.equal(aapNavn);
     const summer = wrapper.find('Normaltekst');
     expect(summer).to.have.length(4);
-    expect(summer.children().at(0).text()).to.equal(formatCurrencyNoKr(dagpengerInntekt / 12));
-    expect(summer.children().at(1).text()).to.equal(formatCurrencyNoKr(dagpengerInntekt));
-    expect(summer.children().at(2).text()).to.equal(formatCurrencyNoKr(aapInntekt / 12));
-    expect(summer.children().at(3).text()).to.equal(formatCurrencyNoKr(aapInntekt));
+    expect(
+      summer
+        .children()
+        .at(0)
+        .text(),
+    ).to.equal(formatCurrencyNoKr(dagpengerInntekt / 12));
+    expect(
+      summer
+        .children()
+        .at(1)
+        .text(),
+    ).to.equal(formatCurrencyNoKr(dagpengerInntekt));
+    expect(
+      summer
+        .children()
+        .at(2)
+        .text(),
+    ).to.equal(formatCurrencyNoKr(aapInntekt / 12));
+    expect(
+      summer
+        .children()
+        .at(3)
+        .text(),
+    ).to.equal(formatCurrencyNoKr(aapInntekt));
   });
 
   it('Skal hente riktig tekst for andel brukt i beregning', () => {

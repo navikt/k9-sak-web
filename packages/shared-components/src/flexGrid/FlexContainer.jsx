@@ -6,14 +6,8 @@ import styles from './flexContainer.less';
 
 const classNames = classnames.bind(styles);
 
-const FlexContainer = ({
-  children,
-  wrap,
-  fullHeight,
-}) => (
-  <div className={classNames('flexContainer', 'fluid', { flexWrap: wrap, fullHeight })}>
-    {children}
-  </div>
+const FlexContainer = ({ children, wrap, fullHeight }) => (
+  <div className={classNames('flexContainer', 'fluid', { flexWrap: wrap, fullHeight })}>{children}</div>
 );
 
 FlexContainer.propTypes = {

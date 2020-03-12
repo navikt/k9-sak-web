@@ -16,9 +16,7 @@ import styles from './home.less';
  *
  * Presentasjonskomponent. Wrapper for sideinnholdet som vises under header.
  */
-const Home = ({
-  headerHeight,
-}) => (
+const Home = ({ headerHeight }) => (
   <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
     <Switch>
       <Route exact path="/" component={DashboardResolver} />

@@ -13,14 +13,15 @@ import {
   settBehandlingPaVentAccess,
 } from './accessMenu';
 
-const forEachFagsakAndBehandlingStatus = (callback) => (
-  Object.values(fagsakStatusCode).forEach((fagsakStatus) => Object.values(behandlingStatusCode)
-    .forEach((behandlingStatus) => callback(fagsakStatus, behandlingStatus)))
-);
+const forEachFagsakAndBehandlingStatus = callback =>
+  Object.values(fagsakStatusCode).forEach(fagsakStatus =>
+    Object.values(behandlingStatusCode).forEach(behandlingStatus => callback(fagsakStatus, behandlingStatus)),
+  );
 
-const getTestName = (accessName, expected, fagsakStatus, behandlingStatus) => (
-  `skal${expected ? '' : ' ikke'} ha ${accessName} når fagsakStatus er '${fagsakStatus}' og behandlingStatus er '${behandlingStatus}'`
-);
+const getTestName = (accessName, expected, fagsakStatus, behandlingStatus) =>
+  `skal${
+    expected ? '' : ' ikke'
+  } ha ${accessName} når fagsakStatus er '${fagsakStatus}' og behandlingStatus er '${behandlingStatus}'`;
 
 describe('accessMenu', () => {
   const saksbehandlerAnsatt = { kanSaksbehandle: true };
@@ -34,7 +35,11 @@ describe('accessMenu', () => {
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
     it('saksbehandler skal ha tilgang til henlegge behandling', () => {
-      const accessForSaksbehandler = henleggBehandlingAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForSaksbehandler = henleggBehandlingAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
@@ -78,32 +83,48 @@ describe('accessMenu', () => {
           navn: '',
         },
       },
-      vilkar: [{
-        vilkarType: {
-          kode: '1',
-          navn: '',
+      vilkar: [
+        {
+          vilkarType: {
+            kode: '1',
+            navn: '',
+          },
+          avslagKode: '2',
+          lovReferanse: '§ 22-13, 2. ledd',
         },
-        avslagKode: '2',
-        lovReferanse: '§ 22-13, 2. ledd',
-      }],
+      ],
       behandlingPaaVent: false,
     };
 
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };
 
-    const validBehandlingStatuser = [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES, behandlingStatusCode.FORESLA_VEDTAK];
+    const validBehandlingStatuser = [
+      behandlingStatusCode.OPPRETTET,
+      behandlingStatusCode.BEHANDLING_UTREDES,
+      behandlingStatusCode.FORESLA_VEDTAK,
+    ];
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
     it('saksbehandler skal ha tilgang til å sette behandling på vent', () => {
-      const accessForSaksbehandler = settBehandlingPaVentAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus, behandling);
+      const accessForSaksbehandler = settBehandlingPaVentAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        behandling,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
     });
 
     it('veileder skal ikke ha aktivert tilgang til å sette behandling på vent', () => {
-      const accessForVeileder = settBehandlingPaVentAccess(veilederAnsatt, validFagsakStatus, validBehandlingStatus, behandling);
+      const accessForVeileder = settBehandlingPaVentAccess(
+        veilederAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        behandling,
+      );
 
       expect(accessForVeileder).to.have.property('employeeHasAccess', true);
       expect(accessForVeileder).to.have.property('isEnabled', false);
@@ -112,7 +133,12 @@ describe('accessMenu', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(getTestName('tilgang til å sette behandling på vent', expected, fagsakStatus, behandlingStatus), () => {
-        const access = settBehandlingPaVentAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus }, behandling);
+        const access = settBehandlingPaVentAccess(
+          saksbehandlerAnsatt,
+          { kode: fagsakStatus },
+          { kode: behandlingStatus },
+          behandling,
+        );
 
         expect(access).to.have.property('isEnabled', expected);
       });
@@ -139,18 +165,32 @@ describe('accessMenu', () => {
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };
 
-    const validBehandlingStatuser = [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES, behandlingStatusCode.FORESLA_VEDTAK];
+    const validBehandlingStatuser = [
+      behandlingStatusCode.OPPRETTET,
+      behandlingStatusCode.BEHANDLING_UTREDES,
+      behandlingStatusCode.FORESLA_VEDTAK,
+    ];
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
     it('saksbehandler skal ha tilgang til å sette behandling på vent når det er behandling av klage', () => {
-      const accessForSaksbehandler = settBehandlingPaVentAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus, behandling);
+      const accessForSaksbehandler = settBehandlingPaVentAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        behandling,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
     });
 
     it('veileder skal ikke ha aktivert tilgang til å sette behandling på vent', () => {
-      const accessForVeileder = settBehandlingPaVentAccess(veilederAnsatt, validFagsakStatus, validBehandlingStatus, behandling);
+      const accessForVeileder = settBehandlingPaVentAccess(
+        veilederAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        behandling,
+      );
 
       expect(accessForVeileder).to.have.property('employeeHasAccess', true);
       expect(accessForVeileder).to.have.property('isEnabled', false);
@@ -159,13 +199,17 @@ describe('accessMenu', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(getTestName('tilgang til å sette behandling på vent', expected, fagsakStatus, behandlingStatus), () => {
-        const access = settBehandlingPaVentAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus }, behandling);
+        const access = settBehandlingPaVentAccess(
+          saksbehandlerAnsatt,
+          { kode: fagsakStatus },
+          { kode: behandlingStatus },
+          behandling,
+        );
 
         expect(access).to.have.property('isEnabled', expected);
       });
     });
   });
-
 
   describe('byttBehandlendeEnhetAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
@@ -175,7 +219,11 @@ describe('accessMenu', () => {
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
     it('saksbehandler skal ha tilgang til å bytte behandlende enhet', () => {
-      const accessForSaksbehandler = byttBehandlendeEnhetAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForSaksbehandler = byttBehandlendeEnhetAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
@@ -191,7 +239,11 @@ describe('accessMenu', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(getTestName('tilgang til å bytte behandlende enhet', expected, fagsakStatus, behandlingStatus), () => {
-        const access = byttBehandlendeEnhetAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus });
+        const access = byttBehandlendeEnhetAccess(
+          saksbehandlerAnsatt,
+          { kode: fagsakStatus },
+          { kode: behandlingStatus },
+        );
 
         expect(access).to.have.property('isEnabled', expected);
       });
@@ -199,7 +251,12 @@ describe('accessMenu', () => {
   });
 
   describe('opprettRevurderingAccess - Foreldrepenger', () => {
-    const validFagsakStatuser = [fagsakStatusCode.OPPRETTET, fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.LOPENDE, fagsakStatusCode.AVSLUTTET];
+    const validFagsakStatuser = [
+      fagsakStatusCode.OPPRETTET,
+      fagsakStatusCode.UNDER_BEHANDLING,
+      fagsakStatusCode.LOPENDE,
+      fagsakStatusCode.AVSLUTTET,
+    ];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };
 
     const validBehandlingStatuser = [behandlingStatusCode.IVERKSETTER_VEDTAK, behandlingStatusCode.AVSLUTTET];
@@ -213,24 +270,42 @@ describe('accessMenu', () => {
     };
 
     it('saksbehandler skal ha tilgang til å opprette revurdering', () => {
-      const accessForSaksbehandler = opprettRevurderingAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus,
-        kanOppretteRevurdering, sakstype, behandlingType);
+      const accessForSaksbehandler = opprettRevurderingAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        kanOppretteRevurdering,
+        sakstype,
+        behandlingType,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
     });
 
     it('saksbehandler skal ha tilgang til å opprette revurdering hvis fagsaktilstand tillater det', () => {
-      const accessForSaksbehandler = opprettRevurderingAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus,
-        kanIkkeOppretteRevurdering, sakstype, behandlingType);
+      const accessForSaksbehandler = opprettRevurderingAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        kanIkkeOppretteRevurdering,
+        sakstype,
+        behandlingType,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', false);
     });
 
     it('veileder skal ikke ha aktivert tilgang til å opprette revurdering', () => {
-      const accessForVeileder = opprettRevurderingAccess(veilederAnsatt, validFagsakStatus, validBehandlingStatus,
-        kanOppretteRevurdering, sakstype, behandlingType);
+      const accessForVeileder = opprettRevurderingAccess(
+        veilederAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        kanOppretteRevurdering,
+        sakstype,
+        behandlingType,
+      );
 
       expect(accessForVeileder).to.have.property('employeeHasAccess', true);
       expect(accessForVeileder).to.have.property('isEnabled', false);
@@ -239,8 +314,14 @@ describe('accessMenu', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(getTestName('tilgang til å opprette revurdering', expected, fagsakStatus, behandlingStatus), () => {
-        const access = opprettRevurderingAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus },
-          kanOppretteRevurdering, sakstype, behandlingType);
+        const access = opprettRevurderingAccess(
+          saksbehandlerAnsatt,
+          { kode: fagsakStatus },
+          { kode: behandlingStatus },
+          kanOppretteRevurdering,
+          sakstype,
+          behandlingType,
+        );
         expect(access).to.have.property('isEnabled', expected);
       });
     });
@@ -261,24 +342,42 @@ describe('accessMenu', () => {
     };
 
     it('saksbehandler skal ha tilgang til å opprette revurdering', () => {
-      const accessForSaksbehandler = opprettRevurderingAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus,
-        kanOppretteRevurdering, sakstype, behandlingType);
+      const accessForSaksbehandler = opprettRevurderingAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        kanOppretteRevurdering,
+        sakstype,
+        behandlingType,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
     });
 
     it('saksbehandler skal ha tilgang til å opprette revurdering hvis fagsaktilstand tillater det', () => {
-      const accessForSaksbehandler = opprettRevurderingAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus,
-        kanIkkeOppretteRevurdering, sakstype, behandlingType);
+      const accessForSaksbehandler = opprettRevurderingAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        kanIkkeOppretteRevurdering,
+        sakstype,
+        behandlingType,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', false);
     });
 
     it('veileder skal ikke ha aktivert tilgang til å opprette revurdering', () => {
-      const accessForVeileder = opprettRevurderingAccess(veilederAnsatt, validFagsakStatus, validBehandlingStatus,
-        kanOppretteRevurdering, sakstype, behandlingType);
+      const accessForVeileder = opprettRevurderingAccess(
+        veilederAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        kanOppretteRevurdering,
+        sakstype,
+        behandlingType,
+      );
 
       expect(accessForVeileder).to.have.property('employeeHasAccess', true);
       expect(accessForVeileder).to.have.property('isEnabled', false);
@@ -287,13 +386,18 @@ describe('accessMenu', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(getTestName('tilgang til å opprette revurdering', expected, fagsakStatus, behandlingStatus), () => {
-        const access = opprettRevurderingAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus },
-          kanOppretteRevurdering, sakstype, behandlingType);
+        const access = opprettRevurderingAccess(
+          saksbehandlerAnsatt,
+          { kode: fagsakStatus },
+          { kode: behandlingStatus },
+          kanOppretteRevurdering,
+          sakstype,
+          behandlingType,
+        );
         expect(access).to.have.property('isEnabled', expected);
       });
     });
   });
-
 
   describe('opprettNyForstegangsBehandlingAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.AVSLUTTET];
@@ -303,14 +407,22 @@ describe('accessMenu', () => {
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
     it('saksbehandler skal ha tilgang til å opprette ny førstegangsbehandling', () => {
-      const accessForSaksbehandler = opprettNyForstegangsBehandlingAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForSaksbehandler = opprettNyForstegangsBehandlingAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
     });
 
     it('veileder skal ikke ha aktivert tilgang til å opprette ny førstegangsbehandling', () => {
-      const accessForVeileder = opprettNyForstegangsBehandlingAccess(veilederAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForVeileder = opprettNyForstegangsBehandlingAccess(
+        veilederAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+      );
 
       expect(accessForVeileder).to.have.property('employeeHasAccess', true);
       expect(accessForVeileder).to.have.property('isEnabled', false);
@@ -318,11 +430,18 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
-      it(getTestName('tilgang til å opprette ny førstegangsbehandling', expected, fagsakStatus, behandlingStatus), () => {
-        const access = opprettNyForstegangsBehandlingAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus });
+      it(
+        getTestName('tilgang til å opprette ny førstegangsbehandling', expected, fagsakStatus, behandlingStatus),
+        () => {
+          const access = opprettNyForstegangsBehandlingAccess(
+            saksbehandlerAnsatt,
+            { kode: fagsakStatus },
+            { kode: behandlingStatus },
+          );
 
-        expect(access).to.have.property('isEnabled', expected);
-      });
+          expect(access).to.have.property('isEnabled', expected);
+        },
+      );
     });
   });
 
@@ -334,7 +453,11 @@ describe('accessMenu', () => {
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
     it('saksbehandler skal ha tilgang til å gjenoppta behandling', () => {
-      const accessForSaksbehandler = gjenopptaBehandlingAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForSaksbehandler = gjenopptaBehandlingAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
@@ -350,7 +473,11 @@ describe('accessMenu', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(getTestName('tilgang til å gjenoppta behandling', expected, fagsakStatus, behandlingStatus), () => {
-        const access = gjenopptaBehandlingAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus });
+        const access = gjenopptaBehandlingAccess(
+          saksbehandlerAnsatt,
+          { kode: fagsakStatus },
+          { kode: behandlingStatus },
+        );
 
         expect(access).to.have.property('isEnabled', expected);
       });
@@ -370,8 +497,13 @@ describe('accessMenu', () => {
       const behandlingType = {
         kode: BehandlingType.REVURDERING,
       };
-      const accessForSaksbehandler = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, validFagsakStatus,
-        validBehandlingStatus, foreldrepengerFagsak);
+      const accessForSaksbehandler = opneBehandlingForEndringerAccess(
+        behandlingType,
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        foreldrepengerFagsak,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
@@ -381,8 +513,13 @@ describe('accessMenu', () => {
       const behandlingType = {
         kode: BehandlingType.KLAGE,
       };
-      const accessForSaksbehandler = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, validFagsakStatus,
-        validBehandlingStatus, foreldrepengerFagsak);
+      const accessForSaksbehandler = opneBehandlingForEndringerAccess(
+        behandlingType,
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        foreldrepengerFagsak,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', false);
@@ -393,8 +530,13 @@ describe('accessMenu', () => {
       const behandlingType = {
         kode: BehandlingType.REVURDERING,
       };
-      const accessForSaksbehandler = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, validFagsakStatus,
-        validBehandlingStatus, sakstype);
+      const accessForSaksbehandler = opneBehandlingForEndringerAccess(
+        behandlingType,
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        sakstype,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', false);
@@ -406,8 +548,13 @@ describe('accessMenu', () => {
       };
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(getTestName('tilgang til å åpne behandling for endringer', expected, fagsakStatus, behandlingStatus), () => {
-        const access = opneBehandlingForEndringerAccess(behandlingType, saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus },
-          foreldrepengerFagsak);
+        const access = opneBehandlingForEndringerAccess(
+          behandlingType,
+          saksbehandlerAnsatt,
+          { kode: fagsakStatus },
+          { kode: behandlingStatus },
+          foreldrepengerFagsak,
+        );
 
         expect(access).to.have.property('isEnabled', expected);
       });

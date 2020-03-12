@@ -5,7 +5,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
-
 import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
 import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
@@ -32,32 +31,36 @@ const {
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
 
-
 // ------------------------------------------------------------------------------------------ //
 // Methods
 // ------------------------------------------------------------------------------------------ //
 
-const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder) => allePerioder.some(({ periodeAarsaker }) => periodeAarsaker
-    && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET));
+const harPerioderMedAvsluttedeArbeidsforhold = allePerioder =>
+  allePerioder.some(
+    ({ periodeAarsaker }) =>
+      periodeAarsaker && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET),
+  );
 
-const finnAksjonspunktForATFL = (gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(
-  (ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
-  || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-);
+const finnAksjonspunktForATFL = gjeldendeAksjonspunkter =>
+  gjeldendeAksjonspunkter &&
+  gjeldendeAksjonspunkter.find(
+    ap =>
+      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS ||
+      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  );
 
-const finnAksjonspunktForVurderDekningsgrad = (gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter
-  && gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
+const finnAksjonspunktForVurderDekningsgrad = gjeldendeAksjonspunkter =>
+  gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
 
-
-const finnAlleAndelerIFørstePeriode = (allePerioder) => {
+const finnAlleAndelerIFørstePeriode = allePerioder => {
   if (allePerioder && allePerioder.length > 0) {
     return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
   }
   return undefined;
 };
 
-
-const createRelevantePaneler = (alleAndelerIForstePeriode,
+const createRelevantePaneler = (
+  alleAndelerIForstePeriode,
   gjeldendeAksjonspunkter,
   relevanteStatuser,
   allePerioder,
@@ -67,45 +70,42 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   behandlingVersjon,
   alleKodeverk,
   sammenligningsGrunnlagInntekter,
-  skjeringstidspunktDato) => (
-    <div className={beregningStyles.panelLeft}>
-      { relevanteStatuser.isArbeidstaker
-      && (
-        <>
-          {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder)
-          && (
-            <>
-              <GrunnlagForAarsinntektPanelAT2
-                alleAndeler={alleAndelerIForstePeriode}
-                aksjonspunkter={gjeldendeAksjonspunkter}
-                allePerioder={allePerioder}
-                readOnly={readOnly}
-                isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-                alleKodeverk={alleKodeverk}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-              />
-            </>
-          )}
-          { harPerioderMedAvsluttedeArbeidsforhold(allePerioder)
-          && (
-            <>
-              <GrunnlagForAarsinntektPanelAT2
-                alleAndeler={alleAndelerIForstePeriode}
-                aksjonspunkter={gjeldendeAksjonspunkter}
-                allePerioder={allePerioder}
-                readOnly={readOnly}
-                isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-                alleKodeverk={alleKodeverk}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-              />
-            </>
-          )}
-        </>
-      )}
-      { relevanteStatuser.isFrilanser
-    && (
+  skjeringstidspunktDato,
+) => (
+  <div className={beregningStyles.panelLeft}>
+    {relevanteStatuser.isArbeidstaker && (
+      <>
+        {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder) && (
+          <>
+            <GrunnlagForAarsinntektPanelAT2
+              alleAndeler={alleAndelerIForstePeriode}
+              aksjonspunkter={gjeldendeAksjonspunkter}
+              allePerioder={allePerioder}
+              readOnly={readOnly}
+              isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+              alleKodeverk={alleKodeverk}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+            />
+          </>
+        )}
+        {harPerioderMedAvsluttedeArbeidsforhold(allePerioder) && (
+          <>
+            <GrunnlagForAarsinntektPanelAT2
+              alleAndeler={alleAndelerIForstePeriode}
+              aksjonspunkter={gjeldendeAksjonspunkter}
+              allePerioder={allePerioder}
+              readOnly={readOnly}
+              isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+              alleKodeverk={alleKodeverk}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+            />
+          </>
+        )}
+      </>
+    )}
+    {relevanteStatuser.isFrilanser && (
       <>
         <GrunnlagForAarsinntektPanelFL
           alleAndeler={alleAndelerIForstePeriode}
@@ -115,49 +115,36 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         />
       </>
     )}
-      {(relevanteStatuser.harDagpengerEllerAAP)
-      && (
-        <div>
-          <TilstotendeYtelser
-            alleAndeler={alleAndelerIForstePeriode}
-            relevanteStatuser={relevanteStatuser}
-            gjelderBesteberegning={gjelderBesteberegning}
-          />
-        </div>
-      )}
-      {(relevanteStatuser.isMilitaer)
-      && (
-        <>
-          <MilitaerPanel
-            alleAndeler={alleAndelerIForstePeriode}
-          />
-        </>
-      )}
-      {(relevanteStatuser.harAndreTilstotendeYtelser)
-      && (
-        <>
-          <YtelserFraInfotrygd
-            bruttoPrAar={allePerioder[0].bruttoPrAar}
-          />
-        </>
-      )}
+    {relevanteStatuser.harDagpengerEllerAAP && (
+      <div>
+        <TilstotendeYtelser
+          alleAndeler={alleAndelerIForstePeriode}
+          relevanteStatuser={relevanteStatuser}
+          gjelderBesteberegning={gjelderBesteberegning}
+        />
+      </div>
+    )}
+    {relevanteStatuser.isMilitaer && (
+      <>
+        <MilitaerPanel alleAndeler={alleAndelerIForstePeriode} />
+      </>
+    )}
+    {relevanteStatuser.harAndreTilstotendeYtelser && (
+      <>
+        <YtelserFraInfotrygd bruttoPrAar={allePerioder[0].bruttoPrAar} />
+      </>
+    )}
 
-      { relevanteStatuser.isSelvstendigNaeringsdrivende
-      && (
-        <>
-          <GrunnlagForAarsinntektPanelSN
-            alleAndeler={alleAndelerIForstePeriode}
-          />
-          <NaeringsopplysningsPanel
-            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-          />
-        </>
-      )}
-      { !relevanteStatuser.isSelvstendigNaeringsdrivende
-      && sammenligningsGrunnlagInntekter
-      && skjeringstidspunktDato
-      && (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker)
-      && (
+    {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+      <>
+        <GrunnlagForAarsinntektPanelSN alleAndeler={alleAndelerIForstePeriode} />
+        <NaeringsopplysningsPanel alleAndelerIForstePeriode={alleAndelerIForstePeriode} />
+      </>
+    )}
+    {!relevanteStatuser.isSelvstendigNaeringsdrivende &&
+      sammenligningsGrunnlagInntekter &&
+      skjeringstidspunktDato &&
+      (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker) && (
         <>
           <SammenlignsgrunnlagAOrdningen
             sammenligningsGrunnlagInntekter={sammenligningsGrunnlagInntekter}
@@ -166,9 +153,8 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           />
         </>
       )}
-    </div>
+  </div>
 );
-
 
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningsgrunnlagImpl
@@ -192,21 +178,18 @@ export const BeregningsgrunnlagImpl = ({
   skjeringstidspunktDato,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
-  return (
-
-    createRelevantePaneler(
-      alleAndelerIForstePeriode,
-      gjeldendeAksjonspunkter,
-      relevanteStatuser,
-      allePerioder,
-      readOnly,
-      gjelderBesteberegning,
-      behandlingId,
-      behandlingVersjon,
-      alleKodeverk,
-      sammenligningsGrunnlagInntekter,
-      skjeringstidspunktDato,
-    )
+  return createRelevantePaneler(
+    alleAndelerIForstePeriode,
+    gjeldendeAksjonspunkter,
+    relevanteStatuser,
+    allePerioder,
+    readOnly,
+    gjelderBesteberegning,
+    behandlingId,
+    behandlingVersjon,
+    alleKodeverk,
+    sammenligningsGrunnlagInntekter,
+    skjeringstidspunktDato,
   );
 };
 
@@ -231,12 +214,14 @@ BeregningsgrunnlagImpl.defaultProps = {
 
 const Beregningsgrunnlag = BeregningsgrunnlagImpl;
 
-Beregningsgrunnlag.buildInitialValues = (gjeldendeAksjonspunkter) => {
+Beregningsgrunnlag.buildInitialValues = gjeldendeAksjonspunkter => {
   const aksjonspunktATFL = finnAksjonspunktForATFL(gjeldendeAksjonspunkter);
   const aksjonspunktVurderDekninsgrad = finnAksjonspunktForVurderDekningsgrad(gjeldendeAksjonspunkter);
   return {
-    ATFLVurdering: (aksjonspunktATFL) ? aksjonspunktATFL.begrunnelse : '',
-    [TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING]: (aksjonspunktVurderDekninsgrad) ? aksjonspunktVurderDekninsgrad.begrunnelse : '',
+    ATFLVurdering: aksjonspunktATFL ? aksjonspunktATFL.begrunnelse : '',
+    [TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING]: aksjonspunktVurderDekninsgrad
+      ? aksjonspunktVurderDekninsgrad.begrunnelse
+      : '',
   };
 };
 

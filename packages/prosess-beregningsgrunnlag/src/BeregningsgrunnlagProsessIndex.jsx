@@ -9,10 +9,13 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const BeregningsgrunnlagProsessIndex = ({
   behandling,
@@ -24,7 +27,6 @@ const BeregningsgrunnlagProsessIndex = ({
   isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
-
 }) => (
   <RawIntlProvider value={intl}>
     <BeregningFP2
@@ -34,7 +36,7 @@ const BeregningsgrunnlagProsessIndex = ({
       submitCallback={submitCallback}
       readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+      apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
       isApOpen={isAksjonspunktOpen}
       vilkar={vilkar}
       alleKodeverk={alleKodeverk}

@@ -7,7 +7,10 @@ import { supportTabs } from '@fpsak-frontend/sak-support-meny';
 
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  behandlingSupportReducer, getSelectedSupportPanel, resetBehandlingSupport, setSelectedSupportPanel,
+  behandlingSupportReducer,
+  getSelectedSupportPanel,
+  resetBehandlingSupport,
+  setSelectedSupportPanel,
 } from './duck';
 
 const middlewares = [thunk];

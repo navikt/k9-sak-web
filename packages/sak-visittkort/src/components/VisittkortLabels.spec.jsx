@@ -1,8 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import {
-  EtikettInfo, EtikettAdvarsel, EtikettFokus,
-} from 'nav-frontend-etiketter';
+import { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
@@ -50,13 +48,15 @@ describe('<VisittkortLabels>', () => {
     },
     aktoerId: '24sedfs32',
     navn: 'Olga Utvikler',
-    adresser: [{
-      adresseType: {
-        kode: opplysningAdresseType.BOSTEDSADRESSE,
-        kodeverk: 'ADRESSE_TYPE',
+    adresser: [
+      {
+        adresseType: {
+          kode: opplysningAdresseType.BOSTEDSADRESSE,
+          kodeverk: 'ADRESSE_TYPE',
+        },
+        adresselinje1: 'Oslo',
       },
-      adresselinje1: 'Oslo',
-    }],
+    ],
     fnr: '98773895',
     region: {
       kode: region.NORDEN,
@@ -66,22 +66,23 @@ describe('<VisittkortLabels>', () => {
   };
 
   it('skal ikke vise noen etiketter', () => {
-    const wrapper = shallowWithIntl(<VisittkortLabels.WrappedComponent
-      intl={intlMock}
-      personopplysninger={personopplysningerSoker}
-    />);
+    const wrapper = shallowWithIntl(
+      <VisittkortLabels.WrappedComponent intl={intlMock} personopplysninger={personopplysningerSoker} />,
+    );
 
     expect(wrapper.find(EtikettInfo)).has.length(0);
   });
 
   it('skal vise etikett for dødsdato', () => {
-    const wrapper = shallowWithIntl(<VisittkortLabels.WrappedComponent
-      intl={intlMock}
-      personopplysninger={{
-        ...personopplysningerSoker,
-        dodsdato: '2019-01-01',
-      }}
-    />);
+    const wrapper = shallowWithIntl(
+      <VisittkortLabels.WrappedComponent
+        intl={intlMock}
+        personopplysninger={{
+          ...personopplysningerSoker,
+          dodsdato: '2019-01-01',
+        }}
+      />,
+    );
 
     const etikett = wrapper.find(EtikettInfo);
     expect(etikett).has.length(1);
@@ -89,13 +90,15 @@ describe('<VisittkortLabels>', () => {
   });
 
   it('skal vise etikett for kode 6', () => {
-    const wrapper = shallowWithIntl(<VisittkortLabels.WrappedComponent
-      intl={intlMock}
-      personopplysninger={{
-        ...personopplysningerSoker,
-        diskresjonskode: diskresjonskodeType.KODE6,
-      }}
-    />);
+    const wrapper = shallowWithIntl(
+      <VisittkortLabels.WrappedComponent
+        intl={intlMock}
+        personopplysninger={{
+          ...personopplysningerSoker,
+          diskresjonskode: diskresjonskodeType.KODE6,
+        }}
+      />,
+    );
 
     const etikett = wrapper.find(EtikettAdvarsel);
     expect(etikett).has.length(1);
@@ -103,13 +106,15 @@ describe('<VisittkortLabels>', () => {
   });
 
   it('skal vise etikett for kode 7', () => {
-    const wrapper = shallowWithIntl(<VisittkortLabels.WrappedComponent
-      intl={intlMock}
-      personopplysninger={{
-        ...personopplysningerSoker,
-        diskresjonskode: diskresjonskodeType.KODE7,
-      }}
-    />);
+    const wrapper = shallowWithIntl(
+      <VisittkortLabels.WrappedComponent
+        intl={intlMock}
+        personopplysninger={{
+          ...personopplysningerSoker,
+          diskresjonskode: diskresjonskodeType.KODE7,
+        }}
+      />,
+    );
 
     const etikett = wrapper.find(EtikettFokus);
     expect(etikett).has.length(1);
@@ -117,13 +122,15 @@ describe('<VisittkortLabels>', () => {
   });
 
   it('skal vise etikett for verge', () => {
-    const wrapper = shallowWithIntl(<VisittkortLabels.WrappedComponent
-      intl={intlMock}
-      personopplysninger={{
-        ...personopplysningerSoker,
-        harVerge: true,
-      }}
-    />);
+    const wrapper = shallowWithIntl(
+      <VisittkortLabels.WrappedComponent
+        intl={intlMock}
+        personopplysninger={{
+          ...personopplysningerSoker,
+          harVerge: true,
+        }}
+      />,
+    );
 
     const etikett = wrapper.find(EtikettInfo);
     expect(etikett).has.length(1);
@@ -131,13 +138,15 @@ describe('<VisittkortLabels>', () => {
   });
 
   it('skal vise etikett for søker under 18', () => {
-    const wrapper = shallowWithIntl(<VisittkortLabels.WrappedComponent
-      intl={intlMock}
-      personopplysninger={{
-        ...personopplysningerSoker,
-        fodselsdato: '2019-01-01',
-      }}
-    />);
+    const wrapper = shallowWithIntl(
+      <VisittkortLabels.WrappedComponent
+        intl={intlMock}
+        personopplysninger={{
+          ...personopplysningerSoker,
+          fodselsdato: '2019-01-01',
+        }}
+      />,
+    );
 
     const etikett = wrapper.find(EtikettInfo);
     expect(etikett).has.length(1);

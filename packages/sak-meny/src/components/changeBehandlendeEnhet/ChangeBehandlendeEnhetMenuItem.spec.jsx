@@ -7,36 +7,42 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import ChangeBehandlendeEnhetMenuItem from './ChangeBehandlendeEnhetMenuItem';
 
 describe('<ChangeBehandlendeEnhetMenuItem>', () => {
-  const behandlendeEnheter = [{
-    enhetId: '001',
-    enhetNavn: 'NAV',
-    status: 'Aktiv',
-  }];
+  const behandlendeEnheter = [
+    {
+      enhetId: '001',
+      enhetNavn: 'NAV',
+      status: 'Aktiv',
+    },
+  ];
   const behandlingIdentifier = new BehandlingIdentifier(123, 1);
 
   it('skal ikke vise modal ved rendring', () => {
-    const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={sinon.spy()}
-      behandlendeEnheter={behandlendeEnheter}
-      nyBehandlendeEnhet={sinon.spy()}
-      byttBehandlendeEnhetEnabled
-    />);
+    const wrapper = shallow(
+      <ChangeBehandlendeEnhetMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={sinon.spy()}
+        behandlendeEnheter={behandlendeEnheter}
+        nyBehandlendeEnhet={sinon.spy()}
+        byttBehandlendeEnhetEnabled
+      />,
+    );
 
     expect(wrapper.find('Connect(ReduxForm)')).has.length(0);
   });
 
   it('skal vise modal ved trykk på meny-lenke', () => {
     const toggleBehandlingsmenyCallback = sinon.spy();
-    const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
-      behandlendeEnheter={behandlendeEnheter}
-      nyBehandlendeEnhet={sinon.spy()}
-      byttBehandlendeEnhetEnabled
-    />);
+    const wrapper = shallow(
+      <ChangeBehandlendeEnhetMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
+        behandlendeEnheter={behandlendeEnheter}
+        nyBehandlendeEnhet={sinon.spy()}
+        byttBehandlendeEnhetEnabled
+      />,
+    );
 
     const button = wrapper.find('MenuButton');
     expect(button).has.length(1);
@@ -54,14 +60,16 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
   });
 
   it('skal skjule modal ved trykk på avbryt', () => {
-    const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={sinon.spy()}
-      behandlendeEnheter={behandlendeEnheter}
-      nyBehandlendeEnhet={sinon.spy()}
-      byttBehandlendeEnhetEnabled
-    />);
+    const wrapper = shallow(
+      <ChangeBehandlendeEnhetMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={sinon.spy()}
+        behandlendeEnheter={behandlendeEnheter}
+        nyBehandlendeEnhet={sinon.spy()}
+        byttBehandlendeEnhetEnabled
+      />,
+    );
 
     wrapper.setState({ showModal: true });
     const modal = wrapper.find('Connect(injectIntl(ReduxForm))');
@@ -80,14 +88,16 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
       enhetNavn: 'NAV Oslo',
     };
     const nyBehandlendeEnhetCallback = sinon.spy();
-    const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
-      behandlingIdentifier={behandlingIdentifier}
-      behandlingVersjon={2}
-      toggleBehandlingsmeny={sinon.spy()}
-      behandlendeEnheter={behandlendeEnheter}
-      nyBehandlendeEnhet={nyBehandlendeEnhetCallback}
-      byttBehandlendeEnhetEnabled
-    />);
+    const wrapper = shallow(
+      <ChangeBehandlendeEnhetMenuItem
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingVersjon={2}
+        toggleBehandlingsmeny={sinon.spy()}
+        behandlendeEnheter={behandlendeEnheter}
+        nyBehandlendeEnhet={nyBehandlendeEnhetCallback}
+        byttBehandlendeEnhetEnabled
+      />,
+    );
 
     wrapper.setState({ nyEnhet });
     wrapper.setState({ showModal: true });

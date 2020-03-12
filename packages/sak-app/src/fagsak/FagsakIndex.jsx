@@ -5,7 +5,12 @@ import { Route } from 'react-router-dom';
 
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
-  behandlingerPath, getRequestPollingMessage, requireProps, trackRouteParam, DataFetcher, pathToAnnenPart,
+  behandlingerPath,
+  getRequestPollingMessage,
+  requireProps,
+  trackRouteParam,
+  DataFetcher,
+  pathToAnnenPart,
 } from '@fpsak-frontend/fp-felles';
 import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 
@@ -18,7 +23,10 @@ import { setSelectedSaksnummer } from './duck';
 import FagsakResolver from './FagsakResolver';
 import FagsakGrid from './components/FagsakGrid';
 import {
-  getSelectedBehandlingId, getBehandlingVersjon, getBehandlingSprak, getUrlBehandlingId,
+  getSelectedBehandlingId,
+  getBehandlingVersjon,
+  getBehandlingSprak,
+  getUrlBehandlingId,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
@@ -26,7 +34,8 @@ import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 const endepunkter = [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER];
 const ingenEndepunkter = [];
 
-const finnLenkeTilAnnenPart = (annenPartBehandling) => pathToAnnenPart(annenPartBehandling.saksnr.verdi, annenPartBehandling.behandlingId);
+const finnLenkeTilAnnenPart = annenPartBehandling =>
+  pathToAnnenPart(annenPartBehandling.saksnr.verdi, annenPartBehandling.behandlingId);
 
 /**
  * FagsakIndex
@@ -34,15 +43,15 @@ const finnLenkeTilAnnenPart = (annenPartBehandling) => pathToAnnenPart(annenPart
  * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 export const FagsakIndex = ({
-                              harValgtBehandling,
-                              selectedSaksnummer,
-                              requestPendingMessage,
-                              behandlingId,
-                              behandlingVersjon,
-                              alleKodeverk,
-                              sprakkode,
-                              fagsak,
-                            }) => (
+  harValgtBehandling,
+  selectedSaksnummer,
+  requestPendingMessage,
+  behandlingId,
+  behandlingVersjon,
+  alleKodeverk,
+  sprakkode,
+  fagsak,
+}) => (
   <>
     <FagsakResolver key={selectedSaksnummer}>
       <FagsakGrid
@@ -61,11 +70,13 @@ export const FagsakIndex = ({
               showLoadingIcon
               behandlingNotRequired
               endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
-              endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
-              render={(dataProps) => (
+              endpoints={endepunkter.every(endepunkt => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
+              render={dataProps => (
                 <VisittkortSakIndex
                   personopplysninger={dataProps.behandlingPersonopplysninger}
-                  lenkeTilAnnenPart={dataProps.annenPartBehandling ? finnLenkeTilAnnenPart(dataProps.annenPartBehandling) : undefined}
+                  lenkeTilAnnenPart={
+                    dataProps.annenPartBehandling ? finnLenkeTilAnnenPart(dataProps.annenPartBehandling) : undefined
+                  }
                   alleKodeverk={alleKodeverk}
                   sprakkode={sprakkode}
                   fagsak={fagsak}
@@ -99,7 +110,7 @@ FagsakIndex.defaultProps = {
   fagsak: undefined,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   harValgtBehandling: !!getUrlBehandlingId(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),
@@ -112,7 +123,7 @@ const mapStateToProps = (state) => ({
 
 export default trackRouteParam({
   paramName: 'saksnummer',
-  parse: (saksnummerFromUrl) => saksnummerFromUrl,
+  parse: saksnummerFromUrl => saksnummerFromUrl,
   paramPropType: PropTypes.number,
   storeParam: setSelectedSaksnummer,
   getParamFromStore: getSelectedSaksnummer,

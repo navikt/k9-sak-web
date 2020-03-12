@@ -9,11 +9,13 @@ const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;
 
-
-const skalFastsetteSN = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.some(
-  (ap) => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
-    || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-);
+const skalFastsetteSN = aksjonspunkter =>
+  aksjonspunkter &&
+  aksjonspunkter.some(
+    ap =>
+      ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE ||
+      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+  );
 
 const AksjonspunktBehandlerSN = ({
   readOnly,
@@ -26,19 +28,18 @@ const AksjonspunktBehandlerSN = ({
   endretTekst,
 }) => (
   <>
-    { skalFastsetteSN(aksjonspunkter)
-      && (
-        <VurderOgFastsettSN2
-          gjeldendeAksjonspunkter={aksjonspunkter}
-          readOnly={readOnly}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          erNyArbLivet={erNyArbLivet}
-          erVarigEndring={erVarigEndring}
-          erNyoppstartet={erNyoppstartet}
-          endretTekst={endretTekst}
-        />
-      )}
+    {skalFastsetteSN(aksjonspunkter) && (
+      <VurderOgFastsettSN2
+        gjeldendeAksjonspunkter={aksjonspunkter}
+        readOnly={readOnly}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        erNyArbLivet={erNyArbLivet}
+        erVarigEndring={erVarigEndring}
+        erNyoppstartet={erNyoppstartet}
+        endretTekst={endretTekst}
+      />
+    )}
   </>
 );
 
@@ -51,7 +52,6 @@ AksjonspunktBehandlerSN.propTypes = {
   erVarigEndring: PropTypes.bool,
   erNyoppstartet: PropTypes.bool,
   endretTekst: PropTypes.node,
-
 };
 AksjonspunktBehandlerSN.defaultProps = {
   erNyArbLivet: false,

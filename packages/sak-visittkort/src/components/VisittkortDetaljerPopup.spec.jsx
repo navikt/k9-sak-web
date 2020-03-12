@@ -49,13 +49,15 @@ describe('<VisittkortDetaljerPopup>', () => {
     },
     aktoerId: '24sedfs32',
     navn: 'Olga Utvikler',
-    adresser: [{
-      adresseType: {
-        kode: opplysningAdresseType.BOSTEDSADRESSE,
-        kodeverk: 'ADRESSE_TYPE',
+    adresser: [
+      {
+        adresseType: {
+          kode: opplysningAdresseType.BOSTEDSADRESSE,
+          kodeverk: 'ADRESSE_TYPE',
+        },
+        adresselinje1: 'Oslo',
       },
-      adresselinje1: 'Oslo',
-    }],
+    ],
     fnr: '98773895',
     region: {
       kode: region.NORDEN,
@@ -65,12 +67,14 @@ describe('<VisittkortDetaljerPopup>', () => {
   };
 
   it('skal vise etiketter', () => {
-    const wrapper = shallowWithIntl(<VisittkortDetaljerPopup.WrappedComponent
-      intl={intlMock}
-      personopplysninger={personopplysningerSoker}
-      alleKodeverk={{}}
-      sprakkode={{ kode: 'NN' }}
-    />);
+    const wrapper = shallowWithIntl(
+      <VisittkortDetaljerPopup.WrappedComponent
+        intl={intlMock}
+        personopplysninger={personopplysningerSoker}
+        alleKodeverk={{}}
+        sprakkode={{ kode: 'NN' }}
+      />,
+    );
 
     const etiketter = wrapper.find(EtikettInfo);
     expect(etiketter).has.length(4);
@@ -81,16 +85,26 @@ describe('<VisittkortDetaljerPopup>', () => {
   });
 
   it('skal vise adresser', () => {
-    const wrapper = shallowWithIntl(<VisittkortDetaljerPopup.WrappedComponent
-      intl={intlMock}
-      personopplysninger={personopplysningerSoker}
-      alleKodeverk={{}}
-      sprakkode={{ kode: 'NN' }}
-    />);
+    const wrapper = shallowWithIntl(
+      <VisittkortDetaljerPopup.WrappedComponent
+        intl={intlMock}
+        personopplysninger={personopplysningerSoker}
+        alleKodeverk={{}}
+        sprakkode={{ kode: 'NN' }}
+      />,
+    );
 
     const rader = wrapper.find(FlexRow);
     expect(rader).has.length(5);
-    const kolonne2ForRad2 = rader.at(1).find(FlexColumn).at(1);
-    expect(kolonne2ForRad2.childAt(0).childAt(0).text()).is.eql('Oslo,');
+    const kolonne2ForRad2 = rader
+      .at(1)
+      .find(FlexColumn)
+      .at(1);
+    expect(
+      kolonne2ForRad2
+        .childAt(0)
+        .childAt(0)
+        .text(),
+    ).is.eql('Oslo,');
   });
 });

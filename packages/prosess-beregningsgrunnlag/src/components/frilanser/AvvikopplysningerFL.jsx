@@ -7,16 +7,14 @@ import { Column } from 'nav-frontend-grid';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFLSN';
 
-const AvviksopplysningerFL = ({
-  relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
-}) => {
-  const kombinasjonsstatusFNSN = relevanteStatuser.isKombinasjonsstatus
-    && !relevanteStatuser.isArbeidstaker
-    && relevanteStatuser.isSelvstendigNaeringsdrivende
-    && relevanteStatuser.isFrilanser;
-  const kombinasjonsstatusATFL = relevanteStatuser.isKombinasjonsstatus
-    && relevanteStatuser.isArbeidstaker
-    && relevanteStatuser.isFrilanser;
+const AvviksopplysningerFL = ({ relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt }) => {
+  const kombinasjonsstatusFNSN =
+    relevanteStatuser.isKombinasjonsstatus &&
+    !relevanteStatuser.isArbeidstaker &&
+    relevanteStatuser.isSelvstendigNaeringsdrivende &&
+    relevanteStatuser.isFrilanser;
+  const kombinasjonsstatusATFL =
+    relevanteStatuser.isKombinasjonsstatus && relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser;
   if (kombinasjonsstatusFNSN) {
     return (
       <FlexRow>
@@ -29,17 +27,23 @@ const AvviksopplysningerFL = ({
     );
   }
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
-    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.FL
-      || status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
+    ? sammenligningsgrunnlagPrStatus.find(
+        status =>
+          status.sammenligningsgrunnlagType.kode === sammenligningType.FL ||
+          status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
+      )
     : undefined;
   if (!sammenligningsGrunnlagFL) {
     return null;
   }
-  if (kombinasjonsstatusATFL && sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)) {
+  if (
+    kombinasjonsstatusATFL &&
+    sammenligningsgrunnlagPrStatus.find(status => status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
+  ) {
     return null;
   }
   const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
-  const avvikRoundedFL = avvikFL ? parseFloat((avvikFL.toFixed(1))) : 0;
+  const avvikRoundedFL = avvikFL ? parseFloat(avvikFL.toFixed(1)) : 0;
   const sammenligningsgrunnlagSumFL = sammenligningsGrunnlagFL.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagFL;
   const visPaneler = {
@@ -62,7 +66,6 @@ const AvviksopplysningerFL = ({
   }
   return null;
 };
-
 
 AvviksopplysningerFL.propTypes = {
   beregnetAarsinntekt: PropTypes.number,

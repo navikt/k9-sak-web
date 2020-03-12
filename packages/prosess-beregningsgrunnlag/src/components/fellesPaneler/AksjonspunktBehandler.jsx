@@ -5,13 +5,11 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import {
-  dateFormat,
-  hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils';
+import { dateFormat, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  BehandlingspunktSubmitButton, hasBehandlingFormErrorsOfType,
+  BehandlingspunktSubmitButton,
+  hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/fp-felles';
@@ -30,15 +28,15 @@ import AksjonspunktBehandlerSN from '../selvstendigNaeringsdrivende/Aksjonspunkt
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
-
-const finnAlleAndelerIFørstePeriode = (allePerioder) => {
+const finnAlleAndelerIFørstePeriode = allePerioder => {
   if (allePerioder && allePerioder.length > 0) {
     return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
   }
   return undefined;
 };
-const harFlereAksjonspunkter = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
-const finnATFLVurderingLabel = (gjeldendeAksjonspunkter) => {
+const harFlereAksjonspunkter = gjeldendeAksjonspunkter =>
+  !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
+const finnATFLVurderingLabel = gjeldendeAksjonspunkter => {
   if (harFlereAksjonspunkter(gjeldendeAksjonspunkter)) {
     return <FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />;
   }
@@ -46,12 +44,20 @@ const finnATFLVurderingLabel = (gjeldendeAksjonspunkter) => {
 };
 const finnGjeldeneAksjonsPunkt = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL) => {
   if (erSNellerFL) {
-    return aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+    return aksjonspunkter.find(
+      ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+    );
   }
   if (erNyiArbeidslivet) {
-    return aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET);
+    return aksjonspunkter.find(
+      ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+    );
   }
-  return aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
+  return aksjonspunkter.find(
+    ap =>
+      ap.definisjon.kode ===
+      aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  );
 };
 
 const lagEndretTekst = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL) => {
@@ -89,13 +95,13 @@ const AksjonspunktBehandler = ({
   let visFL = false;
   let visAT = false;
   const snAndel = alleAndelerIForstePeriode.find(
-    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const flAndel = alleAndelerIForstePeriode.find(
-    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
+    andel => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
   );
   const atAndel = alleAndelerIForstePeriode.find(
-    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
+    andel => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
   );
   if (flAndel) {
     visFL = flAndel.skalFastsetteGrunnlag;
@@ -106,8 +112,8 @@ const AksjonspunktBehandler = ({
   if (snAndel && snAndel.erNyIArbeidslivet) {
     erNyArbLivet = snAndel.erNyIArbeidslivet;
   }
-  erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
-  erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some(naring => naring.erVarigEndret === true);
+  erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some(naring => naring.erNyoppstartet === true);
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
@@ -124,44 +130,45 @@ const AksjonspunktBehandler = ({
           </Row>
           <VerticalSpacer eightPx />
           {tidsBegrensetInntekt && (
-          <AksjonspunktBehandlerTB
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            formName={formName}
-            allePerioder={allePerioder}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-            aksjonspunkter={aksjonspunkter}
-          />
+            <AksjonspunktBehandlerTB
+              readOnly={readOnly}
+              readOnlySubmitButton={readOnlySubmitButton}
+              formName={formName}
+              allePerioder={allePerioder}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              alleKodeverk={alleKodeverk}
+              aksjonspunkter={aksjonspunkter}
+            />
           )}
           {!tidsBegrensetInntekt && visAT && (
-          <AksjonspunktBehandlerAT
-            readOnly={readOnly}
-            allePerioder={allePerioder}
-            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-            alleKodeverk={alleKodeverk}
-          />
+            <AksjonspunktBehandlerAT
+              readOnly={readOnly}
+              allePerioder={allePerioder}
+              alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+              alleKodeverk={alleKodeverk}
+            />
           )}
           {visFL && (
-          <AksjonspunktBehandlerFL
-            readOnly={readOnly}
-            allePerioder={allePerioder}
-            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-          />
+            <AksjonspunktBehandlerFL
+              readOnly={readOnly}
+              allePerioder={allePerioder}
+              alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+            />
           )}
 
           <VerticalSpacer sixteenPx />
           <Row>
             <Column xs="12">
-
               <TextAreaField2
                 name="ATFLVurdering"
                 label={finnATFLVurderingLabel(aksjonspunkter)}
                 validate={[required, maxLength1500, minLength3, hasValidText]}
                 maxLength={1500}
                 readOnly={readOnly}
-                placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
+                placeholder={intl.formatMessage({
+                  id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder',
+                })}
                 endrettekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, true)}
               />
             </Column>
@@ -258,6 +265,6 @@ AksjonspunktBehandler.defaultProps = {
   allePerioder: undefined,
 };
 
-AksjonspunktBehandler.transformValues = (values) => values.ATFLVurdering;
+AksjonspunktBehandler.transformValues = values => values.ATFLVurdering;
 
 export default injectIntl(AksjonspunktBehandler);

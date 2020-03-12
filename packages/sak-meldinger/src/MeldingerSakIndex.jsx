@@ -9,10 +9,13 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const MeldingerSakIndex = ({
   submitCallback,
@@ -43,11 +46,13 @@ const MeldingerSakIndex = ({
 MeldingerSakIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   recipients: PropTypes.arrayOf(PropTypes.string).isRequired,
-  templates: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
-    tilgjengelig: PropTypes.bool.isRequired,
-  })),
+  templates: PropTypes.arrayOf(
+    PropTypes.shape({
+      kode: PropTypes.string.isRequired,
+      navn: PropTypes.string.isRequired,
+      tilgjengelig: PropTypes.bool.isRequired,
+    }),
+  ),
   sprakKode: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
