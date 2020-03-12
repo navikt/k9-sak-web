@@ -5,7 +5,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
   FagsakInfo,
   Behandling,
-  FaktaPanel,
+  SideMenuWrapper,
   Kodeverk,
   NavAnsatt,
   DataFetcherBehandlingDataV2,
@@ -105,7 +105,7 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
 
   if (valgtPanel) {
     return (
-      <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
+      <SideMenuWrapper paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
         <DataFetcherBehandlingDataV2
           key={valgtPanel.urlCode}
           behandlingVersion={behandling.versjon}
@@ -120,7 +120,7 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
             })
           }
         />
-      </FaktaPanel>
+      </SideMenuWrapper>
     );
   }
   return null;

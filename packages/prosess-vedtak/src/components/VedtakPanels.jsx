@@ -11,6 +11,7 @@ import VedtakForm from './VedtakForm';
 import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
 import { skalSkriveFritekstGrunnetFastsettingAvBeregning } from './VedtakHelper';
 import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
+import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
 /*
  * VedtakPanels
@@ -41,8 +42,12 @@ const VedtakPanels = ({
   beregningsgrunnlag,
   sendVarselOmRevurdering,
   resultatstrukturOriginalBehandling,
+  vedtakVarsel,
 }) => {
-  const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(beregningsgrunnlag, aksjonspunkter);
+  const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(
+    beregningsgrunnlag,
+    aksjonspunkter,
+  );
   if (behandlingTypeKode === behandlingType.REVURDERING) {
     return (
       <VedtakRevurderingForm
@@ -67,6 +72,7 @@ const VedtakPanels = ({
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}
         beregningErManueltFastsatt={beregningErManueltFastsatt}
+        vedtakVarsel={vedtakVarsel}
       />
     );
   }
@@ -92,6 +98,7 @@ const VedtakPanels = ({
       alleKodeverk={alleKodeverk}
       vilkar={vilkar}
       beregningErManueltFastsatt={beregningErManueltFastsatt}
+      vedtakVarsel={vedtakVarsel}
     />
   );
 };
@@ -120,6 +127,7 @@ VedtakPanels.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
+  vedtakVarsel: vedtakVarselPropType,
 };
 
 VedtakPanels.defaultProps = {

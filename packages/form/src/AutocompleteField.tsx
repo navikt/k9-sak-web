@@ -41,7 +41,7 @@ const Autocomplete = ({
 }: AutocompleteFieldProps & AutocompleteProps) => {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <label className="skjemaelement__label" htmlFor={id} data-id={dataId}>
+    <label htmlFor={id} className={styles.autocompleteLabel} data-id={dataId}>
       <Element className={styles.typoElement}>{label}</Element>
       <NAPAutocomplete
         id={id}

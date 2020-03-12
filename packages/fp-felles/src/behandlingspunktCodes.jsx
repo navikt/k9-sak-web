@@ -25,6 +25,8 @@ const behandlingspunktCodes = {
   ANKEBEHANDLING: 'ankebehandling',
   ANKE_MERKNADER: 'ankemerknader',
   ANKE_RESULTAT: 'ankeresultat',
+  MEDISINSK_VILKAR: 'medisinsk_vilkar',
+  OPPTJENING: 'opptjening',
 };
 
 export default behandlingspunktCodes;

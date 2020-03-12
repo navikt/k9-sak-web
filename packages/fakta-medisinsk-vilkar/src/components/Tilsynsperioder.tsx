@@ -15,9 +15,10 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import MedisinskVilkårValues from '../types/MedisinskVilkårValues';
-import styles from './medisinskVilkar.less';
+import styles from './tilsynsperioder.less';
 import PeriodePolse from './PeriodePolse';
 import { getMomentConvertedDate } from './MedisinskVilkarUtils';
+import HeadingMedHjelpetekst from './HeadingMedHjelpetekst';
 
 interface TilsynsperioderProps {
   periodeMedBehovForKontinuerligTilsynId: string;
@@ -32,7 +33,8 @@ interface TilsynsperioderProps {
   index: number;
   valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom: string;
   valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom: string;
-  renderAksjonspunktHelpText: JSX.Element;
+  sammenhengMellomSykdomOgTilsyn: boolean;
+  brukSoknadsdato: (fieldNameFom: string, fieldNameTom: string) => void;
 }
 
 const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.memo(
@@ -49,22 +51,26 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
     index,
     valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom,
     valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom,
-    renderAksjonspunktHelpText,
+    sammenhengMellomSykdomOgTilsyn,
+    brukSoknadsdato,
   }) => (
     <div className={styles.tilsynContainer}>
-      <PeriodePolse theme="warn">
+      <PeriodePolse theme="warn" hideIcon>
         <div className={styles.periodeContainer}>
-          <div className={styles.helpTextContainer}>{renderAksjonspunktHelpText}</div>
           <FlexRow wrap>
             <FlexColumn>
-              <Element>
-                <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie" />
-              </Element>
+              <HeadingMedHjelpetekst
+                headingId="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie"
+                helpTextId={[
+                  'MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleieHjelpetekstOne',
+                  'MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleieHjelpetekstTwo',
+                ]}
+              />
               <VerticalSpacer eightPx />
               <TextAreaField
                 name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.BEGRUNNELSE}`}
                 label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                validate={[required, minLength(3), maxLength(400), hasValidText]}
+                validate={[required, minLength(3), maxLength(2000), hasValidText]}
                 readOnly={readOnly}
                 dataId={`begrunnelseForKontinuerligTilsyn[${index}]`}
               />
@@ -76,22 +82,58 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 readOnly={readOnly}
                 direction="vertical"
               >
+                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJaBehovForKontinuerligTilsyn' }} value />
                 <RadioOption
-                  label={{ id: 'MedisinskVilkarForm.RadioknappNei' }}
+                  label={{ id: 'MedisinskVilkarForm.RadioknappNeiBehovForKontinuerligTilsyn' }}
                   value={false}
                   dataId="behovForKontinuerligTilsynRadioNei"
                 />
-                <RadioOption label={{ id: 'MedisinskVilkarForm.RadioknappJa' }} value />
               </RadioGroupField>
             </FlexColumn>
           </FlexRow>
           {harBehovForKontinuerligTilsynOgPleie && (
+            <FlexRow wrap>
+              <FlexColumn>
+                <VerticalSpacer twentyPx />
+                <HeadingMedHjelpetekst
+                  headingId="MedisinskVilkarForm.SammenhengMellomSykdomOgTilsyn"
+                  helpTextId="MedisinskVilkarForm.SammenhengSykdomOgPleieHjelpetekst"
+                />
+                <VerticalSpacer eightPx />
+                <TextAreaField
+                  name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.SAMMENG_MELLOM_SYKDOM_OG_TILSYN_BEGRUNNELSE}`}
+                  label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
+                  validate={[required, minLength(3), maxLength(2000), hasValidText]}
+                  readOnly={readOnly}
+                />
+                <VerticalSpacer eightPx />
+                <RadioGroupField
+                  name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.SAMMENHENG_MELLOM_SYKDOM_OG_TILSYN}`}
+                  bredde="M"
+                  validate={[required]}
+                  readOnly={readOnly}
+                  direction="vertical"
+                >
+                  <RadioOption
+                    label={{ id: 'MedisinskVilkarForm.RadioknappJaSammenhengSykdomOgKontinuerligTilsyn' }}
+                    value
+                  />
+                  <RadioOption
+                    label={{ id: 'MedisinskVilkarForm.RadioknappNeiSammenhengSykdomOgKontinuerligTilsyn' }}
+                    value={false}
+                  />
+                </RadioGroupField>
+              </FlexColumn>
+            </FlexRow>
+          )}
+          {harBehovForKontinuerligTilsynOgPleie && sammenhengMellomSykdomOgTilsyn && (
             <>
+              <VerticalSpacer twentyPx />
+              <Element>
+                <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder" />
+              </Element>
               <FlexRow wrap>
                 <FlexColumn>
-                  <Element>
-                    <FormattedMessage id="MedisinskVilkarForm.BehovForKontinuerligTilsynOgPleie.Perioder" />
-                  </Element>
                   <PeriodpickerField
                     names={[
                       `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.FOM}`,
@@ -107,9 +149,26 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     }}
                   />
                 </FlexColumn>
+                <FlexColumn>
+                  <div className={styles.sokandsperiodeButtonContainer}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        brukSoknadsdato(
+                          `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.FOM}`,
+                          `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.TOM}`,
+                        )
+                      }
+                      className={styles.soknadsperiodeButton}
+                    >
+                      <FormattedMessage id="MedisinskVilkarForm.BrukPeriodenTilVurdering" />
+                    </button>
+                  </div>
+                </FlexColumn>
               </FlexRow>
               <FlexRow>
                 <FlexColumn>
+                  <VerticalSpacer twentyPx />
                   <Element>
                     <FormattedMessage id="MedisinskVilkarForm.BehovForEnEllerToOmsorgspersoner" />
                   </Element>
@@ -140,7 +199,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                       <TextAreaField
                         name={`${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.BEGRUNNELSE_UTVIDET}`}
                         label={{ id: 'MedisinskVilkarForm.Begrunnelse' }}
-                        validate={[required, minLength(3), maxLength(400), hasValidText]}
+                        validate={[required, minLength(3), maxLength(2000), hasValidText]}
                         readOnly={readOnly}
                       />
                     </>
@@ -161,6 +220,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
                     after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
                   }}
+                  renderUpwards
                 />
               )}
             </>

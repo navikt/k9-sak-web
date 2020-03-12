@@ -1,1 +1,1 @@
-export { default } from './src/VurderSoknadsfristForeldrepengerIndex';
+export { default } from './src/VurderSoknadsfristPleiepengerIndex';

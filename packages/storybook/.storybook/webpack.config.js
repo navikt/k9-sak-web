@@ -88,7 +88,6 @@ module.exports = async ({ config, mode }) => {
     },
     {
       test: /\.(less)?$/,
-      include: [CSS_DIR, CORE_DIR],
       use: [
         {
           loader: MiniCssExtractPlugin.loader,
@@ -109,14 +108,47 @@ module.exports = async ({ config, mode }) => {
           },
         },
       ],
+      include: [CSS_DIR, CORE_DIR],
     },
     {
-      test: /\.(jpg|png|svg)$/,
+      test: /\.(svg)$/,
+      issuer: {
+        test: /\.less?$/,
+      },
       loader: 'file-loader',
       options: {
+        esModule: false,
         name: '[name]_[hash].[ext]',
       },
       include: [IMAGE_DIR],
+    },
+    {
+      test: /\.(svg)$/,
+      issuer: {
+        test: /\.(jsx?|js?|tsx?|ts?)?$/,
+      },
+      use: [
+        {
+          loader: '@svgr/webpack',
+        },
+        {
+          loader: 'file-loader',
+          options: {
+            esModule: false,
+            name: '[name]_[hash].[ext]',
+          },
+        },
+      ],
+      include: [IMAGE_DIR],
+    },
+    {
+      test: /\.(svg)$/,
+      loader: 'file-loader',
+      options: {
+        esModule: false,
+        name: '[name]_[hash].[ext]',
+      },
+      include: [CORE_DIR],
     },
   );
 
@@ -126,7 +158,8 @@ module.exports = async ({ config, mode }) => {
       ignoreOrder: true,
     }),
   );
-  config.resolve.extensions.push('.ts', '.tsx');
+
+  config.resolve.extensions.push('.ts', '.tsx', '.less');
 
   // Return the altered config
   return config;

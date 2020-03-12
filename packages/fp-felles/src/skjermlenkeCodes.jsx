@@ -177,7 +177,7 @@ const skjermlenkeCodes = {
   },
   UTLAND: {
     kode: 'UTLAND',
-    faktaNavn: faktaPanelCodes.PERSON,
+    faktaNavn: faktaPanelCodes.SAKEN,
     punktNavn: '',
   },
   FORELDELSE: {
@@ -189,16 +189,6 @@ const skjermlenkeCodes = {
     kode: 'TILBAKEKREVING',
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: behandlingspunktCodes.TILBAKEKREVING,
-  },
-  PUNKT_FOR_SVP_INNGANG: {
-    kode: 'SVANGERSKAP',
-    faktaNavn: faktaPanelCodes.FODSELTILRETTELEGGING,
-    punktNavn: '',
-  },
-  PUNKT_FOR_SVANGERSKAPSPENGER: {
-    kode: 'SVANGERSKAP',
-    faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
   },
   VURDER_FARESIGNALER: {
     kode: 'VURDER_FARESIGNALER',

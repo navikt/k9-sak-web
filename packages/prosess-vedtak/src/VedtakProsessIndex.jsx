@@ -15,13 +15,17 @@ import vedtakVilkarPropType from './propTypes/vedtakVilkarPropType';
 import vedtakTilbakekrevingvalgPropType from './propTypes/vedtakTilbakekrevingvalgPropType';
 import vedtakOriginalBehandlingPropType from './propTypes/vedtakOriginalBehandlingPropType';
 import vedtakBeregningsgrunnlagPropType from './propTypes/vedtakBeregningsgrunnlagPropType';
+import vedtakVarselPropType from './propTypes/vedtakVarselPropType';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VedtakProsessIndex = ({
   behandling,
@@ -41,6 +45,7 @@ const VedtakProsessIndex = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  vedtakVarsel,
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -56,8 +61,11 @@ const VedtakProsessIndex = ({
       vilkar={vilkar}
       tilbakekrevingvalg={tilbakekrevingvalg}
       simuleringResultat={simuleringResultat}
-      resultatstruktur={ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
-        ? beregningresultatEngangsstonad : beregningresultatForeldrepenger}
+      resultatstruktur={
+        ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
+          ? beregningresultatEngangsstonad
+          : beregningresultatForeldrepenger
+      }
       sendVarselOmRevurdering={sendVarselOmRevurdering}
       resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
       medlemskapFom={medlemskap ? medlemskap.fom : undefined}
@@ -68,6 +76,7 @@ const VedtakProsessIndex = ({
       previewCallback={previewCallback}
       submitCallback={submitCallback}
       alleKodeverk={alleKodeverk}
+      vedtakVarsel={vedtakVarsel}
     />
   </RawIntlProvider>
 );
@@ -90,6 +99,7 @@ VedtakProsessIndex.propTypes = {
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
+  vedtakVarsel: vedtakVarselPropType,
 };
 
 VedtakProsessIndex.defaultProps = {

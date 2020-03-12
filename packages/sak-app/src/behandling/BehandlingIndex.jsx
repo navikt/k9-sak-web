@@ -23,11 +23,11 @@ import {
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  setTempBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getTempBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon,
+  setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getUrlBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon,
   resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
-  getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
+  getBehandlingerTypesMappedById, getBehandlingerInfo,
   getBehandlingerLinksMappedById,
 } from './selectors/behandlingerSelectors';
 import behandlingEventHandler from './BehandlingEventHandler';
@@ -38,7 +38,6 @@ const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandlin
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
-const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/behandling-papirsoknad'));
 
 const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
 const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
@@ -58,7 +57,6 @@ export class BehandlingIndex extends Component {
     behandlingVersjon: PropTypes.number.isRequired,
     location: PropTypes.shape().isRequired,
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-    erAktivPapirsoknad: PropTypes.bool,
     resetBehandlingContext: PropTypes.func.isRequired,
     setBehandlingIdOgVersjon: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
@@ -87,10 +85,6 @@ export class BehandlingIndex extends Component {
     navAnsatt: navAnsattPropType.isRequired,
     push: PropTypes.func.isRequired,
     visFeilmelding: PropTypes.func.isRequired,
-  };
-
-  static defaultProps = {
-    erAktivPapirsoknad: false,
   };
 
   constructor(props) {
@@ -160,7 +154,6 @@ export class BehandlingIndex extends Component {
       behandlingType,
       location,
       oppdaterBehandlingVersjon,
-      erAktivPapirsoknad,
       featureToggles,
       kodeverk,
       fagsak,
@@ -180,19 +173,6 @@ export class BehandlingIndex extends Component {
       opneSokeside: this.goToSearchPage,
       key: behandlingId,
     };
-
-    if (erAktivPapirsoknad) {
-      return (
-        <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
-            <BehandlingPapirsoknadIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
-              {...defaultProps}
-            />
-          </ErrorBoundary>
-        </Suspense>
-      );
-    }
 
     if (behandlingType === BehandlingType.DOKUMENTINNSYN) {
       return (
@@ -280,14 +260,13 @@ export const getFagsakInfo = createSelector([
 
 
 const mapStateToProps = (state) => {
-  const behandlingId = getTempBehandlingId(state);
+  const behandlingId = getUrlBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
   return {
     behandlingId,
     behandlingType,
     behandlingVersjon: getTempBehandlingVersjon(state),
     location: state.router.location,
-    erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
     featureToggles: getFeatureToggles(state),
     kodeverk: erTilbakekreving(behandlingType) ? getAlleFpTilbakeKodeverk(state) : getAlleFpSakKodeverk(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
@@ -309,6 +288,6 @@ export default trackRouteParam({
   paramName: 'behandlingId',
   parse: (behandlingFromUrl) => Number.parseInt(behandlingFromUrl, 10),
   paramPropType: PropTypes.number,
-  storeParam: setTempBehandlingId,
-  getParamFromStore: getTempBehandlingId,
+  storeParam: setUrlBehandlingId,
+  getParamFromStore: getUrlBehandlingId,
 })(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingType'])(BehandlingIndex)));

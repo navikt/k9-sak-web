@@ -9,7 +9,11 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
+  behandlingForm,
+  behandlingFormValueSelector,
+  VilkarResultPicker,
+  BehandlingspunktBegrunnelseTextField,
+  ProsessPanelTemplate,
 } from '@fpsak-frontend/fp-felles';
 
 import { fastsattOpptjeningPropType } from '../propTypes/opptjeningVilkarOpptjeningPropType';
@@ -58,7 +62,9 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       </>
     )}
   >
-    <Element><FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilForeldrepenger" /></Element>
+    <Element>
+      <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
+    </Element>
     <VilkarResultPicker
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
@@ -90,9 +96,7 @@ OpptjeningVilkarAksjonspunktPanelImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [(ownProps) => ownProps.behandlingsresultat,
-    (ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.status],
+  [ownProps => ownProps.behandlingsresultat, ownProps => ownProps.aksjonspunkter, ownProps => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -107,22 +111,28 @@ const transformValues = (values, aksjonspunkter) => ({
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const { aksjonspunkter, submitCallback } = initialOwnProps;
-  const onSubmit = (values) => submitCallback([transformValues(values, aksjonspunkter)]);
+  const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter)]);
 
-  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
 
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),
     originalErVilkarOk: erVilkarOk,
-    erVilkarOk: behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'erVilkarOk'),
+    erVilkarOk: behandlingFormValueSelector(
+      FORM_NAME,
+      ownProps.behandlingId,
+      ownProps.behandlingVersjon,
+    )(state, 'erVilkarOk'),
     lovReferanse: ownProps.lovReferanse,
   });
 };
 
-const OpptjeningVilkarAksjonspunktPanel = connect(mapStateToPropsFactory)(behandlingForm({
-  form: FORM_NAME,
-})(OpptjeningVilkarAksjonspunktPanelImpl));
+const OpptjeningVilkarAksjonspunktPanel = connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: FORM_NAME,
+  })(OpptjeningVilkarAksjonspunktPanelImpl),
+);
 
 export default OpptjeningVilkarAksjonspunktPanel;

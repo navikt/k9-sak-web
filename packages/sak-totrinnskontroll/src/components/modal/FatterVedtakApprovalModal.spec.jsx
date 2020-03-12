@@ -12,15 +12,17 @@ import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-totrinnsk
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = sinon.spy();
   it('skal rendre modal for fatter vedtak', () => {
-    const wrapper = shallowWithIntl(<FatterVedtakApprovalModal
-      intl={intlMock}
-      showModal
-      infoTextCode="testInfo"
-      altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
-      modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescription"
-      closeEvent={closeEventCallback}
-      resolveProsessAksjonspunkterSuccess
-    />);
+    const wrapper = shallowWithIntl(
+      <FatterVedtakApprovalModal
+        intl={intlMock}
+        showModal
+        infoTextCode="testInfo"
+        altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
+        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescription"
+        closeEvent={closeEventCallback}
+        resolveProsessAksjonspunkterSuccess
+      />,
+    );
 
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
@@ -32,55 +34,65 @@ describe('<FatterVedtakApprovalModal>', () => {
   });
 
   it('skal rendre modal for iverksetter vedtak', () => {
-    const wrapper = shallowWithIntl(<FatterVedtakApprovalModal
-      intl={intlMock}
-      showModal
-      infoTextCode="testInfo"
-      altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
-      modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionESApproval"
-      closeEvent={closeEventCallback}
-      resolveProsessAksjonspunkterSuccess
-    />);
+    const wrapper = shallowWithIntl(
+      <FatterVedtakApprovalModal
+        intl={intlMock}
+        showModal
+        infoTextCode="testInfo"
+        altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
+        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionESApproval"
+        closeEvent={closeEventCallback}
+        resolveProsessAksjonspunkterSuccess
+      />,
+    );
 
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Engangsstønad er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.');
+    expect(modal.prop('contentLabel')).is.eql(
+      'Engangsstønad er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+    );
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
   });
 
   it('skal rendre modal for iverksetter vedtak foreldrepenger', () => {
-    const wrapper = shallowWithIntl(<FatterVedtakApprovalModal
-      intl={intlMock}
-      showModal
-      infoTextCode="testInfo"
-      altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
-      modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionFPApproval"
-      closeEvent={closeEventCallback}
-      resolveProsessAksjonspunkterSuccess
-    />);
+    const wrapper = shallowWithIntl(
+      <FatterVedtakApprovalModal
+        intl={intlMock}
+        showModal
+        infoTextCode="testInfo"
+        altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
+        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionFPApproval"
+        closeEvent={closeEventCallback}
+        resolveProsessAksjonspunkterSuccess
+      />,
+    );
 
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Foreldrepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.');
+    expect(modal.prop('contentLabel')).is.eql(
+      'Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+    );
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
   });
 
   it('skal lukke modal ved trykk på knapp', () => {
-    const wrapper = shallowWithIntl(<FatterVedtakApprovalModal
-      intl={intlMock}
-      showModal={false}
-      infoTextCode="testInfo"
-      altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
-      modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionFPApproval"
-      closeEvent={closeEventCallback}
-      resolveProsessAksjonspunkterSuccess
-    />);
+    const wrapper = shallowWithIntl(
+      <FatterVedtakApprovalModal
+        intl={intlMock}
+        showModal={false}
+        infoTextCode="testInfo"
+        altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
+        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionFPApproval"
+        closeEvent={closeEventCallback}
+        resolveProsessAksjonspunkterSuccess
+      />,
+    );
 
     const modal = wrapper.find(Modal);
     expect(modal.prop('isOpen')).is.false;

@@ -29,20 +29,20 @@ const allSelected = (formState) => formState
   * Presentasjonskomponent. Holds the form of the totrinnkontroll
   */
 export const ToTrinnsFormImpl = ({
-  handleSubmit,
-  formState,
-  forhandsvisVedtaksbrev,
-  readOnly,
-  totrinnskontrollContext,
-  erBehandlingEtterKlage,
-  behandlingKlageVurdering,
-  behandlingStatus,
-  isForeldrepengerFagsak,
-  alleKodeverk,
-  disableGodkjennKnapp,
-  erTilbakekreving,
-  ...formProps
-}) => {
+                                   handleSubmit,
+                                   formState,
+                                   forhandsvisVedtaksbrev,
+                                   readOnly,
+                                   totrinnskontrollContext,
+                                   erBehandlingEtterKlage,
+                                   behandlingKlageVurdering,
+                                   behandlingStatus,
+                                   isForeldrepengerFagsak,
+                                   alleKodeverk,
+                                   disableGodkjennKnapp,
+                                   erTilbakekreving,
+                                   ...formProps
+                                 }) => {
   if (formState.length !== totrinnskontrollContext.length) {
     return null;
   }
@@ -52,8 +52,8 @@ export const ToTrinnsFormImpl = ({
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
       {totrinnskontrollContext.map(({
-        contextCode, skjermlenke, aksjonspunkter, skjermlenkeNavn,
-      }, contextIndex) => {
+                                      contextCode, skjermlenke, aksjonspunkter, skjermlenkeNavn,
+                                    }, contextIndex) => {
         if (aksjonspunkter.length > 0) {
           return (
             <div key={contextCode}>

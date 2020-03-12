@@ -138,10 +138,13 @@ class Periodpicker extends Component {
   }
 
   render() {
-    const { label, placeholder, feil, names, disabled, disabledDays, hideLabel, dataId } = this.props;
+    const { label, placeholder, feil, names, disabled, disabledDays, hideLabel, renderUpwards, dataId } = this.props;
     const { period, inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
     const inputWrapperCls = classnames(styles.dateInput, {
-      [styles.visuallyHidden]: hideLabel
+      [styles.visuallyHidden]: hideLabel,
+    });
+    const periodeCalendarOverlayCls = classnames(styles.calendarRoot, {
+      [styles.renderUpwards]: renderUpwards,
     });
 
     return (
@@ -177,7 +180,7 @@ class Periodpicker extends Component {
             endDate={this.parseToDate(names[1])}
             onDayChange={this.handleDayChange}
             elementIsCalendarButton={this.elementIsCalendarButton}
-            className={styles.calendarRoot}
+            className={periodeCalendarOverlayCls}
             dayPickerClassName={styles.calendarWrapper}
             onClose={this.hideCalendar}
             disabledDays={disabledDays}
@@ -197,6 +200,7 @@ Periodpicker.propTypes = {
   disabledDays: PropTypes.shape(),
   hideLabel: PropTypes.bool,
   dataId: PropTypes.string,
+  renderUpwards: PropTypes.bool,
 };
 
 Periodpicker.defaultProps = {
@@ -206,7 +210,8 @@ Periodpicker.defaultProps = {
   disabled: false,
   disabledDays: {},
   hideLabel: false,
-  dataId: ''
+  dataId: '',
+  renderUpwards: false,
 };
 
 export default Periodpicker;
