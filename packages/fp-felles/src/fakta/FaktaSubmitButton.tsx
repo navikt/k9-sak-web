@@ -37,6 +37,7 @@ export const FaktaSubmitButton = ({
   hasOpenAksjonspunkter,
   buttonTextId = 'SubmitButton.ConfirmInformation',
   onClick,
+  dataId,
 }: FaktaSubmitButtonProps) => (
   <ElementWrapper>
     {!isReadOnly && (
@@ -46,6 +47,7 @@ export const FaktaSubmitButton = ({
         disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter)}
         onClick={onClick || ariaCheck}
         htmlType={onClick ? 'button' : 'submit'}
+        data-id={dataId}
       >
         <FormattedMessage id={buttonTextId} />
       </Hovedknapp>
@@ -67,6 +69,7 @@ interface FaktaSubmitButtonProps {
   behandlingId?: number;
   behandlingVersjon?: number;
   doNotCheckForRequiredFields?: boolean;
+  dataId?: string;
 }
 
 const mapStateToProps = (state, ownProps: FaktaSubmitButtonProps) => {

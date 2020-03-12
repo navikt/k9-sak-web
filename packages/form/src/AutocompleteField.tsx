@@ -24,6 +24,7 @@ interface AutocompleteProps {
   inputValue: string;
   name: string;
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  dataId?: string;
 }
 
 const Autocomplete = ({
@@ -36,10 +37,11 @@ const Autocomplete = ({
   onInputValueChange,
   inputValue,
   input: { onChange },
+  dataId,
 }: AutocompleteFieldProps & AutocompleteProps) => {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <label htmlFor={id} className={styles.autocompleteLabel}>
+    <label htmlFor={id} className={styles.autocompleteLabel} data-id={dataId}>
       <Element className={styles.typoElement}>{label}</Element>
       <NAPAutocomplete
         id={id}

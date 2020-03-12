@@ -87,6 +87,7 @@ class Datepicker extends Component {
       disabledDays,
       initialMonth,
       numberOfMonths,
+      dataId
     } = this.props;
     const {
       inputOffsetTop, inputOffsetWidth, showCalendar,
@@ -107,6 +108,7 @@ class Datepicker extends Component {
             value={value || ''}
             feil={feil}
             disabled={disabled}
+            data-id={dataId}
           />
           <CalendarToggleButton
             inputOffsetTop={inputOffsetTop}
@@ -148,6 +150,7 @@ Datepicker.propTypes = {
   initialMonth: PropTypes.instanceOf(Date),
   numberOfMonths: PropTypes.number,
   disabledDays: PropTypes.shape(),
+  dataId: PropTypes.string,
 };
 
 Datepicker.defaultProps = {
@@ -159,6 +162,7 @@ Datepicker.defaultProps = {
   initialMonth: new Date(),
   numberOfMonths: 1,
   disabledDays: {},
+  dataId: ''
 };
 
 export default Datepicker;
