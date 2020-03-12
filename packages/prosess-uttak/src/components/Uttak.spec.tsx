@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import { mapRader } from './Uttak';
 import BehandlingPersonMap from './types/BehandlingPersonMap';
+import { InnvilgetÅrsakEnum } from './dto/InnvilgetÅrsak';
+import { AvslåttÅrsakEnum } from './dto/AvslåttÅrsak';
 import Uttaksplaner from './types/Uttaksplaner';
 
 describe('<UttakPP>', () => {
@@ -26,7 +28,7 @@ describe('<UttakPP>', () => {
           utfall: 'Avslått',
           årsaker: [
             {
-              årsak: 'IkkeMedlemIFolketrygden',
+              årsak: AvslåttÅrsakEnum.IKKE_MEDLEM_I_FOLKETRYGDEN,
               hjemler: [
                 {
                   henvisning: 'Folketrygdloven LOV-1997-02-28-19 Kapittel 2',
@@ -42,7 +44,7 @@ describe('<UttakPP>', () => {
       perioder: {
         '2020-01-29/2020-02-15': {
           utfall: 'Innvilget',
-          årsak: 'AvkortetMotInntekt',
+          årsak: InnvilgetÅrsakEnum.AVKORTET_MOT_INNTEKT,
           hjemler: [],
           grad: 80,
           utbetalingsgrader: [

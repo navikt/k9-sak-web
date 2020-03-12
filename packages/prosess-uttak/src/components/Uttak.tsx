@@ -1,21 +1,19 @@
 import React, { FunctionComponent, useState } from 'react';
-import moment from 'moment';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import svgKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import svgMann from '@fpsak-frontend/assets/images/mann.svg';
 import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/TimeLineControl';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 
 import BehandlingPersonMap from './types/BehandlingPersonMap';
-import UttakPeriode from './types/UttakPeriode';
+import UttakTidslinjePeriode from './types/UttakTidslinjePeriode';
 import Uttaksplaner from './types/Uttaksplaner';
 import { UtfallEnum } from './types/Utfall';
+import ValgtPeriode from './ValgtPeriode';
 
 interface UttakkProps {
   uttaksplaner: Uttaksplaner;
@@ -28,7 +26,7 @@ export const mapRader = (
   uttaksplaner: Uttaksplaner,
   behandlingPersonMap: BehandlingPersonMap,
   intl,
-): TidslinjeRad<UttakPeriode>[] =>
+): TidslinjeRad<UttakTidslinjePeriode>[] =>
   Object.entries(uttaksplaner).map(([behandlingsId, behandling]) => {
     const { kjønnkode } = behandlingPersonMap[behandlingsId];
     const kvinne = erKvinne(kjønnkode);
@@ -41,12 +39,16 @@ export const mapRader = (
     const perioder = Object.entries(behandling.perioder).map(([fomTom, periode], index) => {
       const [fom, tom] = fomTom.split('/');
       const { utfall } = periode;
+      const hoverText =
+        utfall === UtfallEnum.INNVILGET
+          ? `${periode.grad}% ${intl.formatMessage({ id: 'UttakPanel.Gradering' })}`
+          : intl.formatMessage({ id: 'UttakPanel.Avslått' });
 
       return {
         fom,
         tom,
         id: `${behandlingsId}-${index}`,
-        hoverText: `${periode.grad}% ${intl.formatMessage({ id: 'UttakPanel.Gradering' })}`,
+        hoverText,
         className: classNames({
           gradert: periode.grad < 100,
           godkjentPeriode: utfall === UtfallEnum.INNVILGET,
@@ -67,11 +69,11 @@ export const mapRader = (
   });
 
 const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner, behandlingPersonMap }) => {
-  const [valgtPeriode, velgPeriode] = useState<UttakPeriode | null>();
+  const [valgtPeriode, velgPeriode] = useState<UttakTidslinjePeriode | null>();
   const [timelineRef, setTimelineRef] = useState();
   const intl = useIntl();
 
-  const rader: TidslinjeRad<UttakPeriode>[] = mapRader(uttaksplaner, behandlingPersonMap, intl);
+  const rader: TidslinjeRad<UttakTidslinjePeriode>[] = mapRader(uttaksplaner, behandlingPersonMap, intl);
 
   const selectHandler = eventProps => {
     const nyValgtPeriode = rader.flatMap(rad => rad.perioder).find(item => item.id === eventProps.items[0]);
@@ -118,18 +120,6 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner, behandlingPersonM
     timeline.zoomOut(0.5);
   };
 
-  // TODO (Anders): bruk kodeverk for tekster
-  const resultattekst = () => {
-    switch (valgtPeriode.periodeinfo.utfall) {
-      case UtfallEnum.INNVILGET:
-        return 'Resultat: Innvilget';
-      case UtfallEnum.AVSLÅTT:
-        return 'Resultat: Avslått';
-      default:
-        return 'Resultat: Uavklart';
-    }
-  };
-
   return (
     <Row>
       <Column xs="12">
@@ -147,33 +137,7 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner, behandlingPersonM
           openPeriodInfo={openPeriodInfo}
           selectedPeriod={valgtPeriode}
         />
-        {valgtPeriode && (
-          <>
-            <Undertittel>
-              <FormattedMessage id="UttakPanel.ValgtPeriode" />
-            </Undertittel>
-            <Normaltekst>
-              {`Fødselsnummer: ${behandlingPersonMap[valgtPeriode.periodeinfo.behandlingsId].fnr}`}
-            </Normaltekst>
-            <Normaltekst>
-              <FormattedMessage
-                id="UttakPanel.FOM"
-                values={{ fom: moment(valgtPeriode.fom).format(DDMMYYYY_DATE_FORMAT) }}
-              />
-            </Normaltekst>
-            <Normaltekst>
-              <FormattedMessage
-                id="UttakPanel.TOM"
-                values={{ tom: moment(valgtPeriode.tom).format(DDMMYYYY_DATE_FORMAT) }}
-              />
-            </Normaltekst>
-            <Normaltekst>
-              <FormattedMessage id="UttakPanel.GraderingProsent" values={{ grad: valgtPeriode.periodeinfo.grad }} />
-            </Normaltekst>
-            <Normaltekst>{resultattekst()}</Normaltekst>
-            {valgtPeriode.periodeinfo.årsak && <Normaltekst>{`Årsak: ${valgtPeriode.periodeinfo.årsak}`}</Normaltekst>}
-          </>
-        )}
+        {valgtPeriode && <ValgtPeriode behandlingPersonMap={behandlingPersonMap} valgtPeriode={valgtPeriode} />}
       </Column>
     </Row>
   );

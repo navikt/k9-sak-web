@@ -1,5 +1,7 @@
 import BehandlingPersonMap from './BehandlingPersonMap';
 import Uttaksplaner from './Uttaksplaner';
+import {InnvilgetÅrsakEnum} from '../dto/InnvilgetÅrsak';
+import {AvslåttÅrsakEnum} from '../dto/AvslåttÅrsak';
 
 export const uttaksplaner: Uttaksplaner = {
   '123': {
@@ -21,7 +23,7 @@ export const uttaksplaner: Uttaksplaner = {
       },
       '2020-01-15/2020-01-28': {
         utfall: 'Innvilget',
-        årsak: 'AvkortetMotInntekt',
+        årsak: InnvilgetÅrsakEnum.AVKORTET_MOT_INNTEKT,
         hjemler: [],
         grad: 80,
         utbetalingsgrader: [
@@ -40,7 +42,7 @@ export const uttaksplaner: Uttaksplaner = {
         utfall: 'Avslått',
         årsaker: [
           {
-            årsak: 'IkkeMedlemIFolketrygden',
+            årsak: AvslåttÅrsakEnum.IKKE_MEDLEM_I_FOLKETRYGDEN,
             hjemler: [
               {
                 henvisning: 'Folketrygdloven LOV-1997-02-28-19 Kapittel 2',
@@ -71,7 +73,7 @@ export const uttaksplaner: Uttaksplaner = {
       },
       '2020-01-29/2020-02-15': {
         utfall: 'Innvilget',
-        årsak: 'AvkortetMotInntekt',
+        årsak: InnvilgetÅrsakEnum.AVKORTET_MOT_INNTEKT,
         hjemler: [],
         grad: 80,
         utbetalingsgrader: [
@@ -90,7 +92,7 @@ export const uttaksplaner: Uttaksplaner = {
         utfall: 'Avslått',
         årsaker: [
           {
-            årsak: 'IkkeMedlemIFolketrygden',
+            årsak: AvslåttÅrsakEnum.IKKE_MEDLEM_I_FOLKETRYGDEN,
             hjemler: [
               {
                 henvisning: 'Folketrygdloven LOV-1997-02-28-19 Kapittel 2',

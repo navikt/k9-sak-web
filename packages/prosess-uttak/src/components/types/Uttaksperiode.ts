@@ -1,17 +1,10 @@
 import Utbetalingsgrad from './Utbetalingsgrad';
 import Utfalltype from './Utfall';
+import Årsak from '../dto/Årsak';
 
-interface Uttaksperiode {
+interface Uttaksperiode extends Partial<Årsak> {
   utfall: Utfalltype;
-  årsak?: string; // TODO: årsakskoder
-  hjemler?: any[]; // TODO: type?
-  årsaker?: {
-    årsak: string;
-    hjemler: {
-      henvisning: string;
-      anvendelse: string;
-    }[];
-  }[];
+  årsaker?: Årsak[];
   grad?: number;
   utbetalingsgrader?: Utbetalingsgrad[];
 }
