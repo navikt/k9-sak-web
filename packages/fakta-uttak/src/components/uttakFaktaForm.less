@@ -1,0 +1,78 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.arbeidsgivere {
+  display: flex;
+  flex-direction: column;
+}
+
+.arbeidsgiver {
+  background: transparent;
+  border: none;
+  color: black;
+  margin-bottom: 1.5em;
+  max-width: fit-content;
+  text-align: left;
+  text-decoration: underline;
+
+  &:hover {
+    color: @navBla;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  &--erValgt {
+    color: @navBla;
+    text-decoration: none;
+  }
+}
+
+.kursiv {
+  font-style: italic;
+}
+
+.image {
+  margin-right: 0.5em;
+  width: 24px;
+
+  &.disabled {
+    color: white;
+  }
+}
+
+.periodeLabel {
+  color: @navBla;
+  font-weight: bold;
+}
+
+.timerLabel {
+  font-weight: bold;
+}
+
+.alignWithInput {
+  align-self: flex-end;
+  padding-bottom: 10px;
+}
+
+.bekreftelseContainer {
+  align-items: center;
+  background-color: @grayBackground;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 -1rem -1rem;
+  padding: 1rem;
+}
+
+.textAreaStyle {
+  max-width: 385px;
+  min-width: 300px;
+  width: 100%;
+  word-break: break-all;
+}
+
+.submittKnapper {
+  > :not(:last-child) {
+    margin-right: 1em;
+  }
+}
