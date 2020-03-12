@@ -142,6 +142,8 @@ export const getPerioderMedKontinuerligTilsynOgPleie = (sykdom: Sykdom) =>
     perioderMedUtvidetKontinuerligTilsynOgPleie: buildPerioderMedUtvidetKontinuerligTilsynOgPleie(p, sykdom),
     begrunnelseUtvidet: getBegrunnelseForUtvidetTilsyn(p, sykdom),
     harBehovForKontinuerligTilsynOgPleie: !!p.periode.fom,
+    sammenhengMellomSykdomOgTilsyn: p.årsaksammenheng,
+    sammenhengMellomSykdomOgTilsynBegrunnelse: p.årsaksammenhengBegrunnelse,
   }));
 
 export const getMomentConvertedDate = (date: string | Date | Moment) => {

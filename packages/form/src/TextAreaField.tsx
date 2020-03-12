@@ -18,6 +18,7 @@ interface Badges {
 
 interface TextAreaWithBadgeProps {
   badges: Badges[];
+  dataId?: string;
 }
 
 interface TextAreaFieldProps {
@@ -25,11 +26,13 @@ interface TextAreaFieldProps {
   label: LabelType;
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;
+  dataId?: string;
 }
 
 const TextAreaWithBadge = ({
   badges,
   intl,
+  dataId,
   ...otherProps
 }: TextAreaWithBadgeProps & WrappedComponentProps & TextareaProps) => (
   <div className={badges ? styles.textAreaFieldWithBadges : null}>
@@ -42,7 +45,7 @@ const TextAreaWithBadge = ({
         ))}
       </div>
     )}
-    <NavTextarea {...otherProps} />
+    <NavTextarea data-id={dataId} {...otherProps} />
   </div>
 );
 

@@ -47,29 +47,30 @@ describe('<VedtakForm>', () => {
     };
     const aksjonspunkter = [];
 
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      previewCallback={previewCallback}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      aksjonspunktKoder={aksjonspunktKoder}
-      kanOverstyre
-      readOnly={false}
-      behandlingPaaVent={false}
-      isBehandlingReadOnly
-      skalBrukeOverstyrendeFritekstBrev={false}
-      sprakkode={sprakkode}
-      erBehandlingEtterKlage={false}
-      initialValues={initialValues}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
-
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        previewCallback={previewCallback}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        aksjonspunktKoder={aksjonspunktKoder}
+        kanOverstyre
+        readOnly={false}
+        behandlingPaaVent={false}
+        isBehandlingReadOnly
+        skalBrukeOverstyrendeFritekstBrev={false}
+        sprakkode={sprakkode}
+        erBehandlingEtterKlage={false}
+        initialValues={initialValues}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     const vedtakInnvilgetPanel = wrapper.find(VedtakInnvilgetPanel);
     expect(vedtakInnvilgetPanel).to.have.length(1);
@@ -95,39 +96,43 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    ];
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
     const label = wrapper.find('Element');
     expect(label).to.have.length(0);
   });
@@ -149,40 +154,44 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      kanOverstyre
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    ];
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        kanOverstyre
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
     expect(wrapper.find(VedtakInnvilgetPanel)).to.have.length(0);
@@ -206,40 +215,44 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      kanOverstyre
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      erBehandlingEtterKlage={false}
-      initialValues={initialValues}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    ];
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        kanOverstyre
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        erBehandlingEtterKlage={false}
+        initialValues={initialValues}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
     expect(wrapper.find(VedtakInnvilgetPanel)).to.have.length(0);
@@ -259,40 +272,44 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    ];
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
@@ -315,40 +332,44 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    ];
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
@@ -375,39 +396,43 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    ];
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
@@ -431,40 +456,44 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.AVSLUTTET}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    ];
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.AVSLUTTET}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(0);
@@ -485,41 +514,45 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
+    ];
     const previewCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.IVERKSETTER_VEDTAK}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      erBehandlingEtterKlage={false}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.IVERKSETTER_VEDTAK}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        erBehandlingEtterKlage={false}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(0);
@@ -542,40 +575,44 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      skalBrukeOverstyrendeFritekstBrev
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    ];
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev
+        initialValues={initialValues}
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(0);
@@ -584,30 +621,32 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal sette opp initialvalues når en ikke har beregningsresultat', () => {
-    const aksjonspunkter = [{
-      id: 0,
-      definisjon: {
-        navn: 'vedtak',
-        kode: aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+    const aksjonspunkter = [
+      {
+        id: 0,
+        definisjon: {
+          navn: 'vedtak',
+          kode: aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      kanLoses: true,
-    }, {
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-      },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    },
     ];
     const behandlingsresultat = {
       id: 1,
@@ -617,15 +656,22 @@ describe('<VedtakForm>', () => {
       },
       avslagsarsak: null,
       avslagsarsakFritekst: null,
-
     };
     const vedtakVarsel = {
       vedtaksbrev: {
         kode: 'FRITEKST',
       },
-    }
+    };
     // eslint-disable-next-line
-    const model = buildInitialValues.resultFunc(behandlingStatus.BEHANDLING_UTREDES, undefined, aksjonspunkter, { kode: 'ES' }, behandlingsresultat, sprakkode, vedtakVarsel);
+    const model = buildInitialValues.resultFunc(
+      behandlingStatus.BEHANDLING_UTREDES,
+      undefined,
+      aksjonspunkter,
+      { kode: 'ES' },
+      behandlingsresultat,
+      sprakkode,
+      vedtakVarsel,
+    );
 
     expect(model).to.eql({
       aksjonspunktKoder: ['5018', '5033'],
@@ -639,19 +685,21 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal sette opp initialvalues når en har beregningsresultat', () => {
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      kanLoses: true,
-      erAktivt: true,
-    }];
+    ];
 
     const beregningResultat = {
       beregnetTilkjentYtelse: '10000',
@@ -666,17 +714,17 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.INNVILGET,
         navn: 'test',
       },
-      avslagsarsak: null,
-      avslagsarsakFritekst: null,
-      overskrift: 'Overskrift',
-      fritekstbrev: 'Brødtekst',
     };
 
     const vedtakVarsel = {
       vedtaksbrev: {
         kode: 'FRITEKST',
       },
-    }
+      avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      overskrift: 'Overskrift',
+      fritekstbrev: 'Brødtekst',
+    };
 
     const model = buildInitialValues.resultFunc(
       behandlingStatus.BEHANDLING_UTREDES,
@@ -685,7 +733,7 @@ describe('<VedtakForm>', () => {
       'ES',
       behandlingsresultat,
       sprakkode,
-      vedtakVarsel
+      vedtakVarsel,
     );
     expect(model).to.eql({
       aksjonspunktKoder: ['5033'],
@@ -711,44 +759,47 @@ describe('<VedtakForm>', () => {
       kode: 'FRITEKST',
     },
   };
-  const aksjonspunkter = [{
-    id: 1,
-    definisjon: {
-      navn: 'annen ytelse',
-      kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+  const aksjonspunkter = [
+    {
+      id: 1,
+      definisjon: {
+        navn: 'annen ytelse',
+        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+      },
+      status: {
+        navn: 'Opprettet',
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      kanLoses: true,
+      erAktivt: true,
     },
-    status: {
-      navn: 'Opprettet',
-      kode: aksjonspunktStatus.OPPRETTET,
-    },
-    kanLoses: true,
-    erAktivt: true,
-  }];
-
+  ];
 
   it('skal vise avkrysningsboks i lesemodus for rolle med overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      kanOverstyre
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        kanOverstyre
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
     expect(overstyringsKnapp).to.have.length(1);
     expect(overstyringsKnapp.prop('readOnly')).to.eql(true);
@@ -756,28 +807,30 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise avkrysningsboks i skrivemodus for rolle med overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      kanOverstyre
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        kanOverstyre
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        erBehandlingEtterKlage={false}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
     expect(overstyringsKnapp).to.have.length(1);
     expect(overstyringsKnapp.prop('readOnly')).to.eql(false);
@@ -785,28 +838,30 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise avkrysningsboks for rolle uten overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      kanOverstyre={false}
-      erBehandlingEtterKlage={false}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={2}
+        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        isBehandlingReadOnly
+        sprakkode={sprakkode}
+        kanOverstyre={false}
+        erBehandlingEtterKlage={false}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        initialValues={initialValues}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        alleKodeverk={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+      />,
+    );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
     expect(overstyringsKnapp).to.have.length(0);
   });

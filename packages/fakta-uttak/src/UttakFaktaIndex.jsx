@@ -1,3 +1,3 @@
 import React from 'react';
 
-export default () => (<span>UttakFaktaIndex</span>)
+export default () => <span>UttakFaktaIndex</span>;

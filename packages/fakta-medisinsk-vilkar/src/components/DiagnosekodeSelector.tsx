@@ -53,6 +53,7 @@ const DiagnosekodeSelector = ({ readOnly, initialDiagnosekodeValue }) => {
           readOnly={readOnly}
           name="diagnosekode"
           validate={[required]}
+          dataId="diagnosekodesokefelt"
         />
       </FlexColumn>
     </FlexRow>
