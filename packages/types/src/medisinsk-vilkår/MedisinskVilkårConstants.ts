@@ -10,6 +10,7 @@ enum MedisinskVilkårConsts {
   PERIODE = 'periode',
   BEGRUNNELSE = 'begrunnelse',
   SAMMENG_MELLOM_SYKDOM_OG_TILSYN_BEGRUNNELSE = 'sammenhengMellomSykdomOgTilsynBegrunnelse',
+  SAMMENHENG_MELLOM_SYKDOM_OG_TILSYN = 'sammenhengMellomSykdomOgTilsyn',
   BEGRUNNELSE_UTVIDET = 'begrunnelseUtvidet',
   LEGEERKLÆRING_FOM = 'legeerklæringFom',
   LEGEERKLÆRING_TOM = 'legeerklæringTom',

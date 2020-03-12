@@ -10,6 +10,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import VedtakFritekstPanel from './VedtakFritekstPanel';
 import { findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
+import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
 export const VedtakInnvilgetPanelImpl = ({
   intl,
@@ -22,22 +23,21 @@ export const VedtakInnvilgetPanelImpl = ({
   skalBrukeOverstyrendeFritekstBrev,
   tilbakekrevingText,
   beregningErManueltFastsatt,
+  vedtakVarsel,
 }) => (
   <>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
       {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
-      {tilbakekrevingText && (
-        `. ${intl.formatMessage({ id: tilbakekrevingText })}`
-      )}
+      {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
     </Normaltekst>
     <VerticalSpacer eightPx />
     {beregningErManueltFastsatt && !skalBrukeOverstyrendeFritekstBrev && (
       <VedtakFritekstPanel
         readOnly={readOnly}
         sprakkode={sprakkode}
-        behandlingsresultat={behandlingsresultat}
         labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
+        vedtakVarsel={vedtakVarsel}
       />
     )}
     {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && (
@@ -70,6 +70,7 @@ VedtakInnvilgetPanelImpl.propTypes = {
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   tilbakekrevingText: PropTypes.string,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
+  vedtakVarsel: vedtakVarselPropType,
 };
 
 VedtakInnvilgetPanelImpl.defaultProps = {

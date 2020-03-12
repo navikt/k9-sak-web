@@ -87,10 +87,9 @@ class Datepicker extends Component {
       disabledDays,
       initialMonth,
       numberOfMonths,
+      dataId,
     } = this.props;
-    const {
-      inputOffsetTop, inputOffsetWidth, showCalendar,
-    } = this.state;
+    const { inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
 
     return (
       <>
@@ -107,6 +106,7 @@ class Datepicker extends Component {
             value={value || ''}
             feil={feil}
             disabled={disabled}
+            data-id={dataId}
           />
           <CalendarToggleButton
             inputOffsetTop={inputOffsetTop}
@@ -115,22 +115,21 @@ class Datepicker extends Component {
             toggleShowCalendar={this.toggleShowCalendar}
             buttonRef={this.handleButtonRef}
             disabled={disabled}
-
           />
         </div>
         {showCalendar && (
-        <CalendarOverlay
-          disabled={disabled}
-          value={value}
-          onDayChange={this.handleDayChange}
-          onClose={this.hideCalendar}
-          elementIsCalendarButton={this.elementIsCalendarButton}
-          className={styles.calendarRoot}
-          dayPickerClassName={classNames(`calendarWrapper calendarWrapper--${numberOfMonths}`)}
-          disabledDays={disabledDays}
-          numberOfMonths={numberOfMonths}
-          initialMonth={initialMonth}
-        />
+          <CalendarOverlay
+            disabled={disabled}
+            value={value}
+            onDayChange={this.handleDayChange}
+            onClose={this.hideCalendar}
+            elementIsCalendarButton={this.elementIsCalendarButton}
+            className={styles.calendarRoot}
+            dayPickerClassName={classNames(`calendarWrapper calendarWrapper--${numberOfMonths}`)}
+            disabledDays={disabledDays}
+            numberOfMonths={numberOfMonths}
+            initialMonth={initialMonth}
+          />
         )}
       </>
     );
@@ -148,6 +147,7 @@ Datepicker.propTypes = {
   initialMonth: PropTypes.instanceOf(Date),
   numberOfMonths: PropTypes.number,
   disabledDays: PropTypes.shape(),
+  dataId: PropTypes.string,
 };
 
 Datepicker.defaultProps = {
@@ -159,6 +159,7 @@ Datepicker.defaultProps = {
   initialMonth: new Date(),
   numberOfMonths: 1,
   disabledDays: {},
+  dataId: '',
 };
 
 export default Datepicker;
