@@ -1,3 +1,4 @@
+
 import sinon from 'sinon';
 import { expect } from 'chai';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
@@ -16,18 +17,16 @@ const behandling = {
     kodeverk: 'SPRAAK_KODE',
   },
 };
-const vilkarMedUtfall = kode => [
-  {
-    vilkarType: {
-      kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
-      kodeverk: 'vilkarType',
-    },
-    vilkarStatus: {
-      kode,
-      kodeverk: 'vilkarStatus',
-    },
+const vilkarMedUtfall = (kode) => [{
+  vilkarType: {
+    kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
+    kodeverk: 'vilkarType',
   },
-];
+  vilkarStatus: {
+    kode,
+    kodeverk: 'vilkarStatus',
+  },
+}];
 const lagPeriode = () => ({
   beregningsgrunnlagPeriodeFom: '2019-09-16',
   beregningsgrunnlagPeriodeTom: undefined,
@@ -36,17 +35,16 @@ const lagPeriode = () => ({
   bruttoInkludertBortfaltNaturalytelsePrAar: 360000,
   avkortetPrAar: 360000,
   redusertPrAar: 360000,
-  beregningsgrunnlagPrStatusOgAndel: [
-    {
-      aktivitetStatus: {
-        kode: 'AT',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+  beregningsgrunnlagPrStatusOgAndel: [{
+    aktivitetStatus: {
+      kode: 'AT',
+      kodeverk: 'AKTIVITET_STATUS',
     },
-  ],
+  }],
   andelerLagtTilManueltIForrige: [],
 });
-const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenligningSum, dekningsgrad, tilfeller) => ({
+const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall,
+  sammenligningSum, dekningsgrad, tilfeller) => ({
   beregningsgrunnlagPeriode: [lagPeriode()],
   sammenligningsgrunnlag: {
     avvikPromille,
@@ -57,13 +55,11 @@ const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenlig
   faktaOmBeregning: {
     faktaOmBeregningTilfeller: tilfeller,
   },
-  aktivitetStatus: [
-    {
-      kode: 'UDEFINERT',
-    },
-  ],
+  aktivitetStatus: [{
+    kode: 'UDEFINERT',
+  }],
 });
-const sammenligningsgrunnlag = kode => ({
+const sammenligningsgrunnlag = (kode) => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',
   rapportertPrAar: 330000,
@@ -83,19 +79,17 @@ describe('<BeregningsgrunnlagProsessIndex>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 100000, 100000, 100, []);
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
     beregningsgrunnlag.sammenligningsgrunnlagPrStatus = [sammenligningsgrunnlagPrStatus];
-    const wrapper = shallowWithIntl(
-      <BeregningsgrunnlagProsessIndex
-        behandling={behandling}
-        beregningsgrunnlag={beregningsgrunnlag}
-        aksjonspunkter={[]}
-        submitCallback={sinon.spy}
-        isReadOnly={false}
-        readOnlySubmitButton={false}
-        isAksjonspunktOpen={false}
-        vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
-        alleKodeverk={alleKodeverk}
-      />,
-    );
+    const wrapper = shallowWithIntl(<BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={beregningsgrunnlag}
+      aksjonspunkter={[]}
+      submitCallback={sinon.spy}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+    />);
     const beregningFp = wrapper.find('BeregningFP');
     expect(beregningFp.length).to.equal(1);
   });

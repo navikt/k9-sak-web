@@ -65,9 +65,10 @@ OpptjeningInfoPanel.defaultProps = {
   dokStatus: undefined,
 };
 
-const addDay = date => addDaysToDate(date, 1);
-const getOpptjeningsperiodeIfEqual = (activityDate, opptjeningsperiodeDate) =>
-  moment(addDay(activityDate)).isSame(opptjeningsperiodeDate) ? opptjeningsperiodeDate : activityDate;
+const addDay = (date) => addDaysToDate(date, 1);
+const getOpptjeningsperiodeIfEqual = (
+  activityDate, opptjeningsperiodeDate,
+) => (moment(addDay(activityDate)).isSame(opptjeningsperiodeDate) ? opptjeningsperiodeDate : activityDate);
 
 const buildPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => {
   const fomDate = moment(activity.opptjeningFom).isBefore(opptjeningsperiodeFom)
@@ -85,25 +86,22 @@ const buildPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => 
 };
 
 export const buildInitialValues = createSelector(
-  [
-    ownProps => ownProps.opptjeningAktiviteter,
-    ownProps => ownProps.fastsattOpptjening,
-    ownProps => ownProps.aksjonspunkter,
-  ],
-  (opptjeningActivities, fastsattOpptjening, aksjonspunkter) =>
-    fastsattOpptjening && {
+  [(ownProps) => ownProps.opptjeningAktiviteter,
+    (ownProps) => ownProps.fastsattOpptjening,
+    (ownProps) => ownProps.aksjonspunkter],
+  (opptjeningActivities, fastsattOpptjening, aksjonspunkter) => fastsattOpptjening
+    && ({
       opptjeningActivities: opptjeningActivities
-        .filter(oa => moment(fastsattOpptjening.opptjeningFom).isBefore(addDay(oa.opptjeningTom)))
-        .filter(oa => moment(oa.opptjeningFom).isBefore(addDay(fastsattOpptjening.opptjeningTom)))
+        .filter((oa) => moment(fastsattOpptjening.opptjeningFom).isBefore(addDay(oa.opptjeningTom)))
+        .filter((oa) => moment(oa.opptjeningFom).isBefore(addDay(fastsattOpptjening.opptjeningTom)))
         .map((oa, index) => ({
           ...oa,
           ...buildPeriod(oa, fastsattOpptjening.opptjeningFom, fastsattOpptjening.opptjeningTom),
           id: index + 1,
         })),
-      aksjonspunkt:
-        aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
+      aksjonspunkt: aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
       fastsattOpptjening,
-    },
+    }),
 );
 
 const transformPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => {
@@ -123,21 +121,15 @@ const transformPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom)
   };
 };
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   opptjeningAktivitetList: values.opptjeningActivities
-    .map(oa =>
-      transformPeriod(
-        oa,
-        addDay(values.fastsattOpptjening.opptjeningFom),
-        addDay(values.fastsattOpptjening.opptjeningTom),
-      ),
-    )
-    .map(oa => omit(oa, 'id')),
+    .map((oa) => transformPeriod(oa, addDay(values.fastsattOpptjening.opptjeningFom), addDay(values.fastsattOpptjening.opptjeningTom)))
+    .map((oa) => omit(oa, 'id')),
   kode: values.aksjonspunkt[0].definisjon.kode,
 });
 
 const mapStateToPropsFactory = (initialState, { submitCallback }) => {
-  const onSubmit = values => submitCallback([transformValues(values)]);
+  const onSubmit = (values) => submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     aksjonspunkt: ownProps.aksjonspunkter[0],
     initialValues: buildInitialValues(ownProps),
@@ -146,8 +138,6 @@ const mapStateToPropsFactory = (initialState, { submitCallback }) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(
-  behandlingForm({
-    form: formName,
-  })(OpptjeningInfoPanel),
-);
+export default connect(mapStateToPropsFactory)(behandlingForm({
+  form: formName,
+})(OpptjeningInfoPanel));

@@ -16,8 +16,8 @@ const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
   if (queryStrings.errormessage) {
     resolvedErrorMessages.push({ message: queryStrings.errormessage });
   }
-  errorMessages.forEach(message => {
-    let msg = { message: message.code ? intl.formatMessage({ id: message.code }, message.params) : message.text };
+  errorMessages.forEach((message) => {
+    let msg = { message: (message.code ? intl.formatMessage({ id: message.code }, message.params) : message.text) };
     if (message.params && message.params.errorDetails) {
       msg = {
         ...msg,
@@ -36,29 +36,19 @@ const Dekorator = ({
   queryStrings,
   setSiteHeight,
   removeErrorMessage: removeErrorMsg,
-  showDetailedErrorMessages,
-  hideErrorMessages,
+  showDetailedErrorMessages, hideErrorMessages,
 }) => {
-  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, errorMessages, queryStrings), [
-    errorMessages,
-    queryStrings,
-  ]);
+  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, errorMessages, queryStrings), [errorMessages, queryStrings]);
 
-  const iconLinks = useMemo(
-    () => [
-      {
-        url: RETTSKILDE_URL,
-        icon: rettskildeneIkonUrl,
-        text: intl.formatMessage({ id: 'Header.Rettskilde' }),
-      },
-      {
-        url: SYSTEMRUTINE_URL,
-        icon: systemrutineIkonUrl,
-        text: intl.formatMessage({ id: 'Header.Systemrutine' }),
-      },
-    ],
-    [],
-  );
+  const iconLinks = useMemo(() => [{
+    url: RETTSKILDE_URL,
+    icon: rettskildeneIkonUrl,
+    text: intl.formatMessage({ id: 'Header.Rettskilde' }),
+  }, {
+    url: SYSTEMRUTINE_URL,
+    icon: systemrutineIkonUrl,
+    text: intl.formatMessage({ id: 'Header.Systemrutine' }),
+  }], []);
 
   return (
     <HeaderWithErrorPanel

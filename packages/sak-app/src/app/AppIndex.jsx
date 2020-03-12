@@ -36,10 +36,12 @@ class AppIndex extends Component {
     const { funksjonellTid } = this.props;
     if (prevProps.funksjonellTid !== funksjonellTid) {
       // TODO (TOR) Dette endrar jo berre moment. Kva med kode som brukar Date direkte?
-      const diffInMinutes = moment().diff(funksjonellTid, 'minutes');
+      const diffInMinutes = moment()
+        .diff(funksjonellTid, 'minutes');
       // Hvis diffInMinutes har avvik på over 5min: override moment.now (ref. http://momentjs.com/docs/#/customization/now/)
       if (diffInMinutes >= 5 || diffInMinutes <= -5) {
-        const diff = moment().diff(funksjonellTid);
+        const diff = moment()
+          .diff(funksjonellTid);
         moment.now = () => Date.now() - diff;
       }
     }
@@ -48,53 +50,46 @@ class AppIndex extends Component {
   componentDidCatch(error, info) {
     const { showCrashMessage: showCrashMsg } = this.props;
 
-    withScope(scope => {
-      Object.keys(info).forEach(key => {
+    withScope((scope) => {
+      Object.keys(info).forEach((key) => {
         scope.setExtra(key, info[key]);
         captureException(error);
       });
     });
 
-    showCrashMsg(
-      [
-        error.toString(),
-        info.componentStack
-          .split('\n')
-          .map(line => line.trim())
-          .find(line => !!line),
-      ].join(' '),
-    );
+    showCrashMsg([
+      error.toString(),
+      info.componentStack
+        .split('\n')
+        .map((line) => line.trim())
+        .find((line) => !!line),
+    ].join(' '));
 
     // eslint-disable-next-line no-console
     console.error(error);
   }
 
-  setSiteHeight = headerHeight => {
+  setSiteHeight = (headerHeight) => {
     document.documentElement.setAttribute('style', `height: calc(100% - ${headerHeight}px)`);
-    this.setState(state => ({ ...state, headerHeight }));
-  };
+    this.setState((state) => ({ ...state, headerHeight }));
+  }
 
   render() {
     const {
-      location,
-      crashMessage,
-      errorMessages,
-      navAnsattName,
-      removeErrorMessage: removeErrorMsg,
-      showDetailedErrorMessages,
+      location, crashMessage, errorMessages, navAnsattName, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
     } = this.props;
     const { headerHeight } = this.state;
 
     // todo sjekke om dette er beste stedet å sette dette for sentry
-    configureScope(scope => {
+    configureScope((scope) => {
       scope.setUser({ username: navAnsattName });
     });
 
     const queryStrings = parseQueryString(location.search);
-    const forbiddenErrors = errorMessages.filter(o => o.type === EventType.REQUEST_FORBIDDEN);
-    const unauthorizedErrors = errorMessages.filter(o => o.type === EventType.REQUEST_UNAUTHORIZED);
+    const forbiddenErrors = errorMessages.filter((o) => o.type === EventType.REQUEST_FORBIDDEN);
+    const unauthorizedErrors = errorMessages.filter((o) => o.type === EventType.REQUEST_UNAUTHORIZED);
     const hasForbiddenOrUnauthorizedErrors = forbiddenErrors.length > 0 || unauthorizedErrors.length > 0;
-    const shouldRenderHome = !crashMessage && !hasForbiddenOrUnauthorizedErrors;
+    const shouldRenderHome = (!crashMessage && !hasForbiddenOrUnauthorizedErrors);
 
     return (
       <AppConfigResolver>
@@ -108,9 +103,9 @@ class AppIndex extends Component {
             showDetailedErrorMessages={showDetailedErrorMessages}
             setSiteHeight={this.setSiteHeight}
           />
-          {shouldRenderHome && <Home headerHeight={headerHeight} />}
-          {forbiddenErrors.length > 0 && <ForbiddenPage errorMessages={forbiddenErrors} />}
-          {unauthorizedErrors.length > 0 && <UnauthorizedPage errorMessages={unauthorizedErrors} />}
+          {shouldRenderHome && (<Home headerHeight={headerHeight} />)}
+          {forbiddenErrors.length > 0 && (<ForbiddenPage errorMessages={forbiddenErrors} />)}
+          {unauthorizedErrors.length > 0 && (<UnauthorizedPage errorMessages={unauthorizedErrors} />)}
         </LanguageProvider>
       </AppConfigResolver>
     );
@@ -136,7 +131,7 @@ AppIndex.defaultProps = {
   errorMessages: [],
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   errorMessages: errorHandler.getAllErrorMessages(state),
   crashMessage: errorHandler.getCrashMessage(state),
   navAnsattName: getNavAnsattName(state),
@@ -144,13 +139,9 @@ const mapStateToProps = state => ({
   showDetailedErrorMessages: getShowDetailedErrorMessages(state),
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      showCrashMessage: errorHandler.getCrashMessageActionCreator(),
-      removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
-    },
-    dispatch,
-  );
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  showCrashMessage: errorHandler.getCrashMessageActionCreator(),
+  removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppIndex));

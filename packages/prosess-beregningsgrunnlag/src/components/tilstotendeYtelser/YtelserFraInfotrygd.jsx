@@ -8,18 +8,23 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
+
 /**
  * YtelserFraInfotrygd
  *
  * Presentasjonskomponent. Viser navn og sum på alle andeler som er tilstøttende ytelser fra infotrygd
  */
-const YtelserFraInfotrygd = ({ bruttoPrAar }) => (
+const YtelserFraInfotrygd = ({
+  bruttoPrAar,
+}) => (
   <>
     <AvsnittSkiller luftOver luftUnder />
     <Row>
       <Column xs="12">
         <Element className={beregningStyles.avsnittOverskrift}>
-          <FormattedMessage id="Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse2" />
+          <FormattedMessage
+            id="Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse2"
+          />
         </Element>
         <VerticalSpacer eightPx />
       </Column>
@@ -41,11 +46,15 @@ const YtelserFraInfotrygd = ({ bruttoPrAar }) => (
     <Row>
       <Column xs="7">
         <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.YtelserFraInfotrygd.YtelseNavn" />
+          <FormattedMessage
+            id="Beregningsgrunnlag.YtelserFraInfotrygd.YtelseNavn"
+          />
         </Normaltekst>
       </Column>
       <Column xs="2" className={beregningStyles.colMaanedText}>
-        <Normaltekst>{formatCurrencyNoKr(bruttoPrAar / 12)}</Normaltekst>
+        <Normaltekst>
+          {formatCurrencyNoKr(bruttoPrAar / 12)}
+        </Normaltekst>
       </Column>
       <Column xs="2" className={beregningStyles.colAarText}>
         <Element>{formatCurrencyNoKr(bruttoPrAar)}</Element>

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { EtikettAdvarsel, EtikettFokus, EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
+import {
+  EtikettAdvarsel, EtikettFokus, EtikettInfo, EtikettSuksess,
+} from 'nav-frontend-etiketter';
 
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 
@@ -17,7 +19,14 @@ import styles from './merkepanel.less';
  *  <MerkePanel erDod={false} diskresjonskode="SPSF" erVerge erNAVANsatt />
  * ```
  */
-const MerkePanel = ({ erDod, erDodFodt, erNAVAnsatt, erVerge, diskresjonskode, intl }) => {
+const MerkePanel = ({
+  erDod,
+  erDodFodt,
+  erNAVAnsatt,
+  erVerge,
+  diskresjonskode,
+  intl,
+}) => {
   const { formatMessage } = intl;
 
   return (
@@ -33,18 +42,12 @@ const MerkePanel = ({ erDod, erDodFodt, erNAVAnsatt, erVerge, diskresjonskode, i
         </EtikettInfo>
       )}
       {diskresjonskode === diskresjonskodeType.KODE6 && !erDod && (
-        <EtikettAdvarsel
-          className={styles.merkeDiskresjonskoder}
-          title={formatMessage({ id: 'MerkePanel.Diskresjon6Tittel' })}
-        >
+        <EtikettAdvarsel className={styles.merkeDiskresjonskoder} title={formatMessage({ id: 'MerkePanel.Diskresjon6Tittel' })}>
           <FormattedMessage id="MerkePanel.Diskresjon6" />
         </EtikettAdvarsel>
       )}
       {diskresjonskode === diskresjonskodeType.KODE7 && !erDod && (
-        <EtikettFokus
-          className={styles.merkeDiskresjonskoder}
-          title={formatMessage({ id: 'MerkePanel.Diskresjon7Tittel' })}
-        >
+        <EtikettFokus className={styles.merkeDiskresjonskoder} title={formatMessage({ id: 'MerkePanel.Diskresjon7Tittel' })}>
           <FormattedMessage id="MerkePanel.Diskresjon7" />
         </EtikettFokus>
       )}

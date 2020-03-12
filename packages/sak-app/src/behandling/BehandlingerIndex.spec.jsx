@@ -17,7 +17,10 @@ describe('BehandlingerIndex', () => {
         navn: 'test',
       },
     };
-    const wrapper = shallow(<BehandlingerIndex numBehandlinger={1} person={person} />);
+    const wrapper = shallow(<BehandlingerIndex
+      numBehandlinger={1}
+      person={person}
+    />);
 
     const noBehandling = wrapper.find(NoSelectedBehandling);
     expect(noBehandling).to.have.length(1);

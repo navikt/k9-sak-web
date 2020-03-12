@@ -17,12 +17,11 @@ describe('<FagsakProfile>', () => {
         kode: 'ES',
         navn: 'Engangsstønad',
         kodeverk: 'FAGSAK_YTELSE',
-      },
-      {
-        kode: 'FP',
-        navn: 'Foreldrepenger',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
+      }, {
+      kode: 'FP',
+      navn: 'Foreldrepenger',
+      kodeverk: 'FAGSAK_YTELSE',
+    },
     ],
     [kodeverkTyper.FAGSAK_STATUS]: [
       {
@@ -81,26 +80,24 @@ describe('<FagsakProfile>', () => {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
     };
-    const wrapper = shallowWithIntl(
-      <FagsakProfile
-        saksnummer="12345"
-        sakstype={sakstype}
-        fagsakStatus={status}
-        toggleShowAll={sinon.spy()}
-        alleKodeverk={alleKodeverk}
-        createLink={() => 'lenke'}
-        renderBehandlingMeny={sinon.spy()}
-        renderBehandlingVelger={sinon.spy()}
-        annenPartLink={{
-          saksnr: {
-            verdi: 9876,
-          },
-          behandlingId: 123,
-        }}
-        dekningsgrad={100}
-        intl={intlMock}
-      />,
-    );
+    const wrapper = shallowWithIntl(<FagsakProfile
+      saksnummer="12345"
+      sakstype={sakstype}
+      fagsakStatus={status}
+      toggleShowAll={sinon.spy()}
+      alleKodeverk={alleKodeverk}
+      createLink={() => 'lenke'}
+      renderBehandlingMeny={sinon.spy()}
+      renderBehandlingVelger={sinon.spy()}
+      annenPartLink={{
+        saksnr: {
+          verdi: 9876,
+        },
+        behandlingId: 123,
+      }}
+      dekningsgrad={100}
+      intl={intlMock}
+    />);
 
     const systemtittel = wrapper.find(Systemtittel);
     expect(systemtittel).to.have.length(1);
@@ -124,25 +121,23 @@ describe('<FagsakProfile>', () => {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
     };
-    const wrapper = shallowWithIntl(
-      <FagsakProfile
-        saksnummer="12345"
-        sakstype={sakstype}
-        fagsakStatus={status}
-        toggleShowAll={sinon.spy()}
-        alleKodeverk={alleKodeverk}
-        createLink={() => 'lenke'}
-        renderBehandlingMeny={sinon.spy()}
-        renderBehandlingVelger={sinon.spy()}
-        annenPartLink={{
-          saksnr: {
-            verdi: 9876,
-          },
-          behandlingId: 123,
-        }}
-        intl={intlMock}
-      />,
-    );
+    const wrapper = shallowWithIntl(<FagsakProfile
+      saksnummer="12345"
+      sakstype={sakstype}
+      fagsakStatus={status}
+      toggleShowAll={sinon.spy()}
+      alleKodeverk={alleKodeverk}
+      createLink={() => 'lenke'}
+      renderBehandlingMeny={sinon.spy()}
+      renderBehandlingVelger={sinon.spy()}
+      annenPartLink={{
+        saksnr: {
+          verdi: 9876,
+        },
+        behandlingId: 123,
+      }}
+      intl={intlMock}
+    />);
 
     const systemtittel = wrapper.find(Systemtittel);
     expect(systemtittel).to.have.length(1);
@@ -165,26 +160,24 @@ describe('<FagsakProfile>', () => {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
     };
-    const wrapper = shallowWithIntl(
-      <FagsakProfile
-        saksnummer="12345"
-        sakstype={sakstype}
-        fagsakStatus={status}
-        toggleShowAll={sinon.spy()}
-        alleKodeverk={alleKodeverk}
-        createLink={() => 'lenke'}
-        renderBehandlingMeny={sinon.spy()}
-        renderBehandlingVelger={sinon.spy()}
-        annenPartLink={{
-          saksnr: {
-            verdi: 9876,
-          },
-          behandlingId: 123,
-        }}
-        dekningsgrad={73}
-        intl={intlMock}
-      />,
-    );
+    const wrapper = shallowWithIntl(<FagsakProfile
+      saksnummer="12345"
+      sakstype={sakstype}
+      fagsakStatus={status}
+      toggleShowAll={sinon.spy()}
+      alleKodeverk={alleKodeverk}
+      createLink={() => 'lenke'}
+      renderBehandlingMeny={sinon.spy()}
+      renderBehandlingVelger={sinon.spy()}
+      annenPartLink={{
+        saksnr: {
+          verdi: 9876,
+        },
+        behandlingId: 123,
+      }}
+      dekningsgrad={73}
+      intl={intlMock}
+    />);
 
     const systemtittel = wrapper.find(Systemtittel);
     expect(systemtittel).to.have.length(1);

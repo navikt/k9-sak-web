@@ -9,12 +9,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import {
-  ariaCheck,
-  getLanguageCodeFromSprakkode,
-  hasValidText,
-  maxLength,
-  minLength,
-  required,
+  ariaCheck, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
@@ -26,16 +21,14 @@ import styles from './messages.less';
 const maxLength4000 = maxLength(4000);
 const minLength3 = minLength(3);
 
-const getFritekstMessage = brevmalkode =>
-  brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst';
+const getFritekstMessage = (brevmalkode) => (brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst');
 
 // TODO (TOR) Bør erstattast av ein markør fra backend
-const showFritekst = (brevmalkode, arsakskode) =>
-  brevmalkode === dokumentMalType.INNHENT_DOK ||
-  brevmalkode === dokumentMalType.KORRIGVARS ||
-  brevmalkode === dokumentMalType.FRITKS ||
-  brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING ||
-  (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET);
+const showFritekst = (brevmalkode, arsakskode) => (brevmalkode === dokumentMalType.INNHENT_DOK
+  || brevmalkode === dokumentMalType.KORRIGVARS
+  || brevmalkode === dokumentMalType.FRITKS
+  || brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING
+  || (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET));
 
 /**
  * Messages
@@ -61,7 +54,7 @@ export const MessagesImpl = ({
     return null;
   }
 
-  const previewMessage = e => {
+  const previewMessage = (e) => {
     if (formProps.valid || formProps.pristine) {
       previewCallback(mottaker, brevmalkode, fritekst, arsakskode);
     } else {
@@ -79,11 +72,7 @@ export const MessagesImpl = ({
         label={intl.formatMessage({ id: 'Messages.Recipient' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
-        selectValues={recipients.map(recipient => (
-          <option key={recipient} value={recipient}>
-            {recipient}
-          </option>
-        ))}
+        selectValues={recipients.map((recipient) => <option key={recipient} value={recipient}>{recipient}</option>)}
         bredde="xxl"
       />
       <VerticalSpacer eightPx />
@@ -92,11 +81,7 @@ export const MessagesImpl = ({
         label={intl.formatMessage({ id: 'Messages.Template' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
-        selectValues={templates.map(template => (
-          <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>
-            {template.navn}
-          </option>
-        ))}
+        selectValues={templates.map((template) => <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>{template.navn}</option>)}
         bredde="xxl"
       />
       {brevmalkode === dokumentMalType.REVURDERING_DOK && (
@@ -107,11 +92,7 @@ export const MessagesImpl = ({
             label={intl.formatMessage({ id: 'Messages.Årsak' })}
             validate={[required]}
             placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
-            selectValues={causes.map(cause => (
-              <option key={cause.kode} value={cause.kode}>
-                {cause.navn}
-              </option>
-            ))}
+            selectValues={causes.map((cause) => <option key={cause.kode} value={cause.kode}>{cause.navn}</option>)}
             bredde="xxl"
           />
         </>
@@ -137,7 +118,7 @@ export const MessagesImpl = ({
         <a
           href=""
           onClick={previewMessage}
-          onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
+          onKeyDown={(e) => (e.keyCode === 13 ? previewMessage(e) : null)}
           className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
         >
           {intl.formatMessage({ id: 'Messages.Preview' })}
@@ -151,20 +132,16 @@ MessagesImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   recipients: PropTypes.arrayOf(PropTypes.string).isRequired,
-  templates: PropTypes.arrayOf(
-    PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
-      tilgjengelig: PropTypes.bool.isRequired,
-    }),
-  ).isRequired,
-  causes: PropTypes.arrayOf(
-    PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
-      kodeverk: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  templates: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string.isRequired,
+    navn: PropTypes.string.isRequired,
+    tilgjengelig: PropTypes.bool.isRequired,
+  })).isRequired,
+  causes: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string.isRequired,
+    navn: PropTypes.string.isRequired,
+    kodeverk: PropTypes.string.isRequired,
+  })).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   sprakKode: PropTypes.shape(),
   ...formPropTypes,
@@ -188,40 +165,32 @@ const buildInitalValues = (isKontrollerRevurderingApOpen, recipients, templates)
     : { ...initialValues };
 };
 
-const transformValues = values => {
+const transformValues = (values) => {
   const newValues = values;
   if (values.brevmalkode === dokumentMalType.REVURDERING_DOK && newValues.arsakskode !== ugunstAarsakTyper.ANNET) {
     newValues.fritekst = ' ';
   }
   return newValues;
 };
-const getfilteredCauses = createSelector([ownProps => ownProps.revurderingVarslingArsak], causes =>
-  causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
+const getfilteredCauses = createSelector(
+  [(ownProps) => ownProps.revurderingVarslingArsak],
+  (causes) => causes.filter((cause) => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values));
+  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values));
   return (state, ownProps) => ({
-    ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
-      state,
-      'mottaker',
-      'brevmalkode',
-      'fritekst',
-      'arsakskode',
-    ),
+    ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'mottaker', 'brevmalkode', 'fritekst', 'arsakskode'),
     causes: getfilteredCauses(ownProps),
     initialValues: buildInitalValues(ownProps.isKontrollerRevurderingApOpen, ownProps.recipients, ownProps.templates),
     onSubmit,
   });
 };
 
-const Messages = connect(mapStateToPropsFactory)(
-  injectIntl(
-    behandlingForm({
-      form: formName,
-    })(MessagesImpl),
-  ),
-);
+
+const Messages = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+  form: formName,
+})(MessagesImpl)));
 
 Messages.formName = formName;
 

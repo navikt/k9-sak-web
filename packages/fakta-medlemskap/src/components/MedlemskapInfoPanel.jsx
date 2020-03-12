@@ -8,11 +8,17 @@ import medlemskapMedlemskaPropType from '../propTypes/medlemskapMedlemskapPropTy
 import medlemskapSoknadPropType from '../propTypes/medlemskapSoknadPropType';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 
-const { AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, OVERSTYR_AVKLAR_STARTDATO } = aksjonspunktCodes;
+
+
+const {
+  AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, OVERSTYR_AVKLAR_STARTDATO,
+} = aksjonspunktCodes;
 
 const avklarStartdatoAp = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, OVERSTYR_AVKLAR_STARTDATO];
 
-const hasOpen = aksjonspunkt => aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
+const hasOpen = (aksjonspunkt) => (aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode));
+
+
 
 /**
  * MedlemskapInfoPanel
@@ -20,32 +26,29 @@ const hasOpen = aksjonspunkt => aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.
  * Presentasjonskomponent. Har ansvar for å vise faktapanelene for medlemskap.
  */
 const MedlemskapInfoPanel = ({
-  submittable,
-  aksjonspunkter,
-  readOnly,
-  submitCallback,
-  alleMerknaderFraBeslutter,
-  behandlingId,
-  behandlingVersjon,
-  behandlingType,
-  soknad,
-  alleKodeverk,
-  medlemskap,
-  medlemskapV2,
-  fagsakPerson,
-}) => {
-  const avklarStartdatoAksjonspunkt = aksjonspunkter.find(
-    ap => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
-  );
-  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
-  const aksjonspunkterMinusAvklarStartDato = useMemo(
-    () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode)),
-    [aksjonspunkter],
-  );
+                               submittable,
+                               aksjonspunkter,
+                               readOnly,
+                               submitCallback,
+                               alleMerknaderFraBeslutter,
+                               behandlingId,
+                               behandlingVersjon,
+                               behandlingType,
+                               soknad,
+                               alleKodeverk,
+                               medlemskap,
+                               medlemskapV2,
+                               fagsakPerson,
+                             }) => {
+  const avklarStartdatoAksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+  const avklarStartdatoOverstyring = aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
+  const aksjonspunkterMinusAvklarStartDato = useMemo(() => aksjonspunkter
+    .filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode)), [aksjonspunkter]);
 
   return (
     <>
-      {!hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring) && (
+      { (!hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
+      && (
         <OppholdInntektOgPerioderForm
           soknad={soknad}
           readOnly={readOnly}
@@ -67,6 +70,7 @@ const MedlemskapInfoPanel = ({
 };
 
 MedlemskapInfoPanel.propTypes = {
+
   submittable: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(medlemskapAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -83,5 +87,7 @@ MedlemskapInfoPanel.propTypes = {
   medlemskap: medlemskapMedlemskaPropType.isRequired,
   medlemskapV2: medlemskapMedlemskaPropType.isRequired,
 };
+
+
 
 export default MedlemskapInfoPanel;

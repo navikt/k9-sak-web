@@ -14,44 +14,46 @@ import ApprovalField from './ApprovalField';
 
 import styles from './ToTrinnsForm.less';
 
-const allApproved = formState =>
-  formState
-    .reduce((a, b) => a.concat(b.aksjonspunkter), [])
-    .every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
+const allApproved = (formState) => formState
+  .reduce((a, b) => a.concat(b.aksjonspunkter), [])
+  .every((ap) => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
 
-const allSelected = formState =>
-  formState.reduce((a, b) => a.concat(b.aksjonspunkter), []).every(ap => ap.totrinnskontrollGodkjent !== null);
+const allSelected = (formState) => formState
+  .reduce((a, b) => a.concat(b.aksjonspunkter), [])
+  .every((ap) => ap.totrinnskontrollGodkjent !== null);
+
 
 /*
- * ToTrinnsForm
- *
- * Presentasjonskomponent. Holds the form of the totrinnkontroll
- */
+  * ToTrinnsForm
+  *
+  * Presentasjonskomponent. Holds the form of the totrinnkontroll
+  */
 export const ToTrinnsFormImpl = ({
-  handleSubmit,
-  formState,
-  forhandsvisVedtaksbrev,
-  readOnly,
-  totrinnskontrollContext,
-  erBehandlingEtterKlage,
-  behandlingKlageVurdering,
-  behandlingStatus,
-  isForeldrepengerFagsak,
-  alleKodeverk,
-  disableGodkjennKnapp,
-  erTilbakekreving,
-  ...formProps
-}) => {
+                                   handleSubmit,
+                                   formState,
+                                   forhandsvisVedtaksbrev,
+                                   readOnly,
+                                   totrinnskontrollContext,
+                                   erBehandlingEtterKlage,
+                                   behandlingKlageVurdering,
+                                   behandlingStatus,
+                                   isForeldrepengerFagsak,
+                                   alleKodeverk,
+                                   disableGodkjennKnapp,
+                                   erTilbakekreving,
+                                   ...formProps
+                                 }) => {
   if (formState.length !== totrinnskontrollContext.length) {
     return null;
   }
 
-  const erKlage =
-    !!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK;
+  const erKlage = !!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK;
 
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
-      {totrinnskontrollContext.map(({ contextCode, skjermlenke, aksjonspunkter, skjermlenkeNavn }, contextIndex) => {
+      {totrinnskontrollContext.map(({
+                                      contextCode, skjermlenke, aksjonspunkter, skjermlenkeNavn,
+                                    }, contextIndex) => {
         if (aksjonspunkter.length > 0) {
           return (
             <div key={contextCode}>
@@ -98,7 +100,11 @@ export const ToTrinnsFormImpl = ({
         {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving && (
           <>
             <VerticalSpacer eightPx />
-            <button type="button" className={styles.buttonLink} onClick={forhandsvisVedtaksbrev}>
+            <button
+              type="button"
+              className={styles.buttonLink}
+              onClick={forhandsvisVedtaksbrev}
+            >
               <FormattedMessage id="ToTrinnsForm.ForhandvisBrev" />
             </button>
           </>
@@ -131,14 +137,14 @@ ToTrinnsFormImpl.defaultProps = {
   erTilbakekreving: false,
 };
 
-const validate = values => {
+const validate = (values) => {
   const errors = {};
   if (!values.approvals) {
     return errors;
   }
 
-  errors.approvals = values.approvals.map(kontekst => ({
-    aksjonspunkter: kontekst.aksjonspunkter.map(ap => {
+  errors.approvals = values.approvals.map((kontekst) => ({
+    aksjonspunkter: kontekst.aksjonspunkter.map((ap) => {
       if (!ap.feilFakta && !ap.feilLov && !ap.feilRegel && !ap.annet) {
         return { missingArsakError: isRequiredMessage() };
       }
@@ -153,11 +159,7 @@ const validate = values => {
 const formName = 'toTrinnForm';
 
 const mapStateToProps = (state, ownProps) => ({
-  formState: behandlingFormValueSelector(
-    formName,
-    ownProps.behandlingId,
-    ownProps.behandlingVersjon,
-  )(state, 'approvals'),
+  formState: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'approvals'),
 });
 const ToTrinnsForm = behandlingForm({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
 

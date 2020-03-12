@@ -16,9 +16,13 @@ import {
 } from '@fpsak-frontend/fp-felles';
 
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import {
+  hasValidText, maxLength, minLength, required,
+} from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -51,7 +55,7 @@ const lagArbeidsgiverString = (andelerMedGraderingUtenBG, getKodeverknavn) => {
   if (andelerMedGraderingUtenBG.length === 1) {
     return bestemVisning(andelerMedGraderingUtenBG[0], getKodeverknavn);
   }
-  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map(andel => bestemVisning(andel, getKodeverknavn));
+  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map((andel) => bestemVisning(andel, getKodeverknavn));
   const sisteNavn = arbeidsgiverVisningsnavn.splice(andelerMedGraderingUtenBG.length - 1);
   const tekst = arbeidsgiverVisningsnavn.join(', ');
   return `${tekst} og ${sisteNavn}`;
@@ -82,22 +86,22 @@ export const GraderingUtenBG2 = ({
   ...formProps
 }) => {
   const aksjonspunkt = aksjonspunkter
-    ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
+    ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
     : undefined;
   if (!aksjonspunkt || !andelerMedGraderingUtenBG || andelerMedGraderingUtenBG.length === 0) {
     return null;
   }
-  const aksjonspunktTekstId =
-    andelerMedGraderingUtenBG.length > 1
-      ? 'Beregningsgrunnlag.Gradering.AksjonspunkttekstFlereForhold'
-      : 'Beregningsgrunnlag.Gradering.AksjonspunkttekstEtForhold';
+  const aksjonspunktTekstId = andelerMedGraderingUtenBG.length > 1
+    ? 'Beregningsgrunnlag.Gradering.AksjonspunkttekstFlereForhold'
+    : 'Beregningsgrunnlag.Gradering.AksjonspunkttekstEtForhold';
 
   return (
     <form onSubmit={formProps.handleSubmit} className={styles.graderingForm}>
+
       <AvsnittSkiller luftOver luftUnder dividerParagraf />
 
       <ElementWrapper>
-        {lagAksjonspunktViser(aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn)}
+        { lagAksjonspunktViser(aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn)}
         <VerticalSpacer sixteenPx />
       </ElementWrapper>
       <Element>
@@ -117,7 +121,10 @@ export const GraderingUtenBG2 = ({
               label={<FormattedMessage id="Beregningsgrunnlag.Gradering.FordelingErRiktig" />}
               value={false}
             />
-            <RadioOption label={<FormattedMessage id="Beregningsgrunnlag.Gradering.FordelingMåVurderes" />} value />
+            <RadioOption
+              label={<FormattedMessage id="Beregningsgrunnlag.Gradering.FordelingMåVurderes" />}
+              value
+            />
           </RadioGroupField>
         </Column>
       </Row>
@@ -161,7 +168,7 @@ GraderingUtenBG2.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
 };
 
-export const transformValues = values => {
+export const transformValues = (values) => {
   const skalSettesPaaVent = values[radioFieldName];
   const begrunnelse = values[begrunnelseFieldName];
   return {
@@ -172,13 +179,15 @@ export const transformValues = values => {
 };
 
 export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.venteaarsakKode, (state, ownProps) => ownProps.aksjonspunkter],
-  (venteKode, aksjonspunkter) => {
+  [(state, ownProps) => ownProps.venteaarsakKode,
+    (state, ownProps) => ownProps.aksjonspunkter], (
+    venteKode, aksjonspunkter,
+  ) => {
     const vurderGraderingUtenBGAP = aksjonspunkter
-      ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
+      ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
       : undefined;
     const settPaaVentAap = aksjonspunkter
-      ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
+      ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
       : undefined;
     if (!vurderGraderingUtenBGAP || vurderGraderingUtenBGAP.status.kode !== aksjonspunktStatus.UTFORT) {
       return undefined;
@@ -206,21 +215,20 @@ export const buildInitialValues = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
   const getKodeverknavn = getKodeverknavnFn(ownProps.alleKodeverk, kodeverkTyper);
-  return state => {
+  return (state) => {
     const initialValues = buildInitialValues(state, ownProps);
-    return {
+    return ({
       getKodeverknavn,
       onSubmit,
       initialValues,
-    };
+    });
   };
 };
 
-export default connect(mapStateToPropsFactory)(
-  behandlingForm({
-    form: formName,
-    enableReinitialize: true,
-  })(GraderingUtenBG2),
-);
+
+export default connect(mapStateToPropsFactory)(behandlingForm({
+  form: formName,
+  enableReinitialize: true,
+})(GraderingUtenBG2));

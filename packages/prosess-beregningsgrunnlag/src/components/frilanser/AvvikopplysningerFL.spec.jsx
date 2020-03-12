@@ -6,7 +6,7 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import AvviksopplysningerFL from './AvvikopplysningerFL';
 
 const beregnetAarsinntekt = 360000;
-const sammenligningsgrunnlag = kode => ({
+const sammenligningsgrunnlag = (kode) => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',
   rapportertPrAar: 330000,
@@ -21,18 +21,18 @@ const sammenligningsgrunnlag = kode => ({
 describe('<AvviksopplysningerFL>', () => {
   it('Skal teste kombinasjonsStatus:FNSN', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerFL
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={{
+    const wrapper = shallowWithIntl(<AvviksopplysningerFL
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={
+        {
           isKombinasjonsstatus: true,
           isFrilanser: true,
           isArbeidstaker: false,
           isSelvstendigNaeringsdrivende: true,
-        }}
-      />,
-    );
+        }
+      }
+    />);
     const rows = wrapper.find('FlexRow');
     expect(rows.length).to.be.equal(1);
     const text = rows.first().find('FormattedMessage');
@@ -41,13 +41,11 @@ describe('<AvviksopplysningerFL>', () => {
 
   it('Skal teste at avvikoplysningerATFL rendres', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_FL');
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerFL
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={{ isKombinasjonsstatus: false }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerFL
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
+    />);
     const panel = wrapper.find('AvvikopplysningerATFLSN');
     expect(panel.length).to.be.equal(1);
     const expectedProps = {
@@ -63,25 +61,21 @@ describe('<AvviksopplysningerFL>', () => {
 
   it('Skal teste tabellen IKKE renderes status:SAMMENLIGNING_ATFL_SN', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerFL
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={{ isKombinasjonsstatus: false }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerFL
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
+    />);
     const rows = wrapper.find('FlexRow');
     expect(rows.length).to.be.equal(0);
   });
   it('Skal teste tabellen IKKE rendres med feil status:SAMMENLIGNING_AT', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_AT');
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerFL
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={{ isKombinasjonsstatus: false }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerFL
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
+    />);
     const rows = wrapper.find('FlexRow');
     expect(rows.length).to.be.equal(0);
   });

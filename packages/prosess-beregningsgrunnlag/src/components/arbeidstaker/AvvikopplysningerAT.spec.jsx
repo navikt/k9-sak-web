@@ -5,7 +5,7 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import AvviksopplysningerAT from './AvvikopplysningerAT';
 
 const beregnetAarsinntekt = 360000;
-const sammenligningsgrunnlag = kode => ({
+const sammenligningsgrunnlag = (kode) => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',
   rapportertPrAar: 330000,
@@ -20,13 +20,11 @@ const sammenligningsgrunnlag = kode => ({
 describe('<AvviksopplysningerAT>', () => {
   it('Skal teste tabellen får korrekte rader med innhold når kombinasjonsstatus=KOMBINERT_AT_SN', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerAT
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={{ isKombinasjonsstatus: true, isArbeidstaker: true, isSelvstendigNaeringsdrivende: true }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerAT
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={{ isKombinasjonsstatus: true, isArbeidstaker: true, isSelvstendigNaeringsdrivende: true }}
+    />);
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const infoText = rows.first().find('FormattedMessage');
@@ -34,18 +32,13 @@ describe('<AvviksopplysningerAT>', () => {
   });
   it('Skal teste tabellen får korrekte rader med innhold når kombinasjonsstatus=KOMBINERT_AT_FL_SN', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerAT
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={{
-          isKombinasjonsstatus: true,
-          isArbeidstaker: true,
-          isSelvstendigNaeringsdrivende: true,
-          isFrilanser: true,
-        }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerAT
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={{
+        isKombinasjonsstatus: true, isArbeidstaker: true, isSelvstendigNaeringsdrivende: true, isFrilanser: true,
+      }}
+    />);
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const infoText = rows.first().find('FormattedMessage');
@@ -53,13 +46,11 @@ describe('<AvviksopplysningerAT>', () => {
   });
   it('Skal teste at avvikoplysningerATFLSN rendres', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_AT');
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerAT
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={{ isKombinasjonsstatus: false }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerAT
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
+    />);
     const panel = wrapper.find('AvvikopplysningerATFLSN');
     expect(panel.length).to.be.equal(1);
     const expectedProps = {
@@ -75,13 +66,11 @@ describe('<AvviksopplysningerAT>', () => {
 
   it('Skal teste tabellen rendres med feil status:SAMMENLIGNING_FL', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_FL');
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerAT
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={{ isKombinasjonsstatus: false, isFrilanser: true }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerAT
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={{ isKombinasjonsstatus: false, isFrilanser: true }}
+    />);
     const rows = wrapper.find('FlexRow');
     expect(rows.length).to.be.equal(0);
   });

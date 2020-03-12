@@ -83,22 +83,18 @@ const apFastsettBgTidsbegrensetArbeidsforhold = {
 
 const apEttLukketOgEttApent = [apFastsettBgATFL, apVurderDekningsgrad];
 
-const allAndeler = [
-  {
-    aktivitetStatus: {
-      kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    },
-    elementNavn: 'arbeidsgiver 1',
-    beregnetPrAar: 200000,
-    overstyrtPrAar: 100,
+const allAndeler = [{
+  aktivitetStatus: {
+    kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   },
-];
-const allPerioder = [
-  {
-    bruttoPrAar: 300000,
-    beregningsgrunnlagPrStatusOgAndel: allAndeler,
-  },
-];
+  elementNavn: 'arbeidsgiver 1',
+  beregnetPrAar: 200000,
+  overstyrtPrAar: 100,
+}];
+const allPerioder = [{
+  bruttoPrAar: 300000,
+  beregningsgrunnlagPrStatusOgAndel: allAndeler,
+}];
 
 const relevanteStatuser = {
   isArbeidstaker: true,
@@ -112,17 +108,16 @@ const lagPeriode = () => ({
   bruttoInkludertBortfaltNaturalytelsePrAar: 360000,
   avkortetPrAar: 360000,
   redusertPrAar: 360000,
-  beregningsgrunnlagPrStatusOgAndel: [
-    {
-      aktivitetStatus: {
-        kode: 'AT',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+  beregningsgrunnlagPrStatusOgAndel: [{
+    aktivitetStatus: {
+      kode: 'AT',
+      kodeverk: 'AKTIVITET_STATUS',
     },
-  ],
+  }],
   andelerLagtTilManueltIForrige: [],
 });
-const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenligningSum, dekningsgrad, tilfeller) => ({
+const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall,
+  sammenligningSum, dekningsgrad, tilfeller) => ({
   beregningsgrunnlagPeriode: [lagPeriode()],
   sammenligningsgrunnlag: {
     avvikPromille,
@@ -133,26 +128,22 @@ const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenlig
   faktaOmBeregning: {
     faktaOmBeregningTilfeller: tilfeller,
   },
-  aktivitetStatus: [
-    {
-      kode: 'UDEFINERT',
-    },
-  ],
+  aktivitetStatus: [{
+    kode: 'UDEFINERT',
+  }],
 });
 const alleKodeverk = {
   test: 'test',
 };
-const mockVilkar = [
-  {
-    vilkarType: {
-      kode: 'FP_VK_41',
-    },
-    vilkarStatus: {
-      kode: vilkarUtfallType.OPPFYLT,
-    },
+const mockVilkar = [{
+  vilkarType: {
+    kode: 'FP_VK_41',
   },
-];
-const sammenligningsgrunnlag = kode => ({
+  vilkarStatus: {
+    kode: vilkarUtfallType.OPPFYLT,
+  },
+}];
+const sammenligningsgrunnlag = (kode) => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',
   rapportertPrAar: 330000,
@@ -164,28 +155,25 @@ const sammenligningsgrunnlag = kode => ({
   differanseBeregnet: 12100,
 });
 
-const getBGVilkar = vilkar =>
-  vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
+const getBGVilkar = (vilkar) => (vilkar ? vilkar.find((v) => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined);
 describe('<BeregningForm>', () => {
   it('skal teste at AvviksopplysningerPanel får korrekte props fra BeregningFP', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 100000, 100000, 100, []);
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
     beregningsgrunnlag.sammenligningsgrunnlagPrStatus = [sammenligningsgrunnlagPrStatus];
-    const wrapper = shallow(
-      <BeregningFormImpl
-        readOnly={false}
-        beregningsgrunnlag={beregningsgrunnlag}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
-        relevanteStatuser={relevanteStatuser}
-        submitCallback={sinon.spy}
-        readOnlySubmitButton
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={alleKodeverk}
-        vilkaarBG={getBGVilkar(mockVilkar)}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallow(<BeregningFormImpl
+      readOnly={false}
+      beregningsgrunnlag={beregningsgrunnlag}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
     const avvikPanel = wrapper.find(AvviksopplysningerPanel);
     expect(avvikPanel.props().harAksjonspunkter).to.have.equal(true);
     expect(avvikPanel.props().gjelderBesteberegning).to.have.equal(false);
@@ -195,60 +183,54 @@ describe('<BeregningForm>', () => {
     expect(avvikPanel.props().allePerioder[0]).to.eql(expectedPerioder);
   });
   it('skal teste at AksjonspunktHjelp rendrer fra BeregningFP', () => {
-    const wrapper = shallow(
-      <BeregningFormImpl
-        readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
-        beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={alleKodeverk}
-        relevanteStatuser={relevanteStatuser}
-        submitCallback={sinon.spy}
-        readOnlySubmitButton
-        vilkaarBG={getBGVilkar(mockVilkar)}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallow(<BeregningFormImpl
+      readOnly={false}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
     const aksjonspunktHelpTextHTML = wrapper.find(AksjonspunktHelpTextHTML);
     expect(aksjonspunktHelpTextHTML.length).to.equal(1);
   });
   it('skal teste at SkjeringspunktOgStatusPanel får korrekte props fra BeregningFP', () => {
-    const wrapper = shallow(
-      <BeregningFormImpl
-        readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
-        beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={alleKodeverk}
-        relevanteStatuser={relevanteStatuser}
-        submitCallback={sinon.spy}
-        readOnlySubmitButton
-        vilkaarBG={getBGVilkar(mockVilkar)}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallow(<BeregningFormImpl
+      readOnly={false}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
     const skjeringspunktOgStatusPanel = wrapper.find(SkjeringspunktOgStatusPanel2);
     expect(skjeringspunktOgStatusPanel.props().gjeldendeAksjonspunkter).to.equal(apEttLukketOgEttApent);
   });
 
   it('skal teste at Aksjonspunktbehandler får korrekte props fra BeregningFP', () => {
-    const wrapper = shallow(
-      <BeregningFormImpl
-        readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
-        beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={alleKodeverk}
-        relevanteStatuser={relevanteStatuser}
-        submitCallback={sinon.spy}
-        readOnlySubmitButton
-        vilkaarBG={getBGVilkar(mockVilkar)}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallow(<BeregningFormImpl
+      readOnly={false}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
     const aksjonspunktBehandler = wrapper.find(AksjonspunktBehandler);
     expect(aksjonspunktBehandler.props().readOnly).to.have.equal(false);
     expect(aksjonspunktBehandler.props().tidsBegrensetInntekt).to.have.equal(false);
@@ -259,21 +241,19 @@ describe('<BeregningForm>', () => {
 
   it('skal teste at Beregningsgrunnlag får korrekte props fra BeregningFP', () => {
     relevanteStatuser.skalViseBeregningsgrunnlag = true;
-    const wrapper = shallow(
-      <BeregningFormImpl
-        readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
-        beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={alleKodeverk}
-        relevanteStatuser={relevanteStatuser}
-        submitCallback={sinon.spy}
-        readOnlySubmitButton
-        vilkaarBG={getBGVilkar(mockVilkar)}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallow(<BeregningFormImpl
+      readOnly={false}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
     const formName = 'BeregningForm';
     const beregningsgrunnlag = wrapper.find(Beregningsgrunnlag);
     expect(beregningsgrunnlag.props().relevanteStatuser).to.have.equal(relevanteStatuser);
@@ -288,21 +268,19 @@ describe('<BeregningForm>', () => {
 
   it('skal teste at Beregningsgrunnlag ikke blir vist', () => {
     relevanteStatuser.skalViseBeregningsgrunnlag = false;
-    const wrapper = shallow(
-      <BeregningFormImpl
-        readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
-        beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={alleKodeverk}
-        relevanteStatuser={relevanteStatuser}
-        submitCallback={sinon.spy}
-        readOnlySubmitButton
-        vilkaarBG={getBGVilkar(mockVilkar)}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallow(<BeregningFormImpl
+      readOnly={false}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
     const beregningsgrunnlag = wrapper.find(Beregningsgrunnlag);
     expect(beregningsgrunnlag).to.have.lengthOf(0);
   });
@@ -310,21 +288,19 @@ describe('<BeregningForm>', () => {
   it('skal teste at BeregningForm rendrer riktige komponenter', () => {
     relevanteStatuser.skalViseBeregningsgrunnlag = false;
     const bg = lagBeregningsgrunnlag(0, 100000, 100000, 100, []);
-    const wrapper = shallowWithIntl(
-      <BeregningFormImpl
-        readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
-        beregningsgrunnlag={bg}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={alleKodeverk}
-        relevanteStatuser={relevanteStatuser}
-        submitCallback={sinon.spy}
-        readOnlySubmitButton
-        vilkaarBG={getBGVilkar(mockVilkar)}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallowWithIntl(<BeregningFormImpl
+      readOnly={false}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      beregningsgrunnlag={bg}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
     const avvikspanel = wrapper.find('AvviksopplysningerPanel');
     expect(avvikspanel).to.have.lengthOf(1);
     const aksjonPunktPanel = wrapper.find(AksjonspunktBehandler);
@@ -332,6 +308,7 @@ describe('<BeregningForm>', () => {
     const beregningsResultatPanel = wrapper.find(BeregningsresultatTable);
     expect(beregningsResultatPanel).to.have.lengthOf(1);
   });
+
 
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5039, samt varigEndring', () => {
     const values = {

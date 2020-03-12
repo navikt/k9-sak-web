@@ -41,7 +41,7 @@ const behandlingerRestApis = {
 };
 
 export const getEnabledContexts = createSelector(
-  [props => props.behandlingerFpsak, props => props.behandlingerFptilbake],
+  [(props) => props.behandlingerFpsak, (props) => props.behandlingerFptilbake],
   (behandlingerFpsak = [], behandlingerFptilbake = []) => behandlingerFpsak.concat(behandlingerFptilbake),
 );
 
@@ -89,7 +89,7 @@ export const FagsakProfileIndex = ({
         keepDataWhenRefetching
         endpoints={enabledApis}
         allowErrors
-        render={dataProps => {
+        render={(dataProps) => {
           const alleBehandlinger = getEnabledContexts(dataProps);
           if (shouldRedirectToBehandlinger) {
             return <Redirect to={findPathToBehandling(saksnummer, location, alleBehandlinger)} />;
@@ -120,9 +120,9 @@ export const FagsakProfileIndex = ({
       <DataFetcher
         behandlingId={selectedBehandlingId}
         behandlingVersjon={behandlingVersjon}
-        showComponent={risikoklassifiseringData.every(d => d.isEndpointEnabled())}
+        showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
         endpoints={risikoklassifiseringData}
-        render={dataProps => <RisikoklassifiseringIndex {...dataProps} />}
+        render={(dataProps) => <RisikoklassifiseringIndex {...dataProps} />}
       />
     </div>
   );
@@ -147,11 +147,12 @@ FagsakProfileIndex.defaultProps = {
   behandlingVersjon: null,
 };
 
-export const getEnabledApis = createSelector([getEnabledApplicationContexts], enabledApplicationContexts =>
-  enabledApplicationContexts.map(c => behandlingerRestApis[c]),
+export const getEnabledApis = createSelector(
+  [getEnabledApplicationContexts],
+  (enabledApplicationContexts) => enabledApplicationContexts.map((c) => behandlingerRestApis[c]),
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   enabledApis: getEnabledApis(state),
   saksnummer: getSelectedSaksnummer(state),
   dekningsgrad: getSelectedFagsakDekningsgrad(state),
@@ -163,7 +164,11 @@ const mapStateToProps = state => ({
   behandlingVersjon: getBehandlingVersjon(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+  },
+  dispatch,
+);
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   ...ownProps,

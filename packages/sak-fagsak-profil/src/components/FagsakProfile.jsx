@@ -5,7 +5,9 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -47,12 +49,16 @@ export const FagsakProfile = ({
               </EtikettInfo>
             </FlexColumn>
           )}
-          <FlexColumn>{renderBehandlingMeny()}</FlexColumn>
+          <FlexColumn>
+            {renderBehandlingMeny()}
+          </FlexColumn>
         </FlexRow>
         <VerticalSpacer eightPx />
         <FlexRow>
           <FlexColumn>
-            <Normaltekst>{`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}</Normaltekst>
+            <Normaltekst>
+              {`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}
+            </Normaltekst>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>

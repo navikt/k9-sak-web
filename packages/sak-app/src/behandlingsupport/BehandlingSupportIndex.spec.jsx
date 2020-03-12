@@ -9,14 +9,12 @@ import { BehandlingSupportIndex } from './BehandlingSupportIndex';
 
 describe('<BehandlingSupportIndex>', () => {
   xit('skal vise godkjennings-panelet', () => {
-    const wrapper = shallow(
-      <BehandlingSupportIndex
-        activeSupportPanel={supportTabs.APPROVAL}
-        acccessibleSupportPanels={[supportTabs.HISTORY, supportTabs.APPROVAL, supportTabs.DOCUMENTS]}
-        enabledSupportPanels={[supportTabs.HISTORY, supportTabs.APPROVAL, supportTabs.DOCUMENTS]}
-        getSupportPanelLocation={() => ({ test: 'location-mock' })}
-      />,
-    );
+    const wrapper = shallow(<BehandlingSupportIndex
+      activeSupportPanel={supportTabs.APPROVAL}
+      acccessibleSupportPanels={[supportTabs.HISTORY, supportTabs.APPROVAL, supportTabs.DOCUMENTS]}
+      enabledSupportPanels={[supportTabs.HISTORY, supportTabs.APPROVAL, supportTabs.DOCUMENTS]}
+      getSupportPanelLocation={() => ({ test: 'location-mock' })}
+    />);
 
     expect(wrapper.find(ApprovalIndex)).to.have.length(1);
   });

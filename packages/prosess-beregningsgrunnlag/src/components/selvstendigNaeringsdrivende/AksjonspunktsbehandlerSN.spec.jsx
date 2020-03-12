@@ -24,28 +24,26 @@ const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse, status) => ({
 
 describe('<AksjonspunktsbehandlerSN>', () => {
   it('Skal teste at riktige kompoenten renderes med riktig props', () => {
-    const snNyIArb = mockAksjonspunktMedKodeOgStatus(
-      FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-      undefined,
-      'OPPR',
-    );
+    const snNyIArb = mockAksjonspunktMedKodeOgStatus(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, undefined, 'OPPR');
 
-    const wrapper = shallowWithIntl(
-      <AksjonspunktBehandlerSN readOnly={false} aksjonspunkter={[snNyIArb]} behandlingId={1} behandlingVersjon={1} />,
-    );
+    const wrapper = shallowWithIntl(<AksjonspunktBehandlerSN
+      readOnly={false}
+      aksjonspunkter={[snNyIArb]}
+      behandlingId={1}
+      behandlingVersjon={1}
+    />);
     const compVurderOgFastsettSN2 = wrapper.find(VurderOgFastsettSN2);
     expect(compVurderOgFastsettSN2).to.have.length(1);
   });
   it('Skal teste at kompoenten IKKE renderes med manglende props', () => {
-    const snNyIArb = mockAksjonspunktMedKodeOgStatus(
-      FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-      undefined,
-      'OPPR',
-    );
+    const snNyIArb = mockAksjonspunktMedKodeOgStatus(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, undefined, 'OPPR');
 
-    const wrapper = shallowWithIntl(
-      <AksjonspunktBehandlerSN readOnly={false} aksjonspunkter={[snNyIArb]} behandlingId={1} behandlingVersjon={1} />,
-    );
+    const wrapper = shallowWithIntl(<AksjonspunktBehandlerSN
+      readOnly={false}
+      aksjonspunkter={[snNyIArb]}
+      behandlingId={1}
+      behandlingVersjon={1}
+    />);
     const compVurderOgFastsettSN2 = wrapper.find(VurderOgFastsettSN2);
     expect(compVurderOgFastsettSN2).to.have.length(0);
   });

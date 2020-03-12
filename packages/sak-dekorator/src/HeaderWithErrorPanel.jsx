@@ -1,4 +1,6 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import React, {
+  useState, useMemo, useCallback, useEffect, useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import BoxedListWithLinks from '@navikt/boxed-list-with-links';
 import Header from '@navikt/nap-header';
@@ -15,24 +17,19 @@ import styles from './headerWithErrorPanel.less';
 
 const cache = createIntlCache();
 
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
+const intl = createIntl({
+  locale: 'nb-NO',
+  messages,
+}, cache);
+
 
 const useOutsideClickEvent = (erLenkepanelApent, setLenkePanelApent) => {
   const wrapperRef = useRef(null);
-  const handleClickOutside = useCallback(
-    event => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        setLenkePanelApent(false);
-      }
-    },
-    [wrapperRef.current],
-  );
+  const handleClickOutside = useCallback((event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setLenkePanelApent(false);
+    }
+  }, [wrapperRef.current]);
 
   useEffect(() => {
     if (erLenkepanelApent) {
@@ -73,39 +70,29 @@ const HeaderWithErrorPanel = ({
     setSiteHeight(fixedHeaderRef.current.clientHeight);
   }, [errorMessages.length]);
 
-  const lenkerFormatertForBoxedList = useMemo(
-    () =>
-      iconLinks.map(link => ({
-        name: link.text,
-        href: link.url,
-        isExternal: true,
-      })),
-    [],
-  );
-  const popperPropsChildren = useCallback(
-    () => (
-      <BoxedListWithLinks
-        items={lenkerFormatertForBoxedList}
+  const lenkerFormatertForBoxedList = useMemo(() => iconLinks.map((link) => ({
+    name: link.text,
+    href: link.url,
+    isExternal: true,
+  })), []);
+  const popperPropsChildren = useCallback(() => (
+    <BoxedListWithLinks
+      items={lenkerFormatertForBoxedList}
+      onClick={() => {
+        setLenkePanelApent(false);
+      }}
+    />
+  ), []);
+  const referencePropsChildren = useCallback(({ ref }) => (
+    <div ref={ref}>
+      <SystemButton
         onClick={() => {
-          setLenkePanelApent(false);
+          setLenkePanelApent(!erLenkepanelApent);
         }}
+        isToggled={erLenkepanelApent}
       />
-    ),
-    [],
-  );
-  const referencePropsChildren = useCallback(
-    ({ ref }) => (
-      <div ref={ref}>
-        <SystemButton
-          onClick={() => {
-            setLenkePanelApent(!erLenkepanelApent);
-          }}
-          isToggled={erLenkepanelApent}
-        />
-      </div>
-    ),
-    [erLenkepanelApent],
-  );
+    </div>
+  ), [erLenkepanelApent]);
 
   return (
     <header ref={fixedHeaderRef} className={styles.container}>

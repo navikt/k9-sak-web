@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
+import {
+  Element, Normaltekst, EtikettLiten,
+} from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -11,6 +13,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
+
 const createHeaderRow = () => (
   <Row key="SNInntektHeader">
     <Column xs="10">
@@ -19,13 +22,14 @@ const createHeaderRow = () => (
       </EtikettLiten>
     </Column>
     <Column xs="2" className={beregningStyles.colAarText}>
+
       <EtikettLiten className={beregningStyles.etikettLiten}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
       </EtikettLiten>
     </Column>
   </Row>
 );
-const createSumRow = pgiSnitt => (
+const createSumRow = (pgiSnitt) => (
   <>
     {pgiSnitt !== undefined && (
       <>
@@ -37,31 +41,40 @@ const createSumRow = pgiSnitt => (
         <Row key="grunnlagAarsinntektSN">
           <Column xs="10" className={beregningStyles.rightAlignTextInDiv}>
             <Element>
-              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende" />
+              <FormattedMessage
+                id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende"
+              />
             </Element>
           </Column>
           <Column xs="2" className={beregningStyles.colAarText}>
-            <Element>{formatCurrencyNoKr(pgiSnitt)}</Element>
+            <Element>
+              {formatCurrencyNoKr(pgiSnitt)}
+            </Element>
           </Column>
         </Row>
       </>
     )}
   </>
 );
-const createInntektRows = pgiVerdier => (
+const createInntektRows = (pgiVerdier) => (
   <>
-    {pgiVerdier.map(element => (
+    {pgiVerdier.map((element) => (
       <Row key={element.årstall}>
         <Column xs="7">
-          <EtikettLiten>{element.årstall}</EtikettLiten>
+          <EtikettLiten>
+            {element.årstall}
+          </EtikettLiten>
         </Column>
         <Column xs="5" className={beregningStyles.colAarText}>
-          <EtikettLiten>{formatCurrencyNoKr(element.beløp)}</EtikettLiten>
+          <EtikettLiten>
+            {formatCurrencyNoKr(element.beløp)}
+          </EtikettLiten>
         </Column>
       </Row>
     ))}
   </>
 );
+
 
 /**
  * GrunnlagForAarsinntektPanelSN
@@ -69,10 +82,10 @@ const createInntektRows = pgiVerdier => (
  * Presentasjonskomponent. Viser PGI-verdier for selvstendig næringsdrivende.
  * Vises også hvis status er en kombinasjonsstatus som inkluderer selvstendig næringsdrivende.
  */
-export const GrunnlagForAarsinntektPanelSN = ({ alleAndeler }) => {
-  const snAndel = alleAndeler.find(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-  );
+export const GrunnlagForAarsinntektPanelSN = ({
+  alleAndeler,
+}) => {
+  const snAndel = alleAndeler.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   if (!snAndel) {
     return null;
   }
@@ -95,6 +108,7 @@ export const GrunnlagForAarsinntektPanelSN = ({ alleAndeler }) => {
       {createHeaderRow()}
       {createInntektRows(pgiVerdier)}
       {createSumRow(pgiSnitt)}
+
     </>
   );
 };

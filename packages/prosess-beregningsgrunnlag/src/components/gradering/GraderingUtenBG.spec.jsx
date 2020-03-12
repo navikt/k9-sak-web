@@ -18,6 +18,7 @@ const mockAksjonspunktMedKodeOgStatus = (apKode, status) => ({
     kode: status,
   },
   begrunnelse: 'begrunnelse',
+
 });
 
 const atAndelEn = {
@@ -56,7 +57,7 @@ const flAndel = {
   andelsnr: 4,
 };
 
-const getKodeverknavn = kodeverk => {
+const getKodeverknavn = (kodeverk) => {
   if (kodeverk.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE) {
     return 'Selvstendig næringsdrivende';
   }
@@ -72,18 +73,16 @@ const getKodeverknavn = kodeverk => {
 
 describe('<GraderingUtenBG>', () => {
   it('skal teste at komponent vises riktig gitt en liste arbeidsforhold', () => {
-    const wrapper = shallowWithIntl(
-      <UnwrappedForm
-        readOnly={false}
-        andelerMedGraderingUtenBG={[atAndelEn, atAndelTo]}
-        aksjonspunkter={[mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')]}
-        getKodeverknavn={getKodeverknavn}
-        submitCallback={sinon.spy()}
-        behandlingId={1}
-        behandlingVersjon={1}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      readOnly={false}
+      andelerMedGraderingUtenBG={[atAndelEn, atAndelTo]}
+      aksjonspunkter={[mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')]}
+      getKodeverknavn={getKodeverknavn}
+      submitCallback={sinon.spy()}
+      behandlingId={1}
+      behandlingVersjon={1}
+      {...reduxFormPropsMock}
+    />);
     const radioOption = wrapper.find(RadioOption);
     expect(radioOption).to.have.length(2);
     const textfield = wrapper.find(TextAreaField);
@@ -99,18 +98,16 @@ describe('<GraderingUtenBG>', () => {
   });
 
   it('skal teste at komponent vises riktig gitt en liste arbeidsforhold der et eller flere er sn / fl', () => {
-    const wrapper = shallowWithIntl(
-      <UnwrappedForm
-        readOnly={false}
-        andelerMedGraderingUtenBG={[atAndelEn, snAndel, flAndel]}
-        submitCallback={sinon.spy()}
-        aksjonspunkter={[mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')]}
-        getKodeverknavn={getKodeverknavn}
-        behandlingId={1}
-        behandlingVersjon={1}
-        {...reduxFormPropsMock}
-      />,
-    );
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      readOnly={false}
+      andelerMedGraderingUtenBG={[atAndelEn, snAndel, flAndel]}
+      submitCallback={sinon.spy()}
+      aksjonspunkter={[mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')]}
+      getKodeverknavn={getKodeverknavn}
+      behandlingId={1}
+      behandlingVersjon={1}
+      {...reduxFormPropsMock}
+    />);
     const radioOption = wrapper.find(RadioOption);
     expect(radioOption).to.have.length(2);
     const textfield = wrapper.find(TextAreaField);
@@ -120,12 +117,11 @@ describe('<GraderingUtenBG>', () => {
     const hjelpetekst = wrapper.find('FormattedHTMLMessage');
     const formattedMessages = wrapper.find('FormattedMessage');
     expect(formattedMessages.prop('id')).to.eql('Beregningsgrunnlag.Gradering.Tittel');
-    expect(hjelpetekst.prop('values')).to.eql({
-      arbeidsforholdTekst: 'arbeidsgiver (123), selvstendig næringsdrivende og frilanser',
-    });
+    expect(hjelpetekst.prop('values')).to.eql({ arbeidsforholdTekst: 'arbeidsgiver (123), selvstendig næringsdrivende og frilanser' });
     const element = wrapper.find(Element);
     expect(element).to.have.length(1);
   });
+
 
   it('skal teste at komponent bygger korrekte initial values dersom aksjonspunktet ikke finnes', () => {
     const expectedInitialValues = undefined;
@@ -146,15 +142,9 @@ describe('<GraderingUtenBG>', () => {
       graderingUtenBGSettPaaVent: true,
       begrunnelse: 'begrunnelse',
     };
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus('5050', 'UTFO'),
-      mockAksjonspunktMedKodeOgStatus('7019', 'OPPR'),
-    ];
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus('5050', 'UTFO'), mockAksjonspunktMedKodeOgStatus('7019', 'OPPR')];
 
-    const actualInitialValues = buildInitialValues.resultFunc(
-      venteArsakType.VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
-      aksjonspunkter,
-    );
+    const actualInitialValues = buildInitialValues.resultFunc(venteArsakType.VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG, aksjonspunkter);
     expect(actualInitialValues).is.deep.equal(expectedInitialValues);
   });
 
@@ -164,9 +154,7 @@ describe('<GraderingUtenBG>', () => {
       begrunnelse: 'begrunnelse',
     };
 
-    const actualInitialValues = buildInitialValues.resultFunc(undefined, [
-      mockAksjonspunktMedKodeOgStatus('5050', 'UTFO'),
-    ]);
+    const actualInitialValues = buildInitialValues.resultFunc(undefined, [mockAksjonspunktMedKodeOgStatus('5050', 'UTFO')]);
     expect(actualInitialValues).is.deep.equal(expectedInitialValues);
   });
 
@@ -175,15 +163,9 @@ describe('<GraderingUtenBG>', () => {
       graderingUtenBGSettPaaVent: true,
       begrunnelse: 'begrunnelse',
     };
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus('5050', 'UTFO'),
-      mockAksjonspunktMedKodeOgStatus('7019', 'OPPR'),
-    ];
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus('5050', 'UTFO'), mockAksjonspunktMedKodeOgStatus('7019', 'OPPR')];
 
-    const actualInitialValues = buildInitialValues.resultFunc(
-      venteArsakType.VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
-      aksjonspunkter,
-    );
+    const actualInitialValues = buildInitialValues.resultFunc(venteArsakType.VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG, aksjonspunkter);
     expect(actualInitialValues).is.deep.equal(expectedInitialValues);
   });
 });

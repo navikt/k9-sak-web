@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Element, Normaltekst, Undertekst, EtikettLiten } from 'nav-frontend-typografi';
+import {
+  Element, Normaltekst, Undertekst, EtikettLiten,
+} from 'nav-frontend-typografi';
 import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
-import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  FlexColumn, FlexRow, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
@@ -12,7 +16,7 @@ import styles from './naeringsOpplysningsPanel.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-const finnvirksomhetsTypeKode = naring => {
+const finnvirksomhetsTypeKode = (naring) => {
   const { virksomhetType } = naring;
   if (!virksomhetType) {
     return 'UDEFINERT';
@@ -23,7 +27,7 @@ const finnvirksomhetsTypeKode = naring => {
   }
   return kode;
 };
-const virksomhetsDatoer = naringsAndel => {
+const virksomhetsDatoer = (naringsAndel) => {
   const { oppstartsdato, opphoersdato } = naringsAndel;
   if (!oppstartsdato) {
     return undefined;
@@ -31,7 +35,7 @@ const virksomhetsDatoer = naringsAndel => {
   return opphoersdato ? `${dateFormat(oppstartsdato)}-${dateFormat(opphoersdato)} ` : `${dateFormat(oppstartsdato)}-`;
 };
 
-const revisorDetaljer = naring => {
+const revisorDetaljer = (naring) => {
   const { regnskapsførerNavn, regnskapsførerTlf } = naring;
   if (!regnskapsførerNavn) {
     return null;
@@ -39,16 +43,16 @@ const revisorDetaljer = naring => {
   return regnskapsførerTlf ? `${regnskapsførerNavn}-${regnskapsførerTlf} ` : `${regnskapsførerNavn}-`;
 };
 
-const finnBedriftsnavn = naring => {
+const finnBedriftsnavn = (naring) => {
   const { virksomhetNavn } = naring;
   return virksomhetNavn || 'Ukjent bedriftsnavn';
 };
 
-const lagIntroTilEndringspanel = naring => {
-  const { oppstartsdato, erVarigEndret, endringsdato } = naring;
-  const hendelseTekst = erVarigEndret
-    ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret'
-    : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
+const lagIntroTilEndringspanel = (naring) => {
+  const {
+    oppstartsdato, erVarigEndret, endringsdato,
+  } = naring;
+  const hendelseTekst = erVarigEndret ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret' : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
   const hendelseDato = erVarigEndret ? endringsdato : oppstartsdato;
   if (!hendelseDato) {
     return null;
@@ -60,8 +64,10 @@ const lagIntroTilEndringspanel = naring => {
   );
 };
 
-const erNæringNyoppstartetEllerVarigEndret = naring => {
-  const { erNyoppstartet, erVarigEndret } = naring;
+const erNæringNyoppstartetEllerVarigEndret = (naring) => {
+  const {
+    erNyoppstartet, erVarigEndret,
+  } = naring;
   return erVarigEndret || erNyoppstartet;
 };
 
@@ -76,18 +82,22 @@ const lagBeskrivelsePanel = (naringsAndel, intl) => (
       defaultApen
     >
       {naringsAndel.begrunnelse && naringsAndel.begrunnelse !== '' && (
-        <Normaltekst className={styles.merTekstBorder}>{naringsAndel.begrunnelse}</Normaltekst>
+      <Normaltekst className={styles.merTekstBorder}>
+        {naringsAndel.begrunnelse}
+      </Normaltekst>
       )}
     </Lesmerpanel>
   </>
 );
 
-const søkerHarOppgittInntekt = naring => naring.oppgittInntekt || naring.oppgittInntekt === 0;
 
-export const NaeringsopplysningsPanel = ({ alleAndelerIForstePeriode, intl }) => {
-  const snAndel = alleAndelerIForstePeriode.find(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-  );
+const søkerHarOppgittInntekt = (naring) => naring.oppgittInntekt || naring.oppgittInntekt === 0;
+
+export const NaeringsopplysningsPanel = ({
+  alleAndelerIForstePeriode,
+  intl,
+}) => {
+  const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   if (!snAndel.næringer) {
     return null;
@@ -102,10 +112,14 @@ export const NaeringsopplysningsPanel = ({ alleAndelerIForstePeriode, intl }) =>
             <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
           </Element>
         </FlexColumn>
-        <FlexColumn>{userIdent && <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} type="SØ" />}</FlexColumn>
+        <FlexColumn>
+          {userIdent && (
+            <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} type="SØ" />
+          )}
+        </FlexColumn>
       </FlexRow>
       <VerticalSpacer eightPx />
-      {snAndel.næringer.map(naring => (
+      {snAndel.næringer.map((naring) => (
         <React.Fragment key={`NaringsWrapper${naring.orgnr}`}>
           <Row key="SNInntektIngress">
             <Column xs="9" />
@@ -119,33 +133,54 @@ export const NaeringsopplysningsPanel = ({ alleAndelerIForstePeriode, intl }) =>
           </Row>
           <Row key={`NaringsNavn${naring.orgnr}`}>
             <Column xs="6">
-              <Normaltekst className={beregningStyles.semiBoldText}>{finnBedriftsnavn(naring)}</Normaltekst>
+              <Normaltekst className={beregningStyles.semiBoldText}>
+                {finnBedriftsnavn(naring)}
+              </Normaltekst>
             </Column>
             <Column xs="4">
               <EtikettLiten className={styles.naringsType}>
-                <FormattedMessage
-                  id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`}
-                />
+                <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
               </EtikettLiten>
             </Column>
             <Column xs="2" className={beregningStyles.colAarText}>
-              {søkerHarOppgittInntekt(naring) && (
+              {søkerHarOppgittInntekt(naring)
+                && (
                 <Normaltekst className={beregningStyles.semiBoldText}>
                   {formatCurrencyNoKr(naring.oppgittInntekt)}
                 </Normaltekst>
-              )}
+                )}
             </Column>
           </Row>
           <Row key={`NaringsDetaljer${naring.orgnr}`}>
             <Column xs="2">
-              <Normaltekst>{naring && naring.orgnr ? naring.orgnr : ''}</Normaltekst>
+              <Normaltekst>
+                {naring && naring.orgnr ? naring.orgnr : ''}
+              </Normaltekst>
             </Column>
-            <Column xs="4">{virksomhetsDatoer(naring) && <Undertekst>{virksomhetsDatoer(naring)}</Undertekst>}</Column>
+            <Column xs="4">
+              {virksomhetsDatoer(naring)
+                && (
+                <Undertekst>
+                  {virksomhetsDatoer(naring)}
+                </Undertekst>
+                )}
+            </Column>
           </Row>
           <Row key={`RevisorRad${naring.orgnr}`}>
-            <Column xs="10">{naring.regnskapsførerNavn && <Normaltekst>{revisorDetaljer(naring)}</Normaltekst>}</Column>
+            <Column xs="10">
+              {naring.regnskapsførerNavn && (
+                <Normaltekst>
+                  {revisorDetaljer(naring)}
+                </Normaltekst>
+              )}
+            </Column>
           </Row>
-          {erNæringNyoppstartetEllerVarigEndret(naring) && <Row>{lagBeskrivelsePanel(naring, intl)}</Row>}
+          {erNæringNyoppstartetEllerVarigEndret(naring)
+            && (
+            <Row>
+              {lagBeskrivelsePanel(naring, intl)}
+            </Row>
+            )}
           <VerticalSpacer twentyPx />
         </React.Fragment>
       ))}
@@ -160,5 +195,6 @@ NaeringsopplysningsPanel.propTypes = {
 NaeringsopplysningsPanel.defaultProps = {
   alleAndelerIForstePeriode: undefined,
 };
+
 
 export default injectIntl(NaeringsopplysningsPanel);

@@ -9,13 +9,19 @@ import renderNavField from '@fpsak-frontend/form/src/renderNavField';
 import styles from './textAreaField.less';
 import ReadOnlyField from './ReadOnlyField';
 
-const TextAreaWithBadge = ({ badges, intl, ...otherProps }) => {
+
+const TextAreaWithBadge = ({
+  badges,
+  intl,
+  ...otherProps
+}) => {
   const { placeholder } = otherProps;
   return (
     <div className={badges ? styles.textAreaFieldWithBadges : null}>
-      {badges && (
+      { badges
+      && (
         <div className={styles.etikettWrapper}>
-          {badges.map(({ textId, type, title }) => (
+          { badges.map(({ textId, type, title }) => (
             <EtikettFokus key={textId} type={type} title={intl.formatMessage({ id: title })}>
               <FormattedMessage id={textId} />
             </EtikettFokus>
@@ -31,7 +37,9 @@ const TextAreaWithBadge = ({ badges, intl, ...otherProps }) => {
 
 const renderNavTextArea = renderNavField(injectIntl(TextAreaWithBadge));
 
-const TextAreaField = ({ name, label, validate, readOnly, ...otherProps }) => (
+const TextAreaField = ({
+  name, label, validate, readOnly, ...otherProps
+}) => (
   <Field
     name={name}
     validate={validate}
@@ -58,13 +66,11 @@ TextAreaField.defaultProps = {
 
 TextAreaWithBadge.propTypes = {
   intl: PropTypes.shape().isRequired,
-  badges: PropTypes.arrayOf(
-    PropTypes.shape({
-      textId: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-    }),
-  ),
+  badges: PropTypes.arrayOf(PropTypes.shape({
+    textId: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  })),
 };
 
 TextAreaWithBadge.defaultProps = {

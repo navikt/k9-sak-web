@@ -26,8 +26,8 @@ import styles from './behandlingMenu.less';
 
 const classNames = classnames.bind(styles);
 
-const getMenuButtonText = menuVisible => (menuVisible ? 'Behandlingsmeny.Close' : 'Behandlingsmeny.Open');
-const getImage = menuVisible => (menuVisible ? openImage : closedImage);
+const getMenuButtonText = (menuVisible) => (menuVisible ? 'Behandlingsmeny.Close' : 'Behandlingsmeny.Open');
+const getImage = (menuVisible) => (menuVisible ? openImage : closedImage);
 
 /**
  * BehandlingMenu
@@ -65,14 +65,12 @@ class BehandlingMenu extends Component {
 
   hasNotAccess() {
     const { rettigheter } = this.props;
-    return (
-      !rettigheter.settBehandlingPaVentAccess.employeeHasAccess &&
-      !rettigheter.henleggBehandlingAccess.employeeHasAccess &&
-      !rettigheter.byttBehandlendeEnhetAccess.employeeHasAccess &&
-      !rettigheter.opprettRevurderingAccess.employeeHasAccess &&
-      !rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess &&
-      !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess
-    );
+    return !rettigheter.settBehandlingPaVentAccess.employeeHasAccess
+      && !rettigheter.henleggBehandlingAccess.employeeHasAccess
+      && !rettigheter.byttBehandlendeEnhetAccess.employeeHasAccess
+      && !rettigheter.opprettRevurderingAccess.employeeHasAccess
+      && !rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
+      && !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess;
   }
 
   hasNotAccessOrKanVeilede() {
@@ -92,10 +90,8 @@ class BehandlingMenu extends Component {
 
   hasEnabledNewBehandling() {
     const { rettigheter } = this.props;
-    return (
-      rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess &&
-      rettigheter.opprettNyForstegangsBehandlingAccess.isEnabled
-    );
+    return rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
+    && rettigheter.opprettNyForstegangsBehandlingAccess.isEnabled;
   }
 
   hasEnabledNewRevurdering() {
@@ -105,27 +101,18 @@ class BehandlingMenu extends Component {
 
   isResumeBehandlingEnabled() {
     const { behandlingData, rettigheter } = this.props;
-    if (
-      !behandlingData.harValgtBehandling ||
-      this.isBehandlingQueued() ||
-      !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess
-    ) {
+    if (!behandlingData.harValgtBehandling || this.isBehandlingQueued() || !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess) {
       return false;
     }
-    return (
-      (behandlingData.type.kode === BehandlingType.DOKUMENTINNSYN && this.isBehandlingOnHold()) ||
-      this.isBehandlingOnHold()
-    );
+    return (behandlingData.type.kode === BehandlingType.DOKUMENTINNSYN && this.isBehandlingOnHold()) || (this.isBehandlingOnHold());
   }
 
   isPauseBehandlingEnabled() {
     const { behandlingData, rettigheter } = this.props;
-    return (
-      behandlingData.harValgtBehandling &&
-      !this.isBehandlingOnHold() &&
-      !this.isBehandlingQueued() &&
-      rettigheter.settBehandlingPaVentAccess.employeeHasAccess
-    );
+    return behandlingData.harValgtBehandling
+      && !this.isBehandlingOnHold()
+      && !this.isBehandlingQueued()
+      && rettigheter.settBehandlingPaVentAccess.employeeHasAccess;
   }
 
   isShelveBehandlingEnebled() {
@@ -138,32 +125,26 @@ class BehandlingMenu extends Component {
 
   isChangeBehandlendeEnhetEnabled() {
     const { behandlingData, behandlendeEnheter, rettigheter } = this.props;
-    return (
-      behandlingData.harValgtBehandling &&
-      behandlendeEnheter &&
-      !this.isBehandlingQueued() &&
-      rettigheter.byttBehandlendeEnhetAccess.employeeHasAccess
-    );
+    return behandlingData.harValgtBehandling
+      && behandlendeEnheter
+      && !this.isBehandlingQueued()
+      && rettigheter.byttBehandlendeEnhetAccess.employeeHasAccess;
   }
 
   hasEnabledOpenBehandlingForChangesAccess() {
     const { behandlingData, rettigheter } = this.props;
-    return (
-      behandlingData.harValgtBehandling &&
-      rettigheter.opneBehandlingForEndringerAccess.employeeHasAccess &&
-      rettigheter.opneBehandlingForEndringerAccess.isEnabled &&
-      !this.isBehandlingQueued() &&
-      !this.isBehandlingOnHold()
-    );
+    return behandlingData.harValgtBehandling
+      && rettigheter.opneBehandlingForEndringerAccess.employeeHasAccess
+      && rettigheter.opneBehandlingForEndringerAccess.isEnabled
+      && !this.isBehandlingQueued()
+      && !this.isBehandlingOnHold();
   }
 
   hasHenleggBehandlingEnabledForTilbakekreving() {
     const { behandlingData } = this.props;
-    if (
-      (behandlingData.type.kode === BehandlingType.TILBAKEKREVING ||
-        behandlingData.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING) &&
-      !behandlingData.kanHenlegge
-    ) {
+    if ((behandlingData.type.kode === BehandlingType.TILBAKEKREVING
+      || behandlingData.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING)
+      && !behandlingData.kanHenlegge) {
       return false;
     }
     return true;
@@ -174,27 +155,10 @@ class BehandlingMenu extends Component {
       return null;
     }
     const {
-      behandlingData,
-      behandlendeEnheter,
-      setBehandlingOnHold,
-      rettigheter,
-      openBehandlingForChanges,
-      previewHenleggBehandling,
-      shelveBehandling,
-      push,
-      nyBehandlendeEnhet,
-      saksnummer,
-      createNewBehandling,
-      fjernVerge,
-      opprettVerge,
-      menyKodeverk,
-      ytelseType,
-      kanTilbakekrevingOpprettes,
-      resumeBehandling,
-      sjekkOmTilbakekrevingKanOpprettes,
-      sjekkOmTilbakekrevingRevurderingKanOpprettes,
-      uuidForSistLukkede,
-      erTilbakekrevingAktivert,
+      behandlingData, behandlendeEnheter, setBehandlingOnHold, rettigheter, openBehandlingForChanges,
+      previewHenleggBehandling, shelveBehandling, push, nyBehandlendeEnhet, saksnummer, createNewBehandling,
+      fjernVerge, opprettVerge, menyKodeverk, ytelseType, kanTilbakekrevingOpprettes, resumeBehandling,
+      sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes, uuidForSistLukkede, erTilbakekrevingAktivert,
     } = this.props;
     const { menuVisible } = this.state;
     const behandlingIdentifier = new BehandlingIdentifier(saksnummer, behandlingData.id);
@@ -209,7 +173,13 @@ class BehandlingMenu extends Component {
         >
           <FormattedMessage id="Behandlingsmeny.Behandlingsmeny" />
           <FormattedMessage id={getMenuButtonText(menuVisible)}>
-            {altText => <Image className={styles.image} src={getImage(menuVisible)} alt={altText} />}
+            {(altText) => (
+              <Image
+                className={styles.image}
+                src={getImage(menuVisible)}
+                alt={altText}
+              />
+            )}
           </FormattedMessage>
         </Knapp>
         <div className={classNames('containerMenu', { hide: !menuVisible })}>
@@ -241,9 +211,7 @@ class BehandlingMenu extends Component {
                 previewHenleggBehandling={previewHenleggBehandling}
                 shelveBehandling={shelveBehandling}
                 push={push}
-                henleggBehandlingEnabled={
-                  rettigheter.henleggBehandlingAccess.isEnabled && this.hasHenleggBehandlingEnabledForTilbakekreving()
-                }
+                henleggBehandlingEnabled={rettigheter.henleggBehandlingAccess.isEnabled && this.hasHenleggBehandlingEnabledForTilbakekreving()}
                 ytelseType={ytelseType}
                 behandlingType={behandlingData.type}
                 behandlingUuid={behandlingData.uuid}
@@ -318,12 +286,10 @@ BehandlingMenu.propTypes = {
   shelveBehandling: PropTypes.func.isRequired,
   nyBehandlendeEnhet: PropTypes.func.isRequired,
   createNewBehandling: PropTypes.func.isRequired,
-  behandlendeEnheter: PropTypes.arrayOf(
-    PropTypes.shape({
-      enhetId: PropTypes.string.isRequired,
-      enhetNavn: PropTypes.string.isRequired,
-    }),
-  ),
+  behandlendeEnheter: PropTypes.arrayOf(PropTypes.shape({
+    enhetId: PropTypes.string.isRequired,
+    enhetNavn: PropTypes.string.isRequired,
+  })),
   erTilbakekrevingAktivert: PropTypes.bool.isRequired,
   kanTilbakekrevingOpprettes: PropTypes.shape({
     kanBehandlingOpprettes: PropTypes.bool.isRequired,

@@ -7,8 +7,7 @@ import classNames from 'classnames';
 import LesMerToggle2 from './LesMerToggle';
 import styles from './lesMerPanel.less';
 
-const lesMerPanelCls = props =>
-  classNames(styles.lesMerPanel, props.className, props.border ? styles['lesMerPanel--border'] : '');
+const lesMerPanelCls = (props) => classNames(styles.lesMerPanel, props.className, props.border ? styles['lesMerPanel--border'] : '');
 
 /**
  * Lesmerpanel
@@ -34,33 +33,48 @@ class Lesmerpanel extends Component {
   }
 
   render() {
-    const { intro, children, apneTekst, lukkTekst, id = guid(), ...other } = this.props;
+    const {
+      intro,
+      children,
+      apneTekst,
+      lukkTekst,
+      id = guid(),
+      ...other
+    } = this.props;
     const domProps = omit(other, 'border', 'onOpen', 'onClose', 'defaultApen');
     const { erApen } = this.state;
     return (
-      <div id={id} className={lesMerPanelCls(this.props)} {...domProps}>
+      <div
+        id={id}
+        className={lesMerPanelCls(this.props)}
+        {...domProps}
+      >
         <div className={styles.lesMerPanel__introWrapper}>
-          {intro && <div className={styles.lesMerPanel__intro}>{intro}</div>}
+          {intro && (
+            <div className={styles.lesMerPanel__intro}>
+              { intro }
+            </div>
+          )}
           {children && (
-            <LesMerToggle2
-              aria-controls={id}
-              apneTekst={apneTekst}
-              lukkTekst={lukkTekst}
-              erApen={erApen}
-              onClick={e => {
-                this.toggle(e);
-              }}
-            />
+          <LesMerToggle2
+            aria-controls={id}
+            apneTekst={apneTekst}
+            lukkTekst={lukkTekst}
+            erApen={erApen}
+            onClick={(e) => { this.toggle(e); }}
+          />
           )}
         </div>
         {children && (
-          <div className={styles.lesMerPanel__merContainer}>
-            <UnmountClosed isOpened={erApen}>
-              <div className={styles.lesMerPanel__mer}>
-                <div>{children}</div>
+        <div className={styles.lesMerPanel__merContainer}>
+          <UnmountClosed isOpened={erApen}>
+            <div className={styles.lesMerPanel__mer}>
+              <div>
+                {children}
               </div>
-            </UnmountClosed>
-          </div>
+            </div>
+          </UnmountClosed>
+        </div>
         )}
       </div>
     );
@@ -108,6 +122,7 @@ Lesmerpanel.propTypes = {
    * Hvis komponenten skal brukes på hvit bakgrunn kan denne brukes for å gi den en border
    */
   border: Proptypes.bool,
+
 };
 Lesmerpanel.defaultProps = {
   defaultApen: false,

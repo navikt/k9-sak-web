@@ -8,19 +8,18 @@ import AppIndex from './AppIndex';
 import Home from './components/Home';
 import Dekorator from './components/Dekorator';
 
+
 describe('<AppIndex>', () => {
   it('skal vise hjem-skjermbilde inkludert header men ikke feilmelding', () => {
-    const wrapper = shallowWithIntl(
-      <AppIndex.WrappedComponent
-        intl={intlMock}
-        navAnsattName="Peder"
-        errorMessagesLength={0}
-        showCrashMessage={sinon.spy()}
-        removeErrorMessage={sinon.spy()}
-        location={{ search: undefined }}
-        showDetailedErrorMessages={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AppIndex.WrappedComponent
+      intl={intlMock}
+      navAnsattName="Peder"
+      errorMessagesLength={0}
+      showCrashMessage={sinon.spy()}
+      removeErrorMessage={sinon.spy()}
+      location={{ search: undefined }}
+      showDetailedErrorMessages={false}
+    />);
     const headerComp = wrapper.find(Dekorator);
     expect(headerComp).to.have.length(1);
     expect(headerComp.prop('navAnsattName')).to.eql('Peder');
@@ -31,17 +30,15 @@ describe('<AppIndex>', () => {
   });
 
   it('skal vise hjem-skjermbilde inkludert header og feilmelding', () => {
-    const wrapper = shallowWithIntl(
-      <AppIndex.WrappedComponent
-        intl={intlMock}
-        navAnsattName="Peder"
-        showCrashMessage={sinon.spy()}
-        removeErrorMessage={sinon.spy()}
-        errorMessages={[{ message: 'error' }]}
-        location={{ search: undefined }}
-        showDetailedErrorMessages={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AppIndex.WrappedComponent
+      intl={intlMock}
+      navAnsattName="Peder"
+      showCrashMessage={sinon.spy()}
+      removeErrorMessage={sinon.spy()}
+      errorMessages={[{ message: 'error' }]}
+      location={{ search: undefined }}
+      showDetailedErrorMessages={false}
+    />);
 
     const headerComp = wrapper.find(Dekorator);
     expect(headerComp).to.have.length(1);
@@ -57,17 +54,15 @@ describe('<AppIndex>', () => {
       search: '?errormessage=Det+finnes+ingen+sak+med+denne+referansen%3A+266',
     };
 
-    const wrapper = shallowWithIntl(
-      <AppIndex.WrappedComponent
-        intl={intlMock}
-        navAnsattName="Peder"
-        removeErrorMessage={sinon.spy()}
-        showCrashMessage={sinon.spy()}
-        errorMessagesLength={1}
-        location={location}
-        showDetailedErrorMessages={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AppIndex.WrappedComponent
+      intl={intlMock}
+      navAnsattName="Peder"
+      removeErrorMessage={sinon.spy()}
+      showCrashMessage={sinon.spy()}
+      errorMessagesLength={1}
+      location={location}
+      showDetailedErrorMessages={false}
+    />);
 
     const headerComp = wrapper.find(Dekorator);
     expect(headerComp.prop('queryStrings')).to.eql({ errormessage: 'Det finnes ingen sak med denne referansen: 266' });

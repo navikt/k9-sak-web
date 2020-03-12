@@ -6,7 +6,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvviksopplysningerPanel from './AvvikopplysningerPanel';
 
-const sammenligningsgrunnlag = kode => ({
+const sammenligningsgrunnlag = (kode) => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',
   rapportertPrAar: 330000,
@@ -31,22 +31,18 @@ const allePerioder = [
           kode: 'AT',
           kodeverk: 'AKTIVITET_STATUS',
         },
-      },
-    ],
-  },
-];
+      }],
+  }];
 describe('<Avviksopplysninger>', () => {
   it('Skal teste at riktig componenter blir renderet når ATFLSN', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag(sammenligningType.ATFLSN);
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        relevanteStatuser={relevanteStatuser}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        allePerioder={allePerioder}
-        aktivitetStatusKode=""
-        gjelderBesteberegning={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerPanel
+      relevanteStatuser={relevanteStatuser}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      allePerioder={allePerioder}
+      aktivitetStatusKode=""
+      gjelderBesteberegning={false}
+    />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
@@ -57,15 +53,13 @@ describe('<Avviksopplysninger>', () => {
   });
   it('Skal teste at riktig componenter blir renderet når AT', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag(sammenligningType.AT);
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        relevanteStatuser={relevanteStatuser}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        allePerioder={allePerioder}
-        aktivitetStatusKode=""
-        gjelderBesteberegning={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerPanel
+      relevanteStatuser={relevanteStatuser}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      allePerioder={allePerioder}
+      aktivitetStatusKode=""
+      gjelderBesteberegning={false}
+    />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
@@ -79,9 +73,10 @@ describe('<Avviksopplysninger>', () => {
     relevanteStatuser.isArbeidstaker = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
     const snPeriode = {
-      aktivitetStatus: {
-        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-      },
+      aktivitetStatus:
+        {
+          kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+        },
       næringer: [
         {
           erVarigEndret: false,
@@ -92,15 +87,13 @@ describe('<Avviksopplysninger>', () => {
     };
     const perioderMedSNAndel = allePerioder;
     perioderMedSNAndel[0].beregningsgrunnlagPrStatusOgAndel[0] = snPeriode;
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        relevanteStatuser={relevanteStatuser}
-        allePerioder={perioderMedSNAndel}
-        aktivitetStatusKode=""
-        gjelderBesteberegning={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerPanel
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={relevanteStatuser}
+      allePerioder={perioderMedSNAndel}
+      aktivitetStatusKode=""
+      gjelderBesteberegning={false}
+    />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
@@ -114,15 +107,13 @@ describe('<Avviksopplysninger>', () => {
     relevanteStatuser.isArbeidstaker = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
     relevanteStatuser.isFrilanser = true;
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        relevanteStatuser={relevanteStatuser}
-        sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-        allePerioder={allePerioder}
-        aktivitetStatusKode=""
-        gjelderBesteberegning={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerPanel
+      relevanteStatuser={relevanteStatuser}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      allePerioder={allePerioder}
+      aktivitetStatusKode=""
+      gjelderBesteberegning={false}
+    />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
@@ -136,15 +127,13 @@ describe('<Avviksopplysninger>', () => {
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isAAP = true;
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        relevanteStatuser={relevanteStatuser}
-        sammenligningsgrunnlagPrStatus={[{}]}
-        allePerioder={allePerioder}
-        aktivitetStatusKode=""
-        gjelderBesteberegning={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerPanel
+      relevanteStatuser={relevanteStatuser}
+      sammenligningsgrunnlagPrStatus={[{}]}
+      allePerioder={allePerioder}
+      aktivitetStatusKode=""
+      gjelderBesteberegning={false}
+    />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
@@ -162,15 +151,13 @@ describe('<Avviksopplysninger>', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isAAP = false;
     relevanteStatuser.isDagpenger = true;
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        relevanteStatuser={relevanteStatuser}
-        sammenligningsgrunnlagPrStatus={[{}]}
-        allePerioder={allePerioder}
-        aktivitetStatusKode=""
-        gjelderBesteberegning={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerPanel
+      relevanteStatuser={relevanteStatuser}
+      sammenligningsgrunnlagPrStatus={[{}]}
+      allePerioder={allePerioder}
+      aktivitetStatusKode=""
+      gjelderBesteberegning={false}
+    />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
@@ -188,15 +175,13 @@ describe('<Avviksopplysninger>', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isAAP = false;
     relevanteStatuser.isMilitaer = true;
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        relevanteStatuser={relevanteStatuser}
-        sammenligningsgrunnlagPrStatus={[{}]}
-        allePerioder={allePerioder}
-        aktivitetStatusKode=""
-        gjelderBesteberegning={false}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerPanel
+      relevanteStatuser={relevanteStatuser}
+      sammenligningsgrunnlagPrStatus={[{}]}
+      allePerioder={allePerioder}
+      aktivitetStatusKode=""
+      gjelderBesteberegning={false}
+    />);
     const panel = wrapper.find('PanelBase');
     const formatedText = panel.find('FormattedMessage');
     const headerTitle = formatedText.first();
@@ -212,15 +197,13 @@ describe('<Avviksopplysninger>', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isAAP = false;
     relevanteStatuser.isMilitaer = false;
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        relevanteStatuser={relevanteStatuser}
-        sammenligningsgrunnlagPrStatus={[{}]}
-        allePerioder={allePerioder}
-        aktivitetStatusKode=""
-        gjelderBesteberegning
-      />,
-    );
+    const wrapper = shallowWithIntl(<AvviksopplysningerPanel
+      relevanteStatuser={relevanteStatuser}
+      sammenligningsgrunnlagPrStatus={[{}]}
+      allePerioder={allePerioder}
+      aktivitetStatusKode=""
+      gjelderBesteberegning
+    />);
     const panel = wrapper.find('PanelBase');
     const formatedText = panel.find('FormattedMessage');
     const headerTitle = formatedText.first();

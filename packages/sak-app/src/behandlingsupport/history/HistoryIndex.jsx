@@ -20,17 +20,16 @@ const historyRestApis = {
 };
 
 const sortAndTagTilbakekreving = createSelector(
-  [props => props.historyFpsak, props => props.historyFptilbake],
+  [(props) => props.historyFpsak, (props) => props.historyFptilbake],
   (historyFpsak = [], historyFptilbake = []) => {
-    const historikkFraTilbakekrevingMedMarkor = historyFptilbake.map(ht => ({
+    const historikkFraTilbakekrevingMedMarkor = historyFptilbake.map((ht) => ({
       ...ht,
       erTilbakekreving: true,
     }));
-    return historyFpsak
-      .concat(historikkFraTilbakekrevingMedMarkor)
-      .sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt));
+    return historyFpsak.concat(historikkFraTilbakekrevingMedMarkor).sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt));
   },
 );
+
 
 /**
  * HistoryIndex
@@ -51,15 +50,12 @@ export const HistoryIndex = ({
     behandlingVersjon={behandlingVersjon}
     showLoadingIcon
     behandlingNotRequired
-    endpointParams={{
-      [fpsakApi.HISTORY_FPSAK.name]: { saksnummer },
-      [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer },
-    }}
+    endpointParams={{ [fpsakApi.HISTORY_FPSAK.name]: { saksnummer }, [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer } }}
     keepDataWhenRefetching
     endpoints={enabledContexts}
     allowErrors
-    render={props =>
-      sortAndTagTilbakekreving(props).map(innslag => (
+    render={(props) => sortAndTagTilbakekreving(props)
+      .map((innslag) => (
         <HistorikkSakIndex
           key={innslag.opprettetTidspunkt + innslag.type.kode}
           historieInnslag={innslag}
@@ -67,8 +63,7 @@ export const HistoryIndex = ({
           location={location}
           alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
         />
-      ))
-    }
+      ))}
   />
 );
 
@@ -90,11 +85,12 @@ HistoryIndex.defaultProps = {
   behandlingVersjon: undefined,
 };
 
-const getEnabledContexts = createSelector([getEnabledApplicationContexts], enabledApplicationContexts =>
-  enabledApplicationContexts.map(c => historyRestApis[c]),
+const getEnabledContexts = createSelector(
+  [getEnabledApplicationContexts],
+  (enabledApplicationContexts) => enabledApplicationContexts.map((c) => historyRestApis[c]),
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   enabledContexts: getEnabledContexts(state),
   saksnummer: getSelectedSaksnummer(state),
   behandlingId: getSelectedBehandlingId(state),

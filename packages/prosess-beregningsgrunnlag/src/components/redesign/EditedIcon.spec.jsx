@@ -6,7 +6,9 @@ import EditedIcon from './EditedIcon';
 
 describe('EditedIcon', () => {
   it('skal vise icon', () => {
-    const wrapper = mountWithIntl(<EditedIcon />);
+    const wrapper = mountWithIntl(
+      <EditedIcon />,
+    );
     const komponent = wrapper.find('EditedIcon');
     expect(komponent.length).to.equal(1);
     const image = komponent.find(Image);

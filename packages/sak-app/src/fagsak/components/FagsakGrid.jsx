@@ -9,12 +9,21 @@ import styles from './fagsakGrid.less';
  *
  * Presentasjonskomponent. Har ansvar for å sette opp applikasjonens hovedgrid.
  */
-const FagsakGrid = ({ behandlingContent, profileAndNavigationContent, supportContent, visittkortContent }) => (
+const FagsakGrid = ({
+  behandlingContent,
+  profileAndNavigationContent,
+  supportContent,
+  visittkortContent,
+}) => (
   <>
-    <MediaQuery maxWidth={1600}>{visittkortContent()}</MediaQuery>
+    <MediaQuery maxWidth={1600}>
+      {visittkortContent()}
+    </MediaQuery>
     <div className={styles.gridContainer}>
       <div className={styles.leftColumn}>
-        <MediaQuery minWidth={1600}>{visittkortContent()}</MediaQuery>
+        <MediaQuery minWidth={1600}>
+          {visittkortContent()}
+        </MediaQuery>
         {behandlingContent}
       </div>
       <div className={styles.rightColumn}>

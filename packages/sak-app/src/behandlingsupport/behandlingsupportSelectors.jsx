@@ -6,44 +6,40 @@ import { supportTabs } from '@fpsak-frontend/sak-support-meny';
 import { getNavAnsatt } from '../app/duck';
 import fpsakApi from '../data/fpsakApi';
 import {
-  getBehandlingStatus,
-  getBehandlingType,
-  erBehandlingPaVent,
-  getBehandlingAnsvarligSaksbehandler,
+  getBehandlingStatus, getBehandlingType, erBehandlingPaVent, getBehandlingAnsvarligSaksbehandler,
 } from '../behandling/duck';
 import { getSelectedSaksnummer } from '../fagsak/duck';
 import { getSelectedFagsakStatus } from '../fagsak/fagsakSelectors';
 import allSupportPanelAccessRights from './accessSupport';
 
-const getRettigheter = createSelector(
-  [getNavAnsatt, getSelectedFagsakStatus, getBehandlingStatus, getBehandlingType, getBehandlingAnsvarligSaksbehandler],
-  allSupportPanelAccessRights,
-);
+const getRettigheter = createSelector([
+  getNavAnsatt,
+  getSelectedFagsakStatus,
+  getBehandlingStatus,
+  getBehandlingType,
+  getBehandlingAnsvarligSaksbehandler,
+], allSupportPanelAccessRights);
 
-const getSendMessageIsRelevant = createSelector(
-  [getSelectedSaksnummer, erBehandlingPaVent],
-  (fagsakSaksnummer, isOnHold) => fagsakSaksnummer && !isOnHold,
-);
+const getSendMessageIsRelevant = createSelector([getSelectedSaksnummer, erBehandlingPaVent],
+  (fagsakSaksnummer, isOnHold) => (fagsakSaksnummer && !isOnHold));
 
 const getReturnedIsRelevant = createSelector(
   [erBehandlingPaVent, fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiData(), getBehandlingStatus],
-  (isOnHold, toTrinnsAksjonspunkter = [], status = {}) =>
-    !isOnHold &&
-    toTrinnsAksjonspunkter
-      .reduce((a, b) => a.concat(b.totrinnskontrollAksjonspunkter), [])
-      .some(ap => ap.totrinnskontrollGodkjent === false) &&
-    status.kode === behandlingStatus.BEHANDLING_UTREDES,
+  (isOnHold, toTrinnsAksjonspunkter = [], status = {}) => !isOnHold && toTrinnsAksjonspunkter.reduce((a, b) => a.concat(b.totrinnskontrollAksjonspunkter), [])
+    .some((ap) => ap.totrinnskontrollGodkjent === false) && status.kode === behandlingStatus.BEHANDLING_UTREDES,
 );
 
-const getApprovalIsRelevant = createSelector(
-  [erBehandlingPaVent, getBehandlingStatus],
-  (isOnHold, status = {}) => !isOnHold && status.kode === behandlingStatus.FATTER_VEDTAK,
-);
+const getApprovalIsRelevant = createSelector([erBehandlingPaVent, getBehandlingStatus], (isOnHold, status = {}) => !isOnHold
+  && status.kode === behandlingStatus.FATTER_VEDTAK);
 
 export const getAccessibleSupportPanels = createSelector(
-  [getReturnedIsRelevant, getApprovalIsRelevant, getRettigheter],
-  (returnIsRelevant, approvalIsRelevant, rettigheter) =>
-    Object.values(supportTabs).filter(supportPanel => {
+  [
+    getReturnedIsRelevant,
+    getApprovalIsRelevant,
+    getRettigheter,
+  ],
+  (returnIsRelevant, approvalIsRelevant, rettigheter) => Object.values(supportTabs)
+    .filter((supportPanel) => {
       switch (supportPanel) {
         case supportTabs.MESSAGES:
           return rettigheter.sendMeldingAccess.employeeHasAccess;
@@ -58,9 +54,13 @@ export const getAccessibleSupportPanels = createSelector(
 );
 
 export const getEnabledSupportPanels = createSelector(
-  [getAccessibleSupportPanels, getSendMessageIsRelevant, getRettigheter],
-  (accessibleSupportPanels, sendMessageIsRelevant, rettigheter) =>
-    accessibleSupportPanels.filter(supportPanel => {
+  [
+    getAccessibleSupportPanels,
+    getSendMessageIsRelevant,
+    getRettigheter,
+  ],
+  (accessibleSupportPanels, sendMessageIsRelevant, rettigheter) => accessibleSupportPanels
+    .filter((supportPanel) => {
       switch (supportPanel) {
         case supportTabs.MESSAGES:
           return sendMessageIsRelevant && rettigheter.sendMeldingAccess.isEnabled;

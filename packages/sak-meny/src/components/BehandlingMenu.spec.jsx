@@ -44,18 +44,7 @@ describe('<BehandlingMenu>', () => {
 
   const behandlingIdentifier = new BehandlingIdentifier(saksnummer, 1);
   const type = { kode: behandlingType.FORSTEGANGSSOKNAD };
-  const behandlingData = new MenyBehandlingData(
-    1,
-    '3',
-    2,
-    type,
-    false,
-    false,
-    'enhetsid',
-    'Enhetsnavn',
-    false,
-    undefined,
-  );
+  const behandlingData = new MenyBehandlingData(1, '3', 2, type, false, false, 'enhetsid', 'Enhetsnavn', false, undefined);
   const kodeverk = new MenyKodeverk();
 
   const rettigheter = new MenyRettigheter({
@@ -150,6 +139,7 @@ describe('<BehandlingMenu>', () => {
     expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
   });
 
+
   it('skal vise knapp med lukket-tekst når meny er synlig', () => {
     const wrapper = shallow(
       <BehandlingMenu
@@ -217,43 +207,28 @@ describe('<BehandlingMenu>', () => {
   });
 
   it('skal vise menyvalg "fortsett behandling" men ikke "Sett på vent" og "Kan henlegges" når tilbakekreving behandling er satt på vent', () => {
-    const wrapper = shallow(
-      <BehandlingMenu
-        saksnummer="12345"
-        behandlingData={
-          new MenyBehandlingData(
-            1,
-            '3',
-            2,
-            { kode: behandlingType.TILBAKEKREVING },
-            true,
-            false,
-            'enhetsid',
-            'Enhetsnavn',
-            false,
-            false,
-          )
-        }
-        menyKodeverk={kodeverk}
-        ytelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-        }}
-        previewHenleggBehandling={previewCallback}
-        rettigheter={rettigheter}
-        resumeBehandling={sinon.spy()}
-        shelveBehandling={shelveBehandlingCallback}
-        nyBehandlendeEnhet={sinon.spy()}
-        createNewBehandling={sinon.spy()}
-        behandlendeEnheter={behandlendeEnheter}
-        erTilbakekrevingAktivert={false}
-        setBehandlingOnHold={behandlingOnHoldCallback}
-        openBehandlingForChanges={sinon.spy()}
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-        push={pushCallback}
-        navAnsatt={navAnsatt}
-      />,
-    );
+    const wrapper = shallow(<BehandlingMenu
+      saksnummer="12345"
+      behandlingData={new MenyBehandlingData(1, '3', 2, { kode: behandlingType.TILBAKEKREVING }, true, false, 'enhetsid', 'Enhetsnavn', false, false)}
+      menyKodeverk={kodeverk}
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      previewHenleggBehandling={previewCallback}
+      rettigheter={rettigheter}
+      resumeBehandling={sinon.spy()}
+      shelveBehandling={shelveBehandlingCallback}
+      nyBehandlendeEnhet={sinon.spy()}
+      createNewBehandling={sinon.spy()}
+      behandlendeEnheter={behandlendeEnheter}
+      erTilbakekrevingAktivert={false}
+      setBehandlingOnHold={behandlingOnHoldCallback}
+      openBehandlingForChanges={sinon.spy()}
+      sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+      push={pushCallback}
+      navAnsatt={navAnsatt}
+    />);
 
     expect(wrapper.find('PauseBehandlingMenuItem')).has.length(0);
 

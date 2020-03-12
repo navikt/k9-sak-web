@@ -8,15 +8,13 @@ import medlemskapBehandlingPropType from './propTypes/medlemskapBehandlingPropTy
 import medlemskapMedlemskapPropType from './propTypes/medlemskapMedlemskapPropType';
 import medlemskapSoknadPropType from './propTypes/medlemskapSoknadPropType';
 
+
 const cache = createIntlCache();
 
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
+const intl = createIntl({
+  locale: 'nb-NO',
+  messages,
+}, cache);
 
 const MedlemskapFaktaIndex = ({
   behandling,

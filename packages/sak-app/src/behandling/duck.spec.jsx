@@ -4,7 +4,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
 import { reduxRestApi } from '../data/fpsakApi';
-import { behandlingReducer, setUrlBehandlingId } from './duck';
+import {
+  behandlingReducer, setUrlBehandlingId,
+} from './duck';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

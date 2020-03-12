@@ -9,22 +9,22 @@ import TabMeny from './TabMeny';
 
 describe('<TabMeny>', () => {
   it('skal vise tabs der Historikk er valgt og Send melding ikke er valgbar', () => {
-    const tabs = [
-      {
-        getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
-        tooltip: 'Historikk',
-        isActive: true,
-        isDisabled: false,
-      },
-      {
-        getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
-        tooltip: 'Send melding',
-        isActive: false,
-        isDisabled: true,
-      },
-    ];
+    const tabs = [{
+      getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
+      tooltip: 'Historikk',
+      isActive: true,
+      isDisabled: false,
+    }, {
+      getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
+      tooltip: 'Send melding',
+      isActive: false,
+      isDisabled: true,
+    }];
 
-    const wrapper = shallow(<TabMeny tabs={tabs} onClick={() => undefined} />);
+    const wrapper = shallow(<TabMeny
+      tabs={tabs}
+      onClick={() => undefined}
+    />);
 
     const kolonne = wrapper.find(FlexColumn);
     expect(kolonne).has.length(2);
@@ -51,24 +51,24 @@ describe('<TabMeny>', () => {
   });
 
   it('skal velge Send melding ved trykk på knapp', () => {
-    const tabs = [
-      {
-        getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
-        tooltip: 'Historikk',
-        isActive: false,
-        isDisabled: false,
-      },
-      {
-        getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
-        tooltip: 'Send melding',
-        isActive: false,
-        isDisabled: false,
-      },
-    ];
+    const tabs = [{
+      getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
+      tooltip: 'Historikk',
+      isActive: false,
+      isDisabled: false,
+    }, {
+      getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
+      tooltip: 'Send melding',
+      isActive: false,
+      isDisabled: false,
+    }];
 
     const onClick = sinon.spy();
 
-    const wrapper = shallow(<TabMeny tabs={tabs} onClick={onClick} />);
+    const wrapper = shallow(<TabMeny
+      tabs={tabs}
+      onClick={onClick}
+    />);
 
     const kolonne = wrapper.find(FlexColumn);
     const knapp = kolonne.last().find('button');

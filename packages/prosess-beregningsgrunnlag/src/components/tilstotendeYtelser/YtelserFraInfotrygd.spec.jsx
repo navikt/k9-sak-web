@@ -7,7 +7,9 @@ import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-bereg
 describe('<YtelserFraInfotrygd>', () => {
   it('Skal teste at de korrekte verdier for ytelse', () => {
     const brutto = 290000;
-    const wrapper = shallowWithIntl(<YtelserFraInfotrygd bruttoPrAar={brutto} />);
+    const wrapper = shallowWithIntl(<YtelserFraInfotrygd
+      bruttoPrAar={brutto}
+    />);
 
     const formattedMessage = wrapper.find('FormattedMessage');
 
@@ -18,19 +20,9 @@ describe('<YtelserFraInfotrygd>', () => {
     expect(formattedMessage.at(3).prop('id')).to.equal('Beregningsgrunnlag.YtelserFraInfotrygd.YtelseNavn');
     const maaned = wrapper.find('Normaltekst');
     expect(maaned).to.have.length(2);
-    expect(
-      maaned
-        .children()
-        .at(1)
-        .text(),
-    ).to.equal(formatCurrencyNoKr(brutto / 12));
+    expect(maaned.children().at(1).text()).to.equal(formatCurrencyNoKr(brutto / 12));
     const element = wrapper.find('Element');
     expect(element).to.have.length(2);
-    expect(
-      element
-        .children()
-        .at(1)
-        .text(),
-    ).to.equal(formatCurrencyNoKr(brutto));
+    expect(element.children().at(1).text()).to.equal(formatCurrencyNoKr(brutto));
   });
 });

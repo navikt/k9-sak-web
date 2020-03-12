@@ -27,38 +27,23 @@ const lagAndel = (status, fastsattBelop) => ({
 
 describe('<FastsettSN>', () => {
   it('Skal teste at det rendres riktig antall rader', () => {
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus(
-        aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-        'Ok.',
-      ),
-    ];
-    const wrapper = shallowWithIntl(
-      <UnwrappedForm
-        readOnly={false}
-        isAksjonspunktClosed={false}
-        erVarigEndring
-        erNyArbLivet
-        gjeldendeAksjonspunkter={aksjonspunkter}
-        endretTekst={{}}
-        intl={intlMock}
-      />,
-    );
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, 'Ok.')];
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      erVarigEndring
+      erNyArbLivet
+      gjeldendeAksjonspunkter={aksjonspunkter}
+      endretTekst={{}}
+      intl={intlMock}
+    />);
 
     const rows = wrapper.find('Row');
     expect(rows.length).to.equal(2);
   });
   it('Skal teste at buildInitialValues bygges korrekt når tidligere fastsatt', () => {
-    const andeler = [
-      lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 300000),
-      lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
-    ];
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus(
-        aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-        'Ok.',
-      ),
-    ];
+    const andeler = [lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 300000), lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000)];
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, 'Ok.')];
 
     const actualValues = FastsettSN.buildInitialValues(andeler, aksjonspunkter);
 
@@ -71,16 +56,8 @@ describe('<FastsettSN>', () => {
   });
 
   it('Skal teste at buildInitialValues bygges korrekt når ikke tidligere fastsatt', () => {
-    const andeler = [
-      lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null),
-      lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
-    ];
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus(
-        aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-        null,
-      ),
-    ];
+    const andeler = [lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null), lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000)];
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, null)];
 
     const actualValues = FastsettSN.buildInitialValues(andeler, aksjonspunkter);
 
@@ -93,13 +70,8 @@ describe('<FastsettSN>', () => {
   });
 
   it('Skal teste at buildInitialValues bygges korrekt når ikke tidligere fastsatt på sn ny i arbliv', () => {
-    const andeler = [
-      lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null),
-      lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
-    ];
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, null),
-    ];
+    const andeler = [lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null), lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000)];
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, null)];
 
     const actualValues = FastsettSN.buildInitialValues(andeler, aksjonspunkter);
     const expectedValues = {
@@ -111,13 +83,8 @@ describe('<FastsettSN>', () => {
   });
 
   it('Skal teste at buildInitialValues bygges korrekt når ikke tidligere fastsatt på sn ny i arbliv', () => {
-    const andeler = [
-      lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 500000),
-      lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
-    ];
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, 'Ok!!!'),
-    ];
+    const andeler = [lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 500000), lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000)];
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, 'Ok!!!')];
 
     const actualValues = FastsettSN.buildInitialValues(andeler, aksjonspunkter);
 

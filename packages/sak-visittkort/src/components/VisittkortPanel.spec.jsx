@@ -113,15 +113,13 @@ describe('<VisittkortPanel>', () => {
     },
     aktoerId: '24sedfs32',
     navn: 'Olga Utvikler',
-    adresser: [
-      {
-        adresseType: {
-          kode: opplysningAdresseType.BOSTEDSADRESSE,
-          kodeverk: 'ADRESSE_TYPE',
-        },
-        adresselinje1: 'Oslo',
+    adresser: [{
+      adresseType: {
+        kode: opplysningAdresseType.BOSTEDSADRESSE,
+        kodeverk: 'ADRESSE_TYPE',
       },
-    ],
+      adresselinje1: 'Oslo',
+    }],
     fnr: '98773895',
     region: {
       kode: region.NORDEN,
@@ -178,17 +176,16 @@ describe('<VisittkortPanel>', () => {
   //   barn: [],
   // };
 
+
   it('skal vise enkelt visittkort når en ikke har personopplysninger', () => {
-    const wrapper = shallowWithIntl(
-      <VisittkortPanel.WrappedComponent
-        intl={intlMock}
-        fagsak={fagsak}
-        familieHendelse={familieHendelse}
-        lenkeTilAnnenPart="testlenke"
-        alleKodeverk={{}}
-        sprakkode={{ kode: 'NN' }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<VisittkortPanel.WrappedComponent
+      intl={intlMock}
+      fagsak={fagsak}
+      familieHendelse={familieHendelse}
+      lenkeTilAnnenPart="testlenke"
+      alleKodeverk={{}}
+      sprakkode={{ kode: 'NN' }}
+    />);
 
     expect(wrapper.find(FlexContainer)).has.length(0);
     const visittkort = wrapper.find(PersonCard);
@@ -199,17 +196,15 @@ describe('<VisittkortPanel>', () => {
   });
 
   it('skal vise visittkort når en har personopplysninger', () => {
-    const wrapper = shallowWithIntl(
-      <VisittkortPanel.WrappedComponent
-        intl={intlMock}
-        fagsak={fagsak}
-        personopplysninger={personopplysningerSoker}
-        familieHendelse={familieHendelse}
-        lenkeTilAnnenPart="testlenke"
-        alleKodeverk={{}}
-        sprakkode={{ kode: 'NN' }}
-      />,
-    );
+    const wrapper = shallowWithIntl(<VisittkortPanel.WrappedComponent
+      intl={intlMock}
+      fagsak={fagsak}
+      personopplysninger={personopplysningerSoker}
+      familieHendelse={familieHendelse}
+      lenkeTilAnnenPart="testlenke"
+      alleKodeverk={{}}
+      sprakkode={{ kode: 'NN' }}
+    />);
 
     expect(wrapper.find(FlexContainer)).has.length(1);
     const visittkort = wrapper.find(PersonCard);

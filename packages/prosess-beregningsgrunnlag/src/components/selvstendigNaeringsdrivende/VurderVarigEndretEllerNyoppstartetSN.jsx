@@ -12,7 +12,10 @@ import {
   formatCurrencyNoKr,
   removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
-import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  InputField,
+  RadioGroupField, RadioOption,
+} from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -28,6 +31,7 @@ export const begrunnelseFieldname = 'varigEndringNyoppstartetBegrunnelse';
 export const varigEndringRadioname = 'erVarigEndretNaering';
 export const fastsettInntektFieldname = 'bruttoBeregningsgrunnlag';
 const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE } = aksjonspunktCodes;
+
 
 /**
  * VurderVarigEndretEllerNyoppstartetSN
@@ -45,32 +49,38 @@ export const VurderVarigEndretEllerNyoppstartetSN = ({
   erVarigEndretNaering,
   endretTekst,
 }) => {
-  let radioLabel1 = <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IngenEndring" />;
-  let radioLabel2 = <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering" />;
+  let radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IngenEndring" />);
+  let radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering" />);
   if (erNyoppstartet && !erVarigEndring) {
-    radioLabel1 = <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeNyoppstartet" />;
-    radioLabel2 = <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.Nyoppstartet" />;
+    radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeNyoppstartet" />);
+    radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.Nyoppstartet" />);
   }
   if (erVarigEndring && !erNyoppstartet) {
-    radioLabel1 = <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeVarigEndring" />;
-    radioLabel2 = <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.VarigEndring" />;
+    radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeVarigEndring" />);
+    radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.VarigEndring" />);
   }
   return (
     <>
       {!readOnly && (
-        <Row>
-          <Column xs="12">
-            <RadioGroupField
-              name={varigEndringRadioname}
-              validate={[required]}
-              direction="vertical"
-              readOnly={readOnly}
-            >
-              <RadioOption label={radioLabel1} value={false} />
-              <RadioOption label={radioLabel2} value />
-            </RadioGroupField>
-          </Column>
-        </Row>
+      <Row>
+        <Column xs="12">
+          <RadioGroupField
+            name={varigEndringRadioname}
+            validate={[required]}
+            direction="vertical"
+            readOnly={readOnly}
+          >
+            <RadioOption
+              label={radioLabel1}
+              value={false}
+            />
+            <RadioOption
+              label={radioLabel2}
+              value
+            />
+          </RadioGroupField>
+        </Column>
+      </Row>
       )}
       {readOnly && (
         <>
@@ -78,10 +88,10 @@ export const VurderVarigEndretEllerNyoppstartetSN = ({
             <Column xs="12">
               <Normaltekst>
                 {erNyoppstartet && (
-                  <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.Nyoppstartet" />
+                <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.Nyoppstartet" />
                 )}
                 {erVarigEndring && (
-                  <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.VarigEndring" />
+                <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.VarigEndring" />
                 )}
               </Normaltekst>
             </Column>
@@ -89,7 +99,8 @@ export const VurderVarigEndretEllerNyoppstartetSN = ({
           <VerticalSpacer sixteenPx />
         </>
       )}
-      {erVarigEndretNaering && (
+      {erVarigEndretNaering
+      && (
         <>
           <Row className={styles.verticalAlignMiddle}>
             <Column className={styles.dynamiskKolonne}>
@@ -121,9 +132,7 @@ export const VurderVarigEndretEllerNyoppstartetSN = ({
             validate={[required, maxLength1500, minLength3, hasValidText]}
             maxLength={1500}
             readOnly={readOnly}
-            placeholder={intl.formatMessage({
-              id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder',
-            })}
+            placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
             endrettekst={endretTekst}
           />
         </Column>
@@ -139,6 +148,7 @@ VurderVarigEndretEllerNyoppstartetSN.propTypes = {
   erVarigEndring: PropTypes.bool.isRequired,
   erNyoppstartet: PropTypes.bool.isRequired,
   erVarigEndretNaering: PropTypes.bool,
+
 };
 
 VurderVarigEndretEllerNyoppstartetSN.defaultProps = {
@@ -149,17 +159,12 @@ VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gje
   if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
     return undefined;
   }
-  const snAndel = relevanteAndeler.find(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-  );
-  const varigEndretNaeringAP = gjeldendeAksjonspunkter.find(
-    ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  );
+  const snAndel = relevanteAndeler.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const varigEndretNaeringAP = gjeldendeAksjonspunkter
+    .find((ap) => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
   if (varigEndretNaeringAP) {
     return {
-      [varigEndringRadioname]: isAksjonspunktOpen(varigEndretNaeringAP.status.kode)
-        ? undefined
-        : relevanteAndeler[0].overstyrtPrAar !== null,
+      [varigEndringRadioname]: isAksjonspunktOpen(varigEndretNaeringAP.status.kode) ? undefined : relevanteAndeler[0].overstyrtPrAar !== null,
       [begrunnelseFieldname]: varigEndretNaeringAP.begrunnelse ? varigEndretNaeringAP.begrunnelse : '',
       [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,
     };
@@ -167,10 +172,11 @@ VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gje
   return undefined;
 };
 
-VurderVarigEndretEllerNyoppstartetSN.transformValues = values => ({
+VurderVarigEndretEllerNyoppstartetSN.transformValues = (values) => ({
   begrunnelse: values[begrunnelseFieldname],
   erVarigEndretNaering: values[varigEndringRadioname],
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
+
 
 export default injectIntl(VurderVarigEndretEllerNyoppstartetSN);
