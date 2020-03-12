@@ -4,5 +4,8 @@
   "UttakPanel.Gradering": "gradering",
   "UttakPanel.GraderingProsent": "{grad}% gradering",
   "UttakPanel.FOM": "Fra og med: {fom}",
-  "UttakPanel.TOM": "Til og med: {tom}"
+  "UttakPanel.TOM": "Til og med: {tom}",
+  "UttakPanel.Avslått": "Avslått",
+  "UttakPanel.UtfallInnvilget": "Utfall: Innvilget",
+  "UttakPanel.UtfallAvslått": "Utfall: Avslått"
 }
