@@ -47,7 +47,6 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
     textCode: 'MedlemskapInfoPanel.Medlemskap',
     aksjonspunkterCodes: [
-      aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
       aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
       aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
       aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,

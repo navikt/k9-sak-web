@@ -19,7 +19,6 @@ import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 
 const {
-  AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
   AVKLAR_OM_BRUKER_ER_BOSATT,
   AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   AVKLAR_OPPHOLDSRETT,
@@ -224,7 +223,6 @@ OppholdInntektOgPerioderForm.propTypes = {
 };
 
 const medlemAksjonspunkter = [
-  AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
   AVKLAR_OM_BRUKER_ER_BOSATT,
   AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   AVKLAR_OPPHOLDSRETT,
@@ -245,7 +243,7 @@ export const transformValues = (values, aksjonspunkter) => {
       .map(periode => {
         // TODO Kor mange felt er det i bekreftetPeriode? Kan ein heller laga nytt objekt med det ein treng?
         const {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          /* eslint-disable @typescript-eslint/no-unused-vars */
           id,
           fixedMedlemskapPerioder,
           foreldre,
@@ -253,7 +251,6 @@ export const transformValues = (values, aksjonspunkter) => {
           manuellVurderingType,
           hasBosattAksjonspunkt,
           hasPeriodeAksjonspunkt,
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           isBosattAksjonspunktClosed,
           isPeriodAksjonspunktClosed,
           opphold,
@@ -261,6 +258,7 @@ export const transformValues = (values, aksjonspunkter) => {
           fom,
           termindato,
           årsaker,
+          /* eslint-enable @typescript-eslint/no-unused-vars */
           ...bekreftetPeriode
         } = periode;
         return bekreftetPeriode;

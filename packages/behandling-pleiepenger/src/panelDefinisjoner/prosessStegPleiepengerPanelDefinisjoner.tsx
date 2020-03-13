@@ -283,12 +283,7 @@ const prosessStegPanelDefinisjoner = [
           ac.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
           ac.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
         ],
-        endpoints: [
-          api.TILBAKEKREVINGVALG,
-          api.SEND_VARSEL_OM_REVURDERING,
-          api.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
-          api.MEDLEMSKAP,
-        ],
+        endpoints: [api.TILBAKEKREVINGVALG, api.SEND_VARSEL_OM_REVURDERING, api.MEDLEMSKAP],
         renderComponent: props => <VedtakProsessIndex {...props} />,
         getData: ({
           previewCallback,

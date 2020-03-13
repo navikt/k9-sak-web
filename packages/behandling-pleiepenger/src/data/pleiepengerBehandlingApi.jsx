@@ -22,7 +22,6 @@ export const PleiepengerBehandlingApiKeys = {
   SOKNAD: 'SOKNAD',
   SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
-  BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
   MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
@@ -88,10 +87,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soknad', PleiepengerBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', PleiepengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
   .withRel('familiehendelse-original-behandling', PleiepengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
-  .withRel(
-    'beregningsresultat-engangsstonad-original-behandling',
-    PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
-  )
   .withRel('soeker-medlemskap-v2', PleiepengerBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)

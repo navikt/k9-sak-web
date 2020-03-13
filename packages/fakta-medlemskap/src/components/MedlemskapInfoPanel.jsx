@@ -8,9 +8,9 @@ import medlemskapMedlemskaPropType from '../propTypes/medlemskapMedlemskapPropTy
 import medlemskapSoknadPropType from '../propTypes/medlemskapSoknadPropType';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 
-const { AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, OVERSTYR_AVKLAR_STARTDATO } = aksjonspunktCodes;
+const { OVERSTYR_AVKLAR_STARTDATO } = aksjonspunktCodes;
 
-const avklarStartdatoAp = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, OVERSTYR_AVKLAR_STARTDATO];
+const avklarStartdatoAp = [OVERSTYR_AVKLAR_STARTDATO];
 
 const hasOpen = aksjonspunkt => aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
 
@@ -33,9 +33,6 @@ const MedlemskapInfoPanel = ({
   medlemskap,
   fagsakPerson,
 }) => {
-  const avklarStartdatoAksjonspunkt = aksjonspunkter.find(
-    ap => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
-  );
   const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
   const aksjonspunkterMinusAvklarStartDato = useMemo(
     () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode)),
@@ -44,7 +41,7 @@ const MedlemskapInfoPanel = ({
 
   return (
     <>
-      {!hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring) && (
+      {!hasOpen(avklarStartdatoOverstyring) && (
         <OppholdInntektOgPerioderForm
           soknad={soknad}
           readOnly={readOnly}
