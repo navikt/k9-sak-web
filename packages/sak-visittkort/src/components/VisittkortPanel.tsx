@@ -3,7 +3,9 @@ import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-compo
 import { Fagsak, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { Gender, PersonCard } from '@navikt/nap-person-card';
 import React, { FunctionComponent } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps, FormattedMessage } from 'react-intl';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
+import moment from 'moment';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
 import styles from './visittkortPanel.less';
@@ -92,8 +94,13 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                     name={barn.navn}
                     fodselsnummer={barn.fnr}
                     gender={utledKjonn(barn.navBrukerKjonn)}
-                    renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={barn} />}
-                    isActive={false}
+                    isChild
+                    childAge={
+                      <FormattedMessage
+                        id="VisittkortBarnInfoFodselPanel.Fodt"
+                        values={{ dato: moment(barn.fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
+                      />
+                    }
                   />
                 </FlexColumn>
               ))}
