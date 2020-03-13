@@ -11,7 +11,6 @@ import { arbeidsprosentNormal, arbeidsprosent, useUttakContext, visningsdato } f
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 import { nyArbeidsperiodeFormName } from './constants';
 import Arbeid from './types/Arbeid';
-import Jobbinfo from './types/Jobbinfo';
 
 interface ValgtPeriodeProps {
   endreValgtPeriodeCallback: () => void;
@@ -35,11 +34,12 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
   avbryt,
   arbeid,
 }) => {
-  const { valgtArbeidsforholdId, valgtFomTom } = useUttakContext();
+  const { valgtArbeidsforholdId, valgtPeriodeIndex } = useUttakContext();
 
-  const valgtPeriode = useMemo<Jobbinfo>(
-    () => arbeid.find(arb => arb.arbeidsforhold.arbeidsforholdId === valgtArbeidsforholdId)?.perioder[valgtFomTom],
-    [valgtArbeidsforholdId, valgtFomTom, arbeid],
+  const valgtPeriode = useMemo<ArbeidsforholdPeriode>(
+    () =>
+      arbeid.find(arb => arb.arbeidsforhold.arbeidsforholdId === valgtArbeidsforholdId)?.perioder[valgtPeriodeIndex],
+    [valgtArbeidsforholdId, valgtPeriodeIndex, arbeid],
   );
 
   const intl = useIntl();
@@ -52,14 +52,11 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
     );
   }
 
-  const valgtPeriodeIndex = 0; // TODO: Det er ingen garanti for at perioder kommer i sortert rekkefølge?
-
-  const [fom, tom] = valgtFomTom?.split('/');
   const { periodeLabelText, visningsdatoer, timerFårJobbet, timerIJobbTilVanlig } = valgtPeriode
     ? {
         periodeLabelText: `${intl.formatMessage({ id: 'FaktaOmUttakForm.Periode' })} ${`${valgtPeriodeIndex +
           1}`.padStart(2, '0')}:`,
-        visningsdatoer: ` ${visningsdato(fom)} - ${visningsdato(tom)}`,
+        visningsdatoer: ` ${visningsdato(valgtPeriode.fom)} - ${visningsdato(valgtPeriode.tom)}`,
         timerFårJobbet: formaterTimer(valgtPeriode.timerFårJobbet, valgtPeriode.timerIJobbTilVanlig),
         timerIJobbTilVanlig: formaterTimer(valgtPeriode.timerIJobbTilVanlig),
       }

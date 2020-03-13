@@ -2,8 +2,8 @@ import React from 'react';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
 import { action } from '@storybook/addon-actions';
 import { Behandling } from '@k9-sak-web/types';
+import ArbeidDto from '@fpsak-frontend/fakta-uttak/src/components/dto/ArbeidDto';
 import Personopplysninger from '@k9-sak-web/types/src/personopplysningerTsType';
-import Arbeid from '@fpsak-frontend/fakta-uttak/src/components/types/Arbeid';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -28,7 +28,7 @@ const behandling: Behandling = {
   links: [],
 };
 
-const arbeid: Arbeid[] = [
+const arbeid: ArbeidDto[] = [
   {
     arbeidsforhold: {
       type: 'Arbeidstaker',
@@ -38,14 +38,16 @@ const arbeid: Arbeid[] = [
     },
     perioder: {
       '2020-01-01/2020-01-31': {
-        timerIJobbTilVanlig: 37.5,
-        timerFårJobbet: 15,
+        jobberNormaltPerUke: 37.5,
+        skalJobbeProsent: 15,
+        // TODO: FIX
         // jobberNormaltPerUke: 'PT7H30M',
         // skalJobbeProsent: '20',
       },
       '2020-02-01/2020-02-29': {
-        timerIJobbTilVanlig: 15,
-        timerFårJobbet: 7.5,
+        jobberNormaltPerUke: 15,
+        skalJobbeProsent: 7.5,
+        // TODO: FIX
         // jobberNormaltPerUke: 'PT7H30M',
         // skalJobbeProsent: '20',
       },
@@ -60,8 +62,9 @@ const arbeid: Arbeid[] = [
     },
     perioder: {
       '2020-01-01/2020-03-31': {
-        timerIJobbTilVanlig: 20,
-        timerFårJobbet: 10,
+        jobberNormaltPerUke: 20,
+        skalJobbeProsent: 10,
+        // TODO: FIX
         // jobberNormaltPerUke: 'PT7H30M',
         // skalJobbeProsent: '20',
       },
@@ -69,6 +72,7 @@ const arbeid: Arbeid[] = [
   },
 ];
 
+// @ts-ignore
 const personopplysninger: Personopplysninger = {
   navn: 'Reidar Rogersen',
   navBrukerKjonn: {
@@ -80,7 +84,7 @@ const personopplysninger: Personopplysninger = {
 export const avklarArbeidsforhold = () => (
   <UttakFaktaIndex
     behandling={behandling}
-    arbeid={arbeid}
+    arbeidDto={arbeid}
     submitCallback={action('Bekreft og fortsett')}
     personopplysninger={personopplysninger}
   />

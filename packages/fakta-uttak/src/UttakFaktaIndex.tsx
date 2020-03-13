@@ -6,6 +6,7 @@ import Personopplysninger from '@k9-sak-web/types/src/personopplysningerTsType';
 import messages from '../i18n/nb_NO.json';
 import UttakFaktaPanel from './components/UttakFaktaPanel';
 import Arbeid from './components/types/Arbeid';
+import ArbeidDto from './components/dto/ArbeidDto';
 
 const cache = createIntlCache();
 
@@ -19,14 +20,29 @@ const intl = createIntl(
 
 interface UttakFaktaIndexProps {
   behandling: Behandling;
-  arbeid: Arbeid[];
-  submitCallback: (values: Arbeid[]) => void;
+  arbeidDto: ArbeidDto[];
+  // TODO: return type: { begrunnelse: arbeidDto, kode }
+  submitCallback: (values: any[]) => void;
   personopplysninger: Personopplysninger;
 }
 
+export const mapDtoTilInternobjekt: (arbeid: ArbeidDto[]) => Arbeid[] = arbeid =>
+  arbeid.map(({ perioder, arbeidsforhold }) => ({
+    arbeidsforhold: { ...arbeidsforhold },
+    perioder: Object.entries(perioder).map(([fomTom, { jobberNormaltPerUke, skalJobbeProsent }]) => {
+      const [fom, tom] = fomTom.split('/');
+      return {
+        fom,
+        tom,
+        timerIJobbTilVanlig: jobberNormaltPerUke,
+        timerFårJobbet: (skalJobbeProsent * jobberNormaltPerUke) / 100,
+      };
+    }),
+  }));
+
 const UttakFaktaIndex: FunctionComponent<UttakFaktaIndexProps> = ({
   behandling,
-  arbeid,
+  arbeidDto,
   submitCallback,
   personopplysninger,
 }) => (
@@ -34,7 +50,7 @@ const UttakFaktaIndex: FunctionComponent<UttakFaktaIndexProps> = ({
     <UttakFaktaPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      arbeid={arbeid}
+      arbeid={mapDtoTilInternobjekt(arbeidDto)}
       submitCallback={submitCallback}
       personopplysninger={personopplysninger}
     />

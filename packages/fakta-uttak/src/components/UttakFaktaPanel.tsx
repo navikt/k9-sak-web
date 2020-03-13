@@ -18,7 +18,7 @@ interface UttakFaktaPanelProps {
   behandlingId: number;
   behandlingVersjon: number;
   arbeid: Arbeid[];
-  submitCallback: (values: Arbeid[]) => void;
+  submitCallback: (values: any[]) => void;
   personopplysninger: Personopplysninger;
 }
 
@@ -61,6 +61,7 @@ const UttakFaktaPanel: FunctionComponent<UttakFaktaPanelProps> = ({ personopplys
   );
 
   return (
+    // @ts-ignore
     <Ekspanderbartpanel apen={erÅpen} onClick={åpneLukke} tittel={paneltittel} border>
       <UttakFaktaForm arbeid={arbeid} {...props} />
     </Ekspanderbartpanel>

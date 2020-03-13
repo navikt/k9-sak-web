@@ -13,11 +13,11 @@ interface ArbeidsgiverProps {
 }
 
 const Arbeidsgiver: FunctionComponent<ArbeidsgiverProps> = ({ arbeid }) => {
-  const { valgtArbeidsforholdId, setValgtArbeidsforholdId, setValgtFomTom } = useUttakContext();
+  const { valgtArbeidsforholdId, setValgtArbeidsforholdId, setValgtPeriodeIndex } = useUttakContext();
 
   const velgArbeidsgiver = () => {
     setValgtArbeidsforholdId(arbeid.arbeidsforhold.arbeidsforholdId);
-    setValgtFomTom(null);
+    setValgtPeriodeIndex(null);
   };
 
   const erValgt = arbeid.arbeidsforhold.arbeidsforholdId === valgtArbeidsforholdId;

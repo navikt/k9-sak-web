@@ -17,6 +17,11 @@ interface PerioderProps {
 const Perioder: FunctionComponent<PerioderProps> = ({ arbeid, valgtArbeidsforholdId, leggTilPeriode }) => {
   const intl = useIntl();
 
+  const valgtArbeid = useMemo(() => arbeid.find(arb => arb.arbeidsforhold.arbeidsforholdId === valgtArbeidsforholdId), [
+    arbeid,
+    valgtArbeidsforholdId,
+  ]);
+
   if (!valgtArbeidsforholdId) {
     return (
       <Normaltekst className={styles.kursiv}>
@@ -25,18 +30,13 @@ const Perioder: FunctionComponent<PerioderProps> = ({ arbeid, valgtArbeidsforhol
     );
   }
 
-  const valgtArbeid = useMemo(() => arbeid.find(arb => arb.arbeidsforhold.arbeidsforholdId === valgtArbeidsforholdId), [
-    arbeid,
-    valgtArbeidsforholdId,
-  ]);
-
   return (
     <div>
-      {Object.entries(valgtArbeid.perioder).map(([fomTom], index) => (
+      {valgtArbeid.perioder.map((periode, index) => (
         <PeriodeKnapp
           periodeIndex={index}
-          fomTom={fomTom}
-          key={`${valgtArbeid.arbeidsforhold.arbeidsforholdId}-${fomTom}`}
+          periode={periode}
+          key={`${valgtArbeid.arbeidsforhold.arbeidsforholdId}-${periode.fom}-${periode.fom}`}
         />
       ))}
       {leggTilPeriode && (

@@ -4,23 +4,24 @@ import classnames from 'classnames/bind';
 
 import styles from './periodeKnapp.less';
 import { useUttakContext, visningsdato } from './uttakUtils';
+import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 
 const classNames = classnames.bind(styles);
 
 interface PeriodeKnappProps {
-  fomTom: string;
+  periode: ArbeidsforholdPeriode;
   periodeIndex: number;
 }
 
-const PeriodeKnapp: FunctionComponent<PeriodeKnappProps> = ({ fomTom, periodeIndex }) => {
-  const { setValgtFomTom, valgtFomTom, setRedigererPeriode } = useUttakContext();
+const PeriodeKnapp: FunctionComponent<PeriodeKnappProps> = ({ periode, periodeIndex }) => {
+  const { setValgtPeriodeIndex, valgtPeriodeIndex, setRedigererPeriode } = useUttakContext();
   const velgPeriode = () => {
     setRedigererPeriode(false);
-    setValgtFomTom(fomTom);
+    setValgtPeriodeIndex(periodeIndex);
   };
 
-  const [fom, tom] = fomTom.split('/');
-  const erValgt = fomTom === valgtFomTom;
+  const { fom, tom } = periode;
+  const erValgt = periodeIndex === valgtPeriodeIndex;
 
   return (
     <button
