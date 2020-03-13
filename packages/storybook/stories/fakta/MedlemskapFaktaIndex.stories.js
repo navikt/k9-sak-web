@@ -30,196 +30,205 @@ const soknad = {
     oppholdNorgeNa: true,
     oppholdNestePeriode: true,
     oppholdSistePeriode: true,
-    utlandsoppholdFor: [{
-      landNavn: 'SVERIGE',
-      fom: '2010-01-01',
-      tom: '2011-01-01',
-    }],
-    utlandsoppholdEtter: [{
-      landNavn: 'DANMARK',
-      fom: '2018-01-01',
-      tom: '2019-01-01',
-    }],
+    utlandsoppholdFor: [
+      {
+        landNavn: 'SVERIGE',
+        fom: '2010-01-01',
+        tom: '2011-01-01',
+      },
+    ],
+    utlandsoppholdEtter: [
+      {
+        landNavn: 'DANMARK',
+        fom: '2018-01-01',
+        tom: '2019-01-01',
+      },
+    ],
   },
 };
 
 const inntektArbeidYtelse = {
-  inntektsmeldinger: [{
-    arbeidsgiverStartdato: '2019-02-02',
-    arbeidsgiver: 'Studio Espen',
-  }, {
-    arbeidsgiverStartdato: '2019-02-03',
-    arbeidsgiver: 'Auto Joachim bilpleie',
-  }],
+  inntektsmeldinger: [
+    {
+      arbeidsgiverStartdato: '2019-02-02',
+      arbeidsgiver: 'Studio Espen',
+    },
+    {
+      arbeidsgiverStartdato: '2019-02-03',
+      arbeidsgiver: 'Auto Joachim bilpleie',
+    },
+  ],
 };
 const medlemskap = {
-  inntekt: [{
-    navn: 'MYGG ROBUST',
-    utbetaler: '973861778',
-    fom: '2018-09-01',
-    tom: '2018-09-30',
-    ytelse: false,
-    belop: 35000,
-  }, {
-    navn: 'MYGG ROBUST',
-    utbetaler: '973861778',
-    fom: '2019-02-01',
-    tom: '2019-02-28',
-    ytelse: false,
-    belop: 35000,
-  }],
-  medlemskapPerioder: [{
-    fom: '2019-01-01',
-    tom: '2021-10-13',
-    medlemskapType: {
-      kode: 'AVKLARES',
-      kodeverk: 'MEDLEMSKAP_TYPE',
+  inntekt: [
+    {
+      navn: 'MYGG ROBUST',
+      utbetaler: '973861778',
+      fom: '2018-09-01',
+      tom: '2018-09-30',
+      ytelse: false,
+      belop: 35000,
     },
-    dekningType: {
-      kode: 'OPPHOR',
-      kodeverk: 'MEDLEMSKAP_DEKNING',
+    {
+      navn: 'MYGG ROBUST',
+      utbetaler: '973861778',
+      fom: '2019-02-01',
+      tom: '2019-02-28',
+      ytelse: false,
+      belop: 35000,
     },
-    kildeType: {
-      kode: 'FS22',
-      kodeverk: 'MEDLEMSKAP_KILDE',
-    },
-    beslutningsdato: null,
-  }],
-  perioder: [{
-    vurderingsdato: '2019-11-07',
-    personopplysninger: {
-      fnr: null,
-      aktoerId: '1615078487209',
-      diskresjonskode: null,
-      nummer: null,
-      navBrukerKjonn: {
-        kode: 'K',
-        kodeverk: 'BRUKER_KJOENN',
+  ],
+  medlemskapPerioder: [
+    {
+      fom: '2019-01-01',
+      tom: '2021-10-13',
+      medlemskapType: {
+        kode: 'AVKLARES',
+        kodeverk: 'MEDLEMSKAP_TYPE',
       },
-      statsborgerskap: {
-        kode: 'NOR',
-        kodeverk: 'LANDKODER',
-        navn: 'Norge',
+      dekningType: {
+        kode: 'OPPHOR',
+        kodeverk: 'MEDLEMSKAP_DEKNING',
       },
-      avklartPersonstatus: {
-        orginalPersonstatus: {
+      kildeType: {
+        kode: 'FS22',
+        kodeverk: 'MEDLEMSKAP_KILDE',
+      },
+      beslutningsdato: null,
+    },
+  ],
+  perioder: [
+    {
+      vurderingsdato: '2019-11-07',
+      personopplysninger: {
+        fnr: null,
+        aktoerId: '1615078487209',
+        diskresjonskode: null,
+        nummer: null,
+        navBrukerKjonn: {
+          kode: 'K',
+          kodeverk: 'BRUKER_KJOENN',
+        },
+        statsborgerskap: {
+          kode: 'NOR',
+          kodeverk: 'LANDKODER',
+          navn: 'Norge',
+        },
+        avklartPersonstatus: {
+          orginalPersonstatus: {
+            kode: 'BOSA',
+            kodeverk: 'PERSONSTATUS_TYPE',
+          },
+          overstyrtPersonstatus: {
+            kode: 'BOSA',
+            kodeverk: 'PERSONSTATUS_TYPE',
+          },
+        },
+        personstatus: {
           kode: 'BOSA',
           kodeverk: 'PERSONSTATUS_TYPE',
         },
-        overstyrtPersonstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
+        sivilstand: {
+          kode: 'UGIF',
+          kodeverk: 'SIVILSTAND_TYPE',
         },
-      },
-      personstatus: {
-        kode: 'BOSA',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-      sivilstand: {
-        kode: 'UGIF',
-        kodeverk: 'SIVILSTAND_TYPE',
-      },
-      navn: 'Mygg Robust',
-      dodsdato: null,
-      fodselsdato: '1966-08-02',
-      adresser: [{
-        adresseType: {
-          kode: 'BOSTEDSADRESSE',
-          kodeverk: 'ADRESSE_TYPE',
+        navn: 'Mygg Robust',
+        dodsdato: null,
+        fodselsdato: '1966-08-02',
+        adresser: [
+          {
+            adresseType: {
+              kode: 'BOSTEDSADRESSE',
+              kodeverk: 'ADRESSE_TYPE',
+            },
+            mottakerNavn: 'Mygg Robust',
+            adresselinje1: 'Skogvegen 3',
+            adresselinje2: null,
+            adresselinje3: null,
+            postNummer: '4353',
+            poststed: 'Klepp Stasjon',
+            land: 'NOR',
+          },
+        ],
+        region: {
+          kode: 'NORDEN',
+          kodeverk: 'REGION',
         },
-        mottakerNavn: 'Mygg Robust',
-        adresselinje1: 'Skogvegen 3',
-        adresselinje2: null,
-        adresselinje3: null,
-        postNummer: '4353',
-        poststed: 'Klepp Stasjon',
-        land: 'NOR',
-      }],
-      region: {
-        kode: 'NORDEN',
-        kodeverk: 'REGION',
+        annenPart: null,
+        ektefelle: null,
+        barn: [],
+        barnSoktFor: [],
+        barnFraTpsRelatertTilSoknad: [],
+        harVerge: false,
       },
-      annenPart: null,
-      ektefelle: null,
-      barn: [],
-      barnSoktFor: [],
-      barnFraTpsRelatertTilSoknad: [],
-      harVerge: false,
+      aksjonspunkter: ['5021'],
+      årsaker: ['SKJÆRINGSTIDSPUNKT'],
+      oppholdsrettVurdering: null,
+      erEosBorger: null,
+      lovligOppholdVurdering: null,
+      bosattVurdering: null,
+      medlemskapManuellVurderingType: null,
+      begrunnelse: null,
     },
-    aksjonspunkter: [
-      '5021',
-    ],
-    årsaker: [
-      'SKJÆRINGSTIDSPUNKT',
-    ],
-    oppholdsrettVurdering: null,
-    erEosBorger: null,
-    lovligOppholdVurdering: null,
-    bosattVurdering: null,
-    medlemskapManuellVurderingType: null,
-    begrunnelse: null,
-  }, {
-    vurderingsdato: '2018-11-07',
-    personopplysninger: {
-      fnr: null,
-      aktoerId: '1615078487209',
-      diskresjonskode: null,
-      nummer: null,
-      navBrukerKjonn: {
-        kode: 'K',
-        kodeverk: 'BRUKER_KJOENN',
-      },
-      statsborgerskap: {
-        kode: 'NOR',
-        kodeverk: 'LANDKODER',
-        navn: 'Norge',
-      },
-      avklartPersonstatus: {
-        orginalPersonstatus: {
+    {
+      vurderingsdato: '2018-11-07',
+      personopplysninger: {
+        fnr: null,
+        aktoerId: '1615078487209',
+        diskresjonskode: null,
+        nummer: null,
+        navBrukerKjonn: {
+          kode: 'K',
+          kodeverk: 'BRUKER_KJOENN',
+        },
+        statsborgerskap: {
+          kode: 'NOR',
+          kodeverk: 'LANDKODER',
+          navn: 'Norge',
+        },
+        avklartPersonstatus: {
+          orginalPersonstatus: {
+            kode: 'BOSA',
+            kodeverk: 'PERSONSTATUS_TYPE',
+          },
+          overstyrtPersonstatus: {
+            kode: 'BOSA',
+            kodeverk: 'PERSONSTATUS_TYPE',
+          },
+        },
+        personstatus: {
           kode: 'BOSA',
           kodeverk: 'PERSONSTATUS_TYPE',
         },
-        overstyrtPersonstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
+        sivilstand: {
+          kode: 'UGIF',
+          kodeverk: 'SIVILSTAND_TYPE',
         },
+        navn: 'Mygg Robust',
+        dodsdato: null,
+        fodselsdato: '1966-08-02',
+        adresser: [],
+        region: {
+          kode: 'NORDEN',
+          kodeverk: 'REGION',
+        },
+        annenPart: null,
+        ektefelle: null,
+        barn: [],
+        barnSoktFor: [],
+        barnFraTpsRelatertTilSoknad: [],
+        harVerge: false,
       },
-      personstatus: {
-        kode: 'BOSA',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-      sivilstand: {
-        kode: 'UGIF',
-        kodeverk: 'SIVILSTAND_TYPE',
-      },
-      navn: 'Mygg Robust',
-      dodsdato: null,
-      fodselsdato: '1966-08-02',
-      adresser: [],
-      region: {
-        kode: 'NORDEN',
-        kodeverk: 'REGION',
-      },
-      annenPart: null,
-      ektefelle: null,
-      barn: [],
-      barnSoktFor: [],
-      barnFraTpsRelatertTilSoknad: [],
-      harVerge: false,
+      aksjonspunkter: ['5021'],
+      årsaker: ['SKJÆRINGSTIDSPUNKT'],
+      oppholdsrettVurdering: null,
+      erEosBorger: null,
+      lovligOppholdVurdering: null,
+      bosattVurdering: null,
+      medlemskapManuellVurderingType: null,
+      begrunnelse: null,
     },
-    aksjonspunkter: [
-      '5021',
-    ],
-    årsaker: [
-      'SKJÆRINGSTIDSPUNKT',
-    ],
-    oppholdsrettVurdering: null,
-    erEosBorger: null,
-    lovligOppholdVurdering: null,
-    bosattVurdering: null,
-    medlemskapManuellVurderingType: null,
-    begrunnelse: null,
-  }],
+  ],
 };
 const fagsakPerson = {};
 
@@ -237,25 +246,29 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = (
   <MedlemskapFaktaIndex
     behandling={object('behandling', behandling)}
     medlemskap={object('medlemskap', medlemskap)}
-    medlemskapV2={object('medlemskap', medlemskap)}
     soknad={object('soknad', soknad)}
     inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     fagsakPerson={object('fagsakPerson', fagsakPerson)}
     isForeldrepengerFagsak={boolean('isForeldrepengerFagsak', true)}
     alleKodeverk={alleKodeverk}
     alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]: object(
+        'merknaderFraBeslutter',
+        merknaderFraBeslutter,
+      ),
     }}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
@@ -269,50 +282,54 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => (
   <MedlemskapFaktaIndex
     behandling={object('behandling', behandling)}
     medlemskap={object('medlemskap', medlemskap)}
-    medlemskapV2={object('medlemskap', medlemskap)}
     soknad={object('soknad', soknad)}
     inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }, {
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }, {
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-      },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }, {
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-      },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     fagsakPerson={object('fagsakPerson', fagsakPerson)}
     isForeldrepengerFagsak={boolean('isForeldrepengerFagsak', true)}
     alleKodeverk={alleKodeverk}

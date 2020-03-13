@@ -55,7 +55,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
       aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
       aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO,
     ],
-    endpoints: [pleiepengerBehandlingApi.MEDLEMSKAP, pleiepengerBehandlingApi.MEDLEMSKAP_V2],
+    endpoints: [pleiepengerBehandlingApi.MEDLEMSKAP],
     renderComponent: props => <MedlemskapFaktaIndex {...props} />,
     showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
     getData: ({ fagsak, soknad, personopplysninger }) => ({
