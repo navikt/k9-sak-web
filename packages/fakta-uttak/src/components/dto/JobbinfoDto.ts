@@ -1,7 +1,6 @@
 interface JobbinfoDto {
-  // TODO: Begge er egentlig strings og jobberNormaltPerUke er på formen PT7H30M
-  jobberNormaltPerUke: number;
-  skalJobbeProsent: number;
+  jobberNormaltPerUke: string;
+  skalJobbeProsent: string;
 }
 
 export default JobbinfoDto;

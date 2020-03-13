@@ -38,18 +38,12 @@ const arbeid: ArbeidDto[] = [
     },
     perioder: {
       '2020-01-01/2020-01-31': {
-        jobberNormaltPerUke: 37.5,
-        skalJobbeProsent: 15,
-        // TODO: FIX
-        // jobberNormaltPerUke: 'PT7H30M',
-        // skalJobbeProsent: '20',
+        jobberNormaltPerUke: 'PT37H30M',
+        skalJobbeProsent: '40',
       },
       '2020-02-01/2020-02-29': {
-        jobberNormaltPerUke: 15,
-        skalJobbeProsent: 7.5,
-        // TODO: FIX
-        // jobberNormaltPerUke: 'PT7H30M',
-        // skalJobbeProsent: '20',
+        jobberNormaltPerUke: 'PT15H',
+        skalJobbeProsent: '50',
       },
     },
   },
@@ -62,11 +56,8 @@ const arbeid: ArbeidDto[] = [
     },
     perioder: {
       '2020-01-01/2020-03-31': {
-        jobberNormaltPerUke: 20,
-        skalJobbeProsent: 10,
-        // TODO: FIX
-        // jobberNormaltPerUke: 'PT7H30M',
-        // skalJobbeProsent: '20',
+        jobberNormaltPerUke: 'PT20H',
+        skalJobbeProsent: '50',
       },
     },
   },
