@@ -94,6 +94,7 @@ export {
   hasValidSaksnummerOrFodselsnummerFormat,
   hasValidDecimal,
   hasValidInteger,
+  hasValidDecimalMaxNumberOfDecimals,
   maxValue,
   minValue,
   maxLength,
