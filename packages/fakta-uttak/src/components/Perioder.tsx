@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Flatknapp } from 'nav-frontend-knapper';
@@ -6,17 +6,18 @@ import addSvg from '@fpsak-frontend/assets/images/add-circle.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import styles from './uttakFaktaForm.less';
 import PeriodeKnapp from './PeriodeKnapp';
-import { Arbeidsforhold } from './types/Arbeidfsforhold';
+import Arbeid from './types/Arbeid';
 
 interface PerioderProps {
-  valgtArbeidsforhold: Arbeidsforhold;
+  arbeid: Arbeid[];
+  valgtArbeidsforholdId: string;
   leggTilPeriode?: () => void;
 }
 
-const Perioder: FunctionComponent<PerioderProps> = ({ valgtArbeidsforhold, leggTilPeriode }) => {
+const Perioder: FunctionComponent<PerioderProps> = ({ arbeid, valgtArbeidsforholdId, leggTilPeriode }) => {
   const intl = useIntl();
 
-  if (!valgtArbeidsforhold) {
+  if (!valgtArbeidsforholdId) {
     return (
       <Normaltekst className={styles.kursiv}>
         <FormattedMessage id="FaktaOmUttakForm.IngenArbeidsforholdValgt" />
@@ -24,13 +25,18 @@ const Perioder: FunctionComponent<PerioderProps> = ({ valgtArbeidsforhold, leggT
     );
   }
 
+  const valgtArbeid = useMemo(() => arbeid.find(arb => arb.arbeidsforhold.arbeidsforholdId === valgtArbeidsforholdId), [
+    arbeid,
+    valgtArbeidsforholdId,
+  ]);
+
   return (
     <div>
-      {valgtArbeidsforhold.perioder.map((periode, index) => (
+      {Object.entries(valgtArbeid.perioder).map(([fomTom], index) => (
         <PeriodeKnapp
-          periode={periode}
           periodeIndex={index}
-          key={`${valgtArbeidsforhold.arbeidsgiversArbeidsforholdId}-${periode.fom}-${periode.tom}`}
+          fomTom={fomTom}
+          key={`${valgtArbeid.arbeidsforhold.arbeidsforholdId}-${fomTom}`}
         />
       ))}
       {leggTilPeriode && (

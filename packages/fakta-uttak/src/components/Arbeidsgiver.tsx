@@ -2,32 +2,27 @@ import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Element } from 'nav-frontend-typografi';
-import ArbeidsgiverType from './types/Arbeidsgiver';
 import styles from './uttakFaktaForm.less';
 import { useUttakContext } from './uttakUtils';
+import Arbeid from './types/Arbeid';
 
 const classNames = classnames.bind(styles);
 
 interface ArbeidsgiverProps {
-  arbeidsgiver: ArbeidsgiverType;
+  arbeid: Arbeid;
 }
 
-const Arbeidsgiver: FunctionComponent<ArbeidsgiverProps> = ({ arbeidsgiver }) => {
-  const {
-    valgtArbeidsgiversOrgNr,
-    setValgtArbeidsgiversOrgNr,
-    setValgtArbeidsforholdId,
-    setValgtPeriodeIndex,
-  } = useUttakContext();
+const Arbeidsgiver: FunctionComponent<ArbeidsgiverProps> = ({ arbeid }) => {
+  const { valgtArbeidsforholdId, setValgtArbeidsforholdId, setValgtFomTom } = useUttakContext();
 
   const velgArbeidsgiver = () => {
-    setValgtArbeidsgiversOrgNr(arbeidsgiver.organisasjonsnummer);
-    setValgtPeriodeIndex(null);
-    // TODO: Kun ett arb.forh. til MVP 27. mars. Støtte flere etter det
-    setValgtArbeidsforholdId(arbeidsgiver.arbeidsforhold[0].arbeidsgiversArbeidsforholdId);
+    setValgtArbeidsforholdId(arbeid.arbeidsforhold.arbeidsforholdId);
+    setValgtFomTom(null);
   };
-  const erValgt = valgtArbeidsgiversOrgNr === arbeidsgiver.organisasjonsnummer;
 
+  const erValgt = arbeid.arbeidsforhold.arbeidsforholdId === valgtArbeidsforholdId;
+
+  // TODO: håndtere at aktørId istedenfor orgnr er satt. må da oppdatere valgtArbeidsgiversOrgnr
   return (
     <button
       onClick={velgArbeidsgiver}
@@ -37,8 +32,8 @@ const Arbeidsgiver: FunctionComponent<ArbeidsgiverProps> = ({ arbeidsgiver }) =>
       })}
     >
       <Element tag="div">
-        <div>{arbeidsgiver.navn}</div>
-        <FormattedMessage values={{ orgNr: arbeidsgiver.organisasjonsnummer }} id="FaktaOmUttakForm.OrgNr" />
+        <FormattedMessage id="FaktaOmUttakForm.OrgNr" />
+        <div>{arbeid.arbeidsforhold.organisasjonsnummer}</div>
       </Element>
     </button>
   );

@@ -12,13 +12,13 @@ import urlBuilding from '@fpsak-frontend/assets/images/building-2.svg';
 import { Undertittel } from 'nav-frontend-typografi';
 import UttakFaktaForm from './UttakFaktaForm';
 import styles from './uttakFaktaPanel.less';
-import Arbeidsgiver from './types/Arbeidsgiver';
+import Arbeid from './types/Arbeid';
 
 interface UttakFaktaPanelProps {
   behandlingId: number;
   behandlingVersjon: number;
-  arbeidsgivere: Arbeidsgiver[];
-  submitCallback: (values: Arbeidsgiver[]) => void;
+  arbeid: Arbeid[];
+  submitCallback: (values: Arbeid[]) => void;
   personopplysninger: Personopplysninger;
 }
 
@@ -33,7 +33,7 @@ const kjønnSrc = kode => {
   }
 };
 
-const UttakFaktaPanel: FunctionComponent<UttakFaktaPanelProps> = ({ personopplysninger, arbeidsgivere, ...props }) => {
+const UttakFaktaPanel: FunctionComponent<UttakFaktaPanelProps> = ({ personopplysninger, arbeid, ...props }) => {
   const intl = useIntl();
   const [erÅpen, setErÅpen] = useState<boolean>(true);
   const åpneLukke = () => setErÅpen(prevErÅpen => !prevErÅpen);
@@ -48,10 +48,10 @@ const UttakFaktaPanel: FunctionComponent<UttakFaktaPanelProps> = ({ personopplys
           <Undertittel tag="span">
             {intl.formatMessage(
               {
-                id: arbeidsgivere.length === 1 ? 'UttakPanel.Arbeidsgiver' : 'UttakPanel.Arbeidsgivere',
+                id: arbeid.length === 1 ? 'UttakPanel.ArbeidsforholdEtt' : 'UttakPanel.ArbeidsforholdFlere',
               },
               {
-                antall: arbeidsgivere.length,
+                antall: arbeid.length,
               },
             )}
           </Undertittel>
@@ -62,7 +62,7 @@ const UttakFaktaPanel: FunctionComponent<UttakFaktaPanelProps> = ({ personopplys
 
   return (
     <Ekspanderbartpanel apen={erÅpen} onClick={åpneLukke} tittel={paneltittel} border>
-      <UttakFaktaForm arbeidsgivere={arbeidsgivere} {...props} />
+      <UttakFaktaForm arbeid={arbeid} {...props} />
     </Ekspanderbartpanel>
   );
 };

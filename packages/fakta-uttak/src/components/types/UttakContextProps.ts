@@ -1,10 +1,8 @@
 interface UttakContextProps {
-  valgtArbeidsgiversOrgNr?: string;
-  setValgtArbeidsgiversOrgNr?: (orgNr: string) => void;
   valgtArbeidsforholdId?: string;
   setValgtArbeidsforholdId?: (arbeidsforholdId: string) => void;
-  valgtPeriodeIndex?: number;
-  setValgtPeriodeIndex?: (periodeIndex: number) => void;
+  valgtFomTom: string;
+  setValgtFomTom: (fomTom: string) => void;
   redigererPeriode?: boolean;
   setRedigererPeriode?: (redigererPeriode: boolean) => void;
 }

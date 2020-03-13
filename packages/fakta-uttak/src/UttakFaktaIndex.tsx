@@ -5,7 +5,7 @@ import Behandling from '@k9-sak-web/types/src/behandlingTsType';
 import Personopplysninger from '@k9-sak-web/types/src/personopplysningerTsType';
 import messages from '../i18n/nb_NO.json';
 import UttakFaktaPanel from './components/UttakFaktaPanel';
-import Arbeidsgiver from './components/types/Arbeidsgiver';
+import Arbeid from './components/types/Arbeid';
 
 const cache = createIntlCache();
 
@@ -19,14 +19,14 @@ const intl = createIntl(
 
 interface UttakFaktaIndexProps {
   behandling: Behandling;
-  arbeidsgivere: Arbeidsgiver[];
-  submitCallback: (values: Arbeidsgiver[]) => void;
+  arbeid: Arbeid[];
+  submitCallback: (values: Arbeid[]) => void;
   personopplysninger: Personopplysninger;
 }
 
 const UttakFaktaIndex: FunctionComponent<UttakFaktaIndexProps> = ({
   behandling,
-  arbeidsgivere,
+  arbeid,
   submitCallback,
   personopplysninger,
 }) => (
@@ -34,7 +34,7 @@ const UttakFaktaIndex: FunctionComponent<UttakFaktaIndexProps> = ({
     <UttakFaktaPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      arbeidsgivere={arbeidsgivere}
+      arbeid={arbeid}
       submitCallback={submitCallback}
       personopplysninger={personopplysninger}
     />

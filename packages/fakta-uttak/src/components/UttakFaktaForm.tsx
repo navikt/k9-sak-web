@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps, change as reduxFormChange, reset } from 'redux-form';
 import { bindActionCreators } from 'redux';
@@ -24,11 +24,12 @@ import ValgtPeriode from './ValgtPeriode';
 import UttakFormKolonne from './UttakFormKolonne';
 import Perioder from './Perioder';
 import UttakContextProps from './types/UttakContextProps';
-import ArbeidsforholdPeriode, { Arbeidsforhold } from './types/Arbeidfsforhold';
+import ArbeidsforholdPeriode from './types/Arbeidfsforhold';
 import { uttakFaktaFormName, nyArbeidsperiodeFormName } from './constants';
+import Arbeid from './types/Arbeid';
 
 interface UttakFaktaFormProps {
-  arbeidsgivere: ArbeidsgiverType[];
+  arbeid: Arbeid[];
   behandlingId: number;
   behandlingVersjon: number;
   submitCallback: (values: ArbeidsgiverType[]) => void;
@@ -93,51 +94,43 @@ export const oppdaterPerioderFor = (
 
 export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & InjectedFormProps> = ({
   handleSubmit,
-  arbeidsgivere,
+  arbeid,
   behandlingFormPrefix,
-  reduxFormChange: formChange,
+  // reduxFormChange: formChange,
   behandlingVersjon,
   behandlingId,
   resetForm,
   intl,
   ...formProps
 }) => {
-  const [valgtArbeidsgiversOrgNr, setValgtArbeidsgiversOrgNr] = useState<string>(null);
   const [valgtArbeidsforholdId, setValgtArbeidsforholdId] = useState<string>(null);
-  const [valgtPeriodeIndex, setValgtPeriodeIndex] = useState<number>(null);
+  const [valgtFomTom, setValgtFomTom] = useState<string>(null);
   const [redigererPeriode, setRedigererPeriode] = useState<boolean>();
 
-  const valgtArbeidsforhold = useMemo<Arbeidsforhold>(() => {
-    return arbeidsgivere
-      ?.find(arbeidsgiver => arbeidsgiver.organisasjonsnummer === valgtArbeidsgiversOrgNr)
-      ?.arbeidsforhold.find(forhold => forhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId);
-  }, [arbeidsgivere, valgtArbeidsgiversOrgNr]);
-
   const formContext: UttakContextProps = {
-    valgtArbeidsgiversOrgNr,
-    setValgtArbeidsgiversOrgNr,
     valgtArbeidsforholdId,
     setValgtArbeidsforholdId,
-    valgtPeriodeIndex,
-    setValgtPeriodeIndex,
+    valgtFomTom,
+    setValgtFomTom,
     redigererPeriode,
     setRedigererPeriode,
   };
   const { pristine } = formProps;
 
-  if (!arbeidsgivere) {
+  if (!arbeid) {
     return null;
   }
 
-  const oppdaterForm = oppdatert =>
-    formChange(`${behandlingFormPrefix}.${uttakFaktaFormName}`, 'arbeidsgivere', oppdatert);
-  const oppdaterPerioder = oppdaterPerioderFor(
-    arbeidsgivere,
-    valgtArbeidsgiversOrgNr,
-    valgtArbeidsforholdId,
-    setValgtPeriodeIndex,
-    oppdaterForm,
-  );
+  // const oppdaterForm = oppdatert =>
+  //   formChange(`${behandlingFormPrefix}.${uttakFaktaFormName}`, 'arbeidsgivere', oppdatert);
+  // const oppdaterPerioder = oppdaterPerioderFor(
+  //   arbeidsgivere,
+  //   valgtArbeidsgiversOrgNr,
+  //   valgtArbeidsforholdId,
+  //   setValgtPeriodeIndex,
+  //   oppdaterForm,
+  // );
+  const oppdaterPerioder = () => undefined;
 
   const avbrytSkjemaInnfylling = () => {
     // TODO: bekrefte avbryt (i f eks en modal), og så resetForm
@@ -150,18 +143,22 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
         <FlexRow>
           <UttakFormKolonne tittel={intl.formatMessage({ id: 'FaktaOmUttakForm.Arbeidsgivere' })} withBorderRight>
             <div className={styles.arbeidsgivere}>
-              {arbeidsgivere.map(arbeidsgiver => (
-                <Arbeidsgiver arbeidsgiver={arbeidsgiver} key={arbeidsgiver.organisasjonsnummer} />
+              {arbeid.map(arbeidet => (
+                <Arbeidsgiver
+                  arbeid={arbeidet}
+                  key={`${arbeidet.arbeidsforhold.organisasjonsnummer}-${arbeidet.arbeidsforhold.arbeidsforholdId}`}
+                />
               ))}
             </div>
           </UttakFormKolonne>
           <UttakFormKolonne tittel={intl.formatMessage({ id: 'FaktaOmUttakForm.Perioder' })} withBorderRight>
             <Perioder
-              valgtArbeidsforhold={valgtArbeidsforhold}
+              valgtArbeidsforholdId={valgtArbeidsforholdId}
+              arbeid={arbeid}
               leggTilPeriode={
                 redigererPeriode
                   ? () => {
-                      setValgtPeriodeIndex(null);
+                      setValgtFomTom(null);
                       setRedigererPeriode(true);
                     }
                   : null
@@ -181,7 +178,7 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
                 resetForm(`${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${nyArbeidsperiodeFormName}`);
                 setRedigererPeriode(false);
               }}
-              arbeidsgivere={arbeidsgivere}
+              arbeid={arbeid}
             />
           </UttakFormKolonne>
         </FlexRow>
@@ -215,34 +212,34 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
 };
 
 interface FormValues {
-  arbeidsgivere: ArbeidsgiverType[];
+  arbeid: Arbeid[];
   begrunnelse: string;
 }
 
 interface FormProps {
   initialValues: {
-    arbeidsgivere: ArbeidsgiverType[];
+    arbeid: Arbeid[];
   };
   behandlingFormPrefix: string;
   onSubmit: (values: FormValues) => any;
 }
 
-const arbeidsgivereSelector = createSelector(
+const arbeidSelector = createSelector(
   [
     (state, ownProps) =>
       behandlingFormValueSelector(
         uttakFaktaFormName,
         ownProps.behandlingId,
         ownProps.behandlingVersjon,
-      )(state, 'arbeidsgivere'),
+      )(state, 'arbeid'),
   ],
   arbeidsgivere => arbeidsgivere,
 );
 
-const transformValues: (formvalues: FormValues) => any[] = ({ arbeidsgivere, begrunnelse }) => [
+const transformValues: (formvalues: FormValues) => any[] = ({ arbeid, begrunnelse }) => [
   {
     begrunnelse,
-    arbeidsgivere,
+    arbeid,
     kode: 'FAKE_CODE', // TODO
   },
 ];
@@ -251,9 +248,9 @@ const mapStateToPropsFactory = (
   _initialState: null,
   initialOwnProps: UttakFaktaFormProps,
 ): ((state, ownProps) => FormProps) => {
-  const { behandlingId, behandlingVersjon, arbeidsgivere, submitCallback } = initialOwnProps;
+  const { behandlingId, behandlingVersjon, arbeid, submitCallback } = initialOwnProps;
   const onSubmit = (formvalues: FormValues) => submitCallback(transformValues(formvalues));
-  const initialValues = { arbeidsgivere };
+  const initialValues = { arbeid };
 
   return (state, ownProps) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
@@ -262,7 +259,7 @@ const mapStateToPropsFactory = (
       initialValues,
       behandlingFormPrefix,
       onSubmit,
-      arbeidsgivere: arbeidsgivereSelector(state, ownProps),
+      arbeid: arbeidSelector(state, ownProps),
     };
   };
 };

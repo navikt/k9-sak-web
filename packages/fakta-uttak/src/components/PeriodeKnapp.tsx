@@ -4,23 +4,23 @@ import classnames from 'classnames/bind';
 
 import styles from './periodeKnapp.less';
 import { useUttakContext, visningsdato } from './uttakUtils';
-import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 
 const classNames = classnames.bind(styles);
 
 interface PeriodeKnappProps {
-  periode: ArbeidsforholdPeriode;
+  fomTom: string;
   periodeIndex: number;
 }
 
-const PeriodeKnapp: FunctionComponent<PeriodeKnappProps> = ({ periode, periodeIndex }) => {
-  const { setValgtPeriodeIndex, valgtPeriodeIndex, setRedigererPeriode } = useUttakContext();
+const PeriodeKnapp: FunctionComponent<PeriodeKnappProps> = ({ fomTom, periodeIndex }) => {
+  const { setValgtFomTom, valgtFomTom, setRedigererPeriode } = useUttakContext();
   const velgPeriode = () => {
     setRedigererPeriode(false);
-    setValgtPeriodeIndex(periodeIndex);
+    setValgtFomTom(fomTom);
   };
 
-  const erValgt = valgtPeriodeIndex === periodeIndex;
+  const [fom, tom] = fomTom.split('/');
+  const erValgt = fomTom === valgtFomTom;
 
   return (
     <button
@@ -31,7 +31,7 @@ const PeriodeKnapp: FunctionComponent<PeriodeKnappProps> = ({ periode, periodeIn
       })}
     >
       <span className={styles.periodeindeks}>{`${`${periodeIndex + 1}`.padStart(2, '0')}`}</span>
-      {`: ${visningsdato(periode.fom)} - ${visningsdato(periode.tom)}`}
+      {`: ${visningsdato(fom)} - ${visningsdato(tom)}`}
     </button>
   );
 };
