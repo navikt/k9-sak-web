@@ -1,8 +1,8 @@
-interface ArbeidsforholdReferanse {
+export interface Arbeidsforhold {
   type?: string;
   organisasjonsnummer?: string;
   aktørId?: string;
   arbeidsforholdId?: string;
 }
 
-export default ArbeidsforholdReferanse;
+export default Arbeidsforhold;

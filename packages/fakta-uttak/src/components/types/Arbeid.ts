@@ -1,9 +1,9 @@
-import ArbeidsforholdReferanse from './ArbeidsforholdReferanse';
-import Perioder from './Perioder';
+import ArbeidsforholdPeriode from './ArbeidsforholdPeriode';
+import Arbeidsforhold from './Arbeidsforhold';
 
 interface Arbeid {
-  arbeidsforhold: ArbeidsforholdReferanse;
-  perioder: Perioder;
+  arbeidsforhold: Arbeidsforhold;
+  perioder: ArbeidsforholdPeriode[];
 }
 
 export default Arbeid;
