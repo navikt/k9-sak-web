@@ -88,7 +88,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
 
   /* Brev */
-  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
+  .withRel('/k9/formidling/api/brev/maler', FpsakApiKeys.BREVMALER)
   .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
 
