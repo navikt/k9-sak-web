@@ -1,13 +1,16 @@
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import checkIkonUrl from '@fpsak-frontend/assets/images/check.svg';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
-import { Image, PeriodFieldArray, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Periode } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Undertekst } from 'nav-frontend-typografi';
 import React, { useCallback } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, FieldArray } from 'redux-form';
@@ -107,18 +110,27 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
       );
       formChange(formSelector, fieldNameTom, moment(periodeTilVurdering.tom).format(ISO_DATE_FORMAT));
     }, []);
+
+    const emptyPeriodTemplate = {
+      fom: '',
+      tom: '',
+    };
+
+    const onClick = useCallback(() => {
+      fields.push(emptyPeriodTemplate);
+    }, []);
+
+    const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (event.keyCode === 13) {
+        fields.push(emptyPeriodTemplate);
+      }
+    }, []);
+
     return (
       <div className={styles.pickerContainer}>
-        <PeriodFieldArray
-          fields={fields}
-          emptyPeriodTemplate={{
-            fom: '',
-            tom: '',
-          }}
-          shouldShowAddButton
-          readOnly={readOnly}
-        >
-          {(periodeMedBehovForKontinuerligTilsynId, index) => {
+        <fieldset className={styles.fieldset}>
+          {fields.map((periodeMedBehovForKontinuerligTilsynId, index) => {
+            // Finner initial state for radioknappene
             const harBehovForToOmsorgspersonerHelePerioden =
               fields.get(index).behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE;
             const harBehovForToOmsorgspersonerDelerAvPerioden =
@@ -161,8 +173,25 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                 brukSoknadsdato={brukSoknadsdato}
               />
             );
-          }}
-        </PeriodFieldArray>
+          })}
+          <Row>
+            <Column xs="12">
+              {!readOnly && (
+                <button onClick={onClick} onKeyDown={onKeyDown} className={styles.addPeriode} type="button">
+                  <Image
+                    className={styles.addCircleIcon}
+                    src={addCircleIcon}
+                    alt={intl.formatMessage({ id: 'PeriodFieldArray.LeggTilPeriode' })}
+                  />
+                  <Undertekst tag="span" className={styles.imageText}>
+                    <FormattedMessage id="PeriodFieldArray.LeggTilPeriode" />
+                  </Undertekst>
+                </button>
+              )}
+              <VerticalSpacer sixteenPx />
+            </Column>
+          </Row>
+        </fieldset>
       </div>
     );
   };
