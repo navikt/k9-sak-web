@@ -6,7 +6,7 @@ export const minValueMessage = (length) => ([{ id: 'ValidationMessage.MinValue' 
 export const maxValueMessage = (length) => ([{ id: 'ValidationMessage.MaxValue' }, { length }]);
 export const invalidDateMessage = () => ([{ id: 'ValidationMessage.InvalidDate' }]);
 export const invalidIntegerMessage = (text) => ([{ id: 'ValidationMessage.InvalidInteger' }, { text }]);
-export const invalidDecimalMessage = (text) => ([{ id: 'ValidationMessage.InvalidDecimal' }, { text }]);
+export const invalidDecimalMessage = (text, maxNumberOfDecimals) => ([{ id: 'ValidationMessage.InvalidDecimal' }, { text, maxNumberOfDecimals }]);
 export const dateNotBeforeOrEqualMessage = (limit) => ([{ id: 'ValidationMessage.DateNotBeforeOrEqual' }, { limit }]);
 export const dateNotAfterOrEqualMessage = (limit) => ([{ id: 'ValidationMessage.DateNotAfterOrEqual' }, { limit }]);
 export const dateRangesOverlappingMessage = () => ([{ id: 'ValidationMessage.DateRangesOverlapping' }]);

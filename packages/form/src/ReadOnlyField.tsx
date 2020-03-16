@@ -5,7 +5,7 @@ import Label from './Label';
 import LabelType from './LabelType';
 import styles from './readOnlyField.less';
 
-interface ReadOnlyFieldProps {
+export interface ReadOnlyFieldProps {
   label?: LabelType;
   input: { value: string | number };
   isEdited?: boolean;

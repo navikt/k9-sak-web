@@ -37,7 +37,7 @@ import {
 } from './messages';
 import {
   dateRangesAreSequential,
-  decimalRegex,
+  decimalRegexWithMax,
   integerRegex,
   isEmpty,
   isoDateRegex,
@@ -71,8 +71,10 @@ export const hasValidOrgNumberOrFodselsnr = (number) => (number.toString().trim(
 
 const hasValidNumber = (text) => (isEmpty(text) || numberRegex.test(text) ? null : invalidNumberMessage(text));
 const hasValidInt = (text) => (isEmpty(text) || integerRegex.test(text) ? null : invalidIntegerMessage(text));
-const hasValidDec = (text) => (isEmpty(text) || decimalRegex.test(text) ? null : invalidDecimalMessage(text));
+const hasValidDec = (text, maxNumberOfDecimals = 2) => (isEmpty(text) || decimalRegexWithMax(maxNumberOfDecimals).test(text)
+    ? null : invalidDecimalMessage(text, maxNumberOfDecimals));
 export const hasValidInteger = (text) => (hasValidNumber(text) || hasValidInt(text));
+export const hasValidDecimalMaxNumberOfDecimals = (maxNumberOfDecimals) => text => hasValidNumber(text) || hasValidDec(text, maxNumberOfDecimals);
 export const hasValidDecimal = (text) => (hasValidNumber(text) || hasValidDec(text));
 
 export const hasValidSaksnummerOrFodselsnummerFormat = (text) => (isEmpty(text) || saksnummerOrFodselsnummerPattern.test(text)

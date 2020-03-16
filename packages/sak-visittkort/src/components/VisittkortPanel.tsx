@@ -3,7 +3,9 @@ import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-compo
 import { Fagsak, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { Gender, PersonCard } from '@navikt/nap-person-card';
 import React, { FunctionComponent } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps, FormattedMessage } from 'react-intl';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
+import moment from 'moment';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
 import styles from './visittkortPanel.less';
@@ -47,7 +49,8 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   // const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
 
   const soker = personopplysninger;
-  // const annenPart = !erMor && personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
+  const annenPart = personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
+  const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
 
   return (
     <div className={styles.container}>
@@ -66,13 +69,12 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               // isActive={erMor}
             />
           </FlexColumn>
-          {/* {annenPart && annenPart.aktoerId && (
+          {annenPart && annenPart.aktoerId && (
             <FlexColumn>
               <PersonCard
                 name={annenPart.navn}
                 fodselsnummer={annenPart.fnr}
                 gender={utledKjonn(annenPart.navBrukerKjonn)}
-                url={lenkeTilAnnenPart}
                 renderMenuContent={(): JSX.Element => (
                   <VisittkortDetaljerPopup
                     personopplysninger={annenPart}
@@ -80,10 +82,30 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                     sprakkode={sprakkode}
                   />
                 )}
-                isActive={!erMor}
+                isActive={false}
               />
             </FlexColumn>
-          )} */}
+          )}
+          {barnSoktFor && (
+            <div className={styles.pushRight}>
+              {barnSoktFor.map(barn => (
+                <FlexColumn key={barn.aktoerId}>
+                  <PersonCard
+                    name={barn.navn}
+                    fodselsnummer={barn.fnr}
+                    gender={utledKjonn(barn.navBrukerKjonn)}
+                    isChild
+                    childAge={
+                      <FormattedMessage
+                        id="VisittkortBarnInfoFodselPanel.Fodt"
+                        values={{ dato: moment(barn.fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
+                      />
+                    }
+                  />
+                </FlexColumn>
+              ))}
+            </div>
+          )}
           {/* {annenPart && !annenPart.aktoerId && (
             <FlexColumn>
               <EmptyPersonCard namePlaceholder={intl.formatMessage({ id: 'VisittkortPanel.Ukjent' })} />
