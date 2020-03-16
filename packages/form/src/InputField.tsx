@@ -1,8 +1,8 @@
-import { Input as NavInput } from 'nav-frontend-skjema';
+import { Input as NavInput, NavFrontendInputProps } from 'nav-frontend-skjema';
 import React from 'react';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';
-import ReadOnlyField from './ReadOnlyField';
+import ReadOnlyField, { ReadOnlyFieldProps } from './ReadOnlyField';
 import renderNavField from './renderNavField';
 
 const renderNavInput = renderNavField(NavInput);
@@ -16,7 +16,15 @@ interface InputFieldProps {
   isEdited?: boolean;
 }
 
-const InputField = ({ name, type, label, validate, readOnly, isEdited, ...otherProps }: InputFieldProps) => (
+const InputField = ({
+  name,
+  type,
+  label,
+  validate,
+  readOnly,
+  isEdited,
+  ...otherProps
+}: InputFieldProps & (NavFrontendInputProps | ReadOnlyFieldProps)) => (
   <Field
     name={name}
     validate={validate}
