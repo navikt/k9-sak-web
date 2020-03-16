@@ -14,6 +14,7 @@ describe('<PeriodeKnapp>', () => {
       timerFårJobbet: 20,
     };
     const wrapper = mount(
+      // @ts-ignore
       <UttakFaktaFormContext.Provider value={{}}>
         <PeriodeKnapp periode={periode} periodeIndex={1} />
       </UttakFaktaFormContext.Provider>,

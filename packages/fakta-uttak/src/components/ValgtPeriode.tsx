@@ -9,8 +9,8 @@ import styles from './uttakFaktaForm.less';
 import NyArbeidsperiode from './NyArbeidsperiode';
 import { arbeidsprosentNormal, arbeidsprosent, useUttakContext, visningsdato } from './uttakUtils';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
-import Arbeidsgiver from './types/Arbeidsgiver';
 import { nyArbeidsperiodeFormName } from './constants';
+import Arbeid from './types/Arbeid';
 
 interface ValgtPeriodeProps {
   endreValgtPeriodeCallback: () => void;
@@ -19,7 +19,7 @@ interface ValgtPeriodeProps {
   behandlingVersjon: number;
   behandlingId: number;
   avbryt: () => void;
-  arbeidsgivere: Arbeidsgiver[];
+  arbeid: Arbeid[];
 }
 
 const formaterTimer = (timer, timerNormal?: number) =>
@@ -32,18 +32,16 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
   behandlingVersjon,
   behandlingId,
   avbryt,
-  arbeidsgivere,
+  arbeid,
 }) => {
-  const { valgtPeriodeIndex, valgtArbeidsforholdId, valgtArbeidsgiversOrgNr } = useUttakContext();
+  const { valgtArbeidsforholdId, valgtPeriodeIndex } = useUttakContext();
 
   const valgtPeriode = useMemo<ArbeidsforholdPeriode>(
     () =>
-      arbeidsgivere
-        ?.find(arbeidsgiver => arbeidsgiver.organisasjonsnummer === valgtArbeidsgiversOrgNr)
-        ?.arbeidsforhold.find(arbeidsforhold => arbeidsforhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId)
-        ?.perioder.find((periode, index) => index === valgtPeriodeIndex),
-    [arbeidsgivere, valgtArbeidsgiversOrgNr, valgtArbeidsforholdId, valgtPeriodeIndex],
+      arbeid.find(arb => arb.arbeidsforhold.arbeidsforholdId === valgtArbeidsforholdId)?.perioder[valgtPeriodeIndex],
+    [valgtArbeidsforholdId, valgtPeriodeIndex, arbeid],
   );
+
   const intl = useIntl();
 
   if (!valgtPeriode && !redigererPeriode) {
@@ -54,17 +52,17 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
     );
   }
 
-  const { periodeLabelText, fomTom, timerFårJobbet, timerIJobbTilVanlig } = valgtPeriode
+  const { periodeLabelText, visningsdatoer, timerFårJobbet, timerIJobbTilVanlig } = valgtPeriode
     ? {
         periodeLabelText: `${intl.formatMessage({ id: 'FaktaOmUttakForm.Periode' })} ${`${valgtPeriodeIndex +
           1}`.padStart(2, '0')}:`,
-        fomTom: ` ${visningsdato(valgtPeriode.fom)} - ${visningsdato(valgtPeriode.tom)}`,
+        visningsdatoer: ` ${visningsdato(valgtPeriode.fom)} - ${visningsdato(valgtPeriode.tom)}`,
         timerFårJobbet: formaterTimer(valgtPeriode.timerFårJobbet, valgtPeriode.timerIJobbTilVanlig),
         timerIJobbTilVanlig: formaterTimer(valgtPeriode.timerIJobbTilVanlig),
       }
     : {
         periodeLabelText: `${intl.formatMessage({ id: 'FaktaOmUttakForm.Periode' })}:`,
-        fomTom: ' -',
+        visningsdatoer: ' -',
         timerFårJobbet: ' -',
         timerIJobbTilVanlig: ' -',
       };
@@ -79,7 +77,7 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
         <label htmlFor={periodeId} className={styles.periodeLabel}>
           {periodeLabelText}
         </label>
-        <span id={periodeId}>{fomTom}</span>
+        <span id={periodeId}>{visningsdatoer}</span>
       </Normaltekst>
       <Normaltekst>
         <label htmlFor={timerIJobbTilVanligId} className={styles.timerLabel}>
