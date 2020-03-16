@@ -43,7 +43,7 @@ export const PleiepengerBehandlingApiKeys = {
   VERGE_OPPRETT: 'VERGE_OPPRETT',
   VERGE_FJERN: 'VERGE_FJERN',
   SYKDOM: 'SYKDOM',
-  VEDTAK_VARSEL: 'VEDTAK_VARSEL'
+  VEDTAK_VARSEL: 'VEDTAK_VARSEL',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -55,13 +55,23 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
     saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt/overstyr', PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withPost('/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder', PleiepengerBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
+  .withAsyncPost(
+    '/k9/sak/api/behandling/aksjonspunkt/overstyr',
+    PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+    {
+      saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+    },
+  )
+  .withPost(
+    '/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
+    PleiepengerBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
+  )
 
   /* fptilbake/api/dokument */
-  .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)
+  .withPostAndOpenBlob(
+    '/fptilbake/api/dokument/forhandsvis-varselbrev',
+    PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+  )
 
   /* /api/brev */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
@@ -78,9 +88,11 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soknad', PleiepengerBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', PleiepengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
   .withRel('familiehendelse-original-behandling', PleiepengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
-  .withRel('beregningsresultat-engangsstonad-original-behandling', PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
-  .withRel('soeker-medlemskap', PleiepengerBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('soeker-medlemskap-v2', PleiepengerBehandlingApiKeys.MEDLEMSKAP_V2)
+  .withRel(
+    'beregningsresultat-engangsstonad-original-behandling',
+    PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
+  )
+  .withRel('soeker-medlemskap-v2', PleiepengerBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', PleiepengerBehandlingApiKeys.VERGE)
@@ -115,9 +127,11 @@ const endpoints = new RestApiConfigBuilder()
 const reducerName = 'dataContextFPBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withReduxEvents(new ReduxEvents()
-    .withErrorActionCreator(errorHandler.getErrorActionCreator())
-    .withPollingMessageActionCreator(setRequestPollingMessage))
+  .withReduxEvents(
+    new ReduxEvents()
+      .withErrorActionCreator(errorHandler.getErrorActionCreator())
+      .withPollingMessageActionCreator(setRequestPollingMessage),
+  )
   .build();
 
 reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
