@@ -134,6 +134,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
               </Element>
               <FlexRow wrap>
                 <FlexColumn>
+                  <VerticalSpacer eightPx />
                   <PeriodpickerField
                     names={[
                       `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.FOM}`,
@@ -207,21 +208,24 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 </FlexColumn>
               </FlexRow>
               {harBehovForToOmsorgspersonerDelerAvPerioden && (
-                <PeriodpickerField
-                  names={[
-                    `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}.fom`,
-                    `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}.tom`,
-                  ]}
-                  validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                  defaultValue={null}
-                  readOnly={readOnly}
-                  label={{ id: 'MedisinskVilkarForm.Periode' }}
-                  disabledDays={{
-                    before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
-                    after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
-                  }}
-                  renderUpwards
-                />
+                <>
+                  <VerticalSpacer eightPx />
+                  <PeriodpickerField
+                    names={[
+                      `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}.fom`,
+                      `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}.tom`,
+                    ]}
+                    validate={[required, hasValidDate, dateRangesNotOverlapping]}
+                    defaultValue={null}
+                    readOnly={readOnly}
+                    label={{ id: 'MedisinskVilkarForm.Periode' }}
+                    disabledDays={{
+                      before: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom).toDate(),
+                      after: moment(valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom).toDate(),
+                    }}
+                    renderUpwards
+                  />
+                </>
               )}
             </>
           )}

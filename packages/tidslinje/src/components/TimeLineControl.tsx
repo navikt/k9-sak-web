@@ -1,17 +1,17 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { Row } from 'nav-frontend-grid';
 import { useIntl } from 'react-intl';
-import UttakPeriode from '@k9-sak-web/types/src/uttak/UttakPeriode';
 import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import TimeLineButton from './TimeLineButton';
 import styles from './timeLineControl.less';
+import Periode from './pleiepenger/types/Periode';
 
 interface TimeLineControlProps {
   children?: ReactNode;
   goBackwardCallback: EventCallback;
   goForwardCallback: EventCallback;
   openPeriodInfo: EventCallback;
-  selectedPeriod?: UttakPeriode;
+  selectedPeriod?: Periode;
   zoomInCallback: EventCallback;
   zoomOutCallback: EventCallback;
 }

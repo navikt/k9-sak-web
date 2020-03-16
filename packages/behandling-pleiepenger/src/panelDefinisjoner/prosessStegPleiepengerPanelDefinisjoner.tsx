@@ -11,6 +11,8 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
+import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
+import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/types/testdata';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
@@ -224,7 +226,9 @@ const prosessStegPanelDefinisjoner = [
       {
         aksjonspunkterCodes: [],
         endpoints: [],
-        renderComponent: () => <span>Content</span>,
+        renderComponent: () => (
+          <UttakProsessIndex uttaksplaner={uttaksplaner} behandlingPersonMap={behandlingPersonMap} />
+        ),
         showComponent: () => true,
       },
     ],

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps, change as reduxFormChange, reset } from 'redux-form';
 import { bindActionCreators } from 'redux';
@@ -12,11 +12,11 @@ import {
 } from '@fpsak-frontend/fp-felles/src/behandlingForm';
 import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl, IntlFormatters } from 'react-intl';
+import moment from 'moment';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Knapp } from 'nav-frontend-knapper';
-import ArbeidsgiverType from './types/Arbeidsgiver';
 import Arbeidsgiver from './Arbeidsgiver';
 import { beregnNyePerioder, UttakFaktaFormContext } from './uttakUtils';
 import styles from './uttakFaktaForm.less';
@@ -24,14 +24,17 @@ import ValgtPeriode from './ValgtPeriode';
 import UttakFormKolonne from './UttakFormKolonne';
 import Perioder from './Perioder';
 import UttakContextProps from './types/UttakContextProps';
-import ArbeidsforholdPeriode, { Arbeidsforhold } from './types/Arbeidfsforhold';
+import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 import { uttakFaktaFormName, nyArbeidsperiodeFormName } from './constants';
+import Arbeid from './types/Arbeid';
+import Overstyring from './dto/Overstyring';
+import ArbeidDto from './dto/ArbeidDto';
 
 interface UttakFaktaFormProps {
-  arbeidsgivere: ArbeidsgiverType[];
+  arbeid: Arbeid[];
   behandlingId: number;
   behandlingVersjon: number;
-  submitCallback: (values: ArbeidsgiverType[]) => void;
+  submitCallback: (values: any[]) => void;
   behandlingFormPrefix?: string;
   reduxFormChange?: (
     form: string,
@@ -46,54 +49,43 @@ interface UttakFaktaFormProps {
 
 // TODO: slå sammen perioder hvis de er tilstøtende og timer-inputs er like
 export const oppdaterPerioderFor = (
-  arbeidsgivere: ArbeidsgiverType[],
-  valgtArbeidsgiversOrgNr: string,
+  arbeid: Arbeid[],
   valgtArbeidsforholdId: string,
   setValgtPeriodeIndex: (index: number) => void,
-  oppdaterForm: (oppdatert: ArbeidsgiverType[]) => void,
+  oppdaterForm: (oppdatert: Arbeid[]) => void,
 ) => (nyPeriode: ArbeidsforholdPeriode) => {
   let nyePerioder;
-  const oppdatert = arbeidsgivere.map(arbeidsgiver => {
-    if (arbeidsgiver.organisasjonsnummer === valgtArbeidsgiversOrgNr) {
-      return {
-        ...arbeidsgiver,
-        arbeidsforhold: arbeidsgiver.arbeidsforhold.map(arbeidsforhold => {
-          if (arbeidsforhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId) {
-            nyePerioder = beregnNyePerioder(arbeidsforhold.perioder, nyPeriode);
-            const nyPeriodeIndex = nyePerioder.reduce(
-              (tmpIndex: number, periode: ArbeidsforholdPeriode, index: number) => {
-                const periodeErLik =
-                  periode.fom === nyPeriode.fom &&
-                  periode.tom === nyPeriode.tom &&
-                  periode.timerIJobbTilVanlig === nyPeriode.timerIJobbTilVanlig &&
-                  periode.timerFårJobbet === nyPeriode.timerFårJobbet;
-                if (periodeErLik) {
-                  return index;
-                }
-                return tmpIndex;
-              },
-              null,
-            );
-
-            setValgtPeriodeIndex(nyPeriodeIndex);
-
-            return {
-              ...arbeidsforhold,
-              perioder: nyePerioder,
-            };
-          }
-          return arbeidsforhold;
-        }),
-      };
+  const oppdatert = arbeid.map(arb => {
+    if (arb.arbeidsforhold.arbeidsforholdId !== valgtArbeidsforholdId) {
+      return arb;
     }
-    return arbeidsgiver;
+
+    nyePerioder = beregnNyePerioder(arb.perioder, nyPeriode);
+    const nyPeriodeIndex = nyePerioder.reduce((tmpIndex: number, periode: ArbeidsforholdPeriode, index: number) => {
+      const periodeErLik =
+        periode.fom === nyPeriode.fom &&
+        periode.tom === nyPeriode.tom &&
+        periode.timerIJobbTilVanlig === nyPeriode.timerIJobbTilVanlig &&
+        periode.timerFårJobbet === nyPeriode.timerFårJobbet;
+      if (periodeErLik) {
+        return index;
+      }
+      return tmpIndex;
+    }, null);
+
+    setValgtPeriodeIndex(nyPeriodeIndex);
+
+    return {
+      ...arb,
+      perioder: nyePerioder,
+    };
   });
   oppdaterForm(oppdatert);
 };
 
 export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & InjectedFormProps> = ({
   handleSubmit,
-  arbeidsgivere,
+  arbeid,
   behandlingFormPrefix,
   reduxFormChange: formChange,
   behandlingVersjon,
@@ -102,20 +94,11 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
   intl,
   ...formProps
 }) => {
-  const [valgtArbeidsgiversOrgNr, setValgtArbeidsgiversOrgNr] = useState<string>(null);
   const [valgtArbeidsforholdId, setValgtArbeidsforholdId] = useState<string>(null);
   const [valgtPeriodeIndex, setValgtPeriodeIndex] = useState<number>(null);
   const [redigererPeriode, setRedigererPeriode] = useState<boolean>();
 
-  const valgtArbeidsforhold = useMemo<Arbeidsforhold>(() => {
-    return arbeidsgivere
-      ?.find(arbeidsgiver => arbeidsgiver.organisasjonsnummer === valgtArbeidsgiversOrgNr)
-      ?.arbeidsforhold.find(forhold => forhold.arbeidsgiversArbeidsforholdId === valgtArbeidsforholdId);
-  }, [arbeidsgivere, valgtArbeidsgiversOrgNr]);
-
   const formContext: UttakContextProps = {
-    valgtArbeidsgiversOrgNr,
-    setValgtArbeidsgiversOrgNr,
     valgtArbeidsforholdId,
     setValgtArbeidsforholdId,
     valgtPeriodeIndex,
@@ -125,19 +108,12 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
   };
   const { pristine } = formProps;
 
-  if (!arbeidsgivere) {
+  if (!arbeid) {
     return null;
   }
 
-  const oppdaterForm = oppdatert =>
-    formChange(`${behandlingFormPrefix}.${uttakFaktaFormName}`, 'arbeidsgivere', oppdatert);
-  const oppdaterPerioder = oppdaterPerioderFor(
-    arbeidsgivere,
-    valgtArbeidsgiversOrgNr,
-    valgtArbeidsforholdId,
-    setValgtPeriodeIndex,
-    oppdaterForm,
-  );
+  const oppdaterForm = oppdatert => formChange(`${behandlingFormPrefix}.${uttakFaktaFormName}`, 'arbeid', oppdatert);
+  const oppdaterPerioder = oppdaterPerioderFor(arbeid, valgtArbeidsforholdId, setValgtPeriodeIndex, oppdaterForm);
 
   const avbrytSkjemaInnfylling = () => {
     // TODO: bekrefte avbryt (i f eks en modal), og så resetForm
@@ -150,16 +126,20 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
         <FlexRow>
           <UttakFormKolonne tittel={intl.formatMessage({ id: 'FaktaOmUttakForm.Arbeidsgivere' })} withBorderRight>
             <div className={styles.arbeidsgivere}>
-              {arbeidsgivere.map(arbeidsgiver => (
-                <Arbeidsgiver arbeidsgiver={arbeidsgiver} key={arbeidsgiver.organisasjonsnummer} />
+              {arbeid.map(arbeidet => (
+                <Arbeidsgiver
+                  arbeid={arbeidet}
+                  key={`${arbeidet.arbeidsforhold.organisasjonsnummer}-${arbeidet.arbeidsforhold.arbeidsforholdId}`}
+                />
               ))}
             </div>
           </UttakFormKolonne>
           <UttakFormKolonne tittel={intl.formatMessage({ id: 'FaktaOmUttakForm.Perioder' })} withBorderRight>
             <Perioder
-              valgtArbeidsforhold={valgtArbeidsforhold}
+              valgtArbeidsforholdId={valgtArbeidsforholdId}
+              arbeid={arbeid}
               leggTilPeriode={
-                redigererPeriode
+                !redigererPeriode
                   ? () => {
                       setValgtPeriodeIndex(null);
                       setRedigererPeriode(true);
@@ -181,7 +161,7 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
                 resetForm(`${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${nyArbeidsperiodeFormName}`);
                 setRedigererPeriode(false);
               }}
-              arbeidsgivere={arbeidsgivere}
+              arbeid={arbeid}
             />
           </UttakFormKolonne>
         </FlexRow>
@@ -195,6 +175,7 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
                 label={intl.formatMessage({ id: 'FaktaOmUttakForm.Begrunnelse' })}
                 name="begrunnelse"
                 validate={[required, minLength(3), maxLength(400), hasValidText]}
+                // @ts-ignore
                 textareaClass={styles.textAreaStyle}
               />
             </div>
@@ -215,45 +196,58 @@ export const UttakFaktaFormImpl: FunctionComponent<UttakFaktaFormProps & Injecte
 };
 
 interface FormValues {
-  arbeidsgivere: ArbeidsgiverType[];
+  arbeid: Arbeid[];
   begrunnelse: string;
 }
 
 interface FormProps {
   initialValues: {
-    arbeidsgivere: ArbeidsgiverType[];
+    arbeid: Arbeid[];
   };
   behandlingFormPrefix: string;
   onSubmit: (values: FormValues) => any;
 }
 
-const arbeidsgivereSelector = createSelector(
+const arbeidSelector = createSelector(
   [
     (state, ownProps) =>
       behandlingFormValueSelector(
         uttakFaktaFormName,
         ownProps.behandlingId,
         ownProps.behandlingVersjon,
-      )(state, 'arbeidsgivere'),
+      )(state, 'arbeid'),
   ],
-  arbeidsgivere => arbeidsgivere,
+  arbeid => arbeid,
 );
 
-const transformValues: (formvalues: FormValues) => any[] = ({ arbeidsgivere, begrunnelse }) => [
-  {
-    begrunnelse,
-    arbeidsgivere,
-    kode: 'FAKE_CODE', // TODO
-  },
-];
+export const transformValues: (formvalues: FormValues) => Overstyring[] = ({ arbeid, begrunnelse }) => {
+  const arbeidDto: ArbeidDto[] = arbeid.map(arb => ({
+    arbeidsforhold: { ...arb.arbeidsforhold },
+    perioder: arb.perioder.reduce((perioder, periode) => {
+      const tmpPerioder = perioder;
+      tmpPerioder[`${periode.fom}/${periode.tom}`] = {
+        jobberNormaltPerUke: moment.duration(periode.timerIJobbTilVanlig, 'hours').toISOString(),
+        skalJobbeProsent: `${(periode.timerFårJobbet / periode.timerIJobbTilVanlig) * 100}`,
+      };
+      return tmpPerioder;
+    }, {}),
+  }));
+  return [
+    {
+      begrunnelse,
+      arbeid: arbeidDto,
+      kode: 'FAKE_CODE', // TODO
+    },
+  ];
+};
 
 const mapStateToPropsFactory = (
   _initialState: null,
   initialOwnProps: UttakFaktaFormProps,
 ): ((state, ownProps) => FormProps) => {
-  const { behandlingId, behandlingVersjon, arbeidsgivere, submitCallback } = initialOwnProps;
+  const { behandlingId, behandlingVersjon, arbeid, submitCallback } = initialOwnProps;
   const onSubmit = (formvalues: FormValues) => submitCallback(transformValues(formvalues));
-  const initialValues = { arbeidsgivere };
+  const initialValues = { arbeid };
 
   return (state, ownProps) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
@@ -262,7 +256,7 @@ const mapStateToPropsFactory = (
       initialValues,
       behandlingFormPrefix,
       onSubmit,
-      arbeidsgivere: arbeidsgivereSelector(state, ownProps),
+      arbeid: arbeidSelector(state, ownProps),
     };
   };
 };

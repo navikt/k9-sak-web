@@ -10,6 +10,7 @@ export const getHelePerioder = (values: TransformValues) =>
   values.perioderMedKontinuerligTilsynOgPleie
     ?.filter(
       periodeMedKontinuerligTilsynOgPleie =>
+        periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie &&
         !!periodeMedKontinuerligTilsynOgPleie.fom &&
         !!periodeMedKontinuerligTilsynOgPleie.tom &&
         periodeMedKontinuerligTilsynOgPleie.behovForToOmsorgspersoner === MedisinskVilkårConsts.JA_HELE,
@@ -24,17 +25,21 @@ export const getHelePerioder = (values: TransformValues) =>
 
 export const getDelvisePerioder = (values: TransformValues) => {
   const delvisePerioder = [];
-  values.perioderMedKontinuerligTilsynOgPleie.forEach(periodeMedKontinuerligTilsynOgPleie => {
-    if (periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie?.fom) {
-      delvisePerioder.push({
-        periode: {
-          fom: periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie.fom,
-          tom: periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie.tom,
-        },
-        begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelseUtvidet,
-      });
-    }
-  });
+  values.perioderMedKontinuerligTilsynOgPleie
+    .filter(
+      periodeMedKontinuerligTilsynOgPleie => periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie,
+    )
+    .forEach(periodeMedKontinuerligTilsynOgPleie => {
+      if (periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie?.fom) {
+        delvisePerioder.push({
+          periode: {
+            fom: periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie.fom,
+            tom: periodeMedKontinuerligTilsynOgPleie.perioderMedUtvidetKontinuerligTilsynOgPleie.tom,
+          },
+          begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelseUtvidet,
+        });
+      }
+    });
   return delvisePerioder;
 };
 

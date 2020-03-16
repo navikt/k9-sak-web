@@ -20,7 +20,8 @@ const PeriodeKnapp: FunctionComponent<PeriodeKnappProps> = ({ periode, periodeIn
     setValgtPeriodeIndex(periodeIndex);
   };
 
-  const erValgt = valgtPeriodeIndex === periodeIndex;
+  const { fom, tom } = periode;
+  const erValgt = periodeIndex === valgtPeriodeIndex;
 
   return (
     <button
@@ -31,7 +32,7 @@ const PeriodeKnapp: FunctionComponent<PeriodeKnappProps> = ({ periode, periodeIn
       })}
     >
       <span className={styles.periodeindeks}>{`${`${periodeIndex + 1}`.padStart(2, '0')}`}</span>
-      {`: ${visningsdato(periode.fom)} - ${visningsdato(periode.tom)}`}
+      {`: ${visningsdato(fom)} - ${visningsdato(tom)}`}
     </button>
   );
 };

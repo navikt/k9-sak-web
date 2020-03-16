@@ -1,0 +1,43 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.timelineContainer {
+  animation-duration: 400ms;
+  animation-name: fadein;
+  animation-timing-function: ease-out;
+  background-color: @white;
+  max-height: 1600px;
+  position: relative;
+  transition: all 400ms;
+  width: 100%;
+}
+
+.timeLineWrapper {
+  border-bottom: 1px solid lightgrey;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  margin-left: -17px;
+  padding-right: 0;
+
+  &:before {
+    border-bottom: 1px solid lightgrey;
+    bottom: 0;
+    content: '';
+    left: -70px;
+    position: absolute;
+    width: 70px;
+  }
+}
+
+.timelineIkonContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 56px;
+
+  & > img {
+    margin-bottom: 6px;
+    margin-left: calc(100% - 40px);
+    margin-top: 6px;
+    width: 26px;
+  }
+}

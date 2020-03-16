@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 // eslint-disable-next-line import/extensions
-import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
+import { KjønnkodeEnum } from '@k9-sak-web/types/src/Kjønnkode';
 import TimeLineSoker from './TimeLineSoker';
 
 describe('<TimeLineSoker>', () => {
   it('skal teste at TimeLineSoker viser korrekte bilder för korrekte soker', () => {
     const wrapper = mountWithIntl(
-      <TimeLineSoker hovedsokerKjonnKode={Kjønnkode.KVINNE} medsokerKjonnKode={Kjønnkode.MANN} />,
+      <TimeLineSoker hovedsokerKjonnKode={KjønnkodeEnum.KVINNE} medsokerKjonnKode={KjønnkodeEnum.MANN} />,
     );
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);

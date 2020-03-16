@@ -2,7 +2,7 @@ import React from 'react';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
 import { action } from '@storybook/addon-actions';
 import { Behandling } from '@k9-sak-web/types';
-import Arbeidsgiver from '@fpsak-frontend/fakta-uttak/src/components/types/Arbeidsgiver';
+import ArbeidDto from '@fpsak-frontend/fakta-uttak/src/components/dto/ArbeidDto';
 import Personopplysninger from '@k9-sak-web/types/src/personopplysningerTsType';
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -28,60 +28,42 @@ const behandling: Behandling = {
   links: [],
 };
 
-const arbeidsgivere: Arbeidsgiver[] = [
+const arbeid: ArbeidDto[] = [
   {
-    arbeidsforhold: [
-      {
-        perioder: [
-          {
-            fom: '2020-02-02',
-            tom: '2020-03-02',
-            timerIJobbTilVanlig: 37.5,
-            timerFårJobbet: 20,
-          },
-        ],
-        arbeidsgiversArbeidsforholdId: 'unik id 1',
+    arbeidsforhold: {
+      type: 'Arbeidstaker',
+      organisasjonsnummer: '999999999',
+      aktørId: null,
+      arbeidsforholdId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+    },
+    perioder: {
+      '2020-01-01/2020-01-31': {
+        jobberNormaltPerUke: 'PT37H30M',
+        skalJobbeProsent: '40',
       },
-      {
-        perioder: [
-          {
-            fom: '2020-02-02',
-            tom: '2020-03-02',
-            timerIJobbTilVanlig: 52.5,
-            timerFårJobbet: 45,
-          },
-        ],
-        arbeidsgiversArbeidsforholdId: 'unik id 2',
+      '2020-02-01/2020-02-29': {
+        jobberNormaltPerUke: 'PT15H',
+        skalJobbeProsent: '50',
       },
-    ],
-    navn: 'Norsk Hydro',
-    organisasjonsnummer: '982156156456',
+    },
   },
   {
-    arbeidsforhold: [
-      {
-        perioder: [
-          {
-            fom: '2020-02-02',
-            tom: '2020-03-02',
-            timerIJobbTilVanlig: 40,
-            timerFårJobbet: 20,
-          },
-          {
-            fom: '2020-04-02',
-            tom: '2020-05-02',
-            timerIJobbTilVanlig: 15,
-            timerFårJobbet: 7.5,
-          },
-        ],
-        arbeidsgiversArbeidsforholdId: 'unik id 1',
+    arbeidsforhold: {
+      type: 'Arbeidstaker',
+      organisasjonsnummer: '111111111',
+      aktørId: null,
+      arbeidsforholdId: '3fa85f64-1234-4562-b3fc-2c963f66afa6',
+    },
+    perioder: {
+      '2020-01-01/2020-03-31': {
+        jobberNormaltPerUke: 'PT20H',
+        skalJobbeProsent: '50',
       },
-    ],
-    navn: 'Equinor',
-    organisasjonsnummer: '90545120125',
+    },
   },
 ];
 
+// @ts-ignore
 const personopplysninger: Personopplysninger = {
   navn: 'Reidar Rogersen',
   navBrukerKjonn: {
@@ -93,7 +75,7 @@ const personopplysninger: Personopplysninger = {
 export const avklarArbeidsforhold = () => (
   <UttakFaktaIndex
     behandling={behandling}
-    arbeidsgivere={arbeidsgivere}
+    arbeidDto={arbeid}
     submitCallback={action('Bekreft og fortsett')}
     personopplysninger={personopplysninger}
   />
