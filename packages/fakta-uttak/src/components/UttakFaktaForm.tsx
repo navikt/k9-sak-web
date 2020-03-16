@@ -26,6 +26,8 @@ import UttakContextProps from './types/UttakContextProps';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 import { uttakFaktaFormName, nyArbeidsperiodeFormName } from './constants';
 import Arbeid from './types/Arbeid';
+import Overstyring from './dto/Overstyring';
+import ArbeidDto from './dto/ArbeidDto';
 
 interface UttakFaktaFormProps {
   arbeid: Arbeid[];
@@ -217,14 +219,26 @@ const arbeidSelector = createSelector(
   arbeid => arbeid,
 );
 
-// TODO: transform arbeid til arbeidDto
-const transformValues: (formvalues: FormValues) => any[] = ({ arbeid, begrunnelse }) => [
-  {
-    begrunnelse,
-    arbeid,
-    kode: 'FAKE_CODE', // TODO
-  },
-];
+export const transformValues: (formvalues: FormValues) => Overstyring[] = ({ arbeid, begrunnelse }) => {
+  const arbeidDto: ArbeidDto[] = arbeid.map(arb => ({
+    arbeidsforhold: { ...arb.arbeidsforhold },
+    perioder: arb.perioder.reduce((perioder, periode) => {
+      const tmpPerioder = perioder;
+      tmpPerioder[`${periode.fom}/${periode.tom}`] = {
+        jobberNormaltPerUke: periode.timerIJobbTilVanlig,
+        skalJobbeProsent: `${(periode.timerFårJobbet / periode.timerIJobbTilVanlig) * 100}`,
+      };
+      return tmpPerioder;
+    }, {}),
+  }));
+  return [
+    {
+      begrunnelse,
+      arbeid: arbeidDto,
+      kode: 'FAKE_CODE', // TODO
+    },
+  ];
+};
 
 const mapStateToPropsFactory = (
   _initialState: null,

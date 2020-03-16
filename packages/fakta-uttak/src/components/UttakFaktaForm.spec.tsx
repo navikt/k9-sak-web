@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
-import { oppdaterPerioderFor, UttakFaktaFormImpl } from './UttakFaktaForm';
+import { oppdaterPerioderFor, transformValues, UttakFaktaFormImpl } from './UttakFaktaForm';
 import UttakFormKolonne from './UttakFormKolonne';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 import Arbeid from './types/Arbeid';
@@ -105,5 +105,33 @@ describe('<UttakFaktaForm>', () => {
     ];
 
     expect(oppdaterteArbeidsgivere[1].perioder).to.eql(expectedPerioder);
+  });
+
+  it('transformerer skjemaverdier til dto onSubmit', () => {
+    const skjemaverdier: { arbeid: Arbeid[]; begrunnelse: string } = {
+      arbeid: [arbeid[0]],
+      begrunnelse: 'begr',
+    };
+    const perioden = arbeid[0].perioder[0];
+
+    const transformert = transformValues(skjemaverdier);
+
+    expect(transformert).to.eql([
+      {
+        begrunnelse: skjemaverdier.begrunnelse,
+        kode: 'FAKE_CODE',
+        arbeid: [
+          {
+            ...arbeid[0],
+            perioder: {
+              [`${perioden.fom}/${perioden.tom}`]: {
+                jobberNormaltPerUke: perioden.timerIJobbTilVanlig,
+                skalJobbeProsent: '40',
+              },
+            },
+          },
+        ],
+      },
+    ]);
   });
 });
