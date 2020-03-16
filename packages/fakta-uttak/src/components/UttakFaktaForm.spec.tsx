@@ -125,7 +125,7 @@ describe('<UttakFaktaForm>', () => {
             ...arbeid[0],
             perioder: {
               [`${perioden.fom}/${perioden.tom}`]: {
-                jobberNormaltPerUke: perioden.timerIJobbTilVanlig,
+                jobberNormaltPerUke: 'PT37H30M',
                 skalJobbeProsent: '40',
               },
             },

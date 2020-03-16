@@ -12,6 +12,7 @@ import {
 } from '@fpsak-frontend/fp-felles/src/behandlingForm';
 import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl, IntlFormatters } from 'react-intl';
+import moment from 'moment';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { TextAreaField } from '@fpsak-frontend/form';
@@ -225,7 +226,7 @@ export const transformValues: (formvalues: FormValues) => Overstyring[] = ({ arb
     perioder: arb.perioder.reduce((perioder, periode) => {
       const tmpPerioder = perioder;
       tmpPerioder[`${periode.fom}/${periode.tom}`] = {
-        jobberNormaltPerUke: periode.timerIJobbTilVanlig,
+        jobberNormaltPerUke: moment.duration(periode.timerIJobbTilVanlig, 'hours').toISOString(),
         skalJobbeProsent: `${(periode.timerFårJobbet / periode.timerIJobbTilVanlig) * 100}`,
       };
       return tmpPerioder;
