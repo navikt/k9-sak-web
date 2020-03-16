@@ -8,19 +8,20 @@ import medlemskapBehandlingPropType from './propTypes/medlemskapBehandlingPropTy
 import medlemskapMedlemskapPropType from './propTypes/medlemskapMedlemskapPropType';
 import medlemskapSoknadPropType from './propTypes/medlemskapSoknadPropType';
 
-
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const MedlemskapFaktaIndex = ({
   behandling,
   soknad,
   medlemskap,
-  medlemskapV2,
   aksjonspunkter,
   harApneAksjonspunkter,
   submittable,
@@ -39,7 +40,6 @@ const MedlemskapFaktaIndex = ({
       behandlingPaaVent={behandling.behandlingPaaVent}
       soknad={soknad}
       medlemskap={medlemskap}
-      medlemskapV2={medlemskapV2}
       fagsakPerson={fagsakPerson}
       aksjonspunkter={aksjonspunkter}
       hasOpenAksjonspunkter={harApneAksjonspunkter}
@@ -55,7 +55,6 @@ const MedlemskapFaktaIndex = ({
 MedlemskapFaktaIndex.propTypes = {
   behandling: medlemskapBehandlingPropType.isRequired,
   medlemskap: medlemskapMedlemskapPropType.isRequired,
-  medlemskapV2: medlemskapMedlemskapPropType.isRequired,
   soknad: medlemskapSoknadPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(medlemskapAksjonspunkterPropType).isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
