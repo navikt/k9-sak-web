@@ -180,7 +180,9 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
       perioderMedKontinuerligTilsynOgPleie: values.perioderMedKontinuerligTilsynOgPleie
         ?.filter(
           periodeMedKontinuerligTilsynOgPleie =>
-            !!periodeMedKontinuerligTilsynOgPleie.fom && !!periodeMedKontinuerligTilsynOgPleie.tom,
+            periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie &&
+            !!periodeMedKontinuerligTilsynOgPleie.fom &&
+            !!periodeMedKontinuerligTilsynOgPleie.tom,
         )
         .map(periodeMedKontinuerligTilsynOgPleie => ({
           periode: {
