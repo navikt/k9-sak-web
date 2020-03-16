@@ -1,6 +1,6 @@
 import stringEnum from './tsUtils';
 
-const KjønnkodeEnum = stringEnum({
+export const KjønnkodeEnum = stringEnum({
   KVINNE: 'K',
   MANN: 'M',
   UDEFINERT: '-',

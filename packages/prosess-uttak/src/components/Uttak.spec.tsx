@@ -93,19 +93,7 @@ describe('<UttakPP>', () => {
             hoverText: '100% gradering',
             className: 'godkjentPeriode',
             periodeinfo: {
-              utfall: 'Innvilget',
-              grad: 100,
-              utbetalingsgrader: [
-                {
-                  arbeidsforhold: {
-                    type: 'Arbeidstaker',
-                    organisasjonsnummer: '999999999',
-                    aktørId: null,
-                    arbeidsforholdId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-                  },
-                  utbetalingsgrad: 75,
-                },
-              ],
+              ...uttaksplaner['123'].perioder['2020-01-01/2020-01-08'],
               behandlingsId: '123',
             },
           },
@@ -113,21 +101,10 @@ describe('<UttakPP>', () => {
             fom: '2020-02-16',
             tom: '2020-02-25',
             id: '123-1',
-            hoverText: 'undefined% gradering',
+            hoverText: 'gradering',
             className: 'avvistPeriode',
             periodeinfo: {
-              utfall: 'Avslått',
-              årsaker: [
-                {
-                  årsak: 'IkkeMedlemIFolketrygden',
-                  hjemler: [
-                    {
-                      henvisning: 'Folketrygdloven LOV-1997-02-28-19 Kapittel 2',
-                      anvendelse: 'Fastsatt at personen ikke er medlem av folketrygden i perioden.',
-                    },
-                  ],
-                },
-              ],
+              ...uttaksplaner['123'].perioder['2020-02-16/2020-02-25'],
               behandlingsId: '123',
             },
           },
@@ -148,21 +125,7 @@ describe('<UttakPP>', () => {
             hoverText: '80% gradering',
             className: 'gradert godkjentPeriode',
             periodeinfo: {
-              utfall: 'Innvilget',
-              årsak: 'AvkortetMotInntekt',
-              hjemler: [],
-              grad: 80,
-              utbetalingsgrader: [
-                {
-                  arbeidsforhold: {
-                    type: 'Arbeidstaker',
-                    organisasjonsnummer: '999999999',
-                    aktørId: null,
-                    arbeidsforholdId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-                  },
-                  utbetalingsgrad: 80,
-                },
-              ],
+              ...uttaksplaner['456'].perioder['2020-01-29/2020-02-15'],
               behandlingsId: '456',
             },
           },
