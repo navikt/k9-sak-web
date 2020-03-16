@@ -1,20 +1,21 @@
 import { PeriodpickerField } from '@fpsak-frontend/form';
+import { Label } from '@fpsak-frontend/form/src/Label';
 import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { dateRangesNotOverlapping, hasValidDate, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Periode, Sykdom, TransformValues } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment from 'moment';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { Element, Systemtittel } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
-import { Label } from '@fpsak-frontend/form/src/Label';
 import DatepickerField from '../../../form/src/DatepickerField';
 import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
@@ -69,12 +70,18 @@ export const MedisinskVilkarForm = ({
   aksjonspunkter,
   intl,
 }: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
+  const [showVilkaarsvurdering, setShowVilkaarsvurdering] = useState(false);
   const { periodeTilVurdering, legeerklæringer } = sykdom;
   const diagnosekode = legeerklæringer && legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';
   const isApOpen = harApneAksjonspunkter || !submittable;
-  const getAksjonspunktHelpText = (
+  const getAksjonspunktHelpText = () => (
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpTextTemp>
   );
+
+  const handleFortsettTilVilkaarButtonClick = useCallback(() => {
+    setShowVilkaarsvurdering(true);
+  }, []);
+
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -130,33 +137,40 @@ export const MedisinskVilkarForm = ({
             dataId="sykehusInnlagtDato"
           />
         </div>
-        <div className={styles.vilkarsContainer}>
-          <div className={styles.helpTextContainer}>{getAksjonspunktHelpText}</div>
+        {!showVilkaarsvurdering && !readOnly && (
+          <Hovedknapp className={styles.fortsettTilVilkaarButton} mini onClick={handleFortsettTilVilkaarButtonClick}>
+            <FormattedMessage id="MedisinskVilkarForm.FortsettTilVilkaarsvurdering" />
+          </Hovedknapp>
+        )}
 
-          <div className={styles.headingContainer}>
-            <Systemtittel>
-              <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
-            </Systemtittel>
+        <div className={!showVilkaarsvurdering && !readOnly ? styles.hideVilkaarsVurdering : ''}>
+          <div className={styles.vilkarsContainer}>
+            <div className={styles.headingContainer}>
+              <Systemtittel>
+                <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
+              </Systemtittel>
+            </div>
+            <div className={styles.fieldContainerLarge}>
+              <KontinuerligTilsynOgPleie
+                readOnly={readOnly}
+                periodeTilVurdering={periodeTilVurdering}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                formName={formName}
+                getAksjonspunktHelpText={getAksjonspunktHelpText}
+              />
+            </div>
           </div>
-          <div className={styles.fieldContainerLarge}>
-            <KontinuerligTilsynOgPleie
-              readOnly={readOnly}
-              periodeTilVurdering={periodeTilVurdering}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              formName={formName}
-            />
-          </div>
+
+          <MedisinskVilkarFormButtons
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            form={form}
+            harApneAksjonspunkter={harApneAksjonspunkter}
+            readOnly={readOnly}
+            submittable={submittable}
+          />
         </div>
-
-        <MedisinskVilkarFormButtons
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          form={form}
-          harApneAksjonspunkter={harApneAksjonspunkter}
-          readOnly={readOnly}
-          submittable={submittable}
-        />
       </form>
     </>
   );
