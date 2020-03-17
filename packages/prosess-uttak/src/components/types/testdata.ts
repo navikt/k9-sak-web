@@ -1,9 +1,9 @@
 import BehandlingPersonMap from './BehandlingPersonMap';
-import Uttaksplaner from '../dto/Uttaksplaner';
-import { InnvilgetÅrsakEnum } from '../dto/InnvilgetÅrsak';
-import { AvslåttÅrsakEnum } from '../dto/AvslåttÅrsak';
+import UttaksplanerDto from '../dto/UttaksplanerDto';
+import { InnvilgetÅrsakEnum } from '../dto/InnvilgetÅrsakType';
+import { AvslåttÅrsakEnum } from '../dto/AvslåttÅrsakType';
 
-export const uttaksplaner: Uttaksplaner = {
+export const uttaksplaner: UttaksplanerDto = {
   '123': {
     perioder: {
       '2020-01-01/2020-01-08': {
@@ -21,7 +21,7 @@ export const uttaksplaner: Uttaksplaner = {
           },
         ],
       },
-      '2020-01-15/2020-01-28': {
+      '2020-01-15/2020-02-07': {
         utfall: 'Innvilget',
         årsak: InnvilgetÅrsakEnum.AVKORTET_MOT_INNTEKT,
         hjemler: [],
@@ -56,7 +56,7 @@ export const uttaksplaner: Uttaksplaner = {
   },
   '456': {
     perioder: {
-      '2020-01-09/2020-01-14': {
+      '2020-01-01/2020-01-14': {
         utfall: 'Innvilget',
         grad: 100,
         utbetalingsgrader: [
@@ -108,19 +108,31 @@ export const uttaksplaner: Uttaksplaner = {
 
 export const behandlingPersonMap: BehandlingPersonMap = {
   123: {
-    kjønnkode: 'K',
-    fnr: '12121250458',
+    kjønn: 'K',
+    navn: {
+      fornavn: 'Anne',
+      etternavn: 'Annesen',
+    },
   },
   321: {
-    kjønnkode: 'M',
-    fnr: '21035489154',
+    kjønn: 'M',
+    navn: {
+      fornavn: 'Geir',
+      etternavn: 'Geirsen',
+    },
   },
   456: {
-    kjønnkode: 'K',
-    fnr: '30108965157',
+    kjønn: 'K',
+    navn: {
+      fornavn: 'Marie',
+      etternavn: 'Mariesen',
+    },
   },
   789: {
-    kjønnkode: 'M',
-    fnr: '04040454120',
+    kjønn: 'M',
+    navn: {
+      fornavn: 'Arne',
+      etternavn: 'Arnesen',
+    },
   },
 };

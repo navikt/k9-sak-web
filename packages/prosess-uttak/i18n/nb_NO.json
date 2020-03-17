@@ -7,5 +7,9 @@
   "UttakPanel.TOM": "Til og med: {tom}",
   "UttakPanel.Avslått": "Avslått",
   "UttakPanel.UtfallInnvilget": "Utfall: Innvilget",
-  "UttakPanel.UtfallAvslått": "Utfall: Avslått"
+  "UttakPanel.UtfallAvslått": "Utfall: Avslått",
+  "UttakTabell.Periode": "Periode",
+  "UttakTabell.Utfall": "Utfall",
+  "UttakTabell.Grad": "Grad",
+  "UttakTabell.Årsak": "Årsak"
 }

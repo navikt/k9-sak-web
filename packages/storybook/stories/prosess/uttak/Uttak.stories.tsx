@@ -12,20 +12,32 @@ export default {
 
 const behandlingPersonMap: BehandlingPersonMap = {
   123: {
-    kjønnkode: 'K',
-    fnr: '12121250458',
+    kjønn: 'K',
+    navn: {
+      fornavn: 'Anne',
+      etternavn: 'Annesen',
+    },
   },
   321: {
-    kjønnkode: 'M',
-    fnr: '21035489154',
+    kjønn: 'M',
+    navn: {
+      fornavn: 'Geir',
+      etternavn: 'Geirsen',
+    },
   },
   456: {
-    kjønnkode: 'K',
-    fnr: '30108965157',
+    kjønn: 'K',
+    navn: {
+      fornavn: 'Marie',
+      etternavn: 'Mariesen',
+    },
   },
   789: {
-    kjønnkode: 'M',
-    fnr: '04040454120',
+    kjønn: 'M',
+    navn: {
+      fornavn: 'Arne',
+      etternavn: 'Arnesen',
+    },
   },
 };
 
