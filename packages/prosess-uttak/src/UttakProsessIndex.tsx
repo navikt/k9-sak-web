@@ -4,7 +4,6 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import Uttak from './components/Uttak';
 import BehandlingPersonMap from './components/types/BehandlingPersonMap';
-import UttakPanel from './components/UttakPanel';
 import UttaksplanerDto from './components/dto/UttaksplanerDto';
 import Uttaksplan from './components/types/Uttaksplan';
 import Uttaksperiode from './components/types/Uttaksperiode';
@@ -71,9 +70,7 @@ const mapUttaksplanerDtoTilInternformat: (
 const UttakProsessIndex: FunctionComponent<UttakProsessIndexProps> = ({ uttaksplaner, behandlingPersonMap }) => {
   return (
     <RawIntlProvider value={intl}>
-      <UttakPanel>
-        <Uttak uttaksplaner={mapUttaksplanerDtoTilInternformat(uttaksplaner, behandlingPersonMap)} />
-      </UttakPanel>
+      <Uttak uttaksplaner={mapUttaksplanerDtoTilInternformat(uttaksplaner, behandlingPersonMap)} />
     </RawIntlProvider>
   );
 };
