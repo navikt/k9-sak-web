@@ -1,8 +1,8 @@
 import Arbeidsforhold from './Arbeidsforhold';
 
-interface Utbetalingsgrad {
+interface UtbetalingsgradDto {
   arbeidsforhold: Arbeidsforhold;
   utbetalingsgrad: number;
 }
 
-export default Utbetalingsgrad;
+export default UtbetalingsgradDto;

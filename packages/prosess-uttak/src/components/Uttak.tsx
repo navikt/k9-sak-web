@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
@@ -8,75 +8,74 @@ import svgKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import svgMann from '@fpsak-frontend/assets/images/mann.svg';
 import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/TimeLineControl';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
+import TidslinjePeriode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
 
-import BehandlingPersonMap from './types/BehandlingPersonMap';
-import UttakTidslinjePeriode from './types/UttakTidslinjePeriode';
-import Uttaksplaner from './dto/Uttaksplaner';
 import { UtfallEnum } from './dto/Utfall';
-import ValgtPeriode from './ValgtPeriode';
+import UttakTabell from './UttakTabell';
+import Uttaksperiode from './types/Uttaksperiode';
+import Uttaksplan from './types/Uttaksplan';
+import Person from './types/Person';
 
 interface UttakkProps {
-  uttaksplaner: Uttaksplaner;
-  behandlingPersonMap: BehandlingPersonMap;
+  uttaksplaner: Uttaksplan[];
 }
 
 const erKvinne = kjønnkode => kjønnkode === navBrukerKjonn.KVINNE;
 
-export const mapRader = (
-  uttaksplaner: Uttaksplaner,
-  behandlingPersonMap: BehandlingPersonMap,
-  intl,
-): TidslinjeRad<UttakTidslinjePeriode>[] =>
-  Object.entries(uttaksplaner).map(([behandlingsId, behandling]) => {
-    const { kjønnkode } = behandlingPersonMap[behandlingsId];
-    const kvinne = erKvinne(kjønnkode);
+export const mapRader = (uttaksplaner: Uttaksplan[], intl): TidslinjeRad<Uttaksperiode>[] => {
+  return uttaksplaner.map(({ behandlingId, perioder, person }) => {
+    const kvinne = erKvinne(person.kjønn);
     const ikon = {
       imageText: intl.formatMessage({ id: 'Person.ImageText' }),
       title: intl.formatMessage({ id: kvinne ? 'Person.Woman' : 'Person.Man' }),
       src: kvinne ? svgKvinne : svgMann,
     };
 
-    const perioder = Object.entries(behandling.perioder).map(([fomTom, periode], index) => {
-      const [fom, tom] = fomTom.split('/');
-      const { utfall } = periode;
+    const tidslinjeperioder: TidslinjePeriode<Uttaksperiode>[] = perioder.map((periode, index) => {
+      const { utfall, grad, fom, tom } = periode;
       const hoverText =
         utfall === UtfallEnum.INNVILGET
-          ? `${periode.grad}% ${intl.formatMessage({ id: 'UttakPanel.Gradering' })}`
+          ? `${grad}% ${intl.formatMessage({ id: 'UttakPanel.Gradering' })}`
           : intl.formatMessage({ id: 'UttakPanel.Avslått' });
 
-      return {
+      const tidslinjeperiode: TidslinjePeriode<Uttaksperiode> = {
         fom,
         tom,
-        id: `${behandlingsId}-${index}`,
+        id: `${behandlingId}-${index}`,
         hoverText,
         className: classNames({
-          gradert: periode.grad < 100,
+          gradert: grad < 100,
           godkjentPeriode: utfall === UtfallEnum.INNVILGET,
           avvistPeriode: utfall === UtfallEnum.AVSLÅTT,
         }),
-        periodeinfo: {
-          ...periode,
-          behandlingsId,
-        },
+        periodeinfo: periode,
       };
+
+      return tidslinjeperiode;
     });
 
     return {
       ikon,
-      id: behandlingsId,
-      perioder,
+      id: behandlingId,
+      perioder: tidslinjeperioder,
     };
   });
+};
 
-const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner, behandlingPersonMap }) => {
-  const [valgtPeriode, velgPeriode] = useState<UttakTidslinjePeriode | null>();
+const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
+  const [valgtPeriode, velgPeriode] = useState<TidslinjePeriode<Uttaksperiode> | null>();
   const [timelineRef, setTimelineRef] = useState();
+  const valgtPerson = useMemo<Person>(
+    () =>
+      valgtPeriode && uttaksplaner.find(plan => plan.behandlingId === valgtPeriode.periodeinfo.behandlingId)?.person,
+    [valgtPeriode, uttaksplaner],
+  );
   const intl = useIntl();
 
-  const rader: TidslinjeRad<UttakTidslinjePeriode>[] = mapRader(uttaksplaner, behandlingPersonMap, intl);
+  const rader: TidslinjeRad<Uttaksperiode>[] = mapRader(uttaksplaner, intl);
 
   const selectHandler = eventProps => {
-    const nyValgtPeriode = rader.flatMap(rad => rad.perioder).find(item => item.id === eventProps.items[0]);
+    const nyValgtPeriode = rader.flatMap(rad => rad.perioder).find(periode => periode.id === eventProps.items[0]);
     velgPeriode(nyValgtPeriode);
     eventProps.event.preventDefault();
   };
@@ -137,7 +136,7 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner, behandlingPersonM
           openPeriodInfo={openPeriodInfo}
           selectedPeriod={valgtPeriode}
         />
-        {valgtPeriode && <ValgtPeriode behandlingPersonMap={behandlingPersonMap} valgtPeriode={valgtPeriode} />}
+        {valgtPeriode && <UttakTabell periode={valgtPeriode.periodeinfo} person={valgtPerson} />}
       </Column>
     </Row>
   );

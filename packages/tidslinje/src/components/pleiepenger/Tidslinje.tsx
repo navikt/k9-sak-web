@@ -21,19 +21,19 @@ interface EventProps {
   event: Event;
 }
 
-interface TidslinjeProps {
-  rader: TidslinjeRad<Periode>[];
+interface TidslinjeProps<Periodeinfo> {
+  rader: TidslinjeRad<Periodeinfo>[];
   customTimes?: {
     [value: string]: string;
   };
   velgPeriode: (eventProps: EventProps) => void;
-  valgtPeriode?: Periode;
+  valgtPeriode?: Periode<Periodeinfo>;
   setTimelineRef?: (timelineRef: any) => void;
 }
 
 const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
 
-const getOptions = (perioderSortert: Periode[]) => ({
+const getOptions = (perioderSortert: Periode<any>[]) => ({
   end: moment(perioderSortert[perioderSortert.length - 1].tom).add(2, 'days'),
   locale: moment.locale('nb'),
   margin: { item: 14 },
@@ -53,14 +53,14 @@ const getOptions = (perioderSortert: Periode[]) => ({
   zoomMin: 1000 * 60 * 60 * 24 * 30,
 });
 
-const createGroups = (rader: TidslinjeRad<Periode>[]) => {
+const createGroups = (rader: TidslinjeRad<Periode<any>>[]) => {
   return rader.map(rad => ({
     id: rad.id,
     content: '',
   }));
 };
 
-const createItems = (perioder: Periode[]) =>
+const createItems = (perioder: Periode<any>[]) =>
   perioder.map(periode => ({
     ...periode,
     start: momentDate(periode.fom).toDate(),
@@ -70,7 +70,7 @@ const createItems = (perioder: Periode[]) =>
     title: periode.hoverText,
   }));
 
-const leggPåGroupId = (rad: TidslinjeRad<Periode>) => {
+const leggPåGroupId = (rad: TidslinjeRad<Periode<any>>) => {
   const groupId = rad.id;
   const perioderMedId = rad.perioder.map(periode => ({
     ...periode,
@@ -83,7 +83,7 @@ const leggPåGroupId = (rad: TidslinjeRad<Periode>) => {
   };
 };
 
-const Tidslinje: FunctionComponent<TidslinjeProps> = ({
+const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
   rader,
   customTimes,
   velgPeriode,

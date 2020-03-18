@@ -12,7 +12,7 @@ import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vi
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
-import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/types/testdata';
+import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/dto/testdata';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';

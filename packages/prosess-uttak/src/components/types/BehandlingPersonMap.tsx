@@ -1,10 +1,7 @@
-import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
+import Person from './Person';
 
 interface BehandlingPersonMap {
-  [behandlingId: string]: {
-    kjønnkode: Kjønnkode;
-    fnr: string;
-  };
+  [behandlingId: string]: Person;
 }
 
 export default BehandlingPersonMap;
