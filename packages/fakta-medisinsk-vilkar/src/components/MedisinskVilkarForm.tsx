@@ -26,6 +26,7 @@ import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
 import {
   getPerioderMedKontinuerligTilsynOgPleie,
   getPerioderMedUtvidetKontinuerligTilsynOgPleie,
+  isHeleSokandsperiodenInnlegelse,
 } from './MedisinskVilkarUtils';
 
 interface MedisinskVilkarFormProps {
@@ -74,8 +75,11 @@ export const MedisinskVilkarForm = ({
   const { periodeTilVurdering, legeerklæringer } = sykdom;
   const diagnosekode = legeerklæringer && legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';
   const isApOpen = harApneAksjonspunkter || !submittable;
-  const getAksjonspunktHelpText = () => (
-    <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpTextTemp>
+  const getAksjonspunktHelpText = useCallback(
+    () => (
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpTextTemp>
+    ),
+    [aksjonspunkter, isApOpen],
   );
 
   const handleFortsettTilVilkaarButtonClick = useCallback(() => {
@@ -176,7 +180,7 @@ export const MedisinskVilkarForm = ({
   );
 };
 
-const transformValues = (values: TransformValues, identifikator?: string) => {
+const transformValues = (values: TransformValues, periodeTilVurdering: Periode, identifikator?: string) => {
   return {
     kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
     begrunnelse: 'placeholder', // TODO (Hallvard): Finn ut hva vi skal gjøre her
@@ -190,28 +194,30 @@ const transformValues = (values: TransformValues, identifikator?: string) => {
         innleggelsesperioder: values.innleggelsesperiode ? [values.innleggelsesperiode] : undefined,
       },
     ],
-    pleiebehov: {
-      perioderMedKontinuerligTilsynOgPleie: values.perioderMedKontinuerligTilsynOgPleie
-        ?.filter(
-          periodeMedKontinuerligTilsynOgPleie =>
-            periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie &&
-            !!periodeMedKontinuerligTilsynOgPleie.fom &&
-            !!periodeMedKontinuerligTilsynOgPleie.tom,
-        )
-        .map(periodeMedKontinuerligTilsynOgPleie => ({
-          periode: {
-            fom: periodeMedKontinuerligTilsynOgPleie.fom,
-            tom: periodeMedKontinuerligTilsynOgPleie.tom,
-          },
-          begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
-          årsaksammenheng: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsyn,
-          årsaksammenhengBegrunnelse: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsynBegrunnelse,
-        })),
-      perioderMedUtvidetKontinuerligTilsynOgPleie:
-        values.perioderMedKontinuerligTilsynOgPleie?.length > 0
-          ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
-          : undefined,
-    },
+    pleiebehov: isHeleSokandsperiodenInnlegelse(values.innleggelsesperiode, periodeTilVurdering)
+      ? {}
+      : {
+          perioderMedKontinuerligTilsynOgPleie: values.perioderMedKontinuerligTilsynOgPleie
+            ?.filter(
+              periodeMedKontinuerligTilsynOgPleie =>
+                periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie &&
+                !!periodeMedKontinuerligTilsynOgPleie.fom &&
+                !!periodeMedKontinuerligTilsynOgPleie.tom,
+            )
+            .map(periodeMedKontinuerligTilsynOgPleie => ({
+              periode: {
+                fom: periodeMedKontinuerligTilsynOgPleie.fom,
+                tom: periodeMedKontinuerligTilsynOgPleie.tom,
+              },
+              begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
+              årsaksammenheng: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsyn,
+              årsaksammenhengBegrunnelse: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsynBegrunnelse,
+            })),
+          perioderMedUtvidetKontinuerligTilsynOgPleie:
+            values.perioderMedKontinuerligTilsynOgPleie?.length > 0
+              ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
+              : undefined,
+        },
   };
 };
 
@@ -240,7 +246,10 @@ const buildInitialValues = createSelector(
 
 const mapStateToProps = (_, props: MedisinskVilkarFormProps) => {
   const { submitCallback, behandlingId, behandlingVersjon, sykdom, aksjonspunkter } = props;
-  const onSubmit = values => submitCallback([transformValues(values, props.sykdom?.legeerklæringer[0]?.identifikator)]);
+  const onSubmit = values =>
+    submitCallback([
+      transformValues(values, props.sykdom.periodeTilVurdering, props.sykdom?.legeerklæringer[0]?.identifikator),
+    ]);
 
   return state => ({
     onSubmit,

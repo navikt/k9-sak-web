@@ -145,6 +145,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                   before: getMomentConvertedDate(datoBegrensningFom),
                   after: getMomentConvertedDate(datoBegrensningTom),
                 }}
+                renderUpwards
               />
             </FlexColumn>
             <FlexColumn>

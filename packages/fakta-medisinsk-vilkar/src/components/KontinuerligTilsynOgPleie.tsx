@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, FieldArray } from 'redux-form';
 import styles from './kontinuerligTilsynOgPleie.less';
+import { isHeleSokandsperiodenInnlegelse } from './MedisinskVilkarUtils';
 import PeriodePolse from './PeriodePolse';
 import Tilsynsperioder from './Tilsynsperioder';
 
@@ -66,40 +67,42 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
       </div>
     ) : null;
 
-  const renderTilsynsperiodeFieldArray = ({ fields }) => {
+  const RenderTilsynsperiodeFieldArray = ({ fields }) => {
     if (fields.length === 0) {
       fields.push({ fom: '', tom: '', behovForToOmsorgspersoner: undefined });
     }
     const removeIndex = useCallback(index => fields.remove(index), []);
-    const brukSoknadsdato = useCallback((fieldNameFom, fieldNameTom) => {
-      const formSelector = `${behandlingFormPrefix}.${formName}`;
-      formChange(
-        formSelector,
-        fieldNameFom,
-        innleggelsesperiode
-          ? moment(innleggelsesperiode.tom)
-              .add(1, 'days')
-              .format(ISO_DATE_FORMAT)
-          : moment(periodeTilVurdering.fom).format(ISO_DATE_FORMAT),
-      );
-      formChange(formSelector, fieldNameTom, moment(periodeTilVurdering.tom).format(ISO_DATE_FORMAT));
-    }, []);
+    const formSelector = `${behandlingFormPrefix}.${formName}`;
+    const brukSoknadsdato = useCallback(
+      (fieldNameFom, fieldNameTom) => {
+        formChange(
+          formSelector,
+          fieldNameFom,
+          innleggelsesperiode
+            ? moment(innleggelsesperiode.tom)
+                .add(1, 'days')
+                .format(ISO_DATE_FORMAT)
+            : moment(periodeTilVurdering.fom).format(ISO_DATE_FORMAT),
+        );
+        formChange(formSelector, fieldNameTom, moment(periodeTilVurdering.tom).format(ISO_DATE_FORMAT));
+      },
+      [formSelector],
+    );
 
     const emptyPeriodTemplate = {
       fom: '',
       tom: '',
     };
 
-    const onClick = useCallback(() => {
+    const onAddPeriodeClick = useCallback(() => {
       fields.push(emptyPeriodTemplate);
     }, []);
 
-    const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLButtonElement>) => {
+    const onAddPeriodeKeyDown = useCallback((event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (event.keyCode === 13) {
         fields.push(emptyPeriodTemplate);
       }
     }, []);
-
     return (
       <div className={styles.pickerContainer}>
         <fieldset className={styles.fieldset}>
@@ -129,7 +132,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
             }
 
             return (
-              <div className={styles.tilsynContainer}>
+              <div key={periodeMedBehovForKontinuerligTilsynId} className={styles.tilsynContainer}>
                 <PeriodePolse
                   theme="warn"
                   dates={`${periodStart.format(DDMMYYYY_DATE_FORMAT)} - ${moment(periodeTilVurdering.tom).format(
@@ -146,7 +149,6 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                   status="Perioden som må vurderes"
                 >
                   <Tilsynsperioder
-                    key={periodeMedBehovForKontinuerligTilsynId}
                     periodeMedBehovForKontinuerligTilsynId={periodeMedBehovForKontinuerligTilsynId}
                     harBehovForKontinuerligTilsynOgPleie={harBehovForKontinuerligTilsynOgPleie}
                     datoBegrensningFom={datoBegrensningFom}
@@ -179,7 +181,12 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
           <Row>
             <Column xs="12">
               {!readOnly && (
-                <button onClick={onClick} onKeyDown={onKeyDown} className={styles.addPeriode} type="button">
+                <button
+                  onClick={onAddPeriodeClick}
+                  onKeyDown={onAddPeriodeKeyDown}
+                  className={styles.addPeriode}
+                  type="button"
+                >
                   <Image
                     className={styles.addCircleIcon}
                     src={addCircleIcon}
@@ -198,6 +205,8 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
     );
   };
 
+  const hideKontinuerligTilsyn = isHeleSokandsperiodenInnlegelse(innleggelsesperiode, periodeTilVurdering);
+
   return (
     <>
       <PeriodePolse
@@ -211,13 +220,17 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
       />
       {getPolseForInnleggelsesperiode()}
       <VerticalSpacer twentyPx />
-      <div className={styles.helpTextContainer}>{getAksjonspunktHelpText()}</div>
-      <FieldArray
-        name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
-        rerenderOnEveryChange
-        component={renderTilsynsperiodeFieldArray}
-        props={{ readOnly }}
-      />
+      {!hideKontinuerligTilsyn && (
+        <>
+          <div className={styles.helpTextContainer}>{getAksjonspunktHelpText()}</div>
+          <FieldArray
+            name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
+            rerenderOnEveryChange
+            component={RenderTilsynsperiodeFieldArray}
+            props={{ readOnly }}
+          />
+        </>
+      )}
     </>
   );
 };

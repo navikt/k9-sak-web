@@ -1,7 +1,8 @@
 import {
-  TransformValues,
+  Periode,
   PeriodeMedTilsynOgPleieResponse,
   Sykdom,
+  TransformValues,
 } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment, { Moment } from 'moment';
@@ -166,3 +167,9 @@ export const getMomentConvertedDate = (date: string | Date | Moment) => {
   // fungerer, men blir deprecated i senere versjoner av moment
   return moment(date).toDate();
 };
+
+export const isHeleSokandsperiodenInnlegelse = (innleggelsesperiode: Periode, periodeTilVurdering: Periode) =>
+  !!innleggelsesperiode?.fom &&
+  !!innleggelsesperiode?.tom &&
+  moment(innleggelsesperiode.fom).isSame(moment(periodeTilVurdering.fom)) &&
+  moment(innleggelsesperiode.tom).isSame(moment(periodeTilVurdering.tom));
