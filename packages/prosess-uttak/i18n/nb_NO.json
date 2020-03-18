@@ -20,5 +20,9 @@
   "UttakTabell.FOR_HØY_TILSYNSGRAD": "For høy tilsynsgrad",
   "UttakTabell.LOVBESTEMT_FERIE": "Lovbestemt ferie",
   "UttakTabell.IKKE_MEDLEM_I_FOLKETRYGDEN": "Ikke medlem i Folketrygden",
-  "UttakTabell.SØKERS_DØDSFALL": "Søkers dødsfall"
+  "UttakTabell.SØKERS_DØDSFALL": "Søkers dødsfall",
+  "UttakTimeline.GoBack": "Én måned tilbake",
+  "UttakTimeline.GoForward": "Én måned tilbake",
+  "UttakTimeline.ZoomIn": "Zoom inn",
+  "UttakTimeline.ZoomOut": "Zoom ut"
 }

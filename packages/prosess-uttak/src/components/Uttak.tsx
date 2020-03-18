@@ -6,9 +6,9 @@ import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tids
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import svgKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import svgMann from '@fpsak-frontend/assets/images/mann.svg';
-import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/TimeLineControl';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 import TidslinjePeriode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
+import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/pleiepenger/TimeLineControl';
 
 import { UtfallEnum } from './dto/Utfall';
 import UttakTabell from './UttakTabell';
@@ -80,17 +80,13 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
     eventProps.event.preventDefault();
   };
 
-  const openPeriodInfo = () => {
-    // TODO: er det vits i å ha en egen knapp for å velge/lukke første periode. lukker selv om det ikke er første som er valgt
-  };
-
   const goBackward = () => {
     // @ts-ignore
     const timeline = timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
-      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),
-      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 42),
+      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 31),
+      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 31),
     };
     timeline.setWindow(newWindowTimes);
   };
@@ -100,8 +96,8 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
     const timeline = timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
-      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() + 42),
-      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() + 42),
+      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() + 31),
+      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() + 31),
     };
 
     timeline.setWindow(newWindowTimes);
@@ -129,12 +125,10 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
           setTimelineRef={setTimelineRef}
         />
         <TimeLineControl
-          goBackwardCallback={goBackward}
-          goForwardCallback={goForward}
-          zoomInCallback={zoomIn}
-          zoomOutCallback={zoomOut}
-          openPeriodInfo={openPeriodInfo}
-          selectedPeriod={valgtPeriode}
+          goBackward={{ buttonText: intl.formatMessage({ id: 'UttakTimeline.GoBack' }), callback: goBackward }}
+          goForward={{ buttonText: intl.formatMessage({ id: 'UttakTimeline.GoForward' }), callback: goForward }}
+          zoomIn={{ buttonText: intl.formatMessage({ id: 'UttakTimeline.ZoomIn' }), callback: zoomIn }}
+          zoomOut={{ buttonText: intl.formatMessage({ id: 'UttakTimeline.ZoomOut' }), callback: zoomOut }}
         />
         {valgtPeriode && <UttakTabell periode={valgtPeriode.periodeinfo} person={valgtPerson} />}
       </Column>
