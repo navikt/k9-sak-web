@@ -25,7 +25,7 @@ const UttakTabell: FunctionComponent<UttakTabellProps> = ({ periode, person }) =
   const { navn, kjønn } = person;
   const { fom, tom, utfall, grad, årsaker } = periode;
   return (
-    <Table noHover headerTextCodes={headerCodes}>
+    <Table noHover headerTextCodes={headerCodes} classNameTable={styles.uttakTable}>
       <TableRow>
         <TableColumn className={styles.personColumn}>
           <span className={styles.personCell}>
