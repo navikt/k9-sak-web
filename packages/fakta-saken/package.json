@@ -8,8 +8,8 @@
     "@fpsak-frontend/fp-felles": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
+    "@fpsak-frontend/utils": "1.0.0",
     "nav-frontend-core": "4.0.12",
     "nav-frontend-knapper": "1.0.40",
     "nav-frontend-knapper-style": "0.3.35",
@@ -26,6 +26,6 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^9.0.1"
+    "sinon": "^9.0.0"
   }
 }
