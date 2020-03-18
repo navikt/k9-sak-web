@@ -1,12 +1,23 @@
-.personColumn {
-  border: none;
-  text-align: end;
-
-  &:before {
-    background-color: white;
-    content: ' ';
-    z-index: 9;
+.uttakTable {
+  thead {
+    tr {
+      &:first-child td {
+        border-bottom: none;
+      }
+    }
   }
+
+  tbody {
+    tr {
+      td:first-child {
+        border: none;
+      }
+    }
+  }
+}
+
+.personColumn {
+  text-align: end;
 }
 
 .personCell {
