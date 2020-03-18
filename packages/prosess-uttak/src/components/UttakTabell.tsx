@@ -19,22 +19,15 @@ interface UttakTabellProps {
 }
 
 const UttakTabell: FunctionComponent<UttakTabellProps> = ({ periode, person }) => {
-  const headerCodes = [
-    'EMPTY',
-    'EMPTY',
-    'UttakTabell.Periode',
-    'UttakTabell.Utfall',
-    'UttakTabell.Grad',
-    'UttakTabell.Årsak',
-  ];
+  const headerCodes = ['EMPTY', 'UttakTabell.Periode', 'UttakTabell.Utfall', 'UttakTabell.Grad', 'UttakTabell.Årsak'];
   const { navn, kjønn } = person;
   const { fom, tom, utfall, grad, årsaker } = periode;
   return (
     <Table noHover headerTextCodes={headerCodes}>
       <TableRow>
-        <TableColumn className={styles.navnCell}>{navn.fornavn}</TableColumn>
-        <TableColumn>
-          <span className={styles.ikonCell}>
+        <TableColumn className={styles.personColumn}>
+          <span className={styles.personCell}>
+            <span className={styles.navn}>{navn.fornavn}</span>
             <Image src={kjønn === KjønnkodeEnum.KVINNE ? svgKvinne : svgMann} className={styles.ikon} />
             <Image src={utfall === UtfallEnum.INNVILGET ? checkSvg : avslåttSvg} className={styles.ikon} />
           </span>
@@ -42,7 +35,12 @@ const UttakTabell: FunctionComponent<UttakTabellProps> = ({ periode, person }) =
         <TableColumn>{fom + tom}</TableColumn>
         <TableColumn>{utfall}</TableColumn>
         <TableColumn>{grad}</TableColumn>
-        <TableColumn>{årsaker ? årsaker.map(({ årsakstype }) => <div>{årsakstype}</div>) : '-'}</TableColumn>
+        <TableColumn>
+          {årsaker && årsaker.length
+            ? // eslint-disable-next-line react/no-array-index-key
+              årsaker.map(({ årsakstype }, index) => <div key={index}>{årsakstype}</div>)
+            : '-'}
+        </TableColumn>
       </TableRow>
     </Table>
   );

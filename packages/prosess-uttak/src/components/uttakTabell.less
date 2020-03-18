@@ -1,11 +1,22 @@
-.navnCell {
-  font-weight: bold;
+.personColumn {
+  border: none;
   text-align: end;
+
+  &:before {
+    background-color: white;
+    content: ' ';
+    z-index: 9;
+  }
 }
 
-.ikonCell {
+.personCell {
   & > :not(:last-child) {
     margin-right: 0.5em;
+  }
+
+  .navn {
+    font-weight: bold;
+    text-align: end;
   }
 
   .ikon {

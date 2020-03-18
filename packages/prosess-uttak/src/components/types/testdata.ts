@@ -50,6 +50,51 @@ export const uttaksplaner: UttaksplanerDto = {
               },
             ],
           },
+          {
+            årsak: AvslåttÅrsakEnum.FOR_HØY_TILSYNSGRAD,
+            hjemler: [
+              {
+                henvisning: 'Folketrygdloven LOV-1997-02-28-19 Kapittel 2',
+                anvendelse: 'Fastsatt at personen ikke er medlem av folketrygden i perioden.',
+              },
+            ],
+          },
+        ],
+      },
+    },
+  },
+  '321': {
+    perioder: {
+      '2020-01-01/2020-01-14': {
+        utfall: 'Innvilget',
+        grad: 100,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: {
+              type: 'Arbeidstaker',
+              organisasjonsnummer: '999999999',
+              aktørId: null,
+              arbeidsforholdId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+            },
+            utbetalingsgrad: 75.0,
+          },
+        ],
+      },
+      '2020-01-29/2020-02-15': {
+        utfall: 'Innvilget',
+        årsak: InnvilgetÅrsakEnum.AVKORTET_MOT_INNTEKT,
+        hjemler: [],
+        grad: 80,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: {
+              type: 'Arbeidstaker',
+              organisasjonsnummer: '999999999',
+              aktørId: null,
+              arbeidsforholdId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+            },
+            utbetalingsgrad: 80.0,
+          },
         ],
       },
     },
@@ -117,7 +162,7 @@ export const behandlingPersonMap: BehandlingPersonMap = {
   321: {
     kjønn: 'M',
     navn: {
-      fornavn: 'Geir',
+      fornavn: 'Alexander-Preben-Christopher',
       etternavn: 'Geirsen',
     },
   },
