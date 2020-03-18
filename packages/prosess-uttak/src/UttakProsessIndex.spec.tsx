@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import UttakProsessIndex from './UttakProsessIndex';
-import { behandlingPersonMap, uttaksplaner as uttaksplanerDto } from './components/types/testdata';
+import { behandlingPersonMap, uttaksplaner as uttaksplanerDto } from './components/dto/testdata';
 import Uttak from './components/Uttak';
 import Uttaksplan from './components/types/Uttaksplan';
 
