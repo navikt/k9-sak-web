@@ -7,7 +7,7 @@ import { UtfallEnum } from './dto/Utfall';
 import { InnvilgetÅrsakEnum } from './dto/InnvilgetÅrsakType';
 
 describe('<UttakTabell>', () => {
-  it('rendrer en tabell med en rad og 6 kolonner', () => {
+  it('rendrer en tabell med en rad og riktig antall kolonner', () => {
     const wrapper = shallow(
       <UttakTabell
         periode={{
@@ -30,6 +30,6 @@ describe('<UttakTabell>', () => {
 
     const kolonner = wrapper.find(TableColumn);
 
-    expect(kolonner).to.have.length(6);
+    expect(kolonner).to.have.length(5);
   });
 });
