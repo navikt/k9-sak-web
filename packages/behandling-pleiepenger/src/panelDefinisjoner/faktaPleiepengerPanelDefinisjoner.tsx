@@ -47,7 +47,6 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
     textCode: 'MedlemskapInfoPanel.Medlemskap',
     aksjonspunkterCodes: [
-      aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
       aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
       aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
       aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
@@ -55,7 +54,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
       aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
       aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO,
     ],
-    endpoints: [pleiepengerBehandlingApi.MEDLEMSKAP, pleiepengerBehandlingApi.MEDLEMSKAP_V2],
+    endpoints: [pleiepengerBehandlingApi.MEDLEMSKAP],
     renderComponent: props => <MedlemskapFaktaIndex {...props} />,
     showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
     getData: ({ fagsak, soknad, personopplysninger }) => ({
