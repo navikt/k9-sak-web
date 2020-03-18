@@ -8,6 +8,8 @@ import Table from '@fpsak-frontend/shared-components/src/table/Table';
 import TableRow from '@fpsak-frontend/shared-components/src/table/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/src/table/TableColumn';
 import { KjønnkodeEnum } from '@k9-sak-web/types/src/Kjønnkode';
+import { dateFormat } from '@fpsak-frontend/utils';
+import { FormattedMessage } from 'react-intl';
 import { UtfallEnum } from './dto/Utfall';
 import styles from './uttakTabell.less';
 import Uttaksperiode from './types/Uttaksperiode';
@@ -32,13 +34,17 @@ const UttakTabell: FunctionComponent<UttakTabellProps> = ({ periode, person }) =
             <Image src={utfall === UtfallEnum.INNVILGET ? checkSvg : avslåttSvg} className={styles.ikon} />
           </span>
         </TableColumn>
-        <TableColumn>{fom + tom}</TableColumn>
+        <TableColumn>{`${dateFormat(fom)} - ${dateFormat(tom)}`}</TableColumn>
         <TableColumn>{utfall}</TableColumn>
-        <TableColumn>{grad}</TableColumn>
+        <TableColumn>{grad || '-'}</TableColumn>
         <TableColumn>
           {årsaker && årsaker.length
-            ? // eslint-disable-next-line react/no-array-index-key
-              årsaker.map(({ årsakstype }, index) => <div key={index}>{årsakstype}</div>)
+            ? årsaker.map(({ årsakstype }, index) => (
+                <div>
+                  {/* eslint-disable-next-line react/no-array-index-key */}
+                  <FormattedMessage id={`UttakTabell.${årsakstype}`} key={index} />
+                </div>
+              ))
             : '-'}
         </TableColumn>
       </TableRow>
