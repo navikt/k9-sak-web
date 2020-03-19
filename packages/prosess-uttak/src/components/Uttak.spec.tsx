@@ -8,7 +8,7 @@ import Uttaksplan from './types/Uttaksplan';
 import { UtfallEnum } from './dto/Utfall';
 import Uttaksperiode from './types/Uttaksperiode';
 
-describe('<UttakPP>', () => {
+describe('<Uttak>', () => {
   const uttaksplaner: Uttaksplan[] = [
     {
       behandlingId: '123',
@@ -71,12 +71,6 @@ describe('<UttakPP>', () => {
 
     const expected: TidslinjeRad<Uttaksperiode>[] = [
       {
-        ikon: {
-          imageText: 'gradering',
-          title: 'gradering',
-          // @ts-ignore
-          src: {},
-        },
         id: '123',
         perioder: [
           {
@@ -98,12 +92,6 @@ describe('<UttakPP>', () => {
         ],
       },
       {
-        ikon: {
-          imageText: 'gradering',
-          title: 'gradering',
-          // @ts-ignore
-          src: {},
-        },
         id: '456',
         perioder: [
           {

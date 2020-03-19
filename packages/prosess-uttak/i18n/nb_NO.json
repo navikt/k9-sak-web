@@ -24,5 +24,7 @@
   "UttakTimeline.GoBack": "Én måned tilbake",
   "UttakTimeline.GoForward": "Én måned tilbake",
   "UttakTimeline.ZoomIn": "Zoom inn",
-  "UttakTimeline.ZoomOut": "Zoom ut"
+  "UttakTimeline.ZoomOut": "Zoom ut",
+  "Person.Woman": "Kvinne",
+  "Person.Man": "Mann"
 }
