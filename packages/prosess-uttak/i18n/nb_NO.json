@@ -7,5 +7,18 @@
   "UttakPanel.TOM": "Til og med: {tom}",
   "UttakPanel.Avslått": "Avslått",
   "UttakPanel.UtfallInnvilget": "Utfall: Innvilget",
-  "UttakPanel.UtfallAvslått": "Utfall: Avslått"
+  "UttakPanel.UtfallAvslått": "Utfall: Avslått",
+  "UttakTabell.Periode": "Periode",
+  "UttakTabell.Utfall": "Utfall",
+  "UttakTabell.Grad": "Grad",
+  "UttakTabell.Årsak": "Årsak",
+  "UttakTabell.GRADERT_MOT_TILSYN": "Gradert mot tilsyn",
+  "UttakTabell.AVKORTET_MOT_INNTEKT": "Avkortet mot inntekt",
+  "UttakTabell.BARNETS_DØDSFALL": "Barnets dødsfall",
+  "UttakTabell.UTENOM_TILSYNSBEHOV": "Utenom tilsynsbehov",
+  "UttakTabell.FOR_LAV_GRAD": "For lav grad",
+  "UttakTabell.FOR_HØY_TILSYNSGRAD": "For høy tilsynsgrad",
+  "UttakTabell.LOVBESTEMT_FERIE": "Lovbestemt ferie",
+  "UttakTabell.IKKE_MEDLEM_I_FOLKETRYGDEN": "Ikke medlem i Folketrygden",
+  "UttakTabell.SØKERS_DØDSFALL": "Søkers dødsfall"
 }
