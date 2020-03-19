@@ -63,6 +63,7 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     ytelsefordeling,
     beregningsgrunnlag,
     sykdom,
+    omsorgenFor,
   } = data;
 
   const dataTilUtledingAvFpPaneler = {
@@ -76,6 +77,7 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     beregningsgrunnlag,
     hasFetchError,
     sykdom,
+    omsorgenFor,
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks.useFaktaPaneler(

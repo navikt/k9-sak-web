@@ -1,37 +1,8 @@
-import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Sykdom } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
+import { Aksjonspunkt, Behandling, SubmitCallback, Sykdom } from '@k9-sak-web/types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import MedisinskVilkarForm from './components/MedisinskVilkarForm';
-
-export interface Soknad {
-  soknadType: Status;
-}
-
-export interface Status {
-  kode: string;
-  navn: string;
-}
-
-export interface Vilkar {
-  vilkarType: Status;
-  avslagKode: string;
-  lovReferanse: string;
-}
-
-export interface Behandling {
-  id: number;
-  versjon: number;
-  aksjonspunkter: Aksjonspunkt[];
-  type: Status;
-  status: Status;
-  fagsakId: number;
-  opprettet: string;
-  soknad: Soknad;
-  vilkar: Vilkar[];
-  behandlingPaaVent: boolean;
-}
 
 const cache = createIntlCache();
 
@@ -43,15 +14,10 @@ const intlConfig = createIntl(
   cache,
 );
 
-export interface SubmitCallbackProps {
-  kode: string;
-  begrunnelse: string;
-}
-
 interface MedisinskVilkarIndexProps {
   readOnly: boolean;
   behandling: Behandling;
-  submitCallback: (props: SubmitCallbackProps[]) => void;
+  submitCallback: (props: SubmitCallback[]) => void;
   shouldOpenDefaultInfoPanels: boolean;
   harApneAksjonspunkter: boolean;
   submittable: boolean;

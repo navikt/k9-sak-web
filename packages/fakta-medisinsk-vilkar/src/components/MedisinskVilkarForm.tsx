@@ -5,8 +5,8 @@ import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behan
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { dateRangesNotOverlapping, hasValidDate, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Periode, Sykdom, TransformValues } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
+import { Aksjonspunkt, SubmitCallback, Sykdom } from '@k9-sak-web/types';
+import { Periode, TransformValues } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment from 'moment';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -17,7 +17,6 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import DatepickerField from '../../../form/src/DatepickerField';
-import { SubmitCallbackProps } from '../MedisinskVilkarIndex';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
 import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
 import Legeerklaering from './Legeerklaering';
@@ -33,7 +32,7 @@ interface MedisinskVilkarFormProps {
   behandlingId: number;
   behandlingVersjon: number;
   readOnly: boolean;
-  submitCallback: (props: SubmitCallbackProps[]) => void;
+  submitCallback: (props: SubmitCallback[]) => void;
   harApneAksjonspunkter: boolean;
   submittable: boolean;
   sykdom?: Sykdom;

@@ -30,7 +30,7 @@ const MedisinskVilkarFormButtons = ({
           behandlingVersjon={behandlingVersjon}
           isSubmittable={submittable}
           isReadOnly={readOnly} // TODO: Mangler && overstyringDisabled
-          harApneAksjonspunkter={harApneAksjonspunkter}
+          hasOpenAksjonspunkter={harApneAksjonspunkter}
           dataId="medisinskVilkarSubmitButton"
         />
       </FlexColumn>

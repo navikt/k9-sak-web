@@ -10,8 +10,9 @@ import {
   UttakStonadskontoer,
   Vilkar,
   Ytelsefordeling,
+  Sykdom,
+  OmsorgenFor,
 } from '@k9-sak-web/types';
-import { Sykdom } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];
@@ -26,6 +27,7 @@ interface FetchedData {
   uttaksresultatPerioder: UttaksresultatPeriode[];
   simuleringResultat: SimuleringResultat;
   sykdom: Sykdom;
+  omsorgenFor: OmsorgenFor;
 }
 
 export default FetchedData;
