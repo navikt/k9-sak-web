@@ -142,7 +142,12 @@ export const MedisinskVilkarForm = ({
           />
         </div>
         {!showVilkaarsvurdering && !readOnly && (
-          <Hovedknapp className={styles.fortsettTilVilkaarButton} mini onClick={handleFortsettTilVilkaarButtonClick}>
+          <Hovedknapp
+            className={styles.fortsettTilVilkaarButton}
+            mini
+            onClick={handleFortsettTilVilkaarButtonClick}
+            data-id="fortsettTilVilkaarsvurdering"
+          >
             <FormattedMessage id="MedisinskVilkarForm.FortsettTilVilkaarsvurdering" />
           </Hovedknapp>
         )}
