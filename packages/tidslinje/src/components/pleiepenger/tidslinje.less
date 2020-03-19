@@ -12,32 +12,27 @@
 }
 
 .timeLineWrapper {
-  border-bottom: 1px solid lightgrey;
-  border-left: 1px solid lightgrey;
-  border-right: 1px solid lightgrey;
-  margin-left: -17px;
-  padding-right: 0;
-
-  &:before {
-    border-bottom: 1px solid lightgrey;
-    bottom: 0;
-    content: '';
-    left: -70px;
-    position: absolute;
-    width: 70px;
-  }
+  width: 100%;
 }
 
 .timelineIkonContainer {
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
+  max-width: 300px;
   position: relative;
   top: 56px;
 
-  & > img {
-    margin-bottom: 6px;
-    margin-left: calc(100% - 40px);
-    margin-top: 6px;
+  & > * {
+    align-items: center;
+    display: flex;
+    height: 38px;
+    margin-right: 0.5em;
+    max-height: 38px;
+    text-align: end;
+  }
+
+  & img {
     width: 26px;
   }
 }

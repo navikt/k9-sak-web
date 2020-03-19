@@ -40,9 +40,9 @@ const UttakTabell: FunctionComponent<UttakTabellProps> = ({ periode, person }) =
         <TableColumn>
           {årsaker && årsaker.length
             ? årsaker.map(({ årsakstype }, index) => (
-                <div>
-                  {/* eslint-disable-next-line react/no-array-index-key */}
-                  <FormattedMessage id={`UttakTabell.${årsakstype}`} key={index} />
+                // eslint-disable-next-line react/no-array-index-key
+                <div key={index}>
+                  <FormattedMessage id={`UttakTabell.${årsakstype}`} />
                 </div>
               ))
             : '-'}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
@@ -6,15 +6,18 @@ import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tids
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import svgKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import svgMann from '@fpsak-frontend/assets/images/mann.svg';
-import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/TimeLineControl';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 import TidslinjePeriode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
+import TimeLineControl from '@fpsak-frontend/tidslinje/src/components/pleiepenger/TimeLineControl';
+import { Image } from '@fpsak-frontend/shared-components';
 
+import { Element } from 'nav-frontend-typografi';
 import { UtfallEnum } from './dto/Utfall';
 import UttakTabell from './UttakTabell';
 import Uttaksperiode from './types/Uttaksperiode';
 import Uttaksplan from './types/Uttaksplan';
 import Person from './types/Person';
+import styles from './uttak.less';
 
 interface UttakkProps {
   uttaksplaner: Uttaksplan[];
@@ -22,15 +25,10 @@ interface UttakkProps {
 
 const erKvinne = kjønnkode => kjønnkode === navBrukerKjonn.KVINNE;
 
-export const mapRader = (uttaksplaner: Uttaksplan[], intl): TidslinjeRad<Uttaksperiode>[] => {
-  return uttaksplaner.map(({ behandlingId, perioder, person }) => {
-    const kvinne = erKvinne(person.kjønn);
-    const ikon = {
-      imageText: intl.formatMessage({ id: 'Person.ImageText' }),
-      title: intl.formatMessage({ id: kvinne ? 'Person.Woman' : 'Person.Man' }),
-      src: kvinne ? svgKvinne : svgMann,
-    };
+const fulltNavn = navn => [navn.fornavn, navn.mellomavn, navn.etternavn].filter(n => !!n).join(' ');
 
+export const mapRader = (uttaksplaner: Uttaksplan[], intl): TidslinjeRad<Uttaksperiode>[] => {
+  return uttaksplaner.map(({ behandlingId, perioder }) => {
     const tidslinjeperioder: TidslinjePeriode<Uttaksperiode>[] = perioder.map((periode, index) => {
       const { utfall, grad, fom, tom } = periode;
       const hoverText =
@@ -55,12 +53,27 @@ export const mapRader = (uttaksplaner: Uttaksplan[], intl): TidslinjeRad<Uttaksp
     });
 
     return {
-      ikon,
       id: behandlingId,
       perioder: tidslinjeperioder,
     };
   });
 };
+
+export const mapSideContent = (uttaksplaner: Uttaksplan[], intl): ReactNode[] =>
+  uttaksplaner.map(({ person, behandlingId }) => {
+    const navn = fulltNavn(person.navn);
+    const kvinne = erKvinne(person.kjønn);
+    return (
+      <span className={styles.sideContent}>
+        <Element>{navn}</Element>
+        <Image
+          key={behandlingId}
+          src={kvinne ? svgKvinne : svgMann}
+          alt={intl.formatMessage({ id: kvinne ? 'Person.Woman' : 'Person.Man' })}
+        />
+      </span>
+    );
+  });
 
 const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
   const [valgtPeriode, velgPeriode] = useState<TidslinjePeriode<Uttaksperiode> | null>();
@@ -72,7 +85,8 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
   );
   const intl = useIntl();
 
-  const rader: TidslinjeRad<Uttaksperiode>[] = mapRader(uttaksplaner, intl);
+  const rader: TidslinjeRad<Uttaksperiode>[] = useMemo(() => mapRader(uttaksplaner, intl), [uttaksplaner]);
+  const sideContent: ReactNode[] = useMemo(() => mapSideContent(uttaksplaner, intl), [uttaksplaner]);
 
   const selectHandler = eventProps => {
     const nyValgtPeriode = rader.flatMap(rad => rad.perioder).find(periode => periode.id === eventProps.items[0]);
@@ -80,17 +94,13 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
     eventProps.event.preventDefault();
   };
 
-  const openPeriodInfo = () => {
-    // TODO: er det vits i å ha en egen knapp for å velge/lukke første periode. lukker selv om det ikke er første som er valgt
-  };
-
   const goBackward = () => {
     // @ts-ignore
     const timeline = timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
-      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),
-      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 42),
+      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 31),
+      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 31),
     };
     timeline.setWindow(newWindowTimes);
   };
@@ -100,8 +110,8 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
     const timeline = timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
-      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() + 42),
-      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() + 42),
+      start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() + 31),
+      end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() + 31),
     };
 
     timeline.setWindow(newWindowTimes);
@@ -127,14 +137,13 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
           velgPeriode={selectHandler}
           valgtPeriode={valgtPeriode}
           setTimelineRef={setTimelineRef}
+          sideContentRader={sideContent}
         />
         <TimeLineControl
-          goBackwardCallback={goBackward}
-          goForwardCallback={goForward}
-          zoomInCallback={zoomIn}
-          zoomOutCallback={zoomOut}
-          openPeriodInfo={openPeriodInfo}
-          selectedPeriod={valgtPeriode}
+          goBackward={{ buttonText: intl.formatMessage({ id: 'UttakTimeline.GoBack' }), callback: goBackward }}
+          goForward={{ buttonText: intl.formatMessage({ id: 'UttakTimeline.GoForward' }), callback: goForward }}
+          zoomIn={{ buttonText: intl.formatMessage({ id: 'UttakTimeline.ZoomIn' }), callback: zoomIn }}
+          zoomOut={{ buttonText: intl.formatMessage({ id: 'UttakTimeline.ZoomOut' }), callback: zoomOut }}
         />
         {valgtPeriode && <UttakTabell periode={valgtPeriode.periodeinfo} person={valgtPerson} />}
       </Column>

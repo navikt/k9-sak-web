@@ -17,7 +17,7 @@
   "FaktaOmUttakForm.LeggTilPeriode": "Legg til",
   "FaktaOmUttakForm.Begrunnelse": "Begrunn endringene",
   "UttakPanel.ArbeidsforholdFlere": "{antall} arbeidsforhold",
-  "UttakPanel.ArbeidsForholdEtt": "1 arbeidsforhold",
+  "UttakPanel.ArbeidsforholdEtt": "1 arbeidsforhold",
   "UttakInfoPanel.FaktaUttak": "Fakta om uttak",
   "UttakInfoPanel.Aksjonspunkt.5070": "Fastsett korrekt og dokumentert søknadsperiode og andel i arbeid. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Rediger søknadsperiodene så de stemmer overens med startdato. Kontakt søker ved behov.",
