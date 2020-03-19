@@ -13,5 +13,8 @@
   "SokerinfoTable.MorEllerFar": "Mor eller far",
   "SokerinfoTable.SammeBosted": "Samme bosted",
 
+  "FaktaOmAlderOgOmsorg.Ja": "Ja",
+  "FaktaOmAlderOgOmsorg.Nei": "Nei",
+  "FaktaOmAlderOgOmsorg.HarSokerenOmsorgenForBarnet": "Har søkeren omsorgen for barnet?",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett"
 }

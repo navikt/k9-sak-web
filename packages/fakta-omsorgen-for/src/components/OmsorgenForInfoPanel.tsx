@@ -15,7 +15,7 @@ import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required, minLength, maxLength, hasValidText } from '@fpsak-frontend/utils';
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles/src/fakta/FaktaSubmitButton';
 import SokerinfoTable from './SokerinfoTable';
@@ -111,6 +111,7 @@ const OmsorgenForInfoPanelImpl = (props: OmsorgenForInfoPanelImplProps & Injecte
     readOnly,
     behandlingId,
     behandlingVersjon,
+    handleSubmit,
   } = props;
   const isApOpen = harApneAksjonspunkter || !submittable;
   const getAksjonspunktHelpText = useCallback(
@@ -139,46 +140,67 @@ const OmsorgenForInfoPanelImpl = (props: OmsorgenForInfoPanelImplProps & Injecte
           </FlexColumn>
         </FlexRow>
       ))}
-      <FlexRow>
-        <FlexColumn className="flexColumn--1-2">
-          <VerticalSpacer eightPx />
-          <TextAreaField
-            name="vurdering"
-            label={{ id: 'FaktaOmAlderOgOmsorg.Vurdering' }}
-            validate={[required, minLength(3), maxLength(2000), hasValidText]}
-            readOnly={readOnly} // || !harApneAksjonspunkter
-          />
-        </FlexColumn>
-      </FlexRow>
-      {/* {harApneAksjonspunkter && ( */}
-      <FlexRow>
-        <FlexColumn>
-          <VerticalSpacer twentyPx />
-          <FaktaSubmitButton
-            buttonTextId="SubmitButton.ConfirmInformation"
-            formName={formName}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            isSubmittable={submittable}
-            isReadOnly={readOnly} // TODO: Mangler && overstyringDisabled
-            hasOpenAksjonspunkter={harApneAksjonspunkter}
-            dataId="medisinskVilkarSubmitButton"
-          />
-        </FlexColumn>
-      </FlexRow>
-      {/* )} */}
+      <form onSubmit={handleSubmit}>
+        <FlexRow>
+          <FlexColumn className="flexColumn--1-2">
+            {harApneAksjonspunkter && (
+              <>
+                <VerticalSpacer eightPx />
+                <RadioGroupField
+                  name="harOmsorgenFor"
+                  bredde="M"
+                  validate={[required]}
+                  readOnly={readOnly}
+                  direction="vertical"
+                  dataId="harOmsorgenForJa"
+                  label={<FormattedMessage id="FaktaOmAlderOgOmsorg.HarSokerenOmsorgenForBarnet" />}
+                >
+                  <RadioOption label={{ id: 'FaktaOmAlderOgOmsorg.Ja' }} value />
+                  <RadioOption label={{ id: 'FaktaOmAlderOgOmsorg.Nei' }} value={false} />
+                </RadioGroupField>
+              </>
+            )}
+            <VerticalSpacer eightPx />
+            <TextAreaField
+              name="vurdering"
+              label={{ id: 'FaktaOmAlderOgOmsorg.Vurdering' }}
+              validate={[required, minLength(3), maxLength(2000), hasValidText]}
+              readOnly={readOnly || !harApneAksjonspunkter}
+            />
+          </FlexColumn>
+        </FlexRow>
+        {harApneAksjonspunkter && (
+          <FlexRow>
+            <FlexColumn>
+              <VerticalSpacer twentyPx />
+              <FaktaSubmitButton
+                buttonTextId="SubmitButton.ConfirmInformation"
+                formName={formName}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                isSubmittable={submittable}
+                isReadOnly={readOnly} // TODO: Mangler overstyringDisabled
+                hasOpenAksjonspunkter={harApneAksjonspunkter}
+                dataId="medisinskVilkarSubmitButton"
+              />
+            </FlexColumn>
+          </FlexRow>
+        )}
+      </form>
     </FlexContainer>
   );
 };
 
 interface TransformValues {
   vurdering: string;
+  harOmsorgenFor: boolean;
 }
 
 const transformValues = (values: TransformValues) => {
   return {
     kode: aksjonspunktCodes.OMSORGEN_FOR,
     begrunnelse: values.vurdering,
+    harOmsorgenFor: values.harOmsorgenFor,
   };
 };
 
