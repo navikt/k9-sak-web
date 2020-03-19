@@ -13,6 +13,8 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import ForeldrepengerFakta from './PleiepengerFakta';
 
 describe('<ForeldrepengerFakta>', () => {
@@ -67,11 +69,62 @@ describe('<ForeldrepengerFakta>', () => {
     relatertTilgrensendeYtelserForAnnenForelder: [],
   };
 
+  const soker = {
+    navn: 'Espen Utvikler',
+    aktoerId: '1',
+    personstatus: {
+      kode: 'BOSA',
+      kodeverk: 'Bosatt',
+    },
+    avklartPersonstatus: {
+      overstyrtPersonstatus: {
+        kode: personstatusType.BOSATT,
+        kodeverk: 'Bosatt',
+      },
+      orginalPersonstatus: {
+        kode: personstatusType.DOD,
+        kodeverk: 'Bosatt',
+      },
+    },
+    navBrukerKjonn: {
+      kode: '',
+      kodeverk: '',
+    },
+    statsborgerskap: {
+      kode: '',
+      kodeverk: '',
+    },
+    diskresjonskode: {
+      kode: '',
+      kodeverk: '',
+    },
+    sivilstand: {
+      kode: sivilstandType.UGIFT,
+      kodeverk: 'Ugift',
+    },
+    region: {
+      kode: 'NORDEN',
+      kodeverk: 'Norden',
+    },
+    adresser: [
+      {
+        adresselinje1: 'Vei 1',
+        postNummer: '1000',
+        poststed: 'Oslo',
+        adresseType: {
+          kode: opplysningAdresseType.POSTADRESSE,
+          kodeverk: 'Bostedsadresse',
+        },
+      },
+    ],
+    barn: [],
+  };
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+        data={{ aksjonspunkter, vilkar, personopplysninger: soker }}
         behandling={behandling}
         fagsak={fagsak}
         navAnsatt={navAnsatt}
@@ -102,6 +155,7 @@ describe('<ForeldrepengerFakta>', () => {
         harAksjonspunkt: false,
         tekst: 'Sykdom',
       },
+      { tekst: 'Uttak', erAktiv: false, harAksjonspunkt: false },
     ]);
   });
 
