@@ -35,16 +35,18 @@ const MedisinskVilkarFormButtons = ({
         />
       </FlexColumn>
       <FlexColumn>
-        <Knapp
-          mini
-          htmlType="button"
-          onClick={() => {
-            return false;
-          }}
-          disabled={false}
-        >
-          Avbryt
-        </Knapp>
+        {!readOnly && (
+          <Knapp
+            mini
+            htmlType="button"
+            onClick={() => {
+              return false;
+            }}
+            disabled={false}
+          >
+            Avbryt
+          </Knapp>
+        )}
       </FlexColumn>
     </FlexRow>
   </FlexContainer>

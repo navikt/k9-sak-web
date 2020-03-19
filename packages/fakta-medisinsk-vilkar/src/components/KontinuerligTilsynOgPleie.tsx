@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, FieldArray } from 'redux-form';
 import styles from './kontinuerligTilsynOgPleie.less';
+import { isHeleSokandsperiodenInnlegelse } from './MedisinskVilkarUtils';
 import PeriodePolse from './PeriodePolse';
 import Tilsynsperioder from './Tilsynsperioder';
 
@@ -24,6 +25,7 @@ interface KontinuerligTilsynOgPleieProps {
   behandlingId: number;
   behandlingVersjon: number;
   formName: string;
+  getAksjonspunktHelpText: () => JSX.Element;
 }
 
 interface StateProps {
@@ -39,6 +41,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
   formName,
   behandlingFormPrefix,
   reduxFormChange: formChange,
+  getAksjonspunktHelpText,
 }) => {
   const intl = useIntl();
   const getPolseForInnleggelsesperiode = () =>
@@ -51,6 +54,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
           lengthInText={`${Math.abs(moment(innleggelsesperiode.tom).diff(moment(innleggelsesperiode.fom), 'days')) +
             1} dager`}
           status="Innlagt"
+          statusComment={intl.formatMessage({ id: 'MedisinskVilkarForm.VilkaarAutomatiskOppfylt' })}
           theme="success"
           icon={
             <Image
@@ -63,69 +67,42 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
       </div>
     ) : null;
 
-  const getPolseForPeriodeSomMaaVurderes = () => {
-    let periodStart;
-    if (innleggelsesperiode) {
-      if (moment(innleggelsesperiode.tom).isSame(moment(periodeTilVurdering.tom))) {
-        return null;
-      }
-      periodStart = moment(innleggelsesperiode.tom).add(1, 'days');
-    } else {
-      periodStart = moment(periodeTilVurdering.fom);
-    }
-    return (
-      <PeriodePolse
-        dates={`${periodStart.format(DDMMYYYY_DATE_FORMAT)} - ${moment(periodeTilVurdering.tom).format(
-          DDMMYYYY_DATE_FORMAT,
-        )}`}
-        lengthInText={`${Math.abs(periodStart.diff(moment(periodeTilVurdering.tom), 'days')) + 1} dager`}
-        status="Perioden som må vurderes"
-        theme="warn"
-        icon={
-          <Image
-            className={styles.polseIcon}
-            alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
-            src={advarselIkonUrl}
-          />
-        }
-      />
-    );
-  };
-
-  const renderTilsynsperiodeFieldArray = ({ fields }) => {
+  const RenderTilsynsperiodeFieldArray = ({ fields }) => {
     if (fields.length === 0) {
       fields.push({ fom: '', tom: '', behovForToOmsorgspersoner: undefined });
     }
     const removeIndex = useCallback(index => fields.remove(index), []);
-    const brukSoknadsdato = useCallback((fieldNameFom, fieldNameTom) => {
-      const formSelector = `${behandlingFormPrefix}.${formName}`;
-      formChange(
-        formSelector,
-        fieldNameFom,
-        innleggelsesperiode
-          ? moment(innleggelsesperiode.tom)
-              .add(1, 'days')
-              .format(ISO_DATE_FORMAT)
-          : moment(periodeTilVurdering.fom).format(ISO_DATE_FORMAT),
-      );
-      formChange(formSelector, fieldNameTom, moment(periodeTilVurdering.tom).format(ISO_DATE_FORMAT));
-    }, []);
+    const formSelector = `${behandlingFormPrefix}.${formName}`;
+    const brukSoknadsdato = useCallback(
+      (fieldNameFom, fieldNameTom) => {
+        formChange(
+          formSelector,
+          fieldNameFom,
+          innleggelsesperiode
+            ? moment(innleggelsesperiode.tom)
+                .add(1, 'days')
+                .format(ISO_DATE_FORMAT)
+            : moment(periodeTilVurdering.fom).format(ISO_DATE_FORMAT),
+        );
+        formChange(formSelector, fieldNameTom, moment(periodeTilVurdering.tom).format(ISO_DATE_FORMAT));
+      },
+      [formSelector],
+    );
 
     const emptyPeriodTemplate = {
       fom: '',
       tom: '',
     };
 
-    const onClick = useCallback(() => {
+    const onAddPeriodeClick = useCallback(() => {
       fields.push(emptyPeriodTemplate);
     }, []);
 
-    const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLButtonElement>) => {
+    const onAddPeriodeKeyDown = useCallback((event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (event.keyCode === 13) {
         fields.push(emptyPeriodTemplate);
       }
     }, []);
-
     return (
       <div className={styles.pickerContainer}>
         <fieldset className={styles.fieldset}>
@@ -144,40 +121,72 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
                   .toString()
               : periodeTilVurdering.fom;
 
+            let periodStart;
+            if (innleggelsesperiode) {
+              if (moment(innleggelsesperiode.tom).isSame(moment(periodeTilVurdering.tom))) {
+                return null;
+              }
+              periodStart = moment(innleggelsesperiode.tom).add(1, 'days');
+            } else {
+              periodStart = moment(periodeTilVurdering.fom);
+            }
+
             return (
-              <Tilsynsperioder
-                key={periodeMedBehovForKontinuerligTilsynId}
-                periodeMedBehovForKontinuerligTilsynId={periodeMedBehovForKontinuerligTilsynId}
-                harBehovForKontinuerligTilsynOgPleie={harBehovForKontinuerligTilsynOgPleie}
-                datoBegrensningFom={datoBegrensningFom}
-                datoBegrensningTom={periodeTilVurdering.tom}
-                harBehovForToOmsorgspersonerDelerAvPerioden={harBehovForToOmsorgspersonerDelerAvPerioden}
-                harBehovForToOmsorgspersonerHelePerioden={harBehovForToOmsorgspersonerHelePerioden}
-                readOnly={readOnly}
-                showCancelButton={index > 0}
-                removeIndex={removeIndex}
-                index={index}
-                valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom={
-                  valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom !==
-                  valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
-                    ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom
-                    : ''
-                }
-                valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom={
-                  valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom !==
-                  valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
-                    ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
-                    : ''
-                }
-                sammenhengMellomSykdomOgTilsyn={sammenhengMellomSykdomOgTilsyn}
-                brukSoknadsdato={brukSoknadsdato}
-              />
+              <div key={periodeMedBehovForKontinuerligTilsynId} className={styles.tilsynContainer}>
+                <PeriodePolse
+                  theme="warn"
+                  dates={`${periodStart.format(DDMMYYYY_DATE_FORMAT)} - ${moment(periodeTilVurdering.tom).format(
+                    DDMMYYYY_DATE_FORMAT,
+                  )}`}
+                  lengthInText={`${Math.abs(periodStart.diff(moment(periodeTilVurdering.tom), 'days')) + 1} dager`}
+                  icon={
+                    <Image
+                      className={styles.polseIcon}
+                      alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+                      src={advarselIkonUrl}
+                    />
+                  }
+                  status="Perioden som må vurderes"
+                >
+                  <Tilsynsperioder
+                    periodeMedBehovForKontinuerligTilsynId={periodeMedBehovForKontinuerligTilsynId}
+                    harBehovForKontinuerligTilsynOgPleie={harBehovForKontinuerligTilsynOgPleie}
+                    datoBegrensningFom={datoBegrensningFom}
+                    datoBegrensningTom={periodeTilVurdering.tom}
+                    harBehovForToOmsorgspersonerDelerAvPerioden={harBehovForToOmsorgspersonerDelerAvPerioden}
+                    harBehovForToOmsorgspersonerHelePerioden={harBehovForToOmsorgspersonerHelePerioden}
+                    readOnly={readOnly}
+                    showCancelButton={index > 0}
+                    removeIndex={removeIndex}
+                    index={index}
+                    valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom={
+                      valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom !==
+                      valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
+                        ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom
+                        : ''
+                    }
+                    valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom={
+                      valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom !==
+                      valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
+                        ? valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom
+                        : ''
+                    }
+                    sammenhengMellomSykdomOgTilsyn={sammenhengMellomSykdomOgTilsyn}
+                    brukSoknadsdato={brukSoknadsdato}
+                  />
+                </PeriodePolse>
+              </div>
             );
           })}
           <Row>
             <Column xs="12">
               {!readOnly && (
-                <button onClick={onClick} onKeyDown={onKeyDown} className={styles.addPeriode} type="button">
+                <button
+                  onClick={onAddPeriodeClick}
+                  onKeyDown={onAddPeriodeKeyDown}
+                  className={styles.addPeriode}
+                  type="button"
+                >
                   <Image
                     className={styles.addCircleIcon}
                     src={addCircleIcon}
@@ -196,6 +205,8 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
     );
   };
 
+  const hideKontinuerligTilsyn = isHeleSokandsperiodenInnlegelse(innleggelsesperiode, periodeTilVurdering);
+
   return (
     <>
       <PeriodePolse
@@ -208,15 +219,18 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
         theme="gray"
       />
       {getPolseForInnleggelsesperiode()}
-      {getPolseForPeriodeSomMaaVurderes()}
       <VerticalSpacer twentyPx />
-
-      <FieldArray
-        name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
-        rerenderOnEveryChange
-        component={renderTilsynsperiodeFieldArray}
-        props={{ readOnly }}
-      />
+      {!hideKontinuerligTilsyn && (
+        <>
+          <div className={styles.helpTextContainer}>{getAksjonspunktHelpText()}</div>
+          <FieldArray
+            name={MedisinskVilkårConsts.PERIODER_MED_KONTINUERLIG_TILSYN_OG_PLEIE}
+            rerenderOnEveryChange
+            component={RenderTilsynsperiodeFieldArray}
+            props={{ readOnly }}
+          />
+        </>
+      )}
     </>
   );
 };
