@@ -1,8 +1,8 @@
 import Periode from './Periode';
-import { TidslinjeIkon } from '../Tidslinje';
+import TidslinjeIkon from './TidslinjeIkon';
 
 interface TidslinjeRad<Periodeinfo> {
-  ikon: TidslinjeIkon;
+  ikon?: TidslinjeIkon;
   id: string;
   perioder: Periode<Periodeinfo>[];
 }
