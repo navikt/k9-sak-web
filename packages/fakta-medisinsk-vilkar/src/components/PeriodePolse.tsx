@@ -13,6 +13,7 @@ interface PeriodePolseProps {
   children?: React.ReactChild | React.ReactChildren;
   icon?: JSX.Element;
   hideIcon?: boolean;
+  statusComment?: string;
 }
 
 const classNames = classnames.bind(styles);
@@ -25,6 +26,7 @@ const PeriodePolse: React.FunctionComponent<PeriodePolseProps> = ({
   theme = 'neutral',
   icon,
   hideIcon,
+  statusComment,
 }) => {
   const themeBorder = classNames('themeBorder', {
     success: theme === 'success',
@@ -44,9 +46,10 @@ const PeriodePolse: React.FunctionComponent<PeriodePolseProps> = ({
               {lengthInText && <Normaltekst className={styles.lengthInText}>({lengthInText})</Normaltekst>}
             </div>
             {status && <Element>{status}</Element>}
+            {statusComment && <Normaltekst className={styles.statusComment}>{statusComment}</Normaltekst>}
           </div>
         ) : null}
-        <div>{children}</div>
+        <div className={styles.childrenContainer}>{children}</div>
       </div>
     </div>
   );
