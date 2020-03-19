@@ -1,20 +1,14 @@
-import React, { FunctionComponent, useEffect, useMemo, useRef } from 'react';
+import React, { FunctionComponent, ReactNode, useEffect, useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
-import { Image } from '@fpsak-frontend/shared-components';
+import { Image, FlexRow } from '@fpsak-frontend/shared-components';
 import styles from './tidslinje.less';
 import Periode from './types/Periode';
 import TidslinjeRad from './types/TidslinjeRad';
-
-export interface TidslinjeIkon {
-  imageText: string;
-  title: string;
-  src: SVGElement;
-}
 
 interface EventProps {
   items: string[];
@@ -29,6 +23,7 @@ interface TidslinjeProps<Periodeinfo> {
   velgPeriode: (eventProps: EventProps) => void;
   valgtPeriode?: Periode<Periodeinfo>;
   setTimelineRef?: (timelineRef: any) => void;
+  sideContentRader?: ReactNode[];
 }
 
 const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
@@ -89,6 +84,7 @@ const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
   velgPeriode,
   valgtPeriode,
   setTimelineRef,
+  sideContentRader,
 }) => {
   const timelineRef = useRef();
 
@@ -110,6 +106,33 @@ const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
       .sort((p1, p2) => momentDate(p1.fom).diff(momentDate(p2.fom)));
   }, [rader]);
 
+  const timeline = (
+    <div className={styles.timeLineWrapper}>
+      <div className="uttakTimeline">
+        <Timeline
+          ref={timelineRef}
+          options={getOptions(allePerioderSortert)}
+          items={createItems(allePerioderSortert)}
+          groups={createGroups(rader)}
+          customTimes={customTimes}
+          selectHandler={velgPeriode}
+          selection={[valgtPeriode ? valgtPeriode.id : null]}
+        />
+      </div>
+    </div>
+  );
+
+  if (sideContentRader) {
+    return (
+      <div className={styles.timelineContainer}>
+        <FlexRow>
+          <div className={styles.timelineIkonContainer}>{sideContentRader}</div>
+          {timeline}
+        </FlexRow>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.timelineContainer}>
       <Row>
@@ -120,21 +143,7 @@ const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
             ))}
           </div>
         </Column>
-        <Column xs="11">
-          <div className={styles.timeLineWrapper}>
-            <div className="uttakTimeline">
-              <Timeline
-                ref={timelineRef}
-                options={getOptions(allePerioderSortert)}
-                items={createItems(allePerioderSortert)}
-                groups={createGroups(rader)}
-                customTimes={customTimes}
-                selectHandler={velgPeriode}
-                selection={[valgtPeriode ? valgtPeriode.id : null]}
-              />
-            </div>
-          </div>
-        </Column>
+        <Column xs="11">{timeline}</Column>
       </Row>
     </div>
   );

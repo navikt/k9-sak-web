@@ -102,29 +102,20 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     showComponent: ({ personopplysninger }) => !!personopplysninger,
     getData: ({ personopplysninger }) => ({
       personopplysninger,
-      arbeidsgivere: [
+      arbeidDto: [
         {
-          organisasjonsnummer: '905',
-          navn: 'NAV',
-          arbeidsforhold: [
-            {
-              perioder: [
-                {
-                  fom: '2020-02-02',
-                  tom: '2020-03-02',
-                  timerIJobbTilVanlig: 40,
-                  timerFårJobbet: 20,
-                },
-                {
-                  fom: '2020-04-02',
-                  tom: '2020-05-02',
-                  timerIJobbTilVanlig: 15,
-                  timerFårJobbet: 7.5,
-                },
-              ],
-              arbeidsgiversArbeidsforholdId: 'unik id 1',
+          arbeidsforhold: {
+            aktørId: null,
+            arbeidsforholdId: '123456',
+            organisasjonsnummer: '999999999',
+            type: 'Arbeidsgiver',
+          },
+          perioder: {
+            '2020-01-01/2020-02-01': {
+              jobberNormaltPerUke: 'PT37H30M',
+              skalJobbeProsent: '80',
             },
-          ],
+          },
         },
       ],
     }),
