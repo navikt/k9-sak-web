@@ -67,10 +67,3 @@ export interface TransformValues {
   legeerklæringFom: string;
   perioderMedKontinuerligTilsynOgPleie?: PeriodeMedTilsynOgPleie[];
 }
-
-export interface Sykdom {
-  periodeTilVurdering: Periode;
-  legeerklæringer: Legeerklæring[];
-  perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse[];
-  perioderMedUtvidetKontinuerligTilsynOgPleie: PeriodeMedUtvidetTilsynOgPleieResponse[];
-}

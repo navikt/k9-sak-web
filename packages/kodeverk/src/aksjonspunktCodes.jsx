@@ -101,6 +101,7 @@ const aksjonspunktCodes = {
   SVANGERSKAPSVILKARET: '5092',
   VURDER_FARESIGNALER: '5095',
   MEDISINSK_VILKAAR: '9001',
+  OMSORGEN_FOR: '9002',
 };
 
 const klageAksjonspunkter = [

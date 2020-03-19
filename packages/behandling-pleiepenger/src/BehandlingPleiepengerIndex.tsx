@@ -33,6 +33,7 @@ const foreldrepengerData = [
   pleiepengerBehandlingApi.SIMULERING_RESULTAT,
   pleiepengerBehandlingApi.SYKDOM,
   pleiepengerBehandlingApi.VEDTAK_VARSEL,
+  pleiepengerBehandlingApi.OMSORGEN_FOR,
 ];
 
 interface OwnProps {

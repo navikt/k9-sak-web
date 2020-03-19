@@ -11,13 +11,12 @@ import EksternLink from './EksternLink';
 interface SokerinfoTableProps {
   header: string;
   forhold: {
-    forholdstekst: string,
-    forholdskode: string,
-    erOppfylt: boolean,
+    forholdstekst: string;
+    erOppfylt: boolean;
     link: {
-      to: string,
-      text: string,
-    },
+      to: string;
+      text: string;
+    };
   }[];
 }
 
@@ -31,27 +30,31 @@ const SokerinfoTable: FunctionComponent<SokerinfoTableProps> = ({ header, forhol
           <span className={styles.tableheader}>
             {/* TODO: Riktig src ihht skisse. src for ikke alle forhold oppfylt? */}
             <Image src={checkSvg} />
-            <span>{header}</span>
+            <span>{intl.formatMessage({ id: header })}</span>
           </span>
         </>,
       ]}
       allowFormattedHeader
       noHover
     >
-      {forhold.map(forholdet => (
-        <TableRow key={forholdet.forholdskode}>
-          <TableColumn className={styles['sokerinfo--firstcol']}>{forholdet.forholdstekst}</TableColumn>
-          <TableColumn className="bold">
-            {forholdet.erOppfylt
-              ? intl.formatMessage({ id: 'SokerinfoTable.Ja' })
-              : intl.formatMessage({ id: 'SokerinfoTable.Nei' })}
-          </TableColumn>
-          <TableColumn>
-            {/* TODO: link css. lage generell ekstern link? */}
-            <EksternLink to={forholdet.link.to} text={forholdet.link.text} />
-          </TableColumn>
-        </TableRow>
-      ))}
+      {forhold
+        .filter(forholdet => typeof forholdet.erOppfylt === 'boolean')
+        .map(forholdet => (
+          <TableRow key={forholdet.forholdstekst}>
+            <TableColumn className={styles['sokerinfo--firstcol']}>
+              {intl.formatMessage({ id: forholdet.forholdstekst })}
+            </TableColumn>
+            <TableColumn className="bold">
+              {forholdet.erOppfylt
+                ? intl.formatMessage({ id: 'SokerinfoTable.Ja' })
+                : intl.formatMessage({ id: 'SokerinfoTable.Nei' })}
+            </TableColumn>
+            <TableColumn>
+              {/* TODO: link css. lage generell ekstern link? */}
+              <EksternLink to={forholdet.link.to} text={forholdet.link.text} />
+            </TableColumn>
+          </TableRow>
+        ))}
     </Table>
   );
 };

@@ -28,11 +28,11 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
   {
     urlCode: faktaPanelCodes.OMSORGEN_FOR,
     textCode: 'FaktaOmAlderOgOmsorg.header',
-    aksjonspunkterCodes: [],
+    aksjonspunkterCodes: [aksjonspunktCodes.OMSORGEN_FOR],
     endpoints: [],
     renderComponent: props => <OmsorgenForFaktaIndex {...props} />,
-    showComponent: () => true,
-    getData: () => ({}),
+    showComponent: ({ personopplysninger }) => personopplysninger,
+    getData: ({ personopplysninger, omsorgenFor }) => ({ personopplysninger, omsorgenFor }),
   },
   {
     urlCode: faktaPanelCodes.MEDISINSKVILKAAR,

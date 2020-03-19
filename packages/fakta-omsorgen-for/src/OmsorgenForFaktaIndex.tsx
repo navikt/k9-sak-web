@@ -1,18 +1,18 @@
+import { Personopplysninger, Aksjonspunkt, Behandling, SubmitCallback, OmsorgenFor } from '@k9-sak-web/types';
 import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import OmsorgenForInfoPanel from './components/OmsorgenForInfoPanel';
 import messages from '../i18n/nb_NO.json';
+import OmsorgenForInfoPanel from './components/OmsorgenForInfoPanel';
 
 interface OmsorgenForFaktaIndexProps {
-  behandling: {
-    id: number,
-    versjon: number,
-  };
-  aksjonspunkter: [];
-  openInfoPanels: string[];
-  toggleInfoPanelCallback: (value: any) => any; // FIXME: hva er types?
-  shouldOpenDefaultInfoPanels: boolean;
+  behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
+  personopplysninger: Personopplysninger;
+  omsorgenFor: OmsorgenFor;
+  submitCallback: (props: SubmitCallback[]) => void;
+  harApneAksjonspunkter: boolean;
+  submittable: boolean;
 }
 
 const cache = createIntlCache();
@@ -28,20 +28,24 @@ const intl = createIntl(
 const OmsorgenForFaktaIndex: FunctionComponent<OmsorgenForFaktaIndexProps> = ({
   behandling,
   aksjonspunkter,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
+  personopplysninger,
+  omsorgenFor,
+  submitCallback,
+  harApneAksjonspunkter,
+  submittable,
 }) => (
   <RawIntlProvider value={intl}>
     <OmsorgenForInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       aksjonspunkter={aksjonspunkter}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
+      personopplysninger={personopplysninger}
+      omsorgenFor={omsorgenFor}
+      submitCallback={submitCallback}
+      harApneAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );

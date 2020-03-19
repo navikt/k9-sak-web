@@ -11,7 +11,7 @@ interface EksternLinkProps {
 const EksternLink = ({ to, text }: EksternLinkProps) => (
   <a href={to} className={styles.eksternlenke} target="_blank" rel="noopener noreferrer">
     <span>{text}</span>
-    <Image src={pil} />
+    <Image src={pil} alt="" />
   </a>
 );
 

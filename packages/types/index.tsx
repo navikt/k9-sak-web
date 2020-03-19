@@ -17,3 +17,6 @@ export { default as Vilkar } from './src/vilkarTsType';
 export { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
 export { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';
 export { default as Fagsak } from './src/fagsakTsType';
+export { default as SubmitCallback } from './src/submitCallback';
+export { default as Sykdom } from './src/sykdom';
+export { default as OmsorgenFor } from './src/omsorgenFor';
