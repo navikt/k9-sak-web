@@ -38,10 +38,10 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     urlCode: faktaPanelCodes.MEDISINSKVILKAAR,
     textCode: 'MedisinskVilkarPanel.MedisinskVilkar',
     aksjonspunkterCodes: [aksjonspunktCodes.MEDISINSK_VILKAAR],
-    endpoints: [],
+    endpoints: [pleiepengerBehandlingApi.SYKDOM],
     renderComponent: props => <MedisinskVilkarIndex {...props} />,
     showComponent: () => true,
-    getData: ({ sykdom }) => ({ sykdom }),
+    getData: () => ({}),
   },
   {
     urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
