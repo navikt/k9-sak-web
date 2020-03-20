@@ -120,7 +120,6 @@ export class VedtakForm extends Component {
       brødtekst,
       overskrift,
       aksjonspunktKoder,
-      kanOverstyre,
       sprakkode,
       erBehandlingEtterKlage,
       skalBrukeOverstyrendeFritekstBrev,
@@ -153,10 +152,8 @@ export class VedtakForm extends Component {
       previewCallback,
     );
     const skalViseLink =
-      behandlingresultat.avslagsarsak === null ||
-      (behandlingresultat.avslagsarsak &&
-        behandlingresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
-    const visOverstyringKnapp = kanOverstyre || readOnly;
+      vedtakVarsel.avslagsarsak === null ||
+      (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     return (
       <>
         <VedtakFritekstbrevModal
@@ -169,14 +166,12 @@ export class VedtakForm extends Component {
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
         >
-          {visOverstyringKnapp && (
-            <VedtakOverstyrendeKnapp
-              toggleCallback={this.onToggleOverstyring}
-              readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
-              keyName="skalBrukeOverstyrendeFritekstBrev"
-              readOnlyHideEmpty={false}
-            />
-          )}
+          <VedtakOverstyrendeKnapp
+            toggleCallback={this.onToggleOverstyring}
+            readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
+            keyName="skalBrukeOverstyrendeFritekstBrev"
+            readOnlyHideEmpty={false}
+          />
 
           {isInnvilget(behandlingresultat.type.kode) && (
             <VedtakInnvilgetPanel
