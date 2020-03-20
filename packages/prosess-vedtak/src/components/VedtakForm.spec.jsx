@@ -39,13 +39,16 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.INNVILGET,
         navn: 'test',
       },
+    };
+    const aksjonspunkter = [];
+
+    const vedtakVarsel = {
       avslagsarsak: null,
       avslagsarsakFritekst: null,
       vedtaksbrev: {
         kode: 'FRITEKST',
       },
     };
-    const aksjonspunkter = [];
 
     const wrapper = shallowWithIntl(
       <VedtakForm
@@ -69,6 +72,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -87,14 +91,6 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.AVSLATT,
         navn: 'test',
       },
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
     };
     const aksjonspunkter = [
       {
@@ -111,6 +107,16 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: {
+        kode: '1019',
+        navn: 'Manglende dokumentasjon',
+      },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -123,6 +129,7 @@ describe('<VedtakForm>', () => {
         previewCallback={previewCallback}
         aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
+        initialValues={initialValues}
         isBehandlingReadOnly
         sprakkode={sprakkode}
         skalBrukeOverstyrendeFritekstBrev
@@ -131,6 +138,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
     const label = wrapper.find('Element');
@@ -145,14 +153,6 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.AVSLATT,
         navn: 'test',
       },
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
     };
     const aksjonspunkter = [
       {
@@ -169,6 +169,16 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: {
+        kode: '1019',
+        navn: 'Manglende dokumentasjon',
+      },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -190,6 +200,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -206,14 +217,6 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.AVSLATT,
         navn: 'test',
       },
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Søkt for sent',
-      },
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
     };
     const aksjonspunkter = [
       {
@@ -230,6 +233,16 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: {
+        kode: '1019',
+        navn: 'Søkt for sent',
+      },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -251,6 +264,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -265,11 +279,6 @@ describe('<VedtakForm>', () => {
       type: {
         kode: BehandlingResultatType.INNVILGET,
         navn: 'test',
-      },
-      avslagsarsak: null,
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
       },
     };
     const aksjonspunkter = [
@@ -287,6 +296,13 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -308,6 +324,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -326,11 +343,6 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.INNVILGET,
         navn: 'test',
       },
-      avslagsarsak: { kode: '1099' },
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
     };
     const aksjonspunkter = [
       {
@@ -347,6 +359,13 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: { kode: '1099' },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -368,6 +387,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -387,14 +407,6 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.AVSLATT,
         navn: 'test',
       },
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
     };
     const aksjonspunkter = [
       {
@@ -411,6 +423,16 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: {
+        kode: '1019',
+        navn: 'Manglende dokumentasjon',
+      },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -431,6 +453,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -450,11 +473,6 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.INNVILGET,
         navn: 'test',
       },
-      avslagsarsak: null,
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
     };
     const aksjonspunkter = [
       {
@@ -471,6 +489,14 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+
+    const vedtakVarsel = {
+      avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -492,6 +518,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -507,11 +534,6 @@ describe('<VedtakForm>', () => {
       type: {
         kode: BehandlingResultatType.INNVILGET,
         navn: 'test',
-      },
-      avslagsarsak: null,
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
       },
     };
     const aksjonspunkter = [
@@ -529,6 +551,13 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const previewCallback = sinon.spy();
     const wrapper = shallowWithIntl(
       <VedtakForm
@@ -551,6 +580,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -569,11 +599,6 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.INNVILGET,
         navn: 'test',
       },
-      avslagsarsak: null,
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
     };
     const aksjonspunkter = [
       {
@@ -590,6 +615,13 @@ describe('<VedtakForm>', () => {
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -611,6 +643,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
 
@@ -654,13 +687,13 @@ describe('<VedtakForm>', () => {
         kode: BehandlingResultatType.INNVILGET,
         navn: 'test',
       },
-      avslagsarsak: null,
-      avslagsarsakFritekst: null,
     };
     const vedtakVarsel = {
       vedtaksbrev: {
         kode: 'FRITEKST',
       },
+      avslagsarsak: null,
+      avslagsarsakFritekst: null,
     };
     // eslint-disable-next-line
     const model = buildInitialValues.resultFunc(
@@ -753,11 +786,6 @@ describe('<VedtakForm>', () => {
       kode: BehandlingResultatType.INNVILGET,
       navn: 'test',
     },
-    avslagsarsak: null,
-    avslagsarsakFritekst: null,
-    vedtaksbrev: {
-      kode: 'FRITEKST',
-    },
   };
   const aksjonspunkter = [
     {
@@ -774,6 +802,13 @@ describe('<VedtakForm>', () => {
       erAktivt: true,
     },
   ];
+  const vedtakVarsel = {
+    avslagsarsak: null,
+    avslagsarsakFritekst: null,
+    vedtaksbrev: {
+      kode: 'FRITEKST',
+    },
+  };
 
   it('skal vise avkrysningsboks i lesemodus for rolle med overstyringstilgang', () => {
     const wrapper = shallowWithIntl(
@@ -798,6 +833,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -829,6 +865,7 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -837,7 +874,7 @@ describe('<VedtakForm>', () => {
     expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
   });
 
-  it('skal ikke vise avkrysningsboks for rolle uten overstyringstilgang', () => {
+  it('skal vise avkrysningsboks for roller uten overstyringstilgang', () => {
     const wrapper = shallowWithIntl(
       <VedtakForm
         {...reduxFormPropsMock}
@@ -860,9 +897,10 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         beregningErManueltFastsatt={false}
         vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
       />,
     );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
-    expect(overstyringsKnapp).to.have.length(0);
+    expect(overstyringsKnapp).to.have.length(1);
   });
 });
