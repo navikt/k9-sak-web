@@ -10,8 +10,8 @@ import {
   SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 
-import ForeldrepengerProsess from './PleiepengerProsess';
-import ForeldrepengerFakta from './PleiepengerFakta';
+import PleiepengerProsess from './PleiepengerProsess';
+import PleiepengerFakta from './PleiepengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
@@ -61,7 +61,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
       />
-      <ForeldrepengerProsess
+      <PleiepengerProsess
         data={fetchedData}
         fagsak={fagsak}
         behandling={behandling}
@@ -77,7 +77,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
       />
-      <ForeldrepengerFakta
+      <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}
         fagsak={fagsak}
