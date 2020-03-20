@@ -148,22 +148,24 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                 renderUpwards
               />
             </FlexColumn>
-            <FlexColumn>
-              <div className={styles.sokandsperiodeButtonContainer}>
-                <button
-                  type="button"
-                  onClick={() =>
-                    brukSoknadsdato(
-                      `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.FOM}`,
-                      `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.TOM}`,
-                    )
-                  }
-                  className={styles.soknadsperiodeButton}
-                >
-                  <FormattedMessage id="MedisinskVilkarForm.BrukPeriodenTilVurdering" />
-                </button>
-              </div>
-            </FlexColumn>
+            {!readOnly && (
+              <FlexColumn>
+                <div className={styles.sokandsperiodeButtonContainer}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      brukSoknadsdato(
+                        `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.FOM}`,
+                        `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.TOM}`,
+                      )
+                    }
+                    className={styles.soknadsperiodeButton}
+                  >
+                    <FormattedMessage id="MedisinskVilkarForm.BrukPeriodenTilVurdering" />
+                  </button>
+                </div>
+              </FlexColumn>
+            )}
           </FlexRow>
           <FlexRow>
             <FlexColumn>
