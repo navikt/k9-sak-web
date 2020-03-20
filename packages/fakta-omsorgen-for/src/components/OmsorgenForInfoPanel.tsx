@@ -50,7 +50,7 @@ const getSokerinfo = (personopplysninger: Personopplysninger, omsorgenFor: Omsor
     header: 'SokerinfoTable.Omsorg',
     forhold: [
       {
-        forholdstekst: 'Omsorgen for',
+        forholdstekst: 'SokerinfoTable.OmsorgenFor',
         erOppfylt: omsorgenFor.harOmsorgenFor,
         link: {
           to: 'https://www.vg.no',
