@@ -31,14 +31,20 @@ const HeadingMedHjelpetekst = ({ headingId, helpTextId }) => {
         <Element>
           <FormattedMessage id={headingId} />
         </Element>
-        <button className={styles.toggleButton} type="button" onClick={onClick}>
+        <button
+          className={styles.toggleButton}
+          type="button"
+          onClick={onClick}
+          aria-controls={headingId}
+          aria-expanded={showHelpText}
+        >
           <FormattedMessage
             id={showHelpText ? 'MedisinskVilkarForm.HjelpetekstSkjul' : 'MedisinskVilkarForm.HjelpetekstVis'}
           />
           <Image className={showHelpText ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
         </button>
       </div>
-      {showHelpText && <p className={styles.helpTextContainer}>{getHelpText()}</p>}
+      <div id={headingId}>{showHelpText && <p className={styles.helpTextContainer}>{getHelpText()}</p>}</div>
     </div>
   );
 };
