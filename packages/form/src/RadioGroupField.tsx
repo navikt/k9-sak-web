@@ -24,6 +24,7 @@ interface RadioGroupFieldProps {
   DOMName?: string;
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;
+  legend?: React.ReactNode;
 }
 
 const classNames = classnames.bind(styles);
@@ -47,6 +48,7 @@ const renderRadioGroupField = renderNavField(
     rows,
     direction,
     DOMName,
+    legend,
   }) => {
     const optionProps = {
       onChange,
@@ -68,8 +70,9 @@ const renderRadioGroupField = renderNavField(
       <NavSkjemaGruppe
         feil={readOnly ? undefined : feil}
         className={classNames(`input--${bredde}`, 'radioGroup', { readOnly })}
+        legend={legend}
       >
-        {label.props.input && <span className={classNames('radioGroupLabel', { readOnly })}>{label}</span>}
+        {label.props.input && <div className={classNames('radioGroupLabel', { readOnly })}>{label}</div>}
         <OptionGrid
           direction={direction}
           id={id}
@@ -105,6 +108,7 @@ RadioGroupField.defaultProps = {
   spaceBetween: false,
   direction: 'horizontal',
   DOMName: undefined,
+  legend: '',
 };
 
 export default RadioGroupField;

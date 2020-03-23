@@ -13,7 +13,7 @@ import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required, minLength, maxLength, hasValidText } from '@fpsak-frontend/utils';
@@ -30,18 +30,10 @@ const getSokerinfo = (personopplysninger: Personopplysninger, omsorgenFor: Omsor
       {
         forholdstekst: 'SokerinfoTable.SokerErUnderSyttiAar',
         erOppfylt: moment(moment()).diff(personopplysninger.fodselsdato, 'years') < 70,
-        link: {
-          to: 'https://www.vg.no',
-          text: 'FR',
-        },
       },
       {
         forholdstekst: 'SokerinfoTable.BarnetErUnderAttenAar',
         erOppfylt: moment(moment()).diff(personopplysninger.barnSoktFor[0].fodselsdato, 'years') < 18,
-        link: {
-          to: 'https://www.vg.no',
-          text: 'FR',
-        },
       },
     ],
   };
@@ -52,26 +44,14 @@ const getSokerinfo = (personopplysninger: Personopplysninger, omsorgenFor: Omsor
       {
         forholdstekst: 'SokerinfoTable.OmsorgenFor',
         erOppfylt: omsorgenFor.harOmsorgenFor,
-        link: {
-          to: 'https://www.vg.no',
-          text: 'SØ',
-        },
       },
       {
         forholdstekst: 'SokerinfoTable.MorEllerFar',
         erOppfylt: omsorgenFor.morEllerFar,
-        link: {
-          to: 'https://www.vg.no',
-          text: 'FR',
-        },
       },
       {
         forholdstekst: 'SokerinfoTable.SammeBosted',
         erOppfylt: omsorgenFor.sammeBosted,
-        link: {
-          to: 'https://www.vg.no',
-          text: 'FR',
-        },
       },
     ],
   };
@@ -121,6 +101,7 @@ const OmsorgenForInfoPanelImpl = (props: OmsorgenForInfoPanelImplProps & Injecte
     [aksjonspunkter, isApOpen],
   );
   const sokerinfo = getSokerinfo(personopplysninger, omsorgenFor);
+  const intl = useIntl();
   return (
     <FlexContainer>
       <FlexRow>
@@ -154,6 +135,7 @@ const OmsorgenForInfoPanelImpl = (props: OmsorgenForInfoPanelImplProps & Injecte
                   direction="vertical"
                   dataId="harOmsorgenForJa"
                   label={<FormattedMessage id="FaktaOmAlderOgOmsorg.HarSokerenOmsorgenForBarnet" />}
+                  legend={<FormattedMessage id="FaktaOmAlderOgOmsorg.HarSokerenOmsorgenForBarnet" />}
                 >
                   <RadioOption label={{ id: 'FaktaOmAlderOgOmsorg.Ja' }} value />
                   <RadioOption label={{ id: 'FaktaOmAlderOgOmsorg.Nei' }} value={false} />
@@ -166,6 +148,7 @@ const OmsorgenForInfoPanelImpl = (props: OmsorgenForInfoPanelImplProps & Injecte
               label={{ id: 'FaktaOmAlderOgOmsorg.Vurdering' }}
               validate={[required, minLength(3), maxLength(2000), hasValidText]}
               readOnly={readOnly || !harApneAksjonspunkter}
+              aria-label={intl.formatMessage({ id: 'FaktaOmAlderOgOmsorg.HarSokerenOmsorgenForBarnet' })}
             />
           </FlexColumn>
         </FlexRow>
