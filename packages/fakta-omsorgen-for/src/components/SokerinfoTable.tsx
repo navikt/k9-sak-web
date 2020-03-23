@@ -49,10 +49,12 @@ const SokerinfoTable: FunctionComponent<SokerinfoTableProps> = ({ header, forhol
                 ? intl.formatMessage({ id: 'SokerinfoTable.Ja' })
                 : intl.formatMessage({ id: 'SokerinfoTable.Nei' })}
             </TableColumn>
-            <TableColumn>
-              {/* TODO: link css. lage generell ekstern link? */}
-              <EksternLink to={forholdet.link.to} text={forholdet.link.text} />
-            </TableColumn>
+            {forholdet.link && (
+              <TableColumn>
+                {/* TODO: link css. lage generell ekstern link? */}
+                <EksternLink to={forholdet.link.to} text={forholdet.link.text} />
+              </TableColumn>
+            )}
           </TableRow>
         ))}
     </Table>
