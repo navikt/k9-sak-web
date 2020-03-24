@@ -1,24 +1,24 @@
+import { SokerinfoTable } from '@fpsak-frontend/fakta-omsorgen-for-felles';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles/src/fakta/FaktaSubmitButton';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
+  AksjonspunktHelpTextTemp,
   FlexColumn,
   FlexContainer,
   FlexRow,
-  AksjonspunktHelpTextTemp,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt, Personopplysninger, SubmitCallback, OmsorgenFor } from '@k9-sak-web/types';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { Aksjonspunkt, OmsorgenFor, Personopplysninger, SubmitCallback } from '@k9-sak-web/types';
 import moment from 'moment';
+import { Systemtittel } from 'nav-frontend-typografi';
 import React, { useCallback } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Systemtittel } from 'nav-frontend-typografi';
-import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { required, minLength, maxLength, hasValidText } from '@fpsak-frontend/utils';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles/src/fakta/FaktaSubmitButton';
-import SokerinfoTable from './SokerinfoTable';
 import styles from './omsorgenForInfo.less';
 
 const formName = 'OmsorgenForForm';

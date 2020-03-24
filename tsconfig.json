@@ -26,6 +26,7 @@
     "packages/fp-felles",
     "packages/fakta-omsorgen-for-psb",
     "packages/fakta-omsorgen-for-oms",
+    "packages/fakta-omsorgen-for-felles",
     "packages/fakta-uttak",
     "packages/sak-historikk",
     "packages/shared-components",

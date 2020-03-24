@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from '@fpsak-frontend/shared-components';
 import pil from '@fpsak-frontend/assets/images/pil_opp_hoyre.svg';
-import styles from './omsorgenForInfo.less';
+import styles from './eksternLink.less';
 
 interface EksternLinkProps {
   to: string;
