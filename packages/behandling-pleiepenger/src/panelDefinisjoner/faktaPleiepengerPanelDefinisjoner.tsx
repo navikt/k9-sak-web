@@ -8,11 +8,12 @@ import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
+import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for-psb/src/OmsorgenForFaktaIndex';
 import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar/src/MedisinskVilkarIndex';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
 import FaktaPanelDefinisjon from '@fpsak-frontend/behandling-felles/src/types/faktaPanelDefinisjonTsType';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 
 const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
@@ -31,7 +32,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     aksjonspunkterCodes: [aksjonspunktCodes.OMSORGEN_FOR],
     endpoints: [pleiepengerBehandlingApi.OMSORGEN_FOR],
     renderComponent: props => <OmsorgenForFaktaIndex {...props} />,
-    showComponent: ({ personopplysninger }) => personopplysninger,
+    showComponent: ({ fagsak }) => fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
     getData: ({ personopplysninger }) => ({ personopplysninger }),
   },
   {

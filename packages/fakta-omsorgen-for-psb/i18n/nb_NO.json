@@ -1,0 +1,21 @@
+{
+  "FaktaOmAlderOgOmsorg.header": "Fakta om alder og omsorg",
+  "FaktaOmAlderOgOmsorg.VurderBehov": "Søkerens omsorg for barnet er uavklart. Vurder omsorgen",
+  "FaktaOmAlderOgOmsorg.Vurdering": "Vurdering",
+
+  "SokerinfoTable.Ja": "Ja",
+  "SokerinfoTable.Nei": "Nei",
+
+  "SokerinfoTable.SokerOgBarnetsAlders": "Søkerens og barnets alder",
+  "SokerinfoTable.SokerErUnderSyttiAar": "Søker er under 70 år",
+  "SokerinfoTable.BarnetErUnderAttenAar": "Barnet er under 18 år",
+  "SokerinfoTable.Omsorg": "Omsorg",
+  "SokerinfoTable.OmsorgenFor": "Omsorgen for",
+  "SokerinfoTable.MorEllerFar": "Mor eller far",
+  "SokerinfoTable.SammeBosted": "Samme bosted",
+
+  "FaktaOmAlderOgOmsorg.Ja": "Ja",
+  "FaktaOmAlderOgOmsorg.Nei": "Nei",
+  "FaktaOmAlderOgOmsorg.HarSokerenOmsorgenForBarnet": "Har søkeren omsorgen for barnet?",
+  "SubmitButton.ConfirmInformation": "Bekreft og fortsett"
+}

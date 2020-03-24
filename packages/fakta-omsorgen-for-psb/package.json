@@ -1,5 +1,5 @@
 {
-  "name": "@fpsak-frontend/fakta-omsorgen-for",
+  "name": "@fpsak-frontend/fakta-omsorgen-for-psb",
   "version": "1.0.0",
   "module": "src/OmsorgenForFaktaIndex.tsx",
   "license": "MIT",
