@@ -138,6 +138,7 @@ export const MedisinskVilkarForm = ({
               after: moment(periodeTilVurdering.tom).toDate(),
             }}
             dataId="sykehusInnlagtDato"
+            ariaLabel={intl.formatMessage({ id: 'MedisinskVilkarForm.Innlagt' })}
           />
         </div>
         {!showVilkaarsvurdering && !readOnly && (

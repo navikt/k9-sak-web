@@ -1,18 +1,17 @@
-import * as React from 'react';
-
-import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
-import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
-import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
-import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar/src/MedisinskVilkarIndex';
-import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
 import FaktaPanelDefinisjon from '@fpsak-frontend/behandling-felles/src/types/faktaPanelDefinisjonTsType';
-
+import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
+import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
+import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar/src/MedisinskVilkarIndex';
+import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
+import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
+import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
+import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import * as React from 'react';
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 
 const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
@@ -29,19 +28,20 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     urlCode: faktaPanelCodes.OMSORGEN_FOR,
     textCode: 'FaktaOmAlderOgOmsorg.header',
     aksjonspunkterCodes: [aksjonspunktCodes.OMSORGEN_FOR],
-    endpoints: [],
+    endpoints: [pleiepengerBehandlingApi.OMSORGEN_FOR],
     renderComponent: props => <OmsorgenForFaktaIndex {...props} />,
-    showComponent: ({ personopplysninger }) => personopplysninger,
-    getData: ({ personopplysninger, omsorgenFor }) => ({ personopplysninger, omsorgenFor }),
+    showComponent: ({ fagsak, personopplysninger }) =>
+      personopplysninger && fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
+    getData: ({ personopplysninger }) => ({ personopplysninger }),
   },
   {
     urlCode: faktaPanelCodes.MEDISINSKVILKAAR,
     textCode: 'MedisinskVilkarPanel.MedisinskVilkar',
     aksjonspunkterCodes: [aksjonspunktCodes.MEDISINSK_VILKAAR],
-    endpoints: [],
+    endpoints: [pleiepengerBehandlingApi.SYKDOM],
     renderComponent: props => <MedisinskVilkarIndex {...props} />,
-    showComponent: () => true,
-    getData: ({ sykdom }) => ({ sykdom }),
+    showComponent: ({ fagsak }) => fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
+    getData: () => ({}),
   },
   {
     urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,

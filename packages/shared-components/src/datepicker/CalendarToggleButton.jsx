@@ -22,13 +22,7 @@ class CalendarToggleButton extends Component {
   }
 
   render() {
-    const {
-      className,
-      inputOffsetTop,
-      inputOffsetWidth,
-      disabled,
-      toggleShowCalendar,
-    } = this.props;
+    const { className, inputOffsetTop, inputOffsetWidth, disabled, toggleShowCalendar } = this.props;
 
     const { buttonWidth } = this.state;
 
@@ -40,6 +34,7 @@ class CalendarToggleButton extends Component {
         style={generateStyleObject(inputOffsetTop, inputOffsetWidth, buttonWidth)}
         disabled={disabled}
         onClick={toggleShowCalendar}
+        aria-label="Åpne kalender"
       />
     );
   }

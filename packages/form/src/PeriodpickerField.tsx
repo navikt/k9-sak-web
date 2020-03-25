@@ -20,6 +20,7 @@ interface PeriodpickerFieldProps {
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   dataId?: string;
   renderUpwards?: boolean;
+  ariaLabel?: string;
 }
 
 const formatError = (intl: IntlShape, otherProps: object, names: string[]) => {

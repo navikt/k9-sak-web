@@ -12,7 +12,7 @@ import { ForhaandsvisningsKnapp } from '../VedtakForm';
 
 import styles from '../vedtakForm.less';
 
-const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
+const getPreviewCallback = (formProps, begrunnelse, previewCallback) => e => {
   if (formProps.valid || formProps.pristine) {
     previewCallback({
       gjelderVedtak: true,
@@ -24,7 +24,14 @@ const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
   e.preventDefault();
 };
 
-const getPreviewManueltBrevCallback = (formProps, begrunnelse, brodtekst, overskrift, skalOverstyre, previewCallback) => (e) => {
+const getPreviewManueltBrevCallback = (
+  formProps,
+  begrunnelse,
+  brodtekst,
+  overskrift,
+  skalOverstyre,
+  previewCallback,
+) => e => {
   if (formProps.valid || formProps.pristine) {
     const data = {
       fritekst: skalOverstyre ? brodtekst : begrunnelse,
@@ -56,7 +63,7 @@ const skalViseESBrev = (revResultat, orgResultat, erSendtVarsel) => {
   return erSendtVarsel;
 };
 
-const skalKunneForhåndsviseBrev = (behandlingResultat) => {
+const skalKunneForhåndsviseBrev = behandlingResultat => {
   if (!behandlingResultat) {
     return true;
   }
@@ -64,13 +71,16 @@ const skalKunneForhåndsviseBrev = (behandlingResultat) => {
   if (!Array.isArray(konsekvenserForYtelsen) || konsekvenserForYtelsen.length !== 1) {
     return true;
   }
-  return konsekvenserForYtelsen[0].kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && konsekvenserForYtelsen[0].kode !== 'INGEN_ENDRING';
+  return (
+    konsekvenserForYtelsen[0].kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' &&
+    konsekvenserForYtelsen[0].kode !== 'INGEN_ENDRING'
+  );
 };
 
-export const getSubmitKnappTekst = createSelector(
-  [(ownProps) => ownProps.aksjonspunkter],
-  (aksjonspunkter) => (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true
-    && ap.toTrinnsBehandling === true) ? 'VedtakForm.TilGodkjenning' : 'VedtakForm.FattVedtak'),
+export const getSubmitKnappTekst = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
+  aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+    ? 'VedtakForm.TilGodkjenning'
+    : 'VedtakForm.FattVedtak',
 );
 
 export const VedtakRevurderingSubmitPanelImpl = ({
@@ -91,7 +101,14 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   behandlingResultat,
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewCallback);
-  const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brodtekst, overskrift, true, previewCallback);
+  const previewOverstyrtBrev = getPreviewManueltBrevCallback(
+    formProps,
+    begrunnelse,
+    brodtekst,
+    overskrift,
+    true,
+    previewCallback,
+  );
 
   return (
     <div>
@@ -104,25 +121,25 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           disabled={formProps.submitting}
           spinner={formProps.submitting}
         >
-          {intl.formatMessage({ id: skalBrukeOverstyrendeFritekstBrev ? 'VedtakForm.TilGodkjenning' : submitKnappTextId })}
+          {intl.formatMessage({
+            id: skalBrukeOverstyrendeFritekstBrev ? 'VedtakForm.TilGodkjenning' : submitKnappTextId,
+          })}
         </Hovedknapp>
       )}
-      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
-          && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && skalBrukeOverstyrendeFritekstBrev && (
-          <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-      )}
-      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
-          && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && !skalBrukeOverstyrendeFritekstBrev
-          && !erBehandlingEtterKlage && (
-          <ForhaandsvisningsKnapp previewFunction={previewBrev} />
-      )}
-      {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && skalBrukeOverstyrendeFritekstBrev && (
+      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD &&
+        skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) &&
+        skalBrukeOverstyrendeFritekstBrev && <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />}
+      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD &&
+        skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) &&
+        !skalBrukeOverstyrendeFritekstBrev &&
+        !erBehandlingEtterKlage && <ForhaandsvisningsKnapp previewFunction={previewBrev} />}
+      {ytelseTypeKode === fagsakYtelseType.PLEIEPENGER && skalBrukeOverstyrendeFritekstBrev && (
         <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
       )}
-      {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER)
-          && !skalBrukeOverstyrendeFritekstBrev && !erBehandlingEtterKlage && skalKunneForhåndsviseBrev(behandlingResultat) && (
-          <ForhaandsvisningsKnapp previewFunction={previewBrev} />
-      )}
+      {ytelseTypeKode === fagsakYtelseType.PLEIEPENGER &&
+        !skalBrukeOverstyrendeFritekstBrev &&
+        !erBehandlingEtterKlage &&
+        skalKunneForhåndsviseBrev(behandlingResultat) && <ForhaandsvisningsKnapp previewFunction={previewBrev} />}
     </div>
   );
 };
@@ -155,11 +172,18 @@ VedtakRevurderingSubmitPanelImpl.defaultProps = {
   overskrift: undefined,
 };
 
-const erArsakTypeBehandlingEtterKlage = createSelector([(ownProps) => ownProps.behandlingArsaker], (behandlingArsakTyper = []) => behandlingArsakTyper
-  .map(({ behandlingArsakType }) => behandlingArsakType)
-  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
-    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
-
+const erArsakTypeBehandlingEtterKlage = createSelector(
+  [ownProps => ownProps.behandlingArsaker],
+  (behandlingArsakTyper = []) =>
+    behandlingArsakTyper
+      .map(({ behandlingArsakType }) => behandlingArsakType)
+      .some(
+        bt =>
+          bt.kode === klageBehandlingArsakType.ETTER_KLAGE ||
+          bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK ||
+          bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK,
+      ),
+);
 
 const mapStateToProps = (state, ownProps) => ({
   submitKnappTextId: getSubmitKnappTekst(ownProps),

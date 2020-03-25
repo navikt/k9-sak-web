@@ -21,6 +21,7 @@ const Legeerklaering = ({ readOnly }: LegeerklaeringProps) => (
       bredde="M"
       validate={[required]}
       readOnly={readOnly}
+      legend={<FormattedMessage id="MedisinskVilkarForm.LegeErklaering" />}
     >
       <RadioOption
         dataId="sykehuslege"

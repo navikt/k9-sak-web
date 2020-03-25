@@ -138,7 +138,18 @@ class Periodpicker extends Component {
   }
 
   render() {
-    const { label, placeholder, feil, names, disabled, disabledDays, hideLabel, renderUpwards, dataId } = this.props;
+    const {
+      label,
+      placeholder,
+      feil,
+      names,
+      disabled,
+      disabledDays,
+      hideLabel,
+      renderUpwards,
+      dataId,
+      ariaLabel,
+    } = this.props;
     const { period, inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
     const inputWrapperCls = classnames(styles.dateInput, {
       [styles.visuallyHidden]: hideLabel,
@@ -163,6 +174,7 @@ class Periodpicker extends Component {
             onBlur={this.onBlur}
             onChange={this.onChange}
             data-id={dataId}
+            aria-label={ariaLabel}
           />
           <CalendarToggleButton
             inputOffsetTop={inputOffsetTop}
@@ -201,6 +213,7 @@ Periodpicker.propTypes = {
   hideLabel: PropTypes.bool,
   dataId: PropTypes.string,
   renderUpwards: PropTypes.bool,
+  ariaLabel: PropTypes.string,
 };
 
 Periodpicker.defaultProps = {
@@ -212,6 +225,7 @@ Periodpicker.defaultProps = {
   hideLabel: false,
   dataId: '',
   renderUpwards: false,
+  ariaLabel: '',
 };
 
 export default Periodpicker;
