@@ -41,15 +41,19 @@ const finnAksjonspunkterForSteg = (panel: ProsessStegPanelDefinisjon, aksjonspun
 const finnVilkarForSteg = (panel: ProsessStegPanelDefinisjon, vilkar: Vilkar[]) =>
   vilkar.filter(v => panel.vilkarCodes.includes(v.vilkarType.kode));
 
-const skalVisePanel = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) => (
-  panel: ProsessStegPanelDefinisjon,
-) => {
+const skalVisePanel = (
+  behandling: Behandling,
+  aksjonspunkter: Aksjonspunkt[],
+  vilkar: Vilkar[],
+  fagsak: FagsakInfo,
+) => (panel: ProsessStegPanelDefinisjon) => {
   if (panel.showComponent) {
     const data = {
       behandling,
       aksjonspunktDefKoderForSteg: panel.aksjonspunkterCodes,
       aksjonspunkterForSteg: finnAksjonspunkterForSteg(panel, aksjonspunkter),
       vilkarForSteg: finnVilkarForSteg(panel, vilkar),
+      fagsak,
     };
     return panel.showComponent(data);
   }
@@ -67,9 +71,13 @@ const skalVisePanel = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], v
   return harAksjonspunkter && harVilkar;
 };
 
-const skalViseProsessSteg = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) => (
-  panelDefinisjon: ProsessStegDefinisjon,
-) => panelDefinisjon.panels.some(skalVisePanel(behandling, aksjonspunkter, vilkar));
+const skalViseProsessSteg = (
+  behandling: Behandling,
+  aksjonspunkter: Aksjonspunkt[],
+  vilkar: Vilkar[],
+  fagsak: FagsakInfo,
+) => (panelDefinisjon: ProsessStegDefinisjon) =>
+  panelDefinisjon.panels.some(skalVisePanel(behandling, aksjonspunkter, vilkar, fagsak));
 
 const brukOverstyringspanelOmApIkkeFinnes = (aksjonspunkter: Aksjonspunkt[]) => (
   panelDefinisjon: ProsessStegDefinisjon,
@@ -182,7 +190,7 @@ export const utledProsessStegPaneler = (
 
   return prosessStegPanelDefinisjoner
     .map(brukOverstyringspanelOmApIkkeFinnes(aksjonspunkter))
-    .filter(skalViseProsessSteg(behandling, aksjonspunkter, vilkar))
+    .filter(skalViseProsessSteg(behandling, aksjonspunkter, vilkar, fagsak))
     .map(panelDefinisjon => {
       const harMinstEttPanelApentAksjonspunkt = panelDefinisjon.panels.some(
         panel =>
@@ -191,7 +199,7 @@ export const utledProsessStegPaneler = (
       );
 
       const panelData = panelDefinisjon.panels
-        .filter(skalVisePanel(behandling, aksjonspunkter, vilkar))
+        .filter(skalVisePanel(behandling, aksjonspunkter, vilkar, fagsak))
         .map(
           lagPanelData(
             panelDefinisjon,
