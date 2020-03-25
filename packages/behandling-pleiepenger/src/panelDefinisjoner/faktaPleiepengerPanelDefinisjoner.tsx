@@ -30,7 +30,8 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     aksjonspunkterCodes: [aksjonspunktCodes.OMSORGEN_FOR],
     endpoints: [pleiepengerBehandlingApi.OMSORGEN_FOR],
     renderComponent: props => <OmsorgenForFaktaIndex {...props} />,
-    showComponent: ({ fagsak }) => fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
+    showComponent: ({ fagsak, personopplysninger }) =>
+      personopplysninger && fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
     getData: ({ personopplysninger }) => ({ personopplysninger }),
   },
   {
