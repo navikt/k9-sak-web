@@ -165,7 +165,7 @@ const prosessStegPanelDefinisjoner = [
         // endpoints: [api.MEDLEMSKAP],
         ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
         showComponent: ({ fagsak }) => fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
-        getData: ({ sykdom }) => ({ sykdom }),
+        getData: () => ({}),
       },
     ],
   },
