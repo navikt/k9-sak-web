@@ -140,7 +140,8 @@ const prosessStegPanelDefinisjoner = [
         vilkarCodes: [vt.OMSORGENFORVILKARET],
         // endpoints: [api.MEDLEMSKAP],
         ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-        showComponent: ({ fagsak }) => fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
+        showComponent: ({ fagsak, vilkarForSteg }) =>
+          vilkarForSteg.length > 0 && fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
       },
       {
         code: 'MEDLEMSKAP',
@@ -164,6 +165,7 @@ const prosessStegPanelDefinisjoner = [
         // endpoints: [api.MEDLEMSKAP],
         ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
         showComponent: ({ fagsak }) => fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER,
+        getData: () => ({}),
       },
     ],
   },
