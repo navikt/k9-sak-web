@@ -2769,7 +2769,7 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sinonjs/formatio@^5.0.0":
+"@sinonjs/formatio@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/formatio/-/formatio-5.0.1.tgz#f13e713cb3313b1ab965901b01b0828ea6b77089"
   integrity sha512-KaiQ5pBf1MpS09MuA0kp6KBQt2JUOQycqVG1NZXvzeaXe5LGFqAKueIS0bw4w0P9r7KuBSVdUk5QjXsUdu2CxQ==
@@ -2777,7 +2777,7 @@
     "@sinonjs/commons" "^1"
     "@sinonjs/samsam" "^5.0.2"
 
-"@sinonjs/samsam@^5.0.1", "@sinonjs/samsam@^5.0.2":
+"@sinonjs/samsam@^5.0.2", "@sinonjs/samsam@^5.0.3":
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/@sinonjs/samsam/-/samsam-5.0.3.tgz#86f21bdb3d52480faf0892a480c9906aa5a52938"
   integrity sha512-QucHkc2uMJ0pFGjJUDP3F9dq5dx8QIaqISl9QgwLOh6P9yv877uONPGXh/OH/0zmM3tW1JjuJltAZV2l7zU+uQ==
@@ -3757,10 +3757,18 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.9.23":
+"@types/react@*":
   version "16.9.23"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.23.tgz#1a66c6d468ba11a8943ad958a8cb3e737568271c"
   integrity sha512-SsGVT4E7L2wLN3tPYLiF20hmZTPGuzaayVunfgXzUn1x4uHVsKH6QDJQ/TdpHqwsTLd4CwrmQ2vOgxN7gE24gw==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@^16.9.26":
+  version "16.9.26"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.26.tgz#1e55803e468f5393413e29033538cc9aaed6cec9"
+  integrity sha512-dGuSM+B0Pq1MKXYUMlUQWeS6Jj9IhSAUf9v8Ikaimj+YhkBcQrihWBkmyEhK/1fzkJTwZQkhZp5YhmWa2CH+Rw==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -13179,15 +13187,15 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-nav-frontend-alertstriper-style@2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.10.tgz#524b24fc03ce1a84701ac4bae3084f3d233bd731"
-  integrity sha512-tpvbKBNgPSqLosb2BCCBLddyGom7OvEJ28ZMAy/mM6Caz3MueSJjEV6W6Dwa7l40gEuHafmO+Jyowh21sMzFIg==
+nav-frontend-alertstriper-style@2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.11.tgz#d3561213fc33d92da47b8de526ba02bfa1718bbf"
+  integrity sha512-iwyOxMtXLhdfFlI7+rBs0aFJFYWkkjPByeMYTE/fzDsnCmcM1u5qLASwfwyOtSP+xaImoWCVHN6sJh6YRL6t1g==
 
-nav-frontend-alertstriper@3.0.12:
-  version "3.0.12"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.12.tgz#f7a66f89025c11723aece341a81bc3f8b01da6a6"
-  integrity sha512-NN79NS+IMIq1bD9fn2LA86k0/6ChJPvUj6Aft7jUcH2wQJeNEbph5kh0KuPffhuskUwxEpW3bDYf02BYB1gqaA==
+nav-frontend-alertstriper@3.0.13:
+  version "3.0.13"
+  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.13.tgz#e00e6e453eca6c9fd0909132fbdfb97b22418c70"
+  integrity sha512-uZSxaEthAYh+CGnH+9eFoSlr4hnTXu+HGJy3fJnLae7P7ZJdQF5H9AUGc7vgMTKbgKXgz509VCV54ELgcYH+eA==
 
 nav-frontend-chevron-style@0.3.5, nav-frontend-chevron-style@^0.3.5:
   version "0.3.5"
@@ -13204,10 +13212,10 @@ nav-frontend-core@4.0.12, nav-frontend-core@^4.0.11, nav-frontend-core@^4.0.12:
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-4.0.12.tgz#e0577ddec4f81f1f411a0a0c3fad8e5fa215bbba"
   integrity sha512-xgkTQ2PzN8qYMkLZ+5qj5Dy6kpMHbfAW/y8suvsiLNAGq/KD/gTCzrGb6ypQ6i0CKMQO7cy9w8Kc8/MmhVpSNw==
 
-nav-frontend-ekspanderbartpanel-style@0.3.23:
-  version "0.3.23"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.23.tgz#dbe5328069958d55018f23effc3312a81989be90"
-  integrity sha512-RaWYBPgLfChmOnkFzo6DmfwuHm5n9rcSWEn1hO+vR6mpNCrABViaUdszg+AE9fq1OECoEAB9bE138GsNkPxkGg==
+nav-frontend-ekspanderbartpanel-style@1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-1.0.8.tgz#8ebde7fc38b4f87d17c5ac23f81d793c3bccfba9"
+  integrity sha512-T+Lss908ZRgEK56h2gjFGONH8ijOtcjU6A6DPNwd+D9WJdDqwX2PwiOJSjNZOjxDwmzuY25wtP+csE0cJovBWw==
 
 nav-frontend-ekspanderbartpanel@3.0.8:
   version "3.0.8"
@@ -13254,7 +13262,12 @@ nav-frontend-knapper-style@0.3.35, nav-frontend-knapper-style@^0.3.32:
   resolved "https://registry.yarnpkg.com/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.35.tgz#841ca892207ca4668dcd9f06ae3b0c19e4753659"
   integrity sha512-UNGuzXw6Y1vLzxTryE5itvGt1+9fZFcmCWAIdacdgUTy3xIh6Cj/VMEh5n84+O/h+mKa1uWm0MquBzdwUODo8w==
 
-nav-frontend-knapper@1.0.40, nav-frontend-knapper@^1.0.37:
+nav-frontend-knapper@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper/-/nav-frontend-knapper-2.0.1.tgz#5316cdda32be790b5c607fd3b61c5ec70d78b7aa"
+  integrity sha512-tiBn/RvE4duGcaEYdIMoDet/74vkPF9OCPLVLvOYnTSsv0CjQZ8sZLkyk5ZF+EO1SbSBNv9csYe8L4UHb/pjZA==
+
+nav-frontend-knapper@^1.0.37:
   version "1.0.40"
   resolved "https://registry.yarnpkg.com/nav-frontend-knapper/-/nav-frontend-knapper-1.0.40.tgz#21e2b5556bf68b7cb179c13947f780700c77799a"
   integrity sha512-BTbPqcQIFas+it6KjFIVixnLtj/zoZTPCtF7+sLv3N6wPpggoaZJ4tEx6y0al2VYMvz5FWwT5H4oc3Iky6Pdug==
@@ -13269,15 +13282,15 @@ nav-frontend-lenkepanel@^1.0.38:
   resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel/-/nav-frontend-lenkepanel-1.0.38.tgz#98ed4afc691b66d574c1fbf2e2250a8dfb486fc0"
   integrity sha512-hHs5Zg99lpPbt+hFPEdli132CnSFpAhtXD0xZ5hkoOpNdhx8Rn4BTuo8hUACO9CGhcmWT7EEfYBUWLL7cIPeXg==
 
-nav-frontend-lenker-style@0.2.25:
-  version "0.2.25"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.25.tgz#788e8b0057176d088699f85bd2f2ab9b318ac400"
-  integrity sha512-23ZdGPoCGG5OjqqrMmJ7AqzFXEjKtaF6T6JdZFEb6ZJfl1HSSwjcpJK+oktxNJbkXeJZsKtM808arcM7t+XgjQ==
+nav-frontend-lenker-style@0.2.26:
+  version "0.2.26"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.26.tgz#1ee2e11fd054ddd8cd2ef06929e8938bc7978564"
+  integrity sha512-s/ki4EpHDPbwydYskWU68jzxSieY29GE94wOul4gcLpal1+p27U8ojRu872W+nOCFoskOoqYJQ83Ivf4IIFUVA==
 
-nav-frontend-lenker@1.0.34:
-  version "1.0.34"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenker/-/nav-frontend-lenker-1.0.34.tgz#422dab50f21339da758618451fdf5043c70569da"
-  integrity sha512-5jJ0ijbSMeKjF5lPd3rxtB455+LM36M8E/LvnXtZkVQ/WhPWiEtJHfjVuVcF2xOfZXVLZOvcEm2AF5IbjHK2wg==
+nav-frontend-lenker@1.0.35:
+  version "1.0.35"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lenker/-/nav-frontend-lenker-1.0.35.tgz#2e72f75247baf6318709873ddef77f7885bbb211"
+  integrity sha512-KVd0bi/kTvMzkl4OthZXxY6rJyEmEO2yT4vc51tdPTwCpLqAMOCJ10h/y4tWYDjyV2+hjs5IrDeM6yyScrtnwA==
 
 nav-frontend-lesmerpanel-style@0.0.27:
   version "0.0.27"
@@ -13314,30 +13327,30 @@ nav-frontend-paneler-style@0.3.18:
   resolved "https://registry.yarnpkg.com/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.18.tgz#a01b14b2759383a00c37057d936287954b45c249"
   integrity sha512-YDqgkS8QdSr9ScBiogm5h8yIBzcMFnWvQ4alF0OyXFw1gDSSVpE15uHsJZtR0+mz4ORWCx+0aT/ivdbT6eEcUg==
 
-nav-frontend-paneler@1.0.24:
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-1.0.24.tgz#c3f777fc4aa589a341dd6d1fa6bd9415eead690a"
-  integrity sha512-M2GpIEo9IPrMSbBOx/5ipPSm8nfKOK9+CALgRMFwbw/VqU+S0mB3+sTXDkoTmlXwOf0n//UQG7+jQqQMJFU4tg==
+nav-frontend-paneler@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-2.0.1.tgz#d62d99c116755a7894a223f76b6c82c8cc84ebca"
+  integrity sha512-r/6XqX/Z3EHYcStyKZBg7ejrXQVwVENhNJ2QKwho/ZPPx/Zjz9a7adJLyJBHD7jiJR7AqU3GwKpw3NqKt82ZXQ==
 
 nav-frontend-skjema-style@2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-2.0.4.tgz#b519aece05a134865d5bfd9634480780166dfb1e"
   integrity sha512-wrgAMxja18frONbjxY8soVVxrKUPktKlnzHIwRChOXPI7YIf8YzWHtYWhzCKYFdXqxyiZIgAz0DaX8JBmyIyqg==
 
-nav-frontend-skjema@2.0.12:
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-2.0.12.tgz#a86a51979bb58015ff069657bc4e5fd54809a96e"
-  integrity sha512-Vid5U3xs/HFfZVeixfHhqABOzFdja+GPq+k5h+Ma9UP3bXgGixnXKXMh8b6RW4wk5Hg8kXvgKlugKclKIbI0LA==
+nav-frontend-skjema@2.0.13:
+  version "2.0.13"
+  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-2.0.13.tgz#10094b8ed78fd239e712e445db6dd70b8cff554b"
+  integrity sha512-/B2xOqaY8VBGbF3BjcHtNH6rj4uRzNuvW/50JevP3OkmwvUqvu6XrlguEmuDzfxh+GDdnqyFCbyVFmyVYkWSlg==
 
 nav-frontend-snakkeboble-style@0.2.25:
   version "0.2.25"
   resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.25.tgz#4aaa58122d0af8079d2933906f17fd42cb65a9ec"
   integrity sha512-vC2bHLV4nDyeO2wVIUJFxabthRDgBu6iR3gtmQ07ONhADjd2xvn7ZOym7VIBlsdQUyY8HLdoGfdO0jIzBH67uw==
 
-nav-frontend-snakkeboble@1.0.37:
-  version "1.0.37"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-1.0.37.tgz#9bb80d068ed9a1d8eae75a77af10bcc71c0a5b1d"
-  integrity sha512-7wh1fO0GaWlvetxK9VtNnDvnUC2+24BRgUKwmaYDu2pWLEwuOf5TwzT05L2Xktk41ah7aan6Xq9+mjpDj3icfA==
+nav-frontend-snakkeboble@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-2.0.1.tgz#c229fd9b2474ea9f9c847c3687c1034d22effc9c"
+  integrity sha512-C7kTfNFoCsllIIOzWEMSvfMLwKlmJlUlOlG/qBm0YjRWmQr6UXNJbEOoTfJuSKxVvH6HGRg3Fb52Lk3yHy4BHA==
 
 nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
@@ -15824,7 +15837,17 @@ react-docgen@^5.0.0:
     node-dir "^0.1.10"
     strip-indent "^3.0.0"
 
-react-dom@^16.13.0, react-dom@^16.8.3:
+react-dom@^16.13.1:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
+  integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.19.1"
+
+react-dom@^16.8.3:
   version "16.13.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.0.tgz#cdde54b48eb9e8a0ca1b3dc9943d9bb409b81866"
   integrity sha512-y09d2c4cG220DzdlFkPTnVvGTszVvNpC73v+AaLGLHbkpy3SSgvYq8x0rNwPJ/Rk/CicTNgk0hbHNw1gMEZAXg==
@@ -16119,7 +16142,16 @@ react-visjs-timeline@^1.6.0:
   dependencies:
     lodash "^4.17.4"
 
-react@^16.12.0, react@^16.13.0, react@^16.8.3:
+react@^16.13.1:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
+  integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+
+react@^16.8.3:
   version "16.13.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.0.tgz#d046eabcdf64e457bbeed1e792e235e1b9934cf7"
   integrity sha512-TSavZz2iSLkq5/oiE7gnFzmURKZMltmi193rm5HEoUDAXpzT9Kzw6oNZnGoai/4+fUnm7FqS5dwgUL34TujcWQ==
@@ -17333,15 +17365,15 @@ sinon-chai@^3.5.0:
   resolved "https://registry.yarnpkg.com/sinon-chai/-/sinon-chai-3.5.0.tgz#c9a78304b0e15befe57ef68e8a85a00553f5c60e"
   integrity sha512-IifbusYiQBpUxxFJkR3wTU68xzBN0+bxCScEaKMjBvAQERg6FnTTc1F17rseLb1tjmkJ23730AXpFI0c47FgAg==
 
-sinon@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-9.0.0.tgz#9f1ed502fa2e287e65220de08f6a44f33e314006"
-  integrity sha512-c4bREcvuK5VuEGyMW/Oim9I3Rq49Vzb0aMdxouFaA44QCFpilc5LJOugrX+mkrvikbqCimxuK+4cnHVNnLR41g==
+sinon@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-9.0.1.tgz#dbb18f7d8f5835bcf91578089c0a97b2fffdd73b"
+  integrity sha512-iTTyiQo5T94jrOx7X7QLBZyucUJ2WvL9J13+96HMfm2CGoJYbIPqRfl6wgNcqmzk0DI28jeGx5bUTXizkrqBmg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
     "@sinonjs/fake-timers" "^6.0.0"
-    "@sinonjs/formatio" "^5.0.0"
-    "@sinonjs/samsam" "^5.0.1"
+    "@sinonjs/formatio" "^5.0.1"
+    "@sinonjs/samsam" "^5.0.3"
     diff "^4.0.2"
     nise "^4.0.1"
     supports-color "^7.1.0"

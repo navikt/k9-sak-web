@@ -11,11 +11,11 @@
     "classnames": "^2.2.6",
     "nav-frontend-core": "4.0.12",
     "nav-frontend-ekspanderbartpanel": "3.0.8",
-    "nav-frontend-ekspanderbartpanel-style": "0.3.23",
+    "nav-frontend-ekspanderbartpanel-style": "1.0.8",
     "nav-frontend-typografi": "2.0.18",
     "nav-frontend-typografi-style": "1.0.19",
     "prop-types": "^15.7.2",
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-intl": "^3.12.0",
     "react-redux": "^7.1.3",
     "reselect": "^4.0.0"
@@ -24,6 +24,6 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^9.0.0"
+    "sinon": "^9.0.1"
   }
 }
