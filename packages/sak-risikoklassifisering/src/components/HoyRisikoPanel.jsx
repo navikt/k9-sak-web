@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import oransjeTrekant from '@fpsak-frontend/assets/images/advarsel.svg';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -25,14 +25,10 @@ const HoyRisikoPanel = ({
   submitCallback,
 }) => (
   <Panel>
-    <TittelMedDivider
-      imageSrc={oransjeTrekant}
-      tittel="Risikopanel.Panel.Tittel"
-    />
+    <TittelMedDivider imageSrc={oransjeTrekant} tittel="Risikopanel.Panel.Tittel" />
     <VerticalSpacer sixteenPx />
     <Faresignaler risikoklassifisering={risikoklassifisering} />
-    {!!aksjonspunkt
-      && (
+    {!!aksjonspunkt && (
       <AvklarFaresignalerForm
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
@@ -41,7 +37,7 @@ const HoyRisikoPanel = ({
         submitCallback={submitCallback}
         risikoklassifisering={risikoklassifisering}
       />
-      )}
+    )}
   </Panel>
 );
 

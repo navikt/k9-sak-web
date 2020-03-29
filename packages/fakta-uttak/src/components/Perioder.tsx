@@ -40,7 +40,7 @@ const Perioder: FunctionComponent<PerioderProps> = ({ arbeid, valgtArbeidsforhol
         />
       ))}
       {leggTilPeriode && (
-        <Flatknapp htmlType="button" onClick={leggTilPeriode} mini form="kompakt">
+        <Flatknapp htmlType="button" onClick={leggTilPeriode} mini knappeForm="kompakt">
           <Image src={addSvg} className={styles.image} />
           <span>{intl.formatMessage({ id: 'FaktaOmUttakForm.LeggTilNyPeriode' })}</span>
         </Flatknapp>

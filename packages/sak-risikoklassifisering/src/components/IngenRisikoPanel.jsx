@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 
 import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
 
@@ -14,10 +14,7 @@ import styles from './ingenRisikoPanel.less';
  */
 const IngenRisikoPanel = () => (
   <Panel className={styles.ingenRisikoOppdagetTittel}>
-    <TittelMedDivider
-      imageSrc={innvilgetIkonUrl}
-      tittel="Risikopanel.Tittel.IngenFaresignaler"
-    />
+    <TittelMedDivider imageSrc={innvilgetIkonUrl} tittel="Risikopanel.Tittel.IngenFaresignaler" />
   </Panel>
 );
 
