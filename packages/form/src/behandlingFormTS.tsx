@@ -12,7 +12,7 @@ import {
   reduxForm,
 } from 'redux-form';
 import { createSelector } from 'reselect';
-import requireProps from './requireProps';
+import requireProps from '@fpsak-frontend/shared-components/src/requireProps';
 
 export const getBehandlingFormPrefix = (behandlingId: number, behandlingVersjon: number) =>
   `behandling_${behandlingId}_v${behandlingVersjon}`;

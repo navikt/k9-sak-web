@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import ApprovalField from './ApprovalField';

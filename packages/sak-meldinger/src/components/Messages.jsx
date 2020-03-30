@@ -9,11 +9,15 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import {
-  ariaCheck, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
+  ariaCheck,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
+  maxLength,
+  minLength,
+  required,
 } from '@fpsak-frontend/utils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
-import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { SelectField, TextAreaField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './messages.less';

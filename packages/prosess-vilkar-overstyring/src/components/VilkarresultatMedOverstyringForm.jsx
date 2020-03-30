@@ -5,19 +5,22 @@ import moment from 'moment';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import {
-  Undertittel, Element, EtikettLiten, Normaltekst,
-} from 'nav-frontend-typografi';
+import { Undertittel, Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox, EditedIcon,
+  FlexContainer,
+  FlexRow,
+  FlexColumn,
+  Image,
+  VerticalSpacer,
+  AksjonspunktBox,
+  EditedIcon,
 } from '@fpsak-frontend/shared-components';
-import {
-  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, OverstyrBekreftKnappPanel,
-} from '@fpsak-frontend/fp-felles';
+import { VilkarResultPicker, OverstyrBekreftKnappPanel } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';

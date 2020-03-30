@@ -11,14 +11,21 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+  RadioGroupField,
+  RadioOption,
+  behandlingForm,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
+import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, getKodeverknavnFn, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
+  getKodeverknavnFn,
+  BehandlingspunktBegrunnelseTextField,
+  BehandlingspunktSubmitButton,
 } from '@fpsak-frontend/fp-felles';
 
 import styles from './checkPersonStatusForm.less';

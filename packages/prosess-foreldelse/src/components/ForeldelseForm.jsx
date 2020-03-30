@@ -9,12 +9,21 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpTextTemp, FadingPanel, FlexColumn, FlexRow, VerticalSpacer,
+  AksjonspunktHelpTextTemp,
+  FadingPanel,
+  FlexColumn,
+  FlexRow,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
-  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe, BehandlingspunktSubmitButton,
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
-} from '@fpsak-frontend/fp-felles';
+  behandlingForm,
+  behandlingFormValueSelector,
+  getBehandlingFormPrefix,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 

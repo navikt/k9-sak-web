@@ -29,3 +29,4 @@ export { default as Tooltip } from './src/Tooltip';
 export { default as VerticalSpacer } from './src/VerticalSpacer';
 export { default as DataFetchPendingModal } from './src/DataFetchPendingModal';
 export { default as SelectFieldArray } from './src/SelectFieldArray';
+export { default as requireProps } from './src/requireProps';

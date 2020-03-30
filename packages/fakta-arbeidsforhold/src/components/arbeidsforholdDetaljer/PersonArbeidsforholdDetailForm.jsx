@@ -10,7 +10,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import {
   ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';

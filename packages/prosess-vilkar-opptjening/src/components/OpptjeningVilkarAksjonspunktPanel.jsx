@@ -8,9 +8,8 @@ import { Element } from 'nav-frontend-typografi';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import {
-  behandlingForm,
-  behandlingFormValueSelector,
   VilkarResultPicker,
   BehandlingspunktBegrunnelseTextField,
   ProsessPanelTemplate,

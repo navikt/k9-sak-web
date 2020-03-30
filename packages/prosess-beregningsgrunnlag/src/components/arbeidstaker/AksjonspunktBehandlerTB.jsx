@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
-  dateFormat, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
+  dateFormat,
+  formatCurrencyNoKr,
+  parseCurrencyInput,
+  removeSpacesFromNumber,
+  required,
 } from '@fpsak-frontend/utils';
 
-import {
-  behandlingFormValueSelector,
-  getKodeverknavnFn,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -20,7 +20,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { InputField } from '@fpsak-frontend/form';
+import { InputField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 

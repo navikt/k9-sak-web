@@ -11,10 +11,10 @@ import {
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  BehandlingspunktSubmitButton, hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
+  BehandlingspunktSubmitButton,
 } from '@fpsak-frontend/fp-felles';
+
+import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

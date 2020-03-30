@@ -2,14 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import {
-  Element, Normaltekst, Undertekst, EtikettLiten,
-} from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst, EtikettLiten } from 'nav-frontend-typografi';
 
-import { behandlingFormValueSelector, getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import { Column, Row } from 'nav-frontend-grid';
 import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';

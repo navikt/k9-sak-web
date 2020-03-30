@@ -1,5 +1,4 @@
 export { default as reducerRegistry } from './src/ReducerRegistry';
-export { default as requireProps } from './src/requireProps';
 export { default as trackRouteParam } from './src/trackRouteParam';
 export { default as featureToggle } from './src/featureToggle';
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/ErrorTypes';
@@ -35,19 +34,7 @@ export {
 export { RETTSKILDE_URL, LINK_TIL_BESTE_BEREGNING_REGNEARK, SYSTEMRUTINE_URL } from './src/eksterneLenker';
 
 export { setRequestPollingMessage, getRequestPollingMessage } from './src/pollingMessageDuck';
-export {
-  behandlingForm,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  getBehandlingFormName,
-  isBehandlingFormSubmitting,
-  getBehandlingFormValues,
-  getBehandlingFormInitialValues,
-  getBehandlingFormSyncErrors,
-  getBehandlingFormPrefix,
-} from './src/behandlingForm';
-export { behandlingForm as behandlingFormTs } from './src/behandlingFormTS';
+
 
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
 export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';
