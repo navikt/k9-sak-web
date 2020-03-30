@@ -145,16 +145,6 @@ describe('<OmsorgspengerFakta>', () => {
         harAksjonspunkt: true,
         tekst: 'Arbeidsforhold',
       },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Alder og omsorg',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Sykdom',
-      },
       { tekst: 'Uttak', erAktiv: false, harAksjonspunkt: false },
     ]);
   });
