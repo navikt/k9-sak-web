@@ -6,21 +6,20 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  Element, Normaltekst, Undertekst, Undertittel,
-} from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 import {
-  featureToggle, getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector,
-} from '@fpsak-frontend/fp-felles';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import {
-  AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import {
-  getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils';
+  RadioGroupField,
+  RadioOption,
+  TextAreaField,
+  getBehandlingFormPrefix,
+  behandlingForm,
+  behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
+import { AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';

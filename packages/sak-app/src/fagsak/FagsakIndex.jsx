@@ -5,9 +5,9 @@ import { Route } from 'react-router-dom';
 
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
-  behandlingerPath, getRequestPollingMessage, requireProps, trackRouteParam, DataFetcher, pathToAnnenPart,
+  behandlingerPath, getRequestPollingMessage, trackRouteParam, DataFetcher, pathToAnnenPart,
 } from '@fpsak-frontend/fp-felles';
-import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
 
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';

@@ -9,7 +9,7 @@ import {
   behandlingForm,
   getBehandlingFormPrefix,
   behandlingFormValueSelector,
-} from '@fpsak-frontend/fp-felles/src/behandlingForm';
+} from '@fpsak-frontend/form/src/behandlingForm';
 import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl, IntlFormatters } from 'react-intl';
 import moment from 'moment';

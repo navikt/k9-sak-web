@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import {
-  requireProps,
   DataFetcher,
   getLocationWithDefaultBehandlingspunktAndFakta,
   pathToBehandling,

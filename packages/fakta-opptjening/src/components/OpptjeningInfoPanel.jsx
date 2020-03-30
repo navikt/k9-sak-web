@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { behandlingForm } from '@fpsak-frontend/fp-felles';
+import { behandlingForm } from '@fpsak-frontend/form';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
