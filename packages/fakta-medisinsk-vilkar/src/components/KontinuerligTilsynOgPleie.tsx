@@ -1,7 +1,7 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import checkIkonUrl from '@fpsak-frontend/assets/images/check.svg';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form/src/behandlingFormTS';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form/src/behandlingForm';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Periode } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
