@@ -15,9 +15,9 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import ForeldrepengerFakta from './PleiepengerFakta';
+import OmsorgspengerFakta from './OmsorgspengerFakta';
 
-describe('<PleiepengerFakta>', () => {
+describe('<OmsorgspengerFakta>', () => {
   const fagsak = {
     saksnummer: 123456,
     fagsakYtelseType: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
@@ -122,7 +122,7 @@ describe('<PleiepengerFakta>', () => {
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
+      <OmsorgspengerFakta.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, personopplysninger: soker }}
         behandling={behandling}
@@ -145,16 +145,6 @@ describe('<PleiepengerFakta>', () => {
         harAksjonspunkt: true,
         tekst: 'Arbeidsforhold',
       },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Alder og omsorg',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Sykdom',
-      },
       { tekst: 'Uttak', erAktiv: false, harAksjonspunkt: false },
     ]);
   });
@@ -162,7 +152,7 @@ describe('<PleiepengerFakta>', () => {
   it('skal oppdatere url ved valg av faktapanel', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
+      <OmsorgspengerFakta.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar }}
         behandling={behandling}
@@ -192,7 +182,7 @@ describe('<PleiepengerFakta>', () => {
 
   it('skal rendre faktapanel korrekt', () => {
     const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
+      <OmsorgspengerFakta.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, inntektArbeidYtelse }}
         behandling={behandling}
