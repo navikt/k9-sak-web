@@ -15,7 +15,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import ForeldrepengerFakta from './PleiepengerFakta';
+import OmsorgspengerFakta from './OmsorgspengerFakta';
 
 describe('<OmsorgspengerFakta>', () => {
   const fagsak = {
@@ -122,7 +122,7 @@ describe('<OmsorgspengerFakta>', () => {
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
+      <OmsorgspengerFakta.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, personopplysninger: soker }}
         behandling={behandling}
@@ -162,7 +162,7 @@ describe('<OmsorgspengerFakta>', () => {
   it('skal oppdatere url ved valg av faktapanel', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
+      <OmsorgspengerFakta.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar }}
         behandling={behandling}
@@ -192,7 +192,7 @@ describe('<OmsorgspengerFakta>', () => {
 
   it('skal rendre faktapanel korrekt', () => {
     const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
+      <OmsorgspengerFakta.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, inntektArbeidYtelse }}
         behandling={behandling}

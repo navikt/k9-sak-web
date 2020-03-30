@@ -21,7 +21,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
-import PleiepengerProsess from './PleiepengerProsess';
+import OmsorgspengerProsess from './OmsorgspengerProsess';
 
 describe('<OmsorgspengerProsess>', () => {
   const fagsak = {
@@ -88,7 +88,7 @@ describe('<OmsorgspengerProsess>', () => {
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
+      <OmsorgspengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -156,7 +156,7 @@ describe('<OmsorgspengerProsess>', () => {
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
+      <OmsorgspengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -202,7 +202,7 @@ describe('<OmsorgspengerProsess>', () => {
     const opneSokeside = sinon.spy();
 
     const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
+      <OmsorgspengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -250,7 +250,7 @@ describe('<OmsorgspengerProsess>', () => {
     const opneSokeside = sinon.spy();
 
     const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
+      <OmsorgspengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -298,7 +298,7 @@ describe('<OmsorgspengerProsess>', () => {
     const opneSokeside = sinon.spy();
 
     const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
+      <OmsorgspengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -330,7 +330,7 @@ describe('<OmsorgspengerProsess>', () => {
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
+      <OmsorgspengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -361,7 +361,7 @@ describe('<OmsorgspengerProsess>', () => {
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
     const dispatch = sinon.spy();
     const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
+      <OmsorgspengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}
@@ -392,7 +392,7 @@ describe('<OmsorgspengerProsess>', () => {
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
     const dispatch = sinon.spy();
     const wrapper = shallowWithIntl(
-      <PleiepengerProsess.WrappedComponent
+      <OmsorgspengerProsess.WrappedComponent
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, soknad }}
         fagsak={fagsak}

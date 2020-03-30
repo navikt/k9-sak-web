@@ -10,6 +10,7 @@
     "@fpsak-frontend/behandling-innsyn": "1.0.0",
     "@fpsak-frontend/behandling-klage": "1.0.0",
     "@fpsak-frontend/behandling-pleiepenger": "1.0.0",
+    "@fpsak-frontend/behandling-omsorgspenger": "1.0.0",
     "@fpsak-frontend/behandling-tilbakekreving": "1.0.0",
     "@fpsak-frontend/error-api-redux": "1.0.0",
     "@fpsak-frontend/fp-felles": "1.0.0",

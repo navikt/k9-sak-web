@@ -34,6 +34,7 @@ import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-pleiepenger'));
+const BehandlingOmsorgspengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-omsorgspenger'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
@@ -84,7 +85,7 @@ export class BehandlingIndex extends Component {
     })).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
     push: PropTypes.func.isRequired,
-    visFeilmelding: PropTypes.func.isRequired,
+    visFeilmelding: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -230,6 +231,21 @@ export class BehandlingIndex extends Component {
       );
     }
 
+    if (fagsak.fagsakYtelseType.kode === 'OMS') {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+            <BehandlingOmsorgspengerIndex
+              featureToggles={featureToggles}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
+              valgtFaktaSteg={location.query.fakta}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -272,7 +288,7 @@ const mapStateToProps = (state) => {
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
     navAnsatt: getNavAnsatt(state),
-    fagsak: getFagsakInfo(state),
+    fagsak: getFagsakInfo(state)
   };
 };
 
