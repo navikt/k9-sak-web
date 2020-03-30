@@ -14,7 +14,7 @@ import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { TextAreaField, RadioGroupField, RadioOption, behandlingFormTs } from '@fpsak-frontend/form';
+import { TextAreaField, RadioGroupField, RadioOption, behandlingForm } from '@fpsak-frontend/form';
 import { required, minLength, maxLength, hasValidText } from '@fpsak-frontend/utils';
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles/src/fakta/FaktaSubmitButton';
 import SokerinfoTable from './SokerinfoTable';
@@ -208,7 +208,7 @@ const mapStateToProps = (_, props: OmsorgenForInfoPanelImplProps) => {
 };
 
 const connectedComponent = connect(mapStateToProps)(
-  behandlingFormTs({
+  behandlingForm({
     form: formName,
     enableReinitialize: true,
   })(OmsorgenForInfoPanelImpl),

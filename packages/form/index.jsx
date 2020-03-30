@@ -23,4 +23,3 @@ export {
   getBehandlingFormPrefix,
 } from './src/behandlingForm';
 
-export { behandlingForm as behandlingFormTs } from './src/behandlingFormTS';

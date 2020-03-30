@@ -1,4 +1,4 @@
-import { getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingFormTS';
+import { getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import React, { Component, ReactNode, ReactNodeArray } from 'react';
 import { connect } from 'react-redux';
