@@ -231,7 +231,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (fagsak.fagsakYtelseType.kode === 'OMS') {
+    if (fagsak.fagsakYtelseType.kode === 'OMP') {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>

@@ -17,7 +17,7 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import ForeldrepengerFakta from './PleiepengerFakta';
 
-describe('<OmsorgspengerFakta>', () => {
+describe('<PleiepengerFakta>', () => {
   const fagsak = {
     saksnummer: 123456,
     fagsakYtelseType: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },

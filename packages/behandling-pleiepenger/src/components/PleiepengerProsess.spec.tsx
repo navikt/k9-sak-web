@@ -23,7 +23,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import PleiepengerProsess from './PleiepengerProsess';
 
-describe('<OmsorgspengerProsess>', () => {
+describe('<PleiepengerProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
     fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },

@@ -9,7 +9,6 @@ import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-r
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
-import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/dto/testdata';
