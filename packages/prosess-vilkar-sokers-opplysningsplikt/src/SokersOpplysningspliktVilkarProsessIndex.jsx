@@ -43,7 +43,7 @@ const SokersOpplysningspliktVilkarProsessIndex = ({
 
 SokersOpplysningspliktVilkarProsessIndex.propTypes = {
   behandling: sokersOpplysningspliltBehandlingPropType.isRequired,
-  soknad: sokersOpplysningspliktSoknadPropType.isRequired,
+  soknad: sokersOpplysningspliktSoknadPropType,
   aksjonspunkter: PropTypes.arrayOf(sokersOpplysningspliktAksjonspunkterPropType).isRequired,
   status: PropTypes.string.isRequired,
   submitCallback: PropTypes.func.isRequired,
