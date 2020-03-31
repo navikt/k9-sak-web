@@ -55,7 +55,7 @@ const MedlemskapFaktaIndex = ({
 MedlemskapFaktaIndex.propTypes = {
   behandling: medlemskapBehandlingPropType.isRequired,
   medlemskap: medlemskapMedlemskapPropType.isRequired,
-  soknad: medlemskapSoknadPropType.isRequired,
+  soknad: medlemskapSoknadPropType,
   aksjonspunkter: PropTypes.arrayOf(medlemskapAksjonspunkterPropType).isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({

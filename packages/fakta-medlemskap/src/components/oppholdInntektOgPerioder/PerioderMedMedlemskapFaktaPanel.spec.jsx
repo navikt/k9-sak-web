@@ -76,58 +76,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     expect(message.prop('values')).to.eql({ dato: '16.10.2016' });
   });
 
-  it('skal vise termindato når en har dette', () => {
-    const periods = [{
-      fom: '2016-01-15',
-      tom: '2016-10-15',
-      dekning: 'testdekning',
-      status: 'testStatus',
-      beslutningsdato: '2016-10-16',
-    }];
-
-    const wrapper = shallowWithIntl(<UndecoratedForm
-      intl={intlMock}
-      hasPeriodeAksjonspunkt
-      isPeriodAksjonspunktClosed={false}
-      fixedMedlemskapPerioder={periods}
-      termindato="2016-10-16"
-      readOnly={false}
-      vurderingTypes={[]}
-      alleMerknaderFraBeslutter={{}}
-    />);
-
-    const message = wrapper.find('FormattedMessage');
-    expect(message).to.have.length(1);
-    expect(message.prop('id')).to.eql('PerioderMedMedlemskapFaktaPanel.Termindato');
-    expect(message.prop('values')).to.eql({ dato: '16.10.2016' });
-  });
-
-  it('skal vise omsorgsovertakelsedato når en har dette', () => {
-    const periods = [{
-      fom: '2016-01-15',
-      tom: '2016-10-15',
-      dekning: 'testdekning',
-      status: 'testStatus',
-      beslutningsdato: '2016-10-16',
-    }];
-
-    const wrapper = shallowWithIntl(<UndecoratedForm
-      intl={intlMock}
-      hasPeriodeAksjonspunkt
-      isPeriodAksjonspunktClosed={false}
-      fixedMedlemskapPerioder={periods}
-      omsorgsovertakelseDato="2016-10-16"
-      readOnly={false}
-      vurderingTypes={[]}
-      alleMerknaderFraBeslutter={{}}
-    />);
-
-    const message = wrapper.find('FormattedMessage');
-    expect(message).to.have.length(1);
-    expect(message.prop('id')).to.eql('PerioderMedMedlemskapFaktaPanel.Omsorgsovertakelse');
-    expect(message.prop('values')).to.eql({ dato: '16.10.2016' });
-  });
-
   it('skal vise tabell med medlemskapsperioder', () => {
     const perioder = [{
       fom: '2017-08-01',
@@ -267,8 +215,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       isPeriodAksjonspunktClosed: false,
       medlemskapManuellVurderingType: 'manuellType',
       fodselsdato: '2017-10-15',
-      termindato: undefined,
-      omsorgsovertakelseDato: undefined,
       hasPeriodeAksjonspunkt: true,
     });
   });
