@@ -6,6 +6,7 @@ import AvregningTable from './AvregningTable';
 
 const simuleringResultat = {
   perioderPerMottaker: [],
+  periode: {},
 };
 const mottaker = {
   mottakerNavn: '',
@@ -34,6 +35,7 @@ const mottaker = {
       ],
     },
   ],
+  nesteUtbPeriode: {},
   resultatOgMotregningRader: [],
 };
 const mockProps = {
@@ -45,9 +47,7 @@ const mockProps = {
 
 describe('<AvregningTable>', () => {
   it('skal ikke vise tabele hvis perioderPerMottaker er tømt array', () => {
-    const wrapper = shallow(<AvregningTable
-      {...mockProps}
-    />);
+    const wrapper = shallow(<AvregningTable {...mockProps} />);
 
     const table = wrapper.find('Table');
     expect(table).to.have.length(0);
@@ -58,11 +58,10 @@ describe('<AvregningTable>', () => {
       ...mockProps,
       simuleringResultat: {
         perioderPerMottaker: [mottaker, mottaker],
+        periode: {},
       },
     };
-    const wrapper = shallow(<AvregningTable
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningTable {...props} />);
 
     const table = wrapper.find('Table');
     expect(table).to.have.length(2);
@@ -73,11 +72,10 @@ describe('<AvregningTable>', () => {
       ...mockProps,
       simuleringResultat: {
         perioderPerMottaker: [mottaker],
+        periode: {},
       },
     };
-    const wrapper = shallow(<AvregningTable
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningTable {...props} />);
 
     const tableRow = wrapper.find('TableRow');
     expect(tableRow).to.have.length(3);
@@ -95,11 +93,10 @@ describe('<AvregningTable>', () => {
       ...mockProps,
       simuleringResultat: {
         perioderPerMottaker: [mottaker, { ...mottaker, ...arbeidsgiver }],
+        periode: {},
       },
     };
-    const wrapper = shallow(<AvregningTable
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningTable {...props} />);
 
     const normaltekst = wrapper.find('Normaltekst');
     expect(normaltekst).to.have.length(1);
