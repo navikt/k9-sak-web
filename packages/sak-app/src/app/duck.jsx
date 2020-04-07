@@ -29,6 +29,11 @@ export const fetchAlleKodeverk = (featureToggles = {}) => dispatch => {
       dispatch(setDisabledApplicationContext(ApplicationContextPath.FPTILBAKE)),
     );
   }
+  if (featureToggles[featureToggle.AKTIVER_KLAGEBEHANDLING]) {
+    dispatch(fpsakApi.KODEVERK_KLAGE.makeRestApiRequest()()).catch(
+      () => dispatch(setDisabledApplicationContext(ApplicationContextPath.KLAGE))
+    );
+  }
 };
 
 /* Reducer */
@@ -111,8 +116,15 @@ export const getEnabledApplicationContexts = createSelector(
       ? featureToggles[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]
       : false;
     const erFpTilbakeDisabled = disabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE);
-    return erFpTilbakeFeatureEnabled && !erFpTilbakeDisabled
-      ? [ApplicationContextPath.FPSAK, ApplicationContextPath.FPTILBAKE]
+    const erKlagefeatureAktivert = featureToggles ? featureToggles[featureToggle.AKTIVER_KLAGEBEHANDLING] : false;
+    const erKlageDeaktivert = disabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
+    if (erFpTilbakeFeatureEnabled && !erFpTilbakeDisabled) {
+      return erKlagefeatureAktivert && !erKlageDeaktivert
+        ? [ApplicationContextPath.FPSAK, ApplicationContextPath.FPTILBAKE, ApplicationContextPath.KLAGE]
+        : [ApplicationContextPath.FPSAK, ApplicationContextPath.FPTILBAKE];
+    }
+    return erKlagefeatureAktivert && !erKlageDeaktivert
+      ? [ApplicationContextPath.FPSAK, ApplicationContextPath.KLAGE]
       : [ApplicationContextPath.FPSAK];
   },
 );
