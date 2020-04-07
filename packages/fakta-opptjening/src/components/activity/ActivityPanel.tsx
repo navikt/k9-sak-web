@@ -1,20 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import moment from 'moment';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+  behandlingForm,
+  behandlingFormValueSelector,
+  PeriodpickerField,
+  RadioGroupField,
+  RadioOption,
+  SelectField,
+  TextAreaField,
+} from '@fpsak-frontend/form';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
-import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import {
   findDifferenceInMonthsAndDays,
   hasValidPeriod,
@@ -27,22 +26,29 @@ import {
   required,
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
-import {
-  PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField, behandlingForm, behandlingFormValueSelector
-} from '@fpsak-frontend/form';
-import { TimeLineButton } from '@fpsak-frontend/tidslinje';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
-
+import { Kodeverk } from '@k9-sak-web/types';
+import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
+import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedHTMLMessage, FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
-
 import styles from './activityPanel.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
 function erFraAvvikendeKode(atCodes, oat) {
-  return (atCodes.includes(arbeidType.LONN_UNDER_UTDANNING) && oat.kode === opptjeningAktivitetType.VIDERE_ETTERUTDANNING)
-    || (atCodes.includes(arbeidType.FRILANSER) && oat.kode === opptjeningAktivitetType.FRILANS);
+  return (
+    (atCodes.includes(arbeidType.LONN_UNDER_UTDANNING) && oat.kode === opptjeningAktivitetType.VIDERE_ETTERUTDANNING) ||
+    (atCodes.includes(arbeidType.FRILANSER) && oat.kode === opptjeningAktivitetType.FRILANS)
+  );
 }
 
 const filterActivityType = (opptjeningAktivitetTypes, erManueltOpprettet, arbeidTypes) => {
@@ -50,9 +56,8 @@ const filterActivityType = (opptjeningAktivitetTypes, erManueltOpprettet, arbeid
     return opptjeningAktivitetTypes;
   }
 
-  const atCodes = arbeidTypes.map((at) => at.kode);
-  return opptjeningAktivitetTypes.filter((oat) => atCodes.includes(oat.kode)
-    || erFraAvvikendeKode(atCodes, oat));
+  const atCodes = arbeidTypes.map(at => at.kode);
+  return opptjeningAktivitetTypes.filter(oat => atCodes.includes(oat.kode) || erFraAvvikendeKode(atCodes, oat));
 };
 
 const shouldDisablePeriodpicker = (hasAksjonspunkt, initialValues) => {
@@ -62,16 +67,18 @@ const shouldDisablePeriodpicker = (hasAksjonspunkt, initialValues) => {
   return !initialValues.erManueltOpprettet && !!initialValues.erGodkjent && !initialValues.erEndret;
 };
 
-const hasMerknad = (activity) => !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
+const hasMerknad = activity => !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
 
 const findInYearsMonthsAndDays = (opptjeningFom, opptjeningTom) => {
   const difference = findDifferenceInMonthsAndDays(opptjeningFom, opptjeningTom);
   if (!difference) {
     return <span />;
   }
-  return difference.months >= 1
-    ? <FormattedMessage id="ActivityPanel.MonthsAndDays" values={{ months: difference.months, days: difference.days }} />
-    : <FormattedMessage id="ActivityPanel.Days" values={{ days: difference.days }} />;
+  return difference.months >= 1 ? (
+    <FormattedMessage id="ActivityPanel.MonthsAndDays" values={{ months: difference.months, days: difference.days }} />
+  ) : (
+    <FormattedMessage id="ActivityPanel.Days" values={{ days: difference.days }} />
+  );
 };
 
 const isBegrunnelseRequired = (allValues, props) => {
@@ -85,13 +92,42 @@ const isBegrunnelseRequired = (allValues, props) => {
 };
 const requiredCustom = requiredIfCustomFunctionIsTrue(isBegrunnelseRequired);
 
-const finnBegrunnelseLabel = (initialValues, readOnly, hasAksjonspunkt) => (
+const finnBegrunnelseLabel = (initialValues, readOnly, hasAksjonspunkt) =>
   initialValues.erManueltOpprettet || readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)
     ? 'ActivityPanel.Begrunnelse'
-    : 'ActivityPanel.BegrunnEndringene'
-);
+    : 'ActivityPanel.BegrunnEndringene';
 
 export const activityPanelName = 'ActivityPanel';
+
+interface ActivityPanelProps {
+  activity: OpptjeningAktivitet;
+  activityId: number;
+  alleKodeverk: AlleKodeverk;
+  alleMerknaderFraBeslutter: any;
+  cancelSelectedOpptjeningActivity: () => void;
+  hasAksjonspunkt: boolean;
+  opptjeningAktivitetTypes: OpptjeningAktivitetType[];
+  opptjeningFomDato: string;
+  opptjeningTomDato: string;
+  readOnly: boolean;
+  selectedActivityType: Kodeverk;
+  selectNextPeriod: () => void;
+  selectPrevPeriod: () => void;
+  updateActivity: (values: string) => void;
+}
+
+interface StateProps {
+  opptjeningFom: string;
+  opptjeningTom: string;
+  initialValues: InitialValues;
+}
+
+interface InitialValues {
+  erEndret: boolean;
+  erManueltOpprettet: boolean;
+  erPeriodeEndret: boolean;
+  id: string;
+}
 
 /**
  * ActivityPanel
@@ -114,8 +150,9 @@ export const ActivityPanel = ({
   opptjeningFomDato,
   opptjeningTomDato,
   alleMerknaderFraBeslutter,
-  ...formProps
-}) => (
+  handleSubmit,
+  pristine,
+}: ActivityPanelProps & WrappedComponentProps & StateProps & InjectedFormProps) => (
   <FaktaGruppe
     className={styles.panel}
     aksjonspunktCode={hasMerknad(initialValues) ? aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING : undefined}
@@ -123,16 +160,26 @@ export const ActivityPanel = ({
   >
     <Row>
       <Column xs="10">
-        <Element><FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} /></Element>
+        <Element>
+          <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
+        </Element>
       </Column>
       <Column xs="2">
-        <TimeLineButton text={intl.formatMessage({ id: 'Timeline.prevPeriod' })} type="prev" callback={selectPrevPeriod} />
-        <TimeLineButton text={intl.formatMessage({ id: 'Timeline.nextPeriod' })} type="next" callback={selectNextPeriod} />
+        <TimeLineButton
+          text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
+          type="prev"
+          callback={selectPrevPeriod}
+        />
+        <TimeLineButton
+          text={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
+          type="next"
+          callback={selectNextPeriod}
+        />
       </Column>
     </Row>
     <Row>
       <Column xs="7">
-        <FlexContainer fluid>
+        <FlexContainer>
           <FlexRow>
             <FlexColumn>
               <PeriodpickerField
@@ -158,7 +205,11 @@ export const ActivityPanel = ({
           label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
           validate={[required]}
           placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}
-          selectValues={opptjeningAktivitetTypes.map((oat) => <option key={oat.kode} value={oat.kode}>{oat.navn}</option>)}
+          selectValues={opptjeningAktivitetTypes.map(oat => (
+            <option key={oat.kode} value={oat.kode}>
+              {oat.navn}
+            </option>
+          ))}
           readOnly={readOnly || !initialValues.erManueltOpprettet}
         />
       </Column>
@@ -169,11 +220,16 @@ export const ActivityPanel = ({
       isManuallyAdded={initialValues.erManueltOpprettet}
       selectedActivityType={selectedActivityType}
     />
-    { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
+    {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
         <VerticalSpacer twentyPx />
-        { (!initialValues.erManueltOpprettet) && (
-          <RadioGroupField name="erGodkjent" validate={[required]} readOnly={readOnly} isEdited={initialValues.erEndret}>
+        {!initialValues.erManueltOpprettet && (
+          <RadioGroupField
+            name="erGodkjent"
+            validate={[required]}
+            readOnly={readOnly}
+            isEdited={initialValues.erEndret}
+          >
             <RadioOption value label={{ id: 'ActivityPanel.Godkjent' }} />
             <RadioOption value={false} label={<FormattedHTMLMessage id="ActivityPanel.IkkeGodkjent" />} />
           </RadioGroupField>
@@ -191,20 +247,18 @@ export const ActivityPanel = ({
         readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
       />
     </>
-    { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
+    {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
-        <FlexContainer fluid>
+        <FlexContainer>
           <FlexRow>
             <FlexColumn>
-              <Hovedknapp mini htmlType="button" onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+              <Hovedknapp mini htmlType="button" onClick={handleSubmit} disabled={pristine}>
                 <FormattedMessage id="ActivityPanel.Oppdater" />
               </Hovedknapp>
             </FlexColumn>
             <FlexColumn>
               <Knapp mini htmlType="button" onClick={cancelSelectedOpptjeningActivity}>
-                <FormattedMessage
-                  id="ActivityPanel.Avbryt"
-                />
+                <FormattedMessage id="ActivityPanel.Avbryt" />
               </Knapp>
             </FlexColumn>
           </FlexRow>
@@ -214,37 +268,15 @@ export const ActivityPanel = ({
   </FaktaGruppe>
 );
 
-ActivityPanel.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  hasAksjonspunkt: PropTypes.bool.isRequired,
-  opptjeningAktivitetTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  cancelSelectedOpptjeningActivity: PropTypes.func.isRequired,
-  selectedActivityType: PropTypes.shape(),
-  opptjeningFom: PropTypes.string,
-  opptjeningTom: PropTypes.string,
-  selectNextPeriod: PropTypes.func,
-  selectPrevPeriod: PropTypes.func,
-  activityId: PropTypes.number,
-  ...formPropTypes,
-};
-
-ActivityPanel.defaultProps = {
-  selectedActivityType: {},
-  opptjeningFom: undefined,
-  opptjeningTom: undefined,
-  selectPrevPeriod: undefined,
-  selectNextPeriod: undefined,
-  activityId: undefined,
-};
-
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const {
-    updateActivity, alleKodeverk, opptjeningAktivitetTypes, activity,
-  } = initialOwnProps;
-  const onSubmit = (values) => updateActivity(values);
+const mapStateToPropsFactory = (initialState, initialOwnProps: ActivityPanelProps) => {
+  const { updateActivity, alleKodeverk, opptjeningAktivitetTypes, activity } = initialOwnProps;
+  const onSubmit = values => updateActivity(values);
   const arbeidTyper = alleKodeverk[kodeverkTyper.ARBEID_TYPE];
-  const filtrerteOpptjeningAktivitetTypes = filterActivityType(opptjeningAktivitetTypes, activity.erManueltOpprettet, arbeidTyper);
+  const filtrerteOpptjeningAktivitetTypes = filterActivityType(
+    opptjeningAktivitetTypes,
+    activity.erManueltOpprettet,
+    arbeidTyper,
+  );
 
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon } = ownProps;
@@ -252,16 +284,28 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       onSubmit,
       initialValues: ownProps.activity,
       opptjeningAktivitetTypes: filtrerteOpptjeningAktivitetTypes,
-      selectedActivityType: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'aktivitetType'),
-      opptjeningFom: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'opptjeningFom'),
-      opptjeningTom: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'opptjeningTom'),
+      selectedActivityType: behandlingFormValueSelector(
+        activityPanelName,
+        behandlingId,
+        behandlingVersjon,
+      )(state, 'aktivitetType'),
+      opptjeningFom: behandlingFormValueSelector(
+        activityPanelName,
+        behandlingId,
+        behandlingVersjon,
+      )(state, 'opptjeningFom'),
+      opptjeningTom: behandlingFormValueSelector(
+        activityPanelName,
+        behandlingId,
+        behandlingVersjon,
+      )(state, 'opptjeningTom'),
       activityId: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'id'),
     };
   };
 };
 
 const validateForm = (values, props) => {
-  const errors = {};
+  const errors = { opptjeningFom: null, opptjeningTom: null };
   if (!values) {
     return errors;
   }
@@ -271,14 +315,21 @@ const validateForm = (values, props) => {
   errors.opptjeningTom = required(opptjeningTom) || hasValidPeriod(opptjeningFom, opptjeningTom);
 
   if (!errors.opptjeningFom && !errors.opptjeningTom) {
-    errors.opptjeningFom = isWithinOpptjeningsperiode(props.opptjeningFomDato, props.opptjeningTomDato)(opptjeningFom, opptjeningTom);
+    errors.opptjeningFom = isWithinOpptjeningsperiode(props.opptjeningFomDato, props.opptjeningTomDato)(
+      opptjeningFom,
+      opptjeningTom,
+    );
   }
 
   return errors;
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
-  form: activityPanelName,
-  validate: validateForm,
-  enableReinitialize: true,
-})(ActivityPanel)));
+export default connect(mapStateToPropsFactory)(
+  injectIntl(
+    behandlingForm({
+      form: activityPanelName,
+      validate: validateForm,
+      enableReinitialize: true,
+    })(ActivityPanel),
+  ),
+);

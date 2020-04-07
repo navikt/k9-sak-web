@@ -1,19 +1,32 @@
+import { Aksjonspunkt, Opptjening, OpptjeningBehandling, SubmitCallback, UtlandDokStatus } from '@k9-sak-web/types';
+import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-import OpptjeningInfoPanel from './components/OpptjeningInfoPanel';
-import opptjeningAksjonspunkterPropType from './propTypes/opptjeningAksjonspunkterPropType';
-import opptjeningPropType from './propTypes/opptjeningPropType';
-import opptjeningBehandlingPropType from './propTypes/opptjeningBehandlingPropType';
 import messages from '../i18n/nb_NO.json';
+import OpptjeningInfoPanel from './components/OpptjeningInfoPanel';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
+
+interface OpptjeningFaktaIndexProps {
+  behandling: OpptjeningBehandling;
+  opptjening: Opptjening;
+  aksjonspunkter: Aksjonspunkt[];
+  alleMerknaderFraBeslutter: any;
+  utlandDokStatus: UtlandDokStatus;
+  alleKodeverk: AlleKodeverk;
+  submitCallback: (props: SubmitCallback[]) => void;
+  readOnly: boolean;
+  harApneAksjonspunkter: boolean;
+  submittable: boolean;
+}
 
 const OpptjeningFaktaIndex = ({
   behandling,
@@ -26,7 +39,7 @@ const OpptjeningFaktaIndex = ({
   submittable,
   submitCallback,
   readOnly,
-}) => (
+}: OpptjeningFaktaIndexProps) => (
   <RawIntlProvider value={intl}>
     <OpptjeningInfoPanel
       behandlingId={behandling.id}
@@ -39,26 +52,11 @@ const OpptjeningFaktaIndex = ({
       readOnly={readOnly}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
-      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      harApneAksjonspunkter={harApneAksjonspunkter}
       submittable={submittable}
     />
   </RawIntlProvider>
 );
-
-OpptjeningFaktaIndex.propTypes = {
-  behandling: opptjeningBehandlingPropType.isRequired,
-  opptjening: opptjeningPropType,
-  aksjonspunkter: PropTypes.arrayOf(opptjeningAksjonspunkterPropType).isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
-  utlandDokStatus: PropTypes.shape({
-    dokStatus: PropTypes.string.isRequired,
-  }),
-  alleKodeverk: PropTypes.shape().isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  harApneAksjonspunkter: PropTypes.bool.isRequired,
-  submittable: PropTypes.bool.isRequired,
-};
 
 OpptjeningFaktaIndex.defaultProps = {
   opptjening: undefined,
