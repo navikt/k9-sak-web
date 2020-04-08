@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
+import { FieldArray, formPropTypes } from 'redux-form';
 import moment from 'moment';
 import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -9,9 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -28,7 +26,13 @@ import {
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
 import {
-  PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField, behandlingForm, behandlingFormValueSelector
+  PeriodpickerField,
+  RadioGroupField,
+  RadioOption,
+  SelectField,
+  TextAreaField,
+  behandlingForm,
+  behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
@@ -41,8 +45,10 @@ const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
 function erFraAvvikendeKode(atCodes, oat) {
-  return (atCodes.includes(arbeidType.LONN_UNDER_UTDANNING) && oat.kode === opptjeningAktivitetType.VIDERE_ETTERUTDANNING)
-    || (atCodes.includes(arbeidType.FRILANSER) && oat.kode === opptjeningAktivitetType.FRILANS);
+  return (
+    (atCodes.includes(arbeidType.LONN_UNDER_UTDANNING) && oat.kode === opptjeningAktivitetType.VIDERE_ETTERUTDANNING) ||
+    (atCodes.includes(arbeidType.FRILANSER) && oat.kode === opptjeningAktivitetType.FRILANS)
+  );
 }
 
 const filterActivityType = (opptjeningAktivitetTypes, erManueltOpprettet, arbeidTypes) => {
@@ -50,9 +56,8 @@ const filterActivityType = (opptjeningAktivitetTypes, erManueltOpprettet, arbeid
     return opptjeningAktivitetTypes;
   }
 
-  const atCodes = arbeidTypes.map((at) => at.kode);
-  return opptjeningAktivitetTypes.filter((oat) => atCodes.includes(oat.kode)
-    || erFraAvvikendeKode(atCodes, oat));
+  const atCodes = arbeidTypes.map(at => at.kode);
+  return opptjeningAktivitetTypes.filter(oat => atCodes.includes(oat.kode) || erFraAvvikendeKode(atCodes, oat));
 };
 
 const shouldDisablePeriodpicker = (hasAksjonspunkt, initialValues) => {
@@ -62,16 +67,18 @@ const shouldDisablePeriodpicker = (hasAksjonspunkt, initialValues) => {
   return !initialValues.erManueltOpprettet && !!initialValues.erGodkjent && !initialValues.erEndret;
 };
 
-const hasMerknad = (activity) => !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
+const hasMerknad = activity => !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
 
 const findInYearsMonthsAndDays = (opptjeningFom, opptjeningTom) => {
   const difference = findDifferenceInMonthsAndDays(opptjeningFom, opptjeningTom);
   if (!difference) {
     return <span />;
   }
-  return difference.months >= 1
-    ? <FormattedMessage id="ActivityPanel.MonthsAndDays" values={{ months: difference.months, days: difference.days }} />
-    : <FormattedMessage id="ActivityPanel.Days" values={{ days: difference.days }} />;
+  return difference.months >= 1 ? (
+    <FormattedMessage id="ActivityPanel.MonthsAndDays" values={{ months: difference.months, days: difference.days }} />
+  ) : (
+    <FormattedMessage id="ActivityPanel.Days" values={{ days: difference.days }} />
+  );
 };
 
 const isBegrunnelseRequired = (allValues, props) => {
@@ -85,11 +92,10 @@ const isBegrunnelseRequired = (allValues, props) => {
 };
 const requiredCustom = requiredIfCustomFunctionIsTrue(isBegrunnelseRequired);
 
-const finnBegrunnelseLabel = (initialValues, readOnly, hasAksjonspunkt) => (
+const finnBegrunnelseLabel = (initialValues, readOnly, hasAksjonspunkt) =>
   initialValues.erManueltOpprettet || readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)
     ? 'ActivityPanel.Begrunnelse'
-    : 'ActivityPanel.BegrunnEndringene'
-);
+    : 'ActivityPanel.BegrunnEndringene';
 
 export const activityPanelName = 'ActivityPanel';
 
@@ -123,11 +129,21 @@ export const ActivityPanel = ({
   >
     <Row>
       <Column xs="10">
-        <Element><FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} /></Element>
+        <Element>
+          <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
+        </Element>
       </Column>
       <Column xs="2">
-        <TimeLineButton text={intl.formatMessage({ id: 'Timeline.prevPeriod' })} type="prev" callback={selectPrevPeriod} />
-        <TimeLineButton text={intl.formatMessage({ id: 'Timeline.nextPeriod' })} type="next" callback={selectNextPeriod} />
+        <TimeLineButton
+          text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
+          type="prev"
+          callback={selectPrevPeriod}
+        />
+        <TimeLineButton
+          text={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
+          type="next"
+          callback={selectNextPeriod}
+        />
       </Column>
     </Row>
     <Row>
@@ -158,7 +174,11 @@ export const ActivityPanel = ({
           label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
           validate={[required]}
           placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}
-          selectValues={opptjeningAktivitetTypes.map((oat) => <option key={oat.kode} value={oat.kode}>{oat.navn}</option>)}
+          selectValues={opptjeningAktivitetTypes.map(oat => (
+            <option key={oat.kode} value={oat.kode}>
+              {oat.navn}
+            </option>
+          ))}
           readOnly={readOnly || !initialValues.erManueltOpprettet}
         />
       </Column>
@@ -169,11 +189,16 @@ export const ActivityPanel = ({
       isManuallyAdded={initialValues.erManueltOpprettet}
       selectedActivityType={selectedActivityType}
     />
-    { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
+    {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
         <VerticalSpacer twentyPx />
-        { (!initialValues.erManueltOpprettet) && (
-          <RadioGroupField name="erGodkjent" validate={[required]} readOnly={readOnly} isEdited={initialValues.erEndret}>
+        {!initialValues.erManueltOpprettet && (
+          <RadioGroupField
+            name="erGodkjent"
+            validate={[required]}
+            readOnly={readOnly}
+            isEdited={initialValues.erEndret}
+          >
             <RadioOption value label={{ id: 'ActivityPanel.Godkjent' }} />
             <RadioOption value={false} label={<FormattedHTMLMessage id="ActivityPanel.IkkeGodkjent" />} />
           </RadioGroupField>
@@ -191,7 +216,7 @@ export const ActivityPanel = ({
         readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
       />
     </>
-    { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
+    {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
         <FlexContainer fluid>
           <FlexRow>
@@ -202,9 +227,7 @@ export const ActivityPanel = ({
             </FlexColumn>
             <FlexColumn>
               <Knapp mini htmlType="button" onClick={cancelSelectedOpptjeningActivity}>
-                <FormattedMessage
-                  id="ActivityPanel.Avbryt"
-                />
+                <FormattedMessage id="ActivityPanel.Avbryt" />
               </Knapp>
             </FlexColumn>
           </FlexRow>
@@ -239,12 +262,14 @@ ActivityPanel.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const {
-    updateActivity, alleKodeverk, opptjeningAktivitetTypes, activity,
-  } = initialOwnProps;
-  const onSubmit = (values) => updateActivity(values);
+  const { updateActivity, alleKodeverk, opptjeningAktivitetTypes, activity } = initialOwnProps;
+  const onSubmit = values => updateActivity(values);
   const arbeidTyper = alleKodeverk[kodeverkTyper.ARBEID_TYPE];
-  const filtrerteOpptjeningAktivitetTypes = filterActivityType(opptjeningAktivitetTypes, activity.erManueltOpprettet, arbeidTyper);
+  const filtrerteOpptjeningAktivitetTypes = filterActivityType(
+    opptjeningAktivitetTypes,
+    activity.erManueltOpprettet,
+    arbeidTyper,
+  );
 
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon } = ownProps;
@@ -252,9 +277,21 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       onSubmit,
       initialValues: ownProps.activity,
       opptjeningAktivitetTypes: filtrerteOpptjeningAktivitetTypes,
-      selectedActivityType: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'aktivitetType'),
-      opptjeningFom: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'opptjeningFom'),
-      opptjeningTom: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'opptjeningTom'),
+      selectedActivityType: behandlingFormValueSelector(
+        activityPanelName,
+        behandlingId,
+        behandlingVersjon,
+      )(state, 'aktivitetType'),
+      opptjeningFom: behandlingFormValueSelector(
+        activityPanelName,
+        behandlingId,
+        behandlingVersjon,
+      )(state, 'opptjeningFom'),
+      opptjeningTom: behandlingFormValueSelector(
+        activityPanelName,
+        behandlingId,
+        behandlingVersjon,
+      )(state, 'opptjeningTom'),
       activityId: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'id'),
     };
   };
@@ -271,14 +308,21 @@ const validateForm = (values, props) => {
   errors.opptjeningTom = required(opptjeningTom) || hasValidPeriod(opptjeningFom, opptjeningTom);
 
   if (!errors.opptjeningFom && !errors.opptjeningTom) {
-    errors.opptjeningFom = isWithinOpptjeningsperiode(props.opptjeningFomDato, props.opptjeningTomDato)(opptjeningFom, opptjeningTom);
+    errors.opptjeningFom = isWithinOpptjeningsperiode(props.opptjeningFomDato, props.opptjeningTomDato)(
+      opptjeningFom,
+      opptjeningTom,
+    );
   }
 
   return errors;
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
-  form: activityPanelName,
-  validate: validateForm,
-  enableReinitialize: true,
-})(ActivityPanel)));
+export default connect(mapStateToPropsFactory)(
+  injectIntl(
+    behandlingForm({
+      form: activityPanelName,
+      validate: validateForm,
+      enableReinitialize: true,
+    })(ActivityPanel),
+  ),
+);

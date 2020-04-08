@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { TabsPure } from 'nav-frontend-tabs';
 
 import OpptjeningInfoPanel from './components/OpptjeningInfoPanel';
 import opptjeningAksjonspunkterPropType from './propTypes/opptjeningAksjonspunkterPropType';
@@ -31,7 +30,6 @@ const OpptjeningFaktaIndex = ({
   submitCallback,
   readOnly,
 }) => {
-  const [activeTab, setActiveTab] = React.useState(0);
   const aktiviteter1 = [
     {
       ...opptjening.opptjeningAktivitetList[0],
@@ -58,43 +56,26 @@ const OpptjeningFaktaIndex = ({
   ];
 
   const opptjeningsperioder = [
-    { label: 'Opptjeningsperiode 1', opptjening: { ...opptjening, opptjeningAktivitetList: aktiviteter1 } },
-    { label: 'Opptjeningsperiode 2', opptjening: { ...opptjening, opptjeningAktivitetList: aktiviteter2 } },
-    { label: 'Opptjeningsperiode 3', opptjening: { ...opptjening, opptjeningAktivitetList: aktiviteter3 } },
+    { ...opptjening, opptjeningAktivitetList: aktiviteter1 },
+    { ...opptjening, opptjeningAktivitetList: aktiviteter2 },
+    { ...opptjening, opptjeningAktivitetList: aktiviteter3 },
   ];
 
   return (
     <RawIntlProvider value={intl}>
-      <TabsPure
-        tabs={opptjeningsperioder.map((currentPeriode, currentPeriodeIndex) => ({
-          ...currentPeriode,
-          aktiv: activeTab === currentPeriodeIndex,
-        }))}
-        onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
+      <OpptjeningInfoPanel
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        opptjeningList={opptjeningsperioder}
+        dokStatus={utlandDokStatus ? utlandDokStatus.dokStatus : undefined}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        alleKodeverk={alleKodeverk}
+        hasOpenAksjonspunkter={harApneAksjonspunkter}
+        submittable={submittable}
       />
-      {opptjeningsperioder.map((currentPeriode, currentPeriodeIndex) => {
-        if (currentPeriodeIndex === activeTab) {
-          return (
-            <OpptjeningInfoPanel
-              behandlingId={behandling.id}
-              behandlingVersjon={behandling.versjon}
-              fastsattOpptjening={currentPeriode.opptjening ? currentPeriode.opptjening.fastsattOpptjening : undefined}
-              opptjeningAktiviteter={
-                currentPeriode.opptjening ? currentPeriode.opptjening.opptjeningAktivitetList : undefined
-              }
-              dokStatus={utlandDokStatus ? utlandDokStatus.dokStatus : undefined}
-              aksjonspunkter={aksjonspunkter}
-              submitCallback={submitCallback}
-              readOnly={readOnly}
-              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-              alleKodeverk={alleKodeverk}
-              hasOpenAksjonspunkter={harApneAksjonspunkter}
-              submittable={submittable}
-            />
-          );
-        }
-        return null;
-      })}
     </RawIntlProvider>
   );
 };
