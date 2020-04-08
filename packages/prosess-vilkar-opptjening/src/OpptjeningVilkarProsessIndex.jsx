@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import { TabsPure } from 'nav-frontend-tabs';
 import opptjeningVilkarAksjonspunkterPropType from './propTypes/opptjeningVilkarAksjonspunkterPropType';
 import opptjeningVilkarBehandlingPropType from './propTypes/opptjeningVilkarBehandlingPropType';
 import opptjeningVilkarOpptjeningPropType from './propTypes/opptjeningVilkarOpptjeningPropType';
@@ -10,10 +11,19 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
+
+const opptjeningsperioder = [
+  { label: 'Opptjeningsperiode 1' },
+  { label: 'Opptjeningsperiode 2' },
+  { label: 'Opptjeningsperiode 3' },
+];
 
 const OpptjeningVilkarProsessIndex = ({
   behandling,
@@ -25,23 +35,33 @@ const OpptjeningVilkarProsessIndex = ({
   isReadOnly,
   isAksjonspunktOpen,
   readOnlySubmitButton,
-}) => (
-  <RawIntlProvider value={intl}>
-    <OpptjeningVilkarForm
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      behandlingsresultat={behandling.behandlingsresultat}
-      fastsattOpptjening={opptjening.fastsattOpptjening}
-      status={status}
-      lovReferanse={lovReferanse}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={submitCallback}
-      readOnly={isReadOnly}
-      isAksjonspunktOpen={isAksjonspunktOpen}
-      readOnlySubmitButton={readOnlySubmitButton}
-    />
-  </RawIntlProvider>
-);
+}) => {
+  const [activeTab, setActiveTab] = React.useState(0);
+  return (
+    <RawIntlProvider value={intl}>
+      <TabsPure
+        tabs={opptjeningsperioder.map((currentPeriode, currentPeriodeIndex) => ({
+          ...currentPeriode,
+          aktiv: activeTab === currentPeriodeIndex,
+        }))}
+        onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
+      />
+      <OpptjeningVilkarForm
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        behandlingsresultat={behandling.behandlingsresultat}
+        fastsattOpptjening={opptjening.fastsattOpptjening}
+        status={status}
+        lovReferanse={lovReferanse}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={isReadOnly}
+        isAksjonspunktOpen={isAksjonspunktOpen}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
+    </RawIntlProvider>
+  );
+};
 
 OpptjeningVilkarProsessIndex.propTypes = {
   behandling: opptjeningVilkarBehandlingPropType.isRequired,
