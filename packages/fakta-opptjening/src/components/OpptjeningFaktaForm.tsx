@@ -26,7 +26,7 @@ import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
 import styles from './opptjeningFaktaForm.less';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 
-const getAksjonspunktHelpTexts = activities => {
+const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
   const texts = [];
   if (activities.some(a => a.stillingsandel === 0)) {
     texts.push(
@@ -34,7 +34,9 @@ const getAksjonspunktHelpTexts = activities => {
     );
   }
 
-  const aktivitetTypes = activities.filter(a => (a.erGodjent === undefined || a.beskrivelse) && a.stillingsandel !== 0);
+  const aktivitetTypes = activities.filter(
+    a => (a.erGodkjent === undefined || a.beskrivelse) && a.stillingsandel !== 0,
+  );
   if (aktivitetTypes.length === 1) {
     texts.push(<FormattedMessage id="OpptjeningFaktaForm.EttArbeidKanGodkjennes" key="EttArbeidKanGodkjennes" />);
   } else if (aktivitetTypes.length > 1) {
@@ -43,7 +45,7 @@ const getAksjonspunktHelpTexts = activities => {
   return texts;
 };
 
-const findSkjaringstidspunkt = date => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
+const findSkjaringstidspunkt = (date: string) => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
 
 const sortByFomDate = opptjeningPeriods =>
   opptjeningPeriods.sort((o1, o2) => {
@@ -80,7 +82,7 @@ interface StateProps {
 }
 
 interface OpptjeningFaktaFormImplState {
-  selectedOpptjeningActivity?: OpptjeningAktivitet;
+  selectedOpptjeningActivity?: Partial<OpptjeningAktivitet>;
 }
 
 /**
@@ -122,19 +124,19 @@ export class OpptjeningFaktaFormImpl extends Component<
     this.setSelectedOpptjeningActivity(selected, true);
   }
 
-  setSelectedOpptjeningActivity(opptjeningActivity, isMounting?: boolean) {
+  setSelectedOpptjeningActivity(opptjeningActivity: Partial<OpptjeningAktivitet>, isMounting?: boolean) {
     if (!isMounting) {
       this.initializeActivityForm(opptjeningActivity);
     }
     this.setState({ selectedOpptjeningActivity: opptjeningActivity });
   }
 
-  setFormField(fieldName, fieldValue) {
+  setFormField(fieldName: string, fieldValue: OpptjeningAktivitet[]) {
     const { behandlingFormPrefix, formName, reduxFormChange: formChange } = this.props;
     formChange(`${behandlingFormPrefix}.${formName}`, fieldName, fieldValue);
   }
 
-  initializeActivityForm(opptjeningActivity) {
+  initializeActivityForm(opptjeningActivity: OpptjeningAktivitet | {}) {
     const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
     formInitialize(`${behandlingFormPrefix}.${activityPanelName}`, opptjeningActivity);
   }
@@ -169,7 +171,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     this.setSelectedOpptjeningActivity(opptjeningActivityWithAp || undefined);
   }
 
-  openPeriodInfo(event) {
+  openPeriodInfo(event: Event) {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     event.preventDefault();
@@ -182,7 +184,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     }
   }
 
-  selectNextPeriod(event) {
+  selectNextPeriod(event: Event) {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     const newIndex = opptjeningActivities.findIndex(oa => oa.id === selectedOpptjeningActivity.id) + 1;
@@ -192,7 +194,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     event.preventDefault();
   }
 
-  selectPrevPeriod(event) {
+  selectPrevPeriod(event: Event) {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     const newIndex = opptjeningActivities.findIndex(oa => oa.id === selectedOpptjeningActivity.id) - 1;

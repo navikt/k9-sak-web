@@ -13,7 +13,7 @@ import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
 export const formName = 'OpptjeningInfoPanel';
 
-interface OpptjeningFaktaIndexProps {
+interface OpptjeningInfoPanelProps {
   behandlingId: number;
   behandlingVersjon: number;
   opptjeningAktiviteter: OpptjeningAktivitet[];
@@ -52,7 +52,7 @@ export const OpptjeningInfoPanel = ({
   submitting,
   dirty,
   handleSubmit,
-}: OpptjeningFaktaIndexProps & InjectedFormProps & StateProps) => (
+}: OpptjeningInfoPanelProps & InjectedFormProps & StateProps) => (
   <form onSubmit={handleSubmit}>
     <OpptjeningFaktaForm
       behandlingId={behandlingId}
@@ -72,11 +72,11 @@ export const OpptjeningInfoPanel = ({
   </form>
 );
 
-const addDay = date => addDaysToDate(date, 1);
-const getOpptjeningsperiodeIfEqual = (activityDate, opptjeningsperiodeDate) =>
+const addDay = (date: string) => addDaysToDate(date, 1);
+const getOpptjeningsperiodeIfEqual = (activityDate: string, opptjeningsperiodeDate: string) =>
   moment(addDay(activityDate)).isSame(opptjeningsperiodeDate) ? opptjeningsperiodeDate : activityDate;
 
-const buildPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => {
+const buildPeriod = (activity: OpptjeningAktivitet, opptjeningsperiodeFom: string, opptjeningsperiodeTom: string) => {
   const fomDate = moment(activity.opptjeningFom).isBefore(opptjeningsperiodeFom)
     ? opptjeningsperiodeFom
     : getOpptjeningsperiodeIfEqual(activity.opptjeningFom, opptjeningsperiodeTom);
@@ -93,9 +93,9 @@ const buildPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => 
 
 export const buildInitialValues = createSelector(
   [
-    (ownProps: OpptjeningFaktaIndexProps) => ownProps.opptjeningAktiviteter,
-    (ownProps: OpptjeningFaktaIndexProps) => ownProps.fastsattOpptjening,
-    (ownProps: OpptjeningFaktaIndexProps) => ownProps.aksjonspunkter,
+    (ownProps: OpptjeningInfoPanelProps) => ownProps.opptjeningAktiviteter,
+    (ownProps: OpptjeningInfoPanelProps) => ownProps.fastsattOpptjening,
+    (ownProps: OpptjeningInfoPanelProps) => ownProps.aksjonspunkter,
   ],
   (opptjeningActivities, fastsattOpptjening, aksjonspunkter) =>
     fastsattOpptjening && {
@@ -113,7 +113,11 @@ export const buildInitialValues = createSelector(
     },
 );
 
-const transformPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => {
+const transformPeriod = (
+  activity: OpptjeningAktivitet,
+  opptjeningsperiodeFom: string,
+  opptjeningsperiodeTom: string,
+) => {
   let fomDate = activity.opptjeningFom;
   if (activity.originalFom && moment(activity.originalFom).isBefore(opptjeningsperiodeFom)) {
     fomDate = fomDate === opptjeningsperiodeFom ? activity.originalFom : fomDate;
@@ -130,7 +134,13 @@ const transformPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom)
   };
 };
 
-const transformValues = values => ({
+interface Values {
+  opptjeningActivities: OpptjeningAktivitet[];
+  fastsattOpptjening: OpptjeningAktivitet;
+  aksjonspunkt: Aksjonspunkt[];
+}
+
+const transformValues = (values: Values) => ({
   opptjeningAktivitetList: values.opptjeningActivities
     .map(oa =>
       transformPeriod(
@@ -141,9 +151,10 @@ const transformValues = values => ({
     )
     .map(oa => omit(oa, 'id')),
   kode: values.aksjonspunkt[0].definisjon.kode,
+  begrunnelse: '',
 });
 
-const mapStateToPropsFactory = (initialState, { submitCallback }) => {
+const mapStateToPropsFactory = (initialState, { submitCallback }: OpptjeningInfoPanelProps) => {
   const onSubmit = values => submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     aksjonspunkt: ownProps.aksjonspunkter[0],

@@ -7,6 +7,7 @@ type OpptjeningAktivitet = Readonly<{
   arbeidsgiverIdentifikator: string;
   arbeidsgiverNavn: string;
   begrunnelse: string;
+  beskrivelse?: string;
   erEndret: boolean;
   erGodkjent: boolean;
   erManueltOpprettet: boolean;

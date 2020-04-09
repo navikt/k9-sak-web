@@ -51,7 +51,11 @@ function erFraAvvikendeKode(atCodes, oat) {
   );
 }
 
-const filterActivityType = (opptjeningAktivitetTypes, erManueltOpprettet, arbeidTypes) => {
+const filterActivityType = (
+  opptjeningAktivitetTypes: OpptjeningAktivitetType[],
+  erManueltOpprettet: boolean,
+  arbeidTypes: Kodeverk[],
+) => {
   if (!erManueltOpprettet) {
     return opptjeningAktivitetTypes;
   }
@@ -60,16 +64,17 @@ const filterActivityType = (opptjeningAktivitetTypes, erManueltOpprettet, arbeid
   return opptjeningAktivitetTypes.filter(oat => atCodes.includes(oat.kode) || erFraAvvikendeKode(atCodes, oat));
 };
 
-const shouldDisablePeriodpicker = (hasAksjonspunkt, initialValues) => {
+const shouldDisablePeriodpicker = (hasAksjonspunkt: boolean, initialValues: Partial<OpptjeningAktivitet>) => {
   if (!hasAksjonspunkt) {
     return true;
   }
   return !initialValues.erManueltOpprettet && !!initialValues.erGodkjent && !initialValues.erEndret;
 };
 
-const hasMerknad = activity => !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
+const hasMerknad = (activity: Partial<OpptjeningAktivitet>) =>
+  !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
 
-const findInYearsMonthsAndDays = (opptjeningFom, opptjeningTom) => {
+const findInYearsMonthsAndDays = (opptjeningFom: string, opptjeningTom: string) => {
   const difference = findDifferenceInMonthsAndDays(opptjeningFom, opptjeningTom);
   if (!difference) {
     return <span />;
@@ -92,7 +97,11 @@ const isBegrunnelseRequired = (allValues, props) => {
 };
 const requiredCustom = requiredIfCustomFunctionIsTrue(isBegrunnelseRequired);
 
-const finnBegrunnelseLabel = (initialValues, readOnly, hasAksjonspunkt) =>
+const finnBegrunnelseLabel = (
+  initialValues: Partial<OpptjeningAktivitet>,
+  readOnly: boolean,
+  hasAksjonspunkt: boolean,
+) =>
   initialValues.erManueltOpprettet || readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)
     ? 'ActivityPanel.Begrunnelse'
     : 'ActivityPanel.BegrunnEndringene';
@@ -100,33 +109,28 @@ const finnBegrunnelseLabel = (initialValues, readOnly, hasAksjonspunkt) =>
 export const activityPanelName = 'ActivityPanel';
 
 interface ActivityPanelProps {
-  activity: OpptjeningAktivitet;
-  activityId: number;
+  activity: Partial<OpptjeningAktivitet>;
   alleKodeverk: AlleKodeverk;
   alleMerknaderFraBeslutter: any;
+  behandlingId: number;
+  behandlingVersjon: number;
   cancelSelectedOpptjeningActivity: () => void;
   hasAksjonspunkt: boolean;
   opptjeningAktivitetTypes: OpptjeningAktivitetType[];
   opptjeningFomDato: string;
   opptjeningTomDato: string;
   readOnly: boolean;
-  selectedActivityType: Kodeverk;
-  selectNextPeriod: () => void;
-  selectPrevPeriod: () => void;
+  selectNextPeriod: (event: Event) => void;
+  selectPrevPeriod: (event: Event) => void;
   updateActivity: (values: string) => void;
 }
 
 interface StateProps {
   opptjeningFom: string;
   opptjeningTom: string;
-  initialValues: InitialValues;
-}
-
-interface InitialValues {
-  erEndret: boolean;
-  erManueltOpprettet: boolean;
-  erPeriodeEndret: boolean;
-  id: string;
+  initialValues: Partial<OpptjeningAktivitet>;
+  selectedActivityType: Kodeverk;
+  activityId: number;
 }
 
 /**
@@ -278,7 +282,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: ActivityPanelProp
     arbeidTyper,
   );
 
-  return (state, ownProps) => {
+  return (state, ownProps: ActivityPanelProps) => {
     const { behandlingId, behandlingVersjon } = ownProps;
     return {
       onSubmit,
