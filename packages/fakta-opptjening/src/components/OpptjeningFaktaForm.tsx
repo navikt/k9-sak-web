@@ -47,21 +47,11 @@ const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
 
 const findSkjaringstidspunkt = (date: string) => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
 
-// const sortByFomDate = opptjeningPeriods =>
-//   opptjeningPeriods.sort((o1, o2) => {
-//     const isSame = moment(o2.opptjeningFom, ISO_DATE_FORMAT).isSame(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
-//     return isSame
-//       ? o1.id < o2.id
-//       : moment(o2.opptjeningFom, ISO_DATE_FORMAT).isBefore(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
-//   });
-
 const DOKUMENTASJON_VIL_BLI_INNHENTET = 'DOKUMENTASJON_VIL_BLI_INNHENTET';
 
 interface OpptjeningFaktaFormImplProps {
   behandlingId: number;
   behandlingVersjon: number;
-  // opptjeningFomDato: string;
-  // opptjeningTomDato: string;
   alleMerknaderFraBeslutter: any;
   alleKodeverk: AlleKodeverk;
   readOnly: boolean;
@@ -189,13 +179,11 @@ export class OpptjeningFaktaFormImpl extends Component<
     this.setSelectedOpptjeningActivity(opptjeningActivityWithAp || undefined);
   }
 
-  openPeriodInfo(event?: Event) {
+  openPeriodInfo(event: Event) {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity, activeTab } = this.state;
     const { opptjeningAktivitetList } = opptjeningList[activeTab];
-    if (event) {
-      event.preventDefault();
-    }
+    event.preventDefault();
     const currentSelectedItem = selectedOpptjeningActivity;
     if (currentSelectedItem) {
       this.setSelectedOpptjeningActivity(undefined);
