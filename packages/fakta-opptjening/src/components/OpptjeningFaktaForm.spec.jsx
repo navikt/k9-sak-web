@@ -10,61 +10,69 @@ import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFakt
 import ActivityPanel from './activity/ActivityPanel';
 
 describe('<OpptjeningFaktaForm>', () => {
-  const opptjeningActivities = [{
-    id: 1,
-    aktivitetType: { kode: OAType.ARBEID, navn: 'ARBEID' },
-    opptjeningFom: '2017-06-01',
-    opptjeningTom: '2017-07-10',
-    arbeidsgiver: 'Andersen Transport AS',
-    oppdragsgiverOrg: 583948180,
-    stillingsandel: 100,
-    erGodkjent: true,
-    begrunnelse: null,
-    erManueltOpprettet: false,
-    erEndret: false,
-  }, {
-    id: 2,
-    aktivitetType: { kode: OAType.NARING, navn: 'NARING' },
-    opptjeningFom: '2017-07-15',
-    opptjeningTom: '2017-08-15',
-    arbeidsgiver: 'Andersen Transport AS',
-    oppdragsgiverOrg: 583948180,
-    stillingsandel: 100,
-    registreringsdato: '2018-02-20',
-    erGodkjent: null,
-    begrunnelse: null,
-    erManueltOpprettet: false,
-    erEndret: false,
-  }];
+  const opptjeningActivities = [
+    {
+      id: 1,
+      aktivitetType: { kode: OAType.ARBEID, navn: 'ARBEID' },
+      opptjeningFom: '2017-06-01',
+      opptjeningTom: '2017-07-10',
+      arbeidsgiver: 'Andersen Transport AS',
+      oppdragsgiverOrg: 583948180,
+      stillingsandel: 100,
+      erGodkjent: true,
+      begrunnelse: null,
+      erManueltOpprettet: false,
+      erEndret: false,
+    },
+    {
+      id: 2,
+      aktivitetType: { kode: OAType.NARING, navn: 'NARING' },
+      opptjeningFom: '2017-07-15',
+      opptjeningTom: '2017-08-15',
+      arbeidsgiver: 'Andersen Transport AS',
+      oppdragsgiverOrg: 583948180,
+      stillingsandel: 100,
+      registreringsdato: '2018-02-20',
+      erGodkjent: null,
+      begrunnelse: null,
+      erManueltOpprettet: false,
+      erEndret: false,
+    },
+  ];
 
-  const opptjeningAktivitetTypes = [{
-    kode: OAType.ARBEID,
-    navn: 'Arbeid',
-  }, {
-    kode: OAType.NARING,
-    navn: 'Næring',
-  }];
+  const opptjeningAktivitetTypes = [
+    {
+      kode: OAType.ARBEID,
+      navn: 'Arbeid',
+    },
+    {
+      kode: OAType.NARING,
+      navn: 'Næring',
+    },
+  ];
 
   it('skal vise aksjonspunktinformasjon og knapper når aksjonspunkt finnes', () => {
-    const wrapper = shallow(<OpptjeningFaktaForm
-      hasAksjonspunkt
-      opptjeningFomDato="2017-08-15"
-      opptjeningTomDato="2017-08-31"
-      readOnly={false}
-      opptjeningActivities={opptjeningActivities}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      formName="test"
-      behandlingFormPrefix="test"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      hasOpenAksjonspunkter
-      submitting={false}
-      isDirty={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <OpptjeningFaktaForm
+        hasAksjonspunkt
+        opptjeningFomDato="2017-08-15"
+        opptjeningTomDato="2017-08-31"
+        readOnly={false}
+        opptjeningActivities={opptjeningActivities}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        formName="test"
+        behandlingFormPrefix="test"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        harApneAksjonspunkter
+        submitting={false}
+        isDirty={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleMerknaderFraBeslutter={{}}
+        alleKodeverk={{}}
+      />,
+    );
 
     wrapper.setState({ selectedOpptjeningActivity: opptjeningActivities[0] });
 
@@ -85,25 +93,27 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal ikke vise aksjonspunktinformasjon og knapper når aksjonspunkt ikke finnes', () => {
-    const wrapper = shallow(<OpptjeningFaktaForm
-      hasAksjonspunkt={false}
-      opptjeningFomDato="2017-08-15"
-      opptjeningTomDato="2017-08-31"
-      readOnly={false}
-      opptjeningActivities={opptjeningActivities}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      formName="test"
-      behandlingFormPrefix="test"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      hasOpenAksjonspunkter
-      submitting={false}
-      isDirty={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <OpptjeningFaktaForm
+        hasAksjonspunkt={false}
+        opptjeningFomDato="2017-08-15"
+        opptjeningTomDato="2017-08-31"
+        readOnly={false}
+        opptjeningActivities={opptjeningActivities}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        formName="test"
+        behandlingFormPrefix="test"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        harApneAksjonspunkter
+        submitting={false}
+        isDirty={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleMerknaderFraBeslutter={{}}
+        alleKodeverk={{}}
+      />,
+    );
 
     wrapper.setState({ selectedOpptjeningActivity: opptjeningActivities[0] });
 
@@ -113,25 +123,27 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal ikke vise informasjon om aktiviteten når det ikke er valgt aktivitetstype i dropdown', () => {
-    const wrapper = shallow(<OpptjeningFaktaForm
-      hasAksjonspunkt
-      opptjeningFomDato="2017-08-15"
-      opptjeningTomDato="2017-08-31"
-      readOnly={false}
-      opptjeningActivities={opptjeningActivities}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      formName="test"
-      behandlingFormPrefix="test"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      hasOpenAksjonspunkter
-      submitting={false}
-      isDirty={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <OpptjeningFaktaForm
+        hasAksjonspunkt
+        opptjeningFomDato="2017-08-15"
+        opptjeningTomDato="2017-08-31"
+        readOnly={false}
+        opptjeningActivities={opptjeningActivities}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        formName="test"
+        behandlingFormPrefix="test"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        harApneAksjonspunkter
+        submitting={false}
+        isDirty={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleMerknaderFraBeslutter={{}}
+        alleKodeverk={{}}
+      />,
+    );
 
     wrapper.setState({ selectedOpptjeningActivity: undefined });
 
@@ -139,30 +151,32 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal kunne lagre og legge til når ingen aktivitet er valgt og alle aksjonspunkter er avklart', () => {
-    const activities = opptjeningActivities.map((oa) => ({
+    const activities = opptjeningActivities.map(oa => ({
       ...oa,
       erGodkjent: true,
     }));
 
-    const wrapper = shallow(<OpptjeningFaktaForm
-      hasAksjonspunkt
-      opptjeningFomDato="2017-08-15"
-      opptjeningTomDato="2017-08-31"
-      readOnly={false}
-      opptjeningActivities={activities}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      formName="test"
-      behandlingFormPrefix="test"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      hasOpenAksjonspunkter
-      submitting={false}
-      isDirty={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <OpptjeningFaktaForm
+        hasAksjonspunkt
+        opptjeningFomDato="2017-08-15"
+        opptjeningTomDato="2017-08-31"
+        readOnly={false}
+        opptjeningActivities={activities}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        formName="test"
+        behandlingFormPrefix="test"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        harApneAksjonspunkter
+        submitting={false}
+        isDirty={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleMerknaderFraBeslutter={{}}
+        alleKodeverk={{}}
+      />,
+    );
 
     wrapper.setState({ selectedOpptjeningActivity: undefined });
 
@@ -177,25 +191,27 @@ describe('<OpptjeningFaktaForm>', () => {
     const formChangeCallback = sinon.spy();
     const formInitCallback = sinon.spy();
 
-    const wrapper = shallow(<OpptjeningFaktaForm
-      hasAksjonspunkt
-      opptjeningFomDato="2017-08-15"
-      opptjeningTomDato="2017-08-31"
-      readOnly={false}
-      opptjeningActivities={opptjeningActivities}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      behandlingFormPrefix="Behandling_123"
-      formName="OpptjeningFaktaForm"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={formInitCallback}
-      hasOpenAksjonspunkter
-      submitting={false}
-      isDirty={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <OpptjeningFaktaForm
+        hasAksjonspunkt
+        opptjeningFomDato="2017-08-15"
+        opptjeningTomDato="2017-08-31"
+        readOnly={false}
+        opptjeningActivities={opptjeningActivities}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        behandlingFormPrefix="Behandling_123"
+        formName="OpptjeningFaktaForm"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={formInitCallback}
+        harApneAksjonspunkter
+        submitting={false}
+        isDirty={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleMerknaderFraBeslutter={{}}
+        alleKodeverk={{}}
+      />,
+    );
 
     expect(wrapper.state().selectedOpptjeningActivity).to.eql(opptjeningActivities[1]);
 
@@ -206,25 +222,27 @@ describe('<OpptjeningFaktaForm>', () => {
     const formChangeCallback = sinon.spy();
     const formInitCallback = sinon.spy();
 
-    const wrapper = shallow(<OpptjeningFaktaForm
-      hasAksjonspunkt
-      opptjeningFomDato="2017-08-15"
-      opptjeningTomDato="2017-08-31"
-      readOnly={false}
-      opptjeningActivities={opptjeningActivities}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      behandlingFormPrefix="Behandling_123"
-      formName="OpptjeningFaktaForm"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={formInitCallback}
-      hasOpenAksjonspunkter
-      submitting={false}
-      isDirty={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <OpptjeningFaktaForm
+        hasAksjonspunkt
+        opptjeningFomDato="2017-08-15"
+        opptjeningTomDato="2017-08-31"
+        readOnly={false}
+        opptjeningActivities={opptjeningActivities}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        behandlingFormPrefix="Behandling_123"
+        formName="OpptjeningFaktaForm"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={formInitCallback}
+        harApneAksjonspunkter
+        submitting={false}
+        isDirty={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleMerknaderFraBeslutter={{}}
+        alleKodeverk={{}}
+      />,
+    );
 
     const activityPanel = wrapper.find(ActivityPanel);
     expect(activityPanel).to.have.length(1);
@@ -252,25 +270,27 @@ describe('<OpptjeningFaktaForm>', () => {
   it('skal legge til aktivitet', () => {
     const formChangeCallback = sinon.spy();
 
-    const wrapper = shallow(<OpptjeningFaktaForm
-      hasAksjonspunkt
-      opptjeningFomDato="2017-08-15"
-      opptjeningTomDato="2017-08-31"
-      readOnly={false}
-      opptjeningActivities={opptjeningActivities}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      behandlingFormPrefix="Behandling_123"
-      formName="OpptjeningFaktaForm"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      hasOpenAksjonspunkter
-      submitting={false}
-      isDirty={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <OpptjeningFaktaForm
+        hasAksjonspunkt
+        opptjeningFomDato="2017-08-15"
+        opptjeningTomDato="2017-08-31"
+        readOnly={false}
+        opptjeningActivities={opptjeningActivities}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        behandlingFormPrefix="Behandling_123"
+        formName="OpptjeningFaktaForm"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        harApneAksjonspunkter
+        submitting={false}
+        isDirty={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleMerknaderFraBeslutter={{}}
+        alleKodeverk={{}}
+      />,
+    );
 
     wrapper.find(Knapp).simulate('click');
 
@@ -285,25 +305,27 @@ describe('<OpptjeningFaktaForm>', () => {
     const formChangeCallback = sinon.spy();
     const formInitCallback = sinon.spy();
 
-    const wrapper = shallow(<OpptjeningFaktaForm
-      hasAksjonspunkt
-      opptjeningFomDato="2017-08-15"
-      opptjeningTomDato="2017-08-31"
-      readOnly={false}
-      opptjeningActivities={opptjeningActivities}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      behandlingFormPrefix="Behandling_123"
-      formName="OpptjeningFaktaForm"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={formInitCallback}
-      hasOpenAksjonspunkter
-      submitting={false}
-      isDirty={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
+    const wrapper = shallow(
+      <OpptjeningFaktaForm
+        hasAksjonspunkt
+        opptjeningFomDato="2017-08-15"
+        opptjeningTomDato="2017-08-31"
+        readOnly={false}
+        opptjeningActivities={opptjeningActivities}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        behandlingFormPrefix="Behandling_123"
+        formName="OpptjeningFaktaForm"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={formInitCallback}
+        harApneAksjonspunkter
+        submitting={false}
+        isDirty={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleMerknaderFraBeslutter={{}}
+        alleKodeverk={{}}
+      />,
+    );
 
     const activityPanel = wrapper.find(ActivityPanel);
     activityPanel.prop('cancelSelectedOpptjeningActivity')();

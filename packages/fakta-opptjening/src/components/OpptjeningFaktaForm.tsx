@@ -1,17 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import { bindActionCreators } from 'redux';
-import moment from 'moment';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   AksjonspunktHelpTextTemp,
   DateLabel,
@@ -21,14 +9,25 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
-
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
+import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import moment from 'moment';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
-import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React, { Component } from 'react';
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
-
 import styles from './opptjeningFaktaForm.less';
+import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 
-const getAksjonspunktHelpTexts = activities => {
+const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
   const texts = [];
   if (activities.some(a => a.stillingsandel === 0)) {
     texts.push(
@@ -36,7 +35,7 @@ const getAksjonspunktHelpTexts = activities => {
     );
   }
 
-  const aktivitetTypes = activities.filter(a => (a.erGodjent === undefined || a.beskrivelse) && a.stillingsandel !== 0);
+  const aktivitetTypes = activities.filter(a => a.stillingsandel !== 0);
   if (aktivitetTypes.length === 1) {
     texts.push(<FormattedMessage id="OpptjeningFaktaForm.EttArbeidKanGodkjennes" key="EttArbeidKanGodkjennes" />);
   } else if (aktivitetTypes.length > 1) {
@@ -45,9 +44,45 @@ const getAksjonspunktHelpTexts = activities => {
   return texts;
 };
 
-const findSkjaringstidspunkt = date => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
+const findSkjaringstidspunkt = (date: string) => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
+
+// const sortByFomDate = opptjeningPeriods =>
+//   opptjeningPeriods.sort((o1, o2) => {
+//     const isSame = moment(o2.opptjeningFom, ISO_DATE_FORMAT).isSame(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
+//     return isSame
+//       ? o1.id < o2.id
+//       : moment(o2.opptjeningFom, ISO_DATE_FORMAT).isBefore(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
+//   });
 
 const DOKUMENTASJON_VIL_BLI_INNHENTET = 'DOKUMENTASJON_VIL_BLI_INNHENTET';
+
+interface OpptjeningFaktaFormImplProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  opptjeningFomDato: string;
+  opptjeningTomDato: string;
+  alleMerknaderFraBeslutter: any;
+  alleKodeverk: AlleKodeverk;
+  readOnly: boolean;
+  harApneAksjonspunkter: boolean;
+  dokStatus: string;
+  formName: string;
+  submitting: boolean;
+  isDirty: boolean;
+  hasAksjonspunkt: boolean;
+}
+
+interface StateProps {
+  opptjeningActivities: OpptjeningAktivitet[];
+  behandlingFormPrefix: string;
+  reduxFormChange: (formName: string, fieldName: string, value: any) => void;
+  reduxFormInitialize: (formName: string, data: any) => void;
+  opptjeningAktivitetTypes: OpptjeningAktivitetType[];
+}
+
+interface OpptjeningFaktaFormImplState {
+  selectedOpptjeningActivity?: Partial<OpptjeningAktivitet>;
+}
 
 /**
  * OpptjeningFaktaForm
@@ -55,9 +90,12 @@ const DOKUMENTASJON_VIL_BLI_INNHENTET = 'DOKUMENTASJON_VIL_BLI_INNHENTET';
  * Presentasjonskomponent. Vises faktapanelet for opptjeningsvilkåret. For Foreldrepenger vises dette alltid. Finnes
  * det aksjonspunkt kan nav-ansatt endre opplysninger før en går videre i prosessen.
  */
-export class OpptjeningFaktaFormImpl extends Component {
-  constructor() {
-    super();
+export class OpptjeningFaktaFormImpl extends Component<
+  OpptjeningFaktaFormImplProps & StateProps,
+  OpptjeningFaktaFormImplState
+> {
+  constructor(props: OpptjeningFaktaFormImplProps & StateProps) {
+    super(props);
 
     this.addOpptjeningActivity = this.addOpptjeningActivity.bind(this);
     this.setSelectedOpptjeningActivity = this.setSelectedOpptjeningActivity.bind(this);
@@ -93,19 +131,19 @@ export class OpptjeningFaktaFormImpl extends Component {
     this.setState({ activeTab: index });
   }
 
-  setSelectedOpptjeningActivity(opptjeningActivity, isMounting) {
+  setSelectedOpptjeningActivity(opptjeningActivity: Partial<OpptjeningAktivitet>, isMounting?: boolean) {
     if (!isMounting) {
       this.initializeActivityForm(opptjeningActivity);
     }
     this.setState({ selectedOpptjeningActivity: opptjeningActivity });
   }
 
-  setFormField(fieldName, fieldValue) {
+  setFormField(fieldName: string, fieldValue: OpptjeningAktivitet[]) {
     const { behandlingFormPrefix, formName, reduxFormChange: formChange } = this.props;
     formChange(`${behandlingFormPrefix}.${formName}`, fieldName, fieldValue);
   }
 
-  initializeActivityForm(opptjeningActivity) {
+  initializeActivityForm(opptjeningActivity: OpptjeningAktivitet | {}) {
     const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
     formInitialize(`${behandlingFormPrefix}.${activityPanelName}`, opptjeningActivity);
   }
@@ -143,7 +181,7 @@ export class OpptjeningFaktaFormImpl extends Component {
     this.setSelectedOpptjeningActivity(opptjeningActivityWithAp || undefined);
   }
 
-  openPeriodInfo(event) {
+  openPeriodInfo(event: Event) {
     const { selectedOpptjeningActivity } = this.state;
     event.preventDefault();
     const currentSelectedItem = selectedOpptjeningActivity;
@@ -155,7 +193,7 @@ export class OpptjeningFaktaFormImpl extends Component {
     }
   }
 
-  selectNextPeriod(event) {
+  selectNextPeriod(event: Event) {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity, activeTab } = this.state;
     const opptjeningAktivitetList = opptjeningList[activeTab];
@@ -166,7 +204,7 @@ export class OpptjeningFaktaFormImpl extends Component {
     event.preventDefault();
   }
 
-  selectPrevPeriod(event) {
+  selectPrevPeriod(event: Event) {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity, activeTab } = this.state;
     const opptjeningAktivitetList = opptjeningList[activeTab];
@@ -299,7 +337,7 @@ export class OpptjeningFaktaFormImpl extends Component {
           </>
         )}
         {hasAksjonspunkt && (
-          <FlexContainer fluid>
+          <FlexContainer>
             <FlexRow>
               <FlexColumn>
                 <Hovedknapp mini disabled={this.isConfirmButtonDisabled()} spinner={submitting}>
@@ -324,33 +362,7 @@ export class OpptjeningFaktaFormImpl extends Component {
   }
 }
 
-OpptjeningFaktaFormImpl.propTypes = {
-  hasAksjonspunkt: PropTypes.bool.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  // opptjeningFomDato: PropTypes.string.isRequired,
-  // opptjeningTomDato: PropTypes.string.isRequired,
-  dokStatus: PropTypes.string,
-  readOnly: PropTypes.bool.isRequired,
-  // opptjeningActivities: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  opptjeningList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  opptjeningAktivitetTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  formName: PropTypes.string.isRequired,
-  behandlingFormPrefix: PropTypes.string.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool.isRequired,
-  reduxFormChange: PropTypes.func.isRequired,
-  reduxFormInitialize: PropTypes.func.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-};
-
-OpptjeningFaktaFormImpl.defaultProps = {
-  dokStatus: undefined,
-};
-
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps: OpptjeningFaktaFormImplProps) => ({
   opptjeningAktivitetTypes: ownProps.alleKodeverk[kodeverkTyper.OPPTJENING_AKTIVITET_TYPE],
   behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
   opptjeningList: behandlingFormValueSelector(

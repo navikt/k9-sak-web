@@ -10,6 +10,7 @@ import {
   isDirty,
   isSubmitting,
   reduxForm,
+  ConfigProps,
 } from 'redux-form';
 import { createSelector } from 'reselect';
 import requireProps from '@fpsak-frontend/shared-components/src/requireProps';
@@ -26,10 +27,11 @@ interface BehandlingFormProps {
   form?: string;
 }
 
-interface Config {
-  form?: string;
-  enableReinitialize?: boolean;
-}
+// interface Config {
+//   form?: string;
+//   enableReinitialize?: boolean;
+//   validate?: (values: any, props: any) => boolean;
+// }
 
 /**
  * behandlingForm
@@ -37,7 +39,7 @@ interface Config {
  * Higher-order component som lager forms innen konteksten av en gitt behandling. BehandlingIndex har ansvaret for å styre livssyklusen til disse skjemaene.
  * @see BehandlingIndex
  */
-export const behandlingForm = (config: Config = {}) => (WrappedComponent: ComponentType<InjectedFormProps>) => {
+export const behandlingForm = (config: ConfigProps) => (WrappedComponent: ComponentType<InjectedFormProps>) => {
   const { form, ...reduxFormConfig } = config;
   // Default configuration lets BehandlingIndex manage the lifecycle of the forms
   const defaultReduxFormConfig = {
