@@ -50,7 +50,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     showComponent: ({ vilkar }) =>
       vilkar.some(v => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET) &&
       vilkar.some(
-        v => v.vilkarType.kode === vilkarType.MEDISINSKVILKARET && v.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
+        v => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && v.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
       ),
     getData: () => ({}),
   },

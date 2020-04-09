@@ -18,8 +18,10 @@ import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-avregnin
 
 const simuleringResultat = {
   simuleringResultat: {
-    periodeFom: '2018-09-01',
-    periodeTom: '2018-12-31',
+    periode: {
+      fom: '2018-09-01',
+      tom: '2018-12-31',
+    },
     sumFeilutbetaling: 0,
     sumEtterbetaling: 0,
     sumInntrekk: 0,
@@ -43,9 +45,7 @@ const mockProps = {
 
 describe('<AvregningPanelImpl>', () => {
   it('skal rendre AvregningPanel', () => {
-    const wrapper = shallowWithIntl(<AvregningPanelImpl
-      {...mockProps}
-    />);
+    const wrapper = shallowWithIntl(<AvregningPanelImpl {...mockProps} />);
 
     const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(2);
@@ -69,9 +69,7 @@ describe('<AvregningPanelImpl>', () => {
       ...mockProps,
       apCodes: ['5084'],
     };
-    const wrapper = shallow(<AvregningPanelImpl
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningPanelImpl {...props} />);
 
     const form = wrapper.find('form');
     expect(form).has.length(1);
@@ -88,9 +86,7 @@ describe('<AvregningPanelImpl>', () => {
 
   it('method toggleDetails skal oppdatere og toggle tabeler med showDetails state', () => {
     const id = 7;
-    const wrapper = shallow(<AvregningPanelImpl
-      {...mockProps}
-    />);
+    const wrapper = shallow(<AvregningPanelImpl {...mockProps} />);
 
     expect(wrapper.state('showDetails')).is.eql([]);
     wrapper.instance().toggleDetails(id);
@@ -105,9 +101,7 @@ describe('<AvregningPanelImpl>', () => {
       apCodes: ['5084'],
       erTilbakekrevingVilkårOppfylt: undefined,
     };
-    const wrapper = shallow(<AvregningPanelImpl
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningPanelImpl {...props} />);
 
     expect(wrapper.state('feilutbetaling')).is.eql(undefined);
     wrapper.setProps({ erTilbakekrevingVilkårOppfylt: true });
@@ -121,9 +115,7 @@ describe('<AvregningPanelImpl>', () => {
       erTilbakekrevingVilkårOppfylt: undefined,
       hasOpenTilbakekrevingsbehandling: true,
     };
-    const wrapper = shallow(<AvregningPanelImpl
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningPanelImpl {...props} />);
 
     expect(wrapper.find('[id="Avregning.ApenTilbakekrevingsbehandling"]')).has.length(1);
   });
@@ -135,9 +127,7 @@ describe('<AvregningPanelImpl>', () => {
       erTilbakekrevingVilkårOppfylt: undefined,
       hasOpenTilbakekrevingsbehandling: false,
     };
-    const wrapper = shallow(<AvregningPanelImpl
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningPanelImpl {...props} />);
 
     expect(wrapper.find('[id="Avregning.ApenTilbakekrevingsbehandling"]')).has.length(0);
   });
@@ -162,10 +152,16 @@ describe('<AvregningPanelImpl>', () => {
     };
     const apCode = '5084';
 
-    const transformedValuesInfotrygd = transformValues({ ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD }, apCode);
+    const transformedValuesInfotrygd = transformValues(
+      { ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD },
+      apCode,
+    );
     expect(transformedValuesInfotrygd.kode).is.eql(apCode);
     expect(transformedValuesInfotrygd.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD);
-    const transformedValuesIgnorer = transformValues({ ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER }, apCode);
+    const transformedValuesIgnorer = transformValues(
+      { ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER },
+      apCode,
+    );
     expect(transformedValuesIgnorer.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER);
   });
 });
