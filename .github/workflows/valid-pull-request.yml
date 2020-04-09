@@ -10,7 +10,7 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 12.16.1
       - name: Get yarn cache
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -23,5 +23,3 @@ jobs:
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
       - name: Tester og linting
         run: yarn test && yarn less:lint
-
-
