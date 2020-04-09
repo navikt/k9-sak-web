@@ -34,9 +34,7 @@ const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
     );
   }
 
-  const aktivitetTypes = activities.filter(
-    a => (a.erGodkjent === undefined || a.beskrivelse) && a.stillingsandel !== 0,
-  );
+  const aktivitetTypes = activities.filter(a => a.stillingsandel !== 0);
   if (aktivitetTypes.length === 1) {
     texts.push(<FormattedMessage id="OpptjeningFaktaForm.EttArbeidKanGodkjennes" key="EttArbeidKanGodkjennes" />);
   } else if (aktivitetTypes.length > 1) {
