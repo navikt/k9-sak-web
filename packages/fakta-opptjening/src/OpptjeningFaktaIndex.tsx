@@ -65,7 +65,7 @@ const OpptjeningFaktaIndex = ({
     },
   ];
 
-  const opptjeningsperioder = [
+  const opptjeningsperioder: Opptjening[] = [
     { ...opptjening, opptjeningAktivitetList: aktiviteter1 },
     { ...opptjening, opptjeningAktivitetList: aktiviteter2 },
     { ...opptjening, opptjeningAktivitetList: aktiviteter3 },

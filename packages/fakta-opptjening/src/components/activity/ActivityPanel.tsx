@@ -106,7 +106,7 @@ const finnBegrunnelseLabel = (
     ? 'ActivityPanel.Begrunnelse'
     : 'ActivityPanel.BegrunnEndringene';
 
-export const activityPanelName = 'ActivityPanel';
+export const activityPanelNameFormName = 'ActivityPanelForm';
 
 interface ActivityPanelProps {
   activity: Partial<OpptjeningAktivitet>;
@@ -289,21 +289,21 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: ActivityPanelProp
       initialValues: ownProps.activity,
       opptjeningAktivitetTypes: filtrerteOpptjeningAktivitetTypes,
       selectedActivityType: behandlingFormValueSelector(
-        activityPanelName,
+        activityPanelNameFormName,
         behandlingId,
         behandlingVersjon,
       )(state, 'aktivitetType'),
       opptjeningFom: behandlingFormValueSelector(
-        activityPanelName,
+        activityPanelNameFormName,
         behandlingId,
         behandlingVersjon,
       )(state, 'opptjeningFom'),
       opptjeningTom: behandlingFormValueSelector(
-        activityPanelName,
+        activityPanelNameFormName,
         behandlingId,
         behandlingVersjon,
       )(state, 'opptjeningTom'),
-      activityId: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'id'),
+      activityId: behandlingFormValueSelector(activityPanelNameFormName, behandlingId, behandlingVersjon)(state, 'id'),
     };
   };
 };
@@ -331,7 +331,7 @@ const validateForm = (values, props) => {
 export default connect(mapStateToPropsFactory)(
   injectIntl(
     behandlingForm({
-      form: activityPanelName,
+      form: activityPanelNameFormName,
       validate: validateForm,
       enableReinitialize: true,
     })(ActivityPanel),

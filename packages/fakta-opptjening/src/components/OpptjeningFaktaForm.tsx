@@ -10,6 +10,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Opptjening } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
@@ -23,7 +24,7 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
+import ActivityPanel, { activityPanelNameFormName } from './activity/ActivityPanel';
 import styles from './opptjeningFaktaForm.less';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 
@@ -59,8 +60,8 @@ const DOKUMENTASJON_VIL_BLI_INNHENTET = 'DOKUMENTASJON_VIL_BLI_INNHENTET';
 interface OpptjeningFaktaFormImplProps {
   behandlingId: number;
   behandlingVersjon: number;
-  opptjeningFomDato: string;
-  opptjeningTomDato: string;
+  // opptjeningFomDato: string;
+  // opptjeningTomDato: string;
   alleMerknaderFraBeslutter: any;
   alleKodeverk: AlleKodeverk;
   readOnly: boolean;
@@ -70,10 +71,10 @@ interface OpptjeningFaktaFormImplProps {
   submitting: boolean;
   isDirty: boolean;
   hasAksjonspunkt: boolean;
+  opptjeningList: Opptjening[];
 }
 
 interface StateProps {
-  opptjeningActivities: OpptjeningAktivitet[];
   behandlingFormPrefix: string;
   reduxFormChange: (formName: string, fieldName: string, value: any) => void;
   reduxFormInitialize: (formName: string, data: any) => void;
@@ -82,6 +83,7 @@ interface StateProps {
 
 interface OpptjeningFaktaFormImplState {
   selectedOpptjeningActivity?: Partial<OpptjeningAktivitet>;
+  activeTab: number;
 }
 
 /**
@@ -129,6 +131,10 @@ export class OpptjeningFaktaFormImpl extends Component<
 
   setActiveTab(index) {
     this.setState({ activeTab: index });
+    const { opptjeningList } = this.props;
+    const { opptjeningAktivitetList } = opptjeningList[index];
+    const selectedItem = opptjeningAktivitetList.find(item => item.id === 1);
+    this.setSelectedOpptjeningActivity(selectedItem);
   }
 
   setSelectedOpptjeningActivity(opptjeningActivity: Partial<OpptjeningAktivitet>, isMounting?: boolean) {
@@ -145,7 +151,7 @@ export class OpptjeningFaktaFormImpl extends Component<
 
   initializeActivityForm(opptjeningActivity: OpptjeningAktivitet | {}) {
     const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${activityPanelName}`, opptjeningActivity);
+    formInitialize(`${behandlingFormPrefix}.${activityPanelNameFormName}`, opptjeningActivity);
   }
 
   cancelSelectedOpptjeningActivity() {
@@ -157,7 +163,10 @@ export class OpptjeningFaktaFormImpl extends Component<
     const { opptjeningList } = this.props;
     const { activeTab } = this.state;
     const newOpptjeningActivity = {
-      id: opptjeningList[activeTab].map(oa => oa.id).reduce((acc, value) => (acc < value ? value : acc), 0) + 1,
+      id:
+        opptjeningList[activeTab].opptjeningAktivitetList
+          .map(oa => oa.id)
+          .reduce((acc, value) => (acc < value ? value : acc), 0) + 1,
       erGodkjent: true,
       erManueltOpprettet: true,
     };
@@ -170,8 +179,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     const { activeTab } = this.state;
     const otherThanUpdated = opptjeningList[activeTab].opptjeningAktivitetList.filter(o => o.id !== values.id);
     this.setFormField(
-      // todo fix
-      'opptjeningList.opptjeningAktivitetList',
+      `opptjeningList[${activeTab}].opptjeningAktivitetList`,
       otherThanUpdated.concat({
         ...values,
         erEndret: true,
@@ -181,14 +189,18 @@ export class OpptjeningFaktaFormImpl extends Component<
     this.setSelectedOpptjeningActivity(opptjeningActivityWithAp || undefined);
   }
 
-  openPeriodInfo(event: Event) {
-    const { selectedOpptjeningActivity } = this.state;
-    event.preventDefault();
+  openPeriodInfo(event?: Event) {
+    const { opptjeningList } = this.props;
+    const { selectedOpptjeningActivity, activeTab } = this.state;
+    const { opptjeningAktivitetList } = opptjeningList[activeTab];
+    if (event) {
+      event.preventDefault();
+    }
     const currentSelectedItem = selectedOpptjeningActivity;
     if (currentSelectedItem) {
       this.setSelectedOpptjeningActivity(undefined);
     } else {
-      const selectedItem = opptjeningActivities.find(item => item.id === 1);
+      const selectedItem = opptjeningAktivitetList.find(item => item.id === 1);
       this.setSelectedOpptjeningActivity(selectedItem);
     }
   }
@@ -196,7 +208,7 @@ export class OpptjeningFaktaFormImpl extends Component<
   selectNextPeriod(event: Event) {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity, activeTab } = this.state;
-    const opptjeningAktivitetList = opptjeningList[activeTab];
+    const { opptjeningAktivitetList } = opptjeningList[activeTab];
     const newIndex = opptjeningAktivitetList.findIndex(oa => oa.id === selectedOpptjeningActivity.id) + 1;
     if (newIndex < opptjeningAktivitetList.length) {
       this.setSelectedOpptjeningActivity(opptjeningAktivitetList[newIndex]);
@@ -207,7 +219,7 @@ export class OpptjeningFaktaFormImpl extends Component<
   selectPrevPeriod(event: Event) {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity, activeTab } = this.state;
-    const opptjeningAktivitetList = opptjeningList[activeTab];
+    const { opptjeningAktivitetList } = opptjeningList[activeTab];
     const newIndex = opptjeningAktivitetList.findIndex(oa => oa.id === selectedOpptjeningActivity.id) - 1;
     if (newIndex >= 0) {
       this.setSelectedOpptjeningActivity(opptjeningAktivitetList[newIndex]);
@@ -224,10 +236,10 @@ export class OpptjeningFaktaFormImpl extends Component<
   }
 
   isConfirmButtonDisabled() {
-    const { hasOpenAksjonspunkter, opptjeningList, readOnly, submitting, isDirty } = this.props;
+    const { harApneAksjonspunkter, opptjeningList, readOnly, submitting, isDirty } = this.props;
     const { activeTab } = this.state;
     const activeOpptjeningObject = opptjeningList[activeTab];
-    if (!hasOpenAksjonspunkter && !isDirty) {
+    if (!harApneAksjonspunkter && !isDirty) {
       return true;
     }
 
@@ -248,7 +260,7 @@ export class OpptjeningFaktaFormImpl extends Component<
   render() {
     const {
       hasAksjonspunkt,
-      hasOpenAksjonspunkter,
+      harApneAksjonspunkter,
       opptjeningAktivitetTypes,
       dokStatus,
       opptjeningList,
@@ -263,7 +275,7 @@ export class OpptjeningFaktaFormImpl extends Component<
 
     const activeOpptjeningObject = opptjeningList[activeTab];
     const { opptjeningAktivitetList, fastsattOpptjening } = activeOpptjeningObject;
-    const { opptjeningFomDato, opptjeningTomDato } = fastsattOpptjening;
+    const { opptjeningFom, opptjeningTom } = fastsattOpptjening;
 
     return (
       <div className={styles.container}>
@@ -277,7 +289,7 @@ export class OpptjeningFaktaFormImpl extends Component<
 
         {hasAksjonspunkt && (
           <>
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
+            <AksjonspunktHelpTextTemp isAksjonspunktOpen={harApneAksjonspunkter}>
               {getAksjonspunktHelpTexts(opptjeningAktivitetList)}
             </AksjonspunktHelpTextTemp>
             <VerticalSpacer twentyPx />
@@ -301,15 +313,15 @@ export class OpptjeningFaktaFormImpl extends Component<
           <FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" />
         </Undertekst>
         <Normaltekst>
-          <DateLabel dateString={findSkjaringstidspunkt(opptjeningTomDato)} />
+          <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom)} />
         </Normaltekst>
         <VerticalSpacer twentyPx />
         <OpptjeningTimeLine
           opptjeningPeriods={opptjeningAktivitetList}
           opptjeningAktivitetTypes={opptjeningAktivitetTypes}
           selectPeriodCallback={this.setSelectedOpptjeningActivity}
-          opptjeningFomDato={opptjeningFomDato}
-          opptjeningTomDato={opptjeningTomDato}
+          opptjeningFomDato={opptjeningFom}
+          opptjeningTomDato={opptjeningTom}
           selectedPeriod={selectedOpptjeningActivity}
         />
         <TimeLineNavigation openPeriodInfo={this.openPeriodInfo} />
@@ -317,7 +329,6 @@ export class OpptjeningFaktaFormImpl extends Component<
         {selectedOpptjeningActivity && (
           <>
             <ActivityPanel
-              key={selectedOpptjeningActivity.id}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               activity={selectedOpptjeningActivity}
@@ -325,8 +336,8 @@ export class OpptjeningFaktaFormImpl extends Component<
               opptjeningAktivitetTypes={opptjeningAktivitetTypes}
               cancelSelectedOpptjeningActivity={this.cancelSelectedOpptjeningActivity}
               updateActivity={this.updateActivity}
-              opptjeningFomDato={opptjeningFomDato}
-              opptjeningTomDato={opptjeningTomDato}
+              opptjeningFomDato={opptjeningFom}
+              opptjeningTomDato={opptjeningTom}
               selectNextPeriod={this.selectNextPeriod}
               selectPrevPeriod={this.selectPrevPeriod}
               hasAksjonspunkt={hasAksjonspunkt}

@@ -1,7 +1,7 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, SubmitCallback, UtlandDokStatus } from '@k9-sak-web/types';
+import { Aksjonspunkt, SubmitCallback, UtlandDokStatus, Opptjening } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
@@ -11,7 +11,7 @@ import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
-export const formName = 'OpptjeningInfoPanel';
+export const formName = 'OpptjeningInfoPanelForm';
 
 interface OpptjeningInfoPanelProps {
   behandlingId: number;
@@ -27,6 +27,7 @@ interface OpptjeningInfoPanelProps {
   harApneAksjonspunkter: boolean;
   submittable: boolean;
   dokStatus: string;
+  opptjeningList: Opptjening[];
 }
 
 interface StateProps {
