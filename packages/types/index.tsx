@@ -20,3 +20,6 @@ export { default as Fagsak } from './src/fagsakTsType';
 export { default as SubmitCallback } from './src/submitCallback';
 export { default as Sykdom } from './src/sykdom';
 export { default as OmsorgenFor } from './src/omsorgenFor';
+export { default as OpptjeningBehandling } from './src/opptjening/behandling';
+export { default as Opptjening } from './src/opptjening/opptjening';
+export { default as UtlandDokStatus } from './src/opptjening/utlandDokStatus';

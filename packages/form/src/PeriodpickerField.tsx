@@ -21,6 +21,10 @@ interface PeriodpickerFieldProps {
   dataId?: string;
   renderUpwards?: boolean;
   ariaLabel?: string;
+  disabledDays?: {
+    before: Date;
+    after: Date;
+  };
 }
 
 const formatError = (intl: IntlShape, otherProps: object, names: string[]) => {
