@@ -139,6 +139,16 @@ export class OpptjeningFaktaFormImpl extends Component<
     formChange(`${behandlingFormPrefix}.${formName}`, fieldName, fieldValue);
   }
 
+  isActivitiesEvaluated = () => {
+    const { opptjeningList } = this.props;
+    let numberOfNotEvaluated = 0;
+    opptjeningList.forEach(element => {
+      const hasNotEvaluated = element.opptjeningAktivitetList.some(ac => ac.erGodkjent === null);
+      numberOfNotEvaluated = hasNotEvaluated ? numberOfNotEvaluated + 1 : numberOfNotEvaluated;
+    });
+    return numberOfNotEvaluated === 0;
+  };
+
   initializeActivityForm(opptjeningActivity: OpptjeningAktivitet | {}) {
     const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
     formInitialize(`${behandlingFormPrefix}.${activityPanelNameFormName}`, opptjeningActivity);
@@ -224,19 +234,12 @@ export class OpptjeningFaktaFormImpl extends Component<
   }
 
   isConfirmButtonDisabled() {
-    const { harApneAksjonspunkter, opptjeningList, readOnly, submitting, isDirty } = this.props;
-    const { activeTab } = this.state;
-    const activeOpptjeningObject = opptjeningList[activeTab];
+    const { harApneAksjonspunkter, readOnly, submitting, isDirty } = this.props;
     if (!harApneAksjonspunkter && !isDirty) {
       return true;
     }
 
-    return (
-      submitting ||
-      readOnly ||
-      this.isSelectedActivityAndButtonsEnabled() ||
-      activeOpptjeningObject.opptjeningAktivitetList.some(ac => ac.erGodkjent === null)
-    );
+    return submitting || readOnly || this.isSelectedActivityAndButtonsEnabled() || !this.isActivitiesEvaluated();
   }
 
   isAddButtonDisabled() {
@@ -317,6 +320,7 @@ export class OpptjeningFaktaFormImpl extends Component<
         {selectedOpptjeningActivity && (
           <>
             <ActivityPanel
+              key={selectedOpptjeningActivity.id}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               activity={selectedOpptjeningActivity}

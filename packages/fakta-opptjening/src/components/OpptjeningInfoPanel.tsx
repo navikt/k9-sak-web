@@ -175,19 +175,21 @@ interface Values {
   aksjonspunkt: Aksjonspunkt[];
 }
 
-const transformValues = (values: Values) => ({
-  opptjeningAktivitetList: values.opptjeningActivities
-    .map(oa =>
-      transformPeriod(
-        oa,
-        addDay(values.fastsattOpptjening.opptjeningFom),
-        addDay(values.fastsattOpptjening.opptjeningTom),
-      ),
-    )
-    .map(oa => omit(oa, 'id')),
-  kode: values.aksjonspunkt[0].definisjon.kode,
-  begrunnelse: '',
-});
+const transformValues = (values: Values) => {
+  return {
+    opptjeningAktivitetList: values.opptjeningActivities
+      .map(oa =>
+        transformPeriod(
+          oa,
+          addDay(values.fastsattOpptjening.opptjeningFom),
+          addDay(values.fastsattOpptjening.opptjeningTom),
+        ),
+      )
+      .map(oa => omit(oa, 'id')),
+    kode: values.aksjonspunkt[0].definisjon.kode,
+    begrunnelse: '',
+  };
+};
 
 const mapStateToPropsFactory = (initialState, { submitCallback }: OpptjeningInfoPanelProps) => {
   const onSubmit = values => submitCallback([transformValues(values)]);
