@@ -315,7 +315,7 @@ export class OpptjeningFaktaFormImpl extends Component<
           opptjeningTomDato={opptjeningTom}
           selectedPeriod={selectedOpptjeningActivity}
         />
-        <TimeLineNavigation openPeriodInfo={this.openPeriodInfo} />
+        <TimeLineNavigation openPeriodInfo={this.openPeriodInfo} className={styles.timelineNavigationContainer} />
         <VerticalSpacer eightPx />
         {selectedOpptjeningActivity && (
           <>
