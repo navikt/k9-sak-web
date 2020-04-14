@@ -30,7 +30,7 @@ describe('<OpptjeningInfoPanel>', () => {
   });
 
   it('skal ikke bruke aktiviteter som er utenfor opptjeningperioden', () => {
-    const opptjeningActivities = [
+    const opptjeningAktivitetList = [
       {
         opptjeningFom: '2017-06-01',
         opptjeningTom: '2017-12-31',
@@ -62,44 +62,49 @@ describe('<OpptjeningInfoPanel>', () => {
       opptjeningTom: '2018-10-01',
     };
     const aksjonspunkter = [{ definisjon: { kode: '5058' }, erAktivt: true, toTrinnsBehandling: false }];
+    const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
-    const initialValues = buildInitialValues.resultFunc(opptjeningActivities, fastsattOpptjening, aksjonspunkter);
+    const initialValues = buildInitialValues.resultFunc(opptjeningList, aksjonspunkter);
     expect(initialValues).is.eql({
-      aksjonspunkt: [],
-      fastsattOpptjening: {
-        opptjeningFom: '2018-01-01',
-        opptjeningTom: '2018-10-01',
-      },
-      opptjeningActivities: [
+      aksjonspunkter: [],
+      opptjeningList: [
         {
-          opptjeningFom: '2018-01-01',
-          opptjeningTom: '2018-10-01',
-          begrunnelse: 'test3',
-          originalFom: '2017-12-15',
-          originalTom: '2018-11-01',
-          id: 1,
-        },
-        {
-          opptjeningFom: '2018-01-01',
-          opptjeningTom: '2018-01-01',
-          begrunnelse: 'test4',
-          originalFom: '2017-12-15',
-          originalTom: '2018-01-01',
-          id: 2,
-        },
-        {
-          opptjeningFom: '2018-10-01',
-          opptjeningTom: '2018-10-01',
-          begrunnelse: 'test5',
-          originalFom: '2018-10-01',
-          originalTom: '2018-12-01',
-          id: 3,
+          fastsattOpptjening: {
+            opptjeningFom: '2018-01-01',
+            opptjeningTom: '2018-10-01',
+          },
+          opptjeningAktivitetList: [
+            {
+              opptjeningFom: '2018-01-01',
+              opptjeningTom: '2018-10-01',
+              begrunnelse: 'test3',
+              originalFom: '2017-12-15',
+              originalTom: '2018-11-01',
+              id: 1,
+            },
+            {
+              opptjeningFom: '2018-01-01',
+              opptjeningTom: '2018-01-01',
+              begrunnelse: 'test4',
+              originalFom: '2017-12-15',
+              originalTom: '2018-01-01',
+              id: 2,
+            },
+            {
+              opptjeningFom: '2018-10-01',
+              opptjeningTom: '2018-10-01',
+              begrunnelse: 'test5',
+              originalFom: '2018-10-01',
+              originalTom: '2018-12-01',
+              id: 3,
+            },
+          ],
         },
       ],
     });
   });
   it('skal ikke bruke aktiviteter som er utenfor opptjeningperioden og vise korrekt aksjonspunkt', () => {
-    const opptjeningActivities = [
+    const opptjeningAktivitetList = [
       {
         opptjeningFom: '2017-06-01',
         opptjeningTom: '2017-12-31',
@@ -134,10 +139,11 @@ describe('<OpptjeningInfoPanel>', () => {
       { definisjon: { kode: '5051' }, erAktivt: true, toTrinnsBehandling: false },
       { definisjon: { kode: '5080' }, erAktivt: true, toTrinnsBehandling: false },
     ];
+    const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
-    const initialValues = buildInitialValues.resultFunc(opptjeningActivities, fastsattOpptjening, aksjonspunkter);
+    const initialValues = buildInitialValues.resultFunc(opptjeningList, aksjonspunkter);
     expect(initialValues).is.eql({
-      aksjonspunkt: [
+      aksjonspunkter: [
         {
           definisjon: {
             kode: '5051',
@@ -146,34 +152,38 @@ describe('<OpptjeningInfoPanel>', () => {
           toTrinnsBehandling: false,
         },
       ],
-      fastsattOpptjening: {
-        opptjeningFom: '2018-01-01',
-        opptjeningTom: '2018-10-01',
-      },
-      opptjeningActivities: [
+      opptjeningList: [
         {
-          opptjeningFom: '2018-01-01',
-          opptjeningTom: '2018-10-01',
-          begrunnelse: 'test3',
-          originalFom: '2017-12-15',
-          originalTom: '2018-11-01',
-          id: 1,
-        },
-        {
-          opptjeningFom: '2018-01-01',
-          opptjeningTom: '2018-01-01',
-          begrunnelse: 'test4',
-          originalFom: '2017-12-15',
-          originalTom: '2018-01-01',
-          id: 2,
-        },
-        {
-          opptjeningFom: '2018-10-01',
-          opptjeningTom: '2018-10-01',
-          begrunnelse: 'test5',
-          originalFom: '2018-10-01',
-          originalTom: '2018-12-01',
-          id: 3,
+          fastsattOpptjening: {
+            opptjeningFom: '2018-01-01',
+            opptjeningTom: '2018-10-01',
+          },
+          opptjeningAktivitetList: [
+            {
+              opptjeningFom: '2018-01-01',
+              opptjeningTom: '2018-10-01',
+              begrunnelse: 'test3',
+              originalFom: '2017-12-15',
+              originalTom: '2018-11-01',
+              id: 1,
+            },
+            {
+              opptjeningFom: '2018-01-01',
+              opptjeningTom: '2018-01-01',
+              begrunnelse: 'test4',
+              originalFom: '2017-12-15',
+              originalTom: '2018-01-01',
+              id: 2,
+            },
+            {
+              opptjeningFom: '2018-10-01',
+              opptjeningTom: '2018-10-01',
+              begrunnelse: 'test5',
+              originalFom: '2018-10-01',
+              originalTom: '2018-12-01',
+              id: 3,
+            },
+          ],
         },
       ],
     });

@@ -50,13 +50,16 @@ describe('<OpptjeningFaktaForm>', () => {
       navn: 'Næring',
     },
   ];
-
+  const opptjeningList = [
+    {
+      opptjeningAktivitetList: opptjeningActivities,
+      fastsattOpptjening: { opptjeningFomDato: '2017-08-15', opptjeningTomDato: '2017-08-31' },
+    },
+  ];
   it('skal vise aksjonspunktinformasjon og knapper når aksjonspunkt finnes', () => {
     const wrapper = shallow(
       <OpptjeningFaktaForm
         hasAksjonspunkt
-        opptjeningFomDato="2017-08-15"
-        opptjeningTomDato="2017-08-31"
         readOnly={false}
         opptjeningActivities={opptjeningActivities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -71,6 +74,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        opptjeningList={opptjeningList}
       />,
     );
 
@@ -112,6 +116,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        opptjeningList={opptjeningList}
       />,
     );
 
@@ -142,6 +147,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        opptjeningList={opptjeningList}
       />,
     );
 
@@ -151,10 +157,15 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal kunne lagre og legge til når ingen aktivitet er valgt og alle aksjonspunkter er avklart', () => {
-    const activities = opptjeningActivities.map(oa => ({
-      ...oa,
-      erGodkjent: true,
-    }));
+    const updatedOpptjeningList = [
+      {
+        ...opptjeningList[0],
+        opptjeningAktivitetList: opptjeningList[0].opptjeningAktivitetList.map(oa => ({
+          ...oa,
+          erGodkjent: true,
+        })),
+      },
+    ];
 
     const wrapper = shallow(
       <OpptjeningFaktaForm
@@ -162,7 +173,6 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningFomDato="2017-08-15"
         opptjeningTomDato="2017-08-31"
         readOnly={false}
-        opptjeningActivities={activities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
         behandlingFormPrefix="test"
@@ -175,6 +185,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        opptjeningList={updatedOpptjeningList}
       />,
     );
 
@@ -210,6 +221,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        opptjeningList={opptjeningList}
       />,
     );
 
@@ -241,6 +253,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        opptjeningList={opptjeningList}
       />,
     );
 
@@ -259,7 +272,7 @@ describe('<OpptjeningFaktaForm>', () => {
     const { args } = calls[0];
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('Behandling_123.OpptjeningFaktaForm');
-    expect(args[1]).to.eql('opptjeningActivities');
+    expect(args[1]).to.eql('opptjeningList[0].opptjeningAktivitetList');
     expect(args[2]).to.eql([opptjeningActivities[0], editedActivity]);
 
     expect(wrapper.state().selectedOpptjeningActivity).is.undefined;
@@ -289,6 +302,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        opptjeningList={opptjeningList}
       />,
     );
 
@@ -324,6 +338,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        opptjeningList={opptjeningList}
       />,
     );
 
@@ -333,7 +348,7 @@ describe('<OpptjeningFaktaForm>', () => {
     const initCalls = formInitCallback.getCalls();
     expect(initCalls).to.have.length(1);
     expect(initCalls[0].args).to.have.length(2);
-    expect(initCalls[0].args[0]).to.eql('Behandling_123.ActivityPanel');
+    expect(initCalls[0].args[0]).to.eql('Behandling_123.ActivityPanelForm');
     expect(initCalls[0].args[1]).to.eql({});
 
     expect(wrapper.state().selectedOpptjeningActivity).is.undefined;
