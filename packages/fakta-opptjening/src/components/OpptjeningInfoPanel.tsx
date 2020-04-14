@@ -138,8 +138,6 @@ export const buildInitialValues = createSelector(
         };
       });
 
-    console.log('opptjeningList', filteredOpptjeningList);
-
     return {
       opptjeningList: filteredOpptjeningList,
       aksjonspunkter:

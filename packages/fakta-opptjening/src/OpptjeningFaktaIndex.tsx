@@ -17,7 +17,7 @@ const intl = createIntl(
 
 interface OpptjeningFaktaIndexProps {
   behandling: OpptjeningBehandling;
-  opptjening: Opptjening;
+  opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
   alleMerknaderFraBeslutter: any;
   utlandDokStatus: UtlandDokStatus;
@@ -40,43 +40,43 @@ const OpptjeningFaktaIndex = ({
   submitCallback,
   readOnly,
 }: OpptjeningFaktaIndexProps) => {
-  const aktiviteter1 = [
-    {
-      ...opptjening.opptjeningAktivitetList[0],
-      opptjeningFom: '2016-02-14',
-      opptjeningTom: '2019-10-19',
-      aktivitetType: { kode: 'NÆRING' },
-    },
-  ];
-  const aktiviteter2 = [
-    {
-      ...opptjening.opptjeningAktivitetList[0],
-      opptjeningFom: '2015-05-02',
-      opptjeningTom: '2018-12-31',
-      aktivitetType: { kode: 'ARBEID' },
-    },
-  ];
-  const aktiviteter3 = [
-    {
-      ...opptjening.opptjeningAktivitetList[0],
-      opptjeningFom: '2016-05-05',
-      opptjeningTom: '2020-01-01',
-      aktivitetType: { kode: 'ARBEID' },
-    },
-  ];
+  // const aktiviteter1 = [
+  //   {
+  //     ...opptjening.opptjeningAktivitetList[0],
+  //     opptjeningFom: '2016-02-14',
+  //     opptjeningTom: '2019-10-19',
+  //     aktivitetType: { kode: 'NÆRING' },
+  //   },
+  // ];
+  // const aktiviteter2 = [
+  //   {
+  //     ...opptjening.opptjeningAktivitetList[0],
+  //     opptjeningFom: '2015-05-02',
+  //     opptjeningTom: '2018-12-31',
+  //     aktivitetType: { kode: 'ARBEID' },
+  //   },
+  // ];
+  // const aktiviteter3 = [
+  //   {
+  //     ...opptjening.opptjeningAktivitetList[0],
+  //     opptjeningFom: '2016-05-05',
+  //     opptjeningTom: '2020-01-01',
+  //     aktivitetType: { kode: 'ARBEID' },
+  //   },
+  // ];
 
-  const opptjeningsperioder: Opptjening[] = [
-    { ...opptjening, opptjeningAktivitetList: aktiviteter1 },
-    { ...opptjening, opptjeningAktivitetList: aktiviteter2 },
-    { ...opptjening, opptjeningAktivitetList: aktiviteter3 },
-  ];
+  // const opptjeningsperioder: Opptjening[] = [
+  //   { ...opptjening, opptjeningAktivitetList: aktiviteter1 },
+  //   { ...opptjening, opptjeningAktivitetList: aktiviteter2 },
+  //   { ...opptjening, opptjeningAktivitetList: aktiviteter3 },
+  // ];
 
   return (
     <RawIntlProvider value={intl}>
       <OpptjeningInfoPanel
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
-        opptjeningList={opptjeningsperioder}
+        opptjeningList={opptjening.opptjeninger}
         dokStatus={utlandDokStatus ? utlandDokStatus.dokStatus : undefined}
         aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}

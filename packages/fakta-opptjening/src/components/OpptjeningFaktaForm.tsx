@@ -109,10 +109,9 @@ export class OpptjeningFaktaFormImpl extends Component<
     };
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity } = this.state;
-    console.log(opptjeningList);
     const { opptjeningAktivitetList } = opptjeningList[0];
     const opptjeningActivityWithAp = opptjeningAktivitetList.find(o => o.erGodkjent === null);
     const selected = selectedOpptjeningActivity || opptjeningActivityWithAp || opptjeningAktivitetList[0];
@@ -270,13 +269,15 @@ export class OpptjeningFaktaFormImpl extends Component<
 
     return (
       <div className={styles.container}>
-        <TabsPure
-          tabs={opptjeningList.map((currentOpptjening, currentOpptjeningIndex) => ({
-            aktiv: activeTab === currentOpptjeningIndex,
-            label: `Opptjeningsperiode ${currentOpptjeningIndex + 1}`,
-          }))}
-          onChange={(e, clickedIndex) => this.setActiveTab(clickedIndex)}
-        />
+        {opptjeningList.length > 1 && (
+          <TabsPure
+            tabs={opptjeningList.map((currentOpptjening, currentOpptjeningIndex) => ({
+              aktiv: activeTab === currentOpptjeningIndex,
+              label: `Opptjeningsperiode ${currentOpptjeningIndex + 1}`,
+            }))}
+            onChange={(e, clickedIndex) => this.setActiveTab(clickedIndex)}
+          />
+        )}
 
         {hasAksjonspunkt && (
           <>
