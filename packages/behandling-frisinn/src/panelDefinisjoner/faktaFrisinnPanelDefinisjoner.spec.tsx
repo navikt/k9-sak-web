@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import faktaPanelDefinisjoner from './faktaOmsorgspengerPanelDefinisjoner';
+import faktaPanelDefinisjoner from './faktaFrisinnPanelDefinisjoner';
 
 describe('<faktaFpPanelDefinisjoner>', () => {
   it('skal sjekka at alle paneler har nødvendige keys', () => {

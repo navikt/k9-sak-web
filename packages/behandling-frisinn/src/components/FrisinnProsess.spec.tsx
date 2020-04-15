@@ -109,13 +109,6 @@ describe('<FrisinnProsess>', () => {
     const meny = wrapper.find(ProsessStegContainer);
     expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
       {
-        isActive: true,
-        isDisabled: false,
-        isFinished: false,
-        label: 'Inngangsvilkår',
-        type: 'default',
-      },
-      {
         isActive: false,
         isDisabled: false,
         isFinished: false,
@@ -126,21 +119,7 @@ describe('<FrisinnProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Uttak',
-        type: 'default',
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
         label: 'Tilkjent ytelse',
-        type: 'default',
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        label: 'Simulering',
         type: 'default',
       },
       {
@@ -181,7 +160,7 @@ describe('<FrisinnProsess>', () => {
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).to.have.length(1);
     expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('uttak');
+    expect(opppdaterKall[0].args[0]).to.eql('vedtak');
     expect(opppdaterKall[0].args[1]).to.eql('default');
   });
 
@@ -382,37 +361,6 @@ describe('<FrisinnProsess>', () => {
     const panel = wrapper.find(ProsessStegPanel);
     expect(panel.prop('valgtProsessSteg').urlCode).is.eql('vedtak');
     const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewCallback;
-    expect(forhandsvisCallback).is.not.null;
-
-    forhandsvisCallback({ param: 'test' });
-
-    expect(dispatch.getCalls()).to.have.length(1);
-  });
-
-  it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
-    const dispatch = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
-        fagsak={fagsak}
-        behandling={behandling}
-        alleKodeverk={{}}
-        navAnsatt={navAnsatt}
-        valgtProsessSteg="simulering"
-        valgtFaktaSteg="default"
-        hasFetchError={false}
-        oppdaterBehandlingVersjon={sinon.spy()}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
-        opneSokeside={sinon.spy()}
-        dispatch={dispatch}
-      />,
-    );
-
-    const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').urlCode).is.eql('simulering');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewFptilbakeCallback;
     expect(forhandsvisCallback).is.not.null;
 
     forhandsvisCallback({ param: 'test' });
