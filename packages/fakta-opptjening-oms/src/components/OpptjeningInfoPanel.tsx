@@ -58,8 +58,6 @@ export const OpptjeningInfoPanel = ({
     <OpptjeningFaktaForm
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
-      // opptjeningFomDato={fastsattOpptjening.opptjeningFom}
-      // opptjeningTomDato={fastsattOpptjening.opptjeningTom}
       opptjeningList={opptjeningList}
       dokStatus={dokStatus}
       readOnly={readOnly}
@@ -92,28 +90,6 @@ const buildPeriod = (activity: OpptjeningAktivitet, opptjeningsperiodeFom: strin
     opptjeningTom: tomDate,
   };
 };
-
-/* export const buildInitialValues = createSelector(
-  [
-    ownProps => ownProps.opptjeningAktiviteter,
-    ownProps => ownProps.fastsattOpptjening,
-    ownProps => ownProps.aksjonspunkter,
-  ],
-  (opptjeningActivities, fastsattOpptjening, aksjonspunkter) =>
-    fastsattOpptjening && {
-      opptjeningActivities: opptjeningActivities
-        .filter(oa => moment(fastsattOpptjening.opptjeningFom).isBefore(addDay(oa.opptjeningTom)))
-        .filter(oa => moment(oa.opptjeningFom).isBefore(addDay(fastsattOpptjening.opptjeningTom)))
-        .map((oa, index) => ({
-          ...oa,
-          ...buildPeriod(oa, fastsattOpptjening.opptjeningFom, fastsattOpptjening.opptjeningTom),
-          id: index + 1,
-        })),
-      aksjonspunkt:
-        aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
-      fastsattOpptjening,
-    },
-); */
 
 export const buildInitialValues = createSelector(
   [
