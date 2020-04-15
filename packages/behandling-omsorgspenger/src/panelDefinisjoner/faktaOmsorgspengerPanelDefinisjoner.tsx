@@ -2,7 +2,7 @@ import FaktaPanelDefinisjon from '@fpsak-frontend/behandling-felles/src/types/fa
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
-import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
+import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

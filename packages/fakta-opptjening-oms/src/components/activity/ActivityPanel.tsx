@@ -106,7 +106,7 @@ const finnBegrunnelseLabel = (
     ? 'ActivityPanel.Begrunnelse'
     : 'ActivityPanel.BegrunnEndringene';
 
-export const activityPanelName = 'ActivityPanel';
+export const activityPanelNameFormName = 'ActivityPanelForm';
 
 interface ActivityPanelProps {
   activity: Partial<OpptjeningAktivitet>;
@@ -254,7 +254,7 @@ export const ActivityPanel = ({
     {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
         <FlexContainer>
-          <FlexRow>
+          <FlexRow className={styles.buttonContainer}>
             <FlexColumn>
               <Hovedknapp mini htmlType="button" onClick={handleSubmit} disabled={pristine}>
                 <FormattedMessage id="ActivityPanel.Oppdater" />
@@ -273,7 +273,14 @@ export const ActivityPanel = ({
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: ActivityPanelProps) => {
-  const { updateActivity, alleKodeverk, opptjeningAktivitetTypes, activity } = initialOwnProps;
+  const {
+    activity,
+    alleKodeverk,
+    behandlingId,
+    behandlingVersjon,
+    opptjeningAktivitetTypes,
+    updateActivity,
+  } = initialOwnProps;
   const onSubmit = values => updateActivity(values);
   const arbeidTyper = alleKodeverk[kodeverkTyper.ARBEID_TYPE];
   const filtrerteOpptjeningAktivitetTypes = filterActivityType(
@@ -282,29 +289,30 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: ActivityPanelProp
     arbeidTyper,
   );
 
-  return (state, ownProps: ActivityPanelProps) => {
-    const { behandlingId, behandlingVersjon } = ownProps;
-    return {
-      onSubmit,
-      initialValues: ownProps.activity,
-      opptjeningAktivitetTypes: filtrerteOpptjeningAktivitetTypes,
-      selectedActivityType: behandlingFormValueSelector(
-        activityPanelName,
-        behandlingId,
-        behandlingVersjon,
-      )(state, 'aktivitetType'),
-      opptjeningFom: behandlingFormValueSelector(
-        activityPanelName,
-        behandlingId,
-        behandlingVersjon,
-      )(state, 'opptjeningFom'),
-      opptjeningTom: behandlingFormValueSelector(
-        activityPanelName,
-        behandlingId,
-        behandlingVersjon,
-      )(state, 'opptjeningTom'),
-      activityId: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'id'),
-    };
+  return {
+    onSubmit,
+    initialValues: initialOwnProps.activity,
+    opptjeningAktivitetTypes: filtrerteOpptjeningAktivitetTypes,
+    selectedActivityType: behandlingFormValueSelector(
+      activityPanelNameFormName,
+      behandlingId,
+      behandlingVersjon,
+    )(initialState, 'aktivitetType'),
+    opptjeningFom: behandlingFormValueSelector(
+      activityPanelNameFormName,
+      behandlingId,
+      behandlingVersjon,
+    )(initialState, 'opptjeningFom'),
+    opptjeningTom: behandlingFormValueSelector(
+      activityPanelNameFormName,
+      behandlingId,
+      behandlingVersjon,
+    )(initialState, 'opptjeningTom'),
+    activityId: behandlingFormValueSelector(
+      activityPanelNameFormName,
+      behandlingId,
+      behandlingVersjon,
+    )(initialState, 'id'),
   };
 };
 
@@ -331,7 +339,7 @@ const validateForm = (values, props) => {
 export default connect(mapStateToPropsFactory)(
   injectIntl(
     behandlingForm({
-      form: activityPanelName,
+      form: activityPanelNameFormName,
       validate: validateForm,
       enableReinitialize: true,
     })(ActivityPanel),
