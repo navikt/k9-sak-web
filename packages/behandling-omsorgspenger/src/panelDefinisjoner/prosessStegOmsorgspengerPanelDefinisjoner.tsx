@@ -264,7 +264,9 @@ const prosessStegPanelDefinisjoner = [
           api.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
           api.MEDLEMSKAP,
         ],
-        renderComponent: props => <VedtakProsessIndex {...props} />,
+        renderComponent: props => {
+          return <VedtakProsessIndex {...props} />;
+        },
         getData: ({
           previewCallback,
           rettigheter,
@@ -281,7 +283,7 @@ const prosessStegPanelDefinisjoner = [
           beregningresultatForeldrepenger,
           simuleringResultat,
           beregningsgrunnlag,
-          ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
+          ytelseTypeKode: fagsakYtelseType.OMSORGSPENGER,
           employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
           vedtakVarsel,
         }),
