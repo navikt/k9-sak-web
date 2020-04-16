@@ -6,10 +6,13 @@ import { useIntl } from 'react-intl';
 import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import TimeLineButton from './TimeLineButton';
 
-const TimeLineNavigation: FunctionComponent<{ openPeriodInfo: EventCallback }> = ({ openPeriodInfo }) => {
+const TimeLineNavigation: FunctionComponent<{ openPeriodInfo: EventCallback; className?: string }> = ({
+  openPeriodInfo,
+  className,
+}) => {
   const intl = useIntl();
   return (
-    <Row>
+    <Row className={className}>
       <Column xs="11" />
       <Column xs="1">
         <TimeLineButton
