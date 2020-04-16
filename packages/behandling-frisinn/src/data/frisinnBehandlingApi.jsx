@@ -2,7 +2,7 @@ import { ReduxEvents, ReduxRestApiBuilder, RestApiConfigBuilder } from '@fpsak-f
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-felles';
 
-export const PleiepengerBehandlingApiKeys = {
+export const FrisinnBehandlingApiKeys = {
   BEHANDLING_FP: 'BEHANDLING_FP',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
@@ -49,79 +49,75 @@ export const PleiepengerBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   /* /api/behandlinger */
-  .withAsyncPost('/k9/sak/api/behandlinger', PleiepengerBehandlingApiKeys.BEHANDLING_FP)
-  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', PleiepengerBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/k9/sak/api/behandlinger', FrisinnBehandlingApiKeys.BEHANDLING_FP)
+  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', FrisinnBehandlingApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withAsyncPost(
-    '/k9/sak/api/behandling/aksjonspunkt/overstyr',
-    PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
-    {
-      saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
-    },
-  )
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt/overstyr', FrisinnBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
+    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
+  })
   .withPost(
     '/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
-    PleiepengerBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
+    FrisinnBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
   )
 
   /* fptilbake/api/dokument */
   .withPostAndOpenBlob(
     '/fptilbake/api/dokument/forhandsvis-varselbrev',
-    PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+    FrisinnBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   )
 
   /* /api/brev */
-  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
 
-  .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar', PleiepengerBehandlingApiKeys.VILKAR)
-  .withRel('soeker-personopplysninger', PleiepengerBehandlingApiKeys.PERSONOPPLYSNINGER)
-  .withRel('simuleringResultat', PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT)
-  .withRel('tilbakekrevingvalg', PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withRel('beregningsresultat-foreldrepenger', PleiepengerBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
-  .withRel('beregningsgrunnlag', PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG)
-  .withRel('beregningsresultat-foreldrepenger', PleiepengerBehandlingApiKeys.BEREGNINGRESULTAT)
-  .withRel('familiehendelse-v2', PleiepengerBehandlingApiKeys.FAMILIEHENDELSE)
-  .withRel('soknad', PleiepengerBehandlingApiKeys.SOKNAD)
-  .withRel('soknad-original-behandling', PleiepengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
-  .withRel('familiehendelse-original-behandling', PleiepengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
+  .withRel('aksjonspunkter', FrisinnBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', FrisinnBehandlingApiKeys.VILKAR)
+  .withRel('soeker-personopplysninger', FrisinnBehandlingApiKeys.PERSONOPPLYSNINGER)
+  .withRel('simuleringResultat', FrisinnBehandlingApiKeys.SIMULERING_RESULTAT)
+  .withRel('tilbakekrevingvalg', FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG)
+  .withRel('beregningsresultat-foreldrepenger', FrisinnBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
+  .withRel('beregningsgrunnlag', FrisinnBehandlingApiKeys.BEREGNINGSGRUNNLAG)
+  .withRel('beregningsresultat-foreldrepenger', FrisinnBehandlingApiKeys.BEREGNINGRESULTAT)
+  .withRel('familiehendelse-v2', FrisinnBehandlingApiKeys.FAMILIEHENDELSE)
+  .withRel('soknad', FrisinnBehandlingApiKeys.SOKNAD)
+  .withRel('soknad-original-behandling', FrisinnBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
+  .withRel('familiehendelse-original-behandling', FrisinnBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel(
     'beregningsresultat-engangsstonad-original-behandling',
-    PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
+    FrisinnBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
   )
-  .withRel('soeker-medlemskap-v2', PleiepengerBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('uttak-periode-grense', PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
-  .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
-  .withRel('soeker-verge', PleiepengerBehandlingApiKeys.VERGE)
-  .withRel('ytelsefordeling', PleiepengerBehandlingApiKeys.YTELSEFORDELING)
-  .withRel('opptjening-v2', PleiepengerBehandlingApiKeys.OPPTJENING)
-  .withRel('sendt-varsel-om-revurdering', PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withRel('fakta-arbeidsforhold', PleiepengerBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
-  .withRel('uttaksresultat-perioder', PleiepengerBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
-  .withRel('uttak-stonadskontoer', PleiepengerBehandlingApiKeys.UTTAK_STONADSKONTOER)
-  .withRel('uttak-kontroller-fakta-perioder', PleiepengerBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
-  .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
-  .withRel('vedtak-varsel', PleiepengerBehandlingApiKeys.VEDTAK_VARSEL)
-  .withRel('omsorgen-for', PleiepengerBehandlingApiKeys.OMSORGEN_FOR)
+  .withRel('soeker-medlemskap-v2', FrisinnBehandlingApiKeys.MEDLEMSKAP)
+  .withRel('uttak-periode-grense', FrisinnBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
+  .withRel('inntekt-arbeid-ytelse', FrisinnBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
+  .withRel('soeker-verge', FrisinnBehandlingApiKeys.VERGE)
+  .withRel('ytelsefordeling', FrisinnBehandlingApiKeys.YTELSEFORDELING)
+  .withRel('opptjening-v2', FrisinnBehandlingApiKeys.OPPTJENING)
+  .withRel('sendt-varsel-om-revurdering', FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
+  .withRel('fakta-arbeidsforhold', FrisinnBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
+  .withRel('uttaksresultat-perioder', FrisinnBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
+  .withRel('uttak-stonadskontoer', FrisinnBehandlingApiKeys.UTTAK_STONADSKONTOER)
+  .withRel('uttak-kontroller-fakta-perioder', FrisinnBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
+  .withRel('sykdom', FrisinnBehandlingApiKeys.SYKDOM)
+  .withRel('vedtak-varsel', FrisinnBehandlingApiKeys.VEDTAK_VARSEL)
+  .withRel('omsorgen-for', FrisinnBehandlingApiKeys.OMSORGEN_FOR)
 
-  .withPost('/k9/sak/api/behandlinger/bytt-enhet', PleiepengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PleiepengerBehandlingApiKeys.RESUME_BEHANDLING, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+  .withPost('/k9/sak/api/behandlinger/bytt-enhet', FrisinnBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/k9/sak/api/behandlinger/henlegg', FrisinnBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', FrisinnBehandlingApiKeys.RESUME_BEHANDLING, {
+    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PleiepengerBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', PleiepengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+  .withPost('/k9/sak/api/behandlinger/sett-pa-vent', FrisinnBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', FrisinnBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
+    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/k9/sak/api/verge/opprett', PleiepengerBehandlingApiKeys.VERGE_OPPRETT, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+  .withPost('/k9/sak/api/verge/opprett', FrisinnBehandlingApiKeys.VERGE_OPPRETT, {
+    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/k9/sak/api/verge/fjern', PleiepengerBehandlingApiKeys.VERGE_FJERN, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+  .withPost('/k9/sak/api/verge/fjern', FrisinnBehandlingApiKeys.VERGE_FJERN, {
+    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
   })
 
   .build();
