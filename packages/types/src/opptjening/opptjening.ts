@@ -1,7 +1,8 @@
 import OpptjeningAktivitet from './opptjeningAktivitet';
+import FastsattOpptjening from './fastsattOpptjening';
 
 type Opptjening = Readonly<{
-  fastsattOpptjening: OpptjeningAktivitet;
+  fastsattOpptjening: FastsattOpptjening;
   opptjeningAktivitetList: OpptjeningAktivitet[];
 }>;
 

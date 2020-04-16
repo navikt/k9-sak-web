@@ -11869,6 +11869,14 @@ nav-frontend-spinner@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.2.tgz#13c1a6f9126d3f3f746d53d480824348a7e91288"
 
+nav-frontend-tabs-style@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.24.tgz#990fc8f5cd0b5f3774b2addb777e379f829a75ce"
+
+nav-frontend-tabs@^0.0.38:
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs/-/nav-frontend-tabs-0.0.38.tgz#056d06eeb45a63fe54faa82571587bd9ebd89d5e"
+
 nav-frontend-typografi-style@1.0.19, nav-frontend-typografi-style@^1.0.17, nav-frontend-typografi-style@^1.0.18:
   version "1.0.19"
   resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.19.tgz#d143ca06f086b1a5838954f1a18ee7611b359889"
