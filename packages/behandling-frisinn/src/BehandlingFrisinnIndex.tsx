@@ -15,7 +15,7 @@ import {
   DataFetcherBehandlingDataV2,
 } from '@fpsak-frontend/behandling-felles';
 
-import frisinnBehandlingApi, { reduxRestApi, PleiepengerBehandlingApiKeys } from './data/frisinnBehandlingApi';
+import frisinnBehandlingApi, { reduxRestApi, FrisinnBehandlingApiKeys } from './data/frisinnBehandlingApi';
 import FrisinnPaneler from './components/FrisinnPaneler';
 import FetchedData from './types/fetchedDataTsType';
 
@@ -178,7 +178,7 @@ const mapStateToProps = state => ({
 });
 
 const getResetRestApiContext = () => dispatch => {
-  Object.values(PleiepengerBehandlingApiKeys).forEach(value => {
+  Object.values(FrisinnBehandlingApiKeys).forEach(value => {
     dispatch(frisinnBehandlingApi[value].resetRestApi()());
   });
 };
