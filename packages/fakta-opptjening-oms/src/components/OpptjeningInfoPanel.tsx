@@ -1,7 +1,7 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, SubmitCallback, UtlandDokStatus, Opptjening } from '@k9-sak-web/types';
+import { Aksjonspunkt, SubmitCallback, UtlandDokStatus, Opptjening, FastsattOpptjening } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
@@ -17,7 +17,7 @@ interface OpptjeningInfoPanelProps {
   behandlingId: number;
   behandlingVersjon: number;
   opptjeningAktiviteter: OpptjeningAktivitet[];
-  fastsattOpptjening: OpptjeningAktivitet;
+  fastsattOpptjening: FastsattOpptjening;
   aksjonspunkter: Aksjonspunkt[];
   alleMerknaderFraBeslutter: any;
   utlandDokStatus: UtlandDokStatus;
@@ -145,7 +145,7 @@ const transformPeriod = (
 
 interface Values {
   opptjeningActivities: OpptjeningAktivitet[];
-  fastsattOpptjening: OpptjeningAktivitet;
+  fastsattOpptjening: FastsattOpptjening;
   aksjonspunkt: Aksjonspunkt[];
 }
 
