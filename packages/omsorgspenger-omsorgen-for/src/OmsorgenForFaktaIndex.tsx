@@ -18,14 +18,20 @@ const intl = createIntl(
 interface OmsorgenForFaktaIndexProps {
   behandling: Behandling;
   submitCallback: VoidFunction;
+  readOnly?: boolean;
 }
 
-const OmsorgenForFaktaIndex: FunctionComponent<OmsorgenForFaktaIndexProps> = ({ behandling, submitCallback }) => (
+const OmsorgenForFaktaIndex: FunctionComponent<OmsorgenForFaktaIndexProps> = ({
+  behandling,
+  submitCallback,
+  readOnly,
+}) => (
   <RawIntlProvider value={intl}>
     <OmsorgenForFaktaForm
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       submitCallback={submitCallback}
+      readOnly={readOnly}
     />
   </RawIntlProvider>
 );

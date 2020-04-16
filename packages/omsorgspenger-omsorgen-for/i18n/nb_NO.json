@@ -1,8 +1,13 @@
 {
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "OmsorgenFor.Aksjonspunkt": "Søkeren har ingen folkeregistrerte barn bosatt på samme adresse. Vurder om søkeren har omsorg for barn.",
   "OmsorgenFor.DelerSøkerAdresseMedBarn": "Søker deler samme folkeregistrert adresse med et barn (f. eks. er steforelder)",
   "OmsorgenFor.FåttOverførtDager": "Fått overført/fordelt dager",
   "OmsorgenFor.HarFosterbarn": "Søker har fosterbarn",
   "OmsorgenFor.HarAvtaltDeltBosted": "Søker har avtalt delt bosted for et barn",
   "OmsorgenFor.Ja": "Ja",
-  "OmsorgenFor.Nei": "Nei"
+  "OmsorgenFor.Nei": "Nei",
+  "OmsorgenFor.Oppfylt": "Omsorgen for er oppfylt. Saken vil fortsette etter du sender inn.",
+  "OmsorgenFor.IkkeOppfylt": "Omsorgen for er ikke oppfylt. Saken vil avvises etter du sender inn.",
+  "SubmitButton.SendInn": "Send inn"
 }

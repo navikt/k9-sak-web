@@ -3,15 +3,17 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form/index';
 import { FormattedMessage } from 'react-intl';
 import * as React from 'react';
 import { usePrevious } from '@fpsak-frontend/fp-felles/index';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 
 interface SpørsmålProps {
   vis: boolean;
   feltnavn: string;
   labeldId: string;
   nullstillFelt: (feltnavn: string) => void;
+  readOnly?: boolean;
 }
 
-const Spørsmål: FunctionComponent<SpørsmålProps> = ({ vis, feltnavn, labeldId, nullstillFelt }) => {
+const Spørsmål: FunctionComponent<SpørsmålProps> = ({ vis, feltnavn, labeldId, nullstillFelt, readOnly }) => {
   const prevVis = usePrevious(vis);
   useEffect(() => {
     if (prevVis && !vis) {
@@ -20,10 +22,13 @@ const Spørsmål: FunctionComponent<SpørsmålProps> = ({ vis, feltnavn, labeldI
   }, [vis, prevVis]);
 
   return vis ? (
-    <RadioGroupField name={feltnavn} label={<FormattedMessage id={labeldId} />}>
-      <RadioOption label={<FormattedMessage id="OmsorgenFor.Ja" />} value />
-      <RadioOption label={<FormattedMessage id="OmsorgenFor.Nei" />} value={false} />
-    </RadioGroupField>
+    <>
+      <VerticalSpacer eightPx />
+      <RadioGroupField name={feltnavn} label={<FormattedMessage id={labeldId} />} readOnly={readOnly}>
+        <RadioOption label={<FormattedMessage id="OmsorgenFor.Ja" />} value />
+        <RadioOption label={<FormattedMessage id="OmsorgenFor.Nei" />} value={false} />
+      </RadioGroupField>
+    </>
   ) : null;
 };
 
