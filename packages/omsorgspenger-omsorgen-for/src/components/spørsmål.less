@@ -1,0 +1,34 @@
+.valgtIndikator {
+  border-bottom: 1px solid grey;
+}
+
+.valgtIndikatorExtendBorder {
+  &:extend(.valgtIndikator);
+
+  position: relative;
+
+  &:after {
+    border-bottom: 1px solid grey;
+    content: '';
+    position: absolute;
+    right: -16px;
+    width: 16px;
+  }
+}
+
+.erValgt {
+  position: relative;
+
+  &:before {
+    background: white;
+    border-left: 1px solid grey;
+    border-top: 1px solid grey;
+    bottom: -8px;
+    content: '';
+    height: 16px;
+    left: 40%;
+    position: absolute;
+    transform: rotate(45deg) skew(-10deg, -10deg);
+    width: 16px;
+  }
+}

@@ -65,7 +65,7 @@ const OmsorgenForFaktaForm: FunctionComponent<OmsorgenForFaktaFormProps & Inject
   return (
     <form onSubmit={handleSubmit}>
       <AksjonspunktHelpTextTemp isAksjonspunktOpen>
-        {[<FormattedMessage id="OmsorgenFor.Aksjonspunkt" />]}
+        {[<FormattedMessage id="OmsorgenFor.Aksjonspunkt" key="OmsorgenFor.Aksjonspunkt" />]}
       </AksjonspunktHelpTextTemp>
       <Spørsmål
         vis
@@ -73,6 +73,7 @@ const OmsorgenForFaktaForm: FunctionComponent<OmsorgenForFaktaFormProps & Inject
         labeldId="OmsorgenFor.DelerSøkerAdresseMedBarn"
         nullstillFelt={nullstillFelt}
         readOnly={readOnly}
+        value={søkerDelerAdresseMedBarn}
       />
       <Spørsmål
         vis={delerAdresseJa}
