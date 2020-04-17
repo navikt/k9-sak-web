@@ -62,10 +62,13 @@ export const OmsorgenForFaktaFormImpl: FunctionComponent<OmsorgenForFaktaFormPro
   const omsorgenForGodkjent = harFosterbarn || fåttOverførtDager || harAvtaltDeltBosted;
   const omsorgenForIkkeGodkjent = fåttOverførtDager === false;
 
+  const koronareglerGjelder = new Date().getFullYear() === 2020;
+  const aksjonspunkt = koronareglerGjelder ? 'OmsorgenFor.Aksjonspunkt2020' : 'OmsorgenFor.Aksjonspunkt';
+
   return (
     <form onSubmit={handleSubmit}>
       <AksjonspunktHelpTextTemp isAksjonspunktOpen>
-        {[<FormattedMessage id="OmsorgenFor.Aksjonspunkt" key="OmsorgenFor.Aksjonspunkt" />]}
+        {[<FormattedMessage id={aksjonspunkt} key="OmsorgenFor.Aksjonspunkt" />]}
       </AksjonspunktHelpTextTemp>
       <Spørsmål
         vis

@@ -1,6 +1,7 @@
 {
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "OmsorgenFor.Aksjonspunkt": "Systemet fant ingen folkeregistrerte barn bosatt på samme adresse som søkeren. Vurder om søkeren har omsorg for barn.",
+  "OmsorgenFor.Aksjonspunkt2020": "Systemet fant ikke at søkeren har folkeregistrerte barn. Vurder om søkeren har omsorg for barn.",
   "OmsorgenFor.DelerSøkerAdresseMedBarn": "Søker deler samme folkeregistrert adresse med et barn (f. eks. er steforelder)",
   "OmsorgenFor.FåttOverførtDager": "Fått overført/fordelt dager",
   "OmsorgenFor.HarFosterbarn": "Søker har fosterbarn",
