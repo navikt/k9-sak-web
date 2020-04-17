@@ -44,7 +44,7 @@ interface OmsorgenForFaktaFormProps {
   readOnly?: boolean;
 }
 
-const OmsorgenForFaktaForm: FunctionComponent<OmsorgenForFaktaFormProps & InjectedFormProps> = ({
+export const OmsorgenForFaktaFormImpl: FunctionComponent<OmsorgenForFaktaFormProps & InjectedFormProps> = ({
   handleSubmit,
   formValues,
   behandlingFormPrefix,
@@ -153,5 +153,5 @@ export default connect(
   behandlingForm({
     form: omsorgenForFormName,
     enableReinitialize: true,
-  })(OmsorgenForFaktaForm),
+  })(OmsorgenForFaktaFormImpl),
 );
