@@ -15,7 +15,10 @@ import {
   DataFetcherBehandlingDataV2,
 } from '@fpsak-frontend/behandling-felles';
 
-import omsorgspengerBehandlingApi, { reduxRestApi, PleiepengerBehandlingApiKeys } from './data/omsorgspengerBehandlingApi';
+import omsorgspengerBehandlingApi, {
+  reduxRestApi,
+  PleiepengerBehandlingApiKeys,
+} from './data/omsorgspengerBehandlingApi';
 import OmsorgspengerPaneler from './components/OmsorgspengerPaneler';
 import FetchedData from './types/fetchedDataTsType';
 

@@ -3,6 +3,7 @@ const fagsakYtelseType = {
   FORELDREPENGER: 'FP',
   SVANGERSKAPSPENGER: 'SVP',
   PLEIEPENGER: 'PSB',
+  OMSORGSPENGER: 'OMP',
 };
 
 export default fagsakYtelseType;
