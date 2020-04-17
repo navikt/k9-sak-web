@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 import { usePrevious } from '@fpsak-frontend/fp-felles/index';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
+import { Element } from 'nav-frontend-typografi';
 import styles from './spørsmål.less';
 
 interface SpørsmålProps {
@@ -30,16 +31,24 @@ const Spørsmål: FunctionComponent<SpørsmålProps> = ({ vis, feltnavn, labeldI
   return vis ? (
     <>
       <VerticalSpacer eightPx />
-      <RadioGroupField name={feltnavn} label={<FormattedMessage id={labeldId} />} readOnly={readOnly}>
+      <RadioGroupField
+        name={feltnavn}
+        label={
+          <Element>
+            <FormattedMessage id={labeldId} />
+          </Element>
+        }
+        readOnly={readOnly}
+      >
         <RadioOption
           label={<FormattedMessage id="OmsorgenFor.Ja" />}
           value
-          wrapperClassName={classNames({ valgtIndikatorExtendBorder: harValgt, erValgt: value === true })}
+          wrapperClassName={classNames('padding', { valgtIndikatorExtendBorder: harValgt, erValgt: value === true })}
         />
         <RadioOption
           label={<FormattedMessage id="OmsorgenFor.Nei" />}
           value={false}
-          wrapperClassName={classNames({ valgtIndikator: harValgt, erValgt: value === false })}
+          wrapperClassName={classNames('padding', { valgtIndikator: harValgt, erValgt: value === false })}
         />
       </RadioGroupField>
     </>
