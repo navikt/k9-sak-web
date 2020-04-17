@@ -106,7 +106,7 @@ const OmsorgenForFaktaForm: FunctionComponent<OmsorgenForFaktaFormProps & Inject
       {(omsorgenForGodkjent || omsorgenForIkkeGodkjent) && (
         <>
           <VerticalSpacer sixteenPx />
-          <AlertStripe type={omsorgenForGodkjent ? 'suksess' : 'feil'}>
+          <AlertStripe type={omsorgenForGodkjent ? 'suksess' : 'feil'} form="inline">
             <FormattedMessage id={omsorgenForGodkjent ? 'OmsorgenFor.Oppfylt' : 'OmsorgenFor.IkkeOppfylt'} />
           </AlertStripe>
           <VerticalSpacer sixteenPx />
