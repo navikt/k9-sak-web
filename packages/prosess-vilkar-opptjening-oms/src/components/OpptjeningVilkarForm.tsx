@@ -1,5 +1,4 @@
-import { Aksjonspunkt, FastsattOpptjening, SubmitCallback } from '@k9-sak-web/types';
-import Behandlingsresultat from '@k9-sak-web/types/src/opptjening/behandlingsresultat';
+import { Aksjonspunkt, FastsattOpptjening, SubmitCallback, Vilkaarresultat } from '@k9-sak-web/types';
 import React from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
@@ -13,7 +12,7 @@ import OpptjeningVilkarView from './OpptjeningVilkarView';
 interface OpptjeningVilkarFormProps {
   behandlingId: number;
   behandlingVersjon: number;
-  behandlingsresultat: Behandlingsresultat;
+  vilkarsresultat: Vilkaarresultat;
   fastsattOpptjening: FastsattOpptjening;
   isAksjonspunktOpen: boolean;
   aksjonspunkter: Aksjonspunkt[];
@@ -22,12 +21,13 @@ interface OpptjeningVilkarFormProps {
   readOnlySubmitButton: boolean;
   readOnly: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
+  tabIndex: number;
 }
 
 const OpptjeningVilkarForm = ({
   behandlingId,
   behandlingVersjon,
-  behandlingsresultat,
+  vilkarsresultat,
   fastsattOpptjening,
   isAksjonspunktOpen,
   aksjonspunkter,
@@ -36,21 +36,24 @@ const OpptjeningVilkarForm = ({
   readOnlySubmitButton,
   readOnly,
   submitCallback,
+  tabIndex,
 }: OpptjeningVilkarFormProps) => {
   if (aksjonspunkter.length > 0) {
     return (
       <OpptjeningVilkarAksjonspunktPanel
+        // key={fastsattOpptjening.opptjeningTom}
         submitCallback={submitCallback}
         isApOpen={isAksjonspunktOpen}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
-        behandlingsresultat={behandlingsresultat}
+        vilkarsresultat={vilkarsresultat}
         aksjonspunkter={aksjonspunkter}
         status={status}
         lovReferanse={lovReferanse}
         fastsattOpptjening={fastsattOpptjening}
+        tabIndex={tabIndex}
       />
     );
   }

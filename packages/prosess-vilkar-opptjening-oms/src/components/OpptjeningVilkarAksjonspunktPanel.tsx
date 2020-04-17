@@ -7,8 +7,7 @@ import {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt, FastsattOpptjening, SubmitCallback } from '@k9-sak-web/types';
-import Behandlingsresultat from '@k9-sak-web/types/src/opptjening/behandlingsresultat';
+import { Aksjonspunkt, FastsattOpptjening, SubmitCallback, Vilkaarresultat } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -16,13 +15,14 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
+import VilkarFields from './VilkarFields';
 
 const FORM_NAME = 'OpptjeningVilkarForm';
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
-  behandlingsresultat: Behandlingsresultat;
+  vilkarsresultat: Vilkaarresultat;
   behandlingVersjon: number;
   fastsattOpptjening: FastsattOpptjening;
   isApOpen: boolean;
@@ -31,6 +31,7 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   readOnlySubmitButton: boolean;
   status: string;
   submitCallback: (props: SubmitCallback[]) => void;
+  tabIndex: number;
 }
 
 interface StateProps {
@@ -56,6 +57,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   dirty,
   handleSubmit,
   form,
+  tabIndex,
 }: OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps) => {
   const formProps = useMemo(
     () => ({
@@ -93,27 +95,19 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       <Element>
         <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
       </Element>
-      <VilkarResultPicker
-        erVilkarOk={erVilkarOk}
-        readOnly={readOnly}
-        // hasAksjonspunkt
-        customVilkarOppfyltText={{ id: 'OpptjeningVilkarAksjonspunktPanel.ErOppfylt' }}
-        customVilkarIkkeOppfyltText={{ id: 'OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt' }}
-      />
-      <VerticalSpacer sixteenPx />
-      <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+      <VilkarFields erVilkarOk={erVilkarOk} readOnly={readOnly} fieldPrefix={`vilkarFields[${tabIndex}]`} />
     </ProsessPanelTemplate>
   );
 };
 
 export const buildInitialValues = createSelector(
   [
-    (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.behandlingsresultat,
+    (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.vilkarsresultat,
     ownProps => ownProps.aksjonspunkter,
     ownProps => ownProps.status,
   ],
-  (behandlingsresultat, aksjonspunkter, status) => ({
-    ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
+  (vilkarsresultat, aksjonspunkter, status) => ({
+    ...VilkarResultPicker.buildInitialValues(vilkarsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
@@ -125,7 +119,7 @@ const transformValues = (values, aksjonspunkter) => ({
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {
-  const { aksjonspunkter, submitCallback } = initialOwnProps;
+  const { aksjonspunkter, submitCallback, tabIndex } = initialOwnProps;
   const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter)]);
 
   const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
@@ -139,7 +133,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarA
       FORM_NAME,
       ownProps.behandlingId,
       ownProps.behandlingVersjon,
-    )(state, 'erVilkarOk'),
+    )(state, `vilkarFields[${tabIndex}].erVilkarOk`),
     lovReferanse: ownProps.lovReferanse,
   });
 };
@@ -147,6 +141,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarA
 const OpptjeningVilkarAksjonspunktPanel = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: FORM_NAME,
+    enableReinitialize: true,
   })(OpptjeningVilkarAksjonspunktPanelImpl),
 );
 

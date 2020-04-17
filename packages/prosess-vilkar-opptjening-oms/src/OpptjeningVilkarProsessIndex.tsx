@@ -41,7 +41,8 @@ const OpptjeningVilkarProsessIndex = ({
 }: OpptjeningVilkarProsessIndexProps) => {
   const [activeTab, setActiveTab] = React.useState(0);
   const activeOpptjeningObject = opptjening.opptjeninger[activeTab];
-
+  const { behandlingsresultat } = behandling;
+  const vilkarsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
   return (
     <RawIntlProvider value={intl}>
       <TabsPure
@@ -52,21 +53,20 @@ const OpptjeningVilkarProsessIndex = ({
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
       />
       <div className={styles.tabContainer}>
-        <React.StrictMode>
-          <OpptjeningVilkarForm
-            behandlingId={behandling.id}
-            behandlingVersjon={behandling.versjon}
-            behandlingsresultat={behandling.behandlingsresultat}
-            fastsattOpptjening={activeOpptjeningObject.fastsattOpptjening}
-            status={status}
-            lovReferanse={lovReferanse}
-            aksjonspunkter={aksjonspunkter}
-            submitCallback={submitCallback}
-            readOnly={isReadOnly}
-            isAksjonspunktOpen={isAksjonspunktOpen}
-            readOnlySubmitButton={readOnlySubmitButton}
-          />
-        </React.StrictMode>
+        <OpptjeningVilkarForm
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          vilkarsresultat={vilkarsresultat ? vilkarsresultat[activeTab] : null}
+          fastsattOpptjening={activeOpptjeningObject.fastsattOpptjening}
+          status={status}
+          lovReferanse={lovReferanse}
+          aksjonspunkter={aksjonspunkter}
+          submitCallback={submitCallback}
+          readOnly={isReadOnly}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+          readOnlySubmitButton={readOnlySubmitButton}
+          tabIndex={activeTab}
+        />
       </div>
     </RawIntlProvider>
   );

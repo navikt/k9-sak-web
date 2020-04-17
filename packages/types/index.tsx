@@ -25,3 +25,4 @@ export { default as Opptjening } from './src/opptjening/opptjening';
 export { default as FastsattOpptjening } from './src/opptjening/fastsattOpptjening';
 export { default as FastsattOpptjeningAktivitet } from './src/opptjening/fastsattOpptjeningAktivitet';
 export { default as UtlandDokStatus } from './src/opptjening/utlandDokStatus';
+export { default as Vilkaarresultat } from './src/opptjening/vilkaarresultat';
