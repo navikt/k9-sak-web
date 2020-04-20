@@ -11837,11 +11837,11 @@ nav-frontend-modal@1.0.33:
   version "1.0.33"
   resolved "https://registry.yarnpkg.com/nav-frontend-modal/-/nav-frontend-modal-1.0.33.tgz#7d45e607cb9b4136ccd9f7987e984fa6870eeb88"
 
-nav-frontend-paneler-style@0.3.18:
+nav-frontend-paneler-style@0.3.18, nav-frontend-paneler-style@^0.3.18:
   version "0.3.18"
   resolved "https://registry.yarnpkg.com/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.18.tgz#a01b14b2759383a00c37057d936287954b45c249"
 
-nav-frontend-paneler@2.0.1:
+nav-frontend-paneler@2.0.1, nav-frontend-paneler@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-2.0.1.tgz#d62d99c116755a7894a223f76b6c82c8cc84ebca"
 
