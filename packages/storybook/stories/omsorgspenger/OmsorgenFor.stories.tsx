@@ -1,7 +1,7 @@
 import React from 'react';
 import { Behandling } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
-import OmsorgenForFaktaIndex from '../../../omsorgspenger-omsorgen-for';
+import OmsorgenForFaktaIndex from '@k9-sak-web/omsorgen-for-oms';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {

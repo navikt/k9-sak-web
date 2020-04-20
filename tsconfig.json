@@ -34,7 +34,7 @@
     "packages/types",
     "packages/behandling-pleiepenger",
     "packages/prosess-uttak",
-    "packages/omsorgspenger-omsorgen-for",
+    "packages/omsorgen-for-oms",
     "@types"
   ]
 }
