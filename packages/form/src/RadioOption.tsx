@@ -18,6 +18,7 @@ export interface RadioOptionProps {
   style: object;
   manualHideChildren?: boolean;
   dataId?: string;
+  wrapperClassName?: string;
 }
 
 export const RadioOption = ({
@@ -33,12 +34,13 @@ export const RadioOption = ({
   style,
   manualHideChildren,
   dataId,
+  wrapperClassName,
 }: RadioOptionProps) => {
   const stringifiedValue = JSON.stringify(value);
   const actualStringifiedValue = JSON.stringify(actualValue);
   const checked = stringifiedValue === actualStringifiedValue;
   return (
-    <div style={style}>
+    <div style={style} className={wrapperClassName}>
       <NavRadio
         name={name}
         className={className}
