@@ -35,7 +35,6 @@ export { RETTSKILDE_URL, LINK_TIL_BESTE_BEREGNING_REGNEARK, SYSTEMRUTINE_URL } f
 
 export { setRequestPollingMessage, getRequestPollingMessage } from './src/pollingMessageDuck';
 
-
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
 export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';
 export { default as OverstyrBekreftKnappPanel } from './src/overstyr/OverstyrBekreftKnappPanel';
@@ -54,3 +53,4 @@ export { createVisningsnavnForAktivitet, lagVisningsNavn } from './src/util/visn
 export { default as allAccessRights } from './src/navAnsatt/access';
 export { default as DataFetcher } from './src/DataFetcher';
 export { default as BehandlingFormFieldCleaner } from './src/behandlingsprosess/BehandlingFormFieldCleaner';
+export { default as usePrevious } from './src/util/componentHooks';
