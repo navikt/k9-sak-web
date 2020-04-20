@@ -8,10 +8,10 @@ import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 
 const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
   {
-    urlCode: faktaPanelCodes.INNTEKT,
+    urlCode: faktaPanelCodes.INNTEKT_OG_YTELSER,
     textCode: 'InntektOgYtelser.Title',
     aksjonspunkterCodes: [],
-    endpoints: [frisinnBehandlingApi.INNTEKT],
+    endpoints: [frisinnBehandlingApi.INNTEKT_OG_YTELSER],
     renderComponent: props => <InntektOgYtelser {...props} />,
     showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
     getData: () => ({}),
@@ -27,7 +27,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     ],
     endpoints: [],
     renderComponent: props => <BeregningFaktaIndex {...props} />,
-    showComponent: ({ beregningsgrunnlag }) => beregningsgrunnlag,
+    showComponent: () => true,
     getData: ({ rettigheter, beregningsgrunnlag }) => ({
       erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
       beregningsgrunnlag,
