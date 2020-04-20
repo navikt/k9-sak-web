@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@k9-sak-web/types": "1.0.0",
+    "nav-frontend-ekspanderbartpanel": "3.0.8",
     "react": "^16.13.1",
     "react-intl": "^3.12.0"
   },

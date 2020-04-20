@@ -7,9 +7,25 @@ import styles from './flexRow.less';
 const classNames = classnames.bind(styles);
 
 const FlexRow = ({
-  children, spaceBetween, alignItemsToBaseline, alignItemsToFlexEnd, wrap, className,
+  children,
+  spaceBetween,
+  alignItemsToBaseline,
+  alignItemsToFlexEnd,
+  wrap,
+  className,
+  childrenMargin,
 }) => (
-  <div className={classNames('flexRow', { spaceBetween }, { alignItemsToBaseline }, { alignItemsToFlexEnd }, { wrap }, className)}>
+  <div
+    className={classNames(
+      'flexRow',
+      { spaceBetween },
+      { alignItemsToBaseline },
+      { alignItemsToFlexEnd },
+      { wrap },
+      { childrenMargin },
+      className,
+    )}
+  >
     {children}
   </div>
 );
@@ -24,6 +40,7 @@ FlexRow.propTypes = {
   alignItemsToFlexEnd: PropTypes.bool,
   wrap: PropTypes.bool,
   className: PropTypes.string,
+  childrenMargin: PropTypes.bool,
 };
 
 FlexRow.defaultProps = {
@@ -33,6 +50,7 @@ FlexRow.defaultProps = {
   alignItemsToFlexEnd: false,
   wrap: false,
   className: undefined,
+  childrenMargin: false,
 };
 
 export default FlexRow;
