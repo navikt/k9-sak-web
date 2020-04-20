@@ -35,7 +35,7 @@
     "packages/behandling-pleiepenger",
     "packages/prosess-uttak",
     "packages/omsorgen-for-oms",
-    "packages/omsorgspenger-fakta-rammevedtak",
+    "packages/fakta-barn-og-overfoeringsdager",
     "@types"
   ]
 }

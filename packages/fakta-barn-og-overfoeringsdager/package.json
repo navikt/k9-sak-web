@@ -1,5 +1,5 @@
 {
-  "name": "@k9-sak-web/omsorgspenger-fakta-rammevedtak",
+  "name": "@k9-sak-web/fakta-barn-og-overfoeringsdager",
   "version": "1.0.0",
   "module": "index.tsx",
   "license": "MIT",

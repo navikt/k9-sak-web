@@ -1,5 +1,5 @@
 import * as React from 'react';
-import FaktaRammevedtakIndex from '@k9-sak-web/omsorgspenger-fakta-rammevedtak';
+import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import { Behandling } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import withReduxProvider from '../../decorators/withRedux';
