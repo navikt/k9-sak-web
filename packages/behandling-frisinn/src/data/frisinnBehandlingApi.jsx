@@ -30,6 +30,7 @@ export const FrisinnBehandlingApiKeys = {
   VERGE: 'VERGE',
   YTELSEFORDELING: 'YTELSEFORDELING',
   OPPTJENING: 'OPPTJENING',
+  INNTEKT: 'INNTEKT',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
   FAKTA_ARBEIDSFORHOLD: 'FAKTA_ARBEIDSFORHOLD',
   UTTAKSRESULTAT_PERIODER: 'UTTAKSRESULTAT_PERIODER',
@@ -73,6 +74,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/brev */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
 
+  .withRel('inntekt', FrisinnBehandlingApiKeys.INNTEKT)
   .withRel('aksjonspunkter', FrisinnBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar', FrisinnBehandlingApiKeys.VILKAR)
   .withRel('soeker-personopplysninger', FrisinnBehandlingApiKeys.PERSONOPPLYSNINGER)

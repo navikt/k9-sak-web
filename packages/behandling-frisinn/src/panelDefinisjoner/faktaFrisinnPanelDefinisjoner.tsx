@@ -8,15 +8,13 @@ import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 
 const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
   {
-    urlCode: faktaPanelCodes.INNTEKT_OG_YTELSER,
+    urlCode: faktaPanelCodes.INNTEKT,
     textCode: 'InntektOgYtelser.Title',
     aksjonspunkterCodes: [],
-    endpoints: [frisinnBehandlingApi.MEDLEMSKAP],
+    endpoints: [frisinnBehandlingApi.INNTEKT],
     renderComponent: props => <InntektOgYtelser {...props} />,
-    showComponent: ({ personopplysninger }) => personopplysninger,
-    getData: ({ personopplysninger, inntektArbeidYtelse }) => {
-      return { personopplysninger, inntektArbeidYtelse };
-    },
+    showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
+    getData: () => ({}),
   },
   {
     urlCode: faktaPanelCodes.BEREGNING,
