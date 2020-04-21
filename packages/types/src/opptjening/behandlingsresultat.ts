@@ -1,8 +1,8 @@
-import Vilkaarresultat from './vilkaarresultat';
+import Vilkårresultat from './vilkårresultat';
 
 type Behandlingsresultat = Readonly<{
   vilkårResultat: {
-    [name: string]: Vilkaarresultat[];
+    [name: string]: Vilkårresultat[];
   };
 }>;
 

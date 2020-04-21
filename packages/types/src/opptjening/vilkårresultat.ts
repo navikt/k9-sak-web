@@ -1,6 +1,6 @@
 import { Kodeverk } from '@k9-sak-web/types';
 
-type Vilkaarresultat = Readonly<{
+type Vilkårresultat = Readonly<{
   avslagsårsak: Kodeverk;
   periode: {
     fom: string;
@@ -9,4 +9,4 @@ type Vilkaarresultat = Readonly<{
   utfall: Kodeverk;
 }>;
 
-export default Vilkaarresultat;
+export default Vilkårresultat;

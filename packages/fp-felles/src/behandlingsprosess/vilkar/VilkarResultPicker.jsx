@@ -96,9 +96,9 @@ const VilkarResultPickerImpl = ({
             name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
             label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
             placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
-            selectValues={avslagsarsaker.map(aa => (
-              <option key={aa.kode} value={aa.kode}>
-                {aa.navn}
+            selectValues={avslagsarsaker.map(årsak => (
+              <option key={årsak.kode} value={årsak.kode}>
+                {årsak.navn}
               </option>
             ))}
             bredde="xl"

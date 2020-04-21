@@ -42,7 +42,7 @@ const OpptjeningVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = React.useState(0);
   const activeOpptjeningObject = opptjening.opptjeninger[activeTab];
   const { behandlingsresultat } = behandling;
-  const vilkarsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
+  const vilkårsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
   return (
     <RawIntlProvider value={intl}>
       <TabsPure
@@ -56,7 +56,7 @@ const OpptjeningVilkarProsessIndex = ({
         <OpptjeningVilkarForm
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
-          vilkarsresultat={vilkarsresultat ? vilkarsresultat[activeTab] : null}
+          vilkårsresultat={vilkårsresultat ? vilkårsresultat[activeTab] : null}
           fastsattOpptjening={activeOpptjeningObject.fastsattOpptjening}
           status={status}
           lovReferanse={lovReferanse}
@@ -65,7 +65,7 @@ const OpptjeningVilkarProsessIndex = ({
           readOnly={isReadOnly}
           isAksjonspunktOpen={isAksjonspunktOpen}
           readOnlySubmitButton={readOnlySubmitButton}
-          tabIndex={activeTab}
+          vilkårIndex={activeTab}
         />
       </div>
     </RawIntlProvider>

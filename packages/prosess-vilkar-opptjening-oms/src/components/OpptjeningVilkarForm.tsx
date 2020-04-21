@@ -1,4 +1,4 @@
-import { Aksjonspunkt, FastsattOpptjening, SubmitCallback, Vilkaarresultat } from '@k9-sak-web/types';
+import { Aksjonspunkt, FastsattOpptjening, SubmitCallback, Vilkårresultat } from '@k9-sak-web/types';
 import React from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
@@ -12,7 +12,7 @@ import OpptjeningVilkarView from './OpptjeningVilkarView';
 interface OpptjeningVilkarFormProps {
   behandlingId: number;
   behandlingVersjon: number;
-  vilkarsresultat: Vilkaarresultat;
+  vilkårsresultat: Vilkårresultat;
   fastsattOpptjening: FastsattOpptjening;
   isAksjonspunktOpen: boolean;
   aksjonspunkter: Aksjonspunkt[];
@@ -21,13 +21,13 @@ interface OpptjeningVilkarFormProps {
   readOnlySubmitButton: boolean;
   readOnly: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
-  tabIndex: number;
+  vilkårIndex: number;
 }
 
 const OpptjeningVilkarForm = ({
   behandlingId,
   behandlingVersjon,
-  vilkarsresultat,
+  vilkårsresultat,
   fastsattOpptjening,
   isAksjonspunktOpen,
   aksjonspunkter,
@@ -36,24 +36,23 @@ const OpptjeningVilkarForm = ({
   readOnlySubmitButton,
   readOnly,
   submitCallback,
-  tabIndex,
+  vilkårIndex,
 }: OpptjeningVilkarFormProps) => {
   if (aksjonspunkter.length > 0) {
     return (
       <OpptjeningVilkarAksjonspunktPanel
-        // key={fastsattOpptjening.opptjeningTom}
         submitCallback={submitCallback}
         isApOpen={isAksjonspunktOpen}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
-        vilkarsresultat={vilkarsresultat}
+        vilkårsresultat={vilkårsresultat}
         aksjonspunkter={aksjonspunkter}
         status={status}
         lovReferanse={lovReferanse}
         fastsattOpptjening={fastsattOpptjening}
-        tabIndex={tabIndex}
+        vilkårIndex={vilkårIndex}
       />
     );
   }
