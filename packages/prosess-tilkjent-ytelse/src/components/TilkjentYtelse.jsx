@@ -9,15 +9,14 @@ import { Column, Row } from 'nav-frontend-grid';
 import { calcDaysAndWeeks, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
-import { TimeLineControl, TimeLineSokerEnsamSoker } from '@fpsak-frontend/tidslinje';
+import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 
 import styles from './tilkjentYtelse.less';
 
-const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT)
-  .toDate();
+const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 
-const getOptions = (nyePerioder) => {
+const getOptions = nyePerioder => {
   const firstPeriod = nyePerioder[0];
   const lastPeriod = nyePerioder[nyePerioder.length - 1];
 
@@ -40,37 +39,42 @@ const getOptions = (nyePerioder) => {
 const gradertKlassenavn = 'gradert';
 const innvilgetKlassenavn = 'innvilget';
 
-const getStatusForPeriode = (periode) => {
-  const graderteAndeler = periode.andeler.filter((andel) => andel.uttak && andel.uttak.gradering === true);
+const getStatusForPeriode = periode => {
+  const graderteAndeler = periode.andeler.filter(andel => andel.uttak && andel.uttak.gradering === true);
   if (graderteAndeler.length === 0) {
     return innvilgetKlassenavn;
   }
   return gradertKlassenavn;
 };
 
-const createTooltipContent = (periodeType, intl, item) => (`
+const createTooltipContent = (periodeType, intl, item) => `
   <p>
-    ${moment(item.fom)
-    .format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom)
-    .format(DDMMYY_DATE_FORMAT)}
+    ${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     ${intl.formatMessage({ id: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).id },
-    {
-      weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
-      days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
-    })}
+     ${intl.formatMessage(
+       { id: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).id },
+       {
+         weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
+         days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
+       },
+     )}
     </br>
-    ${item.utsettelseType && item.utsettelseType.kode !== '-'
-    ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
+    ${
+      item.utsettelseType && item.utsettelseType.kode !== '-'
+        ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' })
+        : periodeType
+    }
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    ${intl.formatMessage({ id: 'Timeline.tooltip.dagsats' },
-    {
-      dagsats: item.dagsats,
-    })}
+    ${intl.formatMessage(
+      { id: 'Timeline.tooltip.dagsats' },
+      {
+        dagsats: item.dagsats,
+      },
+    )}
    </p>
-`);
+`;
 
-const findKorrektLabelForKvote = (stonadtype) => {
+const findKorrektLabelForKvote = stonadtype => {
   switch (stonadtype) {
     case stonadskontoType.FEDREKVOTE:
       return uttakPeriodeNavn.FEDREKVOTE;
@@ -92,26 +96,22 @@ const findKorrektLabelForKvote = (stonadtype) => {
 // og grupp kan endres nor vi har en medsøkare
 const addClassNameGroupIdToPerioder = (perioder, intl) => {
   const perioderMedClassName = [];
-  perioder.forEach((item) => {
+  perioder.forEach(item => {
     const status = getStatusForPeriode(item);
     const copyOfItem = { ...item };
     copyOfItem.className = status;
     copyOfItem.group = 1;
     copyOfItem.start = parseDateString(item.fom);
-    copyOfItem.end = moment(item.tom)
-      .add(1, 'days');
-    copyOfItem.title = createTooltipContent(findKorrektLabelForKvote(item.andeler[0].uttak.stonadskontoType), intl, item);
+    copyOfItem.end = moment(item.tom).add(1, 'days');
+    copyOfItem.title = createTooltipContent(
+      findKorrektLabelForKvote(item.andeler[0].uttak.stonadskontoType),
+      intl,
+      item,
+    );
     perioderMedClassName.push(copyOfItem);
   });
   return perioderMedClassName;
 };
-
-const getCustomTimes = (soknadDate, familiehendelseDate, lastPeriod) => ({
-  soknad: parseDateString(soknadDate),
-  fodsel: parseDateString(familiehendelseDate),
-  lastDateInSoknad: lastPeriod ? parseDateString(lastPeriod.tom) : parseDateString(moment()
-    .toDate()),
-});
 
 /**
  * TilkjentYtelse
@@ -149,7 +149,10 @@ export class TilkjentYtelse extends Component {
   }
 
   openPeriodInfo() {
-    const { props: { items }, state: { selectedItem } } = this;
+    const {
+      props: { items },
+      state: { selectedItem },
+    } = this;
     if (selectedItem) {
       this.setState({
         selectedItem: null,
@@ -162,8 +165,11 @@ export class TilkjentYtelse extends Component {
   }
 
   nextPeriod() {
-    const { props: { items }, state: { selectedItem: currentSelectedItem } } = this;
-    const newIndex = items.findIndex((item) => item.id === currentSelectedItem.id) + 1;
+    const {
+      props: { items },
+      state: { selectedItem: currentSelectedItem },
+    } = this;
+    const newIndex = items.findIndex(item => item.id === currentSelectedItem.id) + 1;
     if (newIndex < items.length) {
       const selectedItem = items[newIndex];
       this.setState({
@@ -173,8 +179,11 @@ export class TilkjentYtelse extends Component {
   }
 
   prevPeriod() {
-    const { props: { items }, state: { selectedItem: currentSelectedItem } } = this;
-    const newIndex = items.findIndex((item) => item.id === currentSelectedItem.id) - 1;
+    const {
+      props: { items },
+      state: { selectedItem: currentSelectedItem },
+    } = this;
+    const newIndex = items.findIndex(item => item.id === currentSelectedItem.id) - 1;
     if (newIndex >= 0) {
       const selectedItem = items[newIndex];
       this.setState({
@@ -184,8 +193,10 @@ export class TilkjentYtelse extends Component {
   }
 
   selectHandler(eventProps) {
-    const { props: { items } } = this;
-    const selectedItem = items.find((item) => item.id === eventProps.items[0]);
+    const {
+      props: { items },
+    } = this;
+    const selectedItem = items.find(item => item.id === eventProps.items[0]);
     this.setState({
       selectedItem,
     });
@@ -230,44 +241,25 @@ export class TilkjentYtelse extends Component {
       goBackward,
       goForward,
       openPeriodInfo,
-      props: {
-        groups,
-        items,
-        soknadDate,
-        familiehendelseDate,
-        hovedsokerKjonnKode,
-        medsokerKjonnKode,
-        intl,
-        isSoknadSvangerskapspenger,
-        alleKodeverk,
-      },
+      props: { groups, items, intl, alleKodeverk },
       selectHandler,
       state: { selectedItem },
       zoomIn,
       zoomOut,
     } = this;
-    const lastPeriod = items[items.length - 1];
-    const customTimes = getCustomTimes(soknadDate, familiehendelseDate, lastPeriod);
     const nyePerioder = addClassNameGroupIdToPerioder(items, intl);
     return (
       <div className={styles.timelineContainer}>
         <VerticalSpacer sixteenPx />
         <VerticalSpacer sixteenPx />
         <Row>
-          <Column xs="1" className={styles.sokerContainer}>
-            <TimeLineSokerEnsamSoker
-              hovedsokerKjonnKode={hovedsokerKjonnKode}
-              medsokerKjonnKode={medsokerKjonnKode}
-            />
-          </Column>
-          <Column xs="11">
+          <Column xs="12">
             <div className={styles.timeLineWrapper}>
               <Timeline
                 ref={this.timelineRef}
                 options={getOptions(nyePerioder)}
                 items={nyePerioder}
                 groups={groups}
-                customTimes={customTimes}
                 selectHandler={selectHandler}
                 selection={[selectedItem ? selectedItem.id : null]}
               />
@@ -285,8 +277,7 @@ export class TilkjentYtelse extends Component {
             />
           </Column>
         </Row>
-        {selectedItem
-        && (
+        {selectedItem && (
           <TilkjentYtelseTimelineData
             alleKodeverk={alleKodeverk}
             selectedItemStartDate={selectedItem.fom.toString()}
@@ -294,7 +285,6 @@ export class TilkjentYtelse extends Component {
             selectedItemData={selectedItem}
             callbackForward={nextPeriod}
             callbackBackward={prevPeriod}
-            isSoknadSvangerskapspenger={isSoknadSvangerskapspenger}
           />
         )}
       </div>
@@ -305,17 +295,8 @@ export class TilkjentYtelse extends Component {
 TilkjentYtelse.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   groups: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  soknadDate: PropTypes.string.isRequired,
-  familiehendelseDate: PropTypes.shape().isRequired,
-  hovedsokerKjonnKode: PropTypes.string.isRequired,
-  medsokerKjonnKode: PropTypes.string,
   intl: PropTypes.shape().isRequired,
-  isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-};
-
-TilkjentYtelse.defaultProps = {
-  medsokerKjonnKode: undefined,
 };
 
 export default injectIntl(TilkjentYtelse);

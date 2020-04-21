@@ -210,11 +210,10 @@ const prosessStegPanelDefinisjoner = [
     panels: [
       {
         aksjonspunkterCodes: [ac.VURDER_TILBAKETREKK],
-        endpoints: [api.FAMILIEHENDELSE],
+        endpoints: [],
         renderComponent: props => <TilkjentYtelseProsessIndex {...props} />,
-        getData: ({ fagsak, beregningresultatForeldrepenger, personopplysninger, soknad }) => ({
+        getData: ({ fagsak, beregningresultatForeldrepenger, soknad }) => ({
           fagsak,
-          personopplysninger,
           soknad,
           beregningresultat: beregningresultatForeldrepenger,
         }),

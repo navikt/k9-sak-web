@@ -6,9 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { createVisningsnavnForAktivitet, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import {
-  Table, TableColumn, TableRow, VerticalSpacer, FloatRight,
-} from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
@@ -34,26 +32,15 @@ const createVisningNavnForUttakArbeidstaker = (andel, getKodeverknavn) => {
   return createVisningsnavnForAktivitet(andelsObjekt, getKodeverknavn);
 };
 
-const tableHeaderTextCodes = (isFagsakSVP = 'false') => {
-  if (isFagsakSVP) {
-    return ([
-      'TilkjentYtelse.PeriodeData.Andel',
-      'TilkjentYtelse.PeriodeData.Utbetalingsgrad',
-      'TilkjentYtelse.PeriodeData.Refusjon',
-      'TilkjentYtelse.PeriodeData.TilSoker',
-      'TilkjentYtelse.PeriodeData.SisteUtbDato',
-    ]);
-  }
-  return ([
-    'TilkjentYtelse.PeriodeData.Andel',
-    'TilkjentYtelse.PeriodeData.KontoType',
-    'TilkjentYtelse.PeriodeData.Gradering',
-    'TilkjentYtelse.PeriodeData.Utbetalingsgrad',
-    'TilkjentYtelse.PeriodeData.Refusjon',
-    'TilkjentYtelse.PeriodeData.TilSoker',
-    'TilkjentYtelse.PeriodeData.SisteUtbDato',
-  ]);
-};
+const tableHeaderTextCodes = [
+  'TilkjentYtelse.PeriodeData.Andel',
+  'TilkjentYtelse.PeriodeData.KontoType',
+  'TilkjentYtelse.PeriodeData.Gradering',
+  'TilkjentYtelse.PeriodeData.Utbetalingsgrad',
+  'TilkjentYtelse.PeriodeData.Refusjon',
+  'TilkjentYtelse.PeriodeData.TilSoker',
+  'TilkjentYtelse.PeriodeData.SisteUtbDato',
+];
 
 const findAndelsnavn = (andel, getKodeverknavn) => {
   switch (andel.aktivitetStatus.kode) {
@@ -77,18 +64,13 @@ const findAndelsnavn = (andel, getKodeverknavn) => {
   }
 };
 
-const getGradering = (andel) => {
+const getGradering = andel => {
   if (andel === undefined) {
     return null;
   }
-  const stringId = andel.uttak && andel.uttak.gradering === true
-    ? 'TilkjentYtelse.PeriodeData.Ja'
-    : 'TilkjentYtelse.PeriodeData.Nei';
-  return (
-    <FormattedMessage
-      id={stringId}
-    />
-  );
+  const stringId =
+    andel.uttak && andel.uttak.gradering === true ? 'TilkjentYtelse.PeriodeData.Ja' : 'TilkjentYtelse.PeriodeData.Nei';
+  return <FormattedMessage id={stringId} />;
 };
 
 /**
@@ -103,7 +85,6 @@ const TilkjentYtelseTimeLineData = ({
   callbackForward,
   callbackBackward,
   alleKodeverk,
-  isSoknadSvangerskapspenger,
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(selectedItemStartDate, selectedItemEndDate);
   const intl = useIntl();
@@ -119,8 +100,16 @@ const TilkjentYtelseTimeLineData = ({
         </Column>
         <Column xs="2">
           <FloatRight>
-            <TimeLineButton text={intl.formatMessage({ id: 'Timeline.prevPeriod' })} type="prev" callback={callbackBackward} />
-            <TimeLineButton text={intl.formatMessage({ id: 'Timeline.nextPeriod' })} type="next" callback={callbackForward} />
+            <TimeLineButton
+              text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
+              type="prev"
+              callback={callbackBackward}
+            />
+            <TimeLineButton
+              text={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
+              type="next"
+              callback={callbackForward}
+            />
           </FloatRight>
         </Column>
       </Row>
@@ -132,12 +121,8 @@ const TilkjentYtelseTimeLineData = ({
               <FormattedMessage
                 id="TilkjentYtelse.PeriodeData.Periode"
                 values={{
-                  fomVerdi: moment(selectedItemStartDate)
-                    .format(DDMMYYYY_DATE_FORMAT)
-                    .toString(),
-                  tomVerdi: moment(selectedItemEndDate)
-                    .format(DDMMYYYY_DATE_FORMAT)
-                    .toString(),
+                  fomVerdi: moment(selectedItemStartDate).format(DDMMYYYY_DATE_FORMAT).toString(),
+                  tomVerdi: moment(selectedItemEndDate).format(DDMMYYYY_DATE_FORMAT).toString(),
                 }}
               />
             </Element>
@@ -167,35 +152,37 @@ const TilkjentYtelseTimeLineData = ({
         </Row>
       </div>
       <VerticalSpacer eightPx />
-      {selectedItemData.andeler.length !== 0
-          && (
-            <Table headerTextCodes={tableHeaderTextCodes(isSoknadSvangerskapspenger)}>
-              {selectedItemData.andeler.map((andel, index) => (
-                <TableRow key={`index${index + 1}`}>
-                  <TableColumn>{findAndelsnavn(andel, getKodeverknavn)}</TableColumn>
-                  {!isSoknadSvangerskapspenger && (
-                    <TableColumn><Normaltekst>{uttakPeriodeNavn[andel.uttak.stonadskontoType]}</Normaltekst></TableColumn>
-                  )}
-                  {!isSoknadSvangerskapspenger && (
-                    <TableColumn><Normaltekst>{getGradering(andel)}</Normaltekst></TableColumn>
-                  )}
-                  <TableColumn><Normaltekst>{andel.utbetalingsgrad}</Normaltekst></TableColumn>
-                  <TableColumn>
-                    <Normaltekst>
-                      {andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER ? andel.refusjon : ''}
-                    </Normaltekst>
-                  </TableColumn>
-                  <TableColumn><Normaltekst>{andel.tilSoker}</Normaltekst></TableColumn>
-                  <TableColumn>
-                    <Normaltekst>
-                      {andel.sisteUtbetalingsdato ? moment(andel.sisteUtbetalingsdato)
-                        .format(DDMMYYYY_DATE_FORMAT) : ''}
-                    </Normaltekst>
-                  </TableColumn>
-                </TableRow>
-              ))}
-            </Table>
-          )}
+      {selectedItemData.andeler.length !== 0 && (
+        <Table headerTextCodes={tableHeaderTextCodes}>
+          {selectedItemData.andeler.map((andel, index) => (
+            <TableRow key={`index${index + 1}`}>
+              <TableColumn>{findAndelsnavn(andel, getKodeverknavn)}</TableColumn>
+              <TableColumn>
+                <Normaltekst>{uttakPeriodeNavn[andel.uttak.stonadskontoType]}</Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>{getGradering(andel)}</Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>{andel.utbetalingsgrad}</Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>
+                  {andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER ? andel.refusjon : ''}
+                </Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>{andel.tilSoker}</Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>
+                  {andel.sisteUtbetalingsdato ? moment(andel.sisteUtbetalingsdato).format(DDMMYYYY_DATE_FORMAT) : ''}
+                </Normaltekst>
+              </TableColumn>
+            </TableRow>
+          ))}
+        </Table>
+      )}
     </TimeLineDataContainer>
   );
 };
@@ -207,7 +194,6 @@ TilkjentYtelseTimeLineData.propTypes = {
   callbackForward: PropTypes.func.isRequired,
   callbackBackward: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
 };
 
 TilkjentYtelseTimeLineData.defaultProps = {
