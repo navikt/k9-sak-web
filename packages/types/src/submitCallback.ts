@@ -1,6 +1,6 @@
 type SubmitCallback = Readonly<{
   kode: string;
-  begrunnelse: string;
+  begrunnelse?: string;
 }>;
 
 export default SubmitCallback;

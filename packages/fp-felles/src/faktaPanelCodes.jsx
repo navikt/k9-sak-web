@@ -18,6 +18,7 @@ const faktaPanelCodes = {
   UTTAK: 'uttak',
   VERGE: 'verge',
   YTELSER: 'ytelser',
+  INNTEKT_OG_YTELSER: 'inntekt-og-ytelser',
 };
 
 export default faktaPanelCodes;

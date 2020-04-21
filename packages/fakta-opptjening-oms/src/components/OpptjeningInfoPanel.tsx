@@ -1,7 +1,7 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, SubmitCallback, UtlandDokStatus, Opptjening, FastsattOpptjening } from '@k9-sak-web/types';
+import { Aksjonspunkt, FastsattOpptjening, Opptjening, SubmitCallback, UtlandDokStatus } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
@@ -144,24 +144,32 @@ const transformPeriod = (
 };
 
 interface Values {
-  opptjeningActivities: OpptjeningAktivitet[];
-  fastsattOpptjening: FastsattOpptjening;
-  aksjonspunkt: Aksjonspunkt[];
+  opptjeningList: Opptjening[];
+  aksjonspunkter: Aksjonspunkt[];
 }
 
 const transformValues = (values: Values) => {
+  const opptjeninger = [];
+  values.opptjeningList.forEach(opptjening => {
+    const opptjeningsperiode = {
+      opptjeningFom: opptjening.fastsattOpptjening.opptjeningFom,
+      opptjeningTom: opptjening.fastsattOpptjening.opptjeningTom,
+      opptjeningAktivitetList: opptjening.opptjeningAktivitetList
+        .map(oa =>
+          transformPeriod(
+            oa,
+            addDay(opptjening.fastsattOpptjening.opptjeningFom),
+            addDay(opptjening.fastsattOpptjening.opptjeningTom),
+          ),
+        )
+        .map(oa => omit(oa, 'id')),
+    };
+
+    opptjeninger.push(opptjeningsperiode);
+  });
   return {
-    opptjeningAktivitetList: values.opptjeningActivities
-      .map(oa =>
-        transformPeriod(
-          oa,
-          addDay(values.fastsattOpptjening.opptjeningFom),
-          addDay(values.fastsattOpptjening.opptjeningTom),
-        ),
-      )
-      .map(oa => omit(oa, 'id')),
-    kode: values.aksjonspunkt[0].definisjon.kode,
-    begrunnelse: '',
+    opptjeningListe: opptjeninger,
+    kode: values.aksjonspunkter[0].definisjon.kode,
   };
 };
 
