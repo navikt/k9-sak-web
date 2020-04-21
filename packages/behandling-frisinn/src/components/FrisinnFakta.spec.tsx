@@ -2,9 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { SideMenuWrapper, DataFetcherBehandlingDataV2 } from '@fpsak-frontend/behandling-felles';
+import { SideMenuWrapper } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -63,11 +62,6 @@ describe('<FrisinnFakta>', () => {
     },
   ];
   const vilkar = [];
-  const inntektArbeidYtelse = {
-    skalKunneLeggeTilNyeArbeidsforhold: true,
-    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
-    relatertTilgrensendeYtelserForAnnenForelder: [],
-  };
 
   const soker = {
     navn: 'Espen Utvikler',
@@ -142,8 +136,8 @@ describe('<FrisinnFakta>', () => {
     expect(panel.prop('paneler')).is.eql([
       {
         erAktiv: true,
-        harAksjonspunkt: true,
-        tekst: 'Arbeidsforhold',
+        harAksjonspunkt: false,
+        tekst: 'Beregning',
       },
     ]);
   });
@@ -168,7 +162,6 @@ describe('<FrisinnFakta>', () => {
     );
 
     const panel = wrapper.find(SideMenuWrapper);
-
     panel.prop('onClick')(0);
 
     const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
@@ -176,37 +169,6 @@ describe('<FrisinnFakta>', () => {
     const { args } = calls[0];
     expect(args).to.have.length(2);
     expect(args[0]).to.eql('default');
-    expect(args[1]).to.eql('arbeidsforhold');
-  });
-
-  it('skal rendre faktapanel korrekt', () => {
-    const wrapper = shallowWithIntl(
-      <FrisinnFakta.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, inntektArbeidYtelse }}
-        behandling={behandling}
-        fagsak={fagsak}
-        navAnsatt={navAnsatt}
-        alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
-        hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        dispatch={sinon.spy()}
-      />,
-    );
-
-    const dataFetcher = wrapper.find(DataFetcherBehandlingDataV2);
-    expect(dataFetcher.prop('behandlingVersion')).is.eql(behandling.versjon);
-    expect(dataFetcher.prop('endpoints')).is.eql([]);
-
-    const arbeidsforholdPanel = dataFetcher.renderProp('render')({}).find(ArbeidsforholdFaktaIndex);
-    // eslint-disable-next-line
-    expect(arbeidsforholdPanel.prop('readOnly')).is.false;
-    // eslint-disable-next-line
-    expect(arbeidsforholdPanel.prop('submittable')).is.true;
-    // eslint-disable-next-line
-    expect(arbeidsforholdPanel.prop('harApneAksjonspunkter')).is.true;
+    expect(args[1]).to.eql('beregning');
   });
 });
