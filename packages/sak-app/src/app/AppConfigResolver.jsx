@@ -25,7 +25,7 @@ class AppConfigResolver extends Component {
     fetchShowDetailedErrorMessages: PropTypes.func.isRequired,
     fetchFeatureToggles: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape(),
-    forbiddenOrUnauthorized: PropTypes.bool,
+    appIsInErroneousState: PropTypes.bool,
     finishedLoadingErrorPageBlockers: PropTypes.bool,
   };
 
@@ -63,8 +63,8 @@ class AppConfigResolver extends Component {
   };
 
   render = () => {
-    const { finishedLoadingBlockers, children, forbiddenOrUnauthorized, finishedLoadingErrorPageBlockers } = this.props;
-    if (forbiddenOrUnauthorized && finishedLoadingErrorPageBlockers) {
+    const { finishedLoadingBlockers, children, appIsInErroneousState, finishedLoadingErrorPageBlockers } = this.props;
+    if (appIsInErroneousState && finishedLoadingErrorPageBlockers) {
       return children;
     }
     if (!finishedLoadingBlockers) {

@@ -97,7 +97,7 @@ class AppIndex extends Component {
     const shouldRenderHome = !crashMessage && !hasForbiddenOrUnauthorizedErrors;
 
     return (
-      <AppConfigResolver forbiddenOrUnauthorized={hasForbiddenOrUnauthorizedErrors}>
+      <AppConfigResolver appIsInErroneousState={hasForbiddenOrUnauthorizedErrors}>
         <LanguageProvider>
           <Dekorator
             errorMessages={errorMessages}

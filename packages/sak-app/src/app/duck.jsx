@@ -89,7 +89,7 @@ const isFinishedLoadingFpSakData = createSelector(
   (...blockers) => blockers.every(finished => finished),
 );
 
-const isFinishedLoadingErrorData = createSelector(
+const sufficientDataForErrorPageLoaded = createSelector(
   [
     fpsakApi.NAV_ANSATT.getRestApiFinished(),
     fpsakApi.LANGUAGE_FILE.getRestApiFinished(),
@@ -126,6 +126,6 @@ export const isFinishedLoadingData = createSelector(
 );
 
 export const isFinishedLoadingErrorPageData = createSelector(
-  [isFinishedLoadingErrorData],
+  [sufficientDataForErrorPageLoaded],
   (isFinished = false) => isFinished,
 );
