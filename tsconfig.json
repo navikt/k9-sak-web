@@ -35,6 +35,7 @@
     "packages/behandling-pleiepenger",
     "packages/prosess-uttak",
     "packages/omsorgen-for-oms",
+    "packages/prosess-vilkar-overstyring",
     "@types"
   ]
 }

@@ -16,7 +16,9 @@ import VedtakFritekstPanel from './VedtakFritekstPanel';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
 export const getAvslagArsak = (vilkar, aksjonspunkter, vedtakVarsel, getKodeverknavn) => {
-  const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
+  const avslatteVilkar = vilkar.filter(v =>
+    v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
+  );
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }

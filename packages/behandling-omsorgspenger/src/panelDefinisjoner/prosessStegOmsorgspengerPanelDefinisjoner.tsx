@@ -153,6 +153,7 @@ const prosessStegPanelDefinisjoner = [
         }),
         overridePanel: {
           aksjonspunkterCodes: [ac.OVERSTYRING_AV_OPPTJENINGSVILKARET],
+          vilkarCodes: [vt.OPPTJENINGSVILKARET],
           ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
         },
       },

@@ -47,11 +47,16 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     aksjonspunkterCodes: [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING],
     endpoints: [omsorgspengerBehandlingApi.OPPTJENING],
     renderComponent: props => <OpptjeningFaktaIndex {...props} />,
-    showComponent: ({ vilkar }) =>
-      vilkar.some(v => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET) &&
-      vilkar.some(
-        v => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && v.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
-      ),
+    showComponent: ({ vilkar }) => {
+      return (
+        vilkar.some(v => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET) &&
+        vilkar.some(
+          v =>
+            v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET &&
+            v.perioder.every(periode => periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT),
+        )
+      );
+    },
     getData: () => ({}),
   },
   {

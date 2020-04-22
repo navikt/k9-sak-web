@@ -33,8 +33,9 @@ import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 
 import styles from './vilkarresultatMedOverstyringForm.less';
 
-const isOverridden = (aksjonspunktCodes, aksjonspunktCode) => aksjonspunktCodes.some((code) => code === aksjonspunktCode);
-const isHidden = (kanOverstyre, aksjonspunktCodes, aksjonspunktCode) => !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
+const isOverridden = (aksjonspunktCodes, aksjonspunktCode) => aksjonspunktCodes.some(code => code === aksjonspunktCode);
+const isHidden = (kanOverstyre, aksjonspunktCodes, aksjonspunktCode) =>
+  !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
 
 /**
  * VilkarresultatForm
@@ -62,23 +63,25 @@ export const VilkarresultatMedOverstyringForm = ({
   toggleOverstyring,
   ...formProps
 }) => {
-  const togglePa = useCallback(() => toggleOverstyring((oldArray) => [...oldArray, overstyringApKode]));
+  const togglePa = useCallback(() => toggleOverstyring(oldArray => [...oldArray, overstyringApKode]));
   const toggleAv = useCallback(() => {
     formProps.reset();
-    toggleOverstyring((oldArray) => oldArray.filter((code) => code !== overstyringApKode));
+    toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));
   });
 
   return (
     <form onSubmit={formProps.handleSubmit}>
       <FlexContainer>
         <FlexRow>
-          {(!erOverstyrt && originalErVilkarOk !== undefined) && (
-          <FlexColumn>
-            <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
-          </FlexColumn>
+          {!erOverstyrt && originalErVilkarOk !== undefined && (
+            <FlexColumn>
+              <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
+            </FlexColumn>
           )}
           <FlexColumn>
-            <Undertittel><FormattedMessage id={panelTittelKode} /></Undertittel>
+            <Undertittel>
+              <FormattedMessage id={panelTittelKode} />
+            </Undertittel>
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
@@ -91,25 +94,32 @@ export const VilkarresultatMedOverstyringForm = ({
             {originalErVilkarOk && (
               <>
                 <VerticalSpacer eightPx />
-                <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element>
+                <Element>
+                  <FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" />
+                </Element>
               </>
             )}
             {originalErVilkarOk === false && (
               <>
                 <VerticalSpacer eightPx />
-                <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element>
+                <Element>
+                  <FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" />
+                </Element>
               </>
             )}
             {originalErVilkarOk === undefined && (
               <>
                 <VerticalSpacer eightPx />
-                <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>
+                <Normaltekst>
+                  <FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" />
+                </Normaltekst>
               </>
             )}
           </FlexColumn>
-          {originalErVilkarOk !== undefined && !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
-            <>
-                {(!erOverstyrt && !overrideReadOnly) && (
+          {originalErVilkarOk !== undefined &&
+            !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
+              <>
+                {!erOverstyrt && !overrideReadOnly && (
                   <FlexColumn>
                     <VerticalSpacer eightPx />
                     <Image className={styles.key} src={keyImage} onClick={togglePa} />
@@ -121,72 +131,78 @@ export const VilkarresultatMedOverstyringForm = ({
                     <Image className={styles.keyWithoutCursor} src={keyUtgraetImage} />
                   </FlexColumn>
                 )}
-            </>
-          )}
+              </>
+            )}
         </FlexRow>
       </FlexContainer>
       <VerticalSpacer eightPx />
       {(erOverstyrt || hasAksjonspunkt) && (
-      <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
-        <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" /></Element>
-        <VerticalSpacer eightPx />
-        <VilkarresultatMedBegrunnelse
-          skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
-          readOnly={isReadOnly || !erOverstyrt}
-          erVilkarOk={erVilkarOk}
-          customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
-          customVilkarOppfyltText={customVilkarOppfyltText}
-          erMedlemskapsPanel={erMedlemskapsPanel}
-          hasAksjonspunkt={hasAksjonspunkt}
-          avslagsarsaker={avslagsarsaker}
-        />
-        <VerticalSpacer sixteenPx />
-        {!erOverstyrt && (erVilkarOk !== undefined) && (
-          <>
-            <VerticalSpacer fourPx />
-            <FlexRow>
-              <FlexColumn>
-                <EditedIcon />
-              </FlexColumn>
-              <FlexColumn>
-                <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" /></Normaltekst>
-              </FlexColumn>
-            </FlexRow>
-          </>
-        )}
-        {erOverstyrt && (
-        <FlexContainer>
-          <FlexRow>
-            <FlexColumn>
-              <Image src={advarselIkonUrl} />
-            </FlexColumn>
-            <FlexColumn>
-              <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" /></Element>
-            </FlexColumn>
-          </FlexRow>
+        <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
+          <Element>
+            <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
+          </Element>
+          <VerticalSpacer eightPx />
+          <VilkarresultatMedBegrunnelse
+            skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
+            readOnly={isReadOnly || !erOverstyrt}
+            erVilkarOk={erVilkarOk}
+            customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
+            customVilkarOppfyltText={customVilkarOppfyltText}
+            erMedlemskapsPanel={erMedlemskapsPanel}
+            hasAksjonspunkt={hasAksjonspunkt}
+            avslagsarsaker={avslagsarsaker}
+          />
           <VerticalSpacer sixteenPx />
-          <FlexRow>
-            <FlexColumn>
-              <OverstyrBekreftKnappPanel
-                submitting={formProps.submitting}
-                pristine={!isSolvable || formProps.pristine}
-                overrideReadOnly={overrideReadOnly}
-              />
-            </FlexColumn>
-            <FlexColumn>
-              <Knapp
-                htmlType="button"
-                spinner={formProps.submitting}
-                disabled={formProps.submitting}
-                onClick={toggleAv}
-              >
-                <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
-              </Knapp>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
-        )}
-      </AksjonspunktBox>
+          {!erOverstyrt && erVilkarOk !== undefined && (
+            <>
+              <VerticalSpacer fourPx />
+              <FlexRow>
+                <FlexColumn>
+                  <EditedIcon />
+                </FlexColumn>
+                <FlexColumn>
+                  <Normaltekst>
+                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" />
+                  </Normaltekst>
+                </FlexColumn>
+              </FlexRow>
+            </>
+          )}
+          {erOverstyrt && (
+            <FlexContainer>
+              <FlexRow>
+                <FlexColumn>
+                  <Image src={advarselIkonUrl} />
+                </FlexColumn>
+                <FlexColumn>
+                  <Element>
+                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" />
+                  </Element>
+                </FlexColumn>
+              </FlexRow>
+              <VerticalSpacer sixteenPx />
+              <FlexRow>
+                <FlexColumn>
+                  <OverstyrBekreftKnappPanel
+                    submitting={formProps.submitting}
+                    pristine={!isSolvable || formProps.pristine}
+                    overrideReadOnly={overrideReadOnly}
+                  />
+                </FlexColumn>
+                <FlexColumn>
+                  <Knapp
+                    htmlType="button"
+                    spinner={formProps.submitting}
+                    disabled={formProps.submitting}
+                    onClick={toggleAv}
+                  >
+                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
+                  </Knapp>
+                </FlexColumn>
+              </FlexRow>
+            </FlexContainer>
+          )}
+        </AksjonspunktBox>
       )}
     </form>
   );
@@ -228,61 +244,73 @@ VilkarresultatMedOverstyringForm.defaultProps = {
 };
 
 const buildInitialValues = createSelector(
-  [(ownProps) => ownProps.behandlingsresultat,
-    (ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.status,
-    (ownProps) => ownProps.overstyringApKode],
+  [
+    ownProps => ownProps.behandlingsresultat,
+    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.status,
+    ownProps => ownProps.overstyringApKode,
+  ],
   (behandlingsresultat, aksjonspunkter, status, overstyringApKode) => {
-    const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === overstyringApKode);
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
-      ...VilkarresultatMedBegrunnelse.buildInitialValues(behandlingsresultat, aksjonspunkter, status, overstyringApKode),
+      ...VilkarresultatMedBegrunnelse.buildInitialValues(
+        behandlingsresultat,
+        aksjonspunkter,
+        status,
+        overstyringApKode,
+      ),
     };
   },
 );
 
 const getCustomVilkarText = (medlemskapFom, behandlingType, erOppfylt) => {
   const customVilkarText = {};
-  const isBehandlingRevurderingFortsattMedlemskap = behandlingType.kode === BehandlingType.REVURDERING && !!medlemskapFom;
+  const isBehandlingRevurderingFortsattMedlemskap =
+    behandlingType.kode === BehandlingType.REVURDERING && !!medlemskapFom;
   if (isBehandlingRevurderingFortsattMedlemskap) {
-    customVilkarText.id = erOppfylt ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom' : 'VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom';
+    customVilkarText.id = erOppfylt
+      ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom'
+      : 'VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom';
     customVilkarText.values = { fom: moment(medlemskapFom).format(DDMMYYYY_DATE_FORMAT) };
   }
   return customVilkarText.id ? customVilkarText : undefined;
 };
 
 const getCustomVilkarTextForOppfylt = createSelector(
-  [(ownProps) => ownProps.medlemskapFom, (ownProps) => ownProps.behandlingType],
+  [ownProps => ownProps.medlemskapFom, ownProps => ownProps.behandlingType],
   (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, true),
 );
 const getCustomVilkarTextForIkkeOppfylt = createSelector(
-  [(ownProps) => ownProps.medlemskapFom, (ownProps) => ownProps.behandlingType],
+  [ownProps => ownProps.medlemskapFom, ownProps => ownProps.behandlingType],
   (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, false),
 );
 
-const transformValues = (values, overstyringApKode) => ({
+const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => ({
   kode: overstyringApKode,
   ...VilkarResultPicker.transformValues(values),
   ...VilkarresultatMedBegrunnelse.transformValues(values),
+  opptjeningFom: periodeFom,
+  opptjeningTom: periodeTom,
 });
 
-const validate = (values) => VilkarresultatMedBegrunnelse.validate(values);
+const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
-  const { overstyringApKode, submitCallback } = initialOwnProps;
-  const onSubmit = (values) => submitCallback([transformValues(values, overstyringApKode)]);
-  const validateFn = (values) => validate(values);
-  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map((a) => a.definisjon.kode);
+  const { overstyringApKode, submitCallback, periodeFom, periodeTom } = initialOwnProps;
+  const onSubmit = values => submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
+  const validateFn = values => validate(values);
+  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon.kode);
   const formName = `VilkarresultatForm_${overstyringApKode}`;
 
   return (state, ownProps) => {
-    const {
-      behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly,
-    } = ownProps;
+    const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;
 
-    const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === overstyringApKode);
-    const isSolvable = aksjonspunkt !== undefined
-      ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses) : false;
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
+    const isSolvable =
+      aksjonspunkt !== undefined
+        ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
+        : false;
 
     const initialValues = buildInitialValues(ownProps);
 
