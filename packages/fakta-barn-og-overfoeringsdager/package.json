@@ -7,6 +7,8 @@
   "dependencies": {
     "@k9-sak-web/types": "1.0.0",
     "nav-frontend-ekspanderbartpanel": "3.0.8",
+    "nav-frontend-alertstriper": "3.0.13",
+    "nav-frontend-alertstriper-style": "2.0.11",
     "react": "^16.13.1",
     "react-intl": "^3.12.0"
   },

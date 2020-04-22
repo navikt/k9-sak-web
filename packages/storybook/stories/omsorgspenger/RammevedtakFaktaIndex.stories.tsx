@@ -1,7 +1,9 @@
 import * as React from 'react';
 import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
+import OmsorgsdagerGrunnlagDto from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/OmsorgsdagerGrunnlagDto';
 import { Behandling } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
+import { BarnAutomatiskHentetDto } from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/BarnDto';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -26,6 +28,27 @@ const behandling: Behandling = {
   links: [],
 };
 
+const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
+  barn: [],
+  barnLagtTilAvSakbehandler: [],
+  utvidetRett: [],
+  overføringFår: [],
+  overføringGir: [],
+  koronaoverføringFår: [],
+  koronaoverføringGir: [],
+};
+
+const barn: BarnAutomatiskHentetDto[] = [
+  {
+    fødselsnummer: '12121212121',
+    aleneomsorg: false,
+  },
+];
+
 export const faktaRammevedtak = () => (
-  <FaktaRammevedtakIndex behandling={behandling} submitCallback={action('Send inn')} />
+  <FaktaRammevedtakIndex
+    omsorgsdagerGrunnlagDto={{ ...tomOmsorgsdagerGrunnlag, barn }}
+    behandling={behandling}
+    submitCallback={action('Send inn')}
+  />
 );

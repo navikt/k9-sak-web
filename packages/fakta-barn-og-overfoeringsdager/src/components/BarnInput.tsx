@@ -3,8 +3,8 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
 import { CheckboxField } from '@fpsak-frontend/form/index';
 import { FormattedMessage } from 'react-intl';
-import Barn from '../types/Barn';
 import styles from './barnInput.less';
+import { Barn } from '../types/Barn';
 
 interface BarnInputProps {
   barn: Barn;
@@ -20,16 +20,8 @@ const BarnInput: FunctionComponent<BarnInputProps> = ({ namePrefix }) => {
           label={<FormattedMessage id="FaktaRammevedtak.Barn.KroniskSykt" />}
         />
         <CheckboxField
-          name={`${namePrefix}.erFosterbarn`}
-          label={<FormattedMessage id="FaktaRammevedtak.Barn.Fosterbarn" />}
-        />
-        <CheckboxField
-          name={`${namePrefix}.midlertidigAleneomsorg`}
-          label={<FormattedMessage id="FaktaRammevedtak.Barn.MidlertidigAleneomsorg" />}
-        />
-        <CheckboxField
-          name={`${namePrefix}.deltBosted`}
-          label={<FormattedMessage id="FaktaRammevedtak.Barn.DeltBosted" />}
+          name={`${namePrefix}.aleneomsorg`}
+          label={<FormattedMessage id="FaktaRammevedtak.Barn.Aleneomsorg" />}
         />
       </FlexRow>
     </Ekspanderbartpanel>

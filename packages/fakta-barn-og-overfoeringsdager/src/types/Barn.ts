@@ -1,9 +1,13 @@
-interface Barn {
+export interface Barn {
   erKroniskSykt?: boolean;
-  erFosterbarn?: boolean;
-  midlertidigAleneomsorg?: boolean;
-  deltBosted?: boolean;
+  aleneomsorg?: boolean;
+}
+
+export interface BarnHentetAutomatisk extends Barn {
   fødselsnummer: string;
 }
 
-export default Barn;
+export interface BarnLagtTilAvSakbehandler extends Barn {
+  id: string;
+  fødselsdato: string;
+}

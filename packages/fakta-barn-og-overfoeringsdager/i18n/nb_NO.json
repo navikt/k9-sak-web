@@ -1,7 +1,6 @@
 {
+  "FaktaRammevedtak.UidentifisertUtvidetRett": "Det finnes {antallRammevedtak} uidentifiserte rammevedtak om utvidet rett fra Infotrygd. Vennligst marker de barna det gjelder.",
   "FaktaRammevedtak.Barn": "Barn",
   "FaktaRammevedtak.Barn.KroniskSykt": "Kronisk sykt barn",
-  "FaktaRammevedtak.Barn.Fosterbarn": "Fosterbarn",
-  "FaktaRammevedtak.Barn.MidlertidigAleneomsorg": "Midlertidig aleneomsorg",
-  "FaktaRammevedtak.Barn.DeltBosted": "Avtale om delt bosted"
+  "FaktaRammevedtak.Barn.Aleneomsorg": "Alene om omsorgen"
 }
