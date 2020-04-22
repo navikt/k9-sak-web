@@ -20,7 +20,7 @@ const DEFAULT_PROSESS_STEG_KODE = 'default';
 const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   if (vilkar.length > 0) {
     const vilkarStatusCodes = [];
-    vilkar.map(v => v.perioder.map(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
+    vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
     if (vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
