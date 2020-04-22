@@ -1,7 +1,7 @@
 import {
   MidlertidigAleneOmOmsorgen,
-  OverføringFår,
-  OverføringGir,
+  DagerMottatt,
+  DagerGitt,
   UidentifisertRammevedtak,
   UtvidetRettDto,
 } from './RammevedtakDto';
@@ -12,10 +12,12 @@ interface OmsorgsdagerGrunnlagDto {
   barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[];
   midlertidigAleneOmOmsorgen?: MidlertidigAleneOmOmsorgen;
   utvidetRett: UtvidetRettDto[];
-  overføringFår: OverføringFår[];
-  overføringGir: OverføringGir[];
-  koronaoverføringFår: OverføringFår[];
-  koronaoverføringGir: OverføringGir[];
+  overføringFår: DagerMottatt[];
+  overføringGir: DagerGitt[];
+  fordelingFår: DagerMottatt[];
+  fordelingGir: DagerGitt[];
+  koronaoverføringFår: DagerMottatt[];
+  koronaoverføringGir: DagerGitt[];
   uidentifiserteRammevedtak: UidentifisertRammevedtak[];
 }
 

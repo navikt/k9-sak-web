@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { mapDtoTilFormValues, mapFormValuesTilDto } from './mapping';
 import OmsorgsdagerGrunnlagDto from './OmsorgsdagerGrunnlagDto';
+import { DagerGitt, DagerMottatt } from './RammevedtakDto';
 
 const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
   barn: [],
@@ -8,8 +9,11 @@ const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
   utvidetRett: [],
   overføringFår: [],
   overføringGir: [],
+  fordelingFår: [],
+  fordelingGir: [],
   koronaoverføringFår: [],
   koronaoverføringGir: [],
+  uidentifiserteRammevedtak: [],
 };
 
 describe('mapping fra DTO til formValues', () => {
@@ -44,6 +48,24 @@ describe('mapping fra DTO til formValues', () => {
   });
 
   it('kan mappe fra og til DTO uten å miste data', () => {
+    const dagerGitt: DagerGitt[] = [
+      {
+        antallDager: 23,
+        mottakersFnr: '345',
+        kilde: 'hentetAutomatisk',
+        fom: '23.03.2020',
+        tom: '23.03.2025',
+      },
+    ];
+    const dagerMottatt: DagerMottatt[] = [
+      {
+        antallDager: 23,
+        avsendersFnr: '123',
+        kilde: 'hentetAutomatisk',
+        fom: '23.03.2020',
+        tom: '23.03.2025',
+      },
+    ];
     const omsorgsdagerGrunnlagDto: OmsorgsdagerGrunnlagDto = {
       barn: [
         {
@@ -78,42 +100,13 @@ describe('mapping fra DTO til formValues', () => {
         fom: '23.03.2020',
         tom: '23.03.2025',
       },
-      overføringGir: [
-        {
-          antallDager: 23,
-          mottakersFnr: '345',
-          kilde: 'hentetAutomatisk',
-          fom: '23.03.2020',
-          tom: '23.03.2025',
-        },
-      ],
-      overføringFår: [
-        {
-          antallDager: 23,
-          avsendersFnr: '123',
-          kilde: 'hentetAutomatisk',
-          fom: '23.03.2020',
-          tom: '23.03.2025',
-        },
-      ],
-      koronaoverføringGir: [
-        {
-          antallDager: 23,
-          mottakersFnr: '345',
-          kilde: 'hentetAutomatisk',
-          fom: '23.03.2020',
-          tom: '23.03.2025',
-        },
-      ],
-      koronaoverføringFår: [
-        {
-          antallDager: 23,
-          avsendersFnr: '123',
-          kilde: 'hentetAutomatisk',
-          fom: '23.03.2020',
-          tom: '23.03.2025',
-        },
-      ],
+      overføringGir: dagerGitt,
+      overføringFår: dagerMottatt,
+      fordelingGir: dagerGitt,
+      fordelingFår: dagerMottatt,
+      koronaoverføringGir: dagerGitt,
+      koronaoverføringFår: dagerMottatt,
+      uidentifiserteRammevedtak: [],
     };
 
     const mappet = mapFormValuesTilDto(mapDtoTilFormValues(omsorgsdagerGrunnlagDto), omsorgsdagerGrunnlagDto);

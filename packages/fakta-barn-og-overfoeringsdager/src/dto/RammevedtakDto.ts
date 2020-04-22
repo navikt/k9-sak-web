@@ -15,12 +15,12 @@ export interface MidlertidigAleneOmOmsorgen extends RammevedtakDto {
   erMidlertidigAlene?: boolean;
 }
 
-export interface OverføringFår extends RammevedtakDto {
+export interface DagerMottatt extends RammevedtakDto {
   antallDager: number;
   avsendersFnr?: string;
 }
 
-export interface OverføringGir extends RammevedtakDto {
+export interface DagerGitt extends RammevedtakDto {
   antallDager: number;
   mottakersFnr?: string;
 }

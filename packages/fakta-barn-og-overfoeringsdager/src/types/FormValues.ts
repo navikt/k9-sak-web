@@ -10,8 +10,10 @@ interface FormValues {
     tom: string;
   };
   overføringFår: Overføring[];
-  koronaoverføringFår: Overføring[];
   overføringGir: Overføring[];
+  fordelingFår: Overføring[];
+  fordelingGir: Overføring[];
+  koronaoverføringFår: Overføring[];
   koronaoverføringGir: Overføring[];
 }
 

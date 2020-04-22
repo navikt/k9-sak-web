@@ -3,7 +3,10 @@ import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import OmsorgsdagerGrunnlagDto from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/OmsorgsdagerGrunnlagDto';
 import { Behandling } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
-import { BarnAutomatiskHentetDto } from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/BarnDto';
+import {
+  BarnAutomatiskHentetDto,
+  BarnLagtTilAvSaksbehandlerDto,
+} from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/BarnDto';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -34,8 +37,11 @@ const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
   utvidetRett: [],
   overføringFår: [],
   overføringGir: [],
+  fordelingFår: [],
+  fordelingGir: [],
   koronaoverføringFår: [],
   koronaoverføringGir: [],
+  uidentifiserteRammevedtak: [],
 };
 
 const barn: BarnAutomatiskHentetDto[] = [
@@ -45,9 +51,25 @@ const barn: BarnAutomatiskHentetDto[] = [
   },
 ];
 
-export const faktaRammevedtak = () => (
+const barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[] = [
+  {
+    id: '1',
+    fødselsdato: '12.12.2012',
+    aleneomsorg: true,
+  },
+];
+
+export const medBarn = () => (
   <FaktaRammevedtakIndex
-    omsorgsdagerGrunnlagDto={{ ...tomOmsorgsdagerGrunnlag, barn }}
+    omsorgsdagerGrunnlagDto={{ ...tomOmsorgsdagerGrunnlag, barn, barnLagtTilAvSakbehandler }}
+    behandling={behandling}
+    submitCallback={action('Send inn')}
+  />
+);
+
+export const ingenBarn = () => (
+  <FaktaRammevedtakIndex
+    omsorgsdagerGrunnlagDto={tomOmsorgsdagerGrunnlag}
     behandling={behandling}
     submitCallback={action('Send inn')}
   />

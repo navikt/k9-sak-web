@@ -2,11 +2,18 @@ import React, { FunctionComponent, useMemo } from 'react';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form/src/behandlingForm';
+import { isEmpty } from 'lodash';
+import {
+  behandlingForm,
+  getBehandlingFormPrefix,
+  getBehandlingFormValues,
+} from '@fpsak-frontend/form/src/behandlingForm';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import BarnInput from './BarnInput';
+import { Undertittel } from 'nav-frontend-typografi';
 import OmsorgsdagerGrunnlagDto from '../dto/OmsorgsdagerGrunnlagDto';
 import { mapDtoTilFormValues, mapFormValuesTilDto } from '../dto/mapping';
+import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
+import FormValues from '../types/FormValues';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -14,23 +21,26 @@ interface RammevedtakFaktaFormProps {
   behandlingVersjon: number;
   submitCallback: (values: any) => void;
   readOnly?: boolean;
+  formValues: FormValues;
 }
 
 const rammevedtakFormName = 'rammevedtakFormName';
 
-const AlleBarn = ({ fields }) =>
-  fields.map(field => <BarnInput barn={field} namePrefix={field} key={field.fødselsnummer} />);
-
 const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
   omsorgsdagerGrunnlag,
+  formValues,
 }) => {
   const { utvidetRett } = omsorgsdagerGrunnlag;
   const utvidetRettUidentifiserteBarnAntall = useMemo(
-    () =>
-      utvidetRett.filter(ur => !ur.tilleggsinfo.fnrKroniskSyktBarn).filter(ur => !ur.tilleggsinfo.idKroniskSyktBarn)
-        .length,
+    () => utvidetRett.filter(ur => !ur.fnrKroniskSyktBarn).filter(ur => !ur.idKroniskSyktBarn).length,
     [utvidetRett],
   );
+
+  if (isEmpty(formValues)) {
+    return null;
+  }
+
+  const { barn, barnLagtTilAvSaksbehandler } = formValues;
 
   return (
     <>
@@ -42,7 +52,12 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           />
         </AlertStripeFeil>
       )}
+      <Undertittel>
+        <FormattedMessage id="FaktaRammevedtak.Barn" />
+      </Undertittel>
+      {!(barn.length || barnLagtTilAvSaksbehandler.length) && <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />}
       <FieldArray name="barn" component={AlleBarn} />
+      <FieldArray name="barnLagtTilAvSaksbehandler" component={BarnLagtTilAvSaksbehandler} />
     </>
   );
 };
@@ -53,11 +68,13 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: RammevedtakFakta
 
   return (state, { behandlingId, behandlingVersjon }: RammevedtakFaktaFormProps) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
+    const formValues = getBehandlingFormValues(rammevedtakFormName, behandlingId, behandlingVersjon)(state) || {};
 
     return {
       initialValues: mapDtoTilFormValues(omsorgsdagerGrunnlag),
       behandlingFormPrefix,
       onSubmit,
+      formValues,
     };
   };
 };

@@ -1,7 +1,7 @@
 import OmsorgsdagerGrunnlagDto from './OmsorgsdagerGrunnlagDto';
 import FormValues from '../types/FormValues';
 import { BarnHentetAutomatisk, BarnLagtTilAvSakbehandler } from '../types/Barn';
-import { OverføringFår, OverføringGir, UtvidetRettDto } from './RammevedtakDto';
+import { DagerMottatt, DagerGitt, UtvidetRettDto } from './RammevedtakDto';
 import Overføring from '../types/Overføring';
 
 export const mapDtoTilFormValues = ({
@@ -37,18 +37,20 @@ export const mapDtoTilFormValues = ({
       : null,
     overføringGir: [],
     overføringFår: [],
+    fordelingFår: [],
+    fordelingGir: [],
     koronaoverføringGir: [],
     koronaoverføringFår: [],
   };
 };
 
-const mapOverføringFår = (overføringer: Overføring[]): OverføringFår[] =>
+const mapOverføringFår = (overføringer: Overføring[]): DagerMottatt[] =>
   overføringer.map(({ antallDager }) => ({
     antallDager,
     kilde: 'lagtTilAvSaksbehandler',
   }));
 
-const mapOverføringGir = (overføringer: Overføring[]): OverføringGir[] =>
+const mapOverføringGir = (overføringer: Overføring[]): DagerGitt[] =>
   overføringer.map(({ antallDager }) => ({
     antallDager,
     kilde: 'lagtTilAvSaksbehandler',
@@ -60,6 +62,8 @@ export const mapFormValuesTilDto = (
     barnLagtTilAvSaksbehandler,
     overføringFår,
     overføringGir,
+    fordelingFår,
+    fordelingGir,
     koronaoverføringFår,
     koronaoverføringGir,
     midlertidigAleneansvar,
@@ -94,6 +98,8 @@ export const mapFormValuesTilDto = (
     utvidetRett: utvidetRettBarn.concat(...utvidetRettBarnLagtTilAvSaksbehandler),
     overføringFår: mapOverføringFår(overføringFår).concat(...initialValues.overføringFår),
     overføringGir: mapOverføringGir(overføringGir).concat(...initialValues.overføringGir),
+    fordelingFår: mapOverføringFår(fordelingFår).concat(...initialValues.fordelingFår),
+    fordelingGir: mapOverføringGir(fordelingGir).concat(...initialValues.fordelingGir),
     koronaoverføringFår: mapOverføringFår(koronaoverføringFår).concat(...initialValues.koronaoverføringFår),
     koronaoverføringGir: mapOverføringGir(koronaoverføringGir).concat(...initialValues.koronaoverføringGir),
     midlertidigAleneOmOmsorgen:
@@ -105,5 +111,6 @@ export const mapFormValuesTilDto = (
             erMidlertidigAlene: midlertidigAleneansvar.erMidlertidigAlene,
           }
         : initialValues.midlertidigAleneOmOmsorgen,
+    uidentifiserteRammevedtak: [],
   };
 };
