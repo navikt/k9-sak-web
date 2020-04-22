@@ -1,4 +1,10 @@
-import { MidlertidigAleneOmOmsorgen, OverføringFår, OverføringGir, UtvidetRettDto } from './RammevedtakDto';
+import {
+  MidlertidigAleneOmOmsorgen,
+  OverføringFår,
+  OverføringGir,
+  UidentifisertRammevedtak,
+  UtvidetRettDto,
+} from './RammevedtakDto';
 import { BarnAutomatiskHentetDto, BarnLagtTilAvSaksbehandlerDto } from './BarnDto';
 
 interface OmsorgsdagerGrunnlagDto {
@@ -10,6 +16,7 @@ interface OmsorgsdagerGrunnlagDto {
   overføringGir: OverføringGir[];
   koronaoverføringFår: OverføringFår[];
   koronaoverføringGir: OverføringGir[];
+  uidentifiserteRammevedtak: UidentifisertRammevedtak[];
 }
 
 export default OmsorgsdagerGrunnlagDto;

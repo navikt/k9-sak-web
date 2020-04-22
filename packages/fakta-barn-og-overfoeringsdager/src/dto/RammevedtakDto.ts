@@ -24,3 +24,7 @@ export interface OverføringGir extends RammevedtakDto {
   antallDager: number;
   mottakersFnr?: string;
 }
+
+export interface UidentifisertRammevedtak {
+  fritekst?: string;
+}
