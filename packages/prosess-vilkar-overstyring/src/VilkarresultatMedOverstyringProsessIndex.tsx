@@ -1,5 +1,5 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { Aksjonspunkt, Behandling, Kodeverk, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Kodeverk, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { TabsPure } from 'nav-frontend-tabs';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
@@ -16,18 +16,6 @@ const intl = createIntl(
   },
   cache,
 );
-
-interface Vilkar {
-  lovReferanse?: string;
-  overstyrbar: boolean;
-  vilkarType: Kodeverk;
-  perioder: {
-    avslagKode: string;
-    merknadParametere: { [name: string]: string };
-    periode: { fom: string; tom: string };
-    vilkarStatus: Kodeverk;
-  }[];
-}
 
 interface VilkarresultatMedOverstyringProsessIndexProps {
   behandling: Behandling;

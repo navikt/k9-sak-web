@@ -290,8 +290,8 @@ const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => (
   kode: overstyringApKode,
   ...VilkarResultPicker.transformValues(values),
   ...VilkarresultatMedBegrunnelse.transformValues(values),
-  opptjeningFom: periodeFom,
-  opptjeningTom: periodeTom,
+  opptjeningFom: periodeFom || undefined,
+  opptjeningTom: periodeTom || undefined,
 });
 
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);
