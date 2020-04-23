@@ -4,49 +4,12 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-// import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-// import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import { TabsPure } from 'nav-frontend-tabs';
 import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
 import styles from './tilkjentYtelse.less';
-
-/* const createVisningNavnForUttakArbeidstaker = (andel, getKodeverknavn) => {
-  if (!andel.arbeidsgiverOrgnr) {
-    return <FormattedMessage id="TilkjentYtelse.PeriodeData.Arbeidstaker" />;
-  }
-  const andelsObjekt = {
-    arbeidsgiverNavn: andel.arbeidsgiverNavn,
-    arbeidsgiverId: andel.arbeidsgiverOrgnr,
-    arbeidsforholType: andel.arbeidsforholdType,
-    eksternArbeidsforholdId: andel.eksternArbeidsforholdId,
-  };
-  return createVisningsnavnForAktivitet(andelsObjekt, getKodeverknavn);
-};
-
-const findAndelsnavn = (andel, getKodeverknavn) => {
-  switch (andel.aktivitetStatus.kode) {
-    case aktivitetStatus.ARBEIDSTAKER:
-      return createVisningNavnForUttakArbeidstaker(andel, getKodeverknavn);
-    case aktivitetStatus.FRILANSER:
-      return <FormattedMessage id="TilkjentYtelse.PeriodeData.Frilans" />;
-    case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
-      return <FormattedMessage id="TilkjentYtelse.PeriodeData.SelvstendigNaeringsdrivende" />;
-    case aktivitetStatus.DAGPENGER:
-      return <FormattedMessage id="TilkjentYtelse.PeriodeData.Dagpenger" />;
-    case aktivitetStatus.ARBEIDSAVKLARINGSPENGER:
-      return <FormattedMessage id="TilkjentYtelse.PeriodeData.AAP" />;
-    case aktivitetStatus.MILITAER_ELLER_SIVIL:
-      return <FormattedMessage id="TilkjentYtelse.PeriodeData.Militaer" />;
-    case aktivitetStatus.BRUKERS_ANDEL:
-      return <FormattedMessage id="TilkjentYtelse.PeriodeData.BrukersAndel" />;
-
-    default:
-      return '';
-  }
-}; */
 
 /**
  * TimeLineData
