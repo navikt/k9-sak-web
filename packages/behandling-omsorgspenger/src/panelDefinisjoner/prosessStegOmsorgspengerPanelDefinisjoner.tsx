@@ -212,14 +212,14 @@ const prosessStegPanelDefinisjoner = [
         aksjonspunkterCodes: [ac.VURDER_TILBAKETREKK],
         endpoints: [],
         renderComponent: props => <TilkjentYtelseProsessIndex {...props} />,
-        getData: ({ fagsak, beregningresultatForeldrepenger, soknad }) => ({
+        getData: ({ fagsak, beregningsresultatUtbetaling, soknad }) => ({
           fagsak,
           soknad,
-          beregningresultat: beregningresultatForeldrepenger,
+          beregningresultat: beregningsresultatUtbetaling,
         }),
         showComponent: () => true,
-        overrideStatus: ({ beregningresultatForeldrepenger, uttaksresultatPerioder }) =>
-          getStatusFromResultatstruktur(beregningresultatForeldrepenger, uttaksresultatPerioder),
+        overrideStatus: ({ beregningsresultatUtbetaling, uttaksresultatPerioder }) =>
+          getStatusFromResultatstruktur(beregningsresultatUtbetaling, uttaksresultatPerioder),
       },
     ],
   },
@@ -271,7 +271,7 @@ const prosessStegPanelDefinisjoner = [
           rettigheter,
           aksjonspunkter,
           vilkar,
-          beregningresultatForeldrepenger,
+          beregningsresultatUtbetaling,
           simuleringResultat,
           beregningsgrunnlag,
           vedtakVarsel,
@@ -279,7 +279,7 @@ const prosessStegPanelDefinisjoner = [
           previewCallback,
           aksjonspunkter,
           vilkar,
-          beregningresultatForeldrepenger,
+          beregningsresultatUtbetaling,
           simuleringResultat,
           beregningsgrunnlag,
           ytelseTypeKode: fagsakYtelseType.OMSORGSPENGER,

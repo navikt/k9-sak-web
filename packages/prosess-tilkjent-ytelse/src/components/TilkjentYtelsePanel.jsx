@@ -106,7 +106,7 @@ const finnTilbaketrekkAksjonspunkt = createSelector(
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    beregningsresultatMedUttaksplan: ownProps.beregningresultat,
+    beregningsresultatMedUttaksplan: ownProps.beregningsresultat,
     vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
   };
 };

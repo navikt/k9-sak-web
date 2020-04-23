@@ -21,7 +21,7 @@ const intl = createIntl(
 
 const TilkjentYtelseProsessIndex = ({
   behandling,
-  beregningresultat,
+  beregningsresultat,
   fagsak,
   aksjonspunkter,
   alleKodeverk,
@@ -33,7 +33,7 @@ const TilkjentYtelseProsessIndex = ({
     <TilkjentYtelsePanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      beregningresultat={beregningresultat}
+      beregningsresultat={beregningsresultat}
       fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
@@ -46,7 +46,7 @@ const TilkjentYtelseProsessIndex = ({
 
 TilkjentYtelseProsessIndex.propTypes = {
   behandling: tilkjentYtelseBehandlingPropType.isRequired,
-  beregningresultat: tilkjentYtelseBeregningresultatPropType.isRequired,
+  beregningsresultat: tilkjentYtelseBeregningresultatPropType.isRequired,
   fagsak: tilkjentYtelseFagsakPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(tilkjentYtelseAksjonspunkterPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
