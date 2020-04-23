@@ -2,14 +2,8 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 
@@ -28,54 +22,169 @@ const behandling = {
   versjon: 1,
 };
 
-const familiehendelse = {
-  gjeldende: {
-    fodselsdato: '2019-01-01',
-    omsorgsovertakelseDato: '2019-01-01',
-  },
-};
-
-const personopplysninger = {
-  navBrukerKjonn: {
-    kode: navBrukerKjonn.KVINNE,
-  },
-};
-
-const beregningresultat = {
-  perioder: [{
-    andeler: [{
-      fom: '2019-01-01',
-      tom: '2019-01-10',
-      uttak: {
-        stonadskontoType: stonadskontoType.FELLESPERIODE,
-      },
-      aktivitetStatus: {
-        kode: aktivitetStatus.ARBEIDSTAKER,
-      },
-      arbeidsforholdType: {
-        kode: arbeidsforholdHandlingType.NYTT_ARBEIDSFORHOLD,
-        kodeverk: kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE,
-      },
-    }],
-    fom: '2019-01-01',
-    tom: '2019-01-10',
-    dagsats: 1000,
-  }],
-};
-
-const soknad = {
-  mottattDato: '2019-01-01',
-  soknadType: {
-    kode: soknadType.FODSEL,
-  },
-  omsorgsovertakelseDato: '2019-01-10',
-  fodselsdatoer: {
-    1: '2019-01-01',
-  },
-  adopsjonFodelsedatoer: {
-    1: '2019-01-01',
-  },
-  termindato: '2019-02-01',
+const beregningsresultat = {
+  opphoersdato: '2021-03-27',
+  perioder: [
+    {
+      andeler: [
+        {
+          aktivitetStatus: {
+            kode: 'AT',
+            kodeverk: 'AKTIVITET_STATUS',
+          },
+          inntektskategori: {
+            kode: 'ARBEIDSTAKER',
+            kodeverk: 'INNTEKTSKATEGORI',
+          },
+          aktørId: null,
+          arbeidsforholdId: null,
+          arbeidsforholdType: {
+            kode: '-',
+            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+          },
+          arbeidsgiverNavn: 'BEDRIFT1 AS',
+          arbeidsgiverOrgnr: '123456789',
+          eksternArbeidsforholdId: null,
+          refusjon: 990,
+          sisteUtbetalingsdato: null,
+          stillingsprosent: 0,
+          tilSoker: 549,
+          utbetalingsgrad: 100,
+          uttak: [
+            {
+              periode: {
+                fom: '2021-03-12',
+                tom: '2021-03-14',
+              },
+              utbetalingsgrad: 100,
+              utfall: {
+                kode: 'INNVILGET',
+                kodeverk: 'UTTAK_UTFALL_TYPE',
+              },
+            },
+            {
+              periode: {
+                fom: '2021-03-15',
+                tom: '2021-03-15',
+              },
+              utbetalingsgrad: 100,
+              utfall: {
+                kode: 'INNVILGET',
+                kodeverk: 'UTTAK_UTFALL_TYPE',
+              },
+            },
+          ],
+        },
+        {
+          aktivitetStatus: {
+            kode: 'AT',
+            kodeverk: 'AKTIVITET_STATUS',
+          },
+          inntektskategori: {
+            kode: 'ARBEIDSTAKER',
+            kodeverk: 'INNTEKTSKATEGORI',
+          },
+          aktørId: null,
+          arbeidsforholdId: null,
+          arbeidsforholdType: {
+            kode: '-',
+            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+          },
+          arbeidsgiverNavn: 'BEDRIFT2 AS',
+          arbeidsgiverOrgnr: '234567890',
+          eksternArbeidsforholdId: null,
+          refusjon: 1090,
+          sisteUtbetalingsdato: null,
+          stillingsprosent: 0,
+          tilSoker: 0,
+          utbetalingsgrad: 100,
+          uttak: [
+            {
+              periode: {
+                fom: '2021-03-16',
+                tom: '2021-03-19',
+              },
+              utbetalingsgrad: 100,
+              utfall: {
+                kode: 'INNVILGET',
+                kodeverk: 'UTTAK_UTFALL_TYPE',
+              },
+            },
+          ],
+        },
+      ],
+      dagsats: 1142,
+      fom: '2021-03-12',
+      tom: '2021-03-19',
+    },
+    {
+      andeler: [
+        {
+          aktivitetStatus: {
+            kode: 'AT',
+            kodeverk: 'AKTIVITET_STATUS',
+          },
+          inntektskategori: {
+            kode: 'ARBEIDSTAKER',
+            kodeverk: 'INNTEKTSKATEGORI',
+          },
+          aktørId: null,
+          arbeidsforholdId: null,
+          arbeidsforholdType: {
+            kode: '-',
+            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+          },
+          arbeidsgiverNavn: 'BEDRIFT1 AS',
+          arbeidsgiverOrgnr: '123456789',
+          eksternArbeidsforholdId: null,
+          refusjon: 45,
+          sisteUtbetalingsdato: null,
+          stillingsprosent: 0,
+          tilSoker: 990,
+          utbetalingsgrad: 100,
+          uttak: [
+            {
+              periode: {
+                fom: '2021-03-22',
+                tom: '2021-03-24',
+              },
+              utbetalingsgrad: 100,
+              utfall: {
+                kode: 'INNVILGET',
+                kodeverk: 'UTTAK_UTFALL_TYPE',
+              },
+            },
+            {
+              periode: {
+                fom: '2021-03-26',
+                tom: '2021-03-26',
+              },
+              utbetalingsgrad: 100,
+              utfall: {
+                kode: 'INNVILGET',
+                kodeverk: 'UTTAK_UTFALL_TYPE',
+              },
+            },
+            {
+              periode: {
+                fom: '2021-03-27',
+                tom: '2021-03-27',
+              },
+              utbetalingsgrad: 100,
+              utfall: {
+                kode: 'AVSLÅTT',
+                kodeverk: 'UTTAK_UTFALL_TYPE',
+              },
+            },
+          ],
+        },
+      ],
+      dagsats: 1192,
+      fom: '2021-03-22',
+      tom: '2021-03-27',
+    },
+  ],
+  skalHindreTilbaketrekk: false,
 };
 
 export default {
@@ -87,10 +196,7 @@ export default {
 export const visUtenAksjonspunkt = () => (
   <TilkjentYtelseProsessIndex
     behandling={object('behandling', behandling)}
-    beregningresultat={beregningresultat}
-    familiehendelse={familiehendelse}
-    personopplysninger={object('personopplysninger', personopplysninger)}
-    soknad={soknad}
+    beregningresultat={beregningsresultat}
     fagsak={fagsak}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
@@ -103,19 +209,18 @@ export const visUtenAksjonspunkt = () => (
 export const visÅpentAksjonspunkt = () => (
   <TilkjentYtelseProsessIndex
     behandling={object('behandling', behandling)}
-    beregningresultat={beregningresultat}
-    familiehendelse={familiehendelse}
-    personopplysninger={object('personopplysninger', personopplysninger)}
-    soknad={soknad}
+    beregningresultat={beregningsresultat}
     fagsak={fagsak}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-    }]}
+    ]}
     alleKodeverk={alleKodeverk}
     isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
