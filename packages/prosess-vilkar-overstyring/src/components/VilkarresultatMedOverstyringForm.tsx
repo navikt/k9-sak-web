@@ -306,8 +306,7 @@ const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => (
   kode: overstyringApKode,
   ...VilkarResultPicker.transformValues(values),
   ...VilkarresultatMedBegrunnelse.transformValues(values),
-  opptjeningFom: periodeFom || undefined,
-  opptjeningTom: periodeTom || undefined,
+  periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
 });
 
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);

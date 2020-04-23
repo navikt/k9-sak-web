@@ -78,7 +78,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
 
   .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar', PleiepengerBehandlingApiKeys.VILKAR)
+  .withRel('vilkar-v3', PleiepengerBehandlingApiKeys.VILKAR)
   .withRel('soeker-personopplysninger', PleiepengerBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG)
