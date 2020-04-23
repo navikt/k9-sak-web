@@ -8,7 +8,6 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { calcDaysAndWeeks, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 
@@ -34,17 +33,6 @@ const getOptions = nyePerioder => {
     zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
     zoomMin: 1000 * 60 * 60 * 24 * 30,
   };
-};
-
-const gradertKlassenavn = 'gradert';
-const innvilgetKlassenavn = 'innvilget';
-
-const getStatusForPeriode = periode => {
-  const graderteAndeler = periode.andeler.filter(andel => andel.uttak && andel.uttak.gradering === true);
-  if (graderteAndeler.length === 0) {
-    return innvilgetKlassenavn;
-  }
-  return gradertKlassenavn;
 };
 
 const createTooltipContent = (periodeType, intl, item) => `
@@ -74,44 +62,15 @@ const createTooltipContent = (periodeType, intl, item) => `
    </p>
 `;
 
-const findKorrektLabelForKvote = stonadtype => {
-  switch (stonadtype) {
-    case stonadskontoType.FEDREKVOTE:
-      return uttakPeriodeNavn.FEDREKVOTE;
-    case stonadskontoType.MØDREKVOTE:
-      return uttakPeriodeNavn.MØDREKVOTE;
-    case stonadskontoType.FELLESPERIODE:
-      return uttakPeriodeNavn.FELLESPERIODE;
-    case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
-      return uttakPeriodeNavn.FORELDREPENGER_FØR_FØDSEL;
-    case stonadskontoType.FLERBARNSDAGER:
-      return uttakPeriodeNavn.FLERBARNSDAGER;
-    case stonadskontoType.FORELDREPENGER:
-      return uttakPeriodeNavn.FORELDREPENGER;
-    default:
-      return '';
-  }
-};
-
-// og grupp kan endres nor vi har en medsøkare
-const addClassNameGroupIdToPerioder = (perioder, intl) => {
-  const perioderMedClassName = [];
-  perioder.forEach(item => {
-    const status = getStatusForPeriode(item);
-    const copyOfItem = { ...item };
-    copyOfItem.className = status;
-    copyOfItem.group = 1;
-    copyOfItem.start = parseDateString(item.fom);
-    copyOfItem.end = moment(item.tom).add(1, 'days');
-    copyOfItem.title = createTooltipContent(
-      findKorrektLabelForKvote(item.andeler[0].uttak.stonadskontoType),
-      intl,
-      item,
-    );
-    perioderMedClassName.push(copyOfItem);
-  });
-  return perioderMedClassName;
-};
+const prepareTimelineData = (periode, index, intl) => ({
+  ...periode,
+  className: periode.utbetalingsgrad < 100 ? 'gradert' : 'innvilget',
+  group: 1,
+  id: index,
+  start: parseDateString(periode.fom),
+  end: moment(parseDateString(periode.tom)).add(1, 'day'),
+  title: createTooltipContent('Omsorgspenger', intl, periode),
+});
 
 /**
  * TilkjentYtelse
@@ -247,7 +206,7 @@ export class TilkjentYtelse extends Component {
       zoomIn,
       zoomOut,
     } = this;
-    const nyePerioder = addClassNameGroupIdToPerioder(items, intl);
+    const timelineData = items.map((periode, index) => prepareTimelineData(periode, index, intl));
     return (
       <div className={styles.timelineContainer}>
         <VerticalSpacer sixteenPx />
@@ -257,8 +216,8 @@ export class TilkjentYtelse extends Component {
             <div className={styles.timeLineWrapper}>
               <Timeline
                 ref={this.timelineRef}
-                options={getOptions(nyePerioder)}
-                items={nyePerioder}
+                options={getOptions(items)}
+                items={timelineData}
                 groups={groups}
                 selectHandler={selectHandler}
                 selection={[selectedItem ? selectedItem.id : null]}
