@@ -1,0 +1,6 @@
+{
+  "Årskvantum.TotaleDager": "Totale dager",
+  "Årskvantum.ForbrukteDager": "Forbrukte dager",
+  "Årskvantum.Restdager": "Restdager",
+  "Årskvantum.TotaldagerInfo": "*{totaltAntallDager} dager, {antallDagerArbeidsgiverDekker} dekket av arbeidsgiver"
+}
