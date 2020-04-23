@@ -1,41 +1,84 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import moment from 'moment';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { Undertittel, Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import { Knapp } from 'nav-frontend-knapper';
-
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
+import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
+import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { OverstyrBekreftKnappPanel, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FlexContainer,
-  FlexRow,
-  FlexColumn,
-  Image,
-  VerticalSpacer,
   AksjonspunktBox,
   EditedIcon,
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  Image,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { VilkarResultPicker, OverstyrBekreftKnappPanel } from '@fpsak-frontend/fp-felles';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
-import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
-
+import { Aksjonspunkt, Kodeverk, SubmitCallback } from '@k9-sak-web/types';
+import moment from 'moment';
+import { Knapp } from 'nav-frontend-knapper';
+import { Element, EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import React, { SetStateAction, useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
-
 import styles from './vilkarresultatMedOverstyringForm.less';
 
-const isOverridden = (aksjonspunktCodes, aksjonspunktCode) => aksjonspunktCodes.some(code => code === aksjonspunktCode);
-const isHidden = (kanOverstyre, aksjonspunktCodes, aksjonspunktCode) =>
+const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
+  aksjonspunktCodes.some(code => code === aksjonspunktCode);
+const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
+
+const getFormName = (overstyringApKode: string) => `VilkarresultatForm_${overstyringApKode}`;
+
+interface VilkarresultatMedOverstyringFormProps {
+  aksjonspunktCodes: string[];
+  aksjonspunkter: Aksjonspunkt[];
+  avslagsarsaker: Kodeverk[];
+  behandlingsresultat: {
+    type: Kodeverk;
+  };
+  behandlingId: number;
+  behandlingVersjon: number;
+  behandlingType: Kodeverk;
+  customVilkarIkkeOppfyltText?: {
+    id: string;
+    values?: any;
+  };
+  customVilkarOppfyltText?: {
+    id: string;
+    values?: any;
+  };
+  erMedlemskapsPanel: boolean;
+  erOverstyrt?: boolean;
+  erVilkarOk?: boolean;
+  hasAksjonspunkt: boolean;
+  isReadOnly: boolean;
+  kanOverstyreAccess?: {
+    isEnabled: boolean;
+  };
+  lovReferanse?: string;
+  medlemskapFom: string;
+  originalErVilkarOk?: boolean;
+  overrideReadOnly: boolean;
+  overstyringApKode: string;
+  panelTittelKode: string;
+  periodeFom: string;
+  periodeTom: string;
+  status: string;
+  submitCallback: (props: SubmitCallback[]) => void;
+  toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
+}
+
+interface StateProps {
+  isSolvable: boolean;
+}
 
 /**
  * VilkarresultatForm
@@ -61,16 +104,29 @@ export const VilkarresultatMedOverstyringForm = ({
   kanOverstyreAccess,
   aksjonspunktCodes,
   toggleOverstyring,
-  ...formProps
-}) => {
-  const togglePa = useCallback(() => toggleOverstyring(oldArray => [...oldArray, overstyringApKode]));
-  const toggleAv = useCallback(() => {
-    formProps.reset();
+  reset,
+  handleSubmit,
+  submitting,
+  pristine,
+  periodeFom,
+  periodeTom,
+}: VilkarresultatMedOverstyringFormProps & StateProps & InjectedFormProps) => {
+  const togglePa = () => {
+    toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
+  };
+  const toggleAv = () => {
+    reset();
     toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));
-  });
+  };
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, [periodeFom, periodeTom]);
 
   return (
-    <form onSubmit={formProps.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <FlexContainer>
         <FlexRow>
           {!erOverstyrt && originalErVilkarOk !== undefined && (
@@ -184,18 +240,13 @@ export const VilkarresultatMedOverstyringForm = ({
               <FlexRow>
                 <FlexColumn>
                   <OverstyrBekreftKnappPanel
-                    submitting={formProps.submitting}
-                    pristine={!isSolvable || formProps.pristine}
+                    submitting={submitting}
+                    pristine={!isSolvable || pristine}
                     overrideReadOnly={overrideReadOnly}
                   />
                 </FlexColumn>
                 <FlexColumn>
-                  <Knapp
-                    htmlType="button"
-                    spinner={formProps.submitting}
-                    disabled={formProps.submitting}
-                    onClick={toggleAv}
-                  >
+                  <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
                     <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
                   </Knapp>
                 </FlexColumn>
@@ -208,47 +259,12 @@ export const VilkarresultatMedOverstyringForm = ({
   );
 };
 
-VilkarresultatMedOverstyringForm.propTypes = {
-  erOverstyrt: PropTypes.bool,
-  erVilkarOk: PropTypes.bool,
-  originalErVilkarOk: PropTypes.bool,
-  isReadOnly: PropTypes.bool.isRequired,
-  lovReferanse: PropTypes.string,
-  customVilkarIkkeOppfyltText: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    values: PropTypes.shape(),
-  }),
-  customVilkarOppfyltText: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    values: PropTypes.shape(),
-  }),
-  erMedlemskapsPanel: PropTypes.bool.isRequired,
-  hasAksjonspunkt: PropTypes.bool.isRequired,
-  avslagsarsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  overrideReadOnly: PropTypes.bool.isRequired,
-  toggleOverstyring: PropTypes.func.isRequired,
-  kanOverstyreAccess: PropTypes.shape({
-    isEnabled: PropTypes.bool.isRequired,
-  }).isRequired,
-  aksjonspunktCodes: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  ...formPropTypes,
-};
-
-VilkarresultatMedOverstyringForm.defaultProps = {
-  customVilkarIkkeOppfyltText: undefined,
-  customVilkarOppfyltText: undefined,
-  lovReferanse: undefined,
-  erOverstyrt: undefined,
-  erVilkarOk: undefined,
-  originalErVilkarOk: undefined,
-};
-
 const buildInitialValues = createSelector(
   [
-    ownProps => ownProps.behandlingsresultat,
-    ownProps => ownProps.aksjonspunkter,
-    ownProps => ownProps.status,
-    ownProps => ownProps.overstyringApKode,
+    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.behandlingsresultat,
+    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.aksjonspunkter,
+    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.status,
+    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.overstyringApKode,
   ],
   (behandlingsresultat, aksjonspunkter, status, overstyringApKode) => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
@@ -264,8 +280,8 @@ const buildInitialValues = createSelector(
   },
 );
 
-const getCustomVilkarText = (medlemskapFom, behandlingType, erOppfylt) => {
-  const customVilkarText = {};
+const getCustomVilkarText = (medlemskapFom: string, behandlingType: Kodeverk, erOppfylt: boolean) => {
+  const customVilkarText = { id: '', values: null };
   const isBehandlingRevurderingFortsattMedlemskap =
     behandlingType.kode === BehandlingType.REVURDERING && !!medlemskapFom;
   if (isBehandlingRevurderingFortsattMedlemskap) {
@@ -278,11 +294,11 @@ const getCustomVilkarText = (medlemskapFom, behandlingType, erOppfylt) => {
 };
 
 const getCustomVilkarTextForOppfylt = createSelector(
-  [ownProps => ownProps.medlemskapFom, ownProps => ownProps.behandlingType],
+  [(ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.medlemskapFom, ownProps => ownProps.behandlingType],
   (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, true),
 );
 const getCustomVilkarTextForIkkeOppfylt = createSelector(
-  [ownProps => ownProps.medlemskapFom, ownProps => ownProps.behandlingType],
+  [(ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.medlemskapFom, ownProps => ownProps.behandlingType],
   (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, false),
 );
 
@@ -296,12 +312,12 @@ const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => (
 
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
-const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
+const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringFormProps) => {
   const { overstyringApKode, submitCallback, periodeFom, periodeTom } = initialOwnProps;
   const onSubmit = values => submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
   const validateFn = values => validate(values);
   const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon.kode);
-  const formName = `VilkarresultatForm_${overstyringApKode}`;
+  const formName = getFormName(overstyringApKode);
 
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;

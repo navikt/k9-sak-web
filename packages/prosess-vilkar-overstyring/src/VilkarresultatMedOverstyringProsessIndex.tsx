@@ -2,7 +2,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, Kodeverk, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { TabsPure } from 'nav-frontend-tabs';
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
@@ -29,7 +29,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
   kanOverstyreAccess: {
     isEnabled: boolean;
   };
-  toggleOverstyring: () => void;
+  toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   avslagsarsaker: Kodeverk[];
   lovReferanse: string;
   erOverstyrt: boolean;
@@ -65,7 +65,9 @@ const VilkarresultatMedOverstyringProsessIndex = ({
         <TabsPure
           tabs={vilkar[0].perioder.map((currentPeriode, currentPeriodeIndex) => ({
             aktiv: activeTab === currentPeriodeIndex,
-            label: `Perioden ${dateFormat(activePeriode.periode.fom)} - ${dateFormat(activePeriode.periode.tom)}`,
+            label: `Perioden ${dateFormat(activeVilkår.perioder[currentPeriodeIndex].periode.fom)} - ${dateFormat(
+              activeVilkår.perioder[currentPeriodeIndex].periode.tom,
+            )}`,
           }))}
           onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
         />
