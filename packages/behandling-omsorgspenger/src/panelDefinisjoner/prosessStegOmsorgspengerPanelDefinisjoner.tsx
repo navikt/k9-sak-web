@@ -211,12 +211,16 @@ const prosessStegPanelDefinisjoner = [
       {
         aksjonspunkterCodes: [ac.VURDER_TILBAKETREKK],
         endpoints: [],
-        renderComponent: props => <TilkjentYtelseProsessIndex {...props} />,
-        getData: ({ fagsak, beregningsresultatUtbetaling, soknad }) => ({
-          fagsak,
-          soknad,
-          beregningresultat: beregningsresultatUtbetaling,
-        }),
+        renderComponent: props => {
+          return <TilkjentYtelseProsessIndex {...props} />;
+        },
+        getData: ({ fagsak, beregningsresultatUtbetaling, soknad, ...rest }) => {
+          return {
+            fagsak,
+            soknad,
+            beregningresultat: beregningsresultatUtbetaling,
+          };
+        },
         showComponent: () => true,
         overrideStatus: ({ beregningsresultatUtbetaling, uttaksresultatPerioder }) =>
           getStatusFromResultatstruktur(beregningsresultatUtbetaling, uttaksresultatPerioder),

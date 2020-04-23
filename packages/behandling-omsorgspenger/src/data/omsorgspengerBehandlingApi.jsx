@@ -77,7 +77,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/brev */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
 
-  .withRel('beregningsresultat-utbetaling', PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
+  .withRel('beregningsresultat-utbetalt', PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
   .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar', PleiepengerBehandlingApiKeys.VILKAR)
   .withRel('soeker-personopplysninger', PleiepengerBehandlingApiKeys.PERSONOPPLYSNINGER)
