@@ -45,3 +45,5 @@ spec:
       value: "http://k9-formidling"
     - name: APP_URL_K9OPPDRAG
       value: "http://k9-oppdrag"
+    - name: APP_URL_KLAGE
+      value: 'http://k9-klage'
