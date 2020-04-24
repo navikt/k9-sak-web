@@ -138,8 +138,8 @@ export class AvregningPanelImpl extends Component {
                 </AksjonspunktHelpTextTemp>
                 <VerticalSpacer twentyPx />
                 <AvregningSummary
-                  fom={simuleringResultatOption.periode.fom}
-                  tom={simuleringResultatOption.periode.tom}
+                  fom={simuleringResultatOption.periode?.fom}
+                  tom={simuleringResultatOption.periode?.tom}
                   feilutbetaling={simuleringResultatOption.sumFeilutbetaling}
                   etterbetaling={simuleringResultatOption.sumEtterbetaling}
                   inntrekk={simuleringResultatOption.sumInntrekk}
