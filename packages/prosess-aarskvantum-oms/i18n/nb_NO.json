@@ -9,5 +9,17 @@
   "Uttaksplan.Fravær": "Fravær",
   "Uttaksplan.Utfall": "Utfall",
   "Uttaksplan.Årsak": "Årsak",
-  "Uttaksplan.IngenUttaksplaner": "Fant ingen uttaksplaner"
+  "Uttaksplan.Utbetalingsgrad": "Utbetalingsgrad",
+  "Uttaksplan.DelvisFravær": "Delvis fravær ({timer}t)",
+  "Uttaksplan.IngenFravær": "Ingen fravær",
+  "Uttaksplan.IngenUttaksplaner": "Fant ingen uttaksplaner",
+  "INNVILGET_ORDINÆR": "Ordinært",
+  "INNVILGET_DOKUMENTERT": "Dokumentert",
+  "AVSLÅTT_IKKE_RETT":  "Ikke rett",
+  "AVSLÅTT_IKKE_FLERE_DAGER": "Ikke flere dager",
+  "AVSLÅTT_OPPTJENING":  "Opptjening",
+  "AVSLÅTT_MEDLEMSKAP": "Medlemskap ikke oppfylt",
+  "AVSLÅTT_70ÅR":  "Søker er over 70 år",
+  "AVSLÅTT_UIDENTIFISERT_RAMMEVEDTAK": "Uidentifisert rammemelding",
+  "AVSLÅTT_KREVER_LEGEERKLÆRING":  "Krever legeerklæring"
 }

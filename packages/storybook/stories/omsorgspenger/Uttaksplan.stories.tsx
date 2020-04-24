@@ -26,8 +26,30 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
           {
             utfall: UtfallEnum.INNVILGET,
             årsak: ÅrsakEnum.INNVILGET_ORDINÆR,
-            delvisFravær: 'asd',
-            periode: 'asdf',
+            delvisFravær: 'P2DT4H30M',
+            periode: '2020-04-01/2020-04-30',
+            utbetalingsgrad: 100,
+          },
+          {
+            utfall: UtfallEnum.INNVILGET,
+            årsak: ÅrsakEnum.INNVILGET_ORDINÆR,
+            periode: '2020-03-01/2020-03-31',
+            utbetalingsgrad: 50,
+          },
+        ],
+      },
+      {
+        arbeidsforhold: {
+          arbeidsforholdId: '888',
+          organisasjonsnummer: '999',
+          type: 'selvstendig næringsdrivende',
+        },
+        uttaksperioder: [
+          {
+            utfall: UtfallEnum.AVSLÅTT,
+            årsak: ÅrsakEnum.AVSLÅTT_IKKE_FLERE_DAGER,
+            periode: '2020-03-01/2020-03-31',
+            utbetalingsgrad: 0,
           },
         ],
       },
