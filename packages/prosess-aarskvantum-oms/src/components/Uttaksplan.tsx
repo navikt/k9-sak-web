@@ -5,7 +5,7 @@ import { TableColumn, TableRow, Table, Image } from '@fpsak-frontend/shared-comp
 import kalender from '@fpsak-frontend/assets/images/kalender.svg';
 import BorderedContainer from './BorderedContainer';
 import Aktivitet from '../dto/Aktivitet';
-import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, storForbokstav } from './utils';
+import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, joinNonNullStrings, storForbokstav } from './utils';
 
 interface UttaksplanProps {
   aktiviteter: Aktivitet[];
@@ -36,7 +36,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({ aktiviteter = [] }) =>
     >
       {aktiviteter.length ? (
         aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => (
-          <div>
+          <div key={joinNonNullStrings(Object.values(arbeidsforhold))}>
             <Element>{storForbokstav(arbeidsforhold.type)}</Element>
             <Table
               headerTextCodes={[
@@ -46,6 +46,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({ aktiviteter = [] }) =>
                 'Uttaksplan.Årsak',
                 'Uttaksplan.Utbetalingsgrad',
               ]}
+              stripet
               noHover
             >
               {uttaksperioder.map(({ periode, delvisFravær, utfall, årsak, utbetalingsgrad }) => (

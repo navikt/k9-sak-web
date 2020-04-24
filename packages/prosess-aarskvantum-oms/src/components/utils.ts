@@ -12,3 +12,5 @@ export const durationTilTimerMed7ogEnHalvTimesDagsbasis = (delvisFravær: string
 
   return heleDager * 7.5 + resttimer;
 };
+
+export const joinNonNullStrings = (...strings) => strings.filter(s => !!s).join('');
