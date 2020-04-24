@@ -12,41 +12,34 @@ const classNames = classnames.bind(styles);
 
 const EMPTY_STRING = 'EMPTY';
 
-const isString = (value) => typeof value === 'string';
-
+const isString = value => typeof value === 'string';
 
 /**
  * Table
  *
  * Presentasjonskomponent. Definerer en tabell med rader og kolonner.
  */
-const Table = ({
-  headerTextCodes,
-  allowFormattedHeader,
-  classNameTable,
-  children,
-  noHover,
-}) => (
-  <table className={classNames('table', { [classNameTable]: classNameTable, noHover })}>
+const Table = ({ headerTextCodes, allowFormattedHeader, classNameTable, children, noHover, stripet }) => (
+  <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
     <thead>
       <TableRow isHeader noHover={noHover}>
-        {headerTextCodes.map((headerElement) => {
+        {headerTextCodes.map(headerElement => {
           if (isString(headerElement) && headerElement.startsWith(EMPTY_STRING)) {
             return <TableColumn key={headerElement}>&nbsp;</TableColumn>;
           }
           return (
             <TableColumn key={headerElement.key ? headerElement.key : headerElement}>
-              { allowFormattedHeader
-              && headerElement}
-              { !allowFormattedHeader
-              && <FormattedHTMLMessage id={headerElement} />}
+              {allowFormattedHeader && headerElement}
+              {!allowFormattedHeader && <FormattedHTMLMessage id={headerElement} />}
             </TableColumn>
           );
         })}
       </TableRow>
     </thead>
     <tbody>
-      {children.length ? children.map((child) => React.cloneElement(child, { noHover })) : React.cloneElement(children, { noHover })}
+      {children.length
+        ? children.map(child => React.cloneElement(child, { noHover }))
+        : React.cloneElement(children, { noHover })}
     </tbody>
   </table>
 );
@@ -69,6 +62,7 @@ Table.propTypes = {
   classNameTable: PropTypes.string,
   noHover: PropTypes.bool,
   allowFormattedHeader: PropTypes.bool,
+  stripet: PropTypes.bool,
 };
 
 Table.defaultProps = {
@@ -76,6 +70,7 @@ Table.defaultProps = {
   classNameTable: '',
   noHover: false,
   allowFormattedHeader: false,
+  stripet: false,
 };
 
 export default Table;
