@@ -76,7 +76,7 @@ const endpoints = new RestApiConfigBuilder()
 
   .withRel('inntekt', FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('aksjonspunkter', FrisinnBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar', FrisinnBehandlingApiKeys.VILKAR)
+  .withRel('vilkar-v3', FrisinnBehandlingApiKeys.VILKAR)
   .withRel('soeker-personopplysninger', FrisinnBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', FrisinnBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG)
