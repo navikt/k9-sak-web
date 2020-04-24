@@ -1,10 +1,21 @@
 import { expect } from 'chai';
-import { konverterDesimalTilDagerOgTimer } from './Årskvantum';
+import React from 'react';
+import Årskvantum, { konverterDesimalTilDagerOgTimer } from './Årskvantum';
+import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
+import CounterBox from './CounterBox';
 
 const sjekkKonvertering = ({ dager, timer }, expectedDager, expectedTimer) => {
   expect(dager).to.equal(expectedDager);
   expect(timer).to.equal(expectedTimer);
 };
+
+it('rendrer 3 Counterbox med riktig info', () => {
+  const wrapper = shallowWithIntl(
+    <Årskvantum totaltAntallDager={20} antallDagerArbeidsgiverDekker={3} forbrukteDager={4.4} restdager={12.6} />,
+  );
+  const bokser = wrapper.find(CounterBox);
+  expect(bokser).to.have.length(3);
+});
 
 it('konverterer desimaltall til hele dager og timer med max 1 desimal', () => {
   const desimal_1 = 9.4;

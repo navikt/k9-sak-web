@@ -20,12 +20,20 @@ interface ÅrsakvantumIndexProps {
   årskvantum: ÅrskvantumForbrukteDager;
 }
 
-const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvantum }) => (
-  <RawIntlProvider value={intl}>
-    <Årskvantum årskvantum={årskvantum} />
-    <VerticalSpacer sixteenPx />
-    <Uttaksplan aktiviteter={årskvantum.sisteUttaksplan.aktiviteter} />
-  </RawIntlProvider>
-);
+const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvantum }) => {
+  const { totaltAntallDager, restdager, forbrukteDager, antallDagerArbeidsgiverDekker, sisteUttaksplan } = årskvantum;
+  return (
+    <RawIntlProvider value={intl}>
+      <Årskvantum
+        totaltAntallDager={totaltAntallDager}
+        restdager={restdager}
+        forbrukteDager={forbrukteDager}
+        antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
+      />
+      <VerticalSpacer sixteenPx />
+      <Uttaksplan aktiviteter={sisteUttaksplan.aktiviteter} />
+    </RawIntlProvider>
+  );
+};
 
 export default ÅrskvantumIndex;

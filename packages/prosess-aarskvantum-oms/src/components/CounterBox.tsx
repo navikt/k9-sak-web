@@ -58,7 +58,7 @@ const BigCount = styled.span`
 `;
 
 const SmallCount = styled.span`
-  font-size: 3em;
+  font-size: 2.7em;
 `;
 
 const LabelPanel = styled.div`

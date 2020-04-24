@@ -4,12 +4,14 @@ import styled from 'styled-components';
 import Undertittel from 'nav-frontend-typografi/lib/undertittel';
 import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components/index';
 import pieChart from '@fpsak-frontend/assets/images/pie_chart.svg';
-import ÅrskvantumForbrukteDager from '../dto/ÅrskvantumForbrukteDager';
 import CounterBox from './CounterBox';
 import BorderedContainer from './BorderedContainer';
 
 interface ÅrskvantumProps {
-  årskvantum: ÅrskvantumForbrukteDager;
+  totaltAntallDager: number;
+  antallDagerArbeidsgiverDekker: number;
+  forbrukteDager: number;
+  restdager: number;
 }
 
 const CounterContainer = styled.div`
@@ -30,8 +32,12 @@ export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
   };
 };
 
-const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({ årskvantum }) => {
-  const { totaltAntallDager, restdager, forbrukteDager, antallDagerArbeidsgiverDekker } = årskvantum;
+const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
+  totaltAntallDager,
+  restdager,
+  forbrukteDager,
+  antallDagerArbeidsgiverDekker,
+}) => {
   const forbrukt = konverterDesimalTilDagerOgTimer(forbrukteDager);
   const rest = konverterDesimalTilDagerOgTimer(restdager);
 
