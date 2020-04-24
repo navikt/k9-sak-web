@@ -23,7 +23,6 @@ const frisinnData = [
   frisinnBehandlingApi.AKSJONSPUNKTER,
   frisinnBehandlingApi.VILKAR,
   frisinnBehandlingApi.PERSONOPPLYSNINGER,
-  frisinnBehandlingApi.YTELSEFORDELING,
   frisinnBehandlingApi.SOKNAD,
   frisinnBehandlingApi.INNTEKT_ARBEID_YTELSE,
   frisinnBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,

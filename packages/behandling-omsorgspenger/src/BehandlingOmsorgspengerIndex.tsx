@@ -26,7 +26,6 @@ const foreldrepengerData = [
   omsorgspengerBehandlingApi.AKSJONSPUNKTER,
   omsorgspengerBehandlingApi.VILKAR,
   omsorgspengerBehandlingApi.PERSONOPPLYSNINGER,
-  omsorgspengerBehandlingApi.YTELSEFORDELING,
   omsorgspengerBehandlingApi.SOKNAD,
   omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE,
   omsorgspengerBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,

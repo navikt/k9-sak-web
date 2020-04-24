@@ -28,7 +28,6 @@ export const FrisinnBehandlingApiKeys = {
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
-  YTELSEFORDELING: 'YTELSEFORDELING',
   OPPTJENING: 'OPPTJENING',
   INNTEKT_OG_YTELSER: 'INNTEKT_OG_YTELSER',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
@@ -95,7 +94,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-periode-grense', FrisinnBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', FrisinnBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', FrisinnBehandlingApiKeys.VERGE)
-  .withRel('ytelsefordeling', FrisinnBehandlingApiKeys.YTELSEFORDELING)
   .withRel('opptjening-v2', FrisinnBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('fakta-arbeidsforhold', FrisinnBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
