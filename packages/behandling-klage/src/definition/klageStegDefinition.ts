@@ -16,7 +16,7 @@ const getVedtakStatus = ({ behandlingsresultat }, bpAksjonspunkter) => {
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
-  const resultatTypeCode = behandlingsresultat.type.kode;
+  const resultatTypeCode = behandlingsresultat?.type.kode;
   if (
     resultatTypeCode === behandlingResultatType.KLAGE_AVVIST ||
     resultatTypeCode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET
@@ -73,7 +73,7 @@ const finnKlageSteg = createSelector(
     (ownProps: OwnProps) => ownProps.aksjonspunkter,
     (ownProps: OwnProps) => ownProps.vilkar,
   ],
-  (behandling, aksjonspunkter, vilkar) => {
+  (behandling, aksjonspunkter = [], vilkar = []) => {
     if (!behandling.type) {
       return undefined;
     }

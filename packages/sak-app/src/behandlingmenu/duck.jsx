@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling } from '@fpsak-frontend/fp-felles';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import fpsakApi from '../data/fpsakApi';
 import behandlingEventHandler from '../behandling/BehandlingEventHandler';
@@ -12,9 +13,20 @@ const findNewBehandlingId = (behandlingerResponse) => {
   return sortedBehandlinger[0].id;
 };
 
-export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilbakekreving, params) => (dispatch) => dispatch((isTilbakekreving
-  ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params))
-  .then((response) => {
+const createNewBehandlingRequest = (params, isTilbakekreving) => {
+  let endpoint;
+  if (params.behandlingType === behandlingType.KLAGE) {
+    endpoint = fpsakApi.NEW_BEHANDLING_KLAGE;
+  } else if (isTilbakekreving) {
+    endpoint = fpsakApi.NEW_BEHANDLING_FPTILBAKE;
+  } else {
+    endpoint = fpsakApi.NEW_BEHANDLING_FPSAK;
+  }
+  return endpoint.makeRestApiRequest()(params);
+};
+
+export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilbakekreving, params) => dispatch =>
+  dispatch(createNewBehandlingRequest(params, isTilbakekreving)).then(response => {
     const updateBehandlinger = isTilbakekreving ? fpsakApi.BEHANDLINGER_FPTILBAKE : fpsakApi.BEHANDLINGER_FPSAK;
     if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
       return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
