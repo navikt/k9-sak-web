@@ -59,6 +59,11 @@ const options = {
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9OPPDRAG,
     },
+    '/k9/klage/**': {
+      target: process.env.APP_URL_KLAGE || 'http://localhost:8701',
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_KLAGE
+    }
   },
   publicPath: config.output.publicPath,
   hot: true,
@@ -80,5 +85,5 @@ wds.listen(9000, 'localhost', function(err) {
   }
   console.log('Listening at http://localhost:9000/');
 
-  console.log('If running agains VTP you can login or change user here: http://localhost:9000/login-with-vtp');
+  console.log('If running against VTP you can login or change user here: http://localhost:9000/login-with-vtp');
 });
