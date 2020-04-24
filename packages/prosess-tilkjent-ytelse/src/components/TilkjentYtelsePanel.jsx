@@ -17,10 +17,9 @@ const perioderMedClassName = [];
 
 const formatPerioder = perioder => {
   perioderMedClassName.length = 0;
-  perioder.forEach((item, index) => {
+  perioder.forEach(item => {
     if (item.andeler[0] && item.dagsats) {
-      perioderMedClassName.push(item);
-      perioderMedClassName[perioderMedClassName.length - 1].id = index;
+      perioderMedClassName.push({ ...item, id: perioderMedClassName.length });
     }
   });
   return perioderMedClassName;

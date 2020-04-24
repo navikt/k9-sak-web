@@ -21,6 +21,7 @@ import FetchedData from './types/fetchedDataTsType';
 
 const foreldrepengerData = [
   pleiepengerBehandlingApi.AKSJONSPUNKTER,
+  pleiepengerBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
   pleiepengerBehandlingApi.VILKAR,
   pleiepengerBehandlingApi.PERSONOPPLYSNINGER,
   pleiepengerBehandlingApi.YTELSEFORDELING,
