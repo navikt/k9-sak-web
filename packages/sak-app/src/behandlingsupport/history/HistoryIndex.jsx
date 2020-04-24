@@ -17,6 +17,7 @@ import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/
 const historyRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.HISTORY_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
+  [ApplicationContextPath.KLAGE]: fpsakApi.HISTORY_FPSAK
 };
 
 const sortAndTagTilbakekreving = createSelector(

@@ -19,27 +19,27 @@ export const KlageBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE)
+  .withAsyncPost('/k9/klage/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE)
 
   // behandlingsdata
   .withRel('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', KlageBehandlingApiKeys.VILKAR)
   .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
 
-  .withPost('/k9/sak/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/k9/sak/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING, {
+  .withPost('/k9/klage/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/k9/klage/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/k9/klage/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING, {
     saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
   })
-  .withPost('/k9/sak/api/behandlinger/sett-pa-vent', KlageBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/k9/klage/api/behandlinger/sett-pa-vent', KlageBehandlingApiKeys.BEHANDLING_ON_HOLD)
 
-  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+  .withPost('/k9/klage/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/k9/klage/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
     saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
   })
-  .withAsyncPost('/k9/sak/api/behandling/klage/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
+  .withAsyncPost('/k9/klage/api/behandling/klage/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
   .withAsyncPost(
-    '/k9/sak/api/behandling/klage/mellomlagre-gjennapne-klage',
+    '/k9/klage/api/behandling/klage/mellomlagre-gjennapne-klage',
     KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING,
     {
       saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,

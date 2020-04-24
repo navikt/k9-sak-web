@@ -7,21 +7,32 @@ import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 
 const getBehandlingerData = createSelector(
-  [fpsakApi.BEHANDLINGER_FPSAK.getRestApiData(), fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiData()],
-  (behandlingerFpsak = [], behandlingerTilbake = []) => behandlingerFpsak.concat(behandlingerTilbake),
+  [fpsakApi.BEHANDLINGER_FPSAK.getRestApiData(), fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiData(), fpsakApi.BEHANDLINGER_KLAGE.getRestApiData()],
+  (behandlingerFpsak = [], behandlingerTilbake = [], behandlingerKlage = []) => behandlingerFpsak.concat(behandlingerTilbake).concat(behandlingerKlage),
 );
 
 const getBehandlingerFpsakMeta = fpsakApi.BEHANDLINGER_FPSAK.getRestApiMeta();
 const getBehandlingerTilbakeMeta = fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiMeta();
+const getBehandlingerKlageMeta = fpsakApi.BEHANDLINGER_KLAGE.getRestApiMeta();
 
 // TODO (TOR) Denne bør ikkje eksporterast. Bryt opp i fleire selectors
 export const getBehandlinger = createSelector(
-  [getSelectedSaksnummer, getBehandlingerData, getBehandlingerFpsakMeta, getBehandlingerTilbakeMeta],
-  (saksnummer, behandlingerData, behandlingerFpsakMeta = { params: {} }, behandlingerTilbakeMeta = { params: {} }) => {
-    const hasRequestedBehandling = behandlingerFpsakMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer;
+  [getSelectedSaksnummer, getBehandlingerData, getBehandlingerFpsakMeta, getBehandlingerTilbakeMeta, getBehandlingerKlageMeta],
+  (
+    saksnummer,
+    behandlingerData,
+    behandlingerFpsakMeta = {params: {}},
+    behandlingerTilbakeMeta = {params: {}},
+    behandlingerKlageMeta = {params: {}}
+  ) => {
+    const hasRequestedBehandling =
+      behandlingerFpsakMeta.params.saksnummer
+      || behandlingerTilbakeMeta.params.saksnummer
+      || behandlingerKlageMeta.params.saksnummer;
     const isFpsakOk = !behandlingerFpsakMeta.params.saksnummer || behandlingerFpsakMeta.params.saksnummer === saksnummer;
     const isTilbakeOk = !behandlingerTilbakeMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer === saksnummer;
-    return hasRequestedBehandling && isFpsakOk && isTilbakeOk ? behandlingerData : undefined;
+    const isKlageOk = !behandlingerKlageMeta.params.saksnummer || behandlingerKlageMeta.params.saksnummer === saksnummer;
+    return hasRequestedBehandling && isFpsakOk && isTilbakeOk && isKlageOk ? behandlingerData : undefined;
   },
 );
 

@@ -56,13 +56,12 @@ const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) => avslut
 
 export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
-  return behandling.type.kode === BehandlingType.TILBAKEKREVING || behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING;
+  return behandling?.type.kode === BehandlingType.TILBAKEKREVING || behandling?.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING;
 };
 
 export const påklagdTilbakekrevingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
-  const erTilbakekrevingVedtak = erTilbakekreving(avsluttedeBehandlinger, påklagdVedtak);
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
-  return erTilbakekrevingVedtak ? {
+  return behandling ? {
     tilbakekrevingUuid: behandling.uuid,
     tilbakekrevingVedtakDato: behandling.avsluttet,
     tilbakekrevingBehandlingType: behandling.type.kode,
@@ -77,7 +76,7 @@ const transformValues = (values, avsluttedeBehandlinger) => ({
   begrunnelse: values.begrunnelse,
   kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
   vedtak: values.vedtak === IKKE_PA_KLAGD_VEDTAK ? null : values.vedtak,
-  erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
+  erTilbakekreving: true,
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
 });
 
