@@ -2,17 +2,20 @@ import { createSelector } from 'reselect';
 import fpsakApi from '../data/fpsakApi';
 
 /* Selectors */
-export const getKodeverk = kodeverkType =>
-  createSelector([fpsakApi.KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType]);
-
-export const getFpTilbakeKodeverk = kodeverkType =>
-  createSelector([fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType]);
-
-export const getAlleFpSakKodeverk = createSelector([fpsakApi.KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk);
+export const getAlleFpSakKodeverk = createSelector(
+  [fpsakApi.KODEVERK.getRestApiData(), fpsakApi.KODEVERK_KLAGE.getRestApiData()],
+  (kodeverk_sak = {}, kodeverk_klage = {}) => ({...kodeverk_klage, ...kodeverk_sak})
+);
 export const getAlleFpTilbakeKodeverk = createSelector(
   [fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()],
   (kodeverk = {}) => kodeverk,
 );
+
+export const getKodeverk = kodeverkType =>
+  createSelector([getAlleFpSakKodeverk], (kodeverk = {}) => kodeverk[kodeverkType]);
+
+export const getFpTilbakeKodeverk = kodeverkType =>
+  createSelector([fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType]);
 
 // TODO (TOR) Fjern denne
 export const getAlleKodeverk = createSelector(
