@@ -1,11 +1,11 @@
-import Uttaksplan from './Uttaksplan';
+import UttaksplanType from './UttaksplanType';
 
 interface ÅrskvantumForbrukteDager {
   totaltAntallDager: number;
   antallDagerArbeidsgiverDekker: number;
   forbrukteDager: number;
   restdager: number;
-  sisteUttaksplan: Uttaksplan;
+  sisteUttaksplan: UttaksplanType;
 }
 
 export default ÅrskvantumForbrukteDager;

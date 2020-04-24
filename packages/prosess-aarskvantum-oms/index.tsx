@@ -1,1 +1,1 @@
-export { default } from './src/Årskvantum';
+export { default } from './src/ÅrskvantumIndex';

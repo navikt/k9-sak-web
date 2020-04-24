@@ -1,22 +1,14 @@
 import React, { FunctionComponent } from 'react';
-import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
-import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
-import CounterBox from './components/CounterBox';
-import messages from '../i18n/nb_NO.json';
+import Undertittel from 'nav-frontend-typografi/lib/undertittel';
+import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components/index';
+import pieChart from '@fpsak-frontend/assets/images/pie_chart.svg';
+import ÅrskvantumForbrukteDager from '../dto/ÅrskvantumForbrukteDager';
+import CounterBox from './CounterBox';
+import BorderedContainer from './BorderedContainer';
 
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
-
-interface UttaksplanProps {
+interface ÅrskvantumProps {
   årskvantum: ÅrskvantumForbrukteDager;
 }
 
@@ -38,12 +30,20 @@ export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
   };
 };
 
-const Årskvantum: FunctionComponent<UttaksplanProps> = ({ årskvantum }) => {
+const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({ årskvantum }) => {
   const { totaltAntallDager, restdager, forbrukteDager, antallDagerArbeidsgiverDekker } = årskvantum;
   const forbrukt = konverterDesimalTilDagerOgTimer(forbrukteDager);
   const rest = konverterDesimalTilDagerOgTimer(restdager);
+
   return (
-    <RawIntlProvider value={intl}>
+    <BorderedContainer
+      heading={
+        <Undertittel tag="h3">
+          <Image src={pieChart} />
+          <FormattedMessage id="Årskvantum.Heading" />
+        </Undertittel>
+      }
+    >
       <CounterContainer>
         <div>
           <CounterBox
@@ -70,7 +70,7 @@ const Årskvantum: FunctionComponent<UttaksplanProps> = ({ årskvantum }) => {
           theme="grønn"
         />
       </CounterContainer>
-    </RawIntlProvider>
+    </BorderedContainer>
   );
 };
 

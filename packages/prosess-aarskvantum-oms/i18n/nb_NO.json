@@ -1,6 +1,13 @@
 {
+  "Årskvantum.Heading": "Årskvantum nøkkeltall",
   "Årskvantum.TotaleDager": "Totale dager",
   "Årskvantum.ForbrukteDager": "Forbrukte dager",
   "Årskvantum.Restdager": "Restdager",
-  "Årskvantum.TotaldagerInfo": "*{totaltAntallDager} dager, {antallDagerArbeidsgiverDekker} dekket av arbeidsgiver"
+  "Årskvantum.TotaldagerInfo": "*{totaltAntallDager} dager, {antallDagerArbeidsgiverDekker} dekket av arbeidsgiver",
+  "Uttaksplan.Heading": "Uttaksplan",
+  "Uttaksplan.Periode": "Periode",
+  "Uttaksplan.Fravær": "Fravær",
+  "Uttaksplan.Utfall": "Utfall",
+  "Uttaksplan.Årsak": "Årsak",
+  "Uttaksplan.IngenUttaksplaner": "Fant ingen uttaksplaner"
 }
