@@ -3,7 +3,6 @@ import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
-import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -74,33 +73,6 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     getData: ({ rettigheter, beregningsgrunnlag }) => ({
       erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
       beregningsgrunnlag,
-    }),
-  },
-  {
-    urlCode: faktaPanelCodes.UTTAK,
-    textCode: 'UttakInfoPanel.FaktaUttak',
-    aksjonspunkterCodes: [],
-    endpoints: [],
-    renderComponent: props => <UttakFaktaIndex {...props} />,
-    showComponent: ({ personopplysninger }) => !!personopplysninger,
-    getData: ({ personopplysninger }) => ({
-      personopplysninger,
-      arbeidDto: [
-        {
-          arbeidsforhold: {
-            aktørId: null,
-            arbeidsforholdId: '123456',
-            organisasjonsnummer: '999999999',
-            type: 'Arbeidsgiver',
-          },
-          perioder: {
-            '2020-01-01/2020-02-01': {
-              jobberNormaltPerUke: 'PT37H30M',
-              skalJobbeProsent: '80',
-            },
-          },
-        },
-      ],
     }),
   },
 ];
