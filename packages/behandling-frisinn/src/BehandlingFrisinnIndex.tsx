@@ -24,7 +24,6 @@ const frisinnData = [
   frisinnBehandlingApi.VILKAR,
   frisinnBehandlingApi.PERSONOPPLYSNINGER,
   frisinnBehandlingApi.YTELSEFORDELING,
-  frisinnBehandlingApi.SOKNAD,
   frisinnBehandlingApi.INNTEKT_ARBEID_YTELSE,
   frisinnBehandlingApi.BEREGNINGSRESULTAT_UTBETALT,
   frisinnBehandlingApi.BEREGNINGSGRUNNLAG,
