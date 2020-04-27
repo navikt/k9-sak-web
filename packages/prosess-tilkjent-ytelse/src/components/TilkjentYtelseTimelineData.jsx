@@ -11,6 +11,33 @@ import { TabsPure } from 'nav-frontend-tabs';
 import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
 import styles from './tilkjentYtelse.less';
 
+const finnAktivitetsstatusIntlKey = aktivitetStatusKode => {
+  const prefix = 'TilkjentYtelse.PeriodeData.Aktivitetsstatus.';
+  if (aktivitetStatusKode === 'AT') {
+    return `${prefix}Arbeidstaker`;
+  }
+  if (aktivitetStatusKode === 'SN') {
+    return `${prefix}SelvstendigNæringsdrivende`;
+  }
+  if (aktivitetStatusKode === 'FL') {
+    return `${prefix}Frilans`;
+  }
+  return `${prefix}${aktivitetStatusKode}`;
+};
+
+const finnTabLabel = ({ arbeidsgiverNavn, arbeidsgiverOrgnr, aktivitetStatus: { kode } }) => {
+  if (kode === 'AT') {
+    return `${arbeidsgiverNavn} (${arbeidsgiverOrgnr})`;
+  }
+  if (kode === 'SN') {
+    return 'Selvstendig næringsdrivende';
+  }
+  if (kode === 'FL') {
+    return 'Frilans';
+  }
+  return kode;
+};
+
 /**
  * TimeLineData
  *
@@ -97,10 +124,11 @@ const TilkjentYtelseTimeLineData = ({
       </div>
       <VerticalSpacer eightPx />
       <TabsPure
-        tabs={andeler.map(({ arbeidsgiverNavn, arbeidsgiverOrgnr }, currentAndelIndex) => {
+        tabs={andeler.map((andel, currentAndelIndex) => {
+          const label = finnTabLabel(andel);
           return {
             aktiv: activeTab === currentAndelIndex,
-            label: `${arbeidsgiverNavn} (${arbeidsgiverOrgnr})`,
+            label,
           };
         })}
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
@@ -136,10 +164,9 @@ const TilkjentYtelseTimeLineData = ({
             <FormattedHTMLMessage
               id="TilkjentYtelse.PeriodeData.Aktivitetsstatus"
               values={{
-                aktivitetsstatusVerdi:
-                  valgtAndel?.aktivitetStatus.kode === 'AT'
-                    ? intl.formatMessage({ id: 'TilkjentYtelse.PeriodeData.Aktivitetsstatus.Arbeidstaker' })
-                    : valgtAndel?.aktivitetStatus.kode,
+                aktivitetsstatusVerdi: intl.formatMessage({
+                  id: finnAktivitetsstatusIntlKey(valgtAndel?.aktivitetStatus.kode),
+                }),
               }}
             />
           </Column>

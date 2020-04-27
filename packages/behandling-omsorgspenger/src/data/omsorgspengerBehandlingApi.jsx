@@ -45,6 +45,7 @@ export const PleiepengerBehandlingApiKeys = {
   SYKDOM: 'SYKDOM',
   VEDTAK_VARSEL: 'VEDTAK_VARSEL',
   OMSORGEN_FOR: 'OMSORGEN_FOR',
+  FORBRUKTE_DAGER: 'FORBRUKTE_DAGER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -108,6 +109,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
   .withRel('vedtak-varsel', PleiepengerBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('omsorgen-for', PleiepengerBehandlingApiKeys.OMSORGEN_FOR)
+  .withRel('forbrukte-dager', PleiepengerBehandlingApiKeys.FORBRUKTE_DAGER)
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', PleiepengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerBehandlingApiKeys.HENLEGG_BEHANDLING)

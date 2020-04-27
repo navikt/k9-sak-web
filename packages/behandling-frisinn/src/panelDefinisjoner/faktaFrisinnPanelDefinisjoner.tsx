@@ -13,7 +13,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     aksjonspunkterCodes: [],
     endpoints: [frisinnBehandlingApi.INNTEKT_OG_YTELSER],
     renderComponent: props => <InntektOgYtelser {...props} />,
-    showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
+    showComponent: ({ personopplysninger }) => personopplysninger,
     getData: () => ({}),
   },
   {
