@@ -237,11 +237,10 @@ const prosessStegPanelDefinisjoner = [
         renderComponent: props => {
           return <TilkjentYtelseProsessIndex {...props} />;
         },
-        getData: ({ fagsak, beregningsresultatUtbetaling, personopplysninger, soknad }) => {
+        getData: ({ fagsak, beregningsresultatUtbetaling, personopplysninger }) => {
           return {
             fagsak,
             personopplysninger,
-            soknad,
             beregningsresultat: beregningsresultatUtbetaling,
           };
         },
