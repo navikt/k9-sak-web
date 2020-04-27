@@ -192,13 +192,12 @@ const prosessStegPanelDefinisjoner = [
         renderComponent: props => <ÅrskvantumIndex {...props} />,
         getData: ({ forbrukteDager }) => ({ årskvantum: forbrukteDager }),
         showComponent: () => true,
-        overrideStatus: data => {
-          const { forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager } = data;
+        overrideStatus: ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
           if (!forbrukteDager) {
             return vut.IKKE_VURDERT;
           }
           const perioder = forbrukteDager.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder);
-          const allePerioderGodkjent = perioder.every(periode => periode.utfall === UtfallEnum.INNVILGET);
+          const allePerioderGodkjent = perioder?.every(periode => periode.utfall === UtfallEnum.INNVILGET);
 
           return allePerioderGodkjent ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
         },
