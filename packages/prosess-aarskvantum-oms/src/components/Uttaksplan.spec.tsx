@@ -26,7 +26,7 @@ describe('Uttaksplan', () => {
   };
   it('rendrer en tabell per aktivitet', () => {
     const aktiviteter: Aktivitet[] = [aktivitet, aktivitet, aktivitet];
-    const wrapper = shallowWithIntl(<Uttaksplan aktiviteter={aktiviteter} />);
+    const wrapper = shallowWithIntl(<Uttaksplan aktiviteter={aktiviteter} aktivitetsstatuser={[]} />);
 
     const tabell = wrapper.find(Table);
 
@@ -34,7 +34,7 @@ describe('Uttaksplan', () => {
   });
 
   it('rendrer tabellrad med rett info', () => {
-    const wrapper = shallowWithIntl(<Uttaksplan aktiviteter={[aktivitet]} />);
+    const wrapper = shallowWithIntl(<Uttaksplan aktiviteter={[aktivitet]} aktivitetsstatuser={[]} />);
     const kolonner = wrapper.find(TableColumn);
 
     expect(kolonner).to.have.length(5);

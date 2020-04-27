@@ -3,6 +3,7 @@ import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
 import { ÅrsakEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Årsak';
 import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 export default {
   title: 'omsorgspenger/prosess/Årskvantum',
@@ -60,4 +61,5 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
   },
 };
 
-export const årskvantum = () => <ÅrskvantumIndex årskvantum={årskvantumDto} />;
+// @ts-ignore
+export const årskvantum = () => <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} />;
