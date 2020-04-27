@@ -47,6 +47,6 @@ describe('Uttaksplan', () => {
     expect(kolonnerMedFormatterTekstId('Uttaksplan.Utfall.AVSLÅTT')).to.have.length(1);
     expect(kolonnerMedTekst(ÅrsakEnum.AVSLÅTT_IKKE_FLERE_DAGER)).to.have.length(1);
     expect(kolonnerMedTekst('0%')).to.have.length(1);
-    expect(kolonnerMedFormatterTekstId('Uttaksplan.IngenFravær')).to.have.length(1);
+    expect(kolonnerMedFormatterTekstId('Uttaksplan.FulltFravær')).to.have.length(1);
   });
 });
