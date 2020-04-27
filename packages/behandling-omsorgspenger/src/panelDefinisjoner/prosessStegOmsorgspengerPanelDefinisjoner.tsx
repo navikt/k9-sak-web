@@ -10,8 +10,9 @@ import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vi
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
-import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
-import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/dto/testdata';
+import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
+import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
+import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
@@ -186,12 +187,20 @@ const prosessStegPanelDefinisjoner = [
     textCode: 'Behandlingspunkt.Uttak',
     panels: [
       {
-        aksjonspunkterCodes: [],
+        aksjonspunkterCodes: [ac.VURDER_ÅRSKVANTUM_KVOTE],
         endpoints: [],
-        renderComponent: () => (
-          <UttakProsessIndex uttaksplaner={uttaksplaner} behandlingPersonMap={behandlingPersonMap} />
-        ),
+        renderComponent: props => <ÅrskvantumIndex {...props} />,
+        getData: ({ forbrukteDager }) => ({ årskvantum: forbrukteDager }),
         showComponent: () => true,
+        overrideStatus: ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
+          if (!forbrukteDager) {
+            return vut.IKKE_VURDERT;
+          }
+          const perioder = forbrukteDager.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder);
+          const allePerioderGodkjent = perioder?.every(periode => periode.utfall === UtfallEnum.INNVILGET);
+
+          return allePerioderGodkjent ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
+        },
       },
     ],
   },

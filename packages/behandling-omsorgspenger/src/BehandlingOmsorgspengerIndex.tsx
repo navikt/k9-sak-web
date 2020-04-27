@@ -35,6 +35,7 @@ const foreldrepengerData = [
   omsorgspengerBehandlingApi.UTTAKSRESULTAT_PERIODER,
   omsorgspengerBehandlingApi.SIMULERING_RESULTAT,
   omsorgspengerBehandlingApi.VEDTAK_VARSEL,
+  omsorgspengerBehandlingApi.FORBRUKTE_DAGER,
 ];
 
 interface OwnProps {
