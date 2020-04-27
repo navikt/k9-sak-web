@@ -8,6 +8,8 @@
   "Uttaksplan.Periode": "Periode",
   "Uttaksplan.Fravær": "Fravær",
   "Uttaksplan.Utfall": "Utfall",
+  "Uttaksplan.Utfall.INNVILGET": "Innvilget",
+  "Uttaksplan.Utfall.AVSLÅTT": "Avslått",
   "Uttaksplan.Årsak": "Årsak",
   "Uttaksplan.Utbetalingsgrad": "Utbetalingsgrad",
   "Uttaksplan.DelvisFravær": "Delvis fravær ({timer}t)",

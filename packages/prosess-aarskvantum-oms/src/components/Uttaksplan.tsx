@@ -53,7 +53,9 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({ aktiviteter = [] }) =>
                 <TableRow key={periode}>
                   <TableColumn>{periodevisning(periode)}</TableColumn>
                   <TableColumn>{formaterDelvisFravær(delvisFravær)}</TableColumn>
-                  <TableColumn>{utfall}</TableColumn>
+                  <TableColumn>
+                    <FormattedMessage id={`Uttaksplan.Utfall.${utfall}`} />
+                  </TableColumn>
                   <TableColumn>{årsak}</TableColumn>
                   <TableColumn>{`${utbetalingsgrad}%`}</TableColumn>
                 </TableRow>
