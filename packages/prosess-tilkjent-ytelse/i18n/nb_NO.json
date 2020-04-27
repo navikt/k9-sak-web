@@ -20,6 +20,8 @@
   "TilkjentYtelse.PeriodeData.Refusjon": "Utbetalt refusjon",
   "TilkjentYtelse.PeriodeData.Aktivitetsstatus": "Aktivitetsstatus: <b>{aktivitetsstatusVerdi}</b>",
   "TilkjentYtelse.PeriodeData.Aktivitetsstatus.Arbeidstaker": "Arbeidstaker",
+  "TilkjentYtelse.PeriodeData.Aktivitetsstatus.SelvstendigNæringsdrivende": "Selvstendig næringsdrivende",
+  "TilkjentYtelse.PeriodeData.Aktivitetsstatus.Frilans": "Frilans",
   "TilkjentYtelse.PeriodeData.TilSoker": "Utbetalt til søker",
   "TilkjentYtelse.PeriodeData.SisteUtbDato": "Siste innvilgede utb.dato",
   "TilkjentYtelse.PeriodeData.Periode": "{fomVerdi} - {tomVerdi}",

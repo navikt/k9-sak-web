@@ -18,6 +18,7 @@ export const FrisinnBehandlingApiKeys = {
   BEREGNINGRESULTAT_FORELDREPENGER: 'BEREGNINGRESULTAT_FORELDREPENGER',
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
   BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
+  BEREGNINGSRESULTAT_UTBETALT: 'BEREGNINGSRESULTAT_UTBETALT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
@@ -74,6 +75,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/brev */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
 
+  .withRel('beregningsresultat-utbetalt', FrisinnBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALT)
   .withRel('inntekt', FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('aksjonspunkter', FrisinnBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar', FrisinnBehandlingApiKeys.VILKAR)

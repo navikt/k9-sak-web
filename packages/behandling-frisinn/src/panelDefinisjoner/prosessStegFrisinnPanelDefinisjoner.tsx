@@ -11,29 +11,20 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
 import findStatusForVedtak from './vedtakStatusUtlederFrisinn';
 import api from '../data/frisinnBehandlingApi';
 
-const harPeriodeMedUtbetaling = perioder => {
-  const periode = perioder.find(p => p.dagsats > 0);
-  return !!periode;
-};
-
-const getStatusFromResultatstruktur = (resultatstruktur, uttaksresultat) => {
-  if (resultatstruktur && resultatstruktur.perioder.length > 0) {
-    if (!harPeriodeMedUtbetaling(resultatstruktur.perioder)) {
-      return vut.IKKE_VURDERT;
-    }
-    if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
-      const oppfylt = uttaksresultat.perioderSøker.some(p => p.periodeResultatType.kode !== prt.AVSLATT);
-      if (oppfylt) {
-        return vut.OPPFYLT;
-      }
-    }
-  }
-  return vut.IKKE_VURDERT;
+const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
+  const { perioder } = beregningsresultatUtbetaling;
+  const alleUtfall = perioder.flatMap(({ andeler }) => {
+    return [
+      ...andeler.flatMap(({ uttak }) => {
+        return [...uttak.flatMap(({ utfall }) => utfall.kode)];
+      }),
+    ];
+  });
+  return !alleUtfall.some(utfall => utfall === 'INNVILGET');
 };
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
@@ -120,18 +111,29 @@ const prosessStegPanelDefinisjoner = [
     textCode: 'Behandlingspunkt.TilkjentYtelse',
     panels: [
       {
-        aksjonspunkterCodes: [],
+        aksjonspunkterCodes: [ac.VURDER_TILBAKETREKK],
         endpoints: [],
-        renderComponent: props => <TilkjentYtelseProsessIndex {...props} />,
-        getData: ({ fagsak, beregningresultatForeldrepenger, personopplysninger, soknad }) => ({
-          fagsak,
-          personopplysninger,
-          soknad,
-          beregningresultat: beregningresultatForeldrepenger,
-        }),
+        renderComponent: props => {
+          return <TilkjentYtelseProsessIndex {...props} />;
+        },
+        getData: ({ fagsak, beregningsresultatUtbetalt, personopplysninger, soknad }) => {
+          return {
+            fagsak,
+            personopplysninger,
+            soknad,
+            beregningsresultat: beregningsresultatUtbetalt,
+          };
+        },
         showComponent: () => true,
-        overrideStatus: ({ beregningresultatForeldrepenger, uttaksresultatPerioder }) =>
-          getStatusFromResultatstruktur(beregningresultatForeldrepenger, uttaksresultatPerioder),
+        overrideStatus: ({ beregningsresultatUtbetalt }) => {
+          if (!beregningsresultatUtbetalt) {
+            return vut.IKKE_VURDERT;
+          }
+          if (harKunAvslåtteUttak(beregningsresultatUtbetalt)) {
+            return vut.IKKE_OPPFYLT;
+          }
+          return vut.OPPFYLT;
+        },
       },
     ],
   },

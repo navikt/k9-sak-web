@@ -35,7 +35,7 @@ const getOptions = nyePerioder => {
   };
 };
 
-const createTooltipContent = (periodeType, intl, item) => `
+const createTooltipContent = (intl, item) => `
   <p>
     ${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -46,13 +46,7 @@ const createTooltipContent = (periodeType, intl, item) => `
          days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
        },
      )}
-    </br>
-    ${
-      item.utsettelseType && item.utsettelseType.kode !== '-'
-        ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' })
-        : periodeType
-    }
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </br>&nbsp;
     ${intl.formatMessage(
       { id: 'Timeline.tooltip.dagsats' },
       {
@@ -69,7 +63,7 @@ const prepareTimelineData = (periode, index, intl) => ({
   id: index,
   start: parseDateString(periode.fom),
   end: moment(parseDateString(periode.tom)).add(1, 'day'),
-  title: createTooltipContent('Omsorgspenger', intl, periode),
+  title: createTooltipContent(intl, periode),
 });
 
 /**

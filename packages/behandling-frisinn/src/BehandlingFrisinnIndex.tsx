@@ -26,7 +26,7 @@ const frisinnData = [
   frisinnBehandlingApi.YTELSEFORDELING,
   frisinnBehandlingApi.SOKNAD,
   frisinnBehandlingApi.INNTEKT_ARBEID_YTELSE,
-  frisinnBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,
+  frisinnBehandlingApi.BEREGNINGSRESULTAT_UTBETALT,
   frisinnBehandlingApi.BEREGNINGSGRUNNLAG,
   frisinnBehandlingApi.UTTAK_STONADSKONTOER,
   frisinnBehandlingApi.UTTAKSRESULTAT_PERIODER,

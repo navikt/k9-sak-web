@@ -18,7 +18,7 @@ const perioderMedClassName = [];
 const formatPerioder = perioder => {
   perioderMedClassName.length = 0;
   perioder.forEach(item => {
-    if (item.andeler[0] && item.dagsats) {
+    if (item.andeler[0] && item.dagsats >= 0) {
       perioderMedClassName.push({ ...item, id: perioderMedClassName.length });
     }
   });
