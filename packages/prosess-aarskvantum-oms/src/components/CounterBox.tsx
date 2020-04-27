@@ -47,7 +47,6 @@ const Count = styled.div`
     margin-right: 0.3em;
   }
   flex-basis: 67%;
-  font-family: 'Source Sans Pro Light';
   padding-top: 0.1em;
   font-weight: 300;
   margin-top: auto;
@@ -63,7 +62,6 @@ const SmallCount = styled.span`
 
 const LabelPanel = styled.div`
   background-color: ${({ color }) => color || 'inherit'};
-  font-family: 'Source Sans Pro';
   font-size: 1.3em;
   font-weight: 600;
   flex-basis: 33%;
