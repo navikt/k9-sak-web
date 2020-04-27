@@ -7,6 +7,10 @@ import {
   BarnAutomatiskHentetDto,
   BarnLagtTilAvSaksbehandlerDto,
 } from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/BarnDto';
+import {
+  UidentifisertRammevedtak,
+  UtvidetRettDto,
+} from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/RammevedtakDto';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -59,9 +63,20 @@ const barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[] = [
   },
 ];
 
-export const medBarn = () => (
+const uidentifiserteRammevedtak: UidentifisertRammevedtak[] = [{ fritekst: undefined }, { fritekst: undefined }];
+const utvidetRettUkjentBarn: UtvidetRettDto = {
+  kilde: 'hentetAutomatisk',
+};
+
+export const medBarnOgUidentifiserteRammevedtak = () => (
   <FaktaRammevedtakIndex
-    omsorgsdagerGrunnlagDto={{ ...tomOmsorgsdagerGrunnlag, barn, barnLagtTilAvSakbehandler }}
+    omsorgsdagerGrunnlagDto={{
+      ...tomOmsorgsdagerGrunnlag,
+      barn,
+      barnLagtTilAvSakbehandler,
+      uidentifiserteRammevedtak,
+      utvidetRett: [utvidetRettUkjentBarn],
+    }}
     behandling={behandling}
     submitCallback={action('Send inn')}
   />

@@ -8,8 +8,9 @@ import {
   getBehandlingFormPrefix,
   getBehandlingFormValues,
 } from '@fpsak-frontend/form/src/behandlingForm';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Undertittel } from 'nav-frontend-typografi';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import OmsorgsdagerGrunnlagDto from '../dto/OmsorgsdagerGrunnlagDto';
 import { mapDtoTilFormValues, mapFormValuesTilDto } from '../dto/mapping';
 import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
@@ -21,7 +22,7 @@ interface RammevedtakFaktaFormProps {
   behandlingVersjon: number;
   submitCallback: (values: any) => void;
   readOnly?: boolean;
-  formValues: FormValues;
+  formValues?: FormValues;
 }
 
 const rammevedtakFormName = 'rammevedtakFormName';
@@ -30,7 +31,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
   omsorgsdagerGrunnlag,
   formValues,
 }) => {
-  const { utvidetRett } = omsorgsdagerGrunnlag;
+  const { utvidetRett, uidentifiserteRammevedtak = [] } = omsorgsdagerGrunnlag;
   const utvidetRettUidentifiserteBarnAntall = useMemo(
     () => utvidetRett.filter(ur => !ur.fnrKroniskSyktBarn).filter(ur => !ur.idKroniskSyktBarn).length,
     [utvidetRett],
@@ -44,13 +45,27 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
 
   return (
     <>
+      {uidentifiserteRammevedtak.length > 0 && (
+        <>
+          <AlertStripeAdvarsel>
+            <FormattedMessage
+              id="FaktaRammevedtak.UidentifiserteRammevedtak"
+              values={{ antall: uidentifiserteRammevedtak.length }}
+            />
+          </AlertStripeAdvarsel>
+          <VerticalSpacer sixteenPx />
+        </>
+      )}
       {utvidetRettUidentifiserteBarnAntall > 0 && (
-        <AlertStripeFeil>
-          <FormattedMessage
-            id="FaktaRammevedtak.UidentifisertUtvidetRett"
-            values={{ antallRammevedtak: utvidetRettUidentifiserteBarnAntall }}
-          />
-        </AlertStripeFeil>
+        <>
+          <AlertStripeAdvarsel>
+            <FormattedMessage
+              id="FaktaRammevedtak.UidentifisertUtvidetRett"
+              values={{ antallRammevedtak: utvidetRettUidentifiserteBarnAntall }}
+            />
+          </AlertStripeAdvarsel>
+          <VerticalSpacer sixteenPx />
+        </>
       )}
       <Undertittel>
         <FormattedMessage id="FaktaRammevedtak.Barn" />
