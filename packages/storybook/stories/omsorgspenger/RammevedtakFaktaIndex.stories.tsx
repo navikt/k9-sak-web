@@ -10,7 +10,7 @@ import {
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
-  title: 'omsorgspenger/fakta',
+  title: 'omsorgspenger/fakta/Dager til utbetaling',
   component: FaktaRammevedtakIndex,
   decorators: [withReduxProvider],
 };
