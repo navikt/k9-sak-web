@@ -23,7 +23,7 @@ const formaterDelvisFravær = (delvisFravær?: string): ReactNode => {
     const timer = durationTilTimerMed7ogEnHalvTimesDagsbasis(delvisFravær);
     return <FormattedMessage id="Uttaksplan.DelvisFravær" values={{ timer }} />;
   }
-  return <FormattedMessage id="Uttaksplan.IngenFravær" />;
+  return <FormattedMessage id="Uttaksplan.FulltFravær" />;
 };
 
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({ aktiviteter = [], aktivitetsstatuser = [] }) => {
