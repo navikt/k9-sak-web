@@ -151,38 +151,6 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.BEREGNINGSGRUNNLAG,
-    textCode: 'Behandlingspunkt.Beregning',
-    panels: [
-      {
-        aksjonspunkterCodes: [
-          ac.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-          ac.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-          ac.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-          ac.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-          ac.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-          ac.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
-          ac.VURDER_DEKNINGSGRAD,
-        ],
-        vilkarCodes: [vt.BEREGNINGSGRUNNLAGVILKARET],
-        renderComponent: props => <BeregningsgrunnlagProsessIndex {...props} />,
-        showComponent: () => true,
-        getData: ({ fagsak, featureToggles, beregningsgrunnlag }) => ({ fagsak, featureToggles, beregningsgrunnlag }),
-      },
-    ],
-  },
-  {
-    urlCode: bpc.FORTSATTMEDLEMSKAP,
-    textCode: 'Behandlingspunkt.FortsattMedlemskap',
-    panels: [
-      {
-        aksjonspunkterCodes: [ac.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR],
-        vilkarCodes: [vt.MEDLEMSKAPSVILKÅRET_LØPENDE],
-        ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-      },
-    ],
-  },
-  {
     urlCode: bpc.UTTAK,
     textCode: 'Behandlingspunkt.Uttak',
     panels: [
@@ -201,6 +169,27 @@ const prosessStegPanelDefinisjoner = [
 
           return allePerioderGodkjent ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
         },
+      },
+    ],
+  },
+  {
+    urlCode: bpc.BEREGNINGSGRUNNLAG,
+    textCode: 'Behandlingspunkt.Beregning',
+    panels: [
+      {
+        aksjonspunkterCodes: [
+          ac.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+          ac.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+          ac.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+          ac.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+          ac.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+          ac.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
+          ac.VURDER_DEKNINGSGRAD,
+        ],
+        vilkarCodes: [vt.BEREGNINGSGRUNNLAGVILKARET],
+        renderComponent: props => <BeregningsgrunnlagProsessIndex {...props} />,
+        showComponent: () => true,
+        getData: ({ fagsak, featureToggles, beregningsgrunnlag }) => ({ fagsak, featureToggles, beregningsgrunnlag }),
       },
     ],
   },
