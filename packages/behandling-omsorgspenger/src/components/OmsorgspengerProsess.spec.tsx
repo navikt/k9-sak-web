@@ -119,14 +119,14 @@ describe('<OmsorgspengerProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Beregning',
+        label: 'Uttak',
         type: 'default',
       },
       {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Uttak',
+        label: 'Beregning',
         type: 'default',
       },
       {
@@ -181,7 +181,7 @@ describe('<OmsorgspengerProsess>', () => {
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).to.have.length(1);
     expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('uttak');
+    expect(opppdaterKall[0].args[0]).to.eql('beregningsgrunnlag');
     expect(opppdaterKall[0].args[1]).to.eql('default');
   });
 
