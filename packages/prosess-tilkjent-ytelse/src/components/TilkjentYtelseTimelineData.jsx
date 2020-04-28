@@ -197,7 +197,7 @@ const TilkjentYtelseTimeLineData = ({
                   <Normaltekst>{utbetalingsgrad}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
-                  <Normaltekst>{utfall.kode}</Normaltekst>
+                  <Normaltekst>{utfall}</Normaltekst>
                 </TableColumn>
               </TableRow>
             ))}
