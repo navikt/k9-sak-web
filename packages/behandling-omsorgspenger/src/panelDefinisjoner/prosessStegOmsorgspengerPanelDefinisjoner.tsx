@@ -28,7 +28,7 @@ const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const alleUtfall = perioder.flatMap(({ andeler }) => {
     return [
       ...andeler.flatMap(({ uttak }) => {
-        return [...uttak.flatMap(({ utfall }) => utfall.kode)];
+        return [...uttak.flatMap(({ utfall }) => utfall)];
       }),
     ];
   });
