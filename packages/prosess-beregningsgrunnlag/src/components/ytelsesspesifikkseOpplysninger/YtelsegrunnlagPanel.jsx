@@ -2,6 +2,7 @@ import React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import Søknadsopplysninger from './frisinn/Søknadsopplysninger';
 import Beregningsresultat from './frisinn/Beregningsresultat';
@@ -30,9 +31,9 @@ const lagFrisinnpaneler = beregningsgrunnlag => {
 };
 
 /**
- * MilitaerPanel
+ * YtelsegrunnlagPanel
  *
- * Presentasjonskomponent. Viser beregningsgrunnlag for militær og sivilforsvarstjeneste.
+ * Presentasjonskomponent. Holder på ytelsesspesifikke visninger.
  */
 export const YtelsegrunnlagPanel = ({ beregningsgrunnlag }) => {
   const ytelsegrunnlag = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
@@ -40,7 +41,7 @@ export const YtelsegrunnlagPanel = ({ beregningsgrunnlag }) => {
     return null;
   }
   const ytelse = ytelsegrunnlag.ytelsetype;
-  if (ytelse === 'FRISINN') {
+  if (ytelse === fagsakYtelseType.FRISINN) {
     return lagFrisinnpaneler(beregningsgrunnlag);
   }
   return null;

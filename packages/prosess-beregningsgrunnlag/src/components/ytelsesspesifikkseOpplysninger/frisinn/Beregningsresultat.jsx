@@ -9,8 +9,8 @@ import BeregningsresultatPeriode from './BeregningsresultatPeriode';
 const finnInntektstak = bg => (bg.grunnbeløp ? bg.grunnbeløp * 6 : null);
 
 const Beregningsresultat = ({ beregningsgrunnlag }) => {
-  const inntektstak = finnInntektstak(beregningsgrunnlag);
-  if (!inntektstak) {
+  const grenseverdi = finnInntektstak(beregningsgrunnlag);
+  if (!grenseverdi) {
     return null;
   }
 
@@ -27,7 +27,7 @@ const Beregningsresultat = ({ beregningsgrunnlag }) => {
         <BeregningsresultatPeriode
           bgperiode={periode}
           ytelsegrunnlag={beregningsgrunnlag.ytelsesspesifiktGrunnlag}
-          inntektstak={inntektstak}
+          grenseverdi={grenseverdi}
         />
       ))}
     </div>

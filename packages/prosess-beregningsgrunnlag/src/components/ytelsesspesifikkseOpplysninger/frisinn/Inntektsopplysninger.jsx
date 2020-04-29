@@ -20,7 +20,7 @@ const finnSamletBruttoForStatus = (andeler, status) => {
 };
 
 const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
-  // Alle perioder skal ha lik brutto for FRISINN, tar første
+  // Første periode inneholder alltid brutto vi ønsker å vise SBH
   const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
   const bruttoSN = finnSamletBruttoForStatus(
     førstePeriode.beregningsgrunnlagPrStatusOgAndel,
@@ -89,18 +89,10 @@ const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
             <Column xs="10">
               <FormattedMessage
                 id="Beregningsgrunnlag.Frisinn.Inntektstak"
-                values={{ seksG: formatCurrencyNoKr(originaltInntektstak) }}
-              />
-            </Column>
-            <Column xs="2">
-              <Normaltekst>{formatCurrencyNoKr(originaltInntektstak)}</Normaltekst>
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="10">
-              <FormattedMessage
-                id="Beregningsgrunnlag.Frisinn.InntektstakTrukket"
-                values={{ seksG: formatCurrencyNoKr(utregnetInntektstak) }}
+                values={{
+                  grenseverdi: formatCurrencyNoKr(originaltInntektstak),
+                  annenInntekt: formatCurrencyNoKr(bruttoAT),
+                }}
               />
             </Column>
             <Column xs="2">
