@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
@@ -9,13 +8,12 @@ import Beregningsresultat from './frisinn/Beregningsresultat';
 import Inntektsopplysninger from './frisinn/Inntektsopplysninger';
 import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
 import styles from './frisinn/søknadsopplysninger.less';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 
-const lagFrisinnpaneler = (beregningsgrunnlag, readOnly) => {
+const lagFrisinnpaneler = beregningsgrunnlag => {
   return (
     <>
       <div className={styles.aksjonspunktBehandlerContainer}>
-        <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
+        <Panel>
           <Undertittel>
             <FormattedMessage id="Beregningsgrunnlag.Frisinn.Tittel" />
           </Undertittel>
@@ -36,20 +34,19 @@ const lagFrisinnpaneler = (beregningsgrunnlag, readOnly) => {
  *
  * Presentasjonskomponent. Viser beregningsgrunnlag for militær og sivilforsvarstjeneste.
  */
-export const YtelsegrunnlagPanel = ({ readOnly, beregningsgrunnlag }) => {
+export const YtelsegrunnlagPanel = ({ beregningsgrunnlag }) => {
   const ytelsegrunnlag = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
   if (!ytelsegrunnlag) {
     return null;
   }
   const ytelse = ytelsegrunnlag.ytelsetype;
   if (ytelse === 'FRISINN') {
-    return lagFrisinnpaneler(beregningsgrunnlag, readOnly);
+    return lagFrisinnpaneler(beregningsgrunnlag);
   }
   return null;
 };
 
 YtelsegrunnlagPanel.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
   beregningsgrunnlag: beregningsgrunnlagPropType,
 };
 

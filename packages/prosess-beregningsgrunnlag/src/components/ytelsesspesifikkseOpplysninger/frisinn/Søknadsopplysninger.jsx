@@ -3,14 +3,15 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import moment from 'moment';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 
 const søkerYtelseFor = (ytelsegrunnlag, status) =>
-  ytelsegrunnlag.perioderSøktFor.some(periode => periode.statusSøktFor.kode === status);
+  ytelsegrunnlag.perioderSøktFor.find(periode => periode.statusSøktFor.kode === status);
 
 const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
   const ytelsegrunnlag = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
@@ -32,7 +33,13 @@ const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
         <Row>
           <Column xs="12">
             <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Søknad.SøktYtelseFL" />
+              <FormattedMessage
+                id="Beregningsgrunnlag.Søknad.SøktYtelseFL"
+                values={{
+                  fom: moment(søktYtelseFL.fom).format(DDMMYYYY_DATE_FORMAT),
+                  tom: moment(søktYtelseFL.yom).format(DDMMYYYY_DATE_FORMAT),
+                }}
+              />
             </Normaltekst>
           </Column>
         </Row>
@@ -41,7 +48,13 @@ const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
         <Row>
           <Column xs="12">
             <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Søknad.SøktYtelseSN" />
+              <FormattedMessage
+                id="Beregningsgrunnlag.Søknad.SøktYtelseSN"
+                values={{
+                  fom: moment(søktYtelseSN.fom).format(DDMMYYYY_DATE_FORMAT),
+                  tom: moment(søktYtelseSN.yom).format(DDMMYYYY_DATE_FORMAT),
+                }}
+              />
             </Normaltekst>
           </Column>
         </Row>
@@ -67,30 +80,6 @@ const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
         </Row>
       )}
       <VerticalSpacer sixteenPx />
-      {flOpplysninger && (
-        <Row>
-          <Column xs="9">
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Søknad.LøpendeFL" />
-            </Normaltekst>
-          </Column>
-          <Column xs="3">
-            <Element>{formatCurrencyNoKr(flOpplysninger.oppgittÅrsinntekt)}</Element>
-          </Column>
-        </Row>
-      )}
-      {snOpplysninger && (
-        <Row>
-          <Column xs="9">
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Søknad.LøpendeSN" />
-            </Normaltekst>
-          </Column>
-          <Column xs="3">
-            <Element>{formatCurrencyNoKr(snOpplysninger.oppgittÅrsinntekt)}</Element>
-          </Column>
-        </Row>
-      )}
     </div>
   );
 };

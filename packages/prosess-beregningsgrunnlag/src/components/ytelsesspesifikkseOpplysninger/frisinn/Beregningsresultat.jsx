@@ -6,8 +6,14 @@ import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.le
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import BeregningsresultatPeriode from './BeregningsresultatPeriode';
 
+const finnInntektstak = bg => (bg.grunnbeløp ? bg.grunnbeløp * 6 : null);
+
 const Beregningsresultat = ({ beregningsgrunnlag }) => {
-  // TODO hvordan finne ut at det er søkt ytelse i perioden?
+  const inntektstak = finnInntektstak(beregningsgrunnlag);
+  if (!inntektstak) {
+    return null;
+  }
+
   return (
     <div>
       <Row>
@@ -18,7 +24,11 @@ const Beregningsresultat = ({ beregningsgrunnlag }) => {
         </Column>
       </Row>
       {beregningsgrunnlag.beregningsgrunnlagPeriode.map(periode => (
-        <BeregningsresultatPeriode bgperiode={periode} ytelsegrunnlag={beregningsgrunnlag.ytelsesspesifiktGrunnlag} />
+        <BeregningsresultatPeriode
+          bgperiode={periode}
+          ytelsegrunnlag={beregningsgrunnlag.ytelsesspesifiktGrunnlag}
+          inntektstak={inntektstak}
+        />
       ))}
     </div>
   );

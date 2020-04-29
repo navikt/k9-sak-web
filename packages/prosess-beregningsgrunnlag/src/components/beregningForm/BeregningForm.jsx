@@ -15,6 +15,7 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import { Undertittel } from 'nav-frontend-typografi';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel, {
   RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN,
@@ -280,6 +281,8 @@ const harFrisinngrunnlag = beregningsgrunnlag => {
   );
 };
 
+const erVilkarAvslått = vilkar => vilkar.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT;
+
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningFormImpl
 // ------------------------------------------------------------------------------------------ //
@@ -317,7 +320,7 @@ export const BeregningFormImpl = ({
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
-  const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
+  const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag) || erVilkarAvslått(vilkaarBG);
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       {gjeldendeAksjonspunkter && (
