@@ -1,13 +1,19 @@
 import React from 'react';
 import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
-import { ÅrsakEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Årsak';
 import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
+import { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
+import { VurderteVilkår } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
 export default {
   title: 'omsorgspenger/prosess/Årskvantum',
   component: ÅrskvantumIndex,
+};
+
+const vurderteVilkår: VurderteVilkår = {
+  [VilkårEnum.NOK_DAGER]: UtfallEnum.INNVILGET,
+  [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
 };
 
 const årskvantumDto: ÅrskvantumForbrukteDager = {
@@ -21,19 +27,19 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
         arbeidsforhold: {
           arbeidsforholdId: '123',
           organisasjonsnummer: '456',
-          type: 'arbeidstaker',
+          type: 'AT',
         },
         uttaksperioder: [
           {
             utfall: UtfallEnum.INNVILGET,
-            årsak: ÅrsakEnum.INNVILGET_ORDINÆR,
+            vurderteVilkår,
             delvisFravær: 'P2DT4H30M',
             periode: '2020-04-01/2020-04-30',
             utbetalingsgrad: 100,
           },
           {
             utfall: UtfallEnum.INNVILGET,
-            årsak: ÅrsakEnum.INNVILGET_ORDINÆR,
+            vurderteVilkår,
             periode: '2020-03-01/2020-03-31',
             utbetalingsgrad: 50,
           },
@@ -43,12 +49,12 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
         arbeidsforhold: {
           arbeidsforholdId: '888',
           organisasjonsnummer: '999',
-          type: 'selvstendig næringsdrivende',
+          type: 'SN',
         },
         uttaksperioder: [
           {
             utfall: UtfallEnum.AVSLÅTT,
-            årsak: ÅrsakEnum.AVSLÅTT_IKKE_FLERE_DAGER,
+            vurderteVilkår,
             periode: '2020-03-01/2020-03-31',
             utbetalingsgrad: 0,
           },
