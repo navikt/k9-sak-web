@@ -20,7 +20,6 @@ class AppConfigResolver extends Component {
     children: PropTypes.node.isRequired,
     fetchNavAnsatt: PropTypes.func.isRequired,
     fetchLanguageFile: PropTypes.func.isRequired,
-    fetchBehandlendeEnheter: PropTypes.func.isRequired,
     fetchAlleKodeverk: PropTypes.func.isRequired,
     fetchShowDetailedErrorMessages: PropTypes.func.isRequired,
     fetchFeatureToggles: PropTypes.func.isRequired,
@@ -47,17 +46,10 @@ class AppConfigResolver extends Component {
   }
 
   resolveAppConfig = () => {
-    const {
-      fetchNavAnsatt,
-      fetchLanguageFile,
-      fetchBehandlendeEnheter,
-      fetchShowDetailedErrorMessages,
-      fetchFeatureToggles,
-    } = this.props;
+    const { fetchNavAnsatt, fetchLanguageFile, fetchShowDetailedErrorMessages, fetchFeatureToggles } = this.props;
 
     fetchNavAnsatt();
     fetchLanguageFile();
-    fetchBehandlendeEnheter();
     fetchShowDetailedErrorMessages();
     fetchFeatureToggles();
   };
@@ -85,7 +77,6 @@ const mapDispatchToProps = dispatch =>
     {
       fetchNavAnsatt: fpsakApi.NAV_ANSATT.makeRestApiRequest(),
       fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
-      fetchBehandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.makeRestApiRequest(),
       fetchShowDetailedErrorMessages: fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.makeRestApiRequest(),
       fetchAlleKodeverk: fetchAlleKodeverkAC,
       fetchFeatureToggles: fetchAllFeatureToggles,

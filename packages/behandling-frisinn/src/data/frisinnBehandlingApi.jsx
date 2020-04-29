@@ -18,8 +18,8 @@ export const FrisinnBehandlingApiKeys = {
   BEREGNINGRESULTAT_FORELDREPENGER: 'BEREGNINGRESULTAT_FORELDREPENGER',
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
   BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
+  BEREGNINGSRESULTAT_UTBETALT: 'BEREGNINGSRESULTAT_UTBETALT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
-  SOKNAD: 'SOKNAD',
   SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
@@ -74,6 +74,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/brev */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
 
+  .withRel('beregningsresultat-utbetalt', FrisinnBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALT)
   .withRel('inntekt', FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('aksjonspunkter', FrisinnBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar', FrisinnBehandlingApiKeys.VILKAR)
@@ -84,7 +85,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('beregningsgrunnlag', FrisinnBehandlingApiKeys.BEREGNINGSGRUNNLAG)
   .withRel('beregningsresultat-foreldrepenger', FrisinnBehandlingApiKeys.BEREGNINGRESULTAT)
   .withRel('familiehendelse-v2', FrisinnBehandlingApiKeys.FAMILIEHENDELSE)
-  .withRel('soknad', FrisinnBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', FrisinnBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
   .withRel('familiehendelse-original-behandling', FrisinnBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel(

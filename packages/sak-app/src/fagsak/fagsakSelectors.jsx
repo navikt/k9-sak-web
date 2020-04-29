@@ -26,6 +26,7 @@ export const getSelectedFagsakStatus = createSelector(getSelectedFagsak, fagsak 
 export const getFagsakPerson = createSelector(getSelectedFagsak, fagsak => (fagsak ? fagsak.person : undefined));
 export const getSaksnummer = createSelector(getSelectedFagsak, fagsak => (fagsak ? fagsak.saksnummer : undefined));
 export const getFagsakYtelseType = createSelector(getSelectedFagsak, fagsak => (fagsak ? fagsak.sakstype : undefined));
+export const getAktorid = createSelector(getFagsakPerson, person => (person ? person.aktørId : undefined));
 export const isForeldrepengerFagsak = createSelector(
   getFagsakYtelseType,
   (ytelseType = {}) => ytelseType.kode === fagsakYtelseType.FORELDREPENGER,

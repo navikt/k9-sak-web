@@ -109,10 +109,10 @@ describe('<OmsorgspengerProsess>', () => {
     const meny = wrapper.find(ProsessStegContainer);
     expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
       {
-        isActive: true,
+        isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Inngangsvilkår',
+        label: 'Uttak',
         type: 'default',
       },
       {
@@ -120,13 +120,6 @@ describe('<OmsorgspengerProsess>', () => {
         isDisabled: false,
         isFinished: false,
         label: 'Beregning',
-        type: 'default',
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        label: 'Uttak',
         type: 'default',
       },
       {
@@ -181,7 +174,7 @@ describe('<OmsorgspengerProsess>', () => {
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).to.have.length(1);
     expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('uttak');
+    expect(opppdaterKall[0].args[0]).to.eql('tilkjent_ytelse');
     expect(opppdaterKall[0].args[1]).to.eql('default');
   });
 

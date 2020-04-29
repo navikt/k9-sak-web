@@ -145,7 +145,6 @@ describe('<OmsorgspengerFakta>', () => {
         harAksjonspunkt: true,
         tekst: 'Arbeidsforhold',
       },
-      { tekst: 'Uttak', erAktiv: false, harAksjonspunkt: false },
     ]);
   });
 

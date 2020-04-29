@@ -137,6 +137,11 @@ describe('<FrisinnFakta>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: false,
+        tekst: 'Inntekt og ytelser',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
         tekst: 'Beregning',
       },
     ]);

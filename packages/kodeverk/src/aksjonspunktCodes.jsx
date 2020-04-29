@@ -102,6 +102,7 @@ const aksjonspunktCodes = {
   VURDER_FARESIGNALER: '5095',
   MEDISINSK_VILKAAR: '9001',
   OMSORGEN_FOR: '9002',
+  VURDER_ÅRSKVANTUM_KVOTE: '9003',
 };
 
 const klageAksjonspunkter = [
