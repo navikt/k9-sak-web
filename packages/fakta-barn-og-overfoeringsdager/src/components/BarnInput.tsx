@@ -5,6 +5,7 @@ import { CheckboxField, DatepickerField } from '@fpsak-frontend/form/index';
 import { FormattedMessage } from 'react-intl';
 import Undertittel from 'nav-frontend-typografi/lib/undertittel';
 import { Flatknapp } from 'nav-frontend-knapper';
+import Panel from 'nav-frontend-paneler';
 import styles from './barnInput.less';
 
 interface BarnInputProps {
@@ -17,7 +18,7 @@ interface BarnInputProps {
 
 const BarnInput: FunctionComponent<BarnInputProps> = ({ namePrefix, fjernBarn, readOnly, visFødselsdato, visning }) => {
   return (
-    <div className={styles.barnInput}>
+    <Panel border className={styles.barnInput}>
       <Undertittel tag="h3">{visning}</Undertittel>
       <VerticalSpacer eightPx />
       <FlexRow wrap={false} spaceBetween alignItemsToBaseline>
@@ -47,7 +48,7 @@ const BarnInput: FunctionComponent<BarnInputProps> = ({ namePrefix, fjernBarn, r
           </Flatknapp>
         )}
       </FlexRow>
-    </div>
+    </Panel>
   );
 };
 

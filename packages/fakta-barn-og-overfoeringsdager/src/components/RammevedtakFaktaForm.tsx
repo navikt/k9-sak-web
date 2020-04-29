@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/form/src/behandlingForm';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
-import { minLength, maxLength, required, hasValidText } from '@fpsak-frontend/utils';
+import { minLength, maxLength, required, hasValidText, hasValidDate } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form/index';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import OmsorgsdagerGrunnlagDto from '../dto/OmsorgsdagerGrunnlagDto';
@@ -19,6 +19,7 @@ import { mapDtoTilFormValues, mapFormValuesTilDto } from '../dto/mapping';
 import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
 import FormValues from '../types/FormValues';
 import BegrunnBekreftTilbakestillSeksjon from './BegrunnBekreftTilbakestillSeksjon';
+import MidlertidigAlene from './MidlertidigAlene';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -88,6 +89,10 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         component={BarnLagtTilAvSaksbehandler}
         props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
       />
+      <MidlertidigAlene
+        readOnly={readOnly}
+        midlertidigAleneVerdi={formValues.midlertidigAleneansvar.erMidlertidigAlene}
+      />
       {!pristine && (
         <>
           <VerticalSpacer twentyPx />
@@ -116,6 +121,25 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
   );
 };
 
+const validate = (values: FormValues) => {
+  if (isEmpty(values)) {
+    return {};
+  }
+  const { midlertidigAleneansvar } = values;
+  if (midlertidigAleneansvar.erMidlertidigAlene) {
+    const tomError = [required, hasValidDate].find(validationFn => validationFn(midlertidigAleneansvar.tom));
+    console.log(tomError(), tomError);
+    if (tomError) {
+      return {
+        midlertidigAleneansvar: {
+          tom: tomError(),
+        },
+      };
+    }
+  }
+  return {};
+};
+
 const mapStateToPropsFactory = (_initialState, initialOwnProps: RammevedtakFaktaFormProps) => {
   const { submitCallback, omsorgsdagerGrunnlag } = initialOwnProps;
   const onSubmit = values => submitCallback(mapFormValuesTilDto(values, omsorgsdagerGrunnlag));
@@ -128,6 +152,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: RammevedtakFakta
       initialValues: mapDtoTilFormValues(omsorgsdagerGrunnlag),
       behandlingFormPrefix,
       onSubmit,
+      validate,
       formValues,
     };
   };

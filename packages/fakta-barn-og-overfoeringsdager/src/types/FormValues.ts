@@ -15,6 +15,7 @@ interface FormValues {
   fordelingGir: Overføring[];
   koronaoverføringFår: Overføring[];
   koronaoverføringGir: Overføring[];
+  begrunnelse: string;
 }
 
 export default FormValues;

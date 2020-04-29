@@ -28,13 +28,11 @@ export const mapDtoTilFormValues = ({
   return {
     barn: barnHentetAutomatisk,
     barnLagtTilAvSaksbehandler: barnLagtTil,
-    midlertidigAleneansvar: midlertidigAleneOmOmsorgen
-      ? {
-          fom: midlertidigAleneOmOmsorgen.fom,
-          tom: midlertidigAleneOmOmsorgen.tom,
-          erMidlertidigAlene: midlertidigAleneOmOmsorgen.erMidlertidigAlene,
-        }
-      : null,
+    midlertidigAleneansvar: {
+      fom: midlertidigAleneOmOmsorgen?.fom,
+      tom: midlertidigAleneOmOmsorgen?.tom,
+      erMidlertidigAlene: !!midlertidigAleneOmOmsorgen?.erMidlertidigAlene,
+    },
     overføringGir: [],
     overføringFår: [],
     fordelingFår: [],
