@@ -104,21 +104,6 @@ const prosessStegPanelDefinisjoner = [
     textCode: 'Behandlingspunkt.Inngangsvilkar',
     panels: [
       {
-        aksjonspunkterCodes: [ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU],
-        aksjonspunkterTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
-        vilkarCodes: [vt.SOKERSOPPLYSNINGSPLIKT],
-        showComponent: ({ behandling, aksjonspunkterForSteg }) => {
-          const isRevurdering = bt.REVURDERING === behandling.type.kode;
-          const hasAp = aksjonspunkterForSteg.some(ap => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
-          return !(isRevurdering && !hasAp);
-        },
-        renderComponent: props => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
-        getData: ({ soknad }) => ({ soknad }),
-      },
-      {
         code: 'MEDLEMSKAP',
         textCode: 'Inngangsvilkar.Medlemskapsvilkaret',
         aksjonspunkterCodes: [ac.OVERSTYR_MEDLEMSKAPSVILKAR],
