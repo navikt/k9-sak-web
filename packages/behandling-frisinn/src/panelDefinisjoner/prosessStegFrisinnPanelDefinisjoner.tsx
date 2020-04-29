@@ -176,7 +176,7 @@ const prosessStegPanelDefinisjoner = [
           beregningresultatForeldrepenger,
           simuleringResultat,
           beregningsgrunnlag,
-          ytelseTypeKode: fagsakYtelseType.OMSORGSPENGER,
+          ytelseTypeKode: fagsakYtelseType.FRISINN,
           employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
           vedtakVarsel,
         }),
