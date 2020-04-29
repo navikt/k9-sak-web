@@ -20,6 +20,7 @@ import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
 import FormValues from '../types/FormValues';
 import BegrunnBekreftTilbakestillSeksjon from './BegrunnBekreftTilbakestillSeksjon';
 import MidlertidigAlene from './MidlertidigAlene';
+import OverføringsdagerPanel from './OverføringsdagerPanel';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -89,6 +90,11 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         component={BarnLagtTilAvSaksbehandler}
         props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
       />
+      <OverføringsdagerPanel
+        totaltAntallDager={formValues.overføringFår.reduce((sum, { antallDager }) => sum + antallDager, 0)}
+        retning="inn"
+        type="overføring"
+      />
       <MidlertidigAlene
         readOnly={readOnly}
         midlertidigAleneVerdi={formValues.midlertidigAleneansvar.erMidlertidigAlene}
@@ -127,12 +133,12 @@ const validate = (values: FormValues) => {
   }
   const { midlertidigAleneansvar } = values;
   if (midlertidigAleneansvar.erMidlertidigAlene) {
-    const tomError = [required, hasValidDate].find(validationFn => validationFn(midlertidigAleneansvar.tom));
-    console.log(tomError(), tomError);
+    const req = required(midlertidigAleneansvar.tom);
+    const tomError = req || hasValidDate(midlertidigAleneansvar.tom);
     if (tomError) {
       return {
         midlertidigAleneansvar: {
-          tom: tomError(),
+          tom: tomError,
         },
       };
     }

@@ -1,7 +1,7 @@
 import OmsorgsdagerGrunnlagDto from './OmsorgsdagerGrunnlagDto';
 import FormValues from '../types/FormValues';
 import { BarnHentetAutomatisk, BarnLagtTilAvSakbehandler } from '../types/Barn';
-import { DagerMottatt, DagerGitt, UtvidetRettDto } from './RammevedtakDto';
+import { DagerMottatt, DagerGitt, UtvidetRettDto, AleneOmOmsorgen } from './RammevedtakDto';
 import Overføring from '../types/Overføring';
 
 export const mapDtoTilFormValues = ({
@@ -9,21 +9,26 @@ export const mapDtoTilFormValues = ({
   barnLagtTilAvSakbehandler,
   utvidetRett,
   midlertidigAleneOmOmsorgen,
+  aleneOmOmsorgen,
+  overføringFår,
+  fordelingFår,
+  koronaoverføringFår,
+  overføringGir,
+  fordelingGir,
+  koronaoverføringGir,
 }: OmsorgsdagerGrunnlagDto): FormValues => {
-  const barnHentetAutomatisk: BarnHentetAutomatisk[] = barn.map(({ fødselsnummer, aleneomsorg }) => ({
+  const barnHentetAutomatisk: BarnHentetAutomatisk[] = barn.map(({ fødselsnummer }) => ({
     fødselsnummer,
     erKroniskSykt: utvidetRett.some(({ fnrKroniskSyktBarn }) => fnrKroniskSyktBarn === fødselsnummer),
-    aleneomsorg,
+    aleneomsorg: aleneOmOmsorgen.some(({ fnrBarnAleneOm }) => fnrBarnAleneOm === fødselsnummer),
   }));
 
-  const barnLagtTil: BarnLagtTilAvSakbehandler[] = barnLagtTilAvSakbehandler.map(
-    ({ id, fødselsdato, aleneomsorg }) => ({
-      id,
-      fødselsdato,
-      aleneomsorg,
-      erKroniskSykt: utvidetRett.some(({ idKroniskSyktBarn }) => idKroniskSyktBarn === id),
-    }),
-  );
+  const barnLagtTil: BarnLagtTilAvSakbehandler[] = barnLagtTilAvSakbehandler.map(({ id, fødselsdato }) => ({
+    id,
+    fødselsdato,
+    aleneomsorg: aleneOmOmsorgen.some(({ idBarnAleneOm }) => idBarnAleneOm === id),
+    erKroniskSykt: utvidetRett.some(({ idKroniskSyktBarn }) => idKroniskSyktBarn === id),
+  }));
 
   return {
     barn: barnHentetAutomatisk,
@@ -33,12 +38,49 @@ export const mapDtoTilFormValues = ({
       tom: midlertidigAleneOmOmsorgen?.tom,
       erMidlertidigAlene: !!midlertidigAleneOmOmsorgen?.erMidlertidigAlene,
     },
-    overføringGir: [],
-    overføringFår: [],
-    fordelingFår: [],
-    fordelingGir: [],
-    koronaoverføringGir: [],
-    koronaoverføringFår: [],
+    overføringGir: overføringGir.map(({ kilde, fom, antallDager, mottakersFnr, tom }) => ({
+      antallDager,
+      fom,
+      tom,
+      kilde,
+      mottakerAvsenderFnr: mottakersFnr,
+    })),
+    overføringFår: overføringFår.map(({ kilde, fom, tom, antallDager, avsendersFnr }) => ({
+      antallDager,
+      fom,
+      tom,
+      kilde,
+      mottakerAvsenderFnr: avsendersFnr,
+    })),
+    fordelingGir: fordelingGir.map(({ kilde, fom, antallDager, mottakersFnr, tom }) => ({
+      antallDager,
+      fom,
+      tom,
+      kilde,
+      mottakerAvsenderFnr: mottakersFnr,
+    })),
+    fordelingFår: fordelingFår.map(({ kilde, fom, tom, antallDager, avsendersFnr }) => ({
+      antallDager,
+      fom,
+      tom,
+      kilde,
+      mottakerAvsenderFnr: avsendersFnr,
+    })),
+    koronaoverføringGir: koronaoverføringGir.map(({ kilde, fom, antallDager, mottakersFnr, tom }) => ({
+      antallDager,
+      fom,
+      tom,
+      kilde,
+      mottakerAvsenderFnr: mottakersFnr,
+    })),
+    koronaoverføringFår: koronaoverføringFår.map(({ kilde, fom, tom, antallDager, avsendersFnr }) => ({
+      antallDager,
+      fom,
+      tom,
+      kilde,
+      mottakerAvsenderFnr: avsendersFnr,
+    })),
+    begrunnelse: '',
   };
 };
 
@@ -68,6 +110,25 @@ export const mapFormValuesTilDto = (
   }: FormValues,
   initialValues: OmsorgsdagerGrunnlagDto,
 ): OmsorgsdagerGrunnlagDto => {
+  const aleneOmOmsorgenBarn: AleneOmOmsorgen[] = barn
+    .filter(b => b.aleneomsorg)
+    .map(b => initialValues.aleneOmOmsorgen.find(alene => alene.fnrBarnAleneOm === b.fødselsnummer));
+
+  const aleneOmOmsorgenBarnLagtTilManuelt: AleneOmOmsorgen[] = barnLagtTilAvSaksbehandler
+    .filter(b => b.aleneomsorg)
+    .map(b => {
+      const tilhørendeRammevetdakLagtTilTidligere: AleneOmOmsorgen = initialValues.aleneOmOmsorgen.find(
+        alene => alene.idBarnAleneOm === b.id,
+      );
+      return (
+        tilhørendeRammevetdakLagtTilTidligere || {
+          idBarnAleneOm: b.id,
+          kilde: 'lagtTilAvSaksbehandler',
+          fødselsdato: b.fødselsdato,
+        }
+      );
+    });
+
   const utvidetRettBarn: UtvidetRettDto[] = barn
     .filter(b => b.erKroniskSykt)
     .map(b => initialValues.utvidetRett.find(ur => ur.fnrKroniskSyktBarn === b.fødselsnummer));
@@ -82,24 +143,25 @@ export const mapFormValuesTilDto = (
         tilhørendeUtvidetRettLagtTilTidligere || {
           idKroniskSyktBarn: b.id,
           kilde: 'lagtTilAvSaksbehandler',
+          fødselsdato: b.fødselsdato,
         }
       );
     });
 
   return {
     barn: barn.map(({ fødselsnummer, aleneomsorg }) => ({ aleneomsorg, fødselsnummer })),
-    barnLagtTilAvSakbehandler: barnLagtTilAvSaksbehandler.map(({ id, aleneomsorg, fødselsdato }) => ({
+    barnLagtTilAvSakbehandler: barnLagtTilAvSaksbehandler.map(({ id, fødselsdato }) => ({
       id,
       fødselsdato,
-      aleneomsorg,
     })),
     utvidetRett: utvidetRettBarn.concat(...utvidetRettBarnLagtTilAvSaksbehandler),
-    overføringFår: mapOverføringFår(overføringFår).concat(...initialValues.overføringFår),
-    overføringGir: mapOverføringGir(overføringGir).concat(...initialValues.overføringGir),
-    fordelingFår: mapOverføringFår(fordelingFår).concat(...initialValues.fordelingFår),
-    fordelingGir: mapOverføringGir(fordelingGir).concat(...initialValues.fordelingGir),
-    koronaoverføringFår: mapOverføringFår(koronaoverføringFår).concat(...initialValues.koronaoverføringFår),
-    koronaoverføringGir: mapOverføringGir(koronaoverføringGir).concat(...initialValues.koronaoverføringGir),
+    aleneOmOmsorgen: aleneOmOmsorgenBarn.concat(...aleneOmOmsorgenBarnLagtTilManuelt),
+    overføringFår: mapOverføringFår(overføringFår),
+    overføringGir: mapOverføringGir(overføringGir),
+    fordelingFår: mapOverføringFår(fordelingFår),
+    fordelingGir: mapOverføringGir(fordelingGir),
+    koronaoverføringFår: mapOverføringFår(koronaoverføringFår),
+    koronaoverføringGir: mapOverføringGir(koronaoverføringGir),
     midlertidigAleneOmOmsorgen:
       midlertidigAleneansvar?.erMidlertidigAlene !== initialValues.midlertidigAleneOmOmsorgen.erMidlertidigAlene
         ? {

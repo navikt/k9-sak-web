@@ -6,9 +6,16 @@ interface RammevedtakDto {
   tom?: string;
 }
 
+export interface AleneOmOmsorgen extends RammevedtakDto {
+  fnrBarnAleneOm?: string;
+  idBarnAleneOm?: string;
+  fødselsdato?: string;
+}
+
 export interface UtvidetRettDto extends RammevedtakDto {
   fnrKroniskSyktBarn?: string;
   idKroniskSyktBarn?: string;
+  fødselsdato?: string;
 }
 
 export interface MidlertidigAleneOmOmsorgen extends RammevedtakDto {

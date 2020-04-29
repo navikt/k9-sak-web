@@ -38,6 +38,7 @@ const behandling: Behandling = {
 const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
   barn: [],
   barnLagtTilAvSakbehandler: [],
+  aleneOmOmsorgen: [],
   utvidetRett: [],
   overføringFår: [],
   overføringGir: [],
@@ -48,10 +49,10 @@ const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
   uidentifiserteRammevedtak: [],
 };
 
+const fnrEtBarn = '12121212121';
 const barn: BarnAutomatiskHentetDto[] = [
   {
-    fødselsnummer: '12121212121',
-    aleneomsorg: false,
+    fødselsnummer: fnrEtBarn,
   },
 ];
 
@@ -59,7 +60,6 @@ const barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[] = [
   {
     id: '1',
     fødselsdato: '2012-12-12',
-    aleneomsorg: true,
   },
 ];
 
@@ -75,7 +75,25 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
       barn,
       barnLagtTilAvSakbehandler,
       uidentifiserteRammevedtak,
+      aleneOmOmsorgen: [
+        {
+          fnrBarnAleneOm: fnrEtBarn,
+          kilde: 'hentetAutomatisk',
+        },
+      ],
       utvidetRett: [utvidetRettUkjentBarn],
+      overføringFår: [
+        {
+          antallDager: 8,
+          kilde: 'hentetAutomatisk',
+          avsendersFnr: '12018926752',
+        },
+        {
+          antallDager: 3,
+          kilde: 'hentetAutomatisk',
+          avsendersFnr: '12018926752',
+        },
+      ],
     }}
     behandling={behandling}
     submitCallback={action('Send inn')}

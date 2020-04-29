@@ -6,6 +6,7 @@ import { DagerGitt, DagerMottatt } from './RammevedtakDto';
 const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
   barn: [],
   barnLagtTilAvSakbehandler: [],
+  aleneOmOmsorgen: [],
   utvidetRett: [],
   overføringFår: [],
   overføringGir: [],
@@ -30,11 +31,9 @@ describe('mapping fra DTO til formValues', () => {
       barn: [
         {
           fødselsnummer: fnrKroniskSyktBarn,
-          aleneomsorg: false,
         },
         {
           fødselsnummer: '456',
-          aleneomsorg: false,
         },
       ],
     };
@@ -69,15 +68,25 @@ describe('mapping fra DTO til formValues', () => {
     const omsorgsdagerGrunnlagDto: OmsorgsdagerGrunnlagDto = {
       barn: [
         {
-          aleneomsorg: true,
           fødselsnummer: '123',
         },
       ],
       barnLagtTilAvSakbehandler: [
         {
-          aleneomsorg: false,
           fødselsdato: '23.02.2019',
           id: '1',
+        },
+      ],
+      aleneOmOmsorgen: [
+        {
+          fnrBarnAleneOm: '123',
+          kilde: 'hentetAutomatisk',
+          tom: '23.03.2020',
+        },
+        {
+          idBarnAleneOm: '1',
+          fødselsdato: '20.04.2018',
+          kilde: 'lagtTilAvSaksbehandler',
         },
       ],
       utvidetRett: [
