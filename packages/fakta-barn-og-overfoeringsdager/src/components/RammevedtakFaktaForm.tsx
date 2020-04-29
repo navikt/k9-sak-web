@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useMemo } from 'react';
-import { FieldArray, InjectedFormProps } from 'redux-form';
+import { FieldArray, InjectedFormProps, reset } from 'redux-form';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { isEmpty } from 'lodash';
@@ -9,12 +10,15 @@ import {
   getBehandlingFormValues,
 } from '@fpsak-frontend/form/src/behandlingForm';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Undertittel } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
+import { minLength, maxLength, required, hasValidText } from '@fpsak-frontend/utils';
+import { TextAreaField } from '@fpsak-frontend/form/index';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import OmsorgsdagerGrunnlagDto from '../dto/OmsorgsdagerGrunnlagDto';
 import { mapDtoTilFormValues, mapFormValuesTilDto } from '../dto/mapping';
 import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
 import FormValues from '../types/FormValues';
+import BegrunnBekreftTilbakestillSeksjon from './BegrunnBekreftTilbakestillSeksjon';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -23,6 +27,7 @@ interface RammevedtakFaktaFormProps {
   submitCallback: (values: any) => void;
   readOnly?: boolean;
   formValues?: FormValues;
+  resetForm?: (formName: string) => void;
 }
 
 const rammevedtakFormName = 'rammevedtakFormName';
@@ -30,6 +35,12 @@ const rammevedtakFormName = 'rammevedtakFormName';
 const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
   omsorgsdagerGrunnlag,
   formValues,
+  pristine,
+  handleSubmit,
+  resetForm,
+  behandlingId,
+  behandlingVersjon,
+  readOnly,
 }) => {
   const { utvidetRett, uidentifiserteRammevedtak = [] } = omsorgsdagerGrunnlag;
   const utvidetRettUidentifiserteBarnAntall = useMemo(
@@ -41,10 +52,13 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
     return null;
   }
 
+  const tilbakestill = () =>
+    resetForm(`${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${rammevedtakFormName}`);
+
   const { barn, barnLagtTilAvSaksbehandler } = formValues;
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       {uidentifiserteRammevedtak.length > 0 && (
         <>
           <AlertStripeAdvarsel>
@@ -67,13 +81,38 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           <VerticalSpacer sixteenPx />
         </>
       )}
-      <Undertittel>
-        <FormattedMessage id="FaktaRammevedtak.Barn" />
-      </Undertittel>
       {!(barn.length || barnLagtTilAvSaksbehandler.length) && <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />}
-      <FieldArray name="barn" component={AlleBarn} />
-      <FieldArray name="barnLagtTilAvSaksbehandler" component={BarnLagtTilAvSaksbehandler} />
-    </>
+      <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
+      <FieldArray
+        name="barnLagtTilAvSaksbehandler"
+        component={BarnLagtTilAvSaksbehandler}
+        props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
+      />
+      {!pristine && (
+        <>
+          <VerticalSpacer twentyPx />
+          <BegrunnBekreftTilbakestillSeksjon
+            begrunnField={
+              <TextAreaField
+                label={<FormattedMessage id="FaktaRammevedtak.Begrunnelse" />}
+                name="begrunnelse"
+                validate={[required, minLength(3), maxLength(400), hasValidText]}
+              />
+            }
+            bekreftKnapp={
+              <Hovedknapp onClick={handleSubmit}>
+                <FormattedMessage id="FaktaRammevedtak.Bekreft" />
+              </Hovedknapp>
+            }
+            tilbakestillKnapp={
+              <Knapp htmlType="button" mini onClick={tilbakestill}>
+                <FormattedMessage id="FaktaRammevedtak.Tilbakestill" />
+              </Knapp>
+            }
+          />
+        </>
+      )}
+    </form>
   );
 };
 
@@ -94,7 +133,18 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: RammevedtakFakta
   };
 };
 
-export default connect(mapStateToPropsFactory)(
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      resetForm: reset,
+    },
+    dispatch,
+  );
+
+export default connect(
+  mapStateToPropsFactory,
+  mapDispatchToProps,
+)(
   behandlingForm({
     form: rammevedtakFormName,
     enableReinitialize: true,

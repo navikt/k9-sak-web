@@ -58,7 +58,7 @@ const barn: BarnAutomatiskHentetDto[] = [
 const barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[] = [
   {
     id: '1',
-    fødselsdato: '12.12.2012',
+    fødselsdato: '2012-12-12',
     aleneomsorg: true,
   },
 ];
@@ -87,5 +87,18 @@ export const ingenBarn = () => (
     omsorgsdagerGrunnlagDto={tomOmsorgsdagerGrunnlag}
     behandling={behandling}
     submitCallback={action('Send inn')}
+  />
+);
+
+export const readOnly = () => (
+  <FaktaRammevedtakIndex
+    omsorgsdagerGrunnlagDto={{
+      ...tomOmsorgsdagerGrunnlag,
+      barn,
+      barnLagtTilAvSakbehandler,
+    }}
+    behandling={behandling}
+    submitCallback={action('Send inn')}
+    readOnly
   />
 );
