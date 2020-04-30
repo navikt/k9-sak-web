@@ -33,11 +33,8 @@ describe('<TilkjentYtelse>', () => {
           },
         ]}
         groups={[]}
-        soknadDate="2018-04-05"
-        familiehendelseDate={new Date('2018-05-10')}
         hovedsokerKjonnKode="K"
         intl={intlMock}
-        isSoknadSvangerskapspenger={false}
         alleKodeverk={{}}
       />,
     );

@@ -8,15 +8,14 @@ import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjen
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
-import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
-import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/dto/testdata';
+import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
+import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
+import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
-import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import findStatusForVedtak from './vedtakStatusUtlederOmsorgspenger';
@@ -27,7 +26,7 @@ const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const alleUtfall = perioder.flatMap(({ andeler }) => {
     return [
       ...andeler.flatMap(({ uttak }) => {
-        return [...uttak.flatMap(({ utfall }) => utfall.kode)];
+        return [...uttak.flatMap(({ utfall }) => utfall)];
       }),
     ];
   });
@@ -103,21 +102,6 @@ const prosessStegPanelDefinisjoner = [
     textCode: 'Behandlingspunkt.Inngangsvilkar',
     panels: [
       {
-        aksjonspunkterCodes: [ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU],
-        aksjonspunkterTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
-        vilkarCodes: [vt.SOKERSOPPLYSNINGSPLIKT],
-        showComponent: ({ behandling, aksjonspunkterForSteg }) => {
-          const isRevurdering = bt.REVURDERING === behandling.type.kode;
-          const hasAp = aksjonspunkterForSteg.some(ap => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
-          return !(isRevurdering && !hasAp);
-        },
-        renderComponent: props => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
-        getData: ({ soknad }) => ({ soknad }),
-      },
-      {
         code: 'MEDLEMSKAP',
         textCode: 'Inngangsvilkar.Medlemskapsvilkaret',
         aksjonspunkterCodes: [ac.OVERSTYR_MEDLEMSKAPSVILKAR],
@@ -151,6 +135,28 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
+    urlCode: bpc.UTTAK,
+    textCode: 'Behandlingspunkt.Uttak',
+    panels: [
+      {
+        aksjonspunkterCodes: [ac.VURDER_ÅRSKVANTUM_KVOTE],
+        endpoints: [],
+        renderComponent: props => <ÅrskvantumIndex {...props} />,
+        getData: ({ forbrukteDager }) => ({ årskvantum: forbrukteDager }),
+        showComponent: () => true,
+        overrideStatus: ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
+          if (!forbrukteDager) {
+            return vut.IKKE_VURDERT;
+          }
+          const perioder = forbrukteDager.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder);
+          const allePerioderGodkjent = perioder?.every(periode => periode.utfall === UtfallEnum.INNVILGET);
+
+          return allePerioderGodkjent ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
+        },
+      },
+    ],
+  },
+  {
     urlCode: bpc.BEREGNINGSGRUNNLAG,
     textCode: 'Behandlingspunkt.Beregning',
     panels: [
@@ -172,31 +178,6 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.FORTSATTMEDLEMSKAP,
-    textCode: 'Behandlingspunkt.FortsattMedlemskap',
-    panels: [
-      {
-        aksjonspunkterCodes: [ac.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR],
-        vilkarCodes: [vt.MEDLEMSKAPSVILKÅRET_LØPENDE],
-        ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-      },
-    ],
-  },
-  {
-    urlCode: bpc.UTTAK,
-    textCode: 'Behandlingspunkt.Uttak',
-    panels: [
-      {
-        aksjonspunkterCodes: [],
-        endpoints: [],
-        renderComponent: () => (
-          <UttakProsessIndex uttaksplaner={uttaksplaner} behandlingPersonMap={behandlingPersonMap} />
-        ),
-        showComponent: () => true,
-      },
-    ],
-  },
-  {
     urlCode: bpc.TILKJENT_YTELSE,
     textCode: 'Behandlingspunkt.TilkjentYtelse',
     panels: [
@@ -206,11 +187,10 @@ const prosessStegPanelDefinisjoner = [
         renderComponent: props => {
           return <TilkjentYtelseProsessIndex {...props} />;
         },
-        getData: ({ fagsak, beregningsresultatUtbetaling, personopplysninger, soknad }) => {
+        getData: ({ fagsak, beregningsresultatUtbetaling, personopplysninger }) => {
           return {
             fagsak,
             personopplysninger,
-            soknad,
             beregningsresultat: beregningsresultatUtbetaling,
           };
         },

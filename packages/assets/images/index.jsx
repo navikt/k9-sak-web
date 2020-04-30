@@ -51,6 +51,7 @@ export { default as navAnsatt } from './nav_ansatt.svg';
 export { default as navAnsattHistorikk } from './nav_ansatt_historikk.svg';
 export { default as oppfylt } from './oppfylt.svg';
 export { default as overlapp } from './overlapp.svg';
+export { default as pieChart } from './pie_chart.svg';
 export { default as pilVidere } from './pil-videre.svg';
 export { default as pilVidereHover } from './pil-videre--hover.svg';
 export { default as pilNed } from './pil_ned.svg';

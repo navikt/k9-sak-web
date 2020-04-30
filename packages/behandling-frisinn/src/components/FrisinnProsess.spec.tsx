@@ -14,7 +14,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
@@ -79,22 +78,12 @@ describe('<FrisinnProsess>', () => {
       ],
     },
   ];
-  const soknad = {
-    fodselsdatoer: {
-      0: '2019-01-01',
-    },
-    antallBarn: 1,
-    soknadType: {
-      kode: soknadType.FODSERL,
-      kodeverk: 'test',
-    },
-  };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallowWithIntl(
       <FrisinnProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={{ aksjonspunkter, vilkar }}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -141,7 +130,7 @@ describe('<FrisinnProsess>', () => {
     const wrapper = shallowWithIntl(
       <FrisinnProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={{ aksjonspunkter, vilkar }}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -187,7 +176,7 @@ describe('<FrisinnProsess>', () => {
     const wrapper = shallowWithIntl(
       <FrisinnProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar }}
         fagsak={fagsak}
         behandling={vedtakBehandling}
         alleKodeverk={{
@@ -235,7 +224,7 @@ describe('<FrisinnProsess>', () => {
     const wrapper = shallowWithIntl(
       <FrisinnProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar }}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{
@@ -283,7 +272,7 @@ describe('<FrisinnProsess>', () => {
     const wrapper = shallowWithIntl(
       <FrisinnProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar }}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{
@@ -315,7 +304,7 @@ describe('<FrisinnProsess>', () => {
     const wrapper = shallowWithIntl(
       <FrisinnProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={{ aksjonspunkter, vilkar }}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -346,7 +335,7 @@ describe('<FrisinnProsess>', () => {
     const wrapper = shallowWithIntl(
       <FrisinnProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={{ aksjonspunkter, vilkar }}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}

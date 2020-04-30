@@ -27,7 +27,7 @@ const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const alleUtfall = perioder.flatMap(({ andeler }) => {
     return [
       ...andeler.flatMap(({ uttak }) => {
-        return [...uttak.flatMap(({ utfall }) => utfall.kode)];
+        return [...uttak.flatMap(({ utfall }) => utfall)];
       }),
     ];
   });
@@ -238,11 +238,10 @@ const prosessStegPanelDefinisjoner = [
         renderComponent: props => {
           return <TilkjentYtelseProsessIndex {...props} />;
         },
-        getData: ({ fagsak, beregningsresultatUtbetaling, personopplysninger, soknad }) => {
+        getData: ({ fagsak, beregningsresultatUtbetaling, personopplysninger }) => {
           return {
             fagsak,
             personopplysninger,
-            soknad,
             beregningsresultat: beregningsresultatUtbetaling,
           };
         },

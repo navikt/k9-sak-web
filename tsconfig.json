@@ -36,6 +36,7 @@
     "packages/prosess-uttak",
     "packages/omsorgen-for-oms",
     "packages/prosess-vilkar-overstyring",
+    "packages/prosess-aarskvantum-oms",
     "@types"
   ]
 }
