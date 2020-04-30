@@ -272,13 +272,15 @@ const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values =>
+  const onSubmit = values => {
+    const klageOnlyValues = values?.behandlingType === bType.KLAGE ? { aktørId: getAktorid(initialState) } : undefined;
     initialOwnProps.submitCallback({
       ...values,
       eksternUuid: initialOwnProps.uuidForSistLukkede,
       fagsakYtelseType: initialOwnProps.ytelseType,
-      aktørId: getAktorid(initialState),
+      ...klageOnlyValues,
     });
+  };
   return (state, ownProps) => ({
     onSubmit,
     behandlingTyper: getBehandlingTyper(ownProps),
