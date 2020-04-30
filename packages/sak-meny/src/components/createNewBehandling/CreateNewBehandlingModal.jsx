@@ -18,17 +18,16 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
-import {getAktorid} from "@fpsak-frontend/sak-app/src/fagsak/fagsakSelectors";
+import { getAktorid } from '@fpsak-frontend/sak-app/src/fagsak/fagsakSelectors';
 import styles from './createNewBehandlingModal.less';
 
 const createOptions = (bt, enabledBehandlingstyper, intl) => {
   // TODO Burde retta opp navn for behandlingstype i DB
-  const navn = bt.kode === bType.REVURDERING
-    ? intl.formatMessage({ id: 'CreateNewBehandlingModal.OpprettRevurdering' })
-    : bt.navn;
+  const navn =
+    bt.kode === bType.REVURDERING ? intl.formatMessage({ id: 'CreateNewBehandlingModal.OpprettRevurdering' }) : bt.navn;
 
-  const isEnabled = enabledBehandlingstyper.some((b) => b.kode === bt.kode);
-  return (<option key={bt.kode} value={bt.kode} disabled={!isEnabled}>{` ${navn} `}</option>);
+  const isEnabled = enabledBehandlingstyper.some(b => b.kode === bt.kode);
+  return <option key={bt.kode} value={bt.kode} disabled={!isEnabled}>{` ${navn} `}</option>;
 };
 /**
  * CreateNewBehandlingModal
@@ -75,7 +74,11 @@ export const CreateNewBehandlingModal = ({
       <form onSubmit={handleSubmit}>
         <Row>
           <Column xs="1">
-            <Image className={styles.image} altCode="CreateNewBehandlingModal.OpprettNyForstegangsbehandling" src={innvilgetImageUrl} />
+            <Image
+              className={styles.image}
+              altCode="CreateNewBehandlingModal.OpprettNyForstegangsbehandling"
+              src={innvilgetImageUrl}
+            />
             <div className={styles.divider} />
           </Column>
           <Column xs="11">
@@ -91,38 +94,36 @@ export const CreateNewBehandlingModal = ({
               label=""
               placeholder={intl.formatMessage({ id: 'CreateNewBehandlingModal.SelectBehandlingTypePlaceholder' })}
               validate={[required]}
-              selectValues={behandlingTyper.map((bt) => createOptions(bt, enabledBehandlingstyper, intl))}
+              selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper, intl))}
               bredde="l"
             />
             <VerticalSpacer eightPx />
-            { behandlingType === bType.FORSTEGANGSSOKNAD && (
+            {behandlingType === bType.FORSTEGANGSSOKNAD && (
               <CheckboxField
                 name="nyBehandlingEtterKlage"
                 label={intl.formatMessage({ id: 'CreateNewBehandlingModal.NyBehandlingEtterKlage' })}
               />
             )}
-            { behandlingArsakTyper.length > 0 && (
+            {behandlingArsakTyper.length > 0 && (
               <SelectField
                 name="behandlingArsakType"
                 label=""
-                placeholder={intl.formatMessage({ id: 'CreateNewBehandlingModal.SelectBehandlingArsakTypePlaceholder' })}
+                placeholder={intl.formatMessage({
+                  id: 'CreateNewBehandlingModal.SelectBehandlingArsakTypePlaceholder',
+                })}
                 validate={[required]}
-                selectValues={behandlingArsakTyper.map((b) => <option key={b.kode} value={b.kode}>{b.navn}</option>)}
+                selectValues={behandlingArsakTyper.map(b => (
+                  <option key={b.kode} value={b.kode}>
+                    {b.navn}
+                  </option>
+                ))}
               />
             )}
             <div className={styles.right}>
-              <Hovedknapp
-                mini
-                className={styles.button}
-              >
+              <Hovedknapp mini className={styles.button}>
                 <FormattedMessage id="CreateNewBehandlingModal.Ok" />
               </Hovedknapp>
-              <Knapp
-                htmlType="button"
-                mini
-                onClick={cancelEvent}
-                className={styles.cancelButton}
-              >
+              <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
                 <FormattedMessage id="CreateNewBehandlingModal.Avbryt" />
               </Knapp>
             </div>
@@ -197,31 +198,38 @@ const tilbakekrevingRevurderingArsaker = [
   behandlingArsakType.RE_FORELDELSE,
 ];
 
-export const getBehandlingAarsaker = createSelector([
-  (state, ownProps) => ownProps.ytelseType,
-  (state, ownProps) => ownProps.menyKodeverk,
-  (state) => formValueSelector(formName)(state, 'behandlingType')],
-(ytelseType, menyKodeverk, valgtBehandlingType) => {
-  if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
-    return menyKodeverk.getKodeverkForBehandlingstype(bType.TILBAKEKREVING_REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)
-      .filter((ba) => tilbakekrevingRevurderingArsaker.includes(ba.kode))
-      .sort((ba1, ba2) => ba1.navn.localeCompare(ba2.navn));
-  }
-
-  if (valgtBehandlingType === bType.REVURDERING) {
-    const isForeldrepenger = ytelseType.kode === fagsakYtelseType.FORELDREPENGER;
-    const isSvangerskap = ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER;
-    let manuelleRevurderingsArsaker = isForeldrepenger ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
-    if (isSvangerskap) {
-      manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
+export const getBehandlingAarsaker = createSelector(
+  [
+    (state, ownProps) => ownProps.ytelseType,
+    (state, ownProps) => ownProps.menyKodeverk,
+    state => formValueSelector(formName)(state, 'behandlingType'),
+  ],
+  (ytelseType, menyKodeverk, valgtBehandlingType) => {
+    if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
+      return menyKodeverk
+        .getKodeverkForBehandlingstype(bType.TILBAKEKREVING_REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)
+        .filter(ba => tilbakekrevingRevurderingArsaker.includes(ba.kode))
+        .sort((ba1, ba2) => ba1.navn.localeCompare(ba2.navn));
     }
-    return menyKodeverk.getKodeverkForBehandlingstype(bType.REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)
-      .filter((bat) => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
-      .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
-  }
 
-  return [];
-});
+    if (valgtBehandlingType === bType.REVURDERING) {
+      const isForeldrepenger = ytelseType.kode === fagsakYtelseType.FORELDREPENGER;
+      const isSvangerskap = ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER;
+      let manuelleRevurderingsArsaker = isForeldrepenger
+        ? manuelleRevurderingsArsakerFP
+        : manuelleRevurderingsArsakerES;
+      if (isSvangerskap) {
+        manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
+      }
+      return menyKodeverk
+        .getKodeverkForBehandlingstype(bType.REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)
+        .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
+        .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
+    }
+
+    return [];
+  },
+);
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   bType.FORSTEGANGSSOKNAD,
@@ -233,31 +241,44 @@ const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   bType.TILBAKEKREVING_REVURDERING,
 ];
 
-export const getBehandlingTyper = createSelector([(ownProps) => ownProps.menyKodeverk], (menyKodeverk) => menyKodeverk
-  .getKodeverkForBehandlingstyper(BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES, kodeverkTyper.BEHANDLING_TYPE)
-  .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)));
+export const getBehandlingTyper = createSelector([ownProps => ownProps.menyKodeverk], menyKodeverk =>
+  menyKodeverk
+    .getKodeverkForBehandlingstyper(BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES, kodeverkTyper.BEHANDLING_TYPE)
+    .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)),
+);
 
-export const getEnabledBehandlingstyper = createSelector([
-  getBehandlingTyper,
-  (ownProps) => ownProps.hasEnabledCreateNewBehandling,
-  (ownProps) => ownProps.hasEnabledCreateRevurdering,
-  (ownProps) => ownProps.kanTilbakekrevingOpprettes],
-(behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, kanTilbakekrevingOpprettes = {}) => behandlingstyper
-  .filter((b) => (b.kode === bType.TILBAKEKREVING ? kanTilbakekrevingOpprettes.kanBehandlingOpprettes : true))
-  .filter((b) => (b.kode === bType.TILBAKEKREVING_REVURDERING ? kanTilbakekrevingOpprettes.kanRevurderingOpprettes : true))
-  .filter((b) => (b.kode === bType.FORSTEGANGSSOKNAD ? hasEnabledCreateNewBehandling : true))
-  .filter((b) => (b.kode === bType.REVURDERING ? hasEnabledCreateRevurdering : true)));
+export const getEnabledBehandlingstyper = createSelector(
+  [
+    getBehandlingTyper,
+    ownProps => ownProps.hasEnabledCreateNewBehandling,
+    ownProps => ownProps.hasEnabledCreateRevurdering,
+    ownProps => ownProps.kanTilbakekrevingOpprettes,
+  ],
+  (behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, kanTilbakekrevingOpprettes = {}) =>
+    behandlingstyper
+      .filter(b => (b.kode === bType.TILBAKEKREVING ? kanTilbakekrevingOpprettes.kanBehandlingOpprettes : true))
+      .filter(b =>
+        b.kode === bType.TILBAKEKREVING_REVURDERING ? kanTilbakekrevingOpprettes.kanRevurderingOpprettes : true,
+      )
+      .filter(b => (b.kode === bType.FORSTEGANGSSOKNAD ? hasEnabledCreateNewBehandling : true))
+      .filter(b => (b.kode === bType.REVURDERING ? hasEnabledCreateRevurdering : true)),
+);
 
-const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector([(ownProps) => ownProps.behandlingType],
-  (behandlingType) => behandlingType && (behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING));
+const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector(
+  [ownProps => ownProps.behandlingType],
+  behandlingType =>
+    behandlingType &&
+    (behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING),
+);
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback({
-    ...values,
-    eksternUuid: initialOwnProps.uuidForSistLukkede,
-    fagsakYtelseType: initialOwnProps.ytelseType,
-    aktørId: getAktorid(initialState)
-  });
+  const onSubmit = values =>
+    initialOwnProps.submitCallback({
+      ...values,
+      eksternUuid: initialOwnProps.uuidForSistLukkede,
+      fagsakYtelseType: initialOwnProps.ytelseType,
+      aktørId: getAktorid(initialState),
+    });
   return (state, ownProps) => ({
     onSubmit,
     behandlingTyper: getBehandlingTyper(ownProps),
@@ -269,6 +290,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(reduxForm({
-  form: formName,
-})(injectIntl(CreateNewBehandlingModal)));
+export default connect(mapStateToPropsFactory)(
+  reduxForm({
+    form: formName,
+  })(injectIntl(CreateNewBehandlingModal)),
+);

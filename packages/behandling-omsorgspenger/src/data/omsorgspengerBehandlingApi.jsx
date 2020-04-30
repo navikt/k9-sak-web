@@ -45,7 +45,7 @@ export const PleiepengerBehandlingApiKeys = {
   SYKDOM: 'SYKDOM',
   VEDTAK_VARSEL: 'VEDTAK_VARSEL',
   OMSORGEN_FOR: 'OMSORGEN_FOR',
-  FORBRUKTE_DAGER: 'FORBRUKTE_DAGER'
+  FORBRUKTE_DAGER: 'FORBRUKTE_DAGER',
 };
 
 const endpoints = new RestApiConfigBuilder()
