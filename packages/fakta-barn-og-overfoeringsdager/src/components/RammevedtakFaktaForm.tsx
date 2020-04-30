@@ -20,7 +20,8 @@ import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
 import FormValues from '../types/FormValues';
 import BegrunnBekreftTilbakestillSeksjon from './BegrunnBekreftTilbakestillSeksjon';
 import MidlertidigAlene from './MidlertidigAlene';
-import OverføringsdagerPanel from './OverføringsdagerPanel';
+import { OverføringsretningEnum } from '../types/Overføring';
+import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -57,7 +58,17 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
   const tilbakestill = () =>
     resetForm(`${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${rammevedtakFormName}`);
 
-  const { barn, barnLagtTilAvSaksbehandler } = formValues;
+  const {
+    barn,
+    barnLagtTilAvSaksbehandler,
+    overføringGir,
+    overføringFår,
+    fordelingGir,
+    fordelingFår,
+    koronaoverføringGir,
+    koronaoverføringFår,
+    midlertidigAleneansvar,
+  } = formValues;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -90,15 +101,19 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         component={BarnLagtTilAvSaksbehandler}
         props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
       />
-      <OverføringsdagerPanel
-        totaltAntallDager={formValues.overføringFår.reduce((sum, { antallDager }) => sum + antallDager, 0)}
-        retning="inn"
-        type="overføring"
+      <OverføringsdagerPanelgruppe
+        overføringer={overføringFår}
+        fordelinger={fordelingFår}
+        koronaoverføringer={koronaoverføringFår}
+        retning={OverføringsretningEnum.INN}
       />
-      <MidlertidigAlene
-        readOnly={readOnly}
-        midlertidigAleneVerdi={formValues.midlertidigAleneansvar.erMidlertidigAlene}
+      <OverføringsdagerPanelgruppe
+        overføringer={overføringGir}
+        fordelinger={fordelingGir}
+        koronaoverføringer={koronaoverføringGir}
+        retning={OverføringsretningEnum.UT}
       />
+      <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />
       {!pristine && (
         <>
           <VerticalSpacer twentyPx />

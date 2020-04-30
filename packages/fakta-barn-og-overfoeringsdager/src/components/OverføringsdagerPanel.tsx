@@ -5,9 +5,12 @@ import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
 import pilHøyre from '@fpsak-frontend/assets/images/pil_hoyre_filled.svg';
 import { FieldArray } from 'redux-form';
+import classnames from 'classnames/bind';
 import styles from './overføringsdagerPanel.less';
 import { Overføringsretning, OverføringsretningEnum, Overføringstype, OverføringstypeEnum } from '../types/Overføring';
 import Overføringsrader from './Overføringsrader';
+
+const classNames = classnames.bind(styles);
 
 interface OverføringsdagerPanelProps {
   type: Overføringstype;
@@ -33,7 +36,10 @@ const renderTittel = (type, retning, totaltAntallDager) => (
         }
       />
     </span>
-    <Image className={styles.tittelikon} src={pilHøyre} />
+    <Image
+      className={classNames('tittelikon', { pilVenstre: retning === OverføringsretningEnum.INN })}
+      src={pilHøyre}
+    />
     <span>
       <FormattedMessage id={typeTilTekstIdMap[type]} />
     </span>
