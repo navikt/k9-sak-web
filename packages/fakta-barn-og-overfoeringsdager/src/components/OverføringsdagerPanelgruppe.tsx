@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent } from 'react';
 import OverføringsdagerPanel from './OverføringsdagerPanel';
 import Overføring, { Overføringsretning, OverføringstypeEnum } from '../types/Overføring';
 import styles from './overføringsdagerPanelgruppe.less';
@@ -20,10 +20,6 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
   behandlingId,
   behandlingVersjon,
 }) => {
-  // const sumOverføringer = useMemo(() => summerDager(overføringer), [overføringer]);
-  // const sumFordelinger = useMemo(() => summerDager(fordelinger), [fordelinger]);
-  // const sumKoronaoverføringer = useMemo(() => summerDager(koronaoverføringer), [koronaoverføringer]);
-
   return (
     <div className={styles.panelgruppeContainer}>
       <OverføringsdagerPanel

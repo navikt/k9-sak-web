@@ -109,6 +109,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
       />
+      <VerticalSpacer thirtyTwoPx />
       <OverføringsdagerPanelgruppe
         overføringer={overføringGir}
         fordelinger={fordelingGir}

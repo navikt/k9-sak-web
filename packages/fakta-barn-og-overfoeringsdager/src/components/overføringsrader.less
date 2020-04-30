@@ -1,8 +1,48 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
 .rad {
+  align-items: center;
   display: flex;
   flex-wrap: nowrap;
 }
 
-.col-1-5 {
+.headers {
+  border-bottom: 1px solid @navGra60;
+  margin-bottom: 0.5em;
+}
+
+.col20prosent {
   flex-basis: 20%;
+}
+
+.relativePosition {
+  position: relative;
+}
+
+.alignCenterRight {
+  margin-top: -16px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.marginRight {
+  margin-right: 0.5em;
+}
+
+.paddingTop {
+  padding-top: 0.5em;
+}
+
+.dagerInputContainer {
+  align-items: baseline;
+  display: flex;
+
+  & > :not(:last-child) {
+    margin-right: 0.5em;
+  }
+}
+
+.dagerInput {
+  width: 45px;
 }

@@ -1,14 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps, ConfigProps } from 'redux-form';
-// import { FormattedMessage } from 'react-intl';
-// import { Element } from 'nav-frontend-typografi';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
-// import { required, hasValidDecimalMaxNumberOfDecimals } from '@fpsak-frontend/utils';
-// import { numberRegex } from '@fpsak-frontend/utils/src/validation/validatorsHelper';
 import Overføring, { Overføringsretning, Overføringstype } from '../types/Overføring';
 import { rammevedtakFormName } from './RammevedtakFaktaForm';
-// import styles from './overføringsraderForm.less';
 import RedigerOverføringsrader from './RedigerOverføringsrader';
 
 interface OverføringsraderFormImplProps {
@@ -20,7 +15,6 @@ const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & Overføri
   type,
   retning,
 }) => {
-  // const redigerer =
   return <FieldArray name="overføringer" component={RedigerOverføringsrader} props={{ type, retning }} />;
 };
 
