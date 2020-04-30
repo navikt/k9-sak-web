@@ -1,21 +1,24 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import Image from '@fpsak-frontend/shared-components/src/Image';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
-import pilHøyre from '@fpsak-frontend/assets/images/pil_hoyre_filled.svg';
-import { FieldArray } from 'redux-form';
-import classnames from 'classnames/bind';
-import styles from './overføringsdagerPanel.less';
-import { Overføringsretning, OverføringsretningEnum, Overføringstype, OverføringstypeEnum } from '../types/Overføring';
-import Overføringsrader from './Overføringsrader';
-
-const classNames = classnames.bind(styles);
+// import { FieldArray } from 'redux-form';
+import Overføring, {
+  Overføringsretning,
+  OverføringsretningEnum,
+  Overføringstype,
+  OverføringstypeEnum,
+} from '../types/Overføring';
+// import Overføringsrader from './Overføringsrader';
+import Pil from './Pil';
+import OverføringsraderForm from './OverføringsraderForm';
 
 interface OverføringsdagerPanelProps {
   type: Overføringstype;
   retning: Overføringsretning;
-  totaltAntallDager: number;
+  overføringer: Overføring[];
+  behandlingId: number;
+  behandlingVersjon: number;
 }
 
 export const typeTilTekstIdMap = {
@@ -36,29 +39,48 @@ const renderTittel = (type, retning, totaltAntallDager) => (
         }
       />
     </span>
-    <Image
-      className={classNames('tittelikon', { pilVenstre: retning === OverføringsretningEnum.INN })}
-      src={pilHøyre}
-    />
+    <Pil retning={retning} />
     <span>
       <FormattedMessage id={typeTilTekstIdMap[type]} />
     </span>
   </FlexRow>
 );
 
-const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = ({ type, retning, totaltAntallDager }) => {
-  const feltnavn = useMemo(() => {
-    const retningstekst = retning === OverføringsretningEnum.INN ? 'Får' : 'Gir';
-    return `${type}${retningstekst}`;
-  }, [type, retning]);
+const summerDager = (overføringer: Overføring[]): number =>
+  overføringer.reduce((sum, { antallDager }) => sum + antallDager, 0);
+
+const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = ({
+  type,
+  retning,
+  behandlingId,
+  behandlingVersjon,
+  overføringer,
+}) => {
+  // const feltnavn = useMemo(() => {
+  //   const retningstekst = retning === OverføringsretningEnum.INN ? 'Får' : 'Gir';
+  //   return `${type}${retningstekst}`;
+  // }, [type, retning]);
+  const totaltAntallDager = useMemo(() => summerDager(overføringer), [overføringer]);
 
   return (
     <EkspanderbartPanel tittel={renderTittel(type, retning, totaltAntallDager)}>
-      <FlexRow childrenMargin>
-        <FieldArray name={feltnavn} component={Overføringsrader} props={{ type }} />
-      </FlexRow>
+      <OverføringsraderForm
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        retning={retning}
+        type={type}
+        oppdaterOverføringer={() => {}}
+        initialValues={overføringer}
+      />
     </EkspanderbartPanel>
   );
+  // return (
+  //   <EkspanderbartPanel tittel={renderTittel(type, retning, totaltAntallDager)}>
+  //     <FlexRow childrenMargin>
+  //       <FieldArray name={feltnavn} component={Overføringsrader} props={{ type }} />
+  //     </FlexRow>
+  //   </EkspanderbartPanel>
+  // );
 };
 
 export default OverføringsdagerPanel;

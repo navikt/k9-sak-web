@@ -8,37 +8,44 @@ interface OverføringsdagerPanelgruppeProps {
   fordelinger: Overføring[];
   koronaoverføringer: Overføring[];
   retning: Overføringsretning;
+  behandlingId: number;
+  behandlingVersjon: number;
 }
-
-const summerDager = (overføringer: Overføring[]): number =>
-  overføringer.reduce((sum, { antallDager }) => sum + antallDager, 0);
 
 const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgruppeProps> = ({
   overføringer,
   fordelinger,
   koronaoverføringer,
   retning,
+  behandlingId,
+  behandlingVersjon,
 }) => {
-  const sumOverføringer = useMemo(() => summerDager(overføringer), [overføringer]);
-  const sumFordelinger = useMemo(() => summerDager(fordelinger), [fordelinger]);
-  const sumKoronaoverføringer = useMemo(() => summerDager(koronaoverføringer), [koronaoverføringer]);
+  // const sumOverføringer = useMemo(() => summerDager(overføringer), [overføringer]);
+  // const sumFordelinger = useMemo(() => summerDager(fordelinger), [fordelinger]);
+  // const sumKoronaoverføringer = useMemo(() => summerDager(koronaoverføringer), [koronaoverføringer]);
 
   return (
     <div className={styles.panelgruppeContainer}>
       <OverføringsdagerPanel
-        totaltAntallDager={sumOverføringer}
+        overføringer={overføringer}
         retning={retning}
         type={OverføringstypeEnum.OVERFØRING}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
       />
       <OverføringsdagerPanel
-        totaltAntallDager={sumFordelinger}
+        overføringer={fordelinger}
         retning={retning}
         type={OverføringstypeEnum.FORDELING}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
       />
       <OverføringsdagerPanel
-        totaltAntallDager={sumKoronaoverføringer}
+        overføringer={koronaoverføringer}
         retning={retning}
         type={OverføringstypeEnum.KORONAOVERFØRING}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
       />
     </div>
   );

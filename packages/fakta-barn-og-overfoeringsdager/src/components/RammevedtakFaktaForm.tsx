@@ -33,7 +33,7 @@ interface RammevedtakFaktaFormProps {
   resetForm?: (formName: string) => void;
 }
 
-const rammevedtakFormName = 'rammevedtakFormName';
+export const rammevedtakFormName = 'rammevedtakFormName';
 
 const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
   omsorgsdagerGrunnlag,
@@ -106,12 +106,16 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         fordelinger={fordelingFår}
         koronaoverføringer={koronaoverføringFår}
         retning={OverføringsretningEnum.INN}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
       />
       <OverføringsdagerPanelgruppe
         overføringer={overføringGir}
         fordelinger={fordelingGir}
         koronaoverføringer={koronaoverføringGir}
         retning={OverføringsretningEnum.UT}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
       />
       <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />
       {!pristine && (

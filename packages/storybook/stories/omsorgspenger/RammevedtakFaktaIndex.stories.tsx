@@ -50,10 +50,12 @@ const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
 };
 
 const fnrEtBarn = '12121212121';
+const fnrEtAnnetBarn = '02020202020';
 const barn: BarnAutomatiskHentetDto[] = [
   {
     fødselsnummer: fnrEtBarn,
   },
+  { fødselsnummer: fnrEtAnnetBarn },
 ];
 
 const barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[] = [

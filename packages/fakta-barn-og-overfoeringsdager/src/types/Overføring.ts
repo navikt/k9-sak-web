@@ -15,7 +15,7 @@ export const OverføringsretningEnum = stringEnum({
 export type Overføringsretning = typeof OverføringsretningEnum[keyof typeof OverføringsretningEnum];
 
 interface Overføring {
-  antallDager: number;
+  antallDager?: number;
   mottakerAvsenderFnr?: string;
   kilde: Informasjonskilde;
   fom?: string;
