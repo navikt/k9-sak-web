@@ -1,4 +1,4 @@
-import { Aksjonspunkt, FastsattOpptjening, SubmitCallback, Vilkårresultat } from '@k9-sak-web/types';
+import { Aksjonspunkt, FastsattOpptjening, SubmitCallback, Vilkårresultat, Opptjening } from '@k9-sak-web/types';
 import React from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
@@ -22,6 +22,7 @@ interface OpptjeningVilkarFormProps {
   readOnly: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
   vilkårIndex: number;
+  opptjeninger: Opptjening[];
 }
 
 const OpptjeningVilkarForm = ({
@@ -37,6 +38,7 @@ const OpptjeningVilkarForm = ({
   readOnly,
   submitCallback,
   vilkårIndex,
+  opptjeninger,
 }: OpptjeningVilkarFormProps) => {
   if (aksjonspunkter.length > 0) {
     return (
@@ -53,6 +55,7 @@ const OpptjeningVilkarForm = ({
         lovReferanse={lovReferanse}
         fastsattOpptjening={fastsattOpptjening}
         vilkårIndex={vilkårIndex}
+        opptjeninger={opptjeninger}
       />
     );
   }

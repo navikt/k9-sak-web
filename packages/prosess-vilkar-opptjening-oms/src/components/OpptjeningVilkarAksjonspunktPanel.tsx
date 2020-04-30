@@ -7,7 +7,7 @@ import {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt, FastsattOpptjening, SubmitCallback, Vilkårresultat } from '@k9-sak-web/types';
+import { Aksjonspunkt, FastsattOpptjening, Opptjening, SubmitCallback, Vilkårresultat } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -18,6 +18,11 @@ import OpptjeningVilkarView from './OpptjeningVilkarView';
 import VilkarFields from './VilkarFields';
 
 const FORM_NAME = 'OpptjeningVilkarForm';
+
+interface VilkårField {
+  erVilkarOk: boolean;
+  begrunnelse: string;
+}
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
   aksjonspunkter: Aksjonspunkt[];
@@ -32,6 +37,8 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   status: string;
   submitCallback: (props: SubmitCallback[]) => void;
   vilkårIndex: number;
+  opptjeninger: Opptjening[];
+  vilkarFields: VilkårField[];
 }
 
 interface StateProps {
@@ -58,6 +65,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   handleSubmit,
   form,
   vilkårIndex,
+  opptjeninger,
+  vilkarFields,
 }: OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps) => {
   const formProps = useMemo(
     () => ({
@@ -66,6 +75,13 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     }),
     [handleSubmit, form],
   );
+
+  const isFormComplete = () => {
+    const isAllTabsCreated = opptjeninger.length === vilkarFields?.length;
+    return isAllTabsCreated
+      ? !vilkarFields.some(vilkarField => !vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined)
+      : false;
+  };
 
   return (
     <ProsessPanelTemplate
@@ -79,6 +95,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       originalErVilkarOk={originalErVilkarOk}
+      isPeriodisertFormComplete={isFormComplete()}
       rendreFakta={() => (
         <>
           <VerticalSpacer sixteenPx />
@@ -105,22 +122,30 @@ export const buildInitialValues = createSelector(
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.vilkårsresultat,
     ownProps => ownProps.aksjonspunkter,
     ownProps => ownProps.status,
+    ownProps => ownProps.vilkårIndex,
   ],
-  (vilkårsresultat, aksjonspunkter, status) => ({
-    ...VilkarResultPicker.buildInitialValues(vilkårsresultat, aksjonspunkter, status),
+  (vilkårsresultat, aksjonspunkter, status, vilkårIndex) => ({
+    ...VilkarResultPicker.buildInitialValues(vilkårsresultat[vilkårIndex], aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
 
-const transformValues = (values, aksjonspunkter) => ({
-  ...VilkarResultPicker.transformValues(values),
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+interface Values {
+  vilkarFields: VilkårField[];
+}
+
+const transformValues = (values: Values, aksjonspunkter: Aksjonspunkt[], opptjeninger: Opptjening[]) => ({
+  vilkårPerioder: values.vilkarFields.map((vilkarField, index) => ({
+    ...vilkarField,
+    opptjeningFom: opptjeninger[index].fastsattOpptjening.opptjeningFom,
+    opptjeningTom: opptjeninger[index].fastsattOpptjening.opptjeningTom,
+  })),
   ...{ kode: aksjonspunkter[0].definisjon.kode },
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {
-  const { aksjonspunkter, submitCallback, vilkårIndex } = initialOwnProps;
-  const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter)]);
+  const { aksjonspunkter, submitCallback, vilkårIndex, opptjeninger } = initialOwnProps;
+  const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter, opptjeninger)]);
 
   const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
@@ -135,6 +160,11 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarA
       ownProps.behandlingVersjon,
     )(state, `vilkarFields[${vilkårIndex}].erVilkarOk`),
     lovReferanse: ownProps.lovReferanse,
+    vilkarFields: behandlingFormValueSelector(
+      FORM_NAME,
+      ownProps.behandlingId,
+      ownProps.behandlingVersjon,
+    )(state, `vilkarFields`),
   });
 };
 

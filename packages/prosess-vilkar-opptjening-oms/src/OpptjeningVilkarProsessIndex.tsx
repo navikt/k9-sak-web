@@ -66,6 +66,7 @@ const OpptjeningVilkarProsessIndex = ({
           isAksjonspunktOpen={isAksjonspunktOpen}
           readOnlySubmitButton={readOnlySubmitButton}
           vilkårIndex={activeTab}
+          opptjeninger={opptjening.opptjeninger}
         />
       </div>
     </RawIntlProvider>
