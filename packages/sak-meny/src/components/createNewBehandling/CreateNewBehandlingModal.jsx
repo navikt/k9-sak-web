@@ -252,12 +252,15 @@ const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector([(ownProps
   (behandlingType) => behandlingType && (behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING));
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback({
-    ...values,
-    eksternUuid: initialOwnProps.uuidForSistLukkede,
-    fagsakYtelseType: initialOwnProps.ytelseType,
-    aktørId: getAktorid(initialState)
-  });
+  const onSubmit = (values) => {
+    const klageOnlyValues = values?.behandlingType === bType.KLAGE ? {aktørId: getAktorid(initialState)} : undefined;
+    initialOwnProps.submitCallback({
+      ...values,
+      eksternUuid: initialOwnProps.uuidForSistLukkede,
+      fagsakYtelseType: initialOwnProps.ytelseType,
+      ...klageOnlyValues
+    });
+  };
   return (state, ownProps) => ({
     onSubmit,
     behandlingTyper: getBehandlingTyper(ownProps),
