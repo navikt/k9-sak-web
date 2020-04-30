@@ -18,6 +18,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
+import {getAktorid} from "@fpsak-frontend/sak-app/src/fagsak/fagsakSelectors";
 import styles from './createNewBehandlingModal.less';
 
 const createOptions = (bt, enabledBehandlingstyper, intl) => {
@@ -255,6 +256,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     ...values,
     eksternUuid: initialOwnProps.uuidForSistLukkede,
     fagsakYtelseType: initialOwnProps.ytelseType,
+    aktørId: getAktorid(initialState)
   });
   return (state, ownProps) => ({
     onSubmit,

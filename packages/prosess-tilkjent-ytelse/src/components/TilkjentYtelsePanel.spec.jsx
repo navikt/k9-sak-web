@@ -22,22 +22,22 @@ const tilbaketrekkAP = {
 describe('<TilkjentYtelsePanelImpl>', () => {
   it('skall innehålla rätt undertekst', () => {
     const familieDate = new Date('2018-04-04');
-    const wrapper = shallowWithIntl(<TilkjentYtelsePanelImpl
-      intl={intlMock}
-      readOnly
-      beregningsresultatMedUttaksplan={null}
-      hovedsokerKjonn="K"
-      medsokerKjonn="M"
-      soknadDato="2018-04-04"
-      familiehendelseDato={familieDate}
-      stonadskontoer={null}
-      submitCallback={sinon.spy()}
-      readOnlySubmitButton
-      isSoknadSvangerskapspenger={false}
-      alleKodeverk={{}}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    const wrapper = shallowWithIntl(
+      <TilkjentYtelsePanelImpl
+        intl={intlMock}
+        readOnly
+        beregningsresultatMedUttaksplan={null}
+        hovedsokerKjonn="K"
+        medsokerKjonn="M"
+        familiehendelseDato={familieDate}
+        stonadskontoer={null}
+        submitCallback={sinon.spy()}
+        readOnlySubmitButton
+        alleKodeverk={{}}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+    );
     expect(wrapper.find(Undertittel)).to.have.length(1);
     expect(wrapper.find(Undertittel).props().children.props.id).to.equal('TilkjentYtelse.Title');
     expect(wrapper.find(Tilbaketrekkpanel)).to.have.length(0);
@@ -45,23 +45,23 @@ describe('<TilkjentYtelsePanelImpl>', () => {
 
   it('Skal vise tilbaketrekkpanel gitt tilbaketrekkaksjonspunkt', () => {
     const familieDate = new Date('2018-04-04');
-    const wrapper = shallowWithIntl(<TilkjentYtelsePanelImpl
-      intl={intlMock}
-      readOnly
-      beregningsresultatMedUttaksplan={null}
-      hovedsokerKjonn="K"
-      medsokerKjonn="M"
-      soknadDato="2018-04-04"
-      familiehendelseDato={familieDate}
-      stonadskontoer={null}
-      submitCallback={sinon.spy()}
-      readOnlySubmitButton
-      vurderTilbaketrekkAP={tilbaketrekkAP}
-      isSoknadSvangerskapspenger={false}
-      alleKodeverk={{}}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    const wrapper = shallowWithIntl(
+      <TilkjentYtelsePanelImpl
+        intl={intlMock}
+        readOnly
+        beregningsresultatMedUttaksplan={null}
+        hovedsokerKjonn="K"
+        medsokerKjonn="M"
+        familiehendelseDato={familieDate}
+        stonadskontoer={null}
+        submitCallback={sinon.spy()}
+        readOnlySubmitButton
+        vurderTilbaketrekkAP={tilbaketrekkAP}
+        alleKodeverk={{}}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+    );
     expect(wrapper.find(Tilbaketrekkpanel)).to.have.length(1);
   });
 });

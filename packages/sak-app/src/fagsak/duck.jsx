@@ -24,6 +24,7 @@ export const doNotResetWhitelist = [
   FpsakApiKeys.BEHANDLENDE_ENHETER,
   FpsakApiKeys.KODEVERK,
   FpsakApiKeys.KODEVERK_FPTILBAKE,
+  FpsakApiKeys.KODEVERK_KLAGE,
   FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES,
   FpsakApiKeys.FEATURE_TOGGLE,
 ];

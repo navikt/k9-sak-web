@@ -6,15 +6,18 @@ export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',
   KODEVERK: 'KODEVERK',
   KODEVERK_FPTILBAKE: 'KODEVERK_FPTILBAKE',
+  KODEVERK_KLAGE: 'KODEVERK_KLAGE',
   NAV_ANSATT: 'NAV_ANSATT',
   SEARCH_FAGSAK: 'SEARCH_FAGSAK',
   FETCH_FAGSAK: 'FETCH_FAGSAK',
   BEHANDLINGER_FPSAK: 'BEHANDLINGER_FPSAK',
   BEHANDLINGER_FPTILBAKE: 'BEHANDLINGER_FPTILBAKE',
+  BEHANDLINGER_KLAGE: 'BEHANDLINGER_KLAGE',
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
   NEW_BEHANDLING_FPSAK: 'NEW_BEHANDLING_FPSAK',
   NEW_BEHANDLING_FPTILBAKE: 'NEW_BEHANDLING_FPTILBAKE',
+  NEW_BEHANDLING_KLAGE: 'NEW_BEHANDLING_KLAGE',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
   DOCUMENT: 'DOCUMENT',
   HISTORY_FPSAK: 'HISTORY_FPSAK',
@@ -107,6 +110,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/kodeverk */
   .withGet('/k9/sak/api/kodeverk', FpsakApiKeys.KODEVERK)
   .withGet('/fptilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
+  .withGet('/k9/klage/api/kodeverk', FpsakApiKeys.KODEVERK_KLAGE)
   .withGet('/k9/sak/api/kodeverk/behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
 
   /* /api/nav-ansatt */
@@ -129,6 +133,10 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/feature-toggle */
   .withPost('/k9/sak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+
+  /* Klage */
+  .withGet('/k9/klage/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_KLAGE)
+  .withAsyncPut('/k9/klage/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_KLAGE)
 
   .build();
 

@@ -191,17 +191,17 @@ const getOmgjortAarsak = createSelector(
 
 const getIsOmgjort = createSelector(
   [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_MEDHOLD,
+  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_MEDHOLD,
 );
 
 export const getIsAvvist = createSelector(
   [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_AVVIST,
+  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_AVVIST,
 );
 
 export const getIsOpphevOgHjemsend = createSelector(
   [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
+  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
 );
 
 export const getFritekstTilBrev = createSelector(

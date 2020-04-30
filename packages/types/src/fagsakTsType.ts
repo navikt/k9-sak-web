@@ -15,6 +15,7 @@ type Fagsak = Readonly<{
     personstatusType: Kodeverk;
     diskresjonskode?: Kodeverk;
     dodsdato?: string;
+    aktørId?: string;
   };
   opprettet: string;
   endret: string;
