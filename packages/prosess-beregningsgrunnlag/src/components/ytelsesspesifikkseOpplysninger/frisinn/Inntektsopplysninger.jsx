@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 
@@ -13,10 +12,14 @@ const finnSamletBruttoForStatus = (andeler, status) => {
   if (!andeler) {
     return 0;
   }
-  return andeler
+  const inntekt = andeler
     .filter(a => a.aktivitetStatus.kode === status)
     .map(({ bruttoPrAar }) => bruttoPrAar)
     .reduce((sum, brutto) => sum + brutto, 0);
+  if (!inntekt || inntekt === 0) {
+    return 0;
+  }
+  return inntekt;
 };
 
 const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
@@ -34,8 +37,6 @@ const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
     førstePeriode.beregningsgrunnlagPrStatusOgAndel,
     aktivitetStatus.ARBEIDSTAKER,
   );
-  const originaltInntektstak = beregningsgrunnlag.grunnbeløp * 6;
-  const utregnetInntektstak = originaltInntektstak > bruttoAT ? originaltInntektstak - bruttoAT : 0;
   return (
     <div>
       <Row>
@@ -75,32 +76,6 @@ const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
           <Element>{formatCurrencyNoKr(bruttoSN)}</Element>
         </Column>
       </Row>
-      {(utregnetInntektstak || utregnetInntektstak === 0) && (
-        <>
-          <VerticalSpacer sixteenPx />
-          <Row>
-            <Column xs="12">
-              <Element className={beregningStyles.avsnittOverskrift}>
-                <FormattedMessage id="Beregningsgrunnlag.Frisinn.InntektstakOpplysninger" />
-              </Element>
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="10">
-              <FormattedMessage
-                id="Beregningsgrunnlag.Frisinn.Inntektstak"
-                values={{
-                  grenseverdi: formatCurrencyNoKr(originaltInntektstak),
-                  annenInntekt: formatCurrencyNoKr(bruttoAT),
-                }}
-              />
-            </Column>
-            <Column xs="2">
-              <Normaltekst>{formatCurrencyNoKr(utregnetInntektstak)}</Normaltekst>
-            </Column>
-          </Row>
-        </>
-      )}
     </div>
   );
 };
