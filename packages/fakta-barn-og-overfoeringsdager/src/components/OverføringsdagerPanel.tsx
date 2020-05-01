@@ -1,17 +1,19 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
+import classnames from 'classnames/bind';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
-// import { FieldArray } from 'redux-form';
 import Overføring, {
   Overføringsretning,
   OverføringsretningEnum,
   Overføringstype,
   OverføringstypeEnum,
 } from '../types/Overføring';
-// import Overføringsrader from './Overføringsrader';
 import Pil from './Pil';
 import OverføringsraderForm from './OverføringsraderForm';
+import styles from './overføringsdagerPanel.less';
+
+const classNames = classnames.bind(styles);
 
 interface OverføringsdagerPanelProps {
   type: Overføringstype;
@@ -56,31 +58,22 @@ const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = (
   behandlingVersjon,
   overføringer,
 }) => {
-  // const feltnavn = useMemo(() => {
-  //   const retningstekst = retning === OverføringsretningEnum.INN ? 'Får' : 'Gir';
-  //   return `${type}${retningstekst}`;
-  // }, [type, retning]);
   const totaltAntallDager = useMemo(() => summerDager(overføringer), [overføringer]);
 
   return (
-    <EkspanderbartPanel tittel={renderTittel(type, retning, totaltAntallDager)}>
-      <OverføringsraderForm
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        retning={retning}
-        type={type}
-        oppdaterOverføringer={() => {}}
-        initialValues={overføringer}
-      />
-    </EkspanderbartPanel>
+    <div className={classNames({ koronapanel: type === OverføringstypeEnum.KORONAOVERFØRING })}>
+      <EkspanderbartPanel tittel={renderTittel(type, retning, totaltAntallDager)}>
+        <OverføringsraderForm
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          retning={retning}
+          type={type}
+          oppdaterOverføringer={() => {}}
+          initialValues={overføringer}
+        />
+      </EkspanderbartPanel>
+    </div>
   );
-  // return (
-  //   <EkspanderbartPanel tittel={renderTittel(type, retning, totaltAntallDager)}>
-  //     <FlexRow childrenMargin>
-  //       <FieldArray name={feltnavn} component={Overføringsrader} props={{ type }} />
-  //     </FlexRow>
-  //   </EkspanderbartPanel>
-  // );
 };
 
 export default OverføringsdagerPanel;

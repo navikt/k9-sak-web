@@ -7,7 +7,7 @@ import classnames from 'classnames/bind';
 import LeggTilKnapp from '@fpsak-frontend/shared-components/src/LeggTilKnapp';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import blyantIkon from '@fpsak-frontend/assets/images/endre.svg';
-import { Flatknapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
 import Overføring, { Overføringsretning, OverføringsretningEnum, Overføringstype } from '../types/Overføring';
 import { typeTilTekstIdMap } from './OverføringsdagerPanel';
@@ -133,7 +133,19 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
         )}
       </div>
 
-      {redigerer && <LeggTilKnapp onClick={leggTilRad} tekstId="FaktaRammevedtak.Overføring.LeggTil" />}
+      {redigerer && (
+        <FlexRow spaceBetween className={styles.knappseksjon}>
+          <LeggTilKnapp onClick={leggTilRad} tekstId="FaktaRammevedtak.Overføring.LeggTil" />
+          <div className={styles.bekreftKnapper}>
+            <Hovedknapp onClick={() => {}} mini htmlType="button">
+              <FormattedMessage id="FaktaRammevedtak.Overføring.Bekreft" />
+            </Hovedknapp>
+            <Knapp onClick={() => {}} mini htmlType="button">
+              <FormattedMessage id="FaktaRammevedtak.Overføring.Avbryt" />
+            </Knapp>
+          </div>
+        </FlexRow>
+      )}
     </div>
   );
 };

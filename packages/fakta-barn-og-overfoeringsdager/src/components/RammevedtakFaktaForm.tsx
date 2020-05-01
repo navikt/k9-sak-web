@@ -94,13 +94,6 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           <VerticalSpacer sixteenPx />
         </>
       )}
-      {!(barn.length || barnLagtTilAvSaksbehandler.length) && <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />}
-      <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
-      <FieldArray
-        name="barnLagtTilAvSaksbehandler"
-        component={BarnLagtTilAvSaksbehandler}
-        props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
-      />
       <OverføringsdagerPanelgruppe
         overføringer={overføringFår}
         fordelinger={fordelingFår}
@@ -117,6 +110,13 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         retning={OverføringsretningEnum.UT}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
+      />
+      {!(barn.length || barnLagtTilAvSaksbehandler.length) && <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />}
+      <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
+      <FieldArray
+        name="barnLagtTilAvSaksbehandler"
+        component={BarnLagtTilAvSaksbehandler}
+        props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
       />
       <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />
       {!pristine && (

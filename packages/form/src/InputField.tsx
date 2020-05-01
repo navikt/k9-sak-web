@@ -1,4 +1,4 @@
-import { Input as NavInput, NavFrontendInputProps } from 'nav-frontend-skjema';
+import { Input as NavInput, InputProps as NavFrontendInputProps } from 'nav-frontend-skjema';
 import React from 'react';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';

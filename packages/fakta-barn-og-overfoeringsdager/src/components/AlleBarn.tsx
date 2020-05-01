@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { WrappedFieldArrayProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import Hovedknapp from 'nav-frontend-knapper/lib/hovedknapp';
 import { guid } from 'nav-frontend-js-utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
+import { LeggTilKnapp, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { Undertittel } from 'nav-frontend-typografi';
 import BarnInput from './BarnInput';
 import { BarnHentetAutomatisk, BarnLagtTilAvSakbehandler } from '../types/Barn';
@@ -64,9 +63,8 @@ export const BarnLagtTilAvSaksbehandler: FunctionComponent<
         />
       ))}
       <VerticalSpacer sixteenPx />
-      <Hovedknapp
-        mini
-        htmlType="button"
+      <LeggTilKnapp
+        tekstId="FaktaRammevedtak.Barn.LeggTil"
         onClick={() =>
           fields.push({
             id: guid(),
@@ -74,9 +72,7 @@ export const BarnLagtTilAvSaksbehandler: FunctionComponent<
           })
         }
         disabled={readOnly}
-      >
-        <FormattedMessage id="FaktaRammevedtak.Barn.LeggTil" />
-      </Hovedknapp>
+      />
     </>
   );
 };

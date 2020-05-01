@@ -9,10 +9,11 @@ import styles from './leggTilKnapp.less';
 interface LeggTilKnappProps {
   onClick: VoidFunction;
   tekstId: string;
+  disabled?: boolean;
 }
 
-const LeggTilKnapp: FunctionComponent<LeggTilKnappProps> = ({ onClick, tekstId }) => (
-  <Flatknapp mini kompakt onClick={onClick} htmlType="button">
+const LeggTilKnapp: FunctionComponent<LeggTilKnappProps> = ({ onClick, tekstId, disabled = false }) => (
+  <Flatknapp mini kompakt onClick={onClick} htmlType="button" disabled={disabled}>
     <Image className={styles.marginRight} src={addCircleIcon} />
     <Normaltekst>
       <FormattedMessage id={tekstId} />
