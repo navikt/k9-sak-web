@@ -18,10 +18,9 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
 const formName = 'BeregningForm';
 
-export const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
+export const andelErIkkeTilkommetEllerLagtTilAvSBH = andel => {
   // Andelen er fastsatt før og må kunne fastsettes igjen
   if (andel.overstyrtPrAar !== null && andel.overstyrtPrAar !== undefined) {
     return true;
@@ -31,21 +30,21 @@ export const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
   return andel.erTilkommetAndel === false && andel.lagtTilAvSaksbehandler === false;
 };
 
-const finnAndelerSomSkalVises = (andeler) => {
+const finnAndelerSomSkalVises = andeler => {
   if (!andeler) {
     return [];
   }
 
   return andeler
-    .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
-    .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
+    .filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+    .filter(andel => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
 
-const beregnbruttoFastsattInntekt = (overstyrteInntekter) => {
+const beregnbruttoFastsattInntekt = overstyrteInntekter => {
   if (!overstyrteInntekter || overstyrteInntekter.length === 0) return null;
   return overstyrteInntekter.reduce((sum, andel) => sum + andel, 0);
 };
-const createArbeidsPeriodeText = (arbeidsforhold) => {
+const createArbeidsPeriodeText = arbeidsforhold => {
   const periodeArr = [];
 
   if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'startdato') && arbeidsforhold.startdato) {
@@ -58,8 +57,7 @@ const createArbeidsPeriodeText = (arbeidsforhold) => {
   return periodeArr.join(' ');
 };
 
-
-const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
+const createArbeidsStillingsNavnOgProsent = arbeidsforhold => {
   // TODO: her må stillingsnavn og stillingsprosent hentes når vi får disse dataene fra backend
   const stillingArr = [''];
   if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'stillingsNavn') && arbeidsforhold.stillingsNavn) {
@@ -74,9 +72,16 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
   return ' ';
 };
 
+const månedsinntekt = årsinntekt => {
+  if (!årsinntekt) {
+    return 0;
+  }
+  return årsinntekt / 12;
+};
+
 const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
-  const beregnetMaanedsinntekt = beregnetAarsinntekt ? beregnetAarsinntekt / 12 : 0;
+  const beregnetMaanedsinntekt = månedsinntekt(beregnetAarsinntekt);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment
@@ -89,46 +94,47 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) =
           </Normaltekst>
         </Column>
 
-        <Column key={`ColBrgMnd${andel.arbeidsforhold.arbeidsgiverId}`} xs="2" className={beregningStyles.colMaanedText}>
+        <Column
+          key={`ColBrgMnd${andel.arbeidsforhold.arbeidsgiverId}`}
+          xs="2"
+          className={beregningStyles.colMaanedText}
+        >
           <Normaltekst key={`ColBrgMndTxt${andel.arbeidsforhold.arbeidsgiverId}`}>
-            {formatCurrencyNoKr(andel.beregnetPrAar / 12)}
+            {formatCurrencyNoKr(månedsinntekt(andel.beregnetPrAar))}
           </Normaltekst>
         </Column>
         <Column key={`ColBrgAar${andel.arbeidsforhold.arbeidsgiverId}`} xs="2" className={beregningStyles.colAarText}>
-          <Normaltekst key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`} className={!harFlereArbeidsforhold ? beregningStyles.semiBoldText : ''}>
+          <Normaltekst
+            key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`}
+            className={!harFlereArbeidsforhold ? beregningStyles.semiBoldText : ''}
+          >
             {formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>
         <Column xs="1" key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colLink}>
-          {userIdent && (
-          <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />
-          )}
+          {userIdent && <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />}
         </Column>
       </Row>
       <FlexRow key={`indexD${andel.arbeidsforhold.arbeidsgiverId}`}>
         {andel.arbeidsforhold && andel.arbeidsforhold.stillingsNavn && (
           <FlexColumn>
-            <Normaltekst>
-              {createArbeidsStillingsNavnOgProsent(andel.arbeidsforhold)}
-            </Normaltekst>
+            <Normaltekst>{createArbeidsStillingsNavnOgProsent(andel.arbeidsforhold)}</Normaltekst>
           </FlexColumn>
         )}
         {andel.arbeidsforhold && andel.arbeidsforhold.startdato && (
-        <FlexColumn>
-          <Undertekst>
-            {createArbeidsPeriodeText(andel.arbeidsforhold)}
-          </Undertekst>
-        </FlexColumn>
+          <FlexColumn>
+            <Undertekst>{createArbeidsPeriodeText(andel.arbeidsforhold)}</Undertekst>
+          </FlexColumn>
         )}
         {andel.erTidsbegrensetArbeidsforhold && (
-        <FlexColumn>
-          <EtikettLiten>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Tidsbegrenset" />
-          </EtikettLiten>
-        </FlexColumn>
+          <FlexColumn>
+            <EtikettLiten>
+              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Tidsbegrenset" />
+            </EtikettLiten>
+          </FlexColumn>
         )}
       </FlexRow>
-      {(index < relevanteAndeler.length) && (
+      {index < relevanteAndeler.length && (
         <Row key={`indexSp${andel.arbeidsforhold.arbeidsgiverId}`}>
           <VerticalSpacer eightPx />
         </Row>
@@ -144,18 +150,13 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) =
           </Column>
         </Row>
         <Row>
-          <Column xs="7"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
-          <Column
-            key="ColBBgMnd"
-            xs="2"
-            className={beregningStyles.colMaanedText}
-          >
+          <Column xs="7">
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" />
+          </Column>
+          <Column key="ColBBgMnd" xs="2" className={beregningStyles.colMaanedText}>
             <Normaltekst>{formatCurrencyNoKr(beregnetMaanedsinntekt)}</Normaltekst>
           </Column>
-          <Column
-            className={beregningStyles.colAarText}
-            xs="2"
-          >
+          <Column className={beregningStyles.colAarText} xs="2">
             <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
           </Column>
           <Column className={beregningStyles.colLink} />
@@ -173,11 +174,7 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) =
  * Presentasjonskomponent. Viser beregningsgrunnlagstabellen for arbeidstakere.
  * Vises også hvis status er en kombinasjonsstatus som inkluderer arbeidstaker.
  */
-export const GrunnlagForAarsinntektPanelATImpl = ({
-  alleAndeler,
-  allePerioder,
-  getKodeverknavn,
-}) => {
+export const GrunnlagForAarsinntektPanelATImpl = ({ alleAndeler, allePerioder, getKodeverknavn }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   if (!relevanteAndeler || relevanteAndeler.length === 0) return null;
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
@@ -190,11 +187,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
           </Element>
         </FlexColumn>
-        <FlexColumn>
-          {userIdent && (
-            <LinkTilEksterntSystem linkText="Aa" userIdent={userIdent} type="Aa" />
-          )}
-        </FlexColumn>
+        <FlexColumn>{userIdent && <LinkTilEksterntSystem linkText="Aa" userIdent={userIdent} type="Aa" />}</FlexColumn>
       </FlexRow>
       <VerticalSpacer eightPx />
       <Row key="Header">
@@ -213,9 +206,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
       </Row>
       {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn, userIdent)}
 
-      <NaturalytelsePanel2
-        allePerioder={allePerioder}
-      />
+      <NaturalytelsePanel2 allePerioder={allePerioder} />
     </>
   );
 };
@@ -232,15 +223,15 @@ GrunnlagForAarsinntektPanelATImpl.defaultProps = {
 
 const mapStateToProps = (state, initialProps) => {
   const getKodeverknavn = getKodeverknavnFn(initialProps.alleKodeverk, kodeverkTyper);
-  const {
-    alleAndeler, behandlingId, behandlingVersjon, readOnlySubmitButton,
-  } = initialProps;
+  const { alleAndeler, behandlingId, behandlingVersjon, readOnlySubmitButton } = initialProps;
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const overstyrteInntekter = relevanteAndeler.map((inntekt, index) => {
-    const overstyrtInntekt = behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
-      state, `inntekt${index}`,
-    );
-    return (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt);
+    const overstyrtInntekt = behandlingFormValueSelector(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+    )(state, `inntekt${index}`);
+    return overstyrtInntekt === undefined || overstyrtInntekt === '' ? 0 : removeSpacesFromNumber(overstyrtInntekt);
   });
   const bruttoFastsattInntekt = beregnbruttoFastsattInntekt(overstyrteInntekter);
   return {
@@ -254,14 +245,13 @@ const mapStateToProps = (state, initialProps) => {
 
 const GrunnlagForAarsinntektPanelAT = connect(mapStateToProps)(GrunnlagForAarsinntektPanelATImpl);
 
-GrunnlagForAarsinntektPanelAT.buildInitialValues = (alleAndeler) => {
+GrunnlagForAarsinntektPanelAT.buildInitialValues = alleAndeler => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
-  const initialValues = { };
+  const initialValues = {};
   relevanteAndeler.forEach((inntekt, index) => {
     initialValues[`inntekt${index}`] = formatCurrencyNoKr(inntekt.overstyrtPrAar);
   });
   return initialValues;
 };
-
 
 export default injectIntl(GrunnlagForAarsinntektPanelAT);

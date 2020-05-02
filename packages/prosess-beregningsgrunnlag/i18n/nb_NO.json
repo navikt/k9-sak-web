@@ -2,7 +2,7 @@
   "Beregningsgrunnlag.Title.Beregning": "Grunnlag for beregning",
   "Beregningsgrunnlag.Title.Fastsettelse": "Fastsettelse",
   "Beregningsgrunnlag.Title": "Beregning",
-  "Beregningsgrunnlag.HarIkkeBeregningsregler": "Har ikke beregningsregler (trer i kraft 1 jan. 2019)",
+  "Beregningsgrunnlag.HarIkkeBeregningsregler": "Har ikke beregningsgrunnlag",
   "Beregningsgrunnlag.SakTilInfo": "Sak overført til Infotrygd",
   "Beregningsgrunnlag.Helptext.Arbeidstaker2": "<b>{verdi}% avvik -</b> Det er mer enn 25% avvik mellom beregnet årsinntekt og sammenligningsgrunnlaget. Fastsett brutto årsinntekt skjønnsmessig",
   "Beregningsgrunnlag.Helptext.Arbeidstaker": "Det er {verdi}% avvik mellom beregnet årsinntekt og sammenlikningsgrunnlaget. Fastsett brutto beregningsgrunnlag (årsinntekt)",
