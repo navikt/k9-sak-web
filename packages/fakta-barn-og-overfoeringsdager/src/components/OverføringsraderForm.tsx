@@ -1,7 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { connect } from 'react-redux';
-import { FieldArray, InjectedFormProps, ConfigProps } from 'redux-form';
-import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
+import { FormAction } from 'redux-form/lib/actions';
+import { bindActionCreators } from 'redux';
+import { FieldArray, InjectedFormProps, ConfigProps, change } from 'redux-form';
+import { behandlingForm, getBehandlingFormValues } from '@fpsak-frontend/form/src/behandlingForm';
 import Overføring, { Overføringsretning, Overføringstype } from '../types/Overføring';
 import { rammevedtakFormName } from './RammevedtakFaktaForm';
 import RedigerOverføringsrader from './RedigerOverføringsrader';
@@ -10,7 +12,15 @@ interface OverføringsraderFormImplProps {
   type: Overføringstype;
   retning: Overføringsretning;
   readOnly: boolean;
-  rediger: VoidFunction;
+  rediger: (redigerer: boolean) => void;
+  formValues: OverføringsraderFormValues;
+  changeForm?: (
+    form: string,
+    field: string,
+    value: any,
+    touch?: boolean,
+    persistentSubmitErrors?: boolean,
+  ) => FormAction;
 }
 
 const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & OverføringsraderFormImplProps> = ({
@@ -19,12 +29,25 @@ const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & Overføri
   readOnly,
   rediger,
   handleSubmit,
+  formValues,
+  changeForm,
+  form,
 }) => {
+  const [overføringerVedRediger, setOverføringerVedRediger] = useState(null);
+  const redigerKopierFormState = () => {
+    rediger(true);
+    setOverføringerVedRediger(formValues.overføringer);
+  };
+  const avbryt = () => {
+    rediger(false);
+    changeForm(form, 'overføringer', overføringerVedRediger);
+  };
+
   return (
     <FieldArray
       name="overføringer"
       component={RedigerOverføringsrader}
-      props={{ rediger, type, retning, readOnly, bekreft: handleSubmit }}
+      props={{ rediger: redigerKopierFormState, type, retning, readOnly, bekreft: handleSubmit, avbryt }}
     />
   );
 };
@@ -40,32 +63,56 @@ interface OverføringsraderFormProps {
   rediger(redigerer: boolean): void;
 }
 
-interface OverføringsraderForm {
+interface OverføringsraderFormValues {
   overføringer: Overføring[];
 }
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: OverføringsraderFormProps) => {
   const { type, retning, oppdaterOverføringer, initialValues } = initialOwnProps;
   const formName = `${rammevedtakFormName}-${type}-${retning}`;
-  return (state, { rediger }: OverføringsraderFormProps): ConfigProps & Partial<OverføringsraderFormImplProps> => {
-    const onSubmit = ({ overføringer }: OverføringsraderForm) => {
+
+  return (
+    state,
+    { rediger, behandlingId, behandlingVersjon }: OverføringsraderFormProps,
+  ): ConfigProps<OverføringsraderFormValues> & Partial<OverføringsraderFormImplProps> => {
+    const onSubmit = ({ overføringer }: OverføringsraderFormValues) => {
       oppdaterOverføringer(
         overføringer.map(overføring => ({ ...overføring, antallDager: Number(overføring.antallDager) })),
       );
       rediger(false);
     };
+
+    // @ts-ignore
+    const formValues: OverføringsraderFormValues = getBehandlingFormValues(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+    )(state);
+
     return {
       form: formName,
       onSubmit,
       initialValues: {
         overføringer: initialValues,
       },
-      rediger: () => rediger(true),
+      rediger,
+      formValues,
     };
   };
 };
 
-const OverføringsraderForm: FunctionComponent<OverføringsraderFormProps> = connect(mapStateToPropsFactory)(
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      changeForm: change,
+    },
+    dispatch,
+  );
+
+const OverføringsraderForm: FunctionComponent<OverføringsraderFormProps> = connect(
+  mapStateToPropsFactory,
+  mapDispatchToProps,
+)(
   // @ts-ignore
   behandlingForm({
     enableReinitialize: true,

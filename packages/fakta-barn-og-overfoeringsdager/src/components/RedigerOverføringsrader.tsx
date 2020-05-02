@@ -23,6 +23,7 @@ interface RedigerOverføringsraderProps {
   readOnly: boolean;
   rediger: VoidFunction;
   bekreft: VoidFunction;
+  avbryt: VoidFunction;
 }
 
 const retningTilTekstIdMap = {
@@ -63,6 +64,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
   readOnly,
   rediger,
   bekreft,
+  avbryt,
 }) => {
   const leggTilRad = () =>
     fields.push({
@@ -146,7 +148,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
             <Hovedknapp onClick={bekreft} mini htmlType="button">
               <FormattedMessage id="FaktaRammevedtak.Overføring.Bekreft" />
             </Hovedknapp>
-            <Knapp onClick={() => {}} mini htmlType="button">
+            <Knapp onClick={avbryt} mini htmlType="button">
               <FormattedMessage id="FaktaRammevedtak.Overføring.Avbryt" />
             </Knapp>
           </div>
