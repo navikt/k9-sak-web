@@ -34,6 +34,8 @@
   "FaktaRammevedtak.Tilbakestill": "Tilbakestill",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.InvalidDate": "Dato må skrives slik : dd.mm.åååå",
+  "ValidationMessage.InvalidNumber": "Feltet kan kun inneholde tall",
+  "ValidationMessage.InvalidInteger": "Tallet kan ikke ha desimaler",
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",
   "Calendar.Day.2": "tirsdag",

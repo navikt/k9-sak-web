@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useMemo } from 'react';
-import { FieldArray, InjectedFormProps, reset } from 'redux-form';
+import { FieldArray, InjectedFormProps, reset, change } from 'redux-form';
+import { FormAction } from 'redux-form/lib/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -31,6 +32,13 @@ interface RammevedtakFaktaFormProps {
   readOnly?: boolean;
   formValues?: FormValues;
   resetForm?: (formName: string) => void;
+  changeForm?: (
+    form: string,
+    field: string,
+    value: any,
+    touch?: boolean,
+    persistentSubmitErrors?: boolean,
+  ) => FormAction;
 }
 
 export const rammevedtakFormName = 'rammevedtakFormName';
@@ -44,6 +52,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
   behandlingId,
   behandlingVersjon,
   readOnly,
+  changeForm,
 }) => {
   const { utvidetRett, uidentifiserteRammevedtak = [] } = omsorgsdagerGrunnlag;
   const utvidetRettUidentifiserteBarnAntall = useMemo(
@@ -55,8 +64,9 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
     return null;
   }
 
-  const tilbakestill = () =>
-    resetForm(`${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${rammevedtakFormName}`);
+  const formName = `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${rammevedtakFormName}`;
+  const oppdaterForm = (felt, nyVerdi) => changeForm(formName, felt, nyVerdi);
+  const tilbakestill = () => resetForm(formName);
 
   const {
     barn,
@@ -101,6 +111,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         retning={OverføringsretningEnum.INN}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
+        oppdaterForm={oppdaterForm}
       />
       <VerticalSpacer thirtyTwoPx />
       <OverføringsdagerPanelgruppe
@@ -110,6 +121,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         retning={OverføringsretningEnum.UT}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
+        oppdaterForm={oppdaterForm}
       />
       {!(barn.length || barnLagtTilAvSaksbehandler.length) && <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />}
       <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
@@ -188,6 +200,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       resetForm: reset,
+      changeForm: change,
     },
     dispatch,
   );

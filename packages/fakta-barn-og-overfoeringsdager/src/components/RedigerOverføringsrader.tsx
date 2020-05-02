@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useState, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { InputField } from '@fpsak-frontend/form/index';
 import { WrappedFieldArrayProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import classnames from 'classnames/bind';
+import { required, hasValidInteger } from '@fpsak-frontend/utils';
 import LeggTilKnapp from '@fpsak-frontend/shared-components/src/LeggTilKnapp';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import blyantIkon from '@fpsak-frontend/assets/images/endre.svg';
@@ -19,6 +20,9 @@ const classNames = classnames.bind(styles);
 interface RedigerOverføringsraderProps {
   type: Overføringstype;
   retning: Overføringsretning;
+  readOnly: boolean;
+  rediger: VoidFunction;
+  bekreft: VoidFunction;
 }
 
 const retningTilTekstIdMap = {
@@ -56,8 +60,10 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
   fields,
   type,
   retning,
+  readOnly,
+  rediger,
+  bekreft,
 }) => {
-  const [redigerer, setRedigerer] = useState<boolean>(false);
   const leggTilRad = () =>
     fields.push({
       kilde: 'lagtTilAvSaksbehandler',
@@ -74,7 +80,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
           kompakt
           onClick={() => {
             leggTilRad();
-            setRedigerer(true);
+            rediger();
           }}
           htmlType="button"
         >
@@ -94,9 +100,15 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
         {fields.map(field => (
           // TODO: Mulig field som key kan gi feil hvis man sletter en rad, siden da vil raden under få samme key plutselig?
           <div key={field} className={styles.rad}>
-            <span className={classNames('col20prosent', 'dagerInputContainer', { paddingTop: !redigerer })}>
-              <span className={classNames({ dagerInput: redigerer })}>
-                <InputField name={`${field}.antallDager`} readOnly={!redigerer} label={null} type="number" />
+            <span className={classNames('col20prosent', 'dagerInputContainer', { paddingTop: !readOnly })}>
+              <span className={classNames({ dagerInput: readOnly })}>
+                <InputField
+                  name={`${field}.antallDager`}
+                  readOnly={!readOnly}
+                  label={null}
+                  type="number"
+                  validate={[required, hasValidInteger]}
+                />
               </span>
               <span>
                 <FormattedMessage id="FaktaRammevedtak.Overføringsdager.Dager" />
@@ -112,19 +124,13 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
             <span className={styles.col20prosent}>
               <Pil retning={retning} />
             </span>
-            <span className={classNames('col20prosent', { paddingTop: !redigerer })}>
-              <InputField name={`${field}.mottakerAvsenderFnr`} readOnly={!redigerer} />
+            <span className={classNames('col20prosent', { paddingTop: !readOnly })}>
+              <InputField name={`${field}.mottakerAvsenderFnr`} readOnly={!readOnly} />
             </span>
           </div>
         ))}
-        {!redigerer && (
-          <Flatknapp
-            mini
-            kompakt
-            onClick={() => setRedigerer(true)}
-            htmlType="button"
-            className={styles.alignCenterRight}
-          >
+        {!readOnly && (
+          <Flatknapp mini kompakt onClick={rediger} htmlType="button" className={styles.alignCenterRight}>
             <Image className={styles.marginRight} src={blyantIkon} />
             <Normaltekst>
               <FormattedMessage id="FaktaRammevedtak.Overføring.Rediger" />
@@ -133,11 +139,11 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
         )}
       </div>
 
-      {redigerer && (
+      {readOnly && (
         <FlexRow spaceBetween className={styles.knappseksjon}>
           <LeggTilKnapp onClick={leggTilRad} tekstId="FaktaRammevedtak.Overføring.LeggTil" />
           <div className={styles.bekreftKnapper}>
-            <Hovedknapp onClick={() => {}} mini htmlType="button">
+            <Hovedknapp onClick={bekreft} mini htmlType="button">
               <FormattedMessage id="FaktaRammevedtak.Overføring.Bekreft" />
             </Hovedknapp>
             <Knapp onClick={() => {}} mini htmlType="button">

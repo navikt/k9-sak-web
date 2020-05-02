@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import classnames from 'classnames/bind';
@@ -21,6 +21,7 @@ interface OverføringsdagerPanelProps {
   overføringer: Overføring[];
   behandlingId: number;
   behandlingVersjon: number;
+  oppdaterOverføringer(overføringer: Overføring[]): void;
 }
 
 export const typeTilTekstIdMap = {
@@ -57,8 +58,10 @@ const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = (
   behandlingId,
   behandlingVersjon,
   overføringer,
+  oppdaterOverføringer,
 }) => {
   const totaltAntallDager = useMemo(() => summerDager(overføringer), [overføringer]);
+  const [redigerer, setRedigerer] = useState<boolean>(false);
 
   return (
     <div className={classNames({ koronapanel: type === OverføringstypeEnum.KORONAOVERFØRING })}>
@@ -68,8 +71,10 @@ const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = (
           behandlingVersjon={behandlingVersjon}
           retning={retning}
           type={type}
-          oppdaterOverføringer={() => {}}
+          oppdaterOverføringer={oppdaterOverføringer}
           initialValues={overføringer}
+          readOnly={redigerer}
+          rediger={setRedigerer}
         />
       </EkspanderbartPanel>
     </div>
