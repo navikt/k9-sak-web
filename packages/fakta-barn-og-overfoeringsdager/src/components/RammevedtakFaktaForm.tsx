@@ -21,8 +21,9 @@ import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
 import FormValues from '../types/FormValues';
 import BegrunnBekreftTilbakestillSeksjon from './BegrunnBekreftTilbakestillSeksjon';
 import MidlertidigAlene from './MidlertidigAlene';
-import { OverføringsretningEnum } from '../types/Overføring';
+import { OverføringsretningEnum, OverføringstypeEnum } from '../types/Overføring';
 import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
+import { overføringerFormName, rammevedtakFormName } from './formNames';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -40,8 +41,6 @@ interface RammevedtakFaktaFormProps {
     persistentSubmitErrors?: boolean,
   ) => FormAction;
 }
-
-export const rammevedtakFormName = 'rammevedtakFormName';
 
 const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
   omsorgsdagerGrunnlag,
@@ -64,9 +63,17 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
     return null;
   }
 
-  const formName = `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${rammevedtakFormName}`;
+  const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
+  const formName = `${behandlingFormPrefix}.${rammevedtakFormName}`;
   const oppdaterForm = (felt, nyVerdi) => changeForm(formName, felt, nyVerdi);
-  const tilbakestill = () => resetForm(formName);
+  const tilbakestill = () => {
+    resetForm(formName);
+    Object.values(OverføringstypeEnum).forEach(type =>
+      Object.values(OverføringsretningEnum).forEach(retning => {
+        resetForm(`${behandlingFormPrefix}.${overføringerFormName(type, retning)}`);
+      }),
+    );
+  };
 
   const {
     barn,

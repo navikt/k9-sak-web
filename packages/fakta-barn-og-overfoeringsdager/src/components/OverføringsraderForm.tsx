@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { FieldArray, InjectedFormProps, ConfigProps, change } from 'redux-form';
 import { behandlingForm, getBehandlingFormValues } from '@fpsak-frontend/form/src/behandlingForm';
 import Overføring, { Overføringsretning, Overføringstype } from '../types/Overføring';
-import { rammevedtakFormName } from './RammevedtakFaktaForm';
+import { overføringerFormName } from './formNames';
 import RedigerOverføringsrader from './RedigerOverføringsrader';
 
 interface OverføringsraderFormImplProps {
@@ -69,7 +69,7 @@ interface OverføringsraderFormValues {
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: OverføringsraderFormProps) => {
   const { type, retning, oppdaterOverføringer, initialValues } = initialOwnProps;
-  const formName = `${rammevedtakFormName}-${type}-${retning}`;
+  const formName = overføringerFormName(type, retning);
 
   return (
     state,
