@@ -11,7 +11,7 @@ import RedigerOverføringsrader from './RedigerOverføringsrader';
 interface OverføringsraderFormImplProps {
   type: Overføringstype;
   retning: Overføringsretning;
-  readOnly: boolean;
+  redigerer: boolean;
   rediger: (redigerer: boolean) => void;
   formValues: OverføringsraderFormValues;
   changeForm?: (
@@ -26,7 +26,7 @@ interface OverføringsraderFormImplProps {
 const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & OverføringsraderFormImplProps> = ({
   type,
   retning,
-  readOnly,
+  redigerer,
   rediger,
   handleSubmit,
   formValues,
@@ -47,7 +47,7 @@ const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & Overføri
     <FieldArray
       name="overføringer"
       component={RedigerOverføringsrader}
-      props={{ rediger: redigerKopierFormState, type, retning, readOnly, bekreft: handleSubmit, avbryt }}
+      props={{ rediger: redigerKopierFormState, type, retning, redigerer, bekreft: handleSubmit, avbryt }}
     />
   );
 };
@@ -59,7 +59,7 @@ interface OverføringsraderFormProps {
   behandlingId: number;
   behandlingVersjon: number;
   oppdaterOverføringer: (overføringer: Overføring[]) => void;
-  readOnly: boolean;
+  redigerer: boolean;
   rediger(redigerer: boolean): void;
 }
 

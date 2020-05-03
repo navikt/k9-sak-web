@@ -73,7 +73,7 @@ const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = (
           type={type}
           oppdaterOverføringer={oppdaterOverføringer}
           initialValues={overføringer}
-          readOnly={redigerer}
+          redigerer={redigerer}
           rediger={setRedigerer}
         />
       </EkspanderbartPanel>

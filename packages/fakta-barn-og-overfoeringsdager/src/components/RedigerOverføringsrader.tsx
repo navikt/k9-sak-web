@@ -4,7 +4,7 @@ import { WrappedFieldArrayProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import classnames from 'classnames/bind';
-import { required, hasValidInteger } from '@fpsak-frontend/utils';
+import { required, hasValidInteger, hasValidFodselsnummerFormat } from '@fpsak-frontend/utils';
 import LeggTilKnapp from '@fpsak-frontend/shared-components/src/LeggTilKnapp';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import blyantIkon from '@fpsak-frontend/assets/images/endre.svg';
@@ -20,7 +20,7 @@ const classNames = classnames.bind(styles);
 interface RedigerOverføringsraderProps {
   type: Overføringstype;
   retning: Overføringsretning;
-  readOnly: boolean;
+  redigerer: boolean;
   rediger: VoidFunction;
   bekreft: VoidFunction;
   avbryt: VoidFunction;
@@ -61,7 +61,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
   fields,
   type,
   retning,
-  readOnly,
+  redigerer,
   rediger,
   bekreft,
   avbryt,
@@ -102,11 +102,11 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
         {fields.map(field => (
           // TODO: Mulig field som key kan gi feil hvis man sletter en rad, siden da vil raden under få samme key plutselig?
           <div key={field} className={styles.rad}>
-            <span className={classNames('col20prosent', 'dagerInputContainer', { paddingTop: !readOnly })}>
-              <span className={classNames({ dagerInput: readOnly })}>
+            <span className={classNames('col20prosent', 'dagerInputContainer')}>
+              <span className={classNames({ dagerInput: redigerer })}>
                 <InputField
                   name={`${field}.antallDager`}
-                  readOnly={!readOnly}
+                  readOnly={!redigerer}
                   label={null}
                   type="number"
                   validate={[required, hasValidInteger]}
@@ -123,15 +123,19 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
                 />
               </span>
             </span>
-            <span className={styles.col20prosent}>
+            <span className={classNames('col20prosent', { paddingTop: redigerer })}>
               <Pil retning={retning} />
             </span>
-            <span className={classNames('col20prosent', { paddingTop: !readOnly })}>
-              <InputField name={`${field}.mottakerAvsenderFnr`} readOnly={!readOnly} />
+            <span className={classNames('col20prosent')}>
+              <InputField
+                name={`${field}.mottakerAvsenderFnr`}
+                readOnly={!redigerer}
+                validate={[hasValidFodselsnummerFormat]}
+              />
             </span>
           </div>
         ))}
-        {!readOnly && (
+        {!redigerer && (
           <Flatknapp mini kompakt onClick={rediger} htmlType="button" className={styles.alignCenterRight}>
             <Image className={styles.marginRight} src={blyantIkon} />
             <Normaltekst>
@@ -141,7 +145,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
         )}
       </div>
 
-      {readOnly && (
+      {redigerer && (
         <FlexRow spaceBetween className={styles.knappseksjon}>
           <LeggTilKnapp onClick={leggTilRad} tekstId="FaktaRammevedtak.Overføring.LeggTil" />
           <div className={styles.bekreftKnapper}>

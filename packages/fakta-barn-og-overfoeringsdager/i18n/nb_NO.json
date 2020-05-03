@@ -37,6 +37,7 @@
   "ValidationMessage.InvalidDate": "Dato må skrives slik : dd.mm.åååå",
   "ValidationMessage.InvalidNumber": "Feltet kan kun inneholde tall",
   "ValidationMessage.InvalidInteger": "Tallet kan ikke ha desimaler",
+  "ValidationMessage.InvalidFodselsnummerFormat": "Feltet må være et fødselsnummer (11 siffer)",
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",
   "Calendar.Day.2": "tirsdag",
