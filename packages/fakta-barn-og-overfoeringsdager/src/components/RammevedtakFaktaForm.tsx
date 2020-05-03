@@ -22,8 +22,8 @@ import FormValues from '../types/FormValues';
 import BegrunnBekreftTilbakestillSeksjon from './BegrunnBekreftTilbakestillSeksjon';
 import MidlertidigAlene from './MidlertidigAlene';
 import { OverføringsretningEnum, OverføringstypeEnum } from '../types/Overføring';
-import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import { overføringerFormName, rammevedtakFormName } from './formNames';
+import OverføringContainer from './OverføringContainer';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -111,21 +111,13 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           <VerticalSpacer sixteenPx />
         </>
       )}
-      <OverføringsdagerPanelgruppe
-        overføringer={overføringFår}
-        fordelinger={fordelingFår}
-        koronaoverføringer={koronaoverføringFår}
-        retning={OverføringsretningEnum.INN}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        oppdaterForm={oppdaterForm}
-      />
-      <VerticalSpacer thirtyTwoPx />
-      <OverføringsdagerPanelgruppe
-        overføringer={overføringGir}
-        fordelinger={fordelingGir}
-        koronaoverføringer={koronaoverføringGir}
-        retning={OverføringsretningEnum.UT}
+      <OverføringContainer
+        overføringFår={overføringFår}
+        overføringGir={overføringGir}
+        fordelingFår={fordelingFår}
+        fordelingGir={fordelingGir}
+        koronaoverføringFår={koronaoverføringFår}
+        koronaoverføringGir={koronaoverføringGir}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         oppdaterForm={oppdaterForm}
