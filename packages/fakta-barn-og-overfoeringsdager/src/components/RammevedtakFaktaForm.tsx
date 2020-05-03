@@ -15,6 +15,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { minLength, maxLength, required, hasValidText, hasValidDate } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form/index';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
 import OmsorgsdagerGrunnlagDto from '../dto/OmsorgsdagerGrunnlagDto';
 import { mapDtoTilFormValues, mapFormValuesTilDto } from '../dto/mapping';
 import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
@@ -23,7 +24,8 @@ import BegrunnBekreftTilbakestillSeksjon from './BegrunnBekreftTilbakestillSeksj
 import MidlertidigAlene from './MidlertidigAlene';
 import { OverføringsretningEnum, OverføringstypeEnum } from '../types/Overføring';
 import { overføringerFormName, rammevedtakFormName } from './formNames';
-import OverføringContainer from './OverføringContainer';
+import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
+import Seksjon from './Seksjon';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -111,25 +113,43 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           <VerticalSpacer sixteenPx />
         </>
       )}
-      <OverføringContainer
-        overføringFår={overføringFår}
-        overføringGir={overføringGir}
-        fordelingFår={fordelingFår}
-        fordelingGir={fordelingGir}
-        koronaoverføringFår={koronaoverføringFår}
-        koronaoverføringGir={koronaoverføringGir}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        oppdaterForm={oppdaterForm}
-      />
-      {!(barn.length || barnLagtTilAvSaksbehandler.length) && <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />}
-      <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
-      <FieldArray
-        name="barnLagtTilAvSaksbehandler"
-        component={BarnLagtTilAvSaksbehandler}
-        props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
-      />
-      <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />
+      <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.Overføringer.Tittel" imgSrc={transferIcon}>
+        <OverføringsdagerPanelgruppe
+          overføringer={overføringFår}
+          fordelinger={fordelingFår}
+          koronaoverføringer={koronaoverføringFår}
+          retning={OverføringsretningEnum.INN}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          oppdaterForm={oppdaterForm}
+        />
+        <VerticalSpacer thirtyTwoPx />
+        <OverføringsdagerPanelgruppe
+          overføringer={overføringGir}
+          fordelinger={fordelingGir}
+          koronaoverføringer={koronaoverføringGir}
+          retning={OverføringsretningEnum.UT}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          oppdaterForm={oppdaterForm}
+        />
+      </Seksjon>
+      <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={transferIcon}>
+        <>
+          {!(barn.length || barnLagtTilAvSaksbehandler.length) && (
+            <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />
+          )}
+          <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
+          <FieldArray
+            name="barnLagtTilAvSaksbehandler"
+            component={BarnLagtTilAvSaksbehandler}
+            props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
+          />
+        </>
+      </Seksjon>
+      <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.ErMidlertidigAlene.Tittel" imgSrc={transferIcon}>
+        <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />
+      </Seksjon>
       {!pristine && (
         <>
           <VerticalSpacer twentyPx />
