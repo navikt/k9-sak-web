@@ -103,96 +103,94 @@ interface OpptjeningTimeLineLightState {
   selectedPeriod?: TimelineItem;
 }
 
-const OpptjeningTimeLineLight = ({
-  opptjeningPeriods,
-  opptjeningFomDate,
-  opptjeningTomDate,
-}: OpptjeningTimeLineLightProps) => {
-  const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom) - new Date(b.fom));
-  const items = createItems(unsortedItems, opptjeningFomDate, opptjeningTomDate);
-  const [selectedPeriod, setSelectedPeriod] = useState<TimelineItem | undefined>(undefined);
-  const timelineRef = useRef();
+const OpptjeningTimeLineLight = React.memo(
+  ({ opptjeningPeriods, opptjeningFomDate, opptjeningTomDate }: OpptjeningTimeLineLightProps) => {
+    const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom) - new Date(b.fom));
+    const items = createItems(unsortedItems, opptjeningFomDate, opptjeningTomDate);
+    const [selectedPeriod, setSelectedPeriod] = useState<TimelineItem | undefined>(undefined);
+    const timelineRef = useRef();
 
-  useEffect(() => {
-    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
-    // eslint-disable-next-line react/no-find-dom-node
-    const node = ReactDOM.findDOMNode(timelineRef.current);
-    if (node) {
-      node.children[0].style.visibility = 'visible';
-    }
-  }, []);
+    useEffect(() => {
+      // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
+      // eslint-disable-next-line react/no-find-dom-node
+      const node = ReactDOM.findDOMNode(timelineRef.current);
+      if (node) {
+        node.children[0].style.visibility = 'visible';
+      }
+    }, []);
 
-  const selectHandler = eventProps => {
-    const selectedItem = items.find(item => item.id === eventProps.items[0]);
-    if (selectedItem) {
-      setSelectedPeriod(selectedItem);
-    }
-  };
+    const selectHandler = eventProps => {
+      const selectedItem = items.find(item => item.id === eventProps.items[0]);
+      if (selectedItem) {
+        setSelectedPeriod(selectedItem);
+      }
+    };
 
-  const openPeriodInfo = event => {
-    event.preventDefault();
-    const currentSelectedItem = selectedPeriod;
-    if (currentSelectedItem) {
-      setSelectedPeriod(null);
-    } else {
-      const selectedItem = items[0];
+    const openPeriodInfo = event => {
+      event.preventDefault();
+      const currentSelectedItem = selectedPeriod;
+      if (currentSelectedItem) {
+        setSelectedPeriod(null);
+      } else {
+        const selectedItem = items[0];
 
-      setSelectedPeriod(selectedItem);
-    }
-  };
+        setSelectedPeriod(selectedItem);
+      }
+    };
 
-  const selectNextPeriod = (event: React.FormEvent) => {
-    event.preventDefault();
-    const newIndex = items.findIndex(oa => oa.id === selectedPeriod.id) + 1;
-    if (newIndex < items.length - 2) {
-      setSelectedPeriod(items[newIndex]);
-    }
-  };
+    const selectNextPeriod = (event: React.FormEvent) => {
+      event.preventDefault();
+      const newIndex = items.findIndex(oa => oa.id === selectedPeriod.id) + 1;
+      if (newIndex < items.length - 2) {
+        setSelectedPeriod(items[newIndex]);
+      }
+    };
 
-  const selectPrevPeriod = (event: React.FormEvent) => {
-    event.preventDefault();
-    const newIndex = items.findIndex(oa => oa.id === selectedPeriod.id) - 1;
-    if (newIndex >= 0) {
-      setSelectedPeriod(items[newIndex]);
-    }
-  };
+    const selectPrevPeriod = (event: React.FormEvent) => {
+      event.preventDefault();
+      const newIndex = items.findIndex(oa => oa.id === selectedPeriod.id) - 1;
+      if (newIndex >= 0) {
+        setSelectedPeriod(items[newIndex]);
+      }
+    };
 
-  return (
-    <div className="opptjening">
-      <div className="timeLineLight">
-        <Row>
-          <Column xs="12">
-            <DateContainer
-              opptjeningFomDate={moment(opptjeningFomDate, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
-              opptjeningTomDate={moment(opptjeningTomDate, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
-            />
-            <div className={styles.timelineContainer}>
-              <div className={styles.timeLineWrapper}>
-                <div className={styles.timeLine}>
-                  <Timeline
-                    ref={timelineRef}
-                    options={options(opptjeningFomDate, opptjeningTomDate)}
-                    items={items}
-                    customTimes={{ currentDate: new Date(opptjeningTomDate) }}
-                    selectHandler={selectHandler}
-                    selection={[selectedPeriod ? selectedPeriod.id : undefined]}
-                  />
+    return (
+      <div className="opptjening">
+        <div className="timeLineLight">
+          <Row>
+            <Column xs="12">
+              <DateContainer
+                opptjeningFomDate={moment(opptjeningFomDate, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
+                opptjeningTomDate={moment(opptjeningTomDate, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
+              />
+              <div className={styles.timelineContainer}>
+                <div className={styles.timeLineWrapper}>
+                  <div className={styles.timeLine}>
+                    <Timeline
+                      ref={timelineRef}
+                      options={options(opptjeningFomDate, opptjeningTomDate)}
+                      items={items}
+                      customTimes={{ currentDate: new Date(opptjeningTomDate) }}
+                      selectHandler={selectHandler}
+                      selection={[selectedPeriod ? selectedPeriod.id : undefined]}
+                    />
+                  </div>
+                  <TimeLineNavigation openPeriodInfo={openPeriodInfo} />
+                  {selectedPeriod && (
+                    <TimeLineData
+                      selectedPeriod={selectedPeriod}
+                      selectNextPeriod={selectNextPeriod}
+                      selectPrevPeriod={selectPrevPeriod}
+                    />
+                  )}
                 </div>
-                <TimeLineNavigation openPeriodInfo={openPeriodInfo} />
-                {selectedPeriod && (
-                  <TimeLineData
-                    selectedPeriod={selectedPeriod}
-                    selectNextPeriod={selectNextPeriod}
-                    selectPrevPeriod={selectPrevPeriod}
-                  />
-                )}
               </div>
-            </div>
-          </Column>
-        </Row>
+            </Column>
+          </Row>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
 
 export default OpptjeningTimeLineLight;
