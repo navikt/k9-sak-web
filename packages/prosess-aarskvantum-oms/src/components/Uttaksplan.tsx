@@ -48,20 +48,18 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({ aktiviteter = [], akti
                 'Uttaksplan.Periode',
                 'Uttaksplan.Fravær',
                 'Uttaksplan.Utfall',
-                'Uttaksplan.Årsak',
                 'Uttaksplan.Utbetalingsgrad',
               ]}
               stripet
               noHover
             >
-              {uttaksperioder.map(({ periode, delvisFravær, utfall, årsak, utbetalingsgrad }) => (
+              {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad }) => (
                 <TableRow key={periode}>
                   <TableColumn>{periodevisning(periode)}</TableColumn>
                   <TableColumn>{formaterDelvisFravær(delvisFravær)}</TableColumn>
                   <TableColumn>
                     <FormattedMessage id={`Uttaksplan.Utfall.${utfall}`} />
                   </TableColumn>
-                  <TableColumn>{årsak}</TableColumn>
                   <TableColumn>{`${utbetalingsgrad}%`}</TableColumn>
                 </TableRow>
               ))}
