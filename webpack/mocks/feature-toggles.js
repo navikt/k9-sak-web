@@ -6,7 +6,7 @@ const toggles = {
     'k9sak.simuler-oppdrag-varseltekst': false,
     'k9sak.aktiver-tilbakekrevingbehandling': false,
     'k9sak.beslutt-tilbakekreving': false,
-    'fpsak.aktiver-klagebehandling': false,
+    'k9sak.aktiver-klagebehandling': false,
   },
 };
 if (process.env.FEATURE_TOGGLES) {
