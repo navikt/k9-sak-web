@@ -3,7 +3,6 @@ require('dotenv').config();
 const toggles = {
   featureToggles: {
     'fpsak.aksjonspunkt-marker-utenlandssak': false,
-    'fpsak.overstyr_beregningsgrunnlag': false,
     'k9sak.simuler-oppdrag-varseltekst': false,
     'k9sak.aktiver-tilbakekrevingbehandling': false,
     'k9sak.beslutt-tilbakekreving': false,
