@@ -68,4 +68,9 @@ jobs:
           CLUSTER: dev-fss
           RESOURCE: deploy/dev-fss.yml
 
-
+      - name: Deploy til produksjon
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.DEPLOY_KEY }}
+          CLUSTER: prod-fss
+          RESOURCE: deploy/prod-fss.yml
