@@ -70,7 +70,7 @@ jobs:
         if: success()
         shell: bash
         run: |
-          curl -XPOST -u "x-access-token:${{secrets.GITHUB_ACCESS_TOKEN}}" \
+          curl -XPOST -u "x-access-token:${{secrets.GA_P_TOKEN}}" \
           -H "Accept: application/vnd.github.everest-preview+json" \
           -H "Content-Type: application/json" \
           https://api.github.com/repos/navikt/k9-verdikjede/dispatches \
@@ -85,7 +85,7 @@ jobs:
         if: success()
         uses: actions/github-script@0.3.0
         with:
-          github-token: ${{secrets.GITHUB_ACCESS_TOKEN}}
+          github-token: ${{secrets.GA_P_TOKEN}}
           script: |
             const issue = { owner: context.issue.owner,
                             repo: context.issue.repo,

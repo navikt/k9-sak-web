@@ -6,11 +6,15 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 
-const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields) => {
+const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, isPeriodisertFormComplete) => {
   if ((!isDirty && !isSubmittable) || isSubmitting) {
     return true;
   }
-  return (!isDirty && hasEmptyRequiredFields) || hasEmptyRequiredFields;
+  return (
+    (!isDirty && hasEmptyRequiredFields) ||
+    hasEmptyRequiredFields ||
+    (isPeriodisertFormComplete !== undefined && !isPeriodisertFormComplete)
+  );
 };
 
 /**
@@ -23,19 +27,19 @@ export const BehandlingspunktSubmitButton = ({
   isDirty,
   hasEmptyRequiredFields,
   textCode,
+  isPeriodisertFormComplete,
 }) => (
   <>
-    {!isReadOnly
-      && (
+    {!isReadOnly && (
       <Hovedknapp
         mini
         spinner={isSubmitting}
-        disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields)}
+        disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, isPeriodisertFormComplete)}
         onClick={ariaCheck}
       >
         <FormattedMessage id={textCode} />
       </Hovedknapp>
-      )}
+    )}
   </>
 );
 
@@ -46,22 +50,29 @@ BehandlingspunktSubmitButton.propTypes = {
   isDirty: PropTypes.bool.isRequired,
   hasEmptyRequiredFields: PropTypes.bool.isRequired,
   textCode: PropTypes.string,
+  isPeriodisertFormComplete: PropTypes.bool,
 };
 
 BehandlingspunktSubmitButton.defaultProps = {
   textCode: 'SubmitButton.ConfirmInformation',
+  isPeriodisertFormComplete: undefined,
 };
 
 const mapStateToProps = (state, ownProps) => {
   const { behandlingId, behandlingVersjon } = ownProps;
   const fNames = ownProps.formNames ? ownProps.formNames : [ownProps.formName];
-  const formNames = fNames.map((f) => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
+  const formNames = fNames.map(f => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
   return {
-    isSubmitting: formNames.some((formName) => ownProps.isBehandlingFormSubmitting(formName, behandlingId, behandlingVersjon)(state)),
-    isDirty: ownProps.isDirty !== undefined
-      ? ownProps.isDirty : formNames.some((formName) => ownProps.isBehandlingFormDirty(formName, behandlingId, behandlingVersjon)(state)),
-    hasEmptyRequiredFields: formNames.some((formName) => ownProps
-      .hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())(state)),
+    isSubmitting: formNames.some(formName =>
+      ownProps.isBehandlingFormSubmitting(formName, behandlingId, behandlingVersjon)(state),
+    ),
+    isDirty:
+      ownProps.isDirty !== undefined
+        ? ownProps.isDirty
+        : formNames.some(formName => ownProps.isBehandlingFormDirty(formName, behandlingId, behandlingVersjon)(state)),
+    hasEmptyRequiredFields: formNames.some(formName =>
+      ownProps.hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())(state),
+    ),
   };
 };
 
