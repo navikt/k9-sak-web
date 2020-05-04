@@ -9,6 +9,8 @@ on:
       - master
 env:
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/k9-sak-web
+  CLUSTER: dev-fss
+  NAMESPACE: default
 jobs:
   deploy-docker-image:
     name: Deploy Docker image
@@ -47,6 +49,23 @@ jobs:
           docker push ${IMAGE}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Opprett deployment issue
+        if: success()
+        uses: maxkomarychev/oction-create-issue@v0.7.1
+        id: createdeployissue
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Deploy av ${{ env.TAG }}
+          labels: deployment
+          body: |
+            Kommenter med <b>/promote cluster namespace</b>, hvor <b>cluster</b> er et gyldig clusternavn og <b>namespace</b> et eksisterende namespace i det clusteret.
+            <table>
+            <tr><th>Cluster</th><th>Namespace</th></tr>
+            <tr><td>dev-fss</td><td>default</td></tr>
+            <tr><td>prod-fss</td><td>default</td></tr>
+            </table>
+
       - name: Trigger verdikjede test
         if: success()
         shell: bash
@@ -55,22 +74,22 @@ jobs:
           -H "Accept: application/vnd.github.everest-preview+json" \
           -H "Content-Type: application/json" \
           https://api.github.com/repos/navikt/k9-verdikjede/dispatches \
-          --data '{"event_type": "saksbehandling-verdikjede", 
+          --data '{"event_type": "saksbehandling-verdikjede",
                    "client_payload": {
                       "trigger": "${{ github.repository }}",
                       "version": "${{ env.TAG }}",
                       "image": "${{ env.IMAGE }}"
                   }}'
-      - name: Deploy til testmiljø
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.DEPLOY_KEY }}
-          CLUSTER: dev-fss
-          RESOURCE: deploy/dev-fss.yml
 
-      - name: Deploy til produksjon
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.DEPLOY_KEY }}
-          CLUSTER: prod-fss
-          RESOURCE: deploy/prod-fss.yml
+      - name: Trigg deploy til dev-fss
+        if: success()
+        uses: actions/github-script@0.3.0
+        with:
+          github-token: ${{secrets.GITHUB_ACCESS_TOKEN}}
+          script: |
+            const issue = { owner: context.issue.owner,
+                            repo: context.issue.repo,
+                            issue_number: ${{ steps.createdeployissue.outputs.number }} }
+            github.issues.createComment({...issue,
+                                    title: 'Deploy av ${{ env.TAG }}',
+                                    body: '/promote ${{ env.CLUSTER }} ${{ env.NAMESPACE }}'})
