@@ -9,6 +9,8 @@ on:
       - master
 env:
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/k9-sak-web
+  CLUSTER: dev-fss
+  NAMESPACE: default
 jobs:
   deploy-docker-image:
     name: Deploy Docker image
