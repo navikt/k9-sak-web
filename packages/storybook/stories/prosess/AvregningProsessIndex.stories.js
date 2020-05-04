@@ -124,7 +124,7 @@ const simuleringResultat = {
 };
 
 const toggles = {
-  'fpsak.simuler-oppdrag-varseltekst': true,
+  'k9sak.simuler-oppdrag-varseltekst': true,
 };
 
 export default {
