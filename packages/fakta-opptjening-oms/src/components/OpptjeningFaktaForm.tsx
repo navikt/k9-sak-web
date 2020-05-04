@@ -278,89 +278,90 @@ export class OpptjeningFaktaFormImpl extends Component<
             onChange={(e, clickedIndex) => this.setActiveTab(clickedIndex)}
           />
         )}
-
-        {hasAksjonspunkt && (
-          <>
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen={harApneAksjonspunkter}>
-              {getAksjonspunktHelpTexts(opptjeningAktivitetList)}
-            </AksjonspunktHelpTextTemp>
-            <VerticalSpacer twentyPx />
-          </>
-        )}
-        {dokStatus && (
-          <>
-            <AlertStripeInfo className={styles.info}>
-              <FormattedHTMLMessage
-                id={
-                  dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET
-                    ? 'OpptjeningFaktaForm.DetErInnhentetDok'
-                    : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'
-                }
+        <div className={opptjeningList.length > 1 ? styles.tabContainer : ''}>
+          {hasAksjonspunkt && (
+            <>
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen={harApneAksjonspunkter}>
+                {getAksjonspunktHelpTexts(opptjeningAktivitetList)}
+              </AksjonspunktHelpTextTemp>
+              <VerticalSpacer twentyPx />
+            </>
+          )}
+          {dokStatus && (
+            <>
+              <AlertStripeInfo className={styles.info}>
+                <FormattedHTMLMessage
+                  id={
+                    dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET
+                      ? 'OpptjeningFaktaForm.DetErInnhentetDok'
+                      : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'
+                  }
+                />
+              </AlertStripeInfo>
+              <VerticalSpacer twentyPx />
+            </>
+          )}
+          <Undertekst>
+            <FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" />
+          </Undertekst>
+          <Normaltekst>
+            <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom)} />
+          </Normaltekst>
+          <VerticalSpacer twentyPx />
+          <OpptjeningTimeLine
+            opptjeningPeriods={opptjeningAktivitetList}
+            opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+            selectPeriodCallback={this.setSelectedOpptjeningActivity}
+            opptjeningFomDato={opptjeningFom}
+            opptjeningTomDato={opptjeningTom}
+            selectedPeriod={selectedOpptjeningActivity}
+          />
+          <TimeLineNavigation openPeriodInfo={this.openPeriodInfo} className={styles.timelineNavigationContainer} />
+          <VerticalSpacer eightPx />
+          {selectedOpptjeningActivity && (
+            <>
+              <ActivityPanel
+                key={selectedOpptjeningActivity.id}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                activity={selectedOpptjeningActivity}
+                readOnly={readOnly}
+                opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+                cancelSelectedOpptjeningActivity={this.cancelSelectedOpptjeningActivity}
+                updateActivity={this.updateActivity}
+                opptjeningFomDato={opptjeningFom}
+                opptjeningTomDato={opptjeningTom}
+                selectNextPeriod={this.selectNextPeriod}
+                selectPrevPeriod={this.selectPrevPeriod}
+                hasAksjonspunkt={hasAksjonspunkt}
+                alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+                alleKodeverk={alleKodeverk}
               />
-            </AlertStripeInfo>
-            <VerticalSpacer twentyPx />
-          </>
-        )}
-        <Undertekst>
-          <FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" />
-        </Undertekst>
-        <Normaltekst>
-          <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom)} />
-        </Normaltekst>
-        <VerticalSpacer twentyPx />
-        <OpptjeningTimeLine
-          opptjeningPeriods={opptjeningAktivitetList}
-          opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-          selectPeriodCallback={this.setSelectedOpptjeningActivity}
-          opptjeningFomDato={opptjeningFom}
-          opptjeningTomDato={opptjeningTom}
-          selectedPeriod={selectedOpptjeningActivity}
-        />
-        <TimeLineNavigation openPeriodInfo={this.openPeriodInfo} className={styles.timelineNavigationContainer} />
-        <VerticalSpacer eightPx />
-        {selectedOpptjeningActivity && (
-          <>
-            <ActivityPanel
-              key={selectedOpptjeningActivity.id}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              activity={selectedOpptjeningActivity}
-              readOnly={readOnly}
-              opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-              cancelSelectedOpptjeningActivity={this.cancelSelectedOpptjeningActivity}
-              updateActivity={this.updateActivity}
-              opptjeningFomDato={opptjeningFom}
-              opptjeningTomDato={opptjeningTom}
-              selectNextPeriod={this.selectNextPeriod}
-              selectPrevPeriod={this.selectPrevPeriod}
-              hasAksjonspunkt={hasAksjonspunkt}
-              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-              alleKodeverk={alleKodeverk}
-            />
-            <VerticalSpacer twentyPx />
-          </>
-        )}
-        {hasAksjonspunkt && (
-          <FlexContainer>
-            <FlexRow>
-              <FlexColumn>
-                <Hovedknapp mini disabled={this.isConfirmButtonDisabled()} spinner={submitting}>
-                  <FormattedMessage id="OpptjeningFaktaForm.Confirm" />
-                </Hovedknapp>
-              </FlexColumn>
-              <FlexColumn>
-                <Knapp
-                  mini
-                  htmlType="button"
-                  onClick={this.addOpptjeningActivity}
-                  disabled={this.isAddButtonDisabled()}
-                >
-                  <FormattedMessage id="OpptjeningFaktaForm.AddActivity" />
-                </Knapp>
-              </FlexColumn>
-            </FlexRow>
-          </FlexContainer>
-        )}
+              <VerticalSpacer twentyPx />
+            </>
+          )}
+          {hasAksjonspunkt && (
+            <FlexContainer>
+              <FlexRow>
+                <FlexColumn>
+                  <Hovedknapp mini disabled={this.isConfirmButtonDisabled()} spinner={submitting}>
+                    <FormattedMessage id="OpptjeningFaktaForm.Confirm" />
+                  </Hovedknapp>
+                </FlexColumn>
+                <FlexColumn>
+                  <Knapp
+                    mini
+                    htmlType="button"
+                    onClick={this.addOpptjeningActivity}
+                    disabled={this.isAddButtonDisabled()}
+                  >
+                    <FormattedMessage id="OpptjeningFaktaForm.AddActivity" />
+                  </Knapp>
+                </FlexColumn>
+              </FlexRow>
+            </FlexContainer>
+          )}
+        </div>
       </div>
     );
   }
