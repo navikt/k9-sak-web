@@ -11,7 +11,7 @@ export default {
   component: ÅrskvantumIndex,
 };
 
-const vurderteVilkår: VurderteVilkår = {
+const vilkårInnvilget: VurderteVilkår = {
   [VilkårEnum.NOK_DAGER]: UtfallEnum.INNVILGET,
   [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
 };
@@ -32,14 +32,21 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
         uttaksperioder: [
           {
             utfall: UtfallEnum.INNVILGET,
-            vurderteVilkår,
+            vurderteVilkår: {
+              vilkår: vilkårInnvilget,
+            },
             delvisFravær: 'P2DT4H30M',
             periode: '2020-04-01/2020-04-30',
             utbetalingsgrad: 100,
           },
           {
-            utfall: UtfallEnum.INNVILGET,
-            vurderteVilkår,
+            utfall: UtfallEnum.UAVKLART,
+            vurderteVilkår: {
+              vilkår: {
+                ...vilkårInnvilget,
+                [VilkårEnum.UIDENTIFISERT_RAMMEVEDTAK]: UtfallEnum.UAVKLART,
+              },
+            },
             periode: '2020-03-01/2020-03-31',
             utbetalingsgrad: 50,
           },
@@ -54,7 +61,12 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
         uttaksperioder: [
           {
             utfall: UtfallEnum.AVSLÅTT,
-            vurderteVilkår,
+            vurderteVilkår: {
+              vilkår: {
+                ...vilkårInnvilget,
+                [VilkårEnum.NOK_DAGER]: UtfallEnum.AVSLÅTT,
+              },
+            },
             periode: '2020-03-01/2020-03-31',
             utbetalingsgrad: 0,
           },
