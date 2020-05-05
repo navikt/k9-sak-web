@@ -37,6 +37,21 @@ const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspun
 
 const getFormName = (overstyringApKode: string) => `VilkarresultatForm_${overstyringApKode}`;
 
+const getVilkarOkMessage = originalErVilkarOk => {
+  let messageId = 'VilkarresultatMedOverstyringForm.IkkeBehandlet';
+  if (originalErVilkarOk) {
+    messageId = 'VilkarresultatMedOverstyringForm.ErOppfylt';
+  } else if (originalErVilkarOk === false) {
+    messageId = 'VilkarresultatMedOverstyringForm.ErIkkeOppfylt';
+  }
+
+  return (
+    <Element>
+      <FormattedMessage id={messageId} />
+    </Element>
+  );
+};
+
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunktCodes: string[];
   aksjonspunkter: Aksjonspunkt[];
@@ -147,30 +162,8 @@ export const VilkarresultatMedOverstyringForm = ({
         </FlexRow>
         <FlexRow>
           <FlexColumn>
-            {originalErVilkarOk && (
-              <>
-                <VerticalSpacer eightPx />
-                <Element>
-                  <FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" />
-                </Element>
-              </>
-            )}
-            {originalErVilkarOk === false && (
-              <>
-                <VerticalSpacer eightPx />
-                <Element>
-                  <FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" />
-                </Element>
-              </>
-            )}
-            {originalErVilkarOk === undefined && (
-              <>
-                <VerticalSpacer eightPx />
-                <Normaltekst>
-                  <FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" />
-                </Normaltekst>
-              </>
-            )}
+            <VerticalSpacer eightPx />
+            {getVilkarOkMessage(originalErVilkarOk)}
           </FlexColumn>
           {originalErVilkarOk !== undefined &&
             !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (

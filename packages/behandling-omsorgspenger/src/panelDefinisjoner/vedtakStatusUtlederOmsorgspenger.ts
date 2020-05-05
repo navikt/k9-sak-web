@@ -18,22 +18,22 @@ const hasAksjonspunkt = ap =>
 
 const isAksjonspunktOpenAndOfType = ap => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status.kode);
 
+const harVilkårSomIkkeErOppfylt = vilkar =>
+  vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT));
+
+const harVilkårSomIkkeErVurdert = vilkar =>
+  vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT));
+
 const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat) => {
   if (vilkar.length === 0) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
-  if (
-    hasOnlyClosedAps(aksjonspunkter, vedtakAksjonspunkter) &&
-    vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT))
-  ) {
+  if (hasOnlyClosedAps(aksjonspunkter, vedtakAksjonspunkter) && harVilkårSomIkkeErOppfylt(vilkar)) {
     return vilkarUtfallType.IKKE_OPPFYLT;
   }
 
-  if (
-    vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT)) ||
-    aksjonspunkter.some(isAksjonspunktOpenAndOfType)
-  ) {
+  if (harVilkårSomIkkeErVurdert(vilkar) || aksjonspunkter.some(isAksjonspunktOpenAndOfType)) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
