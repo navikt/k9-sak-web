@@ -73,3 +73,13 @@ const getSisteLukkedeForsteEllerRevurd = createSelector([getBehandlinger], (beha
     && (b.type.kode === behandlingType.FORSTEGANGSSOKNAD || b.type.kode === behandlingType.REVURDERING)));
 
 export const getUuidForSisteLukkedeForsteEllerRevurd = createSelector([getSisteLukkedeForsteEllerRevurd], (behandling = {}) => behandling.uuid);
+
+const getGjeldendeVedtak = createSelector(
+  [getBehandlinger],
+  (behandlinger = []) => behandlinger.find(b => b.gjeldendeVedtak)
+);
+
+export const getBehandlendeEnhetIdOfGjeldendeVedtak = createSelector(
+  [getGjeldendeVedtak],
+  (behandling = {}) => behandling.behandlendeEnhetId
+);
