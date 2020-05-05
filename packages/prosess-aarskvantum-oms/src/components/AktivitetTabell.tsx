@@ -3,18 +3,15 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
 import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
-import classnames from 'classnames/bind';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import { joinNonNullStrings, durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate } from './utils';
 import Arbeidsforhold from '../dto/Arbeidsforhold';
 import Uttaksperiode from '../dto/Uttaksperiode';
-import styles from './aktivitetTabell.less';
 import Utfalltype, { UtfallEnum } from '../dto/Utfall';
-
-const classNames = classnames.bind(styles);
 
 interface AktivitetTabellProps {
   arbeidsforhold: Arbeidsforhold;
@@ -41,9 +38,29 @@ const utfallSymbolMap = {
   [UtfallEnum.UAVKLART]: advarsel,
 };
 
+const Vilkårsutfall = styled.div`
+  padding-top: 1em;
+`;
+
+const ExpandButton = styled.button`
+  cursor: pointer;
+  border: none;
+  background: inherit;
+`;
+
+const UtfallImage = styled.span`
+  img {
+    margin-right: 0.5em;
+    height: 20px;
+    width: 20px;
+  }
+`;
+
 const renderUtfall = (utfall: Utfalltype, key?: string): ReactNode => (
   <div key={key}>
-    <Image src={utfallSymbolMap[utfall]} className={styles.utfallImg} />
+    <UtfallImage>
+      <Image src={utfallSymbolMap[utfall]} />
+    </UtfallImage>
     <FormattedMessage id={`Uttaksplan.Utfall.${utfall}`} />
   </div>
 );
@@ -78,16 +95,13 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
           'EMPTY',
         ]}
         stripet
+        noHover
       >
         {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår }, index) => {
           const erValgt = valgtPeriodeIndex === index;
+
           return (
-            <TableRow
-              key={periode}
-              onMouseDown={() => velgPeriode(index)}
-              onKeyDown={() => velgPeriode(index)}
-              className={classNames({ expanded: erValgt })}
-            >
+            <TableRow key={periode}>
               <TableColumn>
                 <Normaltekst>{periodevisning(periode)}</Normaltekst>
                 {erValgt && (
@@ -95,8 +109,8 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                     <Element>
                       <FormattedMessage id="Uttaksplan.Vilkår" />
                     </Element>
-                    {Object.keys(vurderteVilkår).map(key => (
-                      <Normaltekst key={`${periode}--${key}`}>{key}</Normaltekst>
+                    {Object.keys(vurderteVilkår).map(vilkår => (
+                      <Normaltekst key={`${periode}--${vilkår}`}>{vilkår}</Normaltekst>
                     ))}
                   </>
                 )}
@@ -105,16 +119,18 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               <TableColumn>
                 {renderUtfall(utfall)}
                 {erValgt && (
-                  <div className={styles.paddingTop}>
+                  <Vilkårsutfall>
                     {Object.entries(vurderteVilkår).map(([key, vilkårsutfall]) =>
                       renderUtfall(vilkårsutfall, `${periode}--${key}.${vilkårsutfall}`),
                     )}
-                  </div>
+                  </Vilkårsutfall>
                 )}
               </TableColumn>
               <TableColumn>{`${utbetalingsgrad}%`}</TableColumn>
               <TableColumn>
-                <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
+                <ExpandButton onClick={() => velgPeriode(index)} type="button">
+                  <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
+                </ExpandButton>
               </TableColumn>
             </TableRow>
           );
