@@ -11,7 +11,7 @@ import { getPathToFplos } from '@fpsak-frontend/fp-felles';
 
 import Dashboard from './Dashboard';
 
-const isDevelopment = () => true;
+const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 
 /**
  * DashboardResolver
@@ -22,7 +22,7 @@ export class DashboardResolver extends Component {
   state = { isLoading: true };
 
   componentDidMount = async () => {
-    if (isDevelopment()) {
+    if (isRunningOnLocalhost()) {
       return;
     }
     try {
@@ -31,14 +31,14 @@ export class DashboardResolver extends Component {
       window.location.assign(url);
     } catch (e) {
       const { addErrorMessage, intl } = this.props;
-      this.setState((prevState) => ({ ...prevState, isLoading: false }));
+      this.setState(prevState => ({ ...prevState, isLoading: false }));
       addErrorMessage(intl.formatMessage({ id: 'DashboardResolver.FpLosErNede' }));
     }
-  }
+  };
 
   render() {
     const { isLoading } = this.state;
-    return !isDevelopment() && isLoading ? <LoadingPanel /> : <Dashboard />;
+    return !isRunningOnLocalhost() && isLoading ? <LoadingPanel /> : <Dashboard />;
   }
 }
 
@@ -47,11 +47,14 @@ DashboardResolver.propTypes = {
   addErrorMessage: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => ({
-});
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  addErrorMessage: errorHandler.getErrorActionCreator(),
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addErrorMessage: errorHandler.getErrorActionCreator(),
+    },
+    dispatch,
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(DashboardResolver));
