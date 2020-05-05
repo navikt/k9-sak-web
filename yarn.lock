@@ -2363,10 +2363,10 @@
     nav-frontend-typografi-style "^1.0.17"
     prop-types "^15.7.2"
 
-"@navikt/nap-person-card@1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-person-card/-/nap-person-card-1.1.3.tgz#da6862e01aa83220536ef6572df21c0a86e1d822"
-  integrity sha512-hRkkG5t/iJww0PdV0xEAJJfEMH8inNmkzdAvoToNhJwxDzcz2tNR88QjHoJNMP5VIOb7gI69FI9P3Xy7SB/Ezw==
+"@navikt/nap-person-card@1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-person-card/-/nap-person-card-1.1.4.tgz#711499912aba1ab1d175925cb18e67c8567fa56c"
+  integrity sha512-p7owTLWKwa5SGHfsVxuZOA3rhOOt40npJ1FTqOS7iFpLXDOpIc87a80hdllZxqobqGQO2EyNGUJt80vJXMmMJg==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     "@navikt/nap-clipboard" "1.0.1"
