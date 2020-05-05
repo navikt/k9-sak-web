@@ -4,7 +4,21 @@ import fpsakApi from '../data/fpsakApi';
 /* Selectors */
 export const getAlleFpSakKodeverk = createSelector(
   [fpsakApi.KODEVERK.getRestApiData(), fpsakApi.KODEVERK_KLAGE.getRestApiData()],
-  (kodeverk_sak = {}, kodeverk_klage = {}) => ({...kodeverk_klage, ...kodeverk_sak})
+  (kodeverk_sak = {}, kodeverk_klage = {}) => {
+    if (Object.keys(kodeverk_klage).length) {
+      const sammenflettedeKodeverk = {};
+      Object.keys(kodeverk_sak).forEach((kv) => {
+        if (!!kodeverk_klage[kv] && Array.isArray(kodeverk_klage[kv]) && Array.isArray(kodeverk_sak[kv])) {
+          const koder = new Set(kodeverk_sak[kv].map(k => k.kode));
+          sammenflettedeKodeverk[kv] = [...kodeverk_sak[kv], ...kodeverk_klage[kv].filter(k => !koder.has(k.kode))];
+        } else {
+          sammenflettedeKodeverk[kv] = kodeverk_sak[kv];
+        }
+      });
+      return {...kodeverk_klage, ...sammenflettedeKodeverk};
+    }
+    return kodeverk_sak;
+  }
 );
 export const getAlleFpTilbakeKodeverk = createSelector(
   [fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()],
