@@ -46,6 +46,7 @@ const ExpandButton = styled.button`
   cursor: pointer;
   border: none;
   background: inherit;
+  line-height: 17px;
 `;
 
 const UtfallImage = styled.span`
@@ -54,6 +55,27 @@ const UtfallImage = styled.span`
     height: 20px;
     width: 20px;
   }
+`;
+
+const ExpandedContent = styled.div`
+  margin-top: 0.5em;
+  padding-top: 0.5em;
+  border-top: 1px solid #c6c2bf;
+  position: relative;
+
+  ${({ fyllBorder }: any) =>
+    fyllBorder &&
+    `
+    &:before{
+    content: '';
+    position: absolute;
+    border-top: 1px solid #c6c2bf;
+    width: 16px;
+    height: 1px;
+    top: -1px;
+    left: -16px;
+  }
+  `}
 `;
 
 const renderUtfall = (utfall: Utfalltype, key?: string): ReactNode => (
@@ -105,32 +127,67 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               <TableColumn>
                 <Normaltekst>{periodevisning(periode)}</Normaltekst>
                 {erValgt && (
-                  <>
+                  <ExpandedContent>
                     <Element>
                       <FormattedMessage id="Uttaksplan.Vilkår" />
                     </Element>
-                    {Object.keys(vurderteVilkår).map(vilkår => (
-                      <Normaltekst key={`${periode}--${vilkår}`}>{vilkår}</Normaltekst>
+                    {Object.keys(vurderteVilkår.vilkår).map(vilkår => (
+                      <Normaltekst key={`${periode}--${vilkår}`}>
+                        <FormattedMessage id={`Uttaksplan.Vilkår.${vilkår}`} />
+                      </Normaltekst>
                     ))}
-                  </>
+                  </ExpandedContent>
                 )}
               </TableColumn>
-              <TableColumn>{formaterDelvisFravær(delvisFravær)}</TableColumn>
+              <TableColumn>
+                <>
+                  {formaterDelvisFravær(delvisFravær)}
+                  {erValgt && (
+                    <ExpandedContent
+                      // @ts-ignore
+                      fyllBorder
+                    />
+                  )}
+                </>
+              </TableColumn>
               <TableColumn>
                 {renderUtfall(utfall)}
                 {erValgt && (
-                  <Vilkårsutfall>
-                    {Object.entries(vurderteVilkår).map(([key, vilkårsutfall]) =>
-                      renderUtfall(vilkårsutfall, `${periode}--${key}.${vilkårsutfall}`),
-                    )}
-                  </Vilkårsutfall>
+                  <ExpandedContent
+                    // @ts-ignore
+                    fyllBorder
+                  >
+                    <Vilkårsutfall>
+                      {Object.entries(vurderteVilkår.vilkår).map(([key, vilkårsutfall]) =>
+                        renderUtfall(vilkårsutfall, `${periode}--${key}.${vilkårsutfall}`),
+                      )}
+                    </Vilkårsutfall>
+                  </ExpandedContent>
                 )}
               </TableColumn>
-              <TableColumn>{`${utbetalingsgrad}%`}</TableColumn>
               <TableColumn>
-                <ExpandButton onClick={() => velgPeriode(index)} type="button">
-                  <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
-                </ExpandButton>
+                <>
+                  {`${utbetalingsgrad}%`}
+                  {erValgt && (
+                    <ExpandedContent
+                      // @ts-ignore
+                      fyllBorder
+                    />
+                  )}
+                </>
+              </TableColumn>
+              <TableColumn>
+                <>
+                  <ExpandButton onClick={() => velgPeriode(index)} type="button">
+                    <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
+                  </ExpandButton>
+                  {erValgt && (
+                    <ExpandedContent
+                      // @ts-ignore
+                      fyllBorder
+                    />
+                  )}
+                </>
               </TableColumn>
             </TableRow>
           );
