@@ -52,6 +52,31 @@ const opptjening2 = {
   },
 };
 
+const behandlingsresultat = {
+  vilkårResultat: {
+    OPPTJENINGSVILKÅRET: [
+      {
+        avslagsårsak: null,
+        periode: { fom: '2018-01-01', tom: '2018-04-04' },
+        fom: '2018-01-01',
+        tom: '2018-10-01',
+        utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+        kode: 'IKKE_VURDERT',
+        kodeverk: 'VILKAR_UTFALL_TYPE',
+      },
+      {
+        avslagsårsak: null,
+        periode: { fom: '2018-05-01', tom: '2018-09-04' },
+        fom: '2018-02-01',
+        tom: '2018-12-01',
+        utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+        kode: 'IKKE_VURDERT',
+        kodeverk: 'VILKAR_UTFALL_TYPE',
+      },
+    ],
+  },
+};
+
 const opptjeninger = { opptjeninger: [opptjening, opptjening2] };
 
 export default {
@@ -65,7 +90,7 @@ export const visPanelForÅpentAksjonspunkt = () => (
     behandling={{
       id: 1,
       versjon: 1,
-      behandlingsresultat: {},
+      behandlingsresultat,
     }}
     opptjening={opptjeninger}
     aksjonspunkter={[

@@ -56,7 +56,6 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
 }) => {
   const {
     aksjonspunkter,
-    soknad,
     vilkar,
     personopplysninger,
     inntektArbeidYtelse,
@@ -68,7 +67,6 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   const dataTilUtledingAvFpPaneler = {
     fagsak,
     behandling,
-    soknad,
     vilkar,
     personopplysninger,
     inntektArbeidYtelse,

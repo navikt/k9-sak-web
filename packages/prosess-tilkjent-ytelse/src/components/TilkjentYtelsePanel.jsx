@@ -17,10 +17,9 @@ const perioderMedClassName = [];
 
 const formatPerioder = perioder => {
   perioderMedClassName.length = 0;
-  perioder.forEach((item, index) => {
-    if (item.andeler[0] && item.dagsats) {
-      perioderMedClassName.push(item);
-      perioderMedClassName[perioderMedClassName.length - 1].id = index;
+  perioder.forEach(item => {
+    if (item.andeler[0] && item.dagsats >= 0) {
+      perioderMedClassName.push({ ...item, id: perioderMedClassName.length });
     }
   });
   return perioderMedClassName;
@@ -106,7 +105,7 @@ const finnTilbaketrekkAksjonspunkt = createSelector(
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    beregningsresultatMedUttaksplan: ownProps.beregningresultat,
+    beregningsresultatMedUttaksplan: ownProps.beregningsresultat,
     vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
   };
 };

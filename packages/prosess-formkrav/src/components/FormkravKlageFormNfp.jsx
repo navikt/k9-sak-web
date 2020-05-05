@@ -52,20 +52,26 @@ FormkravKlageFormNfpImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) => avsluttedeBehandlinger.find((behandling) => behandling.id.toString() === påklagdVedtak);
+const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) =>
+  avsluttedeBehandlinger.find(behandling => behandling.id.toString() === påklagdVedtak);
 
 export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
-  return behandling?.type.kode === BehandlingType.TILBAKEKREVING || behandling?.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING;
+  return (
+    behandling?.type.kode === BehandlingType.TILBAKEKREVING ||
+    behandling?.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+  );
 };
 
 export const påklagdTilbakekrevingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
-  return behandling ? {
-    tilbakekrevingUuid: behandling.uuid,
-    tilbakekrevingVedtakDato: behandling.avsluttet,
-    tilbakekrevingBehandlingType: behandling.type.kode,
-  } : null;
+  return behandling
+    ? {
+        tilbakekrevingUuid: behandling.uuid,
+        tilbakekrevingVedtakDato: behandling.avsluttet,
+        tilbakekrevingBehandlingType: behandling.type.kode,
+      }
+    : null;
 };
 
 const transformValues = (values, avsluttedeBehandlinger) => ({
@@ -76,27 +82,27 @@ const transformValues = (values, avsluttedeBehandlinger) => ({
   begrunnelse: values.begrunnelse,
   kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
   vedtak: values.vedtak === IKKE_PA_KLAGD_VEDTAK ? null : values.vedtak,
-  erTilbakekreving: true,
+  erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
 });
 
 const formName = 'FormkravKlageFormNfp';
 
-const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering],
-  (klageVurdering) => {
-    const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
-    return {
-      vedtak: klageFormkavResultatNfp ? getPaKlagdVedtak(klageFormkavResultatNfp) : null,
-      begrunnelse: klageFormkavResultatNfp ? klageFormkavResultatNfp.begrunnelse : null,
-      erKlagerPart: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagerPart : null,
-      erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
-      erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
-      erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
-    };
-  });
+const buildInitialValues = createSelector([ownProps => ownProps.klageVurdering], klageVurdering => {
+  const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
+  return {
+    vedtak: klageFormkavResultatNfp ? getPaKlagdVedtak(klageFormkavResultatNfp) : null,
+    begrunnelse: klageFormkavResultatNfp ? klageFormkavResultatNfp.begrunnelse : null,
+    erKlagerPart: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagerPart : null,
+    erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
+    erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
+    erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
+  };
+});
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
+  const onSubmit = values =>
+    initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     readOnly: ownProps.readOnly,
@@ -104,8 +110,10 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-const FormkravKlageFormNfp = connect(mapStateToPropsFactory)(behandlingForm({
-  form: formName,
-})(FormkravKlageFormNfpImpl));
+const FormkravKlageFormNfp = connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+  })(FormkravKlageFormNfpImpl),
+);
 
 export default FormkravKlageFormNfp;

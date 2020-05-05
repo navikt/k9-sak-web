@@ -5,7 +5,6 @@ import {
   InntektArbeidYtelse,
   Personopplysninger,
   SimuleringResultat,
-  Soknad,
   UttaksresultatPeriode,
   UttakStonadskontoer,
   Vilkar,
@@ -17,7 +16,6 @@ interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
   personopplysninger: Personopplysninger;
-  soknad: Soknad;
   inntektArbeidYtelse: InntektArbeidYtelse;
   beregningresultatForeldrepenger: BeregningsresultatFp;
   beregningsgrunnlag: Beregningsgrunnlag;
