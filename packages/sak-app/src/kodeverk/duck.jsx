@@ -10,7 +10,7 @@ export const getAlleFpSakKodeverk = createSelector(
 
       const sammenflettedeKodeverk = {};
 
-      // Går igjennom kodeverkene fra k9-sak og for å flette de sammen med tilsvarende kodeverk i k9-klage
+      // Går igjennom kodeverkene fra k9-sak for å flette dem sammen med tilsvarende kodeverk i k9-klage
       Object.keys(kodeverk_sak).forEach((kv) => {
 
         if (!!kodeverk_klage[kv] && Array.isArray(kodeverk_klage[kv]) && Array.isArray(kodeverk_sak[kv])) {
