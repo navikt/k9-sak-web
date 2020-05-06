@@ -1,13 +1,8 @@
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { OverstyrBekreftKnappPanel, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktBox,
   EditedIcon,
@@ -21,7 +16,7 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, SubmitCallback } from '@k9-sak-web/types';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
-import { Element, EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { SetStateAction, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -30,30 +25,14 @@ import { createSelector } from 'reselect';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.less';
 
-const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
-  aksjonspunktCodes.some(code => code === aksjonspunktCode);
-const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspunktCode: string) =>
-  !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
-
 const getFormName = (overstyringApKode: string) => `VilkarresultatForm_${overstyringApKode}`;
 
-const getVilkarOkMessage = originalErVilkarOk => {
-  let messageId = 'VilkarresultatMedOverstyringForm.IkkeBehandlet';
-  if (originalErVilkarOk) {
-    messageId = 'VilkarresultatMedOverstyringForm.ErOppfylt';
-  } else if (originalErVilkarOk === false) {
-    messageId = 'VilkarresultatMedOverstyringForm.ErIkkeOppfylt';
-  }
-
-  return (
-    <Element>
-      <FormattedMessage id={messageId} />
-    </Element>
-  );
-};
+export interface CustomVilkarText {
+  id: string;
+  values?: any;
+}
 
 interface VilkarresultatMedOverstyringFormProps {
-  aksjonspunktCodes: string[];
   aksjonspunkter: Aksjonspunkt[];
   avslagsarsaker: Kodeverk[];
   behandlingsresultat: {
@@ -62,28 +41,17 @@ interface VilkarresultatMedOverstyringFormProps {
   behandlingId: number;
   behandlingVersjon: number;
   behandlingType: Kodeverk;
-  customVilkarIkkeOppfyltText?: {
-    id: string;
-    values?: any;
-  };
-  customVilkarOppfyltText?: {
-    id: string;
-    values?: any;
-  };
+  customVilkarIkkeOppfyltText?: CustomVilkarText;
+  customVilkarOppfyltText?: CustomVilkarText;
   erMedlemskapsPanel: boolean;
   erOverstyrt?: boolean;
   erVilkarOk?: boolean;
   hasAksjonspunkt: boolean;
   isReadOnly: boolean;
-  kanOverstyreAccess?: {
-    isEnabled: boolean;
-  };
   lovReferanse?: string;
   medlemskapFom: string;
-  originalErVilkarOk?: boolean;
   overrideReadOnly: boolean;
   overstyringApKode: string;
-  panelTittelKode: string;
   periodeFom: string;
   periodeTom: string;
   status: string;
@@ -102,22 +70,17 @@ interface StateProps {
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
 export const VilkarresultatMedOverstyringForm = ({
-  panelTittelKode,
   erOverstyrt,
   isReadOnly,
   overstyringApKode,
-  lovReferanse,
   isSolvable,
   erVilkarOk,
-  originalErVilkarOk,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
   erMedlemskapsPanel,
   hasAksjonspunkt,
   avslagsarsaker,
   overrideReadOnly,
-  kanOverstyreAccess,
-  aksjonspunktCodes,
   toggleOverstyring,
   reset,
   handleSubmit,
@@ -126,9 +89,6 @@ export const VilkarresultatMedOverstyringForm = ({
   periodeFom,
   periodeTom,
 }: VilkarresultatMedOverstyringFormProps & StateProps & InjectedFormProps) => {
-  const togglePa = () => {
-    toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
-  };
   const toggleAv = () => {
     reset();
     toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));
@@ -142,49 +102,6 @@ export const VilkarresultatMedOverstyringForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <FlexContainer>
-        <FlexRow>
-          {!erOverstyrt && originalErVilkarOk !== undefined && (
-            <FlexColumn>
-              <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
-            </FlexColumn>
-          )}
-          <FlexColumn>
-            <Undertittel>
-              <FormattedMessage id={panelTittelKode} />
-            </Undertittel>
-          </FlexColumn>
-          {lovReferanse && (
-            <FlexColumn>
-              <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
-            </FlexColumn>
-          )}
-        </FlexRow>
-        <FlexRow>
-          <FlexColumn>
-            <VerticalSpacer eightPx />
-            {getVilkarOkMessage(originalErVilkarOk)}
-          </FlexColumn>
-          {originalErVilkarOk !== undefined &&
-            !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
-              <>
-                {!erOverstyrt && !overrideReadOnly && (
-                  <FlexColumn>
-                    <VerticalSpacer eightPx />
-                    <Image className={styles.key} src={keyImage} onClick={togglePa} />
-                  </FlexColumn>
-                )}
-                {(erOverstyrt || overrideReadOnly) && (
-                  <FlexColumn>
-                    <VerticalSpacer eightPx />
-                    <Image className={styles.keyWithoutCursor} src={keyUtgraetImage} />
-                  </FlexColumn>
-                )}
-              </>
-            )}
-        </FlexRow>
-      </FlexContainer>
-      <VerticalSpacer eightPx />
       {(erOverstyrt || hasAksjonspunkt) && (
         <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
           <Element>
@@ -308,7 +225,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
   const { overstyringApKode, submitCallback, periodeFom, periodeTom } = initialOwnProps;
   const onSubmit = values => submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
   const validateFn = values => validate(values);
-  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon.kode);
   const formName = getFormName(overstyringApKode);
 
   return (state, ownProps) => {
@@ -322,12 +238,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
 
     const initialValues = buildInitialValues(ownProps);
 
-    const erOppfylt = vilkarUtfallType.OPPFYLT === ownProps.status;
-    const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== ownProps.status ? erOppfylt : undefined;
-
     return {
       onSubmit,
-      aksjonspunktCodes,
       initialValues,
       customVilkarOppfyltText: getCustomVilkarTextForOppfylt(ownProps),
       customVilkarIkkeOppfyltText: getCustomVilkarTextForIkkeOppfylt(ownProps),
@@ -336,7 +248,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
       hasAksjonspunkt: aksjonspunkt !== undefined,
       validate: validateFn,
       form: formName,
-      originalErVilkarOk: erVilkarOk,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
     };
   };

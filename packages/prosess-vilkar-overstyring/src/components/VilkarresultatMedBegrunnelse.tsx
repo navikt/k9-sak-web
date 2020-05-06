@@ -2,6 +2,7 @@ import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
 import React from 'react';
+import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;
@@ -9,14 +10,8 @@ interface VilkarresultatMedBegrunnelseProps {
   erMedlemskapsPanel: boolean;
   hasAksjonspunkt: boolean;
   avslagsarsaker: Kodeverk[];
-  customVilkarIkkeOppfyltText?: {
-    id: string;
-    values?: any;
-  };
-  customVilkarOppfyltText?: {
-    id: string;
-    values?: any;
-  };
+  customVilkarIkkeOppfyltText?: CustomVilkarText;
+  customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
 }
 
