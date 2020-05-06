@@ -1,8 +1,28 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
+.panelContainer {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.panel {
+  flex-grow: 1;
+  max-width: 800px;
+  min-width: 600px;
+}
+
 .koronapanel {
   & > * {
     border: 1px solid @navOransjeLighten20 !important;
     border-left: 8px solid @navOransjeLighten20 !important;
+  }
+}
+
+.checkIcon {
+  margin: 1em 0 0 1em;
+
+  &.hidden {
+    visibility: hidden;
   }
 }

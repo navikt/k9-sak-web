@@ -7,15 +7,17 @@ import Overføring, {
   OverføringstypeEnum,
 } from '../types/Overføring';
 import styles from './overføringsdagerPanelgruppe.less';
+import { overføringerFormName } from './formNames';
 
 interface OverføringsdagerPanelgruppeProps {
   overføringer: Overføring[];
   fordelinger: Overføring[];
   koronaoverføringer: Overføring[];
   retning: Overføringsretning;
-  oppdaterForm(felt, nyVerdi): void;
+  oppdaterForm(felt, nyVerdi, oppdatertFormName): void;
   behandlingId: number;
   behandlingVersjon: number;
+  oppdaterteForms: string[];
 }
 
 const feltnavnMap = { [OverføringsretningEnum.INN]: 'Får', [OverføringsretningEnum.UT]: 'Gir' };
@@ -29,9 +31,11 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
   oppdaterForm,
   behandlingId,
   behandlingVersjon,
+  oppdaterteForms,
 }) => {
   const oppdaterOverføringer = useCallback(
-    (type: Overføringstype) => nyeOverføringer => oppdaterForm(feltnavn(type, retning), nyeOverføringer),
+    (type: Overføringstype) => nyeOverføringer =>
+      oppdaterForm(feltnavn(type, retning), nyeOverføringer, overføringerFormName(type, retning)),
     [retning],
   );
 
@@ -44,6 +48,7 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
         oppdaterOverføringer={oppdaterOverføringer(OverføringstypeEnum.OVERFØRING)}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
+        oppdaterteForms={oppdaterteForms}
       />
       <OverføringsdagerPanel
         overføringer={fordelinger}
@@ -52,6 +57,7 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
         oppdaterOverføringer={oppdaterOverføringer(OverføringstypeEnum.FORDELING)}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
+        oppdaterteForms={oppdaterteForms}
       />
       <OverføringsdagerPanel
         overføringer={koronaoverføringer}
@@ -60,6 +66,7 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
         oppdaterOverføringer={oppdaterOverføringer(OverføringstypeEnum.KORONAOVERFØRING)}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
+        oppdaterteForms={oppdaterteForms}
       />
     </div>
   );

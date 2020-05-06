@@ -2,7 +2,8 @@ import React, { FunctionComponent, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import classnames from 'classnames/bind';
-import { FlexRow } from '@fpsak-frontend/shared-components/index';
+import check from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { FlexRow, Image } from '@fpsak-frontend/shared-components/index';
 import Overføring, {
   Overføringsretning,
   OverføringsretningEnum,
@@ -12,6 +13,7 @@ import Overføring, {
 import Pil from './Pil';
 import OverføringsraderForm from './OverføringsraderForm';
 import styles from './overføringsdagerPanel.less';
+import { overføringerFormName } from './formNames';
 
 const classNames = classnames.bind(styles);
 
@@ -22,6 +24,7 @@ interface OverføringsdagerPanelProps {
   behandlingId: number;
   behandlingVersjon: number;
   oppdaterOverføringer(overføringer: Overføring[]): void;
+  oppdaterteForms: string[];
 }
 
 export const typeTilTekstIdMap = {
@@ -59,24 +62,32 @@ const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = (
   behandlingVersjon,
   overføringer,
   oppdaterOverføringer,
+  oppdaterteForms,
 }) => {
   const totaltAntallDager = useMemo(() => summerDager(overføringer), [overføringer]);
   const [redigerer, setRedigerer] = useState<boolean>(false);
+  const erOppdatert = useMemo(
+    () => oppdaterteForms.some(formName => formName === overføringerFormName(type, retning)),
+    [oppdaterteForms],
+  );
 
   return (
-    <div className={classNames({ koronapanel: type === OverføringstypeEnum.KORONAOVERFØRING })}>
-      <EkspanderbartPanel tittel={renderTittel(type, retning, totaltAntallDager)}>
-        <OverføringsraderForm
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          retning={retning}
-          type={type}
-          oppdaterOverføringer={oppdaterOverføringer}
-          initialValues={overføringer}
-          redigerer={redigerer}
-          rediger={setRedigerer}
-        />
-      </EkspanderbartPanel>
+    <div className={styles.panelContainer}>
+      <div className={classNames('panel', { koronapanel: type === OverføringstypeEnum.KORONAOVERFØRING })}>
+        <EkspanderbartPanel tittel={renderTittel(type, retning, totaltAntallDager)}>
+          <OverføringsraderForm
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            retning={retning}
+            type={type}
+            oppdaterOverføringer={oppdaterOverføringer}
+            initialValues={overføringer}
+            redigerer={redigerer}
+            rediger={setRedigerer}
+          />
+        </EkspanderbartPanel>
+      </div>
+      <Image src={check} className={classNames('checkIcon', { hidden: !erOppdatert })} />
     </div>
   );
 };

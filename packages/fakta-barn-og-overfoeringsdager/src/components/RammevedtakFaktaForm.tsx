@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { FieldArray, InjectedFormProps, reset, change } from 'redux-form';
 import { FormAction } from 'redux-form/lib/actions';
 import { bindActionCreators } from 'redux';
@@ -60,14 +60,19 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
     () => utvidetRett.filter(ur => !ur.fnrKroniskSyktBarn).filter(ur => !ur.idKroniskSyktBarn).length,
     [utvidetRett],
   );
+  const [oppdaterteForms, setOppdaterteForms] = useState<string[]>([]);
 
   if (isEmpty(formValues)) {
     return null;
   }
+  console.log(oppdaterteForms);
 
   const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
   const formName = `${behandlingFormPrefix}.${rammevedtakFormName}`;
-  const oppdaterForm = (felt, nyVerdi) => changeForm(formName, felt, nyVerdi);
+  const oppdaterForm = (felt, nyVerdi, oppdatertFormName) => {
+    changeForm(formName, felt, nyVerdi);
+    setOppdaterteForms(verdi => verdi.concat(oppdatertFormName));
+  };
   const tilbakestill = () => {
     resetForm(formName);
     Object.values(OverføringstypeEnum).forEach(type =>
@@ -75,6 +80,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         resetForm(`${behandlingFormPrefix}.${overføringerFormName(type, retning)}`);
       }),
     );
+    setOppdaterteForms([]);
   };
 
   const {
@@ -122,6 +128,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           oppdaterForm={oppdaterForm}
+          oppdaterteForms={oppdaterteForms}
         />
         <VerticalSpacer thirtyTwoPx />
         <OverføringsdagerPanelgruppe
@@ -132,6 +139,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           oppdaterForm={oppdaterForm}
+          oppdaterteForms={oppdaterteForms}
         />
       </Seksjon>
       <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={transferIcon}>
