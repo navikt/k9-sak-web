@@ -86,7 +86,9 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
 
 export const hasIkkeOppfyltSoknadsfristvilkar = vilkar =>
   vilkar.some(
-    v => v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET && v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT,
+    v =>
+      v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET &&
+      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
   );
 
 export const medholdIKlage = klageVurderingResultat =>

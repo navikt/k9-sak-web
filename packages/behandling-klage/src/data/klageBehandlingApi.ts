@@ -23,7 +23,7 @@ const endpoints = new RestApiConfigBuilder()
 
   // behandlingsdata
   .withRel('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar', KlageBehandlingApiKeys.VILKAR)
+  .withRel('vilkar-v3', KlageBehandlingApiKeys.VILKAR)
   .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
 
   .withPost('/k9/klage/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)

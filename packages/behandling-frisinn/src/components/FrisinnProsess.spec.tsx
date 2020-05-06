@@ -70,8 +70,12 @@ describe('<FrisinnProsess>', () => {
   const vilkar = [
     {
       vilkarType: { kode: vilkarType.ADOPSJONSVILKARET_FORELDREPENGER, kodeverk: 'test' },
-      vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
       overstyrbar: true,
+      perioder: [
+        {
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+        },
+      ],
     },
   ];
 
