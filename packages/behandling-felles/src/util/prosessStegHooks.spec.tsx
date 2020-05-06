@@ -20,7 +20,7 @@ import prosessStegHooks from './prosessStegHooks';
 
 const HookWrapper = ({ callback }) => <div values={callback()} />;
 
-const testHook = (callback) => shallow(<HookWrapper callback={callback} />);
+const testHook = callback => shallow(<HookWrapper callback={callback} />);
 
 describe('<prosessStegHooks>', () => {
   const fagsak = {
@@ -49,36 +49,51 @@ describe('<prosessStegHooks>', () => {
     links: [],
   };
 
-  const aksjonspunkter = [{
-    definisjon: { kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU, kodeverk: 'BEHANDLING_DEF' },
-    status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
-    kanLoses: true,
-    erAktivt: true,
-  }];
+  const aksjonspunkter = [
+    {
+      definisjon: { kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU, kodeverk: 'BEHANDLING_DEF' },
+      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+      kanLoses: true,
+      erAktivt: true,
+    },
+  ];
 
-  const vilkar = [{
-    vilkarType: { kode: vilkarType.SOKERSOPPLYSNINGSPLIKT, kodeverk: 'test' },
-    vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-    overstyrbar: false,
-  }];
+  const vilkar = [
+    {
+      vilkarType: { kode: vilkarType.SOKERSOPPLYSNINGSPLIKT, kodeverk: 'test' },
+      overstyrbar: false,
+      perioder: [
+        {
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+        },
+      ],
+    },
+  ];
 
   it('skal utlede prosesstegpaneler, valgt panel og paneler formatert for meny', () => {
-    const prosessStegPanelDefinisjoner = [{
-      urlCode: bpc.OPPLYSNINGSPLIKT,
-      textCode: 'Behandlingspunkt.Opplysningsplikt',
-      panels: [{
-        aksjonspunkterCodes: [aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU],
-        aksjonspunkterTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger', 'SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
-        vilkarCodes: [vilkarType.SOKERSOPPLYSNINGSPLIKT],
-        endpoints: [],
-        getData: ({ soknad }) => ({ soknad }),
-        showComponent: undefined,
-        renderComponent: (props) => <div {...props} />,
-        overrideStatus: undefined,
-        isOverridable: false,
-        overridePanel: undefined,
-      }],
-    }];
+    const prosessStegPanelDefinisjoner = [
+      {
+        urlCode: bpc.OPPLYSNINGSPLIKT,
+        textCode: 'Behandlingspunkt.Opplysningsplikt',
+        panels: [
+          {
+            aksjonspunkterCodes: [aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU],
+            aksjonspunkterTextCodes: [
+              'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
+              'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
+            ],
+            vilkarCodes: [vilkarType.SOKERSOPPLYSNINGSPLIKT],
+            endpoints: [],
+            getData: ({ soknad }) => ({ soknad }),
+            showComponent: undefined,
+            renderComponent: props => <div {...props} />,
+            overrideStatus: undefined,
+            isOverridable: false,
+            overridePanel: undefined,
+          },
+        ],
+      },
+    ];
 
     const ekstraPanelData = {
       soknad: 'test_soknad',
@@ -99,96 +114,119 @@ describe('<prosessStegHooks>', () => {
 
     const hasFetchError = false;
     const valgtProsessSteg = 'default';
-    const intl = { formatMessage: (data) => data.id };
+    const intl = { formatMessage: data => data.id };
 
     // ACT
-    const wrapper = testHook(() => prosessStegHooks.useProsessStegPaneler(
-      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, navAnsatt, behandling,
-      aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
-    ));
+    const wrapper = testHook(() =>
+      prosessStegHooks.useProsessStegPaneler(
+        prosessStegPanelDefinisjoner,
+        ekstraPanelData,
+        fagsak,
+        navAnsatt,
+        behandling,
+        aksjonspunkter,
+        vilkar,
+        hasFetchError,
+        intl,
+        valgtProsessSteg,
+        apentFaktaPanelInfo,
+      ),
+    );
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values(
       wrapper.find('div').prop('values'),
     ).reduce((acc, value) => [...acc, value], []);
 
-    const paneler = [{
-      aksjonspunkter,
-      erStegBehandlet: true,
-      isAksjonspunktOpen: true,
-      isReadOnly: false,
-      prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
-      panelData: [{
-        aksjonspunktHelpTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
+    const paneler = [
+      {
         aksjonspunkter,
-        code: 'opplysningsplikt',
-        endpoints: [],
+        erStegBehandlet: true,
         isAksjonspunktOpen: true,
         isReadOnly: false,
-        komponentData: {
-          aksjonspunkter,
-          isAksjonspunktOpen: true,
-          isReadOnly: false,
-          readOnlySubmitButton: false,
-          soknad: ekstraPanelData.soknad,
-          status: vilkarUtfallType.IKKE_VURDERT,
-          vilkar,
-        },
-        renderComponent: prosessStegPanelDefinisjoner[0].panels[0].renderComponent,
+        prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
+        panelData: [
+          {
+            aksjonspunktHelpTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
+            aksjonspunkter,
+            code: 'opplysningsplikt',
+            endpoints: [],
+            isAksjonspunktOpen: true,
+            isReadOnly: false,
+            komponentData: {
+              aksjonspunkter,
+              isAksjonspunktOpen: true,
+              isReadOnly: false,
+              readOnlySubmitButton: false,
+              soknad: ekstraPanelData.soknad,
+              status: vilkarUtfallType.IKKE_VURDERT,
+              vilkar,
+            },
+            renderComponent: prosessStegPanelDefinisjoner[0].panels[0].renderComponent,
+            status: vilkarUtfallType.IKKE_VURDERT,
+          },
+        ],
         status: vilkarUtfallType.IKKE_VURDERT,
+        urlCode: 'opplysningsplikt',
       },
-      ],
-      status: vilkarUtfallType.IKKE_VURDERT,
-      urlCode: 'opplysningsplikt',
-    }];
+    ];
 
     expect(prosessStegPaneler).to.eql(paneler);
     expect(valgtPanel).to.eql(paneler[0]);
-    expect(formaterteProsessStegPaneler).to.eql([{
-      isActive: true,
-      isDisabled: false,
-      isFinished: false,
-      label: 'Behandlingspunkt.Opplysningsplikt',
-      type: StepType.warning,
-    }]);
+    expect(formaterteProsessStegPaneler).to.eql([
+      {
+        isActive: true,
+        isDisabled: false,
+        isFinished: false,
+        label: 'Behandlingspunkt.Opplysningsplikt',
+        type: StepType.warning,
+      },
+    ]);
   });
 
   it('skal velge første prosess-steg', () => {
-    const prosessStegPaneler = [{
-      urlCode: 'opplysningsplikt',
-      label: 'Behandlingspunkt.Opplysningsplikt',
-      aksjonspunkter,
-      erStegBehandlet: true,
-      isAksjonspunktOpen: true,
-      isReadOnly: true,
-      status: vilkarUtfallType.IKKE_VURDERT,
-      panelData: [{
-        aksjonspunktHelpTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
+    const prosessStegPaneler = [
+      {
+        urlCode: 'opplysningsplikt',
+        label: 'Behandlingspunkt.Opplysningsplikt',
         aksjonspunkter,
-        code: 'opplysningsplikt',
-        endpoints: [],
+        erStegBehandlet: true,
         isAksjonspunktOpen: true,
         isReadOnly: true,
-        renderComponent: () => <div>test</div>,
         status: vilkarUtfallType.IKKE_VURDERT,
-        komponentData: {
-          aksjonspunkter,
-          isAksjonspunktOpen: true,
-          isReadOnly: true,
-          readOnlySubmitButton: false,
-          status: vilkarUtfallType.IKKE_VURDERT,
-          vilkar,
-        },
-      }],
-    }];
+        panelData: [
+          {
+            aksjonspunktHelpTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
+            aksjonspunkter,
+            code: 'opplysningsplikt',
+            endpoints: [],
+            isAksjonspunktOpen: true,
+            isReadOnly: true,
+            renderComponent: () => <div>test</div>,
+            status: vilkarUtfallType.IKKE_VURDERT,
+            komponentData: {
+              aksjonspunkter,
+              isAksjonspunktOpen: true,
+              isReadOnly: true,
+              readOnlySubmitButton: false,
+              status: vilkarUtfallType.IKKE_VURDERT,
+              vilkar,
+            },
+          },
+        ],
+      },
+    ];
     const valgtFaktaSteg = 'default';
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const valgtProsessSteg = 'default';
 
-    const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
-      behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
+    const wrapper = testHook(() =>
+      prosessStegHooks.useProsessStegVelger(
+        prosessStegPaneler,
+        valgtFaktaSteg,
+        behandling,
+        oppdaterProsessStegOgFaktaPanelIUrl,
+        valgtProsessSteg,
+      ),
+    );
     const prosessStegVelger = wrapper.find('div').prop('values');
 
     prosessStegVelger(0);
@@ -201,41 +239,50 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal skjule prosess-steg når en velger steg som allerede vises', () => {
-    const prosessStegPaneler = [{
-      urlCode: 'opplysningsplikt',
-      label: 'Behandlingspunkt.Opplysningsplikt',
-      aksjonspunkter,
-      erStegBehandlet: true,
-      isAksjonspunktOpen: true,
-      isReadOnly: true,
-      status: vilkarUtfallType.IKKE_VURDERT,
-      panelData: [{
-        aksjonspunktHelpTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
+    const prosessStegPaneler = [
+      {
+        urlCode: 'opplysningsplikt',
+        label: 'Behandlingspunkt.Opplysningsplikt',
         aksjonspunkter,
-        code: 'opplysningsplikt',
-        endpoints: [],
+        erStegBehandlet: true,
         isAksjonspunktOpen: true,
         isReadOnly: true,
-        renderComponent: () => <div>test</div>,
         status: vilkarUtfallType.IKKE_VURDERT,
-        komponentData: {
-          aksjonspunkter,
-          isAksjonspunktOpen: true,
-          isReadOnly: true,
-          readOnlySubmitButton: false,
-          status: vilkarUtfallType.IKKE_VURDERT,
-          vilkar,
-        },
-      }],
-    }];
+        panelData: [
+          {
+            aksjonspunktHelpTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
+            aksjonspunkter,
+            code: 'opplysningsplikt',
+            endpoints: [],
+            isAksjonspunktOpen: true,
+            isReadOnly: true,
+            renderComponent: () => <div>test</div>,
+            status: vilkarUtfallType.IKKE_VURDERT,
+            komponentData: {
+              aksjonspunkter,
+              isAksjonspunktOpen: true,
+              isReadOnly: true,
+              readOnlySubmitButton: false,
+              status: vilkarUtfallType.IKKE_VURDERT,
+              vilkar,
+            },
+          },
+        ],
+      },
+    ];
     const valgtFaktaSteg = 'default';
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const valgtProsessSteg = 'opplysningsplikt';
 
-    const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
-      behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
+    const wrapper = testHook(() =>
+      prosessStegHooks.useProsessStegVelger(
+        prosessStegPaneler,
+        valgtFaktaSteg,
+        behandling,
+        oppdaterProsessStegOgFaktaPanelIUrl,
+        valgtProsessSteg,
+      ),
+    );
     const prosessStegVelger = wrapper.find('div').prop('values');
 
     prosessStegVelger(0);
@@ -256,26 +303,26 @@ describe('<prosessStegHooks>', () => {
       isAksjonspunktOpen: true,
       isReadOnly: true,
       status: vilkarUtfallType.IKKE_VURDERT,
-      panelData: [{
-        aksjonspunktHelpTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
-        aksjonspunkter,
-        code: 'opplysningsplikt',
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        isReadOnly: true,
-        renderComponent: () => <div>test</div>,
-        status: vilkarUtfallType.IKKE_VURDERT,
-        komponentData: {
+      panelData: [
+        {
+          aksjonspunktHelpTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
           aksjonspunkter,
+          code: 'opplysningsplikt',
+          endpoints: [],
           isAksjonspunktOpen: true,
           isReadOnly: true,
-          readOnlySubmitButton: false,
+          renderComponent: () => <div>test</div>,
           status: vilkarUtfallType.IKKE_VURDERT,
-          vilkar,
+          komponentData: {
+            aksjonspunkter,
+            isAksjonspunktOpen: true,
+            isReadOnly: true,
+            readOnlySubmitButton: false,
+            status: vilkarUtfallType.IKKE_VURDERT,
+            vilkar,
+          },
         },
-      }],
+      ],
     };
 
     const dispatch = () => Promise.resolve();
@@ -285,12 +332,20 @@ describe('<prosessStegHooks>', () => {
     };
     const behandlingApi = {
       SAVE_AKSJONSPUNKT: {
-        makeRestApiRequest: () => (data) => makeRestApiRequest(data),
+        makeRestApiRequest: () => data => makeRestApiRequest(data),
       },
     };
 
-    const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling, behandlingApi,
-      lagringSideEffectsCallback, dispatch, prosessStegPanel));
+    const wrapper = testHook(() =>
+      prosessStegHooks.useBekreftAksjonspunkt(
+        fagsak,
+        behandling,
+        behandlingApi,
+        lagringSideEffectsCallback,
+        dispatch,
+        prosessStegPanel,
+      ),
+    );
     const bekreftAksjonspunkt = wrapper.find('div').prop('values');
 
     bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
@@ -302,10 +357,12 @@ describe('<prosessStegHooks>', () => {
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
-      bekreftedeAksjonspunktDtoer: [{
-        '@type': aksjonspunkter[0].definisjon.kode,
-        kode: aksjonspunkter[0].definisjon.kode,
-      }],
+      bekreftedeAksjonspunktDtoer: [
+        {
+          '@type': aksjonspunkter[0].definisjon.kode,
+          kode: aksjonspunkter[0].definisjon.kode,
+        },
+      ],
     });
   });
 });

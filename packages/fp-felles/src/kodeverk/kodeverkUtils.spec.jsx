@@ -10,11 +10,13 @@ import { getKodeverknavnFn, getKodeverknavnFraKode } from './kodeverkUtils';
 describe('<kodeverkUtils>', () => {
   it('skal finne navn til gitt kodeverk-kode', () => {
     const alleKodeverk = {
-      [kodeverkTyper.ARBEID_TYPE]: [{
-        kode: arbeidType.LONN_UNDER_UTDANNING,
-        kodeverk: 'ARBEID_TYPE',
-        navn: 'Lønn under utdanning',
-      }],
+      [kodeverkTyper.ARBEID_TYPE]: [
+        {
+          kode: arbeidType.LONN_UNDER_UTDANNING,
+          kodeverk: 'ARBEID_TYPE',
+          navn: 'Lønn under utdanning',
+        },
+      ],
     };
 
     const kodeverkType = kodeverkTyper.ARBEID_TYPE;
@@ -27,11 +29,13 @@ describe('<kodeverkUtils>', () => {
 
   it('skal finne navn til gitt kodeverk-objekt', () => {
     const alleKodeverk = {
-      [kodeverkTyper.ARBEID_TYPE]: [{
-        kode: arbeidType.LONN_UNDER_UTDANNING,
-        kodeverk: 'ARBEID_TYPE',
-        navn: 'Lønn under utdanning',
-      }],
+      [kodeverkTyper.ARBEID_TYPE]: [
+        {
+          kode: arbeidType.LONN_UNDER_UTDANNING,
+          kodeverk: 'ARBEID_TYPE',
+          navn: 'Lønn under utdanning',
+        },
+      ],
     };
 
     const kodeverk = {
@@ -47,16 +51,20 @@ describe('<kodeverkUtils>', () => {
   it('skal finne navn til gitt kodeverk-objekt når en har underkategori i kodeverk-json', () => {
     const alleKodeverk = {
       [kodeverkTyper.AVSLAGSARSAK]: {
-        [vilkarType.FODSELSVILKARET_MOR]: [{
-          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-          kodeverk: 'AVSLAGSARSAK',
-          navn: 'Ingen beregningsregler',
-        }],
-        [vilkarType.MEDLEMSKAPSVILKÅRET_LØPENDE]: [{
-          kode: 'test 2',
-          kodeverk: 'AVSLAGSARSAK',
-          navn: 'test 2',
-        }],
+        [vilkarType.MEDLEMSKAPSVILKARET]: [
+          {
+            kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+            kodeverk: 'AVSLAGSARSAK',
+            navn: 'Ingen beregningsregler',
+          },
+        ],
+        [vilkarType.OPPTJENINGSPERIODE]: [
+          {
+            kode: 'test 2',
+            kodeverk: 'AVSLAGSARSAK',
+            navn: 'test 2',
+          },
+        ],
       },
     };
 
@@ -65,7 +73,7 @@ describe('<kodeverkUtils>', () => {
       kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
     };
 
-    const navn = getKodeverknavnFn(alleKodeverk, kodeverkTyper)(kodeverk, vilkarType.FODSELSVILKARET_MOR);
+    const navn = getKodeverknavnFn(alleKodeverk, kodeverkTyper)(kodeverk, vilkarType.MEDLEMSKAPSVILKARET);
 
     expect(navn).to.equal('Ingen beregningsregler');
   });
