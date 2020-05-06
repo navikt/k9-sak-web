@@ -121,6 +121,19 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           <VerticalSpacer sixteenPx />
         </>
       )}
+      <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={transferIcon}>
+        <>
+          {!(barn.length || barnLagtTilAvSaksbehandler.length) && (
+            <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />
+          )}
+          <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
+          <FieldArray
+            name="barnLagtTilAvSaksbehandler"
+            component={BarnLagtTilAvSaksbehandler}
+            props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
+          />
+        </>
+      </Seksjon>
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.Overføringer.Tittel" imgSrc={transferIcon}>
         <FastBreddeAligner
           rad={{ padding: '0 0 0 1em' }}
@@ -167,19 +180,6 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           oppdaterForm={oppdaterForm}
           oppdaterteForms={oppdaterteForms}
         />
-      </Seksjon>
-      <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={transferIcon}>
-        <>
-          {!(barn.length || barnLagtTilAvSaksbehandler.length) && (
-            <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />
-          )}
-          <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
-          <FieldArray
-            name="barnLagtTilAvSaksbehandler"
-            component={BarnLagtTilAvSaksbehandler}
-            props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
-          />
-        </>
       </Seksjon>
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.ErMidlertidigAlene.Tittel" imgSrc={transferIcon}>
         <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />
