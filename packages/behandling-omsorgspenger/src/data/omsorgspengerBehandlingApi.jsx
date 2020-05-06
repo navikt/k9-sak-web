@@ -28,7 +28,6 @@ export const PleiepengerBehandlingApiKeys = {
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
-  YTELSEFORDELING: 'YTELSEFORDELING',
   OPPTJENING: 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
   FAKTA_ARBEIDSFORHOLD: 'FAKTA_ARBEIDSFORHOLD',
@@ -99,7 +98,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-periode-grense', PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', PleiepengerBehandlingApiKeys.VERGE)
-  .withRel('ytelsefordeling', PleiepengerBehandlingApiKeys.YTELSEFORDELING)
   .withRel('opptjening-v2', PleiepengerBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('fakta-arbeidsforhold', PleiepengerBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
