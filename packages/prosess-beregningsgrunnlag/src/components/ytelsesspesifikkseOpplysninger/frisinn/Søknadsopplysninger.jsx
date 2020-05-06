@@ -37,7 +37,7 @@ const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
                 id="Beregningsgrunnlag.Søknad.SøktYtelseFL"
                 values={{
                   fom: moment(søktYtelseFL.fom).format(DDMMYYYY_DATE_FORMAT),
-                  tom: moment(søktYtelseFL.yom).format(DDMMYYYY_DATE_FORMAT),
+                  tom: moment(søktYtelseFL.tom).format(DDMMYYYY_DATE_FORMAT),
                 }}
               />
             </Normaltekst>
@@ -52,7 +52,7 @@ const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
                 id="Beregningsgrunnlag.Søknad.SøktYtelseSN"
                 values={{
                   fom: moment(søktYtelseSN.fom).format(DDMMYYYY_DATE_FORMAT),
-                  tom: moment(søktYtelseSN.yom).format(DDMMYYYY_DATE_FORMAT),
+                  tom: moment(søktYtelseSN.tom).format(DDMMYYYY_DATE_FORMAT),
                 }}
               />
             </Normaltekst>
