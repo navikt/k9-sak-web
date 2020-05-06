@@ -45,7 +45,7 @@ export const PleiepengerBehandlingApiKeys = {
   SYKDOM: 'SYKDOM',
   VEDTAK_VARSEL: 'VEDTAK_VARSEL',
   OMSORGEN_FOR: 'OMSORGEN_FOR',
-  FORBRUKTE_DAGER: 'FORBRUKTE_DAGER'
+  FORBRUKTE_DAGER: 'FORBRUKTE_DAGER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -80,7 +80,7 @@ const endpoints = new RestApiConfigBuilder()
 
   .withRel('beregningsresultat-utbetalt', PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
   .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar', PleiepengerBehandlingApiKeys.VILKAR)
+  .withRel('vilkar-v3', PleiepengerBehandlingApiKeys.VILKAR)
   .withRel('soeker-personopplysninger', PleiepengerBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG)

@@ -28,7 +28,9 @@ const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
 export const getAvslagArsak = (vilkar, aksjonspunkter, vedtakVarsel, getKodeverknavn) => {
-  const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
+  const avslatteVilkar = vilkar.filter(v =>
+    v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
+  );
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }
