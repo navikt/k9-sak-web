@@ -6,11 +6,9 @@ export const getKodeverknavnFraKode = (alleKodeverk, kodeverkType, kode, underty
   if (undertype) {
     kodeverkForType = kodeverkForType[undertype];
   }
-
-  const kodeverk = kodeverkForType.find((k) => k.kode === kode);
+  const kodeverk = kodeverkForType.find(k => k.kode === kode);
   return kodeverk ? kodeverk.navn : '';
 };
 
-export const getKodeverknavnFn = (alleKodeverk, kodeverkTyper) => (kodeverkOjekt, undertype) => getKodeverknavnFraKode(
-  alleKodeverk, kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode, undertype,
-);
+export const getKodeverknavnFn = (alleKodeverk, kodeverkTyper) => (kodeverkOjekt, undertype) =>
+  getKodeverknavnFraKode(alleKodeverk, kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode, undertype);

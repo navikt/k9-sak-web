@@ -1,19 +1,14 @@
-import * as React from 'react';
-
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
-import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening';
-import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
+import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-
-import findStatusForVedtak from './vedtakStatusUtlederFrisinn';
+import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
+import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
+import * as React from 'react';
 import api from '../data/frisinnBehandlingApi';
+import findStatusForVedtak from './vedtakStatusUtlederFrisinn';
 
 const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const { perioder } = beregningsresultatUtbetaling;
@@ -25,30 +20,6 @@ const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
     ];
   });
   return !alleUtfall.some(utfall => utfall === 'INNVILGET');
-};
-
-const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
-  const apKoder = aksjonspunkterForSteg.map(ap => ap.definisjon.kode);
-  const harIngenApOgMulighetTilOverstyring = apKoder.length === 0 && aksjonspunktDefKoderForSteg.length > 0;
-  const harApSomErOverstyringAp = apKoder.some(apCode => aksjonspunktDefKoderForSteg.includes(apCode));
-  return harIngenApOgMulighetTilOverstyring || harApSomErOverstyringAp;
-};
-
-const avslagsarsakerES = ['1002', '1003', '1032'];
-const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) =>
-  vilkarTypeKode === vt.FODSELSVILKARET_MOR
-    ? avslagsarsaker[vilkarTypeKode].filter(arsak => !avslagsarsakerES.includes(arsak.kode))
-    : avslagsarsaker[vilkarTypeKode];
-
-const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = {
-  showComponent: ({ vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg }) =>
-    vilkarForSteg.length > 0 && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg),
-  renderComponent: props => <VilkarresultatMedOverstyringProsessIndex {...props} />,
-  getData: ({ vilkarForSteg, alleKodeverk }) => ({
-    avslagsarsaker: filtrerAvslagsarsaker(alleKodeverk[kodeverkTyper.AVSLAGSARSAK], vilkarForSteg[0].vilkarType.kode),
-  }),
-  isOverridable: true,
-  aksjonspunkterTextCodes: [],
 };
 
 const PANEL_ATTRIBUTTER = {
@@ -63,28 +34,6 @@ const PANEL_ATTRIBUTTER = {
 };
 
 const prosessStegPanelDefinisjoner = [
-  {
-    urlCode: bpc.OPPTJENING,
-    textCode: 'Behandlingspunkt.Opptjening',
-    panels: [
-      {
-        code: 'OPPTJENINGSVILKARET',
-        textCode: 'Inngangsvilkar.Opptjeningsvilkaret',
-        aksjonspunkterCodes: [ac.VURDER_OPPTJENINGSVILKARET],
-        aksjonspunkterTextCodes: ['OpptjeningVilkarView.VurderOmSøkerHarRett'],
-        vilkarCodes: [vt.OPPTJENINGSPERIODE, vt.OPPTJENINGSVILKARET],
-        endpoints: [api.OPPTJENING],
-        renderComponent: props => <OpptjeningVilkarProsessIndex {...props} />,
-        getData: ({ vilkarForSteg }) => ({
-          lovReferanse: vilkarForSteg[0].lovReferanse,
-        }),
-        overridePanel: {
-          aksjonspunkterCodes: [ac.OVERSTYRING_AV_OPPTJENINGSVILKARET],
-          ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-        },
-      },
-    ],
-  },
   {
     urlCode: bpc.BEREGNINGSGRUNNLAG,
     textCode: 'Behandlingspunkt.Beregning',

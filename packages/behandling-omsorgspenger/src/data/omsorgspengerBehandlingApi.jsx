@@ -28,7 +28,6 @@ export const PleiepengerBehandlingApiKeys = {
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
-  YTELSEFORDELING: 'YTELSEFORDELING',
   OPPTJENING: 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
   FAKTA_ARBEIDSFORHOLD: 'FAKTA_ARBEIDSFORHOLD',
@@ -45,7 +44,7 @@ export const PleiepengerBehandlingApiKeys = {
   SYKDOM: 'SYKDOM',
   VEDTAK_VARSEL: 'VEDTAK_VARSEL',
   OMSORGEN_FOR: 'OMSORGEN_FOR',
-  FORBRUKTE_DAGER: 'FORBRUKTE_DAGER'
+  FORBRUKTE_DAGER: 'FORBRUKTE_DAGER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -80,7 +79,7 @@ const endpoints = new RestApiConfigBuilder()
 
   .withRel('beregningsresultat-utbetalt', PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
   .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar', PleiepengerBehandlingApiKeys.VILKAR)
+  .withRel('vilkar-v3', PleiepengerBehandlingApiKeys.VILKAR)
   .withRel('soeker-personopplysninger', PleiepengerBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG)
@@ -99,7 +98,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-periode-grense', PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', PleiepengerBehandlingApiKeys.VERGE)
-  .withRel('ytelsefordeling', PleiepengerBehandlingApiKeys.YTELSEFORDELING)
   .withRel('opptjening-v2', PleiepengerBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('fakta-arbeidsforhold', PleiepengerBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)

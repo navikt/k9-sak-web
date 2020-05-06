@@ -12,7 +12,9 @@ interface Uttaksperiode {
   delvisFravær?: string; // Duration
   utfall: Utfalltype;
   utbetalingsgrad: number;
-  vurderteVilkår: VurderteVilkår;
+  vurderteVilkår: {
+    vilkår: VurderteVilkår;
+  };
 }
 
 export default Uttaksperiode;
