@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
-
+import { parseQueryString } from '@fpsak-frontend/utils';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { getPathToFplos } from '@fpsak-frontend/fp-felles';
@@ -12,6 +12,11 @@ import { getPathToFplos } from '@fpsak-frontend/fp-felles';
 import Dashboard from './Dashboard';
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
+const isComingFromK9Los = () => {
+  const searchString = window.location.search;
+  const queryParams = parseQueryString(searchString);
+  return queryParams.kilde === 'k9-los';
+};
 
 /**
  * DashboardResolver
@@ -22,7 +27,7 @@ export class DashboardResolver extends Component {
   state = { isLoading: true };
 
   componentDidMount = async () => {
-    if (isRunningOnLocalhost()) {
+    if (!isComingFromK9Los() || isRunningOnLocalhost()) {
       return;
     }
     try {
