@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import classnames from 'classnames/bind';
 import check from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { FlexRow, Image } from '@fpsak-frontend/shared-components/index';
+import { Image } from '@fpsak-frontend/shared-components/index';
 import Overføring, {
   Overføringsretning,
   OverføringsretningEnum,
@@ -14,6 +14,7 @@ import Pil from './Pil';
 import OverføringsraderForm from './OverføringsraderForm';
 import styles from './overføringsdagerPanel.less';
 import { overføringerFormName } from './formNames';
+import FastBreddeAligner from './FastBreddeAligner';
 
 const classNames = classnames.bind(styles);
 
@@ -34,22 +35,39 @@ export const typeTilTekstIdMap = {
 };
 
 const renderTittel = (type, retning, totaltAntallDager) => (
-  <FlexRow childrenMargin>
-    <span>
-      <FormattedMessage id="FaktaRammevedtak.Overføringsdager.AntallDager" values={{ totaltAntallDager }} />
-      <FormattedMessage
-        id={
-          retning === OverføringsretningEnum.INN
-            ? 'FaktaRammevedtak.Overføringsdager.Inn'
-            : 'FaktaRammevedtak.Overføringsdager.Ut'
-        }
-      />
-    </span>
-    <Pil retning={retning} />
-    <span>
-      <FormattedMessage id={typeTilTekstIdMap[type]} />
-    </span>
-  </FlexRow>
+  <FastBreddeAligner
+    kolonner={[
+      {
+        width: '150px',
+        id: 'antallDager',
+        content: (
+          <>
+            <FormattedMessage id="FaktaRammevedtak.Overføringsdager.AntallDager" values={{ totaltAntallDager }} />
+            <FormattedMessage
+              id={
+                retning === OverføringsretningEnum.INN
+                  ? 'FaktaRammevedtak.Overføringsdager.Inn'
+                  : 'FaktaRammevedtak.Overføringsdager.Ut'
+              }
+            />
+          </>
+        ),
+      },
+      {
+        width: '75px',
+        id: 'pil',
+        content: <Pil retning={retning} />,
+      },
+      {
+        width: '150px',
+        id: 'overføring',
+        content: <FormattedMessage id={typeTilTekstIdMap[type]} />,
+      },
+    ]}
+    rad={{
+      margin: type === OverføringstypeEnum.KORONAOVERFØRING ? '0 0 0 -0.3em' : undefined,
+    }}
+  />
 );
 
 const summerDager = (overføringer: Overføring[]): number =>

@@ -16,6 +16,7 @@ import { minLength, maxLength, required, hasValidText, hasValidDate } from '@fps
 import { TextAreaField } from '@fpsak-frontend/form/index';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
+import { Element } from 'nav-frontend-typografi';
 import OmsorgsdagerGrunnlagDto from '../dto/OmsorgsdagerGrunnlagDto';
 import { mapDtoTilFormValues, mapFormValuesTilDto } from '../dto/mapping';
 import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
@@ -26,6 +27,7 @@ import { OverføringsretningEnum, OverføringstypeEnum } from '../types/Overfør
 import { overføringerFormName, rammevedtakFormName } from './formNames';
 import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import Seksjon from './Seksjon';
+import FastBreddeAligner from './FastBreddeAligner';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
@@ -120,6 +122,30 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         </>
       )}
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.Overføringer.Tittel" imgSrc={transferIcon}>
+        <FastBreddeAligner
+          rad={{ padding: '0 0 0 1em' }}
+          kolonner={[
+            {
+              width: '150px',
+              id: 'overføring.tittel.totalt',
+              content: (
+                <Element>
+                  <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
+                </Element>
+              ),
+            },
+            { width: '75px', id: 'overføring.tittel.totalt' },
+            {
+              width: '150px',
+              id: 'overføring.tittel.totalt',
+              content: (
+                <Element>
+                  <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
+                </Element>
+              ),
+            },
+          ]}
+        />
         <OverføringsdagerPanelgruppe
           overføringer={overføringFår}
           fordelinger={fordelingFår}

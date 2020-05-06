@@ -9,10 +9,14 @@ const classNames = classnames.bind(styles);
 
 interface PilProps {
   retning: Overføringsretning;
+  className?: string;
 }
 
-const Pil: FunctionComponent<PilProps> = ({ retning }) => (
-  <Image className={classNames('pil', { pilVenstre: retning === OverføringsretningEnum.INN })} src={pilHøyre} />
+const Pil: FunctionComponent<PilProps> = ({ retning, className = '' }) => (
+  <Image
+    className={classNames('pil', className, { pilVenstre: retning === OverføringsretningEnum.INN })}
+    src={pilHøyre}
+  />
 );
 
 export default Pil;
