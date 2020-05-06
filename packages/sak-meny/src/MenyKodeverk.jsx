@@ -7,6 +7,8 @@ class MenyKodeverk {
 
   $$fpTilbakeKodeverk;
 
+  $$klagekodeverk;
+
   constructor(behandlingType) {
     this.$$behandlingType = behandlingType;
   }
@@ -21,12 +23,20 @@ class MenyKodeverk {
     return this;
   }
 
+  medKlagekodeverk(klagekodeverk) {
+    this.$$klagekodeverk = klagekodeverk;
+    return this;
+  }
+
   getKodeverkForBehandlingstype(behandlingTypeKode, kodeverkType) {
     if (
       behandlingTypeKode === BehandlingType.TILBAKEKREVING
       || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
     ) {
       return this.$$fpTilbakeKodeverk[kodeverkType];
+    }
+    if (behandlingTypeKode === BehandlingType.KLAGE) {
+      return this.$$klagekodeverk[kodeverkType];
     }
     return this.$$fpSakKodeverk[kodeverkType];
   }

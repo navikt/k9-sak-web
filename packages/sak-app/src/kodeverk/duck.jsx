@@ -3,12 +3,16 @@ import fpsakApi from '../data/fpsakApi';
 
 /* Selectors */
 export const getAlleFpSakKodeverk = createSelector(
-  [fpsakApi.KODEVERK.getRestApiData(), fpsakApi.KODEVERK_KLAGE.getRestApiData()],
-  (kodeverk_sak = {}, kodeverk_klage = {}) => ({...kodeverk_klage, ...kodeverk_sak})
+  [fpsakApi.KODEVERK.getRestApiData()],
+  (kodeverk = {}) => kodeverk
 );
 export const getAlleFpTilbakeKodeverk = createSelector(
   [fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()],
   (kodeverk = {}) => kodeverk,
+);
+export const getAlleKlagekodeverk = createSelector(
+  [fpsakApi.KODEVERK_KLAGE.getRestApiData()],
+  (kodeverk = {}) => kodeverk
 );
 
 export const getKodeverk = kodeverkType =>

@@ -31,7 +31,7 @@ import {
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
-import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
+import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk } from '../kodeverk/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
 import {
@@ -201,9 +201,12 @@ BehandlingMenuIndex.defaultProps = {
 };
 
 const getMenyKodeverk = createSelector(
-  [getBehandlingType, getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk],
-  (behandlingType, alleFpSakKodeverk, alleFpTilbakeKodeverk) =>
-    new MenyKodeverk(behandlingType).medFpSakKodeverk(alleFpSakKodeverk).medFpTilbakeKodeverk(alleFpTilbakeKodeverk),
+  [getBehandlingType, getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk],
+  (behandlingType, alleFpSakKodeverk, alleFpTilbakeKodeverk, alleKlagekodeverk) =>
+    new MenyKodeverk(behandlingType)
+      .medFpSakKodeverk(alleFpSakKodeverk)
+      .medFpTilbakeKodeverk(alleFpTilbakeKodeverk)
+      .medKlagekodeverk(alleKlagekodeverk)
 );
 
 const getMenyBehandlingData = createSelector(
