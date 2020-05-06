@@ -31,15 +31,6 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
         },
         uttaksperioder: [
           {
-            utfall: UtfallEnum.INNVILGET,
-            vurderteVilkår: {
-              vilkår: vilkårInnvilget,
-            },
-            delvisFravær: 'P2DT4H30M',
-            periode: '2020-04-01/2020-04-30',
-            utbetalingsgrad: 100,
-          },
-          {
             utfall: UtfallEnum.UAVKLART,
             vurderteVilkår: {
               vilkår: {
@@ -47,8 +38,17 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
                 [VilkårEnum.UIDENTIFISERT_RAMMEVEDTAK]: UtfallEnum.UAVKLART,
               },
             },
-            periode: '2020-03-01/2020-03-31',
+            periode: '2020-03-01/2020-03-10',
             utbetalingsgrad: 50,
+          },
+          {
+            utfall: UtfallEnum.INNVILGET,
+            vurderteVilkår: {
+              vilkår: vilkårInnvilget,
+            },
+            delvisFravær: 'P2DT4H30M',
+            periode: '2020-04-01/2020-04-30',
+            utbetalingsgrad: 100,
           },
         ],
       },
