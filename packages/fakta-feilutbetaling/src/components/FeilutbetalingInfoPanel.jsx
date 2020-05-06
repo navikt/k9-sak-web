@@ -7,21 +7,15 @@ import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  Element, Normaltekst, Undertekst,
-} from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { TextAreaField } from '@fpsak-frontend/form';
-import {
-  behandlingForm, getKodeverknavnFn, getBehandlingFormPrefix, FaktaGruppe,
-} from '@fpsak-frontend/fp-felles';
+import { TextAreaField, behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import { getKodeverknavnFn, FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
-import {
-  DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 

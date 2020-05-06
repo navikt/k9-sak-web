@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { FaktaGruppe, getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -16,7 +17,9 @@ import aktivtArbeidsforholdHandling from '../kodeverk/aktivtArbeidsforholdHandli
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
 import { arbeidsforholdPropType } from '../propTypes/arbeidsforholdPropType';
 import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
-import PersonArbeidsforholdDetailForm, { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
+import PersonArbeidsforholdDetailForm, {
+  PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
+} from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 
 import styles from './personArbeidsforholdPanel.less';
 

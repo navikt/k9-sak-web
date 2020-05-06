@@ -21,7 +21,7 @@ export const AnkeBehandlingApiKeys = {
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/sak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE)
   .withRel('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar', AnkeBehandlingApiKeys.VILKAR)
+  .withRel('vilkar-v3', AnkeBehandlingApiKeys.VILKAR)
   .withRel('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)

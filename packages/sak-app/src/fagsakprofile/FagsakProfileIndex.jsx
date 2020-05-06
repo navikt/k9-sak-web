@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import {
-  requireProps,
   DataFetcher,
   getLocationWithDefaultBehandlingspunktAndFakta,
   pathToBehandling,
@@ -38,11 +37,12 @@ const risikoklassifiseringData = [fpsakApi.RISIKO_AKSJONSPUNKT, fpsakApi.KONTROL
 const behandlingerRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.BEHANDLINGER_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.BEHANDLINGER_FPTILBAKE,
+  [ApplicationContextPath.KLAGE]: fpsakApi.BEHANDLINGER_KLAGE
 };
 
 export const getEnabledContexts = createSelector(
-  [(props) => props.behandlingerFpsak, (props) => props.behandlingerFptilbake],
-  (behandlingerFpsak = [], behandlingerFptilbake = []) => behandlingerFpsak.concat(behandlingerFptilbake),
+  [(props) => props.behandlingerFpsak, (props) => props.behandlingerFptilbake, (props) => props.behandlingerKlage],
+  (behandlingerFpsak = [], behandlingerFptilbake = [], behandlingerKlage = []) => behandlingerFpsak.concat(behandlingerFptilbake).concat(behandlingerKlage),
 );
 
 const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
@@ -85,6 +85,7 @@ export const FagsakProfileIndex = ({
         endpointParams={{
           [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer },
           [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer },
+          [fpsakApi.BEHANDLINGER_KLAGE.name]: {saksnummer}
         }}
         keepDataWhenRefetching
         endpoints={enabledApis}

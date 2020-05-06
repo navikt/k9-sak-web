@@ -8,14 +8,14 @@ import { Column, Row } from 'nav-frontend-grid';
 import {
   BehandlingspunktSubmitButton,
   getKodeverknavnFn,
-  behandlingForm,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
   createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/fp-felles';
 
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField,
+  behandlingForm,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting, } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';

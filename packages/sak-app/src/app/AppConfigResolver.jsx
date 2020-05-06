@@ -7,7 +7,11 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import fpsakApi from '../data/fpsakApi';
 import {
-  fetchAlleKodeverk as fetchAlleKodeverkAC, getFeatureToggles, isFinishedLoadingData, fetchAllFeatureToggles,
+  fetchAlleKodeverk as fetchAlleKodeverkAC,
+  getFeatureToggles,
+  isFinishedLoadingData,
+  fetchAllFeatureToggles,
+  isFinishedLoadingErrorPageData,
 } from './duck';
 
 class AppConfigResolver extends Component {
@@ -16,11 +20,12 @@ class AppConfigResolver extends Component {
     children: PropTypes.node.isRequired,
     fetchNavAnsatt: PropTypes.func.isRequired,
     fetchLanguageFile: PropTypes.func.isRequired,
-    fetchBehandlendeEnheter: PropTypes.func.isRequired,
     fetchAlleKodeverk: PropTypes.func.isRequired,
     fetchShowDetailedErrorMessages: PropTypes.func.isRequired,
     fetchFeatureToggles: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape(),
+    appIsInErroneousState: PropTypes.bool,
+    finishedLoadingErrorPageBlockers: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -33,10 +38,7 @@ class AppConfigResolver extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      fetchAlleKodeverk,
-      featureToggles,
-    } = this.props;
+    const { fetchAlleKodeverk, featureToggles } = this.props;
 
     if (featureToggles !== prevProps.featureToggles) {
       fetchAlleKodeverk(featureToggles);
@@ -44,42 +46,42 @@ class AppConfigResolver extends Component {
   }
 
   resolveAppConfig = () => {
-    const {
-      fetchNavAnsatt,
-      fetchLanguageFile,
-      fetchBehandlendeEnheter,
-      fetchShowDetailedErrorMessages,
-      fetchFeatureToggles,
-    } = this.props;
+    const { fetchNavAnsatt, fetchLanguageFile, fetchShowDetailedErrorMessages, fetchFeatureToggles } = this.props;
 
     fetchNavAnsatt();
     fetchLanguageFile();
-    fetchBehandlendeEnheter();
     fetchShowDetailedErrorMessages();
     fetchFeatureToggles();
-  }
+  };
 
   render = () => {
-    const { finishedLoadingBlockers, children } = this.props;
+    const { finishedLoadingBlockers, children, appIsInErroneousState, finishedLoadingErrorPageBlockers } = this.props;
+    if (appIsInErroneousState && finishedLoadingErrorPageBlockers) {
+      return children;
+    }
     if (!finishedLoadingBlockers) {
       return <LoadingPanel />;
     }
     return children;
-  }
+  };
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   finishedLoadingBlockers: isFinishedLoadingData(state),
   featureToggles: getFeatureToggles(state),
+  finishedLoadingErrorPageBlockers: isFinishedLoadingErrorPageData(state),
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchNavAnsatt: fpsakApi.NAV_ANSATT.makeRestApiRequest(),
-  fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
-  fetchBehandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.makeRestApiRequest(),
-  fetchShowDetailedErrorMessages: fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.makeRestApiRequest(),
-  fetchAlleKodeverk: fetchAlleKodeverkAC,
-  fetchFeatureToggles: fetchAllFeatureToggles,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchNavAnsatt: fpsakApi.NAV_ANSATT.makeRestApiRequest(),
+      fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
+      fetchShowDetailedErrorMessages: fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.makeRestApiRequest(),
+      fetchAlleKodeverk: fetchAlleKodeverkAC,
+      fetchFeatureToggles: fetchAllFeatureToggles,
+    },
+    dispatch,
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppConfigResolver);

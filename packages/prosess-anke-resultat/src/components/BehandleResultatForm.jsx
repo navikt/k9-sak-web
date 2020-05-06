@@ -6,12 +6,16 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-
+import {
+  behandlingForm,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 

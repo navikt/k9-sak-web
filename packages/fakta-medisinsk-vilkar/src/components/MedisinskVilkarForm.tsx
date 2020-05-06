@@ -1,7 +1,6 @@
-import { PeriodpickerField } from '@fpsak-frontend/form';
+import { PeriodpickerField, behandlingForm } from '@fpsak-frontend/form';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { behandlingFormTs } from '@fpsak-frontend/fp-felles';
-import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
+import { behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { dateRangesNotOverlapping, hasValidDate, required } from '@fpsak-frontend/utils';
@@ -264,7 +263,7 @@ const mapStateToProps = (_, props: MedisinskVilkarFormProps) => {
 };
 
 const connectedComponent = connect(mapStateToProps)(
-  behandlingFormTs({
+  behandlingForm({
     form: formName,
     enableReinitialize: true,
   })(MedisinskVilkarForm),

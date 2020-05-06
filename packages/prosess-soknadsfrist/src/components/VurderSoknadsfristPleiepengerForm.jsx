@@ -10,18 +10,19 @@ import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typo
 import Panel from 'nav-frontend-paneler';
 
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { dateBeforeOrEqualToToday, DDMMYYYY_DATE_FORMAT, hasValidDate, required } from '@fpsak-frontend/utils';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
+  DatepickerField,
+  RadioGroupField,
+  RadioOption,
   behandlingForm,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-  BehandlingspunktBegrunnelseTextField,
-  BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+} from '@fpsak-frontend/form';
+import { dateBeforeOrEqualToToday, DDMMYYYY_DATE_FORMAT, hasValidDate, required } from '@fpsak-frontend/utils';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import styles from './vurderSoknadsfristPleiepengerForm.less';
 

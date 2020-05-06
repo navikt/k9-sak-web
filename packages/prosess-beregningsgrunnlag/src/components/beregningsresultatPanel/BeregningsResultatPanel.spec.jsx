@@ -5,9 +5,7 @@ import React from 'react';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
-
 const tableData = {
-
   avkortetRad: { ledetekst: 'Avkortet beregningsgrunnlag (6G=599148)', verdi: '380' },
   redusertRad: { ledetekst: 'Redusert beregningsgrunnlag (80%)', verdi: '350' },
   bruttoRad: { ledetekst: 'Brutto beregningsgrunnlag', verdi: '400' },
@@ -18,25 +16,31 @@ const tableData = {
   rowsForklaringer: [],
 };
 const vilkaarBG = {
-  vilkarStatus: {
-    kode: vilkarUtfallType.IKKE_VURDERT,
-    kodeverk: 'VILKAR_UTFALL_TYPE',
-  },
   vilkarType: {
     kode: 'FP_VK_41',
     kodeverk: 'vilkarType',
   },
+  perioder: [
+    {
+      vilkarStatus: {
+        kode: vilkarUtfallType.IKKE_VURDERT,
+        kodeverk: 'VILKAR_UTFALL_TYPE',
+      },
+    },
+  ],
 };
 describe('BeregningsresultatPanel', () => {
   it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:IKKE VURDERT', () => {
     tableData.rowsAndeler[0].skalFastsetteGrunnlag = true;
-    const wrapper = shallowWithIntl(<BeregningsresutatPanel.WrappedComponent
-      intl={intlMock}
-      periodeResultatTabeller={[tableData]}
-      vilkaarBG={vilkaarBG}
-      halvGVerdi={98866}
-    />);
-    const panel = wrapper.find('PanelBase');
+    const wrapper = shallowWithIntl(
+      <BeregningsresutatPanel.WrappedComponent
+        intl={intlMock}
+        periodeResultatTabeller={[tableData]}
+        vilkaarBG={vilkaarBG}
+        halvGVerdi={98866}
+      />,
+    );
+    const panel = wrapper.find('Panel');
     const rows = panel.find('Row');
     expect(rows).to.have.length(3);
     const andelRow = rows.first();
@@ -49,15 +53,17 @@ describe('BeregningsresultatPanel', () => {
     expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt');
   });
   it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:OPPFYLT', () => {
-    vilkaarBG.vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
-    vilkaarBG.vilkarStatus.kodeverk = 'VILKAR_UTFALL_TYPE';
-    const wrapper = shallowWithIntl(<BeregningsresutatPanel.WrappedComponent
-      intl={intlMock}
-      periodeResultatTabeller={[tableData]}
-      vilkaarBG={vilkaarBG}
-      halvGVerdi={98866}
-    />);
-    const panel = wrapper.find('PanelBase');
+    vilkaarBG.perioder[0].vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
+    vilkaarBG.perioder[0].vilkarStatus.kodeverk = 'VILKAR_UTFALL_TYPE';
+    const wrapper = shallowWithIntl(
+      <BeregningsresutatPanel.WrappedComponent
+        intl={intlMock}
+        periodeResultatTabeller={[tableData]}
+        vilkaarBG={vilkaarBG}
+        halvGVerdi={98866}
+      />,
+    );
+    const panel = wrapper.find('Panel');
     const rows = panel.find('Row');
     expect(rows).to.have.length(5);
     const andelRow = rows.first();

@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Undertittel, EtikettLiten, Element, Normaltekst,
-} from 'nav-frontend-typografi';
+import { Undertittel, EtikettLiten, Element, Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  VerticalSpacer, FlexContainer, FlexRow, FlexColumn, AksjonspunktBox, Image,
+  VerticalSpacer,
+  FlexContainer,
+  FlexRow,
+  FlexColumn,
+  AksjonspunktBox,
+  Image,
 } from '@fpsak-frontend/shared-components';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 
 import {
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '../../behandlingForm';
+} from '@fpsak-frontend/form/src/behandlingForm';
 import BehandlingspunktSubmitButton from '../BehandlingspunktSubmitButton';
 
 import styles from './prosessPanelTemplate.less';
@@ -37,6 +41,7 @@ const ProsessPanelTemplate = ({
   rendreFakta,
   isDirty,
   children,
+  isPeriodisertFormComplete,
 }) => (
   <>
     <form onSubmit={formProps.handleSubmit}>
@@ -48,7 +53,9 @@ const ProsessPanelTemplate = ({
             </FlexColumn>
           )}
           <FlexColumn>
-            <Undertittel><FormattedMessage id={titleCode} /></Undertittel>
+            <Undertittel>
+              <FormattedMessage id={titleCode} />
+            </Undertittel>
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
@@ -62,19 +69,25 @@ const ProsessPanelTemplate = ({
             {originalErVilkarOk && (
               <>
                 <VerticalSpacer eightPx />
-                <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element>
+                <Element>
+                  <FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" />
+                </Element>
               </>
             )}
             {originalErVilkarOk === false && (
               <>
                 <VerticalSpacer eightPx />
-                <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element>
+                <Element>
+                  <FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" />
+                </Element>
               </>
             )}
-            {(!isAksjonspunktOpen && originalErVilkarOk === undefined) && (
+            {!isAksjonspunktOpen && originalErVilkarOk === undefined && (
               <>
                 <VerticalSpacer eightPx />
-                <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>
+                <Normaltekst>
+                  <FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" />
+                </Normaltekst>
               </>
             )}
           </FlexColumn>
@@ -94,8 +107,8 @@ const ProsessPanelTemplate = ({
           isBehandlingFormSubmitting={isBehandlingFormSubmitting}
           isBehandlingFormDirty={isBehandlingFormDirty}
           hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          isPeriodisertFormComplete={isPeriodisertFormComplete}
         />
-
       </AksjonspunktBox>
       {rendreFakta && (
         <>
@@ -120,6 +133,7 @@ ProsessPanelTemplate.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isDirty: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  isPeriodisertFormComplete: PropTypes.bool,
 };
 
 ProsessPanelTemplate.defaultProps = {
@@ -127,6 +141,7 @@ ProsessPanelTemplate.defaultProps = {
   originalErVilkarOk: undefined,
   rendreFakta: undefined,
   isDirty: undefined,
+  isPeriodisertFormComplete: undefined,
 };
 
 export default ProsessPanelTemplate;

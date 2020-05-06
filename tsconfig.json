@@ -25,6 +25,7 @@
     "packages/fakta-medisinsk-vilkar",
     "packages/fp-felles",
     "packages/fakta-omsorgen-for",
+    "packages/fakta-opptjening",
     "packages/fakta-uttak",
     "packages/sak-historikk",
     "packages/shared-components",
@@ -33,6 +34,9 @@
     "packages/types",
     "packages/behandling-pleiepenger",
     "packages/prosess-uttak",
+    "packages/omsorgen-for-oms",
+    "packages/prosess-vilkar-overstyring",
+    "packages/prosess-aarskvantum-oms",
     "@types"
   ]
 }

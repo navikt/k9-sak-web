@@ -102,7 +102,7 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
         />
       )}
       {!redigererPeriode && (
-        <Flatknapp htmlType="button" onClick={endreValgtPeriodeCallback} mini form="kompakt">
+        <Flatknapp htmlType="button" onClick={endreValgtPeriodeCallback} mini knappeForm="kompakt">
           <Image src={endreSvg} className={styles.image} />
           <span>{intl.formatMessage({ id: 'FaktaOmUttakForm.EndrePeriode' })}</span>
         </Flatknapp>

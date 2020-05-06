@@ -14,6 +14,13 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import * as React from 'react';
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 
+const erAllePerioderOppfylt = vilkarsperioder =>
+  vilkarsperioder.every(periode => periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT);
+
+const shouldShowOpptjening = vilkar =>
+  vilkar.some(v => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET) &&
+  vilkar.some(v => v.vilkarType.kode === vilkarType.MEDISINSKVILKARET && erAllePerioderOppfylt(v.perioder));
+
 const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
   {
     urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
@@ -69,11 +76,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     aksjonspunkterCodes: [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING],
     endpoints: [pleiepengerBehandlingApi.OPPTJENING],
     renderComponent: props => <OpptjeningFaktaIndex {...props} />,
-    showComponent: ({ vilkar }) =>
-      vilkar.some(v => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET) &&
-      vilkar.some(
-        v => v.vilkarType.kode === vilkarType.MEDISINSKVILKARET && v.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
-      ),
+    showComponent: ({ vilkar }) => shouldShowOpptjening(vilkar),
     getData: () => ({}),
   },
   {

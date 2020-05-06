@@ -1,0 +1,49 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: k9-sak-web
+  namespace: default
+  labels:
+    team: k9saksbehandling
+spec:
+  image: {{ image }}
+  port: 9000
+  sessionAffinity: ClientIP
+  team: k9saksbehandling
+  liveness:
+    path: /isAlive
+    initialDelay: 20
+    timeout: 1
+    periodSeconds: 5
+    failureThreshold: 10
+  readiness:
+    path: /isReady
+    initialDelay: 20
+    timeout: 1
+  replicas:
+    min: 2
+    max: 3
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 64Mi
+    requests:
+      cpu: 200m
+      memory: 32Mi
+  ingresses:
+    - "https://app-q1.adeo.no/k9"
+    # - "https://k9-sak-web.nais.preprod.local/"
+  env:
+    - name: APP_NAME
+      value: k9-sak-web
+    - name: APP_URL
+      value: "http://k9-sak"
+    - name: APP_PORT
+      value: "9000"
+    - name: APP_URL_K9FORMIDLING
+      value: "http://k9-formidling"
+    - name: APP_URL_K9OPPDRAG
+      value: "http://k9-oppdrag"
+    - name: APP_URL_KLAGE
+      value: 'http://k9-klage'

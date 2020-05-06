@@ -54,7 +54,7 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
   (alleSteg, valgtStegKode, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl) => {
     const indexTilStegMedApentAksjonspunkt = alleSteg.findIndex(steg =>
       aksjonspunkter
-        .filter(ap => steg.apCodes.includes(ap.definisjon.kode))
+        ?.filter(ap => steg.apCodes.includes(ap.definisjon.kode))
         .some(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET),
     );
 
@@ -65,7 +65,7 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
       const type = finnProsessmenyType(steg.status, harApentAp);
 
       const apForSteg = aksjonspunkter.filter(a => steg.apCodes.includes(a.definisjon.kode));
-      const vilkarForBp = vilkar.filter(v => steg.vilkarene.includes(v));
+      const vilkarForBp = vilkar?.filter(v => steg.vilkarene.includes(v));
       const isReadOnly = readOnlyUtils.erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
       const isSubmittable = apForSteg.some(ap => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
 

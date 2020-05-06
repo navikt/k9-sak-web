@@ -27,6 +27,8 @@ interface TextAreaFieldProps {
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;
   dataId?: string;
+  textareaClass?: string;
+  maxLength?: number;
 }
 
 const TextAreaWithBadge = ({

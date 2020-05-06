@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import {
   DateLabel, FlexColumn, FlexContainer, FlexRow, PeriodLabel, Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -13,7 +13,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { createSelector } from 'reselect';
 
 const headerTextCodes = [
@@ -34,8 +34,6 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
   isPeriodAksjonspunktClosed,
   fixedMedlemskapPerioder,
   fodselsdato,
-  termindato,
-  omsorgsovertakelseDato,
   vurderingTypes,
   alleMerknaderFraBeslutter,
 }) => {
@@ -97,20 +95,6 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
             values={{ dato: moment(fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
           />
           )}
-            {termindato
-          && (
-          <FormattedMessage
-            id="PerioderMedMedlemskapFaktaPanel.Termindato"
-            values={{ dato: moment(termindato).format(DDMMYYYY_DATE_FORMAT) }}
-          />
-          )}
-            {omsorgsovertakelseDato
-          && (
-          <FormattedMessage
-            id="PerioderMedMedlemskapFaktaPanel.Omsorgsovertakelse"
-            values={{ dato: moment(omsorgsovertakelseDato).format(DDMMYYYY_DATE_FORMAT) }}
-          />
-          )}
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
@@ -122,8 +106,6 @@ PerioderMedMedlemskapFaktaPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fixedMedlemskapPerioder: PropTypes.arrayOf(PropTypes.shape()),
   fodselsdato: PropTypes.string,
-  termindato: PropTypes.string,
-  omsorgsovertakelseDato: PropTypes.string,
   vurderingTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   hasPeriodeAksjonspunkt: PropTypes.bool.isRequired,
   isPeriodAksjonspunktClosed: PropTypes.bool.isRequired,
@@ -134,8 +116,6 @@ PerioderMedMedlemskapFaktaPanelImpl.propTypes = {
 
 PerioderMedMedlemskapFaktaPanelImpl.defaultProps = {
   fodselsdato: undefined,
-  termindato: undefined,
-  omsorgsovertakelseDato: undefined,
   fixedMedlemskapPerioder: [],
 };
 
@@ -161,8 +141,8 @@ export const getAksjonspunkter = createSelector(
 
 const mapStateToProps = (state, ownProps) => ({
   ...behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`, ownProps.behandlingId, ownProps.behandlingVersjon)(
-    state, 'fixedMedlemskapPerioder', 'fodselsdato', 'termindato',
-    'omsorgsovertakelseDato', 'hasPeriodeAksjonspunkt', 'isPeriodAksjonspunktClosed',
+    state, 'fixedMedlemskapPerioder', 'fodselsdato',
+    'hasPeriodeAksjonspunkt', 'isPeriodAksjonspunktClosed',
   ),
   vurderingTypes: getAksjonspunkter(ownProps),
 });
@@ -190,9 +170,7 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPeriode
   return {
     fixedMedlemskapPerioder,
     medlemskapManuellVurderingType: periode.medlemskapManuellVurderingType,
-    fodselsdato: soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined,
-    termindato: soknad.termindato,
-    omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,
+    fodselsdato: soknad && soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined,
     hasPeriodeAksjonspunkt: filteredAp.length > 0,
     isPeriodAksjonspunktClosed: filteredAp.some((ap) => !isAksjonspunktOpen(ap.status.kode)),
   };

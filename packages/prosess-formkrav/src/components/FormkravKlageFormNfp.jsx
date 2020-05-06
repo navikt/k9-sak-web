@@ -5,7 +5,7 @@ import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm } from '@fpsak-frontend/fp-felles';
+import { behandlingForm } from '@fpsak-frontend/form';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
@@ -56,13 +56,12 @@ const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) => avslut
 
 export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
-  return behandling.type.kode === BehandlingType.TILBAKEKREVING || behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING;
+  return behandling?.type.kode === BehandlingType.TILBAKEKREVING || behandling?.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING;
 };
 
 export const påklagdTilbakekrevingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
-  const erTilbakekrevingVedtak = erTilbakekreving(avsluttedeBehandlinger, påklagdVedtak);
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
-  return erTilbakekrevingVedtak ? {
+  return behandling ? {
     tilbakekrevingUuid: behandling.uuid,
     tilbakekrevingVedtakDato: behandling.avsluttet,
     tilbakekrevingBehandlingType: behandling.type.kode,

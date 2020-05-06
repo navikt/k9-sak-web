@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-import { behandlingForm } from '@fpsak-frontend/fp-felles/src/behandlingForm';
+import { behandlingForm , behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import { required, hasValidDecimalMaxNumberOfDecimals } from '@fpsak-frontend/utils';
 import { numberRegex } from '@fpsak-frontend/utils/src/validation/validatorsHelper';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
@@ -13,7 +13,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { InjectedFormProps } from 'redux-form';
 import { FlexContainer } from '@fpsak-frontend/shared-components/index';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
-import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles/src/behandlingFormTS';
+
 import { Normaltekst } from 'nav-frontend-typografi';
 import { arbeidsprosent, arbeidsprosentNormal } from './uttakUtils';
 import styles from './uttakFaktaForm.less';

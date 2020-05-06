@@ -1,5 +1,5 @@
 {
-  "PersonArbeidsforholdPanel.ArbeidsforholdHeader": "Arbeidsforhold som er aktive ved permisjonsstart",
+  "PersonArbeidsforholdPanel.ArbeidsforholdHeader": "Arbeidsforhold som er aktive",
   "PersonArbeidsforholdTable.Arbeidsforhold": "<br />Arbeidsforhold",
   "PersonArbeidsforholdTable.Periode": "<br />Periode",
   "PersonArbeidsforholdTable.Kilde": "<br />Kilde",
@@ -22,7 +22,7 @@
   "PersonArbeidsforholdDetailForm.ArbeidsforholdStartdato": "Startdato",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdSluttdato": "Sluttdato",
   "PersonArbeidsforholdDetailForm.Stillingsprosent": "Stillingsprosent",
-  "PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt": "Arbeidsforholdet er aktivt og skal benyttes i behandlingen. Nødvendig inntektesmelding er ikke mottatt.",
+  "PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt": "Arbeidsforholdet er aktivt og skal benyttes i behandlingen. Nødvendig inntektsmelding er ikke mottatt.",
   "PersonArbeidsforholdDetailForm.OppdaterArbeidsforhold": "Oppdater arbeidsforholdet basert på inntektsmeldig med følgene opplysninger.",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon": "Søker er ikke i permisjon. Arbeidsforholdet er aktivt og skal benyttes i behandlingen.",
   "PersonArbeidsforholdDetailForm.FjernArbeidsforholdet": "Fjern arbeidsforholdet for denne behandlingen",

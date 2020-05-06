@@ -8,7 +8,8 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ElementWrapper, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
@@ -190,17 +191,17 @@ const getOmgjortAarsak = createSelector(
 
 const getIsOmgjort = createSelector(
   [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_MEDHOLD,
+  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_MEDHOLD,
 );
 
 export const getIsAvvist = createSelector(
   [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_AVVIST,
+  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_AVVIST,
 );
 
 export const getIsOpphevOgHjemsend = createSelector(
   [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
+  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
 );
 
 export const getFritekstTilBrev = createSelector(

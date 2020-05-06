@@ -6,23 +6,22 @@ import tilkjentYtelseBehandlingPropType from './propTypes/tilkjentYtelseBehandli
 import tilkjentYtelseFagsakPropType from './propTypes/tilkjentYtelseFagsakPropType';
 import tilkjentYtelseBeregningresultatPropType from './propTypes/tilkjentYtelseBeregningresultatPropType';
 import tilkjentYtelseAksjonspunkterPropType from './propTypes/tilkjentYtelseAksjonspunkterPropType';
-import tilkjentYtelsePersonopplysningerPropType from './propTypes/tilkjentYtelsePersonopplysningerPropType';
-import tilkjentYtelseSoknadPropType from './propTypes/tilkjentYtelseSoknadPropType';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const TilkjentYtelseProsessIndex = ({
   behandling,
-  beregningresultat,
-  personopplysninger,
-  soknad,
+  beregningsresultat,
   fagsak,
   aksjonspunkter,
   alleKodeverk,
@@ -34,9 +33,7 @@ const TilkjentYtelseProsessIndex = ({
     <TilkjentYtelsePanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      beregningresultat={beregningresultat}
-      personopplysninger={personopplysninger}
-      soknad={soknad}
+      beregningsresultat={beregningsresultat}
       fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
@@ -49,9 +46,7 @@ const TilkjentYtelseProsessIndex = ({
 
 TilkjentYtelseProsessIndex.propTypes = {
   behandling: tilkjentYtelseBehandlingPropType.isRequired,
-  beregningresultat: tilkjentYtelseBeregningresultatPropType.isRequired,
-  personopplysninger: tilkjentYtelsePersonopplysningerPropType.isRequired,
-  soknad: tilkjentYtelseSoknadPropType.isRequired,
+  beregningsresultat: tilkjentYtelseBeregningresultatPropType.isRequired,
   fagsak: tilkjentYtelseFagsakPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(tilkjentYtelseAksjonspunkterPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

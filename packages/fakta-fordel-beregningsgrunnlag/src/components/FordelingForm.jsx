@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import {
-  behandlingForm, FaktaSubmitButton, getKodeverknavnFn, FaktaBegrunnelseTextField,
-} from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton, getKodeverknavnFn, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { behandlingForm } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -16,16 +15,12 @@ import FastsettFordeltBeregningsgrunnlag from './fordeling/FastsettFordeltBeregn
 import FordelingHelpText from './FordelingHelpText';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 
-const {
-  FORDEL_BEREGNINGSGRUNNLAG,
-} = aksjonspunktCodes;
-
+const { FORDEL_BEREGNINGSGRUNNLAG } = aksjonspunktCodes;
 
 const FORM_NAME_FORDEL_BEREGNING = 'fordelBeregningsgrunnlagForm';
 
-
-const findAksjonspunktMedBegrunnelse = (aksjonspunkter) => aksjonspunkter
-  .find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
+const findAksjonspunktMedBegrunnelse = aksjonspunkter =>
+  aksjonspunkter.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
@@ -102,50 +97,61 @@ FordelingFormImpl.propTypes = {
 };
 
 export const transformValuesFordelBeregning = createSelector(
-  [(ownProps) => ownProps.beregningsgrunnlag,
-    (ownProps) => ownProps.aksjonspunkter],
-  (beregningsgrunnlag, aksjonspunkter) => (values) => {
+  [ownProps => ownProps.beregningsgrunnlag, ownProps => ownProps.aksjonspunkter],
+  (beregningsgrunnlag, aksjonspunkter) => values => {
     const bgPerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
-    const fordelBGPerioder = beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
+    const fordelBGPerioder =
+      beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       const faktaBeregningValues = values;
       const begrunnelse = faktaBeregningValues[BEGRUNNELSE_FORDELING_NAME];
-      return [{
-        begrunnelse,
-        kode: FORDEL_BEREGNINGSGRUNNLAG,
-        ...FastsettFordeltBeregningsgrunnlag.transformValues(values, fordelBGPerioder, bgPerioder),
-      }];
+      return [
+        {
+          begrunnelse,
+          kode: FORDEL_BEREGNINGSGRUNNLAG,
+          ...FastsettFordeltBeregningsgrunnlag.transformValues(values, fordelBGPerioder, bgPerioder),
+        },
+      ];
     }
     return {};
   },
 );
 
 export const buildInitialValuesFordelBeregning = createSelector(
-  [(ownProps) => ownProps.beregningsgrunnlag,
-    (ownProps) => ownProps.alleKodeverk,
-    (ownProps) => ownProps.aksjonspunkter],
+  [ownProps => ownProps.beregningsgrunnlag, ownProps => ownProps.alleKodeverk, ownProps => ownProps.aksjonspunkter],
   (beregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
-    const fordelBGPerioder = beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
+    const fordelBGPerioder =
+      beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
     if (!hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {};
     }
-    return ({
-      ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FORDELING_NAME),
-      ...FastsettFordeltBeregningsgrunnlag.buildInitialValues(fordelBGPerioder, beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
-    });
+    return {
+      ...FaktaBegrunnelseTextField.buildInitialValues(
+        findAksjonspunktMedBegrunnelse(aksjonspunkter),
+        BEGRUNNELSE_FORDELING_NAME,
+      ),
+      ...FastsettFordeltBeregningsgrunnlag.buildInitialValues(
+        fordelBGPerioder,
+        beregningsgrunnlag,
+        getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+      ),
+    };
   },
 );
 
 export const getValidationFordelBeregning = createSelector(
-  [(ownProps) => ownProps.beregningsgrunnlag,
-    (ownProps) => ownProps.alleKodeverk,
-    (ownProps) => ownProps.aksjonspunkter],
-  (beregningsgrunnlag, alleKodeverk, aksjonspunkter) => (values) => {
-    const fordelBGPerioder = beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
+  [ownProps => ownProps.beregningsgrunnlag, ownProps => ownProps.alleKodeverk, ownProps => ownProps.aksjonspunkter],
+  (beregningsgrunnlag, alleKodeverk, aksjonspunkter) => values => {
+    const fordelBGPerioder =
+      beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {
-        ...FastsettFordeltBeregningsgrunnlag.validate(values, fordelBGPerioder,
-          beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+        ...FastsettFordeltBeregningsgrunnlag.validate(
+          values,
+          fordelBGPerioder,
+          beregningsgrunnlag,
+          getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+        ),
       };
     }
     return null;
@@ -153,9 +159,9 @@ export const getValidationFordelBeregning = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback(transformValuesFordelBeregning(initialOwnProps)(values));
+  const onSubmit = values => initialOwnProps.submitCallback(transformValuesFordelBeregning(initialOwnProps)(values));
   return (state, ownProps) => {
-    const relevantAp = ownProps.aksjonspunkter.find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
+    const relevantAp = ownProps.aksjonspunkter.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
     const isAksjonspunktClosed = !isAksjonspunktOpen(relevantAp.status.kode);
     const initialValues = buildInitialValuesFordelBeregning(ownProps);
     const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_FORDELING_NAME];
@@ -169,7 +175,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   };
 };
 
-
-const FordelingForm = connect(mapStateToPropsFactory)(behandlingForm({ form: FORM_NAME_FORDEL_BEREGNING })(FordelingFormImpl));
+const FordelingForm = connect(mapStateToPropsFactory)(
+  behandlingForm({ form: FORM_NAME_FORDEL_BEREGNING })(FordelingFormImpl),
+);
 
 export default FordelingForm;

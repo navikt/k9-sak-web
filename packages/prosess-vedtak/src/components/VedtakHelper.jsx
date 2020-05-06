@@ -46,7 +46,15 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.SvangerskapspengerInnvilget';
   }
 
-  return 'VedtakForm.VilkarStatusInnvilgetForeldrepenger';
+  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+    return 'VedtakForm.VilkarStatusInnvilgetOmsorgspenger';
+  }
+
+  if (ytelseType === fagsakYtelseType.FRISINN) {
+    return 'VedtakForm.VilkarStatusInnvilgetFrisinn';
+  }
+
+  return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
 export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) => {
@@ -65,12 +73,22 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.SvangerskapspengerIkkeInnvilget';
   }
 
+  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+    return 'VedtakForm.OmsorgspengerIkkeInnvilget';
+  }
+
+  if (ytelseType === fagsakYtelseType.FRISINN) {
+    return 'VedtakForm.FrisinnIkkeInnvilget';
+  }
+
   return 'VedtakForm.PleiepengerIkkeInnvilget';
 };
 
 export const hasIkkeOppfyltSoknadsfristvilkar = vilkar =>
   vilkar.some(
-    v => v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET && v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT,
+    v =>
+      v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET &&
+      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
   );
 
 export const medholdIKlage = klageVurderingResultat =>

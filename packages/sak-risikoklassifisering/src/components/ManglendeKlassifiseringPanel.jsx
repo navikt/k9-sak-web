@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 
 import manglendeKlassifiseringIkon from '@fpsak-frontend/assets/images/behandle_disable.svg';
 
@@ -14,10 +14,7 @@ import styles from './manglendeKlassifiseringPanel.less';
  */
 const ManglendeKlassifiseringPanel = () => (
   <Panel className={styles.ingenKlassifiseringUtfortTittel}>
-    <TittelMedDivider
-      imageSrc={manglendeKlassifiseringIkon}
-      tittel="Risikopanel.Tittel.ManglerKlassifisering"
-    />
+    <TittelMedDivider imageSrc={manglendeKlassifiseringIkon} tittel="Risikopanel.Tittel.ManglerKlassifisering" />
   </Panel>
 );
 

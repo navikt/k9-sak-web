@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm } from '@fpsak-frontend/fp-felles';
+import { behandlingForm } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 
