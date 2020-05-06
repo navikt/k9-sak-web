@@ -28,6 +28,7 @@ export class DashboardResolver extends Component {
 
   componentDidMount = async () => {
     if (!isComingFromK9Los() || isRunningOnLocalhost()) {
+      this.setState({ isLoading: false });
       return;
     }
     try {
