@@ -20,10 +20,14 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
         vilkarType: {
           kode: vilkarType.SOKNADFRISTVILKARET,
         },
-        vilkarStatus: {
-          kode: vilkarUtfallType.IKKE_OPPFYLT,
-        },
         lovReferanse: '§ 22-13, 2. ledd',
+        perioder: [
+          {
+            vilkarStatus: {
+              kode: vilkarUtfallType.IKKE_OPPFYLT,
+            },
+          },
+        ],
       },
     ];
     const behandlingsresultat = {
@@ -55,12 +59,7 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(1);
-    expect(
-      undertekstFields
-        .last()
-        .childAt(0)
-        .text(),
-    ).to.eql('Årsak til avslag');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til avslag');
 
     const textArea = wrapper.find('TextAreaField');
     expect(textArea).to.have.length(1);

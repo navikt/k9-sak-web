@@ -21,7 +21,7 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/sak/api/behandlinger', InnsynBehandlingApiKeys.BEHANDLING_INNSYN)
   // behandlingsdata
   .withRel('aksjonspunkter', InnsynBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar', InnsynBehandlingApiKeys.VILKAR)
+  .withRel('vilkar-v3', InnsynBehandlingApiKeys.VILKAR)
   .withRel('innsyn', InnsynBehandlingApiKeys.INNSYN)
   .withRel('dokumenter', InnsynBehandlingApiKeys.INNSYN_DOKUMENTER)
 
