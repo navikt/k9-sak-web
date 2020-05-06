@@ -41,6 +41,7 @@ const ProsessPanelTemplate = ({
   rendreFakta,
   isDirty,
   children,
+  isPeriodisertFormComplete,
 }) => (
   <>
     <form onSubmit={formProps.handleSubmit}>
@@ -106,6 +107,7 @@ const ProsessPanelTemplate = ({
           isBehandlingFormSubmitting={isBehandlingFormSubmitting}
           isBehandlingFormDirty={isBehandlingFormDirty}
           hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          isPeriodisertFormComplete={isPeriodisertFormComplete}
         />
       </AksjonspunktBox>
       {rendreFakta && (
@@ -131,6 +133,7 @@ ProsessPanelTemplate.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isDirty: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  isPeriodisertFormComplete: PropTypes.bool,
 };
 
 ProsessPanelTemplate.defaultProps = {
@@ -138,6 +141,7 @@ ProsessPanelTemplate.defaultProps = {
   originalErVilkarOk: undefined,
   rendreFakta: undefined,
   isDirty: undefined,
+  isPeriodisertFormComplete: undefined,
 };
 
 export default ProsessPanelTemplate;

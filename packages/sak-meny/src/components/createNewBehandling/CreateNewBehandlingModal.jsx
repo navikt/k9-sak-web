@@ -18,6 +18,8 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
+import {getAktorid} from "@fpsak-frontend/sak-app/src/fagsak/fagsakSelectors";
+import {getBehandlendeEnhetIdOfGjeldendeVedtak} from "@fpsak-frontend/sak-app/src/behandling/selectors/behandlingerSelectors";
 import styles from './createNewBehandlingModal.less';
 
 const createOptions = (bt, enabledBehandlingstyper, intl) => {
@@ -251,11 +253,18 @@ const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector([(ownProps
   (behandlingType) => behandlingType && (behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING));
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback({
-    ...values,
-    eksternUuid: initialOwnProps.uuidForSistLukkede,
-    fagsakYtelseType: initialOwnProps.ytelseType,
-  });
+  const onSubmit = (values) => {
+    const klageOnlyValues = values?.behandlingType === bType.KLAGE ? {
+      aktørId: getAktorid(initialState),
+      behandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(initialState)
+    } : undefined;
+    initialOwnProps.submitCallback({
+      ...values,
+      eksternUuid: initialOwnProps.uuidForSistLukkede,
+      fagsakYtelseType: initialOwnProps.ytelseType,
+      ...klageOnlyValues
+    });
+  };
   return (state, ownProps) => ({
     onSubmit,
     behandlingTyper: getBehandlingTyper(ownProps),

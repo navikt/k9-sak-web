@@ -1,7 +1,9 @@
-import { Kodeverk } from '@k9-sak-web/types';
+import Vilkårresultat from './vilkårresultat';
 
 type Behandlingsresultat = Readonly<{
-  avslagsarsak: Kodeverk;
+  vilkårResultat: {
+    [name: string]: Vilkårresultat[];
+  };
 }>;
 
 export default Behandlingsresultat;
