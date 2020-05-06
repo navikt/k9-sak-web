@@ -7,6 +7,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import styles from './vilkarresultatMedOverstyringProsessIndex.less';
+import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
 
 const cache = createIntlCache();
 
@@ -73,6 +74,17 @@ const VilkarresultatMedOverstyringProsessIndex = ({
         />
       )}
       <div className={styles.tabContainer}>
+        <VilkarresultatMedOverstyringHeader
+          aksjonspunkter={aksjonspunkter}
+          erOverstyrt={erOverstyrt}
+          kanOverstyreAccess={kanOverstyreAccess}
+          lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
+          overrideReadOnly={overrideReadOnly}
+          overstyringApKode={overstyringApKode}
+          panelTittelKode={panelTittelKode}
+          status={activePeriode.vilkarStatus.kode}
+          toggleOverstyring={toggleOverstyring}
+        />
         <VilkarresultatMedOverstyringForm
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
