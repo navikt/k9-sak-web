@@ -109,7 +109,10 @@ const finnBeregningsgrunnlag = (bgperiode, statuserDetErSøktOm, status, grensev
     annenStatusSøktOm.statusSøktFor.kode,
   );
   bg -= samletBruttoForAnnenStatus;
-  return bg < 0 ? 0 : bg;
+  if (bg < samletBruttoForDenneStatus) {
+    return bg < 0 ? 0 : bg;
+  }
+  return samletBruttoForDenneStatus;
 };
 
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, originalGrenseverdi) => {
