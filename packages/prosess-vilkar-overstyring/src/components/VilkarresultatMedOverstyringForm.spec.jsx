@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import { EtikettLiten } from 'nav-frontend-typografi';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,34 +10,33 @@ import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyring
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
-    const wrapper = shallow(<VilkarresultatMedOverstyringForm
-      {...reduxFormPropsMock}
-      behandlingspunktTitleCode="Behandlingspunkt.Fodselsvilkaret"
-      erVilkarOk
-      isReadOnly
-      overstyringApKode="5011"
-      avslagsarsaker={[{ kode: 'test1', navn: 'test' }, { kode: 'test2', navn: 'test' }]}
-      lovReferanse="§23"
-      hasAksjonspunkt
-      behandlingspunkt="foedsel"
-      overrideReadOnly={false}
-      kanOverstyreAccess={{
-        isEnabled: true,
-      }}
-      aksjonspunktCodes={[]}
-      toggleOverstyring={() => undefined}
-      erMedlemskapsPanel={false}
-      panelTittelKode="Fødsel"
-      erOverstyrt
-    />);
+    const wrapper = shallow(
+      <VilkarresultatMedOverstyringForm
+        {...reduxFormPropsMock}
+        erVilkarOk
+        isReadOnly
+        overstyringApKode="5011"
+        avslagsarsaker={[
+          { kode: 'test1', navn: 'test' },
+          { kode: 'test2', navn: 'test' },
+        ]}
+        lovReferanse="§23"
+        hasAksjonspunkt
+        behandlingspunkt="foedsel"
+        overrideReadOnly={false}
+        kanOverstyreAccess={{
+          isEnabled: true,
+        }}
+        aksjonspunktCodes={[]}
+        toggleOverstyring={() => undefined}
+        erMedlemskapsPanel={false}
+        panelTittelKode="Fødsel"
+        erOverstyrt
+      />,
+    );
 
     const melding = wrapper.find(FormattedMessage);
-    expect(melding).to.have.length(5);
-    expect(melding.first().prop('id')).to.eql('Fødsel');
-
-    const normaltekst = wrapper.find(EtikettLiten);
-    expect(normaltekst).to.have.length(1);
-    expect(normaltekst.childAt(0).text()).to.eql('§23');
+    expect(melding).to.have.length(3);
 
     const vilkarResultatMedBegrunnelse = wrapper.find(VilkarresultatMedBegrunnelse);
     expect(vilkarResultatMedBegrunnelse).to.have.length(1);
