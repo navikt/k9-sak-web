@@ -1,12 +1,13 @@
 import React from 'react';
-import { TableColumn } from '@fpsak-frontend/shared-components/index';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
+import NavFrontendChevron from 'nav-frontend-chevron';
 import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
 import { VilkårEnum } from '../dto/Vilkår';
 import AktivitetTabell from './AktivitetTabell';
+import StyledColumn from './StyledColumn';
 
 describe('AktivitetTabell', () => {
   const aktivitet: Aktivitet = {
@@ -38,7 +39,7 @@ describe('AktivitetTabell', () => {
         aktivitetsstatuser={[]}
       />,
     );
-    const kolonner = wrapper.find(TableColumn);
+    const kolonner = wrapper.find(StyledColumn);
 
     expect(kolonner).to.have.length(5);
 
@@ -48,7 +49,8 @@ describe('AktivitetTabell', () => {
 
     expect(kolonnerMedTekst('01.03.2020 - 31.03.2020')).to.have.length(1);
     expect(kolonnerMedFormatterTekstId('Uttaksplan.Utfall.AVSLÅTT')).to.have.length(1);
-    expect(kolonnerMedTekst('0%')).to.have.length(1);
+    expect(kolonnerMedTekst('0%')).to.have.length(2);
     expect(kolonnerMedFormatterTekstId('Uttaksplan.FulltFravær')).to.have.length(1);
+    expect(kolonner.find(NavFrontendChevron)).to.have.length(1);
   });
 });

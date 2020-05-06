@@ -1,17 +1,23 @@
-import React, { FunctionComponent, useState, ReactNode } from 'react';
+import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components/index';
+import { Table, TableRow, Image } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import { joinNonNullStrings, durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate } from './utils';
+import {
+  joinNonNullStrings,
+  durationTilTimerMed7ogEnHalvTimesDagsbasis,
+  formatDate,
+  periodeErIKoronaperioden,
+} from './utils';
 import Arbeidsforhold from '../dto/Arbeidsforhold';
 import Uttaksperiode from '../dto/Uttaksperiode';
 import Utfalltype, { UtfallEnum } from '../dto/Utfall';
+import StyledColumn from './StyledColumn';
 
 interface AktivitetTabellProps {
   arbeidsforhold: Arbeidsforhold;
@@ -57,16 +63,16 @@ const UtfallImage = styled.span`
   }
 `;
 
-const ExpandedContent = styled.div`
+const ExpandedContent = styled.div<{ fyllBorder?: boolean }>`
   margin-top: 0.5em;
   padding-top: 0.5em;
   border-top: 1px solid #c6c2bf;
   position: relative;
 
-  ${({ fyllBorder }: any) =>
+  ${({ fyllBorder }) =>
     fyllBorder &&
     `
-    &:before{
+    &:before {
     content: '';
     position: absolute;
     border-top: 1px solid #c6c2bf;
@@ -121,10 +127,11 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
       >
         {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår }, index) => {
           const erValgt = valgtPeriodeIndex === index;
+          const erKoronaperiode = useMemo(() => periodeErIKoronaperioden(periode), [periode]);
 
           return (
             <TableRow key={periode}>
-              <TableColumn>
+              <StyledColumn koronaperiode={erKoronaperiode} first>
                 <Normaltekst>{periodevisning(periode)}</Normaltekst>
                 {erValgt && (
                   <ExpandedContent>
@@ -138,25 +145,17 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                     ))}
                   </ExpandedContent>
                 )}
-              </TableColumn>
-              <TableColumn>
+              </StyledColumn>
+              <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
                   {formaterDelvisFravær(delvisFravær)}
-                  {erValgt && (
-                    <ExpandedContent
-                      // @ts-ignore
-                      fyllBorder
-                    />
-                  )}
+                  {erValgt && <ExpandedContent fyllBorder />}
                 </>
-              </TableColumn>
-              <TableColumn>
+              </StyledColumn>
+              <StyledColumn koronaperiode={erKoronaperiode}>
                 {renderUtfall(utfall)}
                 {erValgt && (
-                  <ExpandedContent
-                    // @ts-ignore
-                    fyllBorder
-                  >
+                  <ExpandedContent fyllBorder>
                     <Vilkårsutfall>
                       {Object.entries(vurderteVilkår.vilkår).map(([key, vilkårsutfall]) =>
                         renderUtfall(vilkårsutfall, `${periode}--${key}.${vilkårsutfall}`),
@@ -164,31 +163,21 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                     </Vilkårsutfall>
                   </ExpandedContent>
                 )}
-              </TableColumn>
-              <TableColumn>
+              </StyledColumn>
+              <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
                   {`${utbetalingsgrad}%`}
-                  {erValgt && (
-                    <ExpandedContent
-                      // @ts-ignore
-                      fyllBorder
-                    />
-                  )}
+                  {erValgt && <ExpandedContent fyllBorder />}
                 </>
-              </TableColumn>
-              <TableColumn>
+              </StyledColumn>
+              <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
                   <ExpandButton onClick={() => velgPeriode(index)} type="button">
                     <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
                   </ExpandButton>
-                  {erValgt && (
-                    <ExpandedContent
-                      // @ts-ignore
-                      fyllBorder
-                    />
-                  )}
+                  {erValgt && <ExpandedContent fyllBorder />}
                 </>
-              </TableColumn>
+              </StyledColumn>
             </TableRow>
           );
         })}
