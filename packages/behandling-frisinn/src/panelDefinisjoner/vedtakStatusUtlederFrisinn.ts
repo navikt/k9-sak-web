@@ -25,13 +25,13 @@ const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behan
 
   if (
     hasOnlyClosedAps(aksjonspunkter, vedtakAksjonspunkter) &&
-    vilkar.some(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT)
+    vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT))
   ) {
     return vilkarUtfallType.IKKE_OPPFYLT;
   }
 
   if (
-    vilkar.some(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) ||
+    vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT)) ||
     aksjonspunkter.some(isAksjonspunktOpenAndOfType)
   ) {
     return vilkarUtfallType.IKKE_VURDERT;
