@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import Undertittel from 'nav-frontend-typografi/lib/undertittel';
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components/index';
+import { Image } from '@fpsak-frontend/shared-components/index';
 import pieChart from '@fpsak-frontend/assets/images/pie_chart.svg';
 import CounterBox from './CounterBox';
 import BorderedContainer from './BorderedContainer';
@@ -12,6 +12,7 @@ interface ÅrskvantumProps {
   antallDagerArbeidsgiverDekker: number;
   forbrukteDager: number;
   restdager: number;
+  antallDagerInfotrygd: number;
 }
 
 const CounterContainer = styled.div`
@@ -37,9 +38,11 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   restdager,
   forbrukteDager,
   antallDagerArbeidsgiverDekker,
+  antallDagerInfotrygd,
 }) => {
   const forbrukt = konverterDesimalTilDagerOgTimer(forbrukteDager);
   const rest = konverterDesimalTilDagerOgTimer(restdager);
+  const dagerInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
 
   return (
     <BorderedContainer
@@ -51,23 +54,32 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
       }
     >
       <CounterContainer>
-        <div>
-          <CounterBox
-            bigCount={`${totaltAntallDager - antallDagerArbeidsgiverDekker}*`}
-            label={<FormattedMessage id="Årskvantum.TotaleDager" />}
-            theme="standard"
-          />
-          <VerticalSpacer eightPx />
-          <FormattedMessage
-            id="Årskvantum.TotaldagerInfo"
-            values={{ totaltAntallDager, antallDagerArbeidsgiverDekker }}
-          />
-        </div>
+        <CounterBox
+          bigCount={totaltAntallDager - antallDagerArbeidsgiverDekker}
+          label={<FormattedMessage id="Årskvantum.TotaleDager" />}
+          theme="standard"
+          bottomText={
+            <FormattedMessage
+              id="Årskvantum.TotaldagerInfo"
+              values={{ totaltAntallDager, antallDagerArbeidsgiverDekker }}
+            />
+          }
+        />
         <CounterBox
           bigCount={forbrukt.dager}
           smallCount={forbrukt.timer ? `${forbrukt.timer}t` : null}
           label={<FormattedMessage id="Årskvantum.ForbrukteDager" />}
           theme="rød"
+          bottomText={
+            dagerInfotrygd.timer ? (
+              <FormattedMessage
+                id="Årskvantum.DagerOgTimerFraInfotrygd"
+                values={{ dager: dagerInfotrygd.dager, timer: dagerInfotrygd.timer }}
+              />
+            ) : (
+              <FormattedMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: dagerInfotrygd.dager }} />
+            )
+          }
         />
         <CounterBox
           bigCount={rest.dager}
