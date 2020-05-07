@@ -1,8 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Kodeverk } from '@k9-sak-web/types';
+import React from 'react';
+import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
+
+interface VilkarresultatMedBegrunnelseProps {
+  erVilkarOk?: boolean;
+  readOnly: boolean;
+  erMedlemskapsPanel: boolean;
+  hasAksjonspunkt: boolean;
+  avslagsarsaker: Kodeverk[];
+  customVilkarIkkeOppfyltText?: CustomVilkarText;
+  customVilkarOppfyltText?: CustomVilkarText;
+  skalViseBegrunnelse?: boolean;
+}
 
 /**
  * VIlkarresultatMedBegrunnelse
@@ -19,7 +30,7 @@ export const VilkarresultatMedBegrunnelse = ({
   skalViseBegrunnelse,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
-}) => (
+}: VilkarresultatMedBegrunnelseProps) => (
   <>
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
@@ -39,27 +50,6 @@ export const VilkarresultatMedBegrunnelse = ({
   </>
 );
 
-
-VilkarresultatMedBegrunnelse.propTypes = {
-  erVilkarOk: PropTypes.bool,
-  readOnly: PropTypes.bool.isRequired,
-  erMedlemskapsPanel: PropTypes.bool.isRequired,
-  hasAksjonspunkt: PropTypes.bool.isRequired,
-  avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
-  })).isRequired,
-  customVilkarIkkeOppfyltText: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    values: PropTypes.shape(),
-  }),
-  customVilkarOppfyltText: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    values: PropTypes.shape(),
-  }),
-  skalViseBegrunnelse: PropTypes.bool,
-};
-
 VilkarresultatMedBegrunnelse.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
@@ -68,17 +58,19 @@ VilkarresultatMedBegrunnelse.defaultProps = {
 };
 
 VilkarresultatMedBegrunnelse.buildInitialValues = (behandlingsresultat, aksjonspunkter, status, overstyringApKode) => {
-  const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === overstyringApKode);
+  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
   return {
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...VilkarBegrunnelse.buildInitialValues(aksjonspunkt),
   };
 };
 
-VilkarresultatMedBegrunnelse.transformValues = (values) => ({
+VilkarresultatMedBegrunnelse.transformValues = values => ({
   begrunnelse: values.begrunnelse,
 });
 
-VilkarresultatMedBegrunnelse.validate = (values = {}) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
+VilkarresultatMedBegrunnelse.validate = (
+  values: { erVilkarOk: boolean; avslagCode: string } = { erVilkarOk: false, avslagCode: '' },
+) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 
 export default VilkarresultatMedBegrunnelse;

@@ -310,9 +310,18 @@ describe('<CreateNewBehandlingModal>', () => {
         },
       ],
     };
+    const kodeverkKlage = {
+      [kodeverkTyper.BEHANDLING_TYPE]: [
+        {
+          kode: behandlingType.KLAGE,
+          navn: 'Klage'
+        }
+      ]
+    };
     const kodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
       .medFpSakKodeverk(kodeverkFpSak)
-      .medFpTilbakeKodeverk(kodeverkFpTilbake);
+      .medFpTilbakeKodeverk(kodeverkFpTilbake)
+      .medKlagekodeverk(kodeverkKlage);
 
     const res = getBehandlingTyper.resultFunc(kodeverk);
 
@@ -347,9 +356,18 @@ describe('<CreateNewBehandlingModal>', () => {
         },
       ],
     };
+    const behandlingstyperKlage = {
+      [kodeverkTyper.BEHANDLING_TYPE]: [
+        {
+          kode: behandlingType.KLAGE,
+          navn: 'Klage'
+        }
+      ]
+    };
     const kodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
       .medFpSakKodeverk(behandlingtyperFpSak)
-      .medFpTilbakeKodeverk(behandlingtyperFpTilbake);
+      .medFpTilbakeKodeverk(behandlingtyperFpTilbake)
+      .medKlagekodeverk(behandlingstyperKlage);
 
     const res = getBehandlingTyper.resultFunc(kodeverk);
 
@@ -357,6 +375,50 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingtyperFpSak[kodeverkTyper.BEHANDLING_TYPE][2],
       behandlingtyperFpSak[kodeverkTyper.BEHANDLING_TYPE][1],
       behandlingtyperFpTilbake[kodeverkTyper.BEHANDLING_TYPE][0],
+    ]);
+  });
+
+  it('Skal finne behandlingstyper for både k9-sak og klage', () => {
+    const behandlingstyperFpSak = {
+      [kodeverkTyper.BEHANDLING_TYPE]: [
+        {
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          navn: 'Førstegangsbehandling'
+        },
+        {
+          kode: behandlingType.REVURDERING,
+          navn: 'Revurdering'
+        }
+      ]
+    };
+    const behandlingstyperFpTilbake = {
+      [kodeverkTyper.BEHANDLING_TYPE]: [
+        {
+          kode: behandlingType.TILBAKEKREVING,
+          navn: 'Tilbakekreving'
+        }
+      ]
+    };
+    const behandlingstyperKlage = {
+      [kodeverkTyper.BEHANDLING_TYPE]: [
+        {
+          kode: behandlingType.KLAGE,
+          navn: 'Klage'
+        }
+      ]
+    };
+
+    const kodeverk = new MenyKodeverk({kode: behandlingType.FORSTEGANGSSOKNAD})
+      .medFpSakKodeverk(behandlingstyperFpSak)
+      .medFpTilbakeKodeverk(behandlingstyperFpTilbake)
+      .medKlagekodeverk(behandlingstyperKlage);
+
+    const res = getBehandlingTyper.resultFunc(kodeverk);
+
+    expect(res).to.deep.include.members([
+      behandlingstyperFpSak[kodeverkTyper.BEHANDLING_TYPE][0],
+      behandlingstyperFpSak[kodeverkTyper.BEHANDLING_TYPE][1],
+      behandlingstyperKlage[kodeverkTyper.BEHANDLING_TYPE][0]
     ]);
   });
 

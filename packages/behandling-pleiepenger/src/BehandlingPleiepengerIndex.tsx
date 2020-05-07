@@ -24,7 +24,6 @@ const foreldrepengerData = [
   pleiepengerBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
   pleiepengerBehandlingApi.VILKAR,
   pleiepengerBehandlingApi.PERSONOPPLYSNINGER,
-  pleiepengerBehandlingApi.YTELSEFORDELING,
   pleiepengerBehandlingApi.SOKNAD,
   pleiepengerBehandlingApi.INNTEKT_ARBEID_YTELSE,
   pleiepengerBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,

@@ -24,11 +24,14 @@ const Beregningsresultat = ({ beregningsgrunnlag }) => {
         </Column>
       </Row>
       {beregningsgrunnlag.beregningsgrunnlagPeriode.map(periode => (
-        <BeregningsresultatPeriode
-          bgperiode={periode}
-          ytelsegrunnlag={beregningsgrunnlag.ytelsesspesifiktGrunnlag}
-          grenseverdi={grenseverdi}
-        />
+        <div key={periode.beregningsgrunnlagPeriodeFom}>
+          <BeregningsresultatPeriode
+            bgperiode={periode}
+            ytelsegrunnlag={beregningsgrunnlag.ytelsesspesifiktGrunnlag}
+            grenseverdi={grenseverdi}
+            key={periode.beregningsgrunnlagperiodeFom}
+          />
+        </div>
       ))}
     </div>
   );

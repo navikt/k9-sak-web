@@ -9,7 +9,6 @@ import {
   UttaksresultatPeriode,
   UttakStonadskontoer,
   Vilkar,
-  Ytelsefordeling,
   Sykdom,
   OmsorgenFor,
 } from '@k9-sak-web/types';
@@ -18,7 +17,6 @@ interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
   personopplysninger: Personopplysninger;
-  ytelsefordeling: Ytelsefordeling;
   soknad: Soknad;
   inntektArbeidYtelse: InntektArbeidYtelse;
   beregningresultatForeldrepenger: BeregningsresultatFp;
