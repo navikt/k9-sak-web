@@ -58,11 +58,22 @@ server {
     error_page 404 = @404_json;
     error_page 504 = @504_json;
   }
-  
+
   location "/k9/oppdrag/" {
     proxy_set_header Host       $http_host;
     proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL_K9OPPDRAG}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+  location "/k9/klage/" {
+    proxy_set_header Host       $http_host;
+    proxy_hide_header       Content-Security-Policy;
+    proxy_pass "${APP_URL_KLAGE}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
     error_page 403 = @403_json;
