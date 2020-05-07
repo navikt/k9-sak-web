@@ -23,10 +23,11 @@ interface CounterBoxProps {
   smallCount?: string | number;
   label: string | ReactNode;
   theme: Theme;
+  bottomText?: string | ReactNode;
 }
 
-const containerHeight = '150px';
-const containerWidth = '240px';
+const containerHeight = '180px';
+const containerWidth = '270px';
 
 const Container = styled.div`
   height: ${containerHeight};
@@ -46,7 +47,7 @@ const Count = styled.div`
   & > *:not(:last-child) {
     margin-right: 0.3em;
   }
-  flex-basis: 67%;
+  flex-basis: 50%;
   padding-top: 0.1em;
   font-weight: 300;
   margin-top: auto;
@@ -60,26 +61,34 @@ const SmallCount = styled.span`
   font-size: 2.7em;
 `;
 
-const LabelPanel = styled.div`
-  background-color: ${({ color }) => color || 'inherit'};
+const themeBorder = ({ theme }) => (theme === 'standard' ? '1px solid grey' : 'none');
+
+const LabelPanel = styled.div<{ theme: Theme }>`
   font-size: 1.3em;
   font-weight: 600;
-  flex-basis: 33%;
+  flex-basis: 30%;
   margin: ${({ theme }) => (theme === 'standard' ? '0 15px' : 'none')};
-  border-top: ${({ theme }) => (theme === 'standard' ? '1px solid grey' : 'none')};
+  border-bottom: ${themeBorder};
+  border-top: ${themeBorder};
   background-color: ${({ theme }) => farger[theme].background};
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-const CounterBox = ({ bigCount, smallCount, label, theme }: CounterBoxProps) => (
+const BottomText = styled.div`
+  flex-basis: 20%;
+  padding-top: 5px;
+`;
+
+const CounterBox = ({ bigCount, smallCount, label, theme, bottomText }: CounterBoxProps) => (
   <Container theme={theme}>
     <Count>
       <BigCount>{bigCount}</BigCount>
       {smallCount && <SmallCount>{smallCount}</SmallCount>}
     </Count>
     <LabelPanel theme={theme}>{label}</LabelPanel>
+    <BottomText>{bottomText}</BottomText>
   </Container>
 );
 
