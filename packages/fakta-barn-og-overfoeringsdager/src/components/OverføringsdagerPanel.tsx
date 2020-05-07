@@ -26,6 +26,7 @@ interface OverføringsdagerPanelProps {
   behandlingVersjon: number;
   oppdaterOverføringer(overføringer: Overføring[]): void;
   oppdaterteForms: string[];
+  readOnly: boolean;
 }
 
 export const typeTilTekstIdMap = {
@@ -81,6 +82,7 @@ const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = (
   overføringer,
   oppdaterOverføringer,
   oppdaterteForms,
+  readOnly,
 }) => {
   const totaltAntallDager = useMemo(() => summerDager(overføringer), [overføringer]);
   const [redigerer, setRedigerer] = useState<boolean>(false);
@@ -102,6 +104,7 @@ const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = (
             initialValues={overføringer}
             redigerer={redigerer}
             rediger={setRedigerer}
+            readOnly={readOnly}
           />
         </EkspanderbartPanel>
       </div>

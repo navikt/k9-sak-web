@@ -18,6 +18,7 @@ interface OverføringsdagerPanelgruppeProps {
   behandlingId: number;
   behandlingVersjon: number;
   oppdaterteForms: string[];
+  readOnly: boolean;
 }
 
 const feltnavnMap = { [OverføringsretningEnum.INN]: 'Får', [OverføringsretningEnum.UT]: 'Gir' };
@@ -32,6 +33,7 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
   behandlingId,
   behandlingVersjon,
   oppdaterteForms,
+  readOnly,
 }) => {
   const oppdaterOverføringer = useCallback(
     (type: Overføringstype) => nyeOverføringer =>
@@ -49,6 +51,7 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         oppdaterteForms={oppdaterteForms}
+        readOnly={readOnly}
       />
       <OverføringsdagerPanel
         overføringer={fordelinger}
@@ -58,6 +61,7 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         oppdaterteForms={oppdaterteForms}
+        readOnly={readOnly}
       />
       <OverføringsdagerPanel
         overføringer={koronaoverføringer}
@@ -67,6 +71,7 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         oppdaterteForms={oppdaterteForms}
+        readOnly={readOnly}
       />
     </div>
   );

@@ -51,12 +51,7 @@ const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
 
 const fnrEtBarn = '12121212121';
 const fnrEtAnnetBarn = '02020202020';
-const barn: BarnAutomatiskHentetDto[] = [
-  {
-    fødselsnummer: fnrEtBarn,
-  },
-  { fødselsnummer: fnrEtAnnetBarn },
-];
+const barn: BarnAutomatiskHentetDto[] = [{ fødselsnummer: fnrEtBarn }, { fødselsnummer: fnrEtAnnetBarn }];
 
 const barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[] = [
   {
@@ -116,6 +111,19 @@ export const readOnly = () => (
       ...tomOmsorgsdagerGrunnlag,
       barn,
       barnLagtTilAvSakbehandler,
+      aleneOmOmsorgen: [
+        {
+          fnrBarnAleneOm: fnrEtBarn,
+          kilde: 'hentetAutomatisk',
+        },
+      ],
+      overføringFår: [
+        {
+          kilde: 'hentetAutomatisk',
+          antallDager: 10,
+          avsendersFnr: '12312312312',
+        },
+      ],
     }}
     behandling={behandling}
     submitCallback={action('Send inn')}

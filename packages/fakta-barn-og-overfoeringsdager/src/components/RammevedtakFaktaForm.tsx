@@ -122,25 +122,12 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           <VerticalSpacer sixteenPx />
         </>
       )}
-      <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={users}>
-        <>
-          {!(barn.length || barnLagtTilAvSaksbehandler.length) && (
-            <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />
-          )}
-          <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
-          <FieldArray
-            name="barnLagtTilAvSaksbehandler"
-            component={BarnLagtTilAvSaksbehandler}
-            props={{ barn: barnLagtTilAvSaksbehandler, readOnly }}
-          />
-        </>
-      </Seksjon>
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.Overføringer.Tittel" imgSrc={transferIcon}>
         <FastBreddeAligner
           rad={{ padding: '0 0 0 1em' }}
           kolonner={[
             {
-              width: '150px',
+              width: '225px',
               id: 'overføring.tittel.totalt',
               content: (
                 <Element>
@@ -148,7 +135,6 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
                 </Element>
               ),
             },
-            { width: '75px', id: 'overføring.tittel.totalt' },
             {
               width: '150px',
               id: 'overføring.tittel.totalt',
@@ -169,6 +155,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           behandlingVersjon={behandlingVersjon}
           oppdaterForm={oppdaterForm}
           oppdaterteForms={oppdaterteForms}
+          readOnly={readOnly}
         />
         <VerticalSpacer thirtyTwoPx />
         <OverføringsdagerPanelgruppe
@@ -180,7 +167,21 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           behandlingVersjon={behandlingVersjon}
           oppdaterForm={oppdaterForm}
           oppdaterteForms={oppdaterteForms}
+          readOnly={readOnly}
         />
+      </Seksjon>
+      <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={users}>
+        <>
+          {!(barn.length || barnLagtTilAvSaksbehandler.length) && (
+            <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />
+          )}
+          <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
+          <FieldArray
+            name="barnLagtTilAvSaksbehandler"
+            component={BarnLagtTilAvSaksbehandler}
+            props={{ barnAutomatisk: barn, readOnly }}
+          />
+        </>
       </Seksjon>
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.ErMidlertidigAlene.Tittel" imgSrc={user}>
         <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />

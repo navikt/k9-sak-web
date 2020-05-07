@@ -25,6 +25,7 @@ interface RedigerOverføringsraderProps {
   rediger: VoidFunction;
   bekreft: VoidFunction;
   avbryt: VoidFunction;
+  readOnly: boolean;
 }
 
 const retningTilTekstIdMap = {
@@ -46,17 +47,13 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
       <FastBreddeAligner
         kolonner={[
           {
-            width: '150px',
+            width: '225px',
             id: 'overføring',
             content: (
               <Element>
                 <FormattedMessage id={typeTilTekstIdMap[type]} />
               </Element>
             ),
-          },
-          {
-            width: '75px',
-            id: 'empty',
           },
           {
             width: '150px',
@@ -81,6 +78,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
   rediger,
   bekreft,
   avbryt,
+  readOnly,
 }) => {
   const leggTilRad = () =>
     fields.push({
@@ -93,20 +91,22 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
         <Element>
           <FormattedMessage id="FaktaRammevedtak.IngenOverføringer" />
         </Element>
-        <Flatknapp
-          mini
-          kompakt
-          onClick={() => {
-            leggTilRad();
-            rediger();
-          }}
-          htmlType="button"
-        >
-          <Image className={styles.marginRight} src={blyantIkon} />
-          <Normaltekst>
-            <FormattedMessage id="FaktaRammevedtak.Overføring.Rediger" />
-          </Normaltekst>
-        </Flatknapp>
+        {!readOnly && (
+          <Flatknapp
+            mini
+            kompakt
+            onClick={() => {
+              leggTilRad();
+              rediger();
+            }}
+            htmlType="button"
+          >
+            <Image className={styles.marginRight} src={blyantIkon} />
+            <Normaltekst>
+              <FormattedMessage id="FaktaRammevedtak.Overføring.Rediger" />
+            </Normaltekst>
+          </Flatknapp>
+        )}
       </FlexRow>
     );
   }
@@ -167,7 +167,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
             key={field}
           />
         ))}
-        {!redigerer && (
+        {!redigerer && !readOnly && (
           <Flatknapp mini kompakt onClick={rediger} htmlType="button" className={styles.alignCenterRight}>
             <Image className={styles.marginRight} src={blyantIkon} />
             <Normaltekst>

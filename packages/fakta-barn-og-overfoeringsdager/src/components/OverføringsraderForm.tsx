@@ -21,6 +21,7 @@ interface OverføringsraderFormImplProps {
     touch?: boolean,
     persistentSubmitErrors?: boolean,
   ) => FormAction;
+  readOnly: boolean;
 }
 
 const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & OverføringsraderFormImplProps> = ({
@@ -32,6 +33,7 @@ const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & Overføri
   formValues,
   changeForm,
   form,
+  readOnly,
 }) => {
   const [overføringerVedRediger, setOverføringerVedRediger] = useState(null);
   const redigerKopierFormState = () => {
@@ -47,7 +49,7 @@ const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & Overføri
     <FieldArray
       name="overføringer"
       component={RedigerOverføringsrader}
-      props={{ rediger: redigerKopierFormState, type, retning, redigerer, bekreft: handleSubmit, avbryt }}
+      props={{ rediger: redigerKopierFormState, type, retning, redigerer, bekreft: handleSubmit, avbryt, readOnly }}
     />
   );
 };
@@ -61,6 +63,7 @@ interface OverføringsraderFormProps {
   oppdaterOverføringer: (overføringer: Overføring[]) => void;
   redigerer: boolean;
   rediger(redigerer: boolean): void;
+  readOnly: boolean;
 }
 
 interface OverføringsraderFormValues {
@@ -73,7 +76,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: Overføringsrade
 
   return (
     state,
-    { rediger, behandlingId, behandlingVersjon }: OverføringsraderFormProps,
+    { rediger, behandlingId, behandlingVersjon, readOnly }: OverføringsraderFormProps,
   ): ConfigProps<OverføringsraderFormValues> & Partial<OverføringsraderFormImplProps> => {
     const onSubmit = ({ overføringer }: OverføringsraderFormValues) => {
       oppdaterOverføringer(
@@ -97,6 +100,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: Overføringsrade
       },
       rediger,
       formValues,
+      readOnly,
     };
   };
 };
