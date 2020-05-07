@@ -6,7 +6,7 @@ import { LeggTilKnapp, VerticalSpacer, FlexRow, Image } from '@fpsak-frontend/sh
 import { Flatknapp } from 'nav-frontend-knapper';
 import søppelkasse from '@fpsak-frontend/assets/images/søppelkasse.svg';
 import BarnInput from './BarnInput';
-import { BarnLagtTilAvSakbehandler } from '../types/Barn';
+import { BarnEnum, BarnLagtTilAvSakbehandler } from '../types/Barn';
 import styles from './alleBarn.less';
 
 interface AlleBarnProps {
@@ -20,7 +20,7 @@ export const AlleBarn: FunctionComponent<WrappedFieldArrayProps & AlleBarnProps>
         <BarnInput
           namePrefix={field}
           key={field}
-          visFødselsnummer
+          barntype={BarnEnum.HENTET_AUTOMATISK}
           visning={
             <FlexRow childrenMargin>
               <span>
@@ -52,7 +52,7 @@ export const BarnLagtTilAvSaksbehandler: FunctionComponent<
         <BarnInput
           namePrefix={field}
           key={field}
-          visFødselsdato
+          barntype={BarnEnum.MANUELT_LAGT_TIL}
           visning={
             <FlexRow spaceBetween>
               <FlexRow childrenMargin autoFlex>
