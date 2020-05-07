@@ -26,8 +26,10 @@ const behandling = {
 
 const simuleringResultat = {
   simuleringResultat: {
-    periodeFom: '2019-01-01',
-    periodeTom: '2019-03-31',
+    periode: {
+      fom: '2019-01-01',
+      tom: '2019-03-31',
+    },
     sumEtterbetaling: 0,
     sumFeilutbetaling: -49863,
     sumInntrekk: -10899,
@@ -114,8 +116,10 @@ const simuleringResultat = {
             ],
           },
         ],
-        nesteUtbPeriodeFom: '2019-10-01',
-        nestUtbPeriodeTom: '2019-10-31',
+        nesteUtbPeriode: {
+          fom: '2019-10-01',
+          tom: '2019-10-31',
+        },
       },
     ],
   },
