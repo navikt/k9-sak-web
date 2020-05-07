@@ -9,12 +9,12 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "lodash": "^4.17.15",
-    "nav-frontend-ekspanderbartpanel": "3.0.8",
-    "nav-frontend-alertstriper": "3.0.13",
-    "nav-frontend-alertstriper-style": "2.0.11",
+    "nav-frontend-ekspanderbartpanel": "3.0.16",
+    "nav-frontend-alertstriper": "3.0.15",
+    "nav-frontend-alertstriper-style": "2.0.13",
     "nav-frontend-knapper": "2.0.1",
     "nav-frontend-knapper-style": "0.3.35",
-    "nav-frontend-paneler": "^2.0.1",
+    "nav-frontend-paneler": "^2.0.2",
     "nav-frontend-typografi": "2.0.18",
     "nav-frontend-typografi-style": "1.0.19",
     "react": "^16.13.1",
@@ -24,6 +24,6 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^9.0.1"
+    "sinon": "^9.0.2"
   }
 }
