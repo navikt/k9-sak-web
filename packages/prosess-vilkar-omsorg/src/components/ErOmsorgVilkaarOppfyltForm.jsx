@@ -46,7 +46,9 @@ export const ErOmsorgVilkaarOppfyltFormImpl = ({
     behandlingVersjon={behandlingVersjon}
     originalErVilkarOk={originalErVilkarOk}
   >
-    <Element><FormattedMessage id="ErOmsorgVilkaarOppfyltForm.VilkaretOppfylt" /></Element>
+    <Element>
+      <FormattedMessage id="ErOmsorgVilkaarOppfyltForm.VilkaretOppfylt" />
+    </Element>
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
       erVilkarOk={erVilkarOk}
@@ -60,10 +62,12 @@ export const ErOmsorgVilkaarOppfyltFormImpl = ({
 );
 
 ErOmsorgVilkaarOppfyltFormImpl.propTypes = {
-  avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
-  })).isRequired,
+  avslagsarsaker: PropTypes.arrayOf(
+    PropTypes.shape({
+      kode: PropTypes.string.isRequired,
+      navn: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   erVilkarOk: PropTypes.bool,
   aksjonspunkter: PropTypes.arrayOf(omsorgVilkarAksjonspunkterPropType),
@@ -80,31 +84,32 @@ ErOmsorgVilkaarOppfyltFormImpl.defaultProps = {
 const validate = ({ erVilkarOk, avslagCode }) => VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
 export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.behandlingsresultat,
+  [
+    (state, ownProps) => ownProps.behandlingsresultat,
     (state, ownProps) => ownProps.aksjonspunkter,
-    (state, ownProps) => ownProps.status],
+    (state, ownProps) => ownProps.status,
+  ],
   (behandlingsresultat, aksjonspunkter, status) => ({
-    ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
+    ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status), // TODO (Hallvard) bytte fra behandlingsresultat til riktig vilår
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
 
-const transformValues = (values, aksjonspunkter) => aksjonspunkter.map((ap) => ({
-  ...VilkarResultPicker.transformValues(values),
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
-  ...{ kode: ap.definisjon.kode },
-}));
+const transformValues = (values, aksjonspunkter) =>
+  aksjonspunkter.map(ap => ({
+    ...VilkarResultPicker.transformValues(values),
+    ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+    ...{ kode: ap.definisjon.kode },
+  }));
 
 const formName = 'ErOmsorgVilkaarOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const {
-    aksjonspunkter, status, alleKodeverk, submitCallback,
-  } = initialOwnProps;
-  const onSubmit = (values) => submitCallback(transformValues(values, initialOwnProps.aksjonspunkter));
+  const { aksjonspunkter, status, alleKodeverk, submitCallback } = initialOwnProps;
+  const onSubmit = values => submitCallback(transformValues(values, initialOwnProps.aksjonspunkter));
   const avslagsarsaker = alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarType.OMSORGSVILKARET];
 
-  const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
 
   return (state, ownProps) => {
@@ -119,7 +124,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
-  form: formName,
-  validate,
-})(ErOmsorgVilkaarOppfyltFormImpl));
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+    validate,
+  })(ErOmsorgVilkaarOppfyltFormImpl),
+);

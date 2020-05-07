@@ -57,10 +57,10 @@ VilkarresultatMedBegrunnelse.defaultProps = {
   skalViseBegrunnelse: true,
 };
 
-VilkarresultatMedBegrunnelse.buildInitialValues = (behandlingsresultat, aksjonspunkter, status, overstyringApKode) => {
+VilkarresultatMedBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, overstyringApKode) => {
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
   return {
-    ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
+    ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status),
     ...VilkarBegrunnelse.buildInitialValues(aksjonspunkt),
   };
 };

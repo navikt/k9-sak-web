@@ -21,7 +21,7 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   if (vilkar.length > 0) {
     const vilkarStatusCodes = [];
     vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
-    if (vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
+    if (vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
     return vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.OPPFYLT)

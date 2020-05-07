@@ -57,6 +57,7 @@ interface VilkarresultatMedOverstyringFormProps {
   status: string;
   submitCallback: (props: SubmitCallback[]) => void;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
+  avslagKode?: string;
 }
 
 interface StateProps {
@@ -171,21 +172,16 @@ export const VilkarresultatMedOverstyringForm = ({
 
 const buildInitialValues = createSelector(
   [
-    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.behandlingsresultat,
+    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.avslagKode,
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.aksjonspunkter,
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.status,
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.overstyringApKode,
   ],
-  (behandlingsresultat, aksjonspunkter, status, overstyringApKode) => {
+  (avslagKode, aksjonspunkter, status, overstyringApKode) => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
-      ...VilkarresultatMedBegrunnelse.buildInitialValues(
-        behandlingsresultat,
-        aksjonspunkter,
-        status,
-        overstyringApKode,
-      ),
+      ...VilkarresultatMedBegrunnelse.buildInitialValues(avslagKode, aksjonspunkter, status, overstyringApKode),
     };
   },
 );

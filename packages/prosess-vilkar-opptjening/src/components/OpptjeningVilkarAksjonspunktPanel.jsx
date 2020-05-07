@@ -97,7 +97,7 @@ OpptjeningVilkarAksjonspunktPanelImpl.defaultProps = {
 export const buildInitialValues = createSelector(
   [ownProps => ownProps.behandlingsresultat, ownProps => ownProps.aksjonspunkter, ownProps => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
-    ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
+    ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status), // TODO (Hallvard) bytte fra behandlingsresultat til riktig vilår
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );

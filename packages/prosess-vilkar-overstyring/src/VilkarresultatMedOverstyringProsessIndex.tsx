@@ -1,4 +1,3 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, Kodeverk, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { TabsPure } from 'nav-frontend-tabs';
@@ -6,8 +5,8 @@ import React, { SetStateAction } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
-import styles from './vilkarresultatMedOverstyringProsessIndex.less';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
+import styles from './vilkarresultatMedOverstyringProsessIndex.less';
 
 const cache = createIntlCache();
 
@@ -70,7 +69,10 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               activeVilkår.perioder[currentPeriodeIndex].periode.tom,
             )}`,
           }))}
-          onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
+          onChange={(e, clickedIndex) => {
+            setActiveTab(clickedIndex);
+            toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));
+          }}
         />
       )}
       <div className={styles.tabContainer}>
@@ -86,6 +88,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
           toggleOverstyring={toggleOverstyring}
         />
         <VilkarresultatMedOverstyringForm
+          key={`${activePeriode.periode.fom}-${activePeriode.periode.tom}`}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           behandlingType={behandling.type}
@@ -103,8 +106,9 @@ const VilkarresultatMedOverstyringProsessIndex = ({
           overstyringApKode={overstyringApKode}
           lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
           erMedlemskapsPanel={erMedlemskapsPanel}
-          periodeFom={activeVilkår.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET ? activePeriode.periode.fom : ''}
-          periodeTom={activeVilkår.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET ? activePeriode.periode.tom : ''}
+          periodeFom={activePeriode.periode.fom}
+          periodeTom={activePeriode.periode.tom}
+          avslagKode={activePeriode.avslagKode}
         />
       </div>
     </RawIntlProvider>
