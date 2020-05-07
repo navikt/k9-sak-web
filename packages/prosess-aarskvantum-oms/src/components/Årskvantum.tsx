@@ -66,7 +66,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           }
         />
         <CounterBox
-          bigCount={forbrukt.timer ? forbrukt.dager : forbrukt.dager}
+          bigCount={forbrukt.dager}
           smallCount={forbrukt.timer ? `${forbrukt.timer}t` : null}
           label={<FormattedMessage id="Årskvantum.ForbrukteDager" />}
           theme="rød"
