@@ -16,6 +16,8 @@ import { minLength, maxLength, required, hasValidText, hasValidDate } from '@fps
 import { TextAreaField } from '@fpsak-frontend/form/index';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
+import user from '@fpsak-frontend/assets/images/user.svg';
+import users from '@fpsak-frontend/assets/images/users.svg';
 import { Element } from 'nav-frontend-typografi';
 import OmsorgsdagerGrunnlagDto from '../dto/OmsorgsdagerGrunnlagDto';
 import { mapDtoTilFormValues, mapFormValuesTilDto } from '../dto/mapping';
@@ -67,7 +69,6 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
   if (isEmpty(formValues)) {
     return null;
   }
-  console.log(oppdaterteForms);
 
   const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
   const formName = `${behandlingFormPrefix}.${rammevedtakFormName}`;
@@ -121,7 +122,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           <VerticalSpacer sixteenPx />
         </>
       )}
-      <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={transferIcon}>
+      <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={users}>
         <>
           {!(barn.length || barnLagtTilAvSaksbehandler.length) && (
             <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />
@@ -181,7 +182,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
           oppdaterteForms={oppdaterteForms}
         />
       </Seksjon>
-      <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.ErMidlertidigAlene.Tittel" imgSrc={transferIcon}>
+      <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.ErMidlertidigAlene.Tittel" imgSrc={user}>
         <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />
       </Seksjon>
       {!pristine && (

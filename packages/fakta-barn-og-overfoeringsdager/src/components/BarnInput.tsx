@@ -1,4 +1,5 @@
 import React, { FunctionComponent, ReactNode, useMemo } from 'react';
+import classnames from 'classnames/bind';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { required, hasValidDate } from '@fpsak-frontend/utils';
 import { CheckboxField, DatepickerField, InputField } from '@fpsak-frontend/form/index';
@@ -8,6 +9,8 @@ import Panel from 'nav-frontend-paneler';
 import styles from './barnInput.less';
 import FastBreddeAligner from './FastBreddeAligner';
 import { BarnEnum, Barntype } from '../types/Barn';
+
+const classNames = classnames.bind(styles);
 
 interface BarnInputProps {
   namePrefix: string;
@@ -27,65 +30,67 @@ const BarnInput: FunctionComponent<BarnInputProps> = ({ namePrefix, readOnly, ba
   const padding = useMemo<string>(() => checkboxPadding(barntype, readOnly), [barntype, readOnly]);
 
   return (
-    <Panel border className={styles.barnInput}>
-      <Element tag="h3">{visning}</Element>
-      <VerticalSpacer eightPx />
-      <FastBreddeAligner
-        kolonner={[
-          {
-            width: '200px',
-            id: 'fnrFdato',
-            content:
-              barntype === BarnEnum.HENTET_AUTOMATISK ? (
-                <InputField
-                  name={`${namePrefix}.fødselsnummer`}
-                  readOnly
-                  label={
-                    <Element>
-                      <FormattedMessage id="FaktaRammevedtak.Barn.Fnr" />
-                    </Element>
-                  }
-                />
-              ) : (
-                <DatepickerField
-                  name={`${namePrefix}.fødselsdato`}
+    <div className={classNames({ overrideBorder: barntype === BarnEnum.MANUELT_LAGT_TIL })}>
+      <Panel border className={styles.barnInput}>
+        <Element tag="h3">{visning}</Element>
+        <VerticalSpacer eightPx />
+        <FastBreddeAligner
+          kolonner={[
+            {
+              width: '200px',
+              id: 'fnrFdato',
+              content:
+                barntype === BarnEnum.HENTET_AUTOMATISK ? (
+                  <InputField
+                    name={`${namePrefix}.fødselsnummer`}
+                    readOnly
+                    label={
+                      <Element>
+                        <FormattedMessage id="FaktaRammevedtak.Barn.Fnr" />
+                      </Element>
+                    }
+                  />
+                ) : (
+                  <DatepickerField
+                    name={`${namePrefix}.fødselsdato`}
+                    readOnly={readOnly}
+                    label={
+                      <Element>
+                        <FormattedMessage id="FaktaRammevedtak.Barn.Fødselsdato" />
+                      </Element>
+                    }
+                    validate={[required, hasValidDate]}
+                  />
+                ),
+            },
+            {
+              width: '200px',
+              padding,
+              id: 'kroniskSyk',
+              content: (
+                <CheckboxField
+                  name={`${namePrefix}.erKroniskSykt`}
+                  label={<FormattedMessage id="FaktaRammevedtak.Barn.KroniskSykt" />}
                   readOnly={readOnly}
-                  label={
-                    <Element>
-                      <FormattedMessage id="FaktaRammevedtak.Barn.Fødselsdato" />
-                    </Element>
-                  }
-                  validate={[required, hasValidDate]}
                 />
               ),
-          },
-          {
-            width: '200px',
-            padding,
-            id: 'kroniskSyk',
-            content: (
-              <CheckboxField
-                name={`${namePrefix}.erKroniskSykt`}
-                label={<FormattedMessage id="FaktaRammevedtak.Barn.KroniskSykt" />}
-                readOnly={readOnly}
-              />
-            ),
-          },
-          {
-            width: '200px',
-            padding,
-            id: 'aleneomsorg',
-            content: (
-              <CheckboxField
-                name={`${namePrefix}.aleneomsorg`}
-                label={<FormattedMessage id="FaktaRammevedtak.Barn.Aleneomsorg" />}
-                readOnly={readOnly}
-              />
-            ),
-          },
-        ]}
-      />
-    </Panel>
+            },
+            {
+              width: '200px',
+              padding,
+              id: 'aleneomsorg',
+              content: (
+                <CheckboxField
+                  name={`${namePrefix}.aleneomsorg`}
+                  label={<FormattedMessage id="FaktaRammevedtak.Barn.Aleneomsorg" />}
+                  readOnly={readOnly}
+                />
+              ),
+            },
+          ]}
+        />
+      </Panel>
+    </div>
   );
 };
 
