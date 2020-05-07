@@ -12,62 +12,72 @@ describe('<VilkarResultPicker>', () => {
   const avslagsarsaker = [{ kode: 'TEST', navn: 'test' }];
 
   it('skal vise komponent med radioknapper', () => {
-    const wrapper = shallowWithIntl(<VilkarResultPicker.WrappedComponent
-      intl={intlMock}
-      avslagsarsaker={avslagsarsaker}
-      erVilkarOk
-      readOnly={false}
-      hasAksjonspunkt
-    />);
+    const wrapper = shallowWithIntl(
+      <VilkarResultPicker.WrappedComponent
+        intl={intlMock}
+        avslagsarsaker={avslagsarsaker}
+        erVilkarOk
+        readOnly={false}
+        hasAksjonspunkt
+      />,
+    );
     expect(wrapper.find('RadioOption')).to.have.length(2);
   });
 
   it('skal kunne overstyre vilkårtekster', () => {
     const textId = 'Test';
-    const wrapper = shallowWithIntl(<VilkarResultPicker.WrappedComponent
-      intl={intlMock}
-      avslagsarsaker={avslagsarsaker}
-      erVilkarOk={false}
-      customVilkarIkkeOppfyltText={{ id: textId, values: { test: 'testvalue' } }}
-      readOnly={false}
-      hasAksjonspunkt
-    />);
+    const wrapper = shallowWithIntl(
+      <VilkarResultPicker.WrappedComponent
+        intl={intlMock}
+        avslagsarsaker={avslagsarsaker}
+        erVilkarOk={false}
+        customVilkarIkkeOppfyltText={{ id: textId, values: { test: 'testvalue' } }}
+        readOnly={false}
+        hasAksjonspunkt
+      />,
+    );
 
     expect(wrapper.find('RadioOption').at(1).prop('label').props.id).to.equal(textId);
   });
 
   it('skal ikke vise nedtrekksliste når vilkårsresultat ikke er valgt', () => {
-    const wrapper = shallowWithIntl(<VilkarResultPicker.WrappedComponent
-      intl={intlMock}
-      avslagsarsaker={avslagsarsaker}
-      erVilkarOk
-      readOnly={false}
-      hasAksjonspunkt
-    />);
+    const wrapper = shallowWithIntl(
+      <VilkarResultPicker.WrappedComponent
+        intl={intlMock}
+        avslagsarsaker={avslagsarsaker}
+        erVilkarOk
+        readOnly={false}
+        hasAksjonspunkt
+      />,
+    );
 
     expect(wrapper.find('SelectField')).to.have.length(0);
   });
 
   it('skal ikke vise nedtrekksliste når vilkårsresultat er OK', () => {
-    const wrapper = shallowWithIntl(<VilkarResultPicker.WrappedComponent
-      intl={intlMock}
-      avslagsarsaker={avslagsarsaker}
-      erVilkarOk
-      readOnly={false}
-      hasAksjonspunkt
-    />);
+    const wrapper = shallowWithIntl(
+      <VilkarResultPicker.WrappedComponent
+        intl={intlMock}
+        avslagsarsaker={avslagsarsaker}
+        erVilkarOk
+        readOnly={false}
+        hasAksjonspunkt
+      />,
+    );
 
     expect(wrapper.find('SelectField')).to.have.length(0);
   });
 
   it('skal vise nedtrekksliste når vilkårsresultat er valgt', () => {
-    const wrapper = shallowWithIntl(<VilkarResultPicker.WrappedComponent
-      intl={intlMock}
-      avslagsarsaker={avslagsarsaker}
-      erVilkarOk={false}
-      readOnly={false}
-      hasAksjonspunkt
-    />);
+    const wrapper = shallowWithIntl(
+      <VilkarResultPicker.WrappedComponent
+        intl={intlMock}
+        avslagsarsaker={avslagsarsaker}
+        erVilkarOk={false}
+        readOnly={false}
+        hasAksjonspunkt
+      />,
+    );
 
     const select = wrapper.find('SelectField');
     expect(select).to.have.length(1);
@@ -98,15 +108,21 @@ describe('<VilkarResultPicker>', () => {
         kode: 'Avslagskoden',
       },
     };
-    const aksjonspunkter = [{
-      status: {
-        kode: aksjonspunktStatus.UTFORT,
+    const aksjonspunkter = [
+      {
+        status: {
+          kode: aksjonspunktStatus.UTFORT,
+        },
+        vilkarType: {
+          kode: vilkarType.FODSELSVILKARET_MOR,
+        },
       },
-      vilkarType: {
-        kode: vilkarType.FODSELSVILKARET_MOR,
-      },
-    }];
-    const intielleVerdier = VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, vilkarUtfallType.IKKE_OPPFYLT);
+    ];
+    const intielleVerdier = VilkarResultPicker.buildInitialValues(
+      behandlingsresultat.avslagsarsak.kode,
+      aksjonspunkter,
+      vilkarUtfallType.IKKE_OPPFYLT,
+    );
 
     expect(intielleVerdier).to.eql({
       avslagCode: 'Avslagskoden',

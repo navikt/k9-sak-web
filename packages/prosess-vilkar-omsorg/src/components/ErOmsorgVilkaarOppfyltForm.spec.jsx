@@ -13,40 +13,46 @@ import { buildInitialValues, ErOmsorgVilkaarOppfyltFormImpl as UnwrappedForm } f
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vilkar-omsorg';
 
 describe('<ErOmsorgVilkaarOppfyltForm>', () => {
-  const aksjonspunkterList = [{
-    id: 1,
-    definisjon: {
-      navn: aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET,
-      kode: aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET,
+  const aksjonspunkterList = [
+    {
+      id: 1,
+      definisjon: {
+        navn: aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET,
+        kode: aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET,
+      },
+      status: {
+        kode: '',
+        navn: '',
+      },
+      vilkarType: {
+        kode: vilkarType.OMSORGSVILKARET,
+        navn: 'Omsorgsvilkåret',
+      },
+      begrunnelse: 'begrunnelse',
+      kanLoses: true,
+      erAktivt: true,
     },
-    status: {
-      kode: '',
-      navn: '',
-    },
-    vilkarType: {
-      kode: vilkarType.OMSORGSVILKARET,
-      navn: 'Omsorgsvilkåret',
-    },
-    begrunnelse: 'begrunnelse',
-    kanLoses: true,
-    erAktivt: true,
-  }];
+  ];
 
   it('skal vise readonly-form med utgråete knapper når readonly og vilkåret ikke er vurdert', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      avslagsarsaker={[{
-        kode: 'TEST_KODE',
-        navn: 'testnavn',
-      }]}
-      aksjonspunkter={aksjonspunkterList}
-      readOnly
-      readOnlySubmitButton
-      erVilkarOk={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    const wrapper = shallowWithIntl(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        avslagsarsaker={[
+          {
+            kode: 'TEST_KODE',
+            navn: 'testnavn',
+          },
+        ]}
+        aksjonspunkter={aksjonspunkterList}
+        readOnly
+        readOnlySubmitButton
+        erVilkarOk={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+    );
 
     const form = wrapper.find(BehandlingspunktBegrunnelseTextField);
     expect(form).to.have.length(1);
@@ -54,27 +60,33 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
   });
 
   it('skal vise radioknapper og nedtrekksliste for å velge om vilkåret skal godkjennes eller avvises med avslagsgrunn når ikke readonly', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      avslagsarsaker={[{
-        kode: 'TEST_KODE',
-        navn: 'testnavn',
-      }]}
-      aksjonspunkter={aksjonspunkterList}
-      readOnly={false}
-      readOnlySubmitButton
-      erVilkarOk={undefined}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    const wrapper = shallowWithIntl(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        avslagsarsaker={[
+          {
+            kode: 'TEST_KODE',
+            navn: 'testnavn',
+          },
+        ]}
+        aksjonspunkter={aksjonspunkterList}
+        readOnly={false}
+        readOnlySubmitButton
+        erVilkarOk={undefined}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+    );
 
     const selector = wrapper.find('injectIntl(VilkarResultPickerImpl)');
     expect(selector).to.have.length(1);
-    expect(selector.prop('avslagsarsaker')).to.eql([{
-      kode: 'TEST_KODE',
-      navn: 'testnavn',
-    }]);
+    expect(selector.prop('avslagsarsaker')).to.eql([
+      {
+        kode: 'TEST_KODE',
+        navn: 'testnavn',
+      },
+    ]);
     expect(selector.prop('erVilkarOk')).is.undefined;
 
     expect(wrapper.find(BehandlingspunktBegrunnelseTextField)).to.have.length(1);
@@ -82,42 +94,45 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
   });
 
   it('skal vise readonly-form når status er readonly og status er ulik ikke vurdert', () => {
-    const aksjonspunkter = [{
-      id: 1,
-      definisjon: {
-        navn: 'test',
-        kode: 'test',
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'test',
+          kode: 'test',
+        },
+        status: {
+          kode: '',
+          navn: '',
+        },
+        vilkarType: {
+          kode: vilkarType.ADOPSJONSVILKARET,
+          navn: 'Adopsjonvilkåret',
+        },
+        begrunnelse: 'begrunnelse',
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: '',
-        navn: '',
-      },
-      vilkarType: {
-        kode: vilkarType.ADOPSJONSVILKARET,
-        navn: 'Adopsjonvilkåret',
-      },
-      begrunnelse: 'begrunnelse',
-      kanLoses: true,
-      erAktivt: true,
-    }];
+    ];
 
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      avslagsarsaker={[]}
-      aksjonspunkter={aksjonspunkter}
-      readOnly
-      readOnlySubmitButton
-      erVilkarOk
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    const wrapper = shallowWithIntl(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        avslagsarsaker={[]}
+        aksjonspunkter={aksjonspunkter}
+        readOnly
+        readOnlySubmitButton
+        erVilkarOk
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+    );
 
     const readonlyForm = wrapper.find(BehandlingspunktBegrunnelseTextField);
     expect(readonlyForm).to.have.length(1);
     expect(readonlyForm.prop('readOnly')).is.true;
   });
-
 
   it('skal sette opp initielle verdier for form gitt behandling og behandlingspunkt', () => {
     const behandlingsresultat = {
@@ -126,20 +141,26 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
       },
     };
 
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: 'test',
+    const aksjonspunkter = [
+      {
+        definisjon: {
+          kode: 'test',
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: 'Dette er en begrunnelse',
+        vilkarType: {
+          kode: vilkarType.OMSORGSVILKARET,
+        },
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: 'Dette er en begrunnelse',
-      vilkarType: {
-        kode: vilkarType.OMSORGSVILKARET,
-      },
-    }];
+    ];
 
-    const initialValues = buildInitialValues.resultFunc(behandlingsresultat, aksjonspunkter, vilkarUtfallType.IKKE_OPPFYLT);
+    const initialValues = buildInitialValues.resultFunc(
+      behandlingsresultat,
+      aksjonspunkter,
+      vilkarUtfallType.IKKE_OPPFYLT,
+    );
 
     expect(initialValues).to.eql({
       erVilkarOk: undefined,
@@ -155,20 +176,26 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
       },
     };
 
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: 'test',
+    const aksjonspunkter = [
+      {
+        definisjon: {
+          kode: 'test',
+        },
+        status: {
+          kode: aksjonspunktStatus.AVBRUTT,
+        },
+        begrunnelse: 'Dette er en begrunnelse',
+        vilkarType: {
+          kode: vilkarType.OMSORGSVILKARET,
+        },
       },
-      status: {
-        kode: aksjonspunktStatus.AVBRUTT,
-      },
-      begrunnelse: 'Dette er en begrunnelse',
-      vilkarType: {
-        kode: vilkarType.OMSORGSVILKARET,
-      },
-    }];
+    ];
 
-    const initialValues = buildInitialValues.resultFunc(behandlingsresultat, aksjonspunkter, vilkarUtfallType.IKKE_OPPFYLT);
+    const initialValues = buildInitialValues.resultFunc(
+      behandlingsresultat.avslagsarsak.kode,
+      aksjonspunkter,
+      vilkarUtfallType.IKKE_OPPFYLT,
+    );
 
     expect(initialValues).to.eql({
       erVilkarOk: false,
@@ -183,20 +210,26 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
         kode: 'TEST',
       },
     };
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: 'test',
+    const aksjonspunkter = [
+      {
+        definisjon: {
+          kode: 'test',
+        },
+        status: {
+          kode: aksjonspunktStatus.AVBRUTT,
+        },
+        begrunnelse: 'Dette er en begrunnelse',
+        vilkarType: {
+          kode: vilkarType.OMSORGSVILKARET,
+        },
       },
-      status: {
-        kode: aksjonspunktStatus.AVBRUTT,
-      },
-      begrunnelse: 'Dette er en begrunnelse',
-      vilkarType: {
-        kode: vilkarType.OMSORGSVILKARET,
-      },
-    }];
+    ];
 
-    const initialValues = buildInitialValues.resultFunc(behandlingsresultat, aksjonspunkter, vilkarUtfallType.IKKE_OPPFYLT);
+    const initialValues = buildInitialValues.resultFunc(
+      behandlingsresultat.avslagsarsak.kode,
+      aksjonspunkter,
+      vilkarUtfallType.IKKE_OPPFYLT,
+    );
 
     expect(initialValues).to.eql({
       erVilkarOk: false,
