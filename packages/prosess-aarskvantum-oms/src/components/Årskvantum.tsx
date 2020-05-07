@@ -42,7 +42,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
 }) => {
   const forbrukt = konverterDesimalTilDagerOgTimer(forbrukteDager);
   const rest = konverterDesimalTilDagerOgTimer(restdager);
-  const dagerInfortrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
+  const dagerInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
 
   return (
     <BorderedContainer
@@ -71,13 +71,13 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           label={<FormattedMessage id="Årskvantum.ForbrukteDager" />}
           theme="rød"
           bottomText={
-            dagerInfortrygd.timer ? (
+            dagerInfotrygd.timer ? (
               <FormattedMessage
                 id="Årskvantum.DagerOgTimerFraInfotrygd"
-                values={{ dager: dagerInfortrygd.dager, timer: dagerInfortrygd.timer }}
+                values={{ dager: dagerInfotrygd.dager, timer: dagerInfotrygd.timer }}
               />
             ) : (
-              <FormattedMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: dagerInfortrygd.dager }} />
+              <FormattedMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: dagerInfotrygd.dager }} />
             )
           }
         />
