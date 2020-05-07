@@ -16,17 +16,6 @@ import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlag
 import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
-const periodeHarAarsakSomTilsierVisning = aarsaker => {
-  if (aarsaker.length < 1) {
-    return true;
-  }
-  const aarsakerSomTilsierMuligEndringIDagsats = [
-    periodeAarsak.NATURALYTELSE_BORTFALT,
-    periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET,
-    periodeAarsak.NATURALYTELSE_TILKOMMER,
-  ];
-  return aarsaker.filter(aarsak => aarsakerSomTilsierMuligEndringIDagsats.indexOf(aarsak.kode) !== -1).length > 0;
-};
 const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnlag) => {
   if (!vilkarStatus || !vilkarStatus.kode) return 'Fastsatt';
   if (vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
@@ -317,6 +306,25 @@ const sjekkharBortfaltNaturalYtelse = periode => {
       andel.bortfaltNaturalytelse !== 0,
   );
 };
+
+const perioderMedDagsatsSomTilsierVisning = periode => {
+  if (periode.dagsats === 0) {
+    return false;
+  }
+  const aarsakerSomTilsierMuligEndringIDagsats = [
+    periodeAarsak.NATURALYTELSE_BORTFALT,
+    periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET,
+    periodeAarsak.NATURALYTELSE_TILKOMMER,
+    periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR,
+  ];
+  if (periode.periodeAarsaker.length === 0) {
+    return true;
+  }
+  return periode.periodeAarsaker.some(aarsak =>
+    aarsakerSomTilsierMuligEndringIDagsats.some(aarsakKode => aarsakKode === aarsak.kode),
+  );
+};
+
 export const createBeregningTableData = createSelector(
   [
     (state, ownProps) => ownProps.beregningsgrunnlagPerioder,
@@ -328,12 +336,12 @@ export const createBeregningTableData = createSelector(
   ],
   (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, harAksjonspunkter, vilkaarBG) => {
     const { vilkarStatus } = vilkaarBG.perioder[0];
-    const perioderSomSkalVises = allePerioder.filter(periode =>
-      periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker),
-    );
+    const perioderSomSkalVises =
+      allePerioder.filter(periode => perioderMedDagsatsSomTilsierVisning(periode))[0] ||
+      allePerioder.filter(periode => periode.periodeAarsaker.length === 0)[0];
     const periodeResultatTabeller = [];
     const seksG = grunnbelop * 6;
-    perioderSomSkalVises.forEach(periode => {
+    [perioderSomSkalVises].forEach(periode => {
       const headers = [];
       const bruttoRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.BruttoTotalt" /> };
       const avkortetRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Avkortet6g" /> };
