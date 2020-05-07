@@ -61,6 +61,13 @@ const simuleringResultat = {
                     },
                     beløp: 52619,
                   },
+                  {
+                    periode: {
+                      fom: '2019-02-01',
+                      tom: '2019-02-28',
+                    },
+                    beløp: 52619,
+                  },
                 ],
               },
               {
@@ -73,6 +80,13 @@ const simuleringResultat = {
                     },
                     beløp: 61795,
                   },
+                  {
+                    periode: {
+                      fom: '2019-02-01',
+                      tom: '2019-02-28',
+                    },
+                    beløp: 61795,
+                  },
                 ],
               },
               {
@@ -82,6 +96,13 @@ const simuleringResultat = {
                     periode: {
                       fom: '2019-01-01',
                       tom: '2019-01-31',
+                    },
+                    beløp: -9176,
+                  },
+                  {
+                    periode: {
+                      fom: '2019-02-01',
+                      tom: '2019-02-28',
                     },
                     beløp: -9176,
                   },
@@ -101,6 +122,13 @@ const simuleringResultat = {
                 },
                 beløp: 0,
               },
+              {
+                periode: {
+                  fom: '2019-02-01',
+                  tom: '2019-02-28',
+                },
+                beløp: 0,
+              },
             ],
           },
           {
@@ -110,6 +138,13 @@ const simuleringResultat = {
                 periode: {
                   fom: '2019-01-01',
                   tom: '2019-01-31',
+                },
+                beløp: -26486,
+              },
+              {
+                periode: {
+                  fom: '2019-02-01',
+                  tom: '2019-02-28',
                 },
                 beløp: -26486,
               },
