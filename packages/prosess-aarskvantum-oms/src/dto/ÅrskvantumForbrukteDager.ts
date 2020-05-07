@@ -5,6 +5,7 @@ interface ÅrskvantumForbrukteDager {
   antallDagerArbeidsgiverDekker: number;
   forbrukteDager: number;
   restdager: number;
+  antallDagerInfotrygd?: number;
   sisteUttaksplan: UttaksplanType;
 }
 
