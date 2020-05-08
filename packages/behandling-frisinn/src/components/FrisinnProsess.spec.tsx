@@ -119,6 +119,13 @@ describe('<FrisinnProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
+        label: 'Simulering',
+        type: 'default',
+      },
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
         label: 'Vedtak',
         type: 'default',
       },
@@ -148,7 +155,7 @@ describe('<FrisinnProsess>', () => {
 
     const meny = wrapper.find(ProsessStegContainer);
 
-    meny.prop('velgProsessStegPanelCallback')(2);
+    meny.prop('velgProsessStegPanelCallback')(3);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).to.have.length(1);
