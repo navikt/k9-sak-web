@@ -19,21 +19,38 @@ const isString = value => typeof value === 'string';
  *
  * Presentasjonskomponent. Definerer en tabell med rader og kolonner.
  */
-const Table = ({ headerTextCodes, allowFormattedHeader, classNameTable, children, noHover, stripet }) => (
+
+const headers = (headerTextCodes, allowFormattedHeader, suppliedHeaders) => {
+  if (suppliedHeaders) {
+    return suppliedHeaders;
+  }
+
+  return headerTextCodes.map(headerElement => {
+    if (isString(headerElement) && headerElement.startsWith(EMPTY_STRING)) {
+      return <TableColumn key={headerElement}>&nbsp;</TableColumn>;
+    }
+    return (
+      <TableColumn key={headerElement.key ? headerElement.key : headerElement}>
+        {allowFormattedHeader && headerElement}
+        {!allowFormattedHeader && <FormattedHTMLMessage id={headerElement} />}
+      </TableColumn>
+    );
+  });
+};
+
+const Table = ({
+  headerTextCodes,
+  allowFormattedHeader,
+  classNameTable,
+  children,
+  noHover,
+  stripet,
+  suppliedHeaders,
+}) => (
   <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
     <thead>
       <TableRow isHeader noHover={noHover}>
-        {headerTextCodes.map(headerElement => {
-          if (isString(headerElement) && headerElement.startsWith(EMPTY_STRING)) {
-            return <TableColumn key={headerElement}>&nbsp;</TableColumn>;
-          }
-          return (
-            <TableColumn key={headerElement.key ? headerElement.key : headerElement}>
-              {allowFormattedHeader && headerElement}
-              {!allowFormattedHeader && <FormattedHTMLMessage id={headerElement} />}
-            </TableColumn>
-          );
-        })}
+        {headers(headerTextCodes, allowFormattedHeader, suppliedHeaders)}
       </TableRow>
     </thead>
     <tbody>
@@ -63,6 +80,7 @@ Table.propTypes = {
   noHover: PropTypes.bool,
   allowFormattedHeader: PropTypes.bool,
   stripet: PropTypes.bool,
+  suppliedHeaders: PropTypes.element,
 };
 
 Table.defaultProps = {
