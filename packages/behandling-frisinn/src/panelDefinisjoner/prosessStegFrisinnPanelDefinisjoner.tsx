@@ -5,6 +5,7 @@ import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
+import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import * as React from 'react';
 import api from '../data/frisinnBehandlingApi';
@@ -82,6 +83,25 @@ const prosessStegPanelDefinisjoner = [
           }
           return vut.OPPFYLT;
         },
+      },
+    ],
+  },
+  {
+    urlCode: bpc.AVREGNING,
+    textCode: 'Behandlingspunkt.Avregning',
+    panels: [
+      {
+        aksjonspunkterCodes: [ac.VURDER_FEILUTBETALING],
+        endpoints: [api.TILBAKEKREVINGVALG],
+        renderComponent: props => <AvregningProsessIndex {...props} />,
+        getData: ({ fagsak, featureToggles, previewFptilbakeCallback, simuleringResultat }) => ({
+          fagsak,
+          featureToggles,
+          previewFptilbakeCallback,
+          simuleringResultat,
+        }),
+        showComponent: () => true,
+        overrideStatus: ({ simuleringResultat }) => (simuleringResultat ? vut.OPPFYLT : vut.IKKE_VURDERT),
       },
     ],
   },
