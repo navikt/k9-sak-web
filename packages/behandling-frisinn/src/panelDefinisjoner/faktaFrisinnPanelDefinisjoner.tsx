@@ -14,6 +14,15 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     showComponent: ({ personopplysninger }) => personopplysninger,
     getData: () => ({}),
   },
+  {
+    urlCode: faktaPanelCodes.OPPLYSNINGER_FRA_SØKNADEN,
+    textCode: 'OpplysningerFraSoknaden.Title',
+    aksjonspunkterCodes: [],
+    endpoints: [],
+    renderComponent: () => <p>Hello world</p>,
+    showComponent: () => true,
+    getData: () => ({}),
+  },
 ];
 
 export default faktaPanelDefinisjoner;
