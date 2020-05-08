@@ -26,8 +26,10 @@ const behandling = {
 
 const simuleringResultat = {
   simuleringResultat: {
-    periodeFom: '2019-01-01',
-    periodeTom: '2019-03-31',
+    periode: {
+      fom: '2019-01-01',
+      tom: '2019-03-31',
+    },
     sumEtterbetaling: 0,
     sumFeilutbetaling: -49863,
     sumInntrekk: -10899,
@@ -59,6 +61,13 @@ const simuleringResultat = {
                     },
                     beløp: 52619,
                   },
+                  {
+                    periode: {
+                      fom: '2019-02-01',
+                      tom: '2019-02-28',
+                    },
+                    beløp: 52619,
+                  },
                 ],
               },
               {
@@ -71,6 +80,13 @@ const simuleringResultat = {
                     },
                     beløp: 61795,
                   },
+                  {
+                    periode: {
+                      fom: '2019-02-01',
+                      tom: '2019-02-28',
+                    },
+                    beløp: 61795,
+                  },
                 ],
               },
               {
@@ -80,6 +96,13 @@ const simuleringResultat = {
                     periode: {
                       fom: '2019-01-01',
                       tom: '2019-01-31',
+                    },
+                    beløp: -9176,
+                  },
+                  {
+                    periode: {
+                      fom: '2019-02-01',
+                      tom: '2019-02-28',
                     },
                     beløp: -9176,
                   },
@@ -99,6 +122,13 @@ const simuleringResultat = {
                 },
                 beløp: 0,
               },
+              {
+                periode: {
+                  fom: '2019-02-01',
+                  tom: '2019-02-28',
+                },
+                beløp: 0,
+              },
             ],
           },
           {
@@ -111,11 +141,20 @@ const simuleringResultat = {
                 },
                 beløp: -26486,
               },
+              {
+                periode: {
+                  fom: '2019-02-01',
+                  tom: '2019-02-28',
+                },
+                beløp: -26486,
+              },
             ],
           },
         ],
-        nesteUtbPeriodeFom: '2019-10-01',
-        nestUtbPeriodeTom: '2019-10-31',
+        nesteUtbPeriode: {
+          fom: '2019-10-01',
+          tom: '2019-10-31',
+        },
       },
     ],
   },
