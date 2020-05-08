@@ -82,4 +82,15 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
 };
 
 // @ts-ignore
-export const årskvantum = () => <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} />;
+export const standard = () => <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} />;
+
+export const smittevernsdager = () => (
+  <ÅrskvantumIndex
+    årskvantum={{
+      ...årskvantumDto,
+      restdager: -3.4,
+    }}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+  />
+);

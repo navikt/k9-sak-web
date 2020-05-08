@@ -25,7 +25,7 @@ const CounterContainer = styled.div`
   }
 `;
 
-export const InfoRammemelding = styled.span`
+const InfoRammemelding = styled.span`
   font-size: 17px;
   font-weight: 400;
   display: flex;
@@ -55,9 +55,12 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   antallDagerInfotrygd,
   benyttetRammemelding,
 }) => {
+  const restdagerErSmittevernsdager = restdager < 0;
+
   const forbrukt = konverterDesimalTilDagerOgTimer(forbrukteDager);
-  const rest = konverterDesimalTilDagerOgTimer(restdager);
+  const rest = restdagerErSmittevernsdager ? { dager: 0, timer: 0 } : konverterDesimalTilDagerOgTimer(restdager);
   const dagerInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
+  const smittevernsdager = restdagerErSmittevernsdager && konverterDesimalTilDagerOgTimer(Math.abs(restdager));
 
   return (
     <BorderedContainer
@@ -90,9 +93,24 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
             />
           }
         />
+        {restdagerErSmittevernsdager && (
+          <CounterBox
+            bigCount={smittevernsdager.dager}
+            smallCount={
+              smittevernsdager.timer ? (
+                <FormattedMessage id="Årskvantum.Timer" values={{ timer: smittevernsdager.timer }} />
+              ) : null
+            }
+            label={<FormattedMessage id="Årskvantum.Smittevernsdager" />}
+            theme="lyseblå"
+            bottomText={<FormattedMessage id="Årskvantum.Smittevernsdager.EkstraTekst" />}
+          />
+        )}
         <CounterBox
           bigCount={forbrukt.dager}
-          smallCount={forbrukt.timer ? `${forbrukt.timer}t` : null}
+          smallCount={
+            forbrukt.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: forbrukt.timer }} /> : null
+          }
           label={<FormattedMessage id="Årskvantum.ForbrukteDager" />}
           theme="rød"
           bottomText={
@@ -108,7 +126,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         />
         <CounterBox
           bigCount={rest.dager}
-          smallCount={rest.timer ? `${rest.timer}t` : null}
+          smallCount={rest.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: rest.timer }} /> : null}
           label={<FormattedMessage id="Årskvantum.Restdager" />}
           theme="grønn"
         />
