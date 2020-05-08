@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import React from 'react';
+import { shallow } from 'enzyme';
 import Årskvantum, { konverterDesimalTilDagerOgTimer } from './Årskvantum';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
 import CounterBox from './CounterBox';
 
 const sjekkKonvertering = ({ dager, timer }, expectedDager, expectedTimer) => {
@@ -10,8 +10,15 @@ const sjekkKonvertering = ({ dager, timer }, expectedDager, expectedTimer) => {
 };
 
 it('rendrer 3 Counterbox med riktig info', () => {
-  const wrapper = shallowWithIntl(
-    <Årskvantum totaltAntallDager={20} antallDagerArbeidsgiverDekker={3} forbrukteDager={4.4} restdager={12.6} />,
+  const wrapper = shallow(
+    <Årskvantum
+      totaltAntallDager={20}
+      antallDagerArbeidsgiverDekker={3}
+      forbrukteDager={4.4}
+      restdager={12.6}
+      benyttetRammemelding
+      antallDagerInfotrygd={0}
+    />,
   );
   const bokser = wrapper.find(CounterBox);
   expect(bokser).to.have.length(3);

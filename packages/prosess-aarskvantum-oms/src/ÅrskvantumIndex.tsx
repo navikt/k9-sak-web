@@ -31,6 +31,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvant
     antallDagerArbeidsgiverDekker,
     antallDagerInfotrygd = 0,
     sisteUttaksplan,
+    benyttetRammemelding,
   } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
@@ -42,6 +43,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvant
         forbrukteDager={forbrukteDager}
         antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
         antallDagerInfotrygd={antallDagerInfotrygd}
+        benyttetRammemelding={benyttetRammemelding}
       />
       <VerticalSpacer sixteenPx />
       <Uttaksplan aktiviteter={sisteUttaksplan.aktiviteter} aktivitetsstatuser={aktivitetsstatuser} />

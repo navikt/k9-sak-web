@@ -2,8 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import Undertittel from 'nav-frontend-typografi/lib/undertittel';
-import { Image } from '@fpsak-frontend/shared-components/index';
+import { FlexRow, Image } from '@fpsak-frontend/shared-components/index';
 import pieChart from '@fpsak-frontend/assets/images/pie_chart.svg';
+import info from '@fpsak-frontend/assets/images/information-circle.svg';
 import CounterBox from './CounterBox';
 import BorderedContainer from './BorderedContainer';
 
@@ -13,6 +14,7 @@ interface ÅrskvantumProps {
   forbrukteDager: number;
   restdager: number;
   antallDagerInfotrygd: number;
+  benyttetRammemelding: boolean;
 }
 
 const CounterContainer = styled.div`
@@ -20,6 +22,18 @@ const CounterContainer = styled.div`
   flex-wrap: wrap;
   & > * {
     margin: 0.5em;
+  }
+`;
+
+export const InfoRammemelding = styled.span`
+  font-size: 17px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+
+  & img {
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -39,6 +53,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   forbrukteDager,
   antallDagerArbeidsgiverDekker,
   antallDagerInfotrygd,
+  benyttetRammemelding,
 }) => {
   const forbrukt = konverterDesimalTilDagerOgTimer(forbrukteDager);
   const rest = konverterDesimalTilDagerOgTimer(restdager);
@@ -48,8 +63,18 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
     <BorderedContainer
       heading={
         <Undertittel tag="h3">
-          <Image src={pieChart} />
-          <FormattedMessage id="Årskvantum.Heading" />
+          <FlexRow spaceBetween>
+            <span>
+              <Image src={pieChart} />
+              <FormattedMessage id="Årskvantum.Heading" />
+            </span>
+            {benyttetRammemelding && (
+              <InfoRammemelding>
+                <Image src={info} />
+                <FormattedMessage id="Årskvantum.Rammemelding" />
+              </InfoRammemelding>
+            )}
+          </FlexRow>
         </Undertittel>
       }
     >

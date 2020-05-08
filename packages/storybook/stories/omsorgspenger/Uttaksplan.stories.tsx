@@ -22,6 +22,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
   forbrukteDager: 10.4,
   restdager: 9.6,
   antallDagerInfotrygd: 2.4,
+  benyttetRammemelding: true,
   sisteUttaksplan: {
     aktiviteter: [
       {
