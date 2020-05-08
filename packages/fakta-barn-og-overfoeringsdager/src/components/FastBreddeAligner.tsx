@@ -9,7 +9,7 @@ const Rad = styled.div<{ padding?: string; margin?: string }>`
   margin: ${({ margin }) => margin};
 `;
 
-const Kolonne = styled.span<{ width: string; padding?: string }>`
+export const Kolonne = styled.span<{ width: string; padding?: string }>`
   width: ${({ width }) => width};
   padding: ${({ padding }) => padding};
 `;
