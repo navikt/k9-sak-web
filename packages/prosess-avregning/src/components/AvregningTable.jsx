@@ -104,7 +104,7 @@ const getPeriod = (ingenPerioderMedAvvik, periodeFom, mottaker) =>
     avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode)
       ? moment(mottaker.nesteUtbPeriode.tom).subtract(1, 'months')
       : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriode.fom),
-    mottaker.nestUtbPeriodeTom,
+    mottaker.nesteUtbPeriode.tom,
   );
 
 const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails, ingenPerioderMedAvvik }) =>
