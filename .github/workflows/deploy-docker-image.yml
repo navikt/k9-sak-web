@@ -24,7 +24,9 @@ jobs:
           node-version: 12.x
       - name: Get yarn cache
         id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: |
+          echo "::set-output name=dir::$(yarn cache dir)"
+          echo "::set-env name=TAG::$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
       - name: Cache node modules
         uses: actions/cache@v1.1.0
         with:
@@ -38,8 +40,7 @@ jobs:
         run: yarn build
       - name: Sette Docker-navn og -tag
         run: |
-          echo "::set-env name=TAG::$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
-          echo "::set-env name=IMAGE::$IMAGE_BASE:$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
+          echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
       - name: Bygg og laste opp docker-image
         run: |
           docker pull nginx:1.17.8-alpine
