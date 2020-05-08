@@ -1,3 +1,4 @@
+import behandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
 import { createSelector } from 'reselect';
 import fpsakApi from '../data/fpsakApi';
 
@@ -23,6 +24,24 @@ export const getFpTilbakeKodeverk = kodeverkType =>
 
 export const getKlagekodeverk = kodeverkType =>
   createSelector([getAlleKlagekodeverk], (kodeverk = {}) => kodeverk[kodeverkType]);
+
+export const getAlleKodeverkForBehandlingstype = behandlingstype => {
+  switch (behandlingstype) {
+    case behandlingType.TILBAKEKREVING:
+    case behandlingType.TILBAKEKREVING_REVURDERING: return getAlleFpTilbakeKodeverk;
+    case behandlingType.KLAGE: return getAlleKlagekodeverk;
+    default: return getAlleFpSakKodeverk;
+  }
+};
+
+export const getKodeverkForBehandlingstype = behandlingstype => {
+  switch (behandlingstype) {
+    case behandlingType.TILBAKEKREVING:
+    case behandlingType.TILBAKEKREVING_REVURDERING: return getFpTilbakeKodeverk;
+    case behandlingType.KLAGE: return getKlagekodeverk;
+    default: return getKodeverk;
+  }
+};
 
 // TODO (TOR) Fjern denne
 export const getAlleKodeverk = createSelector(

@@ -30,7 +30,7 @@ import {
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
-import { getKlagekodeverk, getFpTilbakeKodeverk, getKodeverk } from '../../kodeverk/duck';
+import { getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype } from '../../kodeverk/duck';
 
 const getArsaker = approval =>
   [
@@ -271,21 +271,12 @@ const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsaker], (
 );
 
 const mapStateToPropsFactory = initialState => {
-  const skjermlenkeTyperFpsak = getKodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(initialState);
-  const skjermlenkeTyperFptilbake = getFpTilbakeKodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(initialState);
-  const skjermlenkeTyperKlage = getKlagekodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(initialState);
   return state => {
     const behandlingType = getBehandlingType(state);
     const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
     const erTilbakekreving =
       BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
       BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
-    const skjemalenkeTyper = BehandlingType.KLAGE === behandlingTypeKode
-      ? skjermlenkeTyperKlage
-      : skjermlenkeTyperFpsak;
-    const kodeverk = BehandlingType.KLAGE === behandlingTypeKode
-      ? fpsakApi.KODEVERK_KLAGE.getRestApiData()(state)
-      : fpsakApi.KODEVERK.getRestApiData()(state);
     const behandlingIdentifier = getBehandlingIdentifier(state);
     return {
       totrinnskontrollSkjermlenkeContext: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER.getRestApiData()(state),
@@ -297,10 +288,8 @@ const mapStateToPropsFactory = initialState => {
       behandlingStatus: getBehandlingStatus(state),
       toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
       navAnsatt: getNavAnsatt(state),
-      alleKodeverk: erTilbakekreving
-        ? fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state)
-        : kodeverk,
-      skjemalenkeTyper: erTilbakekreving ? skjermlenkeTyperFptilbake : skjemalenkeTyper,
+      alleKodeverk: getAlleKodeverkForBehandlingstype(behandlingType)(state),
+      skjemalenkeTyper: getKodeverkForBehandlingstype(behandlingType)(kodeverkTyper.SKJERMLENKE_TYPE)(initialState),
       location: state.router.location,
       behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
       fagsakYtelseType: getFagsakYtelseType(state),
