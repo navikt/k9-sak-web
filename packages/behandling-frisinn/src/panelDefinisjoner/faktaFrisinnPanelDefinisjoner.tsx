@@ -1,5 +1,6 @@
 import FaktaPanelDefinisjon from '@fpsak-frontend/behandling-felles/src/types/faktaPanelDefinisjonTsType';
 import InntektOgYtelser from '@fpsak-frontend/fakta-inntekt-og-ytelser';
+import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import * as React from 'react';
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
@@ -19,7 +20,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     textCode: 'OpplysningerFraSoknaden.Title',
     aksjonspunkterCodes: [],
     endpoints: [],
-    renderComponent: () => <p>Hello world</p>,
+    renderComponent: props => <OpplysningerFraSoknadenIndex {...props} />,
     showComponent: () => true,
     getData: () => ({}),
   },
