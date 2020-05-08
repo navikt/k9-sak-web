@@ -28,6 +28,25 @@ import ActivityPanel, { activityPanelNameFormName } from './activity/ActivityPan
 import styles from './opptjeningFaktaForm.less';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 
+const sortByFomDate = (opptjeningPeriods: Opptjening[]) =>
+  opptjeningPeriods.sort((o1, o2) => {
+    if (
+      moment(o1.fastsattOpptjening.opptjeningFom, ISO_DATE_FORMAT).isBefore(
+        moment(o2.fastsattOpptjening.opptjeningFom, ISO_DATE_FORMAT),
+      )
+    ) {
+      return -1;
+    }
+    if (
+      moment(o1.fastsattOpptjening.opptjeningFom, ISO_DATE_FORMAT).isSame(
+        moment(o2.fastsattOpptjening.opptjeningFom, ISO_DATE_FORMAT),
+      )
+    ) {
+      return 0;
+    }
+    return 1;
+  });
+
 const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
   const texts = [];
   if (activities.some(a => a.stillingsandel === 0)) {
@@ -370,11 +389,13 @@ export class OpptjeningFaktaFormImpl extends Component<
 const mapStateToProps = (state, ownProps: OpptjeningFaktaFormImplProps) => ({
   opptjeningAktivitetTypes: ownProps.alleKodeverk[kodeverkTyper.OPPTJENING_AKTIVITET_TYPE],
   behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
-  opptjeningList: behandlingFormValueSelector(
-    ownProps.formName,
-    ownProps.behandlingId,
-    ownProps.behandlingVersjon,
-  )(state, 'opptjeningList'),
+  opptjeningList: sortByFomDate(
+    behandlingFormValueSelector(
+      ownProps.formName,
+      ownProps.behandlingId,
+      ownProps.behandlingVersjon,
+    )(state, 'opptjeningList'),
+  ),
 });
 
 const mapDispatchToProps = dispatch => ({
