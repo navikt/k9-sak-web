@@ -42,6 +42,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvant
         forbrukteDager={forbrukteDager}
         antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
         antallDagerInfotrygd={antallDagerInfotrygd}
+        benyttetRammemelding={sisteUttaksplan.benyttetRammemelding}
       />
       <VerticalSpacer sixteenPx />
       <Uttaksplan aktiviteter={sisteUttaksplan.aktiviteter} aktivitetsstatuser={aktivitetsstatuser} />

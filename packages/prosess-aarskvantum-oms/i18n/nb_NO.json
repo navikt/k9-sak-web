@@ -1,8 +1,12 @@
 {
   "Årskvantum.Heading": "Årskvantum nøkkeltall",
+  "Årskvantum.Rammemelding": "Det er benyttet rammemelding for behandlingen",
+  "Årskvantum.Timer": "{timer}t",
   "Årskvantum.TotaleDager": "Totale dager",
   "Årskvantum.ForbrukteDager": "Forbrukte dager",
   "Årskvantum.Restdager": "Restdager",
+  "Årskvantum.Smittevernsdager": "Smittevernsdager",
+  "Årskvantum.Smittevernsdager.EkstraTekst": "Kommer i tillegg til totale dager",
   "Årskvantum.TotaldagerInfo": "{totaltAntallDager} dager, {antallDagerArbeidsgiverDekker} dekket av arbeidsgiver",
   "Årskvantum.DagerFraInfotrygd": "{dager} dager utbetalt fra Infotrygd",
   "Årskvantum.DagerOgTimerFraInfotrygd": "{dager} dager, {timer}t utbetalt fra Infotrygd",

@@ -77,8 +77,20 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
     behandlingUUID: '1',
     saksnummer: '2',
     innsendingstidspunkt: '123',
+    benyttetRammemelding: true,
   },
 };
 
 // @ts-ignore
-export const årskvantum = () => <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} />;
+export const standard = () => <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} />;
+
+export const smittevernsdager = () => (
+  <ÅrskvantumIndex
+    årskvantum={{
+      ...årskvantumDto,
+      restdager: -3.4,
+    }}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+  />
+);
