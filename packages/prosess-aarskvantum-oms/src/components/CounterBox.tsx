@@ -35,7 +35,7 @@ interface CounterBoxProps {
 }
 
 const containerHeight = '180px';
-const containerWidth = '270px';
+const containerWidth = '240px';
 
 const Container = styled.div`
   height: ${containerHeight};

@@ -88,6 +88,7 @@ export const smittevernsdager = () => (
   <ÅrskvantumIndex
     årskvantum={{
       ...årskvantumDto,
+      antallKoronadager: 10,
       restdager: -3.4,
     }}
     // @ts-ignore

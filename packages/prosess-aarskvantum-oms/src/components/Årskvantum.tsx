@@ -10,6 +10,7 @@ import BorderedContainer from './BorderedContainer';
 
 interface ÅrskvantumProps {
   totaltAntallDager: number;
+  antallKoronadager?: number;
   antallDagerArbeidsgiverDekker: number;
   forbrukteDager: number;
   restdager: number;
@@ -49,6 +50,7 @@ export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
 
 const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   totaltAntallDager,
+  antallKoronadager,
   restdager,
   forbrukteDager,
   antallDagerArbeidsgiverDekker,
@@ -93,6 +95,13 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
             />
           }
         />
+        {antallKoronadager && (
+          <CounterBox
+            bigCount={antallKoronadager}
+            label={<FormattedMessage id="Årskvantum.Koronadager" />}
+            theme="oransje"
+          />
+        )}
         {restdagerErSmittevernsdager && (
           <CounterBox
             bigCount={smittevernsdager.dager}

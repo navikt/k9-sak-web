@@ -29,6 +29,23 @@ it('rendrer smittevern hvis restdager er nagativt, ellers ikke', () => {
   expect(bokserMedSmittevern).to.have.length(4);
 });
 
+it('rendrer koronadager hvis det finnes', () => {
+  const wrapper = shallow(
+    <Årskvantum
+      totaltAntallDager={20}
+      antallDagerArbeidsgiverDekker={3}
+      forbrukteDager={4.4}
+      antallKoronadager={10}
+      restdager={4}
+      benyttetRammemelding
+      antallDagerInfotrygd={0}
+    />,
+  );
+
+  const bokser = wrapper.find(CounterBox);
+  expect(bokser).to.have.length(4);
+});
+
 it('konverterer desimaltall til hele dager og timer med max 1 desimal', () => {
   const desimal_1 = 9.4;
   sjekkKonvertering(konverterDesimalTilDagerOgTimer(desimal_1), 9, 3);
