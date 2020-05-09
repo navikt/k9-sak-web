@@ -18,7 +18,7 @@ import {
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
-import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk } from '../kodeverk/duck';
+import { getAlleKodeverkForBehandlingstype } from '../kodeverk/duck';
 import {
   getSelectedFagsakStatus,
   getFagsakPerson,
@@ -56,7 +56,6 @@ const BehandlingFrisinnIndex = React.lazy(() => import('@fpsak-frontend/behandli
 
 const erTilbakekreving = behandlingType =>
   behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
-const erKlage = behandlingType => behandlingType === BehandlingType.KLAGE;
 const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
 /**
@@ -323,14 +322,13 @@ export const getFagsakInfo = createSelector(
 const mapStateToProps = state => {
   const behandlingId = getUrlBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
-  const kodeverk = erKlage(behandlingType) ? getAlleKlagekodeverk(state) : getAlleFpSakKodeverk(state);
   return {
     behandlingId,
     behandlingType,
     behandlingVersjon: getTempBehandlingVersjon(state),
     location: state.router.location,
     featureToggles: getFeatureToggles(state),
-    kodeverk: erTilbakekreving(behandlingType) ? getAlleFpTilbakeKodeverk(state) : kodeverk,
+    kodeverk: getAlleKodeverkForBehandlingstype(behandlingType)(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
     navAnsatt: getNavAnsatt(state),

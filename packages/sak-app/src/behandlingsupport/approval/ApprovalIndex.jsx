@@ -289,7 +289,7 @@ const mapStateToPropsFactory = initialState => {
       toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
       navAnsatt: getNavAnsatt(state),
       alleKodeverk: getAlleKodeverkForBehandlingstype(behandlingType)(state),
-      skjemalenkeTyper: getKodeverkForBehandlingstype(behandlingType)(kodeverkTyper.SKJERMLENKE_TYPE)(initialState),
+      skjemalenkeTyper: getKodeverkForBehandlingstype(behandlingType, kodeverkTyper.SKJERMLENKE_TYPE)(initialState),
       location: state.router.location,
       behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
       fagsakYtelseType: getFagsakYtelseType(state),

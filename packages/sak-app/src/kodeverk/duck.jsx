@@ -34,12 +34,12 @@ export const getAlleKodeverkForBehandlingstype = behandlingstype => {
   }
 };
 
-export const getKodeverkForBehandlingstype = behandlingstype => {
+export const getKodeverkForBehandlingstype = (behandlingstype, kodeverktype) => {
   switch (behandlingstype) {
     case behandlingType.TILBAKEKREVING:
-    case behandlingType.TILBAKEKREVING_REVURDERING: return getFpTilbakeKodeverk;
-    case behandlingType.KLAGE: return getKlagekodeverk;
-    default: return getKodeverk;
+    case behandlingType.TILBAKEKREVING_REVURDERING: return getFpTilbakeKodeverk(kodeverktype);
+    case behandlingType.KLAGE: return getKlagekodeverk(kodeverktype);
+    default: return getKodeverk(kodeverktype);
   }
 };
 
