@@ -2,7 +2,7 @@ import UttaksplanType from './UttaksplanType';
 
 interface ÅrskvantumForbrukteDager {
   totaltAntallDager: number;
-  koronadager?: number;
+  antallKoronadager?: number;
   antallDagerArbeidsgiverDekker: number;
   forbrukteDager: number;
   restdager: number;

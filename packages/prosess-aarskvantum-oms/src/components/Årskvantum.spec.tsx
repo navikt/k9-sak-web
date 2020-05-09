@@ -35,7 +35,7 @@ it('rendrer koronadager hvis det finnes', () => {
       totaltAntallDager={20}
       antallDagerArbeidsgiverDekker={3}
       forbrukteDager={4.4}
-      koronadager={10}
+      antallKoronadager={10}
       restdager={4}
       benyttetRammemelding
       antallDagerInfotrygd={0}
