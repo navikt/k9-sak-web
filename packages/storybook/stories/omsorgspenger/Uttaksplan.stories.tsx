@@ -18,6 +18,7 @@ const vilkårInnvilget: VurderteVilkår = {
 
 const årskvantumDto: ÅrskvantumForbrukteDager = {
   totaltAntallDager: 17,
+  antallKoronadager: 0,
   antallDagerArbeidsgiverDekker: 3,
   forbrukteDager: 10.4,
   restdager: 9.6,
