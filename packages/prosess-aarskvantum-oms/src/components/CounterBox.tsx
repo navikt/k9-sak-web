@@ -86,7 +86,8 @@ const LabelPanel = styled.div<{ theme: Theme }>`
 
 const BottomText = styled.div`
   flex-basis: 20%;
-  padding-top: 5px;
+  padding-top: 8px;
+  font-size: 0.85em;
 `;
 
 const CounterBox = ({ bigCount, smallCount, label, theme, bottomText }: CounterBoxProps) => (
