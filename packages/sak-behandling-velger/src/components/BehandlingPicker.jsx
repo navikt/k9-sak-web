@@ -4,6 +4,7 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import behandlingstype from "@fpsak-frontend/kodeverk/src/behandlingType";
 import behandlingVelgerBehandlingPropType from '../propTypes/behandlingVelgerBehandlingPropType';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
@@ -20,7 +21,7 @@ export const sortBehandlinger = (behandlinger) => behandlinger.sort((b1, b2) => 
   return moment(b2.opprettet).diff(moment(b1.opprettet));
 });
 
-const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk) => (
+const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk, klagekodeverk) => (
   sortBehandlinger(behandlinger)
     .filter((behandling) => showAll || behandling.id === behandlingId)
     .map((behandling) => (
@@ -32,7 +33,7 @@ const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggle
           isActive={behandling.id === behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
-          alleKodeverk={alleKodeverk}
+          alleKodeverk={behandling.type.kode === behandlingstype.KLAGE ? klagekodeverk : alleKodeverk}
         />
       </li>
     ))
@@ -51,10 +52,11 @@ const BehandlingPicker = ({
   showAll,
   toggleShowAll,
   alleKodeverk,
+  klagekodeverk
 }) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && <Normaltekst><FormattedMessage id="BehandlingList.ZeroBehandlinger" /></Normaltekst>}
-    {!noExistingBehandlinger && renderListItems(behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk)}
+    {!noExistingBehandlinger && renderListItems(behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk, klagekodeverk)}
   </ul>
 );
 
@@ -66,6 +68,7 @@ BehandlingPicker.propTypes = {
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  klagekodeverk: PropTypes.shape()
 };
 
 BehandlingPicker.defaultProps = {
