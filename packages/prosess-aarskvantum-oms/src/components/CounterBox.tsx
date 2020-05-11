@@ -53,7 +53,7 @@ const Count = styled.div`
   align-items: baseline;
   min-width: 130px;
   font-weight: 300;
-  margin-top: -8px;
+  margin-top: -4px;
 `;
 
 const BigCount = styled.div`
