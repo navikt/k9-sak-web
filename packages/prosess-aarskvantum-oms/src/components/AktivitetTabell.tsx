@@ -115,13 +115,24 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
           arbeidsforhold.type}
       </Element>
       <Table
-        headerTextCodes={[
-          'Uttaksplan.Periode',
-          'Uttaksplan.Fravær',
-          'Uttaksplan.Utfall',
-          'Uttaksplan.Utbetalingsgrad',
-          'EMPTY',
-        ]}
+        suppliedHeaders={
+          <>
+            <StyledColumn width="30%">
+              <FormattedMessage id="Uttaksplan.Periode" />
+            </StyledColumn>
+            <StyledColumn width="30%">
+              <FormattedMessage id="Uttaksplan.Fravær" />
+            </StyledColumn>
+            <StyledColumn width="20%">
+              <FormattedMessage id="Uttaksplan.Utfall" />
+            </StyledColumn>
+            <StyledColumn width="15%">
+              <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
+            </StyledColumn>
+            <StyledColumn width="5%" />
+          </>
+        }
+        allowFormattedHeader
         stripet
         noHover
       >

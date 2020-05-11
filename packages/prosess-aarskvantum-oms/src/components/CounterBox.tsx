@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
-type Theme = 'standard' | 'rød' | 'grønn';
+type Theme = 'standard' | 'rød' | 'grønn' | 'lyseblå' | 'oransje';
 
 const farger = {
   rød: {
@@ -12,6 +12,14 @@ const farger = {
     border: '#06893A',
     background: '#CDE7D8',
   },
+  lyseblå: {
+    border: '#66CBEC',
+    background: '#E0F5FB',
+  },
+  oransje: {
+    border: '#FFA733',
+    background: '#FFE9CC',
+  },
   standard: {
     border: '#78706A',
     background: 'inherit',
@@ -20,14 +28,14 @@ const farger = {
 
 interface CounterBoxProps {
   bigCount: string | number;
-  smallCount?: string | number;
+  smallCount?: string | number | ReactNode;
   label: string | ReactNode;
   theme: Theme;
   bottomText?: string | ReactNode;
 }
 
 const containerHeight = '180px';
-const containerWidth = '270px';
+const containerWidth = '240px';
 
 const Container = styled.div`
   height: ${containerHeight};
@@ -78,7 +86,8 @@ const LabelPanel = styled.div<{ theme: Theme }>`
 
 const BottomText = styled.div`
   flex-basis: 20%;
-  padding-top: 5px;
+  padding-top: 8px;
+  font-size: 0.85em;
 `;
 
 const CounterBox = ({ bigCount, smallCount, label, theme, bottomText }: CounterBoxProps) => (
