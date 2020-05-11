@@ -22,6 +22,7 @@ export const FpsakApiKeys = {
   DOCUMENT: 'DOCUMENT',
   HISTORY_FPSAK: 'HISTORY_FPSAK',
   HISTORY_FPTILBAKE: 'HISTORY_FPTILBAKE',
+  HISTORY_KLAGE: 'HISTORY_KLAGE',
   SHOW_DETAILED_ERROR_MESSAGES: 'SHOW_DETAILED_ERROR_MESSAGES',
   INTEGRATION_STATUS: 'INTEGRATION_STATUS',
   FEATURE_TOGGLE: 'FEATURE_TOGGLE',
@@ -106,6 +107,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/historikk */
   .withGet('/k9/sak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
   .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
+  .withGet('/k9/klage/api/historikk', FpsakApiKeys.HISTORY_KLAGE)
 
   /* /api/kodeverk */
   .withGet('/k9/sak/api/kodeverk', FpsakApiKeys.KODEVERK)
