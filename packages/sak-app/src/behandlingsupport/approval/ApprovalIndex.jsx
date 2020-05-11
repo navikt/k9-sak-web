@@ -128,7 +128,7 @@ export class ApprovalIndex extends Component {
 
   goToSearchPage() {
     const { push: pushLocation } = this.props;
-    pushLocation('/');
+    pushLocation('/k9/web?goto=k9-los');
   }
 
   render() {
