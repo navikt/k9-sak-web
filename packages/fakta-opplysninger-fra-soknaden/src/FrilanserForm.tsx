@@ -5,6 +5,7 @@ import { hasValidDate, required } from '@fpsak-frontend/utils';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.less';
+import OpplysningerFraSoknadenValues from './types/OpplysningerFraSoknadenTypes';
 
 interface FrilanserFormProps {
   erSelvstendigNæringsdrivende: boolean;
@@ -17,22 +18,16 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende }: FrilanserFormProps) =>
     <>
       <div className={styles.fieldContainer}>
         <DatepickerField
-          name="frilanser_startdatoForSoknaden"
+          name={OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN}
           validate={[required, hasValidDate]}
           defaultValue={null}
           readOnly={false} // TODO (Hallvard): endre til readOnly
-          label={
-            <Label
-              input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }}
-              // typographyElement={Element}
-              intl={intl}
-            />
-          }
+          label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
         />
       </div>
       <div className={styles.fieldContainer}>
         <InputField
-          name="frilanser_inntektISoknadsperioden"
+          name={OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
           validate={[required]}
@@ -41,7 +36,7 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende }: FrilanserFormProps) =>
       {erSelvstendigNæringsdrivende && (
         <div className={styles.fieldContainer}>
           <InputField
-            name="frilanser_inntektISoknadsperiodenSomSelvstendig"
+            name={OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
             validate={[required]}

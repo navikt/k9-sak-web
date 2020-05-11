@@ -19,12 +19,14 @@ interface Props {
   behandling: Behandling;
   submitCallback: (props: SubmitCallback[]) => void;
   submittable: boolean;
+  harApneAksjonspunkter: boolean;
 }
 
 const OpplysningerFraSoknadenIndex = (props: Props) => {
   const {
     readOnly,
     behandling: { id: behandlingId, versjon: behandlingVersjon },
+    harApneAksjonspunkter,
     submitCallback,
     submittable,
   } = props;
@@ -37,6 +39,7 @@ const OpplysningerFraSoknadenIndex = (props: Props) => {
         behandlingVersjon={behandlingVersjon}
         submitCallback={submitCallback}
         submittable={submittable}
+        harApneAksjonspunkter={harApneAksjonspunkter}
       />
     </RawIntlProvider>
   );

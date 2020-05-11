@@ -5,9 +5,18 @@ import { Checkbox } from 'nav-frontend-skjema';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
+import classnames from 'classnames/bind';
+import { useIntl } from 'react-intl';
+import { Label } from '@fpsak-frontend/form/src/Label';
+import { Element } from 'nav-frontend-typografi';
+import { required, minLength, maxLength, hasValidText } from '@fpsak-frontend/utils';
 import FrilanserForm from './FrilanserForm';
 import styles from './opplysningerFraSoknadenForm.less';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
+import OpplysningerFraSoknadenValues from './types/OpplysningerFraSoknadenTypes';
+import TextAreaField from '../../form/src/TextAreaField';
+
+const classNames = classnames.bind(styles);
 
 const mock = {
   søknadId: '100-abc',
@@ -51,6 +60,7 @@ interface OpplysningerFraSoknadenFormProps {
   readOnly: boolean;
   behandlingId: number;
   behandlingVersjon: number;
+  harApneAksjonspunkter: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
   submittable: boolean;
 }
@@ -67,7 +77,8 @@ interface StateProps {
 const formName = 'OpplysningerFraSoknadenForm';
 
 const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & InjectedFormProps & StateProps) => {
-  const { handleSubmit, initialValues, behandlingId, behandlingVersjon, submittable } = props;
+  const intl = useIntl();
+  const { handleSubmit, initialValues, behandlingId, behandlingVersjon, submittable, harApneAksjonspunkter } = props;
   const [erSelvstendigNæringsdrivende, setErSelvstendigNæringsdrivende] = React.useState(
     initialValues.erSelvstendigNæringsdrivende,
   );
@@ -76,25 +87,46 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className={styles.formContainer}>
+        <div className={classNames('formContainer', { showBorder: erSelvstendigNæringsdrivende })}>
           <Checkbox
-            name="erSelvstendigNæringsdrivende"
-            label="Selvstendig næringsdrivende"
+            label={
+              <Label
+                input={{ id: 'OpplysningerFraSoknaden.selvstendigNæringsdrivende', args: {} }}
+                typographyElement={Element}
+                intl={intl}
+              />
+            }
             disabled={false} // TODO (Hallvard): endre til readOnly
             onChange={() => setErSelvstendigNæringsdrivende(!erSelvstendigNæringsdrivende)}
             checked={erSelvstendigNæringsdrivende}
           />
           {erSelvstendigNæringsdrivende && <SelvstendigNæringsdrivendeForm erFrilanser={erFrilanser} />}
         </div>
-        <div className={styles.formContainer}>
+        <div className={classNames('formContainer', { showBorder: erFrilanser })}>
           <Checkbox
-            name="erFrilanser"
-            label="Frilanser"
+            label={
+              <Label
+                input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }}
+                typographyElement={Element}
+                intl={intl}
+              />
+            }
             disabled={false} // TODO (Hallvard): endre til readOnly
             onChange={() => setErFrilanser(!erFrilanser)}
             checked={erFrilanser}
           />
           {erFrilanser && <FrilanserForm erSelvstendigNæringsdrivende={erSelvstendigNæringsdrivende} />}
+        </div>
+        <div className={classNames('begrunnelseContainer')}>
+          <TextAreaField
+            name={OpplysningerFraSoknadenValues.BEGRUNNELSE}
+            label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
+            validate={[required, minLength(3), maxLength(2000), hasValidText]}
+            readOnly={false} // TODO (Hallvard): endre til readOnly
+            aria-label={intl.formatMessage({
+              id: 'OpplysningerFraSoknaden.Begrunnelse',
+            })}
+          />
         </div>
         <FaktaSubmitButton
           buttonTextId="SubmitButton.ConfirmInformation"
@@ -103,14 +135,26 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
           behandlingVersjon={behandlingVersjon}
           isSubmittable={submittable}
           isReadOnly={false} // TODO (Hallvard) sett til readOnly
-          hasOpenAksjonspunkter={false}
+          hasOpenAksjonspunkter={harApneAksjonspunkter}
         />
       </form>
     </div>
   );
 };
 
-const transformValues = values => values;
+interface TransformValues {
+  [OpplysningerFraSoknadenValues.BEGRUNNELSE]: string;
+  [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE]: number;
+  [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: number;
+  [OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN]: string;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: number;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: number;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER]: number;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: number;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
+}
+
+const transformValues = (values: TransformValues) => ({ kode: '', begrunnelse: values.begrunnelse });
 
 const buildInitialValues = values => {
   const { inntekter } = values;
@@ -123,7 +167,7 @@ const buildInitialValues = values => {
 
 const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
   const { submitCallback } = props;
-  const onSubmit = values => submitCallback([transformValues(values)]);
+  const onSubmit = (values: TransformValues) => submitCallback([transformValues(values)]);
 
   return () => ({
     onSubmit,
