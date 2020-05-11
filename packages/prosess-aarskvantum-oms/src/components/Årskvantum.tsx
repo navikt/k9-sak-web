@@ -7,6 +7,7 @@ import pieChart from '@fpsak-frontend/assets/images/pie_chart.svg';
 import info from '@fpsak-frontend/assets/images/information-circle.svg';
 import CounterBox from './CounterBox';
 import BorderedContainer from './BorderedContainer';
+import ComboCounterBox from './ComboCounterBox';
 
 interface ÅrskvantumProps {
   totaltAntallDager: number;
@@ -22,7 +23,7 @@ const CounterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   & > * {
-    margin: 0.5em;
+    margin: 0.25em 0.5em;
   }
 `;
 
@@ -63,6 +64,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   const rest = restdagerErSmittevernsdager ? { dager: 0, timer: 0 } : konverterDesimalTilDagerOgTimer(restdager);
   const dagerInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
   const smittevernsdager = restdagerErSmittevernsdager && konverterDesimalTilDagerOgTimer(Math.abs(restdager));
+  const opprinneligeDager = totaltAntallDager - antallDagerArbeidsgiverDekker;
 
   return (
     <BorderedContainer
@@ -84,22 +86,6 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
       }
     >
       <CounterContainer>
-        <CounterBox
-          bigCount={totaltAntallDager - antallDagerArbeidsgiverDekker}
-          label={<FormattedMessage id="Årskvantum.TotaleDager" />}
-          theme="standard"
-          bottomText={
-            <FormattedMessage
-              id="Årskvantum.TotaldagerInfo"
-              values={{ totaltAntallDager, antallDagerArbeidsgiverDekker }}
-            />
-          }
-        />
-        <CounterBox
-          bigCount={antallKoronadager}
-          label={<FormattedMessage id="Årskvantum.Koronadager" />}
-          theme="oransje"
-        />
         {restdagerErSmittevernsdager && (
           <CounterBox
             bigCount={smittevernsdager.dager}
@@ -108,34 +94,73 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
                 <FormattedMessage id="Årskvantum.Timer" values={{ timer: smittevernsdager.timer }} />
               ) : null
             }
-            label={<FormattedMessage id="Årskvantum.Smittevernsdager" />}
+            label={{ textId: 'Årskvantum.Smittevernsdager' }}
             theme="lyseblå"
-            bottomText={<FormattedMessage id="Årskvantum.Smittevernsdager.EkstraTekst" />}
+            infoText={{ content: <FormattedMessage id="Årskvantum.Smittevernsdager.InfoText" /> }}
           />
         )}
+        <ComboCounterBox
+          counterBoxes={[
+            {
+              bigCount: opprinneligeDager,
+              label: { textId: 'Årskvantum.OpprinneligeDager' },
+              theme: 'grå',
+              infoText: {
+                content: (
+                  <FormattedMessage
+                    id="Årskvantum.OpprinneligeDager.InfoText"
+                    values={{ totaltAntallDager, antallDagerArbeidsgiverDekker }}
+                  />
+                ),
+              },
+              border: false,
+            },
+            {
+              bigCount: antallKoronadager,
+              label: { textId: 'Årskvantum.Koronadager', borderTop: true, borderBottom: true },
+              theme: 'oransje',
+              border: false,
+              infoText: {
+                content: <FormattedMessage id="Årskvantum.Koronadager.InfoText" />,
+                borderTop: true,
+                borderBottom: true,
+              },
+            },
+            {
+              bigCount: opprinneligeDager + antallKoronadager,
+              label: { textId: 'Årskvantum.TotaleDager', bold: true },
+              theme: 'hvit',
+              border: false,
+              infoText: {
+                content: <FormattedMessage id="Årskvantum.TotaleDager.InfoText" />,
+              },
+            },
+          ]}
+        />
         <CounterBox
           bigCount={forbrukt.dager}
           smallCount={
             forbrukt.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: forbrukt.timer }} /> : null
           }
-          label={<FormattedMessage id="Årskvantum.ForbrukteDager" />}
+          label={{ textId: 'Årskvantum.ForbrukteDager' }}
           theme="rød"
-          bottomText={
-            dagerInfotrygd.timer ? (
+          infoText={{
+            content: dagerInfotrygd.timer ? (
               <FormattedMessage
                 id="Årskvantum.DagerOgTimerFraInfotrygd"
                 values={{ dager: dagerInfotrygd.dager, timer: dagerInfotrygd.timer }}
               />
             ) : (
               <FormattedMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: dagerInfotrygd.dager }} />
-            )
-          }
+            ),
+          }}
         />
         <CounterBox
           bigCount={rest.dager}
           smallCount={rest.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: rest.timer }} /> : null}
-          label={<FormattedMessage id="Årskvantum.Restdager" />}
+          label={{ textId: 'Årskvantum.Restdager' }}
           theme="grønn"
+          infoText={{ content: <FormattedMessage id="Årskvantum.Restdager.InfoText" /> }}
         />
       </CounterContainer>
     </BorderedContainer>

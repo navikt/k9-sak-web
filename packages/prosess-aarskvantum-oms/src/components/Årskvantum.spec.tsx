@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import React from 'react';
-import { shallow } from 'enzyme';
 import Årskvantum, { konverterDesimalTilDagerOgTimer } from './Årskvantum';
 import CounterBox from './CounterBox';
+import { mountWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
 
 const sjekkKonvertering = ({ dager, timer }, expectedDager, expectedTimer) => {
   expect(dager).to.equal(expectedDager);
@@ -11,7 +11,7 @@ const sjekkKonvertering = ({ dager, timer }, expectedDager, expectedTimer) => {
 
 it('rendrer smittevern hvis restdager er nagativt, ellers ikke', () => {
   const wrapper = restdager =>
-    shallow(
+    mountWithIntl(
       <Årskvantum
         totaltAntallDager={20}
         antallDagerArbeidsgiverDekker={3}
@@ -23,10 +23,10 @@ it('rendrer smittevern hvis restdager er nagativt, ellers ikke', () => {
     );
 
   const bokserUtenSmittevern = wrapper(12).find(CounterBox);
-  expect(bokserUtenSmittevern).to.have.length(4);
+  expect(bokserUtenSmittevern).to.have.length(5);
 
   const bokserMedSmittevern = wrapper(-12).find(CounterBox);
-  expect(bokserMedSmittevern).to.have.length(5);
+  expect(bokserMedSmittevern).to.have.length(6);
 });
 
 it('konverterer desimaltall til hele dager og timer med max 1 desimal', () => {
