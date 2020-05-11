@@ -86,6 +86,19 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
       }
     >
       <CounterContainer>
+        {restdagerErSmittevernsdager && (
+          <CounterBox
+            bigCount={smittevernsdager.dager}
+            smallCount={
+              smittevernsdager.timer ? (
+                <FormattedMessage id="Årskvantum.Timer" values={{ timer: smittevernsdager.timer }} />
+              ) : null
+            }
+            label={{ textId: 'Årskvantum.Smittevernsdager' }}
+            theme="lyseblå"
+            infoText={{ content: <FormattedMessage id="Årskvantum.Smittevernsdager.InfoText" /> }}
+          />
+        )}
         <ComboCounterBox
           counterBoxes={[
             {
@@ -124,19 +137,6 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
             },
           ]}
         />
-        {restdagerErSmittevernsdager && (
-          <CounterBox
-            bigCount={smittevernsdager.dager}
-            smallCount={
-              smittevernsdager.timer ? (
-                <FormattedMessage id="Årskvantum.Timer" values={{ timer: smittevernsdager.timer }} />
-              ) : null
-            }
-            label={{ textId: 'Årskvantum.Smittevernsdager' }}
-            theme="lyseblå"
-            infoText={{ content: <FormattedMessage id="Årskvantum.Smittevernsdager.EkstraTekst" /> }}
-          />
-        )}
         <CounterBox
           bigCount={forbrukt.dager}
           smallCount={
