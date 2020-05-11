@@ -23,10 +23,10 @@ it('rendrer smittevern hvis restdager er nagativt, ellers ikke', () => {
     );
 
   const bokserUtenSmittevern = wrapper(12).find(CounterBox);
-  expect(bokserUtenSmittevern).to.have.length(3);
+  expect(bokserUtenSmittevern).to.have.length(4);
 
   const bokserMedSmittevern = wrapper(-12).find(CounterBox);
-  expect(bokserMedSmittevern).to.have.length(4);
+  expect(bokserMedSmittevern).to.have.length(5);
 });
 
 it('konverterer desimaltall til hele dager og timer med max 1 desimal', () => {

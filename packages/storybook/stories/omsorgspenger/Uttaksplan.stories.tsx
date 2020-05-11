@@ -18,6 +18,7 @@ const vilkårInnvilget: VurderteVilkår = {
 
 const årskvantumDto: ÅrskvantumForbrukteDager = {
   totaltAntallDager: 17,
+  antallKoronadager: 0,
   antallDagerArbeidsgiverDekker: 3,
   forbrukteDager: 10.4,
   restdager: 9.6,
@@ -88,6 +89,7 @@ export const smittevernsdager = () => (
   <ÅrskvantumIndex
     årskvantum={{
       ...årskvantumDto,
+      antallKoronadager: 10,
       restdager: -3.4,
     }}
     // @ts-ignore
