@@ -22,7 +22,7 @@ const CounterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   & > * {
-    margin: 0.5em;
+    margin: 0.25em 0.5em;
   }
 `;
 
@@ -87,8 +87,8 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         <CounterBox
           bigCount={totaltAntallDager - antallDagerArbeidsgiverDekker}
           label={<FormattedMessage id="Årskvantum.TotaleDager" />}
-          theme="standard"
-          bottomText={
+          theme="grå"
+          infoText={
             <FormattedMessage
               id="Årskvantum.TotaldagerInfo"
               values={{ totaltAntallDager, antallDagerArbeidsgiverDekker }}
@@ -110,7 +110,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
             }
             label={<FormattedMessage id="Årskvantum.Smittevernsdager" />}
             theme="lyseblå"
-            bottomText={<FormattedMessage id="Årskvantum.Smittevernsdager.EkstraTekst" />}
+            infoText={<FormattedMessage id="Årskvantum.Smittevernsdager.EkstraTekst" />}
           />
         )}
         <CounterBox
@@ -120,7 +120,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           }
           label={<FormattedMessage id="Årskvantum.ForbrukteDager" />}
           theme="rød"
-          bottomText={
+          infoText={
             dagerInfotrygd.timer ? (
               <FormattedMessage
                 id="Årskvantum.DagerOgTimerFraInfotrygd"
