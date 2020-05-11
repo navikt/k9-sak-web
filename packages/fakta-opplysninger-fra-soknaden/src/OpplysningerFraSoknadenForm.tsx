@@ -117,17 +117,19 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
           />
           {erFrilanser && <FrilanserForm erSelvstendigNæringsdrivende={erSelvstendigNæringsdrivende} />}
         </div>
-        <div className={classNames('begrunnelseContainer')}>
-          <TextAreaField
-            name={OpplysningerFraSoknadenValues.BEGRUNNELSE}
-            label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
-            validate={[required, minLength(3), maxLength(2000), hasValidText]}
-            readOnly={false} // TODO (Hallvard): endre til readOnly
-            aria-label={intl.formatMessage({
-              id: 'OpplysningerFraSoknaden.Begrunnelse',
-            })}
-          />
-        </div>
+        {(erFrilanser || erSelvstendigNæringsdrivende) && (
+          <div className={classNames('begrunnelseContainer')}>
+            <TextAreaField
+              name={OpplysningerFraSoknadenValues.BEGRUNNELSE}
+              label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
+              validate={[required, minLength(3), maxLength(2000), hasValidText]}
+              readOnly={false} // TODO (Hallvard): endre til readOnly
+              aria-label={intl.formatMessage({
+                id: 'OpplysningerFraSoknaden.Begrunnelse',
+              })}
+            />
+          </div>
+        )}
         <FaktaSubmitButton
           buttonTextId="SubmitButton.ConfirmInformation"
           formName={formName}

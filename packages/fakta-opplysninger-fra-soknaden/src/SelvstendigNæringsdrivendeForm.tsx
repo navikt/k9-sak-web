@@ -42,6 +42,14 @@ const SelvstendigNæringsdrivendeForm = ({ erFrilanser }: SelvstendigNæringsdri
             validate={[required]}
           />
         </div>
+        <div className={styles.nyoppstartetContainer}>
+          <InputField
+            name={OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
+            bredde="S"
+            label={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato' }}
+            validate={[required]}
+          />
+        </div>
       </div>
       <div className={styles.fieldContainer}>
         <InputField
@@ -51,13 +59,12 @@ const SelvstendigNæringsdrivendeForm = ({ erFrilanser }: SelvstendigNæringsdri
           validate={[required]}
         />
       </div>
-      {erFrilanser && (
+      {!erFrilanser && (
         <div className={styles.fieldContainer}>
           <InputField
             name={OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
-            validate={[required]}
           />
         </div>
       )}

@@ -33,13 +33,12 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende }: FrilanserFormProps) =>
           validate={[required]}
         />
       </div>
-      {erSelvstendigNæringsdrivende && (
+      {!erSelvstendigNæringsdrivende && (
         <div className={styles.fieldContainer}>
           <InputField
             name={OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
-            validate={[required]}
           />
         </div>
       )}

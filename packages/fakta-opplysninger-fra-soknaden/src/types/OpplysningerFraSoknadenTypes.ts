@@ -4,6 +4,7 @@ enum OpplysningerFraSoknadenValues {
   SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020 = 'selvstendigNaeringsdrivende_inntekt2020',
   SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN = 'selvstendigNaeringsdrivende_inntektISoknadsperioden',
   SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER = 'selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser',
+  SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO = 'selvstendigNaeringsdrivende_nyoppstartetDato',
   FRILANSER_STARTDATO_FOR_SØKNADEN = 'frilanser_startdatoForSoknaden',
   FRILANSER_INNTEKT_I_SØKNADSPERIODEN = 'frilanser_inntektISoknadsperioden',
   FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE = 'frilanser_inntektISoknadsperiodenSomSelvstendig',
