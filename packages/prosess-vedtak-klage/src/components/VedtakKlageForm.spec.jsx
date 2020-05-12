@@ -4,8 +4,7 @@ import sinon from 'sinon';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { getAvvisningsAarsaker, getIsAvvist, VedtakKlageFormImpl } from './VedtakKlageForm';
+import {getAvvisningsAarsaker, getIsAvvist, getKlageresultat, VedtakKlageFormImpl} from './VedtakKlageForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-vedtak-klage';
 
 const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjortGunst';
@@ -16,12 +15,9 @@ describe('<VedtakKlageForm>', () => {
     const avvistArsaker = [{ kode: 'KLAGET_FOR_SENT', kodeverk: 'KLAGE_AVVIST_AARSAK' },
       { kode: 'KLAGER_IKKE_PART', kodeverk: 'KLAGE_AVVIST_AARSAK' }];
     const forhandsvisVedtaksbrevFunc = sinon.spy();
-    const br = {
-      id: 1,
-      type: {
-        kode: behandlingResultatType.KLAGE_AVVIST,
-        navn: 'avvist',
-      },
+    const klageVurderingResultatNFP = {
+      klageVurdertAv: "NFP",
+      klageVurdering: "AVVIS_KLAGE"
     };
     const wrapper = shallowWithIntl(<VedtakKlageFormImpl
       {...reduxFormPropsMock}
@@ -36,11 +32,11 @@ describe('<VedtakKlageForm>', () => {
       avvisningsAarsakerForFeature={[null]}
       behandlingPaaVent={false}
       behandlingStatusKode="UTRED"
-      behandlingsresultat={br}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       finishKlageCallback={forhandsvisVedtaksbrevFunc}
       aksjonspunktKoder={[]}
-      klageVurdering={{}}
+      klageVurdering={{klageVurderingResultatNFP}}
+      klageresultat={klageVurderingResultatNFP}
       isBehandlingReadOnly
       alleKodeverk={{
         KlageAvvistÅrsak: [{
@@ -58,7 +54,7 @@ describe('<VedtakKlageForm>', () => {
   describe('Klage vedtak Selectors', () => {
     describe('getIsAvvist', () => {
       it('should return true', () => {
-        const brt = { type: { kode: behandlingResultatType.KLAGE_AVVIST } };
+        const brt = {klageVurdering: "AVVIS_KLAGE"};
         const selected = getIsAvvist.resultFunc(brt);
         expect(selected).equal(true);
       });
@@ -72,6 +68,24 @@ describe('<VedtakKlageForm>', () => {
         };
         const selected = getAvvisningsAarsaker.resultFunc(klageVurdering);
         expect(selected).to.have.length(2);
+      });
+    });
+
+    describe('getKlageresultat', () => {
+
+      it('Skal returnere klageVurderingResultatNFP hvis klagen ikke har blitt vurdert av klageinstans', () => {
+        const klageVurderingResultatNFP = {klageVurdertAv: "NFP"};
+        const klageresultater = {klageVurderingResultatNFP};
+        const resultat = getKlageresultat.resultFunc(klageresultater);
+        expect(resultat).equal(klageVurderingResultatNFP);
+      });
+
+      it('Skal returnere klageVurderingResultatNK hvis klagen har blitt vurdert av klageinstans', () => {
+        const klageVurderingResultatNFP = {klageVurdertAv: "NFP"};
+        const klageVurderingResultatNK = {klageVurdertAv: "NK"};
+        const klageresultater = {klageVurderingResultatNFP, klageVurderingResultatNK};
+        const resultat = getKlageresultat.resultFunc(klageresultater);
+        expect(resultat).equal(klageVurderingResultatNK);
       });
     });
   });

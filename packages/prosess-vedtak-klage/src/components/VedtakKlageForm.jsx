@@ -10,7 +10,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ElementWrapper, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
@@ -38,7 +37,7 @@ export const VedtakKlageFormImpl = ({
   isOpphevOgHjemsend,
   avvistArsaker,
   behandlingsResultatTekst,
-  klageVurdering,
+  klageresultat,
   behandlingPaaVent,
   alleKodeverk,
   ...formProps
@@ -77,20 +76,20 @@ export const VedtakKlageFormImpl = ({
           <VerticalSpacer sixteenPx />
         </div>
         )}
-        {klageVurdering.klageVurdertAv === 'NK' && (
+        {klageresultat.klageVurdertAv === 'NK' && (
         <VedtakKlageKaSubmitPanel
           begrunnelse={fritekstTilBrev}
-          klageResultat={klageVurdering}
+          klageResultat={klageresultat}
           previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
           formProps={formProps}
           readOnly={readOnly}
           behandlingPaaVent={behandlingPaaVent}
         />
         )}
-        {klageVurdering.klageVurdertAv === 'NFP' && (
+        {klageresultat.klageVurdertAv === 'NFP' && (
         <VedtakKlageSubmitPanel
           begrunnelse={fritekstTilBrev}
-          klageResultat={klageVurdering}
+          klageResultat={klageresultat}
           previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
           formProps={formProps}
           readOnly={readOnly}
@@ -113,7 +112,7 @@ VedtakKlageFormImpl.propTypes = {
   avvistArsaker: PropTypes.arrayOf(PropTypes.object),
   omgjortAarsak: PropTypes.string,
   fritekstTilBrev: PropTypes.string,
-  behandlingsresultat: PropTypes.shape().isRequired,
+  behandlingsresultat: PropTypes.shape(),
   ...formPropTypes,
 };
 
@@ -146,18 +145,15 @@ const omgjoerTekstMap = {
   DELVIS_MEDHOLD_I_KLAGE: 'VedtakKlageForm.KlageOmgjortDelvis',
 };
 
-const getKlageResultat = createSelector(
-  [(ownProps) => ownProps.klageVurdering],
-  (behandlingKlageVurdering) => (behandlingKlageVurdering.klageVurderingResultatNK
-    ? behandlingKlageVurdering.klageVurderingResultatNK : behandlingKlageVurdering.klageVurderingResultatNFP),
+export const getKlageresultat = createSelector(
+  [ownProps => ownProps.klageVurdering],
+  kv => kv.klageVurderingResultatNK || kv.klageVurderingResultatNFP
 );
 
 const getResultatText = createSelector(
-  [(ownProps) => ownProps.klageVurdering],
-  (behandlingKlageVurdering) => {
-    const klageResultat = behandlingKlageVurdering.klageVurderingResultatNK
-      ? behandlingKlageVurdering.klageVurderingResultatNK : behandlingKlageVurdering.klageVurderingResultatNFP;
-    switch (klageResultat.klageVurdering) {
+  [getKlageresultat],
+  klageresultat => {
+    switch (klageresultat.klageVurdering) {
       case klageVurderingCodes.AVVIS_KLAGE:
         return 'VedtakKlageForm.KlageAvvist';
       case klageVurderingCodes.STADFESTE_YTELSESVEDTAK:
@@ -167,7 +163,7 @@ const getResultatText = createSelector(
       case klageVurderingCodes.HJEMSENDE_UTEN_Å_OPPHEVE:
         return 'VedtakKlageForm.HjemmsendUtenOpphev';
       case klageVurderingCodes.MEDHOLD_I_KLAGE:
-        return omgjoerTekstMap[klageResultat.klageVurderingOmgjoer];
+        return omgjoerTekstMap[klageresultat.klageVurderingOmgjoer];
       default:
         return null;
     }
@@ -190,27 +186,23 @@ const getOmgjortAarsak = createSelector(
 );
 
 const getIsOmgjort = createSelector(
-  [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_MEDHOLD,
+  [getKlageresultat],
+  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.MEDHOLD_I_KLAGE
 );
 
 export const getIsAvvist = createSelector(
-  [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_AVVIST,
+  [getKlageresultat],
+  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.AVVIS_KLAGE
 );
 
 export const getIsOpphevOgHjemsend = createSelector(
-  [(ownProps) => ownProps.behandlingsresultat],
-  (behandlingsresultat) => behandlingsresultat?.type.kode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
+  [getKlageresultat],
+  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.OPPHEVE_YTELSESVEDTAK
 );
 
 export const getFritekstTilBrev = createSelector(
-  [(ownProps) => ownProps.klageVurdering],
-  (behandlingKlageVurdering) => {
-    const klageResultat = behandlingKlageVurdering.klageVurderingResultatNK
-      ? behandlingKlageVurdering.klageVurderingResultatNK : behandlingKlageVurdering.klageVurderingResultatNFP;
-    return klageResultat.fritekstTilBrev;
-  },
+  [getKlageresultat],
+  klageresultat => klageresultat.fritekstTilBrev
 );
 
 export const buildInitialValues = createSelector([(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => {
@@ -232,7 +224,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     omgjortAarsak: getOmgjortAarsak(ownProps),
     fritekstTilBrev: getFritekstTilBrev(ownProps),
     behandlingsResultatTekst: getResultatText(ownProps),
-    klageVurdering: getKlageResultat(ownProps),
+    klageresultat: getKlageresultat(ownProps),
     ...behandlingFormValueSelector(VEDTAK_KLAGE_FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'begrunnelse',
