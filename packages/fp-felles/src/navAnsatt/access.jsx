@@ -16,7 +16,7 @@ const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatu
 );
 
 const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (navAnsatt,
-  fagsakStatus, behandlingStatus, type) => {
+                                                                                                    fagsakStatus, behandlingStatus, type) => {
   if (kanVeilede(navAnsatt)) {
     return {
       employeeHasAccess: true,
@@ -29,9 +29,11 @@ const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBeha
   return { employeeHasAccess, isEnabled };
 };
 
-export const writeAccess = accessSelector(
+export const writeAccess = behandlingType => accessSelector(
   [kanSaksbehandle],
-  [fagsakStatusCode.OPPRETTET, fagsakStatusCode.UNDER_BEHANDLING],
+  behandlingType.kode === BehandlingType.KLAGE
+    ? [fagsakStatusCode.OPPRETTET, fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.LOPENDE, fagsakStatusCode.AVSLUTTET]
+    : [fagsakStatusCode.OPPRETTET, fagsakStatusCode.UNDER_BEHANDLING],
   [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES],
 );
 
@@ -42,7 +44,7 @@ export const kanOverstyreAccess = accessSelector(
 );
 
 const allAccessRights = (navAnsatt, fagsakStatus, behandlingStatus, behandlingType) => ({
-  writeAccess: writeAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
+  writeAccess: writeAccess(behandlingType)(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   kanOverstyreAccess: kanOverstyreAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
 });
 
