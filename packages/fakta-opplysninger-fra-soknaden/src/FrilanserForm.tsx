@@ -10,9 +10,10 @@ import OpplysningerFraSoknadenValues from './types/OpplysningerFraSoknadenTypes'
 interface FrilanserFormProps {
   erSelvstendigNæringsdrivende: boolean;
   startdatoValidator: (startdato: string) => void;
+  readOnly: boolean;
 }
 
-const FrilanserForm = ({ erSelvstendigNæringsdrivende, startdatoValidator }: FrilanserFormProps) => {
+const FrilanserForm = ({ erSelvstendigNæringsdrivende, startdatoValidator, readOnly }: FrilanserFormProps) => {
   const intl = useIntl();
 
   return (
@@ -22,7 +23,7 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende, startdatoValidator }: Fr
           name={OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN}
           validate={[required, hasValidDate, startdatoValidator]}
           defaultValue={null}
-          readOnly={false} // TODO (Hallvard): endre til readOnly
+          readOnly={readOnly}
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
         />
       </div>
@@ -32,6 +33,7 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende, startdatoValidator }: Fr
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
           validate={[required, hasValidInteger]}
+          readOnly={readOnly}
         />
       </div>
       {!erSelvstendigNæringsdrivende && (
@@ -41,6 +43,7 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende, startdatoValidator }: Fr
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
             validate={[hasValidInteger]}
+            readOnly={readOnly}
           />
         </div>
       )}

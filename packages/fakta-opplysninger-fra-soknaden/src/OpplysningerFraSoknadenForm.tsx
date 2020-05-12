@@ -1,17 +1,18 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
-import { SubmitCallback } from '@k9-sak-web/types';
+import { SubmitCallback, OpplysningerFraSøknaden } from '@k9-sak-web/types';
 import { Checkbox } from 'nav-frontend-skjema';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import classnames from 'classnames/bind';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import { Element } from 'nav-frontend-typografi';
 import { required, minLength, maxLength, hasValidText, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FrilanserForm from './FrilanserForm';
 import styles from './opplysningerFraSoknadenForm.less';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
@@ -20,7 +21,66 @@ import TextAreaField from '../../form/src/TextAreaField';
 
 const classNames = classnames.bind(styles);
 
-const mock = {};
+const mock = {
+  førSøkerPerioden: {
+    oppgittEgenNæring: [
+      {
+        periode: {
+          fom: '2020-05-12',
+          tom: '2020-06-12',
+        },
+        bruttoInntekt: {
+          verdi: 3000,
+        },
+      },
+    ],
+    oppgittFrilans: {
+      oppgittFrilansoppdrag: [
+        {
+          periode: {
+            fom: '2020-05-12',
+            tom: '2020-06-12',
+          },
+          bruttoInntekt: {
+            verdi: 3000,
+          },
+        },
+      ],
+    },
+  },
+  iSøkerPerioden: {
+    oppgittEgenNæring: [
+      {
+        periode: {
+          fom: '2020-05-12',
+          tom: '2020-06-12',
+        },
+        bruttoInntekt: {
+          verdi: 3000,
+        },
+      },
+    ],
+    oppgittFrilans: {
+      oppgittFrilansoppdrag: [
+        {
+          periode: {
+            fom: '2020-05-12',
+            tom: '2020-06-12',
+          },
+          bruttoInntekt: {
+            verdi: 3000,
+          },
+        },
+      ],
+    },
+  },
+  periodeFraSøknad: {
+    fom: '2020-05-12',
+    tom: '2020-06-12',
+  },
+  søkerYtelseForFrilans: true,
+  søkerYtelseForNæring: true,
+};
 
 const startdatoErISøknadsperiode = (startdato, søknadsperiode) => {
   const søknadsperiodeFom = moment(søknadsperiode.fom, ISO_DATE_FORMAT);
@@ -69,55 +129,74 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     harApneAksjonspunkter,
     selvstendigNæringsdrivendeInntekt2019,
     selvstendigNæringsdrivendeInntekt2020,
+    readOnly,
   } = props;
   const { søknadsperiode } = initialValues;
   const [erSelvstendigNæringsdrivende, setErSelvstendigNæringsdrivende] = React.useState(
     initialValues.erSelvstendigNæringsdrivende,
   );
   const [erFrilanser, setErFrilanser] = React.useState(initialValues.erFrilanser);
+  const [erSkjemaetLåst, setErSkjemaetLåst] = React.useState(true);
 
   return (
     <div>
+      {!readOnly && erSkjemaetLåst && (
+        <button type="button" onClick={() => setErSkjemaetLåst(false)}>
+          Lås opp
+        </button>
+      )}
       <form onSubmit={handleSubmit}>
         <div className={classNames('formContainer', { showBorder: erSelvstendigNæringsdrivende })}>
-          <Checkbox
-            label={
-              <Label
-                input={{ id: 'OpplysningerFraSoknaden.selvstendigNæringsdrivende', args: {} }}
-                typographyElement={Element}
-                intl={intl}
-              />
-            }
-            disabled={false} // TODO (Hallvard): endre til readOnly
-            onChange={() => setErSelvstendigNæringsdrivende(!erSelvstendigNæringsdrivende)}
-            checked={erSelvstendigNæringsdrivende}
-          />
+          {erSkjemaetLåst ? (
+            <Element>
+              <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
+            </Element>
+          ) : (
+            <Checkbox
+              label={
+                <Label
+                  input={{ id: 'OpplysningerFraSoknaden.selvstendigNæringsdrivende', args: {} }}
+                  typographyElement={Element}
+                  intl={intl}
+                />
+              }
+              onChange={() => setErSelvstendigNæringsdrivende(!erSelvstendigNæringsdrivende)}
+              checked={erSelvstendigNæringsdrivende}
+            />
+          )}
           {erSelvstendigNæringsdrivende && (
             <SelvstendigNæringsdrivendeForm
               erFrilanser={erFrilanser}
               selvstendigNæringsdrivendeInntekt2019={selvstendigNæringsdrivendeInntekt2019}
               selvstendigNæringsdrivendeInntekt2020={selvstendigNæringsdrivendeInntekt2020}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
+              readOnly={erSkjemaetLåst}
             />
           )}
         </div>
         <div className={classNames('formContainer', { showBorder: erFrilanser })}>
-          <Checkbox
-            label={
-              <Label
-                input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }}
-                typographyElement={Element}
-                intl={intl}
-              />
-            }
-            disabled={false} // TODO (Hallvard): endre til readOnly
-            onChange={() => setErFrilanser(!erFrilanser)}
-            checked={erFrilanser}
-          />
+          {erSkjemaetLåst ? (
+            <Element>
+              <FormattedMessage id="OpplysningerFraSoknaden.frilanser" />
+            </Element>
+          ) : (
+            <Checkbox
+              label={
+                <Label
+                  input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }}
+                  typographyElement={Element}
+                  intl={intl}
+                />
+              }
+              onChange={() => setErFrilanser(!erFrilanser)}
+              checked={erFrilanser}
+            />
+          )}
           {erFrilanser && (
             <FrilanserForm
               erSelvstendigNæringsdrivende={erSelvstendigNæringsdrivende}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
+              readOnly={erSkjemaetLåst}
             />
           )}
         </div>
@@ -127,7 +206,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
               name={OpplysningerFraSoknadenValues.BEGRUNNELSE}
               label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
               validate={[required, minLength(3), maxLength(2000), hasValidText]}
-              readOnly={false} // TODO (Hallvard): endre til readOnly
+              readOnly={erSkjemaetLåst}
               aria-label={intl.formatMessage({
                 id: 'OpplysningerFraSoknaden.Begrunnelse',
               })}
@@ -140,7 +219,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           isSubmittable={submittable}
-          isReadOnly={false} // TODO (Hallvard) sett til readOnly
+          isReadOnly={erSkjemaetLåst}
           hasOpenAksjonspunkter={harApneAksjonspunkter}
         />
       </form>
@@ -160,15 +239,91 @@ interface TransformValues {
   [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
 }
 
-const transformValues = (values: TransformValues) => ({ kode: '', begrunnelse: values.begrunnelse });
+const transformValues = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => ({
+  kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
+  begrunnelse: values.begrunnelse,
+  oppgittOpptjening: {
+    førSøkerPerioden: {
+      oppgittEgenNæring: [
+        {
+          periode: {
+            ...opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring[0].periode,
+          },
+          bruttoInntekt: {
+            verdi: values.selvstendigNaeringsdrivende_inntekt2019 || values.selvstendigNaeringsdrivende_inntekt2020,
+          },
+        },
+      ],
+      oppgittFrilans: {
+        ...opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
+      },
+    },
+    iSøkerPerioden: {
+      oppgittEgenNæring: [
+        {
+          periode: {
+            fom: values.selvstendigNaeringsdrivende_startdatoForSoknaden,
+            tom: moment(values.selvstendigNaeringsdrivende_startdatoForSoknaden, ISO_DATE_FORMAT)
+              .endOf('month')
+              .format(ISO_DATE_FORMAT),
+          },
+          bruttoInntekt: {
+            verdi: values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
+          },
+        },
+      ],
+      oppgittFrilans: {
+        oppgittFrilansoppdrag: [
+          {
+            periode: {
+              fom: values.frilanser_startdatoForSoknaden,
+              tom: moment(values.frilanser_startdatoForSoknaden, ISO_DATE_FORMAT)
+                .endOf('month')
+                .format(ISO_DATE_FORMAT),
+            },
+            bruttoInntekt: {
+              verdi: values.frilanser_inntektISoknadsperioden,
+            },
+          },
+        ],
+      },
+    },
+    periodeFraSøknad: { ...opplysningerFraSøknaden.periodeFraSøknad },
+    søkerYtelseForFrilans: !!values.frilanser_inntektISoknadsperioden,
+    søkerYtelseForNæring: !!values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
+  },
+});
 
-const buildInitialValues = values => {
-  const { oppgittOpptjening, periodeFraSøknad } = values;
+const buildInitialValues = (values: OpplysningerFraSøknaden) => {
+  const {
+    søkerYtelseForNæring,
+    søkerYtelseForFrilans,
+    periodeFraSøknad,
+    førSøkerPerioden,
+    iSøkerPerioden: { oppgittEgenNæring, oppgittFrilans },
+  } = values;
+  const erInntektsperiodenFørKorona2019 =
+    moment(førSøkerPerioden.oppgittEgenNæring[0].periode.tom, ISO_DATE_FORMAT).year() === 2019;
+  const erInntektsperiodenFørKorona2020 =
+    moment(førSøkerPerioden.oppgittEgenNæring[0].periode.tom, ISO_DATE_FORMAT).year() === 2020;
   return {
-    erSelvstendigNæringsdrivende: !!oppgittOpptjening?.oppgittEgenNæring,
-    erFrilanser: !!oppgittOpptjening?.oppgittFrilans,
+    erSelvstendigNæringsdrivende: søkerYtelseForNæring,
+    erFrilanser: søkerYtelseForFrilans,
     søknadsperiode: periodeFraSøknad,
-    // startdatoSoknadSelvstendigNaeringsdrivende: !!inntekter.selvstendig ? values
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]:
+      oppgittEgenNæring[0].periode.fom,
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]:
+      oppgittEgenNæring[0].bruttoInntekt.verdi,
+    [OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN]:
+      oppgittFrilans.oppgittFrilansoppdrag[0].periode.fom,
+    [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]:
+      oppgittFrilans.oppgittFrilansoppdrag[0].bruttoInntekt.verdi,
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: erInntektsperiodenFørKorona2019
+      ? førSøkerPerioden.oppgittEgenNæring[0].bruttoInntekt.verdi
+      : null,
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: erInntektsperiodenFørKorona2020
+      ? førSøkerPerioden.oppgittEgenNæring[0].bruttoInntekt.verdi
+      : null,
   };
 };
 

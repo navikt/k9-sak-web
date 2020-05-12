@@ -27,3 +27,4 @@ export { default as FastsattOpptjening } from './src/opptjening/fastsattOpptjeni
 export { default as FastsattOpptjeningAktivitet } from './src/opptjening/fastsattOpptjeningAktivitet';
 export { default as UtlandDokStatus } from './src/opptjening/utlandDokStatus';
 export { default as Vilkårresultat } from './src/opptjening/vilkårresultat';
+export { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknaden';

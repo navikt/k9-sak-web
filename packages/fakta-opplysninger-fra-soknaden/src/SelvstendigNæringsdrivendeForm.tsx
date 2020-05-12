@@ -13,6 +13,7 @@ interface SelvstendigNæringsdrivendeFormProps {
   selvstendigNæringsdrivendeInntekt2019: boolean;
   selvstendigNæringsdrivendeInntekt2020: boolean;
   startdatoValidator: (startdato: string) => void;
+  readOnly: boolean;
 }
 
 const startdatoIsValid = (startdato, selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
@@ -43,6 +44,7 @@ const SelvstendigNæringsdrivendeForm = ({
   selvstendigNæringsdrivendeInntekt2019,
   selvstendigNæringsdrivendeInntekt2020,
   startdatoValidator,
+  readOnly,
 }: SelvstendigNæringsdrivendeFormProps) => {
   const intl = useIntl();
 
@@ -59,7 +61,7 @@ const SelvstendigNæringsdrivendeForm = ({
             startdatoValidator,
           ]}
           defaultValue={null}
-          readOnly={false} // TODO (Hallvard): endre til readOnly
+          readOnly={readOnly}
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
         />
       </div>
@@ -70,6 +72,7 @@ const SelvstendigNæringsdrivendeForm = ({
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
             validate={[hasValidInteger, inntekt => inntektIsValid(inntekt, selvstendigNæringsdrivendeInntekt2020)]}
+            readOnly={readOnly}
           />
         </div>
         <div className={styles.fieldContainer}>
@@ -78,6 +81,7 @@ const SelvstendigNæringsdrivendeForm = ({
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
             validate={[hasValidInteger, inntekt => inntektIsValid(selvstendigNæringsdrivendeInntekt2019, inntekt)]}
+            readOnly={readOnly}
           />
         </div>
         <div className={styles.nyoppstartetContainer}>
@@ -85,7 +89,7 @@ const SelvstendigNæringsdrivendeForm = ({
             name={OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
             validate={[hasValidDate]}
             defaultValue={null}
-            readOnly={false} // TODO (Hallvard): endre til readOnly
+            readOnly={readOnly}
             label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
           />
         </div>
@@ -96,6 +100,7 @@ const SelvstendigNæringsdrivendeForm = ({
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
           validate={[required, hasValidInteger]}
+          readOnly={readOnly}
         />
       </div>
       {!erFrilanser && (
@@ -105,6 +110,7 @@ const SelvstendigNæringsdrivendeForm = ({
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
             validate={[hasValidInteger]}
+            readOnly={readOnly}
           />
         </div>
       )}

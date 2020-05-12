@@ -19,7 +19,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
   {
     urlCode: faktaPanelCodes.OPPLYSNINGER_FRA_SØKNADEN,
     textCode: 'OpplysningerFraSoknaden.Title',
-    aksjonspunkterCodes: [aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING_KODE],
+    aksjonspunkterCodes: [aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING],
     endpoints: [],
     renderComponent: props => <OpplysningerFraSoknadenIndex {...props} />,
     showComponent: () => true,
