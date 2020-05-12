@@ -89,12 +89,12 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
       <CounterContainer>
         {restdagerErSmittevernsdager && (
           <CounterBox
-            bigCount={smittevernsdager.dager}
-            smallCount={
-              smittevernsdager.timer ? (
+            count={{
+              bigCount: smittevernsdager.dager,
+              smallCount: smittevernsdager.timer ? (
                 <FormattedMessage id="Årskvantum.Timer" values={{ timer: smittevernsdager.timer }} />
-              ) : null
-            }
+              ) : null,
+            }}
             label={{ textId: 'Årskvantum.Smittevernsdager' }}
             theme="lyseblå"
             infoText={{ content: <FormattedMessage id="Årskvantum.Smittevernsdager.InfoText" /> }}
@@ -103,7 +103,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         <ComboCounterBox
           counterBoxes={[
             {
-              bigCount: opprinneligeDager,
+              count: { bigCount: opprinneligeDager },
               label: { textId: 'Årskvantum.OpprinneligeDager' },
               theme: 'grå',
               infoText: {
@@ -117,7 +117,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
               border: false,
             },
             {
-              bigCount: antallKoronadager,
+              count: { bigCount: antallKoronadager, borderBottom: true },
               label: { textId: 'Årskvantum.Koronadager', borderTop: true, borderBottom: true },
               theme: 'oransje',
               border: false,
@@ -128,7 +128,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
               },
             },
             {
-              bigCount: opprinneligeDager + antallKoronadager,
+              count: { bigCount: opprinneligeDager + antallKoronadager },
               label: { textId: 'Årskvantum.TotaleDager', bold: true, borderRight: true, borderLeft: true },
               theme: 'hvit',
               border: false,
@@ -139,10 +139,12 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           ]}
         />
         <CounterBox
-          bigCount={forbrukt.dager}
-          smallCount={
-            forbrukt.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: forbrukt.timer }} /> : null
-          }
+          count={{
+            bigCount: forbrukt.dager,
+            smallCount: forbrukt.timer ? (
+              <FormattedMessage id="Årskvantum.Timer" values={{ timer: forbrukt.timer }} />
+            ) : null,
+          }}
           label={{ textId: 'Årskvantum.ForbrukteDager' }}
           theme="rød"
           infoText={{
@@ -157,8 +159,10 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           }}
         />
         <CounterBox
-          bigCount={rest.dager}
-          smallCount={rest.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: rest.timer }} /> : null}
+          count={{
+            bigCount: rest.dager,
+            smallCount: rest.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: rest.timer }} /> : null,
+          }}
           label={{ textId: 'Årskvantum.Restdager' }}
           theme="grønn"
           infoText={{ content: <FormattedMessage id="Årskvantum.Restdager.InfoText" /> }}

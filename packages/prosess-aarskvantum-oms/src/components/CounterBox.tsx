@@ -32,8 +32,11 @@ const farger = {
 };
 
 export interface CounterBoxProps {
-  bigCount: string | number;
-  smallCount?: string | number | ReactNode;
+  count: {
+    bigCount: string | number;
+    smallCount?: string | number | ReactNode;
+    borderBottom?: boolean;
+  };
   label: {
     textId: string;
     bold?: boolean;
@@ -68,13 +71,14 @@ const Container = styled.div<{ theme: Theme; border: boolean }>`
   ${({ border, theme }) => border && `border: 1px solid ${farger[theme].border};`}
 `;
 
-const Count = styled.div`
+const Count = styled.div<{ borderBottom: boolean; theme: Theme }>`
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: baseline;
   min-width: 130px;
   font-weight: 300;
+  ${borderBottomFn}
 `;
 
 const BigCount = styled.div`
@@ -118,11 +122,11 @@ const InfoText = styled.div<{ borderTop: boolean; borderBottom: boolean; theme: 
   ${borderBottomFn}
 `;
 
-const CounterBox = ({ bigCount, smallCount, label, theme, infoText, border = true }: CounterBoxProps) => (
+const CounterBox = ({ count, label, theme, infoText, border = true }: CounterBoxProps) => (
   <Container border={border} theme={theme}>
-    <Count>
-      <BigCount>{bigCount}</BigCount>
-      {smallCount && <SmallCount>{smallCount}</SmallCount>}
+    <Count borderBottom={count.borderBottom} theme={theme}>
+      <BigCount>{count.bigCount}</BigCount>
+      {count.smallCount && <SmallCount>{count.smallCount}</SmallCount>}
     </Count>
     <LabelPanel
       theme={theme}
