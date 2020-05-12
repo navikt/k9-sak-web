@@ -21,66 +21,7 @@ import TextAreaField from '../../form/src/TextAreaField';
 
 const classNames = classnames.bind(styles);
 
-const mock = {
-  førSøkerPerioden: {
-    oppgittEgenNæring: [
-      {
-        periode: {
-          fom: '2020-05-12',
-          tom: '2020-06-12',
-        },
-        bruttoInntekt: {
-          verdi: 3000,
-        },
-      },
-    ],
-    oppgittFrilans: {
-      oppgittFrilansoppdrag: [
-        {
-          periode: {
-            fom: '2020-05-12',
-            tom: '2020-06-12',
-          },
-          bruttoInntekt: {
-            verdi: 3000,
-          },
-        },
-      ],
-    },
-  },
-  iSøkerPerioden: {
-    oppgittEgenNæring: [
-      {
-        periode: {
-          fom: '2020-05-12',
-          tom: '2020-06-12',
-        },
-        bruttoInntekt: {
-          verdi: 3000,
-        },
-      },
-    ],
-    oppgittFrilans: {
-      oppgittFrilansoppdrag: [
-        {
-          periode: {
-            fom: '2020-05-12',
-            tom: '2020-06-12',
-          },
-          bruttoInntekt: {
-            verdi: 3000,
-          },
-        },
-      ],
-    },
-  },
-  periodeFraSøknad: {
-    fom: '2020-05-12',
-    tom: '2020-06-12',
-  },
-  søkerYtelseForFrilans: true,
-  søkerYtelseForNæring: true,
-};
+const mock = {};
 
 const startdatoErISøknadsperiode = (startdato, søknadsperiode) => {
   const søknadsperiodeFom = moment(søknadsperiode.fom, ISO_DATE_FORMAT);
@@ -295,29 +236,23 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
 });
 
 const buildInitialValues = (values: OpplysningerFraSøknaden) => {
-  const {
-    søkerYtelseForNæring,
-    søkerYtelseForFrilans,
-    periodeFraSøknad,
-    førSøkerPerioden,
-    iSøkerPerioden: { oppgittEgenNæring, oppgittFrilans },
-  } = values;
+  const { søkerYtelseForNæring, søkerYtelseForFrilans, periodeFraSøknad, førSøkerPerioden, iSøkerPerioden } = values;
   const erInntektsperiodenFørKorona2019 =
-    moment(førSøkerPerioden.oppgittEgenNæring[0].periode.tom, ISO_DATE_FORMAT).year() === 2019;
+    moment(førSøkerPerioden?.oppgittEgenNæring[0].periode.tom, ISO_DATE_FORMAT).year() === 2019;
   const erInntektsperiodenFørKorona2020 =
-    moment(førSøkerPerioden.oppgittEgenNæring[0].periode.tom, ISO_DATE_FORMAT).year() === 2020;
+    moment(førSøkerPerioden?.oppgittEgenNæring[0].periode.tom, ISO_DATE_FORMAT).year() === 2020;
   return {
     erSelvstendigNæringsdrivende: søkerYtelseForNæring,
     erFrilanser: søkerYtelseForFrilans,
     søknadsperiode: periodeFraSøknad,
     [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]:
-      oppgittEgenNæring[0].periode.fom,
+      iSøkerPerioden?.oppgittEgenNæring[0].periode.fom,
     [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]:
-      oppgittEgenNæring[0].bruttoInntekt.verdi,
+      iSøkerPerioden?.oppgittEgenNæring[0].bruttoInntekt.verdi,
     [OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN]:
-      oppgittFrilans.oppgittFrilansoppdrag[0].periode.fom,
+      iSøkerPerioden?.oppgittFrilans.oppgittFrilansoppdrag[0].periode.fom,
     [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]:
-      oppgittFrilans.oppgittFrilansoppdrag[0].bruttoInntekt.verdi,
+      iSøkerPerioden?.oppgittFrilans.oppgittFrilansoppdrag[0].bruttoInntekt.verdi,
     [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: erInntektsperiodenFørKorona2019
       ? førSøkerPerioden.oppgittEgenNæring[0].bruttoInntekt.verdi
       : null,
