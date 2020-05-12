@@ -11,36 +11,38 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
-
 /* global VERSION:true */
 /* eslint no-undef: "error" */
 const release = VERSION;
 const environment = window.location.hostname;
 const isDevelopment = process.env.NODE_ENV === 'development';
-init({
-  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://d1b7de8cc42949569da03849b47d3ea1@sentry.gc.nav.no/17',
-  release,
-  environment,
-  integrations: [new Integrations.Breadcrumbs({ console: false })],
-  beforeSend: (event, hint) => {
-    const exception = hint.originalException;
-    if (exception.isAxiosError) {
-      const requestUrl = new URL(exception.request.responseURL);
-      // eslint-disable-next-line no-param-reassign
-      event.fingerprint = [
-        '{{ default }}',
-        String(exception.name),
-        String(exception.message),
-        String(requestUrl.pathname),
-      ];
-      // eslint-disable-next-line no-param-reassign
-      event.extra = event.extra ? event.extra : {};
-      // eslint-disable-next-line no-param-reassign
-      event.extra.callId = exception.response.config.headers['Nav-Callid'];
-    }
-    return event;
-  },
-});
+
+if (isDevelopment) {
+  init({
+    dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://d1b7de8cc42949569da03849b47d3ea1@sentry.gc.nav.no/17',
+    release,
+    environment,
+    integrations: [new Integrations.Breadcrumbs({ console: false })],
+    beforeSend: (event, hint) => {
+      const exception = hint.originalException;
+      if (exception.isAxiosError) {
+        const requestUrl = new URL(exception.request.responseURL);
+        // eslint-disable-next-line no-param-reassign
+        event.fingerprint = [
+          '{{ default }}',
+          String(exception.name),
+          String(exception.message),
+          String(requestUrl.pathname),
+        ];
+        // eslint-disable-next-line no-param-reassign
+        event.extra = event.extra ? event.extra : {};
+        // eslint-disable-next-line no-param-reassign
+        event.extra.callId = exception.response.config.headers['Nav-Callid'];
+      }
+      return event;
+    },
+  });
+}
 
 const history = createBrowserHistory({
   basename: '/k9/web/',
@@ -49,7 +51,7 @@ const store = configureStore(history);
 
 reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
 
-const renderFunc = (Component) => {
+const renderFunc = Component => {
   const app = document.getElementById('app');
   if (app === null) {
     throw new Error('No app element');
