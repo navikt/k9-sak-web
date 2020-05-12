@@ -37,10 +37,13 @@
   "OpplysningerFraSoknaden.startdatoForSoknanden": "Startdato for søknaden",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
-  "ValidationMessage.InvalidDate": "Dato må skrives slik : dd.mm.åååå",
+  "ValidationMessage.InvalidDate": "Startdato må stemme overens med årstallet for innntektstapet",
+  "ValidationMessage.InvalidNumber": "Feltet kan kun inneholde tall",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
   "ValidationMessage.MaxValue": "Feltet må være mindre eller lik {length}",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MinValue": "Feltet må være større eller lik ength}",
-  "ValidationMessage.NotEmpty": "Feltet må fylles ut"
+  "ValidationMessage.NotEmpty": "Feltet må fylles ut",
+  "ValidationMessage.InvalidIncome": "Du kan bare oppgi inntekt for 2019 eller 2020.",
+  "ValidationMessage.InvalidStartdato": "Startdato må være innenfor søknadsperioden {fom} - {tom}"
 }

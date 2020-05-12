@@ -1,7 +1,7 @@
 import { DatepickerField } from '@fpsak-frontend/form';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { hasValidDate, required } from '@fpsak-frontend/utils';
+import { hasValidDate, required, hasValidInteger } from '@fpsak-frontend/utils';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.less';
@@ -9,9 +9,10 @@ import OpplysningerFraSoknadenValues from './types/OpplysningerFraSoknadenTypes'
 
 interface FrilanserFormProps {
   erSelvstendigNæringsdrivende: boolean;
+  startdatoValidator: (startdato: string) => void;
 }
 
-const FrilanserForm = ({ erSelvstendigNæringsdrivende }: FrilanserFormProps) => {
+const FrilanserForm = ({ erSelvstendigNæringsdrivende, startdatoValidator }: FrilanserFormProps) => {
   const intl = useIntl();
 
   return (
@@ -19,7 +20,7 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende }: FrilanserFormProps) =>
       <div className={styles.fieldContainer}>
         <DatepickerField
           name={OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN}
-          validate={[required, hasValidDate]}
+          validate={[required, hasValidDate, startdatoValidator]}
           defaultValue={null}
           readOnly={false} // TODO (Hallvard): endre til readOnly
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
@@ -30,7 +31,7 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende }: FrilanserFormProps) =>
           name={OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
-          validate={[required]}
+          validate={[required, hasValidInteger]}
         />
       </div>
       {!erSelvstendigNæringsdrivende && (
@@ -39,6 +40,7 @@ const FrilanserForm = ({ erSelvstendigNæringsdrivende }: FrilanserFormProps) =>
             name={OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
+            validate={[hasValidInteger]}
           />
         </div>
       )}
