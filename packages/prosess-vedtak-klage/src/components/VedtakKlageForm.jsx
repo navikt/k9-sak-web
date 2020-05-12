@@ -202,7 +202,7 @@ export const getIsOpphevOgHjemsend = createSelector(
 
 export const getFritekstTilBrev = createSelector(
   [getKlageresultat],
-  klageresultat => klageresultat.frtekstTilBrev
+  klageresultat => klageresultat.fritekstTilBrev
 );
 
 export const buildInitialValues = createSelector([(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => {
