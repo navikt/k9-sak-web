@@ -11,14 +11,13 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
-
 /* global VERSION:true */
 /* eslint no-undef: "error" */
 const release = VERSION;
 const environment = window.location.hostname;
 const isDevelopment = process.env.NODE_ENV === 'development';
 init({
-  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://d1b7de8cc42949569da03849b47d3ea1@sentry.gc.nav.no/17',
+  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
   release,
   environment,
   integrations: [new Integrations.Breadcrumbs({ console: false })],
@@ -49,7 +48,7 @@ const store = configureStore(history);
 
 reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
 
-const renderFunc = (Component) => {
+const renderFunc = Component => {
   const app = document.getElementById('app');
   if (app === null) {
     throw new Error('No app element');
