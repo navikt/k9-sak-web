@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import styled from 'styled-components';
 import Undertittel from 'nav-frontend-typografi/lib/undertittel';
 import { FlexRow, Image } from '@fpsak-frontend/shared-components/index';
@@ -128,7 +128,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
             },
             {
               bigCount: opprinneligeDager + antallKoronadager,
-              label: { textId: 'Årskvantum.TotaleDager', bold: true },
+              label: { textId: 'Årskvantum.TotaleDager', bold: true, borderRight: true, borderLeft: true },
               theme: 'hvit',
               border: false,
               infoText: {
@@ -146,12 +146,12 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           theme="rød"
           infoText={{
             content: dagerInfotrygd.timer ? (
-              <FormattedMessage
+              <FormattedHTMLMessage
                 id="Årskvantum.DagerOgTimerFraInfotrygd"
                 values={{ dager: dagerInfotrygd.dager, timer: dagerInfotrygd.timer }}
               />
             ) : (
-              <FormattedMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: dagerInfotrygd.dager }} />
+              <FormattedHTMLMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: dagerInfotrygd.dager }} />
             ),
           }}
         />

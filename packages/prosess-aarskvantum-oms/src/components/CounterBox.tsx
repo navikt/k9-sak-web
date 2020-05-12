@@ -26,7 +26,7 @@ const farger = {
     background: '#E9E7E7',
   },
   hvit: {
-    border: 'grey',
+    border: '#E9E7E7',
     background: 'white',
   },
 };
@@ -39,6 +39,8 @@ export interface CounterBoxProps {
     bold?: boolean;
     borderTop?: boolean;
     borderBottom?: boolean;
+    borderRight?: boolean;
+    borderLeft?: boolean;
   };
   theme: Theme;
   infoText: {
@@ -54,6 +56,8 @@ const containerWidth = '100%';
 
 const borderTopFn = ({ borderTop, theme }) => borderTop && `border-top: 1px solid ${farger[theme].border};`;
 const borderBottomFn = ({ borderBottom, theme }) => borderBottom && `border-bottom: 1px solid ${farger[theme].border};`;
+const borderRightFn = ({ borderRight, theme }) => borderRight && `border-right: 1px solid ${farger[theme].border};`;
+const borderLeftFn = ({ borderLeft, theme }) => borderLeft && `border-left: 1px solid ${farger[theme].border};`;
 
 const Container = styled.div<{ theme: Theme; border: boolean }>`
   height: ${containerHeight};
@@ -82,7 +86,14 @@ const SmallCount = styled.div`
   font-size: 1.5em;
 `;
 
-const LabelPanel = styled.div<{ theme: Theme; bold: boolean; borderTop: boolean; borderBottom: boolean }>`
+const LabelPanel = styled.div<{
+  theme: Theme;
+  bold: boolean;
+  borderTop: boolean;
+  borderBottom: boolean;
+  borderRight: boolean;
+  borderLeft: boolean;
+}>`
   font-size: 1.3em;
   font-weight: ${({ bold }) => (bold ? `600` : `500`)};
   min-width: 250px;
@@ -93,14 +104,17 @@ const LabelPanel = styled.div<{ theme: Theme; bold: boolean; borderTop: boolean;
   padding-left: 1em;
   ${borderTopFn}
   ${borderBottomFn}
+  ${borderLeftFn}
+  ${borderRightFn}
 `;
 
 const InfoText = styled.div<{ borderTop: boolean; borderBottom: boolean; theme: Theme }>`
   display: flex;
   align-items: center;
-  padding-left: 1em;
+  padding: 0 1em 0 1em;
   text-align: start;
   width: 100%;
+  font-size: 0.95em;
   ${borderTopFn}
   ${borderBottomFn}
 `;
@@ -111,7 +125,14 @@ const CounterBox = ({ bigCount, smallCount, label, theme, infoText, border = tru
       <BigCount>{bigCount}</BigCount>
       {smallCount && <SmallCount>{smallCount}</SmallCount>}
     </Count>
-    <LabelPanel theme={theme} bold={label.bold} borderTop={label.borderTop} borderBottom={label.borderBottom}>
+    <LabelPanel
+      theme={theme}
+      bold={label.bold}
+      borderTop={label.borderTop}
+      borderBottom={label.borderBottom}
+      borderRight={label.borderRight}
+      borderLeft={label.borderLeft}
+    >
       <FormattedMessage id={label.textId} />
     </LabelPanel>
     <InfoText borderTop={infoText.borderTop} borderBottom={infoText.borderBottom} theme={theme}>
