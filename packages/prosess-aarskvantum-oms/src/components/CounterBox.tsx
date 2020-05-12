@@ -75,11 +75,10 @@ const Count = styled.div`
   align-items: baseline;
   min-width: 130px;
   font-weight: 300;
-  margin-top: -4px;
 `;
 
 const BigCount = styled.div`
-  font-size: 3em;
+  font-size: 2.5em;
 `;
 
 const SmallCount = styled.div`

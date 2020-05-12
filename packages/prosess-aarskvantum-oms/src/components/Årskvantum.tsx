@@ -32,6 +32,7 @@ const InfoRammemelding = styled.span`
   font-weight: 400;
   display: flex;
   align-items: center;
+  padding-right: 1em;
 
   & img {
     width: 20px;
