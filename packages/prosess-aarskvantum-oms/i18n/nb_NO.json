@@ -43,5 +43,13 @@
   "AVSLÅTT_MEDLEMSKAP": "Medlemskap ikke oppfylt",
   "AVSLÅTT_70ÅR":  "Søker er over 70 år",
   "AVSLÅTT_UIDENTIFISERT_RAMMEVEDTAK": "Uidentifisert rammemelding",
-  "AVSLÅTT_KREVER_LEGEERKLÆRING":  "Krever legeerklæring"
+  "AVSLÅTT_KREVER_LEGEERKLÆRING":  "Krever legeerklæring",
+  "Uttaksplan.Hjemler": "Hjemler",
+  "Uttaksplan.Hjemmel.FTRL_9_3__1": "Ftrl. § 9-3 1. ledd",
+  "Uttaksplan.Hjemmel.FTRL_9_5__1": "Ftrl. § 9-5 1. ledd",
+  "Uttaksplan.Hjemmel.FTRL_9_5__3": "Ftrl. § 9-5 3. ledd",
+  "Uttaksplan.Hjemmel.FTRL_9_6__1": "Ftrl. § 9-6 1. ledd",
+  "Uttaksplan.Hjemmel.FTRL_9_8_JF_8_10__3": "Ftrl. § 9-8, jf 8-10 3. ledd",
+  "Uttaksplan.Hjemmel.COVID19_4_3": "Ftrl. § 25-16 og midl. forskrift § 4-3",
+  "Uttaksplan.Hjemmel.COVID19_4_1__2": "Ftrl. § 25-16 og midl. forskrift § 4-1 2. ledd"
 }

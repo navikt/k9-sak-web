@@ -15,6 +15,7 @@ interface Uttaksperiode {
   vurderteVilkår: {
     vilkår: VurderteVilkår;
   };
+  hjemler: string[];
 }
 
 export default Uttaksperiode;
