@@ -308,15 +308,35 @@ const getPeriodeForOppgittEgenNæringFørSøkerperioden = (
   values: TransformValues,
   opplysningerFraSøknaden: OpplysningerFraSøknaden,
 ) => {
-  if (values.selvstendigNaeringsdrivende_nyoppstartetDato) {
-    const erNyOppstartetI2019 =
-      moment(values.selvstendigNaeringsdrivende_nyoppstartetDato, ISO_DATE_FORMAT).year() === 2019;
-    return {
-      fom: values.selvstendigNaeringsdrivende_nyoppstartetDato,
-      tom: erNyOppstartetI2019 ? '2019-12-31' : '2020-02-29',
-    };
+  const inntekt2019 = values[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+  const næringFørSøknadsperioden = opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring;
+  const inntektsperiodeFørSøknadsperioden = næringFørSøknadsperioden[0].periode;
+
+  const { fom, tom } = inntektsperiodeFørSøknadsperioden;
+  const opprinneligInntektsperiodeErI2019 = moment(fom, ISO_DATE_FORMAT).year() === 2019;
+  const { selvstendigNaeringsdrivende_nyoppstartetDato } = values;
+
+  const periode: any = {};
+  if (inntekt2019) {
+    if (opprinneligInntektsperiodeErI2019) {
+      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || fom;
+      periode.tom = tom;
+    } else {
+      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || '2019-01-01';
+      periode.tom = '2019-12-31';
+    }
+  } else {
+    // eslint-disable-next-line no-lonely-if
+    if (opprinneligInntektsperiodeErI2019) {
+      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || '2020-01-01';
+      periode.tom = '2020-02-29';
+    } else {
+      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || fom;
+      periode.tom = tom;
+    }
   }
-  return { ...opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring[0].periode };
+
+  return periode;
 };
 
 const transformValues = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => {
@@ -326,7 +346,7 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
     opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0 ||
     values.selvstendigNaeringsdrivende_nyoppstartetDato;
 
-  return {
+  const resultingData = {
     kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
     begrunnelse: values.begrunnelse,
     søknadsperiodeOgOppgittOpptjeningDto: {
@@ -352,6 +372,8 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
       søkerYtelseForNæring: !!values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
     },
   };
+
+  return resultingData;
 };
 
 const buildInitialValues = (values: OpplysningerFraSøknaden) => {
