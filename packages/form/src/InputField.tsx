@@ -14,6 +14,7 @@ interface InputFieldProps {
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;
   isEdited?: boolean;
+  renderReadOnlyValue?: (value: any) => any;
 }
 
 const InputField = ({
