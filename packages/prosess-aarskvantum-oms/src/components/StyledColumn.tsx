@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 
-const StyledColumn = styled.td<{ koronaperiode?: boolean; first?: boolean }>`
+const StyledColumn = styled.td<{ koronaperiode?: boolean; first?: boolean; width?: string }>`
   border-bottom: 1px solid ${({ koronaperiode }) => (koronaperiode ? '#FFA733' : '#b7b1a9')};
   line-height: 1.42857143;
   padding: 8px;
   text-align: left;
   vertical-align: top;
   position: relative;
+  ${({ width }) =>
+    width &&
+    `
+    width: ${width};
+  `}
 
   ${({ koronaperiode, first }) =>
     koronaperiode &&

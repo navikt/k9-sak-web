@@ -17,7 +17,7 @@ import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/
 const historyRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.HISTORY_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
-  [ApplicationContextPath.KLAGE]: fpsakApi.HISTORY_FPSAK
+  [ApplicationContextPath.KLAGE]: fpsakApi.HISTORY_KLAGE
 };
 
 const sortAndTagTilbakekreving = createSelector(
@@ -51,7 +51,11 @@ export const HistoryIndex = ({
     behandlingVersjon={behandlingVersjon}
     showLoadingIcon
     behandlingNotRequired
-    endpointParams={{ [fpsakApi.HISTORY_FPSAK.name]: { saksnummer }, [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer } }}
+    endpointParams={{
+      [fpsakApi.HISTORY_FPSAK.name]: {saksnummer},
+      [fpsakApi.HISTORY_FPTILBAKE.name]: {saksnummer},
+      [fpsakApi.HISTORY_KLAGE.name]: {saksnummer}
+    }}
     keepDataWhenRefetching
     endpoints={enabledContexts}
     allowErrors

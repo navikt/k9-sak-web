@@ -26,6 +26,7 @@ interface ÅrsakvantumIndexProps {
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvantum, alleKodeverk }) => {
   const {
     totaltAntallDager,
+    antallKoronadager,
     restdager,
     forbrukteDager,
     antallDagerArbeidsgiverDekker,
@@ -38,10 +39,12 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvant
     <RawIntlProvider value={intl}>
       <Årskvantum
         totaltAntallDager={totaltAntallDager}
+        antallKoronadager={antallKoronadager}
         restdager={restdager}
         forbrukteDager={forbrukteDager}
         antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
         antallDagerInfotrygd={antallDagerInfotrygd}
+        benyttetRammemelding={sisteUttaksplan.benyttetRammemelding}
       />
       <VerticalSpacer sixteenPx />
       <Uttaksplan aktiviteter={sisteUttaksplan.aktiviteter} aktivitetsstatuser={aktivitetsstatuser} />
