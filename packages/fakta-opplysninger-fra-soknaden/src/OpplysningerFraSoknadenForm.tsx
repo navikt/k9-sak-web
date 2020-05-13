@@ -205,6 +205,15 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             />
           </div>
         )}
+        <button
+          type="button"
+          onClick={() => {
+            // eslint-disable-next-line no-self-assign
+            window.location = window.location;
+          }}
+        >
+          Avbryt (relaster siden)
+        </button>
         <FaktaSubmitButton
           buttonTextId="SubmitButton.ConfirmInformation"
           formName={formName}
@@ -242,7 +251,7 @@ const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
   },
 });
 
-const getOppgittEgenæringISøkerperioden = (
+const getOppgittEgenNæringISøkerperioden = (
   values: TransformValues,
   opplysningerFraSøknaden: OpplysningerFraSøknaden,
 ) => {
@@ -295,7 +304,7 @@ const getOppgittFrilansISøkerperioden = (values: TransformValues, opplysningerF
   return null;
 };
 
-const getPeriodeForOppgittEgenæringFørSøkerperioden = (
+const getPeriodeForOppgittEgenNæringFørSøkerperioden = (
   values: TransformValues,
   opplysningerFraSøknaden: OpplysningerFraSøknaden,
 ) => {
@@ -310,35 +319,40 @@ const getPeriodeForOppgittEgenæringFørSøkerperioden = (
   return { ...opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring[0].periode };
 };
 
-const transformValues = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => ({
-  kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
-  begrunnelse: values.begrunnelse,
-  søknadsperiodeOgOppgittOpptjeningDto: {
-    førSøkerPerioden: {
-      oppgittEgenNæring:
-        opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0 ||
-        values.selvstendigNaeringsdrivende_nyoppstartetDato
+const transformValues = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => {
+  const egenNæringBruttoInntekt =
+    values.selvstendigNaeringsdrivende_inntekt2019 || values.selvstendigNaeringsdrivende_inntekt2020;
+  const skalOppgiNæringsinntektFørSøknadsperioden =
+    opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0 ||
+    values.selvstendigNaeringsdrivende_nyoppstartetDato;
+
+  return {
+    kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
+    begrunnelse: values.begrunnelse,
+    søknadsperiodeOgOppgittOpptjeningDto: {
+      førSøkerPerioden: {
+        oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
           ? [
               {
-                periode: getPeriodeForOppgittEgenæringFørSøkerperioden(values, opplysningerFraSøknaden),
+                periode: getPeriodeForOppgittEgenNæringFørSøkerperioden(values, opplysningerFraSøknaden),
                 bruttoInntekt: {
-                  verdi:
-                    values.selvstendigNaeringsdrivende_inntekt2019 || values.selvstendigNaeringsdrivende_inntekt2020,
+                  verdi: egenNæringBruttoInntekt,
                 },
               },
             ]
           : null,
-      oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
+        oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
+      },
+      iSøkerPerioden: {
+        oppgittEgenNæring: getOppgittEgenNæringISøkerperioden(values, opplysningerFraSøknaden),
+        oppgittFrilans: getOppgittFrilansISøkerperioden(values, opplysningerFraSøknaden),
+      },
+      periodeFraSøknad: opplysningerFraSøknaden.periodeFraSøknad,
+      søkerYtelseForFrilans: !!values.frilanser_inntektISoknadsperioden,
+      søkerYtelseForNæring: !!values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
     },
-    iSøkerPerioden: {
-      oppgittEgenNæring: getOppgittEgenæringISøkerperioden(values, opplysningerFraSøknaden),
-      oppgittFrilans: getOppgittFrilansISøkerperioden(values, opplysningerFraSøknaden),
-    },
-    periodeFraSøknad: { ...opplysningerFraSøknaden.periodeFraSøknad },
-    søkerYtelseForFrilans: !!values.frilanser_inntektISoknadsperioden,
-    søkerYtelseForNæring: !!values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
-  },
-});
+  };
+};
 
 const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   const { søkerYtelseForNæring, søkerYtelseForFrilans, periodeFraSøknad, førSøkerPerioden, iSøkerPerioden } = values;
