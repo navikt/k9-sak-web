@@ -4,6 +4,7 @@ import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import * as React from 'react';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 
 const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
@@ -20,8 +21,18 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     urlCode: faktaPanelCodes.OPPLYSNINGER_FRA_SØKNADEN,
     textCode: 'OpplysningerFraSoknaden.Title',
     aksjonspunkterCodes: [aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING],
-    endpoints: [],
-    renderComponent: props => <OpplysningerFraSoknadenIndex {...props} />,
+    endpoints: [frisinnBehandlingApi.OPPGITT_OPPTJENING],
+    renderComponent: ({ navAnsatt: { kanSaksbehandle }, behandling, ...otherProps }) => {
+      const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
+      const kanEndrePåSøknadsopplysninger = kanSaksbehandle && !behandlingenErAvsluttet;
+      return (
+        <OpplysningerFraSoknadenIndex
+          {...otherProps}
+          kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
+          behandling={behandling}
+        />
+      );
+    },
     showComponent: () => true,
     getData: () => ({}),
   },

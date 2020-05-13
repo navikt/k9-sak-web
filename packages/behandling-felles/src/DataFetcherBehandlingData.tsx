@@ -37,6 +37,9 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
     return null;
   }
 
+  // eslint-disable-next-line no-param-reassign
+  endpoints = endpoints.filter(e => e !== undefined && e !== null);
+
   const [hasFailed, setFailed] = useState(false);
 
   const endpointData = endpoints.reduce(

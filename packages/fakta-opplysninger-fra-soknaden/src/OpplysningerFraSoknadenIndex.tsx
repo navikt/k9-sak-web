@@ -1,6 +1,7 @@
 import { Behandling, SubmitCallback } from '@k9-sak-web/types';
 import * as React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import messages from '../i18n/nb_NO.json';
 import OpplysningerFraSoknadenForm from './OpplysningerFraSoknadenForm';
 
@@ -20,6 +21,8 @@ interface Props {
   submitCallback: (props: SubmitCallback[]) => void;
   submittable: boolean;
   harApneAksjonspunkter: boolean;
+  kanEndrePåSøknadsopplysninger: boolean;
+  oppgittOpptjening: OpplysningerFraSøknaden;
 }
 
 const OpplysningerFraSoknadenIndex = (props: Props) => {
@@ -27,6 +30,8 @@ const OpplysningerFraSoknadenIndex = (props: Props) => {
     readOnly,
     behandling: { id: behandlingId, versjon: behandlingVersjon },
     harApneAksjonspunkter,
+    kanEndrePåSøknadsopplysninger,
+    oppgittOpptjening,
     submitCallback,
     submittable,
   } = props;
@@ -40,6 +45,8 @@ const OpplysningerFraSoknadenIndex = (props: Props) => {
         submitCallback={submitCallback}
         submittable={submittable}
         harApneAksjonspunkter={harApneAksjonspunkter}
+        kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
+        opplysningerFraSøknaden={oppgittOpptjening}
       />
     </RawIntlProvider>
   );

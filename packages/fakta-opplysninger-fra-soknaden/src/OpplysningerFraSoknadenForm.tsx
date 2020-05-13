@@ -21,8 +21,6 @@ import TextAreaField from '../../form/src/TextAreaField';
 
 const classNames = classnames.bind(styles);
 
-const mock = {};
-
 const startdatoErISøknadsperiode = (startdato, søknadsperiode) => {
   const søknadsperiodeFom = moment(søknadsperiode.fom, ISO_DATE_FORMAT);
   const søknadsperiodeTom = moment(søknadsperiode.tom, ISO_DATE_FORMAT);
@@ -43,6 +41,8 @@ interface OpplysningerFraSoknadenFormProps {
   harApneAksjonspunkter: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
   submittable: boolean;
+  kanEndrePåSøknadsopplysninger: boolean;
+  opplysningerFraSøknaden: OpplysningerFraSøknaden;
 }
 
 interface InitialValues {
@@ -70,6 +70,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     harApneAksjonspunkter,
     selvstendigNæringsdrivendeInntekt2019,
     selvstendigNæringsdrivendeInntekt2020,
+    kanEndrePåSøknadsopplysninger,
     readOnly,
   } = props;
   const { søknadsperiode } = initialValues;
@@ -79,6 +80,9 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
   const [erFrilanser, setErFrilanser] = React.useState(initialValues.erFrilanser);
   const [erSkjemaetLåst, setErSkjemaetLåst] = React.useState(true);
 
+  const skalViseSSNSeksjonen = kanEndrePåSøknadsopplysninger || erSelvstendigNæringsdrivende;
+  const skalViseFrilansSeksjonen = kanEndrePåSøknadsopplysninger || erFrilanser;
+
   return (
     <div>
       {!readOnly && erSkjemaetLåst && (
@@ -87,7 +91,12 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
         </button>
       )}
       <form onSubmit={handleSubmit}>
-        <div className={classNames('formContainer', { showBorder: erSelvstendigNæringsdrivende })}>
+        <div
+          className={classNames('formContainer', {
+            showBorder: erSelvstendigNæringsdrivende,
+            'formContainer--hidden': !skalViseSSNSeksjonen,
+          })}
+        >
           {erSkjemaetLåst ? (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
@@ -115,7 +124,12 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             />
           )}
         </div>
-        <div className={classNames('formContainer', { showBorder: erFrilanser })}>
+        <div
+          className={classNames('formContainer', {
+            showBorder: erFrilanser,
+            'formContainer--hidden': !skalViseFrilansSeksjonen,
+          })}
+        >
           {erSkjemaetLåst ? (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.frilanser" />
@@ -245,38 +259,50 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
 
 const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   const { søkerYtelseForNæring, søkerYtelseForFrilans, periodeFraSøknad, førSøkerPerioden, iSøkerPerioden } = values;
-  const erInntektsperiodenFørKorona2019 =
-    moment(førSøkerPerioden?.oppgittEgenNæring[0].periode.tom, ISO_DATE_FORMAT).year() === 2019;
-  const erInntektsperiodenFørKorona2020 =
-    moment(førSøkerPerioden?.oppgittEgenNæring[0].periode.tom, ISO_DATE_FORMAT).year() === 2020;
+
+  const frilansoppdrag = iSøkerPerioden?.oppgittFrilans?.oppgittFrilansoppdrag;
+  const frilansoppdragStartdato = frilansoppdrag ? frilansoppdrag[0].periode.fom : null;
+  const frilansoppdragBruttoinntekt = frilansoppdrag ? frilansoppdrag[0].bruttoInntekt.verdi : null;
+
+  const næring = iSøkerPerioden?.oppgittEgenNæring;
+  const næringStartdato = næring ? næring[0].periode.fom : null;
+  const næringBruttoinntekt = næring ? næring[0].bruttoInntekt.verdi : null;
+
+  const næringFørSøknadsperioden = førSøkerPerioden?.oppgittEgenNæring;
+  const næringsinntektFørSøknadsperioden = næringFørSøknadsperioden
+    ? næringFørSøknadsperioden[0].bruttoInntekt.verdi
+    : null;
+  const inntektsperiodenFørSøknadsperiodeErI2019 = næringFørSøknadsperioden
+    ? moment(næringFørSøknadsperioden[0].periode.tom, ISO_DATE_FORMAT).year() === 2019
+    : false;
+  const inntektsperiodenFørSøknadsperiodeErI2020 = næringFørSøknadsperioden
+    ? moment(næringFørSøknadsperioden[0].periode.tom, ISO_DATE_FORMAT).year() === 2020
+    : false;
+
   return {
     erSelvstendigNæringsdrivende: søkerYtelseForNæring,
     erFrilanser: søkerYtelseForFrilans,
     søknadsperiode: periodeFraSøknad,
-    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]:
-      iSøkerPerioden?.oppgittEgenNæring[0].periode.fom,
-    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]:
-      iSøkerPerioden?.oppgittEgenNæring[0].bruttoInntekt.verdi,
-    [OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN]:
-      iSøkerPerioden?.oppgittFrilans.oppgittFrilansoppdrag[0].periode.fom,
-    [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]:
-      iSøkerPerioden?.oppgittFrilans.oppgittFrilansoppdrag[0].bruttoInntekt.verdi,
-    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: erInntektsperiodenFørKorona2019
-      ? førSøkerPerioden.oppgittEgenNæring[0].bruttoInntekt.verdi
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: næringStartdato,
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: næringBruttoinntekt,
+    [OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN]: frilansoppdragStartdato,
+    [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: frilansoppdragBruttoinntekt,
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
+      ? næringsinntektFørSøknadsperioden
       : null,
-    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: erInntektsperiodenFørKorona2020
-      ? førSøkerPerioden.oppgittEgenNæring[0].bruttoInntekt.verdi
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: inntektsperiodenFørSøknadsperiodeErI2020
+      ? næringsinntektFørSøknadsperioden
       : null,
   };
 };
 
 const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
-  const { submitCallback, behandlingId, behandlingVersjon } = props;
+  const { submitCallback, behandlingId, behandlingVersjon, opplysningerFraSøknaden, ...otherProps } = props;
   const onSubmit = (values: TransformValues) => submitCallback([transformValues(values)]);
 
   return state => ({
     onSubmit,
-    initialValues: buildInitialValues(mock),
+    initialValues: buildInitialValues(opplysningerFraSøknaden),
     selvstendigNæringsdrivendeInntekt2019: !!behandlingFormValueSelector(
       formName,
       behandlingId,
@@ -287,6 +313,7 @@ const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
       behandlingId,
       behandlingVersjon,
     )(state, [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]),
+    ...otherProps,
   });
 };
 
