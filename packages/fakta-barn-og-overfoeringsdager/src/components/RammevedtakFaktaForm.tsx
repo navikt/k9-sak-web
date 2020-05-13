@@ -48,7 +48,7 @@ interface RammevedtakFaktaFormProps {
   ) => FormAction;
 }
 
-const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
+export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
   omsorgsdagerGrunnlag,
   formValues,
   pristine,
@@ -137,7 +137,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
             },
             {
               width: '150px',
-              id: 'overføring.tittel.totalt',
+              id: 'overføring.tittel.type',
               content: (
                 <Element>
                   <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
@@ -184,7 +184,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
         </>
       </Seksjon>
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.ErMidlertidigAlene.Tittel" imgSrc={user}>
-        <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={midlertidigAleneansvar.erMidlertidigAlene} />
+        <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={!!midlertidigAleneansvar?.erMidlertidigAlene} />
       </Seksjon>
       {!pristine && (
         <>
@@ -198,7 +198,7 @@ const RammevedtakFaktaForm: FunctionComponent<RammevedtakFaktaFormProps & Inject
               />
             }
             bekreftKnapp={
-              <Hovedknapp onClick={handleSubmit}>
+              <Hovedknapp onClick={handleSubmit} htmlType="submit" disabled={!readOnly}>
                 <FormattedMessage id="FaktaRammevedtak.Bekreft" />
               </Hovedknapp>
             }
@@ -267,5 +267,5 @@ export default connect(
   behandlingForm({
     form: rammevedtakFormName,
     enableReinitialize: true,
-  })(RammevedtakFaktaForm),
+  })(RammevedtakFaktaFormImpl),
 );
