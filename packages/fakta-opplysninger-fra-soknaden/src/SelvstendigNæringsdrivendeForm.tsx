@@ -17,19 +17,6 @@ interface SelvstendigNæringsdrivendeFormProps {
   clearSelvstendigValues: () => void;
 }
 
-const startdatoIsValid = (startdato, selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
-  const startdatoObject = moment(startdato, ISO_DATE_FORMAT);
-  const startdatoErI2019 = startdatoObject.year() === 2019;
-  const startdatoErI2020 = startdatoObject.year() === 2020;
-  if (selvstendigNæringsdrivendeInntekt2019 && !startdatoErI2019) {
-    return [{ id: 'ValidationMessage.InvalidDate' }];
-  }
-  if (selvstendigNæringsdrivendeInntekt2020 && !startdatoErI2020) {
-    return [{ id: 'ValidationMessage.InvalidDate' }];
-  }
-  return null;
-};
-
 const nyoppstartetDatoIsValid = (
   nyoppstartetDato,
   selvstendigNæringsdrivendeInntekt2019,
@@ -87,13 +74,7 @@ const SelvstendigNæringsdrivendeForm = ({
       <div className={styles.fieldContainer}>
         <DatepickerField
           name={OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}
-          validate={[
-            required,
-            hasValidDate,
-            startdato =>
-              startdatoIsValid(startdato, selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020),
-            startdatoValidator,
-          ]}
+          validate={[required, hasValidDate, startdatoValidator]}
           defaultValue={null}
           readOnly={readOnly}
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
