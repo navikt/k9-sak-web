@@ -35,7 +35,6 @@ const startdatoErISøknadsperiode = (startdato, søknadsperiode) => {
 };
 
 interface OpplysningerFraSoknadenFormProps {
-  readOnly: boolean;
   behandlingId: number;
   behandlingVersjon: number;
   harApneAksjonspunkter: boolean;
@@ -71,7 +70,6 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     selvstendigNæringsdrivendeInntekt2019,
     selvstendigNæringsdrivendeInntekt2020,
     kanEndrePåSøknadsopplysninger,
-    readOnly,
   } = props;
   const { søknadsperiode } = initialValues;
   const [erSelvstendigNæringsdrivende, setErSelvstendigNæringsdrivende] = React.useState(
@@ -85,9 +83,9 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
 
   return (
     <div>
-      {!readOnly && erSkjemaetLåst && (
-        <button type="button" onClick={() => setErSkjemaetLåst(false)}>
-          Lås opp
+      {kanEndrePåSøknadsopplysninger && (
+        <button type="button" onClick={() => setErSkjemaetLåst(!erSkjemaetLåst)}>
+          {erSkjemaetLåst ? 'Lås opp' : 'Lås'}
         </button>
       )}
       <form onSubmit={handleSubmit}>

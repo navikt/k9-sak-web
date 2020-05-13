@@ -27,7 +27,6 @@ interface Props {
 
 const OpplysningerFraSoknadenIndex = (props: Props) => {
   const {
-    readOnly,
     behandling: { id: behandlingId, versjon: behandlingVersjon },
     harApneAksjonspunkter,
     kanEndrePåSøknadsopplysninger,
@@ -39,7 +38,6 @@ const OpplysningerFraSoknadenIndex = (props: Props) => {
   return (
     <RawIntlProvider value={intlConfig}>
       <OpplysningerFraSoknadenForm
-        readOnly={readOnly}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         submitCallback={submitCallback}
