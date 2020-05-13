@@ -120,11 +120,11 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
             <StyledColumn width="30%">
               <FormattedMessage id="Uttaksplan.Periode" />
             </StyledColumn>
-            <StyledColumn width="30%">
-              <FormattedMessage id="Uttaksplan.Fravær" />
-            </StyledColumn>
             <StyledColumn width="20%">
               <FormattedMessage id="Uttaksplan.Utfall" />
+            </StyledColumn>
+            <StyledColumn width="30%">
+              <FormattedMessage id="Uttaksplan.Fravær" />
             </StyledColumn>
             <StyledColumn width="15%">
               <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
@@ -136,7 +136,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
         stripet
         noHover
       >
-        {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår }, index) => {
+        {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler }, index) => {
           const erValgt = valgtPeriodeIndex === index;
           const erKoronaperiode = useMemo(() => periodeErIKoronaperioden(periode), [periode]);
 
@@ -158,12 +158,6 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                 )}
               </StyledColumn>
               <StyledColumn koronaperiode={erKoronaperiode}>
-                <>
-                  {formaterDelvisFravær(delvisFravær)}
-                  {erValgt && <ExpandedContent fyllBorder />}
-                </>
-              </StyledColumn>
-              <StyledColumn koronaperiode={erKoronaperiode}>
                 {renderUtfall(utfall)}
                 {erValgt && (
                   <ExpandedContent fyllBorder>
@@ -174,6 +168,23 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                     </Vilkårsutfall>
                   </ExpandedContent>
                 )}
+              </StyledColumn>
+              <StyledColumn koronaperiode={erKoronaperiode}>
+                <>
+                  {formaterDelvisFravær(delvisFravær)}
+                  {erValgt && (
+                    <ExpandedContent fyllBorder>
+                      <Element>
+                        <FormattedMessage id="Uttaksplan.Hjemler" />
+                      </Element>
+                      {hjemler.map(hjemmel => (
+                        <div>
+                          <FormattedMessage id={`Uttaksplan.Hjemmel.${hjemmel}`} />
+                        </div>
+                      ))}
+                    </ExpandedContent>
+                  )}
+                </>
               </StyledColumn>
               <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
