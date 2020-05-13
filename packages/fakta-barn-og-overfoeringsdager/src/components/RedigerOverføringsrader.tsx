@@ -64,6 +64,15 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
               </Element>
             ),
           },
+          {
+            width: '150px',
+            id: 'kilde',
+            content: (
+              <Element>
+                <FormattedMessage id="FaktaRammevedtak.Overføring.Kilde" />
+              </Element>
+            ),
+          },
         ]}
       />
     </div>
@@ -154,11 +163,24 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
               {
                 width: '150px',
                 id: `${field}.fnr`,
+                padding: '0 20px 0 0',
                 content: (
                   <InputField
                     name={`${field}.mottakerAvsenderFnr`}
                     readOnly={!redigerer}
                     validate={[hasValidFodselsnummerFormat]}
+                  />
+                ),
+              },
+              {
+                width: '150px',
+                id: `${field}.kilde`,
+                padding: redigerer ? '1em 0 0 0' : '0',
+                content: (
+                  <InputField
+                    name={`${field}.kilde`}
+                    readOnly
+                    renderReadOnlyValue={value => <FormattedMessage id={`FaktaRammevedtak.Overføring.${value}`} />}
                   />
                 ),
               },
