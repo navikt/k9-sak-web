@@ -11,10 +11,22 @@ interface FrilanserFormProps {
   erSelvstendigNæringsdrivende: boolean;
   startdatoValidator: (startdato: string) => void;
   readOnly: boolean;
+  clearFrilansValues: () => void;
 }
 
-const FrilanserForm = ({ erSelvstendigNæringsdrivende, startdatoValidator, readOnly }: FrilanserFormProps) => {
+const FrilanserForm = ({
+  erSelvstendigNæringsdrivende,
+  startdatoValidator,
+  readOnly,
+  clearFrilansValues,
+}: FrilanserFormProps) => {
   const intl = useIntl();
+
+  React.useEffect(() => {
+    return () => {
+      clearFrilansValues();
+    };
+  }, []);
 
   return (
     <>

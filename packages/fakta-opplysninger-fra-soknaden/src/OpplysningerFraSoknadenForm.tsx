@@ -1,23 +1,25 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
-import { SubmitCallback, OpplysningerFraSøknaden } from '@k9-sak-web/types';
-import { Checkbox } from 'nav-frontend-skjema';
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import classnames from 'classnames/bind';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { Element } from 'nav-frontend-typografi';
-import { required, minLength, maxLength, hasValidText, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
+import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { hasValidText, ISO_DATE_FORMAT, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
+import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
+import classnames from 'classnames/bind';
+import moment from 'moment';
+import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
+import * as React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { change as reduxFormChange, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
+import { Knapp } from 'nav-frontend-knapper';
+import TextAreaField from '../../form/src/TextAreaField';
 import FrilanserForm from './FrilanserForm';
 import styles from './opplysningerFraSoknadenForm.less';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
 import OpplysningerFraSoknadenValues from './types/OpplysningerFraSoknadenTypes';
-import TextAreaField from '../../form/src/TextAreaField';
 
 const classNames = classnames.bind(styles);
 
@@ -33,6 +35,21 @@ const startdatoErISøknadsperiode = (startdato, søknadsperiode) => {
     { fom: søknadsperiodeFom.format(DDMMYYYY_DATE_FORMAT), tom: søknadsperiodeTom.format(DDMMYYYY_DATE_FORMAT) },
   ];
 };
+
+const selvstendigNæringsdrivendeFields = [
+  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN,
+  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019,
+  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020,
+  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO,
+  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN,
+  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER,
+];
+
+const frilansFields = [
+  OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN,
+  OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN,
+  OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE,
+];
 
 interface OpplysningerFraSoknadenFormProps {
   behandlingId: number;
@@ -54,6 +71,9 @@ interface StateProps {
   initialValues: InitialValues;
   selvstendigNæringsdrivendeInntekt2019: boolean;
   selvstendigNæringsdrivendeInntekt2020: boolean;
+  reduxFormChange: (formName: string, fieldName: string, value: any) => void;
+  reduxFormUntouch: (formName: string, fieldName: string) => void;
+  behandlingFormPrefix: string;
 }
 
 const formName = 'OpplysningerFraSoknadenForm';
@@ -70,6 +90,9 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     selvstendigNæringsdrivendeInntekt2019,
     selvstendigNæringsdrivendeInntekt2020,
     kanEndrePåSøknadsopplysninger,
+    reduxFormChange: formChange,
+    reduxFormUntouch: formUntouch,
+    behandlingFormPrefix,
   } = props;
   const { søknadsperiode } = initialValues;
   const [erSelvstendigNæringsdrivende, setErSelvstendigNæringsdrivende] = React.useState(
@@ -77,16 +100,30 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
   );
   const [erFrilanser, setErFrilanser] = React.useState(initialValues.erFrilanser);
   const [erSkjemaetLåst, setErSkjemaetLåst] = React.useState(true);
+  const formSelector = `${behandlingFormPrefix}.${formName}`;
+
+  const resetFormField = field => {
+    formChange(formSelector, field, null);
+    formUntouch(formSelector, field);
+  };
+
+  const clearSelvstendigValues = () => {
+    selvstendigNæringsdrivendeFields.forEach(field => resetFormField(field));
+  };
+
+  const clearFrilansValues = () => {
+    frilansFields.forEach(field => resetFormField(field));
+  };
 
   const skalViseSSNSeksjonen = kanEndrePåSøknadsopplysninger || erSelvstendigNæringsdrivende;
   const skalViseFrilansSeksjonen = kanEndrePåSøknadsopplysninger || erFrilanser;
 
   return (
     <div>
-      {kanEndrePåSøknadsopplysninger && (
-        <button type="button" onClick={() => setErSkjemaetLåst(!erSkjemaetLåst)}>
+      {kanEndrePåSøknadsopplysninger && erSkjemaetLåst && (
+        <Knapp className={styles.formUnlockButton} type="hoved" onClick={() => setErSkjemaetLåst(!erSkjemaetLåst)}>
           {erSkjemaetLåst ? 'Lås opp' : 'Lås'}
-        </button>
+        </Knapp>
       )}
       <form onSubmit={handleSubmit}>
         <div
@@ -119,6 +156,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
               selvstendigNæringsdrivendeInntekt2020={selvstendigNæringsdrivendeInntekt2020}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
               readOnly={erSkjemaetLåst}
+              clearSelvstendigValues={clearSelvstendigValues}
             />
           )}
         </div>
@@ -150,6 +188,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
               erSelvstendigNæringsdrivende={erSelvstendigNæringsdrivende}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
               readOnly={erSkjemaetLåst}
+              clearFrilansValues={clearFrilansValues}
             />
           )}
         </div>
@@ -190,7 +229,76 @@ interface TransformValues {
   [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER]: number;
   [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: number;
   [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO]: string;
 }
+
+const byggPeriodeMedInntekt = (startdato, inntekt) => ({
+  periode: {
+    fom: startdato,
+    tom: moment(startdato, ISO_DATE_FORMAT).endOf('month').format(ISO_DATE_FORMAT),
+  },
+  bruttoInntekt: {
+    verdi: inntekt,
+  },
+});
+
+const getOppgittEgenæringISøkerperioden = (values: TransformValues) => {
+  if (values.selvstendigNaeringsdrivende_inntektISoknadsperioden) {
+    return [
+      byggPeriodeMedInntekt(
+        values.selvstendigNaeringsdrivende_startdatoForSoknaden,
+        values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
+      ),
+    ];
+  }
+
+  if (values.frilanser_inntektISoknadsperiodenSomSelvstendig) {
+    return [
+      byggPeriodeMedInntekt(
+        values.frilanser_startdatoForSoknaden,
+        values.frilanser_inntektISoknadsperiodenSomSelvstendig,
+      ),
+    ];
+  }
+
+  return null;
+};
+
+const getOppgittFrilansISøkerperioden = (values: TransformValues) => {
+  if (values.frilanser_inntektISoknadsperioden) {
+    return {
+      oppgittFrilansoppdrag: [
+        byggPeriodeMedInntekt(values.frilanser_startdatoForSoknaden, values.frilanser_inntektISoknadsperioden),
+      ],
+    };
+  }
+  if (values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser) {
+    return {
+      oppgittFrilansoppdrag: [
+        byggPeriodeMedInntekt(
+          values.selvstendigNaeringsdrivende_startdatoForSoknaden,
+          values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser,
+        ),
+      ],
+    };
+  }
+  return null;
+};
+
+const getPeriodeForOppgittEgenæringFørSøkerperioden = (
+  values: TransformValues,
+  opplysningerFraSøknaden: OpplysningerFraSøknaden,
+) => {
+  if (values.selvstendigNaeringsdrivende_nyoppstartetDato) {
+    const erNyOppstartetI2019 =
+      moment(values.selvstendigNaeringsdrivende_nyoppstartetDato, ISO_DATE_FORMAT).year() === 2019;
+    return {
+      fom: values.selvstendigNaeringsdrivende_nyoppstartetDato,
+      tom: erNyOppstartetI2019 ? '2019-12-31' : '2020-29-02',
+    };
+  }
+  return { ...opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring[0].periode };
+};
 
 const transformValues = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => ({
   kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
@@ -198,12 +306,10 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
   oppgittOpptjening: {
     førSøkerPerioden: {
       oppgittEgenNæring:
-        opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring.length > 0
+        opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0
           ? [
               {
-                periode: {
-                  ...opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring[0].periode,
-                },
+                periode: getPeriodeForOppgittEgenæringFørSøkerperioden(values, opplysningerFraSøknaden),
                 bruttoInntekt: {
                   verdi:
                     values.selvstendigNaeringsdrivende_inntekt2019 || values.selvstendigNaeringsdrivende_inntekt2020,
@@ -216,38 +322,8 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
         : null,
     },
     iSøkerPerioden: {
-      oppgittEgenNæring: values.selvstendigNaeringsdrivende_inntektISoknadsperioden
-        ? [
-            {
-              periode: {
-                fom: values.selvstendigNaeringsdrivende_startdatoForSoknaden,
-                tom: moment(values.selvstendigNaeringsdrivende_startdatoForSoknaden, ISO_DATE_FORMAT)
-                  .endOf('month')
-                  .format(ISO_DATE_FORMAT),
-              },
-              bruttoInntekt: {
-                verdi: values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
-              },
-            },
-          ]
-        : null,
-      oppgittFrilans: values.frilanser_inntektISoknadsperioden
-        ? {
-            oppgittFrilansoppdrag: [
-              {
-                periode: {
-                  fom: values.frilanser_startdatoForSoknaden,
-                  tom: moment(values.frilanser_startdatoForSoknaden, ISO_DATE_FORMAT)
-                    .endOf('month')
-                    .format(ISO_DATE_FORMAT),
-                },
-                bruttoInntekt: {
-                  verdi: values.frilanser_inntektISoknadsperioden,
-                },
-              },
-            ],
-          }
-        : null,
+      oppgittEgenNæring: getOppgittEgenæringISøkerperioden(values),
+      oppgittFrilans: getOppgittFrilansISøkerperioden(values),
     },
     periodeFraSøknad: { ...opplysningerFraSøknaden.periodeFraSøknad },
     søkerYtelseForFrilans: !!values.frilanser_inntektISoknadsperioden,
@@ -296,7 +372,7 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
 
 const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
   const { submitCallback, behandlingId, behandlingVersjon, opplysningerFraSøknaden, ...otherProps } = props;
-  const onSubmit = (values: TransformValues) => submitCallback([transformValues(values)]);
+  const onSubmit = (values: TransformValues) => submitCallback([transformValues(values, opplysningerFraSøknaden)]);
 
   return state => ({
     onSubmit,
@@ -311,11 +387,25 @@ const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
       behandlingId,
       behandlingVersjon,
     )(state, [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]),
+    behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
     ...otherProps,
   });
 };
 
-const connectedComponent = connect(mapStateToProps)(
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      reduxFormChange,
+      reduxFormUntouch,
+    },
+    dispatch,
+  ),
+});
+
+const connectedComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
   behandlingForm({
     form: formName,
   })(OpplysningerFraSoknadenForm),

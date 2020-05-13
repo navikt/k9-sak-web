@@ -14,6 +14,7 @@ interface SelvstendigNæringsdrivendeFormProps {
   selvstendigNæringsdrivendeInntekt2020: boolean;
   startdatoValidator: (startdato: string) => void;
   readOnly: boolean;
+  clearSelvstendigValues: () => void;
 }
 
 const startdatoIsValid = (startdato, selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
@@ -45,8 +46,15 @@ const SelvstendigNæringsdrivendeForm = ({
   selvstendigNæringsdrivendeInntekt2020,
   startdatoValidator,
   readOnly,
+  clearSelvstendigValues,
 }: SelvstendigNæringsdrivendeFormProps) => {
   const intl = useIntl();
+
+  React.useEffect(() => {
+    return () => {
+      clearSelvstendigValues();
+    };
+  }, []);
 
   return (
     <>
