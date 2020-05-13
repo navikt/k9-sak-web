@@ -14,14 +14,16 @@ const BegrunnBekreftTilbakestillSeksjon: FunctionComponent<BegrunnBekreftTilbake
   bekreftKnapp,
   tilbakestillKnapp,
 }) => (
-  <FlexRow className={styles.bekreftelseContainer}>
-    <div className={styles.textAreaStyle}>{begrunnField}</div>
-    <VerticalSpacer sixteenPx />
-    <FlexRow className={styles.submitKnapper}>
-      {bekreftKnapp}
-      {tilbakestillKnapp}
-    </FlexRow>
-  </FlexRow>
+  <div className={styles.bekreftelseContainer}>
+    <div>
+      {begrunnField}
+      <VerticalSpacer sixteenPx />
+      <FlexRow className={styles.submitKnapper}>
+        {bekreftKnapp}
+        {tilbakestillKnapp}
+      </FlexRow>
+    </div>
+  </div>
 );
 
 export default BegrunnBekreftTilbakestillSeksjon;
