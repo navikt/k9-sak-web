@@ -145,10 +145,10 @@ const prosessStegPanelDefinisjoner = [
         getData: ({ forbrukteDager }) => ({ årskvantum: forbrukteDager }),
         showComponent: () => true,
         overrideStatus: ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
-          if (!forbrukteDager) {
+          if (!forbrukteDager || !forbrukteDager.sisteUttaksplan) {
             return vut.IKKE_VURDERT;
           }
-          const perioder = forbrukteDager.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder);
+          const perioder = forbrukteDager.sisteUttaksplan.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder);
           const allePerioderGodkjent = perioder?.every(periode => periode.utfall === UtfallEnum.INNVILGET);
 
           return allePerioderGodkjent ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
