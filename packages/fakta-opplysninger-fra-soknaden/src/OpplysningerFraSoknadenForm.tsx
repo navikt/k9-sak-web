@@ -185,49 +185,57 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
   begrunnelse: values.begrunnelse,
   oppgittOpptjening: {
     førSøkerPerioden: {
-      oppgittEgenNæring: [
-        {
-          periode: {
-            ...opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring[0].periode,
-          },
-          bruttoInntekt: {
-            verdi: values.selvstendigNaeringsdrivende_inntekt2019 || values.selvstendigNaeringsdrivende_inntekt2020,
-          },
-        },
-      ],
-      oppgittFrilans: {
-        ...opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
-      },
+      oppgittEgenNæring:
+        opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring.length > 0
+          ? [
+              {
+                periode: {
+                  ...opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring[0].periode,
+                },
+                bruttoInntekt: {
+                  verdi:
+                    values.selvstendigNaeringsdrivende_inntekt2019 || values.selvstendigNaeringsdrivende_inntekt2020,
+                },
+              },
+            ]
+          : null,
+      oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans
+        ? { ...opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans }
+        : null,
     },
     iSøkerPerioden: {
-      oppgittEgenNæring: [
-        {
-          periode: {
-            fom: values.selvstendigNaeringsdrivende_startdatoForSoknaden,
-            tom: moment(values.selvstendigNaeringsdrivende_startdatoForSoknaden, ISO_DATE_FORMAT)
-              .endOf('month')
-              .format(ISO_DATE_FORMAT),
-          },
-          bruttoInntekt: {
-            verdi: values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
-          },
-        },
-      ],
-      oppgittFrilans: {
-        oppgittFrilansoppdrag: [
-          {
-            periode: {
-              fom: values.frilanser_startdatoForSoknaden,
-              tom: moment(values.frilanser_startdatoForSoknaden, ISO_DATE_FORMAT)
-                .endOf('month')
-                .format(ISO_DATE_FORMAT),
+      oppgittEgenNæring: values.selvstendigNaeringsdrivende_inntektISoknadsperioden
+        ? [
+            {
+              periode: {
+                fom: values.selvstendigNaeringsdrivende_startdatoForSoknaden,
+                tom: moment(values.selvstendigNaeringsdrivende_startdatoForSoknaden, ISO_DATE_FORMAT)
+                  .endOf('month')
+                  .format(ISO_DATE_FORMAT),
+              },
+              bruttoInntekt: {
+                verdi: values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
+              },
             },
-            bruttoInntekt: {
-              verdi: values.frilanser_inntektISoknadsperioden,
-            },
-          },
-        ],
-      },
+          ]
+        : null,
+      oppgittFrilans: values.frilanser_inntektISoknadsperioden
+        ? {
+            oppgittFrilansoppdrag: [
+              {
+                periode: {
+                  fom: values.frilanser_startdatoForSoknaden,
+                  tom: moment(values.frilanser_startdatoForSoknaden, ISO_DATE_FORMAT)
+                    .endOf('month')
+                    .format(ISO_DATE_FORMAT),
+                },
+                bruttoInntekt: {
+                  verdi: values.frilanser_inntektISoknadsperioden,
+                },
+              },
+            ],
+          }
+        : null,
     },
     periodeFraSøknad: { ...opplysningerFraSøknaden.periodeFraSøknad },
     søkerYtelseForFrilans: !!values.frilanser_inntektISoknadsperioden,
