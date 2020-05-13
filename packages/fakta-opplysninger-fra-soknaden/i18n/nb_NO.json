@@ -38,6 +38,8 @@
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
   "ValidationMessage.InvalidDate": "Startdato må stemme overens med årstallet for innntektstapet",
+  "ValidationMessage.InvalidNyoppstartetDate": "Nyoppstartet dato må stemme overens med årstallet for innntektstapet",
+  "ValidationMessage.InvalidNyoppstartetDateSoknadsperiode": "Nyoppstartet dato må være før 29.02.2020",
   "ValidationMessage.InvalidNumber": "Feltet kan kun inneholde tall",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
   "ValidationMessage.MaxValue": "Feltet må være mindre eller lik {length}",

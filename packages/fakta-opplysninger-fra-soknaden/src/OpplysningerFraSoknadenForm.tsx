@@ -122,13 +122,13 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     <div>
       {kanEndrePåSøknadsopplysninger && erSkjemaetLåst && (
         <Knapp className={styles.formUnlockButton} type="hoved" onClick={() => setErSkjemaetLåst(!erSkjemaetLåst)}>
-          {erSkjemaetLåst ? 'Lås opp' : 'Lås'}
+          Lås opp
         </Knapp>
       )}
       <form onSubmit={handleSubmit}>
         <div
           className={classNames('formContainer', {
-            showBorder: erSelvstendigNæringsdrivende,
+            'formContainer--showBorder': erSelvstendigNæringsdrivende,
             'formContainer--hidden': !skalViseSSNSeksjonen,
           })}
         >
@@ -162,7 +162,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
         </div>
         <div
           className={classNames('formContainer', {
-            showBorder: erFrilanser,
+            'formContainer--showBorder': erFrilanser,
             'formContainer--hidden': !skalViseFrilansSeksjonen,
           })}
         >
@@ -232,21 +232,25 @@ interface TransformValues {
   [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO]: string;
 }
 
-const byggPeriodeMedInntekt = (startdato, inntekt) => ({
+const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
   periode: {
     fom: startdato,
-    tom: moment(startdato, ISO_DATE_FORMAT).endOf('month').format(ISO_DATE_FORMAT),
+    tom: sluttdato,
   },
   bruttoInntekt: {
     verdi: inntekt,
   },
 });
 
-const getOppgittEgenæringISøkerperioden = (values: TransformValues) => {
+const getOppgittEgenæringISøkerperioden = (
+  values: TransformValues,
+  opplysningerFraSøknaden: OpplysningerFraSøknaden,
+) => {
   if (values.selvstendigNaeringsdrivende_inntektISoknadsperioden) {
     return [
       byggPeriodeMedInntekt(
         values.selvstendigNaeringsdrivende_startdatoForSoknaden,
+        opplysningerFraSøknaden.periodeFraSøknad.tom,
         values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
       ),
     ];
@@ -256,6 +260,7 @@ const getOppgittEgenæringISøkerperioden = (values: TransformValues) => {
     return [
       byggPeriodeMedInntekt(
         values.frilanser_startdatoForSoknaden,
+        opplysningerFraSøknaden.periodeFraSøknad.tom,
         values.frilanser_inntektISoknadsperiodenSomSelvstendig,
       ),
     ];
@@ -264,11 +269,15 @@ const getOppgittEgenæringISøkerperioden = (values: TransformValues) => {
   return null;
 };
 
-const getOppgittFrilansISøkerperioden = (values: TransformValues) => {
+const getOppgittFrilansISøkerperioden = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => {
   if (values.frilanser_inntektISoknadsperioden) {
     return {
       oppgittFrilansoppdrag: [
-        byggPeriodeMedInntekt(values.frilanser_startdatoForSoknaden, values.frilanser_inntektISoknadsperioden),
+        byggPeriodeMedInntekt(
+          values.frilanser_startdatoForSoknaden,
+          opplysningerFraSøknaden.periodeFraSøknad.tom,
+          values.frilanser_inntektISoknadsperioden,
+        ),
       ],
     };
   }
@@ -277,6 +286,7 @@ const getOppgittFrilansISøkerperioden = (values: TransformValues) => {
       oppgittFrilansoppdrag: [
         byggPeriodeMedInntekt(
           values.selvstendigNaeringsdrivende_startdatoForSoknaden,
+          opplysningerFraSøknaden.periodeFraSøknad.tom,
           values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser,
         ),
       ],
@@ -294,7 +304,7 @@ const getPeriodeForOppgittEgenæringFørSøkerperioden = (
       moment(values.selvstendigNaeringsdrivende_nyoppstartetDato, ISO_DATE_FORMAT).year() === 2019;
     return {
       fom: values.selvstendigNaeringsdrivende_nyoppstartetDato,
-      tom: erNyOppstartetI2019 ? '2019-12-31' : '2020-29-02',
+      tom: erNyOppstartetI2019 ? '2019-12-31' : '2020-02-29',
     };
   }
   return { ...opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring[0].periode };
@@ -303,10 +313,11 @@ const getPeriodeForOppgittEgenæringFørSøkerperioden = (
 const transformValues = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => ({
   kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
   begrunnelse: values.begrunnelse,
-  oppgittOpptjening: {
+  søknadsperiodeOgOppgittOpptjeningDto: {
     førSøkerPerioden: {
       oppgittEgenNæring:
-        opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0
+        opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0 ||
+        values.selvstendigNaeringsdrivende_nyoppstartetDato
           ? [
               {
                 periode: getPeriodeForOppgittEgenæringFørSøkerperioden(values, opplysningerFraSøknaden),
@@ -317,13 +328,11 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
               },
             ]
           : null,
-      oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans
-        ? { ...opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans }
-        : null,
+      oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
     },
     iSøkerPerioden: {
-      oppgittEgenNæring: getOppgittEgenæringISøkerperioden(values),
-      oppgittFrilans: getOppgittFrilansISøkerperioden(values),
+      oppgittEgenNæring: getOppgittEgenæringISøkerperioden(values, opplysningerFraSøknaden),
+      oppgittFrilans: getOppgittFrilansISøkerperioden(values, opplysningerFraSøknaden),
     },
     periodeFraSøknad: { ...opplysningerFraSøknaden.periodeFraSøknad },
     søkerYtelseForFrilans: !!values.frilanser_inntektISoknadsperioden,

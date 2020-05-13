@@ -30,6 +30,32 @@ const startdatoIsValid = (startdato, selvstendigNæringsdrivendeInntekt2019, sel
   return null;
 };
 
+const nyoppstartetDatoIsValid = (
+  nyoppstartetDato,
+  selvstendigNæringsdrivendeInntekt2019,
+  selvstendigNæringsdrivendeInntekt2020,
+) => {
+  if (!nyoppstartetDato) {
+    return null;
+  }
+  const nyoppstartetDatoObject = moment(nyoppstartetDato, ISO_DATE_FORMAT);
+  const nyoppstartetDatoErI2019 = nyoppstartetDatoObject.year() === 2019;
+  const nyoppstartetDatoErI2020 = nyoppstartetDatoObject.year() === 2020;
+
+  if (selvstendigNæringsdrivendeInntekt2019 && !nyoppstartetDatoErI2019) {
+    return [{ id: 'ValidationMessage.InvalidNyoppstartetDate' }];
+  }
+  if (selvstendigNæringsdrivendeInntekt2020 && !nyoppstartetDatoErI2020) {
+    return [{ id: 'ValidationMessage.InvalidNyoppstartetDate' }];
+  }
+  if (selvstendigNæringsdrivendeInntekt2020 && nyoppstartetDatoErI2020) {
+    if (nyoppstartetDatoObject.isAfter('2020-02-29')) {
+      return [{ id: 'ValidationMessage.InvalidNyoppstartetDateSoknadsperiode' }];
+    }
+  }
+  return null;
+};
+
 const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
   if (selvstendigNæringsdrivendeInntekt2019 && selvstendigNæringsdrivendeInntekt2020) {
     return [{ id: 'ValidationMessage.InvalidIncome' }];
@@ -95,7 +121,15 @@ const SelvstendigNæringsdrivendeForm = ({
         <div className={styles.nyoppstartetContainer}>
           <DatepickerField
             name={OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
-            validate={[hasValidDate]}
+            validate={[
+              hasValidDate,
+              nyoppstartetDato =>
+                nyoppstartetDatoIsValid(
+                  nyoppstartetDato,
+                  selvstendigNæringsdrivendeInntekt2019,
+                  selvstendigNæringsdrivendeInntekt2020,
+                ),
+            ]}
             defaultValue={null}
             readOnly={readOnly}
             label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
