@@ -1,12 +1,11 @@
 import React from 'react';
-import { VerticalSpacer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import PropTypes from 'prop-types';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import styles from './avvikopplysningerPanel.less';
-
 
 const lagFormatertetekster = (kriterie, visPanel, relevanteStatuser, isBold) => (
   <FlexColumn className={styles.colLable}>
@@ -34,11 +33,10 @@ const AvvikopplysningerATFLSN = ({
   visPanel,
   avvikProsentAvrundet,
   differanseBeregnet,
+  skalViseAvviksprosent,
 }) => (
   <>
-    {relevanteStatuser.isKombinasjonsstatus && (
-      <VerticalSpacer sixteenPx />
-    )}
+    {relevanteStatuser.isKombinasjonsstatus && <VerticalSpacer sixteenPx />}
     <FlexRow>
       {lagFormatertetekster('OmregnetAarsinntekt', visPanel, relevanteStatuser, false)}
       <FlexColumn className={styles.colValue}>
@@ -52,9 +50,7 @@ const AvvikopplysningerATFLSN = ({
     <FlexRow>
       {lagFormatertetekster('RapportertAarsinntekt', visPanel, relevanteStatuser, false)}
       <FlexColumn className={styles.colValue}>
-        <Normaltekst>
-          {formatCurrencyNoKr(sammenligningsgrunnlagSum)}
-        </Normaltekst>
+        <Normaltekst>{formatCurrencyNoKr(sammenligningsgrunnlagSum)}</Normaltekst>
       </FlexColumn>
       <FlexColumn className={styles.colAvvik} />
     </FlexRow>
@@ -64,15 +60,19 @@ const AvvikopplysningerATFLSN = ({
     <FlexRow>
       {lagFormatertetekster('BeregnetAvvik', visPanel, relevanteStatuser, true)}
       <FlexColumn className={styles.colValue}>
-        <Normaltekst>
-          {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
-            : differanseBeregnet)}
-        </Normaltekst>
+        <Normaltekst>{formatCurrencyNoKr(differanseBeregnet === undefined ? 0 : differanseBeregnet)}</Normaltekst>
       </FlexColumn>
       <FlexColumn className={styles.colAvvik}>
-        <Normaltekst className={`${avvikProsentAvrundet > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikProsentAvrundet }} />
-        </Normaltekst>
+        {skalViseAvviksprosent && (
+          <Normaltekst
+            className={`${avvikProsentAvrundet > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}
+          >
+            <FormattedMessage
+              id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent"
+              values={{ avvik: avvikProsentAvrundet }}
+            />
+          </Normaltekst>
+        )}
       </FlexColumn>
     </FlexRow>
   </>
@@ -84,6 +84,7 @@ AvvikopplysningerATFLSN.propTypes = {
   sammenligningsgrunnlagSum: PropTypes.number.isRequired,
   avvikProsentAvrundet: PropTypes.number.isRequired,
   visPanel: PropTypes.shape().isRequired,
+  skalViseAvviksprosent: PropTypes.bool,
 };
 
 AvvikopplysningerATFLSN.defaultProps = {

@@ -280,6 +280,13 @@ const harFrisinngrunnlag = beregningsgrunnlag => {
   );
 };
 
+const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
+  if (beregningsgrunnlag.ytelsesspesifiktGrunnlag && beregningsgrunnlag.ytelsesspesifiktGrunnlag.ytelsetype === 'OMP') {
+    return beregningsgrunnlag.ytelsesspesifiktGrunnlag.skalAvviksvurdere;
+  }
+  return true;
+};
+
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningFormImpl
 // ------------------------------------------------------------------------------------------ //
@@ -318,6 +325,7 @@ export const BeregningFormImpl = ({
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
+  const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       {gjeldendeAksjonspunkter && (
@@ -375,6 +383,7 @@ export const BeregningFormImpl = ({
             allePerioder={beregningsgrunnlagPeriode}
             harAksjonspunkter={harAksjonspunkter}
             gjelderBesteberegning={gjelderBesteberegning}
+            skalViseAvviksprosent={skalViseAvviksprosent}
           />
           {harAksjonspunkter && (
             <>
