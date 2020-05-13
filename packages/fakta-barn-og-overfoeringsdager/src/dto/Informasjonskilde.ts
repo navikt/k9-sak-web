@@ -1,3 +1,3 @@
-type Informasjonskilde = 'hentetAutomatisk' | 'lagtTilAvSaksbehandler';
+type Informasjonskilde = 'hentetAutomatisk' | 'lagtTilManuelt';
 
 export default Informasjonskilde;

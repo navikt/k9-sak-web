@@ -87,13 +87,13 @@ export const mapDtoTilFormValues = ({
 const mapOverføringFår = (overføringer: Overføring[]): DagerMottatt[] =>
   overføringer.map(({ antallDager }) => ({
     antallDager,
-    kilde: 'lagtTilAvSaksbehandler',
+    kilde: 'lagtTilManuelt',
   }));
 
 const mapOverføringGir = (overføringer: Overføring[]): DagerGitt[] =>
   overføringer.map(({ antallDager }) => ({
     antallDager,
-    kilde: 'lagtTilAvSaksbehandler',
+    kilde: 'lagtTilManuelt',
   }));
 
 export const mapFormValuesTilDto = (
@@ -123,7 +123,7 @@ export const mapFormValuesTilDto = (
       return (
         tilhørendeRammevetdakLagtTilTidligere || {
           idBarnAleneOm: b.id,
-          kilde: 'lagtTilAvSaksbehandler',
+          kilde: 'lagtTilManuelt',
           fødselsdato: b.fødselsdato,
         }
       );
@@ -142,7 +142,7 @@ export const mapFormValuesTilDto = (
       return (
         tilhørendeUtvidetRettLagtTilTidligere || {
           idKroniskSyktBarn: b.id,
-          kilde: 'lagtTilAvSaksbehandler',
+          kilde: 'lagtTilManuelt',
           fødselsdato: b.fødselsdato,
         }
       );
@@ -167,7 +167,7 @@ export const mapFormValuesTilDto = (
         ? {
             fom: midlertidigAleneansvar.fom,
             tom: midlertidigAleneansvar.tom,
-            kilde: 'lagtTilAvSaksbehandler',
+            kilde: 'lagtTilManuelt',
             erMidlertidigAlene: midlertidigAleneansvar.erMidlertidigAlene,
           }
         : initialValues.midlertidigAleneOmOmsorgen,

@@ -82,7 +82,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
 }) => {
   const leggTilRad = () =>
     fields.push({
-      kilde: 'lagtTilAvSaksbehandler',
+      kilde: 'lagtTilManuelt',
     });
 
   if (fields.length === 0) {

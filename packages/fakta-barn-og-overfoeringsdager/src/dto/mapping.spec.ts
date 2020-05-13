@@ -86,7 +86,7 @@ describe('mapping fra DTO til formValues', () => {
         {
           idBarnAleneOm: '1',
           fødselsdato: '20.04.2018',
-          kilde: 'lagtTilAvSaksbehandler',
+          kilde: 'lagtTilManuelt',
         },
       ],
       utvidetRett: [
@@ -98,7 +98,7 @@ describe('mapping fra DTO til formValues', () => {
         },
         {
           idKroniskSyktBarn: '1',
-          kilde: 'lagtTilAvSaksbehandler',
+          kilde: 'lagtTilManuelt',
           fom: '23.03.2020',
           tom: '23.03.2025',
         },
