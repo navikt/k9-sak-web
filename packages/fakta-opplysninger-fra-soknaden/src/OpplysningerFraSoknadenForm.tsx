@@ -230,13 +230,13 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
 
 interface TransformValues {
   [OpplysningerFraSoknadenValues.BEGRUNNELSE]: string;
-  [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE]: number;
-  [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: number;
+  [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE]: string;
+  [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: string;
   [OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN]: string;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: number;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: number;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER]: number;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: number;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: string;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: string;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER]: string;
+  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: string;
   [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
   [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO]: string;
 }
@@ -247,7 +247,7 @@ const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
     tom: sluttdato,
   },
   bruttoInntekt: {
-    verdi: inntekt,
+    verdi: +inntekt,
   },
 });
 
@@ -279,7 +279,7 @@ const getOppgittEgenNæringISøkerperioden = (
 };
 
 const getOppgittFrilansISøkerperioden = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => {
-  if (values.frilanser_inntektISoknadsperioden) {
+  if (values.frilanser_inntektISoknadsperioden?.trim()) {
     return {
       oppgittFrilansoppdrag: [
         byggPeriodeMedInntekt(
@@ -290,7 +290,7 @@ const getOppgittFrilansISøkerperioden = (values: TransformValues, opplysningerF
       ],
     };
   }
-  if (values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser) {
+  if (values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser?.trim()) {
     return {
       oppgittFrilansoppdrag: [
         byggPeriodeMedInntekt(
@@ -356,7 +356,7 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
               {
                 periode: getPeriodeForOppgittEgenNæringFørSøkerperioden(values, opplysningerFraSøknaden),
                 bruttoInntekt: {
-                  verdi: egenNæringBruttoInntekt,
+                  verdi: +egenNæringBruttoInntekt,
                 },
               },
             ]
@@ -447,12 +447,75 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 
+const nyoppstartetDatoIsValid = (
+  nyoppstartetDato,
+  selvstendigNæringsdrivendeInntekt2019,
+  selvstendigNæringsdrivendeInntekt2020,
+) => {
+  if (!nyoppstartetDato) {
+    return null;
+  }
+  const nyoppstartetDatoObject = moment(nyoppstartetDato, ISO_DATE_FORMAT);
+  const nyoppstartetDatoErI2019 = nyoppstartetDatoObject.year() === 2019;
+  const nyoppstartetDatoErI2020 = nyoppstartetDatoObject.year() === 2020;
+
+  if (selvstendigNæringsdrivendeInntekt2019 && !nyoppstartetDatoErI2019) {
+    return [{ id: 'ValidationMessage.InvalidNyoppstartetDate' }];
+  }
+  if (selvstendigNæringsdrivendeInntekt2020 && !nyoppstartetDatoErI2020) {
+    return [{ id: 'ValidationMessage.InvalidNyoppstartetDate' }];
+  }
+  if (selvstendigNæringsdrivendeInntekt2020 && nyoppstartetDatoErI2020) {
+    if (nyoppstartetDatoObject.isAfter('2020-02-29')) {
+      return [{ id: 'ValidationMessage.InvalidNyoppstartetDateSoknadsperiode' }];
+    }
+  }
+  return null;
+};
+
+const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
+  const inntekt2019 = `${selvstendigNæringsdrivendeInntekt2019}`?.trim();
+  const inntekt2020 = `${selvstendigNæringsdrivendeInntekt2020}`?.trim();
+  if (inntekt2019 && inntekt2020) {
+    return [{ id: 'ValidationMessage.InvalidIncome' }];
+  }
+  if (!inntekt2019 && !inntekt2020) {
+    return [{ id: 'ValidationMessage.MissingIncome' }];
+  }
+  return null;
+};
+
 const connectedComponent = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(
   behandlingForm({
     form: formName,
+    validate: values => {
+      const nyoppstartetDato = values[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
+      const inntekt2019 = values[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+      const inntekt2020 = values[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
+
+      const errors = {};
+
+      const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
+      if (nyoppstartetDatoValidation !== null) {
+        errors[
+          OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO
+        ] = nyoppstartetDatoValidation;
+      }
+
+      const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
+      if (inntekt2019Validation !== null) {
+        errors[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
+      }
+      const inntekt2020Validation = inntektIsValid(inntekt2020, inntekt2019);
+      if (inntekt2020Validation !== null) {
+        errors[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
+      }
+
+      return errors;
+    },
   })(OpplysningerFraSoknadenForm),
 );
 
