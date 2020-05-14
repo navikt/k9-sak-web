@@ -4,20 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, TIDENES_ENDE } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-
-const finnSamletBruttoForStatus = (andeler, status) => {
-  if (!andeler) {
-    return 0;
-  }
-  return andeler
-    .filter(a => a.aktivitetStatus.kode === status)
-    .map(({ bruttoPrAar }) => bruttoPrAar)
-    .reduce((sum, brutto) => sum + brutto, 0);
-};
 
 const lagPeriodeHeader = (fom, originalTom) => {
   let tom = null;
@@ -84,54 +74,19 @@ const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, l�
   );
 };
 
-const finnBeregningsgrunnlag = (bgperiode, statuserDetErSøktOm, status, grenseverdi) => {
-  const erSøktForStatusIPerioden = statuserDetErSøktOm.find(periode => periode.statusSøktFor.kode === status);
-  if (!erSøktForStatusIPerioden) {
-    return null;
-  }
-  const samletATBrutto = finnSamletBruttoForStatus(
-    bgperiode.beregningsgrunnlagPrStatusOgAndel,
-    aktivitetStatus.ARBEIDSTAKER,
-  );
-  const samletBruttoForDenneStatus = finnSamletBruttoForStatus(bgperiode.beregningsgrunnlagPrStatusOgAndel, status);
-
-  let bg = grenseverdi - samletATBrutto;
-  // Er det søkt om en annen status?
-  const annenStatusSøktOm = statuserDetErSøktOm.find(periode => periode.statusSøktFor.kode !== status);
-  if (!annenStatusSøktOm) {
-    if (bg < samletBruttoForDenneStatus) {
-      return bg < 0 ? 0 : bg;
-    }
-    return samletBruttoForDenneStatus;
-  }
-  const samletBruttoForAnnenStatus = finnSamletBruttoForStatus(
-    bgperiode.beregningsgrunnlagPrStatusOgAndel,
-    annenStatusSøktOm.statusSøktFor.kode,
-  );
-  bg -= samletBruttoForAnnenStatus;
-  if (bg < samletBruttoForDenneStatus) {
-    return bg < 0 ? 0 : bg;
-  }
-  return samletBruttoForDenneStatus;
-};
-
-const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, originalGrenseverdi) => {
+const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {
   const statuserDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
   if (!statuserDetErSøktOm || statuserDetErSøktOm.length < 1) {
     return null;
   }
-  const beregningsgrunnlagFL = finnBeregningsgrunnlag(
-    bgperiode,
-    statuserDetErSøktOm,
-    aktivitetStatus.FRILANSER,
-    originalGrenseverdi,
-  );
-  const beregningsgrunnlagSN = finnBeregningsgrunnlag(
-    bgperiode,
-    statuserDetErSøktOm,
-    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    originalGrenseverdi,
-  );
+  const beregningsgrunnlagFL = statuserDetErSøktOm.some(p => p.statusSøktFor.kode === aktivitetStatus.FRILANSER)
+    ? frilansGrunnlag
+    : null;
+  const beregningsgrunnlagSN = statuserDetErSøktOm.some(
+    p => p.statusSøktFor.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+  )
+    ? næringGrunnlag
+    : null;
   const løpendeInntektFL = ytelsegrunnlag.opplysningerFL ? ytelsegrunnlag.opplysningerFL.oppgittInntekt : null;
   const løpendeInntektSN = ytelsegrunnlag.opplysningerSN ? ytelsegrunnlag.opplysningerSN.oppgittInntekt : null;
 
@@ -174,7 +129,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, originalGrenseverdi) => {
   );
 };
 
-const BeregningsresultatPeriode = ({ bgperiode, ytelsegrunnlag, grenseverdi }) => {
+const BeregningsresultatPeriode = ({ bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag }) => {
   const statuserDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
   if (!statuserDetErSøktOm || statuserDetErSøktOm.length < 1) {
     return null;
@@ -189,14 +144,20 @@ const BeregningsresultatPeriode = ({ bgperiode, ytelsegrunnlag, grenseverdi }) =
           </Element>
         </Column>
       </Row>
-      {lagPeriodeblokk(bgperiode, ytelsegrunnlag, grenseverdi)}
+      {lagPeriodeblokk(bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag)}
     </div>
   );
 };
 BeregningsresultatPeriode.propTypes = {
-  grenseverdi: PropTypes.number.isRequired,
   bgperiode: PropTypes.shape().isRequired,
   ytelsegrunnlag: PropTypes.shape().isRequired,
+  frilansGrunnlag: PropTypes.number,
+  næringGrunnlag: PropTypes.number,
+};
+
+BeregningsresultatPeriode.defaultProps = {
+  frilansGrunnlag: undefined,
+  næringGrunnlag: undefined,
 };
 
 export default BeregningsresultatPeriode;
