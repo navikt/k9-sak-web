@@ -62,8 +62,6 @@ interface DispatchProps {
   taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
   opneBehandlingForEndringer: (params: {}) => Promise<any>;
-  opprettVerge: (params: {}) => Promise<any>;
-  fjernVerge: (params: {}) => Promise<any>;
   lagreRisikoklassifiseringAksjonspunkt: (params: {}) => Promise<any>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -84,8 +82,6 @@ class BehandlingFrisinnIndex extends PureComponent<Props> {
       hentBehandling,
       behandlingId,
       opneBehandlingForEndringer,
-      opprettVerge,
-      fjernVerge,
       lagreRisikoklassifiseringAksjonspunkt,
     } = this.props;
     behandlingEventHandler.setHandler({
@@ -96,8 +92,6 @@ class BehandlingFrisinnIndex extends PureComponent<Props> {
       taBehandlingAvVent: params => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: params => henleggBehandling(params),
       opneBehandlingForEndringer: params => opneBehandlingForEndringer(params),
-      opprettVerge: params => opprettVerge(params),
-      fjernVerge: params => fjernVerge(params),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
@@ -190,8 +184,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
       henleggBehandling: frisinnBehandlingApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
       settPaVent: frisinnBehandlingApi.UPDATE_ON_HOLD.makeRestApiRequest(),
       opneBehandlingForEndringer: frisinnBehandlingApi.OPEN_BEHANDLING_FOR_CHANGES.makeRestApiRequest(),
-      opprettVerge: frisinnBehandlingApi.VERGE_OPPRETT.makeRestApiRequest(),
-      fjernVerge: frisinnBehandlingApi.VERGE_FJERN.makeRestApiRequest(),
       hentBehandling: frisinnBehandlingApi.BEHANDLING_FP.makeRestApiRequest(),
       lagreRisikoklassifiseringAksjonspunkt: frisinnBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
       resetRestApiContext: getResetRestApiContext,
