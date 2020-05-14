@@ -212,7 +212,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             window.location = window.location;
           }}
         >
-          Avbryt (relaster siden)
+          Tilbakestill skjema (OBS! Relaster siden)
         </button>
         <FaktaSubmitButton
           buttonTextId="SubmitButton.ConfirmInformation"
