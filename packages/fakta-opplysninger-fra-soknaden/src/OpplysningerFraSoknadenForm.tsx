@@ -1,6 +1,5 @@
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { hasValidText, ISO_DATE_FORMAT, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
@@ -83,10 +82,6 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
   const {
     handleSubmit,
     initialValues,
-    behandlingId,
-    behandlingVersjon,
-    submittable,
-    harApneAksjonspunkter,
     selvstendigNæringsdrivendeInntekt2019,
     selvstendigNæringsdrivendeInntekt2020,
     kanEndrePåSøknadsopplysninger,
@@ -99,7 +94,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     initialValues.erSelvstendigNæringsdrivende,
   );
   const [erFrilanser, setErFrilanser] = React.useState(initialValues.erFrilanser);
-  const [erSkjemaetLåst, setErSkjemaetLåst] = React.useState(true);
+  const [skjemaErLåst, setSkjemaErLåst] = React.useState(true);
   const formSelector = `${behandlingFormPrefix}.${formName}`;
 
   const resetFormField = field => {
@@ -120,9 +115,14 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
 
   return (
     <div>
-      {kanEndrePåSøknadsopplysninger && erSkjemaetLåst && (
-        <Knapp className={styles.formUnlockButton} type="hoved" onClick={() => setErSkjemaetLåst(!erSkjemaetLåst)}>
-          Lås opp
+      {kanEndrePåSøknadsopplysninger && (
+        <Knapp
+          className={styles.formUnlockButton}
+          type="hoved"
+          htmlType="button"
+          onClick={() => setSkjemaErLåst(!skjemaErLåst)}
+        >
+          {skjemaErLåst ? 'Lås opp skjema' : 'Lås skjema'}
         </Knapp>
       )}
       <form onSubmit={handleSubmit}>
@@ -132,7 +132,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             'formContainer--hidden': !skalViseSSNSeksjonen,
           })}
         >
-          {erSkjemaetLåst ? (
+          {skjemaErLåst ? (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
             </Element>
@@ -155,7 +155,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
               selvstendigNæringsdrivendeInntekt2019={selvstendigNæringsdrivendeInntekt2019}
               selvstendigNæringsdrivendeInntekt2020={selvstendigNæringsdrivendeInntekt2020}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
-              readOnly={erSkjemaetLåst}
+              readOnly={skjemaErLåst}
               clearSelvstendigValues={clearSelvstendigValues}
             />
           )}
@@ -166,11 +166,12 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             'formContainer--hidden': !skalViseFrilansSeksjonen,
           })}
         >
-          {erSkjemaetLåst ? (
+          {erFrilanser && skjemaErLåst && (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.frilanser" />
             </Element>
-          ) : (
+          )}
+          {!skjemaErLåst && (
             <Checkbox
               label={
                 <Label
@@ -187,7 +188,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             <FrilanserForm
               erSelvstendigNæringsdrivende={erSelvstendigNæringsdrivende}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
-              readOnly={erSkjemaetLåst}
+              readOnly={skjemaErLåst}
               clearFrilansValues={clearFrilansValues}
             />
           )}
@@ -198,33 +199,32 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
               name={OpplysningerFraSoknadenValues.BEGRUNNELSE}
               label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
               validate={[required, minLength(3), maxLength(2000), hasValidText]}
-              readOnly={erSkjemaetLåst}
+              readOnly={skjemaErLåst}
               aria-label={intl.formatMessage({
                 id: 'OpplysningerFraSoknaden.Begrunnelse',
               })}
             />
           </div>
         )}
-        {kanEndrePåSøknadsopplysninger && !erSkjemaetLåst && (
-          <button
-            type="button"
-            onClick={() => {
-              // eslint-disable-next-line no-self-assign
-              window.location = window.location;
-            }}
-          >
-            Tilbakestill skjema (OBS! Relaster siden)
-          </button>
+        {kanEndrePåSøknadsopplysninger && !skjemaErLåst && (
+          <>
+            {(erSelvstendigNæringsdrivende || erFrilanser) && (
+              <Knapp htmlType="submit" type="hoved">
+                Bekreft og fortsett
+              </Knapp>
+            )}
+            <Knapp
+              onClick={() => {
+                // eslint-disable-next-line no-self-assign
+                window.location = window.location;
+              }}
+              htmlType="button"
+              style={{ marginLeft: '8px', marginTop: '2px' }}
+            >
+              Tilbakestill skjema (OBS! Relaster siden)
+            </Knapp>
+          </>
         )}
-        <FaktaSubmitButton
-          buttonTextId="SubmitButton.ConfirmInformation"
-          formName={formName}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          isSubmittable={submittable}
-          isReadOnly={erSkjemaetLåst}
-          hasOpenAksjonspunkter={harApneAksjonspunkter}
-        />
       </form>
     </div>
   );
