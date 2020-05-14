@@ -474,8 +474,8 @@ const nyoppstartetDatoIsValid = (
 };
 
 const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
-  const inntekt2019 = `${selvstendigNæringsdrivendeInntekt2019}`?.trim();
-  const inntekt2020 = `${selvstendigNæringsdrivendeInntekt2020}`?.trim();
+  const inntekt2019 = selvstendigNæringsdrivendeInntekt2019 ? `${selvstendigNæringsdrivendeInntekt2019}`.trim() : null;
+  const inntekt2020 = selvstendigNæringsdrivendeInntekt2020 ? `${selvstendigNæringsdrivendeInntekt2020}`.trim() : null;
   if (inntekt2019 && inntekt2020) {
     return [{ id: 'ValidationMessage.InvalidIncome' }];
   }
@@ -509,7 +509,7 @@ const connectedComponent = connect(
       if (inntekt2019Validation !== null) {
         errors[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
       }
-      const inntekt2020Validation = inntektIsValid(inntekt2020, inntekt2019);
+      const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
       if (inntekt2020Validation !== null) {
         errors[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
       }
