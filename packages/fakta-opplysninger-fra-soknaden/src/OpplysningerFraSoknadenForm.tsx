@@ -281,7 +281,10 @@ const getOppgittEgenNæringISøkerperioden = (
 };
 
 const getOppgittFrilansISøkerperioden = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => {
-  if (values.frilanser_inntektISoknadsperioden?.trim()) {
+  const frilansInntektISøknadsperioden = values.frilanser_inntektISoknadsperioden
+    ? `${values.frilanser_inntektISoknadsperioden}`.trim()
+    : null;
+  if (frilansInntektISøknadsperioden) {
     return {
       oppgittFrilansoppdrag: [
         byggPeriodeMedInntekt(
@@ -292,7 +295,11 @@ const getOppgittFrilansISøkerperioden = (values: TransformValues, opplysningerF
       ],
     };
   }
-  if (values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser?.trim()) {
+
+  const ssnInntektISøknadsperioden = values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser
+    ? `${values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser}`.trim()
+    : null;
+  if (ssnInntektISøknadsperioden) {
     return {
       oppgittFrilansoppdrag: [
         byggPeriodeMedInntekt(
@@ -382,12 +389,14 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   const { søkerYtelseForNæring, søkerYtelseForFrilans, periodeFraSøknad, førSøkerPerioden, iSøkerPerioden } = values;
 
   const frilansoppdrag = iSøkerPerioden?.oppgittFrilans?.oppgittFrilansoppdrag;
-  const frilansoppdragStartdato = frilansoppdrag ? frilansoppdrag[0].periode.fom : null;
-  const frilansoppdragBruttoinntekt = frilansoppdrag ? frilansoppdrag[0].bruttoInntekt.verdi : null;
+  const harFrilansoppdrag = frilansoppdrag && frilansoppdrag.length > 0;
+  const frilansoppdragStartdato = harFrilansoppdrag ? frilansoppdrag[0].periode.fom : null;
+  const frilansoppdragBruttoinntekt = harFrilansoppdrag ? frilansoppdrag[0].bruttoInntekt.verdi : null;
 
   const næring = iSøkerPerioden?.oppgittEgenNæring;
-  const næringStartdato = næring ? næring[0].periode.fom : null;
-  const næringBruttoinntekt = næring ? næring[0].bruttoInntekt.verdi : null;
+  const harNæring = næring && næring.length > 0;
+  const næringStartdato = harNæring ? næring[0].periode.fom : null;
+  const næringBruttoinntekt = harNæring ? næring[0].bruttoInntekt.verdi : null;
 
   const næringFørSøknadsperioden = førSøkerPerioden?.oppgittEgenNæring;
   const næringsinntektFørSøknadsperioden = næringFørSøknadsperioden
