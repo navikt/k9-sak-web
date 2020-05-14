@@ -351,9 +351,7 @@ const getPeriodeForOppgittEgenNæringFørSøkerperioden = (
 const transformValues = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => {
   const egenNæringBruttoInntekt =
     values.selvstendigNaeringsdrivende_inntekt2019 || values.selvstendigNaeringsdrivende_inntekt2020;
-  const skalOppgiNæringsinntektFørSøknadsperioden =
-    opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0 ||
-    values.selvstendigNaeringsdrivende_nyoppstartetDato;
+  const skalOppgiNæringsinntektFørSøknadsperioden = !!values.selvstendigNaeringsdrivende_startdatoForSoknaden;
 
   const resultingData = {
     kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
