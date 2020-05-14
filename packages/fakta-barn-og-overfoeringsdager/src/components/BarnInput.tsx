@@ -9,6 +9,7 @@ import Panel from 'nav-frontend-paneler';
 import styles from './barnInput.less';
 import FastBreddeAligner from './FastBreddeAligner';
 import { BarnEnum, Barntype } from '../types/Barn';
+import Informasjonskilde from '../dto/Informasjonskilde';
 
 const classNames = classnames.bind(styles);
 
@@ -17,6 +18,8 @@ interface BarnInputProps {
   barntype: Barntype;
   readOnly?: boolean;
   visning: ReactNode;
+  kroniskSykKilde?: Informasjonskilde;
+  aleneomsorgKilde?: Informasjonskilde;
 }
 
 const checkboxPadding = (barntype: Barntype, readOnly: boolean): string => {

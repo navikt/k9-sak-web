@@ -1,8 +1,11 @@
+import moment from 'moment';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import OmsorgsdagerGrunnlagDto from './OmsorgsdagerGrunnlagDto';
 import FormValues from '../types/FormValues';
 import { BarnHentetAutomatisk, BarnLagtTilAvSakbehandler } from '../types/Barn';
 import { DagerMottatt, DagerGitt, UtvidetRettDto, AleneOmOmsorgen } from './RammevedtakDto';
 import Overføring from '../types/Overføring';
+import { InformasjonskildeEnum } from './Informasjonskilde';
 
 export const mapDtoTilFormValues = ({
   barn,
@@ -84,13 +87,26 @@ export const mapDtoTilFormValues = ({
   };
 };
 
+const førsteDagIÅr = () => moment().date(1).month(0).format(ISO_DATE_FORMAT);
+const sisteDagIAar = () => moment().date(31).month(11).format(ISO_DATE_FORMAT);
+
+const sisteDagIAaretBarnFyller18 = fødselsdato => {
+  const fødeår = moment(fødselsdato).year();
+
+  return moment()
+    .year(fødeår + 18)
+    .date(31)
+    .month(11)
+    .format(ISO_DATE_FORMAT);
+};
+
 const mapOverføringFår = (overføringer: Overføring[]): DagerMottatt[] =>
   overføringer.map(({ antallDager, kilde, mottakerAvsenderFnr, tom, fom }) => ({
     antallDager,
     kilde,
     avsendersFnr: mottakerAvsenderFnr,
-    tom,
-    fom,
+    fom: fom || førsteDagIÅr(),
+    tom: tom || sisteDagIAar(),
   }));
 
 const mapOverføringGir = (overføringer: Overføring[]): DagerGitt[] =>
@@ -98,9 +114,18 @@ const mapOverføringGir = (overføringer: Overføring[]): DagerGitt[] =>
     antallDager,
     kilde,
     mottakersFnr: mottakerAvsenderFnr,
-    fom,
-    tom,
+    fom: fom || førsteDagIÅr(),
+    tom: tom || sisteDagIAar(),
   }));
+
+// Kun gjeldende for barn
+const fødselsdatoFraFødselsnummer = fødselsnummer => {
+  const dag = fødselsnummer.substring(0, 2);
+  const måned = fødselsnummer.substring(2, 4);
+  const år = `20${fødselsnummer.substring(4, 6)}`;
+
+  return `${år}-${måned}-${dag}`;
+};
 
 export const mapFormValuesTilDto = (
   {
@@ -126,18 +151,34 @@ export const mapFormValuesTilDto = (
       const tilhørendeRammevetdakLagtTilTidligere: AleneOmOmsorgen = initialValues.aleneOmOmsorgen.find(
         alene => alene.idBarnAleneOm === b.id,
       );
+
       return (
         tilhørendeRammevetdakLagtTilTidligere || {
           idBarnAleneOm: b.id,
-          kilde: 'lagtTilManuelt',
+          kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
           fødselsdato: b.fødselsdato,
+          fom: førsteDagIÅr(),
+          tom: sisteDagIAar(),
         }
       );
     });
 
   const utvidetRettBarn: UtvidetRettDto[] = barn
     .filter(b => b.erKroniskSykt)
-    .map(b => initialValues.utvidetRett.find(ur => ur.fnrKroniskSyktBarn === b.fødselsnummer));
+    .map(b => {
+      const tilhørendeUtvidetRettLagtTilTidligere = initialValues.utvidetRett.find(
+        ur => ur.fnrKroniskSyktBarn === b.fødselsnummer,
+      );
+
+      return (
+        tilhørendeUtvidetRettLagtTilTidligere || {
+          fnrKroniskSyktBarn: b.fødselsnummer,
+          kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
+          fom: førsteDagIÅr(),
+          tom: sisteDagIAaretBarnFyller18(fødselsdatoFraFødselsnummer(b.fødselsnummer)),
+        }
+      );
+    });
 
   const utvidetRettBarnLagtTilAvSaksbehandler: UtvidetRettDto[] = barnLagtTilAvSaksbehandler
     .filter(b => b.erKroniskSykt)
@@ -148,8 +189,10 @@ export const mapFormValuesTilDto = (
       return (
         tilhørendeUtvidetRettLagtTilTidligere || {
           idKroniskSyktBarn: b.id,
-          kilde: 'lagtTilManuelt',
+          kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
           fødselsdato: b.fødselsdato,
+          fom: førsteDagIÅr(),
+          tom: sisteDagIAaretBarnFyller18(b.fødselsdato),
         }
       );
     });
@@ -169,11 +212,11 @@ export const mapFormValuesTilDto = (
     koronaoverføringFår: mapOverføringFår(koronaoverføringFår),
     koronaoverføringGir: mapOverføringGir(koronaoverføringGir),
     midlertidigAleneOmOmsorgen:
-      midlertidigAleneansvar?.erMidlertidigAlene !== initialValues.midlertidigAleneOmOmsorgen.erMidlertidigAlene
+      midlertidigAleneansvar?.erMidlertidigAlene !== initialValues.midlertidigAleneOmOmsorgen?.erMidlertidigAlene
         ? {
             fom: midlertidigAleneansvar.fom,
             tom: midlertidigAleneansvar.tom,
-            kilde: 'lagtTilManuelt',
+            kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
             erMidlertidigAlene: midlertidigAleneansvar.erMidlertidigAlene,
           }
         : initialValues.midlertidigAleneOmOmsorgen,

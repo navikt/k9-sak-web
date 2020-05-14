@@ -6,7 +6,7 @@ interface FormValues {
   barnLagtTilAvSaksbehandler: BarnLagtTilAvSakbehandler[];
   midlertidigAleneansvar?: {
     erMidlertidigAlene: boolean;
-    fom?: string;
+    fom: string;
     tom: string;
   };
   overføringFår: Overføring[];
