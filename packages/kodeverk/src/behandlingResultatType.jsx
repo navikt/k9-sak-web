@@ -1,6 +1,7 @@
 const behandlingResultatType = {
   IKKE_FASTSATT: 'IKKE_FASTSATT',
   INNVILGET: 'INNVILGET',
+  INNVILGET_ENDRING: 'INNVILGET_ENDRING',
   AVSLATT: 'AVSLÅTT',
   OPPHOR: 'OPPHØR',
   HENLAGT_SOKNAD_TRUKKET: 'HENLAGT_SØKNAD_TRUKKET',
@@ -27,16 +28,21 @@ const innvilgetKlageResultatTyper = [
   behandlingResultatType.HJEMSENDE_UTEN_OPPHEVE,
 ];
 
-const innvilgetRevurderingFPResultatTyper = [behandlingResultatType.FORELDREPENGER_ENDRET, behandlingResultatType.INGEN_ENDRING];
+const innvilgetRevurderingResultatTyper = [
+  behandlingResultatType.INNVILGET_ENDRING,
+  behandlingResultatType.INGEN_ENDRING,
+];
 
-export const isInnvilget = (behandlingResultatTypeKode) => innvilgetKlageResultatTyper.includes(behandlingResultatTypeKode)
-  || innvilgetRevurderingFPResultatTyper.includes(behandlingResultatTypeKode)
-  || behandlingResultatTypeKode === behandlingResultatType.INNVILGET;
+export const isInnvilget = behandlingResultatTypeKode =>
+  innvilgetKlageResultatTyper.includes(behandlingResultatTypeKode) ||
+  innvilgetRevurderingResultatTyper.includes(behandlingResultatTypeKode) ||
+  behandlingResultatTypeKode === behandlingResultatType.INNVILGET;
 
-export const isAvslag = (behandlingResultatTypeKode) => behandlingResultatTypeKode === behandlingResultatType.AVSLATT
-  || behandlingResultatTypeKode === behandlingResultatType.KLAGE_AVVIST
-  || behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET;
+export const isAvslag = behandlingResultatTypeKode =>
+  behandlingResultatTypeKode === behandlingResultatType.AVSLATT ||
+  behandlingResultatTypeKode === behandlingResultatType.KLAGE_AVVIST ||
+  behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET;
 
-export const isOpphor = (behandlingResultatTypeKode) => behandlingResultatTypeKode === behandlingResultatType.OPPHOR;
+export const isOpphor = behandlingResultatTypeKode => behandlingResultatTypeKode === behandlingResultatType.OPPHOR;
 
 export default behandlingResultatType;
