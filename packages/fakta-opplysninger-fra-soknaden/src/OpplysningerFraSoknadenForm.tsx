@@ -398,7 +398,8 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   const næringStartdato = harNæring ? næring[0].periode.fom : null;
   const næringBruttoinntekt = harNæring ? næring[0].bruttoInntekt.verdi : null;
 
-  const næringFørSøknadsperioden = førSøkerPerioden?.oppgittEgenNæring;
+  const næringFørSøknadsperioden =
+    førSøkerPerioden?.oppgittEgenNæring.length > 0 ? førSøkerPerioden.oppgittEgenNæring : null;
   const næringsinntektFørSøknadsperioden = næringFørSøknadsperioden
     ? næringFørSøknadsperioden[0].bruttoInntekt.verdi
     : null;
