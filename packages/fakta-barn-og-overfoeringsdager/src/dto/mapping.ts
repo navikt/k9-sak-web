@@ -85,15 +85,21 @@ export const mapDtoTilFormValues = ({
 };
 
 const mapOverføringFår = (overføringer: Overføring[]): DagerMottatt[] =>
-  overføringer.map(({ antallDager }) => ({
+  overføringer.map(({ antallDager, kilde, mottakerAvsenderFnr, tom, fom }) => ({
     antallDager,
-    kilde: 'lagtTilManuelt',
+    kilde,
+    avsendersFnr: mottakerAvsenderFnr,
+    tom,
+    fom,
   }));
 
 const mapOverføringGir = (overføringer: Overføring[]): DagerGitt[] =>
-  overføringer.map(({ antallDager }) => ({
+  overføringer.map(({ antallDager, kilde, mottakerAvsenderFnr, tom, fom }) => ({
     antallDager,
-    kilde: 'lagtTilManuelt',
+    kilde,
+    mottakersFnr: mottakerAvsenderFnr,
+    fom,
+    tom,
   }));
 
 export const mapFormValuesTilDto = (
@@ -149,7 +155,7 @@ export const mapFormValuesTilDto = (
     });
 
   return {
-    barn: barn.map(({ fødselsnummer, aleneomsorg }) => ({ aleneomsorg, fødselsnummer })),
+    barn: barn.map(({ fødselsnummer }) => ({ fødselsnummer })),
     barnLagtTilAvSakbehandler: barnLagtTilAvSaksbehandler.map(({ id, fødselsdato }) => ({
       id,
       fødselsdato,
