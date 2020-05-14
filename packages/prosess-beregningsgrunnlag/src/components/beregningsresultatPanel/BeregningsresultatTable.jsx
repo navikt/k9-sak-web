@@ -12,6 +12,7 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import dekningsgradKode from '@fpsak-frontend/kodeverk/src/dekningsgrad';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
 import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
@@ -327,7 +328,7 @@ const finnDagsats = (periode, seksG, erOmsorgspenger) => {
 };
 
 const harOmsorgspengegrunnlag = ytelseGrunnlag => {
-  return ytelseGrunnlag && ytelseGrunnlag.ytelsetype === 'OMP';
+  return ytelseGrunnlag && ytelseGrunnlag.ytelsetype === fagsakYtelseType.OMSORGSPENGER;
 };
 
 export const createBeregningTableData = createSelector(
