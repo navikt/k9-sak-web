@@ -132,11 +132,12 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             'formContainer--hidden': !skalViseSSNSeksjonen,
           })}
         >
-          {skjemaErLåst ? (
+          {erSelvstendigNæringsdrivende && skjemaErLåst && (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
             </Element>
-          ) : (
+          )}
+          {!skjemaErLåst && (
             <Checkbox
               label={
                 <Label
@@ -193,7 +194,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             />
           )}
         </div>
-        {(erFrilanser || erSelvstendigNæringsdrivende) && (
+        {(erFrilanser || erSelvstendigNæringsdrivende) && !skjemaErLåst && (
           <div className={classNames('begrunnelseContainer')}>
             <TextAreaField
               name={SøknadFormValue.BEGRUNNELSE}
