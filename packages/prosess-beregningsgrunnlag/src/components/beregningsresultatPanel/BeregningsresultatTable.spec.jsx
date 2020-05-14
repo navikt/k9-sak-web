@@ -690,7 +690,7 @@ describe('<BeregningsresultatTable>', () => {
     );
     selectorData.forEach(periode => {
       const { dagsatser } = periode;
-      expect(dagsatser.verdi).to.equal(2287);
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(2287));
     });
   });
 });
