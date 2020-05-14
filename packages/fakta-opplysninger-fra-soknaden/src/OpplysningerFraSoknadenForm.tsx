@@ -205,15 +205,17 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             />
           </div>
         )}
-        <button
-          type="button"
-          onClick={() => {
-            // eslint-disable-next-line no-self-assign
-            window.location = window.location;
-          }}
-        >
-          Tilbakestill skjema (OBS! Relaster siden)
-        </button>
+        {kanEndrePåSøknadsopplysninger && !erSkjemaetLåst && (
+          <button
+            type="button"
+            onClick={() => {
+              // eslint-disable-next-line no-self-assign
+              window.location = window.location;
+            }}
+          >
+            Tilbakestill skjema (OBS! Relaster siden)
+          </button>
+        )}
         <FaktaSubmitButton
           buttonTextId="SubmitButton.ConfirmInformation"
           formName={formName}
