@@ -298,7 +298,7 @@ const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligeSøknadsop
   const frilansinntekt = getFormValueSafely(SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN, formValues);
   if (frilansinntekt !== null) {
     const fomDato = formValues[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
-    return [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, frilansinntekt)];
+    return { oppgittFrilansoppdrag: [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, frilansinntekt)] };
   }
 
   const frilansinntektISøknadsperiodeForSSN = getFormValueSafely(
@@ -307,7 +307,9 @@ const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligeSøknadsop
   );
   if (frilansinntektISøknadsperiodeForSSN !== null) {
     const fomDato = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
-    return [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, frilansinntektISøknadsperiodeForSSN)];
+    return {
+      oppgittFrilansoppdrag: [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, frilansinntektISøknadsperiodeForSSN)],
+    };
   }
 
   return null;
