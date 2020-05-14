@@ -17,6 +17,8 @@ import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlag
 import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
+const VIRKEDAGER_PR_AAR = 260;
+
 const periodeHarAarsakSomTilsierVisning = aarsaker => {
   if (aarsaker.length < 1) {
     return true;
@@ -319,10 +321,9 @@ const sjekkharBortfaltNaturalYtelse = periode => {
   );
 };
 
-const finnDagsats = (periode, seksG, erOmsorgspenger) => {
-  if (erOmsorgspenger && periode.bruttoPrAar) {
-    const bruttoPrAarJustertForSeksG = periode.bruttoPrAar <= seksG ? periode.bruttoPrAar : seksG;
-    return Math.round(bruttoPrAarJustertForSeksG / 260);
+const finnDagsats = (periode, erOmsorgspenger) => {
+  if (erOmsorgspenger && periode.avkortetPrAar) {
+    return Math.round(periode.avkortetPrAar / VIRKEDAGER_PR_AAR);
   }
   return periode.dagsats;
 };
@@ -369,7 +370,7 @@ export const createBeregningTableData = createSelector(
       if (dekningsgrad !== dekningsgradKode.HUNDRE) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
-      dagsatserRad.verdi = formatCurrencyNoKr(finnDagsats(periode, seksG, erOmsorgspenger));
+      dagsatserRad.verdi = formatCurrencyNoKr(finnDagsats(periode, erOmsorgspenger));
       const rows = [];
       const rowsAndeler = [];
       const rowsForklaringer = [];

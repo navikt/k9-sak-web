@@ -618,7 +618,7 @@ describe('<BeregningsresultatTable>', () => {
               kode: 'AT',
               kodeverk: 'AKTIVITET_STATUS',
             },
-            avkortetPrAar: 360001,
+            avkortetPrAar: 360000,
             overstyrtPrAar: undefined,
             bruttoPrAar: 300001,
             redusertPrAar: 360001,
@@ -655,7 +655,7 @@ describe('<BeregningsresultatTable>', () => {
         beregnetPrAar: 800000,
         bruttoPrAar: 800000,
         bruttoInkludertBortfaltNaturalytelsePrAar: 800000,
-        avkortetPrAar: 800000,
+        avkortetPrAar: 594738,
         redusertPrAar: 800000,
         dagsats: 0,
         beregningsgrunnlagPrStatusOgAndel: [
@@ -664,7 +664,7 @@ describe('<BeregningsresultatTable>', () => {
               kode: 'AT',
               kodeverk: 'AKTIVITET_STATUS',
             },
-            avkortetPrAar: 599148,
+            avkortetPrAar: 594738,
             overstyrtPrAar: undefined,
             bruttoPrAar: 800000,
             redusertPrAar: 200852,
@@ -690,7 +690,7 @@ describe('<BeregningsresultatTable>', () => {
     );
     selectorData.forEach(periode => {
       const { dagsatser } = periode;
-      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(Math.round(seksG / 260)));
+      expect(dagsatser.verdi).to.equal(2287);
     });
   });
 });
