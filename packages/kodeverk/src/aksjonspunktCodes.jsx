@@ -103,6 +103,7 @@ const aksjonspunktCodes = {
   MEDISINSK_VILKAAR: '9001',
   OMSORGEN_FOR: '9002',
   VURDER_ÅRSKVANTUM_KVOTE: '9003',
+  OVERSTYRING_FRISINN_OPPGITT_OPPTJENING: '8004',
 };
 
 const klageAksjonspunkter = [
