@@ -1,7 +1,7 @@
 import { DatepickerField } from '@fpsak-frontend/form';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { hasValidDate, required, hasValidInteger } from '@fpsak-frontend/utils';
+import { hasValidDate, required, hasValidInteger, maxLength } from '@fpsak-frontend/utils';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.less';
@@ -44,7 +44,7 @@ const FrilanserForm = ({
           name={OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
-          validate={[required, hasValidInteger]}
+          validate={[required, hasValidInteger, maxLength(5)]}
           readOnly={readOnly}
         />
       </div>
@@ -54,7 +54,7 @@ const FrilanserForm = ({
             name={OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
-            validate={[hasValidInteger]}
+            validate={[hasValidInteger, maxLength(5)]}
             readOnly={readOnly}
           />
         </div>
