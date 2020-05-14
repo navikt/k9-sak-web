@@ -82,7 +82,7 @@ const SelvstendigNæringsdrivendeForm = ({
       {!erFrilanser && (
         <div className={styles.fieldContainer}>
           <InputField
-            name={OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER}
+            name={OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
             validate={[hasValidInteger, maxLength(5)]}

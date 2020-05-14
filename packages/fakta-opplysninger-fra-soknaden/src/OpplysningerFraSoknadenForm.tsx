@@ -423,6 +423,10 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
     [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: inntektsperiodenFørSøknadsperiodeErI2020
       ? næringsinntektFørSøknadsperioden
       : null,
+    [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE]:
+      !søkerYtelseForFrilans && frilansoppdragBruttoinntekt ? frilansoppdragBruttoinntekt : null,
+    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER]:
+      !søkerYtelseForNæring && næringBruttoinntekt ? næringBruttoinntekt : null,
   };
 };
 
