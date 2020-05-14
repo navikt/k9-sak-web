@@ -21,6 +21,7 @@ const BehandlingVelgerSakIndex = ({
   showAll,
   toggleShowAll,
   alleKodeverk,
+  klagekodeverk
 }) => (
   <RawIntlProvider value={intl}>
     <BehandlingPicker
@@ -31,6 +32,7 @@ const BehandlingVelgerSakIndex = ({
       showAll={showAll}
       toggleShowAll={toggleShowAll}
       alleKodeverk={alleKodeverk}
+      klagekodeverk={klagekodeverk}
     />
   </RawIntlProvider>
 );
@@ -43,6 +45,7 @@ BehandlingVelgerSakIndex.propTypes = {
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  klagekodeverk: PropTypes.shape()
 };
 
 BehandlingVelgerSakIndex.defaultProps = {

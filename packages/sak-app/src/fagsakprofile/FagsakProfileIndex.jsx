@@ -28,7 +28,7 @@ import {
 import { getNoExistingBehandlinger } from '../behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
-import { getAlleKodeverk } from '../kodeverk/duck';
+import { getAlleKodeverk, getAlleKlagekodeverk } from '../kodeverk/duck';
 
 import styles from './fagsakProfileIndex.less';
 
@@ -60,6 +60,7 @@ export const FagsakProfileIndex = ({
   selectedBehandlingId,
   behandlingVersjon,
   alleKodeverk,
+  klagekodeverk,
   noExistingBehandlinger,
   fagsakStatus,
   saksnummer,
@@ -112,6 +113,7 @@ export const FagsakProfileIndex = ({
                   showAll={showAll}
                   toggleShowAll={toggleShowAll}
                   alleKodeverk={alleKodeverk}
+                  klagekodeverk={klagekodeverk}
                 />
               )}
             />
@@ -137,6 +139,7 @@ FagsakProfileIndex.propTypes = {
   selectedBehandlingId: PropTypes.number,
   noExistingBehandlinger: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  klagekodeverk: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,
   shouldRedirectToBehandlinger: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
@@ -162,6 +165,7 @@ const mapStateToProps = (state) => ({
   selectedBehandlingId: getSelectedBehandlingId(state),
   noExistingBehandlinger: getNoExistingBehandlinger(state),
   alleKodeverk: getAlleKodeverk(state),
+  klagekodeverk: getAlleKlagekodeverk(state),
   behandlingVersjon: getBehandlingVersjon(state),
 });
 

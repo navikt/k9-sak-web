@@ -7,8 +7,8 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import HistorikkMalFelles7og8 from './HistorikkmalFelles7og8';
 
 const HistorikkMalType7 = ({ historikkinnslagDeler, behandlingLocation, dokumentLinks, saksNr, getKodeverknavn }) => {
+  const intl = useIntl();
   const formatChangedField = endretFelt => {
-    const intl = useIntl();
     const fieldName = findEndretFeltNavn(endretFelt, intl);
     const sub1 = fieldName.substring(0, fieldName.lastIndexOf(';'));
     const sub2 = fieldName.substring(fieldName.lastIndexOf(';') + 1);
