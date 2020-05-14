@@ -134,6 +134,8 @@ const BeregningsresultatPeriode = ({ bgperiode, ytelsegrunnlag, frilansGrunnlag,
   if (!statuserDetErSøktOm || statuserDetErSøktOm.length < 1) {
     return null;
   }
+  const visningFrilans = frilansGrunnlag >= 0 ? frilansGrunnlag : 0;
+  const visningNæring = næringGrunnlag >= 0 ? næringGrunnlag : 0;
   return (
     <div>
       <VerticalSpacer eightPx />
@@ -144,7 +146,7 @@ const BeregningsresultatPeriode = ({ bgperiode, ytelsegrunnlag, frilansGrunnlag,
           </Element>
         </Column>
       </Row>
-      {lagPeriodeblokk(bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag)}
+      {lagPeriodeblokk(bgperiode, ytelsegrunnlag, visningFrilans, visningNæring)}
     </div>
   );
 };
