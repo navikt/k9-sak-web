@@ -317,6 +317,19 @@ const sjekkharBortfaltNaturalYtelse = periode => {
       andel.bortfaltNaturalytelse !== 0,
   );
 };
+
+const finnDagsats = (periode, seksG, erOmsorgspenger) => {
+  if (erOmsorgspenger && periode.bruttoPrAar) {
+    const bruttoPrAarJustertForSeksG = periode.bruttoPrAar <= seksG ? periode.bruttoPrAar : seksG;
+    return Math.round(bruttoPrAarJustertForSeksG / 260);
+  }
+  return periode.dagsats;
+};
+
+const harOmsorgspengegrunnlag = ytelseGrunnlag => {
+  return ytelseGrunnlag && ytelseGrunnlag.ytelsetype === 'OMP';
+};
+
 export const createBeregningTableData = createSelector(
   [
     (state, ownProps) => ownProps.beregningsgrunnlagPerioder,
@@ -325,14 +338,16 @@ export const createBeregningTableData = createSelector(
     (state, ownProps) => ownProps.grunnbelop,
     (state, ownProps) => ownProps.harAksjonspunkter,
     (state, ownProps) => ownProps.vilkaarBG,
+    (state, ownProps) => ownProps.ytelseGrunnlag,
   ],
-  (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, harAksjonspunkter, vilkaarBG) => {
+  (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, harAksjonspunkter, vilkaarBG, ytelseGrunnlag) => {
     const { vilkarStatus } = vilkaarBG.perioder[0];
     const perioderSomSkalVises = allePerioder.filter(periode =>
       periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker),
     );
     const periodeResultatTabeller = [];
     const seksG = grunnbelop * 6;
+    const erOmsorgspenger = harOmsorgspengegrunnlag(ytelseGrunnlag);
     perioderSomSkalVises.forEach(periode => {
       const headers = [];
       const bruttoRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.BruttoTotalt" /> };
@@ -353,7 +368,7 @@ export const createBeregningTableData = createSelector(
       if (dekningsgrad !== dekningsgradKode.HUNDRE) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
-      dagsatserRad.verdi = formatCurrencyNoKr(periode.dagsats);
+      dagsatserRad.verdi = formatCurrencyNoKr(finnDagsats(periode, seksG, erOmsorgspenger));
       const rows = [];
       const rowsAndeler = [];
       const rowsForklaringer = [];
