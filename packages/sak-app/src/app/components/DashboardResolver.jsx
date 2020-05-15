@@ -15,7 +15,7 @@ const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 const isComingFromK9Los = () => {
   const searchString = window.location.search;
   const queryParams = parseQueryString(searchString);
-  return queryParams.kilde === 'k9-los' || queryParams.goto === 'k9-los';
+  return queryParams.kilde === 'k9-los';
 };
 
 /**
