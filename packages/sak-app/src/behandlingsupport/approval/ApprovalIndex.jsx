@@ -1,4 +1,4 @@
-import { BehandlingIdentifier, DataFetcher, featureToggle } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, DataFetcher, featureToggle, getPathToFplos } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
+import axios from 'axios';
 import { getFeatureToggles, getNavAnsatt } from '../../app/duck';
 import {
   getBehandlingAnsvarligSaksbehandler,
@@ -57,6 +58,7 @@ const getArsaker = approval =>
 const klageData = [fpsakApi.TOTRINNS_KLAGE_VURDERING];
 const revurderingData = [fpsakApi.HAR_REVURDERING_SAMME_RESULTAT];
 const ingenData = [];
+const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 
 /**
  * ApprovalIndex
@@ -126,9 +128,18 @@ export class ApprovalIndex extends Component {
     });
   }
 
-  goToSearchPage() {
+  async goToSearchPage() {
     const { push: pushLocation } = this.props;
-    pushLocation('/k9/web?goto=k9-los');
+    if (!isRunningOnLocalhost()) {
+      try {
+        const url = getPathToFplos(window.location.href);
+        await axios.get(url);
+        window.location.assign(url);
+      } catch {
+        pushLocation('/');
+      }
+    }
+    pushLocation('/');
   }
 
   render() {
