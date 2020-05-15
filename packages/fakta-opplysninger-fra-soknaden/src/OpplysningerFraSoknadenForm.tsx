@@ -316,35 +316,50 @@ const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligeSøknadsop
   return null;
 };
 
-const getPeriodeForOppgittEgenNæringFørSøkerperioden = (
-  values: OpplysningerFraSøknadenFormValues,
+// eslint-disable-next-line consistent-return
+const finnOpprinneligPeriodeMedOppgittNæringsinntektFørSøknadsperioden = næringFørSøknadsperioden => {
+  const harOppgittNæringsinntektFørSøknadsperioden = næringFørSøknadsperioden && næringFørSøknadsperioden.length > 0;
+  if (harOppgittNæringsinntektFørSøknadsperioden) {
+    const inntektsperiodeFørSøknadsperioden = næringFørSøknadsperioden[0].periode;
+    const { fom, tom } = inntektsperiodeFørSøknadsperioden;
+    return {
+      fom,
+      tom,
+    };
+  }
+};
+
+const lagPeriodeForOppgittEgenNæringFørSøkerperioden = (
+  formValues: OpplysningerFraSøknadenFormValues,
   opplysningerFraSøknaden: OpplysningerFraSøknaden,
 ) => {
-  const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
   const næringFørSøknadsperioden = opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring;
-  const inntektsperiodeFørSøknadsperioden = næringFørSøknadsperioden[0].periode;
+  const opprinneligPeriode = finnOpprinneligPeriodeMedOppgittNæringsinntektFørSøknadsperioden(næringFørSøknadsperioden);
 
-  const { fom, tom } = inntektsperiodeFørSøknadsperioden;
+  const fom = opprinneligPeriode?.fom;
+  const tom = opprinneligPeriode?.tom;
   const opprinneligInntektsperiodeErI2019 = moment(fom, ISO_DATE_FORMAT).year() === 2019;
-  const { selvstendigNaeringsdrivende_nyoppstartetDato } = values;
+  const opprinneligInntektsperiodeErI2020 = moment(fom, ISO_DATE_FORMAT).year() === 2020;
 
   const periode: any = {};
+  const inntekt2019 = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+  const nyoppstartetDato = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
   if (inntekt2019) {
     if (opprinneligInntektsperiodeErI2019) {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || fom;
-      periode.tom = tom;
+      periode.fom = nyoppstartetDato || fom || '2019-01-01';
+      periode.tom = tom || '2019-12-31';
     } else {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || '2019-01-01';
+      periode.fom = nyoppstartetDato || '2019-01-01';
       periode.tom = '2019-12-31';
     }
   } else {
     // eslint-disable-next-line no-lonely-if
-    if (opprinneligInntektsperiodeErI2019) {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || '2020-01-01';
-      periode.tom = '2020-02-29';
+    if (opprinneligInntektsperiodeErI2020) {
+      periode.fom = nyoppstartetDato || fom || '2020-01-01';
+      periode.tom = tom || '2020-02-29';
     } else {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || fom;
-      periode.tom = tom;
+      periode.fom = nyoppstartetDato || '2020-01-01';
+      periode.tom = '2020-02-29';
     }
   }
 
@@ -358,6 +373,8 @@ const transformValues = (
   const egenNæringBruttoInntekt =
     formValues.selvstendigNaeringsdrivende_inntekt2019 || formValues.selvstendigNaeringsdrivende_inntekt2020;
   const skalOppgiNæringsinntektFørSøknadsperioden = !!formValues.selvstendigNaeringsdrivende_startdatoForSoknaden;
+  const søkerYtelseForFrilans = !!formValues.frilanser_inntektISoknadsperioden;
+  const søkerYtelseForNæring = !!formValues.selvstendigNaeringsdrivende_inntektISoknadsperioden;
 
   const resultingData = {
     kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
@@ -367,7 +384,7 @@ const transformValues = (
         oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
           ? [
               {
-                periode: getPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
+                periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
                 bruttoInntekt: {
                   verdi: +egenNæringBruttoInntekt,
                 },
@@ -381,8 +398,8 @@ const transformValues = (
         oppgittFrilans: lagOppgittFrilansForSøknadsperioden(formValues, opplysningerFraSøknaden),
       },
       periodeFraSøknad: opplysningerFraSøknaden.periodeFraSøknad,
-      søkerYtelseForFrilans: !!formValues.frilanser_inntektISoknadsperioden,
-      søkerYtelseForNæring: !!formValues.selvstendigNaeringsdrivende_inntektISoknadsperioden,
+      søkerYtelseForFrilans,
+      søkerYtelseForNæring,
     },
   };
 
