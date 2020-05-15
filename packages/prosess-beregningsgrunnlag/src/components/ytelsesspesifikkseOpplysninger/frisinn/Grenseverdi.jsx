@@ -22,6 +22,11 @@ const finnSamletBruttoForStatus = (andeler, status) => {
   return inntekt;
 };
 
+const erSøktStatus = (bg, status) => {
+  const { perioderSøktFor } = bg.ytelsesspesifiktGrunnlag;
+  return perioderSøktFor ? perioderSøktFor.some(p => p.statusSøktFor.kode === status) : false;
+};
+
 const Grenseverdi = ({ beregningsgrunnlag }) => {
   const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
   const bruttoAT = finnSamletBruttoForStatus(
@@ -29,7 +34,23 @@ const Grenseverdi = ({ beregningsgrunnlag }) => {
     aktivitetStatus.ARBEIDSTAKER,
   );
   const originaltInntektstak = beregningsgrunnlag.grunnbeløp * 6;
-  const utregnetInntektstak = originaltInntektstak > bruttoAT ? originaltInntektstak - bruttoAT : 0;
+  let annenInntektIkkeSøktFor = bruttoAT;
+  if (!erSøktStatus(beregningsgrunnlag, aktivitetStatus.FRILANSER)) {
+    const bruttoFL = finnSamletBruttoForStatus(
+      førstePeriode.beregningsgrunnlagPrStatusOgAndel,
+      aktivitetStatus.FRILANSER,
+    );
+    annenInntektIkkeSøktFor += bruttoFL;
+  }
+  if (!erSøktStatus(beregningsgrunnlag, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)) {
+    const bruttoSN = finnSamletBruttoForStatus(
+      førstePeriode.beregningsgrunnlagPrStatusOgAndel,
+      aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    );
+    annenInntektIkkeSøktFor += bruttoSN;
+  }
+  const utregnetInntektstak =
+    originaltInntektstak > annenInntektIkkeSøktFor ? originaltInntektstak - annenInntektIkkeSøktFor : 0;
   return (
     <>
       {(utregnetInntektstak || utregnetInntektstak === 0) && (
@@ -48,7 +69,7 @@ const Grenseverdi = ({ beregningsgrunnlag }) => {
                 id="Beregningsgrunnlag.Frisinn.Inntektstak"
                 values={{
                   grenseverdi: formatCurrencyNoKr(originaltInntektstak),
-                  annenInntekt: formatCurrencyNoKr(bruttoAT),
+                  annenInntekt: formatCurrencyNoKr(annenInntektIkkeSøktFor),
                 }}
               />
             </Column>

@@ -22,7 +22,9 @@ const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatu
 );
 
 const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (navAnsatt,
-  fagsakStatus, behandlingStatus, type) => {
+                                                                                                    fagsakStatus,
+                                                                                                    behandlingStatus,
+                                                                                                    type) => {
   if (kanVeilede(navAnsatt)) {
     return {
       employeeHasAccess: true,
@@ -35,9 +37,12 @@ const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBeha
   return { employeeHasAccess, isEnabled };
 };
 
-const godkjenningsFaneAccessSelector = (navAnsatt, ansvarligSaksbehandler) => {
+const godkjenningsFaneAccessSelector = (navAnsatt, ansvarligSaksbehandler, behandlingType) => {
   if (ansvarligSaksbehandler && navAnsatt.brukernavn.toUpperCase() === ansvarligSaksbehandler.toUpperCase()) {
     return accessSelector([kanBeslutte], [], []);
+  }
+  if (behandlingType && behandlingType.kode === BehandlingType.KLAGE) {
+    return accessSelector([kanBeslutte], [fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.AVSLUTTET], [behandlingStatusCode.FATTER_VEDTAK]);
   }
 
   return accessSelector([kanBeslutte], [fagsakStatusCode.UNDER_BEHANDLING], [behandlingStatusCode.FATTER_VEDTAK]);
@@ -68,7 +73,7 @@ const sendMeldingAccessSelector = (navAnsatt) => {
 
 export const godkjenningsFaneAccess = (
   navAnsatt, fagsakStatus, behandlingStatus, ansvarligSaksbehandler, type,
-) => godkjenningsFaneAccessSelector(navAnsatt, ansvarligSaksbehandler)(navAnsatt, fagsakStatus, behandlingStatus, type);
+) => godkjenningsFaneAccessSelector(navAnsatt, ansvarligSaksbehandler, type)(navAnsatt, fagsakStatus, behandlingStatus, type);
 
 export const sendMeldingAccess = (navAnsatt, fagsakStatus, behandlingStatus, type) => sendMeldingAccessSelector(navAnsatt)(
   navAnsatt, fagsakStatus, behandlingStatus, type,

@@ -1,4 +1,4 @@
-import { BehandlingIdentifier, DataFetcher, featureToggle } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, DataFetcher, featureToggle, getPathToFplos } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
+import axios from 'axios';
 import { getFeatureToggles, getNavAnsatt } from '../../app/duck';
 import {
   getBehandlingAnsvarligSaksbehandler,
@@ -30,7 +31,7 @@ import {
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
-import { getFpTilbakeKodeverk, getKodeverk } from '../../kodeverk/duck';
+import { getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype } from '../../kodeverk/duck';
 
 const getArsaker = approval =>
   [
@@ -57,6 +58,7 @@ const getArsaker = approval =>
 const klageData = [fpsakApi.TOTRINNS_KLAGE_VURDERING];
 const revurderingData = [fpsakApi.HAR_REVURDERING_SAMME_RESULTAT];
 const ingenData = [];
+const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 
 /**
  * ApprovalIndex
@@ -126,8 +128,17 @@ export class ApprovalIndex extends Component {
     });
   }
 
-  goToSearchPage() {
+  async goToSearchPage() {
     const { push: pushLocation } = this.props;
+    if (!isRunningOnLocalhost()) {
+      try {
+        const url = getPathToFplos(window.location.href);
+        await axios.get(url);
+        window.location.assign(url);
+      } catch {
+        pushLocation('/');
+      }
+    }
     pushLocation('/');
   }
 
@@ -271,8 +282,6 @@ const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsaker], (
 );
 
 const mapStateToPropsFactory = initialState => {
-  const skjermlenkeTyperFpsak = getKodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(initialState);
-  const skjermlenkeTyperFptilbake = getFpTilbakeKodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(initialState);
   return state => {
     const behandlingType = getBehandlingType(state);
     const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
@@ -290,10 +299,8 @@ const mapStateToPropsFactory = initialState => {
       behandlingStatus: getBehandlingStatus(state),
       toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
       navAnsatt: getNavAnsatt(state),
-      alleKodeverk: erTilbakekreving
-        ? fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state)
-        : fpsakApi.KODEVERK.getRestApiData()(state),
-      skjemalenkeTyper: erTilbakekreving ? skjermlenkeTyperFptilbake : skjermlenkeTyperFpsak,
+      alleKodeverk: getAlleKodeverkForBehandlingstype(behandlingTypeKode)(state),
+      skjemalenkeTyper: getKodeverkForBehandlingstype(behandlingTypeKode, kodeverkTyper.SKJERMLENKE_TYPE)(initialState),
       location: state.router.location,
       behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
       fagsakYtelseType: getFagsakYtelseType(state),

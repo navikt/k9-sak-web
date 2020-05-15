@@ -18,6 +18,7 @@ const vilkårInnvilget: VurderteVilkår = {
 
 const årskvantumDto: ÅrskvantumForbrukteDager = {
   totaltAntallDager: 17,
+  antallKoronadager: 0,
   antallDagerArbeidsgiverDekker: 3,
   forbrukteDager: 10.4,
   restdager: 9.6,
@@ -41,6 +42,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
             },
             periode: '2020-03-01/2020-03-10',
             utbetalingsgrad: 50,
+            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
           },
           {
             utfall: UtfallEnum.INNVILGET,
@@ -50,6 +52,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
             delvisFravær: 'P2DT4H30M',
             periode: '2020-04-01/2020-04-30',
             utbetalingsgrad: 100,
+            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
           },
         ],
       },
@@ -70,6 +73,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
             },
             periode: '2020-03-01/2020-03-31',
             utbetalingsgrad: 0,
+            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1', 'COVID19_4_3', 'COVID19_4_1__2'],
           },
         ],
       },
@@ -77,8 +81,21 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
     behandlingUUID: '1',
     saksnummer: '2',
     innsendingstidspunkt: '123',
+    benyttetRammemelding: true,
   },
 };
 
 // @ts-ignore
-export const årskvantum = () => <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} />;
+export const standard = () => <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} />;
+
+export const smittevernsdager = () => (
+  <ÅrskvantumIndex
+    årskvantum={{
+      ...årskvantumDto,
+      antallKoronadager: 10,
+      restdager: -3.4,
+    }}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+  />
+);

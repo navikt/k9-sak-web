@@ -2,6 +2,7 @@ import { expect } from 'chai';
 
 import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
 
 import {
   kanOverstyreAccess,
@@ -10,11 +11,17 @@ import {
 
 const forEachFagsakAndBehandlingStatus = (callback) => (
   Object.values(fagsakStatusCode).forEach((fagsakStatus) => Object.values(behandlingStatusCode)
-    .forEach((behandlingStatus) => callback(fagsakStatus, behandlingStatus)))
+    .forEach((behandlingStatus) => {
+      callback(fagsakStatus, behandlingStatus, false);
+      callback(fagsakStatus, behandlingStatus, true);
+    }))
 );
 
-const getTestName = (accessName, expected, fagsakStatus, behandlingStatus) => (
-  `skal${expected ? '' : ' ikke'} ha ${accessName} når fagsakStatus er '${fagsakStatus}' og behandlingStatus er '${behandlingStatus}'`
+const getTestName = (accessName, expected, fagsakStatus, behandlingStatus, behandlingstype) => (
+  `skal${expected ? '' : ' ikke'} ha ${accessName} når ` +
+  `fagsakStatus er '${fagsakStatus}', ` +
+  `behandlingStatus er '${behandlingStatus}' og ` +
+  `behandlingstype er '${behandlingstype?.kode}'`
 );
 
 describe('access', () => {
@@ -28,24 +35,29 @@ describe('access', () => {
     const validBehandlingStatuser = [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES];
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
 
+    const behandlingstypeSomIkkeErKlage = {kode: behandlingType.FORSTEGANGSSOKNAD};
+    const klage = {kode: behandlingType.KLAGE};
+
     it('saksbehandler skal ha skrivetilgang', () => {
-      const accessForSaksbehandler = writeAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForSaksbehandler = writeAccess(behandlingstypeSomIkkeErKlage)(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', true);
     });
 
     it('veileder skal ikke ha aktivert skrivetilgang', () => {
-      const accessForVeileder = writeAccess(veilederAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForVeileder = writeAccess(behandlingstypeSomIkkeErKlage)(veilederAnsatt, validFagsakStatus, validBehandlingStatus);
 
       expect(accessForVeileder).to.have.property('employeeHasAccess', true);
       expect(accessForVeileder).to.have.property('isEnabled', false);
     });
 
-    forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
-      const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
-      it(getTestName('skrivetilgang', expected, fagsakStatus, behandlingStatus), () => {
-        const access = writeAccess(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus });
+    forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus, erKlage) => {
+      const expected = (validFagsakStatuser.includes(fagsakStatus) || erKlage) && validBehandlingStatuser.includes(behandlingStatus);
+      const behandlingstype = erKlage ? klage : behandlingstypeSomIkkeErKlage;
+
+      it(getTestName('skrivetilgang', expected, fagsakStatus, behandlingStatus, behandlingstype), () => {
+        const access = writeAccess(behandlingstype)(saksbehandlerAnsatt, { kode: fagsakStatus }, { kode: behandlingStatus });
 
         expect(access).to.have.property('isEnabled', expected);
       });

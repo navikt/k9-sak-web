@@ -5,6 +5,7 @@ interface UttaksplanType {
   behandlingUUID: string;
   innsendingstidspunkt: string;
   aktiviteter: Aktivitet[];
+  benyttetRammemelding: boolean;
 }
 
 export default UttaksplanType;

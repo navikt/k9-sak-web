@@ -13,21 +13,29 @@ import { getEnabledApplicationContexts } from '../../app/duck';
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
+import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk } from "../../kodeverk/duck";
 
 const historyRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.HISTORY_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
-  [ApplicationContextPath.KLAGE]: fpsakApi.HISTORY_FPSAK
+  [ApplicationContextPath.KLAGE]: fpsakApi.HISTORY_KLAGE
 };
 
-const sortAndTagTilbakekreving = createSelector(
-  [(props) => props.historyFpsak, (props) => props.historyFptilbake],
-  (historyFpsak = [], historyFptilbake = []) => {
+const sortAndTagTilbakekrevingAndKlage = createSelector(
+  [props => props.historyFpsak, props => props.historyFptilbake, props => props.historyKlage],
+  (historyFpsak = [], historyFptilbake = [], historyKlage = []) => {
     const historikkFraTilbakekrevingMedMarkor = historyFptilbake.map((ht) => ({
       ...ht,
       erTilbakekreving: true,
     }));
-    return historyFpsak.concat(historikkFraTilbakekrevingMedMarkor).sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt));
+    const historikkFraKlageMedMarkor = historyKlage.map((ht) => ({
+      ...ht,
+      erKlage: true
+    }));
+    return historyFpsak
+      .concat(historikkFraTilbakekrevingMedMarkor)
+      .concat(historikkFraKlageMedMarkor)
+      .sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt));
   },
 );
 
@@ -45,26 +53,39 @@ export const HistoryIndex = ({
   location,
   alleKodeverkFpsak,
   alleKodeverkFptilbake,
+  alleKodeverkKlage
 }) => (
   <DataFetcher
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
     showLoadingIcon
     behandlingNotRequired
-    endpointParams={{ [fpsakApi.HISTORY_FPSAK.name]: { saksnummer }, [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer } }}
+    endpointParams={{
+      [fpsakApi.HISTORY_FPSAK.name]: {saksnummer},
+      [fpsakApi.HISTORY_FPTILBAKE.name]: {saksnummer},
+      [fpsakApi.HISTORY_KLAGE.name]: {saksnummer}
+    }}
     keepDataWhenRefetching
     endpoints={enabledContexts}
     allowErrors
-    render={(props) => sortAndTagTilbakekreving(props)
-      .map((innslag) => (
-        <HistorikkSakIndex
-          key={innslag.opprettetTidspunkt + innslag.type.kode}
-          historieInnslag={innslag}
-          saksnummer={saksnummer}
-          location={location}
-          alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
-        />
-      ))}
+    render={(props) => sortAndTagTilbakekrevingAndKlage(props)
+      .map((innslag) => {
+
+        let alleKodeverk;
+        if (innslag.erTilbakekreving) alleKodeverk = alleKodeverkFptilbake;
+        else if (innslag.erKlage) alleKodeverk = alleKodeverkKlage;
+        else alleKodeverk = alleKodeverkFpsak;
+
+        return (
+          <HistorikkSakIndex
+            key={innslag.opprettetTidspunkt + innslag.type.kode}
+            historieInnslag={innslag}
+            saksnummer={saksnummer}
+            location={location}
+            alleKodeverk={alleKodeverk}
+          />
+        );
+      })}
   />
 );
 
@@ -78,6 +99,7 @@ HistoryIndex.propTypes = {
   }).isRequired,
   alleKodeverkFpsak: PropTypes.shape().isRequired,
   alleKodeverkFptilbake: PropTypes.shape(),
+  alleKodeverkKlage: PropTypes.shape()
 };
 
 HistoryIndex.defaultProps = {
@@ -96,8 +118,9 @@ const mapStateToProps = (state) => ({
   saksnummer: getSelectedSaksnummer(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),
-  alleKodeverkFpsak: fpsakApi.KODEVERK.getRestApiData()(state),
-  alleKodeverkFptilbake: fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state),
+  alleKodeverkFpsak: getAlleFpSakKodeverk(state),
+  alleKodeverkFptilbake: getAlleFpTilbakeKodeverk(state),
+  alleKodeverkKlage: getAlleKlagekodeverk(state)
 });
 
 export default withRouter(connect(mapStateToProps)(HistoryIndex));

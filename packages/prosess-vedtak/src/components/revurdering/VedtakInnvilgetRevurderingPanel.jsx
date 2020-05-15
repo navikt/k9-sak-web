@@ -88,7 +88,8 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
         </div>
       )}
       {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER ||
-        ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && (
+        ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER ||
+        ytelseTypeKode === fagsakYtelseType.FRISINN) && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
           <Normaltekst>
@@ -147,8 +148,7 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  konsekvenserForYtelsen:
-    ownProps.behandlingsresultat !== undefined ? ownProps.behandlingsresultat.konsekvenserForYtelsen : undefined,
+  konsekvenserForYtelsen: ownProps.behandlingsresultat !== undefined ? [ownProps.behandlingsresultat.type] : undefined,
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 

@@ -18,7 +18,7 @@ import {
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
-import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
+import { getAlleKodeverkForBehandlingstype } from '../kodeverk/duck';
 import {
   getSelectedFagsakStatus,
   getFagsakPerson,
@@ -328,7 +328,7 @@ const mapStateToProps = state => {
     behandlingVersjon: getTempBehandlingVersjon(state),
     location: state.router.location,
     featureToggles: getFeatureToggles(state),
-    kodeverk: erTilbakekreving(behandlingType) ? getAlleFpTilbakeKodeverk(state) : getAlleFpSakKodeverk(state),
+    kodeverk: getAlleKodeverkForBehandlingstype(behandlingType)(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
     navAnsatt: getNavAnsatt(state),
