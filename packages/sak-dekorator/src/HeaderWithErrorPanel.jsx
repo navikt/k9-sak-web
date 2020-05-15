@@ -50,7 +50,7 @@ const useOutsideClickEvent = (erLenkepanelApent, setLenkePanelApent) => {
 };
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
-const getHeaderTitleHref = async () => {
+const getHeaderTitleHref = () => {
   if (!isRunningOnLocalhost()) {
     return getPathToFplos(window.location.href) || '/k9/web';
   }
