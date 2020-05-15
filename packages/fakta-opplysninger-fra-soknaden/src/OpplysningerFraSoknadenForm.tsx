@@ -357,9 +357,7 @@ const transformValues = (
 ) => {
   const egenNæringBruttoInntekt =
     formValues.selvstendigNaeringsdrivende_inntekt2019 || formValues.selvstendigNaeringsdrivende_inntekt2020;
-  const skalOppgiNæringsinntektFørSøknadsperioden =
-    opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0 ||
-    formValues.selvstendigNaeringsdrivende_nyoppstartetDato;
+  const skalOppgiNæringsinntektFørSøknadsperioden = !!formValues.selvstendigNaeringsdrivende_startdatoForSoknaden;
 
   const resultingData = {
     kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
