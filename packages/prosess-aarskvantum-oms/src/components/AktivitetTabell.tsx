@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { Table, TableRow, Image } from '@fpsak-frontend/shared-components/index';
+import { Table, TableRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
@@ -154,6 +154,15 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                         <FormattedMessage id={`Uttaksplan.Vilkår.${vilkår}`} />
                       </Normaltekst>
                     ))}
+                    <VerticalSpacer sixteenPx />
+                    <Element>
+                      <FormattedMessage id="Uttaksplan.Hjemler" />
+                    </Element>
+                    {hjemler.map(hjemmel => (
+                      <div>
+                        <FormattedMessage id={`Uttaksplan.Hjemmel.${hjemmel}`} />
+                      </div>
+                    ))}
                   </ExpandedContent>
                 )}
               </StyledColumn>
@@ -172,18 +181,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
                   {formaterDelvisFravær(delvisFravær)}
-                  {erValgt && (
-                    <ExpandedContent fyllBorder>
-                      <Element>
-                        <FormattedMessage id="Uttaksplan.Hjemler" />
-                      </Element>
-                      {hjemler.map(hjemmel => (
-                        <div>
-                          <FormattedMessage id={`Uttaksplan.Hjemmel.${hjemmel}`} />
-                        </div>
-                      ))}
-                    </ExpandedContent>
-                  )}
+                  {erValgt && <ExpandedContent fyllBorder />}
                 </>
               </StyledColumn>
               <StyledColumn koronaperiode={erKoronaperiode}>
