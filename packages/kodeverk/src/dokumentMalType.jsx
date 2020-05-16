@@ -14,6 +14,8 @@ const dokumentMalType = {
   KORRIGVARS: 'KORRIGVARS',
   FRITKS: 'FRITKS',
   VARSEL_OM_TILBAKEKREVING: 'VARS',
+  UTLED_KLAGE: 'UTLED_KLAGE',
+  UTLED: 'UTLED'
 };
 
 export default dokumentMalType;
