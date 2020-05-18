@@ -19,6 +19,7 @@ const faktaPanelCodes = {
   VERGE: 'verge',
   YTELSER: 'ytelser',
   INNTEKT_OG_YTELSER: 'inntekt-og-ytelser',
+  OPPLYSNINGER_FRA_SØKNADEN: 'opplysninger-fra-soknaden',
 };
 
 export default faktaPanelCodes;

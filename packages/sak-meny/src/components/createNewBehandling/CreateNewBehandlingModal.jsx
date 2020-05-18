@@ -166,6 +166,7 @@ const manuelleRevurderingsArsakerES = [
   behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
   behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
   behandlingArsakType.FEIL_PROSESSUELL,
+  behandlingArsakType.ETTER_KLAGE,
 ];
 
 const manuelleRevurderingsArsakerFP = [

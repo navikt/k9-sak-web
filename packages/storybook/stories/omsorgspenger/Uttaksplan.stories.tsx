@@ -42,6 +42,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
             },
             periode: '2020-03-01/2020-03-10',
             utbetalingsgrad: 50,
+            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
           },
           {
             utfall: UtfallEnum.INNVILGET,
@@ -51,6 +52,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
             delvisFravær: 'P2DT4H30M',
             periode: '2020-04-01/2020-04-30',
             utbetalingsgrad: 100,
+            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
           },
         ],
       },
@@ -71,6 +73,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
             },
             periode: '2020-03-01/2020-03-31',
             utbetalingsgrad: 0,
+            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1', 'COVID19_4_3', 'COVID19_4_1__2'],
           },
         ],
       },

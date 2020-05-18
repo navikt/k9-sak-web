@@ -113,6 +113,7 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               ...dataProps,
               behandling,
               alleKodeverk,
+              navAnsatt,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.komponentData,
             })

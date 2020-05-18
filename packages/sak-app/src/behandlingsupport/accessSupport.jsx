@@ -42,7 +42,11 @@ const godkjenningsFaneAccessSelector = (navAnsatt, ansvarligSaksbehandler, behan
     return accessSelector([kanBeslutte], [], []);
   }
   if (behandlingType && behandlingType.kode === BehandlingType.KLAGE) {
-    return accessSelector([kanBeslutte], [fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.AVSLUTTET], [behandlingStatusCode.FATTER_VEDTAK]);
+    return accessSelector(
+      [kanBeslutte],
+      [fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.AVSLUTTET, fagsakStatusCode.LOPENDE],
+      [behandlingStatusCode.FATTER_VEDTAK],
+    );
   }
 
   return accessSelector([kanBeslutte], [fagsakStatusCode.UNDER_BEHANDLING], [behandlingStatusCode.FATTER_VEDTAK]);
