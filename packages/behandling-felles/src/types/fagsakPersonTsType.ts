@@ -9,6 +9,7 @@ type FagsakPerson = Readonly<{
   navn: string;
   personnummer: string;
   personstatusType: Kodeverk;
+  aktørId?: string;
 }>;
 
 export default FagsakPerson;
