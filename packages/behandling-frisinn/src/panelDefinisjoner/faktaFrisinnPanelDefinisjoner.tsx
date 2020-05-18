@@ -40,17 +40,12 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
   {
     urlCode: faktaPanelCodes.BEREGNING,
     textCode: 'BeregningInfoPanel.Title',
-    aksjonspunkterCodes: [
-      aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-      aksjonspunktCodes.AVKLAR_AKTIVITETER,
-      aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-      aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-    ],
+    aksjonspunkterCodes: [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN],
     endpoints: [],
     renderComponent: props => <BeregningFaktaIndex {...props} />,
     showComponent: () => true,
-    getData: ({ rettigheter, beregningsgrunnlag }) => ({
-      erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
+    getData: ({ beregningsgrunnlag }) => ({
+      erOverstyrer: false,
       beregningsgrunnlag,
     }),
   },

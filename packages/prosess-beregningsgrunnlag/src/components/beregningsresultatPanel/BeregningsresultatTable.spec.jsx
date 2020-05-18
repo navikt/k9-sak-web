@@ -601,4 +601,96 @@ describe('<BeregningsresultatTable>', () => {
       expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
+  it('Skal teste at create table returnerer riktig dagsats når omsorgspengegrunnlag', () => {
+    const beregningsgrunnlagPerioder = [
+      {
+        beregningsgrunnlagPeriodeFom: '2019-09-16',
+        beregningsgrunnlagPeriodeTom: undefined,
+        beregnetPrAar: 360000,
+        bruttoPrAar: 360000,
+        bruttoInkludertBortfaltNaturalytelsePrAar: 360000,
+        avkortetPrAar: 360000,
+        redusertPrAar: 360000,
+        dagsats: 0,
+        beregningsgrunnlagPrStatusOgAndel: [
+          {
+            aktivitetStatus: {
+              kode: 'AT',
+              kodeverk: 'AKTIVITET_STATUS',
+            },
+            avkortetPrAar: 360000,
+            overstyrtPrAar: undefined,
+            bruttoPrAar: 300001,
+            redusertPrAar: 360001,
+            erTilkommetAndel: false,
+            lagtTilAvSaksbehandler: false,
+          },
+        ],
+        andelerLagtTilManueltIForrige: [],
+        periodeAarsaker: [],
+      },
+    ];
+    const dekningsgrad = 100;
+    const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
+    const ytelseGrunnlag = { skalAvviksvurdere: false, ytelsetype: 'OMP' };
+    const selectorData = createBeregningTableData.resultFunc(
+      beregningsgrunnlagPerioder,
+      aktivitetStatusList,
+      dekningsgrad,
+      grunnbelop,
+      false,
+      vilkaarBG,
+      ytelseGrunnlag,
+    );
+    selectorData.forEach(periode => {
+      const { dagsatser } = periode;
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(1385));
+    });
+  });
+  it('Skal teste at create table returnerer riktig dagsats når omsorgspengegrunnlag og brutto over 6G', () => {
+    const beregningsgrunnlagPerioder = [
+      {
+        beregningsgrunnlagPeriodeFom: '2019-09-16',
+        beregningsgrunnlagPeriodeTom: undefined,
+        beregnetPrAar: 800000,
+        bruttoPrAar: 800000,
+        bruttoInkludertBortfaltNaturalytelsePrAar: 800000,
+        avkortetPrAar: 594738,
+        redusertPrAar: 800000,
+        dagsats: 0,
+        beregningsgrunnlagPrStatusOgAndel: [
+          {
+            aktivitetStatus: {
+              kode: 'AT',
+              kodeverk: 'AKTIVITET_STATUS',
+            },
+            avkortetPrAar: 594738,
+            overstyrtPrAar: undefined,
+            bruttoPrAar: 800000,
+            redusertPrAar: 200852,
+            erTilkommetAndel: false,
+            lagtTilAvSaksbehandler: false,
+          },
+        ],
+        andelerLagtTilManueltIForrige: [],
+        periodeAarsaker: [],
+      },
+    ];
+    const dekningsgrad = 100;
+    const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
+    const ytelseGrunnlag = { skalAvviksvurdere: false, ytelsetype: 'OMP' };
+    const selectorData = createBeregningTableData.resultFunc(
+      beregningsgrunnlagPerioder,
+      aktivitetStatusList,
+      dekningsgrad,
+      grunnbelop,
+      false,
+      vilkaarBG,
+      ytelseGrunnlag,
+    );
+    selectorData.forEach(periode => {
+      const { dagsatser } = periode;
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(2287));
+    });
+  });
 });

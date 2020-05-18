@@ -402,6 +402,7 @@ export const BeregningFormImpl = ({
               <AvsnittSkiller luftOver luftUnder rightPanel />
               <BeregningsresultatTable
                 beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
+                ytelseGrunnlag={beregningsgrunnlag.ytelsesspesifiktGrunnlag}
                 dekningsgrad={dekningsgrad}
                 vilkaarBG={vilkaarBG}
                 aksjonspunkter={gjeldendeAksjonspunkter}
