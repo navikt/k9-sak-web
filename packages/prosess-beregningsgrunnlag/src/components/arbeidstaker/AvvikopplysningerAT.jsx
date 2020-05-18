@@ -10,27 +10,35 @@ import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFLSN';
 
 const AvviksopplysningerAT = ({
-  relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
+  relevanteStatuser,
+  sammenligningsgrunnlagPrStatus,
+  beregnetAarsinntekt,
+  skalViseAvviksprosent,
 }) => {
   const sammenligningsGrunnlagAT = sammenligningsgrunnlagPrStatus
-    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.AT
-      || status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
+    ? sammenligningsgrunnlagPrStatus.find(
+        status =>
+          status.sammenligningsgrunnlagType.kode === sammenligningType.AT ||
+          status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
+      )
     : undefined;
   if (!sammenligningsGrunnlagAT) {
     return null;
   }
   const avvikAT = sammenligningsGrunnlagAT.avvikProsent;
-  const avvikATRounded = avvikAT ? parseFloat((avvikAT.toFixed(1))) : 0;
+  const avvikATRounded = avvikAT ? parseFloat(avvikAT.toFixed(1)) : 0;
   const sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagAT;
-  const kombinasjonsstatusATSN = relevanteStatuser.isKombinasjonsstatus
-    && relevanteStatuser.isArbeidstaker
-    && relevanteStatuser.isSelvstendigNaeringsdrivende
-    && !relevanteStatuser.isFrilanser;
-  const kombinasjonsstatusATFLSN = relevanteStatuser.isKombinasjonsstatus
-    && relevanteStatuser.isArbeidstaker
-    && relevanteStatuser.isSelvstendigNaeringsdrivende
-    && relevanteStatuser.isFrilanser;
+  const kombinasjonsstatusATSN =
+    relevanteStatuser.isKombinasjonsstatus &&
+    relevanteStatuser.isArbeidstaker &&
+    relevanteStatuser.isSelvstendigNaeringsdrivende &&
+    !relevanteStatuser.isFrilanser;
+  const kombinasjonsstatusATFLSN =
+    relevanteStatuser.isKombinasjonsstatus &&
+    relevanteStatuser.isArbeidstaker &&
+    relevanteStatuser.isSelvstendigNaeringsdrivende &&
+    relevanteStatuser.isFrilanser;
   const visPaneler = {
     visAT: true,
     visFL: false,
@@ -42,17 +50,16 @@ const AvviksopplysningerAT = ({
         <Column xs="12">
           <Normaltekst>
             {kombinasjonsstatusATSN && (
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" />
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" />
             )}
             {kombinasjonsstatusATFLSN && (
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" />
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" />
             )}
           </Normaltekst>
         </Column>
       </FlexRow>
     );
   }
-
 
   if (sammenligningsgrunnlagSumAT) {
     return (
@@ -63,17 +70,18 @@ const AvviksopplysningerAT = ({
         relevanteStatuser={relevanteStatuser}
         visPanel={visPaneler}
         sammenligningsgrunnlagSum={sammenligningsgrunnlagSumAT}
+        skalViseAvviksprosent={skalViseAvviksprosent}
       />
     );
   }
   return null;
 };
 
-
 AvviksopplysningerAT.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregnetAarsinntekt: PropTypes.number,
+  skalViseAvviksprosent: PropTypes.bool,
 };
 AvviksopplysningerAT.defaultProps = {
   beregnetAarsinntekt: undefined,
