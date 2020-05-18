@@ -16,6 +16,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 import axios from 'axios';
+import dokumentMalType from "@fpsak-frontend/kodeverk/src/dokumentMalType";
 import { getFeatureToggles, getNavAnsatt } from '../../app/duck';
 import {
   getBehandlingAnsvarligSaksbehandler,
@@ -31,7 +32,7 @@ import {
 } from '../../behandling/duck';
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import fpsakApi, {reduxRestApi} from '../../data/fpsakApi';
-import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
+import {getAktorid, getFagsakYtelseType, getSaksnummer, isForeldrepengerFagsak} from '../../fagsak/fagsakSelectors';
 import { getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype } from '../../kodeverk/duck';
 
 const getArsaker = approval =>
@@ -121,11 +122,13 @@ export class ApprovalIndex extends Component {
   }
 
   forhandsvisVedtaksbrev() {
-    const { previewMessage: fetchPreview, fagsakYtelseType, behandlingUuid, erTilbakekreving } = this.props;
+    const { previewMessage: fetchPreview, fagsakYtelseType, behandlingUuid, erTilbakekreving, aktørId, saksnummer, behandlingTypeKode} = this.props;
     fetchPreview(erTilbakekreving, false, {
       behandlingUuid,
       ytelseType: fagsakYtelseType,
-      gjelderVedtak: true,
+      aktørId,
+      saksnummer,
+      dokumentMal: behandlingTypeKode === BehandlingType.KLAGE ? dokumentMalType.UTLED_KLAGE : dokumentMalType.UTLED
     });
   }
 
@@ -262,7 +265,9 @@ ApprovalIndex.propTypes = {
   behandlingsresultat: PropTypes.shape(),
   behandlingId: PropTypes.number,
   behandlingTypeKode: PropTypes.string,
-  klagebehandling: PropTypes.shape()
+  klagebehandling: PropTypes.shape(),
+  aktørId: PropTypes.string,
+  saksnummer: PropTypes.string,
 };
 
 ApprovalIndex.defaultProps = {
@@ -317,6 +322,8 @@ const mapStateToPropsFactory = initialState => {
       behandlingsresultat: getBehandlingsresultat(state),
       behandlingId: getSelectedBehandlingId(state),
       disableGodkjennKnapp: erTilbakekreving ? !getFeatureToggles(state)[featureToggle.BESLUTT_TILBAKEKREVING] : false,
+      aktørId: getAktorid(state),
+      saksnummer: getSaksnummer(state),
       behandlingIdentifier,
       erTilbakekreving,
       behandlingTypeKode,

@@ -12,14 +12,16 @@ import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
-const getPreviewVedtakCallback = (previewVedtakCallback) => () => previewVedtakCallback({
-  gjelderVedtak: true,
-});
+const getPreviewVedtakCallback = previewVedtakCallback => () =>
+  previewVedtakCallback({
+    dokumentMal: dokumentMalType.UTLED_KLAGE,
+  });
 
 /**
  * VedtakKlageForm
