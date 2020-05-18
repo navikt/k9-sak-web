@@ -182,6 +182,8 @@ class KlageProsess extends Component<Props, KlageProsessState> {
       ...data,
       behandlingUuid: behandling.uuid,
       ytelseType: fagsak.fagsakYtelseType,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsak.fagsakPerson.aktørId,
     };
     return forhandsvisMelding(brevData);
   };
