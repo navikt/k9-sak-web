@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
 import { godkjenningsFaneAccess, sendMeldingAccess } from './accessSupport';
 
 const forEachFagsakAndBehandlingStatus = (callback) => (
@@ -18,6 +19,7 @@ describe('accessSupport', () => {
 
   describe('godkjenningsFaneAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
+    const validFagsakStatuserKlage = [fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.AVSLUTTET, fagsakStatusCode.LOPENDE];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };
 
     const validBehandlingStatuser = [behandlingStatusCode.FATTER_VEDTAK];
@@ -62,6 +64,21 @@ describe('accessSupport', () => {
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
       expect(accessForSaksbehandler).to.have.property('isEnabled', false);
+    });
+
+    forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
+      const expected = validFagsakStatuserKlage.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      it(getTestName('tilgang til å godkjenne klage', expected, fagsakStatus, behandlingStatus), () => {
+        const access = godkjenningsFaneAccess(
+          saksbehandlerOgBeslutterAnsatt,
+          { kode: fagsakStatus },
+          { kode: behandlingStatus },
+          null,
+          { kode: BehandlingType.KLAGE },
+        );
+
+        expect(access).to.have.property('isEnabled', expected);
+      });
     });
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {

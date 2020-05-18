@@ -1,6 +1,4 @@
-import React, {
-  useState, useMemo, useCallback, useEffect, useRef,
-} from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import BoxedListWithLinks from '@navikt/boxed-list-with-links';
 import Header from '@navikt/nap-header';
@@ -9,6 +7,7 @@ import SystemButton from '@navikt/nap-system-button';
 import UserPanel from '@navikt/nap-user-panel';
 
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { getPathToFplos } from '@fpsak-frontend/fp-felles';
 import ErrorMessagePanel from './ErrorMessagePanel';
 
 import messages from '../i18n/nb_NO.json';
@@ -17,19 +16,24 @@ import styles from './headerWithErrorPanel.less';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
-
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const useOutsideClickEvent = (erLenkepanelApent, setLenkePanelApent) => {
   const wrapperRef = useRef(null);
-  const handleClickOutside = useCallback((event) => {
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      setLenkePanelApent(false);
-    }
-  }, [wrapperRef.current]);
+  const handleClickOutside = useCallback(
+    event => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setLenkePanelApent(false);
+      }
+    },
+    [wrapperRef.current],
+  );
 
   useEffect(() => {
     if (erLenkepanelApent) {
@@ -43,6 +47,14 @@ const useOutsideClickEvent = (erLenkepanelApent, setLenkePanelApent) => {
   }, [erLenkepanelApent]);
 
   return wrapperRef;
+};
+
+const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
+const getHeaderTitleHref = () => {
+  if (!isRunningOnLocalhost()) {
+    return getPathToFplos(window.location.href) || '/k9/web';
+  }
+  return '/k9/web';
 };
 
 /**
@@ -70,35 +82,45 @@ const HeaderWithErrorPanel = ({
     setSiteHeight(fixedHeaderRef.current.clientHeight);
   }, [errorMessages.length]);
 
-  const lenkerFormatertForBoxedList = useMemo(() => iconLinks.map((link) => ({
-    name: link.text,
-    href: link.url,
-    isExternal: true,
-  })), []);
-  const popperPropsChildren = useCallback(() => (
-    <BoxedListWithLinks
-      items={lenkerFormatertForBoxedList}
-      onClick={() => {
-        setLenkePanelApent(false);
-      }}
-    />
-  ), []);
-  const referencePropsChildren = useCallback(({ ref }) => (
-    <div ref={ref}>
-      <SystemButton
+  const lenkerFormatertForBoxedList = useMemo(
+    () =>
+      iconLinks.map(link => ({
+        name: link.text,
+        href: link.url,
+        isExternal: true,
+      })),
+    [],
+  );
+  const popperPropsChildren = useCallback(
+    () => (
+      <BoxedListWithLinks
+        items={lenkerFormatertForBoxedList}
         onClick={() => {
-          setLenkePanelApent(!erLenkepanelApent);
+          setLenkePanelApent(false);
         }}
-        isToggled={erLenkepanelApent}
       />
-    </div>
-  ), [erLenkepanelApent]);
+    ),
+    [],
+  );
+  const referencePropsChildren = useCallback(
+    ({ ref }) => (
+      <div ref={ref}>
+        <SystemButton
+          onClick={() => {
+            setLenkePanelApent(!erLenkepanelApent);
+          }}
+          isToggled={erLenkepanelApent}
+        />
+      </div>
+    ),
+    [erLenkepanelApent],
+  );
 
   return (
     <header ref={fixedHeaderRef} className={styles.container}>
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
-          <Header title={systemTittel} titleHref="/k9/web">
+          <Header title={systemTittel} titleHref={getHeaderTitleHref()}>
             <Popover
               popperIsVisible={erLenkepanelApent}
               renderArrowElement

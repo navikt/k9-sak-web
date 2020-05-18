@@ -67,14 +67,11 @@ const skalKunneForhåndsviseBrev = behandlingResultat => {
   if (!behandlingResultat) {
     return true;
   }
-  const { konsekvenserForYtelsen } = behandlingResultat;
-  if (!Array.isArray(konsekvenserForYtelsen) || konsekvenserForYtelsen.length !== 1) {
+  const { type } = behandlingResultat;
+  if (!type) {
     return true;
   }
-  return (
-    konsekvenserForYtelsen[0].kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' &&
-    konsekvenserForYtelsen[0].kode !== 'INGEN_ENDRING'
-  );
+  return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
 };
 
 export const getSubmitKnappTekst = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>

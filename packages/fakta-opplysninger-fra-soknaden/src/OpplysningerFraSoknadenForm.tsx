@@ -18,7 +18,7 @@ import TextAreaField from '../../form/src/TextAreaField';
 import FrilanserForm from './FrilanserForm';
 import styles from './opplysningerFraSoknadenForm.less';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
-import OpplysningerFraSoknadenValues from './types/OpplysningerFraSoknadenTypes';
+import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
 
 const classNames = classnames.bind(styles);
 
@@ -36,18 +36,18 @@ const startdatoErISøknadsperiode = (startdato, søknadsperiode) => {
 };
 
 const selvstendigNæringsdrivendeFields = [
-  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN,
-  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019,
-  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020,
-  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO,
-  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN,
-  OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER,
+  SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN,
+  SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019,
+  SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020,
+  SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO,
+  SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN,
+  SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS,
 ];
 
 const frilansFields = [
-  OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN,
-  OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN,
-  OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE,
+  SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN,
+  SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN,
+  SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN,
 ];
 
 interface OpplysningerFraSoknadenFormProps {
@@ -132,11 +132,12 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             'formContainer--hidden': !skalViseSSNSeksjonen,
           })}
         >
-          {skjemaErLåst ? (
+          {erSelvstendigNæringsdrivende && skjemaErLåst && (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
             </Element>
-          ) : (
+          )}
+          {!skjemaErLåst && (
             <Checkbox
               label={
                 <Label
@@ -193,10 +194,10 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             />
           )}
         </div>
-        {(erFrilanser || erSelvstendigNæringsdrivende) && (
+        {(erFrilanser || erSelvstendigNæringsdrivende) && !skjemaErLåst && (
           <div className={classNames('begrunnelseContainer')}>
             <TextAreaField
-              name={OpplysningerFraSoknadenValues.BEGRUNNELSE}
+              name={SøknadFormValue.BEGRUNNELSE}
               label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
               validate={[required, minLength(3), maxLength(2000), hasValidText]}
               readOnly={skjemaErLåst}
@@ -230,17 +231,17 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
   );
 };
 
-interface TransformValues {
-  [OpplysningerFraSoknadenValues.BEGRUNNELSE]: string;
-  [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN_SOM_SELVSTENDIG_NÆRINGSDRIVENDE]: string;
-  [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: string;
-  [OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN]: string;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: string;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: string;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN_SOM_FRILANSER]: string;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: string;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
-  [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO]: string;
+interface OpplysningerFraSøknadenFormValues {
+  [SøknadFormValue.BEGRUNNELSE]: string;
+  [SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN]: string;
+  [SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: string;
+  [SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN]: string;
+  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: string;
+  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: string;
+  [SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS]: string;
+  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: string;
+  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
+  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO]: string;
 }
 
 const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
@@ -253,117 +254,137 @@ const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
   },
 });
 
-const getOppgittEgenNæringISøkerperioden = (
-  values: TransformValues,
-  opplysningerFraSøknaden: OpplysningerFraSøknaden,
+const getValueSafely = value => {
+  if (value) {
+    return `${value}`.trim();
+  }
+  return null;
+};
+
+const getFormValueSafely = (propertyName: SøknadFormValue, formValues: OpplysningerFraSøknadenFormValues) => {
+  const formValue = formValues[propertyName];
+  return getValueSafely(formValue);
+};
+
+const lagOppgittEgenNæringForSøknadsperioden = (
+  formValues: OpplysningerFraSøknadenFormValues,
+  opprinneligeSøknadsopplysninger: OpplysningerFraSøknaden,
 ) => {
-  if (values.selvstendigNaeringsdrivende_inntektISoknadsperioden) {
-    return [
-      byggPeriodeMedInntekt(
-        values.selvstendigNaeringsdrivende_startdatoForSoknaden,
-        opplysningerFraSøknaden.periodeFraSøknad.tom,
-        values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
-      ),
-    ];
+  const opprinneligTomDato = opprinneligeSøknadsopplysninger.periodeFraSøknad.tom;
+
+  const næringsinntekt = getFormValueSafely(
+    SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN,
+    formValues,
+  );
+  if (næringsinntekt !== null) {
+    const fomDato = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
+    return [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, næringsinntekt)];
   }
 
-  if (values.frilanser_inntektISoknadsperiodenSomSelvstendig) {
-    return [
-      byggPeriodeMedInntekt(
-        values.frilanser_startdatoForSoknaden,
-        opplysningerFraSøknaden.periodeFraSøknad.tom,
-        values.frilanser_inntektISoknadsperiodenSomSelvstendig,
-      ),
-    ];
+  const næringsinntektISøknadsperiodeForFrilans = getFormValueSafely(
+    SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS,
+    formValues,
+  );
+  if (næringsinntektISøknadsperiodeForFrilans !== null) {
+    const fomDato = formValues[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
+    return [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, næringsinntektISøknadsperiodeForFrilans)];
   }
 
   return null;
 };
 
-const getOppgittFrilansISøkerperioden = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => {
-  const frilansInntektISøknadsperioden = values.frilanser_inntektISoknadsperioden
-    ? `${values.frilanser_inntektISoknadsperioden}`.trim()
-    : null;
-  if (frilansInntektISøknadsperioden) {
+const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligeSøknadsopplysninger: OpplysningerFraSøknaden) => {
+  const opprinneligTomDato = opprinneligeSøknadsopplysninger.periodeFraSøknad.tom;
+
+  const frilansinntekt = getFormValueSafely(SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN, formValues);
+  if (frilansinntekt !== null) {
+    const fomDato = formValues[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
+    return { oppgittFrilansoppdrag: [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, frilansinntekt)] };
+  }
+
+  const frilansinntektISøknadsperiodeForSSN = getFormValueSafely(
+    SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN,
+    formValues,
+  );
+  if (frilansinntektISøknadsperiodeForSSN !== null) {
+    const fomDato = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
     return {
-      oppgittFrilansoppdrag: [
-        byggPeriodeMedInntekt(
-          values.frilanser_startdatoForSoknaden,
-          opplysningerFraSøknaden.periodeFraSøknad.tom,
-          values.frilanser_inntektISoknadsperioden,
-        ),
-      ],
+      oppgittFrilansoppdrag: [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, frilansinntektISøknadsperiodeForSSN)],
     };
   }
 
-  const ssnInntektISøknadsperioden = values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser
-    ? `${values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser}`.trim()
-    : null;
-  if (ssnInntektISøknadsperioden) {
-    return {
-      oppgittFrilansoppdrag: [
-        byggPeriodeMedInntekt(
-          values.selvstendigNaeringsdrivende_startdatoForSoknaden,
-          opplysningerFraSøknaden.periodeFraSøknad.tom,
-          values.selvstendigNaeringsdrivende_inntektISoknadsperiodenSomFrilanser,
-        ),
-      ],
-    };
-  }
   return null;
 };
 
-const getPeriodeForOppgittEgenNæringFørSøkerperioden = (
-  values: TransformValues,
+// eslint-disable-next-line consistent-return
+const finnOpprinneligPeriodeMedOppgittNæringsinntektFørSøknadsperioden = næringFørSøknadsperioden => {
+  const harOppgittNæringsinntektFørSøknadsperioden = næringFørSøknadsperioden && næringFørSøknadsperioden.length > 0;
+  if (harOppgittNæringsinntektFørSøknadsperioden) {
+    const inntektsperiodeFørSøknadsperioden = næringFørSøknadsperioden[0].periode;
+    const { fom, tom } = inntektsperiodeFørSøknadsperioden;
+    return {
+      fom,
+      tom,
+    };
+  }
+};
+
+const lagPeriodeForOppgittEgenNæringFørSøkerperioden = (
+  formValues: OpplysningerFraSøknadenFormValues,
   opplysningerFraSøknaden: OpplysningerFraSøknaden,
 ) => {
-  const inntekt2019 = values[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
   const næringFørSøknadsperioden = opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring;
-  const inntektsperiodeFørSøknadsperioden = næringFørSøknadsperioden[0].periode;
+  const opprinneligPeriode = finnOpprinneligPeriodeMedOppgittNæringsinntektFørSøknadsperioden(næringFørSøknadsperioden);
 
-  const { fom, tom } = inntektsperiodeFørSøknadsperioden;
+  const fom = opprinneligPeriode?.fom;
+  const tom = opprinneligPeriode?.tom;
   const opprinneligInntektsperiodeErI2019 = moment(fom, ISO_DATE_FORMAT).year() === 2019;
-  const { selvstendigNaeringsdrivende_nyoppstartetDato } = values;
+  const opprinneligInntektsperiodeErI2020 = moment(fom, ISO_DATE_FORMAT).year() === 2020;
 
   const periode: any = {};
+  const inntekt2019 = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+  const nyoppstartetDato = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
   if (inntekt2019) {
     if (opprinneligInntektsperiodeErI2019) {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || fom;
-      periode.tom = tom;
+      periode.fom = nyoppstartetDato || fom || '2019-01-01';
+      periode.tom = tom || '2019-12-31';
     } else {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || '2019-01-01';
+      periode.fom = nyoppstartetDato || '2019-01-01';
       periode.tom = '2019-12-31';
     }
   } else {
     // eslint-disable-next-line no-lonely-if
-    if (opprinneligInntektsperiodeErI2019) {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || '2020-01-01';
-      periode.tom = '2020-02-29';
+    if (opprinneligInntektsperiodeErI2020) {
+      periode.fom = nyoppstartetDato || fom || '2020-01-01';
+      periode.tom = tom || '2020-02-29';
     } else {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || fom;
-      periode.tom = tom;
+      periode.fom = nyoppstartetDato || '2020-01-01';
+      periode.tom = '2020-02-29';
     }
   }
 
   return periode;
 };
 
-const transformValues = (values: TransformValues, opplysningerFraSøknaden: OpplysningerFraSøknaden) => {
+const transformValues = (
+  formValues: OpplysningerFraSøknadenFormValues,
+  opplysningerFraSøknaden: OpplysningerFraSøknaden,
+) => {
   const egenNæringBruttoInntekt =
-    values.selvstendigNaeringsdrivende_inntekt2019 || values.selvstendigNaeringsdrivende_inntekt2020;
-  const skalOppgiNæringsinntektFørSøknadsperioden =
-    opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring?.length > 0 ||
-    values.selvstendigNaeringsdrivende_nyoppstartetDato;
+    formValues.selvstendigNaeringsdrivende_inntekt2019 || formValues.selvstendigNaeringsdrivende_inntekt2020;
+  const skalOppgiNæringsinntektFørSøknadsperioden = !!formValues.selvstendigNaeringsdrivende_startdatoForSoknaden;
+  const søkerYtelseForFrilans = !!formValues.frilanser_inntektISoknadsperioden;
+  const søkerYtelseForNæring = !!formValues.selvstendigNaeringsdrivende_inntektISoknadsperioden;
 
   const resultingData = {
     kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
-    begrunnelse: values.begrunnelse,
+    begrunnelse: formValues.begrunnelse,
     søknadsperiodeOgOppgittOpptjeningDto: {
       førSøkerPerioden: {
         oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
           ? [
               {
-                periode: getPeriodeForOppgittEgenNæringFørSøkerperioden(values, opplysningerFraSøknaden),
+                periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
                 bruttoInntekt: {
                   verdi: +egenNæringBruttoInntekt,
                 },
@@ -373,12 +394,12 @@ const transformValues = (values: TransformValues, opplysningerFraSøknaden: Oppl
         oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
       },
       iSøkerPerioden: {
-        oppgittEgenNæring: getOppgittEgenNæringISøkerperioden(values, opplysningerFraSøknaden),
-        oppgittFrilans: getOppgittFrilansISøkerperioden(values, opplysningerFraSøknaden),
+        oppgittEgenNæring: lagOppgittEgenNæringForSøknadsperioden(formValues, opplysningerFraSøknaden),
+        oppgittFrilans: lagOppgittFrilansForSøknadsperioden(formValues, opplysningerFraSøknaden),
       },
       periodeFraSøknad: opplysningerFraSøknaden.periodeFraSøknad,
-      søkerYtelseForFrilans: !!values.frilanser_inntektISoknadsperioden,
-      søkerYtelseForNæring: !!values.selvstendigNaeringsdrivende_inntektISoknadsperioden,
+      søkerYtelseForFrilans,
+      søkerYtelseForNæring,
     },
   };
 
@@ -398,7 +419,8 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   const næringStartdato = harNæring ? næring[0].periode.fom : null;
   const næringBruttoinntekt = harNæring ? næring[0].bruttoInntekt.verdi : null;
 
-  const næringFørSøknadsperioden = førSøkerPerioden?.oppgittEgenNæring;
+  const næringFørSøknadsperioden =
+    førSøkerPerioden?.oppgittEgenNæring.length > 0 ? førSøkerPerioden.oppgittEgenNæring : null;
   const næringsinntektFørSøknadsperioden = næringFørSøknadsperioden
     ? næringFørSøknadsperioden[0].bruttoInntekt.verdi
     : null;
@@ -413,22 +435,27 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
     erSelvstendigNæringsdrivende: søkerYtelseForNæring,
     erFrilanser: søkerYtelseForFrilans,
     søknadsperiode: periodeFraSøknad,
-    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: næringStartdato,
-    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: næringBruttoinntekt,
-    [OpplysningerFraSoknadenValues.FRILANSER_STARTDATO_FOR_SØKNADEN]: frilansoppdragStartdato,
-    [OpplysningerFraSoknadenValues.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: frilansoppdragBruttoinntekt,
-    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
+    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: næringStartdato,
+    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: næringBruttoinntekt,
+    [SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN]: frilansoppdragStartdato,
+    [SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: frilansoppdragBruttoinntekt,
+    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
       ? næringsinntektFørSøknadsperioden
       : null,
-    [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: inntektsperiodenFørSøknadsperiodeErI2020
+    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: inntektsperiodenFørSøknadsperiodeErI2020
       ? næringsinntektFørSøknadsperioden
       : null,
+    [SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN]:
+      !søkerYtelseForFrilans && frilansoppdragBruttoinntekt ? frilansoppdragBruttoinntekt : null,
+    [SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS]:
+      !søkerYtelseForNæring && næringBruttoinntekt ? næringBruttoinntekt : null,
   };
 };
 
 const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
   const { submitCallback, behandlingId, behandlingVersjon, opplysningerFraSøknaden, ...otherProps } = props;
-  const onSubmit = (values: TransformValues) => submitCallback([transformValues(values, opplysningerFraSøknaden)]);
+  const onSubmit = (formValues: OpplysningerFraSøknadenFormValues) =>
+    submitCallback([transformValues(formValues, opplysningerFraSøknaden)]);
 
   return state => ({
     onSubmit,
@@ -437,12 +464,12 @@ const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
       formName,
       behandlingId,
       behandlingVersjon,
-    )(state, [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]),
+    )(state, [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]),
     selvstendigNæringsdrivendeInntekt2020: !!behandlingFormValueSelector(
       formName,
       behandlingId,
       behandlingVersjon,
-    )(state, [OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]),
+    )(state, [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]),
     behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
     ...otherProps,
   });
@@ -485,8 +512,8 @@ const nyoppstartetDatoIsValid = (
 };
 
 const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
-  const inntekt2019 = selvstendigNæringsdrivendeInntekt2019 ? `${selvstendigNæringsdrivendeInntekt2019}`.trim() : null;
-  const inntekt2020 = selvstendigNæringsdrivendeInntekt2020 ? `${selvstendigNæringsdrivendeInntekt2020}`.trim() : null;
+  const inntekt2019 = getValueSafely(selvstendigNæringsdrivendeInntekt2019);
+  const inntekt2020 = getValueSafely(selvstendigNæringsdrivendeInntekt2020);
   if (inntekt2019 && inntekt2020) {
     return [{ id: 'ValidationMessage.InvalidIncome' }];
   }
@@ -503,26 +530,24 @@ const connectedComponent = connect(
   behandlingForm({
     form: formName,
     validate: values => {
-      const nyoppstartetDato = values[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
-      const inntekt2019 = values[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
-      const inntekt2020 = values[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
+      const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
+      const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+      const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
 
       const errors = {};
 
       const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
       if (nyoppstartetDatoValidation !== null) {
-        errors[
-          OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO
-        ] = nyoppstartetDatoValidation;
+        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
       }
 
       const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
       if (inntekt2019Validation !== null) {
-        errors[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
+        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
       }
       const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
       if (inntekt2020Validation !== null) {
-        errors[OpplysningerFraSoknadenValues.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
+        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
       }
 
       return errors;
