@@ -20,9 +20,9 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
   totaltAntallDager: 17,
   antallKoronadager: 0,
   antallDagerArbeidsgiverDekker: 3,
-  forbrukteDager: 10.4,
+  forbrukteDager: 'PT37H30M',
   restdager: 9.6,
-  antallDagerInfotrygd: 2.4,
+  antallDagerInfotrygd: 2,
   sisteUttaksplan: {
     aktiviteter: [
       {

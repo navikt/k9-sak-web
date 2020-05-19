@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import styled from 'styled-components';
+import moment from 'moment';
 import Undertittel from 'nav-frontend-typografi/lib/undertittel';
 import { FlexRow, Image } from '@fpsak-frontend/shared-components/index';
 import pieChart from '@fpsak-frontend/assets/images/pie_chart.svg';
@@ -50,6 +51,22 @@ export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
   };
 };
 
+export const beregnDagerTimer = (dagerTimer: number | string) => {
+  // @ts-ignore
+  if (Number.isFinite(dagerTimer)) {
+    // @ts-ignore
+    return konverterDesimalTilDagerOgTimer(dagerTimer);
+  }
+
+  const duration = moment.duration(dagerTimer);
+  const totaltAntallTimer = duration.days() * 7.5 + duration.hours() + duration.minutes() / 60;
+
+  return {
+    dager: Math.floor(totaltAntallTimer / 7.5),
+    timer: totaltAntallTimer % 7.5,
+  };
+};
+
 const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   totaltAntallDager,
   antallKoronadager = 0,
@@ -61,10 +78,9 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
 }) => {
   const restdagerErSmittevernsdager = restdager < 0;
 
-  const forbrukt = konverterDesimalTilDagerOgTimer(forbrukteDager);
-  const rest = restdagerErSmittevernsdager ? { dager: 0, timer: 0 } : konverterDesimalTilDagerOgTimer(restdager);
-  const dagerInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
-  const smittevernsdager = restdagerErSmittevernsdager && konverterDesimalTilDagerOgTimer(Math.abs(restdager));
+  const forbrukt = beregnDagerTimer(forbrukteDager);
+  const rest = restdagerErSmittevernsdager ? { dager: 0, timer: 0 } : beregnDagerTimer(restdager);
+  const smittevernsdager = restdagerErSmittevernsdager && beregnDagerTimer(Math.abs(restdager));
   const opprinneligeDager = totaltAntallDager - antallDagerArbeidsgiverDekker;
 
   return (
@@ -148,13 +164,8 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           label={{ textId: 'Årskvantum.ForbrukteDager' }}
           theme="rød"
           infoText={{
-            content: dagerInfotrygd.timer ? (
-              <FormattedHTMLMessage
-                id="Årskvantum.DagerOgTimerFraInfotrygd"
-                values={{ dager: dagerInfotrygd.dager, timer: dagerInfotrygd.timer }}
-              />
-            ) : (
-              <FormattedHTMLMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: dagerInfotrygd.dager }} />
+            content: (
+              <FormattedHTMLMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: antallDagerInfotrygd }} />
             ),
           }}
         />
