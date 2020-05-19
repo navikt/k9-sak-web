@@ -9,6 +9,8 @@ enum SøknadFormValue {
   FRILANSER_INNTEKT_I_SØKNADSPERIODEN = 'frilanser_inntektISoknadsperioden',
   FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN = 'frilansinntektISøknadsperiodeForSSN',
   BEGRUNNELSE = 'begrunnelse',
+  HAR_SØKT_SOM_SSN = 'harSøktSomSSN',
+  HAR_SØKT_SOM_FRILANSER = 'harSøktSomFrilanser',
 }
 
 export default SøknadFormValue;
