@@ -27,7 +27,12 @@ const createNewBehandlingRequest = (params, isTilbakekreving) => {
 
 export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilbakekreving, params) => dispatch =>
   dispatch(createNewBehandlingRequest(params, isTilbakekreving)).then(response => {
-    const updateBehandlinger = isTilbakekreving ? fpsakApi.BEHANDLINGER_FPTILBAKE : fpsakApi.BEHANDLINGER_FPSAK;
+
+    let updateBehandlinger;
+    if (isTilbakekreving) updateBehandlinger = fpsakApi.BEHANDLINGER_FPTILBAKE;
+    else if (params.behandlingType === behandlingType.KLAGE) updateBehandlinger = fpsakApi.BEHANDLINGER_KLAGE;
+    else updateBehandlinger = fpsakApi.BEHANDLINGER_FPSAK;
+
     if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
       return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
         .then((behandlingerResponse) => {
