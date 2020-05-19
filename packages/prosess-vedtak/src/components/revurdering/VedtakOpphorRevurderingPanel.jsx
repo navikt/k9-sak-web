@@ -13,6 +13,19 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
+const ytelseNavnMap = kode => {
+  switch (kode) {
+    case fagsakYtelseType.FRISINN:
+      return 'Frilans og selvstendig næringsdrivende inntektskompensasjon';
+    case fagsakYtelseType.OMSORGSPENGER:
+      return 'Omsorgspenger';
+    case fagsakYtelseType.PLEIEPENGER:
+      return 'Pleiepenger';
+    default:
+      return 'Ytelsen';
+  }
+};
+
 export const VedtakOpphorRevurderingPanelImpl = ({
   intl,
   opphoersdato,
@@ -25,17 +38,26 @@ export const VedtakOpphorRevurderingPanelImpl = ({
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-    <Normaltekst>
-      {intl.formatMessage(
-        {
-          id:
-            ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER
-              ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
-              : 'VedtakForm.RevurderingFP.PleiepengerOpphoerer',
-        },
-        { dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
-      )}
-    </Normaltekst>
+    {opphoersdato && (
+      <Normaltekst>
+        {intl.formatMessage(
+          {
+            id: 'VedtakForm.Revurdering.OpphoererDato',
+          },
+          { ytelse: ytelseNavnMap(ytelseTypeKode), dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
+        )}
+      </Normaltekst>
+    )}
+    {!opphoersdato && (
+      <Normaltekst>
+        {intl.formatMessage(
+          {
+            id: 'VedtakForm.Revurdering.Opphoerer',
+          },
+          { ytelse: ytelseNavnMap(ytelseTypeKode) },
+        )}
+      </Normaltekst>
+    )}
     <VerticalSpacer sixteenPx />
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
     {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
