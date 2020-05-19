@@ -38,14 +38,26 @@ export const VedtakOpphorRevurderingPanelImpl = ({
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-    <Normaltekst>
-      {intl.formatMessage(
-        {
-          id: 'VedtakForm.Revurdering.Opphoerer',
-        },
-        { ytelse: ytelseNavnMap(ytelseTypeKode), dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
-      )}
-    </Normaltekst>
+    {opphoersdato && (
+      <Normaltekst>
+        {intl.formatMessage(
+          {
+            id: 'VedtakForm.Revurdering.OpphoererDato',
+          },
+          { ytelse: ytelseNavnMap(ytelseTypeKode), dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
+        )}
+      </Normaltekst>
+    )}
+    {!opphoersdato && (
+      <Normaltekst>
+        {intl.formatMessage(
+          {
+            id: 'VedtakForm.Revurdering.Opphoerer',
+          },
+          { ytelse: ytelseNavnMap(ytelseTypeKode) },
+        )}
+      </Normaltekst>
+    )}
     <VerticalSpacer sixteenPx />
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
     {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
@@ -78,21 +90,13 @@ VedtakOpphorRevurderingPanelImpl.defaultProps = {
 };
 
 const getOpphorsdato = createSelector(
-  [
-    ownProps => ownProps.resultatstruktur,
-    ownProps => ownProps.medlemskapFom,
-    ownProps => ownProps.vedtakVarsel,
-    ownProps => ownProps.behandlingsresultat,
-  ],
-  (resultatstruktur, medlemskapFom, vedtakVarsel, behandlingsresultat) => {
+  [ownProps => ownProps.resultatstruktur, ownProps => ownProps.medlemskapFom, ownProps => ownProps.vedtakVarsel],
+  (resultatstruktur, medlemskapFom, vedtakVarsel) => {
     if (resultatstruktur && resultatstruktur.opphoersdato) {
       return resultatstruktur.opphoersdato;
     }
     if (medlemskapFom) {
       return medlemskapFom;
-    }
-    if (behandlingsresultat && behandlingsresultat.skjæringstidspunkt) {
-      return behandlingsresultat.skjæringstidspunkt.dato;
     }
     return vedtakVarsel.skjæringstidspunkt ? vedtakVarsel.skjæringstidspunkt.dato : '';
   },
