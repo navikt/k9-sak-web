@@ -154,6 +154,11 @@ export class VedtakForm extends Component {
     const skalViseLink =
       vedtakVarsel.avslagsarsak === null ||
       (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
+    const skalSkjuleFattVedtakKnapp =
+      aksjonspunktKoder &&
+      aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
+      ytelseTypeKode === fagsakYtelseType.FRISINN;
+
     return (
       <>
         <VedtakFritekstbrevModal
@@ -228,6 +233,7 @@ export class VedtakForm extends Component {
                     onClick={formProps.handleSubmit}
                     disabled={behandlingPaaVent || formProps.submitting}
                     spinner={formProps.submitting}
+                    style={{ display: skalSkjuleFattVedtakKnapp ? 'none' : 'block' }}
                   >
                     {intl.formatMessage({
                       id:
