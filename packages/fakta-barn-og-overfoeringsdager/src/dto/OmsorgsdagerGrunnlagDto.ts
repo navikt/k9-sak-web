@@ -6,11 +6,10 @@ import {
   UtvidetRettDto,
   AleneOmOmsorgen,
 } from './RammevedtakDto';
-import { BarnAutomatiskHentetDto, BarnLagtTilAvSaksbehandlerDto } from './BarnDto';
+import BarnDto from './BarnDto';
 
 interface OmsorgsdagerGrunnlagDto {
-  barn: BarnAutomatiskHentetDto[];
-  barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[];
+  barn: BarnDto[];
   midlertidigAleneOmOmsorgen?: MidlertidigAleneOmOmsorgen;
   aleneOmOmsorgen: AleneOmOmsorgen[];
   utvidetRett: UtvidetRettDto[];

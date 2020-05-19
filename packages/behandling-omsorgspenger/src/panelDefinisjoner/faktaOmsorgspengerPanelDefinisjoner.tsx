@@ -7,6 +7,7 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import * as React from 'react';
 import omsorgspengerBehandlingApi from '../data/omsorgspengerBehandlingApi';
 
@@ -55,6 +56,39 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     renderComponent: props => <OpptjeningFaktaIndex {...props} />,
     showComponent: ({ vilkar }) => shouldShowOpptjening(vilkar),
     getData: () => ({}),
+  },
+  {
+    urlCode: faktaPanelCodes.UTTAK,
+    textCode: 'UttakInfoPanel.FaktaUttak',
+    aksjonspunkterCodes: [],
+    endpoints: [],
+    renderComponent: props => <FaktaRammevedtakIndex {...props} />,
+    showComponent: ({ forbrukteDager }) => !!forbrukteDager,
+    getData: ({ forbrukteDager }) => ({
+      omsorgsdagerGrunnlagDto: forbrukteDager.omsorgsdagerGrunnlag || {
+        barn: [],
+        aleneOmOmsorgen: [],
+        utvidetRett: [],
+        overføringFår: [
+          {
+            antallDager: 8,
+            kilde: 'hentetAutomatisk',
+            avsendersFnr: '12018926752',
+          },
+          {
+            antallDager: 3,
+            kilde: 'hentetAutomatisk',
+            avsendersFnr: '12018926752',
+          },
+        ],
+        overføringGir: [],
+        fordelingFår: [],
+        fordelingGir: [],
+        koronaoverføringFår: [],
+        koronaoverføringGir: [],
+        uidentifiserteRammevedtak: [],
+      },
+    }),
   },
   {
     urlCode: faktaPanelCodes.BEREGNING,

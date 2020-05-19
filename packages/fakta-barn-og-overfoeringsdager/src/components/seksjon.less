@@ -1,7 +1,10 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .seksjon {
-  margin: 1em 0;
+  & + .seksjon {
+    margin: 1em 0;
+  }
+
   min-width: fit-content;
   padding: 1em;
 

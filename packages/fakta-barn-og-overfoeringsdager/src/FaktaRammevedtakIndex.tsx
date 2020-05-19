@@ -19,13 +19,11 @@ const intl = createIntl(
 interface FaktaRammevedtakIndexProps {
   omsorgsdagerGrunnlagDto: OmsorgsdagerGrunnlagDto;
   behandling: Behandling;
-  submitCallback: VoidFunction;
   readOnly?: boolean;
 }
 
 const FaktaRammevedtakIndex: FunctionComponent<FaktaRammevedtakIndexProps> = ({
   behandling,
-  submitCallback,
   readOnly,
   omsorgsdagerGrunnlagDto,
 }) => (
@@ -34,7 +32,6 @@ const FaktaRammevedtakIndex: FunctionComponent<FaktaRammevedtakIndexProps> = ({
       omsorgsdagerGrunnlag={omsorgsdagerGrunnlagDto}
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      submitCallback={submitCallback}
       readOnly={readOnly}
     />
   </RawIntlProvider>

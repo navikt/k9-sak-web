@@ -3,10 +3,7 @@ import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import OmsorgsdagerGrunnlagDto from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/OmsorgsdagerGrunnlagDto';
 import { Behandling } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
-import {
-  BarnAutomatiskHentetDto,
-  BarnLagtTilAvSaksbehandlerDto,
-} from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/BarnDto';
+import BarnDto from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/BarnDto';
 import {
   UidentifisertRammevedtak,
   UtvidetRettDto,
@@ -37,7 +34,6 @@ const behandling: Behandling = {
 
 const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
   barn: [],
-  barnLagtTilAvSakbehandler: [],
   aleneOmOmsorgen: [],
   utvidetRett: [],
   overføringFår: [],
@@ -51,14 +47,7 @@ const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
 
 const fnrEtBarn = '12121212121';
 const fnrEtAnnetBarn = '02020202020';
-const barn: BarnAutomatiskHentetDto[] = [{ fødselsnummer: fnrEtBarn }, { fødselsnummer: fnrEtAnnetBarn }];
-
-const barnLagtTilAvSakbehandler: BarnLagtTilAvSaksbehandlerDto[] = [
-  {
-    id: '1',
-    fødselsdato: '2012-12-12',
-  },
-];
+const barn: BarnDto[] = [{ fødselsnummer: fnrEtBarn }, { fødselsnummer: fnrEtAnnetBarn }];
 
 const uidentifiserteRammevedtak: UidentifisertRammevedtak[] = [{ fritekst: undefined }, { fritekst: undefined }];
 const utvidetRettUkjentBarn: UtvidetRettDto = {
@@ -70,7 +59,6 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
     omsorgsdagerGrunnlagDto={{
       ...tomOmsorgsdagerGrunnlag,
       barn,
-      barnLagtTilAvSakbehandler,
       uidentifiserteRammevedtak,
       aleneOmOmsorgen: [
         {
@@ -110,7 +98,6 @@ export const readOnly = () => (
     omsorgsdagerGrunnlagDto={{
       ...tomOmsorgsdagerGrunnlag,
       barn,
-      barnLagtTilAvSakbehandler,
       aleneOmOmsorgen: [
         {
           fnrBarnAleneOm: fnrEtBarn,

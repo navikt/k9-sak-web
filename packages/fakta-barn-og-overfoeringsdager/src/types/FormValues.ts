@@ -1,9 +1,8 @@
 import Overføring from './Overføring';
-import { BarnHentetAutomatisk, BarnLagtTilAvSakbehandler } from './Barn';
+import Barn from './Barn';
 
 interface FormValues {
-  barn: BarnHentetAutomatisk[];
-  barnLagtTilAvSaksbehandler: BarnLagtTilAvSakbehandler[];
+  barn: Barn[];
   midlertidigAleneansvar?: {
     erMidlertidigAlene: boolean;
     fom: string;

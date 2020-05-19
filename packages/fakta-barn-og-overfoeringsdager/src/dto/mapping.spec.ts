@@ -5,12 +5,11 @@ import OmsorgsdagerGrunnlagDto from './OmsorgsdagerGrunnlagDto';
 import { DagerGitt, DagerMottatt, UtvidetRettDto } from './RammevedtakDto';
 import FormValues from '../types/FormValues';
 import Overføring from '../types/Overføring';
-import { BarnAutomatiskHentetDto } from './BarnDto';
+import BarnDto from './BarnDto';
 import { InformasjonskildeEnum } from './Informasjonskilde';
 
 const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
   barn: [],
-  barnLagtTilAvSakbehandler: [],
   aleneOmOmsorgen: [],
   utvidetRett: [],
   overføringFår: [],
@@ -68,14 +67,6 @@ describe('mapping fra DTO til formValues', () => {
           aleneomsorg: true,
         },
       ],
-      barnLagtTilAvSaksbehandler: [
-        {
-          fødselsdato: fDatoManueltLagtTil,
-          id: idBarnManueltLagtTil,
-          aleneomsorg: true,
-          erKroniskSykt: true,
-        },
-      ],
       begrunnelse: 'fordi',
       fordelingFår: [nyOverføring],
       fordelingGir: [nyOverføring],
@@ -89,7 +80,7 @@ describe('mapping fra DTO til formValues', () => {
       overføringFår: [nyOverføring],
       overføringGir: [nyOverføring],
     };
-    const initBarn: BarnAutomatiskHentetDto = { fødselsnummer: fnrAutoHentet };
+    const initBarn: BarnDto = { fødselsnummer: fnrAutoHentet };
 
     const {
       barn,
@@ -172,12 +163,6 @@ describe('mapping fra DTO til formValues', () => {
       barn: [
         {
           fødselsnummer: '123',
-        },
-      ],
-      barnLagtTilAvSakbehandler: [
-        {
-          fødselsdato: '23.02.2019',
-          id: '1',
         },
       ],
       aleneOmOmsorgen: [

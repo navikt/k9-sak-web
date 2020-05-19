@@ -2,14 +2,13 @@ import moment from 'moment';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import OmsorgsdagerGrunnlagDto from './OmsorgsdagerGrunnlagDto';
 import FormValues from '../types/FormValues';
-import { BarnHentetAutomatisk, BarnLagtTilAvSakbehandler } from '../types/Barn';
+import Barn from '../types/Barn';
 import { DagerMottatt, DagerGitt, UtvidetRettDto, AleneOmOmsorgen } from './RammevedtakDto';
 import Overføring from '../types/Overføring';
 import { InformasjonskildeEnum } from './Informasjonskilde';
 
 export const mapDtoTilFormValues = ({
-  barn,
-  barnLagtTilAvSakbehandler,
+  barn: barnDto,
   utvidetRett,
   midlertidigAleneOmOmsorgen,
   aleneOmOmsorgen,
@@ -20,22 +19,14 @@ export const mapDtoTilFormValues = ({
   fordelingGir,
   koronaoverføringGir,
 }: OmsorgsdagerGrunnlagDto): FormValues => {
-  const barnHentetAutomatisk: BarnHentetAutomatisk[] = barn.map(({ fødselsnummer }) => ({
+  const barn: Barn[] = barnDto.map(({ fødselsnummer }) => ({
     fødselsnummer,
     erKroniskSykt: utvidetRett.some(({ fnrKroniskSyktBarn }) => fnrKroniskSyktBarn === fødselsnummer),
     aleneomsorg: aleneOmOmsorgen.some(({ fnrBarnAleneOm }) => fnrBarnAleneOm === fødselsnummer),
   }));
 
-  const barnLagtTil: BarnLagtTilAvSakbehandler[] = barnLagtTilAvSakbehandler.map(({ id, fødselsdato }) => ({
-    id,
-    fødselsdato,
-    aleneomsorg: aleneOmOmsorgen.some(({ idBarnAleneOm }) => idBarnAleneOm === id),
-    erKroniskSykt: utvidetRett.some(({ idKroniskSyktBarn }) => idKroniskSyktBarn === id),
-  }));
-
   return {
-    barn: barnHentetAutomatisk,
-    barnLagtTilAvSaksbehandler: barnLagtTil,
+    barn,
     midlertidigAleneansvar: {
       fom: midlertidigAleneOmOmsorgen?.fom,
       tom: midlertidigAleneOmOmsorgen?.tom,
@@ -130,7 +121,6 @@ const fødselsdatoFraFødselsnummer = fødselsnummer => {
 export const mapFormValuesTilDto = (
   {
     barn,
-    barnLagtTilAvSaksbehandler,
     overføringFår,
     overføringGir,
     fordelingFår,
@@ -144,24 +134,6 @@ export const mapFormValuesTilDto = (
   const aleneOmOmsorgenBarn: AleneOmOmsorgen[] = barn
     .filter(b => b.aleneomsorg)
     .map(b => initialValues.aleneOmOmsorgen.find(alene => alene.fnrBarnAleneOm === b.fødselsnummer));
-
-  const aleneOmOmsorgenBarnLagtTilManuelt: AleneOmOmsorgen[] = barnLagtTilAvSaksbehandler
-    .filter(b => b.aleneomsorg)
-    .map(b => {
-      const tilhørendeRammevetdakLagtTilTidligere: AleneOmOmsorgen = initialValues.aleneOmOmsorgen.find(
-        alene => alene.idBarnAleneOm === b.id,
-      );
-
-      return (
-        tilhørendeRammevetdakLagtTilTidligere || {
-          idBarnAleneOm: b.id,
-          kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
-          fødselsdato: b.fødselsdato,
-          fom: førsteDagIÅr(),
-          tom: sisteDagIAar(),
-        }
-      );
-    });
 
   const utvidetRettBarn: UtvidetRettDto[] = barn
     .filter(b => b.erKroniskSykt)
@@ -180,31 +152,10 @@ export const mapFormValuesTilDto = (
       );
     });
 
-  const utvidetRettBarnLagtTilAvSaksbehandler: UtvidetRettDto[] = barnLagtTilAvSaksbehandler
-    .filter(b => b.erKroniskSykt)
-    .map(b => {
-      const tilhørendeUtvidetRettLagtTilTidligere: UtvidetRettDto = initialValues.utvidetRett.find(
-        ur => ur.idKroniskSyktBarn === b.id,
-      );
-      return (
-        tilhørendeUtvidetRettLagtTilTidligere || {
-          idKroniskSyktBarn: b.id,
-          kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
-          fødselsdato: b.fødselsdato,
-          fom: førsteDagIÅr(),
-          tom: sisteDagIAaretBarnFyller18(b.fødselsdato),
-        }
-      );
-    });
-
   return {
     barn: barn.map(({ fødselsnummer }) => ({ fødselsnummer })),
-    barnLagtTilAvSakbehandler: barnLagtTilAvSaksbehandler.map(({ id, fødselsdato }) => ({
-      id,
-      fødselsdato,
-    })),
-    utvidetRett: utvidetRettBarn.concat(...utvidetRettBarnLagtTilAvSaksbehandler),
-    aleneOmOmsorgen: aleneOmOmsorgenBarn.concat(...aleneOmOmsorgenBarnLagtTilManuelt),
+    utvidetRett: utvidetRettBarn,
+    aleneOmOmsorgen: aleneOmOmsorgenBarn,
     overføringFår: mapOverføringFår(overføringFår),
     overføringGir: mapOverføringGir(overføringGir),
     fordelingFår: mapOverføringFår(fordelingFår),

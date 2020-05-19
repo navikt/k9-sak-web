@@ -12,30 +12,26 @@ import {
 } from '@fpsak-frontend/form/src/behandlingForm';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
-import { minLength, maxLength, required, hasValidText, hasValidDate } from '@fpsak-frontend/utils';
-import { TextAreaField } from '@fpsak-frontend/form/index';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { required, hasValidDate } from '@fpsak-frontend/utils';
 import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
 import user from '@fpsak-frontend/assets/images/user.svg';
 import users from '@fpsak-frontend/assets/images/users.svg';
 import { Element } from 'nav-frontend-typografi';
 import OmsorgsdagerGrunnlagDto from '../dto/OmsorgsdagerGrunnlagDto';
 import { mapDtoTilFormValues, mapFormValuesTilDto } from '../dto/mapping';
-import { AlleBarn, BarnLagtTilAvSaksbehandler } from './AlleBarn';
 import FormValues from '../types/FormValues';
-import BegrunnBekreftTilbakestillSeksjon from './BegrunnBekreftTilbakestillSeksjon';
 import MidlertidigAlene from './MidlertidigAlene';
-import { OverføringsretningEnum, OverføringstypeEnum } from '../types/Overføring';
-import { overføringerFormName, rammevedtakFormName } from './formNames';
+import { OverføringsretningEnum } from '../types/Overføring';
+import { rammevedtakFormName } from './formNames';
 import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import Seksjon from './Seksjon';
 import FastBreddeAligner from './FastBreddeAligner';
+import AlleBarn from './AlleBarn';
 
 interface RammevedtakFaktaFormProps {
   omsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto;
   behandlingId: number;
   behandlingVersjon: number;
-  submitCallback: (values: any) => void;
   readOnly?: boolean;
   formValues?: FormValues;
   resetForm?: (formName: string) => void;
@@ -51,12 +47,9 @@ interface RammevedtakFaktaFormProps {
 export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
   omsorgsdagerGrunnlag,
   formValues,
-  pristine,
   handleSubmit,
-  resetForm,
   behandlingId,
   behandlingVersjon,
-  readOnly,
   changeForm,
 }) => {
   const { utvidetRett, uidentifiserteRammevedtak = [] } = omsorgsdagerGrunnlag;
@@ -76,26 +69,24 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
     changeForm(formName, felt, nyVerdi);
     setOppdaterteForms(verdi => verdi.concat(oppdatertFormName));
   };
-  const tilbakestill = () => {
-    resetForm(formName);
-    Object.values(OverføringstypeEnum).forEach(type =>
-      Object.values(OverføringsretningEnum).forEach(retning => {
-        resetForm(`${behandlingFormPrefix}.${overføringerFormName(type, retning)}`);
-      }),
-    );
-    setOppdaterteForms([]);
-  };
+  // const tilbakestill = () => {
+  //   resetForm(formName);
+  //   Object.values(OverføringstypeEnum).forEach(type =>
+  //     Object.values(OverføringsretningEnum).forEach(retning => {
+  //       resetForm(`${behandlingFormPrefix}.${overføringerFormName(type, retning)}`);
+  //     }),
+  //   );
+  //   setOppdaterteForms([]);
+  // };
 
   const {
     barn,
-    barnLagtTilAvSaksbehandler,
     overføringGir,
     overføringFår,
     fordelingGir,
     fordelingFår,
     koronaoverføringGir,
     koronaoverføringFår,
-    midlertidigAleneansvar,
   } = formValues;
 
   return (
@@ -155,7 +146,7 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
           behandlingVersjon={behandlingVersjon}
           oppdaterForm={oppdaterForm}
           oppdaterteForms={oppdaterteForms}
-          readOnly={readOnly}
+          readOnly
         />
         <VerticalSpacer thirtyTwoPx />
         <OverføringsdagerPanelgruppe
@@ -167,49 +158,42 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
           behandlingVersjon={behandlingVersjon}
           oppdaterForm={oppdaterForm}
           oppdaterteForms={oppdaterteForms}
-          readOnly={readOnly}
+          readOnly
         />
       </Seksjon>
       <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={users}>
         <>
-          {!(barn.length || barnLagtTilAvSaksbehandler.length) && (
-            <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />
-          )}
-          <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly }} />
-          <FieldArray
-            name="barnLagtTilAvSaksbehandler"
-            component={BarnLagtTilAvSaksbehandler}
-            props={{ barnAutomatisk: barn, readOnly }}
-          />
+          {!barn.length && <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />}
+          <FieldArray name="barn" component={AlleBarn} props={{ barn, readOnly: true }} />
         </>
       </Seksjon>
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.ErMidlertidigAlene.Tittel" imgSrc={user}>
-        <MidlertidigAlene readOnly={readOnly} midlertidigAleneVerdi={!!midlertidigAleneansvar?.erMidlertidigAlene} />
+        <MidlertidigAlene readOnly />
       </Seksjon>
-      {!pristine && (
-        <>
-          <VerticalSpacer twentyPx />
-          <BegrunnBekreftTilbakestillSeksjon
-            begrunnField={
-              <TextAreaField
-                label={<FormattedMessage id="FaktaRammevedtak.Begrunnelse" />}
-                name="begrunnelse"
-                validate={[required, minLength(3), maxLength(400), hasValidText]}
-              />
-            }
-            bekreftKnapp={
-              <Hovedknapp onClick={handleSubmit} htmlType="submit" disabled={!readOnly}>
-                <FormattedMessage id="FaktaRammevedtak.Bekreft" />
-              </Hovedknapp>
-            }
-            tilbakestillKnapp={
-              <Knapp htmlType="button" mini onClick={tilbakestill}>
-                <FormattedMessage id="FaktaRammevedtak.Tilbakestill" />
-              </Knapp>
-            }
-          />
-        </>
-      )}
+      {/* {!pristine && ( */}
+      {/*  <> */}
+      {/*    <VerticalSpacer twentyPx /> */}
+      {/*    <BegrunnBekreftTilbakestillSeksjon */}
+      {/*      begrunnField={ */}
+      {/*        <TextAreaField */}
+      {/*          label={<FormattedMessage id="FaktaRammevedtak.Begrunnelse" />} */}
+      {/*          name="begrunnelse" */}
+      {/*          validate={[required, minLength(3), maxLength(400), hasValidText]} */}
+      {/*        /> */}
+      {/*      } */}
+      {/*      bekreftKnapp={ */}
+      {/*        <Hovedknapp onClick={handleSubmit} htmlType="submit" disabled={!readOnly}> */}
+      {/*          <FormattedMessage id="FaktaRammevedtak.Bekreft" /> */}
+      {/*        </Hovedknapp> */}
+      {/*      } */}
+      {/*      tilbakestillKnapp={ */}
+      {/*        <Knapp htmlType="button" mini onClick={tilbakestill}> */}
+      {/*          <FormattedMessage id="FaktaRammevedtak.Tilbakestill" /> */}
+      {/*        </Knapp> */}
+      {/*      } */}
+      {/*    /> */}
+      {/*  </> */}
+      {/* )} */}
     </form>
   );
 };
@@ -234,8 +218,8 @@ const validate = (values: FormValues) => {
 };
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: RammevedtakFaktaFormProps) => {
-  const { submitCallback, omsorgsdagerGrunnlag } = initialOwnProps;
-  const onSubmit = values => submitCallback(mapFormValuesTilDto(values, omsorgsdagerGrunnlag));
+  const { omsorgsdagerGrunnlag } = initialOwnProps;
+  const onSubmit = values => mapFormValuesTilDto(values, omsorgsdagerGrunnlag);
 
   return (state, { behandlingId, behandlingVersjon }: RammevedtakFaktaFormProps) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);

@@ -1,8 +1,5 @@
-export interface BarnAutomatiskHentetDto {
+interface BarnDto {
   fødselsnummer: string;
 }
 
-export interface BarnLagtTilAvSaksbehandlerDto {
-  id: string;
-  fødselsdato: string;
-}
+export default BarnDto;
