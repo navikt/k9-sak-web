@@ -15,6 +15,7 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -52,6 +53,7 @@ export class VedtakRevurderingFormImpl extends Component {
   constructor(props) {
     super(props);
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
+    this.skalSkjuleFattVedtakKnapp = this.skalSkjuleFattVedtakKnapp.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
     };
@@ -65,6 +67,15 @@ export class VedtakRevurderingFormImpl extends Component {
     });
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
     clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
+  }
+
+  skalSkjuleFattVedtakKnapp() {
+    const { aksjonspunktKoder, ytelseTypeKode } = this.props;
+    return (
+      aksjonspunktKoder &&
+      aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
+      ytelseTypeKode === fagsakYtelseType.FRISINN
+    );
   }
 
   render() {
@@ -180,7 +191,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 previewBrev={previewAutomatiskBrev}
               />
             )}
-            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
+            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && !this.skalSkjuleFattVedtakKnapp() && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
                 brodtekst={brødtekst}
