@@ -15,6 +15,7 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import { Undertittel } from 'nav-frontend-typografi';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel, {
   RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN,
@@ -280,6 +281,16 @@ const harFrisinngrunnlag = beregningsgrunnlag => {
   );
 };
 
+const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
+  if (
+    beregningsgrunnlag.ytelsesspesifiktGrunnlag &&
+    beregningsgrunnlag.ytelsesspesifiktGrunnlag.ytelsetype === fagsakYtelseType.OMSORGSPENGER
+  ) {
+    return beregningsgrunnlag.ytelsesspesifiktGrunnlag.skalAvviksvurdere;
+  }
+  return true;
+};
+
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningFormImpl
 // ------------------------------------------------------------------------------------------ //
@@ -318,6 +329,7 @@ export const BeregningFormImpl = ({
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
+  const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       {gjeldendeAksjonspunkter && (
@@ -375,6 +387,7 @@ export const BeregningFormImpl = ({
             allePerioder={beregningsgrunnlagPeriode}
             harAksjonspunkter={harAksjonspunkter}
             gjelderBesteberegning={gjelderBesteberegning}
+            skalViseAvviksprosent={skalViseAvviksprosent}
           />
           {harAksjonspunkter && (
             <>
