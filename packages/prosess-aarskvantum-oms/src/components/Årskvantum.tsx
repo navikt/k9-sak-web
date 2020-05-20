@@ -115,6 +115,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
                 ),
               },
               border: false,
+              key: 'opprinneligeDager',
             },
             {
               count: { bigCount: antallKoronadager, borderBottom: true },
@@ -126,6 +127,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
                 borderTop: true,
                 borderBottom: true,
               },
+              key: 'koronadager',
             },
             {
               count: { bigCount: opprinneligeDager + antallKoronadager },
@@ -135,6 +137,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
               infoText: {
                 content: <FormattedMessage id="Årskvantum.TotaleDager.InfoText" />,
               },
+              key: 'totaleDager',
             },
           ]}
         />

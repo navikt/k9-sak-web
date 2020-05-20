@@ -8,13 +8,25 @@ import BorderedContainer from './BorderedContainer';
 import Aktivitet from '../dto/Aktivitet';
 import { joinNonNullStrings } from './utils';
 import AktivitetTabell from './AktivitetTabell';
+import AksjonspunktForm from './AksjonspunktForm';
 
 interface UttaksplanProps {
   aktiviteter: Aktivitet[];
   aktivitetsstatuser: KodeverkMedNavn[];
+  isAksjonspunktOpen: boolean;
+  behandlingId: number;
+  behandlingVersjon: number;
+  submitCallback: (values: any[]) => void;
 }
 
-const Uttaksplan: FunctionComponent<UttaksplanProps> = ({ aktiviteter = [], aktivitetsstatuser = [] }) => {
+const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
+  aktiviteter = [],
+  aktivitetsstatuser = [],
+  isAksjonspunktOpen,
+  behandlingId,
+  behandlingVersjon,
+  submitCallback,
+}) => {
   return (
     <BorderedContainer
       heading={
@@ -24,6 +36,14 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({ aktiviteter = [], akti
         </Undertittel>
       }
     >
+      {isAksjonspunktOpen && (
+        <AksjonspunktForm
+          aktiviteter={aktiviteter}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          submitCallback={submitCallback}
+        />
+      )}
       {aktiviteter.length ? (
         aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => (
           <AktivitetTabell

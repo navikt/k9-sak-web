@@ -159,7 +159,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                       <FormattedMessage id="Uttaksplan.Hjemler" />
                     </Element>
                     {hjemler.map(hjemmel => (
-                      <div>
+                      <div key={`${periode}--${hjemmel}`}>
                         <FormattedMessage id={`Uttaksplan.Hjemmel.${hjemmel}`} />
                       </div>
                     ))}

@@ -1,14 +1,19 @@
 import React from 'react';
+import { withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
 import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
 import { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
 import { VurderteVilkår } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
+import { Behandling } from '@k9-sak-web/types';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
+import withReduxProvider from '../../decorators/withRedux';
 
 export default {
   title: 'omsorgspenger/prosess/Årskvantum',
   component: ÅrskvantumIndex,
+  decorators: [withKnobs, withReduxProvider],
 };
 
 const vilkårInnvilget: VurderteVilkår = {
@@ -86,7 +91,15 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
 };
 
 // @ts-ignore
-export const standard = () => <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} />;
+const behandling: Behandling = {
+  id: 1,
+  versjon: 1,
+};
+
+export const standard = () => (
+  // @ts-ignore
+  <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} behandling={behandling} />
+);
 
 export const smittevernsdager = () => (
   <ÅrskvantumIndex
@@ -97,5 +110,8 @@ export const smittevernsdager = () => (
     }}
     // @ts-ignore
     alleKodeverk={alleKodeverk}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
   />
 );
