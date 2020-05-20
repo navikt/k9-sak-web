@@ -53,7 +53,7 @@ export class VedtakRevurderingFormImpl extends Component {
   constructor(props) {
     super(props);
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
-    this.skalSkjuleFattVedtakKnapp = this.skalSkjuleFattVedtakKnapp.bind(this);
+    this.skalSkjuleSubmitPanel = this.skalSkjuleSubmitPanel.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
     };
@@ -69,7 +69,7 @@ export class VedtakRevurderingFormImpl extends Component {
     clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
   }
 
-  skalSkjuleFattVedtakKnapp() {
+  skalSkjuleSubmitPanel() {
     const { aksjonspunktKoder, ytelseTypeKode } = this.props;
     return (
       aksjonspunktKoder &&
@@ -191,7 +191,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 previewBrev={previewAutomatiskBrev}
               />
             )}
-            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && !this.skalSkjuleFattVedtakKnapp() && (
+            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && !this.skalSkjuleSubmitPanel() && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
                 brodtekst={brødtekst}
