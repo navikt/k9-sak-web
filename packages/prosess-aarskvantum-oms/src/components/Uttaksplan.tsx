@@ -9,9 +9,11 @@ import Aktivitet from '../dto/Aktivitet';
 import { joinNonNullStrings } from './utils';
 import AktivitetTabell from './AktivitetTabell';
 import AksjonspunktForm from './AksjonspunktForm';
+import Rammevedtak from '../dto/Rammevedtak';
 
 interface UttaksplanProps {
   aktiviteter: Aktivitet[];
+  rammevedtak: Rammevedtak[];
   aktivitetsstatuser: KodeverkMedNavn[];
   isAksjonspunktOpen: boolean;
   behandlingId: number;
@@ -21,6 +23,7 @@ interface UttaksplanProps {
 
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   aktiviteter = [],
+  rammevedtak= [],
   aktivitetsstatuser = [],
   isAksjonspunktOpen,
   behandlingId,
@@ -39,6 +42,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
       {isAksjonspunktOpen && (
         <AksjonspunktForm
           aktiviteter={aktiviteter}
+          rammevedtak={rammevedtak}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           submitCallback={submitCallback}

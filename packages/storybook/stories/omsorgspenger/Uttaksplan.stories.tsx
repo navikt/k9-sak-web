@@ -4,8 +4,9 @@ import { action } from '@storybook/addon-actions';
 import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
 import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
 import { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
-import { VurderteVilkår } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
+import Uttaksperiode, { VurderteVilkår } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
 import { Behandling } from '@k9-sak-web/types';
+import Rammevedtak, { RammevedtakEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Rammevedtak';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -21,7 +22,49 @@ const vilkårInnvilget: VurderteVilkår = {
   [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
 };
 
-const årskvantumDto: ÅrskvantumForbrukteDager = {
+const uavklartPeriode: Uttaksperiode = {
+  utfall: UtfallEnum.UAVKLART,
+  vurderteVilkår: {
+    vilkår: {
+      ...vilkårInnvilget,
+      [VilkårEnum.UIDENTIFISERT_RAMMEVEDTAK]: UtfallEnum.UAVKLART,
+    },
+  },
+  periode: '2020-03-01/2020-03-10',
+  utbetalingsgrad: 50,
+  hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
+};
+
+const innvilgetPeriode: Uttaksperiode = {
+  utfall: UtfallEnum.INNVILGET,
+  vurderteVilkår: {
+    vilkår: vilkårInnvilget,
+  },
+  delvisFravær: 'P2DT4H30M',
+  periode: '2020-04-01/2020-04-30',
+  utbetalingsgrad: 100,
+  hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
+};
+
+const avslåttPeriode: Uttaksperiode = {
+  utfall: UtfallEnum.AVSLÅTT,
+  vurderteVilkår: {
+    vilkår: {
+      ...vilkårInnvilget,
+      [VilkårEnum.NOK_DAGER]: UtfallEnum.AVSLÅTT,
+    },
+  },
+  periode: '2020-03-01/2020-03-31',
+  utbetalingsgrad: 0,
+  hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1', 'COVID19_4_3', 'COVID19_4_1__2'],
+};
+
+const uidentifisertRammevedtak: Rammevedtak = {
+  type: RammevedtakEnum.UIDENTIFISERT,
+  fritekst: 'utolkbart blabla',
+};
+
+const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukteDager => ({
   totaltAntallDager: 17,
   antallKoronadager: 0,
   antallDagerArbeidsgiverDekker: 3,
@@ -36,30 +79,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
           organisasjonsnummer: '456',
           type: 'AT',
         },
-        uttaksperioder: [
-          {
-            utfall: UtfallEnum.UAVKLART,
-            vurderteVilkår: {
-              vilkår: {
-                ...vilkårInnvilget,
-                [VilkårEnum.UIDENTIFISERT_RAMMEVEDTAK]: UtfallEnum.UAVKLART,
-              },
-            },
-            periode: '2020-03-01/2020-03-10',
-            utbetalingsgrad: 50,
-            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
-          },
-          {
-            utfall: UtfallEnum.INNVILGET,
-            vurderteVilkår: {
-              vilkår: vilkårInnvilget,
-            },
-            delvisFravær: 'P2DT4H30M',
-            periode: '2020-04-01/2020-04-30',
-            utbetalingsgrad: 100,
-            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
-          },
-        ],
+        uttaksperioder: perioder,
       },
       {
         arbeidsforhold: {
@@ -67,20 +87,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
           organisasjonsnummer: '999',
           type: 'SN',
         },
-        uttaksperioder: [
-          {
-            utfall: UtfallEnum.AVSLÅTT,
-            vurderteVilkår: {
-              vilkår: {
-                ...vilkårInnvilget,
-                [VilkårEnum.NOK_DAGER]: UtfallEnum.AVSLÅTT,
-              },
-            },
-            periode: '2020-03-01/2020-03-31',
-            utbetalingsgrad: 0,
-            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1', 'COVID19_4_3', 'COVID19_4_1__2'],
-          },
-        ],
+        uttaksperioder: [innvilgetPeriode],
       },
     ],
     behandlingUUID: '1',
@@ -88,7 +95,10 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
     innsendingstidspunkt: '123',
     benyttetRammemelding: true,
   },
-};
+  rammevedtak: [],
+});
+
+const årskvantumDto: ÅrskvantumForbrukteDager = årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode]);
 
 // @ts-ignore
 const behandling: Behandling = {
@@ -101,13 +111,38 @@ export const standard = () => (
   <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} behandling={behandling} />
 );
 
-export const smittevernsdager = () => (
+export const smittevernsdagerOgOverlappendePerioderInfotrygd = () => (
   <ÅrskvantumIndex
     årskvantum={{
-      ...årskvantumDto,
+      ...årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode, avslåttPeriode]),
       antallKoronadager: 10,
       restdager: -3.4,
     }}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+  />
+);
+
+export const aksjonspunktUidentifiserteRammevedtak = () => (
+  <ÅrskvantumIndex
+    årskvantum={{
+      ...årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode]),
+      rammevedtak: [uidentifisertRammevedtak],
+    }}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+  />
+);
+
+export const aksjonspunktAvslåttePerioder = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
     // @ts-ignore
     alleKodeverk={alleKodeverk}
     behandling={behandling}

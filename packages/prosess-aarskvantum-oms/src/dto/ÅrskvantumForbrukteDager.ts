@@ -1,4 +1,5 @@
 import UttaksplanType from './UttaksplanType';
+import Rammevedtak from './Rammevedtak';
 
 interface ÅrskvantumForbrukteDager {
   totaltAntallDager: number;
@@ -8,6 +9,7 @@ interface ÅrskvantumForbrukteDager {
   restdager: number;
   antallDagerInfotrygd?: number;
   sisteUttaksplan: UttaksplanType;
+  rammevedtak: Rammevedtak[];
 }
 
 export default ÅrskvantumForbrukteDager;
