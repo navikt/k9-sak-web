@@ -41,12 +41,12 @@ it('konverterer desimaltall til hele dager og timer med max 1 desimal', () => {
 });
 
 it('konverterer duration til dager og timer', () => {
-  const duration_1 = 'P4DT6H30M';
-  sjekkKonvertering(beregnDagerTimer(duration_1), 4, 6.5);
+  const duration_1 = 'PT6H30M';
+  sjekkKonvertering(beregnDagerTimer(duration_1), 0, 6.5);
 
-  const duration_2 = 'P3D';
-  sjekkKonvertering(beregnDagerTimer(duration_2), 3, 0);
+  const duration_2 = 'PT7H30M';
+  sjekkKonvertering(beregnDagerTimer(duration_2), 1, 0);
 
-  const duration_3 = 'PT5H30M';
-  sjekkKonvertering(beregnDagerTimer(duration_3), 0, 5.5);
+  const duration_3 = 'PT22H';
+  sjekkKonvertering(beregnDagerTimer(duration_3), 2, 7);
 });

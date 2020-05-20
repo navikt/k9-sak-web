@@ -14,8 +14,10 @@ interface ÅrskvantumProps {
   totaltAntallDager: number;
   antallKoronadager?: number;
   antallDagerArbeidsgiverDekker: number;
-  forbrukteDager: number;
-  restdager: number;
+  forbrukteDager?: number;
+  forbruktTid?: string;
+  restdager?: number;
+  restTid?: string;
   antallDagerInfotrygd: number;
   benyttetRammemelding: boolean;
 }
@@ -47,19 +49,13 @@ export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
 
   return {
     dager,
-    timer: timerDesimal > 0 ? Number.parseFloat((timerDesimal * 7.5).toFixed(1).replace('.0', '')) : null,
+    timer: timerDesimal !== 0 ? Number.parseFloat((timerDesimal * 7.5).toFixed(1).replace('.0', '')) : null,
   };
 };
 
-export const beregnDagerTimer = (dagerTimer: number | string) => {
-  // @ts-ignore
-  if (Number.isFinite(dagerTimer)) {
-    // @ts-ignore
-    return konverterDesimalTilDagerOgTimer(dagerTimer);
-  }
-
+export const beregnDagerTimer = (dagerTimer: string) => {
   const duration = moment.duration(dagerTimer);
-  const totaltAntallTimer = duration.days() * 7.5 + duration.hours() + duration.minutes() / 60;
+  const totaltAntallTimer = duration.days() * 24 + duration.hours() + duration.minutes() / 60;
 
   return {
     dager: Math.floor(totaltAntallTimer / 7.5),
@@ -71,16 +67,17 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   totaltAntallDager,
   antallKoronadager = 0,
   restdager,
+  restTid,
   forbrukteDager,
+  forbruktTid,
   antallDagerArbeidsgiverDekker,
   antallDagerInfotrygd,
   benyttetRammemelding,
 }) => {
-  const restdagerErSmittevernsdager = restdager < 0;
+  const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
+  const restdagerErSmittevernsdager = rest.dager < 0 || rest.timer < 0;
 
-  const forbrukt = beregnDagerTimer(forbrukteDager);
-  const rest = restdagerErSmittevernsdager ? { dager: 0, timer: 0 } : beregnDagerTimer(restdager);
-  const smittevernsdager = restdagerErSmittevernsdager && beregnDagerTimer(Math.abs(restdager));
+  const forbrukt = forbruktTid ? beregnDagerTimer(forbruktTid) : konverterDesimalTilDagerOgTimer(forbrukteDager);
   const opprinneligeDager = totaltAntallDager - antallDagerArbeidsgiverDekker;
 
   return (
@@ -106,9 +103,9 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         {restdagerErSmittevernsdager && (
           <CounterBox
             count={{
-              bigCount: smittevernsdager.dager,
-              smallCount: smittevernsdager.timer ? (
-                <FormattedMessage id="Årskvantum.Timer" values={{ timer: smittevernsdager.timer }} />
+              bigCount: Math.abs(rest.dager),
+              smallCount: rest.timer ? (
+                <FormattedMessage id="Årskvantum.Timer" values={{ timer: Math.abs(rest.timer) }} />
               ) : null,
             }}
             label={{ textId: 'Årskvantum.Smittevernsdager' }}
@@ -171,8 +168,11 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         />
         <CounterBox
           count={{
-            bigCount: rest.dager,
-            smallCount: rest.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: rest.timer }} /> : null,
+            bigCount: restdagerErSmittevernsdager ? 0 : rest.dager,
+            smallCount:
+              rest.timer && rest.timer > 0 ? (
+                <FormattedMessage id="Årskvantum.Timer" values={{ timer: rest.timer }} />
+              ) : null,
           }}
           label={{ textId: 'Årskvantum.Restdager' }}
           theme="grønn"

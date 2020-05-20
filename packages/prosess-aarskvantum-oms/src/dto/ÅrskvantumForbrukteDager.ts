@@ -4,8 +4,10 @@ interface ÅrskvantumForbrukteDager {
   totaltAntallDager: number;
   antallKoronadager?: number;
   antallDagerArbeidsgiverDekker: number;
-  forbrukteDager: number | string;
-  restdager: number | string;
+  forbrukteDager?: number;
+  forbruktTid?: string;
+  restdager?: number;
+  restTid?: string;
   antallDagerInfotrygd?: number;
   sisteUttaksplan: UttaksplanType;
 }
