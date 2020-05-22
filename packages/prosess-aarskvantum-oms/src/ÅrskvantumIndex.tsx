@@ -28,7 +28,9 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvant
     totaltAntallDager,
     antallKoronadager,
     restdager,
+    restTid,
     forbrukteDager,
+    forbruktTid,
     antallDagerArbeidsgiverDekker,
     antallDagerInfotrygd = 0,
     sisteUttaksplan,
@@ -41,7 +43,9 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvant
         totaltAntallDager={totaltAntallDager}
         antallKoronadager={antallKoronadager}
         restdager={restdager}
+        restTid={restTid}
         forbrukteDager={forbrukteDager}
+        forbruktTid={forbruktTid}
         antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
         antallDagerInfotrygd={antallDagerInfotrygd}
         benyttetRammemelding={sisteUttaksplan.benyttetRammemelding}
