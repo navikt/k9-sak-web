@@ -4,11 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import { connect } from 'react-redux';
 import { InjectedFormProps, ConfigProps, SubmitHandler } from 'redux-form';
-import { minLength, maxLength, required, hasValidText } from '@fpsak-frontend/utils';
+import { minLength, maxLength, required, hasValidText, hasValidValue } from '@fpsak-frontend/utils';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
 import styled from 'styled-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
 import Rammevedtak, { RammevedtakEnum } from '../dto/Rammevedtak';
@@ -32,13 +33,14 @@ const valg = {
 };
 
 const GråBakgrunn = styled.div`
-  padding: 0.5em;
+  padding: 1em;
   background-color: #e9e7e7;
 `;
 
-const FlexEnd = styled.div`
+const SpaceBetween = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-top: 1em;
 `;
 
@@ -65,16 +67,16 @@ const FormContent: FunctionComponent<FormContentProps> = ({ rammevedtak, aktivit
           ]}
         </AksjonspunktHelpTextTemp>
         <VerticalSpacer sixteenPx />
-        <CheckboxField
-          validate={[required]}
-          name="bekreftInfotrygd"
-          label={{ id: 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd' }}
-        />
-        <FlexEnd>
+        <SpaceBetween>
+          <CheckboxField
+            validate={[hasValidValue(true)]}
+            name="bekreftInfotrygd"
+            label={{ id: 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd' }}
+          />
           <Hovedknapp onClick={handleSubmit} htmlType="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
           </Hovedknapp>
-        </FlexEnd>
+        </SpaceBetween>
       </>
     );
   }
@@ -103,11 +105,11 @@ const FormContent: FunctionComponent<FormContentProps> = ({ rammevedtak, aktivit
         validate={[required, minLength(3), maxLength(1500), hasValidText]}
         maxLength={1500}
       />
-      <FlexEnd>
+      <SpaceBetween>
         <Hovedknapp onClick={handleSubmit} htmlType="submit">
           <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
         </Hovedknapp>
-      </FlexEnd>
+      </SpaceBetween>
     </>
   );
 };
@@ -128,7 +130,9 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
 };
 
 interface FormValues {
-  begrunnelse: string;
+  begrunnelse?: string;
+  reBehandling?: boolean;
+  fortsett?: boolean;
 }
 
 interface AksjonspunktFormProps {
@@ -141,11 +145,14 @@ interface AksjonspunktFormProps {
 
 const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormProps) => {
   const { submitCallback } = initialProps;
-  const onSubmit = (formValues: FormValues) => {
-    console.log(formValues);
-    // submitCallback([formValues])
-    console.log(submitCallback);
-  }; // TODO: mapping
+  const onSubmit = (formValues: FormValues) =>
+    submitCallback([
+      {
+        ...formValues,
+        kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
+      },
+    ]);
+
   return (
     state,
     { aktiviteter, rammevedtak }: AksjonspunktFormProps,
