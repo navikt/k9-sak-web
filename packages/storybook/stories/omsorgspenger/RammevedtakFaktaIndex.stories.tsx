@@ -65,6 +65,7 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
       utvidetRettManglendeFnr,
       utvidetRett,
       aleneOmOmsorgen,
+      { ...aleneOmOmsorgen, aleneOmOmsorgenFor: '78978978978' },
       overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P4D'),
     ]}
     behandling={behandling}

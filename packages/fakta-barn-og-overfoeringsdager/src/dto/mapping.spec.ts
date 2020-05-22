@@ -1,213 +1,112 @@
 import { expect } from 'chai';
-import moment from 'moment';
-import { mapDtoTilFormValues, mapFormValuesTilDto } from './mapping';
-import OmsorgsdagerGrunnlagDto from './OmsorgsdagerGrunnlagDto';
-import { DagerGitt, DagerMottatt, UtvidetRettDto } from './RammevedtakDto';
-import FormValues from '../types/FormValues';
-import Overføring from '../types/Overføring';
-import BarnDto from './BarnDto';
-import { InformasjonskildeEnum } from './Informasjonskilde';
+import mapDtoTilFormValues from './mapping';
+import Rammevedtak, { RammevedtakEnum, RammevedtakType } from './Rammevedtak';
 
-const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
-  barn: [],
-  aleneOmOmsorgen: [],
-  utvidetRett: [],
-  overføringFår: [],
-  overføringGir: [],
-  fordelingFår: [],
-  fordelingGir: [],
-  koronaoverføringFår: [],
-  koronaoverføringGir: [],
-  uidentifiserteRammevedtak: [],
+const barnFnr = '12312312312';
+const annetBarnFnr = '78978978978';
+
+const utvidetRettManglendeFnr: Rammevedtak = {
+  type: RammevedtakEnum.UTVIDET_RETT,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2028-12-31',
 };
 
-describe('mapping fra DTO til formValues', () => {
-  it('mapper rammevedtak om utvidet rett til barn', () => {
-    const fnrKroniskSyktBarn = '123';
-    const omsorgsdagerGrunnlagDto: OmsorgsdagerGrunnlagDto = {
-      ...tomOmsorgsdagerGrunnlag,
-      utvidetRett: [
-        {
-          kilde: 'hentetAutomatisk',
-          fnrKroniskSyktBarn,
-        },
-      ],
-      barn: [
-        {
-          fødselsnummer: fnrKroniskSyktBarn,
-        },
-        {
-          fødselsnummer: '456',
-        },
-      ],
-    };
-    const { barn } = mapDtoTilFormValues(omsorgsdagerGrunnlagDto);
+const utvidetRett: Rammevedtak = {
+  ...utvidetRettManglendeFnr,
+  utvidetRettFor: barnFnr,
+};
 
-    expect(barn).to.have.length(2);
-    // eslint-disable-next-line no-unused-expressions
-    expect(barn[0].erKroniskSykt).to.be.true;
-    // eslint-disable-next-line no-unused-expressions
-    expect(barn[1].erKroniskSykt).to.be.false;
-  });
+const aleneOmOmsorgen: Rammevedtak = {
+  type: RammevedtakEnum.ALENEOMSORG,
+  aleneOmOmsorgenFor: barnFnr,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2020-12-31',
+};
 
-  it('legger til fom/tom for nye rammevetdak', () => {
-    const nyOverføring: Overføring = {
-      mottakerAvsenderFnr: '12312312312',
-      kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
-      antallDager: 2,
-    };
-    const fnrAutoHentet = '01012040527';
-    const idBarnManueltLagtTil = '1';
-    const fDatoManueltLagtTil = '2020-01-01';
-    const formValues: FormValues = {
-      barn: [
-        {
-          fødselsnummer: fnrAutoHentet,
-          erKroniskSykt: true,
-          aleneomsorg: true,
-        },
-      ],
-      begrunnelse: 'fordi',
-      fordelingFår: [nyOverføring],
-      fordelingGir: [nyOverføring],
-      koronaoverføringFår: [nyOverføring],
-      koronaoverføringGir: [nyOverføring],
-      midlertidigAleneansvar: {
-        erMidlertidigAlene: true,
-        fom: '2020-01-01',
-        tom: '2020-12-31',
-      },
-      overføringFår: [nyOverføring],
-      overføringGir: [nyOverføring],
-    };
-    const initBarn: BarnDto = { fødselsnummer: fnrAutoHentet };
+const midlertidigAleneOmOmsorgen: Rammevedtak = {
+  type: RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2020-12-31',
+};
 
-    const {
-      barn,
-      utvidetRett,
-      overføringFår,
-      fordelingFår,
-      koronaoverføringFår,
-      overføringGir,
-      fordelingGir,
-      koronaoverføringGir,
-    } = mapFormValuesTilDto(formValues, { ...tomOmsorgsdagerGrunnlag, barn: [initBarn] });
+const uidentifisertRammevedtak: Rammevedtak = {
+  type: RammevedtakEnum.UIDENTIFISERT,
+  fritekst: 'Utolkbar tekst beep boop',
+};
 
-    expect(barn).to.eql([initBarn]);
-    expect(utvidetRett).to.have.length(2);
-    const utvidetRettBarnAutomatiskHentet: UtvidetRettDto = utvidetRett.find(
-      ({ fnrKroniskSyktBarn }) => fnrKroniskSyktBarn === fnrAutoHentet,
-    );
-    const utvidetRettManueltLagtTil: UtvidetRettDto = utvidetRett.find(
-      ({ idKroniskSyktBarn }) => idKroniskSyktBarn === idBarnManueltLagtTil,
-    );
+const avsender = '02028920544';
+const gyldigFraOgMedFår = '2020-01-01';
+const gyldigTilOgMedFår = '2020-12-31';
+const overføringFårRammevedtak = (type: RammevedtakType, lengde): Rammevedtak => ({
+  type,
+  lengde,
+  avsender,
+  gyldigFraOgMed: gyldigFraOgMedFår,
+  gyldigTilOgMed: gyldigTilOgMedFår,
+});
 
-    const currentYear = moment().year();
+const mottaker = '03058945104';
+const gyldigFraOgMedGir = '2019-01-01';
+const gyldigTilOgMedGir = '2019-12-31';
+const overføringGirRammevedtak = (type: RammevedtakType, lengde): Rammevedtak => ({
+  type,
+  lengde,
+  mottaker,
+  gyldigFraOgMed: gyldigFraOgMedGir,
+  gyldigTilOgMed: gyldigTilOgMedGir,
+});
 
-    expect(utvidetRettBarnAutomatiskHentet).to.eql({
-      fnrKroniskSyktBarn: fnrAutoHentet,
-      kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
-      fom: `${currentYear}-01-01`,
-      tom: '2038-12-31',
-    });
-    expect(utvidetRettManueltLagtTil).to.eql({
-      idKroniskSyktBarn: idBarnManueltLagtTil,
-      fødselsdato: fDatoManueltLagtTil,
-      kilde: InformasjonskildeEnum.LAGT_TIL_MANUELT,
-      fom: `${currentYear}-01-01`,
-      tom: '2038-12-31',
-    });
-    const dagerMottattExpected: DagerMottatt = {
-      antallDager: nyOverføring.antallDager,
-      avsendersFnr: nyOverføring.mottakerAvsenderFnr,
-      kilde: nyOverføring.kilde,
-      fom: `${currentYear}-01-01`,
-      tom: `${currentYear}-12-31`,
-    };
-    const dagerGittExpected: DagerGitt = {
-      antallDager: nyOverføring.antallDager,
-      mottakersFnr: nyOverføring.mottakerAvsenderFnr,
-      kilde: nyOverføring.kilde,
-      fom: `${currentYear}-01-01`,
-      tom: `${currentYear}-12-31`,
-    };
+it('mapping fra DTO til formValues', () => {
+  const rammevedtak: Rammevedtak[] = [
+    utvidetRett,
+    utvidetRettManglendeFnr,
+    aleneOmOmsorgen,
+    { ...aleneOmOmsorgen, aleneOmOmsorgenFor: annetBarnFnr },
+    midlertidigAleneOmOmsorgen,
+    uidentifisertRammevedtak,
+    overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P1D'),
+    overføringFårRammevedtak(RammevedtakEnum.FORDELING_FÅR, 'P2D'),
+    overføringFårRammevedtak(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P3D'),
+    overføringGirRammevedtak(RammevedtakEnum.OVERFØRING_GIR, 'P4D'),
+    overføringGirRammevedtak(RammevedtakEnum.FORDELING_GIR, 'P5D'),
+    overføringGirRammevedtak(RammevedtakEnum.KORONAOVERFØRING_GIR, 'P6D'),
+  ];
 
-    [overføringFår, fordelingFår, koronaoverføringFår].forEach(dagerMottatt => {
-      expect(dagerMottatt).to.eql([dagerMottattExpected]);
-    });
-    [overføringGir, fordelingGir, koronaoverføringGir].forEach(dagerGitt => {
-      expect(dagerGitt).to.eql([dagerGittExpected]);
-    });
-  });
+  const {
+    barn,
+    midlertidigAleneansvar,
+    overføringFår,
+    fordelingFår,
+    koronaoverføringFår,
+    overføringGir,
+    fordelingGir,
+    koronaoverføringGir,
+  } = mapDtoTilFormValues(rammevedtak);
 
-  it('kan mappe fra og til DTO uten å miste data', () => {
-    const dagerGitt: DagerGitt[] = [
+  expect(barn).to.have.length(2);
+  expect(barn[0].fødselsnummer).to.equal(barnFnr);
+  expect(barn[0].kroniskSykdom).to.eql({ fom: utvidetRett.gyldigFraOgMed, tom: utvidetRett.gyldigTilOgMed });
+  expect(barn[0].aleneomsorg).to.eql({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
+  expect(barn[1].kroniskSykdom).to.equal(undefined);
+  expect(barn[1].aleneomsorg).to.eql({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
+
+  const assertOverføring = (overføring, expectedDager, expectedMottakerAvsender, expectedFom, expectedTom) => {
+    expect(overføring).to.eql([
       {
-        antallDager: 23,
-        mottakersFnr: '345',
-        kilde: 'hentetAutomatisk',
-        fom: '23.03.2020',
-        tom: '23.03.2025',
+        antallDager: expectedDager,
+        mottakerAvsenderFnr: expectedMottakerAvsender,
+        fom: expectedFom,
+        tom: expectedTom,
       },
-    ];
-    const dagerMottatt: DagerMottatt[] = [
-      {
-        antallDager: 23,
-        avsendersFnr: '123',
-        kilde: 'hentetAutomatisk',
-        fom: '23.03.2020',
-        tom: '23.03.2025',
-      },
-    ];
-    const omsorgsdagerGrunnlagDto: OmsorgsdagerGrunnlagDto = {
-      barn: [
-        {
-          fødselsnummer: '123',
-        },
-      ],
-      aleneOmOmsorgen: [
-        {
-          fnrBarnAleneOm: '123',
-          kilde: 'hentetAutomatisk',
-          tom: '23.03.2020',
-        },
-        {
-          idBarnAleneOm: '1',
-          fødselsdato: '20.04.2018',
-          kilde: 'lagtTilManuelt',
-        },
-      ],
-      utvidetRett: [
-        {
-          fnrKroniskSyktBarn: '123',
-          kilde: 'hentetAutomatisk',
-          fom: '23.03.2020',
-          tom: '23.03.2025',
-        },
-        {
-          idKroniskSyktBarn: '1',
-          kilde: 'lagtTilManuelt',
-          fom: '23.03.2020',
-          tom: '23.03.2025',
-        },
-      ],
-      midlertidigAleneOmOmsorgen: {
-        erMidlertidigAlene: true,
-        kilde: 'hentetAutomatisk',
-        fom: '23.03.2020',
-        tom: '23.03.2025',
-      },
-      overføringGir: dagerGitt,
-      overføringFår: dagerMottatt,
-      fordelingGir: dagerGitt,
-      fordelingFår: dagerMottatt,
-      koronaoverføringGir: dagerGitt,
-      koronaoverføringFår: dagerMottatt,
-      uidentifiserteRammevedtak: [],
-    };
+    ]);
+  };
 
-    const mappet = mapFormValuesTilDto(mapDtoTilFormValues(omsorgsdagerGrunnlagDto), omsorgsdagerGrunnlagDto);
+  assertOverføring(overføringFår, 1, avsender, gyldigFraOgMedFår, gyldigTilOgMedFår);
+  assertOverføring(fordelingFår, 2, avsender, gyldigFraOgMedFår, gyldigTilOgMedFår);
+  assertOverføring(koronaoverføringFår, 3, avsender, gyldigFraOgMedFår, gyldigTilOgMedFår);
+  assertOverføring(overføringGir, 4, mottaker, gyldigFraOgMedGir, gyldigTilOgMedGir);
+  assertOverføring(fordelingGir, 5, mottaker, gyldigFraOgMedGir, gyldigTilOgMedGir);
+  assertOverføring(koronaoverføringGir, 6, mottaker, gyldigFraOgMedGir, gyldigTilOgMedGir);
 
-    expect(mappet).to.eql(omsorgsdagerGrunnlagDto);
-  });
+  expect(midlertidigAleneansvar).to.eql(midlertidigAleneansvar);
 });
