@@ -39,7 +39,7 @@ const endpoints = new RestApiConfigBuilder()
   })
   .withAsyncPost('/k9/klage/api/klage-v2/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
   .withAsyncPost(
-    '/k9/klage/api/behandling/klage-v2/mellomlagre-gjennapne-klage',
+    '/k9/klage/api/klage-v2/mellomlagre-gjennapne-klage',
     KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING,
     {
       saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
