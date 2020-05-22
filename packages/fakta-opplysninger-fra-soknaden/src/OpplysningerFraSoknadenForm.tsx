@@ -1,4 +1,9 @@
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import {
+  behandlingForm,
+  behandlingFormValueSelector,
+  getBehandlingFormPrefix,
+  CheckboxField,
+} from '@fpsak-frontend/form';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { hasValidText, ISO_DATE_FORMAT, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -6,7 +11,6 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
 import classnames from 'classnames/bind';
 import moment from 'moment';
-import { Checkbox } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -22,8 +26,16 @@ import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
 
 const classNames = classnames.bind(styles);
 
+const fomDatoBegrensning = søknadsperiodeFom => {
+  const march30th = moment('2020-03-30', ISO_DATE_FORMAT);
+  if (søknadsperiodeFom.isBefore(march30th)) {
+    return march30th;
+  }
+  return søknadsperiodeFom;
+};
+
 const startdatoErISøknadsperiode = (startdato, søknadsperiode) => {
-  const søknadsperiodeFom = moment(søknadsperiode.fom, ISO_DATE_FORMAT);
+  const søknadsperiodeFom = fomDatoBegrensning(moment(søknadsperiode.fom, ISO_DATE_FORMAT));
   const søknadsperiodeTom = moment(søknadsperiode.tom, ISO_DATE_FORMAT);
   const startdatoMoment = moment(startdato, ISO_DATE_FORMAT);
   if (startdatoMoment.isSameOrAfter(søknadsperiodeFom) && startdatoMoment.isSameOrBefore(søknadsperiodeTom)) {
@@ -70,6 +82,8 @@ interface StateProps {
   initialValues: InitialValues;
   selvstendigNæringsdrivendeInntekt2019: boolean;
   selvstendigNæringsdrivendeInntekt2020: boolean;
+  harSøktSomFrilanser: boolean;
+  harSøktSomSSN: boolean;
   reduxFormChange: (formName: string, fieldName: string, value: any) => void;
   reduxFormUntouch: (formName: string, fieldName: string) => void;
   behandlingFormPrefix: string;
@@ -88,12 +102,10 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     reduxFormChange: formChange,
     reduxFormUntouch: formUntouch,
     behandlingFormPrefix,
+    harSøktSomFrilanser,
+    harSøktSomSSN,
   } = props;
   const { søknadsperiode } = initialValues;
-  const [erSelvstendigNæringsdrivende, setErSelvstendigNæringsdrivende] = React.useState(
-    initialValues.erSelvstendigNæringsdrivende,
-  );
-  const [erFrilanser, setErFrilanser] = React.useState(initialValues.erFrilanser);
   const [skjemaErLåst, setSkjemaErLåst] = React.useState(true);
   const formSelector = `${behandlingFormPrefix}.${formName}`;
 
@@ -110,8 +122,8 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     frilansFields.forEach(field => resetFormField(field));
   };
 
-  const skalViseSSNSeksjonen = kanEndrePåSøknadsopplysninger || erSelvstendigNæringsdrivende;
-  const skalViseFrilansSeksjonen = kanEndrePåSøknadsopplysninger || erFrilanser;
+  const skalViseSSNSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomSSN;
+  const skalViseFrilansSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomFrilanser;
 
   return (
     <div>
@@ -128,17 +140,17 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
       <form onSubmit={handleSubmit}>
         <div
           className={classNames('formContainer', {
-            'formContainer--showBorder': erSelvstendigNæringsdrivende,
+            'formContainer--showBorder': harSøktSomSSN,
             'formContainer--hidden': !skalViseSSNSeksjonen,
           })}
         >
-          {erSelvstendigNæringsdrivende && skjemaErLåst && (
+          {harSøktSomSSN && skjemaErLåst && (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
             </Element>
           )}
           {!skjemaErLåst && (
-            <Checkbox
+            <CheckboxField
               label={
                 <Label
                   input={{ id: 'OpplysningerFraSoknaden.selvstendigNæringsdrivende', args: {} }}
@@ -146,13 +158,12 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
                   intl={intl}
                 />
               }
-              onChange={() => setErSelvstendigNæringsdrivende(!erSelvstendigNæringsdrivende)}
-              checked={erSelvstendigNæringsdrivende}
+              name={SøknadFormValue.HAR_SØKT_SOM_SSN}
             />
           )}
-          {erSelvstendigNæringsdrivende && (
+          {harSøktSomSSN && (
             <SelvstendigNæringsdrivendeForm
-              erFrilanser={erFrilanser}
+              erFrilanser={harSøktSomFrilanser}
               selvstendigNæringsdrivendeInntekt2019={selvstendigNæringsdrivendeInntekt2019}
               selvstendigNæringsdrivendeInntekt2020={selvstendigNæringsdrivendeInntekt2020}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
@@ -163,17 +174,17 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
         </div>
         <div
           className={classNames('formContainer', {
-            'formContainer--showBorder': erFrilanser,
+            'formContainer--showBorder': harSøktSomFrilanser,
             'formContainer--hidden': !skalViseFrilansSeksjonen,
           })}
         >
-          {erFrilanser && skjemaErLåst && (
+          {harSøktSomFrilanser && skjemaErLåst && (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.frilanser" />
             </Element>
           )}
           {!skjemaErLåst && (
-            <Checkbox
+            <CheckboxField
               label={
                 <Label
                   input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }}
@@ -181,20 +192,19 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
                   intl={intl}
                 />
               }
-              onChange={() => setErFrilanser(!erFrilanser)}
-              checked={erFrilanser}
+              name={SøknadFormValue.HAR_SØKT_SOM_FRILANSER}
             />
           )}
-          {erFrilanser && (
+          {harSøktSomFrilanser && (
             <FrilanserForm
-              erSelvstendigNæringsdrivende={erSelvstendigNæringsdrivende}
+              erSelvstendigNæringsdrivende={harSøktSomSSN}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
               readOnly={skjemaErLåst}
               clearFrilansValues={clearFrilansValues}
             />
           )}
         </div>
-        {(erFrilanser || erSelvstendigNæringsdrivende) && !skjemaErLåst && (
+        {(harSøktSomFrilanser || harSøktSomSSN) && !skjemaErLåst && (
           <div className={classNames('begrunnelseContainer')}>
             <TextAreaField
               name={SøknadFormValue.BEGRUNNELSE}
@@ -209,7 +219,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
         )}
         {kanEndrePåSøknadsopplysninger && !skjemaErLåst && (
           <>
-            {(erSelvstendigNæringsdrivende || erFrilanser) && (
+            {(harSøktSomSSN || harSøktSomFrilanser) && (
               <Knapp htmlType="submit" type="hoved">
                 Bekreft og fortsett
               </Knapp>
@@ -242,6 +252,8 @@ interface OpplysningerFraSøknadenFormValues {
   [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: string;
   [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
   [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO]: string;
+  [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: boolean;
+  [SøknadFormValue.HAR_SØKT_SOM_SSN]: boolean;
 }
 
 const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
@@ -255,7 +267,7 @@ const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
 });
 
 const getValueSafely = value => {
-  if (value) {
+  if (value || value === 0) {
     return `${value}`.trim();
   }
   return null;
@@ -316,35 +328,50 @@ const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligeSøknadsop
   return null;
 };
 
-const getPeriodeForOppgittEgenNæringFørSøkerperioden = (
-  values: OpplysningerFraSøknadenFormValues,
+// eslint-disable-next-line consistent-return
+const finnOpprinneligPeriodeMedOppgittNæringsinntektFørSøknadsperioden = næringFørSøknadsperioden => {
+  const harOppgittNæringsinntektFørSøknadsperioden = næringFørSøknadsperioden && næringFørSøknadsperioden.length > 0;
+  if (harOppgittNæringsinntektFørSøknadsperioden) {
+    const inntektsperiodeFørSøknadsperioden = næringFørSøknadsperioden[0].periode;
+    const { fom, tom } = inntektsperiodeFørSøknadsperioden;
+    return {
+      fom,
+      tom,
+    };
+  }
+};
+
+const lagPeriodeForOppgittEgenNæringFørSøkerperioden = (
+  formValues: OpplysningerFraSøknadenFormValues,
   opplysningerFraSøknaden: OpplysningerFraSøknaden,
 ) => {
-  const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
   const næringFørSøknadsperioden = opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring;
-  const inntektsperiodeFørSøknadsperioden = næringFørSøknadsperioden[0].periode;
+  const opprinneligPeriode = finnOpprinneligPeriodeMedOppgittNæringsinntektFørSøknadsperioden(næringFørSøknadsperioden);
 
-  const { fom, tom } = inntektsperiodeFørSøknadsperioden;
+  const fom = opprinneligPeriode?.fom;
+  const tom = opprinneligPeriode?.tom;
   const opprinneligInntektsperiodeErI2019 = moment(fom, ISO_DATE_FORMAT).year() === 2019;
-  const { selvstendigNaeringsdrivende_nyoppstartetDato } = values;
+  const opprinneligInntektsperiodeErI2020 = moment(fom, ISO_DATE_FORMAT).year() === 2020;
 
   const periode: any = {};
+  const inntekt2019 = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+  const nyoppstartetDato = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
   if (inntekt2019) {
     if (opprinneligInntektsperiodeErI2019) {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || fom;
-      periode.tom = tom;
+      periode.fom = nyoppstartetDato || fom || '2019-01-01';
+      periode.tom = tom || '2019-12-31';
     } else {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || '2019-01-01';
+      periode.fom = nyoppstartetDato || '2019-01-01';
       periode.tom = '2019-12-31';
     }
   } else {
     // eslint-disable-next-line no-lonely-if
-    if (opprinneligInntektsperiodeErI2019) {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || '2020-01-01';
-      periode.tom = '2020-02-29';
+    if (opprinneligInntektsperiodeErI2020) {
+      periode.fom = nyoppstartetDato || fom || '2020-01-01';
+      periode.tom = tom || '2020-02-29';
     } else {
-      periode.fom = selvstendigNaeringsdrivende_nyoppstartetDato || fom;
-      periode.tom = tom;
+      periode.fom = nyoppstartetDato || '2020-01-01';
+      periode.tom = '2020-02-29';
     }
   }
 
@@ -358,6 +385,8 @@ const transformValues = (
   const egenNæringBruttoInntekt =
     formValues.selvstendigNaeringsdrivende_inntekt2019 || formValues.selvstendigNaeringsdrivende_inntekt2020;
   const skalOppgiNæringsinntektFørSøknadsperioden = !!formValues.selvstendigNaeringsdrivende_startdatoForSoknaden;
+  const søkerYtelseForFrilans = formValues[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
+  const søkerYtelseForNæring = formValues[SøknadFormValue.HAR_SØKT_SOM_SSN];
 
   const resultingData = {
     kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
@@ -367,7 +396,7 @@ const transformValues = (
         oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
           ? [
               {
-                periode: getPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
+                periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
                 bruttoInntekt: {
                   verdi: +egenNæringBruttoInntekt,
                 },
@@ -381,8 +410,8 @@ const transformValues = (
         oppgittFrilans: lagOppgittFrilansForSøknadsperioden(formValues, opplysningerFraSøknaden),
       },
       periodeFraSøknad: opplysningerFraSøknaden.periodeFraSøknad,
-      søkerYtelseForFrilans: !!formValues.frilanser_inntektISoknadsperioden,
-      søkerYtelseForNæring: !!formValues.selvstendigNaeringsdrivende_inntektISoknadsperioden,
+      søkerYtelseForFrilans,
+      søkerYtelseForNæring,
     },
   };
 
@@ -390,7 +419,7 @@ const transformValues = (
 };
 
 const buildInitialValues = (values: OpplysningerFraSøknaden) => {
-  const { søkerYtelseForNæring, søkerYtelseForFrilans, periodeFraSøknad, førSøkerPerioden, iSøkerPerioden } = values;
+  const { søkerYtelseForFrilans, søkerYtelseForNæring, periodeFraSøknad, førSøkerPerioden, iSøkerPerioden } = values;
 
   const frilansoppdrag = iSøkerPerioden?.oppgittFrilans?.oppgittFrilansoppdrag;
   const harFrilansoppdrag = frilansoppdrag && frilansoppdrag.length > 0;
@@ -432,6 +461,8 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
       !søkerYtelseForFrilans && frilansoppdragBruttoinntekt ? frilansoppdragBruttoinntekt : null,
     [SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS]:
       !søkerYtelseForNæring && næringBruttoinntekt ? næringBruttoinntekt : null,
+    [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: søkerYtelseForFrilans || false,
+    [SøknadFormValue.HAR_SØKT_SOM_SSN]: søkerYtelseForNæring || false,
   };
 };
 
@@ -453,6 +484,16 @@ const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
       behandlingId,
       behandlingVersjon,
     )(state, [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]),
+    harSøktSomSSN: !!behandlingFormValueSelector(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+    )(state, [SøknadFormValue.HAR_SØKT_SOM_SSN]),
+    harSøktSomFrilanser: !!behandlingFormValueSelector(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+    )(state, [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]),
     behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
     ...otherProps,
   });

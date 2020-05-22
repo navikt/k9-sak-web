@@ -182,6 +182,8 @@ class KlageProsess extends Component<Props, KlageProsessState> {
       ...data,
       behandlingUuid: behandling.uuid,
       ytelseType: fagsak.fagsakYtelseType,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsak.fagsakPerson.aktørId,
     };
     return forhandsvisMelding(brevData);
   };
@@ -225,7 +227,7 @@ class KlageProsess extends Component<Props, KlageProsessState> {
     const readOnlySubmitButton =
       valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some(ap => ap.kanLoses));
 
-    const skalViseTilBeslutterTekst =
+    const erFerdigstilt =
       klageVurdering &&
       klageVurdering.klageVurderingResultatNK &&
       klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
@@ -247,8 +249,8 @@ class KlageProsess extends Component<Props, KlageProsessState> {
           visModal={visFatterVedtakModal}
           lukkModal={this.toggleFatterVedtakModal}
           tekstkode={
-            skalViseTilBeslutterTekst
-              ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter'
+            erFerdigstilt
+              ? 'FatterVedtakStatusModal.KlageFerdigstilt'
               : 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver'
           }
         />

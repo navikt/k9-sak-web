@@ -1,7 +1,8 @@
-import { BehandlingIdentifier, DataFetcher, featureToggle, getPathToFplos } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, DataFetcher, featureToggle } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import klageApi from '@fpsak-frontend/behandling-klage/src/data/klageBehandlingApi';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import { kodeverkObjektPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
@@ -14,7 +15,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
-import axios from 'axios';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { getFeatureToggles, getNavAnsatt } from '../../app/duck';
 import {
   getBehandlingAnsvarligSaksbehandler,
@@ -29,8 +30,8 @@ import {
   previewMessage,
 } from '../../behandling/duck';
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
-import fpsakApi from '../../data/fpsakApi';
-import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
+import fpsakApi, { reduxRestApi } from '../../data/fpsakApi';
+import { getAktorid, getFagsakYtelseType, getSaksnummer, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype } from '../../kodeverk/duck';
 
 const getArsaker = approval =>
@@ -58,7 +59,7 @@ const getArsaker = approval =>
 const klageData = [fpsakApi.TOTRINNS_KLAGE_VURDERING];
 const revurderingData = [fpsakApi.HAR_REVURDERING_SAMME_RESULTAT];
 const ingenData = [];
-const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
+// const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 
 /**
  * ApprovalIndex
@@ -120,25 +121,35 @@ export class ApprovalIndex extends Component {
   }
 
   forhandsvisVedtaksbrev() {
-    const { previewMessage: fetchPreview, fagsakYtelseType, behandlingUuid, erTilbakekreving } = this.props;
+    const {
+      previewMessage: fetchPreview,
+      fagsakYtelseType,
+      behandlingUuid,
+      erTilbakekreving,
+      aktørId,
+      saksnummer,
+      behandlingTypeKode,
+    } = this.props;
     fetchPreview(erTilbakekreving, false, {
       behandlingUuid,
       ytelseType: fagsakYtelseType,
-      gjelderVedtak: true,
+      aktørId,
+      saksnummer,
+      dokumentMal: behandlingTypeKode === BehandlingType.KLAGE ? dokumentMalType.UTLED_KLAGE : dokumentMalType.UTLED,
     });
   }
 
   async goToSearchPage() {
     const { push: pushLocation } = this.props;
-    if (!isRunningOnLocalhost()) {
-      try {
-        const url = getPathToFplos(window.location.href);
-        await axios.get(url);
-        window.location.assign(url);
-      } catch {
-        pushLocation('/');
-      }
-    }
+    // if (!isRunningOnLocalhost()) {
+    //   try {
+    //     const url = getPathToFplos(window.location.href);
+    //     await axios.get(url);
+    //     window.location.assign(url);
+    //   } catch {
+    //     pushLocation('/');
+    //   }
+    // }
     pushLocation('/');
   }
 
@@ -164,6 +175,7 @@ export class ApprovalIndex extends Component {
       behandlingId,
       behandlingTypeKode,
       erTilbakekreving,
+      klagebehandling,
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
@@ -171,6 +183,10 @@ export class ApprovalIndex extends Component {
 
     if (!totrinnskontrollSkjermlenkeContext && !totrinnskontrollReadOnlySkjermlenkeContext) {
       return null;
+    }
+
+    if (klagebehandling?.links) {
+      reduxRestApi.injectPaths(klagebehandling.links);
     }
 
     return (
@@ -256,6 +272,9 @@ ApprovalIndex.propTypes = {
   behandlingsresultat: PropTypes.shape(),
   behandlingId: PropTypes.number,
   behandlingTypeKode: PropTypes.string,
+  klagebehandling: PropTypes.shape(),
+  aktørId: PropTypes.string,
+  saksnummer: PropTypes.string,
 };
 
 ApprovalIndex.defaultProps = {
@@ -310,9 +329,12 @@ const mapStateToPropsFactory = initialState => {
       behandlingsresultat: getBehandlingsresultat(state),
       behandlingId: getSelectedBehandlingId(state),
       disableGodkjennKnapp: erTilbakekreving ? !getFeatureToggles(state)[featureToggle.BESLUTT_TILBAKEKREVING] : false,
+      aktørId: getAktorid(state),
+      saksnummer: getSaksnummer(state),
       behandlingIdentifier,
       erTilbakekreving,
       behandlingTypeKode,
+      klagebehandling: klageApi.BEHANDLING_KLAGE.getRestApiData()(state),
     };
   };
 };
