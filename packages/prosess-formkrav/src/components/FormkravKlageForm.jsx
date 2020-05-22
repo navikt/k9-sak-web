@@ -25,14 +25,15 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './formkravKlageForm.less';
 
-export const IKKE_PA_KLAGD_VEDTAK = 'ikkePaklagdVedtak';
+export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 
-export const getPaKlagdVedtak = (klageFormkavResultat) => (
-  klageFormkavResultat.paKlagdBehandlingId ? `${klageFormkavResultat.paKlagdBehandlingId}` : IKKE_PA_KLAGD_VEDTAK
-);
+export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) => {
+  const behandlingid = avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.id;
+  return behandlingid ? `${behandlingid}` : IKKE_PAKLAGD_VEDTAK;
+};
 
 const getKlagBareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
-  const klagBareVedtak = [<option key="formkrav" value={IKKE_PA_KLAGD_VEDTAK}>{intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}</option>];
+  const klagBareVedtak = [<option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>{intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}</option>];
   return klagBareVedtak.concat(avsluttedeBehandlinger.map((behandling) => (
     <option key={behandling.id} value={`${behandling.id}`}>
       {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
