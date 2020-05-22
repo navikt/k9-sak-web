@@ -71,7 +71,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   forbrukteDager,
   forbruktTid,
   antallDagerArbeidsgiverDekker,
-  antallDagerInfotrygd,
+  antallDagerInfotrygd = 0,
   benyttetRammemelding,
 }) => {
   const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
@@ -153,7 +153,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         />
         <CounterBox
           count={{
-            bigCount: forbrukt.dager,
+            bigCount: forbrukt.dager + antallDagerInfotrygd,
             smallCount: forbrukt.timer ? (
               <FormattedMessage id="Årskvantum.Timer" values={{ timer: forbrukt.timer }} />
             ) : null,
