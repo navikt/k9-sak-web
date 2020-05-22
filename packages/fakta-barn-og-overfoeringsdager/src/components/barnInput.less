@@ -1,11 +1,30 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.overrideBorder > * {
-  border-left: 8px solid @navLysBla;
-  padding-left: calc(1rem - 8px);
-}
-
 .barnInput {
   margin-top: 1em;
   width: 550px;
+}
+
+.header {
+  display: flex;
+
+  h4 {
+    font-weight: 600;
+    margin: 0 1em 0 0;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+}
+
+.rammevedtak {
+  display: flex;
+  margin-top: 1em;
+
+  & > * {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1em;
+  }
 }

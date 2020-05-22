@@ -1,17 +1,19 @@
 import React, { FunctionComponent } from 'react';
-import { CheckboxField } from '@fpsak-frontend/form/index';
-import { FormattedMessage } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
+import Rammevedtak from '../dto/Rammevedtak';
 
 interface MidlertidigAleneProps {
-  readOnly?: boolean;
+  midlertidigAlene?: Rammevedtak;
 }
 
-const MidlertidigAlene: FunctionComponent<MidlertidigAleneProps> = ({ readOnly }) => (
-  <CheckboxField
-    name="midlertidigAleneansvar.erMidlertidigAlene"
-    label={<FormattedMessage id="FaktaRammevedtak.ErMidlertidigAlene" />}
-    readOnly={readOnly}
-  />
-);
+const MidlertidigAlene: FunctionComponent<MidlertidigAleneProps> = ({ midlertidigAlene }) =>
+  midlertidigAlene ? (
+    <FormattedHTMLMessage
+      id="FaktaRammevedtak.MidlertidigAlene"
+      values={{ fom: midlertidigAlene.gyldigFraOgMed, tom: midlertidigAlene.gyldigTilOgMed }}
+    />
+  ) : (
+    <FormattedHTMLMessage id="FaktaRammevedtak.IkkeMidlertidigAlene" />
+  );
 
 export default MidlertidigAlene;

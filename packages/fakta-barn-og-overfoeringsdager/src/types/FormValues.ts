@@ -1,20 +1,16 @@
 import Overføring from './Overføring';
 import Barn from './Barn';
+import Rammevedtak from '../dto/Rammevedtak';
 
 interface FormValues {
   barn: Barn[];
-  midlertidigAleneansvar?: {
-    erMidlertidigAlene: boolean;
-    fom: string;
-    tom: string;
-  };
+  midlertidigAleneansvar?: Rammevedtak;
   overføringFår: Overføring[];
   overføringGir: Overføring[];
   fordelingFår: Overføring[];
   fordelingGir: Overføring[];
   koronaoverføringFår: Overføring[];
   koronaoverføringGir: Overføring[];
-  begrunnelse: string;
 }
 
 export default FormValues;

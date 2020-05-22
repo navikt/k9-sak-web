@@ -4,7 +4,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Behandling } from '@k9-sak-web/types';
 import messages from '../i18n/nb_NO.json';
 import RammevedtakFaktaForm from './components/RammevedtakFaktaForm';
-import OmsorgsdagerGrunnlagDto from './dto/OmsorgsdagerGrunnlagDto';
+import Rammevedtak from './dto/Rammevedtak';
 
 const cache = createIntlCache();
 
@@ -17,22 +17,16 @@ const intl = createIntl(
 );
 
 interface FaktaRammevedtakIndexProps {
-  omsorgsdagerGrunnlagDto: OmsorgsdagerGrunnlagDto;
+  rammevedtak: Rammevedtak[];
   behandling: Behandling;
-  readOnly?: boolean;
 }
 
-const FaktaRammevedtakIndex: FunctionComponent<FaktaRammevedtakIndexProps> = ({
-  behandling,
-  readOnly,
-  omsorgsdagerGrunnlagDto,
-}) => (
+const FaktaRammevedtakIndex: FunctionComponent<FaktaRammevedtakIndexProps> = ({ behandling, rammevedtak }) => (
   <RawIntlProvider value={intl}>
     <RammevedtakFaktaForm
-      omsorgsdagerGrunnlag={omsorgsdagerGrunnlagDto}
+      rammevedtak={rammevedtak}
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      readOnly={readOnly}
     />
   </RawIntlProvider>
 );

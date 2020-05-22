@@ -1,5 +1,4 @@
 import stringEnum from '@k9-sak-web/types/src/tsUtils';
-import Informasjonskilde from '../dto/Informasjonskilde';
 
 export const OverføringstypeEnum = stringEnum({
   OVERFØRING: 'overføring',
@@ -17,7 +16,6 @@ export type Overføringsretning = typeof OverføringsretningEnum[keyof typeof Ov
 interface Overføring {
   antallDager?: number;
   mottakerAvsenderFnr?: string;
-  kilde: Informasjonskilde;
   fom?: string;
   tom?: string;
 }

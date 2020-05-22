@@ -1,13 +1,10 @@
 import * as React from 'react';
 import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
-import OmsorgsdagerGrunnlagDto from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/OmsorgsdagerGrunnlagDto';
 import { Behandling } from '@k9-sak-web/types';
-import { action } from '@storybook/addon-actions';
-import BarnDto from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/BarnDto';
-import {
-  UidentifisertRammevedtak,
-  UtvidetRettDto,
-} from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/RammevedtakDto';
+import Rammevedtak, {
+  RammevedtakEnum,
+  RammevedtakType,
+} from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/Rammevedtak';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -16,104 +13,71 @@ export default {
   decorators: [withReduxProvider],
 };
 
+// @ts-ignore
 const behandling: Behandling = {
   id: 1,
   versjon: 1,
-  status: {
-    kode: '',
-    kodeverk: '',
-  },
-  type: {
-    kode: '',
-    kodeverk: 'BEHANDLING_TYPE',
-  },
-  behandlingPaaVent: false,
-  behandlingHenlagt: false,
-  links: [],
-};
-
-const tomOmsorgsdagerGrunnlag: OmsorgsdagerGrunnlagDto = {
-  barn: [],
-  aleneOmOmsorgen: [],
-  utvidetRett: [],
-  overføringFår: [],
-  overføringGir: [],
-  fordelingFår: [],
-  fordelingGir: [],
-  koronaoverføringFår: [],
-  koronaoverføringGir: [],
-  uidentifiserteRammevedtak: [],
 };
 
 const fnrEtBarn = '12121212121';
-const fnrEtAnnetBarn = '02020202020';
-const barn: BarnDto[] = [{ fødselsnummer: fnrEtBarn }, { fødselsnummer: fnrEtAnnetBarn }];
 
-const uidentifiserteRammevedtak: UidentifisertRammevedtak[] = [{ fritekst: undefined }, { fritekst: undefined }];
-const utvidetRettUkjentBarn: UtvidetRettDto = {
-  kilde: 'hentetAutomatisk',
+const utvidetRettManglendeFnr: Rammevedtak = {
+  type: RammevedtakEnum.UTVIDET_RETT,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2028-12-31',
 };
+
+const utvidetRett: Rammevedtak = {
+  ...utvidetRettManglendeFnr,
+  utvidetRettFor: fnrEtBarn,
+};
+
+const aleneOmOmsorgen: Rammevedtak = {
+  type: RammevedtakEnum.ALENEOMSORG,
+  aleneOmOmsorgenFor: fnrEtBarn,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2020-12-31',
+};
+
+const midlertidigAleneOmOmsorgen: Rammevedtak = {
+  type: RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2020-12-31',
+};
+
+const uidentifisertRammevedtak: Rammevedtak = {
+  type: RammevedtakEnum.UIDENTIFISERT,
+  fritekst: 'Utolkbar tekst beep boop',
+};
+
+const overføringFårRammevedtak = (type: RammevedtakType, lengde): Rammevedtak => ({
+  type,
+  lengde,
+  avsender: '02028920544',
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2020-12-31',
+});
 
 export const medBarnOgUidentifiserteRammevedtak = () => (
   <FaktaRammevedtakIndex
-    omsorgsdagerGrunnlagDto={{
-      ...tomOmsorgsdagerGrunnlag,
-      barn,
-      uidentifiserteRammevedtak,
-      aleneOmOmsorgen: [
-        {
-          fnrBarnAleneOm: fnrEtBarn,
-          kilde: 'hentetAutomatisk',
-        },
-      ],
-      utvidetRett: [utvidetRettUkjentBarn],
-      overføringFår: [
-        {
-          antallDager: 8,
-          kilde: 'hentetAutomatisk',
-          avsendersFnr: '12018926752',
-        },
-        {
-          antallDager: 3,
-          kilde: 'hentetAutomatisk',
-          avsendersFnr: '12018926752',
-        },
-      ],
-    }}
+    rammevedtak={[
+      uidentifisertRammevedtak,
+      utvidetRettManglendeFnr,
+      utvidetRett,
+      aleneOmOmsorgen,
+      overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P4D'),
+    ]}
     behandling={behandling}
-    submitCallback={action('Send inn')}
   />
 );
 
 export const ingenBarn = () => (
   <FaktaRammevedtakIndex
-    omsorgsdagerGrunnlagDto={tomOmsorgsdagerGrunnlag}
+    rammevedtak={[
+      overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P13D'),
+      overføringFårRammevedtak(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P5D'),
+      midlertidigAleneOmOmsorgen,
+    ]}
     behandling={behandling}
-    submitCallback={action('Send inn')}
-  />
-);
-
-export const readOnly = () => (
-  <FaktaRammevedtakIndex
-    omsorgsdagerGrunnlagDto={{
-      ...tomOmsorgsdagerGrunnlag,
-      barn,
-      aleneOmOmsorgen: [
-        {
-          fnrBarnAleneOm: fnrEtBarn,
-          kilde: 'hentetAutomatisk',
-        },
-      ],
-      overføringFår: [
-        {
-          kilde: 'hentetAutomatisk',
-          antallDager: 10,
-          avsendersFnr: '12312312312',
-        },
-      ],
-    }}
-    behandling={behandling}
-    submitCallback={action('Send inn')}
-    readOnly
   />
 );

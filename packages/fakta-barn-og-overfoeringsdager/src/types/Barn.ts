@@ -1,5 +1,11 @@
 export default interface Barn {
-  erKroniskSykt?: boolean;
-  aleneomsorg?: boolean;
+  kroniskSykdom?: {
+    fom: string;
+    tom: string;
+  };
+  aleneomsorg?: {
+    fom: string;
+    tom: string;
+  };
   fødselsnummer: string;
 }
