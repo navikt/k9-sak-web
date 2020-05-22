@@ -20,9 +20,9 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
   totaltAntallDager: 17,
   antallKoronadager: 0,
   antallDagerArbeidsgiverDekker: 3,
-  forbrukteDager: 10.4,
+  forbrukteDager: 7.4,
   restdager: 9.6,
-  antallDagerInfotrygd: 2.4,
+  antallDagerInfotrygd: 2,
   sisteUttaksplan: {
     aktiviteter: [
       {
@@ -93,7 +93,8 @@ export const smittevernsdager = () => (
     årskvantum={{
       ...årskvantumDto,
       antallKoronadager: 10,
-      restdager: -3.4,
+      forbruktTid: 'PT180H',
+      restTid: 'PT-34H-30M',
     }}
     // @ts-ignore
     alleKodeverk={alleKodeverk}

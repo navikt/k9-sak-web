@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import styled from 'styled-components';
+import moment from 'moment';
 import Undertittel from 'nav-frontend-typografi/lib/undertittel';
 import { FlexRow, Image } from '@fpsak-frontend/shared-components/index';
 import pieChart from '@fpsak-frontend/assets/images/pie_chart.svg';
@@ -13,8 +14,10 @@ interface ÅrskvantumProps {
   totaltAntallDager: number;
   antallKoronadager?: number;
   antallDagerArbeidsgiverDekker: number;
-  forbrukteDager: number;
-  restdager: number;
+  forbrukteDager?: number;
+  forbruktTid?: string;
+  restdager?: number;
+  restTid?: string;
   antallDagerInfotrygd: number;
   benyttetRammemelding: boolean;
 }
@@ -46,7 +49,17 @@ export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
 
   return {
     dager,
-    timer: timerDesimal > 0 ? Number.parseFloat((timerDesimal * 7.5).toFixed(1).replace('.0', '')) : null,
+    timer: timerDesimal !== 0 ? Number.parseFloat((timerDesimal * 7.5).toFixed(1).replace('.0', '')) : null,
+  };
+};
+
+export const beregnDagerTimer = (dagerTimer: string) => {
+  const duration = moment.duration(dagerTimer);
+  const totaltAntallTimer = duration.days() * 24 + duration.hours() + duration.minutes() / 60;
+
+  return {
+    dager: Math.floor(totaltAntallTimer / 7.5),
+    timer: totaltAntallTimer % 7.5,
   };
 };
 
@@ -54,17 +67,17 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   totaltAntallDager,
   antallKoronadager = 0,
   restdager,
+  restTid,
   forbrukteDager,
+  forbruktTid,
   antallDagerArbeidsgiverDekker,
-  antallDagerInfotrygd,
+  antallDagerInfotrygd = 0,
   benyttetRammemelding,
 }) => {
-  const restdagerErSmittevernsdager = restdager < 0;
+  const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
+  const restdagerErSmittevernsdager = rest.dager < 0 || rest.timer < 0;
 
-  const forbrukt = konverterDesimalTilDagerOgTimer(forbrukteDager);
-  const rest = restdagerErSmittevernsdager ? { dager: 0, timer: 0 } : konverterDesimalTilDagerOgTimer(restdager);
-  const dagerInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
-  const smittevernsdager = restdagerErSmittevernsdager && konverterDesimalTilDagerOgTimer(Math.abs(restdager));
+  const forbrukt = forbruktTid ? beregnDagerTimer(forbruktTid) : konverterDesimalTilDagerOgTimer(forbrukteDager);
   const opprinneligeDager = totaltAntallDager - antallDagerArbeidsgiverDekker;
 
   return (
@@ -90,9 +103,9 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         {restdagerErSmittevernsdager && (
           <CounterBox
             count={{
-              bigCount: smittevernsdager.dager,
-              smallCount: smittevernsdager.timer ? (
-                <FormattedMessage id="Årskvantum.Timer" values={{ timer: smittevernsdager.timer }} />
+              bigCount: Math.abs(rest.dager),
+              smallCount: rest.timer ? (
+                <FormattedMessage id="Årskvantum.Timer" values={{ timer: Math.abs(rest.timer) }} />
               ) : null,
             }}
             label={{ textId: 'Årskvantum.Smittevernsdager' }}
@@ -140,7 +153,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         />
         <CounterBox
           count={{
-            bigCount: forbrukt.dager,
+            bigCount: forbrukt.dager + antallDagerInfotrygd,
             smallCount: forbrukt.timer ? (
               <FormattedMessage id="Årskvantum.Timer" values={{ timer: forbrukt.timer }} />
             ) : null,
@@ -148,20 +161,18 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           label={{ textId: 'Årskvantum.ForbrukteDager' }}
           theme="rød"
           infoText={{
-            content: dagerInfotrygd.timer ? (
-              <FormattedHTMLMessage
-                id="Årskvantum.DagerOgTimerFraInfotrygd"
-                values={{ dager: dagerInfotrygd.dager, timer: dagerInfotrygd.timer }}
-              />
-            ) : (
-              <FormattedHTMLMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: dagerInfotrygd.dager }} />
+            content: (
+              <FormattedHTMLMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: antallDagerInfotrygd }} />
             ),
           }}
         />
         <CounterBox
           count={{
-            bigCount: rest.dager,
-            smallCount: rest.timer ? <FormattedMessage id="Årskvantum.Timer" values={{ timer: rest.timer }} /> : null,
+            bigCount: restdagerErSmittevernsdager ? 0 : rest.dager,
+            smallCount:
+              rest.timer && rest.timer > 0 ? (
+                <FormattedMessage id="Årskvantum.Timer" values={{ timer: rest.timer }} />
+              ) : null,
           }}
           label={{ textId: 'Årskvantum.Restdager' }}
           theme="grønn"

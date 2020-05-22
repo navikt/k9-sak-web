@@ -3,6 +3,7 @@ import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
+import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -27,6 +28,15 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     renderComponent: props => <ArbeidsforholdFaktaIndex {...props} />,
     showComponent: ({ personopplysninger }) => personopplysninger,
     getData: ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse }),
+  },
+  {
+    urlCode: faktaPanelCodes.VERGE,
+    textCode: 'RegistrereVergeInfoPanel.Info',
+    aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_VERGE],
+    endpoints: [omsorgspengerBehandlingApi.VERGE],
+    renderComponent: props => <VergeFaktaIndex {...props} />,
+    showComponent: () => false,
+    getData: () => ({}),
   },
   {
     urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
