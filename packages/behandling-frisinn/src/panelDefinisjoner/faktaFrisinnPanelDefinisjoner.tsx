@@ -43,7 +43,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     aksjonspunkterCodes: [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN],
     endpoints: [],
     renderComponent: props => <BeregningFaktaIndex {...props} />,
-    showComponent: () => true,
+    showComponent: ({ beregningsgrunnlag }) => !!beregningsgrunnlag,
     getData: ({ beregningsgrunnlag }) => ({
       erOverstyrer: false,
       beregningsgrunnlag,
