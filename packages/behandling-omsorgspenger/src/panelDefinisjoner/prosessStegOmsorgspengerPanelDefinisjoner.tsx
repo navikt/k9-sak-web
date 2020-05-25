@@ -196,7 +196,11 @@ const prosessStegPanelDefinisjoner = [
         },
         showComponent: () => true,
         overrideStatus: ({ beregningsresultatUtbetaling }) => {
-          if (!beregningsresultatUtbetaling) {
+          const manglerBeregningsresultatUtbetaling =
+            !beregningsresultatUtbetaling ||
+            !beregningsresultatUtbetaling.perioder ||
+            beregningsresultatUtbetaling.perioder.length === 0;
+          if (manglerBeregningsresultatUtbetaling) {
             return vut.IKKE_VURDERT;
           }
           if (harKunAvslåtteUttak(beregningsresultatUtbetaling)) {
