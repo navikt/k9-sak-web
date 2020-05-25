@@ -6,14 +6,14 @@ import { Element } from 'nav-frontend-typografi';
 import classnames from 'classnames/bind';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
 import Overføring, { Overføringsretning, OverføringsretningEnum, Overføringstype } from '../types/Overføring';
-import styles from './redigerOverføringsrader.less';
+import styles from './overføringsrader.less';
 import Pil from './Pil';
 import FastBreddeAligner from './FastBreddeAligner';
 import typeTilTekstIdMap from './typeTilTekstIdMap';
 
 const classNames = classnames.bind(styles);
 
-interface RedigerOverføringsraderProps {
+interface OverføringsraderProps {
   type: Overføringstype;
   retning: Overføringsretning;
 }
@@ -69,7 +69,7 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
   );
 };
 
-const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overføring> & RedigerOverføringsraderProps> = ({
+const Overføringsrader: FunctionComponent<WrappedFieldArrayProps<Overføring> & OverføringsraderProps> = ({
   fields,
   type,
   retning,
@@ -96,7 +96,7 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
                 id: `${field}.dager`,
                 content: (
                   <span className={styles.dagerInputContainer}>
-                    <InputField name={`${field}.antallDager`} readOnly label={null} type="number" />
+                    <InputField name={`${field}.antallDager`} readOnly type="number" />
                     <span>
                       <FormattedMessage id="FaktaRammevedtak.Overføringsdager.Dager" />
                       <FormattedMessage
@@ -137,4 +137,4 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
   );
 };
 
-export default RedigerOverføringsrader;
+export default Overføringsrader;

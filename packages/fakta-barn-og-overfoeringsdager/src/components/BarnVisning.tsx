@@ -1,17 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { visningsdato, isValidDate } from '@fpsak-frontend/utils';
 import Panel from 'nav-frontend-paneler';
-import styles from './barnInput.less';
+import styles from './barnVisning.less';
 import Barn from '../types/Barn';
+import formaterDato from './utils';
 
 interface BarnInputProps {
   barnet: Barn;
   index: number;
 }
-
-export const formaterDato = dato => (isValidDate(dato) ? visningsdato(dato) : '-');
 
 const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
   const { aleneomsorg, kroniskSykdom, fødselsnummer } = barnet;

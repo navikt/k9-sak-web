@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 import Rammevedtak from '../dto/Rammevedtak';
-import { formaterDato } from './BarnVisning';
+import formaterDato from './utils';
 
 interface MidlertidigAleneProps {
   midlertidigAlene?: Rammevedtak;

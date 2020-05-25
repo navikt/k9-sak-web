@@ -4,7 +4,7 @@ import { FieldArray, InjectedFormProps, ConfigProps } from 'redux-form';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import Overføring, { Overføringsretning, Overføringstype } from '../types/Overføring';
 import { overføringerFormName } from './formNames';
-import RedigerOverføringsrader from './RedigerOverføringsrader';
+import Overføringsrader from './Overføringsrader';
 
 interface OverføringsraderFormImplProps {
   type: Overføringstype;
@@ -15,7 +15,7 @@ const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & Overføri
   type,
   retning,
 }) => {
-  return <FieldArray name="overføringer" component={RedigerOverføringsrader} props={{ type, retning }} />;
+  return <FieldArray name="overføringer" component={Overføringsrader} props={{ type, retning }} />;
 };
 
 interface OverføringsraderFormProps {
