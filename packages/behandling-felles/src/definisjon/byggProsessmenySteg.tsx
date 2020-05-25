@@ -1,3 +1,4 @@
+import KlageVurdering from "@fpsak-frontend/behandling-klage/src/types/klageVurderingTsType";
 import { createSelector } from 'reselect';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -37,6 +38,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   hasFetchError: boolean;
   intl: {};
+  klageVurdering?: KlageVurdering;
 }
 
 const byggProsessmenySteg = createSelector<OwnProps, any, any>(
@@ -50,8 +52,9 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
     ownProps => ownProps.fagsak,
     ownProps => ownProps.hasFetchError,
     ownProps => ownProps.intl,
+    ownProps => ownProps.klageVurdering
   ],
-  (alleSteg, valgtStegKode, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl) => {
+  (alleSteg, valgtStegKode, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl, klagevurdering) => {
     const indexTilStegMedApentAksjonspunkt = alleSteg.findIndex(steg =>
       aksjonspunkter
         ?.filter(ap => steg.apCodes.includes(ap.definisjon.kode))
@@ -66,7 +69,7 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
 
       const apForSteg = aksjonspunkter.filter(a => steg.apCodes.includes(a.definisjon.kode));
       const vilkarForBp = vilkar?.filter(v => steg.vilkarene.includes(v));
-      const isReadOnly = readOnlyUtils.erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
+      const isReadOnly = readOnlyUtils.erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError, steg.code, klagevurdering);
       const isSubmittable = apForSteg.some(ap => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
 
       const erValgtSteg = indexTilValgtSteg === mapIndex;

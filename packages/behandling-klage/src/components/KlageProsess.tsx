@@ -219,6 +219,7 @@ class KlageProsess extends Component<Props, KlageProsessState> {
       fagsak,
       hasFetchError,
       intl,
+      klageVurdering
     });
 
     const valgtSteg = alleProsessMenySteg[alleProsessMenySteg.findIndex(p => p.prosessmenySteg.isActive)];
