@@ -55,7 +55,7 @@ export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
 
 export const beregnDagerTimer = (dagerTimer: string) => {
   const duration = moment.duration(dagerTimer);
-  const totaltAntallTimer = duration.days() * 24 + duration.hours() + duration.minutes() / 60;
+  const totaltAntallTimer = duration.asHours();
 
   return {
     dager: Math.floor(totaltAntallTimer / 7.5),
