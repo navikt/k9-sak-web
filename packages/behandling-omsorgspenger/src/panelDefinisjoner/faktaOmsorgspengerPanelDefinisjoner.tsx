@@ -69,36 +69,12 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
   },
   {
     urlCode: faktaPanelCodes.UTTAK,
-    textCode: 'UttakInfoPanel.FaktaUttak',
+    textCode: 'FaktaRammevedtak.Title',
     aksjonspunkterCodes: [],
     endpoints: [],
     renderComponent: props => <FaktaRammevedtakIndex {...props} />,
     showComponent: ({ forbrukteDager }) => !!forbrukteDager,
-    getData: ({ forbrukteDager }) => ({
-      omsorgsdagerGrunnlagDto: forbrukteDager.omsorgsdagerGrunnlag || {
-        barn: [],
-        aleneOmOmsorgen: [],
-        utvidetRett: [],
-        overføringFår: [
-          {
-            antallDager: 8,
-            kilde: 'hentetAutomatisk',
-            avsendersFnr: '12018926752',
-          },
-          {
-            antallDager: 3,
-            kilde: 'hentetAutomatisk',
-            avsendersFnr: '12018926752',
-          },
-        ],
-        overføringGir: [],
-        fordelingFår: [],
-        fordelingGir: [],
-        koronaoverføringFår: [],
-        koronaoverføringGir: [],
-        uidentifiserteRammevedtak: [],
-      },
-    }),
+    getData: ({ forbrukteDager }) => ({ rammevedtak: forbrukteDager?.rammevedtak || [] }),
   },
   {
     urlCode: faktaPanelCodes.BEREGNING,

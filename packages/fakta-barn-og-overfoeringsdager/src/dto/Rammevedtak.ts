@@ -7,11 +7,11 @@ export const RammevedtakEnum = stringEnum({
   OVERFØRING_GIR: 'OverføringGir',
   FORDELING_FÅR: 'FordeligFår',
   FORDELING_GIR: 'FordelingGir',
-  KORONAOVERFØRING_FÅR: 'KoronaoverføringFår',
-  KORONAOVERFØRING_GIR: 'KoronaoverføringGir',
+  KORONAOVERFØRING_FÅR: 'KoronaOverføringFår',
+  KORONAOVERFØRING_GIR: 'KoronaOverføringGir',
   UTVIDET_RETT: 'UtvidetRett',
-  ALENEOMSORG: 'Aleneomsorg',
-  MIDLERTIDIG_ALENEOMSORG: 'MidlertidigAleneomsorg',
+  ALENEOMSORG: 'AleneOmOmsorgen',
+  MIDLERTIDIG_ALENEOMSORG: 'MidlertidigAleneOmOmsorgen',
 });
 
 export type RammevedtakType = typeof RammevedtakEnum[keyof typeof RammevedtakEnum];

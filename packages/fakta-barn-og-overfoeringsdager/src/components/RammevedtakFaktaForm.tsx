@@ -33,7 +33,7 @@ interface RammevedtakFaktaFormProps {
 }
 
 export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
-  rammevedtak = [],
+  rammevedtak,
   formValues,
   behandlingId,
   behandlingVersjon,

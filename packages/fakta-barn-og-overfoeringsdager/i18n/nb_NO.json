@@ -1,5 +1,5 @@
 {
-  "FaktaRammevedtak.UidentifisertUtvidetRett": "Det finnes {antallRammevedtak} rammevedtak om utvidet rett fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst marker de barna det gjelder.",
+  "FaktaRammevedtak.UidentifisertUtvidetRett": "Det finnes {antallRammevedtak} rammevedtak om utvidet rett fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst korriger i Infotrygd.",
   "FaktaRammevedtak.UidentifiserteRammevedtak": "Det finnes {antall} uidentifiserte rammevedtak fra Infotrygd.",
   "FaktaRammevedtak.Barn.Tittel": "Barn",
   "FaktaRammevedtak.Barn.Fnr": "Fødselsnummer",
