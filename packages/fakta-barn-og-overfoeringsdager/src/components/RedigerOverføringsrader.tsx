@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { InputField } from '@fpsak-frontend/form/index';
+import { InputField, PeriodpickerField } from '@fpsak-frontend/form/index';
 import { WrappedFieldArrayProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
@@ -51,6 +51,15 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
             content: (
               <Element>
                 <FormattedMessage id={retningTilTekstIdMap[retning]} />
+              </Element>
+            ),
+          },
+          {
+            width: 'inherit',
+            id: 'gyldighetsperiode',
+            content: (
+              <Element>
+                <FormattedMessage id="Gyldighetsperiode" />
               </Element>
             ),
           },
@@ -111,6 +120,13 @@ const RedigerOverføringsrader: FunctionComponent<WrappedFieldArrayProps<Overfø
                 id: `${field}.fnr`,
                 padding: '0 20px 0 0',
                 content: <InputField name={`${field}.mottakerAvsenderFnr`} readOnly />,
+              },
+              {
+                width: 'inherit',
+                id: `${field}.gyldighetsperiode`,
+                content: (
+                  <PeriodpickerField names={[`${field}.fom`, `${field}.tom`]} readOnly renderIfMissingDateOnReadOnly />
+                ),
               },
             ]}
             key={field}
