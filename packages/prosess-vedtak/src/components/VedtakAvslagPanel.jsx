@@ -23,10 +23,14 @@ export const getAvslagArsak = (vilkar, aksjonspunkter, vedtakVarsel, getKodeverk
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }
 
-  return `${getKodeverknavn(avslatteVilkar[0].vilkarType)}: ${getKodeverknavn(
-    vedtakVarsel.avslagsarsak,
-    avslatteVilkar[0].vilkarType.kode,
-  )}`;
+  return avslatteVilkar.map(avslåttVilkår => (
+    <Normaltekst key={avslåttVilkår.vilkarType.kode}>
+      {`${getKodeverknavn(avslåttVilkår.vilkarType)}: ${getKodeverknavn(
+        { kode: avslåttVilkår.perioder[0].avslagKode, kodeverk: 'AVSLAGSARSAK' },
+        avslåttVilkår.vilkarType.kode,
+      )}`}
+    </Normaltekst>
+  ));
 };
 
 export const VedtakAvslagPanelImpl = ({
@@ -60,7 +64,7 @@ export const VedtakAvslagPanelImpl = ({
       {getAvslagArsak(vilkar, aksjonspunkter, vedtakVarsel, getKodeverknavn) && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}</Undertekst>
-          <Normaltekst>{getAvslagArsak(vilkar, aksjonspunkter, vedtakVarsel, getKodeverknavn)}</Normaltekst>
+          {getAvslagArsak(vilkar, aksjonspunkter, vedtakVarsel, getKodeverknavn)}
           <VerticalSpacer sixteenPx />
         </div>
       )}
