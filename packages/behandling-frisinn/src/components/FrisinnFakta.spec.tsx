@@ -144,11 +144,6 @@ describe('<FrisinnFakta>', () => {
         harAksjonspunkt: false,
         tekst: 'Søknaden',
       },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Beregning',
-      },
     ]);
   });
 
