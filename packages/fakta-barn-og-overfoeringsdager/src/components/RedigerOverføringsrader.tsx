@@ -6,10 +6,10 @@ import { Element } from 'nav-frontend-typografi';
 import classnames from 'classnames/bind';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
 import Overføring, { Overføringsretning, OverføringsretningEnum, Overføringstype } from '../types/Overføring';
-import { typeTilTekstIdMap } from './OverføringsdagerPanel';
 import styles from './redigerOverføringsrader.less';
 import Pil from './Pil';
 import FastBreddeAligner from './FastBreddeAligner';
+import typeTilTekstIdMap from './typeTilTekstIdMap';
 
 const classNames = classnames.bind(styles);
 

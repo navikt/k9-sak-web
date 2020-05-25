@@ -12,6 +12,7 @@ import Pil from './Pil';
 import OverføringsraderForm from './OverføringsraderForm';
 import styles from './overføringsdagerPanel.less';
 import FastBreddeAligner from './FastBreddeAligner';
+import typeTilTekstIdMap from './typeTilTekstIdMap';
 
 const classNames = classnames.bind(styles);
 
@@ -22,12 +23,6 @@ interface OverføringsdagerPanelProps {
   behandlingId: number;
   behandlingVersjon: number;
 }
-
-export const typeTilTekstIdMap = {
-  [OverføringstypeEnum.OVERFØRING]: 'FaktaRammevedtak.Overføringsdager.Overføring',
-  [OverføringstypeEnum.FORDELING]: 'FaktaRammevedtak.Overføringsdager.Fordeling',
-  [OverføringstypeEnum.KORONAOVERFØRING]: 'FaktaRammevedtak.Overføringsdager.Koronaoverføring',
-};
 
 const renderTittel = (type, retning, totaltAntallDager) => (
   <FastBreddeAligner

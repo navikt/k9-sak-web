@@ -13,15 +13,9 @@ interface OverføringsraderFormImplProps {
 
 const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & OverføringsraderFormImplProps> = ({
   type,
-  retning
+  retning,
 }) => {
-  return (
-    <FieldArray
-      name="overføringer"
-      component={RedigerOverføringsrader}
-      props={{ type, retning }}
-    />
-  );
+  return <FieldArray name="overføringer" component={RedigerOverføringsrader} props={{ type, retning }} />;
 };
 
 interface OverføringsraderFormProps {
@@ -48,9 +42,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: Overføringsrade
   });
 };
 
-const OverføringsraderForm: FunctionComponent<OverføringsraderFormProps> = connect(
-  mapStateToPropsFactory,
-)(
+const OverføringsraderForm: FunctionComponent<OverføringsraderFormProps> = connect(mapStateToPropsFactory)(
   // @ts-ignore
   behandlingForm({
     enableReinitialize: true,
