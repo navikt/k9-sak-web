@@ -199,7 +199,7 @@ class BehandlingMenu extends Component {
     } = this.props;
     const { menuVisible } = this.state;
     const behandlingIdentifier = new BehandlingIdentifier(saksnummer, behandlingData.id);
-    const erFrisinn = fagsakYtelseType.FRISINN === ytelseType;
+    const erFrisinn = fagsakYtelseType.FRISINN === ytelseType.kode;
     return (
       <div className={styles.container}>
         <Knapp
