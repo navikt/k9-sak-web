@@ -45,7 +45,7 @@ const AvslagsårsakListe = ({ vilkar, getKodeverknavn }: AvslagsårsakListeProps
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }
 
-  return avslatteVilkar.map(avslåttVilkår => visAvslåtteVilkårsperioder(avslåttVilkår, getKodeverknavn));
+  return <>{avslatteVilkar.map(avslåttVilkår => visAvslåtteVilkårsperioder(avslåttVilkår, getKodeverknavn))}</>;
 };
 
 export default AvslagsårsakListe;
