@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { visningsdato, isValidDate } from '@fpsak-frontend/utils';
 import Panel from 'nav-frontend-paneler';
 import styles from './barnInput.less';
 import Barn from '../types/Barn';
@@ -10,10 +11,10 @@ interface BarnInputProps {
   index: number;
 }
 
+export const formaterDato = dato => (isValidDate(dato) ? visningsdato(dato) : '-');
+
 const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
   const { aleneomsorg, kroniskSykdom, fødselsnummer } = barnet;
-  // const aleneomsorgLabelId = `${fødselsnummer}-aleneomsorg`;
-  // const kroniskSykLabelId = `${fødselsnummer}-kroniskSyk`;
 
   return (
     <Panel border className={styles.barnInput}>
@@ -44,15 +45,15 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
             <Element>
               <FormattedMessage id="FaktaRammevedtak.Barn.FOM" />
             </Element>
-            {kroniskSykdom && <Normaltekst>{kroniskSykdom.fom}</Normaltekst>}
-            {aleneomsorg && <Normaltekst>{aleneomsorg.fom}</Normaltekst>}
+            {kroniskSykdom && <Normaltekst>{formaterDato(kroniskSykdom.fom)}</Normaltekst>}
+            {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.fom)}</Normaltekst>}
           </div>
           <div>
             <Element>
               <FormattedMessage id="FaktaRammevedtak.Barn.TOM" />
             </Element>
-            {kroniskSykdom && <Normaltekst>{kroniskSykdom.tom}</Normaltekst>}
-            {aleneomsorg && <Normaltekst>{aleneomsorg.tom}</Normaltekst>}
+            {kroniskSykdom && <Normaltekst>{formaterDato(kroniskSykdom.tom)}</Normaltekst>}
+            {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
           </div>
         </div>
       )}

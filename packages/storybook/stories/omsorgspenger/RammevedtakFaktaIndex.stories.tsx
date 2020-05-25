@@ -64,6 +64,11 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
       uidentifisertRammevedtak,
       utvidetRettManglendeFnr,
       utvidetRett,
+      {
+        ...utvidetRett,
+        gyldigTilOgMed: undefined,
+        utvidetRettFor: '55555555555',
+      },
       aleneOmOmsorgen,
       { ...aleneOmOmsorgen, aleneOmOmsorgenFor: '78978978978' },
       overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P4D'),
