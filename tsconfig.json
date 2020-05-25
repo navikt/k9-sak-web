@@ -37,6 +37,7 @@
     "packages/omsorgen-for-oms",
     "packages/prosess-vilkar-overstyring",
     "packages/prosess-aarskvantum-oms",
+    "packages/prosess-vedtak",
     "packages/fakta-opplysninger-fra-soknaden",
     "@types"
   ]
