@@ -33,7 +33,7 @@ https://medium.com/@jsilvax/a-workflow-guide-for-lerna-with-yarn-workspaces-60f9
 ## Mocks i dev-serveren
 Kan konfigureres via å sette opp en `.env`-fil i roten av prosjektet.
 ### Feature toggles (webpack/mocks/feature-toggles.js)
-Aktiveres med flagget `--feature-toggles` til `yarn dev`.  
+Aktiveres med flagget `--feature-toggles` til `yarn dev`.
 Tar en kommaseparert liste med featuretoggles og skrur disse på
 ```
 FEATURE_TOGGLES=my.toggle,my.second.toggle
@@ -52,3 +52,6 @@ FAKE_ERROR_BODY={"error":"dette fikk galt"}
 
 ### For NAV-ansatte
 Interne henvendelser kan sendes via Slack i kanalen **#p2-frontend**.
+
+### Ikoner
+This project uses Streamline Icons. If you use k9-sak-web in your project please adhere to the Streamline Icons license agreement found here: https://streamlineicons.com/ux/extended-license.html
