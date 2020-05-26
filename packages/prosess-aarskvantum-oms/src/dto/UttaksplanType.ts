@@ -6,6 +6,7 @@ interface UttaksplanType {
   innsendingstidspunkt: string;
   aktiviteter: Aktivitet[];
   benyttetRammemelding: boolean;
+  aktiv: boolean;
 }
 
 export default UttaksplanType;

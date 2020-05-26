@@ -51,7 +51,11 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({ årskvant
         benyttetRammemelding={sisteUttaksplan.benyttetRammemelding}
       />
       <VerticalSpacer sixteenPx />
-      <Uttaksplan aktiviteter={sisteUttaksplan.aktiviteter} aktivitetsstatuser={aktivitetsstatuser} />
+      <Uttaksplan
+        aktiviteter={sisteUttaksplan.aktiviteter}
+        aktivitetsstatuser={aktivitetsstatuser}
+        aktiv={sisteUttaksplan.aktiv}
+      />
     </RawIntlProvider>
   );
 };
