@@ -11,6 +11,7 @@
   "Klage.ResolveKlage.NullifyVedtak": "Opphev og hjemsend vedtaket",
   "Klage.ResolveKlage.Cause": "Årsak",
   "Klage.ResolveKlage.TempSaveButton": "Lagre",
+  "Klage.ResolveKlage.TempSaveAndPreviewButton": "Lagre og forhåndsvis brev",
   "KlageVurderingRadioOptionsKa.VurderingForKlage": "Vurdering",
   "FritekstKlageBrevTextField.Fritekst": "Fritekst til brev",
   "BehandleKlageFormNfp.BegrunnelseForKlage": "Begrunnelse",

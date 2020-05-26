@@ -22,7 +22,7 @@ import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-fr
 
 import KlageVurderingRadioOptionsKa from './KlageVurderingRadioOptionsKa';
 import FritekstBrevTextField from '../felles/FritekstKlageBrevTextField';
-import PreviewKlageLink from '../felles/PreviewKlageLink';
+import TempsaveAndPreviewKlageLink from '../felles/TempsaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
 
 import styles from './behandleKlageFormKa.less';
@@ -83,11 +83,12 @@ export const BehandleKlageFormKaImpl = ({
             />
             {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
             && (
-              <PreviewKlageLink
-                previewCallback={previewCallback}
-                fritekstTilBrev={formValues.fritekstTilBrev}
-                klageVurdering={formValues.klageVurdering}
+              <TempsaveAndPreviewKlageLink
+                formValues={formValues}
+                saveKlage={saveKlage}
+                readOnly={readOnly}
                 aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+                previewCallback={previewCallback}
               />
             )}
           </Column>
