@@ -51,7 +51,7 @@ const createItems = (
   const items = opptjeningPeriods.map(ap => ({
     id: ap.id,
     start: moment(ap.opptjeningFom),
-    end: moment(ap.opptjeningTom),
+    end: moment(`${ap.opptjeningTom} 23:59`),
     group: groups.find(
       g =>
         g.aktivitetTypeKode === ap.aktivitetType.kode &&
