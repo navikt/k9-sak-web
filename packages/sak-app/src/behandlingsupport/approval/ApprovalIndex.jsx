@@ -59,7 +59,7 @@ const getArsaker = approval =>
 const klageData = [fpsakApi.TOTRINNS_KLAGE_VURDERING];
 const revurderingData = [fpsakApi.HAR_REVURDERING_SAMME_RESULTAT];
 const ingenData = [];
-// const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
+const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 
 /**
  * ApprovalIndex
@@ -141,15 +141,15 @@ export class ApprovalIndex extends Component {
 
   async goToSearchPage() {
     const { push: pushLocation } = this.props;
-    // if (!isRunningOnLocalhost()) {
-    //   try {
-    //     const url = getPathToFplos(window.location.href);
-    //     await axios.get(url);
-    //     window.location.assign(url);
-    //   } catch {
-    //     pushLocation('/');
-    //   }
-    // }
+    if (!isRunningOnLocalhost()) {
+      try {
+        const url = getPathToFplos(window.location.href);
+        await axios.get(url);
+        window.location.assign(url);
+      } catch {
+        pushLocation('/');
+      }
+    }
     pushLocation('/');
   }
 

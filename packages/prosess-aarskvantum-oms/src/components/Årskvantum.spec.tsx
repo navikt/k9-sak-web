@@ -49,4 +49,7 @@ it('konverterer duration til dager og timer', () => {
 
   const duration_3 = 'PT22H';
   sjekkKonvertering(beregnDagerTimer(duration_3), 2, 7);
+
+  const duration_4 = 'PT802H30M';
+  sjekkKonvertering(beregnDagerTimer(duration_4), 107, 0);
 });

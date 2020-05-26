@@ -157,7 +157,7 @@ describe('<VedtakAvslagPanel>', () => {
     expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
@@ -186,7 +186,7 @@ describe('<VedtakAvslagPanel>', () => {
     expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
@@ -215,7 +215,7 @@ describe('<VedtakAvslagPanel>', () => {
     expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.first().childAt(0).text()).to.eql('Pleiepenger er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
@@ -244,7 +244,7 @@ describe('<VedtakAvslagPanel>', () => {
     expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.first().childAt(0).text()).to.eql('Pleiepenger er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
