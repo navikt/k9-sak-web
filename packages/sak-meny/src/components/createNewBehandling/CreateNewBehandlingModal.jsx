@@ -8,18 +8,20 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils';
+import { required, DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-
+import moment from 'moment';
 import { getAktorid } from '@fpsak-frontend/sak-app/src/fagsak/fagsakSelectors';
-import { getBehandlendeEnhetIdOfGjeldendeVedtak } from '@fpsak-frontend/sak-app/src/behandling/selectors/behandlingerSelectors';
+import {
+  getBehandlendeEnhetIdOfGjeldendeVedtak,
+  getBehandlingerInfo,
+} from '@fpsak-frontend/sak-app/src/behandling/selectors/behandlingerSelectors';
 import styles from './createNewBehandlingModal.less';
 
 const createOptions = (bt, enabledBehandlingstyper, intl) => {
@@ -43,11 +45,14 @@ export const CreateNewBehandlingModal = ({
   intl,
   behandlingTyper,
   behandlingType,
+  valgtBehandlingArsakType,
   behandlingArsakTyper,
   enabledBehandlingstyper,
   behandlingId,
   sjekkOmTilbakekrevingKanOpprettes,
   sjekkOmTilbakekrevingRevurderingKanOpprettes,
+  alleBehandlinger,
+  erFrisinn,
   uuid,
   saksnummer,
   erTilbakekrevingAktivert,
@@ -120,6 +125,21 @@ export const CreateNewBehandlingModal = ({
                 ))}
               />
             )}
+            {erFrisinn && valgtBehandlingArsakType && (
+              <SelectField
+                name="behandlingUuid"
+                placeholder="Velg behandling"
+                validate={[required]}
+                selectValues={alleBehandlinger
+                  .filter(({ status }) => status.kode === 'AVSLU')
+                  .map(behandling => (
+                    <option key={behandling.id} value={behandling.uuid}>
+                      Behandling avsluttet {moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)} kl.{' '}
+                      {moment(behandling.avsluttet).format(HHMM_TIME_FORMAT)}
+                    </option>
+                  ))}
+              />
+            )}
             <div className={styles.right}>
               <Hovedknapp mini className={styles.button}>
                 <FormattedMessage id="CreateNewBehandlingModal.Ok" />
@@ -150,6 +170,9 @@ CreateNewBehandlingModal.propTypes = {
   saksnummer: PropTypes.string.isRequired,
   behandlingArsakTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   enabledBehandlingstyper: PropTypes.arrayOf(PropTypes.shape().isRequired).isRequired,
+  alleBehandlinger: PropTypes.arrayOf(PropTypes.any),
+  erFrisinn: PropTypes.bool,
+  valgtBehandlingArsakType: PropTypes.string,
 };
 
 CreateNewBehandlingModal.defaultProps = {
@@ -282,6 +305,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
             behandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(initialState),
           }
         : undefined;
+
     initialOwnProps.submitCallback({
       ...values,
       eksternUuid: initialOwnProps.uuidForSistLukkede,
@@ -289,15 +313,20 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       ...klageOnlyValues,
     });
   };
-  return (state, ownProps) => ({
-    onSubmit,
-    behandlingTyper: getBehandlingTyper(ownProps),
-    enabledBehandlingstyper: getEnabledBehandlingstyper(ownProps),
-    uuid: ownProps.uuidForSistLukkede,
-    behandlingId: isTilbakekrevingEllerTilbakekrevingRevurdering(ownProps) ? ownProps.behandlingId : undefined,
-    behandlingArsakTyper: getBehandlingAarsaker(state, ownProps),
-    behandlingType: formValueSelector(formName)(state, 'behandlingType'),
-  });
+  return (state, ownProps) => {
+    return {
+      onSubmit,
+      alleBehandlinger: getBehandlingerInfo(state),
+      behandlingTyper: getBehandlingTyper(ownProps),
+      enabledBehandlingstyper: getEnabledBehandlingstyper(ownProps),
+      uuid: ownProps.uuidForSistLukkede,
+      behandlingId: isTilbakekrevingEllerTilbakekrevingRevurdering(ownProps) ? ownProps.behandlingId : undefined,
+      behandlingArsakTyper: getBehandlingAarsaker(state, ownProps),
+      behandlingType: formValueSelector(formName)(state, 'behandlingType'),
+      valgtBehandlingArsakType: formValueSelector(formName)(state, 'behandlingArsakType'),
+      erFrisinn: ownProps.ytelseType.kode === fagsakYtelseType.FRISINN,
+    };
+  };
 };
 
 export default connect(mapStateToPropsFactory)(
