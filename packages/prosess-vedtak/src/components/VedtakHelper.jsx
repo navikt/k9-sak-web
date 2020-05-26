@@ -13,7 +13,7 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
-  tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD &&
+  tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
   (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
