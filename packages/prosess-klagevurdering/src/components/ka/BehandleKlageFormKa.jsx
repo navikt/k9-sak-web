@@ -63,11 +63,7 @@ export const BehandleKlageFormKaImpl = ({
       />
       <div className={styles.confirmVilkarForm}>
         <VerticalSpacer sixteenPx />
-        <FritekstBrevTextField
-          sprakkode={sprakkode}
-          readOnly={readOnly}
-          intl={intl}
-        />
+        <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="8">
@@ -81,16 +77,18 @@ export const BehandleKlageFormKaImpl = ({
               isBehandlingFormDirty={isBehandlingFormDirty}
               hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
             />
-            {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
-            && (
-              <TempSaveAndPreviewKlageLink
-                formValues={formValues}
-                saveKlage={saveKlage}
-                readOnly={readOnly}
-                aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
-                previewCallback={previewCallback}
-              />
-            )}
+            {!readOnly &&
+              formValues.klageVurdering &&
+              formValues.fritekstTilBrev &&
+              formValues.fritekstTilBrev.length > 2 && (
+                <TempSaveAndPreviewKlageLink
+                  formValues={formValues}
+                  saveKlage={saveKlage}
+                  readOnly={readOnly}
+                  aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+                  previewCallback={previewCallback}
+                />
+              )}
           </Column>
           <Column xs="2">
             <TempsaveKlageButton
@@ -121,20 +119,25 @@ BehandleKlageFormKaImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([
-  (ownProps) => ownProps.klageVurdering.klageVurderingResultatNK], (klageVurderingResultat) => ({
-  klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
-  klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
-  klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
-  begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
-  fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
-}));
+export const buildInitialValues = createSelector(
+  [ownProps => ownProps.klageVurdering.klageVurderingResultatNK],
+  klageVurderingResultat => ({
+    klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
+    klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
+    klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
+    begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
+    fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
+  }),
+);
 
-
-export const transformValues = (values) => ({
-  klageMedholdArsak: (values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE
-    || values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK) ? values.klageMedholdArsak : null,
-  klageVurderingOmgjoer: values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
+export const transformValues = values => ({
+  klageMedholdArsak:
+    values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
+    values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK
+      ? values.klageMedholdArsak
+      : null,
+  klageVurderingOmgjoer:
+    values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
   klageVurdering: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
@@ -144,18 +147,25 @@ export const transformValues = (values) => ({
 const formName = 'BehandleKlageKaForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
-      state, 'begrunnelse', 'fritekstTilBrev', 'klageVurdering', 'klageVurderingOmgjoer', 'klageMedholdArsak',
+      state,
+      'begrunnelse',
+      'fritekstTilBrev',
+      'klageVurdering',
+      'klageVurderingOmgjoer',
+      'klageMedholdArsak',
     ),
     onSubmit,
   });
 };
 
-const BehandleKlageFormKa = connect(mapStateToPropsFactory)(behandlingForm({
-  form: formName,
-})(BehandleKlageFormKaImpl));
+const BehandleKlageFormKa = connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+  })(BehandleKlageFormKaImpl),
+);
 
 export default injectIntl(BehandleKlageFormKa);

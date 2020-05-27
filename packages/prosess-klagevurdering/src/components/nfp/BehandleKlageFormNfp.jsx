@@ -62,16 +62,9 @@ export const BehandleKlageFormNfpImpl = ({
         medholdReasons={alleKodeverk[kodeverkTyper.KLAGE_MEDHOLD_ARSAK]}
       />
       <div className={styles.confirmVilkarForm}>
-        <BehandlingspunktBegrunnelseTextField
-          readOnly={readOnly}
-          textCode="BehandleKlageFormNfp.BegrunnelseForKlage"
-        />
+        <BehandlingspunktBegrunnelseTextField readOnly={readOnly} textCode="BehandleKlageFormNfp.BegrunnelseForKlage" />
         <VerticalSpacer sixteenPx />
-        <FritekstBrevTextField
-          sprakkode={sprakkode}
-          readOnly={readOnly}
-          intl={intl}
-        />
+        <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="8">
@@ -85,15 +78,17 @@ export const BehandleKlageFormNfpImpl = ({
               isBehandlingFormDirty={isBehandlingFormDirty}
               hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
             />
-            {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
-              && (
-               <TempSaveAndPreviewKlageLink
-                formValues={formValues}
-                saveKlage={saveKlage}
-                readOnly={readOnly}
-                aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-                previewCallback={previewCallback}
-               />
+            {!readOnly &&
+              formValues.klageVurdering &&
+              formValues.fritekstTilBrev &&
+              formValues.fritekstTilBrev.length > 2 && (
+                <TempSaveAndPreviewKlageLink
+                  formValues={formValues}
+                  saveKlage={saveKlage}
+                  readOnly={readOnly}
+                  aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+                  previewCallback={previewCallback}
+                />
               )}
           </Column>
           <Column xs="2">
@@ -125,20 +120,25 @@ BehandleKlageFormNfpImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([
-  (ownProps) => ownProps.klageVurdering.klageVurderingResultatNFP], (klageVurderingResultat) => ({
-  klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
-  klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
-  klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
-  begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
-  fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
-}));
+export const buildInitialValues = createSelector(
+  [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP],
+  klageVurderingResultat => ({
+    klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
+    klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
+    klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
+    begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
+    fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
+  }),
+);
 
-
-export const transformValues = (values) => ({
-  klageMedholdArsak: (values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE
-    || values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK) ? values.klageMedholdArsak : null,
-  klageVurderingOmgjoer: values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
+export const transformValues = values => ({
+  klageMedholdArsak:
+    values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
+    values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK
+      ? values.klageMedholdArsak
+      : null,
+  klageVurderingOmgjoer:
+    values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
   klageVurdering: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
@@ -148,18 +148,26 @@ export const transformValues = (values) => ({
 const formName = 'BehandleKlageNfpForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
-    formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state,
-      'klageVurdering', 'begrunnelse', 'fritekstTilBrev', 'klageMedholdArsak', 'klageVurderingOmgjoer'),
+    formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
+      state,
+      'klageVurdering',
+      'begrunnelse',
+      'fritekstTilBrev',
+      'klageMedholdArsak',
+      'klageVurderingOmgjoer',
+    ),
     readOnly: ownProps.readOnly,
     onSubmit,
   });
 };
 
-const BehandleKlageFormNfp = connect(mapStateToPropsFactory)(behandlingForm({
-  form: formName,
-})(BehandleKlageFormNfpImpl));
+const BehandleKlageFormNfp = connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+  })(BehandleKlageFormNfpImpl),
+);
 
 export default injectIntl(BehandleKlageFormNfp);
