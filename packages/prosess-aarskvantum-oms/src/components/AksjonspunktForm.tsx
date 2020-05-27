@@ -27,7 +27,7 @@ interface FormContentProps {
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
 
-const valg = {
+const valgValues = {
   reBehandling: 'reBehandling',
   fortsett: 'fortsett',
 };
@@ -44,7 +44,7 @@ const SpaceBetween = styled.div`
   margin-top: 1em;
 `;
 
-const FormContent: FunctionComponent<FormContentProps> = ({ rammevedtak, aktiviteter, handleSubmit }) => {
+export const FormContent: FunctionComponent<FormContentProps> = ({ rammevedtak, aktiviteter, handleSubmit }) => {
   const harUavklartePerioder = useMemo(
     () =>
       aktiviteter.flatMap(({ uttaksperioder }) => uttaksperioder).some(({ utfall }) => utfall === UtfallEnum.UAVKLART),
@@ -96,8 +96,8 @@ const FormContent: FunctionComponent<FormContentProps> = ({ rammevedtak, aktivit
           </Element>
         }
       >
-        <RadioOption value={valg.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />
-        <RadioOption value={valg.fortsett} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Fortsett' }} />
+        <RadioOption value={valgValues.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />
+        <RadioOption value={valgValues.fortsett} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Fortsett' }} />
       </RadioGroupField>
       <TextAreaField
         label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Begrunnelse' }}
@@ -129,10 +129,10 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
   );
 };
 
-interface FormValues {
+export interface FormValues {
   begrunnelse?: string;
-  reBehandling?: boolean;
-  fortsett?: boolean;
+  bekreftInfotrygd?: boolean;
+  valg?: 'reBehandling' | 'fortsett';
 }
 
 interface AksjonspunktFormProps {
@@ -143,15 +143,16 @@ interface AksjonspunktFormProps {
   submitCallback: (values: any[]) => void;
 }
 
+export const transformValues = ({ begrunnelse, valg, bekreftInfotrygd }: FormValues) => {
+  if (bekreftInfotrygd || valg === valgValues.reBehandling) {
+    return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, valg: valgValues.reBehandling }];
+  }
+  return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, valg: valgValues.fortsett }];
+};
+
 const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormProps) => {
   const { submitCallback } = initialProps;
-  const onSubmit = (formValues: FormValues) =>
-    submitCallback([
-      {
-        ...formValues,
-        kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
-      },
-    ]);
+  const onSubmit = (formValues: FormValues) => submitCallback(transformValues(formValues));
 
   return (
     state,
