@@ -1,6 +1,7 @@
 import FaktaPanelDefinisjon from '@fpsak-frontend/behandling-felles/src/types/faktaPanelDefinisjonTsType';
 import InntektOgYtelser from '@fpsak-frontend/fakta-inntekt-og-ytelser';
 import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
+import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import * as React from 'react';
@@ -35,6 +36,18 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     },
     showComponent: () => true,
     getData: () => ({}),
+  },
+  {
+    urlCode: faktaPanelCodes.BEREGNING,
+    textCode: 'BeregningInfoPanel.Title',
+    aksjonspunkterCodes: [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN],
+    endpoints: [],
+    renderComponent: props => <BeregningFaktaIndex {...props} />,
+    showComponent: ({ beregningsgrunnlag }) => !!beregningsgrunnlag,
+    getData: ({ beregningsgrunnlag }) => ({
+      erOverstyrer: false,
+      beregningsgrunnlag,
+    }),
   },
 ];
 

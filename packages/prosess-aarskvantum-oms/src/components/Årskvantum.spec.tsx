@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import React from 'react';
-import Årskvantum, { konverterDesimalTilDagerOgTimer } from './Årskvantum';
+import Årskvantum, { beregnDagerTimer, konverterDesimalTilDagerOgTimer } from './Årskvantum';
 import CounterBox from './CounterBox';
 import { mountWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
 
@@ -38,4 +38,18 @@ it('konverterer desimaltall til hele dager og timer med max 1 desimal', () => {
 
   const heltall = 12;
   sjekkKonvertering(konverterDesimalTilDagerOgTimer(heltall), 12, null);
+});
+
+it('konverterer duration til dager og timer', () => {
+  const duration_1 = 'PT6H30M';
+  sjekkKonvertering(beregnDagerTimer(duration_1), 0, 6.5);
+
+  const duration_2 = 'PT7H30M';
+  sjekkKonvertering(beregnDagerTimer(duration_2), 1, 0);
+
+  const duration_3 = 'PT22H';
+  sjekkKonvertering(beregnDagerTimer(duration_3), 2, 7);
+
+  const duration_4 = 'PT802H30M';
+  sjekkKonvertering(beregnDagerTimer(duration_4), 107, 0);
 });

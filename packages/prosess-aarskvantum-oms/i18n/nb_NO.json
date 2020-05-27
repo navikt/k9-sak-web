@@ -9,7 +9,7 @@
   "Årskvantum.Koronadager": "Koronadager",
   "Årskvantum.Koronadager.InfoText": "Dobling av dager gitt pga. Koronapandemien. Gjelder fra og med 13.03.2020 til og med 31.12.2020",
   "Årskvantum.ForbrukteDager": "Forbrukte dager",
-  "Årskvantum.DagerFraInfotrygd": "<div>Antall forbrukte dager per siste dag i uttaksperioden.</div><div>{dager} dager utbetalt fra Infotrygd.</div>",
+  "Årskvantum.DagerFraInfotrygd": "<div>Antall forbrukte dager per siste dag i uttaksoversikten.</div><div>Inkludert {dager} dager utbetalt fra Infotrygd.</div>",
   "Årskvantum.DagerOgTimerFraInfotrygd": "<div>Antall forbrukte dager per siste dag i uttaksperioden.</div><div>{dager} dager, {timer}t utbetalt fra Infotrygd.</div>",
   "Årskvantum.Restdager": "Restdager",
   "Årskvantum.Restdager.InfoText": "Dager tilgode",
@@ -49,7 +49,12 @@
   "Uttaksplan.Hjemmel.FTRL_9_5__1": "Ftrl. § 9-5 1. ledd",
   "Uttaksplan.Hjemmel.FTRL_9_5__3": "Ftrl. § 9-5 3. ledd",
   "Uttaksplan.Hjemmel.FTRL_9_6__1": "Ftrl. § 9-6 1. ledd",
+  "Uttaksplan.Hjemmel.FTRL_9_6__2_OG_4": "Ftrl. § 9-6 2. og 4. ledd",
+  "Uttaksplan.Hjemmel.FTRL_9_6__3": "Ftrl. § 9-6 3. ledd" ,
+  "Uttaksplan.Hjemmel.FTRL_9_6__5": "Ftrl. § 9-6 5. ledd",
+  "Uttaksplan.Hjemmel.FTRL_9_6__6": "Ftrl. § 9-6 6. ledd",
   "Uttaksplan.Hjemmel.FTRL_9_8_JF_8_10__3": "Ftrl. § 9-8, jf 8-10 3. ledd",
   "Uttaksplan.Hjemmel.COVID19_4_3": "Ftrl. § 25-16 og midl. forskrift § 4-3",
-  "Uttaksplan.Hjemmel.COVID19_4_1__2": "Ftrl. § 25-16 og midl. forskrift § 4-1 2. ledd"
+  "Uttaksplan.Hjemmel.COVID19_4_1__2": "Ftrl. § 25-16 og midl. forskrift § 4-1 2. ledd",
+  "Uttaksplan.Hjemmel.COVID19_4_2": "Ftrl. § 25-16 og midl. forskrift § 4-1"
 }

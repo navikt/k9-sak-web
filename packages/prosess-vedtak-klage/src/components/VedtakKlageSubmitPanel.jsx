@@ -7,6 +7,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
+import dokumentMalType from "@fpsak-frontend/kodeverk/src/dokumentMalType";
 import styles from './vedtakKlageSubmitPanel.less';
 
 const medholdIKlage = (klageVurderingResultat) => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE);
@@ -17,7 +18,7 @@ export const isMedholdIKlage = (
 
 const getPreviewCallback = (formProps, previewVedtakCallback) => e => {
   if (formProps.valid || formProps.pristine) {
-    previewVedtakCallback(data);
+    previewVedtakCallback({dokumentMal: dokumentMalType.UTLED_KLAGE})
   } else {
     formProps.submit();
   }

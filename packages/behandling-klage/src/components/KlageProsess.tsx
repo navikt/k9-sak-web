@@ -227,16 +227,22 @@ class KlageProsess extends Component<Props, KlageProsessState> {
     const readOnlySubmitButton =
       valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some(ap => ap.kanLoses));
 
-    const skalViseTilBeslutterTekst =
+    const erFerdigstilt =
       klageVurdering &&
       klageVurdering.klageVurderingResultatNK &&
       klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
+
+    const harKommetTilKlageinstans = !!klageVurdering?.klageFormkravResultatKA;
+
+    const erReadOnly =
+      valgtSteg?.isReadOnly
+      || (harKommetTilKlageinstans && (valgtSteg?.kode === 'formkrav_klage_nav_familie_og_pensjon' || valgtSteg?.kode === 'klage_nav_familie_og_pensjon'));
 
     const fellesProps = {
       behandling,
       klageVurdering,
       submitCallback: this.submitAksjonspunkter,
-      readOnly: valgtSteg && valgtSteg.isReadOnly,
+      readOnly: erReadOnly,
       alleKodeverk: kodeverk,
     };
 
@@ -249,8 +255,8 @@ class KlageProsess extends Component<Props, KlageProsessState> {
           visModal={visFatterVedtakModal}
           lukkModal={this.toggleFatterVedtakModal}
           tekstkode={
-            skalViseTilBeslutterTekst
-              ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter'
+            erFerdigstilt
+              ? 'FatterVedtakStatusModal.KlageFerdigstilt'
               : 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver'
           }
         />
@@ -265,7 +271,7 @@ class KlageProsess extends Component<Props, KlageProsessState> {
             <MargMarkering
               behandlingStatus={behandling.status}
               aksjonspunkter={valgtSteg.aksjonspunkter}
-              isReadOnly={valgtSteg.isReadOnly}
+              isReadOnly={erReadOnly}
             >
               {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON ||
                 valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (

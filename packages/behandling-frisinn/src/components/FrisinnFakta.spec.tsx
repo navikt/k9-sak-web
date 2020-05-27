@@ -147,8 +147,7 @@ describe('<FrisinnFakta>', () => {
     ]);
   });
 
-  // TODO peek er denne relevant med kun et panel?
-  xit('skal oppdatere url ved valg av faktapanel', () => {
+  it('skal oppdatere url ved valg av faktapanel', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
       <FrisinnFakta.WrappedComponent
@@ -173,7 +172,8 @@ describe('<FrisinnFakta>', () => {
     const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(calls).to.have.length(1);
     const { args } = calls[0];
-    expect(args).to.have.length(1);
+    expect(args).to.have.length(2);
     expect(args[0]).to.eql('default');
+    expect(args[1]).to.eql('opplysninger-fra-soknaden');
   });
 });

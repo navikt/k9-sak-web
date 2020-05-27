@@ -20,9 +20,10 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
   totaltAntallDager: 17,
   antallKoronadager: 0,
   antallDagerArbeidsgiverDekker: 3,
-  forbrukteDager: 10.4,
+  forbrukteDager: 7.4,
   restdager: 9.6,
-  antallDagerInfotrygd: 2.4,
+  restTid: 'PT802H30M',
+  antallDagerInfotrygd: 2,
   sisteUttaksplan: {
     aktiviteter: [
       {
@@ -73,7 +74,15 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
             },
             periode: '2020-03-01/2020-03-31',
             utbetalingsgrad: 0,
-            hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1', 'COVID19_4_3', 'COVID19_4_1__2'],
+            hjemler: [
+              'FTRL_9_5__1',
+              'FTRL_9_5__3',
+              'FTRL_9_3__1',
+              'FTRL_9_6__1',
+              'COVID19_4_3',
+              'COVID19_4_1__2',
+              'FTRL_9_6__2_OG_4',
+            ],
           },
         ],
       },
@@ -93,7 +102,8 @@ export const smittevernsdager = () => (
     årskvantum={{
       ...årskvantumDto,
       antallKoronadager: 10,
-      restdager: -3.4,
+      forbruktTid: 'PT180H',
+      restTid: 'PT-34H-30M',
     }}
     // @ts-ignore
     alleKodeverk={alleKodeverk}

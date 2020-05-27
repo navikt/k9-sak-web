@@ -7,7 +7,7 @@ import SystemButton from '@navikt/nap-system-button';
 import UserPanel from '@navikt/nap-user-panel';
 
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-// import { getPathToFplos } from '@fpsak-frontend/fp-felles';
+import { getPathToFplos } from '@fpsak-frontend/fp-felles';
 import ErrorMessagePanel from './ErrorMessagePanel';
 
 import messages from '../i18n/nb_NO.json';
@@ -49,11 +49,11 @@ const useOutsideClickEvent = (erLenkepanelApent, setLenkePanelApent) => {
   return wrapperRef;
 };
 
-// const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
+const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 const getHeaderTitleHref = () => {
-  // if (!isRunningOnLocalhost()) {
-  //  return getPathToFplos(window.location.href) || '/k9/web';
-  // }
+  if (!isRunningOnLocalhost()) {
+    return getPathToFplos(window.location.href) || '/k9/web';
+  }
   return '/k9/web';
 };
 
