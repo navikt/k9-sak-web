@@ -97,7 +97,7 @@ export const buildInitialValues = createSelector(
     (ownProps: OpptjeningInfoPanelProps) => ownProps.aksjonspunkter,
   ],
   (opptjeningList, aksjonspunkter) => {
-    const filteredOpptjeningList = opptjeningList
+    const filteredOpptjeningList = (opptjeningList || [])
       .filter(({ fastsattOpptjening }) => fastsattOpptjening)
       .map(opptjeningElement => {
         const { fastsattOpptjening } = opptjeningElement;
