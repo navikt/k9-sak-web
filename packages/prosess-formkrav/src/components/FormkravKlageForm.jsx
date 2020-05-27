@@ -25,24 +25,30 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './formkravKlageForm.less';
 
-export const IKKE_PA_KLAGD_VEDTAK = 'ikkePaklagdVedtak';
+export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 
-export const getPaKlagdVedtak = (klageFormkavResultat) => (
-  klageFormkavResultat.paKlagdBehandlingId ? `${klageFormkavResultat.paKlagdBehandlingId}` : IKKE_PA_KLAGD_VEDTAK
-);
-
-const getKlagBareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
-  const klagBareVedtak = [<option key="formkrav" value={IKKE_PA_KLAGD_VEDTAK}>{intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}</option>];
-  return klagBareVedtak.concat(avsluttedeBehandlinger.map((behandling) => (
-    <option key={behandling.id} value={`${behandling.id}`}>
-      {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
-    </option>
-  )));
+export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) => {
+  const behandlingid = avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.id;
+  return behandlingid ? `${behandlingid}` : IKKE_PAKLAGD_VEDTAK;
 };
 
-const getLovHjemmeler = (aksjonspunktCode) => (
-  aksjonspunktCode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ? 'Klage.LovhjemmelNFP' : 'Klage.LovhjemmelKA'
-);
+const getKlagBareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
+  const klagBareVedtak = [
+    <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
+      {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
+    </option>,
+  ];
+  return klagBareVedtak.concat(
+    avsluttedeBehandlinger.map(behandling => (
+      <option key={behandling.id} value={`${behandling.id}`}>
+        {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
+      </option>
+    )),
+  );
+};
+
+const getLovHjemmeler = aksjonspunktCode =>
+  aksjonspunktCode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ? 'Klage.LovhjemmelNFP' : 'Klage.LovhjemmelKA';
 
 /**
  * FormkravKlageForm
@@ -75,9 +81,7 @@ export const FormkravKlageForm = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="6">
-          <BehandlingspunktBegrunnelseTextField
-            readOnly={readOnly}
-          />
+          <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
         </Column>
         <Column xs="6">
           <SelectField
@@ -92,9 +96,7 @@ export const FormkravKlageForm = ({
           <VerticalSpacer sixteenPx />
           <Row>
             <Column xs="4">
-              <Undertekst>
-                {intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}
-              </Undertekst>
+              <Undertekst>{intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}</Undertekst>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erKlagerPart" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
@@ -102,9 +104,7 @@ export const FormkravKlageForm = ({
               </RadioGroupField>
             </Column>
             <Column xs="8">
-              <Undertekst>
-                {intl.formatMessage({ id: 'Klage.Formkrav.ErKonkret' })}
-              </Undertekst>
+              <Undertekst>{intl.formatMessage({ id: 'Klage.Formkrav.ErKonkret' })}</Undertekst>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erKonkret" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
@@ -114,9 +114,7 @@ export const FormkravKlageForm = ({
           </Row>
           <Row>
             <Column xs="4">
-              <Undertekst>
-                {intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}
-              </Undertekst>
+              <Undertekst>{intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}</Undertekst>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erFristOverholdt" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
@@ -124,9 +122,7 @@ export const FormkravKlageForm = ({
               </RadioGroupField>
             </Column>
             <Column xs="8">
-              <Undertekst>
-                {intl.formatMessage({ id: 'Klage.Formkrav.ErSignert' })}
-              </Undertekst>
+              <Undertekst>{intl.formatMessage({ id: 'Klage.Formkrav.ErSignert' })}</Undertekst>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erSignert" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
@@ -148,7 +144,6 @@ export const FormkravKlageForm = ({
           hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
         />
       </div>
-
     </FadingPanel>
   );
 };
@@ -156,14 +151,16 @@ export const FormkravKlageForm = ({
 FormkravKlageForm.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  avsluttedeBehandlinger: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    type: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }).isRequired,
-    avsluttet: PropTypes.string,
-    uuid: PropTypes.string,
-  })).isRequired,
+  avsluttedeBehandlinger: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      type: PropTypes.shape({
+        kode: PropTypes.string.isRequired,
+      }).isRequired,
+      avsluttet: PropTypes.string,
+      uuid: PropTypes.string,
+    }),
+  ).isRequired,
   formProps: PropTypes.shape().isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
   readOnly: PropTypes.bool,

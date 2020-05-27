@@ -232,11 +232,19 @@ class KlageProsess extends Component<Props, KlageProsessState> {
       klageVurdering.klageVurderingResultatNK &&
       klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
 
+    const harKommetTilKlageinstans = !!klageVurdering?.klageFormkravResultatKA;
+
+    const erReadOnly =
+      valgtSteg?.isReadOnly ||
+      (harKommetTilKlageinstans &&
+        (valgtSteg?.kode === 'formkrav_klage_nav_familie_og_pensjon' ||
+          valgtSteg?.kode === 'klage_nav_familie_og_pensjon'));
+
     const fellesProps = {
       behandling,
       klageVurdering,
       submitCallback: this.submitAksjonspunkter,
-      readOnly: valgtSteg && valgtSteg.isReadOnly,
+      readOnly: erReadOnly,
       alleKodeverk: kodeverk,
     };
 
@@ -265,7 +273,7 @@ class KlageProsess extends Component<Props, KlageProsessState> {
             <MargMarkering
               behandlingStatus={behandling.status}
               aksjonspunkter={valgtSteg.aksjonspunkter}
-              isReadOnly={valgtSteg.isReadOnly}
+              isReadOnly={erReadOnly}
             >
               {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON ||
                 valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (

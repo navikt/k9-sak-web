@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
-import kalender from '@fpsak-frontend/assets/images/kalender.svg';
+import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BorderedContainer from './BorderedContainer';
 import Aktivitet from '../dto/Aktivitet';
@@ -23,7 +23,7 @@ interface UttaksplanProps {
 
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   aktiviteter = [],
-  rammevedtak= [],
+  rammevedtak = [],
   aktivitetsstatuser = [],
   isAksjonspunktOpen,
   behandlingId,
