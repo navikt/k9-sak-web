@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import React from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import klageApi from '@fpsak-frontend/behandling-klage/src/data/klageBehandlingApi';
@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styles from './tempsaveAndPreviewKlageLink.less';
 
-const transformValues = (values, aksjonspunktCode) => ({
+const transformValues = (values: any, aksjonspunktCode: string) => ({
   klageMedholdArsak:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
     values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK
@@ -22,7 +22,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const getBrevData = tekst => {
+const getBrevData = (tekst: string) => {
   return { fritekst: tekst || '', dokumentMal: dokumentMalType.UTLED_KLAGE };
 };
 
@@ -36,66 +36,63 @@ interface OwnProps {
   resetSaveKlage: () => void;
 }
 
-interface StateProps {
-  skalForhaandsvise: boolean;
-}
-
-export class TempsaveAndPreviewKlageLink extends React.Component<OwnProps, StateProps> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      skalForhaandsvise: false,
-    };
-  }
-
-  componentDidUpdate = () => {
-    const { readOnly, hasFinishedSaveKlage } = this.props;
-    const { skalForhaandsvise } = this.state;
+function useForhaandsvise(
+  readOnly: boolean,
+  hasFinishedSaveKlage: boolean,
+  previewCallback: (data) => void,
+  formValues: any,
+  resetSaveKlage: () => void,
+) {
+  const [skalForhaandsvise, setSkalForhaandsvise] = useState(false);
+  useEffect(() => {
     if (!readOnly && hasFinishedSaveKlage && skalForhaandsvise) {
-      this.forhåndsvisKlage();
-      this.resettVerdier();
+      previewCallback(getBrevData(formValues.fritekstTilBrev));
+      setSkalForhaandsvise(false);
+      resetSaveKlage();
     }
-  };
+  }, [skalForhaandsvise, hasFinishedSaveKlage]);
 
-  private tempSave = event => {
-    const { saveKlage, formValues, aksjonspunktCode } = this.props;
-    saveKlage(transformValues(formValues, aksjonspunktCode));
-    this.setState({ skalForhaandsvise: true });
-    event.preventDefault();
-  };
-
-  private forhåndsvisKlage = () => {
-    const { previewCallback, formValues } = this.props;
-    previewCallback(getBrevData(formValues.fritekstTilBrev));
-  };
-
-  private resettVerdier() {
-    this.setState({ skalForhaandsvise: false });
-    const { resetSaveKlage } = this.props;
-    resetSaveKlage();
-  }
-
-  render() {
-    const { readOnly } = this.props;
-    return (
-      <div>
-        {' '}
-        {!readOnly && (
-          <a
-            href=""
-            onClick={e => {
-              this.tempSave(e);
-            }}
-            onKeyDown={e => (e.keyCode === 13 ? this.tempSave(e) : null)}
-            className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-          >
-            <FormattedMessage id="Klage.ResolveKlage.TempSaveAndPreviewButton" />
-          </a>
-        )}
-      </div>
-    );
-  }
+  return setSkalForhaandsvise;
 }
+
+export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
+  formValues,
+  saveKlage,
+  aksjonspunktCode,
+  readOnly,
+  previewCallback,
+  hasFinishedSaveKlage,
+  resetSaveKlage,
+}) => {
+  const setSkalForhaandsvise = useForhaandsvise(
+    readOnly,
+    hasFinishedSaveKlage,
+    previewCallback,
+    formValues,
+    resetSaveKlage,
+  );
+
+  function tempSave(event) {
+    saveKlage(transformValues(formValues, aksjonspunktCode));
+    setSkalForhaandsvise(true);
+    event.preventDefault();
+  }
+
+  return (
+    <div>
+      {!readOnly && (
+        <a
+          href=""
+          onClick={tempSave}
+          onKeyDown={e => (e.keyCode === 13 ? tempSave(e) : null)}
+          className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+        >
+          <FormattedMessage id="Klage.ResolveKlage.TempSaveAndPreviewButton" />
+        </a>
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({
   hasFinishedSaveKlage: !!klageApi.SAVE_KLAGE_VURDERING.getRestApiFinished()(state),
@@ -105,4 +102,4 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({ resetSaveKlage: klageApi.SAVE_KLAGE_VURDERING.resetRestApi() }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TempsaveAndPreviewKlageLink);
+export default connect(mapStateToProps, mapDispatchToProps)(TempSaveAndPreviewKlageLink);

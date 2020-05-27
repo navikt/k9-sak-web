@@ -7,7 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BehandleKlageFormKaImpl } from './BehandleKlageFormKa';
-import TempsaveAndPreviewKlageLink from '../felles/TempsaveAndPreviewKlageLink';
+import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-klagevurdering';
 
 describe('<BehandleKlageFormKaImpl>', () => {
@@ -34,7 +34,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       alleKodeverk={{}}
       {...reduxFormPropsMock}
     />);
-    expect(wrapper.find(TempsaveAndPreviewKlageLink)).to.have.length(1);
+    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(1);
   });
   const formValues2 = {
     fritekstTilBrev: '123',
@@ -54,7 +54,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       alleKodeverk={{}}
       {...reduxFormPropsMock}
     />);
-    expect(wrapper.find(TempsaveAndPreviewKlageLink)).to.have.length(0);
+    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(0);
   });
   const formValues3 = {
     klageVurdering: klageVurdering.STADFESTE_YTELSESVEDTAK,
@@ -74,6 +74,6 @@ describe('<BehandleKlageFormKaImpl>', () => {
       alleKodeverk={{}}
       {...reduxFormPropsMock}
     />);
-    expect(wrapper.find(TempsaveAndPreviewKlageLink)).to.have.length(0);
+    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(0);
   });
 });

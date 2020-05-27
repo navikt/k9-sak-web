@@ -22,7 +22,7 @@ import {
 
 import KlageVurderingRadioOptionsNfp from './KlageVurderingRadioOptionsNfp';
 import FritekstBrevTextField from '../felles/FritekstKlageBrevTextField';
-import TempsaveAndPreviewKlageLink from '../felles/TempsaveAndPreviewKlageLink';
+import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
 
 import styles from './behandleKlageFormNfp.less';
@@ -87,7 +87,7 @@ export const BehandleKlageFormNfpImpl = ({
             />
             {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
               && (
-               <TempsaveAndPreviewKlageLink
+               <TempSaveAndPreviewKlageLink
                 formValues={formValues}
                 saveKlage={saveKlage}
                 readOnly={readOnly}
