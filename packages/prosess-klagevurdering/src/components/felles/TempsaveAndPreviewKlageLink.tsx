@@ -23,10 +23,7 @@ const transformValues = (values, aksjonspunktCode) => ({
 });
 
 const getBrevData = tekst => {
-  return {
-    fritekst: tekst || '',
-    dokumentMal: dokumentMalType.UTLED_KLAGE,
-  };
+  return { fritekst: tekst || '', dokumentMal: dokumentMalType.UTLED_KLAGE };
 };
 
 interface OwnProps {
@@ -105,12 +102,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(
-    {
-      resetSaveKlage: klageApi.SAVE_KLAGE_VURDERING.resetRestApi(),
-    },
-    dispatch,
-  ),
+  ...bindActionCreators({ resetSaveKlage: klageApi.SAVE_KLAGE_VURDERING.resetRestApi() }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TempsaveAndPreviewKlageLink);
