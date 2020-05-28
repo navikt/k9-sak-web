@@ -36,13 +36,13 @@ interface OwnProps {
   resetSaveKlage: () => void;
 }
 
-function useForhaandsvise(
+const useForhaandsvise = (
   readOnly: boolean,
   hasFinishedSaveKlage: boolean,
   previewCallback: (data) => void,
   formValues: any,
   resetSaveKlage: () => void,
-) {
+) => {
   const [skalForhaandsvise, setSkalForhaandsvise] = useState(false);
   useEffect(() => {
     if (!readOnly && hasFinishedSaveKlage && skalForhaandsvise) {
@@ -50,10 +50,10 @@ function useForhaandsvise(
       setSkalForhaandsvise(false);
       resetSaveKlage();
     }
-  }, [skalForhaandsvise, hasFinishedSaveKlage]);
+  }, [skalForhaandsvise, hasFinishedSaveKlage, readOnly, formValues.fritekstTilBrev, previewCallback, resetSaveKlage]);
 
   return setSkalForhaandsvise;
-}
+};
 
 export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   formValues,
@@ -72,11 +72,11 @@ export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
     resetSaveKlage,
   );
 
-  function tempSave(event) {
+  const tempSave = event => {
     saveKlage(transformValues(formValues, aksjonspunktCode));
     setSkalForhaandsvise(true);
     event.preventDefault();
-  }
+  };
 
   return (
     <div>
