@@ -21,6 +21,13 @@ import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import findStatusForVedtak from './vedtakStatusUtlederOmsorgspenger';
 import api from '../data/omsorgspengerBehandlingApi';
 
+const harIngenAndeler = perioder => {
+  const alleAndeler = perioder.flatMap(({ andeler }) => {
+    return [...andeler];
+  });
+  return alleAndeler.length === 0;
+};
+
 const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const { perioder } = beregningsresultatUtbetaling;
   const alleUtfall = perioder.flatMap(({ andeler }) => {
@@ -203,7 +210,11 @@ const prosessStegPanelDefinisjoner = [
           if (manglerBeregningsresultatUtbetaling) {
             return vut.IKKE_VURDERT;
           }
-          if (harKunAvslåtteUttak(beregningsresultatUtbetaling)) {
+
+          if (
+            harIngenAndeler(beregningsresultatUtbetaling.perioder) ||
+            harKunAvslåtteUttak(beregningsresultatUtbetaling)
+          ) {
             return vut.IKKE_OPPFYLT;
           }
           return vut.OPPFYLT;

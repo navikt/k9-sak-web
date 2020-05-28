@@ -2960,7 +2960,7 @@
       "kodeverk": "TILBAKEKR_VIDERE_BEH"
     },
     {
-      "kode": "TILBAKEKR_INFOTRYGD",
+      "kode": "TILBAKEKR_OPPRETT",
       "navn": "Feilutbetaling med tilbakekreving",
       "kodeverk": "TILBAKEKR_VIDERE_BEH"
     },
@@ -6077,8 +6077,8 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
     },
     {
-      "kode": "TILBAKEKR_INFOTRYGD",
-      "navn": "Behandle tilbakekreving i infotrygd",
+      "kode": "TILBAKEKR_OPPRETT",
+      "navn": "Opprett tilbakekreving",
       "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
     },
     {

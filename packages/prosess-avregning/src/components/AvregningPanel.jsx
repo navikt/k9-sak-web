@@ -193,7 +193,7 @@ export class AvregningPanelImpl extends Component {
                           {featureVarseltekst && (
                             <RadioOption
                               label={<FormattedMessage id="Avregning.gjennomfør" />}
-                              value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
+                              value={tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}
                             >
                               <div className={styles.varsel}>
                                 <ArrowBox alignOffset={20}>
@@ -249,7 +249,7 @@ export class AvregningPanelImpl extends Component {
                                 id={featureVarseltekst ? 'Avregning.OpprettMenIkkeSendVarsel' : 'Avregning.Opprett'}
                               />
                             }
-                            value={`${tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}${IKKE_SEND}`}
+                            value={`${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`}
                           />
                           <RadioOption
                             label={<FormattedMessage id="Avregning.avvent" />}
@@ -307,7 +307,7 @@ export const transformValues = (values, ap) => {
   return videreBehandling.endsWith(IKKE_SEND)
     ? {
         ...info,
-        videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD,
+        videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
       }
     : {
         ...info,
@@ -325,7 +325,7 @@ const buildInitialValues = createSelector(
 
     const harTypeIkkeSendt =
       !tilbakekrevingvalg.varseltekst &&
-      tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD;
+      tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT;
 
     return {
       videreBehandling: harTypeIkkeSendt
