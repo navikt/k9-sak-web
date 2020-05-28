@@ -211,9 +211,19 @@ const getSammenligningsgrunnlagsPrStatus = bg =>
   bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
 
 const formaterAksjonspunkter = aksjonspunkter => {
-  return flattenArray(aksjonspunkter).map(aksjonspunkt => ({
-    ...aksjonspunkt,
-  }));
+  return flattenArray(aksjonspunkter).map(aksjonspunkt => {
+    const { kode } = aksjonspunkt;
+    return {
+      '@type': kode,
+      kode,
+      grunnlag: [
+        {
+          '@type': kode,
+          ...aksjonspunkt,
+        },
+      ],
+    };
+  });
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
