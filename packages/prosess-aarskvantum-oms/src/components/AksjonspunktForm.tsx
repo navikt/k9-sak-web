@@ -145,9 +145,9 @@ interface AksjonspunktFormProps {
 
 export const transformValues = ({ begrunnelse, valg, bekreftInfotrygd }: FormValues) => {
   if (bekreftInfotrygd || valg === valgValues.reBehandling) {
-    return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, valg: valgValues.reBehandling }];
+    return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: false }];
   }
-  return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, valg: valgValues.fortsett }];
+  return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: true }];
 };
 
 const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormProps) => {

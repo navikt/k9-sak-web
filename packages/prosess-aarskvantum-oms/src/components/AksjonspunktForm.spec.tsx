@@ -115,14 +115,30 @@ describe('<AksjonspunktForm>', () => {
     it('mapper valg', () => {
       const valgtReBehandling: FormValues = {
         valg: 'reBehandling',
+        begrunnelse: 'Nei.',
+      };
+
+      const rebehandlingDto = transformValues(valgtReBehandling);
+
+      expect(rebehandlingDto).to.eql([
+        {
+          fortsettBehandling: false,
+          begrunnelse: valgtReBehandling.begrunnelse,
+          kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
+        },
+      ]);
+
+      const valgtFortsett: FormValues = {
+        valg: 'fortsett',
         begrunnelse: 'Ja.',
       };
 
-      const mappet = transformValues(valgtReBehandling);
+      const fortsettDto = transformValues(valgtFortsett);
 
-      expect(mappet).to.eql([
+      expect(fortsettDto).to.eql([
         {
-          ...valgtReBehandling,
+          fortsettBehandling: true,
+          begrunnelse: valgtFortsett.begrunnelse,
           kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
         },
       ]);
@@ -137,7 +153,7 @@ describe('<AksjonspunktForm>', () => {
 
       expect(mappet).to.eql([
         {
-          valg: 'reBehandling',
+          fortsettBehandling: false,
           kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
           begrunnelse: undefined,
         },
