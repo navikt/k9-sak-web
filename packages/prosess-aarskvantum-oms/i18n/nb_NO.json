@@ -13,7 +13,7 @@
   "Årskvantum.Rammemelding": "Det er benyttet rammemelding for behandlingen",
   "Årskvantum.Timer": "{timer}t",
   "Årskvantum.TotaleDager": "Totale dager",
-  "Årskvantum.TotaleDager.InfoText": "Totalt antall tilgjengelige dager per kalenderår . Viser summen av opprinnelige dager og koronadager som NAV kan utbetale",
+  "Årskvantum.TotaleDager.InfoText": "Totalt antall tilgjengelige dager per kalenderår. Viser summen av opprinnelige dager og koronadager som NAV kan utbetale",
   "Årskvantum.OpprinneligeDager": "Opprinnelige dager",
   "Årskvantum.OpprinneligeDager.InfoText": "{totaltAntallDager} dager, {antallDagerArbeidsgiverDekker} av disse er dekket av arbeidsgiver",
   "Årskvantum.Koronadager": "Koronadager",
