@@ -10,11 +10,18 @@ export interface ReadOnlyFieldProps {
   input: { value: string | number };
   isEdited?: boolean;
   type: string;
+  renderReadOnlyValue?: (value: any) => any;
 }
 
 const hasValue = (value: string | number) => value !== undefined && value !== null && value !== '';
 
-export const ReadOnlyField = ({ label, input, isEdited, type }: ReadOnlyFieldProps): JSX.Element => {
+export const ReadOnlyField = ({
+  label,
+  input,
+  isEdited,
+  type,
+  renderReadOnlyValue,
+}: ReadOnlyFieldProps): JSX.Element => {
   if (!hasValue(input.value)) {
     return null;
   }
@@ -24,7 +31,7 @@ export const ReadOnlyField = ({ label, input, isEdited, type }: ReadOnlyFieldPro
       <Label input={label} readOnly />
       <div className={type === 'textarea' ? styles.textarea : ''}>
         <Normaltekst className={styles.readOnlyContent}>
-          {input.value}
+          {renderReadOnlyValue ? renderReadOnlyValue(input.value) : input.value}
           {isEdited && <EditedIcon />}
         </Normaltekst>
       </div>
