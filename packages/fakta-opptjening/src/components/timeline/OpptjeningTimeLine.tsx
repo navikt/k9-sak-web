@@ -51,7 +51,7 @@ const createItems = (
   const items = opptjeningPeriods.map(ap => ({
     id: ap.id,
     start: moment(ap.opptjeningFom),
-    end: moment(ap.opptjeningTom),
+    end: moment(`${ap.opptjeningTom} 23:59`),
     group: groups.find(
       g =>
         g.aktivitetTypeKode === ap.aktivitetType.kode &&
@@ -89,8 +89,8 @@ const options = (opptjeningFomDato, opptjeningTomDato) => ({
   end: moment(opptjeningTomDato).add(1, 'months').endOf('month'),
   locale: moment.locale('nb'),
   margin: { item: 10 },
-  max: moment(opptjeningTomDato).endOf('month'),
-  min: moment(opptjeningFomDato).startOf('month'),
+  max: moment(opptjeningTomDato).add(1, 'week').endOf('week'),
+  min: moment(opptjeningFomDato).subtract(1, 'week').startOf('week'),
   moment,
   moveable: false,
   orientation: { axis: 'top' },
