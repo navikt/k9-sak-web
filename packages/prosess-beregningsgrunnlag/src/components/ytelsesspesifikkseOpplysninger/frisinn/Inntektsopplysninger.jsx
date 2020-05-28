@@ -7,36 +7,13 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
-
-const finnSamletBruttoForStatus = (andeler, status) => {
-  if (!andeler) {
-    return 0;
-  }
-  const inntekt = andeler
-    .filter(a => a.aktivitetStatus.kode === status)
-    .map(({ bruttoPrAar }) => bruttoPrAar)
-    .reduce((sum, brutto) => sum + brutto, 0);
-  if (!inntekt || inntekt === 0) {
-    return 0;
-  }
-  return inntekt;
-};
+import finnVisningForStatus from './FrisinnUtils';
 
 const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
   // Første periode inneholder alltid brutto vi ønsker å vise SBH
-  const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
-  const bruttoSN = finnSamletBruttoForStatus(
-    førstePeriode.beregningsgrunnlagPrStatusOgAndel,
-    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-  );
-  const bruttoFL = finnSamletBruttoForStatus(
-    førstePeriode.beregningsgrunnlagPrStatusOgAndel,
-    aktivitetStatus.FRILANSER,
-  );
-  const bruttoAT = finnSamletBruttoForStatus(
-    førstePeriode.beregningsgrunnlagPrStatusOgAndel,
-    aktivitetStatus.ARBEIDSTAKER,
-  );
+  const bruttoSN = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const bruttoFL = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.FRILANSER);
+  const bruttoAT = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.ARBEIDSTAKER);
   return (
     <div>
       <Row>
