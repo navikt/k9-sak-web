@@ -1,4 +1,4 @@
-import { Input as NavInput, NavFrontendInputProps } from 'nav-frontend-skjema';
+import { Input as NavInput, InputProps as NavFrontendInputProps } from 'nav-frontend-skjema';
 import React from 'react';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';
@@ -14,6 +14,7 @@ interface InputFieldProps {
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
   readOnly?: boolean;
   isEdited?: boolean;
+  renderReadOnlyValue?: (value: any) => any;
 }
 
 const InputField = ({

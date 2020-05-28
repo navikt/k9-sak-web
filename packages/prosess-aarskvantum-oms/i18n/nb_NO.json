@@ -16,6 +16,7 @@
   "Årskvantum.Smittevernsdager": "Smitteverndager",
   "Årskvantum.Smittevernsdager.InfoText": "Dager gitt pga dokumentert særlige smittevernhensyn i perioden 20.04.2020 til og med 30.06.2020",
   "Uttaksplan.Heading": "Uttaksoversikt",
+  "Uttaksplan.Inaktiv": "Uttaksoversikten er inaktiv som følge av avslag/kansellering i et senere steg, og er ikke med i beregningen av forbrukte dager",
   "Uttaksplan.Periode": "Periode",
   "Uttaksplan.Fravær": "Fravær",
   "Uttaksplan.Utfall": "Utfall",
