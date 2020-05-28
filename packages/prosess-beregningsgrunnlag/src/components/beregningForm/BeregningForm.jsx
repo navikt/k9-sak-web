@@ -182,6 +182,13 @@ const transformValuesATFLHverForSegTidsbegrenset = (values, skalFastsetteAT, ska
   },
 ];
 
+function leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunktListe, skjæringstidspunkt) {
+  return aksjonspunktListe.map(aksjonspunkt => ({
+    ...aksjonspunkt,
+    skjæringstidspunkt,
+  }));
+}
+
 export const transformValues = (
   values,
   relevanteStatuser,
@@ -200,6 +207,7 @@ export const transformValues = (
     (skalFastsetteAT || skalFastsetteFL) && harNyttIkkeSamletSammenligningsgrunnlag;
   const harTidsbegrensedeArbeidsforhold = harPerioderMedAvsluttedeArbeidsforhold(allePerioder);
   const aksjonspunkter = [];
+  const { skjæringstidspunkt } = values;
   const vurderDekningsgradAksjonspunkt = {
     kode: VURDER_DEKNINGSGRAD,
     begrunnelse: values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING],
@@ -213,12 +221,18 @@ export const transformValues = (
     !harTidsbegrensedeArbeidsforhold
   ) {
     if (skalATOgFLFastsettesHverForSeg) {
-      return aksjonspunkter.concat(
-        transformValuesATFLHverForSeg(values, skalFastsetteAT, skalFastsetteFL, alleAndelerIForstePeriode),
+      return leggPåSkjæringstidspunktPåAksjonspunktListe(
+        aksjonspunkter.concat(
+          transformValuesATFLHverForSeg(values, skalFastsetteAT, skalFastsetteFL, alleAndelerIForstePeriode),
+        ),
+        skjæringstidspunkt,
       );
     }
-    return aksjonspunkter.concat(
-      AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode),
+    return leggPåSkjæringstidspunktPåAksjonspunktListe(
+      aksjonspunkter.concat(
+        AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode),
+      ),
+      skjæringstidspunkt,
     );
   }
   if (
@@ -228,7 +242,10 @@ export const transformValues = (
     ) ||
     harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)
   ) {
-    return aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, gjeldendeAksjonspunkter));
+    return leggPåSkjæringstidspunktPåAksjonspunktListe(
+      aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, gjeldendeAksjonspunkter)),
+      skjæringstidspunkt,
+    );
   }
   if (
     (harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, gjeldendeAksjonspunkter) ||
@@ -237,11 +254,14 @@ export const transformValues = (
   ) {
     if (skalATOgFLFastsettesHverForSeg) {
       const t = transformValuesATFLHverForSegTidsbegrenset(values, skalFastsetteAT, skalFastsetteFL, allePerioder);
-      return aksjonspunkter.concat(t);
+      return leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunkter.concat(t), skjæringstidspunkt);
     }
-    return aksjonspunkter.concat(Beregningsgrunnlag.transformValues(values, allePerioder));
+    return leggPåSkjæringstidspunktPåAksjonspunktListe(
+      aksjonspunkter.concat(Beregningsgrunnlag.transformValues(values, allePerioder)),
+      skjæringstidspunkt,
+    );
   }
-  return aksjonspunkter;
+  return leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunkter, skjæringstidspunkt);
 };
 
 const getSammenligningsgrunnlagsPrStatus = bg =>

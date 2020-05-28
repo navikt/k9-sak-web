@@ -211,11 +211,13 @@ const getSammenligningsgrunnlagsPrStatus = bg =>
   bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
 
 const formaterAksjonspunkter = aksjonspunkter => {
-  return flattenArray(aksjonspunkter);
+  return flattenArray(aksjonspunkter).map(aksjonspunkt => ({
+    ...aksjonspunkt,
+  }));
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { aksjonspunkter, submitCallback } = initialOwnProps;
+  const { aksjonspunkter, submitCallback, beregningsgrunnlag } = initialOwnProps;
   const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
 
   const onSubmit = values => {
@@ -240,7 +242,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
         harNyttIkkeSamletSammenligningsgrunnlag,
       );
     });
-    return submitCallback(formaterAksjonspunkter(alleAksjonspunkter));
+    return submitCallback(formaterAksjonspunkter(alleAksjonspunkter), beregningsgrunnlag);
   };
   return (state, ownProps) => ({
     onSubmit,
