@@ -1,16 +1,5 @@
-export {
-  range,
-  flatten,
-  haystack,
-  isArrayEmpty,
-  without,
-  zip,
-} from './src/arrayUtils';
-export {
-  isIE11,
-  isEdge,
-  getRelatedTargetIE11,
-} from './src/browserUtils';
+export { range, flatten, haystack, isArrayEmpty, without, zip } from './src/arrayUtils';
+export { isIE11, isEdge, getRelatedTargetIE11 } from './src/browserUtils';
 export {
   formatCurrencyWithKr,
   formatCurrencyNoKr,
@@ -28,12 +17,11 @@ export {
   TIDENES_ENDE,
   timeFormat,
   getRangeOfMonths,
+  visningsdato,
+  isValidDate,
 } from './src/dateUtils';
 export { default as decodeHtmlEntity } from './src/decodeHtmlEntity';
-export {
-  fodselsnummerPattern,
-  isValidFodselsnummer,
-} from './src/fodselsnummerUtils';
+export { fodselsnummerPattern, isValidFodselsnummer } from './src/fodselsnummerUtils';
 export {
   ISO_DATE_FORMAT,
   DDMMYYYY_DATE_FORMAT,
@@ -42,10 +30,7 @@ export {
   ACCEPTED_DATE_INPUT_FORMATS,
 } from './src/formats';
 export { default as guid } from './src/guid';
-export {
-  replaceNorwegianCharacters,
-  getLanguageCodeFromSprakkode,
-} from './src/languageUtils';
+export { replaceNorwegianCharacters, getLanguageCodeFromSprakkode } from './src/languageUtils';
 export {
   notNull,
   isObjectEmpty,
@@ -57,13 +42,7 @@ export {
   omit,
 } from './src/objectUtils';
 export { default as getAddresses } from './src/getAddresses';
-export {
-  parseQueryString,
-  buildPath,
-  formatArray,
-  formatQueryString,
-  parseArray,
-} from './src/urlUtils';
+export { parseQueryString, buildPath, formatArray, formatQueryString, parseArray } from './src/urlUtils';
 export {
   ariaCheck,
   validateProsentandel,

@@ -99,6 +99,7 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
         uttaksperioder: [innvilgetPeriode],
       },
     ],
+    aktiv: true,
     behandlingUUID: '1',
     saksnummer: '2',
     innsendingstidspunkt: '123',
@@ -127,6 +128,10 @@ export const smittevernsdagerOgOverlappendePerioderInfotrygd = () => (
       antallKoronadager: 10,
       forbruktTid: 'PT180H',
       restTid: 'PT-34H-30M',
+      sisteUttaksplan: {
+        ...årskvantumDto.sisteUttaksplan,
+        aktiv: false,
+      },
     }}
     // @ts-ignore
     alleKodeverk={alleKodeverk}

@@ -32,7 +32,10 @@ const standardItems = (opptjeningFomDato: string, opptjeningTomDato: string) => 
   return items;
 };
 
-const classNameGenerator = ap => {
+const classNameGenerator = (ap: OpptjeningAktivitet, harApneAksjonspunkter: boolean) => {
+  if (!harApneAksjonspunkter) {
+    return 'laastPeriode';
+  }
   if (ap.erGodkjent === false) {
     return 'avvistPeriode';
   }
@@ -47,18 +50,19 @@ const createItems = (
   groups,
   opptjeningFomDato: string,
   opptjeningTomDato: string,
+  harApneAksjonspunkter: boolean,
 ) => {
   const items = opptjeningPeriods.map(ap => ({
     id: ap.id,
     start: moment(ap.opptjeningFom),
-    end: moment(ap.opptjeningTom),
+    end: moment(`${ap.opptjeningTom} 23:59`),
     group: groups.find(
       g =>
         g.aktivitetTypeKode === ap.aktivitetType.kode &&
         g.arbeidsforholdRef === ap.arbeidsforholdRef &&
         g.oppdragsgiverOrg === ap.oppdragsgiverOrg,
     ).id,
-    className: classNameGenerator(ap),
+    className: classNameGenerator(ap, harApneAksjonspunkter),
     content: '',
     data: ap,
   }));
@@ -89,8 +93,8 @@ const options = (opptjeningFomDato, opptjeningTomDato) => ({
   end: moment(opptjeningTomDato).add(1, 'months').endOf('month'),
   locale: moment.locale('nb'),
   margin: { item: 10 },
-  max: moment(opptjeningTomDato).endOf('month'),
-  min: moment(opptjeningFomDato).startOf('month'),
+  max: moment(opptjeningTomDato).add(1, 'week').endOf('week'),
+  min: moment(opptjeningFomDato).subtract(1, 'week').startOf('week'),
   moment,
   moveable: false,
   orientation: { axis: 'top' },
@@ -109,6 +113,7 @@ interface OpptjeningTimeLineProps {
   selectPeriodCallback: (data: any) => void;
   opptjeningFomDato: string;
   opptjeningTomDato: string;
+  harApneAksjonspunkter: boolean;
 }
 
 interface OpptjeningTimeLineState {
@@ -137,9 +142,15 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
   }
 
   UNSAFE_componentWillMount() {
-    const { opptjeningAktivitetTypes, opptjeningPeriods, opptjeningFomDato, opptjeningTomDato } = this.props;
+    const {
+      opptjeningAktivitetTypes,
+      opptjeningPeriods,
+      opptjeningFomDato,
+      opptjeningTomDato,
+      harApneAksjonspunkter,
+    } = this.props;
     const groups = createGroups(opptjeningPeriods, opptjeningAktivitetTypes);
-    const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato);
+    const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter);
     this.setState({
       groups,
       items,
@@ -156,7 +167,7 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const { opptjeningPeriods } = this.props;
+    const { opptjeningPeriods, harApneAksjonspunkter } = this.props;
     if (!isEqual(opptjeningPeriods, nextProps.opptjeningPeriods)) {
       const groups = createGroups(nextProps.opptjeningPeriods, nextProps.opptjeningAktivitetTypes);
       const items = createItems(
@@ -164,6 +175,7 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
         groups,
         nextProps.opptjeningFomDato,
         nextProps.opptjeningTomDato,
+        harApneAksjonspunkter,
       );
       this.setState({
         groups,

@@ -14,6 +14,8 @@ const FlexRow = ({
   wrap,
   className,
   justifyCenter,
+  childrenMargin,
+  autoFlex,
 }) => (
   <div
     className={classNames(
@@ -23,6 +25,8 @@ const FlexRow = ({
       { alignItemsToFlexEnd },
       { wrap },
       { justifyCenter },
+      { childrenMargin },
+      { autoFlex },
       className,
     )}
   >
@@ -41,6 +45,8 @@ FlexRow.propTypes = {
   wrap: PropTypes.bool,
   className: PropTypes.string,
   justifyCenter: PropTypes.bool,
+  childrenMargin: PropTypes.bool,
+  autoFlex: PropTypes.bool,
 };
 
 FlexRow.defaultProps = {
@@ -51,6 +57,8 @@ FlexRow.defaultProps = {
   wrap: false,
   justifyCenter: false,
   className: undefined,
+  childrenMargin: false,
+  autoFlex: false,
 };
 
 export default FlexRow;

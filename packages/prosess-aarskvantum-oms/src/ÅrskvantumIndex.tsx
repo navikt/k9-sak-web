@@ -65,6 +65,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiviteter={sisteUttaksplan.aktiviteter}
         rammevedtak={rammevedtak}
         aktivitetsstatuser={aktivitetsstatuser}
+        aktiv={sisteUttaksplan.aktiv}
         isAksjonspunktOpen={isAksjonspunktOpen}
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
