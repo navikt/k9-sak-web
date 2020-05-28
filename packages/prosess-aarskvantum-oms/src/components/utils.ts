@@ -24,5 +24,3 @@ export const periodeErIKoronaperioden = (periode: string): boolean => {
 
   return datoErIPerioden(fom) || datoErIPerioden(tom);
 };
-
-export const joinNonNullStrings = (...strings) => strings.filter(s => !!s).join('');

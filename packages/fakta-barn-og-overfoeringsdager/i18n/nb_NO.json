@@ -1,6 +1,9 @@
 {
-  "FaktaRammevedtak.UidentifisertUtvidetRett": "Det finnes {antallRammevedtak} rammevedtak om utvidet rett fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst korriger i Infotrygd.",
-  "FaktaRammevedtak.UidentifiserteRammevedtak": "Det finnes {antall} uidentifiserte rammevedtak fra Infotrygd.",
+  "FaktaRammevedtak.Uidentifisert.UtvidetRett": "Det finnes {antall} rammevedtak om utvidet rett fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst korriger i Infotrygd.",
+  "FaktaRammevedtak.Uidentifisert.Aleneomsorg": "Det finnes {antall} rammevedtak om aleneomsorg fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst korriger i Infotrygd.",
+  "FaktaRammevedtak.Uidentifisert.Fosterbarn": "Det finnes {antall} rammevedtak om fosterbarn fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst korriger i Infotrygd.",
+  "FaktaRammevedtak.UidentifiserteRammevedtak": "Det finnes {antall} automatisk utolkbare rammevedtak fra Infotrygd. Vennligst korriger i Infotrygd.",
+  "FaktaRammevedtak.Uidentifisert.UtolkbarTekst": "Utolkbar tekst: \"{fritekst}\"",
   "FaktaRammevedtak.Barn.Tittel": "Barn",
   "FaktaRammevedtak.Barn.Fnr": "Fødselsnummer",
   "FaktaRammevedtak.BarnVisningNummer": "Barn #{nummer}",

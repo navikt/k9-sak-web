@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent } from 'react';
 import { InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -8,7 +8,6 @@ import {
   getBehandlingFormPrefix,
   getBehandlingFormValues,
 } from '@fpsak-frontend/form/src/behandlingForm';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
 import user from '@fpsak-frontend/assets/images/user.svg';
@@ -24,6 +23,7 @@ import Seksjon from './Seksjon';
 import FastBreddeAligner from './FastBreddeAligner';
 import Rammevedtak, { RammevedtakEnum } from '../dto/Rammevedtak';
 import BarnVisning from './BarnVisning';
+import UidentifiserteRammevedtak from './UidentifiserteRammevedtak';
 
 interface RammevedtakFaktaFormProps {
   rammevedtak: Rammevedtak[];
@@ -38,15 +38,6 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
   behandlingId,
   behandlingVersjon,
 }) => {
-  const utvidetRettUidentifiserteBarnAntall = useMemo(
-    () => rammevedtak.filter(rv => rv.type === RammevedtakEnum.UTVIDET_RETT).filter(rv => !rv.utvidetRettFor).length,
-    [rammevedtak],
-  );
-
-  const uidentifiserteRammevedtak = useMemo(() => rammevedtak.filter(rv => rv.type === RammevedtakEnum.UIDENTIFISERT), [
-    rammevedtak,
-  ]);
-
   if (isEmpty(formValues)) {
     return null;
   }
@@ -64,28 +55,10 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
 
   return (
     <>
-      {uidentifiserteRammevedtak.length > 0 && (
-        <>
-          <AlertStripeAdvarsel>
-            <FormattedMessage
-              id="FaktaRammevedtak.UidentifiserteRammevedtak"
-              values={{ antall: uidentifiserteRammevedtak.length }}
-            />
-          </AlertStripeAdvarsel>
-          <VerticalSpacer sixteenPx />
-        </>
-      )}
-      {utvidetRettUidentifiserteBarnAntall > 0 && (
-        <>
-          <AlertStripeAdvarsel>
-            <FormattedMessage
-              id="FaktaRammevedtak.UidentifisertUtvidetRett"
-              values={{ antallRammevedtak: utvidetRettUidentifiserteBarnAntall }}
-            />
-          </AlertStripeAdvarsel>
-          <VerticalSpacer sixteenPx />
-        </>
-      )}
+      <UidentifiserteRammevedtak type={RammevedtakEnum.UIDENTIFISERT} rammevedtak={rammevedtak} />
+      <UidentifiserteRammevedtak type={RammevedtakEnum.UTVIDET_RETT} rammevedtak={rammevedtak} />
+      <UidentifiserteRammevedtak type={RammevedtakEnum.ALENEOMSORG} rammevedtak={rammevedtak} />
+      <UidentifiserteRammevedtak type={RammevedtakEnum.FOSTERBARN} rammevedtak={rammevedtak} />
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.Overføringer.Tittel" imgSrc={transferIcon}>
         <FastBreddeAligner
           rad={{ padding: '0 0 0 1em' }}
