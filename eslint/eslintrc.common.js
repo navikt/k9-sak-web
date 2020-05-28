@@ -18,7 +18,7 @@ const config = {
 
   parser: '@typescript-eslint/parser',
 
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'react-hooks'],
 
   extends: [
     'airbnb',
@@ -72,6 +72,8 @@ const config = {
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-ignore': OFF,
     '@typescript-eslint/camelcase': OFF,
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
   },
   overrides: [
     {
