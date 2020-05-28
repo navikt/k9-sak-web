@@ -12,6 +12,7 @@
   "FaktaRammevedtak.Barn.TOM": "Gyldig til og med",
   "FaktaRammevedtak.Barn.UtvidetRett": "Utvidet rett",
   "FaktaRammevedtak.Barn.Aleneomsorg": "Alene om omsorgen",
+  "FaktaRammevedtak.Barn.Fosterbarn": "Fosterbarn",
   "FaktaRammevedtak.Barn.IngenBarn": "Det er ikke registrert rammemeldinger på brukerens barn",
   "FaktaRammevedtak.ErMidlertidigAlene.Tittel": "Midlertidig aleneomsorg",
   "FaktaRammevedtak.MidlertidigAlene": "<div>Brukeren har midlertidig aleneansvar for alle barn.</div><div>Gyldig fra og med <b>{fom}</b> til og med <b>{tom}</b>.</div>",
