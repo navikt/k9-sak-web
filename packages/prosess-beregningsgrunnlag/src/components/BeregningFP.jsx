@@ -14,14 +14,26 @@ import { Column, Row } from 'nav-frontend-grid';
 import { TabsPure } from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'redux-form';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import {
+  behandlingForm,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form/src/behandlingForm';
+import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
+import { flattenArray } from 'less/lib/less/utils';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
-import BeregningForm2 from './beregningForm/BeregningForm';
+import BeregningForm2, { buildInitialValues, transformValues } from './beregningForm/BeregningForm';
 import GraderingUtenBG2 from './gradering/GraderingUtenBG';
+import beregningStyles from './beregningsgrunnlagPanel/beregningsgrunnlag.less';
 
 const visningForManglendeBG = () => (
   <>
@@ -70,15 +82,20 @@ const getAksjonspunktForGraderingPaaAndelUtenBG = aksjonspunkter =>
  * Presentasjonskomponent. Holder på alle komponenter relatert til beregning av foreldrepenger.
  * Finner det gjeldende aksjonspunktet hvis vi har et.
  */
+
+const formName = 'BeregningForm';
+
 const BeregningFP = ({
   behandling,
   beregningsgrunnlag,
   aksjonspunkter,
+  gjeldendeAksjonspunkter,
   submitCallback,
   readOnly,
   readOnlySubmitButton,
   vilkar,
   alleKodeverk,
+  handleSubmit,
 }) => {
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
   const skalBrukeTabs = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
@@ -89,7 +106,6 @@ const BeregningFP = ({
   if (!aktivtBeregningsrunnlag) {
     return visningForManglendeBG();
   }
-  const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
   const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsrunnlag);
   const vilkaarBG = getBGVilkar(vilkar);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
@@ -105,18 +121,53 @@ const BeregningFP = ({
         />
       )}
       <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
-        <BeregningForm2
-          readOnly={readOnly}
-          beregningsgrunnlag={aktivtBeregningsrunnlag}
-          gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-          relevanteStatuser={relevanteStatuser}
-          submitCallback={submitCallback}
-          readOnlySubmitButton={readOnlySubmitButton}
-          alleKodeverk={alleKodeverk}
-          behandlingId={behandling.id}
-          behandlingVersjon={behandling.versjon}
-          vilkaarBG={vilkaarBG}
-        />
+        <form onSubmit={handleSubmit} className={beregningStyles.beregningForm}>
+          <FieldArray
+            name="beregningsgrunnlagListe"
+            component={({ fields }) => {
+              if (fields.length === 0) {
+                if (harFlereBeregningsgrunnlag) {
+                  beregningsgrunnlag.forEach(beregningsgrunnlagElement => {
+                    fields.push(beregningsgrunnlagElement);
+                  });
+                } else {
+                  fields.push(beregningsgrunnlag);
+                }
+              }
+              return fields.map((fieldId, index) =>
+                index === aktivtBeregningsgrunnlagIndeks ? (
+                  <BeregningForm2
+                    readOnly={readOnly}
+                    fieldArrayID={fieldId}
+                    beregningsgrunnlag={aktivtBeregningsrunnlag}
+                    gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+                    relevanteStatuser={relevanteStatuser}
+                    submitCallback={submitCallback}
+                    readOnlySubmitButton={readOnlySubmitButton}
+                    alleKodeverk={alleKodeverk}
+                    behandlingId={behandling.id}
+                    behandlingVersjon={behandling.versjon}
+                    vilkaarBG={vilkaarBG}
+                  />
+                ) : null,
+              );
+            }}
+          />
+          <Row>
+            <Column xs="12">
+              <BehandlingspunktSubmitButton
+                formName={formName}
+                behandlingId={behandling.behandlingId}
+                behandlingVersjon={behandling.behandlingVersjon}
+                isReadOnly={readOnly}
+                isSubmittable={!readOnlySubmitButton}
+                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+                isBehandlingFormDirty={isBehandlingFormDirty}
+                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+              />
+            </Column>
+          </Row>
+        </form>
 
         {sokerHarGraderingPaaAndelUtenBG && (
           <GraderingUtenBG2
@@ -144,10 +195,65 @@ BeregningFP.propTypes = {
   beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
   vilkar: PropTypes.arrayOf(beregningsgrunnlagVilkarPropType).isRequired,
   behandling: beregningsgrunnlagBehandlingPropType,
+  behandlingId: PropTypes.string.isRequired,
+  behandlingVersjon: PropTypes.string.isRequired,
+  // eslint-disable-next-line
+  handleSubmit: PropTypes.any.isRequired,
+  // eslint-disable-next-line
+  gjeldendeAksjonspunkter: PropTypes.any.isRequired,
 };
 
 BeregningFP.defaultProps = {
   beregningsgrunnlag: undefined,
 };
 
-export default BeregningFP;
+const getSammenligningsgrunnlagsPrStatus = bg =>
+  bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
+
+const formaterAksjonspunkter = aksjonspunkter => {
+  return flattenArray(aksjonspunkter);
+};
+
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const { aksjonspunkter, submitCallback } = initialOwnProps;
+  const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
+
+  const onSubmit = values => {
+    const alleAksjonspunkter = values.beregningsgrunnlagListe.map(currentBeregningsgrunnlag => {
+      const allePerioder = currentBeregningsgrunnlag ? currentBeregningsgrunnlag.beregningsgrunnlagPeriode : [];
+      const alleAndelerIForstePeriode =
+        allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
+      const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(currentBeregningsgrunnlag);
+      const relevanteStatuser = getRelevanteStatuser(currentBeregningsgrunnlag);
+      const samletSammenligningsgrunnnlag =
+        sammenligningsgrunnlagPrStatus &&
+        sammenligningsgrunnlagPrStatus.find(
+          sammenLigGr => sammenLigGr.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
+        );
+      const harNyttIkkeSamletSammenligningsgrunnlag = sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
+      return transformValues(
+        currentBeregningsgrunnlag,
+        relevanteStatuser,
+        alleAndelerIForstePeriode,
+        gjeldendeAksjonspunkter,
+        allePerioder,
+        harNyttIkkeSamletSammenligningsgrunnlag,
+      );
+    });
+    return submitCallback(formaterAksjonspunkter(alleAksjonspunkter));
+  };
+  return (state, ownProps) => ({
+    onSubmit,
+    initialValues: buildInitialValues(state, ownProps),
+    fieldArrayID: ownProps.fieldArrayID,
+    gjeldendeAksjonspunkter,
+  });
+};
+
+const BeregningK9Form = connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+  })(BeregningFP),
+);
+
+export default BeregningK9Form;

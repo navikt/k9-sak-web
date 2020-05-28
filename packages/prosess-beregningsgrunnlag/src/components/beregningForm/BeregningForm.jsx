@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
@@ -9,12 +8,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { behandlingForm } from '@fpsak-frontend/form';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import { Undertittel } from 'nav-frontend-typografi';
-import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel, {
@@ -313,7 +310,7 @@ export const BeregningFormImpl = ({
   behandlingVersjon,
   alleKodeverk,
   vilkaarBG,
-  ...formProps
+  fieldArrayID,
 }) => {
   const {
     dekningsgrad,
@@ -331,7 +328,7 @@ export const BeregningFormImpl = ({
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
   const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
   return (
-    <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
+    <>
       {gjeldendeAksjonspunkter && (
         <>
           <VerticalSpacer eightPx />
@@ -403,6 +400,7 @@ export const BeregningFormImpl = ({
                 aksjonspunkter={gjeldendeAksjonspunkter}
                 relevanteStatuser={relevanteStatuser}
                 tidsBegrensetInntekt={tidsBegrensetInntekt}
+                fieldArrayID={fieldArrayID}
               />
             </>
           )}
@@ -428,7 +426,7 @@ export const BeregningFormImpl = ({
           )}
         </Column>
       </Row>
-    </form>
+    </>
   );
 };
 
@@ -443,43 +441,7 @@ BeregningFormImpl.propTypes = {
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   vilkaarBG: PropTypes.shape().isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { gjeldendeAksjonspunkter, relevanteStatuser, submitCallback, beregningsgrunnlag } = initialOwnProps;
-  const allePerioder = beregningsgrunnlag ? beregningsgrunnlag.beregningsgrunnlagPeriode : [];
-  const alleAndelerIForstePeriode =
-    allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
-
-  const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
-  const samletSammenligningsgrunnnlag =
-    sammenligningsgrunnlagPrStatus &&
-    sammenligningsgrunnlagPrStatus.find(
-      sammenLigGr => sammenLigGr.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
-    );
-  const harNyttIkkeSamletSammenligningsgrunnlag = sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
-
-  const onSubmit = values =>
-    submitCallback(
-      transformValues(
-        values,
-        relevanteStatuser,
-        alleAndelerIForstePeriode,
-        gjeldendeAksjonspunkter,
-        allePerioder,
-        harNyttIkkeSamletSammenligningsgrunnlag,
-      ),
-    );
-  return (state, ownProps) => ({
-    onSubmit,
-    initialValues: buildInitialValues(state, ownProps),
-  });
-};
-
-const BeregningForm = connect(mapStateToPropsFactory)(
-  behandlingForm({
-    form: formName,
-  })(BeregningFormImpl),
-);
-
-export default BeregningForm;
+export default BeregningFormImpl;
