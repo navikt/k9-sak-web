@@ -13,7 +13,7 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
-  tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD &&
+  tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
   (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
@@ -110,13 +110,17 @@ export const shouldGiveBegrunnelse = (klageVurderingResultatNK, klageVurderingRe
     hasKlageVurderingSomIkkeErAvvist(klageVurderingResultatNFP, klageVurderingResultatNK));
 
 export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnlag, aksjonspunkter) => {
-  if (!beregningsgrunnlag || !aksjonspunkter) {
+  const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
+  if (!beregningsgrunnlag || !aksjonspunkter || (harFlereBeregningsgrunnlag && beregningsgrunnlag.length === 0)) {
     return false;
   }
   const behandlingHarLøstBGAP = aksjonspunkter.find(
     ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status.kode === aksjonspunktStatus.UTFORT,
   );
-  const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
+
+  const førstePeriode = harFlereBeregningsgrunnlag
+    ? beregningsgrunnlag[0].beregningsgrunnlagPeriode[0] // TODO (Hallvard) Er dette god nok løsning?
+    : beregningsgrunnlag.beregningsgrunnlagPeriode[0];
   const andelSomErManueltFastsatt = førstePeriode.beregningsgrunnlagPrStatusOgAndel.find(
     andel => andel.overstyrtPrAar || andel.overstyrtPrAar === 0,
   );
