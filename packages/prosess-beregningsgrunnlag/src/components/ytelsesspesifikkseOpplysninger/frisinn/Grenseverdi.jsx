@@ -7,20 +7,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-
-const finnSamletBruttoForStatus = (andeler, status) => {
-  if (!andeler) {
-    return 0;
-  }
-  const inntekt = andeler
-    .filter(a => a.aktivitetStatus.kode === status)
-    .map(({ bruttoPrAar }) => bruttoPrAar)
-    .reduce((sum, brutto) => sum + brutto, 0);
-  if (!inntekt || inntekt === 0) {
-    return 0;
-  }
-  return inntekt;
-};
+import finnVisningForStatus from './FrisinnUtils';
 
 const erSøktStatus = (bg, status) => {
   const { perioderSøktFor } = bg.ytelsesspesifiktGrunnlag;
@@ -28,25 +15,15 @@ const erSøktStatus = (bg, status) => {
 };
 
 const Grenseverdi = ({ beregningsgrunnlag }) => {
-  const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
-  const bruttoAT = finnSamletBruttoForStatus(
-    førstePeriode.beregningsgrunnlagPrStatusOgAndel,
-    aktivitetStatus.ARBEIDSTAKER,
-  );
+  const bruttoAT = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.ARBEIDSTAKER);
   const originaltInntektstak = beregningsgrunnlag.grunnbeløp * 6;
   let annenInntektIkkeSøktFor = bruttoAT;
   if (!erSøktStatus(beregningsgrunnlag, aktivitetStatus.FRILANSER)) {
-    const bruttoFL = finnSamletBruttoForStatus(
-      førstePeriode.beregningsgrunnlagPrStatusOgAndel,
-      aktivitetStatus.FRILANSER,
-    );
+    const bruttoFL = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.FRILANSER);
     annenInntektIkkeSøktFor += bruttoFL;
   }
   if (!erSøktStatus(beregningsgrunnlag, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)) {
-    const bruttoSN = finnSamletBruttoForStatus(
-      førstePeriode.beregningsgrunnlagPrStatusOgAndel,
-      aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    );
+    const bruttoSN = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
     annenInntektIkkeSøktFor += bruttoSN;
   }
   const utregnetInntektstak =

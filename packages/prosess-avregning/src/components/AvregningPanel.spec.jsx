@@ -136,13 +136,13 @@ describe('<AvregningPanelImpl>', () => {
     const values = {
       erTilbakekrevingVilkårOppfylt: true,
       grunnerTilReduksjon: false,
-      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD,
+      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
     };
     const apCode = '5084';
 
     const transformedValues = transformValues(values, apCode);
     expect(transformedValues.kode).is.eql(apCode);
-    expect(transformedValues.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD);
+    expect(transformedValues.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT);
   });
 
   it('transform values skal returnere verdi av videre behandling gitt at vilkår er oppfylt og grunnerTilReduksjon er true', () => {
@@ -153,11 +153,11 @@ describe('<AvregningPanelImpl>', () => {
     const apCode = '5084';
 
     const transformedValuesInfotrygd = transformValues(
-      { ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD },
+      { ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT },
       apCode,
     );
     expect(transformedValuesInfotrygd.kode).is.eql(apCode);
-    expect(transformedValuesInfotrygd.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD);
+    expect(transformedValuesInfotrygd.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT);
     const transformedValuesIgnorer = transformValues(
       { ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER },
       apCode,

@@ -419,7 +419,7 @@
   "HistorikkEndretFeltVerdiType.DagpengerInntekt": "Dagpenger",
   "HistorikkEndretFeltVerdiType.GraderingOppfylt": "Oppfylt",
   "HistorikkEndretFeltVerdiType.GraderingIkkeOppfylt": "Ikke oppfylt",
-  "HistorikkEndretFeltVerdiType.tilbakekrInfotrygd": "Behandle tilbakekreving i infotrygd",
+  "HistorikkEndretFeltVerdiType.opprettTilbakekr": "Opprett tilbakekreving",
   "HistorikkEndretFeltVerdiType.tilbakekrIgnorer": "Avvent samordning, ingen tilbakekreving",
   "HistorikkEndretFeltVerdiType.AnnenforelderHarRett": "Annen forelder har rett",
   "HistorikkEndretFeltVerdiType.AnnenforelderHarIkkeRett": "Annen forelder har ikke rett",
