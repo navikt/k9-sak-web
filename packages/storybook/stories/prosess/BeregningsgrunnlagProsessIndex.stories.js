@@ -62,10 +62,14 @@ const vilkarMedUtfall = kode => [
       kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
       kodeverk: 'vilkarType',
     },
-    vilkarStatus: {
-      kode,
-      kodeverk: 'vilkarStatus',
-    },
+    perioder: [
+      {
+        vilkarStatus: {
+          kode,
+          kodeverk: 'vilkarStatus',
+        },
+      },
+    ],
   },
 ];
 
