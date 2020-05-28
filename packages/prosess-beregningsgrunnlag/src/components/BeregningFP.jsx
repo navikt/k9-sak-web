@@ -10,8 +10,9 @@ import aktivitetStatus, {
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import SideMenu from '@navikt/nap-side-menu';
+import classNames from 'classnames/bind';
 import { Column, Row } from 'nav-frontend-grid';
-import { TabsPure } from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -21,7 +22,10 @@ import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnla
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
 import BeregningForm2 from './beregningForm/BeregningForm';
+import styles from './beregningFP.less';
 import GraderingUtenBG2 from './gradering/GraderingUtenBG';
+
+const cx = classNames.bind(styles);
 
 const visningForManglendeBG = () => (
   <>
@@ -81,7 +85,7 @@ const BeregningFP = ({
   alleKodeverk,
 }) => {
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
-  const skalBrukeTabs = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
+  const skalBrukeSidemeny = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const aktivtBeregningsrunnlag = harFlereBeregningsgrunnlag
     ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
@@ -93,18 +97,26 @@ const BeregningFP = ({
   const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsrunnlag);
   const vilkaarBG = getBGVilkar(vilkar);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
+
+  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
+
   return (
-    <>
-      {skalBrukeTabs && (
-        <TabsPure
-          tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-            aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
-            label: `Beregningsgrunnlag ${currentBeregningsgrunnlagIndex + 1}`,
-          }))}
-          onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
-        />
+    <div className={mainContainerClassnames}>
+      {skalBrukeSidemeny && (
+        <div className={styles.sideMenuContainer}>
+          <SideMenu
+            links={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
+              active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
+              label: `Beregningsgrunnlag ${currentBeregningsgrunnlagIndex + 1}`,
+            }))}
+            onClick={clickedIndex => {
+              setAktivtBeregningsgrunnlagIndeks(clickedIndex);
+            }}
+            theme="arrow"
+          />
+        </div>
       )}
-      <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
+      <div className={styles.contentContainer}>
         <BeregningForm2
           readOnly={readOnly}
           beregningsgrunnlag={aktivtBeregningsrunnlag}
@@ -131,7 +143,7 @@ const BeregningFP = ({
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 
