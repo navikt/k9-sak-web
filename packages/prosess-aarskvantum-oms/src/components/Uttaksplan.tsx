@@ -3,14 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Rammevedtak } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import BorderedContainer from './BorderedContainer';
 import Aktivitet from '../dto/Aktivitet';
 import { joinNonNullStrings } from './utils';
 import AktivitetTabell from './AktivitetTabell';
 import AksjonspunktForm from './AksjonspunktForm';
-import Rammevedtak from '../dto/Rammevedtak';
 import styles from './uttaksplan.less';
 
 interface UttaksplanProps {

@@ -1,5 +1,5 @@
+import { Rammevedtak } from '@k9-sak-web/types';
 import UttaksplanType from './UttaksplanType';
-import Rammevedtak from './Rammevedtak';
 
 interface ÅrskvantumForbrukteDager {
   totaltAntallDager: number;

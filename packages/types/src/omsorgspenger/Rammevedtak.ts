@@ -1,4 +1,4 @@
-import stringEnum from '@k9-sak-web/types/src/tsUtils';
+import stringEnum from '../tsUtils';
 
 export const RammevedtakEnum = stringEnum({
   UIDENTIFISERT: 'UidentifisertRammevedtak',
