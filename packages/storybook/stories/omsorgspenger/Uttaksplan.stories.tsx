@@ -87,6 +87,7 @@ const årskvantumDto: ÅrskvantumForbrukteDager = {
         ],
       },
     ],
+    aktiv: true,
     behandlingUUID: '1',
     saksnummer: '2',
     innsendingstidspunkt: '123',
@@ -104,6 +105,10 @@ export const smittevernsdager = () => (
       antallKoronadager: 10,
       forbruktTid: 'PT180H',
       restTid: 'PT-34H-30M',
+      sisteUttaksplan: {
+        ...årskvantumDto.sisteUttaksplan,
+        aktiv: false,
+      },
     }}
     // @ts-ignore
     alleKodeverk={alleKodeverk}
