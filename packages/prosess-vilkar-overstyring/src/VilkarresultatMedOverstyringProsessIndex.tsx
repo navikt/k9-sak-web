@@ -82,7 +82,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
                 setActiveTab(clickedIndex);
               }}
               theme="arrow"
-              heading="Perioder"
+              heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
           </div>
         )}

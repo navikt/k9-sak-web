@@ -58,7 +58,9 @@ const OpptjeningVilkarProsessIndex = ({
             <SideMenu
               links={opptjening.opptjeninger.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
                 active: activeTab === currentBeregningsgrunnlagIndex,
-                label: `Beregningsgrunnlag ${currentBeregningsgrunnlagIndex + 1}`,
+                label: `${intl.formatMessage({ id: 'Sidemeny.Opptjeningsperiode' })} ${
+                  currentBeregningsgrunnlagIndex + 1
+                }`,
               }))}
               onClick={clickedIndex => {
                 setActiveTab(clickedIndex);

@@ -16,7 +16,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
@@ -84,6 +84,7 @@ const BeregningFP = ({
   vilkar,
   alleKodeverk,
 }) => {
+  const intl = useIntl();
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
   const skalBrukeSidemeny = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
@@ -107,7 +108,9 @@ const BeregningFP = ({
           <SideMenu
             links={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
-              label: `Beregningsgrunnlag ${currentBeregningsgrunnlagIndex + 1}`,
+              label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
+                currentBeregningsgrunnlagIndex + 1
+              }`,
             }))}
             onClick={clickedIndex => {
               setAktivtBeregningsgrunnlagIndeks(clickedIndex);
