@@ -12,7 +12,6 @@ import Pil from './Pil';
 import OverføringsraderForm from './OverføringsraderForm';
 import styles from './overføringsdagerPanel.less';
 import FastBreddeAligner from './FastBreddeAligner';
-import typeTilTekstIdMap from './typeTilTekstIdMap';
 
 const classNames = classnames.bind(styles);
 
@@ -24,6 +23,12 @@ interface OverføringsdagerPanelProps {
   behandlingVersjon: number;
 }
 
+const typeTilTekstIdMap = {
+  [OverføringstypeEnum.OVERFØRING]: 'FaktaRammevedtak.Overføringsdager.Overføring',
+  [OverføringstypeEnum.FORDELING]: 'FaktaRammevedtak.Overføringsdager.Fordeling',
+  [OverføringstypeEnum.KORONAOVERFØRING]: 'FaktaRammevedtak.Overføringsdager.Koronaoverføring',
+};
+
 const renderTittel = (type, retning, totaltAntallDager) => (
   <FastBreddeAligner
     kolonner={[
@@ -32,7 +37,6 @@ const renderTittel = (type, retning, totaltAntallDager) => (
         id: 'antallDager',
         content: (
           <>
-            <FormattedMessage id="FaktaRammevedtak.Overføringsdager.AntallDager" values={{ totaltAntallDager }} />
             <FormattedMessage
               id={
                 retning === OverføringsretningEnum.INN
@@ -40,6 +44,7 @@ const renderTittel = (type, retning, totaltAntallDager) => (
                   : 'FaktaRammevedtak.Overføringsdager.Ut'
               }
             />
+            <FormattedMessage id="FaktaRammevedtak.Overføringsdager.AntallDager" values={{ totaltAntallDager }} />
           </>
         ),
       },
@@ -49,7 +54,7 @@ const renderTittel = (type, retning, totaltAntallDager) => (
         content: <Pil retning={retning} />,
       },
       {
-        width: '150px',
+        width: '300px',
         id: 'overføring',
         content: <FormattedMessage id={typeTilTekstIdMap[type]} />,
       },

@@ -111,6 +111,7 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
       overføringGirRammevedtak(RammevedtakEnum.OVERFØRING_GIR, 'P8D'),
       overføringGirRammevedtak(RammevedtakEnum.FORDELING_GIR, 'P1D'),
       overføringGirRammevedtak(RammevedtakEnum.KORONAOVERFØRING_GIR, 'P2D'),
+      overføringGirRammevedtak(RammevedtakEnum.FORDELING_GIR, 'P4D'),
     ]}
     behandling={behandling}
   />

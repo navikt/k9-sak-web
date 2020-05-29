@@ -53,6 +53,16 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
     midlertidigAleneansvar,
   } = formValues;
 
+  const detFinnesOverføringer =
+    [
+      ...overføringGir,
+      ...overføringFår,
+      ...fordelingGir,
+      ...fordelingFår,
+      ...koronaoverføringGir,
+      ...koronaoverføringFår,
+    ].length > 0;
+
   return (
     <>
       <UidentifiserteRammevedtak type={RammevedtakEnum.UIDENTIFISERT} rammevedtak={rammevedtak} />
@@ -60,46 +70,52 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
       <UidentifiserteRammevedtak type={RammevedtakEnum.ALENEOMSORG} rammevedtak={rammevedtak} />
       <UidentifiserteRammevedtak type={RammevedtakEnum.FOSTERBARN} rammevedtak={rammevedtak} />
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.Overføringer.Tittel" imgSrc={transferIcon}>
-        <FastBreddeAligner
-          rad={{ padding: '0 0 0 1em' }}
-          kolonner={[
-            {
-              width: '225px',
-              id: 'overføring.tittel.totalt',
-              content: (
-                <Element>
-                  <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
-                </Element>
-              ),
-            },
-            {
-              width: '150px',
-              id: 'overføring.tittel.type',
-              content: (
-                <Element>
-                  <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
-                </Element>
-              ),
-            },
-          ]}
-        />
-        <OverføringsdagerPanelgruppe
-          overføringer={overføringFår}
-          fordelinger={fordelingFår}
-          koronaoverføringer={koronaoverføringFår}
-          retning={OverføringsretningEnum.INN}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-        />
-        <VerticalSpacer thirtyTwoPx />
-        <OverføringsdagerPanelgruppe
-          overføringer={overføringGir}
-          fordelinger={fordelingGir}
-          koronaoverføringer={koronaoverføringGir}
-          retning={OverføringsretningEnum.UT}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-        />
+        {detFinnesOverføringer ? (
+          <>
+            <FastBreddeAligner
+              rad={{ padding: '0 0 0 1em' }}
+              kolonner={[
+                {
+                  width: '225px',
+                  id: 'overføring.tittel.totalt',
+                  content: (
+                    <Element>
+                      <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
+                    </Element>
+                  ),
+                },
+                {
+                  width: '150px',
+                  id: 'overføring.tittel.type',
+                  content: (
+                    <Element>
+                      <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
+                    </Element>
+                  ),
+                },
+              ]}
+            />
+            <OverføringsdagerPanelgruppe
+              overføringer={overføringFår}
+              fordelinger={fordelingFår}
+              koronaoverføringer={koronaoverføringFår}
+              retning={OverføringsretningEnum.INN}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+            />
+            <VerticalSpacer thirtyTwoPx />
+            <OverføringsdagerPanelgruppe
+              overføringer={overføringGir}
+              fordelinger={fordelingGir}
+              koronaoverføringer={koronaoverføringGir}
+              retning={OverføringsretningEnum.UT}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+            />
+          </>
+        ) : (
+          <FormattedMessage id="FaktaRammevedtak.Overføringer.IngenOverføringer" />
+        )}
       </Seksjon>
       <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={users}>
         <>
