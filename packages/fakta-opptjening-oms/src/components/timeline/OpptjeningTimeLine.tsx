@@ -32,7 +32,10 @@ const standardItems = (opptjeningFomDato: string, opptjeningTomDato: string) => 
   return items;
 };
 
-const classNameGenerator = ap => {
+const classNameGenerator = (ap: OpptjeningAktivitet, harApneAksjonspunkter: boolean) => {
+  if (!harApneAksjonspunkter) {
+    return 'laastPeriode';
+  }
   if (ap.erGodkjent === false) {
     return 'avvistPeriode';
   }
@@ -47,6 +50,7 @@ const createItems = (
   groups,
   opptjeningFomDato: string,
   opptjeningTomDato: string,
+  harApneAksjonspunkter: boolean,
 ) => {
   const items = opptjeningPeriods.map(ap => ({
     id: ap.id,
@@ -58,7 +62,7 @@ const createItems = (
         g.arbeidsforholdRef === ap.arbeidsforholdRef &&
         g.oppdragsgiverOrg === ap.oppdragsgiverOrg,
     ).id,
-    className: classNameGenerator(ap),
+    className: classNameGenerator(ap, harApneAksjonspunkter),
     content: '',
     data: ap,
   }));
@@ -109,6 +113,7 @@ interface OpptjeningTimeLineProps {
   selectPeriodCallback: (data: any) => void;
   opptjeningFomDato: string;
   opptjeningTomDato: string;
+  harApneAksjonspunkter: boolean;
 }
 
 interface OpptjeningTimeLineState {
@@ -137,9 +142,15 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
   }
 
   UNSAFE_componentWillMount() {
-    const { opptjeningAktivitetTypes, opptjeningPeriods, opptjeningFomDato, opptjeningTomDato } = this.props;
+    const {
+      opptjeningAktivitetTypes,
+      opptjeningPeriods,
+      opptjeningFomDato,
+      opptjeningTomDato,
+      harApneAksjonspunkter,
+    } = this.props;
     const groups = createGroups(opptjeningPeriods, opptjeningAktivitetTypes);
-    const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato);
+    const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter);
     this.setState({
       groups,
       items,
@@ -156,7 +167,7 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const { opptjeningPeriods } = this.props;
+    const { opptjeningPeriods, harApneAksjonspunkter } = this.props;
     if (!isEqual(opptjeningPeriods, nextProps.opptjeningPeriods)) {
       const groups = createGroups(nextProps.opptjeningPeriods, nextProps.opptjeningAktivitetTypes);
       const items = createItems(
@@ -164,6 +175,7 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
         groups,
         nextProps.opptjeningFomDato,
         nextProps.opptjeningTomDato,
+        harApneAksjonspunkter,
       );
       this.setState({
         groups,
