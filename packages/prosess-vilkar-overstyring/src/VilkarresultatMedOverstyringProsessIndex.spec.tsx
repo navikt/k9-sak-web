@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { TabsPure } from 'nav-frontend-tabs';
+import SideMenu from '@navikt/nap-side-menu';
 import { expect } from 'chai';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
@@ -44,7 +44,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
       />,
     );
 
-    const tabs = wrapper.find(TabsPure);
+    const tabs = wrapper.find(SideMenu);
     expect(tabs).to.have.length(0);
   });
 
@@ -101,7 +101,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
       />,
     );
 
-    const tabs = wrapper.find(TabsPure);
+    const tabs = wrapper.find(SideMenu);
     expect(tabs).to.have.length(1);
   });
 });

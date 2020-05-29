@@ -1,12 +1,12 @@
-
-import sinon from 'sinon';
-import { expect } from 'chai';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import React from 'react';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import BeregningsgrunnlagProsessIndex from './BeregningsgrunnlagProsessIndex';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { expect } from 'chai';
+import React from 'react';
+import sinon from 'sinon';
 import shallowWithIntl from '../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
+import BeregningsgrunnlagProsessIndex from './BeregningsgrunnlagProsessIndex';
+import BeregningFP from './components/BeregningFP';
 
 const behandling = {
   id: 1,
@@ -17,16 +17,18 @@ const behandling = {
     kodeverk: 'SPRAAK_KODE',
   },
 };
-const vilkarMedUtfall = (kode) => [{
-  vilkarType: {
-    kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
-    kodeverk: 'vilkarType',
+const vilkarMedUtfall = kode => [
+  {
+    vilkarType: {
+      kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
+      kodeverk: 'vilkarType',
+    },
+    vilkarStatus: {
+      kode,
+      kodeverk: 'vilkarStatus',
+    },
   },
-  vilkarStatus: {
-    kode,
-    kodeverk: 'vilkarStatus',
-  },
-}];
+];
 const lagPeriode = () => ({
   beregningsgrunnlagPeriodeFom: '2019-09-16',
   beregningsgrunnlagPeriodeTom: undefined,
@@ -35,16 +37,17 @@ const lagPeriode = () => ({
   bruttoInkludertBortfaltNaturalytelsePrAar: 360000,
   avkortetPrAar: 360000,
   redusertPrAar: 360000,
-  beregningsgrunnlagPrStatusOgAndel: [{
-    aktivitetStatus: {
-      kode: 'AT',
-      kodeverk: 'AKTIVITET_STATUS',
+  beregningsgrunnlagPrStatusOgAndel: [
+    {
+      aktivitetStatus: {
+        kode: 'AT',
+        kodeverk: 'AKTIVITET_STATUS',
+      },
     },
-  }],
+  ],
   andelerLagtTilManueltIForrige: [],
 });
-const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall,
-  sammenligningSum, dekningsgrad, tilfeller) => ({
+const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenligningSum, dekningsgrad, tilfeller) => ({
   beregningsgrunnlagPeriode: [lagPeriode()],
   sammenligningsgrunnlag: {
     avvikPromille,
@@ -55,11 +58,13 @@ const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall,
   faktaOmBeregning: {
     faktaOmBeregningTilfeller: tilfeller,
   },
-  aktivitetStatus: [{
-    kode: 'UDEFINERT',
-  }],
+  aktivitetStatus: [
+    {
+      kode: 'UDEFINERT',
+    },
+  ],
 });
-const sammenligningsgrunnlag = (kode) => ({
+const sammenligningsgrunnlag = kode => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',
   rapportertPrAar: 330000,
@@ -79,18 +84,20 @@ describe('<BeregningsgrunnlagProsessIndex>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 100000, 100000, 100, []);
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
     beregningsgrunnlag.sammenligningsgrunnlagPrStatus = [sammenligningsgrunnlagPrStatus];
-    const wrapper = shallowWithIntl(<BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={beregningsgrunnlag}
-      aksjonspunkter={[]}
-      submitCallback={sinon.spy}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
-      alleKodeverk={alleKodeverk}
-    />);
-    const beregningFp = wrapper.find('BeregningFP');
+    const wrapper = shallowWithIntl(
+      <BeregningsgrunnlagProsessIndex
+        behandling={behandling}
+        beregningsgrunnlag={beregningsgrunnlag}
+        aksjonspunkter={[]}
+        submitCallback={sinon.spy}
+        isReadOnly={false}
+        readOnlySubmitButton={false}
+        isAksjonspunktOpen={false}
+        vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+        alleKodeverk={alleKodeverk}
+      />,
+    );
+    const beregningFp = wrapper.find(BeregningFP);
     expect(beregningFp.length).to.equal(1);
   });
 });
