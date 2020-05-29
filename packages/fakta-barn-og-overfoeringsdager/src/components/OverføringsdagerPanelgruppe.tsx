@@ -23,16 +23,16 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
   return (
     <div className={styles.panelgruppeContainer}>
       <OverføringsdagerPanel
-        overføringer={overføringer}
+        overføringer={fordelinger}
         retning={retning}
-        type={OverføringstypeEnum.OVERFØRING}
+        type={OverføringstypeEnum.FORDELING}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
       />
       <OverføringsdagerPanel
-        overføringer={fordelinger}
+        overføringer={overføringer}
         retning={retning}
-        type={OverføringstypeEnum.FORDELING}
+        type={OverføringstypeEnum.OVERFØRING}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
       />
