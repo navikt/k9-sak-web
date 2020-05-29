@@ -109,6 +109,36 @@ const BeregningFP = ({
   const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsrunnlag);
   const vilkaarBG = getBGVilkar(vilkar);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
+
+  const BeregningsGrunnlagFieldArrayComponent = ({ fields }) => {
+    if (fields.length === 0) {
+      if (harFlereBeregningsgrunnlag) {
+        beregningsgrunnlag.forEach(beregningsgrunnlagElement => {
+          fields.push(beregningsgrunnlagElement);
+        });
+      } else {
+        fields.push(beregningsgrunnlag);
+      }
+    }
+    return fields.map((fieldId, index) =>
+      index === aktivtBeregningsgrunnlagIndeks ? (
+        <BeregningForm2
+          readOnly={readOnly}
+          fieldArrayID={fieldId}
+          beregningsgrunnlag={aktivtBeregningsrunnlag}
+          gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+          relevanteStatuser={relevanteStatuser}
+          submitCallback={submitCallback}
+          readOnlySubmitButton={readOnlySubmitButton}
+          alleKodeverk={alleKodeverk}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          vilkaarBG={vilkaarBG}
+        />
+      ) : null,
+    );
+  };
+
   return (
     <>
       {skalBrukeTabs && (
@@ -122,37 +152,19 @@ const BeregningFP = ({
       )}
       <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
         <form onSubmit={handleSubmit} className={beregningStyles.beregningForm}>
-          <FieldArray
-            name="beregningsgrunnlagListe"
-            component={({ fields }) => {
-              if (fields.length === 0) {
-                if (harFlereBeregningsgrunnlag) {
-                  beregningsgrunnlag.forEach(beregningsgrunnlagElement => {
-                    fields.push(beregningsgrunnlagElement);
-                  });
-                } else {
-                  fields.push(beregningsgrunnlag);
-                }
-              }
-              return fields.map((fieldId, index) =>
-                index === aktivtBeregningsgrunnlagIndeks ? (
-                  <BeregningForm2
-                    readOnly={readOnly}
-                    fieldArrayID={fieldId}
-                    beregningsgrunnlag={aktivtBeregningsrunnlag}
-                    gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-                    relevanteStatuser={relevanteStatuser}
-                    submitCallback={submitCallback}
-                    readOnlySubmitButton={readOnlySubmitButton}
-                    alleKodeverk={alleKodeverk}
-                    behandlingId={behandling.id}
-                    behandlingVersjon={behandling.versjon}
-                    vilkaarBG={vilkaarBG}
-                  />
-                ) : null,
-              );
-            }}
-          />
+          <FieldArray name="beregningsgrunnlagListe" component={BeregningsGrunnlagFieldArrayComponent} />
+          {sokerHarGraderingPaaAndelUtenBG && (
+            <GraderingUtenBG2
+              submitCallback={submitCallback}
+              readOnly={readOnly}
+              behandlingId={behandling.id}
+              behandlingVersjon={behandling.versjon}
+              aksjonspunkter={aksjonspunkter}
+              andelerMedGraderingUtenBG={aktivtBeregningsrunnlag.andelerMedGraderingUtenBG}
+              alleKodeverk={alleKodeverk}
+              venteaarsakKode={behandling.venteArsakKode}
+            />
+          )}
           <Row>
             <Column xs="12">
               <BehandlingspunktSubmitButton
@@ -168,19 +180,6 @@ const BeregningFP = ({
             </Column>
           </Row>
         </form>
-
-        {sokerHarGraderingPaaAndelUtenBG && (
-          <GraderingUtenBG2
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            behandlingId={behandling.id}
-            behandlingVersjon={behandling.versjon}
-            aksjonspunkter={aksjonspunkter}
-            andelerMedGraderingUtenBG={aktivtBeregningsrunnlag.andelerMedGraderingUtenBG}
-            alleKodeverk={alleKodeverk}
-            venteaarsakKode={behandling.venteArsakKode}
-          />
-        )}
       </div>
     </>
   );
