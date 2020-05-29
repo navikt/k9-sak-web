@@ -12,7 +12,7 @@ interface BarnInputProps {
 }
 
 const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
-  const { aleneomsorg, kroniskSykdom, fødselsnummer } = barnet;
+  const { aleneomsorg, kroniskSykdom, fosterbarn, fødselsnummer } = barnet;
 
   return (
     <Panel border className={styles.barnInput}>
@@ -22,7 +22,7 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
         </h4>
         <span className={styles.italic}>{fødselsnummer}</span>
       </div>
-      {(aleneomsorg || kroniskSykdom) && (
+      {(aleneomsorg || kroniskSykdom || fosterbarn) && (
         <div className={styles.rammevedtak}>
           <div>
             <Element>
@@ -38,6 +38,11 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
                 <FormattedMessage id="FaktaRammevedtak.Barn.Aleneomsorg" />
               </Normaltekst>
             )}
+            {fosterbarn && (
+              <Normaltekst>
+                <FormattedMessage id="FaktaRammevedtak.Barn.Fosterbarn" />
+              </Normaltekst>
+            )}
           </div>
           <div>
             <Element>
@@ -45,6 +50,7 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
             </Element>
             {kroniskSykdom && <Normaltekst>{formaterDato(kroniskSykdom.fom)}</Normaltekst>}
             {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.fom)}</Normaltekst>}
+            {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.fom)}</Normaltekst>}
           </div>
           <div>
             <Element>
@@ -52,6 +58,7 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
             </Element>
             {kroniskSykdom && <Normaltekst>{formaterDato(kroniskSykdom.tom)}</Normaltekst>}
             {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
+            {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.tom)}</Normaltekst>}
           </div>
         </div>
       )}
