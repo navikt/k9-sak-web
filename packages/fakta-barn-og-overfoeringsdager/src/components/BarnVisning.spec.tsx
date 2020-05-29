@@ -7,12 +7,14 @@ import BarnVisning from './BarnVisning';
 import Barn from '../types/Barn';
 
 it('rendrer panel om barnet med rett info', () => {
+  const periode = {
+    fom: '2020-01-01',
+    tom: '2020-12-31',
+  };
   const barn: Barn = {
     fødselsnummer: '12312312312',
-    kroniskSykdom: {
-      fom: '2020-01-01',
-      tom: '2020-12-31',
-    },
+    kroniskSykdom: periode,
+    fosterbarn: periode,
   };
 
   const wrapper = shallow(<BarnVisning barnet={barn} index={0} />);
@@ -24,7 +26,9 @@ it('rendrer panel om barnet med rett info', () => {
 
   const kroniskSykdomVisning = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.UtvidetRett');
   const aleneomsorgvisning = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.Aleneomsorg');
+  const fosterbarn = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.Fosterbarn');
 
   expect(kroniskSykdomVisning).to.have.length(1);
   expect(aleneomsorgvisning).to.have.length(0);
+  expect(fosterbarn).to.have.length(1);
 });

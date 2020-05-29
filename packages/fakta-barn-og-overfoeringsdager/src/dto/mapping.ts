@@ -55,6 +55,25 @@ const mapDtoTilFormValues = (rammevedtak: Rammevedtak[]): FormValues => {
         };
       }
 
+      if (rv.type === RammevedtakEnum.FOSTERBARN) {
+        const fnr = rv.fosterbarnFor;
+        if (!fnr) {
+          return tmpBarn;
+        }
+        const fosterbarn = tmpBarn[fnr] || {};
+        return {
+          ...tmpBarn,
+          [fnr]: {
+            ...fosterbarn,
+            fødselsnummer: fnr,
+            fosterbarn: {
+              fom: rv.gyldigFraOgMed,
+              tom: rv.gyldigTilOgMed,
+            },
+          },
+        };
+      }
+
       return tmpBarn;
     }, {}),
   );
