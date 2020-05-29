@@ -49,7 +49,7 @@ const aleneOmOmsorgenManglendeFnr: Rammevedtak = {
 
 const fosterbarn: Rammevedtak = {
   type: RammevedtakEnum.FOSTERBARN,
-  fosterbarnFor: fnrEtBarn,
+  mottaker: fnrEtBarn,
   gyldigFraOgMed: '2020-01-01',
   gyldigTilOgMed: '2020-12-31',
 };

@@ -26,7 +26,7 @@ const typeInfo = {
   },
   [RammevedtakEnum.FOSTERBARN]: {
     text: 'FaktaRammevedtak.Uidentifisert.Fosterbarn',
-    erUidentifisert: rv => rv.type === RammevedtakEnum.FOSTERBARN && !rv.fosterbarnFor,
+    erUidentifisert: rv => rv.type === RammevedtakEnum.FOSTERBARN && !rv.mottaker,
   },
 };
 
