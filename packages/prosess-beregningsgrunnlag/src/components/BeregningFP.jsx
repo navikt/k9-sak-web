@@ -16,7 +16,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
@@ -83,8 +83,8 @@ const BeregningFP = ({
   readOnlySubmitButton,
   vilkar,
   alleKodeverk,
+  intl,
 }) => {
-  const intl = useIntl();
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
   const skalBrukeSidemeny = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
@@ -159,10 +159,11 @@ BeregningFP.propTypes = {
   beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
   vilkar: PropTypes.arrayOf(beregningsgrunnlagVilkarPropType).isRequired,
   behandling: beregningsgrunnlagBehandlingPropType,
+  intl: PropTypes.shape().isRequired,
 };
 
 BeregningFP.defaultProps = {
   beregningsgrunnlag: undefined,
 };
 
-export default BeregningFP;
+export default injectIntl(BeregningFP);
