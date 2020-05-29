@@ -37,7 +37,6 @@ const renderTittel = (type, retning, totaltAntallDager) => (
         id: 'antallDager',
         content: (
           <>
-            <FormattedMessage id="FaktaRammevedtak.Overføringsdager.AntallDager" values={{ totaltAntallDager }} />
             <FormattedMessage
               id={
                 retning === OverføringsretningEnum.INN
@@ -45,6 +44,7 @@ const renderTittel = (type, retning, totaltAntallDager) => (
                   : 'FaktaRammevedtak.Overføringsdager.Ut'
               }
             />
+            <FormattedMessage id="FaktaRammevedtak.Overføringsdager.AntallDager" values={{ totaltAntallDager }} />
           </>
         ),
       },

@@ -106,9 +106,7 @@ const Overføringsrader: FunctionComponent<WrappedFieldArrayProps<Overføring> &
                 id: `${field}.dager`,
                 content: (
                   <span className={styles.dagerInputContainer}>
-                    <InputField name={`${field}.antallDager`} readOnly type="number" />
                     <span>
-                      <FormattedMessage id="FaktaRammevedtak.Overføringsdager.Dager" />
                       <FormattedMessage
                         id={
                           retning === OverføringsretningEnum.INN
@@ -116,6 +114,10 @@ const Overføringsrader: FunctionComponent<WrappedFieldArrayProps<Overføring> &
                             : 'FaktaRammevedtak.Overføringsdager.Ut'
                         }
                       />
+                    </span>
+                    <InputField name={`${field}.antallDager`} readOnly type="number" />
+                    <span>
+                      <FormattedMessage id="FaktaRammevedtak.Overføringsdager.Dager" />
                     </span>
                   </span>
                 ),
