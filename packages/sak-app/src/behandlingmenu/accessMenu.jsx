@@ -32,11 +32,19 @@ const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBeha
   return { employeeHasAccess, isEnabled };
 };
 
-export const henleggBehandlingAccess = accessSelector(
-  [kanSaksbehandle],
-  [fagsakStatusCode.UNDER_BEHANDLING],
-  [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES],
-);
+const henleggBehandlingAccessSelector = behandlingstype => {
+  const fagsakstatus = behandlingstype?.kode === BehandlingType.KLAGE
+    ? [fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.LOPENDE, fagsakStatusCode.AVSLUTTET]
+    : [fagsakStatusCode.UNDER_BEHANDLING];
+  return accessSelector(
+    [kanSaksbehandle],
+    fagsakstatus,
+    [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES],
+  );
+};
+
+export const henleggBehandlingAccess = (navansatt, fagsakstatus, behandlingsstatus, behandlingstype) =>
+  henleggBehandlingAccessSelector(behandlingstype)(navansatt, fagsakstatus, behandlingsstatus, behandlingstype);
 
 const settBehandlingPaVentAccessSelector = (navAnsatt, harSoknad, erIInnhentSoknadopplysningerSteg, type) => {
   const isBehandlingAvKlageEllerInnsynEllerTilbakekreving = type
