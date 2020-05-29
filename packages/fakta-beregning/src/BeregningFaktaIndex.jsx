@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
+import { FieldArray } from 'redux-form';
 import { TabsPure } from 'nav-frontend-tabs';
 import BeregningInfoPanel from './components/BeregningInfoPanel';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
@@ -30,6 +30,7 @@ const BeregningFaktaIndex = ({
   harApneAksjonspunkter,
   submittable,
   erOverstyrer,
+  ...formProps
 }) => {
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
   const skalBrukeTabs = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
@@ -48,19 +49,28 @@ const BeregningFaktaIndex = ({
           onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
         />
       )}
-      <BeregningInfoPanel
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        beregningsgrunnlag={aktivtBeregningsrunnlag}
-        alleKodeverk={alleKodeverk}
-        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        aksjonspunkter={aksjonspunkter}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        hasOpenAksjonspunkter={harApneAksjonspunkter}
-        submittable={submittable}
-        erOverstyrer={erOverstyrer}
-      />
+      <form onSubmit={formProps.handleSubmit}>
+        <FieldArray
+          component={({ fields }) => {
+            return fields.map(field => (
+              <BeregningInfoPanel
+                behandlingId={behandling.id}
+                behandlingVersjon={behandling.versjon}
+                beregningsgrunnlag={aktivtBeregningsrunnlag}
+                fieldArrayID={field}
+                alleKodeverk={alleKodeverk}
+                alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+                aksjonspunkter={aksjonspunkter}
+                submitCallback={submitCallback}
+                readOnly={readOnly}
+                hasOpenAksjonspunkter={harApneAksjonspunkter}
+                submittable={submittable}
+                erOverstyrer={erOverstyrer}
+              />
+            ));
+          }}
+        />
+      </form>
     </RawIntlProvider>
   );
 };

@@ -23,35 +23,31 @@ import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteb
 import VurderRefusjonForm from './vurderrefusjon/VurderRefusjonForm';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
 
-
-const {
-  VURDER_FAKTA_FOR_ATFL_SN,
-} = aksjonspunktCodes;
+const { VURDER_FAKTA_FOR_ATFL_SN } = aksjonspunktCodes;
 
 export const getFaktaOmBeregning = createSelector(
-  [(ownProps) => ownProps.beregningsgrunnlag],
+  [ownProps => ownProps.beregningsgrunnlag],
   (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.faktaOmBeregning : undefined),
 );
 export const getKortvarigeArbeidsforhold = createSelector(
-  [(ownProps) => getFaktaOmBeregning(ownProps)],
+  [ownProps => getFaktaOmBeregning(ownProps)],
   (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.kortvarigeArbeidsforhold : undefined),
 );
-export const getKunYtelse = createSelector(
-  [(ownProps) => getFaktaOmBeregning(ownProps)],
-  (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.kunYtelse : undefined),
+export const getKunYtelse = createSelector([ownProps => getFaktaOmBeregning(ownProps)], (faktaOmBeregning = {}) =>
+  faktaOmBeregning ? faktaOmBeregning.kunYtelse : undefined,
 );
 export const getFaktaOmBeregningTilfellerKoder = createSelector(
-  [(ownProps) => getFaktaOmBeregning(ownProps)],
-  (faktaOmBeregning = []) => (faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
-    ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode) : []),
+  [ownProps => getFaktaOmBeregning(ownProps)],
+  (faktaOmBeregning = []) =>
+    faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
+      ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
+      : [],
 );
-export const getVurderMottarYtelse = createSelector(
-  [getFaktaOmBeregning],
-  (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.vurderMottarYtelse : undefined),
+export const getVurderMottarYtelse = createSelector([getFaktaOmBeregning], (faktaOmBeregning = {}) =>
+  faktaOmBeregning ? faktaOmBeregning.vurderMottarYtelse : undefined,
 );
-export const getVurderBesteberegning = createSelector(
-  [getFaktaOmBeregning],
-  (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.vurderBesteberegning : undefined),
+export const getVurderBesteberegning = createSelector([getFaktaOmBeregning], (faktaOmBeregning = {}) =>
+  faktaOmBeregning ? faktaOmBeregning.vurderBesteberegning : undefined,
 );
 export const getArbeidsgiverInfoForRefusjonskravSomKommerForSent = createSelector(
   [getFaktaOmBeregning],
@@ -63,29 +59,23 @@ export const getArbeidsgiverInfoForRefusjonskravSomKommerForSent = createSelecto
   },
 );
 
-export const validationForVurderFakta = (values) => {
+export const validationForVurderFakta = values => {
   if (!values) {
     return {};
   }
-  const {
-    faktaOmBeregning,
-    beregningsgrunnlag,
-    tilfeller,
-    kunYtelse,
-    vurderMottarYtelse,
-  } = values;
+  const { faktaOmBeregning, beregningsgrunnlag, tilfeller, kunYtelse, vurderMottarYtelse } = values;
   if (!faktaOmBeregning || !beregningsgrunnlag || !tilfeller) {
     return {};
   }
-  return ({
+  return {
     ...getKunYtelseValidation(values, kunYtelse, tilfeller),
     ...VurderMottarYtelseForm.validate(values, vurderMottarYtelse),
     ...VurderBesteberegningForm.validate(values, tilfeller),
     ...VurderOgFastsettATFL.validate(values, tilfeller, faktaOmBeregning, beregningsgrunnlag),
-  });
+  };
 };
 
-const spacer = (hasShownPanel) => {
+const spacer = hasShownPanel => {
   if (hasShownPanel) {
     return <VerticalSpacer twentyPx />;
   }
@@ -103,10 +93,11 @@ const getFaktaPanels = (
   alleKodeverk,
   aksjonspunkter,
   erOverstyrer,
+  fieldArrayID,
 ) => {
   const faktaPanels = [];
   let hasShownPanel = false;
-  tilfeller.forEach((tilfelle) => {
+  tilfeller.forEach(tilfelle => {
     if (tilfelle === faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD) {
       hasShownPanel = true;
       faktaPanels.push(
@@ -116,6 +107,7 @@ const getFaktaPanels = (
             isAksjonspunktClosed={isAksjonspunktClosed}
             faktaOmBeregning={faktaOmBeregning}
             alleKodeverk={alleKodeverk}
+            fieldArrayID={fieldArrayID}
           />
         </ElementWrapper>,
       );
@@ -128,6 +120,7 @@ const getFaktaPanels = (
           <NyIArbeidslivetSNForm
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
+            fieldArrayID={fieldArrayID}
           />
         </ElementWrapper>,
       );
@@ -136,10 +129,7 @@ const getFaktaPanels = (
       hasShownPanel = true;
       faktaPanels.push(
         <ElementWrapper key={tilfelle}>
-          <VurderMilitaer
-            readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
-          />
+          <VurderMilitaer readOnly={readOnly} isAksjonspunktClosed={isAksjonspunktClosed} fieldArrayID={fieldArrayID} />
         </ElementWrapper>,
       );
     }
@@ -151,12 +141,23 @@ const getFaktaPanels = (
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
             faktaOmBeregning={faktaOmBeregning}
+            fieldArrayID={fieldArrayID}
           />
         </ElementWrapper>,
       );
     }
   });
-  setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed, faktaOmBeregning, behandlingId, behandlingVersjon, alleKodeverk);
+  setFaktaPanelForKunYtelse(
+    faktaPanels,
+    tilfeller,
+    readOnly,
+    isAksjonspunktClosed,
+    faktaOmBeregning,
+    behandlingId,
+    behandlingVersjon,
+    alleKodeverk,
+    fieldArrayID,
+  );
   faktaPanels.push(
     <ElementWrapper key="VurderOgFastsettATFL">
       {spacer(true)}
@@ -171,6 +172,7 @@ const getFaktaPanels = (
         alleKodeverk={alleKodeverk}
         erOverstyrer={erOverstyrer}
         aksjonspunkter={aksjonspunkter}
+        fieldArrayID={fieldArrayID}
       />
     </ElementWrapper>,
   );
@@ -193,6 +195,7 @@ export const FaktaForATFLOgSNPanelImpl = ({
   alleKodeverk,
   aksjonspunkter,
   erOverstyrer,
+  fieldArrayID,
 }) => (
   <div>
     {getFaktaPanels(
@@ -206,7 +209,8 @@ export const FaktaForATFLOgSNPanelImpl = ({
       alleKodeverk,
       aksjonspunkter,
       erOverstyrer,
-    ).map((panelOrSpacer) => panelOrSpacer)}
+      fieldArrayID,
+    ).map(panelOrSpacer => panelOrSpacer)}
   </div>
 );
 
@@ -221,41 +225,44 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-const kunYtelseTransform = (faktaOmBeregning, aktivePaneler) => (values) => transformValuesForKunYtelse(values,
-  faktaOmBeregning.kunYtelse, aktivePaneler);
+const kunYtelseTransform = (faktaOmBeregning, aktivePaneler) => values =>
+  transformValuesForKunYtelse(values, faktaOmBeregning.kunYtelse, aktivePaneler);
 
 const nyIArbeidslivetTransform = (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET);
-  return ({
+  return {
     ...vurderFaktaValues,
     ...NyIArbeidslivetSNForm.transformValues(values),
-  });
+  };
 };
 
-const kortvarigeArbeidsforholdTransform = (kortvarigeArbeidsforhold) => (vurderFaktaValues, values) => {
+const kortvarigeArbeidsforholdTransform = kortvarigeArbeidsforhold => (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD);
-  return ({
+  return {
     ...vurderFaktaValues,
     ...TidsbegrensetArbeidsforholdForm.transformValues(values, kortvarigeArbeidsforhold),
-  });
+  };
 };
 
 const vurderMilitaerSiviltjenesteTransform = (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE);
-  return ({
+  return {
     ...vurderFaktaValues,
     ...VurderMilitaer.transformValues(values),
-  });
+  };
 };
 
-const vurderRefusjonskravTransform = (faktaOmBeregning) => (vurderFaktaValues, values) => {
-  vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT);
-  return ({
+const vurderRefusjonskravTransform = faktaOmBeregning => (vurderFaktaValues, values) => {
+  vurderFaktaValues.faktaOmBeregningTilfeller.push(
+    faktaOmBeregningTilfelle.VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT,
+  );
+  return {
     ...vurderFaktaValues,
     ...VurderRefusjonForm.transformValues(faktaOmBeregning.refusjonskravSomKommerForSentListe)(values),
-  });
+  };
 };
 
 export const transformValues = (
@@ -266,7 +273,7 @@ export const transformValues = (
   vurderRefusjonTransform,
 ) => (vurderFaktaValues, values) => {
   let transformed = { ...vurderFaktaValues };
-  aktivePaneler.forEach((kode) => {
+  aktivePaneler.forEach(kode => {
     if (kode === faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET) {
       transformed = nyIArbTransform(transformed, values);
     }
@@ -283,45 +290,61 @@ export const transformValues = (
   return transformed;
 };
 
-export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform,
-  vurderOgFastsettATFLTransform, erOverstyrt) => (values) => {
+export const setInntektValues = (
+  aktivePaneler,
+  fatsettKunYtelseTransform,
+  vurderOgFastsettATFLTransform,
+  erOverstyrt,
+) => values => {
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
     return { fakta: fatsettKunYtelseTransform(values), overstyrteAndeler: [] };
   }
   return { ...vurderOgFastsettATFLTransform(values, erOverstyrt) };
 };
 
-const setValuesForVurderFakta = (aktivePaneler, values, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag, erOverstyrt) => {
+const setValuesForVurderFakta = (
+  aktivePaneler,
+  values,
+  kortvarigeArbeidsforhold,
+  faktaOmBeregning,
+  beregningsgrunnlag,
+  erOverstyrt,
+) => {
   const vurderFaktaValues = setInntektValues(
     aktivePaneler,
     kunYtelseTransform(faktaOmBeregning, aktivePaneler),
-    VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag), erOverstyrt,
+    VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag),
+    erOverstyrt,
   )(values);
-  return ({
-    fakta: transformValues(aktivePaneler,
+  return {
+    fakta: transformValues(
+      aktivePaneler,
       nyIArbeidslivetTransform,
       kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
       vurderMilitaerSiviltjenesteTransform,
-      vurderRefusjonskravTransform(faktaOmBeregning))(vurderFaktaValues.fakta, values),
+      vurderRefusjonskravTransform(faktaOmBeregning),
+    )(vurderFaktaValues.fakta, values),
     overstyrteAndeler: vurderFaktaValues.overstyrteAndeler,
-  });
+  };
 };
 
 export const transformValuesFaktaForATFLOgSN = (values, erOverstyrt) => {
-  const {
+  const { tilfeller, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag } = values;
+  return setValuesForVurderFakta(
     tilfeller,
+    values,
     kortvarigeArbeidsforhold,
     faktaOmBeregning,
     beregningsgrunnlag,
-  } = values;
-  return setValuesForVurderFakta(tilfeller, values, kortvarigeArbeidsforhold,
-    faktaOmBeregning, beregningsgrunnlag, erOverstyrt);
+    erOverstyrt,
+  );
 };
 
-const getVurderFaktaAksjonspunkt = createSelector([(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => (aksjonspunkter
-  ? aksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
+const getVurderFaktaAksjonspunkt = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
+  aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined,
+);
 
-const buildInitialValuesForTilfeller = (props) => ({
+const buildInitialValuesForTilfeller = props => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
   ...VurderMilitaer.buildInitialValues(props.faktaOmBeregning, props.vurderFaktaAP),
   ...NyIArbeidslivetSNForm.buildInitialValues(props.beregningsgrunnlag),
@@ -336,21 +359,22 @@ const buildInitialValuesForTilfeller = (props) => ({
 });
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
-  beregningsgrunnlag: (ownProps) => ownProps.beregningsgrunnlag,
+  beregningsgrunnlag: ownProps => ownProps.beregningsgrunnlag,
   kortvarigeArbeidsforhold: getKortvarigeArbeidsforhold,
   vurderFaktaAP: getVurderFaktaAksjonspunkt,
   kunYtelse: getKunYtelse,
   tilfeller: getFaktaOmBeregningTilfellerKoder,
   vurderMottarYtelse: getVurderMottarYtelse,
   vurderBesteberegning: getVurderBesteberegning,
-  alleKodeverk: (ownProps) => ownProps.alleKodeverk,
-  aksjonspunkter: (ownProps) => ownProps.aksjonspunkter,
+  alleKodeverk: ownProps => ownProps.alleKodeverk,
+  aksjonspunkter: ownProps => ownProps.aksjonspunkter,
   faktaOmBeregning: getFaktaOmBeregning,
   refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
-  [mapStateToBuildInitialValuesProps], (props) => () => ({
+  [mapStateToBuildInitialValuesProps],
+  props => () => ({
     tilfeller: props.tilfeller,
     kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
     faktaOmBeregning: props.faktaOmBeregning,

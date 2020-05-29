@@ -17,8 +17,12 @@ const {
   OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
 } = aksjonspunktCodes;
 
-export const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER,
-  OVERSTYRING_AV_BEREGNINGSAKTIVITETER, OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
+export const faktaOmBeregningAksjonspunkter = [
+  VURDER_FAKTA_FOR_ATFL_SN,
+  AVKLAR_AKTIVITETER,
+  OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+];
 
 const createRelevantForms = (
   readOnly,
@@ -30,8 +34,9 @@ const createRelevantForms = (
   behandlingId,
   behandlingVersjon,
   beregningsgrunnlag,
+  fieldArrayID,
 ) => (
-  <div>
+  <>
     <AvklareAktiviteterPanel
       readOnly={readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) && !erOverstyrer)}
       harAndreAksjonspunkterIPanel={hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)}
@@ -43,6 +48,7 @@ const createRelevantForms = (
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       beregningsgrunnlag={beregningsgrunnlag}
+      fieldArrayID={fieldArrayID}
     />
     <VerticalSpacer thirtyTwoPx />
     <VurderFaktaBeregningPanel
@@ -55,10 +61,10 @@ const createRelevantForms = (
       behandlingVersjon={behandlingVersjon}
       beregningsgrunnlag={beregningsgrunnlag}
       erOverstyrer={erOverstyrer}
+      fieldArrayID={fieldArrayID}
     />
-  </div>
+  </>
 );
-
 
 /**
  * BeregningInfoPanel
@@ -75,17 +81,18 @@ const BeregningInfoPanel = ({
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
-}) => createRelevantForms(
-  readOnly,
-  aksjonspunkter,
-  submitCallback,
-  submittable,
-  erOverstyrer,
-  alleKodeverk,
-  behandlingId,
-  behandlingVersjon,
-  beregningsgrunnlag,
-);
+}) =>
+  createRelevantForms(
+    readOnly,
+    aksjonspunkter,
+    submitCallback,
+    submittable,
+    erOverstyrer,
+    alleKodeverk,
+    behandlingId,
+    behandlingVersjon,
+    beregningsgrunnlag,
+  );
 
 BeregningInfoPanel.propTypes = {
   submitCallback: PropTypes.func.isRequired,
@@ -98,6 +105,7 @@ BeregningInfoPanel.propTypes = {
   beregningsgrunnlag: beregningsgrunnlagPropType,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
 export default BeregningInfoPanel;
