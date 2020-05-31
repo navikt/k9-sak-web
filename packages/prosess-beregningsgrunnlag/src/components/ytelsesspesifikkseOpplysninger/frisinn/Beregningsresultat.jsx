@@ -6,51 +6,35 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import BeregningsresultatPeriode from './BeregningsresultatPeriode';
+import { erSøktForAndel, finnVisningForStatusIPeriode } from './FrisinnUtils';
 
 const finnInntektstak = bg => (bg.grunnbeløp ? bg.grunnbeløp * 6 : null);
 
-const erSøktStatus = (bg, status) => {
-  const { perioderSøktFor } = bg.ytelsesspesifiktGrunnlag;
-  return perioderSøktFor ? perioderSøktFor.some(p => p.statusSøktFor.kode === status) : false;
-};
-
-const finnSamletBruttoForStatus = (andeler, status) => {
-  if (!andeler) {
-    return 0;
-  }
-  return andeler
-    .filter(a => a.aktivitetStatus.kode === status)
-    .map(({ bruttoPrAar }) => bruttoPrAar)
-    .reduce((sum, brutto) => sum + brutto, 0);
-};
-
-const finnBGFrilans = bg => {
-  if (!erSøktStatus(bg, aktivitetStatus.FRILANSER)) {
+const finnBGFrilans = (bg, periode) => {
+  if (!erSøktForAndel(aktivitetStatus.FRILANSER, bg.ytelsesspesifiktGrunnlag)) {
     return null;
   }
   let inntektstak = finnInntektstak(bg);
-  const andelerFørstePeriode = bg.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
-  const atBrutto = finnSamletBruttoForStatus(andelerFørstePeriode, aktivitetStatus.ARBEIDSTAKER);
+  const atBrutto = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, periode);
   inntektstak -= atBrutto;
-  if (!erSøktStatus(bg, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)) {
-    const snBrutto = finnSamletBruttoForStatus(andelerFørstePeriode, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  if (!erSøktForAndel(bg, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)) {
+    const snBrutto = finnVisningForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, periode);
     inntektstak -= snBrutto;
   }
-  const frilansBrutto = finnSamletBruttoForStatus(andelerFørstePeriode, aktivitetStatus.FRILANSER);
+  const frilansBrutto = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, bg, periode);
   return frilansBrutto > inntektstak ? inntektstak : frilansBrutto;
 };
 
-const finnBGNæring = bg => {
-  if (!erSøktStatus(bg, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)) {
+const finnBGNæring = (bg, periode) => {
+  if (!erSøktForAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg.ytelsesspesifiktGrunnlag)) {
     return null;
   }
   let inntektstak = finnInntektstak(bg);
-  const andelerFørstePeriode = bg.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
-  const atBrutto = finnSamletBruttoForStatus(andelerFørstePeriode, aktivitetStatus.ARBEIDSTAKER);
+  const atBrutto = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, periode);
   inntektstak -= atBrutto;
-  const flBrutto = finnSamletBruttoForStatus(andelerFørstePeriode, aktivitetStatus.FRILANSER);
+  const flBrutto = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, bg, periode);
   inntektstak -= flBrutto;
-  const snBrutto = finnSamletBruttoForStatus(andelerFørstePeriode, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const snBrutto = finnVisningForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, periode);
   return snBrutto > inntektstak ? inntektstak : snBrutto;
 };
 
@@ -69,8 +53,8 @@ const Beregningsresultat = ({ beregningsgrunnlag }) => {
           <BeregningsresultatPeriode
             bgperiode={periode}
             ytelsegrunnlag={beregningsgrunnlag.ytelsesspesifiktGrunnlag}
-            frilansGrunnlag={finnBGFrilans(beregningsgrunnlag)}
-            næringGrunnlag={finnBGNæring(beregningsgrunnlag)}
+            frilansGrunnlag={finnBGFrilans(beregningsgrunnlag, periode)}
+            næringGrunnlag={finnBGNæring(beregningsgrunnlag, periode)}
             key={periode.beregningsgrunnlagperiodeFom}
           />
         </div>

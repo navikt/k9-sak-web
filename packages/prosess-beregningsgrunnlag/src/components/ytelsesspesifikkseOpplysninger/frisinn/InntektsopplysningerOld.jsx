@@ -7,18 +7,13 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
-import { finnVisningForStatusIPeriode } from './FrisinnUtils';
+import finnVisningForStatus from './FrisinnUtilsOld';
 
 const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
   // Første periode inneholder alltid brutto vi ønsker å vise SBH
-  const foreløpigPeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[1]; // Her må vi finne ut hvordan vi vil vise det
-  const bruttoSN = finnVisningForStatusIPeriode(
-    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    beregningsgrunnlag,
-    foreløpigPeriode,
-  );
-  const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, beregningsgrunnlag, foreløpigPeriode);
-  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, beregningsgrunnlag, foreløpigPeriode);
+  const bruttoSN = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const bruttoFL = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.FRILANSER);
+  const bruttoAT = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.ARBEIDSTAKER);
   return (
     <div>
       <Row>
