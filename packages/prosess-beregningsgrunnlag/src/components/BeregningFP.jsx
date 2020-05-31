@@ -157,8 +157,8 @@ const BeregningFP = ({
             <Column xs="12">
               <BehandlingspunktSubmitButton
                 formName={formName}
-                behandlingId={behandling.behandlingId}
-                behandlingVersjon={behandling.behandlingVersjon}
+                behandlingId={behandling.id}
+                behandlingVersjon={behandling.versjon}
                 isReadOnly={readOnly}
                 isSubmittable={!readOnlySubmitButton}
                 isBehandlingFormSubmitting={isBehandlingFormSubmitting}
@@ -195,8 +195,6 @@ BeregningFP.propTypes = {
   beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
   vilkar: PropTypes.arrayOf(beregningsgrunnlagVilkarPropType).isRequired,
   behandling: beregningsgrunnlagBehandlingPropType,
-  behandlingId: PropTypes.string.isRequired,
-  behandlingVersjon: PropTypes.string.isRequired,
   // eslint-disable-next-line
   handleSubmit: PropTypes.any.isRequired,
   // eslint-disable-next-line

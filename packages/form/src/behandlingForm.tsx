@@ -1,3 +1,4 @@
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import React, { ComponentType } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -12,6 +13,7 @@ import {
   ConfigProps,
 } from 'redux-form';
 import { createSelector } from 'reselect';
+import requireProps from '@fpsak-frontend/shared-components/src/requireProps';
 
 export const getBehandlingFormPrefix = (behandlingId: number, behandlingVersjon: number) =>
   `behandling_${behandlingId}_v${behandlingVersjon}`;
@@ -57,7 +59,9 @@ export const behandlingForm = (config: ConfigProps) => (WrappedComponent: Compon
     behandlingFormName: getBehandlingFormName(ownProps.behandlingId, ownProps.behandlingVersjon, form || ownProps.form),
   });
 
-  return connect(mapStateToProps)(WithBehandlingForm);
+  return connect(mapStateToProps)(
+    requireProps(['behandlingId', 'behandlingVersjon'], <LoadingPanel />)(WithBehandlingForm),
+  );
 };
 
 const getFormName = (formName: string, behandlingId: number, behandlingVersjon: number) =>
