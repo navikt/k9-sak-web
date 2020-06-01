@@ -10,15 +10,40 @@ import moment from 'moment';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 
-const søkerYtelseFor = (ytelsegrunnlag, status) =>
-  ytelsegrunnlag.perioderSøktFor.find(periode => periode.statusSøktFor.kode === status);
+const lagPerioderadMedTekst = (tekstId, fom, tom) => {
+  return (
+    <Row>
+      <Column xs="12">
+        <Normaltekst>
+          <FormattedMessage
+            id={tekstId}
+            values={{
+              fom: moment(fom).format(DDMMYYYY_DATE_FORMAT),
+              tom: moment(tom).format(DDMMYYYY_DATE_FORMAT),
+            }}
+          />
+        </Normaltekst>
+      </Column>
+    </Row>
+  );
+};
+
+const lagSøktYtelseRadPeriode = periode => {
+  const snAndel = periode.frisinnAndeler.find(
+    andel => andel.statusSøktFor.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  const flAndel = periode.frisinnAndeler.find(andel => andel.statusSøktFor.kode === aktivitetStatus.FRILANSER);
+  return (
+    <div key={periode.fom}>
+      {flAndel && lagPerioderadMedTekst('Beregningsgrunnlag.Søknad.SøktYtelseFL', periode.fom, periode.tom)}
+      {snAndel && lagPerioderadMedTekst('Beregningsgrunnlag.Søknad.SøktYtelseSN', periode.fom, periode.tom)}
+    </div>
+  );
+};
 
 const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
   const ytelsegrunnlag = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
-  const søktYtelseFL = søkerYtelseFor(ytelsegrunnlag, aktivitetStatus.FRILANSER);
-  const søktYtelseSN = søkerYtelseFor(ytelsegrunnlag, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-  const flOpplysninger = beregningsgrunnlag.ytelsesspesifiktGrunnlag.opplysningerFL;
-  const snOpplysninger = beregningsgrunnlag.ytelsesspesifiktGrunnlag.opplysningerSN;
+  const { frisinnPerioder } = ytelsegrunnlag;
   return (
     <div>
       <Row>
@@ -29,56 +54,7 @@ const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
         </Column>
       </Row>
       <VerticalSpacer eightPx />
-      {søktYtelseFL && (
-        <Row>
-          <Column xs="12">
-            <Normaltekst>
-              <FormattedMessage
-                id="Beregningsgrunnlag.Søknad.SøktYtelseFL"
-                values={{
-                  fom: moment(søktYtelseFL.fom).format(DDMMYYYY_DATE_FORMAT),
-                  tom: moment(søktYtelseFL.tom).format(DDMMYYYY_DATE_FORMAT),
-                }}
-              />
-            </Normaltekst>
-          </Column>
-        </Row>
-      )}
-      {søktYtelseSN && (
-        <Row>
-          <Column xs="12">
-            <Normaltekst>
-              <FormattedMessage
-                id="Beregningsgrunnlag.Søknad.SøktYtelseSN"
-                values={{
-                  fom: moment(søktYtelseSN.fom).format(DDMMYYYY_DATE_FORMAT),
-                  tom: moment(søktYtelseSN.tom).format(DDMMYYYY_DATE_FORMAT),
-                }}
-              />
-            </Normaltekst>
-          </Column>
-        </Row>
-      )}
-      <VerticalSpacer sixteenPx />
-      {flOpplysninger && flOpplysninger.erNyoppstartet && (
-        <Row>
-          <Column xs="12">
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Søknad.NyoppstartetFL" />
-            </Normaltekst>
-          </Column>
-        </Row>
-      )}
-      {snOpplysninger && snOpplysninger.erNyoppstartet && (
-        <Row>
-          <Column xs="12">
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Søknad.NyoppstartetSN" />
-            </Normaltekst>
-          </Column>
-          <VerticalSpacer eightPx />
-        </Row>
-      )}
+      {frisinnPerioder.map(periode => lagSøktYtelseRadPeriode(periode))}
       <VerticalSpacer sixteenPx />
     </div>
   );

@@ -8,11 +8,6 @@ import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, TIDENES_ENDE } from '@fpsak-f
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-import {
-  finnOppgittInntektForAndelIPeriode,
-  finnOppgittArbeidsinntektIPeriode,
-  erSøktForAndelIPeriode,
-} from './FrisinnUtils';
 
 const lagPeriodeHeader = (fom, originalTom) => {
   let tom = null;
@@ -34,7 +29,7 @@ const lagPeriodeHeader = (fom, originalTom) => {
 const statuserDetErSøktOmIPerioden = (bgPeriode, ytelsegrunnlag) => {
   const fom = bgPeriode.beregningsgrunnlagPeriodeFom;
   const tom = bgPeriode.beregningsgrunnlagPeriodeTom;
-  const perioder = ytelsegrunnlag.frisinnPerioder;
+  const perioder = ytelsegrunnlag.perioderSøktFor;
   return perioder
     ? perioder.filter(periode => !moment(fom).isBefore(periode.fom) && !moment(tom).isAfter(periode.tom))
     : [];
@@ -78,32 +73,21 @@ const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, l�
     </>
   );
 };
-
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {
   const statuserDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
   if (!statuserDetErSøktOm || statuserDetErSøktOm.length < 1) {
     return null;
   }
-  const beregningsgrunnlagFL = erSøktForAndelIPeriode(aktivitetStatus.FRILANSER, bgperiode, ytelsegrunnlag)
+  const beregningsgrunnlagFL = statuserDetErSøktOm.some(p => p.statusSøktFor.kode === aktivitetStatus.FRILANSER)
     ? frilansGrunnlag
     : null;
-  const beregningsgrunnlagSN = erSøktForAndelIPeriode(
-    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    bgperiode,
-    ytelsegrunnlag,
+  const beregningsgrunnlagSN = statuserDetErSøktOm.some(
+    p => p.statusSøktFor.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   )
     ? næringGrunnlag
     : null;
-
-  const løpendeInntektFL = finnOppgittInntektForAndelIPeriode(aktivitetStatus.FRILANSER, bgperiode, ytelsegrunnlag);
-  const løpendeInntektSN = finnOppgittInntektForAndelIPeriode(
-    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    bgperiode,
-    ytelsegrunnlag,
-  );
-
-  const oppgittArbeidsinntektIPeriode = finnOppgittArbeidsinntektIPeriode(bgperiode, ytelsegrunnlag);
-
+  const løpendeInntektFL = ytelsegrunnlag.opplysningerFL ? ytelsegrunnlag.opplysningerFL.oppgittInntekt : null;
+  const løpendeInntektSN = ytelsegrunnlag.opplysningerSN ? ytelsegrunnlag.opplysningerSN.oppgittInntekt : null;
   return (
     <>
       {(beregningsgrunnlagFL || beregningsgrunnlagFL === 0) &&
@@ -124,8 +108,6 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
           'Beregningsgrunnlag.Søknad.LøpendeSN',
           løpendeInntektSN,
         )}
-      {(oppgittArbeidsinntektIPeriode || oppgittArbeidsinntektIPeriode === 0) &&
-        lagBeskrivelseMedBeløpRad('Beregningsgrunnlag.Frisinn.OppgittArbeidsinntekt', oppgittArbeidsinntektIPeriode)}
       <Row>
         <Column xs="12" className={beregningStyles.noPaddingRight}>
           <div className={beregningStyles.colDevider} />
@@ -144,7 +126,6 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
     </>
   );
 };
-
 const BeregningsresultatPeriode = ({ bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag }) => {
   const statuserDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
   if (!statuserDetErSøktOm || statuserDetErSøktOm.length < 1) {
@@ -172,10 +153,8 @@ BeregningsresultatPeriode.propTypes = {
   frilansGrunnlag: PropTypes.number,
   næringGrunnlag: PropTypes.number,
 };
-
 BeregningsresultatPeriode.defaultProps = {
   frilansGrunnlag: undefined,
   næringGrunnlag: undefined,
 };
-
 export default BeregningsresultatPeriode;

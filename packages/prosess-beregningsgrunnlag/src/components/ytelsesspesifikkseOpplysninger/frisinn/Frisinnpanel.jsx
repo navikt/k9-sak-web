@@ -9,10 +9,61 @@ import Søknadsopplysninger from './Søknadsopplysninger';
 import Beregningsresultat from './Beregningsresultat';
 import Inntektsopplysninger from './Inntektsopplysninger';
 import Grenseverdi from './Grenseverdi';
+import GrenseverdiOld from './GrenseverdiOld';
+import BeregningsresultatOld from './BeregningsresultatOld';
+import SøknadsopplysningerOld from './SøknadsopplysningerOld';
+import InntektsopplysningerOld from './InntektsopplysningerOld';
 
 const erDagsatsBeregnet = bg => bg.beregningsgrunnlagPeriode.some(p => p.dagsats || p.dagsats === 0);
 
+const gammelSøknadOgInntektsOpplysninger = bg => {
+  return (
+    <>
+      <VerticalSpacer sixteenPx />
+      <SøknadsopplysningerOld beregningsgrunnlag={bg} />
+      <VerticalSpacer sixteenPx />
+      <InntektsopplysningerOld beregningsgrunnlag={bg} />
+      <VerticalSpacer sixteenPx />
+    </>
+  );
+};
+
+const nySøknadOgInntektsOpplysninger = bg => {
+  return (
+    <>
+      <VerticalSpacer sixteenPx />
+      <Søknadsopplysninger beregningsgrunnlag={bg} />
+      <VerticalSpacer sixteenPx />
+      <Inntektsopplysninger beregningsgrunnlag={bg} />
+      <VerticalSpacer sixteenPx />
+    </>
+  );
+};
+
+const nyttResultatOgGrenseverdi = bg => {
+  return (
+    <>
+      <Grenseverdi beregningsgrunnlag={bg} />
+      <VerticalSpacer sixteenPx />
+      <Beregningsresultat beregningsgrunnlag={bg} />
+    </>
+  );
+};
+
+const gammeltResultatOgGrenseverdi = bg => {
+  return (
+    <>
+      <GrenseverdiOld beregningsgrunnlag={bg} />
+      <VerticalSpacer sixteenPx />
+      <BeregningsresultatOld beregningsgrunnlag={bg} />
+    </>
+  );
+};
+
 const Frisinnpanel = ({ beregningsgrunnlag }) => {
+  const frisinngrunnlag = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
+  // TODO fjern denne og alle "Old" komponenter når vi kontrakt er ute i P
+  const harPeriodisertGrunnlag = frisinngrunnlag.frisinnPerioder && frisinngrunnlag.frisinnPerioder.length > 0;
   return (
     <>
       <div className={styles.aksjonspunktBehandlerContainer}>
@@ -20,16 +71,12 @@ const Frisinnpanel = ({ beregningsgrunnlag }) => {
           <Undertittel>
             <FormattedMessage id="Beregningsgrunnlag.Frisinn.Tittel" />
           </Undertittel>
-          <VerticalSpacer sixteenPx />
-          <Søknadsopplysninger beregningsgrunnlag={beregningsgrunnlag} />
-          <VerticalSpacer sixteenPx />
-          <Inntektsopplysninger beregningsgrunnlag={beregningsgrunnlag} />
-          <VerticalSpacer sixteenPx />
+          {harPeriodisertGrunnlag && <>{nySøknadOgInntektsOpplysninger(beregningsgrunnlag)}</>}
+          {!harPeriodisertGrunnlag && <>{gammelSøknadOgInntektsOpplysninger(beregningsgrunnlag)}</>}
           {erDagsatsBeregnet(beregningsgrunnlag) && (
             <>
-              <Grenseverdi beregningsgrunnlag={beregningsgrunnlag} />
-              <VerticalSpacer sixteenPx />
-              <Beregningsresultat beregningsgrunnlag={beregningsgrunnlag} />
+              {harPeriodisertGrunnlag && <>{nyttResultatOgGrenseverdi(beregningsgrunnlag)}</>}
+              {!harPeriodisertGrunnlag && <>{gammeltResultatOgGrenseverdi(beregningsgrunnlag)}</>}
             </>
           )}
         </Panel>
