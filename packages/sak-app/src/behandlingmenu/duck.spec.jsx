@@ -58,9 +58,8 @@ describe('BehandlingMenu-reducer', () => {
 
     const push = sinon.spy();
     const params = { behandlingType: 'revurdering' };
-    const isTilbakekreving = false;
 
-    return store.dispatch(createNewBehandling(push, fagsak.saksnummer, true, isTilbakekreving, params))
+    return store.dispatch(createNewBehandling(push, fagsak.saksnummer, true, params))
       .then(() => {
         expect(store.getActions()).to.have.length(7);
         const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
@@ -109,9 +108,8 @@ describe('BehandlingMenu-reducer', () => {
 
     const push = sinon.spy();
     const params = { behandlingType: 'revurdering' };
-    const isTilbakekreving = false;
 
-    return store.dispatch(createNewBehandling(push, 1, true, isTilbakekreving, params))
+    return store.dispatch(createNewBehandling(push, 1, true, params))
       .then(() => {
         expect(store.getActions()).to.have.length(4);
         const [requestStartedAction, requestFinishedAction] = store.getActions();

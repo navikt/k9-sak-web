@@ -2,8 +2,8 @@ import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling } from '@fpsak-frontend/fp-felles';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
+import ApiForBehandlingstype from '@fpsak-frontend/utils/src/behandlingstypeUtils';
 import fpsakApi from '../data/fpsakApi';
 import behandlingEventHandler from '../behandling/BehandlingEventHandler';
 
@@ -13,38 +13,26 @@ const findNewBehandlingId = (behandlingerResponse) => {
   return sortedBehandlinger[0].id;
 };
 
-const createNewBehandlingRequest = (params, isTilbakekreving) => {
-  let endpoint;
-  if (params.behandlingType === behandlingType.KLAGE) {
-    endpoint = fpsakApi.NEW_BEHANDLING_KLAGE;
-  } else if (isTilbakekreving) {
-    endpoint = fpsakApi.NEW_BEHANDLING_FPTILBAKE;
-  } else {
-    endpoint = fpsakApi.NEW_BEHANDLING_FPSAK;
-  }
-  return endpoint.makeRestApiRequest()(params);
-};
+const createNewBehandlingRequest = (params, apiForBehandlingstype) =>
+  apiForBehandlingstype.newBehandlingApi().makeRestApiRequest()(params);
 
-export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilbakekreving, params) => dispatch =>
-  dispatch(createNewBehandlingRequest(params, isTilbakekreving)).then(response => {
-
-    let updateBehandlinger;
-    if (isTilbakekreving) updateBehandlinger = fpsakApi.BEHANDLINGER_FPTILBAKE;
-    else if (params.behandlingType === behandlingType.KLAGE) updateBehandlinger = fpsakApi.BEHANDLINGER_KLAGE;
-    else updateBehandlinger = fpsakApi.BEHANDLINGER_FPSAK;
-
-    if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
-      return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
-        .then((behandlingerResponse) => {
-          const pathname = pathToBehandling(saksnummer, findNewBehandlingId(behandlingerResponse));
-          push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname }));
-          return Promise.resolve(behandlingerResponse);
-        });
+export const createNewBehandling = (push, saksnummer, erBehandlingValgt, params) => dispatch => {
+  const apiForBehandlingstype = new ApiForBehandlingstype(params.behandlingType);
+  return dispatch(createNewBehandlingRequest(params, apiForBehandlingstype)).then(response => {
+    const updateBehandlinger = apiForBehandlingstype.behandlingerApi();
+    if (response.payload.saksnummer) {
+      // NEW_BEHANDLING har returnert fagsak
+      return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer })).then(behandlingerResponse => {
+        const pathname = pathToBehandling(saksnummer, findNewBehandlingId(behandlingerResponse));
+        push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname }));
+        return Promise.resolve(behandlingerResponse);
+      });
     }
     // NEW_BEHANDLING har returnert behandling
     return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
       .then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) })));
   });
+};
 
 export const sjekkOmTilbakekrevingKanOpprettes = (params) => (dispatch) => dispatch(
   fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.makeRestApiRequest()(params),
