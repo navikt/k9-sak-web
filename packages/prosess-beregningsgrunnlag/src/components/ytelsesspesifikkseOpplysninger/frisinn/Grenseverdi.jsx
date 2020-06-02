@@ -74,7 +74,7 @@ const lagGrenseverdirad = (bg, periode) => {
         <Column xs="12">
           <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage
-              id="Beregningsgrunnlag.Frisinn.InntektstakOpplysninger"
+              id="Beregningsgrunnlag.Frisinn.InntektstakOpplysningerPeriode"
               key={`fom-tom${fom}${tom}`}
               values={{
                 fom: moment(fom).format(DDMMYYYY_DATE_FORMAT),

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import moment from 'moment';
 
+import { FormattedMessage } from 'react-intl';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
@@ -10,15 +11,21 @@ import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPro
 import { finnVisningForStatusIPeriode } from './FrisinnUtils';
 
 const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
-  // Første periode inneholder alltid brutto vi ønsker å vise SBH
-  const foreløpigPeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[1]; // Her må vi finne ut hvordan vi vil vise det
+  // Vi ønsker alltid kun å vise data fra siste beregnede periode, dvs nest siste periode (koronologisk) i grunnlaget
+  if (beregningsgrunnlag.beregningsgrunnlagPeriode.length < 2) {
+    return null;
+  }
+  const kronologiskePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode.sort(
+    (a, b) => moment(a.beregningsgrunnlagPeriodeFom) - moment(b.beregningsgrunnlagPeriodeFom),
+  );
+  const gjeldendePeriode = kronologiskePerioder[kronologiskePerioder.length - 2];
   const bruttoSN = finnVisningForStatusIPeriode(
     aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
     beregningsgrunnlag,
-    foreløpigPeriode,
+    gjeldendePeriode,
   );
-  const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, beregningsgrunnlag, foreløpigPeriode);
-  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, beregningsgrunnlag, foreløpigPeriode);
+  const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, beregningsgrunnlag, gjeldendePeriode);
+  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, beregningsgrunnlag, gjeldendePeriode);
   return (
     <div>
       <Row>
