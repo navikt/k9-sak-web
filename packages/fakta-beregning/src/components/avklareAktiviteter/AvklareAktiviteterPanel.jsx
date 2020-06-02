@@ -115,6 +115,11 @@ const hasOpenAvklarAksjonspunkter = aksjonspunkter =>
   hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) ||
   hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
 
+export const buildInitialValuesAvklarAktiviteter = createSelector(
+  [ownProps => ownProps.aksjonspunkter, ownProps => getAvklarAktiviteter(ownProps), ownProps => ownProps.alleKodeverk],
+  buildInitialValues,
+);
+
 /**
  * AvklareAktiviteterPanel
  *
@@ -169,7 +174,6 @@ export class AvklareAktiviteterPanelImpl extends Component {
         behandlingId,
         behandlingVersjon,
         alleBeregningsgrunnlag,
-        beregningsgrunnlag,
         formValues,
         ...formProps
       },
@@ -183,11 +187,13 @@ export class AvklareAktiviteterPanelImpl extends Component {
 
     if (fields.length === 0) {
       if (harFlereBeregningsgrunnlag) {
-        alleBeregningsgrunnlag.forEach(beregningsgrunnlagElement => {
-          fields.push(beregningsgrunnlagElement);
+        alleBeregningsgrunnlag.forEach(() => {
+          const initialValues = buildInitialValuesAvklarAktiviteter(this.props);
+          fields.push(initialValues);
         });
       } else {
-        fields.push(beregningsgrunnlag);
+        const initialValues = buildInitialValuesAvklarAktiviteter(this.props);
+        fields.push(initialValues);
       }
     }
 
@@ -363,11 +369,6 @@ export const transformValues = values => {
   }
   return null;
 };
-
-export const buildInitialValuesAvklarAktiviteter = createSelector(
-  [ownProps => ownProps.aksjonspunkter, ownProps => getAvklarAktiviteter(ownProps), ownProps => ownProps.alleKodeverk],
-  buildInitialValues,
-);
 
 const skalKunneOverstyre = (erOverstyrer, aksjonspunkter) =>
   erOverstyrer && !hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);

@@ -19,7 +19,7 @@ const VurderMilitaer = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
       <FormattedMessage id="BeregningInfoPanel.VurderMilitaer.HarSøkerMilitærinntekt" />
     </Normaltekst>
     <RadioGroupField
-      name={`${fieldArrayID}${vurderMilitaerField}`}
+      name={`${fieldArrayID}.${vurderMilitaerField}`}
       validate={[required]}
       readOnly={readOnly}
       isEdited={isAksjonspunktClosed}
