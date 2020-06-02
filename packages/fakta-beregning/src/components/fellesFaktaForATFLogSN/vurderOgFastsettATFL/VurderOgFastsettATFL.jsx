@@ -154,6 +154,7 @@ const VurderOgFastsettATFL = ({
       aksjonspunkter={aksjonspunkter}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
+      fieldArrayID={fieldArrayID}
     >
       <ATFLSammeOrgTekst beregningsgrunnlag={beregningsgrunnlag} manglerInntektsmelding={manglerInntektsmelding} />
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING) && (
@@ -371,9 +372,9 @@ VurderOgFastsettATFL.propTypes = {
 };
 
 export const skalFastsettInntektForArbeidstaker = createSelector(
-  [getFormValuesForBeregning, getSkalRedigereInntekt],
-  (values, skalFastsette) => {
-    const fields = values[INNTEKT_FIELD_ARRAY_NAME];
+  [getFormValuesForBeregning, getSkalRedigereInntekt, (state, ownProps) => ownProps.fieldArrayID],
+  (values, skalFastsette, fieldArrayID) => {
+    const fields = values[`${fieldArrayID}.${INNTEKT_FIELD_ARRAY_NAME}`];
     if (!fields) {
       return false;
     }
