@@ -113,6 +113,7 @@ export class VedtakRevurderingFormImpl extends Component {
       medlemskapFom,
       beregningErManueltFastsatt,
       vedtakVarsel,
+      bgPeriodeMedAvslagsårsak,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
@@ -156,6 +157,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 originaltBeregningResultat={resultatstrukturOriginalBehandling}
                 beregningErManueltFastsatt={beregningErManueltFastsatt}
                 vedtakVarsel={vedtakVarsel}
+                bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
               />
             )}
             {isAvslag(behandlingresultat.type.kode) && (
@@ -238,6 +240,7 @@ VedtakRevurderingFormImpl.propTypes = {
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
+  bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
   ...formPropTypes,
 };
@@ -251,6 +254,7 @@ VedtakRevurderingFormImpl.defaultProps = {
   kanOverstyre: undefined,
   resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
+  bgPeriodeMedAvslagsårsak: undefined,
 };
 
 const buildInitialValues = createSelector(

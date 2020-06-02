@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtakAksjonspunkterPropType from '../propTypes/vedtakAksjonspunkterPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import VedtakForm from './VedtakForm';
 import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
-import { skalSkriveFritekstGrunnetFastsettingAvBeregning } from './VedtakHelper';
+import {
+  skalSkriveFritekstGrunnetFastsettingAvBeregning,
+  finnSistePeriodeMedAvslagsårsakBeregning,
+} from './VedtakHelper';
 import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
@@ -48,7 +52,12 @@ const VedtakPanels = ({
     beregningsgrunnlag,
     aksjonspunkter,
   );
+  const bgYtelsegrunnlag = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
   if (behandlingTypeKode === behandlingType.REVURDERING) {
+    let bgPeriodeMedAvslagsårsak;
+    if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag && bgYtelsegrunnlag.avslagsårsakPrPeriode) {
+      bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(bgYtelsegrunnlag.avslagsårsakPrPeriode);
+    }
     return (
       <VedtakRevurderingForm
         submitCallback={submitCallback}
@@ -73,6 +82,7 @@ const VedtakPanels = ({
         simuleringResultat={simuleringResultat}
         beregningErManueltFastsatt={beregningErManueltFastsatt}
         vedtakVarsel={vedtakVarsel}
+        bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
       />
     );
   }

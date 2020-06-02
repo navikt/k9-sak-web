@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import moment from 'moment';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -11,6 +12,7 @@ import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { TIDENES_ENDE } from '@fpsak-frontend/utils';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
@@ -125,4 +127,17 @@ export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnl
     andel => andel.overstyrtPrAar || andel.overstyrtPrAar === 0,
   );
   return !!behandlingHarLøstBGAP || !!andelSomErManueltFastsatt;
+};
+
+export const finnSistePeriodeMedAvslagsårsakBeregning = perioderMedAvslag => {
+  if (!perioderMedAvslag) {
+    return null;
+  }
+  const allePerioderMedEndeKronologisk = perioderMedAvslag
+    .filter(periode => periode.tom !== TIDENES_ENDE)
+    .sort((a, b) => moment(a.beregningsgrunnlagPeriodeFom) - moment(b.beregningsgrunnlagPeriodeFom));
+  if (allePerioderMedEndeKronologisk.length < 1) {
+    return null;
+  }
+  return allePerioderMedEndeKronologisk[allePerioderMedEndeKronologisk.length - 1];
 };
