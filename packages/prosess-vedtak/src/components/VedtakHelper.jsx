@@ -129,15 +129,16 @@ export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnl
   return !!behandlingHarLøstBGAP || !!andelSomErManueltFastsatt;
 };
 
-export const finnSistePeriodeMedAvslagsårsakBeregning = perioderMedAvslag => {
-  if (!perioderMedAvslag) {
+export const finnSistePeriodeMedAvslagsårsakBeregning = (perioderMedAvslag, bgPerioder) => {
+  if (!perioderMedAvslag || perioderMedAvslag.length < 1) {
     return null;
   }
-  const allePerioderMedEndeKronologisk = perioderMedAvslag
-    .filter(periode => periode.tom !== TIDENES_ENDE)
+  const kronologiskeBGPerioder = bgPerioder
+    .filter(periode => periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE)
     .sort((a, b) => moment(a.beregningsgrunnlagPeriodeFom) - moment(b.beregningsgrunnlagPeriodeFom));
-  if (allePerioderMedEndeKronologisk.length < 1) {
+  if (kronologiskeBGPerioder.length < 1) {
     return null;
   }
-  return allePerioderMedEndeKronologisk[allePerioderMedEndeKronologisk.length - 1];
+  const sisteBGPeriode = kronologiskeBGPerioder[kronologiskeBGPerioder.length - 1];
+  return perioderMedAvslag.find(periode => periode.fom === sisteBGPeriode.beregningsgrunnlagPeriodeFom);
 };

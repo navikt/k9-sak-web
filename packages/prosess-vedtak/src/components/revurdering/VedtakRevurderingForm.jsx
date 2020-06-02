@@ -174,6 +174,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 simuleringResultat={simuleringResultat}
                 originaltBeregningResultat={resultatstrukturOriginalBehandling}
                 vedtakVarsel={vedtakVarsel}
+                ytelseTypeKode={ytelseTypeKode}
               />
             )}
             {isOpphor(behandlingresultat.type.kode) && (

@@ -56,7 +56,10 @@ const VedtakPanels = ({
   if (behandlingTypeKode === behandlingType.REVURDERING) {
     let bgPeriodeMedAvslagsårsak;
     if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag && bgYtelsegrunnlag.avslagsårsakPrPeriode) {
-      bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(bgYtelsegrunnlag.avslagsårsakPrPeriode);
+      bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(
+        bgYtelsegrunnlag.avslagsårsakPrPeriode,
+        beregningsgrunnlag.beregningsgrunnlagPeriode,
+      );
     }
     return (
       <VedtakRevurderingForm
