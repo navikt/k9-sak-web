@@ -4,6 +4,7 @@ const featureToggle = {
   MARKER_UTENLANDSSAK: 'fpsak.aksjonspunkt-marker-utenlandssak',
   BESLUTT_TILBAKEKREVING: 'k9sak.beslutt-tilbakekreving',
   AKTIVER_KLAGEBEHANDLING: 'k9sak.aktiver-klagebehandling',
+  AKTIVER_UTTAK_AKSJONSPUNKT: 'k9sak.frontend.uttak.aksjonspunkt',
 };
 
 export default featureToggle;

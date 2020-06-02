@@ -11,12 +11,15 @@ import { Element } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { RammevedtakEnum, Rammevedtak } from '@k9-sak-web/types';
+import { getFeatureToggles } from '@fpsak-frontend/sak-app/src/app/duck';
+import { featureToggle } from '@fpsak-frontend/fp-felles/index';
 import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
   rammevedtak: Rammevedtak[];
+  featureSkalViseAksjonspunkt: boolean;
 }
 
 interface FormContentProps {
@@ -118,7 +121,11 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
   aktiviteter,
   rammevedtak,
   handleSubmit,
+  featureSkalViseAksjonspunkt,
 }) => {
+  if (!featureSkalViseAksjonspunkt) {
+    return null;
+  }
   return (
     <form onSubmit={handleSubmit}>
       <GråBakgrunn>
@@ -158,10 +165,13 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     state,
     { aktiviteter, rammevedtak }: AksjonspunktFormProps,
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
+    const featureToggles = getFeatureToggles(state);
+    const featureSkalViseAksjonspunkt = featureToggles[featureToggle.AKTIVER_UTTAK_AKSJONSPUNKT];
     return {
       onSubmit,
       aktiviteter,
       rammevedtak,
+      featureSkalViseAksjonspunkt,
     };
   };
 };
