@@ -179,7 +179,10 @@ export default {
 export const ArbeidOgDagpenger = () => (
   <BeregningFaktaIndex
     behandling={behandling}
-    beregningsgrunnlag={object('beregningsgrunnlag', bgMedArbeidOgDagpenger)}
+    beregningsgrunnlag={[
+      Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
+      Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
+    ]}
     aksjonspunkter={aksjonspunktArbeidOgDagpenger}
     erOverstyrer
     alleKodeverk={alleKodeverk}

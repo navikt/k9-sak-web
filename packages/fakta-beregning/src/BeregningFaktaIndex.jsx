@@ -66,6 +66,7 @@ const BeregningFaktaIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         beregningsgrunnlag={aktivtBeregningsrunnlag}
+        aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
         alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : undefined}
       />
       <VerticalSpacer thirtyTwoPx />
