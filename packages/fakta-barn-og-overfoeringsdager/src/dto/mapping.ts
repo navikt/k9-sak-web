@@ -56,7 +56,7 @@ const mapDtoTilFormValues = (rammevedtak: Rammevedtak[]): FormValues => {
       }
 
       if (rv.type === RammevedtakEnum.FOSTERBARN) {
-        const fnr = rv.fosterbarnFor;
+        const fnr = rv.mottaker;
         if (!fnr) {
           return tmpBarn;
         }
