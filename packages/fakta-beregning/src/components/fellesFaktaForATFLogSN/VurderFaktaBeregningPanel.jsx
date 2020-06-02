@@ -70,6 +70,18 @@ const lagHelpTextsForFakta = () => {
 const hasOpenAksjonspunkt = (kode, aksjonspunkter) =>
   aksjonspunkter.some(ap => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
 
+export const buildInitialValuesVurderFaktaBeregning = createSelector(
+  [ownProps => ownProps.aksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
+  (aksjonspunkter, buildInitialValuesTilfeller) => ({
+    aksjonspunkter,
+    ...FaktaBegrunnelseTextField.buildInitialValues(
+      findAksjonspunktMedBegrunnelse(aksjonspunkter),
+      BEGRUNNELSE_FAKTA_TILFELLER_NAME,
+    ),
+    ...buildInitialValuesTilfeller(),
+  }),
+);
+
 /**
  * VurderFaktaBeregningPanel
  *
@@ -117,11 +129,13 @@ export class VurderFaktaBeregningPanelImpl extends Component {
 
     if (fields.length === 0) {
       if (harFlereBeregningsgrunnlag) {
-        alleBeregningsgrunnlag.forEach(beregningsgrunnlagElement => {
-          fields.push(beregningsgrunnlagElement);
+        alleBeregningsgrunnlag.forEach(() => {
+          const initialValues = buildInitialValuesVurderFaktaBeregning(this.props);
+          fields.push(initialValues);
         });
       } else {
-        fields.push(beregningsgrunnlag);
+        const initialValues = buildInitialValuesVurderFaktaBeregning(this.props);
+        fields.push(initialValues);
       }
     }
 
@@ -215,32 +229,22 @@ VurderFaktaBeregningPanelImpl.propTypes = {
 };
 
 export const transformValuesVurderFaktaBeregning = values => {
-  const { aksjonspunkter } = values;
-  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyring(values)) {
-    const faktaBeregningValues = values;
-    const beg = faktaBeregningValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
-    return [
-      {
-        kode: erOverstyring(values) ? OVERSTYRING_AV_BEREGNINGSGRUNNLAG : VURDER_FAKTA_FOR_ATFL_SN,
+  const fieldArrayList = values.vurderFaktaListe;
+  return fieldArrayList
+    .filter(
+      currentFormValues =>
+        hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, currentFormValues.aksjonspunkter) || erOverstyring(currentFormValues),
+    )
+    .map(currentFormValues => {
+      const faktaBeregningValues = currentFormValues;
+      const beg = faktaBeregningValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
+      return {
+        kode: erOverstyring(currentFormValues) ? OVERSTYRING_AV_BEREGNINGSGRUNNLAG : VURDER_FAKTA_FOR_ATFL_SN,
         begrunnelse: beg === undefined ? null : beg,
-        ...transformValuesFaktaForATFLOgSN(faktaBeregningValues, erOverstyring(values)),
-      },
-    ];
-  }
-  return {};
+        ...transformValuesFaktaForATFLOgSN(faktaBeregningValues, erOverstyring(currentFormValues)),
+      };
+    });
 };
-
-export const buildInitialValuesVurderFaktaBeregning = createSelector(
-  [ownProps => ownProps.aksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
-  (aksjonspunkter, buildInitialValuesTilfeller) => ({
-    aksjonspunkter,
-    ...FaktaBegrunnelseTextField.buildInitialValues(
-      findAksjonspunktMedBegrunnelse(aksjonspunkter),
-      BEGRUNNELSE_FAKTA_TILFELLER_NAME,
-    ),
-    ...buildInitialValuesTilfeller(),
-  }),
-);
 
 export const validateVurderFaktaBeregning = values => {
   const { aksjonspunkter } = values;
