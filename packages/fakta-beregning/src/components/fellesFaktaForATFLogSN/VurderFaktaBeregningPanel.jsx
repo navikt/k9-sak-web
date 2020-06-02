@@ -107,6 +107,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
         alleKodeverk,
         erOverstyrer,
         alleBeregningsgrunnlag,
+        aktivtBeregningsgrunnlagIndex,
         ...formProps
       },
       state: { submitEnabled },
@@ -124,53 +125,56 @@ export class VurderFaktaBeregningPanelImpl extends Component {
       }
     }
 
-    return fields.map(field => (
-      <div key={field}>
-        {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
-          <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed(aksjonspunkter)}>
-            {lagHelpTextsForFakta()}
-          </AksjonspunktHelpTextTemp>
-        )}
-        <VerticalSpacer twentyPx />
-        <FaktaForATFLOgSNPanel
-          readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed(aksjonspunkter)}
-          aksjonspunkter={aksjonspunkter}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          beregningsgrunnlag={beregningsgrunnlag}
-          alleKodeverk={alleKodeverk}
-          erOverstyrer={erOverstyrer}
-          fieldArrayID={field}
-        />
-        <VerticalSpacer twentyPx />
-
-        {(hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyrt) && (
-          <>
-            <FaktaBegrunnelseTextField
-              name={`${field}.${BEGRUNNELSE_FAKTA_TILFELLER_NAME}`}
-              isDirty={formProps.dirty}
-              isSubmittable={submittable}
-              isReadOnly={readOnly}
-              hasBegrunnelse={hasBegrunnelse}
-            />
+    return fields.map(
+      (field, index) =>
+        index === aktivtBeregningsgrunnlagIndex && (
+          <div key={field}>
+            {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed(aksjonspunkter)}>
+                {lagHelpTextsForFakta()}
+              </AksjonspunktHelpTextTemp>
+            )}
             <VerticalSpacer twentyPx />
-            <FaktaSubmitButton
-              formName={formProps.form}
-              isSubmittable={
-                submittable &&
-                submitEnabled &&
-                harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)
-              }
-              isReadOnly={readOnly}
-              hasOpenAksjonspunkter={!isAksjonspunktClosed(aksjonspunkter)}
+            <FaktaForATFLOgSNPanel
+              readOnly={readOnly}
+              isAksjonspunktClosed={isAksjonspunktClosed(aksjonspunkter)}
+              aksjonspunkter={aksjonspunkter}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
+              beregningsgrunnlag={beregningsgrunnlag}
+              alleKodeverk={alleKodeverk}
+              erOverstyrer={erOverstyrer}
+              fieldArrayID={field}
             />
-          </>
-        )}
-      </div>
-    ));
+            <VerticalSpacer twentyPx />
+
+            {(hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyrt) && (
+              <>
+                <FaktaBegrunnelseTextField
+                  name={`${field}.${BEGRUNNELSE_FAKTA_TILFELLER_NAME}`}
+                  isDirty={formProps.dirty}
+                  isSubmittable={submittable}
+                  isReadOnly={readOnly}
+                  hasBegrunnelse={hasBegrunnelse}
+                />
+                <VerticalSpacer twentyPx />
+                <FaktaSubmitButton
+                  formName={formProps.form}
+                  isSubmittable={
+                    submittable &&
+                    submitEnabled &&
+                    harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)
+                  }
+                  isReadOnly={readOnly}
+                  hasOpenAksjonspunkter={!isAksjonspunktClosed(aksjonspunkter)}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                />
+              </>
+            )}
+          </div>
+        ),
+    );
   };
 
   render() {
@@ -193,6 +197,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
 }
 
 VurderFaktaBeregningPanelImpl.propTypes = {
+  aktivtBeregningsgrunnlagIndex: PropTypes.number.isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,

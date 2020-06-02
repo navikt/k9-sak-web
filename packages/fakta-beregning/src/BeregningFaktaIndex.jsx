@@ -82,6 +82,7 @@ const BeregningFaktaIndex = ({
         beregningsgrunnlag={aktivtBeregningsrunnlag}
         erOverstyrer={erOverstyrer}
         alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : undefined}
+        aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
       />
     </RawIntlProvider>
   );
