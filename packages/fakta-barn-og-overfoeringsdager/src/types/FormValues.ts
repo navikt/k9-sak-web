@@ -1,6 +1,6 @@
+import { Rammevedtak } from '@k9-sak-web/types';
 import Overføring from './Overføring';
 import Barn from './Barn';
-import Rammevedtak from '../dto/Rammevedtak';
 
 interface FormValues {
   barn: Barn[];

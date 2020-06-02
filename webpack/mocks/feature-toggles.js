@@ -7,6 +7,7 @@ const toggles = {
     'k9sak.aktiver-tilbakekrevingbehandling': false,
     'k9sak.beslutt-tilbakekreving': false,
     'k9sak.aktiver-klagebehandling': false,
+    'k9sak.frontend.uttak.aksjonspunkt': false,
   },
 };
 if (process.env.FEATURE_TOGGLES) {

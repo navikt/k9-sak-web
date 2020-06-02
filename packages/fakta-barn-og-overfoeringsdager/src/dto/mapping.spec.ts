@@ -1,6 +1,6 @@
 import { expect } from 'chai';
+import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types';
 import mapDtoTilFormValues from './mapping';
-import Rammevedtak, { RammevedtakEnum, RammevedtakType } from './Rammevedtak';
 
 const barnFnr = '12312312312';
 const annetBarnFnr = '78978978978';

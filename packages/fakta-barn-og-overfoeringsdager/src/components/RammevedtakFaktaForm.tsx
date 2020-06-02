@@ -13,6 +13,7 @@ import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal
 import user from '@fpsak-frontend/assets/images/user.svg';
 import users from '@fpsak-frontend/assets/images/users.svg';
 import { Element } from 'nav-frontend-typografi';
+import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types';
 import mapDtoTilFormValues from '../dto/mapping';
 import FormValues from '../types/FormValues';
 import MidlertidigAlene from './MidlertidigAlene';
@@ -21,7 +22,6 @@ import { rammevedtakFormName } from './formNames';
 import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import Seksjon from './Seksjon';
 import FastBreddeAligner from './FastBreddeAligner';
-import Rammevedtak, { RammevedtakEnum } from '../dto/Rammevedtak';
 import BarnVisning from './BarnVisning';
 import UidentifiserteRammevedtak from './UidentifiserteRammevedtak';
 

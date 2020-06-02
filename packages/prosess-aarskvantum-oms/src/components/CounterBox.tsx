@@ -52,6 +52,7 @@ export interface CounterBoxProps {
     borderBottom?: boolean;
   };
   border?: boolean;
+  key?: string;
 }
 
 const containerHeight = '60px';

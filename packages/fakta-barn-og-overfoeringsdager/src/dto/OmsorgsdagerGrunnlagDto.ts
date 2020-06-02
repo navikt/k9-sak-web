@@ -1,4 +1,4 @@
-import Rammevedtak from './Rammevedtak';
+import { Rammevedtak } from '@k9-sak-web/types';
 
 interface OmsorgsdagerGrunnlagDto {
   rammevedtak: Rammevedtak[];

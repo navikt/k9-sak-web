@@ -1,3 +1,4 @@
+import { Rammevedtak } from '@k9-sak-web/types';
 import UttaksplanType from './UttaksplanType';
 
 interface ÅrskvantumForbrukteDager {
@@ -10,6 +11,7 @@ interface ÅrskvantumForbrukteDager {
   restTid?: string;
   antallDagerInfotrygd?: number;
   sisteUttaksplan: UttaksplanType;
+  rammevedtak: Rammevedtak[];
 }
 
 export default ÅrskvantumForbrukteDager;

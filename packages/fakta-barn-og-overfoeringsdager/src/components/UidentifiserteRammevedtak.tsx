@@ -3,7 +3,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import { joinNonNullStrings } from '@fpsak-frontend/fp-felles/index';
-import Rammevedtak, { RammevedtakEnum, RammevedtakType } from '../dto/Rammevedtak';
+import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types';
 import styles from './uidentifisertRammevedtak.less';
 
 interface UidentifiserteRammevedtakProps {
