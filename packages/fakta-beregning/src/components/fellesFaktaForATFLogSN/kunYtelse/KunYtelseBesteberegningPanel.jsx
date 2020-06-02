@@ -68,7 +68,7 @@ const KunYtelseBesteberegningImpl = ({
           <Row>
             <Column xs="12">
               <FieldArray
-                name={`${fieldArrayID}${brukersAndelFieldArrayName}`}
+                name={`${fieldArrayID}.${brukersAndelFieldArrayName}`}
                 component={BrukersAndelFieldArray}
                 readOnly={readOnly}
                 alleKodeverk={alleKodeverk}

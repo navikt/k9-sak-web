@@ -39,6 +39,7 @@ export const VurderAktiviteterPanel = ({
 }) =>
   finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values).map(aktivitetMap => (
     <VurderAktiviteterTabell
+      key={fieldArrayID}
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
       aktiviteter={aktivitetMap.aktiviteter}

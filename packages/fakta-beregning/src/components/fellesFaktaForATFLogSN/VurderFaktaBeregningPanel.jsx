@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { formPropTypes } from 'redux-form';
+import { formPropTypes, FieldArray } from 'redux-form';
 import { AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
@@ -92,7 +92,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     }
   }
 
-  render() {
+  renderVurderFaktaBeregningPanel = ({ fields }) => {
     const {
       props: {
         beregningsgrunnlag,
@@ -106,10 +106,76 @@ export class VurderFaktaBeregningPanelImpl extends Component {
         behandlingVersjon,
         alleKodeverk,
         erOverstyrer,
-        fieldArrayID,
+        alleBeregningsgrunnlag,
         ...formProps
       },
       state: { submitEnabled },
+    } = this;
+
+    const harFlereBeregningsgrunnlag = Array.isArray(alleBeregningsgrunnlag);
+
+    if (fields.length === 0) {
+      if (harFlereBeregningsgrunnlag) {
+        alleBeregningsgrunnlag.forEach(beregningsgrunnlagElement => {
+          fields.push(beregningsgrunnlagElement);
+        });
+      } else {
+        fields.push(beregningsgrunnlag);
+      }
+    }
+
+    return fields.map(field => (
+      <div key={field}>
+        {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed(aksjonspunkter)}>
+            {lagHelpTextsForFakta()}
+          </AksjonspunktHelpTextTemp>
+        )}
+        <VerticalSpacer twentyPx />
+        <FaktaForATFLOgSNPanel
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed(aksjonspunkter)}
+          aksjonspunkter={aksjonspunkter}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          beregningsgrunnlag={beregningsgrunnlag}
+          alleKodeverk={alleKodeverk}
+          erOverstyrer={erOverstyrer}
+          fieldArrayID={field}
+        />
+        <VerticalSpacer twentyPx />
+
+        {(hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyrt) && (
+          <>
+            <FaktaBegrunnelseTextField
+              name={`${field}.${BEGRUNNELSE_FAKTA_TILFELLER_NAME}`}
+              isDirty={formProps.dirty}
+              isSubmittable={submittable}
+              isReadOnly={readOnly}
+              hasBegrunnelse={hasBegrunnelse}
+            />
+            <VerticalSpacer twentyPx />
+            <FaktaSubmitButton
+              formName={formProps.form}
+              isSubmittable={
+                submittable &&
+                submitEnabled &&
+                harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)
+              }
+              isReadOnly={readOnly}
+              hasOpenAksjonspunkter={!isAksjonspunktClosed(aksjonspunkter)}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+            />
+          </>
+        )}
+      </div>
+    ));
+  };
+
+  render() {
+    const {
+      props: { aksjonspunkter, ...formProps },
     } = this;
     return (
       <ElementWrapper>
@@ -118,48 +184,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
           hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter)
         ) && (
           <form onSubmit={formProps.handleSubmit}>
-            {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
-              <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed(aksjonspunkter)}>
-                {lagHelpTextsForFakta()}
-              </AksjonspunktHelpTextTemp>
-            )}
-            <VerticalSpacer twentyPx />
-            <FaktaForATFLOgSNPanel
-              readOnly={readOnly}
-              isAksjonspunktClosed={isAksjonspunktClosed(aksjonspunkter)}
-              aksjonspunkter={aksjonspunkter}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              beregningsgrunnlag={beregningsgrunnlag}
-              alleKodeverk={alleKodeverk}
-              erOverstyrer={erOverstyrer}
-              fieldArrayID={fieldArrayID}
-            />
-            <VerticalSpacer twentyPx />
-            {(hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyrt) && (
-              <>
-                <FaktaBegrunnelseTextField
-                  name={`${fieldArrayID}.${BEGRUNNELSE_FAKTA_TILFELLER_NAME}`}
-                  isDirty={formProps.dirty}
-                  isSubmittable={submittable}
-                  isReadOnly={readOnly}
-                  hasBegrunnelse={hasBegrunnelse}
-                />
-                <VerticalSpacer twentyPx />
-                <FaktaSubmitButton
-                  formName={formProps.form}
-                  isSubmittable={
-                    submittable &&
-                    submitEnabled &&
-                    harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)
-                  }
-                  isReadOnly={readOnly}
-                  hasOpenAksjonspunkter={!isAksjonspunktClosed(aksjonspunkter)}
-                  behandlingId={behandlingId}
-                  behandlingVersjon={behandlingVersjon}
-                />
-              </>
-            )}
+            <FieldArray name="vurderFaktaListe" component={this.renderVurderFaktaBeregningPanel} />
           </form>
         )}
       </ElementWrapper>
@@ -176,8 +201,11 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  alleBeregningsgrunnlag: PropTypes.oneOfType([
+    beregningsgrunnlagPropType,
+    PropTypes.arrayOf(beregningsgrunnlagPropType),
+  ]),
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
-  fieldArrayID: PropTypes.string.isRequired,
   ...formPropTypes,
 };
 
@@ -231,7 +259,6 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state, ownProps),
       erOverstyrt: erOverstyringAvBeregningsgrunnlag(state, ownProps),
       hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME],
-      fieldArrayID: ownProps.fieldArrayID,
     };
   };
 };

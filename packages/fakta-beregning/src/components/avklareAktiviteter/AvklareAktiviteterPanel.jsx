@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { formPropTypes, initialize as reduxFormInitialize } from 'redux-form';
+import { formPropTypes, initialize as reduxFormInitialize, FieldArray } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormattedMessage } from 'react-intl';
@@ -22,6 +22,7 @@ import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
 
 import styles from './avklareAktiviteterPanel.less';
+import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
 
 const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = aksjonspunktCodes;
 
@@ -114,6 +115,11 @@ const hasOpenAvklarAksjonspunkter = aksjonspunkter =>
   hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) ||
   hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
 
+export const buildInitialValuesAvklarAktiviteter = createSelector(
+  [ownProps => ownProps.aksjonspunkter, ownProps => getAvklarAktiviteter(ownProps), ownProps => ownProps.alleKodeverk],
+  buildInitialValues,
+);
+
 /**
  * AvklareAktiviteterPanel
  *
@@ -151,7 +157,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
     );
   }
 
-  render() {
+  renderAvklareAktiviteter = ({ fields }) => {
     const {
       props: {
         readOnly,
@@ -167,101 +173,92 @@ export class AvklareAktiviteterPanelImpl extends Component {
         alleKodeverk,
         behandlingId,
         behandlingVersjon,
+        alleBeregningsgrunnlag,
         formValues,
-        fieldArrayID,
         ...formProps
       },
       state: { submitEnabled },
     } = this;
-
-    if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && !kanOverstyre && !erOverstyrt) {
-      return null;
-    }
     const avklarAktiviteter = getAvklarAktiviteter(this.props);
     const skalViseSubmitknappInneforBorderBox =
       (harAndreAksjonspunkterIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenAvklarAksjonspunkter(aksjonspunkter);
-    return (
-      <>
-        <form onSubmit={formProps.handleSubmit}>
-          {(kanOverstyre || erOverstyrt) && (
-            <div className={styles.rightAligned}>
-              <CheckboxField
-                key="manuellOverstyring"
-                name={`${fieldArrayID}.${MANUELL_OVERSTYRING_FIELD}`}
-                label={{ id: 'AvklareAktiviteter.ManuellOverstyring' }}
-                readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) || readOnly}
-                onChange={() => this.initializeAktiviteter()}
-              />
-            </div>
-          )}
-          {(hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || kanOverstyre || erOverstyrt) && (
-            <div>
-              {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && (
-                <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed}>
-                  {helpText}
-                </AksjonspunktHelpTextTemp>
-              )}
-              {erOverstyrt && (
-                <Element>
-                  <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />
-                </Element>
-              )}
 
-              {formProps.error && (
-                <>
-                  <VerticalSpacer sixteenPx />
-                  <AlertStripe type="feil">
-                    <FormattedMessage id={formProps.error} />
-                  </AlertStripe>
-                </>
-              )}
+    const harFlereBeregningsgrunnlag = Array.isArray(alleBeregningsgrunnlag);
 
+    if (fields.length === 0) {
+      if (harFlereBeregningsgrunnlag) {
+        alleBeregningsgrunnlag.forEach(() => {
+          const initialValues = buildInitialValuesAvklarAktiviteter(this.props);
+          fields.push(initialValues);
+        });
+      } else {
+        const initialValues = buildInitialValuesAvklarAktiviteter(this.props);
+        fields.push(initialValues);
+      }
+    }
+
+    return fields.map(field => (
+      <div key={field}>
+        {(kanOverstyre || erOverstyrt) && (
+          <div className={styles.rightAligned}>
+            <CheckboxField
+              key="manuellOverstyring"
+              name={`${field}.${MANUELL_OVERSTYRING_FIELD}`}
+              label={{ id: 'AvklareAktiviteter.ManuellOverstyring' }}
+              readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) || readOnly}
+              onChange={() => this.initializeAktiviteter()}
+            />
+          </div>
+        )}
+        {(hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || kanOverstyre || erOverstyrt) && (
+          <div>
+            {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && (
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpTextTemp>
+            )}
+            {erOverstyrt && (
+              <Element>
+                <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />
+              </Element>
+            )}
+
+            {formProps.error && (
+              <>
+                <VerticalSpacer sixteenPx />
+                <AlertStripe type="feil">
+                  <FormattedMessage id={formProps.error} />
+                </AlertStripe>
+              </>
+            )}
+
+            <VerticalSpacer twentyPx />
+            <BorderBox>
+              {avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping && (
+                <VurderAktiviteterPanel
+                  aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
+                  readOnly={readOnly}
+                  isAksjonspunktClosed={isAksjonspunktClosed}
+                  erOverstyrt={erOverstyrt}
+                  alleKodeverk={alleKodeverk}
+                  values={formValues}
+                  harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
+                  fieldArrayID={field}
+                />
+              )}
               <VerticalSpacer twentyPx />
-              <BorderBox>
-                {avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping && (
-                  <VurderAktiviteterPanel
-                    aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
-                    readOnly={readOnly}
-                    isAksjonspunktClosed={isAksjonspunktClosed}
-                    erOverstyrt={erOverstyrt}
-                    alleKodeverk={alleKodeverk}
-                    values={formValues}
-                    harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
-                    fieldArrayID={fieldArrayID}
+              {skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
+                <>
+                  <FaktaBegrunnelseTextField
+                    name={`${field}.${BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}`}
+                    isDirty={formProps.dirty}
+                    isSubmittable={submittable}
+                    isReadOnly={readOnly}
+                    hasBegrunnelse={hasBegrunnelse}
                   />
-                )}
-                <VerticalSpacer twentyPx />
-                {skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
-                  <>
-                    <FaktaBegrunnelseTextField
-                      name={`${fieldArrayID}.${BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}`}
-                      isDirty={formProps.dirty}
-                      isSubmittable={submittable}
-                      isReadOnly={readOnly}
-                      hasBegrunnelse={hasBegrunnelse}
-                    />
-                    {skalViseSubmitknappInneforBorderBox && (
-                      <FaktaSubmitButton
-                        buttonTextId={
-                          erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText'
-                        }
-                        formName={formProps.form}
-                        isSubmittable={submittable && submitEnabled && !formProps.error}
-                        isReadOnly={readOnly}
-                        hasOpenAksjonspunkter={!isAksjonspunktClosed}
-                        behandlingId={behandlingId}
-                        behandlingVersjon={behandlingVersjon}
-                      />
-                    )}
-                  </>
-                )}
-              </BorderBox>
-              {!skalViseSubmitknappInneforBorderBox &&
-                skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
-                  <>
-                    <VerticalSpacer twentyPx />
+                  {skalViseSubmitknappInneforBorderBox && (
                     <FaktaSubmitButton
-                      buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : undefined}
+                      buttonTextId={
+                        erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText'
+                      }
                       formName={formProps.form}
                       isSubmittable={submittable && submitEnabled && !formProps.error}
                       isReadOnly={readOnly}
@@ -269,10 +266,43 @@ export class AvklareAktiviteterPanelImpl extends Component {
                       behandlingId={behandlingId}
                       behandlingVersjon={behandlingVersjon}
                     />
-                  </>
-                )}
-            </div>
-          )}
+                  )}
+                </>
+              )}
+            </BorderBox>
+            {!skalViseSubmitknappInneforBorderBox && skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
+              <>
+                <VerticalSpacer twentyPx />
+                <FaktaSubmitButton
+                  buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : undefined}
+                  formName={formProps.form}
+                  isSubmittable={submittable && submitEnabled && !formProps.error}
+                  isReadOnly={readOnly}
+                  hasOpenAksjonspunkter={!isAksjonspunktClosed}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                />
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    ));
+  };
+
+  render() {
+    const {
+      props: { harAndreAksjonspunkterIPanel, erOverstyrt, aksjonspunkter, kanOverstyre, ...formProps },
+    } = this;
+
+    if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && !kanOverstyre && !erOverstyrt) {
+      return null;
+    }
+
+    return (
+      <>
+        <form onSubmit={formProps.handleSubmit}>
+          <FieldArray name="avklareAktiviteterListe" component={this.renderAvklareAktiviteter} />
         </form>
         {harAndreAksjonspunkterIPanel && <VerticalSpacer twentyPx />}
       </>
@@ -295,10 +325,13 @@ AvklareAktiviteterPanelImpl.propTypes = {
   erOverstyrt: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  beregningsgrunnlag: PropTypes.shape().isRequired,
+  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  alleBeregningsgrunnlag: PropTypes.oneOfType([
+    beregningsgrunnlagPropType,
+    PropTypes.arrayOf(beregningsgrunnlagPropType),
+  ]),
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   formValues: PropTypes.shape(),
-  fieldArrayID: PropTypes.string.isRequired,
   ...formPropTypes,
 };
 
@@ -337,11 +370,6 @@ export const transformValues = values => {
   return null;
 };
 
-export const buildInitialValuesAvklarAktiviteter = createSelector(
-  [ownProps => ownProps.aksjonspunkter, ownProps => getAvklarAktiviteter(ownProps), ownProps => ownProps.alleKodeverk],
-  buildInitialValues,
-);
-
 const skalKunneOverstyre = (erOverstyrer, aksjonspunkter) =>
   erOverstyrer && !hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
 
@@ -374,7 +402,6 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
       erOverstyrt: !!values && values[MANUELL_OVERSTYRING_FIELD],
       erBgOverstyrt: erOverstyringAvBeregningsgrunnlag(state, ownProps),
-      fieldArrayID: ownProps.fieldArrayID,
     };
   };
 };
