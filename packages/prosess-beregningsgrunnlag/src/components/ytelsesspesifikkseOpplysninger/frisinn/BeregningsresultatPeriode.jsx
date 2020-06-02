@@ -8,11 +8,7 @@ import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, TIDENES_ENDE } from '@fpsak-f
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-import {
-  finnOppgittInntektForAndelIPeriode,
-  finnOppgittArbeidsinntektIPeriode,
-  erSøktForAndelIPeriode,
-} from './FrisinnUtils';
+import { finnOppgittInntektForAndelIPeriode, erSøktForAndelIPeriode } from './FrisinnUtils';
 
 const lagPeriodeHeader = (fom, originalTom) => {
   let tom = null;
@@ -79,6 +75,8 @@ const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, l�
   );
 };
 
+const erBeløpSatt = beløp => beløp || beløp === 0;
+
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {
   const statuserDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
   if (!statuserDetErSøktOm || statuserDetErSøktOm.length < 1) {
@@ -102,30 +100,26 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
     ytelsegrunnlag,
   );
 
-  const oppgittArbeidsinntektIPeriode = finnOppgittArbeidsinntektIPeriode(bgperiode, ytelsegrunnlag);
-
   return (
     <>
-      {(beregningsgrunnlagFL || beregningsgrunnlagFL === 0) &&
+      {erBeløpSatt(beregningsgrunnlagFL) &&
         lagBeskrivelseMedBeløpRad('Beregningsgrunnlag.Frisinn.BeregningsgrunnlagFL', beregningsgrunnlagFL)}
-      {(beregningsgrunnlagFL || beregningsgrunnlagFL === 0) &&
+      {erBeløpSatt(beregningsgrunnlagFL) &&
         lagRedusertBGRad(
           'Beregningsgrunnlag.Frisinn.BeregningsgrunnlagRedusertFL',
           beregningsgrunnlagFL,
           'Beregningsgrunnlag.Søknad.LøpendeFL',
           løpendeInntektFL,
         )}
-      {(beregningsgrunnlagSN || beregningsgrunnlagSN === 0) &&
+      {erBeløpSatt(beregningsgrunnlagSN) &&
         lagBeskrivelseMedBeløpRad('Beregningsgrunnlag.Frisinn.BeregningsgrunnlagSN', beregningsgrunnlagSN)}
-      {(beregningsgrunnlagSN || beregningsgrunnlagSN === 0) &&
+      {erBeløpSatt(beregningsgrunnlagSN) &&
         lagRedusertBGRad(
           'Beregningsgrunnlag.Frisinn.BeregningsgrunnlagRedusertSN',
           beregningsgrunnlagSN,
           'Beregningsgrunnlag.Søknad.LøpendeSN',
           løpendeInntektSN,
         )}
-      {(oppgittArbeidsinntektIPeriode || oppgittArbeidsinntektIPeriode === 0) &&
-        lagBeskrivelseMedBeløpRad('Beregningsgrunnlag.Frisinn.OppgittArbeidsinntekt', oppgittArbeidsinntektIPeriode)}
       <Row>
         <Column xs="12" className={beregningStyles.noPaddingRight}>
           <div className={beregningStyles.colDevider} />
