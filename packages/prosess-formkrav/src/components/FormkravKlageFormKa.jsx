@@ -78,11 +78,12 @@ const buildInitialValues = createSelector(
       erFristOverholdt: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagefirstOverholdt : null,
       erSignert: klageFormkavResultatKa ? klageFormkavResultatKa.erSignert : null,
     };
-  }
+  },
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
+  const onSubmit = values =>
+    initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     readOnly: ownProps.readOnly,
@@ -90,6 +91,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
-  form: formName,
-})(FormkravKlageFormKa));
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+  })(FormkravKlageFormKa),
+);

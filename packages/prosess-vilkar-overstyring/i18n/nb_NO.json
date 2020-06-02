@@ -100,5 +100,7 @@
   "Calendar.Month.9": "Oktober",
   "Calendar.Month.10": "November",
   "Calendar.Month.11": "Desember",
-  "Behandling.EditedField": "Saksbehandler har endret feltets verdi"
+  "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
+
+  "Sidemeny.Perioder": "Perioder"
 }
