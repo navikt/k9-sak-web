@@ -8,12 +8,8 @@ import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import {
-  joinNonNullStrings,
-  durationTilTimerMed7ogEnHalvTimesDagsbasis,
-  formatDate,
-  periodeErIKoronaperioden,
-} from './utils';
+import { joinNonNullStrings } from '@fpsak-frontend/fp-felles/index';
+import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
 import Arbeidsforhold from '../dto/Arbeidsforhold';
 import Uttaksperiode from '../dto/Uttaksperiode';
 import Utfalltype, { UtfallEnum } from '../dto/Utfall';
@@ -159,7 +155,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                       <FormattedMessage id="Uttaksplan.Hjemler" />
                     </Element>
                     {hjemler.map(hjemmel => (
-                      <div>
+                      <div key={`${periode}--${hjemmel}`}>
                         <FormattedMessage id={`Uttaksplan.Hjemmel.${hjemmel}`} />
                       </div>
                     ))}

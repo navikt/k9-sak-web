@@ -156,9 +156,9 @@ const prosessStegPanelDefinisjoner = [
             return vut.IKKE_VURDERT;
           }
           const perioder = forbrukteDager.sisteUttaksplan.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder);
-          const allePerioderGodkjent = perioder?.every(periode => periode.utfall === UtfallEnum.INNVILGET);
+          const allePerioderAvslått = perioder?.every(periode => periode.utfall === UtfallEnum.AVSLÅTT);
 
-          return allePerioderGodkjent ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
+          return allePerioderAvslått ? vut.IKKE_OPPFYLT : vut.OPPFYLT;
         },
       },
     ],

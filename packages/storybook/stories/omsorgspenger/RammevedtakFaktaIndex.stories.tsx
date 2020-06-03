@@ -1,10 +1,6 @@
 import * as React from 'react';
 import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
-import { Behandling } from '@k9-sak-web/types';
-import Rammevedtak, {
-  RammevedtakEnum,
-  RammevedtakType,
-} from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/dto/Rammevedtak';
+import { Behandling, Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -25,6 +21,7 @@ const utvidetRettManglendeFnr: Rammevedtak = {
   type: RammevedtakEnum.UTVIDET_RETT,
   gyldigFraOgMed: '2020-01-01',
   gyldigTilOgMed: '2028-12-31',
+  fritekst: '@9-6 2 L UTV.OMSD*20/',
 };
 
 const utvidetRett: Rammevedtak = {
@@ -39,6 +36,27 @@ const aleneOmOmsorgen: Rammevedtak = {
   gyldigTilOgMed: '2020-12-31',
 };
 
+const aleneOmOmsorgenManglendeFnr: Rammevedtak = {
+  type: RammevedtakEnum.ALENEOMSORG,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2020-12-31',
+  fritekst: '@9-6 2 L AL.OMSD*10/',
+};
+
+const fosterbarn: Rammevedtak = {
+  type: RammevedtakEnum.FOSTERBARN,
+  mottaker: fnrEtBarn,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2020-12-31',
+};
+
+const fosterbarnManglendeFnr: Rammevedtak = {
+  type: RammevedtakEnum.FOSTERBARN,
+  gyldigFraOgMed: '2020-01-01',
+  gyldigTilOgMed: '2020-12-31',
+  fritekst: '@9-6 2 L FOST/',
+};
+
 const midlertidigAleneOmOmsorgen: Rammevedtak = {
   type: RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG,
   gyldigFraOgMed: '2020-01-01',
@@ -47,7 +65,7 @@ const midlertidigAleneOmOmsorgen: Rammevedtak = {
 
 const uidentifisertRammevedtak: Rammevedtak = {
   type: RammevedtakEnum.UIDENTIFISERT,
-  fritekst: 'Utolkbar tekst beep boop',
+  fritekst: '03070189827 @9-6,20 D (Denne mangler type)',
 };
 
 const overføringFårRammevedtak = (type: RammevedtakType, lengde): Rammevedtak => ({
@@ -70,6 +88,7 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
   <FaktaRammevedtakIndex
     rammevedtak={[
       uidentifisertRammevedtak,
+      { ...uidentifisertRammevedtak, fritekst: '010119 (mangler alt)' },
       utvidetRettManglendeFnr,
       utvidetRett,
       {
@@ -77,7 +96,10 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
         gyldigTilOgMed: undefined,
         utvidetRettFor: '55555555555',
       },
+      fosterbarn,
+      fosterbarnManglendeFnr,
       aleneOmOmsorgen,
+      aleneOmOmsorgenManglendeFnr,
       { ...aleneOmOmsorgen, aleneOmOmsorgenFor: '78978978978' },
       overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P4D'),
       overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P7D'),
@@ -85,6 +107,7 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
       overføringGirRammevedtak(RammevedtakEnum.OVERFØRING_GIR, 'P8D'),
       overføringGirRammevedtak(RammevedtakEnum.FORDELING_GIR, 'P1D'),
       overføringGirRammevedtak(RammevedtakEnum.KORONAOVERFØRING_GIR, 'P2D'),
+      overføringGirRammevedtak(RammevedtakEnum.FORDELING_GIR, 'P4D'),
     ]}
     behandling={behandling}
   />

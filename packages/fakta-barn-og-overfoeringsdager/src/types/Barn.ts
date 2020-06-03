@@ -1,11 +1,11 @@
+interface Gyldighetsperiode {
+  fom: string;
+  tom: string;
+}
+
 export default interface Barn {
-  kroniskSykdom?: {
-    fom: string;
-    tom: string;
-  };
-  aleneomsorg?: {
-    fom: string;
-    tom: string;
-  };
+  kroniskSykdom?: Gyldighetsperiode;
+  aleneomsorg?: Gyldighetsperiode;
+  fosterbarn?: Gyldighetsperiode;
   fødselsnummer: string;
 }

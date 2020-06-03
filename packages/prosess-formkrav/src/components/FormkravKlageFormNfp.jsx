@@ -98,9 +98,9 @@ const buildInitialValues = createSelector(
       erKlagerPart: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagerPart : null,
       erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
       erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
-      erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null
+      erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
     };
-  }
+  },
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {

@@ -1,31 +1,19 @@
 import React from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import moment from 'moment';
-
 import { FormattedMessage } from 'react-intl';
+
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
-import { finnVisningForStatusIPeriode } from './FrisinnUtils';
+import finnVisningForStatus from './FrisinnUtilsOld';
 
 const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
-  // Vi ønsker alltid kun å vise data fra siste beregnede periode, dvs nest siste periode (koronologisk) i grunnlaget
-  if (beregningsgrunnlag.beregningsgrunnlagPeriode.length < 2) {
-    return null;
-  }
-  const kronologiskePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode.sort(
-    (a, b) => moment(a.beregningsgrunnlagPeriodeFom) - moment(b.beregningsgrunnlagPeriodeFom),
-  );
-  const gjeldendePeriode = kronologiskePerioder[kronologiskePerioder.length - 2];
-  const bruttoSN = finnVisningForStatusIPeriode(
-    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    beregningsgrunnlag,
-    gjeldendePeriode,
-  );
-  const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, beregningsgrunnlag, gjeldendePeriode);
-  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, beregningsgrunnlag, gjeldendePeriode);
+  // Første periode inneholder alltid brutto vi ønsker å vise SBH
+  const bruttoSN = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const bruttoFL = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.FRILANSER);
+  const bruttoAT = finnVisningForStatus(beregningsgrunnlag, aktivitetStatus.ARBEIDSTAKER);
   return (
     <div>
       <Row>

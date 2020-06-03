@@ -1,4 +1,4 @@
-import stringEnum from '@k9-sak-web/types/src/tsUtils';
+import stringEnum from '../tsUtils';
 
 export const RammevedtakEnum = stringEnum({
   UIDENTIFISERT: 'UidentifisertRammevedtak',
@@ -12,6 +12,7 @@ export const RammevedtakEnum = stringEnum({
   UTVIDET_RETT: 'UtvidetRett',
   ALENEOMSORG: 'AleneOmOmsorgen',
   MIDLERTIDIG_ALENEOMSORG: 'MidlertidigAleneOmOmsorgen',
+  FOSTERBARN: 'Fosterbarn',
 });
 
 export type RammevedtakType = typeof RammevedtakEnum[keyof typeof RammevedtakEnum];
@@ -26,6 +27,7 @@ interface Rammevedtak {
   mottaker?: string;
   utvidetRettFor?: string;
   aleneOmOmsorgenFor?: string;
+  fosterbarnFor?: string;
   lengde?: string; // Duration (smittevernsdager)
 }
 
