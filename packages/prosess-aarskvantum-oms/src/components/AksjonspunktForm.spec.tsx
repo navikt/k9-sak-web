@@ -4,73 +4,13 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { CheckboxField, RadioOption } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
-import { FormContent, FormValues, transformValues } from './AksjonspunktForm';
-import Uttaksperiode from '../dto/Uttaksperiode';
-import { UtfallEnum } from '../dto/Utfall';
-import { VilkårEnum } from '../dto/Vilkår';
+import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues } from './AksjonspunktForm';
 
 describe('<AksjonspunktForm>', () => {
-  const uavklartPeriode: Uttaksperiode = {
-    utfall: UtfallEnum.UAVKLART,
-    vurderteVilkår: {
-      vilkår: {
-        [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
-        [VilkårEnum.UIDENTIFISERT_RAMMEVEDTAK]: UtfallEnum.UAVKLART,
-      },
-    },
-    periode: '2020-03-01/2020-03-10',
-    utbetalingsgrad: 50,
-    hjemler: [],
-  };
-
-  const innvilgetPeriode: Uttaksperiode = {
-    utfall: UtfallEnum.INNVILGET,
-    vurderteVilkår: {
-      vilkår: {
-        [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
-      },
-    },
-    delvisFravær: 'P2DT4H30M',
-    periode: '2020-04-01/2020-04-30',
-    utbetalingsgrad: 100,
-    hjemler: [],
-  };
-
-  const avslåttPeriode: Uttaksperiode = {
-    utfall: UtfallEnum.AVSLÅTT,
-    vurderteVilkår: {
-      vilkår: {
-        [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
-        [VilkårEnum.NOK_DAGER]: UtfallEnum.AVSLÅTT,
-      },
-    },
-    periode: '2020-03-01/2020-03-31',
-    utbetalingsgrad: 0,
-    hjemler: [],
-  };
-
   describe('<FormContent>', () => {
     it('viser kun en checkbox hvis man har minst én uavklart periode', () => {
-      const aktiviteter = [
-        {
-          arbeidsforhold: {
-            arbeidsforholdId: '123',
-            organisasjonsnummer: '456',
-            type: 'AT',
-          },
-          uttaksperioder: [innvilgetPeriode, avslåttPeriode],
-        },
-        {
-          arbeidsforhold: {
-            arbeidsforholdId: '888',
-            organisasjonsnummer: '999',
-            type: 'SN',
-          },
-          uttaksperioder: [uavklartPeriode, innvilgetPeriode],
-        },
-      ];
       const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} rammevedtak={[]} />,
+        <FormContent {...reduxFormPropsMock} harUavklartePerioder />,
       );
 
       const checkbox = wrapper.find(CheckboxField);
@@ -80,27 +20,9 @@ describe('<AksjonspunktForm>', () => {
       expect(radios).to.have.length(0);
     });
 
-    it('viser radios hvis man har minst én avslått periode og ingen uavklarte', () => {
-      const aktiviteter = [
-        {
-          arbeidsforhold: {
-            arbeidsforholdId: '123',
-            organisasjonsnummer: '456',
-            type: 'AT',
-          },
-          uttaksperioder: [innvilgetPeriode, avslåttPeriode],
-        },
-        {
-          arbeidsforhold: {
-            arbeidsforholdId: '888',
-            organisasjonsnummer: '999',
-            type: 'SN',
-          },
-          uttaksperioder: [innvilgetPeriode],
-        },
-      ];
+    it('viser radios hvis man ikke har uavklarte perioder', () => {
       const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} rammevedtak={[]} />,
+        <FormContent {...reduxFormPropsMock} harUavklartePerioder={false} />,
       );
 
       const checkbox = wrapper.find(CheckboxField);
@@ -155,7 +77,7 @@ describe('<AksjonspunktForm>', () => {
         {
           fortsettBehandling: false,
           kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
-          begrunnelse: undefined,
+          begrunnelse: begrunnelseUavklartePerioder,
         },
       ]);
     });

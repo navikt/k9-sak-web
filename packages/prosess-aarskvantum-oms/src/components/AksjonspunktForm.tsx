@@ -152,12 +152,13 @@ interface AksjonspunktFormProps {
   submitCallback: (values: any[]) => void;
 }
 
+export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infotrygd';
 /**
  * Skal ikke be saksbehandler om begrunnelse hvis uavklarte perioder, men backend krvever det.
  * Hardkoder derfor begrunnelsen i de tilfellene.
  * */
 export const transformValues = ({
-  begrunnelse = 'Rammemeldinger er oppdatert i Infotrygd',
+  begrunnelse = begrunnelseUavklartePerioder,
   valg,
   bekreftInfotrygd,
 }: FormValues) => {
