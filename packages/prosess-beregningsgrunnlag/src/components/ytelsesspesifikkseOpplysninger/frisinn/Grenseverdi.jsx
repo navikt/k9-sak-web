@@ -8,7 +8,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-import { finnVisningForStatusIPeriode, erSøktForAndelIPeriode } from './FrisinnUtils';
+import { finnVisningForStatusIPeriode, erSøktForAndelISøknadsperiodePeriode } from './FrisinnUtils';
 
 const førsteDato = moment('2020-04-01');
 
@@ -50,24 +50,33 @@ const finnAllePerioderSomSkalVises = bgPerioder => {
   return perioder;
 };
 
-const lagGrenseverdirad = (bg, periode) => {
+const starterFørISammeMåned = (frisinnPeriode, bgPeriode) => {
+  const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
+  const frisinnFom = moment(frisinnPeriode.fom);
+  return bgFom.year() === frisinnFom.year() && bgFom.month() === frisinnFom.month() && frisinnFom.isBefore(bgFom);
+};
+
+const lagGrenseverdirad = (bg, bgPeriode) => {
   const frisinnGrunnlag = bg.ytelsesspesifiktGrunnlag;
-  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, periode);
+  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, bgPeriode);
   const originaltInntektstak = bg.grunnbeløp * 6;
   let annenInntektIkkeSøktFor = bruttoAT;
-  if (!erSøktForAndelIPeriode(aktivitetStatus.FRILANSER, periode, frisinnGrunnlag)) {
-    const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, bg, periode);
+  if (!erSøktForAndelISøknadsperiodePeriode(aktivitetStatus.FRILANSER, bgPeriode, frisinnGrunnlag)) {
+    const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, bg, bgPeriode);
     annenInntektIkkeSøktFor += bruttoFL;
   }
-  if (!erSøktForAndelIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, periode, frisinnGrunnlag)) {
-    const bruttoSN = finnVisningForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, periode);
+  if (!erSøktForAndelISøknadsperiodePeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bgPeriode, frisinnGrunnlag)) {
+    const bruttoSN = finnVisningForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, bgPeriode);
     annenInntektIkkeSøktFor += bruttoSN;
   }
   const utregnetInntektstak =
     originaltInntektstak > annenInntektIkkeSøktFor ? originaltInntektstak - annenInntektIkkeSøktFor : 0;
-  const fom = periode.beregningsgrunnlagPeriodeFom;
-  const tom = periode.beregningsgrunnlagPeriodeTom;
 
+  const tom = bgPeriode.beregningsgrunnlagPeriodeTom;
+  const førstePeriodeISammeMåned = frisinnGrunnlag.frisinnPerioder.find(frisinnPeriode =>
+    starterFørISammeMåned(frisinnPeriode, bgPeriode),
+  );
+  const fom = førstePeriodeISammeMåned ? førstePeriodeISammeMåned.fom : bgPeriode.beregningsgrunnlagPeriodeFom;
   return (
     <>
       <Row>

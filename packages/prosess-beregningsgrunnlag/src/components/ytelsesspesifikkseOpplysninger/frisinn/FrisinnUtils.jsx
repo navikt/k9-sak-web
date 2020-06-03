@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const finnSamletBruttoForStatus = (andeler, status) => {
   if (!andeler) {
     return 0;
@@ -12,26 +14,32 @@ const finnSamletBruttoForStatus = (andeler, status) => {
   return inntekt;
 };
 
-const finnFrisinnAndelerIPeriodeForStatus = (status, bgPeriode, ytelsegrunnlag) => {
+/**
+ Denne metoden sjekker om det er søkt for valgt status i denne beregningsperiode eller i neste dersom den inngår i samme søknadsperiode.
+ Hvis to perioder ligger i samme måned ligger de i samme søknadsperiode
+ */
+const finnFrisinnAndelerISøknadsperiodeForStatus = (status, bgPeriode, ytelsegrunnlag) => {
   const { frisinnPerioder } = ytelsegrunnlag;
   if (!frisinnPerioder) {
     return null;
   }
-  const fom = bgPeriode.beregningsgrunnlagPeriodeFom;
-  const tom = bgPeriode.beregningsgrunnlagPeriodeTom;
-  const matchetPeriode = frisinnPerioder.find(p => p.fom === fom && p.tom === tom);
+  const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
+  const sisteDatoIMåned = moment(bgPeriode.beregningsgrunnlagPeriodeTom).endOf('month');
+  const matchetPeriode = frisinnPerioder.find(
+    p => !moment(p.fom).isBefore(bgFom) && moment(p.tom).isSame(sisteDatoIMåned, 'day'),
+  );
   if (!matchetPeriode) {
     return null;
   }
   return matchetPeriode.frisinnAndeler.filter(andel => andel.statusSøktFor.kode === status);
 };
 
-export const erSøktForAndelIPeriode = (status, bgPeriode, ytelsegrunnlag) => {
-  const andeler = finnFrisinnAndelerIPeriodeForStatus(status, bgPeriode, ytelsegrunnlag);
+export const erSøktForAndelISøknadsperiodePeriode = (status, bgPeriode, ytelsegrunnlag) => {
+  const andeler = finnFrisinnAndelerISøknadsperiodeForStatus(status, bgPeriode, ytelsegrunnlag);
   return !!andeler && andeler.length > 0;
 };
 
-export const erSøktForAndelIEnPeriode = (status, ytelsegrunnlag) => {
+const erSøktForAndelIEnPeriode = (status, ytelsegrunnlag) => {
   const { frisinnPerioder } = ytelsegrunnlag;
   if (!frisinnPerioder) {
     return null;
@@ -54,7 +62,7 @@ export const finnVisningForStatusIPeriode = (status, bg, bgPeriode) => {
 };
 
 export const finnOppgittInntektForAndelIPeriode = (status, bgPeriode, ytelsegrunnlag) => {
-  const matchendeAndeler = finnFrisinnAndelerIPeriodeForStatus(status, bgPeriode, ytelsegrunnlag);
+  const matchendeAndeler = finnFrisinnAndelerISøknadsperiodeForStatus(status, bgPeriode, ytelsegrunnlag);
   if (!matchendeAndeler || matchendeAndeler.length < 1) {
     return 0;
   }
