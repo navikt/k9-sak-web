@@ -1,28 +1,28 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { formPropTypes, initialize as reduxFormInitialize, FieldArray } from 'redux-form';
-import { createSelector } from 'reselect';
-import { bindActionCreators } from 'redux';
-import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { behandlingForm, CheckboxField, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { CheckboxField, getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
+import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Element } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { change as reduxFormChange, FieldArray, formPropTypes, initialize as reduxFormInitialize } from 'redux-form';
+import { createSelector } from 'reselect';
+import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
+import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
 import {
   formNameAvklarAktiviteter,
   getFormInitialValuesForAvklarAktiviteter,
   getFormValuesForAvklarAktiviteter,
+  formNameVurderFaktaBeregning,
 } from '../BeregningFormUtils';
 import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
-import VurderAktiviteterPanel from './VurderAktiviteterPanel';
-import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
-
 import styles from './avklareAktiviteterPanel.less';
-import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
+import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 
 const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = aksjonspunktCodes;
 
@@ -81,7 +81,7 @@ const getHelpTextsAvklarAktiviteter = createSelector([ownProps => ownProps.aksjo
 const skalViseSubmitKnappEllerBegrunnelse = (aksjonspunkter, erOverstyrt) =>
   hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || erOverstyrt;
 
-const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk) => {
+const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk, aktivtBeregningsgrunnlagIndex) => {
   const harAvklarAksjonspunkt = hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
   const erOverstyrt = hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
   let initialValues = {};
@@ -105,6 +105,7 @@ const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk) => 
     avklarAktiviteter,
     ...initialValues,
     ...FaktaBegrunnelseTextField.buildInitialValues(begrunnelse, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME),
+    aktivtBeregningsgrunnlagIndex,
   };
 };
 
@@ -120,6 +121,7 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
     (beregningsgrunnlag, ownProps) => ownProps.aksjonspunkter,
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
     (beregningsgrunnlag, ownProps) => ownProps.alleKodeverk,
+    (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
   ],
   buildInitialValues,
 );
@@ -145,6 +147,27 @@ export class AvklareAktiviteterPanelImpl extends Component {
       this.setState({
         submitEnabled: true,
       });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { aktivtBeregningsgrunnlagIndex, behandlingFormPrefix } = this.props;
+    if (prevProps.aktivtBeregningsgrunnlagIndex !== aktivtBeregningsgrunnlagIndex) {
+      const formSelectorAvklarAktiviteter = `${behandlingFormPrefix}.${formNameAvklarAktiviteter}`;
+      const formSelectorVurderFaktaBeregning = `${behandlingFormPrefix}.${formNameVurderFaktaBeregning}`;
+
+      // eslint-disable-next-line
+      this.props.reduxFormChange(
+        formSelectorAvklarAktiviteter,
+        'aktivtBeregningsgrunnlagIndex',
+        aktivtBeregningsgrunnlagIndex,
+      );
+      // eslint-disable-next-line
+      this.props.reduxFormChange(
+        formSelectorVurderFaktaBeregning,
+        'aktivtBeregningsgrunnlagIndex',
+        aktivtBeregningsgrunnlagIndex,
+      );
     }
   }
 
@@ -432,6 +455,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(
     {
+      reduxFormChange,
       reduxFormInitialize,
     },
     dispatch,

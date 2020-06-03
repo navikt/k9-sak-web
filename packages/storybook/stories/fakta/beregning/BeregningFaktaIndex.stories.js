@@ -213,7 +213,10 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[
+        Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
+        Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
+      ]}
       aksjonspunkter={[
         {
           definisjon: {
