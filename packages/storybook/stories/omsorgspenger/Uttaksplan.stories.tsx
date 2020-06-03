@@ -164,3 +164,14 @@ export const aksjonspunktAvslåttePerioder = () => (
     submitCallback={action('bekreft')}
   />
 );
+
+export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([uavklartPeriode, avslåttPeriode])}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+  />
+);
