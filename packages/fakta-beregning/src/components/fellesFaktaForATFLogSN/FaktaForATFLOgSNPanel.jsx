@@ -344,14 +344,14 @@ const getVurderFaktaAksjonspunkt = createSelector([ownProps => ownProps.aksjonsp
   aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined,
 );
 
-const buildInitialValuesForTilfeller = props => ({
+const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
   ...VurderMilitaer.buildInitialValues(props.faktaOmBeregning, props.vurderFaktaAP),
-  ...NyIArbeidslivetSNForm.buildInitialValues(props.beregningsgrunnlag),
-  ...LonnsendringForm.buildInitialValues(props.beregningsgrunnlag),
-  ...NyoppstartetFLForm.buildInitialValues(props.beregningsgrunnlag),
+  ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
+  ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
+  ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
   ...buildInitialValuesKunYtelse(props.kunYtelse, props.tilfeller, props.faktaOmBeregning.andelerForFaktaOmBeregning),
-  ...VurderEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag, props.vurderFaktaAP),
+  ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, props.vurderFaktaAP),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
   ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
   ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
@@ -374,11 +374,11 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [mapStateToBuildInitialValuesProps],
-  props => () => ({
+  (props, beregningsgrunnlag) => () => ({
     tilfeller: props.tilfeller,
     kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
     faktaOmBeregning: props.faktaOmBeregning,
-    beregningsgrunnlag: props.beregningsgrunnlag,
+    beregningsgrunnlag,
     vurderMottarYtelse: props.vurderMottarYtelse,
     kunYtelse: props.kunYtelse,
     ...buildInitialValuesForTilfeller(props),

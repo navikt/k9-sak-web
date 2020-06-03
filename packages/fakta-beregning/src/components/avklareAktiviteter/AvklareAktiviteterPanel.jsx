@@ -34,7 +34,7 @@ const findAksjonspunktMedBegrunnelse = (aksjonspunkter, kode) =>
   aksjonspunkter.filter(ap => ap.definisjon.kode === kode && ap.begrunnelse !== null)[0];
 
 const getAvklarAktiviteter = createSelector(
-  [ownProps => ownProps.beregningsgrunnlag.faktaOmBeregning],
+  [beregningsgrunnlag => beregningsgrunnlag.faktaOmBeregning],
   (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.avklarAktiviteter : undefined),
 );
 
@@ -116,7 +116,11 @@ const hasOpenAvklarAksjonspunkter = aksjonspunkter =>
   hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
 
 export const buildInitialValuesAvklarAktiviteter = createSelector(
-  [ownProps => ownProps.aksjonspunkter, ownProps => getAvklarAktiviteter(ownProps), ownProps => ownProps.alleKodeverk],
+  [
+    (beregningsgrunnlag, ownProps) => ownProps.aksjonspunkter,
+    beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
+    (beregningsgrunnlag, ownProps) => ownProps.alleKodeverk,
+  ],
   buildInitialValues,
 );
 
@@ -126,6 +130,7 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
  * Container komponent.. Inneholder panel for å avklare om aktivitet fra opptjening skal tas med i beregning
  */
 
+const fieldArrayName = 'avklareAktiviteterListe';
 export class AvklareAktiviteterPanelImpl extends Component {
   constructor() {
     super();
@@ -309,7 +314,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
     return (
       <>
         <form onSubmit={formProps.handleSubmit}>
-          <FieldArray name="avklareAktiviteterListe" component={this.renderAvklareAktiviteter} />
+          <FieldArray name={fieldArrayName} component={this.renderAvklareAktiviteter} />
         </form>
         {harAndreAksjonspunkterIPanel && <VerticalSpacer twentyPx />}
       </>
@@ -359,7 +364,7 @@ const validate = values => {
 };
 
 export const transformValues = values => {
-  const fieldArrayList = values.avklareAktiviteterListe;
+  const fieldArrayList = values[fieldArrayName];
   return fieldArrayList
     .filter(currentFormValues => {
       const skalOverstyre = currentFormValues[MANUELL_OVERSTYRING_FIELD];
@@ -401,7 +406,12 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
   };
   return (state, ownProps) => {
     const values = getFormValuesForAvklarAktiviteter(state, ownProps);
-    const initialValues = buildInitialValuesAvklarAktiviteter(ownProps);
+
+    const initialValues = {
+      [fieldArrayName]: ownProps.alleBeregningsgrunnlag.map(beregningsgrunnlag =>
+        buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, ownProps),
+      ),
+    };
     return {
       initialValues,
       onSubmit,

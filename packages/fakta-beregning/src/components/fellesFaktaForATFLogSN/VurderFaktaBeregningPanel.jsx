@@ -82,6 +82,8 @@ export const buildInitialValuesVurderFaktaBeregning = createSelector(
   }),
 );
 
+const fieldArrayName = 'vurderFaktaListe';
+
 /**
  * VurderFaktaBeregningPanel
  *
@@ -202,7 +204,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
           hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter)
         ) && (
           <form onSubmit={formProps.handleSubmit}>
-            <FieldArray name="vurderFaktaListe" component={this.renderVurderFaktaBeregningPanel} />
+            <FieldArray name={fieldArrayName} component={this.renderVurderFaktaBeregningPanel} />
           </form>
         )}
       </ElementWrapper>
@@ -228,20 +230,29 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-export const transformValuesVurderFaktaBeregning = values => {
-  const fieldArrayList = values.vurderFaktaListe;
+export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnlag) => {
+  const fieldArrayList = values[fieldArrayName];
   return fieldArrayList
     .filter(
       currentFormValues =>
         hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, currentFormValues.aksjonspunkter) || erOverstyring(currentFormValues),
     )
-    .map(currentFormValues => {
+    .map((currentFormValues, index) => {
       const faktaBeregningValues = currentFormValues;
       const beg = faktaBeregningValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
+      const kode = erOverstyring(currentFormValues) ? OVERSTYRING_AV_BEREGNINGSGRUNNLAG : VURDER_FAKTA_FOR_ATFL_SN;
       return {
-        kode: erOverstyring(currentFormValues) ? OVERSTYRING_AV_BEREGNINGSGRUNNLAG : VURDER_FAKTA_FOR_ATFL_SN,
-        begrunnelse: beg === undefined ? null : beg,
-        ...transformValuesFaktaForATFLOgSN(faktaBeregningValues, erOverstyring(currentFormValues)),
+        '@type': kode,
+        kode,
+        grunnlag: [
+          {
+            '@type': kode,
+            kode,
+            begrunnelse: beg === undefined ? null : beg,
+            skjæringstidspunkt: alleBeregningsgrunnlag[index].skjæringstidspunkt,
+            ...transformValuesFaktaForATFLOgSN(faktaBeregningValues, erOverstyring(currentFormValues)),
+          },
+        ],
       };
     });
 };
@@ -257,10 +268,16 @@ export const validateVurderFaktaBeregning = values => {
 };
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
-  const onSubmit = values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(values));
+  const onSubmit = values =>
+    initialProps.submitCallback(transformValuesVurderFaktaBeregning(values, initialProps.alleBeregningsgrunnlag));
   const validate = values => validateVurderFaktaBeregning(values);
   return (state, ownProps) => {
-    const initialValues = buildInitialValuesVurderFaktaBeregning(ownProps);
+    const { alleBeregningsgrunnlag } = ownProps;
+    const initialValues = {
+      [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => {
+        return buildInitialValuesVurderFaktaBeregning(ownProps, beregningsgrunnlag);
+      }),
+    };
     return {
       initialValues,
       onSubmit,
