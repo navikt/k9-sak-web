@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
-import { createSelector } from 'reselect';
-
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -18,7 +16,6 @@ import SkjeringspunktOgStatusPanel, {
   RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN,
 } from '../fellesPaneler/SkjeringspunktOgStatusPanel';
 import VurderOgFastsettSN from '../selvstendigNaeringsdrivende/VurderOgFastsettSN';
-import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import Beregningsgrunnlag, {
@@ -124,36 +121,6 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
     </div>
   );
 };
-
-export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.beregningsgrunnlag, (state, ownProps) => ownProps.gjeldendeAksjonspunkter],
-  (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
-    if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
-      return undefined;
-    }
-    const allePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
-    const gjeldendeDekningsgrad = beregningsgrunnlag.dekningsgrad;
-    const alleAndelerIForstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
-    const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(
-      andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
-    );
-    const frilanserAndeler = alleAndelerIForstePeriode.filter(
-      andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
-    );
-    const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter(
-      andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    );
-    const initialValues = {
-      ...Beregningsgrunnlag.buildInitialValues(gjeldendeAksjonspunkter),
-      ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
-      ...AksjonspunktBehandlerFL.buildInitialValues(frilanserAndeler),
-      ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
-      ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
-      ...SkjeringspunktOgStatusPanel.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
-    };
-    return initialValues;
-  },
-);
 
 const harAksjonspunkt = (aksjonspunktKode, gjeldendeAksjonspunkter) =>
   gjeldendeAksjonspunkter !== undefined &&

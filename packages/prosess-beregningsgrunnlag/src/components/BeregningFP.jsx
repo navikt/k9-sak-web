@@ -31,9 +31,15 @@ import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgru
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
-import BeregningForm2, { buildInitialValues, transformValues } from './beregningForm/BeregningForm';
+import BeregningForm2, { transformValues } from './beregningForm/BeregningForm';
 import GraderingUtenBG2 from './gradering/GraderingUtenBG';
 import beregningStyles from './beregningsgrunnlagPanel/beregningsgrunnlag.less';
+import Beregningsgrunnlag from './beregningsgrunnlagPanel/Beregningsgrunnlag';
+import AksjonspunktBehandlerTB from './arbeidstaker/AksjonspunktBehandlerTB';
+import AksjonspunktBehandlerFL from './frilanser/AksjonspunktBehandlerFL';
+import VurderOgFastsettSN from './selvstendigNaeringsdrivende/VurderOgFastsettSN';
+import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
+import GrunnlagForAarsinntektPanelAT from './arbeidstaker/GrunnlagForAarsinntektPanelAT';
 
 const visningForManglendeBG = () => (
   <>
@@ -96,6 +102,8 @@ const BeregningFP = ({
   vilkar,
   alleKodeverk,
   handleSubmit,
+  // eslint-disable-next-line
+  initialValues,
 }) => {
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
   const skalBrukeTabs = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
@@ -113,11 +121,12 @@ const BeregningFP = ({
   const BeregningsGrunnlagFieldArrayComponent = ({ fields }) => {
     if (fields.length === 0) {
       if (harFlereBeregningsgrunnlag) {
-        beregningsgrunnlag.forEach(beregningsgrunnlagElement => {
-          fields.push(beregningsgrunnlagElement);
+        // eslint-disable-next-line
+        initialValues.forEach(initialValueObject => {
+          fields.push(initialValueObject);
         });
       } else {
-        fields.push(beregningsgrunnlag);
+        fields.push(initialValues[0]);
       }
     }
     return fields.map((fieldId, index) =>
@@ -134,6 +143,7 @@ const BeregningFP = ({
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           vilkaarBG={vilkaarBG}
+          initialValues={initialValues[index]}
         />
       ) : null,
     );
@@ -223,37 +233,83 @@ const formaterAksjonspunkter = aksjonspunkter => {
   });
 };
 
+const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
+  if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
+    return undefined;
+  }
+  const allePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
+  const gjeldendeDekningsgrad = beregningsgrunnlag.dekningsgrad;
+  const alleAndelerIForstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
+  const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(
+    andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
+  );
+  const frilanserAndeler = alleAndelerIForstePeriode.filter(
+    andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
+  );
+  const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter(
+    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  const initialValues = {
+    ...Beregningsgrunnlag.buildInitialValues(gjeldendeAksjonspunkter),
+    ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
+    ...AksjonspunktBehandlerFL.buildInitialValues(frilanserAndeler),
+    ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
+    ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
+    ...SkjeringspunktOgStatusPanel.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
+  };
+  return initialValues;
+};
+
+export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
+  if (Array.isArray(beregningsgrunnlag)) {
+    return beregningsgrunnlag.map(currentBeregningsgrunnlag =>
+      buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter),
+    );
+  }
+  return [buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, gjeldendeAksjonspunkter)];
+};
+
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const { aksjonspunkter, submitCallback, beregningsgrunnlag } = initialOwnProps;
   const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
 
   const onSubmit = values => {
-    const alleAksjonspunkter = values.beregningsgrunnlagListe.map(currentBeregningsgrunnlag => {
-      const allePerioder = currentBeregningsgrunnlag ? currentBeregningsgrunnlag.beregningsgrunnlagPeriode : [];
-      const alleAndelerIForstePeriode =
-        allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
-      const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(currentBeregningsgrunnlag);
-      const relevanteStatuser = getRelevanteStatuser(currentBeregningsgrunnlag);
-      const samletSammenligningsgrunnnlag =
-        sammenligningsgrunnlagPrStatus &&
-        sammenligningsgrunnlagPrStatus.find(
-          sammenLigGr => sammenLigGr.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
+    const alleAksjonspunkter = values.beregningsgrunnlagListe.map(
+      (currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
+        const opprinneligBeregningsgrunnlag = beregningsgrunnlag[currentBeregningsgrunnlagIndex];
+        const allePerioder = opprinneligBeregningsgrunnlag
+          ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
+          : [];
+        const alleAndelerIForstePeriode =
+          allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
+        const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(opprinneligBeregningsgrunnlag);
+        const relevanteStatuser = getRelevanteStatuser(opprinneligBeregningsgrunnlag);
+        const samletSammenligningsgrunnnlag =
+          sammenligningsgrunnlagPrStatus &&
+          sammenligningsgrunnlagPrStatus.find(
+            sammenLigGr => sammenLigGr.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
+          );
+        const harNyttIkkeSamletSammenligningsgrunnlag =
+          sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
+
+        return transformValues(
+          { ...beregningsgrunnlag[currentBeregningsgrunnlagIndex], ...currentBeregningsgrunnlagSkjemaverdier },
+          relevanteStatuser,
+          alleAndelerIForstePeriode,
+          gjeldendeAksjonspunkter,
+          allePerioder,
+          harNyttIkkeSamletSammenligningsgrunnlag,
         );
-      const harNyttIkkeSamletSammenligningsgrunnlag = sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
-      return transformValues(
-        currentBeregningsgrunnlag,
-        relevanteStatuser,
-        alleAndelerIForstePeriode,
-        gjeldendeAksjonspunkter,
-        allePerioder,
-        harNyttIkkeSamletSammenligningsgrunnlag,
-      );
-    });
+      },
+    );
     return submitCallback(formaterAksjonspunkter(alleAksjonspunkter), beregningsgrunnlag);
   };
+
   return (state, ownProps) => ({
     onSubmit,
-    initialValues: buildInitialValues(state, ownProps),
+    initialValues: {
+      beregningsgrunnlagListe: buildInitialValues(ownProps.beregningsgrunnlag, ownProps.aksjonspunkter),
+    },
     fieldArrayID: ownProps.fieldArrayID,
     gjeldendeAksjonspunkter,
   });

@@ -397,7 +397,6 @@ const getIsAksjonspunktClosed = createSelector([ownProps => ownProps.aksjonspunk
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = vals => {
-    console.log(123);
     return initialProps.submitCallback(transformValues(vals));
   };
   return (state, ownProps) => {
