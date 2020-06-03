@@ -23,9 +23,8 @@ interface AksjonspunktFormImplProps {
 }
 
 interface FormContentProps {
-  aktiviteter: Aktivitet[];
-  rammevedtak: Rammevedtak[];
   handleSubmit: SubmitHandler;
+  harUavklartePerioder: boolean;
 }
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
@@ -47,27 +46,12 @@ const SpaceBetween = styled.div`
   margin-top: 1em;
 `;
 
-export const FormContent: FunctionComponent<FormContentProps> = ({ rammevedtak, aktiviteter, handleSubmit }) => {
-  const harUavklartePerioder = useMemo(
-    () =>
-      aktiviteter.flatMap(({ uttaksperioder }) => uttaksperioder).some(({ utfall }) => utfall === UtfallEnum.UAVKLART),
-    [aktiviteter],
-  );
-
+export const FormContent: FunctionComponent<FormContentProps> = ({ handleSubmit, harUavklartePerioder }) => {
   if (harUavklartePerioder) {
-    const harUidentifiserteRammevedtak = rammevedtak.some(({ type }) => type === RammevedtakEnum.UIDENTIFISERT);
     return (
       <>
         <AksjonspunktHelpTextTemp isAksjonspunktOpen>
-          {[
-            <FormattedMessage
-              id={
-                harUidentifiserteRammevedtak
-                  ? 'Årskvantum.Aksjonspunkt.Uavklart.UidentifiserteRammemeldinger'
-                  : 'Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd'
-              }
-            />,
-          ]}
+          {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.UidentifiserteRammemeldinger" />]}
         </AksjonspunktHelpTextTemp>
         <VerticalSpacer sixteenPx />
         <SpaceBetween>
@@ -126,10 +110,28 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
   if (!featureSkalViseAksjonspunkt) {
     return null;
   }
+
+  const harUavklartePerioder = useMemo(
+    () =>
+      aktiviteter.flatMap(({ uttaksperioder }) => uttaksperioder).some(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+    [aktiviteter],
+  );
+
+  if (harUavklartePerioder) {
+    const harUidentifiserteRammevedtak = rammevedtak.some(({ type }) => type === RammevedtakEnum.UIDENTIFISERT);
+    if (!harUidentifiserteRammevedtak) {
+      return (
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+          {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd" />]}
+        </AksjonspunktHelpTextTemp>
+      );
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <GråBakgrunn>
-        <FormContent aktiviteter={aktiviteter} rammevedtak={rammevedtak} handleSubmit={handleSubmit} />
+        <FormContent handleSubmit={handleSubmit} harUavklartePerioder={harUavklartePerioder} />
       </GråBakgrunn>
       <VerticalSpacer sixteenPx />
     </form>
@@ -150,7 +152,16 @@ interface AksjonspunktFormProps {
   submitCallback: (values: any[]) => void;
 }
 
-export const transformValues = ({ begrunnelse, valg, bekreftInfotrygd }: FormValues) => {
+export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infotrygd';
+/**
+ * Skal ikke be saksbehandler om begrunnelse hvis uavklarte perioder, men backend krvever det.
+ * Hardkoder derfor begrunnelsen i de tilfellene.
+ * */
+export const transformValues = ({
+  begrunnelse = begrunnelseUavklartePerioder,
+  valg,
+  bekreftInfotrygd,
+}: FormValues) => {
   if (bekreftInfotrygd || valg === valgValues.reBehandling) {
     return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: false }];
   }
@@ -166,7 +177,7 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     { aktiviteter, rammevedtak }: AksjonspunktFormProps,
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
     const featureToggles = getFeatureToggles(state);
-    const featureSkalViseAksjonspunkt = featureToggles[featureToggle.AKTIVER_UTTAK_AKSJONSPUNKT];
+    const featureSkalViseAksjonspunkt = featureToggles && featureToggles[featureToggle.AKTIVER_UTTAK_AKSJONSPUNKT];
     return {
       onSubmit,
       aktiviteter,
