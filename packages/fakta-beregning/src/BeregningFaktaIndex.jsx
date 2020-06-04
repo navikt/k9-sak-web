@@ -55,34 +55,38 @@ const BeregningFaktaIndex = ({
           onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
         />
       )}
-      <AvklareAktiviteterPanel
-        readOnly={readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) && !erOverstyrer)}
-        harAndreAksjonspunkterIPanel={hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)}
-        submitCallback={submitCallback}
-        submittable={submittable}
-        erOverstyrer={erOverstyrer}
-        aksjonspunkter={aksjonspunkter}
-        alleKodeverk={alleKodeverk}
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        beregningsgrunnlag={aktivtBeregningsrunnlag}
-        aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
-        alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [aktivtBeregningsrunnlag]}
-      />
-      <VerticalSpacer thirtyTwoPx />
-      <VurderFaktaBeregningPanel
-        readOnly={readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) && !erOverstyrer)}
-        submitCallback={submitCallback}
-        submittable={submittable}
-        aksjonspunkter={aksjonspunkter}
-        alleKodeverk={alleKodeverk}
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        beregningsgrunnlag={aktivtBeregningsrunnlag}
-        erOverstyrer={erOverstyrer}
-        alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
-        aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
-      />
+      <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
+        <AvklareAktiviteterPanel
+          readOnly={
+            readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) && !erOverstyrer)
+          }
+          harAndreAksjonspunkterIPanel={hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)}
+          submitCallback={submitCallback}
+          submittable={submittable}
+          erOverstyrer={erOverstyrer}
+          aksjonspunkter={aksjonspunkter}
+          alleKodeverk={alleKodeverk}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          beregningsgrunnlag={aktivtBeregningsrunnlag}
+          aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
+          alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [aktivtBeregningsrunnlag]}
+        />
+        <VerticalSpacer thirtyTwoPx />
+        <VurderFaktaBeregningPanel
+          readOnly={readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) && !erOverstyrer)}
+          submitCallback={submitCallback}
+          submittable={submittable}
+          aksjonspunkter={aksjonspunkter}
+          alleKodeverk={alleKodeverk}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          beregningsgrunnlag={aktivtBeregningsrunnlag}
+          erOverstyrer={erOverstyrer}
+          alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
+          aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
+        />
+      </div>
     </RawIntlProvider>
   );
 };
