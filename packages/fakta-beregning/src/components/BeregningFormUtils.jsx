@@ -25,7 +25,7 @@ export const getFormInitialValuesForAvklarAktiviteter = createSelector(
         ownProps.behandlingVersjon,
       )(state),
   ],
-  values => values,
+  values => values.avklareAktiviteterListe[0],
 );
 
 export const getFormValuesForBeregning = createSelector(
@@ -45,7 +45,7 @@ export const getFormInitialValuesForBeregning = createSelector(
         ownProps.behandlingVersjon,
       )(state),
   ],
-  values => values,
+  values => values.vurderFaktaListe[0],
 );
 
 export const isBeregningFormDirty = createSelector(

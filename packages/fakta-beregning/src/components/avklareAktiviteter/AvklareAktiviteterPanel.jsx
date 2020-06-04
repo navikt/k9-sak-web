@@ -41,7 +41,7 @@ const getAvklarAktiviteter = createSelector(
 export const erAvklartAktivitetEndret = createSelector(
   [
     (state, ownProps) => ownProps.aksjonspunkter,
-    (state, ownProps) => getAvklarAktiviteter(ownProps),
+    (state, ownProps) => getAvklarAktiviteter(ownProps.beregningsgrunnlag),
     getFormValuesForAvklarAktiviteter,
     getFormInitialValuesForAvklarAktiviteter,
   ],
@@ -204,11 +204,12 @@ export class AvklareAktiviteterPanelImpl extends Component {
         alleBeregningsgrunnlag,
         formValues,
         aktivtBeregningsgrunnlagIndex,
+        beregningsgrunnlag,
         ...formProps
       },
       state: { submitEnabled },
     } = this;
-    const avklarAktiviteter = getAvklarAktiviteter(this.props);
+    const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag);
     const skalViseSubmitknappInneforBorderBox =
       (harAndreAksjonspunkterIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenAvklarAksjonspunkter(aksjonspunkter);
 
@@ -434,6 +435,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       [fieldArrayName]: ownProps.alleBeregningsgrunnlag.map(beregningsgrunnlag =>
         buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, ownProps),
       ),
+      aktivtBeregningsgrunnlagIndex: ownProps.aktivtBeregningsgrunnlagIndex,
     };
     return {
       initialValues,
@@ -444,7 +446,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       helpText: getHelpTextsAvklarAktiviteter(ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
       isAksjonspunktClosed: getIsAksjonspunktClosed(ownProps),
-      avklarAktiviteter: getAvklarAktiviteter(ownProps),
+      avklarAktiviteter: getAvklarAktiviteter(ownProps.beregningsgrunnlag),
       hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
       erOverstyrt: !!values && values[MANUELL_OVERSTYRING_FIELD],
       erBgOverstyrt: erOverstyringAvBeregningsgrunnlag(state, ownProps),

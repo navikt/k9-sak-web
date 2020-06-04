@@ -71,19 +71,14 @@ const hasOpenAksjonspunkt = (kode, aksjonspunkter) =>
   aksjonspunkter.some(ap => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
 
 export const buildInitialValuesVurderFaktaBeregning = createSelector(
-  [
-    ownProps => ownProps.aksjonspunkter,
-    getBuildInitialValuesFaktaForATFLOgSN,
-    ownProps => ownProps.aktivtBeregningsgrunnlagIndex,
-  ],
-  (aksjonspunkter, buildInitialValuesTilfeller, aktivtBeregningsgrunnlagIndex) => ({
+  [ownProps => ownProps.aksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
+  (aksjonspunkter, buildInitialValuesTilfeller) => ({
     aksjonspunkter,
     ...FaktaBegrunnelseTextField.buildInitialValues(
       findAksjonspunktMedBegrunnelse(aksjonspunkter),
       BEGRUNNELSE_FAKTA_TILFELLER_NAME,
     ),
     ...buildInitialValuesTilfeller(),
-    aktivtBeregningsgrunnlagIndex,
   }),
 );
 
@@ -277,11 +272,12 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
     initialProps.submitCallback(transformValuesVurderFaktaBeregning(values, initialProps.alleBeregningsgrunnlag));
   const validate = values => validateVurderFaktaBeregning(values);
   return (state, ownProps) => {
-    const { alleBeregningsgrunnlag } = ownProps;
+    const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex } = ownProps;
     const initialValues = {
       [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => {
         return buildInitialValuesVurderFaktaBeregning(ownProps, beregningsgrunnlag);
       }),
+      aktivtBeregningsgrunnlagIndex,
     };
     return {
       initialValues,

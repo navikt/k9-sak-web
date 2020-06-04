@@ -67,10 +67,9 @@ const BeregningFaktaIndex = ({
         behandlingVersjon={behandling.versjon}
         beregningsgrunnlag={aktivtBeregningsrunnlag}
         aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
-        alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : undefined}
+        alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [aktivtBeregningsrunnlag]}
       />
       <VerticalSpacer thirtyTwoPx />
-
       <VurderFaktaBeregningPanel
         readOnly={readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) && !erOverstyrer)}
         submitCallback={submitCallback}
@@ -81,7 +80,7 @@ const BeregningFaktaIndex = ({
         behandlingVersjon={behandling.versjon}
         beregningsgrunnlag={aktivtBeregningsrunnlag}
         erOverstyrer={erOverstyrer}
-        alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : undefined}
+        alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
         aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
       />
     </RawIntlProvider>
