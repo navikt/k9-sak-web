@@ -356,7 +356,10 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
     beregningsgrunnlag.faktaOmBeregning?.kortvarigeArbeidsforhold,
   vurderFaktaAP: getVurderFaktaAksjonspunkt,
   kunYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.kunYtelse,
-  tilfeller: (ownProps, beregningsgrunnlag) => getFaktaOmBeregningTilfellerKoder(beregningsgrunnlag.faktaOmBeregning),
+  tilfeller: (ownProps, beregningsgrunnlag) => {
+    const tilfeller = getFaktaOmBeregningTilfellerKoder(beregningsgrunnlag.faktaOmBeregning);
+    return tilfeller;
+  },
   vurderMottarYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.vurderMottarYtelse,
   vurderBesteberegning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.vurderBesteberegning,
   alleKodeverk: ownProps => ownProps.alleKodeverk,
@@ -367,15 +370,17 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [mapStateToBuildInitialValuesProps, (ownProps, beregningsgrunnlag) => beregningsgrunnlag],
-  (props, beregningsgrunnlag) => () => ({
-    tilfeller: props.tilfeller,
-    kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
-    faktaOmBeregning: props.faktaOmBeregning,
-    beregningsgrunnlag,
-    vurderMottarYtelse: props.vurderMottarYtelse,
-    kunYtelse: props.kunYtelse,
-    ...buildInitialValuesForTilfeller(props),
-  }),
+  (props, beregningsgrunnlag) => () => {
+    return {
+      tilfeller: props.tilfeller,
+      kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
+      faktaOmBeregning: props.faktaOmBeregning,
+      beregningsgrunnlag,
+      vurderMottarYtelse: props.vurderMottarYtelse,
+      kunYtelse: props.kunYtelse,
+      ...buildInitialValuesForTilfeller(props),
+    };
+  },
 );
 
 const emptyArray = [];

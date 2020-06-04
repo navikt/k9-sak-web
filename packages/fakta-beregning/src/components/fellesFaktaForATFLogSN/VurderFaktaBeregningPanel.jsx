@@ -73,7 +73,7 @@ const hasOpenAksjonspunkt = (kode, aksjonspunkter) =>
 export const buildInitialValuesVurderFaktaBeregning = createSelector(
   [
     ownProps => ownProps.aksjonspunkter,
-    (ownProps, beregningsgrunnlag) => () => getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag),
+    (ownProps, beregningsgrunnlag) => getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag),
   ],
   (aksjonspunkter, buildInitialValuesTilfeller) => ({
     aksjonspunkter,
