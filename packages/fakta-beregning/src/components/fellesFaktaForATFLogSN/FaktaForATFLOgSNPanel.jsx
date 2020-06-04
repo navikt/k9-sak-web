@@ -357,11 +357,11 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   vurderFaktaAP: getVurderFaktaAksjonspunkt,
   kunYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.kunYtelse,
   tilfeller: (ownProps, beregningsgrunnlag) => getFaktaOmBeregningTilfellerKoder(beregningsgrunnlag.faktaOmBeregning),
-  vurderMottarYtelse: getVurderMottarYtelse,
-  vurderBesteberegning: getVurderBesteberegning,
+  vurderMottarYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.vurderMottarYtelse,
+  vurderBesteberegning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.vurderBesteberegning,
   alleKodeverk: ownProps => ownProps.alleKodeverk,
   aksjonspunkter: ownProps => ownProps.aksjonspunkter,
-  faktaOmBeregning: getFaktaOmBeregning,
+  faktaOmBeregning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning,
   refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
 });
 
