@@ -71,7 +71,10 @@ const hasOpenAksjonspunkt = (kode, aksjonspunkter) =>
   aksjonspunkter.some(ap => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
 
 export const buildInitialValuesVurderFaktaBeregning = createSelector(
-  [ownProps => ownProps.aksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
+  [
+    ownProps => ownProps.aksjonspunkter,
+    (ownProps, beregningsgrunnlag) => () => getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag),
+  ],
   (aksjonspunkter, buildInitialValuesTilfeller) => ({
     aksjonspunkter,
     ...FaktaBegrunnelseTextField.buildInitialValues(

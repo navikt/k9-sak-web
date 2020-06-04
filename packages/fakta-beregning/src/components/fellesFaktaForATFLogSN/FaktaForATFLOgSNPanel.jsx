@@ -29,20 +29,6 @@ export const getFaktaOmBeregning = createSelector(
   [ownProps => ownProps.beregningsgrunnlag],
   (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.faktaOmBeregning : undefined),
 );
-export const getKortvarigeArbeidsforhold = createSelector(
-  [ownProps => getFaktaOmBeregning(ownProps)],
-  (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.kortvarigeArbeidsforhold : undefined),
-);
-export const getKunYtelse = createSelector([ownProps => getFaktaOmBeregning(ownProps)], (faktaOmBeregning = {}) =>
-  faktaOmBeregning ? faktaOmBeregning.kunYtelse : undefined,
-);
-export const getFaktaOmBeregningTilfellerKoder = createSelector(
-  [ownProps => getFaktaOmBeregning(ownProps)],
-  (faktaOmBeregning = []) =>
-    faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
-      ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
-      : [],
-);
 export const getVurderMottarYtelse = createSelector([getFaktaOmBeregning], (faktaOmBeregning = {}) =>
   faktaOmBeregning ? faktaOmBeregning.vurderMottarYtelse : undefined,
 );
@@ -358,12 +344,19 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...VurderRefusjonForm.buildInitialValues(props.tilfeller, props.refusjonskravSomKommerForSentListe),
 });
 
+const getFaktaOmBeregningTilfellerKoder = faktaOmBeregning => {
+  return faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
+    ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
+    : [];
+};
+
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
-  beregningsgrunnlag: ownProps => ownProps.beregningsgrunnlag,
-  kortvarigeArbeidsforhold: getKortvarigeArbeidsforhold,
+  beregningsgrunnlag: (ownProps, beregningsgrunnlag) => beregningsgrunnlag,
+  kortvarigeArbeidsforhold: (ownProps, beregningsgrunnlag) =>
+    beregningsgrunnlag.faktaOmBeregning?.kortvarigeArbeidsforhold,
   vurderFaktaAP: getVurderFaktaAksjonspunkt,
-  kunYtelse: getKunYtelse,
-  tilfeller: getFaktaOmBeregningTilfellerKoder,
+  kunYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.kunYtelse,
+  tilfeller: (ownProps, beregningsgrunnlag) => getFaktaOmBeregningTilfellerKoder(beregningsgrunnlag.faktaOmBeregning),
   vurderMottarYtelse: getVurderMottarYtelse,
   vurderBesteberegning: getVurderBesteberegning,
   alleKodeverk: ownProps => ownProps.alleKodeverk,
@@ -373,7 +366,7 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
-  [mapStateToBuildInitialValuesProps],
+  [mapStateToBuildInitialValuesProps, (ownProps, beregningsgrunnlag) => beregningsgrunnlag],
   (props, beregningsgrunnlag) => () => ({
     tilfeller: props.tilfeller,
     kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
