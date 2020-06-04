@@ -31,7 +31,7 @@ export const erSøktForAndelIPeriode = (status, bgPeriode, ytelsegrunnlag) => {
   return !!andeler && andeler.length > 0;
 };
 
-export const erSøktForAndel = (status, ytelsegrunnlag) => {
+export const erSøktForAndelIEnPeriode = (status, ytelsegrunnlag) => {
   const { frisinnPerioder } = ytelsegrunnlag;
   if (!frisinnPerioder) {
     return null;
@@ -42,24 +42,8 @@ export const erSøktForAndel = (status, ytelsegrunnlag) => {
   return !!periodeDerStatusErSøktFor;
 };
 
-export const finnVisningForStatus = (bg, status) => {
-  const erSøktForStatus = erSøktForAndel(status, bg.ytelsesspesifiktGrunnlag);
-  if (erSøktForStatus) {
-    // Er det søkt ytelse for statusen kan vi finne den inntekten som ligger i første periode
-    const førstePeriode = bg.beregningsgrunnlagPeriode[0];
-    return finnSamletBruttoForStatus(førstePeriode.beregningsgrunnlagPrStatusOgAndel, status);
-  }
-  // Er det ikke søkt ytelse må vi ta den inntekten som ligger i perioden det er søkt om
-  const periodeFom = perioderSøktFor[0].fom;
-  const periodeTom = perioderSøktFor[0].tom;
-  const matchendePeriode = bg.beregningsgrunnlagPeriode.find(
-    p => p.beregningsgrunnlagPeriodeFom === periodeFom && p.beregningsgrunnlagPeriodeTom === periodeTom,
-  );
-  return matchendePeriode ? finnSamletBruttoForStatus(matchendePeriode.beregningsgrunnlagPrStatusOgAndel, status) : 0;
-};
-
 export const finnVisningForStatusIPeriode = (status, bg, bgPeriode) => {
-  const erSøktForStatus = erSøktForAndel(status, bg.ytelsesspesifiktGrunnlag);
+  const erSøktForStatus = erSøktForAndelIEnPeriode(status, bg.ytelsesspesifiktGrunnlag);
   if (erSøktForStatus) {
     // Er det søkt ytelse for statusen kan vi finne den inntekten som ligger i første periode
     const førstePeriode = bg.beregningsgrunnlagPeriode[0];
@@ -79,15 +63,4 @@ export const finnOppgittInntektForAndelIPeriode = (status, bgPeriode, ytelsegrun
     return 0;
   }
   return inntekt;
-};
-
-export const finnOppgittArbeidsinntektIPeriode = (bgPeriode, ytelsegrunnlag) => {
-  const { frisinnPerioder } = ytelsegrunnlag;
-  if (!frisinnPerioder) {
-    return 0;
-  }
-  const fom = bgPeriode.beregningsgrunnlagPeriodeFom;
-  const tom = bgPeriode.beregningsgrunnlagPeriodeTom;
-  const matchetPeriode = frisinnPerioder.find(p => p.fom === fom && p.tom === tom);
-  return matchetPeriode ? matchetPeriode.oppgittArbeidsinntekt : null;
 };
