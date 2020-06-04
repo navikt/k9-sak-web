@@ -6,18 +6,20 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import BeregningsresultatPeriode from './BeregningsresultatPeriode';
-import { erSøktForAndelIPeriode, finnVisningForStatusIPeriode } from './FrisinnUtils';
+import { erSøktForAndelISøknadsperiode, finnVisningForStatusIPeriode } from './FrisinnUtils';
 
 const finnInntektstak = bg => (bg.grunnbeløp ? bg.grunnbeløp * 6 : null);
 
 const finnBGFrilans = (bg, periode) => {
-  if (!erSøktForAndelIPeriode(aktivitetStatus.FRILANSER, periode, bg.ytelsesspesifiktGrunnlag)) {
+  if (!erSøktForAndelISøknadsperiode(aktivitetStatus.FRILANSER, periode, bg.ytelsesspesifiktGrunnlag)) {
     return null;
   }
   let inntektstak = finnInntektstak(bg);
   const atBrutto = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, periode);
   inntektstak -= atBrutto;
-  if (!erSøktForAndelIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, periode, bg.ytelsesspesifiktGrunnlag)) {
+  if (
+    !erSøktForAndelISøknadsperiode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, periode, bg.ytelsesspesifiktGrunnlag)
+  ) {
     const snBrutto = finnVisningForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, periode);
     inntektstak -= snBrutto;
   }
@@ -26,7 +28,9 @@ const finnBGFrilans = (bg, periode) => {
 };
 
 const finnBGNæring = (bg, periode) => {
-  if (!erSøktForAndelIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, periode, bg.ytelsesspesifiktGrunnlag)) {
+  if (
+    !erSøktForAndelISøknadsperiode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, periode, bg.ytelsesspesifiktGrunnlag)
+  ) {
     return null;
   }
   let inntektstak = finnInntektstak(bg);
