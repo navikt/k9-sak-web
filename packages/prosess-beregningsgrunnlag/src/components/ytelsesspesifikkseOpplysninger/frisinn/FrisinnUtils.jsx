@@ -14,6 +14,15 @@ const finnSamletBruttoForStatus = (andeler, status) => {
   return inntekt;
 };
 
+const erMars2020 = dato => {
+  return dato.month() === 2 && dato.year() === 2020;
+};
+
+const erSøktForMars2020 = frisinnPeriode => {
+  const tom = moment(frisinnPeriode.tom);
+  return erMars2020(tom);
+};
+
 /**
  Denne metoden sjekker om det er søkt for valgt status i denne beregningsperiode eller i neste dersom den inngår i samme søknadsperiode.
  Hvis to perioder ligger i samme måned ligger de i samme søknadsperiode
@@ -24,17 +33,27 @@ const finnFrisinnAndelerISøknadsperiodeForStatus = (status, bgPeriode, ytelsegr
     return null;
   }
   const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
+
+  // Søkader for mars må spesialhåndteres da disse er de eneste som krysser måneder
+  if (erMars2020(bgFom) && frisinnPerioder.some(p => erSøktForMars2020(p))) {
+    const aprilSlutt = moment('2020-04-30');
+    const periodeVedSisteDagIApril = frisinnPerioder.find(p => moment(p.tom).isSame(aprilSlutt, 'day'));
+    if (!periodeVedSisteDagIApril) {
+      return null;
+    }
+    return periodeVedSisteDagIApril.frisinnAndeler.filter(andel => andel.statusSøktFor.kode === status);
+  }
   const sisteDatoIMåned = moment(bgPeriode.beregningsgrunnlagPeriodeTom).endOf('month');
-  const matchetPeriode = frisinnPerioder.find(
+  const periodeVedSisteDagIMnd = frisinnPerioder.find(
     p => !moment(p.fom).isBefore(bgFom) && moment(p.tom).isSame(sisteDatoIMåned, 'day'),
   );
-  if (!matchetPeriode) {
+  if (!periodeVedSisteDagIMnd) {
     return null;
   }
-  return matchetPeriode.frisinnAndeler.filter(andel => andel.statusSøktFor.kode === status);
+  return periodeVedSisteDagIMnd.frisinnAndeler.filter(andel => andel.statusSøktFor.kode === status);
 };
 
-export const erSøktForAndelISøknadsperiodePeriode = (status, bgPeriode, ytelsegrunnlag) => {
+export const erSøktForAndelISøknadsperiode = (status, bgPeriode, ytelsegrunnlag) => {
   const andeler = finnFrisinnAndelerISøknadsperiodeForStatus(status, bgPeriode, ytelsegrunnlag);
   return !!andeler && andeler.length > 0;
 };
