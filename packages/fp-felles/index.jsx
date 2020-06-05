@@ -53,3 +53,4 @@ export { default as allAccessRights } from './src/navAnsatt/access';
 export { default as DataFetcher } from './src/DataFetcher';
 export { default as BehandlingFormFieldCleaner } from './src/behandlingsprosess/BehandlingFormFieldCleaner';
 export { default as usePrevious } from './src/util/componentHooks';
+export { default as joinNonNullStrings } from './src/util/stringUtils';

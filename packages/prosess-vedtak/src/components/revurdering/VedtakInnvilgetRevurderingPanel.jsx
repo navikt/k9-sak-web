@@ -1,20 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
 
+import { Column, Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
+import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import { findTilbakekrevingText } from '../VedtakHelper';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
+
+const mapFraAvslagskodeTilTekst = kode => {
+  switch (kode) {
+    case avslagsarsakCodes.AVKORTET_GRUNNET_ANNEN_INNTEKT:
+      return 'Avkortet grunnet annen inntekt';
+    case avslagsarsakCodes.FOR_LAVT_BG:
+      return 'For lavt brutto beregningsgrunnlag';
+    case avslagsarsakCodes.AVKORTET_GRUNNET_LØPENDE_INNTEKT:
+      return 'Avkortet grunnet løpende inntekter';
+    case avslagsarsakCodes.INGEN_FRILANS_I_PERIODE_UTEN_YTELSE:
+      return 'Ingen frilansaktivitet i periode uten ytelse';
+    default:
+      return 'Avslag';
+  }
+};
 
 const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;
@@ -45,6 +62,16 @@ export const lagKonsekvensForYtelsenTekst = (konsekvenser, getKodeverknavn) => {
   return konsekvenser.map(k => getKodeverknavn(k)).join(' og ');
 };
 
+const lagPeriodevisning = periodeMedÅrsak => {
+  if (!periodeMedÅrsak) {
+    return undefined;
+  }
+  const fom = moment(periodeMedÅrsak.fom).format(DDMMYYYY_DATE_FORMAT);
+  const tom = moment(periodeMedÅrsak.tom).format(DDMMYYYY_DATE_FORMAT);
+  const årsak = mapFraAvslagskodeTilTekst(periodeMedÅrsak.avslagsårsak);
+  return <FormattedMessage id="VedtakForm.Avslagsgrunner.Beregning" values={{ fom, tom, årsak }} />;
+};
+
 export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
   antallBarn,
@@ -59,6 +86,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   tilbakekrevingText,
   alleKodeverk,
   beregningErManueltFastsatt,
+  bgPeriodeMedAvslagsårsak,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
@@ -99,6 +127,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
               intl.formatMessage({
                 id: tilbakekrevingText,
               })}
+            {bgPeriodeMedAvslagsårsak && <Normaltekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Normaltekst>}
           </Normaltekst>
           <VerticalSpacer sixteenPx />
           <Row>
@@ -135,6 +164,7 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
+  bgPeriodeMedAvslagsårsak: PropTypes.shape(),
 };
 
 VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
@@ -145,6 +175,7 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
   revurderingsAarsakString: undefined,
   sprakKode: undefined,
   tilbakekrevingText: null,
+  bgPeriodeMedAvslagsårsak: undefined,
 };
 
 const mapStateToProps = (state, ownProps) => ({

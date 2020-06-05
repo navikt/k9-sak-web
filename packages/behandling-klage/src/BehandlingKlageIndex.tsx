@@ -126,6 +126,7 @@ class BehandlingKlageIndex extends PureComponent<Props> {
     if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
       this.behandlingDataCache.setVersion(behandling.versjon);
       this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
+      oppdaterBehandlingVersjon(behandling.versjon);
     }
 
     return (

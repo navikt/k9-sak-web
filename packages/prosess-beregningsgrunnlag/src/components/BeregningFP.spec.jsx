@@ -6,6 +6,7 @@ import { shallow } from 'enzyme/build';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import BeregningFP from './BeregningFP';
 import BeregningForm2 from './beregningForm/BeregningForm';
 import GraderingUtenBG2 from './gradering/GraderingUtenBG';
@@ -105,7 +106,7 @@ const alleKodeverk = {
 describe('<BeregningFP>', () => {
   it('skal teste at BeregningForm får korrekte props fra BeregningFP med beregnetAvvikPromille lik NULL', () => {
     const wrapper = shallow(
-      <BeregningFP
+      <BeregningFP.WrappedComponent
         readOnly={false}
         submitCallback={sinon.spy}
         beregningsgrunnlag={lagBeregningsgrunnlag(true, 100000, 100000, null, null)}
@@ -115,6 +116,7 @@ describe('<BeregningFP>', () => {
         aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
         sokerHarGraderingPaaAndelUtenBG={false}
+        intl={intlMock}
       />,
     );
     const beregningForm = wrapper.find(BeregningForm2);
@@ -128,7 +130,7 @@ describe('<BeregningFP>', () => {
   });
   it('skal teste visning av komponenter når beregningsgrunnlag er lik null', () => {
     const wrapper = shallow(
-      <BeregningFP
+      <BeregningFP.WrappedComponent
         readOnly={false}
         submitCallback={sinon.spy}
         beregningsgrunnlag={null}
@@ -137,6 +139,7 @@ describe('<BeregningFP>', () => {
         alleKodeverk={alleKodeverk}
         aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
+        intl={intlMock}
       />,
     );
     const beregningForm = wrapper.find(BeregningForm2);
@@ -148,7 +151,7 @@ describe('<BeregningFP>', () => {
   });
   it('skal teste visning av komponenter når beregningsgrunnlag ikke er null', () => {
     const wrapper = shallow(
-      <BeregningFP
+      <BeregningFP.WrappedComponent
         readOnly={false}
         submitCallback={sinon.spy}
         alleKodeverk={alleKodeverk}
@@ -157,6 +160,7 @@ describe('<BeregningFP>', () => {
         aksjonspunkter={gjeldendeAksjonspunkter}
         behandling={behandling}
         readOnlySubmitButton
+        intl={intlMock}
       />,
     );
     const beregningForm = wrapper.find(BeregningForm2);
@@ -166,7 +170,7 @@ describe('<BeregningFP>', () => {
   });
   it('skal teste at GraderingUtenBG vises når sokerHarGraderingPaaAndelUtenBG er true', () => {
     const wrapper = shallow(
-      <BeregningFP
+      <BeregningFP.WrappedComponent
         readOnly={false}
         submitCallback={sinon.spy}
         beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, [{ test: 'test' }])}
@@ -175,6 +179,7 @@ describe('<BeregningFP>', () => {
         behandling={behandling}
         alleKodeverk={alleKodeverk}
         readOnlySubmitButton
+        intl={intlMock}
       />,
     );
     const graderingUtenBG = wrapper.find(GraderingUtenBG2);
@@ -182,7 +187,7 @@ describe('<BeregningFP>', () => {
   });
   it('skal teste at GraderingUtenBG ikke vises når sokerHarGraderingPaaAndelUtenBG er false', () => {
     const wrapper = shallow(
-      <BeregningFP
+      <BeregningFP.WrappedComponent
         readOnly={false}
         submitCallback={sinon.spy}
         beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, null)}
@@ -191,6 +196,7 @@ describe('<BeregningFP>', () => {
         behandling={behandling}
         alleKodeverk={alleKodeverk}
         readOnlySubmitButton
+        intl={intlMock}
       />,
     );
     const graderingUtenBG = wrapper.find(GraderingUtenBG2);
