@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types';
+import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import FormValues from '../types/FormValues';
 import Barn from '../types/Barn';
 import Overføring from '../types/Overføring';

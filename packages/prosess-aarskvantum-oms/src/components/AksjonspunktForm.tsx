@@ -10,7 +10,7 @@ import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fps
 import { Element } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { RammevedtakEnum, Rammevedtak } from '@k9-sak-web/types';
+import { RammevedtakEnum, Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { getFeatureToggles } from '@fpsak-frontend/sak-app/src/app/duck';
 import { featureToggle } from '@fpsak-frontend/fp-felles/index';
 import Aktivitet from '../dto/Aktivitet';
@@ -157,11 +157,7 @@ export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infot
  * Skal ikke be saksbehandler om begrunnelse hvis uavklarte perioder, men backend krvever det.
  * Hardkoder derfor begrunnelsen i de tilfellene.
  * */
-export const transformValues = ({
-  begrunnelse = begrunnelseUavklartePerioder,
-  valg,
-  bekreftInfotrygd,
-}: FormValues) => {
+export const transformValues = ({ begrunnelse = begrunnelseUavklartePerioder, valg, bekreftInfotrygd }: FormValues) => {
   if (bekreftInfotrygd || valg === valgValues.reBehandling) {
     return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: false }];
   }
