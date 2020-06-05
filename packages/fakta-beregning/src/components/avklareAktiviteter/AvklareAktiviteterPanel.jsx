@@ -407,7 +407,7 @@ export const transformValues = values => {
       return {
         kode: skalOverstyre ? OVERSTYRING_AV_BEREGNINGSAKTIVITETER : AVKLAR_AKTIVITETER,
         begrunnelse: beg === undefined ? null : beg,
-        grunnlag: [...vurderAktiviteterTransformed],
+        grunnlag: [...vurderAktiviteterTransformed.beregningsaktivitetLagreDtoList],
       };
     });
 };
