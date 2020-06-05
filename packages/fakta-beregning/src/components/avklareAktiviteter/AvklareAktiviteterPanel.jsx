@@ -204,7 +204,7 @@ export const transformValues = values => {
     })
     .map(currentFormValues => {
       const { avklarAktiviteter } = currentFormValues;
-      const skalOverstyre = values[MANUELL_OVERSTYRING_FIELD];
+      const skalOverstyre = currentFormValues[MANUELL_OVERSTYRING_FIELD];
       const vurderAktiviteterTransformed = VurderAktiviteterPanel.transformValues(
         currentFormValues,
         avklarAktiviteter.aktiviteterTomDatoMapping,

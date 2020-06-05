@@ -233,23 +233,33 @@ describe('<VurderOgFastsettATFL>', () => {
 
   it('skal returnere true for fastsetting av AT-inntekt når AT-inntekt skal fastsettes', () => {
     const values = {};
-    values[INNTEKT_FIELD_ARRAY_NAME] = [
+    const fieldArrayID = '123';
+    values[[`${fieldArrayID}.${INNTEKT_FIELD_ARRAY_NAME}`]] = [
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
     ];
     const skalFastsetteInntektMock = andel => andel.aktivitetStatus === aktivitetStatuser.ARBEIDSTAKER;
-    const skalFastsetteAT = skalFastsettInntektForArbeidstaker.resultFunc(values, skalFastsetteInntektMock);
+    const skalFastsetteAT = skalFastsettInntektForArbeidstaker.resultFunc(
+      values,
+      skalFastsetteInntektMock,
+      fieldArrayID,
+    );
     expect(skalFastsetteAT).to.equal(true);
   });
 
   it('skal returnere false for fastsetting av AT-inntekt når AT-inntekt ikkje skal fastsettes', () => {
     const values = {};
-    values[INNTEKT_FIELD_ARRAY_NAME] = [
+    const fieldArrayID = '123';
+    values[[`${fieldArrayID}.${INNTEKT_FIELD_ARRAY_NAME}`]] = [
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
     ];
     const skalFastsetteInntektMock = andel => andel.aktivitetStatus !== aktivitetStatuser.ARBEIDSTAKER;
-    const skalFastsetteAT = skalFastsettInntektForArbeidstaker.resultFunc(values, skalFastsetteInntektMock);
+    const skalFastsetteAT = skalFastsettInntektForArbeidstaker.resultFunc(
+      values,
+      skalFastsetteInntektMock,
+      fieldArrayID,
+    );
     expect(skalFastsetteAT).to.equal(false);
   });
 });
