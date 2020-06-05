@@ -387,7 +387,9 @@ const emptyArray = [];
 
 const mapStateToProps = (state, ownProps) => ({
   faktaOmBeregning: getFaktaOmBeregning(ownProps),
-  aktivePaneler: getFaktaOmBeregningTilfellerKoder(ownProps) ? getFaktaOmBeregningTilfellerKoder(ownProps) : emptyArray,
+  aktivePaneler: getFaktaOmBeregningTilfellerKoder(ownProps)
+    ? getFaktaOmBeregningTilfellerKoder(ownProps.beregningsgrunnlag?.faktaOmBeregning)
+    : emptyArray,
 });
 
 export default connect(mapStateToProps)(FaktaForATFLOgSNPanelImpl);

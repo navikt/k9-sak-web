@@ -175,14 +175,16 @@ export class AvklareAktiviteterPanelImpl extends Component {
     const {
       reduxFormInitialize: formInitialize,
       behandlingFormPrefix,
-      avklarAktiviteter,
-      aksjonspunkter,
-      alleKodeverk,
+      aktivtBeregningsgrunnlagIndex,
+      alleBeregningsgrunnlag,
     } = this.props;
-    formInitialize(
-      `${behandlingFormPrefix}.${formNameAvklarAktiviteter}`,
-      buildInitialValues(aksjonspunkter, avklarAktiviteter, alleKodeverk),
-    );
+    const initialValues = {
+      [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag =>
+        buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, this.props),
+      ),
+      aktivtBeregningsgrunnlagIndex,
+    };
+    formInitialize(`${behandlingFormPrefix}.${formNameAvklarAktiviteter}`, initialValues);
   }
 
   renderAvklareAktiviteter = ({ fields }) => {
