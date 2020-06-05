@@ -10,13 +10,14 @@ import aktivitetStatus, {
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import SideMenu from '@navikt/nap-side-menu';
+import classNames from 'classnames/bind';
 import { Column, Row } from 'nav-frontend-grid';
-import { TabsPure } from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { FieldArray } from 'redux-form';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
@@ -32,6 +33,7 @@ import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnla
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
 import BeregningForm2, { transformValues } from './beregningForm/BeregningForm';
+import styles from './beregningFP.less';
 import GraderingUtenBG2 from './gradering/GraderingUtenBG';
 import beregningStyles from './beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import Beregningsgrunnlag from './beregningsgrunnlagPanel/Beregningsgrunnlag';
@@ -40,6 +42,8 @@ import AksjonspunktBehandlerFL from './frilanser/AksjonspunktBehandlerFL';
 import VurderOgFastsettSN from './selvstendigNaeringsdrivende/VurderOgFastsettSN';
 import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import GrunnlagForAarsinntektPanelAT from './arbeidstaker/GrunnlagForAarsinntektPanelAT';
+
+const cx = classNames.bind(styles);
 
 const visningForManglendeBG = () => (
   <>
@@ -104,9 +108,10 @@ const BeregningFP = ({
   handleSubmit,
   // eslint-disable-next-line
   initialValues,
+  intl,
 }) => {
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
-  const skalBrukeTabs = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
+  const skalBrukeSidemeny = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const aktivtBeregningsrunnlag = harFlereBeregningsgrunnlag
     ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
@@ -149,6 +154,8 @@ const BeregningFP = ({
     );
   };
 
+  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
+
   const GraderingUtenBGFieldArrayComponent = ({ fields }) => {
     if (fields.length === 0) {
       if (harFlereBeregningsgrunnlag) {
@@ -178,17 +185,24 @@ const BeregningFP = ({
   };
 
   return (
-    <>
-      {skalBrukeTabs && (
-        <TabsPure
-          tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-            aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
-            label: `Beregningsgrunnlag ${currentBeregningsgrunnlagIndex + 1}`,
-          }))}
-          onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
-        />
+    <div className={mainContainerClassnames}>
+      {skalBrukeSidemeny && (
+        <div className={styles.sideMenuContainer}>
+          <SideMenu
+            links={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
+              active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
+              label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
+                currentBeregningsgrunnlagIndex + 1
+              }`,
+            }))}
+            onClick={clickedIndex => {
+              setAktivtBeregningsgrunnlagIndeks(clickedIndex);
+            }}
+            theme="arrow"
+          />
+        </div>
       )}
-      <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
+      <div className={styles.contentContainer}>
         <form onSubmit={handleSubmit} className={beregningStyles.beregningForm}>
           <FieldArray name="beregningsgrunnlagListe" component={BeregningsGrunnlagFieldArrayComponent} />
           {sokerHarGraderingPaaAndelUtenBG && (
@@ -212,7 +226,7 @@ const BeregningFP = ({
           )}
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -229,6 +243,7 @@ BeregningFP.propTypes = {
   handleSubmit: PropTypes.any.isRequired,
   // eslint-disable-next-line
   gjeldendeAksjonspunkter: PropTypes.any.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 BeregningFP.defaultProps = {
@@ -362,7 +377,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 const BeregningK9Form = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(BeregningFP),
+  })(injectIntl(BeregningFP)),
 );
 
 export default BeregningK9Form;

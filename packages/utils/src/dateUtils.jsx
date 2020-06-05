@@ -1,8 +1,6 @@
 import moment from 'moment/moment';
 import 'moment/locale/nb';
-import {
-  DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT,
-} from './formats';
+import { DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
 
 export const TIDENES_ENDE = '9999-12-31';
 
@@ -94,24 +92,24 @@ export const calcDaysAndWeeksWithWeekends = (fraDatoPeriode, tilDatoPeriode) => 
 
 export const splitWeeksAndDays = (weeks, days) => {
   const returnArray = [];
-  const allDays = weeks ? (weeks * 5) + days : days;
-  const firstPeriodDays = allDays % 2 === 0 ? allDays / 2 : (allDays / 2) + 0.5;
-  const secondPeriodDays = allDays % 2 === 0 ? allDays / 2 : (allDays / 2) - 0.5;
+  const allDays = weeks ? weeks * 5 + days : days;
+  const firstPeriodDays = allDays % 2 === 0 ? allDays / 2 : allDays / 2 + 0.5;
+  const secondPeriodDays = allDays % 2 === 0 ? allDays / 2 : allDays / 2 - 0.5;
   const firstPeriodWeeksAndDays = { weeks: Math.trunc(firstPeriodDays / 5), days: firstPeriodDays % 5 };
   const secondPeriodWeeksAndDays = { weeks: Math.trunc(secondPeriodDays / 5), days: secondPeriodDays % 5 };
   returnArray.push(secondPeriodWeeksAndDays, firstPeriodWeeksAndDays);
   return returnArray;
 };
 
-export const dateFormat = (date) => moment(date).format(DDMMYYYY_DATE_FORMAT);
+export const dateFormat = date => moment(date).format(DDMMYYYY_DATE_FORMAT);
 
-export const timeFormat = (date) => moment(date).format(HHMM_TIME_FORMAT);
+export const timeFormat = date => moment(date).format(HHMM_TIME_FORMAT);
 
 // Skal ikke legge til dag når dato er tidenes ende
-export const addDaysToDate = (dateString, nrOfDays) => (dateString === TIDENES_ENDE
-  ? dateString
-  : moment(dateString, ISO_DATE_FORMAT).add(nrOfDays, 'days').format(ISO_DATE_FORMAT));
-
+export const addDaysToDate = (dateString, nrOfDays) =>
+  dateString === TIDENES_ENDE
+    ? dateString
+    : moment(dateString, ISO_DATE_FORMAT).add(nrOfDays, 'days').format(ISO_DATE_FORMAT);
 
 export const findDifferenceInMonthsAndDays = (fomDate, tomDate) => {
   const fDate = moment(fomDate, ISO_DATE_FORMAT, true);
@@ -129,16 +127,17 @@ export const findDifferenceInMonthsAndDays = (fomDate, tomDate) => {
   };
 };
 
-
 export const getRangeOfMonths = (fom, tom) => {
   moment.locale('nb');
   const fraMåned = moment(fom, YYYY_MM_FORMAT);
   const tilMåned = moment(tom, YYYY_MM_FORMAT);
   let currentMonth = fraMåned;
-  const range = [{
-    month: currentMonth.format('MMMM'),
-    year: currentMonth.format('YY'),
-  }];
+  const range = [
+    {
+      month: currentMonth.format('MMMM'),
+      year: currentMonth.format('YY'),
+    },
+  ];
 
   while (currentMonth.isBefore(tilMåned)) {
     currentMonth = currentMonth.add(1, 'month');
@@ -150,3 +149,6 @@ export const getRangeOfMonths = (fom, tom) => {
 
   return range;
 };
+
+export const isValidDate = date => moment(date, ISO_DATE_FORMAT).isValid();
+export const visningsdato = date => moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT);

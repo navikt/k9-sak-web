@@ -28,3 +28,4 @@ export { default as FastsattOpptjeningAktivitet } from './src/opptjening/fastsat
 export { default as UtlandDokStatus } from './src/opptjening/utlandDokStatus';
 export { default as Vilkårresultat } from './src/opptjening/vilkårresultat';
 export { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknaden';
+export { default as Rammevedtak, RammevedtakEnum, RammevedtakType } from './src/omsorgspenger/Rammevedtak';

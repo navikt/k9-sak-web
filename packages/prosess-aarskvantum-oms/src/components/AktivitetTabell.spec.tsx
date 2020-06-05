@@ -21,6 +21,7 @@ describe('AktivitetTabell', () => {
         utfall: UtfallEnum.AVSLÅTT,
         periode: '2020-03-01/2020-03-31',
         utbetalingsgrad: 0,
+        hjemler: [],
         vurderteVilkår: {
           vilkår: {
             [VilkårEnum.NOK_DAGER]: UtfallEnum.AVSLÅTT,

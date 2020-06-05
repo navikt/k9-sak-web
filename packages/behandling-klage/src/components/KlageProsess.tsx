@@ -235,8 +235,10 @@ class KlageProsess extends Component<Props, KlageProsessState> {
     const harKommetTilKlageinstans = !!klageVurdering?.klageFormkravResultatKA;
 
     const erReadOnly =
-      valgtSteg?.isReadOnly
-      || (harKommetTilKlageinstans && (valgtSteg?.kode === 'formkrav_klage_nav_familie_og_pensjon' || valgtSteg?.kode === 'klage_nav_familie_og_pensjon'));
+      valgtSteg?.isReadOnly ||
+      (harKommetTilKlageinstans &&
+        (valgtSteg?.kode === 'formkrav_klage_nav_familie_og_pensjon' ||
+          valgtSteg?.kode === 'klage_nav_familie_og_pensjon'));
 
     const fellesProps = {
       behandling,

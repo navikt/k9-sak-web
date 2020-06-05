@@ -12,6 +12,7 @@ import {
   Sykdom,
   OmsorgenFor,
 } from '@k9-sak-web/types';
+import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];
@@ -26,6 +27,7 @@ interface FetchedData {
   simuleringResultat: SimuleringResultat;
   sykdom: Sykdom;
   omsorgenFor: OmsorgenFor;
+  forbrukteDager: ÅrskvantumForbrukteDager;
 }
 
 export default FetchedData;
