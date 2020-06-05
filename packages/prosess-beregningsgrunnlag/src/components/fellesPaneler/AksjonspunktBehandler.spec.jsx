@@ -113,8 +113,6 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerTB).to.have.length(0);
     expect(aksjonspunktBehandlerFL).to.have.length(1);
     expect(aksjonspunktBehandlerSN).to.have.length(0);
-    const submitButton = rows.at(2).first().childAt(0);
-    expect(submitButton).to.have.length(1);
   });
   it('Skal teste at riktig componenter blir renderet for AT readOnly false', () => {
     relevanteStatuser.isFrilanser = false;
@@ -152,8 +150,6 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerTB).to.have.length(0);
     expect(aksjonspunktBehandlerFL).to.have.length(0);
     expect(aksjonspunktBehandlerSN).to.have.length(0);
-    const submitButton = rows.at(2).first().childAt(0);
-    expect(submitButton).to.have.length(1);
   });
   it('Skal teste at riktig componenter blir renderet for AT tidsbegrenset readOnly false', () => {
     relevanteStatuser.isFrilanser = false;
@@ -191,8 +187,6 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerTB).to.have.length(1);
     expect(aksjonspunktBehandlerFL).to.have.length(0);
     expect(aksjonspunktBehandlerSN).to.have.length(0);
-    const submitButton = rows.at(2).first().childAt(0);
-    expect(submitButton).to.have.length(1);
   });
   it('Skal teste at riktig componenter blir renderet for SN NyIArbeidslivet==true', () => {
     relevanteStatuser.isFrilanser = false;
