@@ -269,7 +269,7 @@ const formaterAksjonspunkter = aksjonspunkter => {
   });
 };
 
-const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
+export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return undefined;
   }

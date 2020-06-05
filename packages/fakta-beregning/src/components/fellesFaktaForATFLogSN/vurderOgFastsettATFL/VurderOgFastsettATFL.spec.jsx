@@ -4,7 +4,10 @@ import { shallow } from 'enzyme';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import VurderOgFastsettATFL, { skalFastsettInntektForArbeidstaker, skalFastsettInntektForFrilans } from './VurderOgFastsettATFL';
+import VurderOgFastsettATFL, {
+  skalFastsettInntektForArbeidstaker,
+  skalFastsettInntektForFrilans,
+} from './VurderOgFastsettATFL';
 import { INNTEKT_FIELD_ARRAY_NAME } from '../BgFordelingUtils';
 import VurderBesteberegningForm, { besteberegningField } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
@@ -21,46 +24,57 @@ const {
   FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,
 } = faktaOmBeregningTilfelle;
 
-
 const behandlingId = 1;
 const behandlingVersjon = 1;
 
-const lagBeregningsgrunnlag = (andeler) => ({
+const lagBeregningsgrunnlag = andeler => ({
   beregningsgrunnlagPeriode: [
     {
-      beregningsgrunnlagPrStatusOgAndel: andeler.map((andel) => (
-        {
-          andelsnr: andel.andelsnr,
-          aktivitetStatus: { kode: andel.aktivitetStatus },
-          inntektskategori: { kode: andel.inntektskategori },
-          erNyoppstartet: andel.erNyoppstartet,
-        }
-      )),
+      beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({
+        andelsnr: andel.andelsnr,
+        aktivitetStatus: { kode: andel.aktivitetStatus },
+        inntektskategori: { kode: andel.inntektskategori },
+        erNyoppstartet: andel.erNyoppstartet,
+      })),
     },
   ],
 });
 
-const lagFaktaOmBeregning = (tilfeller, arbeidsforholdMedLønnsendringUtenIM,
+const lagFaktaOmBeregning = (
+  tilfeller,
+  arbeidsforholdMedLønnsendringUtenIM,
   arbeidstakerOgFrilanserISammeOrganisasjonListe,
-  vurderMottarYtelse = {}) => ({
-  faktaOmBeregningTilfeller: tilfeller.map((kode) => ({ kode })),
+  vurderMottarYtelse = {},
+) => ({
+  faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
   vurderBesteberegning: {},
   arbeidsforholdMedLønnsendringUtenIM,
   arbeidstakerOgFrilanserISammeOrganisasjonListe,
   vurderMottarYtelse,
 });
 
-const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => (
-  {
-    andelsnr,
-    aktivitetStatus: { kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS' },
-    inntektskategori: { kode: inntektskategori, kodeverk: 'INNTEKTSKATEGORI' },
-  }
-);
+const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => ({
+  andelsnr,
+  aktivitetStatus: { kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS' },
+  inntektskategori: { kode: inntektskategori, kodeverk: 'INNTEKTSKATEGORI' },
+});
 
-const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler = false,
-  nyAndel = false, skalRedigereInntekt = true) => ({
-  nyAndel, andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler, skalRedigereInntekt,
+const lagAndelValues = (
+  andelsnr,
+  fastsattBelop,
+  inntektskategori,
+  aktivitetStatus,
+  lagtTilAvSaksbehandler = false,
+  nyAndel = false,
+  skalRedigereInntekt = true,
+) => ({
+  nyAndel,
+  andelsnr,
+  fastsattBelop,
+  inntektskategori,
+  aktivitetStatus,
+  lagtTilAvSaksbehandler,
+  skalRedigereInntekt,
 });
 
 describe('<VurderOgFastsettATFL>', () => {
@@ -77,12 +91,17 @@ describe('<VurderOgFastsettATFL>', () => {
     const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
     expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe.length).to.equal(1);
     expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).to.equal(1);
-    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
-    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
-    expect(transformed.fakta.besteberegningAndeler.nyDagpengeAndel.fastsatteVerdier.inntektskategori).to.equal('DAGPENGER');
+    expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(
+      10000,
+    );
+    expect(
+      transformed.fakta.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.inntektskategori,
+    ).to.equal('ARBEIDSTAKER');
+    expect(transformed.fakta.besteberegningAndeler.nyDagpengeAndel.fastsatteVerdier.inntektskategori).to.equal(
+      'DAGPENGER',
+    );
     expect(transformed.fakta.besteberegningAndeler.nyDagpengeAndel.fastsatteVerdier.fastsattBeløp).to.equal(20000);
   });
-
 
   it('skal ikkje transform inntekt for nyoppstartetFL og lønnsendring når man har besteberegning', () => {
     const values = {};
@@ -95,19 +114,18 @@ describe('<VurderOgFastsettATFL>', () => {
       lagAndelValues(undefined, '20 000', inntektskategorier.DAGPENGER, aktivitetStatuser.DAGPENGER, true, true),
     ];
     const andelMedLonnsendring = lagAndel(1, aktivitetStatuser.ARBEIDSTAKER, inntektskategorier.ARBEIDSTAKER);
-    const andeler = [
-      andelMedLonnsendring,
-      lagAndel(2, aktivitetStatuser.FRILANSER, inntektskategorier.FRILANSER),
-    ];
+    const andeler = [andelMedLonnsendring, lagAndel(2, aktivitetStatuser.FRILANSER, inntektskategorier.FRILANSER)];
     const beregningsgrunnlag = lagBeregningsgrunnlag(andeler);
-    const faktaOmBeregning = lagFaktaOmBeregning([VURDER_BESTEBEREGNING,
-      VURDER_NYOPPSTARTET_FL, VURDER_LONNSENDRING], [andelMedLonnsendring], undefined);
+    const faktaOmBeregning = lagFaktaOmBeregning(
+      [VURDER_BESTEBEREGNING, VURDER_NYOPPSTARTET_FL, VURDER_LONNSENDRING],
+      [andelMedLonnsendring],
+      undefined,
+    );
     const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values);
     expect(transformed.fakta.besteberegningAndeler.besteberegningAndelListe.length).to.equal(2);
     expect(transformed.fakta.besteberegningAndeler.nyDagpengeAndel === null).to.equal(false);
     expect(transformed.fakta.faktaOmBeregningTilfeller.length).to.equal(4);
   });
-
 
   it('skal fastsette inntekt for nyoppstartetFL og arbeidstaker uten inntektsmelding med lønnendring', () => {
     const values = {};
@@ -127,8 +145,11 @@ describe('<VurderOgFastsettATFL>', () => {
       },
     ];
     const beregningsgrunnlag = lagBeregningsgrunnlag(andeler);
-    const faktaOmBeregning = lagFaktaOmBeregning([VURDER_LONNSENDRING,
-      VURDER_NYOPPSTARTET_FL], [andelMedLonnsendring], undefined);
+    const faktaOmBeregning = lagFaktaOmBeregning(
+      [VURDER_LONNSENDRING, VURDER_NYOPPSTARTET_FL],
+      [andelMedLonnsendring],
+      undefined,
+    );
     const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values).fakta;
     expect(transformed.fastsattUtenInntektsmelding.andelListe.length).to.equal(1);
     expect(transformed.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
@@ -138,14 +159,13 @@ describe('<VurderOgFastsettATFL>', () => {
     expect(transformed.faktaOmBeregningTilfeller.includes(VURDER_NYOPPSTARTET_FL)).to.equal(true);
     expect(transformed.faktaOmBeregningTilfeller.includes(VURDER_LONNSENDRING)).to.equal(true);
     expect(transformed.faktaOmBeregningTilfeller.includes(FASTSETT_MAANEDSINNTEKT_FL)).to.equal(true);
-    expect(transformed.faktaOmBeregningTilfeller.includes(FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)).to.equal(true);
+    expect(
+      transformed.faktaOmBeregningTilfeller.includes(FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),
+    ).to.equal(true);
   });
 
-
   it('skal vise komponent', () => {
-    const tilfeller = [VURDER_BESTEBEREGNING, VURDER_LONNSENDRING,
-      VURDER_MOTTAR_YTELSE, VURDER_NYOPPSTARTET_FL,
-    ];
+    const tilfeller = [VURDER_BESTEBEREGNING, VURDER_LONNSENDRING, VURDER_MOTTAR_YTELSE, VURDER_NYOPPSTARTET_FL];
     const andelMedLonnsendring = lagAndel(1, aktivitetStatuser.ARBEIDSTAKER, inntektskategorier.ARBEIDSTAKER);
     const andeler = [
       andelMedLonnsendring,
@@ -155,23 +175,26 @@ describe('<VurderOgFastsettATFL>', () => {
       },
     ];
     const beregningsgrunnlag = lagBeregningsgrunnlag(andeler);
-    const wrapper = shallow(<VurderOgFastsettATFL.WrappedComponent
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      tilfeller={tilfeller}
-      skalViseTabell={false}
-      skalFastsetteAT
-      skalFastsetteFL={false}
-      skalHaBesteberegning={false}
-      harKunstigArbeid={false}
-      manglerInntektsmelding
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      alleKodeverk={{}}
-      aksjonspunkter={[]}
-      erOverstyrer={false}
-      beregningsgrunnlag={beregningsgrunnlag}
-    />);
+    const wrapper = shallow(
+      <VurderOgFastsettATFL.WrappedComponent
+        readOnly={false}
+        isAksjonspunktClosed={false}
+        tilfeller={tilfeller}
+        skalViseTabell={false}
+        skalFastsetteAT
+        skalFastsetteFL={false}
+        skalHaBesteberegning={false}
+        harKunstigArbeid={false}
+        manglerInntektsmelding
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={{}}
+        aksjonspunkter={[]}
+        erOverstyrer={false}
+        beregningsgrunnlag={beregningsgrunnlag}
+        fieldArrayID="dummyId"
+      />,
+    );
     const inntektstabellPanel = wrapper.find(InntektstabellPanel);
     const lonnsendringForm = inntektstabellPanel.find(LonnsendringForm);
     expect(lonnsendringForm.length).to.equal(1);
@@ -192,7 +215,7 @@ describe('<VurderOgFastsettATFL>', () => {
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
     ];
-    const skalFastsetteInntektMock = (andel) => (andel.aktivitetStatus === aktivitetStatuser.FRILANSER);
+    const skalFastsetteInntektMock = andel => andel.aktivitetStatus === aktivitetStatuser.FRILANSER;
     const skalFastsetteFL = skalFastsettInntektForFrilans.resultFunc(values, skalFastsetteInntektMock);
     expect(skalFastsetteFL).to.equal(true);
   });
@@ -203,7 +226,7 @@ describe('<VurderOgFastsettATFL>', () => {
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
     ];
-    const skalFastsetteInntektMock = (andel) => (andel.aktivitetStatus !== aktivitetStatuser.FRILANSER);
+    const skalFastsetteInntektMock = andel => andel.aktivitetStatus !== aktivitetStatuser.FRILANSER;
     const skalFastsetteFL = skalFastsettInntektForFrilans.resultFunc(values, skalFastsetteInntektMock);
     expect(skalFastsetteFL).to.equal(false);
   });
@@ -214,7 +237,7 @@ describe('<VurderOgFastsettATFL>', () => {
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
     ];
-    const skalFastsetteInntektMock = (andel) => (andel.aktivitetStatus === aktivitetStatuser.ARBEIDSTAKER);
+    const skalFastsetteInntektMock = andel => andel.aktivitetStatus === aktivitetStatuser.ARBEIDSTAKER;
     const skalFastsetteAT = skalFastsettInntektForArbeidstaker.resultFunc(values, skalFastsetteInntektMock);
     expect(skalFastsetteAT).to.equal(true);
   });
@@ -225,7 +248,7 @@ describe('<VurderOgFastsettATFL>', () => {
       lagAndelValues(1, 10000, inntektskategorier.FRILANSER, aktivitetStatuser.FRILANSER),
       lagAndelValues(2, 20000, inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
     ];
-    const skalFastsetteInntektMock = (andel) => (andel.aktivitetStatus !== aktivitetStatuser.ARBEIDSTAKER);
+    const skalFastsetteInntektMock = andel => andel.aktivitetStatus !== aktivitetStatuser.ARBEIDSTAKER;
     const skalFastsetteAT = skalFastsettInntektForArbeidstaker.resultFunc(values, skalFastsetteInntektMock);
     expect(skalFastsetteAT).to.equal(false);
   });
