@@ -151,10 +151,8 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleBeregningsgrunnlag={[beregningsgrunnlag]}
         fields={[]}
         {...behandlingProps}
-        fieldArrayID="test"
       />,
     );
-    console.log(wrapper.debug());
     const vurderAktivitetPanel = wrapper.find(VurderAktiviteterPanel);
     expect(vurderAktivitetPanel).has.length(1);
   });
@@ -292,21 +290,24 @@ describe('<AvklareAktiviteterPanel>', () => {
       { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, status: { kode: 'OPPR' } },
     ];
 
+    const beregningsgrunnlag = {
+      faktaOmBeregning: {
+        avklarAktiviteter,
+        andelerForFaktaOmBeregning: [
+          { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+        ],
+      },
+    };
     const wrapper = shallow(
       <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
-        beregningsgrunnlag={{
-          faktaOmBeregning: {
-            avklarAktiviteter,
-            andelerForFaktaOmBeregning: [
-              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-            ],
-          },
-        }}
+        beregningsgrunnlag={beregningsgrunnlag}
+        alleBeregningsgrunnlag={[beregningsgrunnlag]}
         hasBegrunnelse={false}
         submittable
+        aktivtBeregningsgrunnlagIndex={0}
         isDirty
         submitEnabled
         helpText={[]}
@@ -350,6 +351,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         hasBegrunnelse={false}
         submittable
         isDirty
+        aktivtBeregningsgrunnlagIndex={0}
         submitEnabled
         helpText={[]}
         harAndreAksjonspunkterIPanel={false}
@@ -393,6 +395,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         hasBegrunnelse={false}
         submittable
         isDirty
+        aktivtBeregningsgrunnlagIndex={0}
         submitEnabled
         helpText={[]}
         harAndreAksjonspunkterIPanel={false}
@@ -433,6 +436,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           },
         }}
         hasBegrunnelse={false}
+        aktivtBeregningsgrunnlagIndex={0}
         submittable
         isDirty
         submitEnabled
@@ -553,13 +557,13 @@ describe('<AvklareAktiviteterPanel>', () => {
       avklareAktiviteterListe: [{ avklarAktiviteter, aksjonspunkter: apsAvklarAktiviteter }],
       avklarAktiviteter,
     };
-    values[id1] = { skalBrukes: false };
-    values[id2] = { skalBrukes: true };
-    values[id3] = { skalBrukes: true };
-    values[idAAP] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][id1] = { skalBrukes: false };
+    values.avklareAktiviteterListe[0][id2] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][id3] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
     const transformed = transformValues(values);
-    expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
-    expect(transformed[0].beregningsaktivitetLagreDtoList[0].oppdragsgiverOrg).to.equal(aktivitet1.arbeidsgiverId);
+    expect(transformed[0].grunnlag.length).to.equal(1);
+    expect(transformed[0].grunnlag[0].oppdragsgiverOrg).to.equal(aktivitet1.arbeidsgiverId);
   });
 
   it('skal transform values om for valgt overstyring', () => {
@@ -571,17 +575,15 @@ describe('<AvklareAktiviteterPanel>', () => {
       avklareAktiviteterListe: [{ avklarAktiviteter, aksjonspunkter: aps }],
       avklarAktiviteter,
     };
-    values[id1] = { skalBrukes: null };
-    values[id2] = { skalBrukes: true };
-    values[id3] = { skalBrukes: false };
-    values[idAAP] = { skalBrukes: true };
-    values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
-    values[MANUELL_OVERSTYRING_FIELD] = true;
+    values.avklareAktiviteterListe[0][id1] = { skalBrukes: null };
+    values.avklareAktiviteterListe[0][id2] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][id3] = { skalBrukes: false };
+    values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
+    values.avklareAktiviteterListe[0][MANUELL_OVERSTYRING_FIELD] = true;
     const transformed = transformValues(values);
-    expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
-    expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
-      aktivitet3.aktørIdString,
-    );
+    expect(transformed[0].grunnlag.length).to.equal(1);
+    expect(transformed[0].grunnlag[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørIdString);
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');
     expect(transformed[0].kode).to.equal(OVERSTYRING_AV_BEREGNINGSAKTIVITETER);
   });

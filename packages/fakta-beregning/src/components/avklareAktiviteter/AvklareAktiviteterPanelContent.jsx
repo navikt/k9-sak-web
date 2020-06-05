@@ -162,7 +162,7 @@ const AvklareAktiviteterPanelContent = props => {
                     alleKodeverk={alleKodeverk}
                     values={formValues}
                     harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
-                    fieldArrayID={field}
+                    fieldArrayID={`${field}`}
                   />
                 )}
                 <VerticalSpacer twentyPx />
