@@ -32,9 +32,10 @@ import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgru
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
-import BeregningForm2, { transformValues } from './beregningForm/BeregningForm';
+import { transformValues } from './beregningForm/BeregningForm';
+import BeregningsgrunnlagFieldArrayComponent from './BeregningsgrunnlagFieldArrayComponent';
 import styles from './beregningFP.less';
-import GraderingUtenBG2 from './gradering/GraderingUtenBG';
+import GraderingUtenBGFieldArrayComponent from './GraderingUtenBGFieldArrayComponent';
 import beregningStyles from './beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import Beregningsgrunnlag from './beregningsgrunnlagPanel/Beregningsgrunnlag';
 import AksjonspunktBehandlerTB from './arbeidstaker/AksjonspunktBehandlerTB';
@@ -95,94 +96,36 @@ const getAksjonspunktForGraderingPaaAndelUtenBG = aksjonspunkter =>
 
 const formName = 'BeregningForm';
 
-const BeregningFP = ({
-  behandling,
-  beregningsgrunnlag,
-  aksjonspunkter,
-  gjeldendeAksjonspunkter,
-  submitCallback,
-  readOnly,
-  readOnlySubmitButton,
-  vilkar,
-  alleKodeverk,
-  handleSubmit,
-  // eslint-disable-next-line
-  initialValues,
-  intl,
-}) => {
+export const BeregningFP = props => {
+  const {
+    behandling,
+    beregningsgrunnlag,
+    aksjonspunkter,
+    gjeldendeAksjonspunkter,
+    submitCallback,
+    readOnly,
+    readOnlySubmitButton,
+    vilkar,
+    alleKodeverk,
+    handleSubmit,
+    // eslint-disable-next-line
+    initialValues,
+    intl,
+  } = props;
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
   const skalBrukeSidemeny = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
-  const aktivtBeregningsrunnlag = harFlereBeregningsgrunnlag
+  const aktivtBeregningsgrunnlag = harFlereBeregningsgrunnlag
     ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
     : beregningsgrunnlag;
-  if (!aktivtBeregningsrunnlag) {
+  if (!aktivtBeregningsgrunnlag) {
     return visningForManglendeBG();
   }
-  const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsrunnlag);
+  const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsgrunnlag);
   const vilkaarBG = getBGVilkar(vilkar);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
 
-  const BeregningsGrunnlagFieldArrayComponent = ({ fields }) => {
-    if (fields.length === 0) {
-      if (harFlereBeregningsgrunnlag) {
-        // eslint-disable-next-line
-        initialValues.forEach(initialValueObject => {
-          fields.push(initialValueObject);
-        });
-      } else {
-        fields.push(initialValues[0]);
-      }
-    }
-    return fields.map((fieldId, index) =>
-      index === aktivtBeregningsgrunnlagIndeks ? (
-        <BeregningForm2
-          readOnly={readOnly}
-          fieldArrayID={fieldId}
-          beregningsgrunnlag={aktivtBeregningsrunnlag}
-          gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-          relevanteStatuser={relevanteStatuser}
-          submitCallback={submitCallback}
-          readOnlySubmitButton={readOnlySubmitButton}
-          alleKodeverk={alleKodeverk}
-          behandlingId={behandling.id}
-          behandlingVersjon={behandling.versjon}
-          vilkaarBG={vilkaarBG}
-          initialValues={initialValues[index]}
-        />
-      ) : null,
-    );
-  };
-
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
-
-  const GraderingUtenBGFieldArrayComponent = ({ fields }) => {
-    if (fields.length === 0) {
-      if (harFlereBeregningsgrunnlag) {
-        // eslint-disable-next-line
-        initialValues.forEach(initialValueObject => {
-          fields.push(initialValueObject);
-        });
-      } else {
-        fields.push(initialValues[0]);
-      }
-    }
-    return fields.map((fieldId, index) =>
-      index === aktivtBeregningsgrunnlagIndeks ? (
-        <GraderingUtenBG2
-          fieldArrayID={fieldId}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-          behandlingId={behandling.id}
-          behandlingVersjon={behandling.versjon}
-          aksjonspunkter={aksjonspunkter}
-          andelerMedGraderingUtenBG={aktivtBeregningsrunnlag.andelerMedGraderingUtenBG}
-          alleKodeverk={alleKodeverk}
-          venteaarsakKode={behandling.venteArsakKode}
-        />
-      ) : null,
-    );
-  };
 
   return (
     <div className={mainContainerClassnames}>
@@ -204,9 +147,39 @@ const BeregningFP = ({
       )}
       <div className={styles.contentContainer}>
         <form onSubmit={handleSubmit} className={beregningStyles.beregningForm}>
-          <FieldArray name="beregningsgrunnlagListe" component={BeregningsGrunnlagFieldArrayComponent} />
+          <FieldArray
+            name="beregningsgrunnlagListe"
+            component={BeregningsgrunnlagFieldArrayComponent}
+            props={{
+              harFlereBeregningsgrunnlag,
+              initialValues,
+              aktivtBeregningsgrunnlagIndeks,
+              aktivtBeregningsgrunnlag,
+              gjeldendeAksjonspunkter,
+              relevanteStatuser,
+              submitCallback,
+              readOnlySubmitButton,
+              behandling,
+              readOnly,
+              vilkaarBG,
+            }}
+          />
           {sokerHarGraderingPaaAndelUtenBG && (
-            <FieldArray name="graderingUtenBgListe" component={GraderingUtenBGFieldArrayComponent} />
+            <FieldArray
+              name="graderingUtenBgListe"
+              component={GraderingUtenBGFieldArrayComponent}
+              props={{
+                harFlereBeregningsgrunnlag,
+                initialValues,
+                aktivtBeregningsgrunnlagIndeks,
+                submitCallback,
+                readOnly,
+                behandling,
+                aksjonspunkter,
+                aktivtBeregningsgrunnlag,
+                alleKodeverk,
+              }}
+            />
           )}
           {aksjonspunkter.length > 0 && (
             <Row>
