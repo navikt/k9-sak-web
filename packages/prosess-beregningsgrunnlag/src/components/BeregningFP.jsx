@@ -162,6 +162,7 @@ export const BeregningFP = props => {
               behandling,
               readOnly,
               vilkaarBG,
+              alleKodeverk,
             }}
           />
           {sokerHarGraderingPaaAndelUtenBG && (
