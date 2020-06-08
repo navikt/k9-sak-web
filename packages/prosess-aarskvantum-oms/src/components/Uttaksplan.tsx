@@ -35,7 +35,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   behandlingId,
   behandlingVersjon,
   submitCallback,
-  aksjonspunkterForSteg,
+  aksjonspunkterForSteg = [],
 }) => {
   return (
     <BorderedContainer
@@ -53,15 +53,17 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
         </>
       }
     >
-      <AksjonspunktForm
-        aktiviteter={aktiviteter}
-        rammevedtak={rammevedtak}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        submitCallback={submitCallback}
-        aksjonspunkterForSteg={aksjonspunkterForSteg}
-        isAksjonspunktOpen={isAksjonspunktOpen}
-      />
+      {aksjonspunkterForSteg.length > 0 && (
+        <AksjonspunktForm
+          aktiviteter={aktiviteter}
+          rammevedtak={rammevedtak}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          submitCallback={submitCallback}
+          aksjonspunkterForSteg={aksjonspunkterForSteg}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+        />
+      )}
       {aktiviteter.length ? (
         aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => (
           <AktivitetTabell
