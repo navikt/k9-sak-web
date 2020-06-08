@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
-import { Rammevedtak } from '@k9-sak-web/types';
+import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import formaterDato from './utils';
 
 interface MidlertidigAleneProps {
