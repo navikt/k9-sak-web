@@ -130,12 +130,8 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
             {bgPeriodeMedAvslagsårsak && <Normaltekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Normaltekst>}
           </Normaltekst>
           <VerticalSpacer sixteenPx />
-          <Row>
-            <Column xs="4">
-              <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
-              {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
-            </Column>
-          </Row>
+          <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
+          {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
           {beregningErManueltFastsatt && (
             <VedtakFritekstPanel
               readOnly={readOnly}
