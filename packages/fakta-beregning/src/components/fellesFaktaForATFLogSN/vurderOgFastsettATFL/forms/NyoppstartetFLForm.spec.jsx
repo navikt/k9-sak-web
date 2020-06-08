@@ -8,14 +8,17 @@ import NyoppstartetFLForm, { erNyoppstartetFLField } from './NyoppstartetFLForm'
 
 describe('<NyoppstartetFLForm>', () => {
   it('skal teste at korrekt antall radioknapper vises med korrekte props', () => {
-    const wrapper = shallow(<NyoppstartetFLForm
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      erNyoppstartetFL={false}
-      tilfeller={[]}
-      radioknappOverskrift={['test1', 'test2']}
-      manglerIM={false}
-    />);
+    const wrapper = shallow(
+      <NyoppstartetFLForm
+        readOnly={false}
+        isAksjonspunktClosed={false}
+        erNyoppstartetFL={false}
+        tilfeller={[]}
+        radioknappOverskrift={['test1', 'test2']}
+        manglerIM={false}
+        fieldArrayID="dummyId"
+      />,
+    );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(2);
     expect(radios.last().prop('disabled')).is.eql(false);
@@ -25,9 +28,8 @@ describe('<NyoppstartetFLForm>', () => {
     faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL }],
   };
 
-
   it('skal teste at transformValues gir korrekt output', () => {
-    const values = { };
+    const values = {};
     values[erNyoppstartetFLField] = true;
     values.dummyField = 'tilfeldig verdi';
     const transformedObject = NyoppstartetFLForm.transformValues(values, null, faktaOmBeregning, []);
@@ -53,24 +55,28 @@ describe('<NyoppstartetFLForm>', () => {
     aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
   };
 
-
   it('skal teste transform values med inntekter', () => {
-    const values = { };
+    const values = {};
     values[erNyoppstartetFLField] = true;
-    const inntekterPrMnd = [
-      frilansAndelInntekt,
-      arbeidstakerInntekt,
-    ];
+    const inntekterPrMnd = [frilansAndelInntekt, arbeidstakerInntekt];
     const fastsatteAndeler = [];
-    const transformedObject = NyoppstartetFLForm.transformValues(values, inntekterPrMnd, faktaOmBeregning, fastsatteAndeler);
+    const transformedObject = NyoppstartetFLForm.transformValues(
+      values,
+      inntekterPrMnd,
+      faktaOmBeregning,
+      fastsatteAndeler,
+    );
     expect(transformedObject.vurderNyoppstartetFL.erNyoppstartetFL).to.equal(true);
     expect(transformedObject.faktaOmBeregningTilfeller.length).to.equal(2);
-    expect(transformedObject.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)).to.equal(true);
-    expect(transformedObject.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)).to.equal(true);
+    expect(
+      transformedObject.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL),
+    ).to.equal(true);
+    expect(
+      transformedObject.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL),
+    ).to.equal(true);
     expect(transformedObject.fastsettMaanedsinntektFL.maanedsinntekt).to.equal(10000);
     expect(fastsatteAndeler.length).to.equal(1);
   });
-
 
   it('skal teste at buildInitialValues gir korrekt output med gyldig beregningsgrunnlag', () => {
     const gyldigBG = {

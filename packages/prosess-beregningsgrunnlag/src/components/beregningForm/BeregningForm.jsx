@@ -1,27 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
-import { createSelector } from 'reselect';
-
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { behandlingForm } from '@fpsak-frontend/form';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import { Undertittel } from 'nav-frontend-typografi';
-import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel, {
   RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN,
 } from '../fellesPaneler/SkjeringspunktOgStatusPanel';
 import VurderOgFastsettSN from '../selvstendigNaeringsdrivende/VurderOgFastsettSN';
-import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import Beregningsgrunnlag, {
@@ -128,36 +122,6 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   );
 };
 
-export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.beregningsgrunnlag, (state, ownProps) => ownProps.gjeldendeAksjonspunkter],
-  (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
-    if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
-      return undefined;
-    }
-    const allePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
-    const gjeldendeDekningsgrad = beregningsgrunnlag.dekningsgrad;
-    const alleAndelerIForstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
-    const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(
-      andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
-    );
-    const frilanserAndeler = alleAndelerIForstePeriode.filter(
-      andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
-    );
-    const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter(
-      andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    );
-    const initialValues = {
-      ...Beregningsgrunnlag.buildInitialValues(gjeldendeAksjonspunkter),
-      ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
-      ...AksjonspunktBehandlerFL.buildInitialValues(frilanserAndeler),
-      ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
-      ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
-      ...SkjeringspunktOgStatusPanel.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
-    };
-    return initialValues;
-  },
-);
-
 const harAksjonspunkt = (aksjonspunktKode, gjeldendeAksjonspunkter) =>
   gjeldendeAksjonspunkter !== undefined &&
   gjeldendeAksjonspunkter !== null &&
@@ -185,6 +149,13 @@ const transformValuesATFLHverForSegTidsbegrenset = (values, skalFastsetteAT, ska
   },
 ];
 
+function leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunktListe, skjæringstidspunkt) {
+  return aksjonspunktListe.map(aksjonspunkt => ({
+    ...aksjonspunkt,
+    skjæringstidspunkt,
+  }));
+}
+
 export const transformValues = (
   values,
   relevanteStatuser,
@@ -203,6 +174,7 @@ export const transformValues = (
     (skalFastsetteAT || skalFastsetteFL) && harNyttIkkeSamletSammenligningsgrunnlag;
   const harTidsbegrensedeArbeidsforhold = harPerioderMedAvsluttedeArbeidsforhold(allePerioder);
   const aksjonspunkter = [];
+  const { skjæringstidspunkt } = values;
   const vurderDekningsgradAksjonspunkt = {
     kode: VURDER_DEKNINGSGRAD,
     begrunnelse: values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING],
@@ -216,12 +188,18 @@ export const transformValues = (
     !harTidsbegrensedeArbeidsforhold
   ) {
     if (skalATOgFLFastsettesHverForSeg) {
-      return aksjonspunkter.concat(
-        transformValuesATFLHverForSeg(values, skalFastsetteAT, skalFastsetteFL, alleAndelerIForstePeriode),
+      return leggPåSkjæringstidspunktPåAksjonspunktListe(
+        aksjonspunkter.concat(
+          transformValuesATFLHverForSeg(values, skalFastsetteAT, skalFastsetteFL, alleAndelerIForstePeriode),
+        ),
+        skjæringstidspunkt,
       );
     }
-    return aksjonspunkter.concat(
-      AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode),
+    return leggPåSkjæringstidspunktPåAksjonspunktListe(
+      aksjonspunkter.concat(
+        AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode),
+      ),
+      skjæringstidspunkt,
     );
   }
   if (
@@ -231,7 +209,10 @@ export const transformValues = (
     ) ||
     harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)
   ) {
-    return aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, gjeldendeAksjonspunkter));
+    return leggPåSkjæringstidspunktPåAksjonspunktListe(
+      aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, gjeldendeAksjonspunkter)),
+      skjæringstidspunkt,
+    );
   }
   if (
     (harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, gjeldendeAksjonspunkter) ||
@@ -240,11 +221,14 @@ export const transformValues = (
   ) {
     if (skalATOgFLFastsettesHverForSeg) {
       const t = transformValuesATFLHverForSegTidsbegrenset(values, skalFastsetteAT, skalFastsetteFL, allePerioder);
-      return aksjonspunkter.concat(t);
+      return leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunkter.concat(t), skjæringstidspunkt);
     }
-    return aksjonspunkter.concat(Beregningsgrunnlag.transformValues(values, allePerioder));
+    return leggPåSkjæringstidspunktPåAksjonspunktListe(
+      aksjonspunkter.concat(Beregningsgrunnlag.transformValues(values, allePerioder)),
+      skjæringstidspunkt,
+    );
   }
-  return aksjonspunkter;
+  return leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunkter, skjæringstidspunkt);
 };
 
 const getSammenligningsgrunnlagsPrStatus = bg =>
@@ -313,7 +297,7 @@ export const BeregningFormImpl = ({
   behandlingVersjon,
   alleKodeverk,
   vilkaarBG,
-  ...formProps
+  fieldArrayID,
 }) => {
   const {
     dekningsgrad,
@@ -331,7 +315,7 @@ export const BeregningFormImpl = ({
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
   const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
   return (
-    <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
+    <>
       {gjeldendeAksjonspunkter && (
         <>
           <VerticalSpacer eightPx />
@@ -403,6 +387,7 @@ export const BeregningFormImpl = ({
                 aksjonspunkter={gjeldendeAksjonspunkter}
                 relevanteStatuser={relevanteStatuser}
                 tidsBegrensetInntekt={tidsBegrensetInntekt}
+                fieldArrayID={fieldArrayID}
               />
             </>
           )}
@@ -428,7 +413,7 @@ export const BeregningFormImpl = ({
           )}
         </Column>
       </Row>
-    </form>
+    </>
   );
 };
 
@@ -443,43 +428,7 @@ BeregningFormImpl.propTypes = {
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   vilkaarBG: PropTypes.shape().isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { gjeldendeAksjonspunkter, relevanteStatuser, submitCallback, beregningsgrunnlag } = initialOwnProps;
-  const allePerioder = beregningsgrunnlag ? beregningsgrunnlag.beregningsgrunnlagPeriode : [];
-  const alleAndelerIForstePeriode =
-    allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
-
-  const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
-  const samletSammenligningsgrunnnlag =
-    sammenligningsgrunnlagPrStatus &&
-    sammenligningsgrunnlagPrStatus.find(
-      sammenLigGr => sammenLigGr.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
-    );
-  const harNyttIkkeSamletSammenligningsgrunnlag = sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
-
-  const onSubmit = values =>
-    submitCallback(
-      transformValues(
-        values,
-        relevanteStatuser,
-        alleAndelerIForstePeriode,
-        gjeldendeAksjonspunkter,
-        allePerioder,
-        harNyttIkkeSamletSammenligningsgrunnlag,
-      ),
-    );
-  return (state, ownProps) => ({
-    onSubmit,
-    initialValues: buildInitialValues(state, ownProps),
-  });
-};
-
-const BeregningForm = connect(mapStateToPropsFactory)(
-  behandlingForm({
-    form: formName,
-  })(BeregningFormImpl),
-);
-
-export default BeregningForm;
+export default BeregningFormImpl;

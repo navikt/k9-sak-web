@@ -21,17 +21,14 @@ import { getFormValuesForBeregning } from '../../../BeregningFormUtils';
  */
 export const harEtterlonnSluttpakkeField = 'vurderEtterlønnSluttpakke';
 
-const VurderEtterlonnSluttpakkeForm = ({
-  readOnly,
-  isAksjonspunktClosed,
-}) => (
+const VurderEtterlonnSluttpakkeForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
   <div>
     <Normaltekst>
       <FormattedMessage id="BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt" />
     </Normaltekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
-      name={harEtterlonnSluttpakkeField}
+      name={`${fieldArrayID}.${harEtterlonnSluttpakkeField}`}
       validate={[required]}
       readOnly={readOnly}
       isEdited={isAksjonspunktClosed}
@@ -45,6 +42,7 @@ const VurderEtterlonnSluttpakkeForm = ({
 VurderEtterlonnSluttpakkeForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
 VurderEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag, faktaAksjonspunkt) => {
@@ -54,22 +52,26 @@ VurderEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag, faktaAks
   }
   const apErTidligereLost = !isAksjonspunktOpen(faktaAksjonspunkt.status.kode);
   const relevanteAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode
-    .flatMap((periode) => periode.beregningsgrunnlagPrStatusOgAndel)
-    .filter(({ arbeidsforhold }) => arbeidsforhold
-  && arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE);
+    .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel)
+    .filter(
+      ({ arbeidsforhold }) => arbeidsforhold && arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE,
+    );
   if (relevanteAndeler.length > 0) {
     initialValues[harEtterlonnSluttpakkeField] = apErTidligereLost ? relevanteAndeler[0].beregnetPrAar > 0 : undefined;
   }
   return initialValues;
 };
 
-const finnEtterlønnSluttpakkeAndel = (faktaOmBeregning) => {
+const finnEtterlønnSluttpakkeAndel = faktaOmBeregning => {
   if (!faktaOmBeregning.andelerForFaktaOmBeregning) {
     return undefined;
   }
-  const etterlønnSluttpakkeAndel = faktaOmBeregning.andelerForFaktaOmBeregning
-    .find((andel) => andel.arbeidsforhold && andel.arbeidsforhold.arbeidsforholdType
-    && andel.arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE);
+  const etterlønnSluttpakkeAndel = faktaOmBeregning.andelerForFaktaOmBeregning.find(
+    andel =>
+      andel.arbeidsforhold &&
+      andel.arbeidsforhold.arbeidsforholdType &&
+      andel.arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE,
+  );
 
   return etterlønnSluttpakkeAndel ? etterlønnSluttpakkeAndel.andelsnr : undefined;
 };
@@ -80,35 +82,37 @@ VurderEtterlonnSluttpakkeForm.transformValues = (values, inntektPrMnd, faktaOmBe
     return {};
   }
   if (!inntektPrMnd || inntektPrMnd.length === 0) {
-    return ({
+    return {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE],
       vurderEtterlønnSluttpakke: { erEtterlønnSluttpakke: values[harEtterlonnSluttpakkeField] },
-    });
+    };
   }
   const etterlønnSluttpakkeAndelsnr = finnEtterlønnSluttpakkeAndel(faktaOmBeregning);
   if (!etterlønnSluttpakkeAndelsnr) {
     return {};
   }
-  const etterlonnSluttpakkeField = inntektPrMnd
-    .find((field) => field.andelsnr === etterlønnSluttpakkeAndelsnr);
+  const etterlonnSluttpakkeField = inntektPrMnd.find(field => field.andelsnr === etterlønnSluttpakkeAndelsnr);
   if (!etterlonnSluttpakkeField) {
-    return ({
+    return {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE],
       vurderEtterlønnSluttpakke: { erEtterlønnSluttpakke: values[harEtterlonnSluttpakkeField] },
-    });
+    };
   }
   if (fastsatteAndelsnr.includes(etterlonnSluttpakkeField.andelsnr)) {
-    return ({
+    return {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE],
       vurderEtterlønnSluttpakke: { erEtterlønnSluttpakke: values[harEtterlonnSluttpakkeField] },
-    });
+    };
   }
   fastsatteAndelsnr.push(etterlonnSluttpakkeField.andelsnr);
   const inntekt = {
     fastsettEtterlønnSluttpakke: { fastsattPrMnd: etterlonnSluttpakkeField.fastsattBelop },
   };
   return {
-    faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE, faktaOmBeregningTilfelle.FASTSETT_ETTERLONN_SLUTTPAKKE],
+    faktaOmBeregningTilfeller: [
+      faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE,
+      faktaOmBeregningTilfelle.FASTSETT_ETTERLONN_SLUTTPAKKE,
+    ],
     ...inntekt,
     vurderEtterlønnSluttpakke: { erEtterlønnSluttpakke: values[harEtterlonnSluttpakkeField] },
   };
