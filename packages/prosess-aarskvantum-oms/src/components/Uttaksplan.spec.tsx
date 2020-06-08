@@ -6,6 +6,7 @@ import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
 import { VilkårEnum } from '../dto/Vilkår';
 import AktivitetTabell from './AktivitetTabell';
+import AksjonspunktForm from './AksjonspunktForm';
 
 describe('Uttaksplan', () => {
   const aktivitet: Aktivitet = {
@@ -18,6 +19,7 @@ describe('Uttaksplan', () => {
       {
         utfall: UtfallEnum.AVSLÅTT,
         periode: '2020-03-01/2020-03-31',
+        hjemler: [],
         utbetalingsgrad: 0,
         vurderteVilkår: {
           vilkår: {
@@ -35,5 +37,19 @@ describe('Uttaksplan', () => {
     const tabell = wrapper.find(AktivitetTabell);
 
     expect(tabell).to.have.length(aktiviteter.length);
+  });
+
+  it('rendrer aksjonspunkt hvis det finnes', () => {
+    const wrapperAksjonspunkt = shallowWithIntl(
+      <Uttaksplan aksjonspunkterForSteg={[{}]} isAksjonspunktOpen={false} aktiviteter={[]} aktivitetsstatuser={[]} />,
+    );
+
+    expect(wrapperAksjonspunkt.find(AksjonspunktForm)).to.have.length(1);
+
+    const wrapperIngenAksjonspunkt = shallowWithIntl(
+      <Uttaksplan aksjonspunkterForSteg={[]} isAksjonspunktOpen={false} aktiviteter={[]} aktivitetsstatuser={[]} />,
+    );
+
+    expect(wrapperIngenAksjonspunkt.find(AksjonspunktForm)).to.have.length(0);
   });
 });
