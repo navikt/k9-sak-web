@@ -17,8 +17,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
-import { Knapp } from 'nav-frontend-knapper';
-import TextAreaField from '../../form/src/TextAreaField';
 import FrilanserForm from './FrilanserForm';
 import styles from './opplysningerFraSoknadenForm.less';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
@@ -68,8 +66,9 @@ interface OpplysningerFraSoknadenFormProps {
   harApneAksjonspunkter: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
   submittable: boolean;
-  kanEndrePåSøknadsopplysninger: boolean;
   opplysningerFraSøknaden: OpplysningerFraSøknaden;
+  formIsEditable: boolean;
+  kanEndrePåSøknadsopplysninger: boolean;
 }
 
 interface InitialValues {
@@ -91,7 +90,7 @@ interface StateProps {
 
 const formName = 'OpplysningerFraSoknadenForm';
 
-const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & InjectedFormProps & StateProps) => {
+const OpplysningerFraSoknadenFormOld = (props: OpplysningerFraSoknadenFormProps & InjectedFormProps & StateProps) => {
   const intl = useIntl();
   const {
     handleSubmit,
@@ -104,9 +103,9 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
     behandlingFormPrefix,
     harSøktSomFrilanser,
     harSøktSomSSN,
+    formIsEditable,
   } = props;
   const { søknadsperiode } = initialValues;
-  const [skjemaErLåst, setSkjemaErLåst] = React.useState(true);
   const formSelector = `${behandlingFormPrefix}.${formName}`;
 
   const resetFormField = field => {
@@ -127,16 +126,6 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
 
   return (
     <div>
-      {kanEndrePåSøknadsopplysninger && (
-        <Knapp
-          className={styles.formUnlockButton}
-          type="hoved"
-          htmlType="button"
-          onClick={() => setSkjemaErLåst(!skjemaErLåst)}
-        >
-          {skjemaErLåst ? 'Lås opp skjema' : 'Lås skjema'}
-        </Knapp>
-      )}
       <form onSubmit={handleSubmit}>
         <div
           className={classNames('formContainer', {
@@ -144,12 +133,12 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             'formContainer--hidden': !skalViseSSNSeksjonen,
           })}
         >
-          {harSøktSomSSN && skjemaErLåst && (
+          {harSøktSomSSN && formIsEditable && (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
             </Element>
           )}
-          {!skjemaErLåst && (
+          {!formIsEditable && (
             <CheckboxField
               label={
                 <Label
@@ -167,7 +156,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
               selvstendigNæringsdrivendeInntekt2019={selvstendigNæringsdrivendeInntekt2019}
               selvstendigNæringsdrivendeInntekt2020={selvstendigNæringsdrivendeInntekt2020}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
-              readOnly={skjemaErLåst}
+              readOnly={formIsEditable}
               clearSelvstendigValues={clearSelvstendigValues}
             />
           )}
@@ -178,12 +167,12 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             'formContainer--hidden': !skalViseFrilansSeksjonen,
           })}
         >
-          {harSøktSomFrilanser && skjemaErLåst && (
+          {harSøktSomFrilanser && formIsEditable && (
             <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.frilanser" />
             </Element>
           )}
-          {!skjemaErLåst && (
+          {!formIsEditable && (
             <CheckboxField
               label={
                 <Label
@@ -199,43 +188,11 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             <FrilanserForm
               erSelvstendigNæringsdrivende={harSøktSomSSN}
               startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
-              readOnly={skjemaErLåst}
+              readOnly={formIsEditable}
               clearFrilansValues={clearFrilansValues}
             />
           )}
         </div>
-        {(harSøktSomFrilanser || harSøktSomSSN) && !skjemaErLåst && (
-          <div className={classNames('begrunnelseContainer')}>
-            <TextAreaField
-              name={SøknadFormValue.BEGRUNNELSE}
-              label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
-              validate={[required, minLength(3), maxLength(2000), hasValidText]}
-              readOnly={skjemaErLåst}
-              aria-label={intl.formatMessage({
-                id: 'OpplysningerFraSoknaden.Begrunnelse',
-              })}
-            />
-          </div>
-        )}
-        {kanEndrePåSøknadsopplysninger && !skjemaErLåst && (
-          <>
-            {(harSøktSomSSN || harSøktSomFrilanser) && (
-              <Knapp htmlType="submit" type="hoved">
-                Bekreft og fortsett
-              </Knapp>
-            )}
-            <Knapp
-              onClick={() => {
-                // eslint-disable-next-line no-self-assign
-                window.location = window.location;
-              }}
-              htmlType="button"
-              style={{ marginLeft: '8px', marginTop: '2px' }}
-            >
-              Tilbakestill skjema (OBS! Relaster siden)
-            </Knapp>
-          </>
-        )}
       </form>
     </div>
   );
@@ -576,7 +533,7 @@ const connectedComponent = connect(
 
       return errors;
     },
-  })(OpplysningerFraSoknadenForm),
+  })(OpplysningerFraSoknadenFormOld),
 );
 
 export default connectedComponent;

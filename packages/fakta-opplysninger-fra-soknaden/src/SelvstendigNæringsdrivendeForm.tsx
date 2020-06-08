@@ -41,35 +41,6 @@ const SelvstendigNæringsdrivendeForm = ({
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
         />
       </div>
-      <div className={styles.inntektContainer}>
-        <div className={styles.fieldContainer}>
-          <InputField
-            name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
-            bredde="S"
-            label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
-            validate={[hasValidInteger]}
-            readOnly={readOnly}
-          />
-        </div>
-        <div className={styles.fieldContainer}>
-          <InputField
-            name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
-            bredde="S"
-            label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
-            validate={[hasValidInteger]}
-            readOnly={readOnly}
-          />
-        </div>
-        <div className={styles.nyoppstartetContainer}>
-          <DatepickerField
-            name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
-            validate={[hasValidDate]}
-            defaultValue={null}
-            readOnly={readOnly}
-            label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
-          />
-        </div>
-      </div>
       <div className={styles.fieldContainer}>
         <InputField
           name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}
