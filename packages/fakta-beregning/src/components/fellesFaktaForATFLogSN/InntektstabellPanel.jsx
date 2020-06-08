@@ -17,10 +17,7 @@ import styles from './InntektstabellPanel.less';
 
 export const MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD = 'manuellOverstyringRapportertInntekt';
 
-const {
-  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-  AVKLAR_AKTIVITETER,
-} = aksjonspunktCodes;
+const { OVERSTYRING_AV_BEREGNINGSGRUNNLAG, AVKLAR_AKTIVITETER } = aksjonspunktCodes;
 
 /**
  * Inntektstabell
@@ -36,33 +33,31 @@ export const InntektstabellPanelImpl = ({
   readOnly,
   aksjonspunkter,
   erOverstyrt,
+  fieldArrayID,
 }) => (
   <ElementWrapper>
     {children}
     <div className={styles.fadeinTabell}>
       <VerticalSpacer sixteenPx />
-      {(kanOverstyre || erOverstyrt)
-          && (
-          <div className={styles.rightAligned}>
-            <CheckboxField
-              key="manuellOverstyring"
-              name={MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD}
-              label={{ id: 'VurderFaktaBeregning.ManuellOverstyring' }}
-              readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
-            />
-          </div>
+      {(kanOverstyre || erOverstyrt) && (
+        <div className={styles.rightAligned}>
+          <CheckboxField
+            key="manuellOverstyring"
+            name={`${fieldArrayID}.${MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD}`}
+            label={{ id: 'VurderFaktaBeregning.ManuellOverstyring' }}
+            readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
+          />
+        </div>
+      )}
+      {skalViseTabell && (
+        <ElementWrapper>
+          {hjelpeTekstId && (
+            <Element>
+              <FormattedMessage id={hjelpeTekstId} />
+            </Element>
           )}
-      {skalViseTabell
-      && (
-      <ElementWrapper>
-        {hjelpeTekstId
-        && (
-          <Element>
-            <FormattedMessage id={hjelpeTekstId} />
-          </Element>
-        )}
-        {tabell}
-      </ElementWrapper>
+          {tabell}
+        </ElementWrapper>
       )}
     </div>
   </ElementWrapper>
@@ -77,9 +72,10 @@ InntektstabellPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-InntektstabellPanelImpl.buildInitialValues = (aksjonspunkter) => ({
+InntektstabellPanelImpl.buildInitialValues = aksjonspunkter => ({
   [MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD]: hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter),
 });
 
@@ -88,9 +84,12 @@ InntektstabellPanelImpl.defaultProps = {
   skalViseTabell: true,
 };
 
-const getSkalKunneOverstyre = createSelector([(ownProps) => ownProps.erOverstyrer, (ownProps) => ownProps.aksjonspunkter],
-  (erOverstyrer, aksjonspunkter) => erOverstyrer
-&& !aksjonspunkter.some((ap) => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode)));
+const getSkalKunneOverstyre = createSelector(
+  [ownProps => ownProps.erOverstyrer, ownProps => ownProps.aksjonspunkter],
+  (erOverstyrer, aksjonspunkter) =>
+    erOverstyrer &&
+    !aksjonspunkter.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode)),
+);
 
 const mapStateToProps = (state, ownProps) => ({
   erOverstyrt: getFormValuesForBeregning(state, ownProps)[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD],

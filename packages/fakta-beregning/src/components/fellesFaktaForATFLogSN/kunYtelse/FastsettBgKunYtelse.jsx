@@ -5,14 +5,17 @@ import KunYtelsePanel from './KunYtelsePanel';
 
 const { FASTSETT_BG_KUN_YTELSE, VURDER_BESTEBEREGNING } = faktaOmBeregningTilfelle;
 
-export const setFaktaPanelForKunYtelse = (faktaPanels,
+export const setFaktaPanelForKunYtelse = (
+  faktaPanels,
   tilfeller,
   readOnly,
   isAksjonspunktClosed,
   faktaOmBeregning,
   behandlingId,
   behandlingVersjon,
-  alleKodeverk) => {
+  alleKodeverk,
+  fieldArrayID,
+) => {
   if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
     faktaPanels.push(
       <ElementWrapper key="FASTSETT_BG_KUN_YTELSE">
@@ -23,12 +26,12 @@ export const setFaktaPanelForKunYtelse = (faktaPanels,
           alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          fieldArrayID={fieldArrayID}
         />
       </ElementWrapper>,
     );
   }
 };
-
 
 export const transformValuesForKunYtelse = (values, kunYtelse, tilfeller) => {
   if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
@@ -51,7 +54,6 @@ export const getKunYtelseValidation = (values, kunYtelse, aktivertePaneler) => {
   }
   return {};
 };
-
 
 export const buildInitialValuesKunYtelse = (kunYtelse, tilfeller, faktaOmBeregningAndeler) => {
   if (tilfeller && tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {

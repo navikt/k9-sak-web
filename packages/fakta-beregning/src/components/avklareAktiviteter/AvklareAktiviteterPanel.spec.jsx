@@ -10,14 +10,12 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { CheckboxField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
-import {
-  AvklareAktiviteterPanelImpl,
+import { erAvklartAktivitetEndret, transformValues } from './AvklareAktiviteterPanel';
+import AvklareAktiviteterPanelContent, {
   BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,
   buildInitialValuesAvklarAktiviteter,
-  erAvklartAktivitetEndret,
   MANUELL_OVERSTYRING_FIELD,
-  transformValues,
-} from './AvklareAktiviteterPanel';
+} from './AvklareAktiviteterPanelContent';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import { formNameAvklarAktiviteter } from '../BeregningFormUtils';
 
@@ -116,13 +114,21 @@ const id3 = '1960-01-01efj8343f34f2019-01-01';
 const idAAP = 'AAP2019-01-01';
 
 describe('<AvklareAktiviteterPanel>', () => {
-  it('skal vise VurderAktiviteterPanel panel', () => {
+  it('skal vise VurderAktiviteterPanel', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
+    const beregningsgrunnlag = {
+      faktaOmBeregning: {
+        avklarAktiviteter,
+        andelerForFaktaOmBeregning: [
+          { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+        ],
+      },
+    };
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
@@ -140,7 +146,10 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         reduxFormInitialize={sinon.spy()}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        aktivtBeregningsgrunnlagIndex={0}
+        beregningsgrunnlag={beregningsgrunnlag}
+        alleBeregningsgrunnlag={[beregningsgrunnlag]}
+        fields={[]}
         {...behandlingProps}
       />,
     );
@@ -154,7 +163,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aksjonspunkter = [];
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
@@ -171,8 +180,17 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        beregningsgrunnlag={{
+          faktaOmBeregning: {
+            avklarAktiviteter,
+            andelerForFaktaOmBeregning: [
+              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+            ],
+          },
+        }}
+        aktivtBeregningsgrunnlagIndex={0}
         reduxFormInitialize={sinon.spy()}
+        fields={[]}
         {...behandlingProps}
       />,
     );
@@ -187,7 +205,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
 
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
@@ -200,12 +218,21 @@ describe('<AvklareAktiviteterPanel>', () => {
         erEndret={false}
         kanOverstyre
         aksjonspunkter={aksjonspunkter}
+        aktivtBeregningsgrunnlagIndex={0}
         erOverstyrt={false}
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        beregningsgrunnlag={{
+          faktaOmBeregning: {
+            avklarAktiviteter,
+            andelerForFaktaOmBeregning: [
+              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+            ],
+          },
+        }}
         reduxFormInitialize={sinon.spy()}
+        fields={[]}
         {...behandlingProps}
       />,
     );
@@ -220,11 +247,18 @@ describe('<AvklareAktiviteterPanel>', () => {
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
 
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        beregningsgrunnlag={{
+          faktaOmBeregning: {
+            avklarAktiviteter,
+            andelerForFaktaOmBeregning: [
+              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+            ],
+          },
+        }}
         hasBegrunnelse={false}
         submittable
         isDirty
@@ -238,6 +272,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        fields={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
       />,
@@ -255,14 +290,24 @@ describe('<AvklareAktiviteterPanel>', () => {
       { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, status: { kode: 'OPPR' } },
     ];
 
+    const beregningsgrunnlag = {
+      faktaOmBeregning: {
+        avklarAktiviteter,
+        andelerForFaktaOmBeregning: [
+          { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+        ],
+      },
+    };
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        beregningsgrunnlag={beregningsgrunnlag}
+        alleBeregningsgrunnlag={[beregningsgrunnlag]}
         hasBegrunnelse={false}
         submittable
+        aktivtBeregningsgrunnlagIndex={0}
         isDirty
         submitEnabled
         helpText={[]}
@@ -275,6 +320,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         reduxFormInitialize={sinon.spy()}
+        fields={[]}
         {...behandlingProps}
       />,
     );
@@ -290,14 +336,22 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } }];
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        beregningsgrunnlag={{
+          faktaOmBeregning: {
+            avklarAktiviteter,
+            andelerForFaktaOmBeregning: [
+              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+            ],
+          },
+        }}
         hasBegrunnelse={false}
         submittable
         isDirty
+        aktivtBeregningsgrunnlagIndex={0}
         submitEnabled
         helpText={[]}
         harAndreAksjonspunkterIPanel={false}
@@ -309,6 +363,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         reduxFormInitialize={sinon.spy()}
+        fields={[]}
         {...behandlingProps}
       />,
     );
@@ -325,14 +380,22 @@ describe('<AvklareAktiviteterPanel>', () => {
     const aksjonspunkter = [];
 
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        beregningsgrunnlag={{
+          faktaOmBeregning: {
+            avklarAktiviteter,
+            andelerForFaktaOmBeregning: [
+              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+            ],
+          },
+        }}
         hasBegrunnelse={false}
         submittable
         isDirty
+        aktivtBeregningsgrunnlagIndex={0}
         submitEnabled
         helpText={[]}
         harAndreAksjonspunkterIPanel={false}
@@ -344,6 +407,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         reduxFormInitialize={sinon.spy()}
+        fields={[]}
         {...behandlingProps}
       />,
     );
@@ -359,12 +423,20 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        beregningsgrunnlag={{
+          faktaOmBeregning: {
+            avklarAktiviteter,
+            andelerForFaktaOmBeregning: [
+              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+            ],
+          },
+        }}
         hasBegrunnelse={false}
+        aktivtBeregningsgrunnlagIndex={0}
         submittable
         isDirty
         submitEnabled
@@ -378,6 +450,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         reduxFormInitialize={sinon.spy()}
+        fields={[]}
         {...behandlingProps}
       />,
     );
@@ -393,11 +466,19 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
     const wrapper = shallow(
-      <AvklareAktiviteterPanelImpl
+      <AvklareAktiviteterPanelContent
         {...reduxFormPropsMock}
         readOnly={false}
         isAksjonspunktClosed={false}
-        beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+        beregningsgrunnlag={{
+          faktaOmBeregning: {
+            avklarAktiviteter,
+            andelerForFaktaOmBeregning: [
+              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+            ],
+          },
+        }}
+        aktivtBeregningsgrunnlagIndex={0}
         hasBegrunnelse={false}
         submittable
         isDirty
@@ -411,6 +492,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        fields={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
       />,
@@ -426,10 +508,10 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
 
-    const initialValues = buildInitialValuesAvklarAktiviteter({
+    const beregningsgrunnlag = { faktaOmBeregning: { avklarAktiviteter } };
+    const initialValues = buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, {
       alleKodeverk,
       aksjonspunkter: apsAvklarAktiviteter,
-      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
     });
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
@@ -440,11 +522,13 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
     const aps = [];
-    const initialValues = buildInitialValuesAvklarAktiviteter({
-      alleKodeverk,
-      aksjonspunkter: aps,
-      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
-    });
+    const initialValues = buildInitialValuesAvklarAktiviteter(
+      { faktaOmBeregning: { avklarAktiviteter } },
+      {
+        alleKodeverk,
+        aksjonspunkter: aps,
+      },
+    );
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
   });
@@ -454,11 +538,13 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
     const aps = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
-    const initialValues = buildInitialValuesAvklarAktiviteter({
-      alleKodeverk,
-      aksjonspunkter: aps,
-      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
-    });
+    const initialValues = buildInitialValuesAvklarAktiviteter(
+      { faktaOmBeregning: { avklarAktiviteter } },
+      {
+        alleKodeverk,
+        aksjonspunkter: aps,
+      },
+    );
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(true);
   });
@@ -468,16 +554,16 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
     const values = {
+      avklareAktiviteterListe: [{ avklarAktiviteter, aksjonspunkter: apsAvklarAktiviteter }],
       avklarAktiviteter,
-      aksjonspunkter: apsAvklarAktiviteter,
     };
-    values[id1] = { skalBrukes: false };
-    values[id2] = { skalBrukes: true };
-    values[id3] = { skalBrukes: true };
-    values[idAAP] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][id1] = { skalBrukes: false };
+    values.avklareAktiviteterListe[0][id2] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][id3] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
     const transformed = transformValues(values);
-    expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
-    expect(transformed[0].beregningsaktivitetLagreDtoList[0].oppdragsgiverOrg).to.equal(aktivitet1.arbeidsgiverId);
+    expect(transformed[0].grunnlag.length).to.equal(1);
+    expect(transformed[0].grunnlag[0].oppdragsgiverOrg).to.equal(aktivitet1.arbeidsgiverId);
   });
 
   it('skal transform values om for valgt overstyring', () => {
@@ -486,20 +572,18 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aps = [];
     const values = {
+      avklareAktiviteterListe: [{ avklarAktiviteter, aksjonspunkter: aps }],
       avklarAktiviteter,
-      aksjonspunkter: aps,
     };
-    values[id1] = { skalBrukes: null };
-    values[id2] = { skalBrukes: true };
-    values[id3] = { skalBrukes: false };
-    values[idAAP] = { skalBrukes: true };
-    values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
-    values[MANUELL_OVERSTYRING_FIELD] = true;
+    values.avklareAktiviteterListe[0][id1] = { skalBrukes: null };
+    values.avklareAktiviteterListe[0][id2] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][id3] = { skalBrukes: false };
+    values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
+    values.avklareAktiviteterListe[0][BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
+    values.avklareAktiviteterListe[0][MANUELL_OVERSTYRING_FIELD] = true;
     const transformed = transformValues(values);
-    expect(transformed[0].beregningsaktivitetLagreDtoList.length).to.equal(1);
-    expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
-      aktivitet3.aktørIdString,
-    );
+    expect(transformed[0].grunnlag.length).to.equal(1);
+    expect(transformed[0].grunnlag[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørIdString);
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');
     expect(transformed[0].kode).to.equal(OVERSTYRING_AV_BEREGNINGSAKTIVITETER);
   });

@@ -13,9 +13,10 @@ import { sortArbeidsforholdList, createVisningsnavnForAktivitet } from '../../Ar
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';
 
-const createArbeidsforholdRadioKey = (andel) => (andel && andel.arbeidsforhold
-  ? `${andel.arbeidsforhold.arbeidsgiverNavn}(${andel.arbeidsforhold.arbeidsforholdId})(${andel.andelsnr})`
-  : '');
+const createArbeidsforholdRadioKey = andel =>
+  andel && andel.arbeidsforhold
+    ? `${andel.arbeidsforhold.arbeidsgiverNavn}(${andel.arbeidsforhold.arbeidsforholdId})(${andel.andelsnr})`
+    : '';
 /**
  * TidsbegrensetArbeidsforholdForm
  *
@@ -28,9 +29,10 @@ export const TidsbegrensetArbeidsforholdFormImpl = ({
   andelsliste,
   isAksjonspunktClosed,
   alleKodeverk,
+  fieldArrayID,
 }) => (
   <div>
-    {andelsliste.map((andel) => (
+    {andelsliste.map(andel => (
       <div key={`fastsettTidsbegrensedeForhold_${createVisningsnavnForAktivitet(andel.arbeidsforhold, alleKodeverk)}`}>
         <Normaltekst>
           <FormattedMessage
@@ -44,7 +46,7 @@ export const TidsbegrensetArbeidsforholdFormImpl = ({
         </Normaltekst>
         <VerticalSpacer eightPx />
         <RadioGroupField
-          name={createArbeidsforholdRadioKey(andel)}
+          name={`${fieldArrayID}.${createArbeidsforholdRadioKey(andel)}`}
           validate={[required]}
           readOnly={readOnly}
           isEdited={isAksjonspunktClosed}
@@ -62,26 +64,30 @@ TidsbegrensetArbeidsforholdFormImpl.propTypes = {
   andelsliste: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-export const getSortedKortvarigeArbeidsforholdList = createSelector([(ownProps) => ownProps.faktaOmBeregning],
-  (faktaOmBeregning) => sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold));
+export const getSortedKortvarigeArbeidsforholdList = createSelector(
+  [ownProps => ownProps.faktaOmBeregning],
+  faktaOmBeregning => sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold),
+);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const andelsliste = getSortedKortvarigeArbeidsforholdList(ownProps);
   return () => ({
     andelsliste,
+    fieldArrayID: ownProps.fieldArrayID,
   });
 };
 
 const TidsbegrensetArbeidsforholdForm = connect(mapStateToPropsFactory)(TidsbegrensetArbeidsforholdFormImpl);
 
-TidsbegrensetArbeidsforholdForm.buildInitialValues = (andeler) => {
+TidsbegrensetArbeidsforholdForm.buildInitialValues = andeler => {
   const initialValues = {};
   if (!andeler) {
     return initialValues;
   }
-  andeler.forEach((andel) => {
+  andeler.forEach(andel => {
     if (andel.erTidsbegrensetArbeidsforhold !== undefined) {
       initialValues[createArbeidsforholdRadioKey(andel)] = andel.erTidsbegrensetArbeidsforhold;
     }
@@ -91,7 +97,7 @@ TidsbegrensetArbeidsforholdForm.buildInitialValues = (andeler) => {
 
 TidsbegrensetArbeidsforholdForm.transformValues = (values, andeler) => {
   const newValues = [];
-  andeler.forEach((andel) => {
+  andeler.forEach(andel => {
     const fieldName = createArbeidsforholdRadioKey(andel);
     const booleanValue = values[fieldName];
     const valueObject = {

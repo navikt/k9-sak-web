@@ -6,10 +6,9 @@ import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-fakta-bere
 
 describe('<NyIArbeidslivetSNForm>', () => {
   it('skal teste at korrekt antall radioknapper vises med korrekte props', () => {
-    const wrapper = shallowWithIntl(<NyIArbeidslivetSNForm
-      readOnly={false}
-      isAksjonspunktClosed={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <NyIArbeidslivetSNForm readOnly={false} isAksjonspunktClosed={false} fieldArrayID="dummyId" />,
+    );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(2);
     expect(radios.last().prop('disabled')).is.eql(false);

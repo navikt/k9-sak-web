@@ -178,7 +178,9 @@ const prosessStegPanelDefinisjoner = [
           ac.VURDER_DEKNINGSGRAD,
         ],
         vilkarCodes: [vt.BEREGNINGSGRUNNLAGVILKARET],
-        renderComponent: props => <BeregningsgrunnlagProsessIndex {...props} />,
+        renderComponent: props => {
+          return <BeregningsgrunnlagProsessIndex {...props} />;
+        },
         showComponent: () => true,
         getData: ({ fagsak, featureToggles, beregningsgrunnlag }) => ({ fagsak, featureToggles, beregningsgrunnlag }),
       },
