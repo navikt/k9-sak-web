@@ -149,7 +149,7 @@ const prosessStegPanelDefinisjoner = [
         aksjonspunkterCodes: [ac.VURDER_ÅRSKVANTUM_KVOTE],
         endpoints: [],
         renderComponent: props => <ÅrskvantumIndex {...props} />,
-        getData: ({ forbrukteDager }) => ({ årskvantum: forbrukteDager }),
+        getData: ({ forbrukteDager, aksjonspunkterForSteg }) => ({ årskvantum: forbrukteDager, aksjonspunkterForSteg }),
         showComponent: () => true,
         overrideStatus: ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
           if (!forbrukteDager || !forbrukteDager.sisteUttaksplan) {

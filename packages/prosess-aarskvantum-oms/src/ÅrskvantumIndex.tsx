@@ -3,6 +3,7 @@ import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import Årskvantum from './components/Årskvantum';
@@ -24,6 +25,7 @@ interface ÅrsakvantumIndexProps {
   isAksjonspunktOpen: boolean;
   behandling: Behandling;
   submitCallback: (values: any[]) => void;
+  aksjonspunkterForSteg?: Aksjonspunkt[];
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
@@ -32,6 +34,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   isAksjonspunktOpen,
   behandling,
   submitCallback,
+  aksjonspunkterForSteg,
 }) => {
   const {
     totaltAntallDager,
@@ -70,6 +73,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         submitCallback={submitCallback}
+        aksjonspunkterForSteg={aksjonspunkterForSteg}
       />
     </RawIntlProvider>
   );
