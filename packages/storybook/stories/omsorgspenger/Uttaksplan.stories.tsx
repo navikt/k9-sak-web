@@ -155,6 +155,19 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
   />
 );
 
+export const behandletAksjonspunkt = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode])}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+    behandling={behandling}
+    isAksjonspunktOpen={false}
+    submitCallback={action('bekreft')}
+    // @ts-ignore
+    aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }]}
+  />
+);
+
 export const aksjonspunktAvslåttePerioder = () => (
   <ÅrskvantumIndex
     årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}

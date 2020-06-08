@@ -3,7 +3,9 @@ import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { KodeverkMedNavn, Rammevedtak } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { joinNonNullStrings } from '@fpsak-frontend/fp-felles/index';
 import BorderedContainer from './BorderedContainer';
@@ -21,6 +23,7 @@ interface UttaksplanProps {
   behandlingId: number;
   behandlingVersjon: number;
   submitCallback: (values: any[]) => void;
+  aksjonspunkterForSteg?: Aksjonspunkt[];
 }
 
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
@@ -32,6 +35,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   behandlingId,
   behandlingVersjon,
   submitCallback,
+  aksjonspunkterForSteg,
 }) => {
   return (
     <BorderedContainer
@@ -49,15 +53,15 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
         </>
       }
     >
-      {isAksjonspunktOpen && (
-        <AksjonspunktForm
-          aktiviteter={aktiviteter}
-          rammevedtak={rammevedtak}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          submitCallback={submitCallback}
-        />
-      )}
+      <AksjonspunktForm
+        aktiviteter={aktiviteter}
+        rammevedtak={rammevedtak}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        submitCallback={submitCallback}
+        aksjonspunkterForSteg={aksjonspunkterForSteg}
+        isAksjonspunktOpen={isAksjonspunktOpen}
+      />
       {aktiviteter.length ? (
         aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => (
           <AktivitetTabell
