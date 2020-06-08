@@ -5,15 +5,13 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { InntektstabellPanelImpl } from './InntektstabellPanel';
 
-const {
-  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-} = aksjonspunktCodes;
-
+const { OVERSTYRING_AV_BEREGNINGSGRUNNLAG } = aksjonspunktCodes;
 
 describe('<InntektstabellPanel>', () => {
   it('skal vise children og skal vise tabell', () => {
     const wrapper = shallow(
       <InntektstabellPanelImpl
+        fieldArrayID="dummyId"
         key="inntektstabell"
         hjelpeTekstId="hjelpetekst"
         tabell={<span> tabell </span>}
@@ -41,6 +39,7 @@ describe('<InntektstabellPanel>', () => {
   it('skal vise checkbox for overstyring', () => {
     const wrapper = shallow(
       <InntektstabellPanelImpl
+        fieldArrayID="dummyId"
         key="inntektstabell"
         hjelpeTekstId="hjelpetekst"
         tabell={<span> tabell </span>}
@@ -60,6 +59,7 @@ describe('<InntektstabellPanel>', () => {
   it('skal vise checkbox for overstyring for saksbehandler når overstyrt', () => {
     const wrapper = shallow(
       <InntektstabellPanelImpl
+        fieldArrayID="dummyId"
         key="inntektstabell"
         hjelpeTekstId="hjelpetekst"
         tabell={<span> tabell </span>}
@@ -79,6 +79,7 @@ describe('<InntektstabellPanel>', () => {
   it('checkbox skal vere readOnly når man har overstyring aksjonspunkt', () => {
     const wrapper = shallow(
       <InntektstabellPanelImpl
+        fieldArrayID="dummyId"
         key="inntektstabell"
         hjelpeTekstId="hjelpetekst"
         tabell={<span> tabell </span>}

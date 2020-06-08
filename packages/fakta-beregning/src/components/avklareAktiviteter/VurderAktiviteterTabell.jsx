@@ -5,19 +5,14 @@ import moment from 'moment';
 import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import opptjeningAktivitetTyper from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import {
-  RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
-import {
-  Table, TableRow, TableColumn, PeriodLabel, EditedIcon,
-} from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { Table, TableRow, TableColumn, PeriodLabel, EditedIcon } from '@fpsak-frontend/shared-components';
 import { createVisningsnavnForAktivitet } from '../ArbeidsforholdHelper';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 
 import styles from './vurderAktiviteterTabell.less';
 
-
-export const lagAktivitetFieldId = (aktivitet) => {
+export const lagAktivitetFieldId = aktivitet => {
   if (aktivitet.arbeidsgiverId) {
     if (aktivitet.arbeidsforholdId) {
       return aktivitet.arbeidsgiverId + aktivitet.arbeidsforholdId + aktivitet.fom.replace('.', '');
@@ -43,12 +38,18 @@ export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt) 
   return true;
 };
 
-const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt) => (
+const lagTableRow = (
+  readOnly,
+  isAksjonspunktClosed,
+  aktivitet,
+  alleKodeverk,
+  erOverstyrt,
+  harAksjonspunkt,
+  fieldArrayID,
+) => (
   <TableRow key={lagAktivitetFieldId(aktivitet)}>
     <TableColumn>
-      <Normaltekst>
-        {createVisningsnavnForAktivitet(aktivitet, alleKodeverk)}
-      </Normaltekst>
+      <Normaltekst>{createVisningsnavnForAktivitet(aktivitet, alleKodeverk)}</Normaltekst>
     </TableColumn>
     <TableColumn>
       <Normaltekst>
@@ -57,7 +58,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, er
     </TableColumn>
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
-        name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
+        name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
         readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.bruk`} value />]}
@@ -65,29 +66,24 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, er
     </TableColumn>
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
-        name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
+        name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
         readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
       </RadioGroupField>
     </TableColumn>
-    {isAksjonspunktClosed && readOnly
-      && (
-      <TableColumn>
-        {skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)
-          && <EditedIcon />}
-      </TableColumn>
-      )}
+    {isAksjonspunktClosed && readOnly && (
+      <TableColumn>{skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt) && <EditedIcon />}</TableColumn>
+    )}
   </TableRow>
 );
 
-const getHeaderTextCodes = () => ([
+const getHeaderTextCodes = () => [
   'VurderAktiviteterTabell.Header.Aktivitet',
   'VurderAktiviteterTabell.Header.Periode',
   'VurderAktiviteterTabell.Header.Benytt',
   'VurderAktiviteterTabell.Header.IkkeBenytt',
-]
-);
+];
 
 const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
   if (erOverstyrt) {
@@ -98,9 +94,14 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
       />
     );
   }
-  const harAAP = aktiviteter.some((aktivitet) => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP);
-  const harVentelonnVartpenger = aktiviteter.some((aktivitet) => aktivitet.arbeidsforholdType
-    && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.VENTELØNN_VARTPENGER);
+  const harAAP = aktiviteter.some(
+    aktivitet => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP,
+  );
+  const harVentelonnVartpenger = aktiviteter.some(
+    aktivitet =>
+      aktivitet.arbeidsforholdType &&
+      aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.VENTELØNN_VARTPENGER,
+  );
   if (harAAP) {
     return (
       <FormattedMessage
@@ -133,15 +134,22 @@ export const VurderAktiviteterTabell = ({
   alleKodeverk,
   erOverstyrt,
   harAksjonspunkt,
+  fieldArrayID,
 }) => (
   <>
-    <Element>
-      {finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}
-    </Element>
+    <Element>{finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}</Element>
     <Table headerTextCodes={getHeaderTextCodes()} noHover>
-      {aktiviteter.map((aktivitet) => (
-        lagTableRow(readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt)
-      ))}
+      {aktiviteter.map(aktivitet =>
+        lagTableRow(
+          readOnly,
+          isAksjonspunktClosed,
+          aktivitet,
+          alleKodeverk,
+          erOverstyrt,
+          harAksjonspunkt,
+          fieldArrayID,
+        ),
+      )}
     </Table>
   </>
 );
@@ -154,42 +162,41 @@ VurderAktiviteterTabell.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
   harAksjonspunkt: PropTypes.bool.isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
-
 
 VurderAktiviteterTabell.validate = (values, aktiviteter) => {
   const errors = {};
   let harError = false;
-  aktiviteter
-    .forEach((aktivitet) => {
-      const fieldId = lagAktivitetFieldId(aktivitet);
-      const e = required(values[fieldId].skalBrukes);
-      if (e) {
-        errors[fieldId] = { skalBrukes: e };
-        harError = true;
-      }
-    });
+  aktiviteter.forEach(aktivitet => {
+    const fieldId = lagAktivitetFieldId(aktivitet);
+    const e = required(values[fieldId].skalBrukes);
+    if (e) {
+      errors[fieldId] = { skalBrukes: e };
+      harError = true;
+    }
+  });
   if (harError) {
     return errors;
   }
   return null;
 };
 
-
-VurderAktiviteterTabell.transformValues = (values, aktiviteter) => aktiviteter
-  .filter((aktivitet) => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)
-  .map((aktivitet) => ({
-    oppdragsgiverOrg: aktivitet.aktørIdString ? null : aktivitet.arbeidsgiverId,
-    arbeidsforholdRef: aktivitet.arbeidsforholdId,
-    fom: aktivitet.fom,
-    tom: aktivitet.tom,
-    opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
-    arbeidsgiverIdentifikator: aktivitet.aktørIdString ? aktivitet.aktørIdString : null,
-    skalBrukes: false,
-  }));
+VurderAktiviteterTabell.transformValues = (values, aktiviteter) =>
+  aktiviteter
+    .filter(aktivitet => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)
+    .map(aktivitet => ({
+      oppdragsgiverOrg: aktivitet.aktørIdString ? null : aktivitet.arbeidsgiverId,
+      arbeidsforholdRef: aktivitet.arbeidsforholdId,
+      fom: aktivitet.fom,
+      tom: aktivitet.tom,
+      opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
+      arbeidsgiverIdentifikator: aktivitet.aktørIdString ? aktivitet.aktørIdString : null,
+      skalBrukes: false,
+    }));
 
 VurderAktiviteterTabell.hasValueChangedFromInitial = (aktiviteter, values, initialValues) => {
-  const changedAktiviteter = aktiviteter.map(lagAktivitetFieldId).find((fieldId) => {
+  const changedAktiviteter = aktiviteter.map(lagAktivitetFieldId).find(fieldId => {
     if (values[fieldId] && initialValues[fieldId]) {
       if (values[fieldId].skalBrukes !== initialValues[fieldId].skalBrukes) {
         return true;
@@ -219,8 +226,13 @@ VurderAktiviteterTabell.buildInitialValues = (aktiviteter, alleKodeverk, erOvers
     return {};
   }
   const initialValues = {};
-  aktiviteter.forEach((aktivitet) => {
-    initialValues[lagAktivitetFieldId(aktivitet)] = mapToInitialValues(aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt);
+  aktiviteter.forEach(aktivitet => {
+    initialValues[lagAktivitetFieldId(aktivitet)] = mapToInitialValues(
+      aktivitet,
+      alleKodeverk,
+      erOverstyrt,
+      harAksjonspunkt,
+    );
   });
   return initialValues;
 };

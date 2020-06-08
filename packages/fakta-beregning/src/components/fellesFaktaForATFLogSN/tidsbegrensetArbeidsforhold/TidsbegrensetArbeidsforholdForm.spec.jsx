@@ -25,39 +25,50 @@ const andeler = [
   },
 ];
 const alleKodeverk = {
-  [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [{
-    kode: opptjeningAktivitetType.ARBEID,
-    navn: 'Arbeid',
-  }, {
-    kode: opptjeningAktivitetType.FRILANS,
-    navn: 'Frilans',
-  }, {
-    kode: opptjeningAktivitetType.DAGPENGER,
-    navn: 'Dagpenger',
-  }, {
-    kode: opptjeningAktivitetType.NARING,
-    navn: 'Næring',
-  }],
+  [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [
+    {
+      kode: opptjeningAktivitetType.ARBEID,
+      navn: 'Arbeid',
+    },
+    {
+      kode: opptjeningAktivitetType.FRILANS,
+      navn: 'Frilans',
+    },
+    {
+      kode: opptjeningAktivitetType.DAGPENGER,
+      navn: 'Dagpenger',
+    },
+    {
+      kode: opptjeningAktivitetType.NARING,
+      navn: 'Næring',
+    },
+  ],
 };
 
 describe('<TidsbegrensetArbeidsforholdForm>', () => {
   it('skal teste at korrekt antall radioknapper vises', () => {
-    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdFormImpl
-      readOnly={false}
-      andelsliste={andeler}
-      isAksjonspunktClosed={false}
-      alleKodeverk={alleKodeverk}
-    />);
+    const wrapper = shallowWithIntl(
+      <TidsbegrensetArbeidsforholdFormImpl
+        readOnly={false}
+        andelsliste={andeler}
+        isAksjonspunktClosed={false}
+        alleKodeverk={alleKodeverk}
+        fieldArrayID="dummyId"
+      />,
+    );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(4);
   });
   it('skal teste at korrekte overskrifter vises', () => {
-    const wrapper = shallowWithIntl(<TidsbegrensetArbeidsforholdFormImpl
-      readOnly={false}
-      andelsliste={andeler}
-      isAksjonspunktClosed={false}
-      alleKodeverk={alleKodeverk}
-    />);
+    const wrapper = shallowWithIntl(
+      <TidsbegrensetArbeidsforholdFormImpl
+        readOnly={false}
+        andelsliste={andeler}
+        isAksjonspunktClosed={false}
+        alleKodeverk={alleKodeverk}
+        fieldArrayID="dummyId"
+      />,
+    );
     const message = wrapper.find('FormattedMessage');
     expect(message).to.have.length(2);
     expect(message.first().prop('id')).to.equal('BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold');

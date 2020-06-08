@@ -8,18 +8,26 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 const kanVeilede = (navAnsatt = {}) => navAnsatt.kanVeilede;
 const kanSaksbehandle = (navAnsatt = {}) => navAnsatt.kanSaksbehandle;
 const kanBeslutte = (navAnsatt = {}) => kanSaksbehandle(navAnsatt) && navAnsatt.kanBeslutte;
-const isBehandlingAvTilbakekreving = (type) => (type
-  ? (type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING) : false);
+const isBehandlingAvTilbakekreving = type =>
+  type ? type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING : false;
 
-const accessibleFor = (validNavAnsattPredicates) => (navAnsatt) => validNavAnsattPredicates.some((predicate) => predicate(navAnsatt));
+const accessibleFor = validNavAnsattPredicates => navAnsatt =>
+  validNavAnsattPredicates.some(predicate => predicate(navAnsatt));
 
-const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatus = {}, behandlingStatus = {}, isTilbakekrevingBehandling) => (
-  (isTilbakekrevingBehandling || validFagsakStauses.includes(fagsakStatus.kode))
-  && validBehandlingStatuses.includes(behandlingStatus.kode)
-);
+const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (
+  fagsakStatus = {},
+  behandlingStatus = {},
+  isTilbakekrevingBehandling,
+) =>
+  (isTilbakekrevingBehandling || validFagsakStauses.includes(fagsakStatus.kode)) &&
+  validBehandlingStatuses.includes(behandlingStatus.kode);
 
-const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (navAnsatt,
-  fagsakStatus, behandlingStatus, type) => {
+const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (
+  navAnsatt,
+  fagsakStatus,
+  behandlingStatus,
+  type,
+) => {
   if (kanVeilede(navAnsatt)) {
     return {
       employeeHasAccess: true,
@@ -27,20 +35,25 @@ const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBeha
     };
   }
   const employeeHasAccess = accessibleFor(validNavAnsattPredicates)(navAnsatt);
-  const isEnabled = employeeHasAccess
-    && (enabledFor(validFagsakStatuses, validBehandlingStatuses)(fagsakStatus, behandlingStatus, isBehandlingAvTilbakekreving(type)));
+  const isEnabled =
+    employeeHasAccess &&
+    enabledFor(validFagsakStatuses, validBehandlingStatuses)(
+      fagsakStatus,
+      behandlingStatus,
+      isBehandlingAvTilbakekreving(type),
+    );
   return { employeeHasAccess, isEnabled };
 };
 
 const henleggBehandlingAccessSelector = behandlingstype => {
-  const fagsakstatus = behandlingstype?.kode === BehandlingType.KLAGE
-    ? [fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.LOPENDE, fagsakStatusCode.AVSLUTTET]
-    : [fagsakStatusCode.UNDER_BEHANDLING];
-  return accessSelector(
-    [kanSaksbehandle],
-    fagsakstatus,
-    [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES],
-  );
+  const fagsakstatus =
+    behandlingstype?.kode === BehandlingType.KLAGE
+      ? [fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.LOPENDE, fagsakStatusCode.AVSLUTTET]
+      : [fagsakStatusCode.UNDER_BEHANDLING];
+  return accessSelector([kanSaksbehandle], fagsakstatus, [
+    behandlingStatusCode.OPPRETTET,
+    behandlingStatusCode.BEHANDLING_UTREDES,
+  ]);
 };
 
 export const henleggBehandlingAccess = (navansatt, fagsakstatus, behandlingsstatus, behandlingstype) =>
@@ -48,20 +61,36 @@ export const henleggBehandlingAccess = (navansatt, fagsakstatus, behandlingsstat
 
 const settBehandlingPaVentAccessSelector = (navAnsatt, harSoknad, erIInnhentSoknadopplysningerSteg, type) => {
   const isBehandlingAvKlageEllerInnsynEllerTilbakekreving = type
-    ? type.kode === BehandlingType.KLAGE || type.kode === BehandlingType.DOKUMENTINNSYN
-      || type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+    ? type.kode === BehandlingType.KLAGE ||
+      type.kode === BehandlingType.DOKUMENTINNSYN ||
+      type.kode === BehandlingType.TILBAKEKREVING ||
+      type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
     : false;
 
   if (harSoknad || erIInnhentSoknadopplysningerSteg || isBehandlingAvKlageEllerInnsynEllerTilbakekreving) {
-    return accessSelector([kanSaksbehandle], [fagsakStatusCode.UNDER_BEHANDLING], [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES,
-      behandlingStatusCode.FORESLA_VEDTAK]);
+    return accessSelector(
+      [kanSaksbehandle],
+      [fagsakStatusCode.UNDER_BEHANDLING],
+      [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES, behandlingStatusCode.FORESLA_VEDTAK],
+    );
   }
   return accessSelector([kanSaksbehandle, kanVeilede], [], []);
 };
 
 export const settBehandlingPaVentAccess = (
-  navAnsatt, fagsakStatus, behandlingStatus, harSoknad, erIInnhentSoknadopplysningerSteg, type,
-) => settBehandlingPaVentAccessSelector(navAnsatt, harSoknad, erIInnhentSoknadopplysningerSteg, type)(navAnsatt, fagsakStatus, behandlingStatus, type);
+  navAnsatt,
+  fagsakStatus,
+  behandlingStatus,
+  harSoknad,
+  erIInnhentSoknadopplysningerSteg,
+  type,
+) =>
+  settBehandlingPaVentAccessSelector(navAnsatt, harSoknad, erIInnhentSoknadopplysningerSteg, type)(
+    navAnsatt,
+    fagsakStatus,
+    behandlingStatus,
+    type,
+  );
 
 export const byttBehandlendeEnhetAccess = accessSelector(
   [kanSaksbehandle],
@@ -75,31 +104,42 @@ const opprettRevurderingAccessSelector = (kanRevurderingOpprettes, sakstype) => 
   }
 
   // PKMANTIS-1796/PK-54777 Workaround mens endelige regler for opprettelse av behandling avklares
-  const fagsakStatus = sakstype.kode === fagsakYtelseType.ENGANGSSTONAD
-    ? [fagsakStatusCode.AVSLUTTET]
-    : [fagsakStatusCode.OPPRETTET, fagsakStatusCode.UNDER_BEHANDLING, fagsakStatusCode.LOPENDE, fagsakStatusCode.AVSLUTTET];
-  return accessSelector(
-    [kanSaksbehandle],
-    fagsakStatus,
-    [behandlingStatusCode.AVSLUTTET, behandlingStatusCode.IVERKSETTER_VEDTAK],
-  );
+  const fagsakStatus =
+    sakstype.kode === fagsakYtelseType.ENGANGSSTONAD
+      ? [fagsakStatusCode.AVSLUTTET]
+      : [
+          fagsakStatusCode.OPPRETTET,
+          fagsakStatusCode.UNDER_BEHANDLING,
+          fagsakStatusCode.LOPENDE,
+          fagsakStatusCode.AVSLUTTET,
+        ];
+  return accessSelector([kanSaksbehandle], fagsakStatus, [
+    behandlingStatusCode.AVSLUTTET,
+    behandlingStatusCode.IVERKSETTER_VEDTAK,
+  ]);
 };
 
-export const opprettRevurderingAccess = (navAnsatt, fagsakStatus, behandlingStatus, kanRevurderingOpprettes, sakstype, type) => (
-  opprettRevurderingAccessSelector(kanRevurderingOpprettes, sakstype)(navAnsatt, fagsakStatus, behandlingStatus, type)
-);
+export const opprettRevurderingAccess = (
+  navAnsatt,
+  fagsakStatus,
+  behandlingStatus,
+  kanRevurderingOpprettes,
+  sakstype,
+  type,
+) =>
+  opprettRevurderingAccessSelector(kanRevurderingOpprettes, sakstype)(navAnsatt, fagsakStatus, behandlingStatus, type);
 
 export const opprettNyForstegangsBehandlingAccess = accessSelector(
   [kanSaksbehandle],
   [fagsakStatusCode.AVSLUTTET],
   [behandlingStatusCode.AVSLUTTET],
 );
-const infotrygdSelector = (skalBehandlesAvInfotrygd) => ({
+const infotrygdSelector = skalBehandlesAvInfotrygd => ({
   employeeHasAccess: true,
   isEnabled: skalBehandlesAvInfotrygd,
 });
 
-export const sjekkOmSkalTilInfotrygdAccess = (skalBehandlesAvInfotrygd) => infotrygdSelector(skalBehandlesAvInfotrygd);
+export const sjekkOmSkalTilInfotrygdAccess = skalBehandlesAvInfotrygd => infotrygdSelector(skalBehandlesAvInfotrygd);
 
 export const gjenopptaBehandlingAccess = accessSelector(
   [kanSaksbehandle],
@@ -108,9 +148,11 @@ export const gjenopptaBehandlingAccess = accessSelector(
 );
 
 const opneBehandlingForEndringerAccessSelector = (behandlingType, sakstype) => {
-  if (!behandlingType
-    || behandlingType.kode !== BehandlingType.REVURDERING
-    || sakstype.kode === fagsakYtelseType.ENGANGSSTONAD) {
+  if (
+    !behandlingType ||
+    behandlingType.kode !== BehandlingType.REVURDERING ||
+    sakstype.kode === fagsakYtelseType.ENGANGSSTONAD
+  ) {
     return accessSelector([kanSaksbehandle], [], []);
   }
 
@@ -121,10 +163,13 @@ const opneBehandlingForEndringerAccessSelector = (behandlingType, sakstype) => {
   );
 };
 
-export const opneBehandlingForEndringerAccess = (behandlingType,
-  navAnsatt, fagsakStatus, behandlingStatus, sakstype) => (
-  opneBehandlingForEndringerAccessSelector(behandlingType, sakstype)(navAnsatt, fagsakStatus, behandlingStatus, behandlingType)
-);
+export const opneBehandlingForEndringerAccess = (behandlingType, navAnsatt, fagsakStatus, behandlingStatus, sakstype) =>
+  opneBehandlingForEndringerAccessSelector(behandlingType, sakstype)(
+    navAnsatt,
+    fagsakStatus,
+    behandlingStatus,
+    behandlingType,
+  );
 
 export const fraBeslutterFaneAccess = accessSelector(
   [kanSaksbehandle, kanBeslutte],
@@ -132,16 +177,49 @@ export const fraBeslutterFaneAccess = accessSelector(
   [behandlingStatusCode.BEHANDLING_UTREDES],
 );
 
-export const allMenuAccessRights = (navAnsatt, fagsakStatus, kanRevurderingOpprettes, skalBehandlesAvInfotrygd,
-  sakstype, behandlingStatus, harSoknad, erIInnhentSoknadopplysningerSteg, behandlingType) => ({
+export const allMenuAccessRights = (
+  navAnsatt,
+  fagsakStatus,
+  kanRevurderingOpprettes,
+  skalBehandlesAvInfotrygd,
+  sakstype,
+  behandlingStatus,
+  harSoknad,
+  erIInnhentSoknadopplysningerSteg,
+  behandlingType,
+) => ({
   henleggBehandlingAccess: henleggBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
-  settBehandlingPaVentAccess: settBehandlingPaVentAccess(navAnsatt, fagsakStatus, behandlingStatus, harSoknad,
-    erIInnhentSoknadopplysningerSteg, behandlingType),
+  settBehandlingPaVentAccess: settBehandlingPaVentAccess(
+    navAnsatt,
+    fagsakStatus,
+    behandlingStatus,
+    harSoknad,
+    erIInnhentSoknadopplysningerSteg,
+    behandlingType,
+  ),
   byttBehandlendeEnhetAccess: byttBehandlendeEnhetAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   fraBeslutterFaneAccess: fraBeslutterFaneAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
-  opprettRevurderingAccess: opprettRevurderingAccess(navAnsatt, fagsakStatus, behandlingStatus, kanRevurderingOpprettes, sakstype, behandlingType),
-  opprettNyForstegangsBehandlingAccess: opprettNyForstegangsBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
+  opprettRevurderingAccess: opprettRevurderingAccess(
+    navAnsatt,
+    fagsakStatus,
+    behandlingStatus,
+    kanRevurderingOpprettes,
+    sakstype,
+    behandlingType,
+  ),
+  opprettNyForstegangsBehandlingAccess: opprettNyForstegangsBehandlingAccess(
+    navAnsatt,
+    fagsakStatus,
+    behandlingStatus,
+    behandlingType,
+  ),
   gjenopptaBehandlingAccess: gjenopptaBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
-  opneBehandlingForEndringerAccess: opneBehandlingForEndringerAccess(behandlingType, navAnsatt, fagsakStatus, behandlingStatus, sakstype),
+  opneBehandlingForEndringerAccess: opneBehandlingForEndringerAccess(
+    behandlingType,
+    navAnsatt,
+    fagsakStatus,
+    behandlingStatus,
+    sakstype,
+  ),
   ikkeVisOpprettNyBehandling: sjekkOmSkalTilInfotrygdAccess(skalBehandlesAvInfotrygd),
 });

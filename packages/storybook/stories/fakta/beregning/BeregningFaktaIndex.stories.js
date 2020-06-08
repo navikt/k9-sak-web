@@ -179,7 +179,10 @@ export default {
 export const ArbeidOgDagpenger = () => (
   <BeregningFaktaIndex
     behandling={behandling}
-    beregningsgrunnlag={object('beregningsgrunnlag', bgMedArbeidOgDagpenger)}
+    beregningsgrunnlag={[
+      Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
+      Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
+    ]}
     aksjonspunkter={aksjonspunktArbeidOgDagpenger}
     erOverstyrer
     alleKodeverk={alleKodeverk}
@@ -210,7 +213,10 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[
+        Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
+        Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
+      ]}
       aksjonspunkter={[
         {
           definisjon: {

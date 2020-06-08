@@ -6,11 +6,14 @@ import shallowWithIntl from '../../../../../i18n/intl-enzyme-test-helper-fakta-b
 
 describe('<VurderEtterlonnSluttpakkeForm>', () => {
   it('Skal teste at komponenten vises korrekt', () => {
-    const wrapper = shallowWithIntl(<VurderEtterlonnSluttpakkeForm.WrappedComponent
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      harEtterlonnSluttpakke={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <VurderEtterlonnSluttpakkeForm.WrappedComponent
+        readOnly={false}
+        isAksjonspunktClosed={false}
+        harEtterlonnSluttpakke={false}
+        fieldArrayID="dummyId"
+      />,
+    );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(2);
   });

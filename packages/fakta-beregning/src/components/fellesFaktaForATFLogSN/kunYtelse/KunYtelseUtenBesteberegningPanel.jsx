@@ -7,7 +7,6 @@ import { BorderBox } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 
-
 /**
  * KunYtelseUtenBesteberegningPanel
  *
@@ -22,6 +21,7 @@ const KunYtelseUtenBesteberegningPanel = ({
   behandlingVersjon,
   behandlingId,
   isAksjonspunktClosed,
+  fieldArrayID,
 }) => (
   <BorderBox>
     <Row>
@@ -32,7 +32,7 @@ const KunYtelseUtenBesteberegningPanel = ({
       </Column>
     </Row>
     <FieldArray
-      name={brukersAndelFieldArrayName}
+      name={`${fieldArrayID}.${brukersAndelFieldArrayName}`}
       component={BrukersAndelFieldArray}
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
@@ -50,6 +50,7 @@ KunYtelseUtenBesteberegningPanel.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
 export default KunYtelseUtenBesteberegningPanel;
