@@ -17,7 +17,7 @@ export const RammevedtakEnum = stringEnum({
 
 export type RammevedtakType = typeof RammevedtakEnum[keyof typeof RammevedtakEnum];
 
-interface Rammevedtak {
+export interface Rammevedtak {
   type: RammevedtakType;
   gyldigFraOgMed?: string;
   gyldigTilOgMed?: string;
@@ -30,5 +30,3 @@ interface Rammevedtak {
   fosterbarnFor?: string;
   lengde?: string; // Duration (smittevernsdager)
 }
-
-export default Rammevedtak;

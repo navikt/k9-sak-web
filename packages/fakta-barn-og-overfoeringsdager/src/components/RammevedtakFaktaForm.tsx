@@ -13,7 +13,7 @@ import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal
 import user from '@fpsak-frontend/assets/images/user.svg';
 import users from '@fpsak-frontend/assets/images/users.svg';
 import { Element } from 'nav-frontend-typografi';
-import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types';
+import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import mapDtoTilFormValues from '../dto/mapping';
 import FormValues from '../types/FormValues';
 import MidlertidigAlene from './MidlertidigAlene';
