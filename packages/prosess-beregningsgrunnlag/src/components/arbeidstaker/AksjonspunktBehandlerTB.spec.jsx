@@ -6,7 +6,11 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import AksjonspunktBehandlerTidsbegrenset, { createInputFieldKey, createTableData, getIsAksjonspunktClosed } from './AksjonspunktBehandlerTB';
+import AksjonspunktBehandlerTidsbegrenset, {
+  createInputFieldKey,
+  createTableData,
+  getIsAksjonspunktClosed,
+} from './AksjonspunktBehandlerTB';
 
 const firstCol = {
   erTidsbegrenset: true,
@@ -36,7 +40,6 @@ const fourthCol = {
   inputfieldKey: 'detteErOgsåBareEnTest',
 };
 
-
 const mockTableData = {
   arbeidsforholdPeriodeMap: {
     arbeidsgiver1: [firstCol, secondCol, thirdCol, fourthCol],
@@ -57,7 +60,6 @@ const overstyrtPrAarAndelEn = 100000;
 
 const beregnetPrAarAndelTo = 100000;
 const overstyrtPrAarAndelTo = 200000;
-
 
 const beregningsgrunnlagPerioder = [
   {
@@ -207,30 +209,40 @@ const beregningsgrunnlagPerioder = [
     ],
   },
 ];
-const keyForPeriodeOgAndel = (periodeNr, andelNr) => createInputFieldKey(
-  beregningsgrunnlagPerioder[periodeNr].beregningsgrunnlagPrStatusOgAndel[andelNr],
-  beregningsgrunnlagPerioder[periodeNr],
-);
+const keyForPeriodeOgAndel = (periodeNr, andelNr) =>
+  createInputFieldKey(
+    beregningsgrunnlagPerioder[periodeNr].beregningsgrunnlagPrStatusOgAndel[andelNr],
+    beregningsgrunnlagPerioder[periodeNr],
+  );
 const alleKodeverk = {
   test: 'test',
 };
 describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
   it('Skal teste tabellen får korrekte rader', () => {
-    const wrapper = shallowWithIntl(<AksjonspunktBehandlerTidsbegrenset.WrappedComponent
-      readOnly={false}
-      tableData={mockTableData}
-      isAksjonspunktClosed={false}
-      bruttoPrPeriodeList={mockbruttoPerodeList}
-    />);
-    const dataRows = wrapper.findWhere((node) => node.key() === 'arbeidsgiver1');
+    const wrapper = shallowWithIntl(
+      <AksjonspunktBehandlerTidsbegrenset.WrappedComponent
+        readOnly={false}
+        tableData={mockTableData}
+        isAksjonspunktClosed={false}
+        bruttoPrPeriodeList={mockbruttoPerodeList}
+        fieldArrayID="dummyId"
+      />,
+    );
+    const dataRows = wrapper.findWhere(node => node.key() === 'arbeidsgiver1');
     const arbeidsgiverNavn = dataRows.first().find('Normaltekst');
-    expect(arbeidsgiverNavn.first().childAt(0).text()).to.equal(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1[0].tabellInnhold);
-    const editableFields = mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.filter((periode) => periode.isEditable === true);
+    expect(arbeidsgiverNavn.first().childAt(0).text()).to.equal(
+      mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1[0].tabellInnhold,
+    );
+    const editableFields = mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.filter(
+      periode => periode.isEditable === true,
+    );
     expect(editableFields).to.have.length(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.length - 1);
     const sumRows = wrapper.find('#bruttoPrPeriodeRad');
     const sumCols = sumRows.first().find('td');
     expect(sumCols).to.have.length(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.length);
-    expect(sumCols.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode');
+    expect(sumCols.first().find('FormattedMessage').first().props().id).to.equal(
+      'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode',
+    );
   });
   it('Skal teste at initial values bygges korrekt', () => {
     const expectedInitialValues = {};
@@ -253,84 +265,91 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
       },
     },
   ];
-  it('Skal teste at selector lager forventet objekt ut av en liste med beregningsgrunnlagperioder '
-    + 'som inneholder kortvarige arbeidsforhold når vi har aksjonspunkt', () => {
-    const expectedResultObjectWhenWeHaveAksjonspunkt = {
-      arbeidsforholdPeriodeMap: {
-        arbeidsgiver123: [
-          {
-            erTidsbegrenset: true,
-            isEditable: false,
-            tabellInnhold: 'arbeidsgiver (123)...5678',
-            inputfieldKey: '',
-          },
-          {
-            erTidsbegrenset: false,
-            isEditable: true,
-            tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
-            inputfieldKey: 'inntektField_123_1_2018-06-01',
-          },
-          {
-            erTidsbegrenset: false,
-            isEditable: true,
-            tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
-            inputfieldKey: 'inntektField_123_1_2018-07-01',
-          },
-          {
-            erTidsbegrenset: false,
-            isEditable: true,
-            tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
-            inputfieldKey: 'inntektField_123_1_2018-08-01',
-          },
-        ],
-        arbeidsgiver456: [
-          {
-            erTidsbegrenset: true,
-            isEditable: false,
-            tabellInnhold: 'arbeidsgiver (456)...7890',
-            inputfieldKey: '',
-          },
-          {
-            erTidsbegrenset: false,
-            isEditable: true,
-            tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
-            inputfieldKey: 'inntektField_456_2_2018-06-01',
-          },
-          {
-            erTidsbegrenset: false,
-            isEditable: true,
-            tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
-            inputfieldKey: 'inntektField_456_2_2018-07-01',
-          },
-          {
-            erTidsbegrenset: false,
-            isEditable: true,
-            tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
-            inputfieldKey: 'inntektField_456_2_2018-08-01',
-          },
-        ],
-      },
-    };
-    const selectorData = createTableData.resultFunc(beregningsgrunnlagPerioder, alleKodeverk, aksjonspunkter);
-    expect(selectorData).to.deep.equal(expectedResultObjectWhenWeHaveAksjonspunkt);
-  });
+  it(
+    'Skal teste at selector lager forventet objekt ut av en liste med beregningsgrunnlagperioder ' +
+      'som inneholder kortvarige arbeidsforhold når vi har aksjonspunkt',
+    () => {
+      const expectedResultObjectWhenWeHaveAksjonspunkt = {
+        arbeidsforholdPeriodeMap: {
+          arbeidsgiver123: [
+            {
+              erTidsbegrenset: true,
+              isEditable: false,
+              tabellInnhold: 'arbeidsgiver (123)...5678',
+              inputfieldKey: '',
+            },
+            {
+              erTidsbegrenset: false,
+              isEditable: true,
+              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
+              inputfieldKey: 'inntektField_123_1_2018-06-01',
+            },
+            {
+              erTidsbegrenset: false,
+              isEditable: true,
+              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
+              inputfieldKey: 'inntektField_123_1_2018-07-01',
+            },
+            {
+              erTidsbegrenset: false,
+              isEditable: true,
+              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
+              inputfieldKey: 'inntektField_123_1_2018-08-01',
+            },
+          ],
+          arbeidsgiver456: [
+            {
+              erTidsbegrenset: true,
+              isEditable: false,
+              tabellInnhold: 'arbeidsgiver (456)...7890',
+              inputfieldKey: '',
+            },
+            {
+              erTidsbegrenset: false,
+              isEditable: true,
+              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
+              inputfieldKey: 'inntektField_456_2_2018-06-01',
+            },
+            {
+              erTidsbegrenset: false,
+              isEditable: true,
+              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
+              inputfieldKey: 'inntektField_456_2_2018-07-01',
+            },
+            {
+              erTidsbegrenset: false,
+              isEditable: true,
+              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
+              inputfieldKey: 'inntektField_456_2_2018-08-01',
+            },
+          ],
+        },
+      };
+      const selectorData = createTableData.resultFunc(beregningsgrunnlagPerioder, alleKodeverk, aksjonspunkter);
+      expect(selectorData).to.deep.equal(expectedResultObjectWhenWeHaveAksjonspunkt);
+    },
+  );
   it('Skal teste at selector henter ut om aksjonspunktet er lukket eller ikke', () => {
-    const korrektApLukket = [{
-      definisjon: {
-        kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+    const korrektApLukket = [
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        },
+        status: {
+          kode: aksjonspunktStatus.UTFORT,
+        },
       },
-      status: {
-        kode: aksjonspunktStatus.UTFORT,
+    ];
+    const korrektApApent = [
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
       },
-    }];
-    const korrektApApent = [{
-      definisjon: {
-        kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-      },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-    }];
+    ];
     const selectorDataLukket = getIsAksjonspunktClosed.resultFunc(korrektApLukket);
     expect(selectorDataLukket).to.equal(true);
     const selectorDataApent = getIsAksjonspunktClosed.resultFunc(korrektApApent);
@@ -394,7 +413,10 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
         ],
       },
     ];
-    const transformedValues = AksjonspunktBehandlerTidsbegrenset.transformValues(formValues, beregningsgrunnlagPerioder);
+    const transformedValues = AksjonspunktBehandlerTidsbegrenset.transformValues(
+      formValues,
+      beregningsgrunnlagPerioder,
+    );
     expect(transformedValues).is.deep.equal(expectedTransformedValues);
   });
 

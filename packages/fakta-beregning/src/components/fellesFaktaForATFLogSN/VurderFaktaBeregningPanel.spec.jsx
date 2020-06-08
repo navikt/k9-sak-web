@@ -8,11 +8,7 @@ import {
   transformValuesVurderFaktaBeregning,
 } from './VurderFaktaBeregningPanel';
 
-const {
-  AVKLAR_AKTIVITETER,
-  VURDER_FAKTA_FOR_ATFL_SN,
-} = aksjonspunktCodes;
-
+const { AVKLAR_AKTIVITETER, VURDER_FAKTA_FOR_ATFL_SN } = aksjonspunktCodes;
 
 const avklarAktiviteterAp = {
   id: 1,
@@ -26,10 +22,11 @@ const avklarAktiviteterAp = {
   },
 };
 
-const aksjonspunkter = [{
-  definisjon:
-  { kode: VURDER_FAKTA_FOR_ATFL_SN },
-}];
+const aksjonspunkter = [
+  {
+    definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN },
+  },
+];
 
 describe('<VurderFaktaBeregningPanel>', () => {
   it('skal bygge initial values', () => {
@@ -45,15 +42,14 @@ describe('<VurderFaktaBeregningPanel>', () => {
           inkludert: null,
         },
       },
+      aksjonspunkter: [avklarAktiviteterAp],
     };
     const values = {
-      aksjonspunkter: [avklarAktiviteterAp],
-      faktaOmBeregning,
+      vurderFaktaListe: [faktaOmBeregning],
     };
     const transformed = transformValuesVurderFaktaBeregning(values);
     expect(transformed).to.be.empty;
   });
-
 
   it('skal transformValues med aksjonspunkt', () => {
     const faktaOmBeregning = {
@@ -62,13 +58,21 @@ describe('<VurderFaktaBeregningPanel>', () => {
           inkludert: null,
         },
       },
+      aksjonspunkter,
     };
     const tilfeller = [];
     const values = {
-      [BEGRUNNELSE_FAKTA_TILFELLER_NAME]: 'begrunnelse', aksjonspunkter, faktaOmBeregning, tilfeller,
+      vurderFaktaListe: [
+        {
+          [BEGRUNNELSE_FAKTA_TILFELLER_NAME]: 'begrunnelse',
+          aksjonspunkter,
+          faktaOmBeregning,
+          tilfeller,
+        },
+      ],
     };
-    const transformed = transformValuesVurderFaktaBeregning(values);
-    expect(transformed[0].begrunnelse).to.equal('begrunnelse');
+    const transformed = transformValuesVurderFaktaBeregning(values, [{}]);
+    expect(transformed[0].grunnlag[0].begrunnelse).to.equal('begrunnelse');
     expect(transformed[0].kode).to.equal(VURDER_FAKTA_FOR_ATFL_SN);
   });
 
@@ -83,7 +87,6 @@ describe('<VurderFaktaBeregningPanel>', () => {
     const knappSkalKunneTrykkes = harIkkeEndringerIAvklarMedFlereAksjonspunkter(true, aps);
     expect(knappSkalKunneTrykkes).to.equal(false);
   });
-
 
   it('skal returnere true for ingen endring i avklar med VURDER_FAKTA_FOR_ATFL_SN', () => {
     const aps = [{ definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];

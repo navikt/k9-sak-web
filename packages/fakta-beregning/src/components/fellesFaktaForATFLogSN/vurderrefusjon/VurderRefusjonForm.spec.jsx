@@ -8,26 +8,23 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 
 import { VurderRefusjonFormImpl, lagFieldName } from './VurderRefusjonForm';
 
-
-const {
-  VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT,
-} = faktaOmBeregningTilfelle;
-
+const { VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT } = faktaOmBeregningTilfelle;
 
 describe('<VurderRefusjonForm>', () => {
   it('skal vise eitt sett med radioknapper om ein arbeidsgiver', () => {
-    const senRefusjonkravListe = [
-      { arbeidsgiverVisningsnavn: 'Arbeidsgiveren (8279312213) AS' },
-    ];
-    const wrapper = shallow(<VurderRefusjonFormImpl
-      {...reduxFormPropsMock}
-      readOnly={false}
-      submittable
-      submitEnabled
-      hasBegrunnelse
-      isAksjonspunktClosed={false}
-      senRefusjonkravListe={senRefusjonkravListe}
-    />);
+    const senRefusjonkravListe = [{ arbeidsgiverVisningsnavn: 'Arbeidsgiveren (8279312213) AS' }];
+    const wrapper = shallow(
+      <VurderRefusjonFormImpl
+        {...reduxFormPropsMock}
+        readOnly={false}
+        submittable
+        submitEnabled
+        hasBegrunnelse
+        isAksjonspunktClosed={false}
+        senRefusjonkravListe={senRefusjonkravListe}
+        fieldArrayID="dummyId"
+      />,
+    );
     const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).has.length(1);
     const radioGroup = wrapper.find(RadioGroupField);
@@ -36,21 +33,23 @@ describe('<VurderRefusjonForm>', () => {
     expect(buttons).has.length(2);
   });
 
-
   it('skal vise to sett med radioknapper om to arbeidsgivere', () => {
     const senRefusjonkravListe = [
       { arbeidsgiverVisningsnavn: 'Arbeidsgiveren (8279312213) AS' },
       { arbeidsgiverVisningsnavn: 'Arbeidsgiverto (45345345345) AS' },
     ];
-    const wrapper = shallow(<VurderRefusjonFormImpl
-      {...reduxFormPropsMock}
-      readOnly={false}
-      submittable
-      submitEnabled
-      hasBegrunnelse
-      isAksjonspunktClosed={false}
-      senRefusjonkravListe={senRefusjonkravListe}
-    />);
+    const wrapper = shallow(
+      <VurderRefusjonFormImpl
+        {...reduxFormPropsMock}
+        readOnly={false}
+        submittable
+        submitEnabled
+        hasBegrunnelse
+        isAksjonspunktClosed={false}
+        senRefusjonkravListe={senRefusjonkravListe}
+        fieldArrayID="dummyId"
+      />,
+    );
     const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).has.length(2);
     const radioGroup = wrapper.find(RadioGroupField);
@@ -62,15 +61,26 @@ describe('<VurderRefusjonForm>', () => {
       { arbeidsgiverVisningsnavn: 'Arbeidsgiveren (8279312213) AS', erRefusjonskravGyldig: true },
       { arbeidsgiverVisningsnavn: 'Arbeidsgiverto (45345345345) AS', erRefusjonskravGyldig: false },
     ];
-    const initialValues = VurderRefusjonFormImpl.buildInitialValues([VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT], senRefusjonkravListe);
+    const initialValues = VurderRefusjonFormImpl.buildInitialValues(
+      [VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT],
+      senRefusjonkravListe,
+    );
     expect(initialValues[lagFieldName('Arbeidsgiveren (8279312213) AS')]).to.equal(true);
     expect(initialValues[lagFieldName('Arbeidsgiverto (45345345345) AS')]).to.equal(false);
   });
 
   it('skal bygge transform values', () => {
     const senRefusjonkravListe = [
-      { arbeidsgiverId: '8279312213', arbeidsgiverVisningsnavn: 'Arbeidsgiveren (8279312213) AS', erRefusjonskravGyldig: true },
-      { arbeidsgiverId: '45345345345', arbeidsgiverVisningsnavn: 'Arbeidsgiverto (45345345345) AS', erRefusjonskravGyldig: false },
+      {
+        arbeidsgiverId: '8279312213',
+        arbeidsgiverVisningsnavn: 'Arbeidsgiveren (8279312213) AS',
+        erRefusjonskravGyldig: true,
+      },
+      {
+        arbeidsgiverId: '45345345345',
+        arbeidsgiverVisningsnavn: 'Arbeidsgiverto (45345345345) AS',
+        erRefusjonskravGyldig: false,
+      },
     ];
     const values = {};
     values[lagFieldName('Arbeidsgiveren (8279312213) AS')] = false;

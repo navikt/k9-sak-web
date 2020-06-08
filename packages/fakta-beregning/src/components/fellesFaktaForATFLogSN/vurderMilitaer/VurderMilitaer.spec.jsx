@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import VurderMilitaer, { vurderMilitaerField } from './VurderMilitaer';
 import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-fakta-beregning';
 
-const mockBGMedStatus = (mili) => ({
+const mockBGMedStatus = mili => ({
   vurderMilitaer: {
     harMilitaer: mili,
   },
@@ -12,10 +12,9 @@ const mockBGMedStatus = (mili) => ({
 
 describe('<VurderMilitaer>', () => {
   it('Skal teste at komponenten vises korrekt med radioknapper', () => {
-    const wrapper = shallowWithIntl(<VurderMilitaer
-      readOnly={false}
-      isAksjonspunktClosed={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <VurderMilitaer readOnly={false} isAksjonspunktClosed={false} fieldArrayID="dummyId" />,
+    );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(2);
   });

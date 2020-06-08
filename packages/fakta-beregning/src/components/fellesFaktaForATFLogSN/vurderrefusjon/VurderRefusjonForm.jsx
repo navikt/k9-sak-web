@@ -8,58 +8,55 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 
-const {
-  VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT,
-} = faktaOmBeregningTilfelle;
+const { VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT } = faktaOmBeregningTilfelle;
 
 const erRefusjonskravGyldigFieldPrefix = 'erKravGyldig_';
 
-export const lagFieldName = (arbeidsgiverVisningsnavn) => erRefusjonskravGyldigFieldPrefix + arbeidsgiverVisningsnavn.replace('.', '');
+export const lagFieldName = arbeidsgiverVisningsnavn =>
+  erRefusjonskravGyldigFieldPrefix + arbeidsgiverVisningsnavn.replace('.', '');
 
-const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktClosed) => senRefusjonkravListe.map((kravPerArbeidsgiver) => {
-  const { arbeidsgiverVisningsnavn } = kravPerArbeidsgiver;
-  return (
-    <React.Fragment key={arbeidsgiverVisningsnavn}>
-      <VerticalSpacer twentyPx />
-      <FormattedMessage
-        id="VurderRefusjonForm.ErRefusjonskravGyldig"
-        values={{
-          arbeidsgiverVisningsnavn,
-        }}
-      />
-      <VerticalSpacer eightPx />
-      <RadioGroupField
-        name={lagFieldName(arbeidsgiverVisningsnavn)}
-        validate={[required]}
-        readOnly={readOnly}
-        isEdited={isAksjonspunktClosed}
-      >
-        <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
-        <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
-      </RadioGroupField>
-    </React.Fragment>
-  );
-});
-
+const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktClosed, fieldArrayID) =>
+  senRefusjonkravListe.map(kravPerArbeidsgiver => {
+    const { arbeidsgiverVisningsnavn } = kravPerArbeidsgiver;
+    return (
+      <React.Fragment key={arbeidsgiverVisningsnavn}>
+        <VerticalSpacer twentyPx />
+        <FormattedMessage
+          id="VurderRefusjonForm.ErRefusjonskravGyldig"
+          values={{
+            arbeidsgiverVisningsnavn,
+          }}
+        />
+        <VerticalSpacer eightPx />
+        <RadioGroupField
+          name={`${fieldArrayID}.${lagFieldName(arbeidsgiverVisningsnavn)}`}
+          validate={[required]}
+          readOnly={readOnly}
+          isEdited={isAksjonspunktClosed}
+        >
+          <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
+          <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
+        </RadioGroupField>
+      </React.Fragment>
+    );
+  });
 
 /**
  * VurderRefusjonForm
  *
  * Container komponent. Har ansvar for å sette opp Redux Formen for vurdering av refusjonskrav som har kommet for sent.
  */
-export const VurderRefusjonFormImpl = ({
-  readOnly,
-  isAksjonspunktClosed,
-  senRefusjonkravListe,
-}) => (lagRefusjonskravRadios(senRefusjonkravListe, readOnly, isAksjonspunktClosed));
+export const VurderRefusjonFormImpl = ({ readOnly, isAksjonspunktClosed, senRefusjonkravListe, fieldArrayID }) =>
+  lagRefusjonskravRadios(senRefusjonkravListe, readOnly, isAksjonspunktClosed, fieldArrayID);
 
 VurderRefusjonFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   senRefusjonkravListe: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-VurderRefusjonFormImpl.transformValues = (arbeidsgiverListe) => (values) => {
+VurderRefusjonFormImpl.transformValues = arbeidsgiverListe => values => {
   if (arbeidsgiverListe.length === 0) {
     return {};
   }
@@ -79,13 +76,14 @@ VurderRefusjonFormImpl.buildInitialValues = (tilfeller, arbeidsgiverListe) => {
   arbeidsgiverListe.forEach(({ arbeidsgiverVisningsnavn, erRefusjonskravGyldig }) => {
     initialValues[lagFieldName(arbeidsgiverVisningsnavn)] = erRefusjonskravGyldig;
   });
-  return ({
+  return {
     ...initialValues,
-  });
+  };
 };
 
 export const getArbeidsgiverInfoForRefusjonskravSomKommerForSent = createSelector(
-  [(ownProps) => ownProps.faktaOmBeregning], (faktaOmBeregning = {}) => {
+  [ownProps => ownProps.faktaOmBeregning],
+  (faktaOmBeregning = {}) => {
     if (faktaOmBeregning && faktaOmBeregning.refusjonskravSomKommerForSentListe) {
       return faktaOmBeregning.refusjonskravSomKommerForSentListe;
     }

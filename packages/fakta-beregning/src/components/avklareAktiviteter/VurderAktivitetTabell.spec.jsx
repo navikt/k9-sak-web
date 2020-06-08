@@ -5,11 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { RadioGroupField } from '@fpsak-frontend/form';
-import {
-  Table, TableRow, TableColumn, EditedIcon,
-} from '@fpsak-frontend/shared-components';
+import { Table, TableRow, TableColumn, EditedIcon } from '@fpsak-frontend/shared-components';
 import VurderAktiviteterTabell, { lagAktivitetFieldId, skalVurdereAktivitet } from './VurderAktiviteterTabell';
-
 
 const aktivitet1 = {
   arbeidsgiverNavn: 'Arbeidsgiveren',
@@ -43,7 +40,6 @@ const aktivitet3 = {
   arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
 };
 
-
 const aktivitetAAP = {
   arbeidsgiverNavn: null,
   arbeidsgiverId: null,
@@ -62,45 +58,47 @@ const aktivitetVentelonnVartpenger = {
   skalBrukes: null,
 };
 
-const aktiviteter = [
-  aktivitet1,
-  aktivitet2,
-  aktivitet3,
-  aktivitetAAP,
-];
-
+const aktiviteter = [aktivitet1, aktivitet2, aktivitet3, aktivitetAAP];
 
 const alleKodeverk = {
-  [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [{
-    kode: opptjeningAktivitetType.ARBEID,
-    navn: 'Arbeid',
-  }, {
-    kode: opptjeningAktivitetType.FRILANS,
-    navn: 'Frilans',
-  }, {
-    kode: opptjeningAktivitetType.DAGPENGER,
-    navn: 'Dagpenger',
-  }, {
-    kode: opptjeningAktivitetType.NARING,
-    navn: 'Næring',
-  }, {
-    kode: opptjeningAktivitetType.AAP,
-    navn: 'Arbeidsavklaringspenger',
-  }],
+  [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [
+    {
+      kode: opptjeningAktivitetType.ARBEID,
+      navn: 'Arbeid',
+    },
+    {
+      kode: opptjeningAktivitetType.FRILANS,
+      navn: 'Frilans',
+    },
+    {
+      kode: opptjeningAktivitetType.DAGPENGER,
+      navn: 'Dagpenger',
+    },
+    {
+      kode: opptjeningAktivitetType.NARING,
+      navn: 'Næring',
+    },
+    {
+      kode: opptjeningAktivitetType.AAP,
+      navn: 'Arbeidsavklaringspenger',
+    },
+  ],
 };
-
 
 describe('<VurderAktiviteterTabell>', () => {
   it('skal vise tabell', () => {
-    const wrapper = shallow(<VurderAktiviteterTabell
-      readOnly={false}
-      isAksjonspunktClosed
-      aktiviteter={aktiviteter}
-      skjaeringstidspunkt="2019-02-01"
-      alleKodeverk={alleKodeverk}
-      erOverstyrt={false}
-      harAksjonspunkt
-    />);
+    const wrapper = shallow(
+      <VurderAktiviteterTabell
+        readOnly={false}
+        isAksjonspunktClosed
+        aktiviteter={aktiviteter}
+        skjaeringstidspunkt="2019-02-01"
+        alleKodeverk={alleKodeverk}
+        erOverstyrt={false}
+        harAksjonspunkt
+        fieldArrayID="dummyId"
+      />,
+    );
 
     const heading = wrapper.find(FormattedMessage).first();
     expect(heading.props().id).to.equal('VurderAktiviteterTabell.FullAAPKombinert.Overskrift');
@@ -114,7 +112,7 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(cols).has.length(4);
     const radios1 = rows.first().find(RadioGroupField);
     expect(radios1).has.length(2);
-    radios1.forEach((radio) => {
+    radios1.forEach(radio => {
       expect(radio.props().readOnly).to.equal(false);
     });
 
@@ -122,7 +120,7 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(cols2).has.length(4);
     const radios2 = rows.at(1).find(RadioGroupField);
     expect(radios2).has.length(2);
-    radios2.forEach((radio) => {
+    radios2.forEach(radio => {
       expect(radio.props().readOnly).to.equal(false);
     });
 
@@ -130,26 +128,25 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(cols3).has.length(4);
     const radios3 = rows.last().find(RadioGroupField);
     expect(radios3).has.length(2);
-    radios3.forEach((radio) => {
+    radios3.forEach(radio => {
       expect(radio.props().readOnly).to.equal(true);
     });
   });
 
   it('skal vise tabell med ventelønn/vartpenger overskrift', () => {
-    const utenAAP = [
-      aktivitet1,
-      aktivitet2,
-      aktivitetVentelonnVartpenger,
-    ];
-    const wrapper = shallow(<VurderAktiviteterTabell
-      readOnly={false}
-      isAksjonspunktClosed
-      aktiviteter={utenAAP}
-      skjaeringstidspunkt="2019-02-01"
-      alleKodeverk={alleKodeverk}
-      erOverstyrt={false}
-      harAksjonspunkt
-    />);
+    const utenAAP = [aktivitet1, aktivitet2, aktivitetVentelonnVartpenger];
+    const wrapper = shallow(
+      <VurderAktiviteterTabell
+        readOnly={false}
+        isAksjonspunktClosed
+        aktiviteter={utenAAP}
+        skjaeringstidspunkt="2019-02-01"
+        alleKodeverk={alleKodeverk}
+        erOverstyrt={false}
+        harAksjonspunkt
+        fieldArrayID="dummyId"
+      />,
+    );
 
     const heading = wrapper.find(FormattedMessage).first();
     expect(heading.props().id).to.equal('VurderAktiviteterTabell.VentelonnVartpenger.Overskrift');
@@ -159,29 +156,31 @@ describe('<VurderAktiviteterTabell>', () => {
     const rows = table.find(TableRow);
     expect(rows).has.length(3);
 
-    rows.forEach((row) => {
+    rows.forEach(row => {
       const radios = row.find(RadioGroupField);
       expect(radios).has.length(2);
-      radios.forEach((radio) => {
+      radios.forEach(radio => {
         expect(radio.props().readOnly).to.equal(false);
       });
     });
   });
 
   it('skal vise tabell med gul mann kolonne for alle rader unntatt AAP', () => {
-    const wrapper = shallow(<VurderAktiviteterTabell
-      readOnly
-      isAksjonspunktClosed
-      aktiviteter={aktiviteter}
-      skjaeringstidspunkt="2019-02-01"
-      alleKodeverk={alleKodeverk}
-      erOverstyrt={false}
-      harAksjonspunkt
-    />);
+    const wrapper = shallow(
+      <VurderAktiviteterTabell
+        readOnly
+        isAksjonspunktClosed
+        aktiviteter={aktiviteter}
+        skjaeringstidspunkt="2019-02-01"
+        alleKodeverk={alleKodeverk}
+        erOverstyrt={false}
+        harAksjonspunkt
+        fieldArrayID="dummyId"
+      />,
+    );
 
     const heading = wrapper.find(FormattedMessage).first();
     expect(heading.props().id).to.equal('VurderAktiviteterTabell.FullAAPKombinert.Overskrift');
-
 
     const table = wrapper.find(Table);
     expect(table).has.length(1);
@@ -192,7 +191,7 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(cols).has.length(5);
     const radios1 = rows.first().find(RadioGroupField);
     expect(radios1).has.length(2);
-    radios1.forEach((radio) => {
+    radios1.forEach(radio => {
       expect(radio.props().readOnly).to.equal(true);
     });
     const edited1 = rows.first().find(EditedIcon);
@@ -202,7 +201,7 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(cols2).has.length(5);
     const radios2 = rows.at(1).find(RadioGroupField);
     expect(radios2).has.length(2);
-    radios2.forEach((radio) => {
+    radios2.forEach(radio => {
       expect(radio.props().readOnly).to.equal(true);
     });
     const edited2 = rows.at(1).find(EditedIcon);
@@ -212,7 +211,7 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(cols3).has.length(5);
     const radios3 = rows.last().find(RadioGroupField);
     expect(radios3).has.length(2);
-    radios3.forEach((radio) => {
+    radios3.forEach(radio => {
       expect(radio.props().readOnly).to.equal(true);
     });
     const edited3 = rows.last().find(EditedIcon);
@@ -242,7 +241,6 @@ describe('<VurderAktiviteterTabell>', () => {
     const idArbeid = lagAktivitetFieldId(aktivitetAAP);
     expect(idArbeid).to.equal(idAAP);
   });
-
 
   it('skal bygge initial values', () => {
     const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, alleKodeverk, false, true);
