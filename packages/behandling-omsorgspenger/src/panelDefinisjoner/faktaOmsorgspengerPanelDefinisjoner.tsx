@@ -87,7 +87,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     ],
     endpoints: [],
     renderComponent: props => <BeregningFaktaIndex {...props} />,
-    showComponent: ({ beregningsgrunnlag }) => beregningsgrunnlag,
+    showComponent: ({ beregningsgrunnlag }) => beregningsgrunnlag && beregningsgrunnlag.length > 0,
     getData: ({ rettigheter, beregningsgrunnlag }) => ({
       erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
       beregningsgrunnlag,
