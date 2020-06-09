@@ -198,6 +198,7 @@ export class VedtakRevurderingFormImpl extends Component {
               <Column xs="8">
                 <VedtakRedusertUtbetalingArsaker
                   readOnly={readOnly}
+                  values={new Map(Object.values(redusertUtbetalingArsak).map(a => [a, !!formProps[a]]))}
                   vedtakVarsel={vedtakVarsel}
                 />
               </Column>
@@ -377,6 +378,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'skalBrukeOverstyrendeFritekstBrev',
       'overskrift',
       'brødtekst',
+      ...Object.values(redusertUtbetalingArsak)
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
   });
