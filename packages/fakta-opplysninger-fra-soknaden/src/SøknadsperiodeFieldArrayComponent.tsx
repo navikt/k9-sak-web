@@ -134,7 +134,6 @@ const SøknadsperiodeFieldArrayComponent = (
   } = props;
   const formSelector = `${behandlingFormPrefix}.${formName}`;
   const { harSøktSomSSN, harSøktSomFrilanser } = søknadsperiodeFormValues;
-  const { måned } = måneder[aktivMånedIndeks];
   const resetFormField = field => {
     formChange(formSelector, field, null);
     formUntouch(formSelector, field);
@@ -148,15 +147,13 @@ const SøknadsperiodeFieldArrayComponent = (
     frilansFields.forEach(field => resetFormField(field));
   };
 
-  return fields.map((field, index) => {
-    if (index !== aktivMånedIndeks) {
-      return null;
-    }
+  return fields.map((field, fieldArrayIndex) => {
     const skalViseSSNSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomSSN;
     const skalViseFrilansSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomFrilanser;
+    const { måned } = måneder[fieldArrayIndex];
 
     return (
-      <div key={field}>
+      <div style={{ display: fieldArrayIndex !== aktivMånedIndeks ? 'none' : 'block' }} key={field}>
         <div
           className={classNames('formContainer', 'formContainer--showBorder', {
             'formContainer--hidden': !skalViseSSNSeksjonen,
