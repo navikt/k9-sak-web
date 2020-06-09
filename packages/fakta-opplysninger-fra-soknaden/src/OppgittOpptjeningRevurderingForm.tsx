@@ -26,9 +26,11 @@ import { change as reduxFormChange, FieldArray, InjectedFormProps, untouch as re
 import styles from './opplysningerFraSoknadenForm.less';
 import SøknadsperiodeFieldArrayComponent, {
   buildInitialValuesForSøknadsperiode,
+  inntektIsValid,
   lagOppgittEgenNæringForSøknadsperioden,
   lagOppgittFrilansForSøknadsperioden,
   lagPeriodeForOppgittEgenNæringFørSøkerperioden,
+  nyoppstartetDatoIsValid,
   SøknadsperiodeFormValues,
 } from './SøknadsperiodeFieldArrayComponent';
 import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
@@ -262,29 +264,29 @@ const connectedComponent = connect(
 )(
   behandlingForm({
     form: oppgittOpptjeningRevurderingFormName,
-    // validate: values => {
-    //   const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
-    //   const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
-    //   const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
+    validate: (values: OppgittOpptjeningRevurderingFormValues) => {
+      const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
+      const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+      const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
 
-    //   const errors = {};
+      const errors = {};
 
-    //   const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
-    //   if (nyoppstartetDatoValidation !== null) {
-    //     errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
-    //   }
+      const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
+      if (nyoppstartetDatoValidation !== null) {
+        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
+      }
 
-    //   const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
-    //   if (inntekt2019Validation !== null) {
-    //     errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
-    //   }
-    //   const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
-    //   if (inntekt2020Validation !== null) {
-    //     errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
-    //   }
+      const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
+      if (inntekt2019Validation !== null) {
+        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
+      }
+      const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
+      if (inntekt2020Validation !== null) {
+        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
+      }
 
-    //   return errors;
-    // },
+      return errors;
+    },
   })(OppgittOpptjeningRevurderingForm),
 );
 
