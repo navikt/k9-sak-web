@@ -1,9 +1,9 @@
 import { behandlingFormValueSelector, CheckboxField, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
+import { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import classnames from 'classnames/bind';
 import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { WrappedFieldArrayProps } from 'redux-form';
-import { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import FrilanserForm from './FrilanserForm';
 import {
   oppgittOpptjeningRevurderingFormName,
@@ -159,8 +158,7 @@ const SøknadsperiodeFieldArrayComponent = (
     return (
       <div key={field}>
         <div
-          className={classNames('formContainer', {
-            'formContainer--showBorder': harSøktSomSSN,
+          className={classNames('formContainer', 'formContainer--showBorder', {
             'formContainer--hidden': !skalViseSSNSeksjonen,
           })}
         >
@@ -193,7 +191,6 @@ const SøknadsperiodeFieldArrayComponent = (
         </div>
         <div
           className={classNames('formContainer', {
-            'formContainer--showBorder': harSøktSomFrilanser,
             'formContainer--hidden': !skalViseFrilansSeksjonen,
           })}
         >

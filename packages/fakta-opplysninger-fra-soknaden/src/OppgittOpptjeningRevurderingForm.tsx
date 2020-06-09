@@ -3,6 +3,7 @@ import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   hasValidDate,
   hasValidInteger,
@@ -14,7 +15,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
-import classNames from 'classnames';
+import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
 import * as React from 'react';
@@ -22,8 +23,6 @@ import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, FieldArray, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
-import moment from 'moment';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import styles from './opplysningerFraSoknadenForm.less';
 import SøknadsperiodeFieldArrayComponent, {
   buildInitialValuesForSøknadsperiode,
@@ -77,20 +76,23 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
         }))}
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
       />
-      <FieldArray
-        component={SøknadsperiodeFieldArrayComponent}
-        props={{
-          måneder: oppgittOpptjening.måneder,
-          formIsEditable,
-          kanEndrePåSøknadsopplysninger,
-          behandlingId,
-          behandlingVersjon,
-          formChange: reduxFormChange,
-          formUntouch: reduxFormUntouch,
-          aktivMånedIndeks: activeTab,
-        }}
-        name={SøknadFormValue.SØKNADSPERIODER}
-      />
+      <div className={styles.tabContent}>
+        <FieldArray
+          component={SøknadsperiodeFieldArrayComponent}
+          props={{
+            måneder: oppgittOpptjening.måneder,
+            formIsEditable,
+            kanEndrePåSøknadsopplysninger,
+            behandlingId,
+            behandlingVersjon,
+            formChange: reduxFormChange,
+            formUntouch: reduxFormUntouch,
+            aktivMånedIndeks: activeTab,
+          }}
+          name={SøknadFormValue.SØKNADSPERIODER}
+        />
+      </div>
+
       <div className={styles.fieldContainer}>
         <InputField
           name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
@@ -109,7 +111,7 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
           readOnly={formIsEditable}
         />
       </div>
-      <div className={styles.nyoppstartetContainer}>
+      <div className={styles.fieldContainer}>
         <DatepickerField
           name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
           validate={[hasValidDate]}
@@ -119,7 +121,7 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
         />
       </div>
       {!formIsEditable && (
-        <div className={classNames('begrunnelseContainer')}>
+        <div className={styles.begrunnelseContainer}>
           <TextAreaField
             name={SøknadFormValue.BEGRUNNELSE}
             label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
