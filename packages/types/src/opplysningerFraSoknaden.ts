@@ -1,9 +1,6 @@
 export default interface OpplysningerFraSøknaden {
   førSøkerPerioden: SøkerPerioden;
-  iSøkerPerioden: SøkerPerioden;
-  periodeFraSøknad: Periode;
-  søkerYtelseForFrilans: boolean;
-  søkerYtelseForNæring: boolean;
+  måneder: Måned[];
 }
 
 interface SøkerPerioden {
@@ -20,11 +17,18 @@ interface BruttoInntekt {
   verdi: number;
 }
 
-interface Periode {
+export interface Periode {
   fom: string;
   tom: string;
 }
 
 interface OppgittFrilans {
   oppgittFrilansoppdrag: Oppgitt[];
+}
+
+export interface Måned {
+  måned: Periode;
+  oppgittIMåned: SøkerPerioden;
+  søkerFL: boolean;
+  søkerSN: boolean;
 }

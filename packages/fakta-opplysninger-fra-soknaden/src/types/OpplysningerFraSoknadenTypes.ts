@@ -11,6 +11,7 @@ enum SøknadFormValue {
   BEGRUNNELSE = 'begrunnelse',
   HAR_SØKT_SOM_SSN = 'harSøktSomSSN',
   HAR_SØKT_SOM_FRILANSER = 'harSøktSomFrilanser',
+  SØKNADSPERIODER = 'søknadsperioder',
 }
 
 export default SøknadFormValue;

@@ -9,11 +9,10 @@ import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
 
 interface SelvstendigNæringsdrivendeFormProps {
   erFrilanser: boolean;
-  selvstendigNæringsdrivendeInntekt2019: boolean;
-  selvstendigNæringsdrivendeInntekt2020: boolean;
   startdatoValidator: (startdato: string) => void;
   readOnly: boolean;
   clearSelvstendigValues: () => void;
+  fieldArrayId: string;
 }
 
 const SelvstendigNæringsdrivendeForm = ({
@@ -21,6 +20,7 @@ const SelvstendigNæringsdrivendeForm = ({
   startdatoValidator,
   readOnly,
   clearSelvstendigValues,
+  fieldArrayId,
 }: SelvstendigNæringsdrivendeFormProps) => {
   const intl = useIntl();
 
@@ -34,7 +34,7 @@ const SelvstendigNæringsdrivendeForm = ({
     <>
       <div className={styles.fieldContainer}>
         <DatepickerField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}
+          name={`${fieldArrayId}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`}
           validate={[required, hasValidDate, startdatoValidator]}
           defaultValue={null}
           readOnly={readOnly}
@@ -43,7 +43,7 @@ const SelvstendigNæringsdrivendeForm = ({
       </div>
       <div className={styles.fieldContainer}>
         <InputField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}
+          name={`${fieldArrayId}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`}
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
           validate={[required, hasValidInteger, maxLength(5)]}
@@ -53,7 +53,7 @@ const SelvstendigNæringsdrivendeForm = ({
       {!erFrilanser && (
         <div className={styles.fieldContainer}>
           <InputField
-            name={SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}
+            name={`${fieldArrayId}.${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
             validate={[hasValidInteger, maxLength(5)]}

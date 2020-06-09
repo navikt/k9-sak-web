@@ -1,9 +1,4 @@
-import {
-  behandlingForm,
-  behandlingFormValueSelector,
-  getBehandlingFormPrefix,
-  CheckboxField,
-} from '@fpsak-frontend/form';
+import { behandlingFormValueSelector, CheckboxField, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -15,17 +10,17 @@ import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { change as reduxFormChange, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
+import { WrappedFieldArrayProps } from 'redux-form';
+import { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import FrilanserForm from './FrilanserForm';
+import { oppgittOpptjeningRevurderingFormName } from './OppgittOpptjeningRevurderingForm';
 import styles from './opplysningerFraSoknadenForm.less';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
 import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
-import { oppgittOpptjeningRevurderingFormFormName } from './OppgittOpptjeningRevurderingForm';
 
 const classNames = classnames.bind(styles);
 
-const formName = oppgittOpptjeningRevurderingFormFormName;
+const formName = oppgittOpptjeningRevurderingFormName;
 
 const fomDatoBegrensning = søknadsperiodeFom => {
   const march30th = moment('2020-03-30', ISO_DATE_FORMAT);
@@ -63,6 +58,36 @@ const frilansFields = [
   SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN,
 ];
 
+export const buildInitialValuesForSøknadsperiode = (values: Måned) => {
+  const { søkerFL, søkerSN, oppgittIMåned } = values;
+
+  const frilansoppdrag = oppgittIMåned?.oppgittFrilans?.oppgittFrilansoppdrag;
+  const harFrilansoppdrag = frilansoppdrag && frilansoppdrag.length > 0;
+  const frilansoppdragStartdato = harFrilansoppdrag ? frilansoppdrag[0].periode.fom : null;
+  const frilansoppdragBruttoinntekt = harFrilansoppdrag ? frilansoppdrag[0].bruttoInntekt.verdi : null;
+
+  const næring = oppgittIMåned?.oppgittEgenNæring;
+  const harNæring = næring && næring.length > 0;
+  const næringStartdato = harNæring ? næring[0].periode.fom : null;
+  const næringBruttoinntekt = harNæring ? næring[0].bruttoInntekt.verdi : null;
+
+  return {
+    erSelvstendigNæringsdrivende: søkerSN,
+    erFrilanser: søkerFL,
+    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: næringStartdato,
+    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: næringBruttoinntekt,
+    [SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN]: frilansoppdragStartdato,
+    [SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: frilansoppdragBruttoinntekt,
+
+    [SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN]:
+      !søkerFL && frilansoppdragBruttoinntekt ? frilansoppdragBruttoinntekt : null,
+    [SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS]:
+      !søkerSN && næringBruttoinntekt ? næringBruttoinntekt : null,
+    [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: søkerFL || false,
+    [SøknadFormValue.HAR_SØKT_SOM_SSN]: søkerSN || false,
+  };
+};
+
 interface SøknadsperiodeFieldArrayComponentProps {
   behandlingId: number;
   behandlingVersjon: number;
@@ -72,6 +97,8 @@ interface SøknadsperiodeFieldArrayComponentProps {
   opplysningerFraSøknaden: OpplysningerFraSøknaden;
   formIsEditable: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
+  aktivMånedIndeks: number;
+  måneder: Måned[];
 }
 
 interface InitialValues {
@@ -86,31 +113,30 @@ interface StateProps {
   selvstendigNæringsdrivendeInntekt2020: boolean;
   harSøktSomFrilanser: boolean;
   harSøktSomSSN: boolean;
-  reduxFormChange: (formName: string, fieldName: string, value: any) => void;
-  reduxFormUntouch: (formName: string, fieldName: string) => void;
+  formChange: (formName: string, fieldName: string, value: any) => void;
+  formUntouch: (formName: string, fieldName: string) => void;
   behandlingFormPrefix: string;
+  søknadsperiodeFormValues: OpplysningerFraSøknadenFormValues;
 }
 
 const SøknadsperiodeFieldArrayComponent = (
-  props: SøknadsperiodeFieldArrayComponentProps & InjectedFormProps & StateProps,
+  props: SøknadsperiodeFieldArrayComponentProps & StateProps & WrappedFieldArrayProps,
 ) => {
   const intl = useIntl();
   const {
-    handleSubmit,
-    initialValues,
-    selvstendigNæringsdrivendeInntekt2019,
-    selvstendigNæringsdrivendeInntekt2020,
     kanEndrePåSøknadsopplysninger,
-    reduxFormChange: formChange,
-    reduxFormUntouch: formUntouch,
+    formChange,
+    formUntouch,
     behandlingFormPrefix,
-    harSøktSomFrilanser,
-    harSøktSomSSN,
     formIsEditable,
+    fields,
+    aktivMånedIndeks,
+    søknadsperiodeFormValues,
+    måneder,
   } = props;
-  const { søknadsperiode } = initialValues;
   const formSelector = `${behandlingFormPrefix}.${formName}`;
-
+  const { harSøktSomSSN, harSøktSomFrilanser } = søknadsperiodeFormValues;
+  const { måned } = måneder[aktivMånedIndeks];
   const resetFormField = field => {
     formChange(formSelector, field, null);
     formUntouch(formSelector, field);
@@ -124,12 +150,15 @@ const SøknadsperiodeFieldArrayComponent = (
     frilansFields.forEach(field => resetFormField(field));
   };
 
-  const skalViseSSNSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomSSN;
-  const skalViseFrilansSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomFrilanser;
+  return fields.map((field, index) => {
+    if (index !== aktivMånedIndeks) {
+      return null;
+    }
+    const skalViseSSNSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomSSN;
+    const skalViseFrilansSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomFrilanser;
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    return (
+      <div key={field}>
         <div
           className={classNames('formContainer', {
             'formContainer--showBorder': harSøktSomSSN,
@@ -150,17 +179,16 @@ const SøknadsperiodeFieldArrayComponent = (
                   intl={intl}
                 />
               }
-              name={SøknadFormValue.HAR_SØKT_SOM_SSN}
+              name={`${field}.${SøknadFormValue.HAR_SØKT_SOM_SSN}`}
             />
           )}
           {harSøktSomSSN && (
             <SelvstendigNæringsdrivendeForm
               erFrilanser={harSøktSomFrilanser}
-              selvstendigNæringsdrivendeInntekt2019={selvstendigNæringsdrivendeInntekt2019}
-              selvstendigNæringsdrivendeInntekt2020={selvstendigNæringsdrivendeInntekt2020}
-              startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
+              startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, måned)}
               readOnly={formIsEditable}
               clearSelvstendigValues={clearSelvstendigValues}
+              fieldArrayId={field}
             />
           )}
         </div>
@@ -184,34 +212,31 @@ const SøknadsperiodeFieldArrayComponent = (
                   intl={intl}
                 />
               }
-              name={SøknadFormValue.HAR_SØKT_SOM_FRILANSER}
+              name={`${field}.${SøknadFormValue.HAR_SØKT_SOM_FRILANSER}`}
             />
           )}
           {harSøktSomFrilanser && (
             <FrilanserForm
               erSelvstendigNæringsdrivende={harSøktSomSSN}
-              startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, søknadsperiode)}
+              startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, måned)}
               readOnly={formIsEditable}
               clearFrilansValues={clearFrilansValues}
+              fieldArrayId={field}
             />
           )}
         </div>
-      </form>
-    </div>
-  );
+      </div>
+    );
+  });
 };
 
 interface OpplysningerFraSøknadenFormValues {
-  [SøknadFormValue.BEGRUNNELSE]: string;
   [SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN]: string;
   [SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: string;
   [SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN]: string;
-  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: string;
-  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: string;
   [SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS]: string;
   [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: string;
   [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
-  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO]: string;
   [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: boolean;
   [SøknadFormValue.HAR_SØKT_SOM_SSN]: boolean;
 }
@@ -378,98 +403,22 @@ const transformValues = (
   return resultingData;
 };
 
-const buildInitialValues = (values: OpplysningerFraSøknaden) => {
-  const { søkerYtelseForFrilans, søkerYtelseForNæring, periodeFraSøknad, førSøkerPerioden, iSøkerPerioden } = values;
+const mapStateToProps = (state, props: SøknadsperiodeFieldArrayComponentProps) => {
+  const { behandlingId, behandlingVersjon, aktivMånedIndeks } = props;
 
-  const frilansoppdrag = iSøkerPerioden?.oppgittFrilans?.oppgittFrilansoppdrag;
-  const harFrilansoppdrag = frilansoppdrag && frilansoppdrag.length > 0;
-  const frilansoppdragStartdato = harFrilansoppdrag ? frilansoppdrag[0].periode.fom : null;
-  const frilansoppdragBruttoinntekt = harFrilansoppdrag ? frilansoppdrag[0].bruttoInntekt.verdi : null;
-
-  const næring = iSøkerPerioden?.oppgittEgenNæring;
-  const harNæring = næring && næring.length > 0;
-  const næringStartdato = harNæring ? næring[0].periode.fom : null;
-  const næringBruttoinntekt = harNæring ? næring[0].bruttoInntekt.verdi : null;
-
-  const næringFørSøknadsperioden =
-    førSøkerPerioden?.oppgittEgenNæring.length > 0 ? førSøkerPerioden.oppgittEgenNæring : null;
-  const næringsinntektFørSøknadsperioden = næringFørSøknadsperioden
-    ? næringFørSøknadsperioden[0].bruttoInntekt.verdi
-    : null;
-  const inntektsperiodenFørSøknadsperiodeErI2019 = næringFørSøknadsperioden
-    ? moment(næringFørSøknadsperioden[0].periode.tom, ISO_DATE_FORMAT).year() === 2019
-    : false;
-  const inntektsperiodenFørSøknadsperiodeErI2020 = næringFørSøknadsperioden
-    ? moment(næringFørSøknadsperioden[0].periode.tom, ISO_DATE_FORMAT).year() === 2020
-    : false;
+  const søknadsperiodeFormValues = behandlingFormValueSelector(
+    'OpplysningerFraSoknadenForm',
+    behandlingId,
+    behandlingVersjon,
+  )(state, [SøknadFormValue.SØKNADSPERIODER])[aktivMånedIndeks];
 
   return {
-    erSelvstendigNæringsdrivende: søkerYtelseForNæring,
-    erFrilanser: søkerYtelseForFrilans,
-    søknadsperiode: periodeFraSøknad,
-    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: næringStartdato,
-    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: næringBruttoinntekt,
-    [SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN]: frilansoppdragStartdato,
-    [SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: frilansoppdragBruttoinntekt,
-    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
-      ? næringsinntektFørSøknadsperioden
-      : null,
-    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: inntektsperiodenFørSøknadsperiodeErI2020
-      ? næringsinntektFørSøknadsperioden
-      : null,
-    [SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN]:
-      !søkerYtelseForFrilans && frilansoppdragBruttoinntekt ? frilansoppdragBruttoinntekt : null,
-    [SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS]:
-      !søkerYtelseForNæring && næringBruttoinntekt ? næringBruttoinntekt : null,
-    [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: søkerYtelseForFrilans || false,
-    [SøknadFormValue.HAR_SØKT_SOM_SSN]: søkerYtelseForNæring || false,
+    søknadsperiodeFormValues,
+    behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
   };
 };
 
-const mapStateToProps = (_, props: SøknadsperiodeFieldArrayComponentProps) => {
-  const { submitCallback, behandlingId, behandlingVersjon, opplysningerFraSøknaden, ...otherProps } = props;
-  const onSubmit = (formValues: OpplysningerFraSøknadenFormValues) =>
-    submitCallback([transformValues(formValues, opplysningerFraSøknaden)]);
-
-  return state => ({
-    onSubmit,
-    initialValues: buildInitialValues(opplysningerFraSøknaden),
-    selvstendigNæringsdrivendeInntekt2019: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]),
-    selvstendigNæringsdrivendeInntekt2020: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]),
-    harSøktSomSSN: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, [SøknadFormValue.HAR_SØKT_SOM_SSN]),
-    harSøktSomFrilanser: !!behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]),
-    behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
-    ...otherProps,
-  });
-};
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(
-    {
-      reduxFormChange,
-      reduxFormUntouch,
-    },
-    dispatch,
-  ),
-});
-
-const nyoppstartetDatoIsValid = (
+export const nyoppstartetDatoIsValid = (
   nyoppstartetDato,
   selvstendigNæringsdrivendeInntekt2019,
   selvstendigNæringsdrivendeInntekt2020,
@@ -495,7 +444,7 @@ const nyoppstartetDatoIsValid = (
   return null;
 };
 
-const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
+export const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstendigNæringsdrivendeInntekt2020) => {
   const inntekt2019 = getValueSafely(selvstendigNæringsdrivendeInntekt2019);
   const inntekt2020 = getValueSafely(selvstendigNæringsdrivendeInntekt2020);
   if (inntekt2019 && inntekt2020) {
@@ -507,36 +456,6 @@ const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstendigNæri
   return null;
 };
 
-const connectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(
-  behandlingForm({
-    form: formName,
-    validate: values => {
-      const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
-      const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
-      const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
-
-      const errors = {};
-
-      const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
-      if (nyoppstartetDatoValidation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
-      }
-
-      const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
-      if (inntekt2019Validation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
-      }
-      const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
-      if (inntekt2020Validation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
-      }
-
-      return errors;
-    },
-  })(SøknadsperiodeFieldArrayComponent),
-);
+const connectedComponent = connect(mapStateToProps)(SøknadsperiodeFieldArrayComponent);
 
 export default connectedComponent;

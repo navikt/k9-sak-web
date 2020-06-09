@@ -1,21 +1,35 @@
-import { Behandling, SubmitCallback } from '@k9-sak-web/types';
-import * as React from 'react';
-import { useIntl } from 'react-intl';
-import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
-import { TabsPure } from 'nav-frontend-tabs';
-import { FieldArray, InjectedFormProps } from 'redux-form';
-import { Knapp } from 'nav-frontend-knapper';
-import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
-import { connect } from 'react-redux';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
-import { hasValidText, maxLength, minLength, required, hasValidInteger, hasValidDate } from '@fpsak-frontend/utils';
-import classNames from 'classnames';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { DatepickerField } from '@fpsak-frontend/form';
-import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
+import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
+import {
+  hasValidDate,
+  hasValidInteger,
+  hasValidText,
+  maxLength,
+  minLength,
+  required,
+  ISO_DATE_FORMAT,
+} from '@fpsak-frontend/utils';
+import { Behandling, SubmitCallback } from '@k9-sak-web/types';
+import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
+import classNames from 'classnames';
+import { Knapp } from 'nav-frontend-knapper';
+import { TabsPure } from 'nav-frontend-tabs';
+import * as React from 'react';
+import { useIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { change as reduxFormChange, FieldArray, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
+import moment from 'moment';
 import styles from './opplysningerFraSoknadenForm.less';
-import SøknadsperiodeFieldArrayComponent from './SøknadsperiodeFieldArrayComponent';
+import SøknadsperiodeFieldArrayComponent, {
+  buildInitialValuesForSøknadsperiode,
+} from './SøknadsperiodeFieldArrayComponent';
+import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
+
+const fieldArrayName = SøknadFormValue.SØKNADSPERIODER;
 
 interface Props {
   readOnly: boolean;
@@ -34,11 +48,11 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
 
   const {
     behandling: { id: behandlingId, versjon: behandlingVersjon },
-    harApneAksjonspunkter,
+    // harApneAksjonspunkter,
     kanEndrePåSøknadsopplysninger,
     oppgittOpptjening,
-    submitCallback,
-    submittable,
+    // submitCallback,
+    // submittable,
     handleSubmit,
   } = props;
 
@@ -55,7 +69,7 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
         </Knapp>
       )}
       <TabsPure
-        tabs={data.søknader.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
+        tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
           aktiv: activeTab === currentOppgittOpptjeningIndex,
           label: `Søknadsperiode ${currentOppgittOpptjeningIndex + 1}`,
         }))}
@@ -64,12 +78,16 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
       <FieldArray
         component={SøknadsperiodeFieldArrayComponent}
         props={{
-          søknad: data.søknader[activeTab],
+          måneder: oppgittOpptjening.måneder,
           formIsEditable,
           kanEndrePåSøknadsopplysninger,
           behandlingId,
           behandlingVersjon,
+          formChange: reduxFormChange,
+          formUntouch: reduxFormUntouch,
+          aktivMånedIndeks: activeTab,
         }}
+        name={SøknadFormValue.SØKNADSPERIODER}
       />
       <div className={styles.fieldContainer}>
         <InputField
@@ -132,13 +150,83 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
   );
 };
 
-export const oppgittOpptjeningRevurderingFormFormName = 'OpplysningerFraSoknadenForm';
+export const oppgittOpptjeningRevurderingFormName = 'OpplysningerFraSoknadenForm';
+
+const transformValues = (formValues, oppgittOpptjening) => {};
+
+const buildInitialValues = (values: OpplysningerFraSøknaden) => {
+  const { førSøkerPerioden } = values;
+
+  const næringFørSøknadsperioden =
+    førSøkerPerioden?.oppgittEgenNæring.length > 0 ? førSøkerPerioden.oppgittEgenNæring : null;
+  const næringsinntektFørSøknadsperioden = næringFørSøknadsperioden
+    ? næringFørSøknadsperioden[0].bruttoInntekt.verdi
+    : null;
+  const inntektsperiodenFørSøknadsperiodeErI2019 = næringFørSøknadsperioden
+    ? moment(næringFørSøknadsperioden[0].periode.tom, ISO_DATE_FORMAT).year() === 2019
+    : false;
+  const inntektsperiodenFørSøknadsperiodeErI2020 = næringFørSøknadsperioden
+    ? moment(næringFørSøknadsperioden[0].periode.tom, ISO_DATE_FORMAT).year() === 2020
+    : false;
+
+  return {
+    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
+      ? næringsinntektFørSøknadsperioden
+      : null,
+    [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: inntektsperiodenFørSøknadsperiodeErI2020
+      ? næringsinntektFørSøknadsperioden
+      : null,
+
+    [fieldArrayName]: values.måneder.map(måned => buildInitialValuesForSøknadsperiode(måned)),
+  };
+};
+
+const mapStateToProps = (state, props) => {
+  const { submitCallback, oppgittOpptjening } = props;
+  const onSubmit = formValues => submitCallback([transformValues(formValues, oppgittOpptjening)]);
+  const initialValues = buildInitialValues(oppgittOpptjening);
+  return state => ({ onSubmit, initialValues });
+};
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      reduxFormChange,
+      reduxFormUntouch,
+    },
+    dispatch,
+  ),
+});
+
 const connectedComponent = connect(
-  () => {},
-  () => {},
+  mapStateToProps,
+  mapDispatchToProps,
 )(
   behandlingForm({
-    form: oppgittOpptjeningRevurderingFormFormName,
+    form: oppgittOpptjeningRevurderingFormName,
+    // validate: values => {
+    //   const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
+    //   const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+    //   const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
+
+    //   const errors = {};
+
+    //   const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
+    //   if (nyoppstartetDatoValidation !== null) {
+    //     errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
+    //   }
+
+    //   const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
+    //   if (inntekt2019Validation !== null) {
+    //     errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
+    //   }
+    //   const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
+    //   if (inntekt2020Validation !== null) {
+    //     errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
+    //   }
+
+    //   return errors;
+    // },
   })(OppgittOpptjeningRevurderingForm),
 );
 

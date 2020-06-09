@@ -27,9 +27,12 @@ interface Props {
 }
 
 const OppgittOpptjeningRevurdering = (props: Props & InjectedFormProps) => {
+  const {
+    behandling: { id, versjon },
+  } = props;
   return (
     <RawIntlProvider value={intlConfig}>
-      <OppgittOpptjeningRevurderingForm {...props} />
+      <OppgittOpptjeningRevurderingForm behandlingId={id} behandlingVersjon={versjon} {...props} />
     </RawIntlProvider>
   );
 };
