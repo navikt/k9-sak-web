@@ -13,7 +13,10 @@ import { connect } from 'react-redux';
 import { WrappedFieldArrayProps } from 'redux-form';
 import { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import FrilanserForm from './FrilanserForm';
-import { oppgittOpptjeningRevurderingFormName } from './OppgittOpptjeningRevurderingForm';
+import {
+  oppgittOpptjeningRevurderingFormName,
+  OppgittOpptjeningRevurderingFormValues,
+} from './OppgittOpptjeningRevurderingForm';
 import styles from './opplysningerFraSoknadenForm.less';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
 import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
@@ -72,8 +75,6 @@ export const buildInitialValuesForSøknadsperiode = (values: Måned) => {
   const næringBruttoinntekt = harNæring ? næring[0].bruttoInntekt.verdi : null;
 
   return {
-    erSelvstendigNæringsdrivende: søkerSN,
-    erFrilanser: søkerFL,
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: næringStartdato,
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: næringBruttoinntekt,
     [SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN]: frilansoppdragStartdato,
@@ -102,8 +103,6 @@ interface SøknadsperiodeFieldArrayComponentProps {
 }
 
 interface InitialValues {
-  erSelvstendigNæringsdrivende: boolean;
-  erFrilanser: boolean;
   søknadsperiode: { fom: string; tom: string };
 }
 
@@ -116,7 +115,7 @@ interface StateProps {
   formChange: (formName: string, fieldName: string, value: any) => void;
   formUntouch: (formName: string, fieldName: string) => void;
   behandlingFormPrefix: string;
-  søknadsperiodeFormValues: OpplysningerFraSøknadenFormValues;
+  søknadsperiodeFormValues: SøknadsperiodeFormValues;
 }
 
 const SøknadsperiodeFieldArrayComponent = (
@@ -230,7 +229,7 @@ const SøknadsperiodeFieldArrayComponent = (
   });
 };
 
-interface OpplysningerFraSøknadenFormValues {
+export interface SøknadsperiodeFormValues {
   [SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN]: string;
   [SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: string;
   [SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN]: string;
@@ -258,17 +257,15 @@ const getValueSafely = value => {
   return null;
 };
 
-const getFormValueSafely = (propertyName: SøknadFormValue, formValues: OpplysningerFraSøknadenFormValues) => {
+const getFormValueSafely = (propertyName: SøknadFormValue, formValues: SøknadsperiodeFormValues) => {
   const formValue = formValues[propertyName];
   return getValueSafely(formValue);
 };
 
-const lagOppgittEgenNæringForSøknadsperioden = (
-  formValues: OpplysningerFraSøknadenFormValues,
-  opprinneligeSøknadsopplysninger: OpplysningerFraSøknaden,
+export const lagOppgittEgenNæringForSøknadsperioden = (
+  formValues: SøknadsperiodeFormValues,
+  opprinneligTomDato: string,
 ) => {
-  const opprinneligTomDato = opprinneligeSøknadsopplysninger.periodeFraSøknad.tom;
-
   const næringsinntekt = getFormValueSafely(
     SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN,
     formValues,
@@ -290,9 +287,7 @@ const lagOppgittEgenNæringForSøknadsperioden = (
   return null;
 };
 
-const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligeSøknadsopplysninger: OpplysningerFraSøknaden) => {
-  const opprinneligTomDato = opprinneligeSøknadsopplysninger.periodeFraSøknad.tom;
-
+export const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligTomDato: string) => {
   const frilansinntekt = getFormValueSafely(SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN, formValues);
   if (frilansinntekt !== null) {
     const fomDato = formValues[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
@@ -326,8 +321,8 @@ const finnOpprinneligPeriodeMedOppgittNæringsinntektFørSøknadsperioden = nær
   }
 };
 
-const lagPeriodeForOppgittEgenNæringFørSøkerperioden = (
-  formValues: OpplysningerFraSøknadenFormValues,
+export const lagPeriodeForOppgittEgenNæringFørSøkerperioden = (
+  formValues: OppgittOpptjeningRevurderingFormValues,
   opplysningerFraSøknaden: OpplysningerFraSøknaden,
 ) => {
   const næringFørSøknadsperioden = opplysningerFraSøknaden.førSøkerPerioden.oppgittEgenNæring;
@@ -361,46 +356,6 @@ const lagPeriodeForOppgittEgenNæringFørSøkerperioden = (
   }
 
   return periode;
-};
-
-const transformValues = (
-  formValues: OpplysningerFraSøknadenFormValues,
-  opplysningerFraSøknaden: OpplysningerFraSøknaden,
-) => {
-  const egenNæringBruttoInntekt =
-    formValues.selvstendigNaeringsdrivende_inntekt2019 || formValues.selvstendigNaeringsdrivende_inntekt2020;
-  const skalOppgiNæringsinntektFørSøknadsperioden = !!formValues.selvstendigNaeringsdrivende_startdatoForSoknaden;
-  const søkerYtelseForFrilans = formValues[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
-  const søkerYtelseForNæring = formValues[SøknadFormValue.HAR_SØKT_SOM_SSN];
-
-  const resultingData = {
-    kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
-    begrunnelse: formValues.begrunnelse,
-    søknadsperiodeOgOppgittOpptjeningDto: {
-      førSøkerPerioden: {
-        oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
-          ? [
-              {
-                periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
-                bruttoInntekt: {
-                  verdi: +egenNæringBruttoInntekt,
-                },
-              },
-            ]
-          : null,
-        oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
-      },
-      iSøkerPerioden: {
-        oppgittEgenNæring: lagOppgittEgenNæringForSøknadsperioden(formValues, opplysningerFraSøknaden),
-        oppgittFrilans: lagOppgittFrilansForSøknadsperioden(formValues, opplysningerFraSøknaden),
-      },
-      periodeFraSøknad: opplysningerFraSøknaden.periodeFraSøknad,
-      søkerYtelseForFrilans,
-      søkerYtelseForNæring,
-    },
-  };
-
-  return resultingData;
 };
 
 const mapStateToProps = (state, props: SøknadsperiodeFieldArrayComponentProps) => {
