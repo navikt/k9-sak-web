@@ -41,6 +41,8 @@ const BeregningsgrunnlagProsessIndex = ({
       isApOpen={isAksjonspunktOpen}
       vilkar={vilkar}
       alleKodeverk={alleKodeverk}
+      behandlingId={behandling.id}
+      behandlingVersjon={behandling.versjon}
     />
   </RawIntlProvider>
 );

@@ -10,21 +10,21 @@ import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fps
 import { Element } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { RammevedtakEnum, Rammevedtak } from '@k9-sak-web/types';
-import { getFeatureToggles } from '@fpsak-frontend/sak-app/src/app/duck';
-import { featureToggle } from '@fpsak-frontend/fp-felles/index';
+import { RammevedtakEnum, Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
   rammevedtak: Rammevedtak[];
-  featureSkalViseAksjonspunkt: boolean;
+  isAksjonspunktOpen: boolean;
 }
 
 interface FormContentProps {
   handleSubmit: SubmitHandler;
   harUavklartePerioder: boolean;
+  isAksjonspunktOpen: boolean;
 }
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
@@ -46,57 +46,70 @@ const SpaceBetween = styled.div`
   margin-top: 1em;
 `;
 
-export const FormContent: FunctionComponent<FormContentProps> = ({ handleSubmit, harUavklartePerioder }) => {
+export const FormContent: FunctionComponent<FormContentProps> = ({
+  handleSubmit,
+  harUavklartePerioder,
+  isAksjonspunktOpen,
+}) => {
   if (harUavklartePerioder) {
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
           {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.UidentifiserteRammemeldinger" />]}
         </AksjonspunktHelpTextTemp>
-        <VerticalSpacer sixteenPx />
-        <SpaceBetween>
-          <CheckboxField
-            validate={[hasValidValue(true)]}
-            name="bekreftInfotrygd"
-            label={{ id: 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd' }}
-          />
-          <Hovedknapp onClick={handleSubmit} htmlType="submit">
-            <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
-          </Hovedknapp>
-        </SpaceBetween>
+        {isAksjonspunktOpen && (
+          <>
+            <VerticalSpacer sixteenPx />
+            <SpaceBetween>
+              <CheckboxField
+                validate={[hasValidValue(true)]}
+                name="bekreftInfotrygd"
+                label={{ id: 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd' }}
+              />
+              <Hovedknapp onClick={handleSubmit} htmlType="submit">
+                <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
+              </Hovedknapp>
+            </SpaceBetween>
+          </>
+        )}
       </>
     );
   }
 
   return (
     <>
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
         {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått" />]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
-      <RadioGroupField
-        name="valg"
-        validate={[required]}
-        label={
-          <Element>
-            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
-          </Element>
-        }
-      >
-        <RadioOption value={valgValues.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />
-        <RadioOption value={valgValues.fortsett} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Fortsett' }} />
-      </RadioGroupField>
+      {isAksjonspunktOpen && (
+        <RadioGroupField
+          name="valg"
+          validate={[required]}
+          label={
+            <Element>
+              <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
+            </Element>
+          }
+        >
+          <RadioOption value={valgValues.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />
+          <RadioOption value={valgValues.fortsett} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Fortsett' }} />
+        </RadioGroupField>
+      )}
       <TextAreaField
         label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Begrunnelse' }}
         name="begrunnelse"
         validate={[required, minLength(3), maxLength(1500), hasValidText]}
         maxLength={1500}
+        readOnly={!isAksjonspunktOpen}
       />
-      <SpaceBetween>
-        <Hovedknapp onClick={handleSubmit} htmlType="submit">
-          <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
-        </Hovedknapp>
-      </SpaceBetween>
+      {isAksjonspunktOpen && (
+        <SpaceBetween>
+          <Hovedknapp onClick={handleSubmit} htmlType="submit">
+            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
+          </Hovedknapp>
+        </SpaceBetween>
+      )}
     </>
   );
 };
@@ -105,12 +118,8 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
   aktiviteter,
   rammevedtak,
   handleSubmit,
-  featureSkalViseAksjonspunkt,
+  isAksjonspunktOpen,
 }) => {
-  if (!featureSkalViseAksjonspunkt) {
-    return null;
-  }
-
   const harUavklartePerioder = useMemo(
     () =>
       aktiviteter.flatMap(({ uttaksperioder }) => uttaksperioder).some(({ utfall }) => utfall === UtfallEnum.UAVKLART),
@@ -121,7 +130,7 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
     const harUidentifiserteRammevedtak = rammevedtak.some(({ type }) => type === RammevedtakEnum.UIDENTIFISERT);
     if (!harUidentifiserteRammevedtak) {
       return (
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
           {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd" />]}
         </AksjonspunktHelpTextTemp>
       );
@@ -131,7 +140,11 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
   return (
     <form onSubmit={handleSubmit}>
       <GråBakgrunn>
-        <FormContent handleSubmit={handleSubmit} harUavklartePerioder={harUavklartePerioder} />
+        <FormContent
+          handleSubmit={handleSubmit}
+          harUavklartePerioder={harUavklartePerioder}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+        />
       </GråBakgrunn>
       <VerticalSpacer sixteenPx />
     </form>
@@ -150,6 +163,8 @@ interface AksjonspunktFormProps {
   behandlingId: number;
   behandlingVersjon: number;
   submitCallback: (values: any[]) => void;
+  aksjonspunkterForSteg?: Aksjonspunkt[];
+  isAksjonspunktOpen: boolean;
 }
 
 export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infotrygd';
@@ -157,11 +172,7 @@ export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infot
  * Skal ikke be saksbehandler om begrunnelse hvis uavklarte perioder, men backend krvever det.
  * Hardkoder derfor begrunnelsen i de tilfellene.
  * */
-export const transformValues = ({
-  begrunnelse = begrunnelseUavklartePerioder,
-  valg,
-  bekreftInfotrygd,
-}: FormValues) => {
+export const transformValues = ({ begrunnelse = begrunnelseUavklartePerioder, valg, bekreftInfotrygd }: FormValues) => {
   if (bekreftInfotrygd || valg === valgValues.reBehandling) {
     return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: false }];
   }
@@ -174,15 +185,14 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
 
   return (
     state,
-    { aktiviteter, rammevedtak }: AksjonspunktFormProps,
+    { aktiviteter, rammevedtak, isAksjonspunktOpen, aksjonspunkterForSteg = [] }: AksjonspunktFormProps,
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
-    const featureToggles = getFeatureToggles(state);
-    const featureSkalViseAksjonspunkt = featureToggles && featureToggles[featureToggle.AKTIVER_UTTAK_AKSJONSPUNKT];
     return {
       onSubmit,
       aktiviteter,
       rammevedtak,
-      featureSkalViseAksjonspunkt,
+      isAksjonspunktOpen,
+      initialValues: { begrunnelse: aksjonspunkterForSteg[0]?.begrunnelse },
     };
   };
 };

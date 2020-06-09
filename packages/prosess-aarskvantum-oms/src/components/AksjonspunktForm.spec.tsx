@@ -9,9 +9,7 @@ import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues 
 describe('<AksjonspunktForm>', () => {
   describe('<FormContent>', () => {
     it('viser kun en checkbox hvis man har minst én uavklart periode', () => {
-      const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} harUavklartePerioder />,
-      );
+      const wrapper = shallowWithIntl(<FormContent {...reduxFormPropsMock} harUavklartePerioder isAksjonspunktOpen />);
 
       const checkbox = wrapper.find(CheckboxField);
       const radios = wrapper.find(RadioOption);
@@ -22,7 +20,7 @@ describe('<AksjonspunktForm>', () => {
 
     it('viser radios hvis man ikke har uavklarte perioder', () => {
       const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} harUavklartePerioder={false} />,
+        <FormContent {...reduxFormPropsMock} harUavklartePerioder={false} isAksjonspunktOpen />,
       );
 
       const checkbox = wrapper.find(CheckboxField);

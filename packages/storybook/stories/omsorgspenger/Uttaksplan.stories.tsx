@@ -5,7 +5,9 @@ import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
 import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
 import { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
 import Uttaksperiode, { VurderteVilkår } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
-import { Behandling, Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
+import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -115,6 +117,9 @@ const behandling: Behandling = {
   versjon: 1,
 };
 
+// @ts-ignore
+const aksjonspunkterForSteg: Aksjonspunkt[] = [{}];
+
 export const standard = () => (
   // @ts-ignore
   <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} behandling={behandling} />
@@ -137,6 +142,7 @@ export const smittevernsdagerOgOverlappendePerioderInfotrygd = () => (
     behandling={behandling}
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
   />
 );
 
@@ -151,6 +157,20 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
     behandling={behandling}
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
+  />
+);
+
+export const behandletAksjonspunkt = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode])}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+    behandling={behandling}
+    isAksjonspunktOpen={false}
+    submitCallback={action('bekreft')}
+    // @ts-ignore
+    aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }]}
   />
 );
 
@@ -162,6 +182,7 @@ export const aksjonspunktAvslåttePerioder = () => (
     behandling={behandling}
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
   />
 );
 
@@ -173,5 +194,6 @@ export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
     behandling={behandling}
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
   />
 );

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { Behandling, Rammevedtak } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
+import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import messages from '../i18n/nb_NO.json';
 import RammevedtakFaktaForm from './components/RammevedtakFaktaForm';
 

@@ -8,7 +8,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-import { finnVisningForStatusIPeriode, erSøktForAndelIPeriode } from './FrisinnUtils';
+import { finnVisningForStatusIPeriode, erSøktForAndelISøknadsperiode } from './FrisinnUtils';
 
 const førsteDato = moment('2020-04-01');
 
@@ -33,41 +33,63 @@ const lagGrenseveriPeriode = (originaltInntektstak, annenInntektIkkeSøktFor, ut
   );
 };
 
-const finnAllePerioderSomSkalVises = bgPerioder => {
+const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {
+  const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
+  const bgTom = moment(bgPeriode.beregningsgrunnlagPeriodeTom);
+  return frisinnPerioder.some(p => !moment(p.fom).isBefore(bgFom) && !moment(p.tom).isAfter(bgTom));
+};
+
+/**
+ * Henter kun ut perioder som avsluttes på siste dag i en måned, da dette er de som skal vises for FRISINN.
+ * De må også overlappe med frisinnperiode
+ * De får rett startdato senere
+ */
+const finnAllePerioderSomSkalVises = (bgPerioder, frisinnGrunnlag) => {
   const perioder = [];
   for (let i = 0; i < bgPerioder.length; i += 1) {
     const periode = bgPerioder[i];
-    const tom = moment(periode.beregningsgrunnlagPeriodeTom);
-    const sisteDatoIMåned = moment(periode.beregningsgrunnlagPeriodeTom).endOf('month');
-    if (
-      tom.isAfter(førsteDato) &&
-      tom.isSame(sisteDatoIMåned, 'day') &&
-      periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE
-    ) {
-      perioder.push(periode);
+    if (overlapperMedFrisinnPeriode(periode, frisinnGrunnlag.frisinnPerioder)) {
+      const tom = moment(periode.beregningsgrunnlagPeriodeTom);
+      const sisteDatoIMåned = moment(periode.beregningsgrunnlagPeriodeTom).endOf('month');
+      if (
+        tom.isAfter(førsteDato) &&
+        tom.isSame(sisteDatoIMåned, 'day') &&
+        periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE
+      ) {
+        perioder.push(periode);
+      }
     }
   }
   return perioder;
 };
 
-const lagGrenseverdirad = (bg, periode) => {
+const starterFørISammeMåned = (frisinnPeriode, bgPeriode) => {
+  const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
+  const frisinnFom = moment(frisinnPeriode.fom);
+  return bgFom.year() === frisinnFom.year() && bgFom.month() === frisinnFom.month() && frisinnFom.isBefore(bgFom);
+};
+
+const lagGrenseverdirad = (bg, bgPeriode) => {
   const frisinnGrunnlag = bg.ytelsesspesifiktGrunnlag;
-  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, periode);
+  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, bgPeriode);
   const originaltInntektstak = bg.grunnbeløp * 6;
   let annenInntektIkkeSøktFor = bruttoAT;
-  if (!erSøktForAndelIPeriode(aktivitetStatus.FRILANSER, periode, frisinnGrunnlag)) {
-    const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, bg, periode);
+  if (!erSøktForAndelISøknadsperiode(aktivitetStatus.FRILANSER, bgPeriode, frisinnGrunnlag)) {
+    const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, bg, bgPeriode);
     annenInntektIkkeSøktFor += bruttoFL;
   }
-  if (!erSøktForAndelIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, periode, frisinnGrunnlag)) {
-    const bruttoSN = finnVisningForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, periode);
+  if (!erSøktForAndelISøknadsperiode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bgPeriode, frisinnGrunnlag)) {
+    const bruttoSN = finnVisningForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, bgPeriode);
     annenInntektIkkeSøktFor += bruttoSN;
   }
   const utregnetInntektstak =
     originaltInntektstak > annenInntektIkkeSøktFor ? originaltInntektstak - annenInntektIkkeSøktFor : 0;
-  const fom = periode.beregningsgrunnlagPeriodeFom;
-  const tom = periode.beregningsgrunnlagPeriodeTom;
 
+  const tom = bgPeriode.beregningsgrunnlagPeriodeTom;
+  const førstePeriodeISammeMåned = frisinnGrunnlag.frisinnPerioder.find(frisinnPeriode =>
+    starterFørISammeMåned(frisinnPeriode, bgPeriode),
+  );
+  const fom = førstePeriodeISammeMåned ? førstePeriodeISammeMåned.fom : bgPeriode.beregningsgrunnlagPeriodeFom;
   return (
     <>
       <Row>
@@ -90,9 +112,16 @@ const lagGrenseverdirad = (bg, periode) => {
     </>
   );
 };
-
+/**
+ * Vi ønsker å vise en rad for grenseverdi pr måned det er søkt ytelse for.
+ * Om det er søkt to perioder i en måned skal disse vises som en rad der vi tar utgangspunkt i den siste, fordi denne alltid
+ * vil vare ut måneden.
+ */
 const Grenseverdi = ({ beregningsgrunnlag }) => {
-  const perioderSomSkalvises = finnAllePerioderSomSkalVises(beregningsgrunnlag.beregningsgrunnlagPeriode);
+  const perioderSomSkalvises = finnAllePerioderSomSkalVises(
+    beregningsgrunnlag.beregningsgrunnlagPeriode,
+    beregningsgrunnlag.ytelsesspesifiktGrunnlag,
+  );
   return (
     <>
       {perioderSomSkalvises.map(periode => (

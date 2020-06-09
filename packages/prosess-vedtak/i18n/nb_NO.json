@@ -52,6 +52,13 @@
   "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImage": "Ingen automatisk vedtaksbrev.",
   "VedtakForm.SvpFritektsBrevModal.ModalDescription": "Informasjonsboks om ingen automatisk vedtaksbrev. Fritekstbrev er nødvendig.",
   "VedtakForm.Avslagsgrunner.Beregning": "Perioden {fom} - {tom} er avslått med årsak: {årsak}",
+  "VedtakForm.RedusertUtbetalingArsak.INNTEKT_REDUSERT_2019": "Inntekt for 2019 er redusert",
+  "VedtakForm.RedusertUtbetalingArsak.INNTEKT_REDUSERT_2020_FØR_MARS": "Inntekt for 2020 før mars er redusert",
+  "VedtakForm.RedusertUtbetalingArsak.INNTEKT_I_SØKNADSPERIODE_ENDRET": "Inntekt for søknadsperioden er endret",
+  "VedtakForm.RedusertUtbetalingArsak.DATO_FOR_NYOPPSTARTET_SN_ENDRET": "Endret oppstartsdato for enkeltpersonforetak",
+  "VedtakForm.RedusertUtbetalingArsak.SØKNAD_GJELDER_IKKE_LENGER_FL": "Søknaden gjelder ikke lenger tap av inntekt som frilanser",
+  "VedtakForm.RedusertUtbetalingArsak.SØKNAD_GJELDER_IKKE_LENGER_SN": "Søknaden gjelder ikke lenger tap av inntekt som selvstendig næringsdrivende",
+  "VedtakForm.RedusertUtbetalingArsak.SØKNADSPERIODENS_LENGDE_ENDRET": "Søknadsperiodens lengde er endret",
 
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",

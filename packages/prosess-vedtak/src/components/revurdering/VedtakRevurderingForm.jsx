@@ -17,6 +17,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+import {Column, Row} from "nav-frontend-grid";
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -27,6 +28,8 @@ import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
+import VedtakRedusertUtbetalingArsaker from "./VedtakRedusertUtbetalingArsaker";
+import redusertUtbetalingArsak from "../../kodeverk/redusertUtbetalingArsak";
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
@@ -140,57 +143,66 @@ export class VedtakRevurderingFormImpl extends Component {
                 readOnlyHideEmpty={false}
               />
             )}
-
-            {isInnvilget(behandlingresultat.type.kode) && (
-              <VedtakInnvilgetRevurderingPanel
-                antallBarn={antallBarn}
-                ytelseTypeKode={ytelseTypeKode}
-                aksjonspunktKoder={aksjonspunktKoder}
-                revurderingsAarsakString={revurderingsAarsakString}
-                behandlingsresultat={behandlingresultat}
-                readOnly={readOnly}
-                beregningResultat={resultatstruktur}
-                sprakKode={sprakkode}
-                tilbakekrevingvalg={tilbakekrevingvalg}
-                simuleringResultat={simuleringResultat}
-                alleKodeverk={alleKodeverk}
-                originaltBeregningResultat={resultatstrukturOriginalBehandling}
-                beregningErManueltFastsatt={beregningErManueltFastsatt}
-                vedtakVarsel={vedtakVarsel}
-                bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-              />
-            )}
-            {isAvslag(behandlingresultat.type.kode) && (
-              <VedtakAvslagRevurderingPanel
-                behandlingStatusKode={behandlingStatusKode}
-                aksjonspunkter={aksjonspunkter}
-                behandlingsresultat={behandlingresultat}
-                readOnly={readOnly}
-                alleKodeverk={alleKodeverk}
-                beregningResultat={resultatstruktur}
-                sprakkode={sprakkode}
-                vilkar={vilkar}
-                tilbakekrevingvalg={tilbakekrevingvalg}
-                simuleringResultat={simuleringResultat}
-                originaltBeregningResultat={resultatstrukturOriginalBehandling}
-                vedtakVarsel={vedtakVarsel}
-                ytelseTypeKode={ytelseTypeKode}
-              />
-            )}
-            {isOpphor(behandlingresultat.type.kode) && (
-              <VedtakOpphorRevurderingPanel
-                revurderingsAarsakString={revurderingsAarsakString}
-                ytelseTypeKode={ytelseTypeKode}
-                readOnly={readOnly}
-                behandlingsresultat={behandlingresultat}
-                sprakKode={sprakkode}
-                medlemskapFom={medlemskapFom}
-                resultatstruktur={resultatstruktur}
-                beregningErManueltFastsatt={beregningErManueltFastsatt}
-                vedtakVarsel={vedtakVarsel}
-              />
-            )}
-
+            <Row>
+              <Column xs="4">
+                {isInnvilget(behandlingresultat.type.kode) && (
+                  <VedtakInnvilgetRevurderingPanel
+                    antallBarn={antallBarn}
+                    ytelseTypeKode={ytelseTypeKode}
+                    aksjonspunktKoder={aksjonspunktKoder}
+                    revurderingsAarsakString={revurderingsAarsakString}
+                    behandlingsresultat={behandlingresultat}
+                    readOnly={readOnly}
+                    beregningResultat={resultatstruktur}
+                    sprakKode={sprakkode}
+                    tilbakekrevingvalg={tilbakekrevingvalg}
+                    simuleringResultat={simuleringResultat}
+                    alleKodeverk={alleKodeverk}
+                    originaltBeregningResultat={resultatstrukturOriginalBehandling}
+                    beregningErManueltFastsatt={beregningErManueltFastsatt}
+                    vedtakVarsel={vedtakVarsel}
+                    bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+                  />
+                )}
+                {isAvslag(behandlingresultat.type.kode) && (
+                  <VedtakAvslagRevurderingPanel
+                    behandlingStatusKode={behandlingStatusKode}
+                    aksjonspunkter={aksjonspunkter}
+                    behandlingsresultat={behandlingresultat}
+                    readOnly={readOnly}
+                    alleKodeverk={alleKodeverk}
+                    beregningResultat={resultatstruktur}
+                    sprakkode={sprakkode}
+                    vilkar={vilkar}
+                    tilbakekrevingvalg={tilbakekrevingvalg}
+                    simuleringResultat={simuleringResultat}
+                    originaltBeregningResultat={resultatstrukturOriginalBehandling}
+                    vedtakVarsel={vedtakVarsel}
+                    ytelseTypeKode={ytelseTypeKode}
+                  />
+                )}
+                {isOpphor(behandlingresultat.type.kode) && (
+                  <VedtakOpphorRevurderingPanel
+                    revurderingsAarsakString={revurderingsAarsakString}
+                    ytelseTypeKode={ytelseTypeKode}
+                    readOnly={readOnly}
+                    behandlingsresultat={behandlingresultat}
+                    sprakKode={sprakkode}
+                    medlemskapFom={medlemskapFom}
+                    resultatstruktur={resultatstruktur}
+                    beregningErManueltFastsatt={beregningErManueltFastsatt}
+                    vedtakVarsel={vedtakVarsel}
+                  />
+                )}
+              </Column>
+              <Column xs="8">
+                <VedtakRedusertUtbetalingArsaker
+                  readOnly={readOnly}
+                  values={new Map(Object.values(redusertUtbetalingArsak).map(a => [a, !!formProps[a]]))}
+                  vedtakVarsel={vedtakVarsel}
+                />
+              </Column>
+            </Row>
             {skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.ENGANGSSTONAD && (
               <FritekstBrevPanel
                 intl={intl}
@@ -308,14 +320,22 @@ const buildInitialValues = createSelector(
 );
 
 const transformValues = values =>
-  values.aksjonspunktKoder.map(apCode => ({
-    kode: apCode,
-    begrunnelse: values.begrunnelse,
-    fritekstBrev: values.brødtekst,
-    skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-    overskrift: values.overskrift,
-    isVedtakSubmission,
-  }));
+  values.aksjonspunktKoder.map(apCode => {
+    const transformedValues = {
+      kode: apCode,
+      begrunnelse: values.begrunnelse,
+      fritekstBrev: values.brødtekst,
+      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+      overskrift: values.overskrift,
+      isVedtakSubmission,
+    };
+    if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+      transformedValues.redusertUtbetalingÅrsaker = Object
+        .values(redusertUtbetalingArsak)
+        .filter(name => Object.keys(values).some(key => key === name && values[key]));
+    }
+    return transformedValues;
+  });
 
 const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
@@ -358,6 +378,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'skalBrukeOverstyrendeFritekstBrev',
       'overskrift',
       'brødtekst',
+      ...Object.values(redusertUtbetalingArsak)
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
   });

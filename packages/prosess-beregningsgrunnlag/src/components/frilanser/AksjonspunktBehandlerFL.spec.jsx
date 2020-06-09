@@ -6,9 +6,7 @@ import AksjonspunktBehandlerFL from './AksjonspunktBehandlerFL';
 
 describe('<AksjonspunktBehandlerFL>', () => {
   it('Skal teste tabellen får korrekte rader readonly=false', () => {
-    const wrapper = shallowWithIntl(<AksjonspunktBehandlerFL
-      readOnly={false}
-    />);
+    const wrapper = shallowWithIntl(<AksjonspunktBehandlerFL readOnly={false} fieldArrayID="dummyId" />);
     const rows = wrapper.find('Row');
     const lblTekst = rows.first().find('FormattedMessage');
     expect(lblTekst.props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerFL');

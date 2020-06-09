@@ -19,17 +19,14 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 
 export const erNyoppstartetFLField = 'NyoppstartetFLField';
 
-const NyoppstartetFLForm = ({
-  readOnly,
-  isAksjonspunktClosed,
-}) => (
+const NyoppstartetFLForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
   <div>
     <Normaltekst>
       <FormattedMessage id="BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL" />
     </Normaltekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
-      name={erNyoppstartetFLField}
+      name={`${fieldArrayID}.${erNyoppstartetFLField}`}
       validate={[required]}
       readOnly={readOnly}
       isEdited={isAksjonspunktClosed}
@@ -43,16 +40,18 @@ const NyoppstartetFLForm = ({
 NyoppstartetFLForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-NyoppstartetFLForm.buildInitialValues = (beregningsgrunnlag) => {
+NyoppstartetFLForm.buildInitialValues = beregningsgrunnlag => {
   const initialValues = {};
   if (beregningsgrunnlag === undefined || beregningsgrunnlag.beregningsgrunnlagPeriode === undefined) {
     return initialValues;
   }
-  const alleAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode
-    .map((periode) => periode.beregningsgrunnlagPrStatusOgAndel);
-  const flAndeler = flatten(alleAndeler).filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+  const alleAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode.map(
+    periode => periode.beregningsgrunnlagPrStatusOgAndel,
+  );
+  const flAndeler = flatten(alleAndeler).filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   if (flAndeler.length > 0) {
     initialValues[erNyoppstartetFLField] = flAndeler[0].erNyoppstartet;
   }
@@ -65,31 +64,33 @@ NyoppstartetFLForm.transformValues = (values, inntektPrMnd, faktaOmBeregning, fa
     return {};
   }
   if (!inntektPrMnd || inntektPrMnd.length === 0) {
-    return ({
+    return {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL],
       vurderNyoppstartetFL: { erNyoppstartetFL: values[erNyoppstartetFLField] },
-    });
+    };
   }
-  const frilansField = inntektPrMnd
-    .find((field) => field.aktivitetStatus === aktivitetStatus.FRILANSER);
+  const frilansField = inntektPrMnd.find(field => field.aktivitetStatus === aktivitetStatus.FRILANSER);
   if (!frilansField) {
-    return ({
+    return {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL],
       vurderNyoppstartetFL: { erNyoppstartetFL: values[erNyoppstartetFLField] },
-    });
+    };
   }
   if (fastsatteAndelsnr.includes(frilansField.andelsnr)) {
-    return ({
+    return {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL],
       vurderNyoppstartetFL: { erNyoppstartetFL: values[erNyoppstartetFLField] },
-    });
+    };
   }
   fastsatteAndelsnr.push(frilansField.andelsnr);
   const inntekt = {
     fastsettMaanedsinntektFL: { maanedsinntekt: frilansField.fastsattBelop },
   };
   return {
-    faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL],
+    faktaOmBeregningTilfeller: [
+      faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL,
+      faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL,
+    ],
     ...inntekt,
     vurderNyoppstartetFL: { erNyoppstartetFL: values[erNyoppstartetFLField] },
   };
