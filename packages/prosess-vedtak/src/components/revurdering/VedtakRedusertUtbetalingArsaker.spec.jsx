@@ -6,8 +6,8 @@ import redusertUtbetalingArsak from "../../kodeverk/redusertUtbetalingArsak";
 
 describe('VedtakRedusertUtbetalingArsaker', () => {
 
-  const vedtakRedusertUtbetalingArsaker = (readOnly = false, vedtakVarsel = {}) => {
-    const attributter = {vedtakVarsel, readOnly};
+  const vedtakRedusertUtbetalingArsaker = (readOnly = false, values = new Map(), vedtakVarsel = {}) => {
+    const attributter = {vedtakVarsel, readOnly, values};
     return shallow(<VedtakRedusertUtbetalingArsaker {...attributter}/>);
   };
 
@@ -16,7 +16,7 @@ describe('VedtakRedusertUtbetalingArsaker', () => {
     expect(vedtakRedusertUtbetalingArsaker().children()).to.have.length(expectedLength);
   });
 
-  it('Akiverer avkrysningsboksene når readOnly er usann', () => {
+  it('Aktiverer avkrysningsboksene når readOnly er usann', () => {
     const readOnly = false;
     vedtakRedusertUtbetalingArsaker(readOnly)
       .children()
@@ -30,13 +30,23 @@ describe('VedtakRedusertUtbetalingArsaker', () => {
       .forEach(checkboxField => expect(checkboxField.prop('disabled')).to.be.true);
   });
 
-  it('Krysser av i riktige bokser', () => {
+  it('Krysser av i riktige bokser ved skrivemodus', () => {
+    const checkedUtbetalingsarsak = Object.values(redusertUtbetalingArsak)[0];
+    const values = new Map(Object.values(redusertUtbetalingArsak).map(a => [a, a === checkedUtbetalingsarsak]));
+    const readOnly = false;
+    const expectedCheckedValue = checkboxField => checkboxField.key() === checkedUtbetalingsarsak;
+    vedtakRedusertUtbetalingArsaker(readOnly, values)
+      .children()
+      .forEach(checkboxField => expect(checkboxField.prop('checked')).to.be.equal(expectedCheckedValue(checkboxField)));
+  });
+
+  it('Krysser av i riktige bokser ved lesemodus', () => {
     const checkedUtbetalingsarsak = Object.values(redusertUtbetalingArsak)[0];
     const vedtakVarsel = {redusertUtbetalingÅrsaker: [checkedUtbetalingsarsak]};
     const readOnly = true;
     const expectedCheckedValue = checkboxField => checkboxField.key() === checkedUtbetalingsarsak;
-    vedtakRedusertUtbetalingArsaker(readOnly, vedtakVarsel)
+    vedtakRedusertUtbetalingArsaker(readOnly, undefined, vedtakVarsel)
       .children()
       .forEach(checkboxField => expect(checkboxField.prop('checked')).to.be.equal(expectedCheckedValue(checkboxField)));
-  })
+  });
 });
