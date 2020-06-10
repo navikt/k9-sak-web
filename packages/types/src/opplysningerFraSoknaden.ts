@@ -6,6 +6,7 @@ export default interface OpplysningerFraSøknaden {
 interface SøkerPerioden {
   oppgittEgenNæring: Oppgitt[];
   oppgittFrilans: OppgittFrilans;
+  oppgittArbeidsforhold: OppgittArbeidsforhold[];
 }
 
 interface Oppgitt {
@@ -31,4 +32,9 @@ export interface Måned {
   oppgittIMåned: SøkerPerioden;
   søkerFL: boolean;
   søkerSN: boolean;
+}
+
+interface OppgittArbeidsforhold {
+  periode: Periode;
+  inntekt: BruttoInntekt;
 }

@@ -1,9 +1,10 @@
 import { behandlingFormValueSelector, CheckboxField, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { hasValidInteger, ISO_DATE_FORMAT, maxLength } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
-import { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
+import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import classnames from 'classnames/bind';
 import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
@@ -73,6 +74,10 @@ export const buildInitialValuesForSøknadsperiode = (values: Måned) => {
   const næringStartdato = harNæring ? næring[0].periode.fom : null;
   const næringBruttoinntekt = harNæring ? næring[0].bruttoInntekt.verdi : null;
 
+  const arbeidsforhold = oppgittIMåned?.oppgittArbeidsforhold;
+  const harArbeidsforhold = arbeidsforhold && arbeidsforhold.length > 0;
+  const arbeidsforholdBruttoinntekt = harArbeidsforhold ? arbeidsforhold[0].inntekt.verdi : null;
+
   return {
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: næringStartdato,
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: næringBruttoinntekt,
@@ -85,6 +90,7 @@ export const buildInitialValuesForSøknadsperiode = (values: Måned) => {
       !søkerSN && næringBruttoinntekt ? næringBruttoinntekt : null,
     [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: søkerFL || false,
     [SøknadFormValue.HAR_SØKT_SOM_SSN]: søkerSN || false,
+    [SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER]: arbeidsforholdBruttoinntekt,
   };
 };
 
@@ -151,6 +157,7 @@ const SøknadsperiodeFieldArrayComponent = (
     const skalViseSSNSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomSSN;
     const skalViseFrilansSeksjonen = kanEndrePåSøknadsopplysninger || harSøktSomFrilanser;
     const { måned } = måneder[fieldArrayIndex];
+    const startdatoForPeriodenErEtterApril = moment(måned.fom).isAfter('2020-04-30');
 
     return (
       <div style={{ display: fieldArrayIndex !== aktivMånedIndeks ? 'none' : 'block' }} key={field}>
@@ -189,6 +196,7 @@ const SøknadsperiodeFieldArrayComponent = (
         <div
           className={classNames('formContainer', {
             'formContainer--hidden': !skalViseFrilansSeksjonen,
+            'formContainer--showBorder': startdatoForPeriodenErEtterApril,
           })}
         >
           {harSøktSomFrilanser && formIsEditable && (
@@ -218,6 +226,19 @@ const SøknadsperiodeFieldArrayComponent = (
             />
           )}
         </div>
+        {startdatoForPeriodenErEtterApril && (
+          <div className={classNames('formContainer')}>
+            <div className={styles.fieldContainer}>
+              <InputField
+                name={`${field}.${SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER}`}
+                bredde="S"
+                label={{ id: 'OpplysningerFraSoknaden.inntektSomArbeidstaker' }}
+                validate={[hasValidInteger, maxLength(5)]}
+                readOnly={formIsEditable}
+              />
+            </div>
+          </div>
+        )}
       </div>
     );
   });
@@ -232,6 +253,7 @@ export interface SøknadsperiodeFormValues {
   [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
   [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: boolean;
   [SøknadFormValue.HAR_SØKT_SOM_SSN]: boolean;
+  [SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER]: string;
 }
 
 const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
@@ -251,7 +273,7 @@ const getValueSafely = value => {
   return null;
 };
 
-const getFormValueSafely = (propertyName: SøknadFormValue, formValues: SøknadsperiodeFormValues) => {
+const getFormValueSafely = (propertyName: SøknadFormValue, formValues: Partial<SøknadsperiodeFormValues>) => {
   const formValue = formValues[propertyName];
   return getValueSafely(formValue);
 };
@@ -300,6 +322,24 @@ export const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligTomD
   }
 
   return null;
+};
+
+export const lagOppgittArbeidsforholdForSøknadsperioden = (måned: Periode, inntekt: string) => {
+  const arbeidsinntekt = getFormValueSafely(SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER, {
+    [SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER]: inntekt,
+  });
+  if (arbeidsinntekt !== null) {
+    return [
+      {
+        periode: måned,
+        inntekt: {
+          verdi: +arbeidsinntekt,
+        },
+      },
+    ];
+  }
+
+  return [];
 };
 
 // eslint-disable-next-line consistent-return

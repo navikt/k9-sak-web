@@ -35,6 +35,7 @@
   "OpplysningerFraSoknaden.NyoppstartetDato": "Oppgi dato dersom søker er nyoppstartet",
   "OpplysningerFraSoknaden.selvstendigNæringsdrivende": "Selvstendig næringsdrivende",
   "OpplysningerFraSoknaden.startdatoForSoknanden": "Startdato for søknaden",
+  "OpplysningerFraSoknaden.inntektSomArbeidstaker": "Inntekt som arbeidstaker i søknadsperioden",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
   "ValidationMessage.InvalidDate": "Startdato må stemme overens med årstallet for innntektstapet",

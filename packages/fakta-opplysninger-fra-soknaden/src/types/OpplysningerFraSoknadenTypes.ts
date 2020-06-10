@@ -12,6 +12,7 @@ enum SøknadFormValue {
   HAR_SØKT_SOM_SSN = 'harSøktSomSSN',
   HAR_SØKT_SOM_FRILANSER = 'harSøktSomFrilanser',
   SØKNADSPERIODER = 'søknadsperioder',
+  INNTEKT_SOM_ARBEIDSTAKER = 'inntektSomArbeidstaker',
 }
 
 export default SøknadFormValue;

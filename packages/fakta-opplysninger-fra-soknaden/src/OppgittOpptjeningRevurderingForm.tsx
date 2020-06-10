@@ -5,6 +5,7 @@ import { Label } from '@fpsak-frontend/form/src/Label';
 import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
+  dateFormat,
   hasValidDate,
   hasValidInteger,
   hasValidText,
@@ -12,7 +13,6 @@ import {
   maxLength,
   minLength,
   required,
-  dateFormat,
 } from '@fpsak-frontend/utils';
 import { Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
@@ -28,6 +28,7 @@ import styles from './opplysningerFraSoknadenForm.less';
 import SøknadsperiodeFieldArrayComponent, {
   buildInitialValuesForSøknadsperiode,
   inntektIsValid,
+  lagOppgittArbeidsforholdForSøknadsperioden,
   lagOppgittEgenNæringForSøknadsperioden,
   lagOppgittFrilansForSøknadsperioden,
   lagPeriodeForOppgittEgenNæringFørSøkerperioden,
@@ -200,11 +201,16 @@ const transformValues = (
       },
       måneder: søknadsperioder.map((currentSøknadsperiode, søknadsperiodeIndex) => {
         const opprinneligTomDato = opplysningerFraSøknaden.måneder[søknadsperiodeIndex].måned.tom;
+        const { måned } = opplysningerFraSøknaden.måneder[søknadsperiodeIndex];
         return {
-          måned: opplysningerFraSøknaden.måneder[søknadsperiodeIndex].måned,
+          måned,
           oppgittIMåned: {
             oppgittEgenNæring: lagOppgittEgenNæringForSøknadsperioden(currentSøknadsperiode, opprinneligTomDato),
             oppgittFrilans: lagOppgittFrilansForSøknadsperioden(currentSøknadsperiode, opprinneligTomDato),
+            oppgittArbeidsforhold: lagOppgittArbeidsforholdForSøknadsperioden(
+              måned,
+              currentSøknadsperiode.inntektSomArbeidstaker,
+            ),
           },
           søkerFL: currentSøknadsperiode.harSøktSomFrilanser,
           søkerSN: currentSøknadsperiode.harSøktSomSSN,

@@ -64,6 +64,17 @@ const opplysningerFraSøknaden = {
           },
         ],
         oppgittFrilans: null,
+        oppgittArbeidsforhold: [
+          {
+            periode: {
+              fom: '2020-05-01',
+              tom: '2020-05-31',
+            },
+            inntekt: {
+              verdi: 2000,
+            },
+          },
+        ],
       },
       søkerFL: false,
       søkerSN: true,
