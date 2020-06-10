@@ -144,7 +144,7 @@ export class VedtakRevurderingFormImpl extends Component {
               />
             )}
             <Row>
-              <Column xs="4">
+              <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? "4" : "12"}>
                 {isInnvilget(behandlingresultat.type.kode) && (
                   <VedtakInnvilgetRevurderingPanel
                     antallBarn={antallBarn}
@@ -195,12 +195,15 @@ export class VedtakRevurderingFormImpl extends Component {
                   />
                 )}
               </Column>
-              <Column xs="8">
-                <VedtakRedusertUtbetalingArsaker
-                  readOnly={readOnly}
-                  vedtakVarsel={vedtakVarsel}
-                />
-              </Column>
+              {ytelseTypeKode === fagsakYtelseType.FRISINN && (
+                <Column xs="8">
+                  <VedtakRedusertUtbetalingArsaker
+                    readOnly={readOnly}
+                    values={new Map(Object.values(redusertUtbetalingArsak).map(a => [a, !!formProps[a]]))}
+                    vedtakVarsel={vedtakVarsel}
+                  />
+                </Column>
+              )}
             </Row>
             {skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.ENGANGSSTONAD && (
               <FritekstBrevPanel
@@ -377,6 +380,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'skalBrukeOverstyrendeFritekstBrev',
       'overskrift',
       'brødtekst',
+      ...Object.values(redusertUtbetalingArsak)
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
   });
