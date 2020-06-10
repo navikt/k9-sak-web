@@ -204,7 +204,7 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
             />
           )}
         </div>
-        {(harSøktSomFrilanser || harSøktSomSSN) && !skjemaErLåst && (
+        {!skjemaErLåst && (
           <div className={classNames('begrunnelseContainer')}>
             <TextAreaField
               name={SøknadFormValue.BEGRUNNELSE}
@@ -219,11 +219,9 @@ const OpplysningerFraSoknadenForm = (props: OpplysningerFraSoknadenFormProps & I
         )}
         {kanEndrePåSøknadsopplysninger && !skjemaErLåst && (
           <>
-            {(harSøktSomSSN || harSøktSomFrilanser) && (
-              <Knapp htmlType="submit" type="hoved">
-                Bekreft og fortsett
-              </Knapp>
-            )}
+            <Knapp htmlType="submit" type="hoved">
+              Bekreft og fortsett
+            </Knapp>
             <Knapp
               onClick={() => {
                 // eslint-disable-next-line no-self-assign
@@ -468,8 +466,10 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
 
 const mapStateToProps = (_, props: OpplysningerFraSoknadenFormProps) => {
   const { submitCallback, behandlingId, behandlingVersjon, opplysningerFraSøknaden, ...otherProps } = props;
-  const onSubmit = (formValues: OpplysningerFraSøknadenFormValues) =>
-    submitCallback([transformValues(formValues, opplysningerFraSøknaden)]);
+  const onSubmit = (formValues: OpplysningerFraSøknadenFormValues) => {
+    const values = transformValues(formValues, opplysningerFraSøknaden);
+    submitCallback([values]);
+  };
 
   return state => ({
     onSubmit,

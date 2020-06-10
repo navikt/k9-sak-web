@@ -52,7 +52,7 @@ const VedtakPanels = ({
     beregningsgrunnlag,
     aksjonspunkter,
   );
-  const bgYtelsegrunnlag = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
+  const bgYtelsegrunnlag = beregningsgrunnlag?.ytelsesspesifiktGrunnlag;
   if (behandlingTypeKode === behandlingType.REVURDERING) {
     let bgPeriodeMedAvslagsårsak;
     if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag && bgYtelsegrunnlag.avslagsårsakPrPeriode) {
