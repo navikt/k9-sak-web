@@ -23,6 +23,12 @@ class Datepicker extends Component {
     this.handleDayChange = this.handleDayChange.bind(this);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.isVisible && this.inputRef?.offsetParent) {
+      this.handleUpdatedRefs();
+    }
+  }
+
   handleButtonRef(buttonRef) {
     if (buttonRef) {
       this.buttonRef = buttonRef;
@@ -43,6 +49,7 @@ class Datepicker extends Component {
       this.setState({
         inputOffsetTop: inputRef.offsetTop,
         inputOffsetWidth: inputRef.offsetWidth,
+        isVisible: !!inputRef.offsetParent,
       });
       if (buttonRef) {
         inputRef.style.paddingRight = `${buttonRef.offsetWidth}px`;
