@@ -12,6 +12,7 @@ import {
   maxLength,
   minLength,
   required,
+  dateFormat,
 } from '@fpsak-frontend/utils';
 import { Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
@@ -74,7 +75,9 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
       <TabsPure
         tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
           aktiv: activeTab === currentOppgittOpptjeningIndex,
-          label: `Søknadsperiode ${currentOppgittOpptjeningIndex + 1}`,
+          label: `${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
+            currentOppgittOpptjening.måned.tom,
+          )}`,
         }))}
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
       />
