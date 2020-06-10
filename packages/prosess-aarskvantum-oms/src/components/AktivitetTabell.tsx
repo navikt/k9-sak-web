@@ -14,6 +14,7 @@ import Arbeidsforhold from '../dto/Arbeidsforhold';
 import Uttaksperiode from '../dto/Uttaksperiode';
 import Utfalltype, { UtfallEnum } from '../dto/Utfall';
 import StyledColumn from './StyledColumn';
+import Vilkår, { VilkårEnum } from '../dto/Vilkår';
 
 interface AktivitetTabellProps {
   arbeidsforhold: Arbeidsforhold;
@@ -44,7 +45,7 @@ const Vilkårsutfall = styled.div`
   padding-top: 1em;
 `;
 
-const ExpandButton = styled.button`
+export const ExpandButton = styled.button`
   cursor: pointer;
   border: none;
   background: inherit;
@@ -59,7 +60,7 @@ const UtfallImage = styled.span`
   }
 `;
 
-const ExpandedContent = styled.div<{ fyllBorder?: boolean }>`
+export const ExpandedContent = styled.div<{ fyllBorder?: boolean }>`
   margin-top: 0.5em;
   padding-top: 0.5em;
   border-top: 1px solid #c6c2bf;
@@ -88,6 +89,9 @@ const renderUtfall = (utfall: Utfalltype, key?: string): ReactNode => (
     <FormattedMessage id={`Uttaksplan.Utfall.${utfall}`} />
   </div>
 );
+
+const arbeidsforholdSist = (_, [vilkår_2]: [Vilkår, Utfalltype]): number =>
+  vilkår_2 === VilkårEnum.ARBEIDSFORHOLD ? -1 : 0;
 
 const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   arbeidsforhold,
@@ -135,6 +139,9 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
         {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler }, index) => {
           const erValgt = valgtPeriodeIndex === index;
           const erKoronaperiode = useMemo(() => periodeErIKoronaperioden(periode), [periode]);
+          const sorterteVilkår = useMemo(() => Object.entries(vurderteVilkår.vilkår).sort(arbeidsforholdSist), [
+            vurderteVilkår.vilkår,
+          ]);
 
           return (
             <TableRow key={periode}>
@@ -145,9 +152,15 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                     <Element>
                       <FormattedMessage id="Uttaksplan.Vilkår" />
                     </Element>
-                    {Object.keys(vurderteVilkår.vilkår).map(vilkår => (
+                    {sorterteVilkår.map(([vilkår, vilkårsutfall]) => (
                       <Normaltekst key={`${periode}--${vilkår}`}>
-                        <FormattedMessage id={`Uttaksplan.Vilkår.${vilkår}`} />
+                        <FormattedMessage
+                          id={
+                            vilkår === VilkårEnum.ARBEIDSFORHOLD
+                              ? `Uttaksplan.Vilkår.${vilkår}_${vilkårsutfall}`
+                              : `Uttaksplan.Vilkår.${vilkår}`
+                          }
+                        />
                       </Normaltekst>
                     ))}
                     <VerticalSpacer sixteenPx />
@@ -167,7 +180,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                 {erValgt && (
                   <ExpandedContent fyllBorder>
                     <Vilkårsutfall>
-                      {Object.entries(vurderteVilkår.vilkår).map(([key, vilkårsutfall]) =>
+                      {sorterteVilkår.map(([key, vilkårsutfall]) =>
                         renderUtfall(vilkårsutfall, `${periode}--${key}.${vilkårsutfall}`),
                       )}
                     </Vilkårsutfall>
