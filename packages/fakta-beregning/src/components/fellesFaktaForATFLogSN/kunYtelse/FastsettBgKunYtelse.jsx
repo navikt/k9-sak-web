@@ -1,6 +1,5 @@
 import React from 'react';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import KunYtelsePanel from './KunYtelsePanel';
 
 const { FASTSETT_BG_KUN_YTELSE, VURDER_BESTEBEREGNING } = faktaOmBeregningTilfelle;
@@ -18,7 +17,7 @@ export const setFaktaPanelForKunYtelse = (
 ) => {
   if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
     faktaPanels.push(
-      <ElementWrapper key="FASTSETT_BG_KUN_YTELSE">
+      <React.Fragment key="FASTSETT_BG_KUN_YTELSE">
         <KunYtelsePanel
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
@@ -28,7 +27,7 @@ export const setFaktaPanelForKunYtelse = (
           behandlingVersjon={behandlingVersjon}
           fieldArrayID={fieldArrayID}
         />
-      </ElementWrapper>,
+      </React.Fragment>,
     );
   }
 };

@@ -1,6 +1,8 @@
 @import '@{coreModulePath}nav-frontend-core/less/core';
 @import './dayPicker';
 
+/* TODO Mesteparten i denne fila bør ikkje ligga her */
+
 html {
   height: 100%;
 }
@@ -31,37 +33,6 @@ som fra core/og muligen import fra alla andra komponenter
   color: @navMorkGra;
   font-size: 0.8rem;
   font-style: italic;
-}
-
-:global(.lenke) {
-  background: none;
-  border: 0;
-  border-bottom: solid 1px @navGra40;
-  color: @navBla;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: none;
-
-  &:hover,
-  &--hover {
-    border-bottom-color: @navBla;
-  }
-
-  &:focus,
-  &--focus {
-    background-color: @orangeFocus;
-    outline: none;
-  }
-
-  &:active,
-  &--active {
-    border-bottom-color: @navDypBla;
-    color: @navDypBla;
-  }
-
-  &--frittstaende {
-    border-bottom: 0;
-  }
 }
 
 :global(.skjemaelement > .skjemaelement) {
@@ -549,103 +520,5 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
     text-align: center;
     top: 0; // lesshint-disable zeroUnit
     width: 80px;
-  }
-}
-
-[class^="behandlingSupportIndex_behandlingsupportIndex"] table {
-  background-color: white;
-  margin-top: -16px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 12px;
-}
-
-[class^="behandlingSupportIndex_behandlingsupportIndex"] form {
-  background-color: white;
-  margin-top: -16px;
-  min-width: 100%;
-  padding-bottom: 12px;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 12px;
-  width: 100%;
-}
-
-[class^="history_historyContainer"] {
-  background-color: white;
-  margin-top: -16px;
-  min-width: 100%;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 12px;
-  width: 100%;
-}
-
-[class^="behandlingSupportIndex_behandlingsupportIndex"] [class^="linkRow"] {
-  padding-top: 12px;
-}
-
-.snakkeboble {
-  .panel {
-    width: 20rem;
-  }
-
-  &&__saksbehandler {
-    .panel {
-      background: @navLillaLighten80;
-    }
-
-    .snakkeboble__snakkebole-pil {
-      background: @navLillaLighten80;
-    }
-  }
-
-  &&__beslutter {
-    .panel {
-      background: @navGronnLighten80;
-    }
-
-    .snakkeboble__snakkebole-pil {
-      background: @navGronnLighten80;
-    }
-  }
-
-  &&__losningen {
-    .panel {
-      background: @grayBackground;
-    }
-
-    .snakkeboble__snakkebole-pil {
-      background: @grayBackground;
-    }
-  }
-
-  &&__bruker {
-    .panel {
-      background: @orangeFocusLighten80;
-    }
-
-    .snakkeboble__snakkebole-pil {
-      background: @orangeFocusLighten80;
-    }
-  }
-
-  &&__ekstern {
-    .panel {
-      background: @navLysBlaLighten80;
-    }
-
-    .snakkeboble__snakkebole-pil {
-      background: @navLysBlaLighten80;
-    }
-  }
-}
-
-.snakkeboble__kompakt {
-  box-shadow: none;
-  margin-bottom: 0;
-
-  .panel {
-    margin-bottom: 0;
   }
 }

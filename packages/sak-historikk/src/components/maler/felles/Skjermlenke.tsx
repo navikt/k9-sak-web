@@ -1,17 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Location } from 'history';
 import { Element } from 'nav-frontend-typografi';
 import { Kodeverk } from '@k9-sak-web/types';
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles/src/skjermlenkeCodes';
 import { scrollUp } from './historikkUtils';
 
 interface SkjermlenkeProps {
   skjermlenke?: Kodeverk;
-  behandlingLocation?: {
-    pathname: string;
-  };
+  behandlingLocation?: Location;
   getKodeverknavn?: (kodeverkObjekt: Kodeverk, undertype?: string) => string;
   scrollUpOnClick?: boolean;
+  createLocationForHistorikkItems: (behandlingLocation: Location, skjermlenkeKode: string) => string;
 }
 
 const Skjermlenke: React.FunctionComponent<SkjermlenkeProps> = ({
@@ -19,6 +18,7 @@ const Skjermlenke: React.FunctionComponent<SkjermlenkeProps> = ({
   behandlingLocation,
   getKodeverknavn,
   scrollUpOnClick,
+  createLocationForHistorikkItems,
 }) => {
   if (!skjermlenke) {
     return null;

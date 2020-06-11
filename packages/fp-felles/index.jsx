@@ -1,5 +1,4 @@
 export { default as reducerRegistry } from './src/ReducerRegistry';
-export { default as trackRouteParam } from './src/trackRouteParam';
 export { default as featureToggle } from './src/featureToggle';
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/ErrorTypes';
 export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';

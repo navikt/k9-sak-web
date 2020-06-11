@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ElementWrapper, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -49,56 +49,56 @@ export const VedtakKlageFormImpl = ({
     <FadingPanel>
       <Undertittel>{intl.formatMessage({ id: 'VedtakKlageForm.Header' })}</Undertittel>
       <VerticalSpacer twentyPx />
-      <ElementWrapper>
+      <>
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.Resultat' })}</Undertekst>
         </div>
-        <Normaltekst>
-          {intl.formatMessage({ id: behandlingsResultatTekst })}
-        </Normaltekst>
+        <Normaltekst>{intl.formatMessage({ id: behandlingsResultatTekst })}</Normaltekst>
         <VerticalSpacer sixteenPx />
         {isAvvist && (
-        <div>
-          <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Undertekst>
-          { avvistArsaker.map((arsak) => <Normaltekst key={arsak.kode}>{kodeverknavn(arsak)}</Normaltekst>) }
-          <VerticalSpacer sixteenPx />
-        </div>
+          <div>
+            <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Undertekst>
+            {avvistArsaker.map(arsak => (
+              <Normaltekst key={arsak.kode}>{kodeverknavn(arsak)}</Normaltekst>
+            ))}
+            <VerticalSpacer sixteenPx />
+          </div>
         )}
         {isOmgjort && (
-        <div>
-          <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOmgjoring' })}</Undertekst>
-          { omgjortAarsak }
-          <VerticalSpacer sixteenPx />
-        </div>
+          <div>
+            <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOmgjoring' })}</Undertekst>
+            {omgjortAarsak}
+            <VerticalSpacer sixteenPx />
+          </div>
         )}
         {isOpphevOgHjemsend && (
-        <div>
-          <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOppheving' })}</Undertekst>
-          { omgjortAarsak }
-          <VerticalSpacer sixteenPx />
-        </div>
+          <div>
+            <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOppheving' })}</Undertekst>
+            {omgjortAarsak}
+            <VerticalSpacer sixteenPx />
+          </div>
         )}
         {klageresultat.klageVurdertAv === 'NK' && (
-        <VedtakKlageKaSubmitPanel
-          begrunnelse={fritekstTilBrev}
-          klageResultat={klageresultat}
-          previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
-          formProps={formProps}
-          readOnly={readOnly}
-          behandlingPaaVent={behandlingPaaVent}
-        />
+          <VedtakKlageKaSubmitPanel
+            begrunnelse={fritekstTilBrev}
+            klageResultat={klageresultat}
+            previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
+            formProps={formProps}
+            readOnly={readOnly}
+            behandlingPaaVent={behandlingPaaVent}
+          />
         )}
         {klageresultat.klageVurdertAv === 'NFP' && (
-        <VedtakKlageSubmitPanel
-          begrunnelse={fritekstTilBrev}
-          klageResultat={klageresultat}
-          previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
-          formProps={formProps}
-          readOnly={readOnly}
-          behandlingPaaVent={behandlingPaaVent}
-        />
+          <VedtakKlageSubmitPanel
+            begrunnelse={fritekstTilBrev}
+            klageResultat={klageresultat}
+            previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
+            formProps={formProps}
+            readOnly={readOnly}
+            behandlingPaaVent={behandlingPaaVent}
+          />
         )}
-      </ElementWrapper>
+      </>
     </FadingPanel>
   );
 };
@@ -124,12 +124,13 @@ VedtakKlageFormImpl.defaultProps = {
   fritekstTilBrev: undefined,
 };
 
-const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
-  kode: apCode,
-  begrunnelse: values.fritekstTilBrev,
-}));
+const transformValues = values =>
+  values.aksjonspunktKoder.map(apCode => ({
+    kode: apCode,
+    begrunnelse: values.fritekstTilBrev,
+  }));
 
-export const getAvvisningsAarsaker = createSelector([(ownProps) => ownProps.klageVurdering], (klageVurderingResultat) => {
+export const getAvvisningsAarsaker = createSelector([ownProps => ownProps.klageVurdering], klageVurderingResultat => {
   if (klageVurderingResultat) {
     if (klageVurderingResultat.klageFormkravResultatKA && klageVurderingResultat.klageVurderingResultatNK) {
       return klageVurderingResultat.klageFormkravResultatKA.avvistArsaker;
@@ -149,73 +150,64 @@ const omgjoerTekstMap = {
 
 export const getKlageresultat = createSelector(
   [ownProps => ownProps.klageVurdering],
-  kv => kv.klageVurderingResultatNK || kv.klageVurderingResultatNFP
+  kv => kv.klageVurderingResultatNK || kv.klageVurderingResultatNFP,
 );
 
-const getResultatText = createSelector(
-  [getKlageresultat],
-  klageresultat => {
-    switch (klageresultat.klageVurdering) {
-      case klageVurderingCodes.AVVIS_KLAGE:
-        return 'VedtakKlageForm.KlageAvvist';
-      case klageVurderingCodes.STADFESTE_YTELSESVEDTAK:
-        return 'VedtakKlageForm.KlageStadfestet';
-      case klageVurderingCodes.OPPHEVE_YTELSESVEDTAK:
-        return 'VedtakKlageForm.YtelsesvedtakOpphevet';
-      case klageVurderingCodes.HJEMSENDE_UTEN_Å_OPPHEVE:
-        return 'VedtakKlageForm.HjemmsendUtenOpphev';
-      case klageVurderingCodes.MEDHOLD_I_KLAGE:
-        return omgjoerTekstMap[klageresultat.klageVurderingOmgjoer];
-      default:
-        return null;
-    }
-  },
-);
+const getResultatText = createSelector([getKlageresultat], klageresultat => {
+  switch (klageresultat.klageVurdering) {
+    case klageVurderingCodes.AVVIS_KLAGE:
+      return 'VedtakKlageForm.KlageAvvist';
+    case klageVurderingCodes.STADFESTE_YTELSESVEDTAK:
+      return 'VedtakKlageForm.KlageStadfestet';
+    case klageVurderingCodes.OPPHEVE_YTELSESVEDTAK:
+      return 'VedtakKlageForm.YtelsesvedtakOpphevet';
+    case klageVurderingCodes.HJEMSENDE_UTEN_Å_OPPHEVE:
+      return 'VedtakKlageForm.HjemmsendUtenOpphev';
+    case klageVurderingCodes.MEDHOLD_I_KLAGE:
+      return omgjoerTekstMap[klageresultat.klageVurderingOmgjoer];
+    default:
+      return null;
+  }
+});
 
-const getOmgjortAarsak = createSelector(
-  [(ownProps) => ownProps.klageVurdering],
-  (klageVurderingResultat) => {
-    if (klageVurderingResultat) {
-      if (klageVurderingResultat.klageVurderingResultatNK) {
-        return klageVurderingResultat.klageVurderingResultatNK.klageMedholdArsakNavn;
-      }
-      if (klageVurderingResultat.klageVurderingResultatNFP) {
-        return klageVurderingResultat.klageVurderingResultatNFP.klageMedholdArsakNavn;
-      }
+const getOmgjortAarsak = createSelector([ownProps => ownProps.klageVurdering], klageVurderingResultat => {
+  if (klageVurderingResultat) {
+    if (klageVurderingResultat.klageVurderingResultatNK) {
+      return klageVurderingResultat.klageVurderingResultatNK.klageMedholdArsakNavn;
     }
-    return null;
-  },
-);
+    if (klageVurderingResultat.klageVurderingResultatNFP) {
+      return klageVurderingResultat.klageVurderingResultatNFP.klageMedholdArsakNavn;
+    }
+  }
+  return null;
+});
 
 const getIsOmgjort = createSelector(
   [getKlageresultat],
-  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.MEDHOLD_I_KLAGE
+  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.MEDHOLD_I_KLAGE,
 );
 
 export const getIsAvvist = createSelector(
   [getKlageresultat],
-  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.AVVIS_KLAGE
+  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.AVVIS_KLAGE,
 );
 
 export const getIsOpphevOgHjemsend = createSelector(
   [getKlageresultat],
-  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.OPPHEVE_YTELSESVEDTAK
+  klageresultat => klageresultat.klageVurdering === klageVurderingCodes.OPPHEVE_YTELSESVEDTAK,
 );
 
-export const getFritekstTilBrev = createSelector(
-  [getKlageresultat],
-  klageresultat => klageresultat.fritekstTilBrev
-);
+export const getFritekstTilBrev = createSelector([getKlageresultat], klageresultat => klageresultat.fritekstTilBrev);
 
-export const buildInitialValues = createSelector([(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => {
-  const behandlingAksjonspunktCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
+export const buildInitialValues = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter => {
+  const behandlingAksjonspunktCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
   return {
     aksjonspunktKoder: behandlingAksjonspunktCodes,
   };
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values));
+  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),
@@ -235,9 +227,10 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-
-const VedtakKlageForm = connect(mapStateToPropsFactory)(behandlingForm({
-  form: VEDTAK_KLAGE_FORM_NAME,
-})(injectIntl(VedtakKlageFormImpl)));
+const VedtakKlageForm = connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: VEDTAK_KLAGE_FORM_NAME,
+  })(injectIntl(VedtakKlageFormImpl)),
+);
 
 export default VedtakKlageForm;

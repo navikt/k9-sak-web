@@ -49,13 +49,19 @@ const buildEndretFeltText = (endredeFelter, getKodeverknavn) => {
   return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.sattFelt" values={{ feltVerdi }} />;
 };
 
-const HistorikkMalTypeFeilutbetaling = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => (
+const HistorikkMalTypeFeilutbetaling = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  getKodeverknavn,
+  createLocationForSkjermlenke,
+}) => (
   <>
     <Skjermlenke
       skjermlenke={historikkinnslagDeler[0].skjermlenke}
       behandlingLocation={behandlingLocation}
       getKodeverknavn={getKodeverknavn}
       scrollUpOnClick
+      createLocationForSkjermlenke={createLocationForSkjermlenke}
     />
     {historikkinnslagDeler.map((historikkinnslagDel, index) =>
       historikkinnslagDel.endredeFelter ? (
@@ -82,6 +88,7 @@ HistorikkMalTypeFeilutbetaling.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalTypeFeilutbetaling;

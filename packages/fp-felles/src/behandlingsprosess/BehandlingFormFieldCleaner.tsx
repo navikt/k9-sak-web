@@ -1,5 +1,4 @@
 import { getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import React, { Component, ReactNode, ReactNodeArray } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -71,7 +70,7 @@ export class BehandlingFormFieldCleaner extends Component<
 
   render() {
     const { children } = this.props;
-    return <ElementWrapper>{children}</ElementWrapper>;
+    return <>{children}</>;
   }
 }
 

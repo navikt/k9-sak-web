@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { behandlingerPath, getRequestPollingMessage, trackRouteParam, DataFetcher } from '@fpsak-frontend/fp-felles';
+import { behandlingerPath, getRequestPollingMessage, DataFetcher } from '@fpsak-frontend/fp-felles';
 import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
 
+import trackRouteParam from '../app/trackRouteParam';
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';

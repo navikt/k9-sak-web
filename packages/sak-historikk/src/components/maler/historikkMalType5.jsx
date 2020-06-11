@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '../../kodeverk/historikkEndretFeltTypeHeadingCodes';
@@ -29,7 +29,7 @@ const lagGjeldendeFraInnslag = historikkinnslagDel => {
   }
   if (historikkinnslagDel.gjeldendeFra && historikkinnslagDel.gjeldendeFra.navn) {
     return (
-      <ElementWrapper>
+      <>
         <FormattedHTMLMessage
           id={historikkEndretFeltTypeCodes[historikkinnslagDel.gjeldendeFra.navn].feltId}
           values={{ value: historikkinnslagDel.gjeldendeFra.verdi }}
@@ -45,12 +45,12 @@ const lagGjeldendeFraInnslag = historikkinnslagDel => {
             <FormattedHTMLMessage id="Historikk.Template.5.IngenEndring" />
           </div>
         )}
-      </ElementWrapper>
+      </>
     );
   }
   if (historikkinnslagDel.gjeldendeFra && !historikkinnslagDel.gjeldendeFra.navn) {
     return (
-      <ElementWrapper>
+      <>
         <FormattedHTMLMessage
           id="Historikk.Template.5.GjeldendeFra"
           values={{ dato: historikkinnslagDel.gjeldendeFra.fra }}
@@ -60,13 +60,20 @@ const lagGjeldendeFraInnslag = historikkinnslagDel => {
             <FormattedHTMLMessage id="Historikk.Template.5.IngenEndring" />
           </div>
         )}
-      </ElementWrapper>
+      </>
     );
   }
   return undefined;
 };
 
-const HistorikkMalType5 = ({ historikkinnslagDeler, behandlingLocation, dokumentLinks, saksNr, getKodeverknavn }) => {
+const HistorikkMalType5 = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  dokumentLinks,
+  saksNr,
+  getKodeverknavn,
+  createLocationForSkjermlenke,
+}) => {
   const intl = useIntl();
 
   const lageElementInnhold = historikkDel => {
@@ -151,6 +158,7 @@ const HistorikkMalType5 = ({ historikkinnslagDeler, behandlingLocation, dokument
         skjermlenke={historikkinnslagDel.skjermlenke}
         getKodeverknavn={getKodeverknavn}
         scrollUpOnClick
+        createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
 
       {lageElementInnhold(historikkinnslagDel).map(tekst => (
@@ -208,6 +216,7 @@ HistorikkMalType5.propTypes = {
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   saksNr: PropTypes.string.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalType5;

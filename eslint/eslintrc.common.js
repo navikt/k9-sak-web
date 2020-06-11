@@ -75,7 +75,7 @@ const config = {
   },
   overrides: [
     {
-      files: ['*.spec.jsx', '*.spec.tsx'],
+      files: ['*.spec.jsx', '*.spec.tsx', '*.spec.ts'],
       rules: {
         'no-unused-expressions': OFF,
       },

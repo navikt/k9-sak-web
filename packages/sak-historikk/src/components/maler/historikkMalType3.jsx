@@ -109,7 +109,12 @@ const formaterAksjonspunkt = (aksjonspunkt, intl) => {
   );
 };
 
-const HistorikkMalType3 = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => (
+const HistorikkMalType3 = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  getKodeverknavn,
+  createLocationForSkjermlenke,
+}) => (
   <>
     {historikkinnslagDeler &&
       historikkinnslagDeler.map((historikkinnslagDel, index) => (
@@ -125,6 +130,7 @@ const HistorikkMalType3 = ({ historikkinnslagDeler, behandlingLocation, getKodev
             behandlingLocation={behandlingLocation}
             getKodeverknavn={getKodeverknavn}
             scrollUpOnClick
+            createLocationForSkjermlenke={createLocationForSkjermlenke}
           />
           {historikkinnslagDel.aksjonspunkter &&
             historikkinnslagDel.aksjonspunkter.map(aksjonspunkt => (
@@ -142,6 +148,7 @@ HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalType3;

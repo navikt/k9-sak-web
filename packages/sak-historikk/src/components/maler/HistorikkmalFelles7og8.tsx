@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
+import { Location } from 'history';
 import { FormattedHTMLMessage, IntlFormatters } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+
 import { Kodeverk } from '@k9-sak-web/types';
 
 import Skjermlenke from './felles/Skjermlenke';
@@ -16,15 +18,14 @@ interface EndretFelt {
 
 interface HistorikkmalFelles7og8Props {
   historikkinnslagDeler: any; // TODO (ANDERS) bruk interface som kommer i master snart
-  behandlingLocation: {
-    pathname: string;
-  };
+  behandlingLocation: Location;
   dokumentLinks: Dokumentlenke[];
   intl: IntlFormatters;
   saksNr: string;
   getKodeverknavn?: (kodeverkOjekt: Kodeverk, undertype?: string) => string;
   formatChangedField: (endretFelt: EndretFelt) => ReactElement;
   formatBegrunnelse: (begrunnelse: string) => string;
+  createLocationForHistorikkItems: (behandlingLocation: Location, skjermlenkeKode: string) => string;
 }
 
 const HistorikkMalFelles7og8: React.FunctionComponent<HistorikkmalFelles7og8Props> = ({
@@ -36,6 +37,7 @@ const HistorikkMalFelles7og8: React.FunctionComponent<HistorikkmalFelles7og8Prop
   getKodeverknavn,
   formatChangedField,
   formatBegrunnelse,
+  createLocationForSkjermlenke,
 }) =>
   historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
     <div
@@ -49,6 +51,7 @@ const HistorikkMalFelles7og8: React.FunctionComponent<HistorikkmalFelles7og8Prop
           behandlingLocation={behandlingLocation}
           getKodeverknavn={getKodeverknavn}
           scrollUpOnClick={false}
+          createLocationForSkjermlenke={createLocationForSkjermlenke}
         />
 
         {historikkinnslagDel.hendelse && (

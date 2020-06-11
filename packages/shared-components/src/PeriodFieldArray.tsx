@@ -36,6 +36,31 @@ const getRemoveButton = (index: number, fields: FieldArrayFieldsProps<any>) => c
 
 const showErrorMessage = (meta: FieldArrayMetaProps) => meta && meta.error && (meta.dirty || meta.submitFailed);
 
+interface EmptyPeriodTemplate {
+  periodeFom?: string;
+  periodeTom?: string;
+  fom?: string;
+  tom?: string;
+}
+
+interface PeriodFieldArrayProps {
+  intl: IntlShape;
+  children: (
+    periodeElementFieldId: string,
+    index: number,
+    getRemoveButton: (index?: number, fields?: FieldArrayFieldsProps<any>) => JSX.Element,
+  ) => void;
+  readOnly?: boolean;
+  titleTextCode?: string;
+  textCode?: string;
+  emptyPeriodTemplate?: EmptyPeriodTemplate;
+  shouldShowAddButton?: boolean;
+  createAddButtonInsteadOfImageLink?: boolean;
+  meta?: FieldArrayMetaProps;
+  fields: FieldArrayFieldsProps<any>;
+  fieldGroupClassName?: string;
+}
+
 /**
  * PeriodFieldArray
  *
@@ -91,31 +116,6 @@ const PeriodFieldArray = ({
     )}
   </NavFieldGroup>
 );
-
-interface EmptyPeriodTemplate {
-  periodeFom?: string;
-  periodeTom?: string;
-  fom?: string;
-  tom?: string;
-}
-
-interface PeriodFieldArrayProps {
-  intl: IntlShape;
-  children: (
-    periodeElementFieldId: string,
-    index: number,
-    getRemoveButton: (index?: number, fields?: FieldArrayFieldsProps<any>) => JSX.Element,
-  ) => void;
-  readOnly?: boolean;
-  titleTextCode?: string;
-  textCode?: string;
-  emptyPeriodTemplate?: EmptyPeriodTemplate;
-  shouldShowAddButton?: boolean;
-  createAddButtonInsteadOfImageLink?: boolean;
-  meta?: FieldArrayMetaProps;
-  fields: FieldArrayFieldsProps<any>;
-  fieldGroupClassName?: string;
-}
 
 PeriodFieldArray.defaultProps = {
   readOnly: true,

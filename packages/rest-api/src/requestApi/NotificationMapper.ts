@@ -1,6 +1,6 @@
 import EventType from './eventType';
 
-type EventCallback = (data?: any, type?: string) => Promise<string>
+type EventCallback = (data?: any, type?: string, isAsync?: boolean) => Promise<string>;
 
 /**
  * NotificationMapper
@@ -28,11 +28,13 @@ class NotificationMapper {
       ...this.eventTypes,
       [eventType]: this.eventTypes[eventType].concat(callback),
     };
-  }
+  };
 
-  addRequestStartedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.REQUEST_STARTED, callback);
+  addRequestStartedEventHandler = (callback: EventCallback) =>
+    this.addEventHandler(EventType.REQUEST_STARTED, callback);
 
-  addRequestFinishedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.REQUEST_FINISHED, callback);
+  addRequestFinishedEventHandler = (callback: EventCallback) =>
+    this.addEventHandler(EventType.REQUEST_FINISHED, callback);
 
   addRequestErrorEventHandler = (callback: EventCallback) => {
     this.addEventHandler(EventType.REQUEST_ERROR, callback);
@@ -41,20 +43,25 @@ class NotificationMapper {
     this.addEventHandler(EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND, callback);
   };
 
-  addStatusRequestStartedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.STATUS_REQUEST_STARTED, callback);
+  addStatusRequestStartedEventHandler = (callback: EventCallback) =>
+    this.addEventHandler(EventType.STATUS_REQUEST_STARTED, callback);
 
-  addStatusRequestFinishedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.STATUS_REQUEST_FINISHED, callback);
+  addStatusRequestFinishedEventHandler = (callback: EventCallback) =>
+    this.addEventHandler(EventType.STATUS_REQUEST_FINISHED, callback);
 
-  addUpdatePollingMessageEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.UPDATE_POLLING_MESSAGE, callback);
+  addUpdatePollingMessageEventHandler = (callback: EventCallback) =>
+    this.addEventHandler(EventType.UPDATE_POLLING_MESSAGE, callback);
 
-  addPollingTimeoutEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.POLLING_TIMEOUT, callback);
+  addPollingTimeoutEventHandler = (callback: EventCallback) =>
+    this.addEventHandler(EventType.POLLING_TIMEOUT, callback);
 
-  addHaltedOrDelayedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.POLLING_HALTED_OR_DELAYED, callback);
+  addHaltedOrDelayedEventHandler = (callback: EventCallback) =>
+    this.addEventHandler(EventType.POLLING_HALTED_OR_DELAYED, callback);
 
   getNotificationEmitter = () => (eventType: keyof typeof EventType, data?: any, isAsync?: boolean) => {
     const eventHandlers = this.eventTypes[eventType];
-    eventHandlers.forEach((handler) => handler(data, eventType, isAsync));
-  }
+    eventHandlers.forEach(handler => handler(data, eventType, isAsync));
+  };
 }
 
 export default NotificationMapper;

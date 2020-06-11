@@ -18,10 +18,11 @@ const intl = createIntl(
 
 interface OwnProps {
   fagsak: Fagsak;
+  sprakkode: Kodeverk;
+  alleKodeverk: { [key: string]: [Kodeverk] };
   personopplysninger?: Personopplysninger;
   lenkeTilAnnenPart?: string;
-  alleKodeverk: { [key: string]: [Kodeverk] };
-  sprakkode: Kodeverk;
+  harTilbakekrevingVerge?: boolean;
 }
 
 const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
@@ -30,6 +31,7 @@ const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
   lenkeTilAnnenPart,
   alleKodeverk,
   sprakkode,
+  harTilbakekrevingVerge = false,
 }) => (
   <RawIntlProvider value={intl}>
     <VisittkortPanel
@@ -38,6 +40,7 @@ const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
       fagsak={fagsak}
       alleKodeverk={alleKodeverk}
       sprakkode={sprakkode}
+      harTilbakekrevingVerge={harTilbakekrevingVerge}
     />
   </RawIntlProvider>
 );

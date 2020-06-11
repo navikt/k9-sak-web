@@ -7,10 +7,13 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const TotrinnskontrollSakIndex = ({
   behandlingId,
@@ -30,6 +33,7 @@ const TotrinnskontrollSakIndex = ({
   erBehandlingEtterKlage,
   disableGodkjennKnapp,
   erTilbakekreving,
+  createLocationForSkjermlenke,
 }) => (
   <RawIntlProvider value={intl}>
     <ApprovalPanel
@@ -50,6 +54,7 @@ const TotrinnskontrollSakIndex = ({
       erBehandlingEtterKlage={erBehandlingEtterKlage}
       disableGodkjennKnapp={disableGodkjennKnapp}
       erTilbakekreving={erTilbakekreving}
+      createLocationForSkjermlenke={createLocationForSkjermlenke}
     />
   </RawIntlProvider>
 );
@@ -77,6 +82,7 @@ TotrinnskontrollSakIndex.propTypes = {
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 TotrinnskontrollSakIndex.defaultProps = {

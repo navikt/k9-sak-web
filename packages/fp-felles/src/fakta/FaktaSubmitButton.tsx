@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import {
   isBehandlingFormDirty,
@@ -43,7 +42,7 @@ export const FaktaSubmitButton = ({
   onClick,
   dataId,
 }: FaktaSubmitButtonProps) => (
-  <ElementWrapper>
+  <>
     {!isReadOnly && (
       <Hovedknapp
         mini
@@ -56,7 +55,7 @@ export const FaktaSubmitButton = ({
         <FormattedMessage id={buttonTextId} />
       </Hovedknapp>
     )}
-  </ElementWrapper>
+  </>
 );
 
 interface FaktaSubmitButtonProps {

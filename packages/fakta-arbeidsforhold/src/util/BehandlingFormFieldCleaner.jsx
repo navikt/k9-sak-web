@@ -5,20 +5,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxChange } from 'redux-form';
 
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getBehandlingFormName } from '@fpsak-frontend/form';
 
-const findAllNames = (children) => (children ? React.Children
-  .map(children, (child) => {
-    let all = [];
-    if (child && child.props && child.props.children) {
-      all = findAllNames(child.props.children);
-    }
-    if (child && child.props && child.props.name) {
-      all.push(child.props.name);
-    }
-    return all;
-  }) : []);
+const findAllNames = children =>
+  children
+    ? React.Children.map(children, child => {
+        let all = [];
+        if (child && child.props && child.props.children) {
+          all = findAllNames(child.props.children);
+        }
+        if (child && child.props && child.props.name) {
+          all.push(child.props.name);
+        }
+        return all;
+      })
+    : [];
 
 // TODO (TOR) Flytt til fp-behandling-felles
 
@@ -39,31 +40,25 @@ export class BehandlingFormFieldCleaner extends Component {
     const oldNames = findAllNames(children);
     const newNames = findAllNames(nextProps.children);
 
-    const diff1 = oldNames.every((k) => newNames.includes(k));
-    const diff2 = newNames.every((k) => oldNames.includes(k));
+    const diff1 = oldNames.every(k => newNames.includes(k));
+    const diff2 = newNames.every(k => oldNames.includes(k));
     return !diff1 || !diff2;
   }
 
   componentDidUpdate() {
-    const {
-      behandlingFormName, children, fieldNames, reduxChange: reduxFieldChange,
-    } = this.props;
+    const { behandlingFormName, children, fieldNames, reduxChange: reduxFieldChange } = this.props;
     const doNotRemoveFieldNames = findAllNames(children);
 
     fieldNames
-      .filter((fieldName) => !doNotRemoveFieldNames.includes(fieldName))
-      .forEach((fieldName) => {
+      .filter(fieldName => !doNotRemoveFieldNames.includes(fieldName))
+      .forEach(fieldName => {
         reduxFieldChange(behandlingFormName, fieldName, null);
       });
   }
 
   render() {
     const { children } = this.props;
-    return (
-      <ElementWrapper>
-        {children}
-      </ElementWrapper>
-    );
+    return <>{children}</>;
   }
 }
 
@@ -79,9 +74,7 @@ BehandlingFormFieldCleaner.defaultProps = {
 };
 
 const getCompleteFormName = createSelector(
-  [(ownProps) => ownProps.formName,
-    (ownProps) => ownProps.behandlingId,
-    (ownProps) => ownProps.behandlingVersjon],
+  [ownProps => ownProps.formName, ownProps => ownProps.behandlingId, ownProps => ownProps.behandlingVersjon],
   (formName, behandlingId, versjon) => getBehandlingFormName(behandlingId, versjon, formName),
 );
 
@@ -89,10 +82,13 @@ const mapStateToProps = (state, ownProps) => ({
   behandlingFormName: getCompleteFormName(ownProps),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators({
-    reduxChange,
-  }, dispatch),
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      reduxChange,
+    },
+    dispatch,
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BehandlingFormFieldCleaner);

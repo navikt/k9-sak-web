@@ -8,6 +8,8 @@ import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg'
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
+import { getPathToFplos } from '../paths';
+
 const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
   const resolvedErrorMessages = [];
   if (queryStrings.errorcode) {
@@ -70,6 +72,7 @@ const Dekorator = ({
       showDetailedErrorMessages={showDetailedErrorMessages}
       errorMessages={hideErrorMessages ? [] : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
+      getPathToFplos={getPathToFplos}
     />
   );
 };

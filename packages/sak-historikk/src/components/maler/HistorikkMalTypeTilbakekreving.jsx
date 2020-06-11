@@ -10,7 +10,12 @@ import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import Skjermlenke from './felles/Skjermlenke';
 
-export const HistorikkMalTypeTilbakekreving = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => {
+export const HistorikkMalTypeTilbakekreving = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  getKodeverknavn,
+  createLocationForSkjermlenke,
+}) => {
   if (historikkinnslagDeler.length === 0) {
     return null;
   }
@@ -21,6 +26,7 @@ export const HistorikkMalTypeTilbakekreving = ({ historikkinnslagDeler, behandli
         behandlingLocation={behandlingLocation}
         getKodeverknavn={getKodeverknavn}
         scrollUpOnClick
+        createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
       {historikkinnslagDeler.map(historikkinnslagDel => {
         const { opplysninger, endredeFelter, begrunnelseFritekst } = historikkinnslagDel;
@@ -33,9 +39,11 @@ export const HistorikkMalTypeTilbakekreving = ({ historikkinnslagDeler, behandli
         const begrunnelse = opplysninger.find(
           o => o.opplysningType.kode === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
         ).tilVerdi;
-        const sarligGrunnerBegrunnelseFelt = opplysninger
-          .find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode);
-        const sarligGrunnerBegrunnelse = sarligGrunnerBegrunnelseFelt !== undefined ? sarligGrunnerBegrunnelseFelt.tilVerdi : undefined;
+        const sarligGrunnerBegrunnelseFelt = opplysninger.find(
+          o => o.opplysningType.kode === historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode,
+        );
+        const sarligGrunnerBegrunnelse =
+          sarligGrunnerBegrunnelseFelt !== undefined ? sarligGrunnerBegrunnelseFelt.tilVerdi : undefined;
 
         return (
           <div key={periodeFom + periodeTom}>
@@ -62,14 +70,15 @@ export const HistorikkMalTypeTilbakekreving = ({ historikkinnslagDeler, behandli
                 const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
                 const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
                 const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
-              const visSarligGrunnerBegrunnelse = sarligGrunnerBegrunnelse && index === endredeFelter.length - 1;
+                const visSarligGrunnerBegrunnelse = sarligGrunnerBegrunnelse && index === endredeFelter.length - 1;
 
                 return (
                   <React.Fragment key={endretFeltNavn.kode}>
                     {visBegrunnelse && begrunnelse}
-                  {visBegrunnelse && <VerticalSpacer eightPx />}
-                  {visAktsomhetBegrunnelse && begrunnelseFritekst}
-                  {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}<Normaltekst>
+                    {visBegrunnelse && <VerticalSpacer eightPx />}
+                    {visAktsomhetBegrunnelse && begrunnelseFritekst}
+                    {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
+                    <Normaltekst>
                       <FormattedHTMLMessage
                         id={
                           felt.fraVerdi
@@ -102,6 +111,7 @@ HistorikkMalTypeTilbakekreving.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalTypeTilbakekreving;

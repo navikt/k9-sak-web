@@ -10,7 +10,6 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import {
-  trackRouteParam,
   getBehandlingspunktLocation,
   getFaktaLocation,
   getLocationWithDefaultBehandlingspunktAndFakta,
@@ -29,6 +28,7 @@ import {
   getSkalBehandlesAvInfotrygd,
 } from '../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
+import trackRouteParam from '../app/trackRouteParam';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
   setUrlBehandlingId,

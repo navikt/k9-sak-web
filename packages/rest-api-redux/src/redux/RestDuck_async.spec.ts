@@ -5,9 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import {
-  asyncPollingStatus, getAxiosHttpClientApi, RequestApi, RequestConfig,
-} from '@fpsak-frontend/rest-api';
+import { asyncPollingStatus, getAxiosHttpClientApi, RequestApi, RequestConfig } from '@fpsak-frontend/rest-api';
 
 import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
@@ -28,10 +26,9 @@ interface Action {
 }
 
 interface Store {
-  dispatch: (dispatch: Dispatch) => Promise<{type: any; payload: any}>;
+  dispatch: (dispatch: Dispatch) => Promise<{ type: any; payload: any }>;
   getActions: () => Action[];
 }
-
 
 const createStore = (): Store => mockStore();
 
@@ -61,57 +58,59 @@ describe('RestDuck (async)', () => {
   const resultKeyActionCreators = undefined;
 
   it('skal returnere resultatet direkte og så sette flagg for started og finished og legge ressurs i state', () => {
-    mockAxios
-      .onGet(ressursEndpointIncludingContextPath)
-      .reply(200, {
-        resource: 'resource',
-      });
+    mockAxios.onGet(ressursEndpointIncludingContextPath).reply(200, {
+      resource: 'resource',
+    });
     const store = createStore();
 
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
+    const asyncGetRessursDuck = new RestDuck(
+      requestApi.getRequestRunner(requestConfig.name),
+      sinon.spy(),
+      reduxEvents,
+      resultKeyActionCreators,
+    );
 
     const params = { id: 'id' };
-    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
-      .then(() => {
-        const [requestStartedAction, requestFinishedAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
-        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
-        const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
+    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params)).then(() => {
+      const [requestStartedAction, requestFinishedAction] = store.getActions();
+      expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+      expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
+      const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
 
-        expect(stateAfterRequestStarted).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          statusRequestStarted: false,
-          statusRequestFinished: false,
-          pollingMessage: undefined,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestFinishedAction);
-        expect(stateAfterRequestFinished).to.eql({
-          data: {
-            resource: 'resource',
-          },
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: false,
-          finished: true,
-          statusRequestStarted: false,
-          statusRequestFinished: false,
-          pollingMessage: undefined,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
+      expect(stateAfterRequestStarted).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        statusRequestStarted: false,
+        statusRequestFinished: false,
+        pollingMessage: undefined,
+        pollingTimeout: false,
+        cacheParams: undefined,
       });
+
+      const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestFinishedAction);
+      expect(stateAfterRequestFinished).to.eql({
+        data: {
+          resource: 'resource',
+        },
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: false,
+        finished: true,
+        statusRequestStarted: false,
+        statusRequestFinished: false,
+        pollingMessage: undefined,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+    });
   });
 
   it('skal først få ACCEPTED og så motta resultatet etter første polling før enn legger ressurs i state', () => {
@@ -121,89 +120,103 @@ describe('RestDuck (async)', () => {
     const headers = {
       location: 'status-url',
     };
-    mockAxios
-      .onGet(ressursEndpointIncludingContextPath)
-      .reply(202, data, headers);
-    mockAxios
-      .onGet(headers.location)
-      .reply(200, data);
+    mockAxios.onGet(ressursEndpointIncludingContextPath).reply(202, data, headers);
+    mockAxios.onGet(headers.location).reply(200, data);
     const store = createStore();
 
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
+    const asyncGetRessursDuck = new RestDuck(
+      requestApi.getRequestRunner(requestConfig.name),
+      sinon.spy(),
+      reduxEvents,
+      resultKeyActionCreators,
+    );
 
     const params = { id: 'id' };
-    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
-      .then(() => {
-        const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
-        expect(requestStatusStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
-        expect(requestStatusFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
-        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
+    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params)).then(() => {
+      const [
+        requestStartedAction,
+        requestStatusStartedAction,
+        requestStatusFinishedAction,
+        requestFinishedAction,
+      ] = store.getActions();
+      expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+      expect(requestStatusStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
+      expect(requestStatusFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
+      expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
 
-        const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
-        expect(stateAfterRequestStarted).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: undefined,
-          statusRequestFinished: false,
-          statusRequestStarted: false,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterRequestStatusStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestStatusStartedAction);
-        expect(stateAfterRequestStatusStarted).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: undefined,
-          statusRequestFinished: false,
-          statusRequestStarted: true,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-        const stateAfterRequestStatusFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusStarted, requestStatusFinishedAction);
-        expect(stateAfterRequestStatusFinished).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: undefined,
-          statusRequestFinished: true,
-          statusRequestStarted: false,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusFinished, requestFinishedAction);
-        expect(stateAfterRequestFinished).to.eql({
-          data: {
-            resource: 'resource',
-          },
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: false,
-          finished: true,
-          pollingMessage: undefined,
-          statusRequestFinished: true,
-          statusRequestStarted: false,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
+      const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
+      expect(stateAfterRequestStarted).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: undefined,
+        statusRequestFinished: false,
+        statusRequestStarted: false,
+        pollingTimeout: false,
+        cacheParams: undefined,
       });
+
+      const stateAfterRequestStatusStarted = asyncGetRessursDuck.reducer(
+        stateAfterRequestStarted,
+        requestStatusStartedAction,
+      );
+      expect(stateAfterRequestStatusStarted).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: undefined,
+        statusRequestFinished: false,
+        statusRequestStarted: true,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+      const stateAfterRequestStatusFinished = asyncGetRessursDuck.reducer(
+        stateAfterRequestStatusStarted,
+        requestStatusFinishedAction,
+      );
+      expect(stateAfterRequestStatusFinished).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: undefined,
+        statusRequestFinished: true,
+        statusRequestStarted: false,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+
+      const stateAfterRequestFinished = asyncGetRessursDuck.reducer(
+        stateAfterRequestStatusFinished,
+        requestFinishedAction,
+      );
+      expect(stateAfterRequestFinished).to.eql({
+        data: {
+          resource: 'resource',
+        },
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: false,
+        finished: true,
+        pollingMessage: undefined,
+        statusRequestFinished: true,
+        statusRequestStarted: false,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+    });
   });
 
   it('skal først få ACCEPTED og så polle etter resultat to ganger før resultatet blir returnert og lagt i state', () => {
@@ -216,142 +229,161 @@ describe('RestDuck (async)', () => {
       .onGet('status-url')
       .replyOnce(200, { status: asyncPollingStatus.PENDING, message: 'Polling pågår', pollIntervalMillis: 0 });
     // Polling kall som returnerer 200 og resultatet. (Egentlig vil det bli utført en  redirect, men det skjer utenfor testbar kode.)
-    mockAxios
-      .onGet('status-url')
-      .replyOnce(200, { resource: 'resource' });
+    mockAxios.onGet('status-url').replyOnce(200, { resource: 'resource' });
 
     const store = createStore();
 
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint, { maxPollingLimit: 200 }).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
+    const asyncGetRessursDuck = new RestDuck(
+      requestApi.getRequestRunner(requestConfig.name),
+      sinon.spy(),
+      reduxEvents,
+      resultKeyActionCreators,
+    );
 
     const params = { id: 'id' };
-    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
-      .then(() => {
-        const [
-          requestStartedAction,
-          firstStatusRequestStartedAction,
-          firstStatusRequestFinishedAction,
-          updatePollingMessageAction,
-          secondStatusRequestStartedAction,
-          secondStatusRequestFinishedAction,
-          requestFinishedAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
-        expect(firstStatusRequestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
-        expect(firstStatusRequestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
-        expect(updatePollingMessageAction.type).to.eql(asyncGetRessursDuck.actionTypes.updatePollingMessage());
-        expect(secondStatusRequestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
-        expect(secondStatusRequestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
-        expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
-        const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
-        expect(stateAfterRequestStarted).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: undefined,
-          statusRequestFinished: false,
-          statusRequestStarted: false,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterRequestStatusStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, firstStatusRequestStartedAction);
-        expect(stateAfterRequestStatusStarted).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: undefined,
-          statusRequestFinished: false,
-          statusRequestStarted: true,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-        const stateAfterRequestStatusFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusStarted, firstStatusRequestFinishedAction);
-        expect(stateAfterRequestStatusFinished).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: undefined,
-          statusRequestFinished: true,
-          statusRequestStarted: false,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterUpdatePollingMessageAction = asyncGetRessursDuck.reducer(stateAfterRequestStatusFinished, updatePollingMessageAction);
-        expect(stateAfterUpdatePollingMessageAction).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: 'Polling pågår',
-          statusRequestFinished: true,
-          statusRequestStarted: false,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterSecondStatusRequestStartedAction = asyncGetRessursDuck
-          .reducer(stateAfterUpdatePollingMessageAction, secondStatusRequestStartedAction);
-        expect(stateAfterSecondStatusRequestStartedAction).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: 'Polling pågår',
-          statusRequestFinished: false,
-          statusRequestStarted: true,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-        const stateAfterSecondStatusRequestFinishedAction = asyncGetRessursDuck
-          .reducer(stateAfterSecondStatusRequestStartedAction, secondStatusRequestFinishedAction);
-        expect(stateAfterSecondStatusRequestFinishedAction).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          pollingMessage: 'Polling pågår',
-          statusRequestFinished: true,
-          statusRequestStarted: false,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterSecondStatusRequestFinishedAction, requestFinishedAction);
-        expect(stateAfterRequestFinished).to.eql({
-          data: {
-            resource: 'resource',
-          },
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: false,
-          finished: true,
-          pollingMessage: undefined,
-          statusRequestFinished: true,
-          statusRequestStarted: false,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
+    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params)).then(() => {
+      const [
+        requestStartedAction,
+        firstStatusRequestStartedAction,
+        firstStatusRequestFinishedAction,
+        updatePollingMessageAction,
+        secondStatusRequestStartedAction,
+        secondStatusRequestFinishedAction,
+        requestFinishedAction,
+      ] = store.getActions();
+      expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+      expect(firstStatusRequestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
+      expect(firstStatusRequestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
+      expect(updatePollingMessageAction.type).to.eql(asyncGetRessursDuck.actionTypes.updatePollingMessage());
+      expect(secondStatusRequestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
+      expect(secondStatusRequestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestFinished());
+      expect(requestFinishedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestFinished());
+      const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
+      expect(stateAfterRequestStarted).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: undefined,
+        statusRequestFinished: false,
+        statusRequestStarted: false,
+        pollingTimeout: false,
+        cacheParams: undefined,
       });
+
+      const stateAfterRequestStatusStarted = asyncGetRessursDuck.reducer(
+        stateAfterRequestStarted,
+        firstStatusRequestStartedAction,
+      );
+      expect(stateAfterRequestStatusStarted).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: undefined,
+        statusRequestFinished: false,
+        statusRequestStarted: true,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+      const stateAfterRequestStatusFinished = asyncGetRessursDuck.reducer(
+        stateAfterRequestStatusStarted,
+        firstStatusRequestFinishedAction,
+      );
+      expect(stateAfterRequestStatusFinished).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: undefined,
+        statusRequestFinished: true,
+        statusRequestStarted: false,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+
+      const stateAfterUpdatePollingMessageAction = asyncGetRessursDuck.reducer(
+        stateAfterRequestStatusFinished,
+        updatePollingMessageAction,
+      );
+      expect(stateAfterUpdatePollingMessageAction).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: 'Polling pågår',
+        statusRequestFinished: true,
+        statusRequestStarted: false,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+
+      const stateAfterSecondStatusRequestStartedAction = asyncGetRessursDuck.reducer(
+        stateAfterUpdatePollingMessageAction,
+        secondStatusRequestStartedAction,
+      );
+      expect(stateAfterSecondStatusRequestStartedAction).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: 'Polling pågår',
+        statusRequestFinished: false,
+        statusRequestStarted: true,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+      const stateAfterSecondStatusRequestFinishedAction = asyncGetRessursDuck.reducer(
+        stateAfterSecondStatusRequestStartedAction,
+        secondStatusRequestFinishedAction,
+      );
+      expect(stateAfterSecondStatusRequestFinishedAction).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        pollingMessage: 'Polling pågår',
+        statusRequestFinished: true,
+        statusRequestStarted: false,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+
+      const stateAfterRequestFinished = asyncGetRessursDuck.reducer(
+        stateAfterSecondStatusRequestFinishedAction,
+        requestFinishedAction,
+      );
+      expect(stateAfterRequestFinished).to.eql({
+        data: {
+          resource: 'resource',
+        },
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: false,
+        finished: true,
+        pollingMessage: undefined,
+        statusRequestFinished: true,
+        statusRequestStarted: false,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+    });
   });
 
   it('skal håndtere status 418 som blir brukt ved HALTED/DELAYED i long-pollinga', () => {
@@ -361,143 +393,152 @@ describe('RestDuck (async)', () => {
     const headers = {
       location: 'status-url',
     };
-    mockAxios
-      .onGet(ressursEndpointIncludingContextPath)
-      .reply(202, data, headers);
-    mockAxios
-      .onGet(headers.location)
-      .reply(418, 'Request failed with status code 418');
+    mockAxios.onGet(ressursEndpointIncludingContextPath).reply(202, data, headers);
+    mockAxios.onGet(headers.location).reply(418, 'Request failed with status code 418');
     const store = createStore();
 
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
+    const asyncGetRessursDuck = new RestDuck(
+      requestApi.getRequestRunner(requestConfig.name),
+      sinon.spy(),
+      reduxEvents,
+      resultKeyActionCreators,
+    );
 
     const params = { id: 'id' };
-    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
-      .catch(() => {
-        const [requestStartedAction, requestStatusStartedAction, requestErrorAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
-        expect(requestStatusStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
-        expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError());
+    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params)).catch(() => {
+      const [requestStartedAction, requestStatusStartedAction, requestErrorAction] = store.getActions();
+      expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+      expect(requestStatusStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.statusRequestStarted());
+      expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError());
 
-        const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
-        expect(stateAfterRequestStarted).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          statusRequestStarted: false,
-          statusRequestFinished: false,
-          pollingMessage: undefined,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterStatusRequestStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestStatusStartedAction);
-        expect(stateAfterStatusRequestStarted).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          statusRequestStarted: true,
-          statusRequestFinished: false,
-          pollingMessage: undefined,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterStatusRequestStarted, requestErrorAction);
-        expect(stateAfterRequestError).to.eql({
-          data: undefined,
-          previousData: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: stateAfterRequestError.error,
-          started: false,
-          finished: true,
-          statusRequestStarted: true,
-          statusRequestFinished: false,
-          pollingMessage: undefined,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        expect(stateAfterRequestError.error).is.eql('Request failed with status code 418');
+      const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
+      expect(stateAfterRequestStarted).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        statusRequestStarted: false,
+        statusRequestFinished: false,
+        pollingMessage: undefined,
+        pollingTimeout: false,
+        cacheParams: undefined,
       });
+
+      const stateAfterStatusRequestStarted = asyncGetRessursDuck.reducer(
+        stateAfterRequestStarted,
+        requestStatusStartedAction,
+      );
+      expect(stateAfterStatusRequestStarted).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        statusRequestStarted: true,
+        statusRequestFinished: false,
+        pollingMessage: undefined,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+
+      const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterStatusRequestStarted, requestErrorAction);
+      expect(stateAfterRequestError).to.eql({
+        data: undefined,
+        previousData: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: stateAfterRequestError.error,
+        started: false,
+        finished: true,
+        statusRequestStarted: true,
+        statusRequestFinished: false,
+        pollingMessage: undefined,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+
+      expect(stateAfterRequestError.error).is.eql('Request failed with status code 418');
+    });
   });
 
   it('skal håndtere feil ved restkall som ligg i konvolutt', () => {
-    const links = [{
-      href: 'personopplysningerUrl', type: 'GET', requestPayload: { behandlingId: 1 }, rel: 'personopplysninger',
-    }, {
-      href: 'medlemUrl', type: 'GET', requestPayload: { behandlingId: 1 }, rel: 'medlem',
-    }];
+    const links = [
+      {
+        href: 'personopplysningerUrl',
+        type: 'GET',
+        requestPayload: { behandlingId: 1 },
+        rel: 'personopplysninger',
+      },
+      {
+        href: 'medlemUrl',
+        type: 'GET',
+        requestPayload: { behandlingId: 1 },
+        rel: 'medlem',
+      },
+    ];
 
-    mockAxios
-      .onGet(ressursEndpointIncludingContextPath)
-      .reply(200, {
-        behandlingId: 1,
-        versjon: 2,
-        links,
-      });
-    mockAxios
-      .onGet('personopplysningerUrl')
-      .reply(418);
-    mockAxios
-      .onGet('medlemUrl')
-      .reply(200, {
-        harMedlemskap: true,
-      });
+    mockAxios.onGet(ressursEndpointIncludingContextPath).reply(200, {
+      behandlingId: 1,
+      versjon: 2,
+      links,
+    });
+    mockAxios.onGet('personopplysningerUrl').reply(418);
+    mockAxios.onGet('medlemUrl').reply(200, {
+      harMedlemskap: true,
+    });
     const store = createStore();
 
     const config = {
       maxPollingLimit: undefined,
-      fetchLinkDataAutomatically: true,
     };
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint, config).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
+    const asyncGetRessursDuck = new RestDuck(
+      requestApi.getRequestRunner(requestConfig.name),
+      sinon.spy(),
+      reduxEvents,
+      resultKeyActionCreators,
+    );
 
     const params = { id: 'id' };
-    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
-      .catch(() => {
-        const [requestStartedAction, requestErrorAction] = store.getActions();
-        expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
-        expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError());
+    return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params)).catch(() => {
+      const [requestStartedAction, requestErrorAction] = store.getActions();
+      expect(requestStartedAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestStarted());
+      expect(requestErrorAction.type).to.eql(asyncGetRessursDuck.actionTypes.requestError());
 
-        const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
-        expect(stateAfterRequestStarted).to.eql({
-          data: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: undefined,
-          started: true,
-          finished: false,
-          statusRequestStarted: false,
-          statusRequestFinished: false,
-          pollingMessage: undefined,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
-
-        const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestErrorAction);
-        expect(stateAfterRequestError).to.eql({
-          data: undefined,
-          meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
-          error: stateAfterRequestError.error,
-          started: false,
-          finished: true,
-          statusRequestStarted: false,
-          statusRequestFinished: false,
-          pollingMessage: undefined,
-          pollingTimeout: false,
-          cacheParams: undefined,
-        });
+      const stateAfterRequestStarted = asyncGetRessursDuck.reducer(undefined, requestStartedAction);
+      expect(stateAfterRequestStarted).to.eql({
+        data: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: undefined,
+        started: true,
+        finished: false,
+        statusRequestStarted: false,
+        statusRequestFinished: false,
+        pollingMessage: undefined,
+        pollingTimeout: false,
+        cacheParams: undefined,
       });
+
+      const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestErrorAction);
+      expect(stateAfterRequestError).to.eql({
+        data: undefined,
+        meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
+        error: stateAfterRequestError.error,
+        started: false,
+        finished: true,
+        statusRequestStarted: false,
+        statusRequestFinished: false,
+        pollingMessage: undefined,
+        pollingTimeout: false,
+        cacheParams: undefined,
+      });
+    });
   });
 });

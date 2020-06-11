@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes, FieldArray } from 'redux-form';
-import { AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import { behandlingForm } from '@fpsak-frontend/form';
@@ -201,7 +201,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
       props: { aksjonspunkter, ...formProps },
     } = this;
     return (
-      <ElementWrapper>
+      <>
         {!(
           hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) ||
           hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter)
@@ -210,7 +210,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
             <FieldArray name={fieldArrayName} component={this.renderVurderFaktaBeregningPanel} />
           </form>
         )}
-      </ElementWrapper>
+      </>
     );
   }
 }
