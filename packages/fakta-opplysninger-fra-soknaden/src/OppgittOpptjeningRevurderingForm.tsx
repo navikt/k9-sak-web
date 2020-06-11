@@ -24,6 +24,7 @@ import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, FieldArray, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
+import { startdatoErISøknadsperiode } from './validators';
 import styles from './opplysningerFraSoknadenForm.less';
 import SøknadsperiodeFieldArrayComponent, {
   buildInitialValuesForSøknadsperiode,
@@ -48,12 +49,75 @@ interface Props {
   harApneAksjonspunkter: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
   oppgittOpptjening: OpplysningerFraSøknaden;
+  validate: (arg1: any, arg2: any) => object;
 }
+
+const transformValues = (
+  formValues: OppgittOpptjeningRevurderingFormValues,
+  opplysningerFraSøknaden: OpplysningerFraSøknaden,
+) => {
+  const egenNæringBruttoInntekt =
+    formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] ||
+    formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
+  const skalOppgiNæringsinntektFørSøknadsperioden = formValues[SøknadFormValue.SØKNADSPERIODER].some(
+    ({ selvstendigNaeringsdrivende_startdatoForSoknaden }) => !!selvstendigNaeringsdrivende_startdatoForSoknaden,
+  );
+  const { søknadsperioder } = formValues;
+
+  const resultingData = {
+    kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
+    begrunnelse: formValues.begrunnelse,
+    søknadsperiodeOgOppgittOpptjeningDto: {
+      førSøkerPerioden: {
+        oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
+          ? [
+              {
+                periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
+                bruttoInntekt: {
+                  verdi: +egenNæringBruttoInntekt,
+                },
+              },
+            ]
+          : null,
+        oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
+      },
+      måneder: søknadsperioder.map((currentSøknadsperiode, søknadsperiodeIndex) => {
+        const opprinneligTomDato = opplysningerFraSøknaden.måneder[søknadsperiodeIndex].måned.tom;
+        const { måned } = opplysningerFraSøknaden.måneder[søknadsperiodeIndex];
+        return {
+          måned,
+          oppgittIMåned: {
+            oppgittEgenNæring: lagOppgittEgenNæringForSøknadsperioden(currentSøknadsperiode, opprinneligTomDato),
+            oppgittFrilans: lagOppgittFrilansForSøknadsperioden(currentSøknadsperiode, opprinneligTomDato),
+            oppgittArbeidsforhold: lagOppgittArbeidsforholdForSøknadsperioden(
+              måned,
+              currentSøknadsperiode.inntektSomArbeidstaker,
+            ),
+          },
+          søkerFL: currentSøknadsperiode.harSøktSomFrilanser,
+          søkerSN: currentSøknadsperiode.harSøktSomSSN,
+        };
+      }),
+    },
+  };
+
+  return resultingData;
+};
 
 const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
   const [activeTab, setActiveTab] = React.useState(0);
   const [formIsEditable, setFormIsEditable] = React.useState(false);
   const intl = useIntl();
+
+  const onSubmit = formValues => {
+    return new Promise((resolve, reject) => {
+      const errors = props.validate(formValues, props.oppgittOpptjening);
+      if (!errors || Object.keys(errors).length === 0) {
+        return resolve(props.submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
+      }
+      return reject(errors);
+    });
+  };
 
   const {
     behandling: { id: behandlingId, versjon: behandlingVersjon },
@@ -63,7 +127,7 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
   } = props;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {kanEndrePåSøknadsopplysninger && (
         <Knapp
           className={styles.formUnlockButton}
@@ -161,58 +225,6 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
   );
 };
 
-const transformValues = (
-  formValues: OppgittOpptjeningRevurderingFormValues,
-  opplysningerFraSøknaden: OpplysningerFraSøknaden,
-) => {
-  const egenNæringBruttoInntekt =
-    formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] ||
-    formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
-  const skalOppgiNæringsinntektFørSøknadsperioden = formValues[SøknadFormValue.SØKNADSPERIODER].some(
-    ({ selvstendigNaeringsdrivende_startdatoForSoknaden }) => !!selvstendigNaeringsdrivende_startdatoForSoknaden,
-  );
-  const { søknadsperioder } = formValues;
-
-  const resultingData = {
-    kode: aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
-    begrunnelse: formValues.begrunnelse,
-    søknadsperiodeOgOppgittOpptjeningDto: {
-      førSøkerPerioden: {
-        oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
-          ? [
-              {
-                periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
-                bruttoInntekt: {
-                  verdi: +egenNæringBruttoInntekt,
-                },
-              },
-            ]
-          : null,
-        oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
-      },
-      måneder: søknadsperioder.map((currentSøknadsperiode, søknadsperiodeIndex) => {
-        const opprinneligTomDato = opplysningerFraSøknaden.måneder[søknadsperiodeIndex].måned.tom;
-        const { måned } = opplysningerFraSøknaden.måneder[søknadsperiodeIndex];
-        return {
-          måned,
-          oppgittIMåned: {
-            oppgittEgenNæring: lagOppgittEgenNæringForSøknadsperioden(currentSøknadsperiode, opprinneligTomDato),
-            oppgittFrilans: lagOppgittFrilansForSøknadsperioden(currentSøknadsperiode, opprinneligTomDato),
-            oppgittArbeidsforhold: lagOppgittArbeidsforholdForSøknadsperioden(
-              måned,
-              currentSøknadsperiode.inntektSomArbeidstaker,
-            ),
-          },
-          søkerFL: currentSøknadsperiode.harSøktSomFrilanser,
-          søkerSN: currentSøknadsperiode.harSøktSomSSN,
-        };
-      }),
-    },
-  };
-
-  return resultingData;
-};
-
 const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   const { førSøkerPerioden } = values;
 
@@ -240,12 +252,9 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
 };
 
 const mapStateToProps = (state, props) => {
-  const { submitCallback, oppgittOpptjening } = props;
-  const onSubmit = formValues => {
-    submitCallback([transformValues(formValues, oppgittOpptjening)]);
-  };
+  const { oppgittOpptjening } = props;
   const initialValues = buildInitialValues(oppgittOpptjening);
-  return () => ({ onSubmit, initialValues });
+  return () => ({ initialValues });
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -258,13 +267,71 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 
+const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraSøknaden) => {
+  const errors = {};
+  fieldArrayList.forEach((fieldArrayItem, index) => {
+    const { måned } = oppgittOpptjening.måneder[index];
+    const harSøktSomSSN = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_SSN];
+    if (harSøktSomSSN) {
+      const ssnInntekt = fieldArrayItem[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN];
+      const ssnStartdato = fieldArrayItem[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
+      const ssnInntektValidation = [required(ssnInntekt), hasValidInteger(ssnInntekt), (v => maxLength(5)(v))()];
+      const ssnStartdatoValidation = [
+        required(ssnStartdato),
+        hasValidDate(ssnStartdato),
+        maxLength(5)(ssnInntekt),
+        startdatoErISøknadsperiode(ssnStartdato, måned),
+      ];
+
+      const inntektError = ssnInntektValidation.find(v => Array.isArray(v));
+      if (inntektError !== undefined) {
+        errors[
+          `${fieldArrayName}[${index}].${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`
+        ] = inntektError;
+      }
+      const startdatoError = ssnStartdatoValidation.find(v => Array.isArray(v));
+      if (startdatoError !== undefined) {
+        errors[
+          `${fieldArrayName}[${index}].${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`
+        ] = startdatoError;
+      }
+    }
+
+    const harSøktSomFrilanser = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
+    if (harSøktSomFrilanser) {
+      const frilansInntekt = fieldArrayItem[SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN];
+      const frilansStartdato = fieldArrayItem[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
+      const frilansInntektValidation = [
+        required(frilansInntekt),
+        hasValidInteger(frilansInntekt),
+        maxLength(5)(frilansInntekt),
+      ];
+      const frilansStartdatoValidation = [
+        required(frilansStartdato),
+        hasValidDate(frilansStartdato),
+        startdatoErISøknadsperiode(frilansStartdato, måned),
+      ];
+
+      const inntektError = frilansInntektValidation.find(v => Array.isArray(v));
+      if (inntektError !== undefined) {
+        errors[`${fieldArrayName}[${index}].${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
+      }
+      const startdatoError = frilansStartdatoValidation.find(v => Array.isArray(v));
+      if (startdatoError !== undefined) {
+        errors[`${fieldArrayName}[${index}].${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
+      }
+    }
+  });
+  return errors;
+};
+
 const connectedComponent = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(
   behandlingForm({
     form: oppgittOpptjeningRevurderingFormName,
-    validate: (values: OppgittOpptjeningRevurderingFormValues) => {
+    validate: (values: OppgittOpptjeningRevurderingFormValues, oppgittOpptjening: OpplysningerFraSøknaden) => {
       const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
       const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
       const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
@@ -285,7 +352,13 @@ const connectedComponent = connect(
         errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
       }
 
-      return errors;
+      let fieldArrayValidation = {};
+      if (values[fieldArrayName] && oppgittOpptjening && oppgittOpptjening.måneder) {
+        fieldArrayValidation = validateFieldArray(values[fieldArrayName], oppgittOpptjening);
+      }
+
+      const allErrors = { ...errors, ...fieldArrayValidation };
+      return allErrors;
     },
   })(OppgittOpptjeningRevurderingForm),
 );
