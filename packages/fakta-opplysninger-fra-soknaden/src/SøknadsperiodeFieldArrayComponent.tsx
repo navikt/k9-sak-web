@@ -13,13 +13,12 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { WrappedFieldArrayProps } from 'redux-form';
 import FrilanserForm from './FrilanserForm';
-import {
-  oppgittOpptjeningRevurderingFormName,
-  OppgittOpptjeningRevurderingFormValues,
-} from './OppgittOpptjeningRevurderingForm';
 import styles from './opplysningerFraSoknadenForm.less';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
-import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
+import SøknadsperiodeFormValues from './types/SøknadsperiodeFormValues';
+import SøknadFormValue from './types/SøknadFormValue';
+import OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
+import oppgittOpptjeningRevurderingFormName from './formName';
 
 const classNames = classnames.bind(styles);
 
@@ -243,18 +242,6 @@ const SøknadsperiodeFieldArrayComponent = (
     );
   });
 };
-
-export interface SøknadsperiodeFormValues {
-  [SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN]: string;
-  [SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: string;
-  [SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN]: string;
-  [SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS]: string;
-  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN]: string;
-  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN]: string;
-  [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: boolean;
-  [SøknadFormValue.HAR_SØKT_SOM_SSN]: boolean;
-  [SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER]: string;
-}
 
 const byggPeriodeMedInntekt = (startdato, sluttdato, inntekt) => ({
   periode: {

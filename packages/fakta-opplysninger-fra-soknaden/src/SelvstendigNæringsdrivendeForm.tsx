@@ -5,7 +5,7 @@ import { hasValidDate, required, hasValidInteger, maxLength } from '@fpsak-front
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.less';
-import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
+import SøknadFormValue from './types/SøknadFormValue';
 
 interface SelvstendigNæringsdrivendeFormProps {
   erFrilanser: boolean;

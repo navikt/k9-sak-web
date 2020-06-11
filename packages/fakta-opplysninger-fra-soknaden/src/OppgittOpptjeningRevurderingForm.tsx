@@ -33,9 +33,10 @@ import SøknadsperiodeFieldArrayComponent, {
   lagOppgittFrilansForSøknadsperioden,
   lagPeriodeForOppgittEgenNæringFørSøkerperioden,
   nyoppstartetDatoIsValid,
-  SøknadsperiodeFormValues,
 } from './SøknadsperiodeFieldArrayComponent';
-import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
+import OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
+import SøknadFormValue from './types/SøknadFormValue';
+import oppgittOpptjeningRevurderingFormName from './formName';
 
 const fieldArrayName = SøknadFormValue.SØKNADSPERIODER;
 
@@ -159,16 +160,6 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
     </form>
   );
 };
-
-export const oppgittOpptjeningRevurderingFormName = 'OpplysningerFraSoknadenForm';
-
-export interface OppgittOpptjeningRevurderingFormValues {
-  [SøknadFormValue.SØKNADSPERIODER]: SøknadsperiodeFormValues[];
-  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: number;
-  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: number;
-  [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO]: string;
-  [SøknadFormValue.BEGRUNNELSE]: string;
-}
 
 const transformValues = (
   formValues: OppgittOpptjeningRevurderingFormValues,
