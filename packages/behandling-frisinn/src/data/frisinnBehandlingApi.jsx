@@ -53,7 +53,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/brev */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
 
-  .withRel('oppgitt-opptjening', FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING)
+  .withRel('oppgitt-opptjening-v2', FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING)
   .withRel('beregningsresultat-utbetalt', FrisinnBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALT)
   .withRel('inntekt', FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('aksjonspunkter', FrisinnBehandlingApiKeys.AKSJONSPUNKTER)

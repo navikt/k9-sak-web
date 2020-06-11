@@ -1,1 +1,1 @@
-export { default } from './src/OpplysningerFraSoknadenIndex';
+export { default } from './src/OppgittOpptjeningRevurdering';

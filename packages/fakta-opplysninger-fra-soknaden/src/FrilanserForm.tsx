@@ -5,13 +5,14 @@ import { hasValidDate, required, hasValidInteger, maxLength } from '@fpsak-front
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.less';
-import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
+import SøknadFormValue from './types/SøknadFormValue';
 
 interface FrilanserFormProps {
   erSelvstendigNæringsdrivende: boolean;
   startdatoValidator: (startdato: string) => void;
   readOnly: boolean;
   clearFrilansValues: () => void;
+  fieldArrayId: string;
 }
 
 const FrilanserForm = ({
@@ -19,6 +20,7 @@ const FrilanserForm = ({
   startdatoValidator,
   readOnly,
   clearFrilansValues,
+  fieldArrayId,
 }: FrilanserFormProps) => {
   const intl = useIntl();
 
@@ -32,7 +34,7 @@ const FrilanserForm = ({
     <>
       <div className={styles.fieldContainer}>
         <DatepickerField
-          name={SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}
+          name={`${fieldArrayId}.${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`}
           validate={[required, hasValidDate, startdatoValidator]}
           defaultValue={null}
           readOnly={readOnly}
@@ -41,7 +43,7 @@ const FrilanserForm = ({
       </div>
       <div className={styles.fieldContainer}>
         <InputField
-          name={SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}
+          name={`${fieldArrayId}.${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`}
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
           validate={[required, hasValidInteger, maxLength(5)]}
@@ -51,7 +53,7 @@ const FrilanserForm = ({
       {!erSelvstendigNæringsdrivende && (
         <div className={styles.fieldContainer}>
           <InputField
-            name={SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}
+            name={`${fieldArrayId}.${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
             validate={[hasValidInteger, maxLength(5)]}

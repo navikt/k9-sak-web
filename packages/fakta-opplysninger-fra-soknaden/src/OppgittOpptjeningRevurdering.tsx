@@ -2,8 +2,9 @@ import { Behandling, SubmitCallback } from '@k9-sak-web/types';
 import * as React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
+import { InjectedFormProps } from 'redux-form';
 import messages from '../i18n/nb_NO.json';
-import OpplysningerFraSoknadenForm from './OpplysningerFraSoknadenForm';
+import OppgittOpptjeningRevurderingForm from './OppgittOpptjeningRevurderingForm';
 
 const cache = createIntlCache();
 
@@ -25,28 +26,15 @@ interface Props {
   oppgittOpptjening: OpplysningerFraSøknaden;
 }
 
-const OpplysningerFraSoknadenIndex = (props: Props) => {
+const OppgittOpptjeningRevurdering = (props: Props & InjectedFormProps) => {
   const {
-    behandling: { id: behandlingId, versjon: behandlingVersjon },
-    harApneAksjonspunkter,
-    kanEndrePåSøknadsopplysninger,
-    oppgittOpptjening,
-    submitCallback,
-    submittable,
+    behandling: { id, versjon },
   } = props;
-
   return (
     <RawIntlProvider value={intlConfig}>
-      <OpplysningerFraSoknadenForm
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        submitCallback={submitCallback}
-        submittable={submittable}
-        harApneAksjonspunkter={harApneAksjonspunkter}
-        kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
-        opplysningerFraSøknaden={oppgittOpptjening}
-      />
+      <OppgittOpptjeningRevurderingForm behandlingId={id} behandlingVersjon={versjon} {...props} />
     </RawIntlProvider>
   );
 };
-export default OpplysningerFraSoknadenIndex;
+
+export default OppgittOpptjeningRevurdering;

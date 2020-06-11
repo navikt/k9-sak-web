@@ -5,15 +5,14 @@ import { hasValidDate, required, hasValidInteger, maxLength } from '@fpsak-front
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.less';
-import SøknadFormValue from './types/OpplysningerFraSoknadenTypes';
+import SøknadFormValue from './types/SøknadFormValue';
 
 interface SelvstendigNæringsdrivendeFormProps {
   erFrilanser: boolean;
-  selvstendigNæringsdrivendeInntekt2019: boolean;
-  selvstendigNæringsdrivendeInntekt2020: boolean;
   startdatoValidator: (startdato: string) => void;
   readOnly: boolean;
   clearSelvstendigValues: () => void;
+  fieldArrayId: string;
 }
 
 const SelvstendigNæringsdrivendeForm = ({
@@ -21,6 +20,7 @@ const SelvstendigNæringsdrivendeForm = ({
   startdatoValidator,
   readOnly,
   clearSelvstendigValues,
+  fieldArrayId,
 }: SelvstendigNæringsdrivendeFormProps) => {
   const intl = useIntl();
 
@@ -34,45 +34,16 @@ const SelvstendigNæringsdrivendeForm = ({
     <>
       <div className={styles.fieldContainer}>
         <DatepickerField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}
+          name={`${fieldArrayId}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`}
           validate={[required, hasValidDate, startdatoValidator]}
           defaultValue={null}
           readOnly={readOnly}
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
         />
       </div>
-      <div className={styles.inntektContainer}>
-        <div className={styles.fieldContainer}>
-          <InputField
-            name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
-            bredde="S"
-            label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
-            validate={[hasValidInteger]}
-            readOnly={readOnly}
-          />
-        </div>
-        <div className={styles.fieldContainer}>
-          <InputField
-            name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
-            bredde="S"
-            label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
-            validate={[hasValidInteger]}
-            readOnly={readOnly}
-          />
-        </div>
-        <div className={styles.nyoppstartetContainer}>
-          <DatepickerField
-            name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
-            validate={[hasValidDate]}
-            defaultValue={null}
-            readOnly={readOnly}
-            label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
-          />
-        </div>
-      </div>
       <div className={styles.fieldContainer}>
         <InputField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}
+          name={`${fieldArrayId}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`}
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
           validate={[required, hasValidInteger, maxLength(5)]}
@@ -82,7 +53,7 @@ const SelvstendigNæringsdrivendeForm = ({
       {!erFrilanser && (
         <div className={styles.fieldContainer}>
           <InputField
-            name={SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}
+            name={`${fieldArrayId}.${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
             validate={[hasValidInteger, maxLength(5)]}
