@@ -140,7 +140,8 @@ class RequestProcess {
     } catch (error) {
       const { response } = error;
       if (response && response.status === 401 && response.headers && response.headers.location) {
-        window.location = response.headers.location;
+        const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.href = `${response.headers.location}?redirectTo=${currentPath}`;
       }
       new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;
