@@ -235,7 +235,7 @@ class BehandlingMenu extends Component {
                 menyKodeverk={menyKodeverk}
               />
             )}
-            {this.isShelveBehandlingEnebled() && !erFrisinn && (
+            {this.isShelveBehandlingEnebled() && (!erFrisinn || behandlingData.type.kode === BehandlingType.KLAGE) && (
               <ShelveBehandlingMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 behandlingIdentifier={behandlingIdentifier}
