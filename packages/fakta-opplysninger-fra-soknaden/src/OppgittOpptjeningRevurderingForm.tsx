@@ -1,5 +1,5 @@
 import { DatepickerField } from '@fpsak-frontend/form';
-import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
@@ -50,7 +50,11 @@ interface Props {
   oppgittOpptjening: OpplysningerFraSøknaden;
 }
 
-const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
+interface StateProps {
+  harSøktSomSSN: boolean;
+}
+
+const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & StateProps) => {
   const [activeTab, setActiveTab] = React.useState(0);
   const [formIsEditable, setFormIsEditable] = React.useState(false);
   const intl = useIntl();
@@ -60,6 +64,7 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
     kanEndrePåSøknadsopplysninger,
     oppgittOpptjening,
     handleSubmit,
+    harSøktSomSSN,
   } = props;
 
   return (
@@ -99,34 +104,37 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
           name={SøknadFormValue.SØKNADSPERIODER}
         />
       </div>
-
-      <div className={styles.fieldContainer}>
-        <InputField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
-          bredde="S"
-          label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
-          validate={[hasValidInteger]}
-          readOnly={formIsEditable}
-        />
-      </div>
-      <div className={styles.fieldContainer}>
-        <InputField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
-          bredde="S"
-          label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
-          validate={[hasValidInteger]}
-          readOnly={formIsEditable}
-        />
-      </div>
-      <div className={styles.fieldContainer}>
-        <DatepickerField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
-          validate={[hasValidDate]}
-          defaultValue={null}
-          readOnly={formIsEditable}
-          label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
-        />
-      </div>
+      {harSøktSomSSN && (
+        <>
+          <div className={styles.fieldContainer}>
+            <InputField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
+              bredde="S"
+              label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
+              validate={[hasValidInteger]}
+              readOnly={formIsEditable}
+            />
+          </div>
+          <div className={styles.fieldContainer}>
+            <InputField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
+              bredde="S"
+              label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
+              validate={[hasValidInteger]}
+              readOnly={formIsEditable}
+            />
+          </div>
+          <div className={styles.fieldContainer}>
+            <DatepickerField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
+              validate={[hasValidDate]}
+              defaultValue={null}
+              readOnly={formIsEditable}
+              label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
+            />
+          </div>
+        </>
+      )}
       {!formIsEditable && (
         <div className={styles.begrunnelseContainer}>
           <TextAreaField
@@ -239,13 +247,22 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   };
 };
 
-const mapStateToProps = (state, props) => {
-  const { submitCallback, oppgittOpptjening } = props;
+const mapStateToProps = (_, props) => {
+  const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon } = props;
   const onSubmit = formValues => {
     submitCallback([transformValues(formValues, oppgittOpptjening)]);
   };
   const initialValues = buildInitialValues(oppgittOpptjening);
-  return () => ({ onSubmit, initialValues });
+  return state => {
+    const søknadsperiodeFormValues = behandlingFormValueSelector(
+      'OpplysningerFraSoknadenForm',
+      behandlingId,
+      behandlingVersjon,
+    )(state, [SøknadFormValue.SØKNADSPERIODER]);
+    const harSøktSomSSN = søknadsperiodeFormValues?.some(søknadsperiode => søknadsperiode.harSøktSomSSN);
+
+    return { onSubmit, initialValues, harSøktSomSSN };
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
