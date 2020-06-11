@@ -29,6 +29,7 @@ module.exports = async ({ config, mode }) => {
         configFile: path.resolve(__dirname, '../../../eslint/eslintrc.dev.js'),
         fix: true,
         cache: true,
+        emitWarning: true,
       },
       include: [PACKAGES_DIR],
     },

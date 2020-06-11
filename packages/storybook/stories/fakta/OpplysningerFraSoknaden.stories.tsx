@@ -1,4 +1,4 @@
-import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
+import OppgittOpptjeningRevurdering from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
 import { action } from '@storybook/addon-actions';
 import * as React from 'react';
 import withReduxProvider from '../../decorators/withRedux';
@@ -10,27 +10,87 @@ const behandling = {
 
 const opplysningerFraSøknaden = {
   førSøkerPerioden: {
-    oppgittEgenNæring: [{ periode: { fom: '2019-01-01', tom: '2019-12-31' }, bruttoInntekt: { verdi: 540000.0 } }],
+    oppgittEgenNæring: [
+      {
+        periode: {
+          fom: '2019-01-01',
+          tom: '2019-12-31',
+        },
+        bruttoInntekt: {
+          verdi: 540000,
+        },
+      },
+    ],
     oppgittFrilans: null,
   },
-  iSøkerPerioden: {
-    oppgittEgenNæring: [{ periode: { fom: '2020-04-01', tom: '2020-04-30' }, bruttoInntekt: { verdi: 20000.0 } }],
-    oppgittFrilans: null,
-  },
-  periodeFraSøknad: { fom: '2020-04-01', tom: '2020-04-30' },
-  søkerYtelseForFrilans: false,
-  søkerYtelseForNæring: true,
+  måneder: [
+    {
+      måned: {
+        fom: '2020-04-01',
+        tom: '2020-04-30',
+      },
+      oppgittIMåned: {
+        oppgittEgenNæring: [
+          {
+            periode: {
+              fom: '2020-04-01',
+              tom: '2020-04-30',
+            },
+            bruttoInntekt: {
+              verdi: 20000,
+            },
+          },
+        ],
+        oppgittFrilans: null,
+      },
+      søkerFL: false,
+      søkerSN: true,
+    },
+    {
+      måned: {
+        fom: '2020-05-01',
+        tom: '2020-05-31',
+      },
+      oppgittIMåned: {
+        oppgittEgenNæring: [
+          {
+            periode: {
+              fom: '2020-05-01',
+              tom: '2020-05-31',
+            },
+            bruttoInntekt: {
+              verdi: 20000,
+            },
+          },
+        ],
+        oppgittFrilans: null,
+        oppgittArbeidsforhold: [
+          {
+            periode: {
+              fom: '2020-05-01',
+              tom: '2020-05-31',
+            },
+            inntekt: {
+              verdi: 2000,
+            },
+          },
+        ],
+      },
+      søkerFL: false,
+      søkerSN: true,
+    },
+  ],
 };
 
 export default {
   title: 'fakta/fakta-opplysninger-fra-søknaden',
-  component: OpplysningerFraSoknadenIndex,
+  component: OppgittOpptjeningRevurdering,
   decorators: [withReduxProvider],
 };
 
 export const visOpplysningerFraSøknaden = () => {
   return (
-    <OpplysningerFraSoknadenIndex
+    <OppgittOpptjeningRevurdering
       behandling={behandling}
       readOnly={false}
       submitCallback={action('button-click')}
