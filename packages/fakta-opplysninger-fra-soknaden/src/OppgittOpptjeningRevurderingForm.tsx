@@ -112,10 +112,14 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
   const onSubmit = formValues => {
     return new Promise((resolve, reject) => {
       const errors = props.validate(formValues, props.oppgittOpptjening);
-      if (!errors || Object.keys(errors).length === 0) {
-        return resolve(props.submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
+      try {
+        if (!errors || Object.keys(errors).length === 0) {
+          return resolve(props.submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
+        }
+        throw new Error();
+      } catch {
+        return reject();
       }
-      return reject(errors);
     });
   };
 
