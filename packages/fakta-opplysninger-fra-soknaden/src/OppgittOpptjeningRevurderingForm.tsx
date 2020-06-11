@@ -247,87 +247,95 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   };
 };
 
-const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraSøknaden) => {
+const validateSSNForm = (formData, måned, fieldArrayID) => {
   const errors = {};
+  const ssnInntekt = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN];
+  const ssnStartdato = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
+  const ssnInntektValidation = [required(ssnInntekt), hasValidInteger(ssnInntekt), (v => maxLength(5)(v))()];
+  const ssnStartdatoValidation = [
+    required(ssnStartdato),
+    hasValidDate(ssnStartdato),
+    maxLength(5)(ssnInntekt),
+    startdatoErISøknadsperiode(ssnStartdato, måned),
+  ];
+
+  const inntektError = ssnInntektValidation.find(v => Array.isArray(v));
+  if (inntektError !== undefined) {
+    errors[`${fieldArrayID}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
+  }
+  const startdatoError = ssnStartdatoValidation.find(v => Array.isArray(v));
+  if (startdatoError !== undefined) {
+    errors[`${fieldArrayID}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
+  }
+
+  const harSøktSomFrilanser = formData[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
+  if (!harSøktSomFrilanser) {
+    const frilansinntekt = formData[SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN];
+    const frilansinntektValidation = [hasValidInteger(frilansinntekt), maxLength(5)(frilansinntekt)];
+    const frilansinntektError = frilansinntektValidation.find(v => Array.isArray(v));
+    if (frilansinntektError !== undefined) {
+      errors[`${fieldArrayID}.${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`] = frilansinntektError;
+    }
+  }
+
+  return errors;
+};
+
+const validateFrilanserForm = (formData, måned, fieldArrayID) => {
+  const errors = {};
+  const frilansInntekt = formData[SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN];
+  const frilansStartdato = formData[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
+  const frilansInntektValidation = [
+    required(frilansInntekt),
+    hasValidInteger(frilansInntekt),
+    maxLength(5)(frilansInntekt),
+  ];
+  const frilansStartdatoValidation = [
+    required(frilansStartdato),
+    hasValidDate(frilansStartdato),
+    startdatoErISøknadsperiode(frilansStartdato, måned),
+  ];
+
+  const inntektError = frilansInntektValidation.find(v => Array.isArray(v));
+  if (inntektError !== undefined) {
+    errors[`${fieldArrayID}.${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
+  }
+  const startdatoError = frilansStartdatoValidation.find(v => Array.isArray(v));
+  if (startdatoError !== undefined) {
+    errors[`${fieldArrayID}.${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
+  }
+
+  const harSøktSomSSN = formData[SøknadFormValue.HAR_SØKT_SOM_SSN];
+  if (!harSøktSomSSN) {
+    const næringsinntektIFrilansperiode = formData[SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS];
+    const næringsinntektValidation = [
+      hasValidInteger(næringsinntektIFrilansperiode),
+      maxLength(5)(næringsinntektIFrilansperiode),
+    ];
+    const næringsinntektError = næringsinntektValidation.find(v => Array.isArray(v));
+    if (næringsinntektError !== undefined) {
+      errors[`${fieldArrayID}.${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`] = næringsinntektError;
+    }
+  }
+
+  return errors;
+};
+
+const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraSøknaden) => {
+  let errors = {};
   fieldArrayList.forEach((fieldArrayItem, index) => {
     const { måned } = oppgittOpptjening.måneder[index];
 
     const harSøktSomSSN = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_SSN];
-    const harSøktSomFrilanser = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
-
     if (harSøktSomSSN) {
-      const ssnInntekt = fieldArrayItem[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN];
-      const ssnStartdato = fieldArrayItem[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
-      const ssnInntektValidation = [required(ssnInntekt), hasValidInteger(ssnInntekt), (v => maxLength(5)(v))()];
-      const ssnStartdatoValidation = [
-        required(ssnStartdato),
-        hasValidDate(ssnStartdato),
-        maxLength(5)(ssnInntekt),
-        startdatoErISøknadsperiode(ssnStartdato, måned),
-      ];
-
-      const inntektError = ssnInntektValidation.find(v => Array.isArray(v));
-      if (inntektError !== undefined) {
-        errors[
-          `${fieldArrayName}[${index}].${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`
-        ] = inntektError;
-      }
-      const startdatoError = ssnStartdatoValidation.find(v => Array.isArray(v));
-      if (startdatoError !== undefined) {
-        errors[
-          `${fieldArrayName}[${index}].${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`
-        ] = startdatoError;
-      }
-
-      if (!harSøktSomFrilanser) {
-        const frilansinntekt = fieldArrayItem[SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN];
-        const frilansinntektValidation = [hasValidInteger(frilansinntekt), maxLength(5)(frilansinntekt)];
-        const frilansinntektError = frilansinntektValidation.find(v => Array.isArray(v));
-        if (frilansinntektError !== undefined) {
-          errors[
-            `${fieldArrayName}[${index}].${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`
-          ] = frilansinntektError;
-        }
-      }
+      const snErrors = validateSSNForm(fieldArrayItem, måned, `${fieldArrayName}[${index}]`);
+      errors = Object.assign(errors, snErrors);
     }
 
+    const harSøktSomFrilanser = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
     if (harSøktSomFrilanser) {
-      const frilansInntekt = fieldArrayItem[SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN];
-      const frilansStartdato = fieldArrayItem[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
-      const frilansInntektValidation = [
-        required(frilansInntekt),
-        hasValidInteger(frilansInntekt),
-        maxLength(5)(frilansInntekt),
-      ];
-      const frilansStartdatoValidation = [
-        required(frilansStartdato),
-        hasValidDate(frilansStartdato),
-        startdatoErISøknadsperiode(frilansStartdato, måned),
-      ];
-
-      const inntektError = frilansInntektValidation.find(v => Array.isArray(v));
-      if (inntektError !== undefined) {
-        errors[`${fieldArrayName}[${index}].${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
-      }
-      const startdatoError = frilansStartdatoValidation.find(v => Array.isArray(v));
-      if (startdatoError !== undefined) {
-        errors[`${fieldArrayName}[${index}].${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
-      }
-
-      if (!harSøktSomSSN) {
-        const næringsinntektIFrilansperiode =
-          fieldArrayItem[SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS];
-        const næringsinntektValidation = [
-          hasValidInteger(næringsinntektIFrilansperiode),
-          maxLength(5)(næringsinntektIFrilansperiode),
-        ];
-        const næringsinntektError = næringsinntektValidation.find(v => Array.isArray(v));
-        if (næringsinntektError !== undefined) {
-          errors[
-            `${fieldArrayName}[${index}].${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`
-          ] = næringsinntektError;
-        }
-      }
+      const frilansErrors = validateFrilanserForm(fieldArrayItem, måned, `${fieldArrayName}[${index}]`);
+      errors = Object.assign(errors, frilansErrors);
     }
   });
   return errors;
