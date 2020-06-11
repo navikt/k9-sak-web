@@ -5,7 +5,7 @@ import styles from './vedtakRedusertUtbetalingArsaker.less';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
-const VedtakRedusertUtbetalingArsaker = ({ readOnly, vedtakVarsel }) => {
+const VedtakRedusertUtbetalingArsaker = ({ readOnly, values, vedtakVarsel }) => {
   return (
     <div className={styles.wrapper}>
       {Object.values(redusertUtbetalingArsak).map(name => (
@@ -14,7 +14,7 @@ const VedtakRedusertUtbetalingArsaker = ({ readOnly, vedtakVarsel }) => {
           key={name}
           label={{ id: `VedtakForm.RedusertUtbetalingArsak.${name}` }}
           disabled={readOnly}
-          checked={vedtakVarsel.redusertUtbetalingÅrsaker?.some(key => key === name)}
+          checked={readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker?.some(key => key === name) : values.get(name)}
         />
       ))}
     </div>
@@ -23,6 +23,7 @@ const VedtakRedusertUtbetalingArsaker = ({ readOnly, vedtakVarsel }) => {
 
 VedtakRedusertUtbetalingArsaker.propTypes = {
   readOnly: PropTypes.bool.isRequired,
+  values: PropTypes.instanceOf(Map),
   vedtakVarsel: vedtakVarselPropType,
 };
 
