@@ -40,7 +40,6 @@ describe('BeregningsresultatPanel', () => {
         halvGVerdi={98866}
       />,
     );
-    console.log(wrapper.debug());
     const panel = wrapper.find('Panel');
     const rows = panel.find('Row');
     expect(rows).to.have.length(3);
