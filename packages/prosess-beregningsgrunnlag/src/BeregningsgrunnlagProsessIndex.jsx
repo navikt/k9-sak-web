@@ -7,6 +7,7 @@ import BeregningFP2 from './components/BeregningFP';
 
 import messages from '../i18n/nb_NO.json';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
+import { BeregningContext } from './beregningContext';
 
 const cache = createIntlCache();
 
@@ -28,22 +29,25 @@ const BeregningsgrunnlagProsessIndex = ({
   isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
+  fagsak,
 }) => (
   <RawIntlProvider value={intl}>
-    <BeregningFP2
-      behandling={behandling}
-      beregningsgrunnlag={beregningsgrunnlag}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={submitCallback}
-      readOnly={isReadOnly}
-      readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
-      isApOpen={isAksjonspunktOpen}
-      vilkar={vilkar}
-      alleKodeverk={alleKodeverk}
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-    />
+    <BeregningContext.Provider value={{ fagsakYtelseType: fagsak?.fagsakYtelseType }}>
+      <BeregningFP2
+        behandling={behandling}
+        beregningsgrunnlag={beregningsgrunnlag}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={isReadOnly}
+        readOnlySubmitButton={readOnlySubmitButton}
+        apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
+        isApOpen={isAksjonspunktOpen}
+        vilkar={vilkar}
+        alleKodeverk={alleKodeverk}
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+      />
+    </BeregningContext.Provider>
   </RawIntlProvider>
 );
 
@@ -57,6 +61,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
   alleKodeverk: PropTypes.shape().isRequired,
+  fagsak: PropTypes.shape().isRequired,
 };
 
 BeregningsgrunnlagProsessIndex.defaultProps = {

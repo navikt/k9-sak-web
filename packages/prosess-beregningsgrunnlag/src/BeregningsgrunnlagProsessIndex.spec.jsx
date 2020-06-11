@@ -95,6 +95,7 @@ describe('<BeregningsgrunnlagProsessIndex>', () => {
         isAksjonspunktOpen={false}
         vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
         alleKodeverk={alleKodeverk}
+        fagsak={{}}
       />,
     );
     const beregningFp = wrapper.find(BeregningFP);

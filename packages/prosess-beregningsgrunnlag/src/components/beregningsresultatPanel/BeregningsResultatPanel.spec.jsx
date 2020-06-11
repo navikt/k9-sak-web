@@ -1,8 +1,8 @@
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { expect } from 'chai';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import React from 'react';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { intlMock, mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { expect } from 'chai';
+import React from 'react';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
 const tableData = {
@@ -32,7 +32,7 @@ const vilkaarBG = {
 describe('BeregningsresultatPanel', () => {
   it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:IKKE VURDERT', () => {
     tableData.rowsAndeler[0].skalFastsetteGrunnlag = true;
-    const wrapper = shallowWithIntl(
+    const wrapper = mountWithIntl(
       <BeregningsresutatPanel.WrappedComponent
         intl={intlMock}
         periodeResultatTabeller={[tableData]}
@@ -40,6 +40,7 @@ describe('BeregningsresultatPanel', () => {
         halvGVerdi={98866}
       />,
     );
+    console.log(wrapper.debug());
     const panel = wrapper.find('Panel');
     const rows = panel.find('Row');
     expect(rows).to.have.length(3);
@@ -55,7 +56,7 @@ describe('BeregningsresultatPanel', () => {
   it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:OPPFYLT', () => {
     vilkaarBG.perioder[0].vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
     vilkaarBG.perioder[0].vilkarStatus.kodeverk = 'VILKAR_UTFALL_TYPE';
-    const wrapper = shallowWithIntl(
+    const wrapper = mountWithIntl(
       <BeregningsresutatPanel.WrappedComponent
         intl={intlMock}
         periodeResultatTabeller={[tableData]}
