@@ -321,6 +321,17 @@ const validateFrilanserForm = (formData, måned, fieldArrayID) => {
   return errors;
 };
 
+const validateArbeidstakerInntekt = (inntekt, fieldArrayID) => {
+  const inntektValidation = [hasValidInteger(inntekt), maxLength(5)(inntekt)];
+  const inntektError = inntektValidation.find(v => Array.isArray(v));
+  if (inntektError !== undefined) {
+    return {
+      [`${fieldArrayID}.${SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER}`]: inntektError,
+    };
+  }
+  return {};
+};
+
 const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraSøknaden) => {
   let errors = {};
   fieldArrayList.forEach((fieldArrayItem, index) => {
@@ -336,6 +347,11 @@ const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraS�
     if (harSøktSomFrilanser) {
       const frilansErrors = validateFrilanserForm(fieldArrayItem, måned, `${fieldArrayName}[${index}]`);
       errors = Object.assign(errors, frilansErrors);
+    }
+
+    const arbeidstakerInntekt = fieldArrayItem[SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER];
+    if (arbeidstakerInntekt) {
+      errors = Object.assign(errors, validateArbeidstakerInntekt(arbeidstakerInntekt, `${fieldArrayName}[${index}]`));
     }
   });
   return errors;
