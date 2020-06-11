@@ -109,29 +109,21 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
   const [formIsEditable, setFormIsEditable] = React.useState(false);
   const intl = useIntl();
 
-  const onSubmit = formValues => {
-    return new Promise((resolve, reject) => {
-      const errors = props.validate(formValues, props.oppgittOpptjening);
-      try {
-        if (!errors || Object.keys(errors).length === 0) {
-          return resolve(props.submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
-        }
-        throw new Error();
-      } catch {
-        return reject();
-      }
-    });
-  };
-
   const {
     behandling: { id: behandlingId, versjon: behandlingVersjon },
     kanEndrePåSøknadsopplysninger,
     oppgittOpptjening,
-    handleSubmit,
   } = props;
 
+  const handleSubmit = e => {
+    const promise = props.handleSubmit(e);
+    if (promise && promise.catch) {
+      promise.catch(() => null);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit}>
       {kanEndrePåSøknadsopplysninger && (
         <Knapp
           className={styles.formUnlockButton}
@@ -255,27 +247,14 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   };
 };
 
-const mapStateToProps = (state, props) => {
-  const { oppgittOpptjening } = props;
-  const initialValues = buildInitialValues(oppgittOpptjening);
-  return () => ({ initialValues });
-};
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(
-    {
-      reduxFormChange,
-      reduxFormUntouch,
-    },
-    dispatch,
-  ),
-});
-
 const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraSøknaden) => {
   const errors = {};
   fieldArrayList.forEach((fieldArrayItem, index) => {
     const { måned } = oppgittOpptjening.måneder[index];
+
     const harSøktSomSSN = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_SSN];
+    const harSøktSomFrilanser = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
+
     if (harSøktSomSSN) {
       const ssnInntekt = fieldArrayItem[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN];
       const ssnStartdato = fieldArrayItem[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
@@ -299,9 +278,19 @@ const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraS�
           `${fieldArrayName}[${index}].${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`
         ] = startdatoError;
       }
+
+      if (!harSøktSomFrilanser) {
+        const frilansinntekt = fieldArrayItem[SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN];
+        const frilansinntektValidation = [hasValidInteger(frilansinntekt), maxLength(5)(frilansinntekt)];
+        const frilansinntektError = frilansinntektValidation.find(v => Array.isArray(v));
+        if (frilansinntektError !== undefined) {
+          errors[
+            `${fieldArrayName}[${index}].${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`
+          ] = frilansinntektError;
+        }
+      }
     }
 
-    const harSøktSomFrilanser = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
     if (harSøktSomFrilanser) {
       const frilansInntekt = fieldArrayItem[SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN];
       const frilansStartdato = fieldArrayItem[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
@@ -324,10 +313,84 @@ const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraS�
       if (startdatoError !== undefined) {
         errors[`${fieldArrayName}[${index}].${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
       }
+
+      if (!harSøktSomSSN) {
+        const næringsinntektIFrilansperiode =
+          fieldArrayItem[SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS];
+        const næringsinntektValidation = [
+          hasValidInteger(næringsinntektIFrilansperiode),
+          maxLength(5)(næringsinntektIFrilansperiode),
+        ];
+        const næringsinntektError = næringsinntektValidation.find(v => Array.isArray(v));
+        if (næringsinntektError !== undefined) {
+          errors[
+            `${fieldArrayName}[${index}].${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`
+          ] = næringsinntektError;
+        }
+      }
     }
   });
   return errors;
 };
+
+const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpptjening: OpplysningerFraSøknaden) => {
+  const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
+  const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+  const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
+
+  const errors = {};
+
+  const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
+  if (nyoppstartetDatoValidation !== null) {
+    errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
+  }
+
+  const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
+  if (inntekt2019Validation !== null) {
+    errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
+  }
+  const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
+  if (inntekt2020Validation !== null) {
+    errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
+  }
+
+  let fieldArrayValidation = {};
+  if (values[fieldArrayName] && oppgittOpptjening && oppgittOpptjening.måneder) {
+    fieldArrayValidation = validateFieldArray(values[fieldArrayName], oppgittOpptjening);
+  }
+
+  const allErrors = { ...errors, ...fieldArrayValidation };
+  return allErrors;
+};
+
+const mapStateToProps = (state, props) => {
+  const { oppgittOpptjening, submitCallback } = props;
+  const onSubmit = formValues => {
+    return new Promise((resolve, reject) => {
+      const errors = validateForm(formValues, props.oppgittOpptjening);
+      if (!errors || Object.keys(errors).length === 0) {
+        return resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
+      }
+      return reject(errors);
+    });
+  };
+  const initialValues = buildInitialValues(oppgittOpptjening);
+  const validate = values => {
+    const validationResult = validateForm(values, oppgittOpptjening);
+    return validationResult;
+  };
+  return () => ({ initialValues, onSubmit, validate });
+};
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      reduxFormChange,
+      reduxFormUntouch,
+    },
+    dispatch,
+  ),
+});
 
 const connectedComponent = connect(
   mapStateToProps,
@@ -335,35 +398,6 @@ const connectedComponent = connect(
 )(
   behandlingForm({
     form: oppgittOpptjeningRevurderingFormName,
-    validate: (values: OppgittOpptjeningRevurderingFormValues, oppgittOpptjening: OpplysningerFraSøknaden) => {
-      const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
-      const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
-      const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
-
-      const errors = {};
-
-      const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
-      if (nyoppstartetDatoValidation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
-      }
-
-      const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
-      if (inntekt2019Validation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
-      }
-      const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
-      if (inntekt2020Validation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
-      }
-
-      let fieldArrayValidation = {};
-      if (values[fieldArrayName] && oppgittOpptjening && oppgittOpptjening.måneder) {
-        fieldArrayValidation = validateFieldArray(values[fieldArrayName], oppgittOpptjening);
-      }
-
-      const allErrors = { ...errors, ...fieldArrayValidation };
-      return allErrors;
-    },
   })(OppgittOpptjeningRevurderingForm),
 );
 
