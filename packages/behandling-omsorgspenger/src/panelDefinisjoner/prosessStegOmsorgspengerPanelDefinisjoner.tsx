@@ -21,6 +21,13 @@ import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import findStatusForVedtak from './vedtakStatusUtlederOmsorgspenger';
 import api from '../data/omsorgspengerBehandlingApi';
 
+const harIngenAndeler = perioder => {
+  const alleAndeler = perioder.flatMap(({ andeler }) => {
+    return [...andeler];
+  });
+  return alleAndeler.length === 0;
+};
+
 const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const { perioder } = beregningsresultatUtbetaling;
   const alleUtfall = perioder.flatMap(({ andeler }) => {
@@ -142,16 +149,16 @@ const prosessStegPanelDefinisjoner = [
         aksjonspunkterCodes: [ac.VURDER_ÅRSKVANTUM_KVOTE],
         endpoints: [],
         renderComponent: props => <ÅrskvantumIndex {...props} />,
-        getData: ({ forbrukteDager }) => ({ årskvantum: forbrukteDager }),
+        getData: ({ forbrukteDager, aksjonspunkterForSteg }) => ({ årskvantum: forbrukteDager, aksjonspunkterForSteg }),
         showComponent: () => true,
         overrideStatus: ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
           if (!forbrukteDager || !forbrukteDager.sisteUttaksplan) {
             return vut.IKKE_VURDERT;
           }
           const perioder = forbrukteDager.sisteUttaksplan.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder);
-          const allePerioderGodkjent = perioder?.every(periode => periode.utfall === UtfallEnum.INNVILGET);
+          const allePerioderAvslått = perioder?.every(periode => periode.utfall === UtfallEnum.AVSLÅTT);
 
-          return allePerioderGodkjent ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
+          return allePerioderAvslått ? vut.IKKE_OPPFYLT : vut.OPPFYLT;
         },
       },
     ],
@@ -171,7 +178,9 @@ const prosessStegPanelDefinisjoner = [
           ac.VURDER_DEKNINGSGRAD,
         ],
         vilkarCodes: [vt.BEREGNINGSGRUNNLAGVILKARET],
-        renderComponent: props => <BeregningsgrunnlagProsessIndex {...props} />,
+        renderComponent: props => {
+          return <BeregningsgrunnlagProsessIndex {...props} />;
+        },
         showComponent: () => true,
         getData: ({ fagsak, featureToggles, beregningsgrunnlag }) => ({ fagsak, featureToggles, beregningsgrunnlag }),
       },
@@ -196,10 +205,18 @@ const prosessStegPanelDefinisjoner = [
         },
         showComponent: () => true,
         overrideStatus: ({ beregningsresultatUtbetaling }) => {
-          if (!beregningsresultatUtbetaling) {
+          const manglerBeregningsresultatUtbetaling =
+            !beregningsresultatUtbetaling ||
+            !beregningsresultatUtbetaling.perioder ||
+            beregningsresultatUtbetaling.perioder.length === 0;
+          if (manglerBeregningsresultatUtbetaling) {
             return vut.IKKE_VURDERT;
           }
-          if (harKunAvslåtteUttak(beregningsresultatUtbetaling)) {
+
+          if (
+            harIngenAndeler(beregningsresultatUtbetaling.perioder) ||
+            harKunAvslåtteUttak(beregningsresultatUtbetaling)
+          ) {
             return vut.IKKE_OPPFYLT;
           }
           return vut.OPPFYLT;

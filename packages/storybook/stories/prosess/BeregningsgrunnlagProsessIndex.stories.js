@@ -62,10 +62,14 @@ const vilkarMedUtfall = kode => [
       kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
       kodeverk: 'vilkarType',
     },
-    vilkarStatus: {
-      kode,
-      kodeverk: 'vilkarStatus',
-    },
+    perioder: [
+      {
+        vilkarStatus: {
+          kode,
+          kodeverk: 'vilkarStatus',
+        },
+      },
+    ],
   },
 ];
 
@@ -436,7 +440,7 @@ export const arbeidstakerUtenAvvik = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -464,7 +468,7 @@ export const brukersAndelUtenAvvik = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -490,7 +494,7 @@ export const arbeidstakerMedAvvik = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -522,7 +526,7 @@ export const arbeidstakerFrilansMedAvvikMedGradering = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={aksjonsPunkter1.concat(aksjonsPunkter2)}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -543,7 +547,7 @@ export const militær = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -606,7 +610,7 @@ export const selvstendigNæringsdrivende = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(
         aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       )}
@@ -655,7 +659,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -684,7 +688,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(
         aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       )}
@@ -741,7 +745,7 @@ export const naturalYtelse = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -770,7 +774,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -801,7 +805,7 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -849,7 +853,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -904,7 +908,7 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(
         aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       )}
@@ -960,7 +964,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       submitCallback={action('button-click')}
       aksjonspunkter={[]}
       isReadOnly={false}
@@ -1009,7 +1013,7 @@ export const arbeidstakerMed3Arbeidsforhold2ISammeOrganisasjonSide3 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1044,7 +1048,7 @@ export const arbeidstakerAvslagHalvGSide4 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       submitCallback={action('button-click')}
       aksjonspunkter={[]}
       readOnly={false}
@@ -1075,7 +1079,7 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1107,7 +1111,7 @@ export const arbeidstakerMedAksjonspunktBehandletSide6 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly
@@ -1148,7 +1152,7 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1213,7 +1217,7 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktBehandletSide7 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1236,7 +1240,7 @@ export const FrilansSide8 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1258,7 +1262,7 @@ export const FrilansMedAksjonspunktSide9 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1282,7 +1286,7 @@ export const arbeidstakerFrilansMedAksjonspunktSide10 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1316,7 +1320,7 @@ export const arbeidstakerFrilansMedAksjonspunktBehandletSide11 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly
@@ -1366,7 +1370,7 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1433,7 +1437,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1485,7 +1489,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(
         aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       )}
@@ -1546,7 +1550,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly
@@ -1600,7 +1604,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1653,7 +1657,7 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1702,7 +1706,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1752,7 +1756,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -1801,7 +1805,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(
         aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       )}
@@ -1860,7 +1864,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly
@@ -1917,7 +1921,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly
@@ -1969,7 +1973,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={lagAPMedKode(
         aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       )}
@@ -2039,7 +2043,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly
@@ -2107,7 +2111,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly
@@ -2130,7 +2134,7 @@ export const YtelseFraNavSide26 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -2153,7 +2157,7 @@ export const arbeidstakerOgAAPMedAksjonspunktSide27 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -2186,7 +2190,7 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={ap}
       submitCallback={action('button-click')}
       isReadOnly={false}
@@ -2216,7 +2220,7 @@ export const arbeidstakerDagpengerMedBesteberegningSide28 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       submitCallback={action('button-click')}
       aksjonspunkter={[]}
       isReadOnly={false}
@@ -2248,7 +2252,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       submitCallback={action('button-click')}
       aksjonspunkter={[]}
       isReadOnly={false}
@@ -2279,7 +2283,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeFnOgDpOverstigerSNSide
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       submitCallback={action('button-click')}
       aksjonspunkter={[]}
       isReadOnly={false}
@@ -2310,7 +2314,7 @@ export const ArbeidstagerDagpengerOgSelvstendigNæringsdrivendeATOgDpOverstigerS
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       submitCallback={action('button-click')}
       aksjonspunkter={[]}
       isReadOnly={false}
@@ -2365,7 +2369,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       submitCallback={action('button-click')}
       aksjonspunkter={ap}
       isReadOnly={false}
@@ -2389,7 +2393,7 @@ export const militærOgSiviltjenesteSide33 = () => {
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
-      beregningsgrunnlag={bg}
+      beregningsgrunnlag={[bg, bg]}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}

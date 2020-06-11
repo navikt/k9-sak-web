@@ -8,6 +8,7 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import * as React from 'react';
 import omsorgspengerBehandlingApi from '../data/omsorgspengerBehandlingApi';
 
@@ -67,6 +68,15 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     getData: () => ({}),
   },
   {
+    urlCode: faktaPanelCodes.UTTAK,
+    textCode: 'FaktaRammevedtak.Title',
+    aksjonspunkterCodes: [],
+    endpoints: [],
+    renderComponent: props => <FaktaRammevedtakIndex {...props} />,
+    showComponent: ({ forbrukteDager }) => !!forbrukteDager,
+    getData: ({ forbrukteDager }) => ({ rammevedtak: forbrukteDager?.rammevedtak || [] }),
+  },
+  {
     urlCode: faktaPanelCodes.BEREGNING,
     textCode: 'BeregningInfoPanel.Title',
     aksjonspunkterCodes: [
@@ -77,7 +87,7 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     ],
     endpoints: [],
     renderComponent: props => <BeregningFaktaIndex {...props} />,
-    showComponent: ({ beregningsgrunnlag }) => beregningsgrunnlag,
+    showComponent: ({ beregningsgrunnlag }) => beregningsgrunnlag && beregningsgrunnlag.length > 0,
     getData: ({ rettigheter, beregningsgrunnlag }) => ({
       erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
       beregningsgrunnlag,

@@ -3,10 +3,13 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import { shallow } from 'enzyme/build';
+import { FieldArray } from 'redux-form';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BeregningFP from './BeregningFP';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { BeregningFP } from './BeregningFP';
+import GraderingUtenBGFieldArrayComponent from './GraderingUtenBGFieldArrayComponent';
 import BeregningForm2 from './beregningForm/BeregningForm';
 import GraderingUtenBG2 from './gradering/GraderingUtenBG';
 
@@ -112,19 +115,22 @@ describe('<BeregningFP>', () => {
         vilkar={vilkar}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
         sokerHarGraderingPaaAndelUtenBG={false}
+        intl={intlMock}
+        handleSubmit={() => {}}
       />,
     );
-    const beregningForm = wrapper.find(BeregningForm2);
-    expect(beregningForm.props().readOnly).to.have.equal(false);
-    expect(beregningForm.props().gjeldendeAksjonspunkter).to.eql(gjeldendeAksjonspunkter);
-    expect(beregningForm.props().relevanteStatuser.isArbeidstaker).to.eql(true);
-    expect(beregningForm.props().relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
-    expect(beregningForm.props().relevanteStatuser.isKombinasjonsstatus).to.eql(true);
-    expect(beregningForm.props().relevanteStatuser.skalViseBeregningsgrunnlag).to.eql(true);
-    expect(beregningForm.props().submitCallback).to.have.equal(sinon.spy);
+    const beregningForm = wrapper.find(FieldArray);
+    expect(beregningForm.props().props.readOnly).to.have.equal(false);
+    expect(beregningForm.props().props.gjeldendeAksjonspunkter).to.eql(gjeldendeAksjonspunkter);
+    expect(beregningForm.props().props.relevanteStatuser.isArbeidstaker).to.eql(true);
+    expect(beregningForm.props().props.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
+    expect(beregningForm.props().props.relevanteStatuser.isKombinasjonsstatus).to.eql(true);
+    expect(beregningForm.props().props.relevanteStatuser.skalViseBeregningsgrunnlag).to.eql(true);
+    expect(beregningForm.props().props.submitCallback).to.have.equal(sinon.spy);
   });
   it('skal teste visning av komponenter når beregningsgrunnlag er lik null', () => {
     const wrapper = shallow(
@@ -135,8 +141,11 @@ describe('<BeregningFP>', () => {
         vilkar={vilkar}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
+        intl={intlMock}
+        handleSubmit={() => {}}
       />,
     );
     const beregningForm = wrapper.find(BeregningForm2);
@@ -154,12 +163,15 @@ describe('<BeregningFP>', () => {
         alleKodeverk={alleKodeverk}
         beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, null)}
         vilkar={vilkar}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         aksjonspunkter={gjeldendeAksjonspunkter}
         behandling={behandling}
         readOnlySubmitButton
+        intl={intlMock}
+        handleSubmit={() => {}}
       />,
     );
-    const beregningForm = wrapper.find(BeregningForm2);
+    const beregningForm = wrapper.find(FieldArray);
     expect(beregningForm).to.be.lengthOf(1);
     const messages = wrapper.find(FormattedMessage);
     expect(messages).to.be.lengthOf(0);
@@ -171,15 +183,19 @@ describe('<BeregningFP>', () => {
         submitCallback={sinon.spy}
         beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, [{ test: 'test' }])}
         vilkar={vilkar}
+        gjeldendeAksjonspunkter={graderingAP}
         aksjonspunkter={graderingAP}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
         readOnlySubmitButton
+        intl={intlMock}
+        handleSubmit={() => {}}
       />,
     );
-    const graderingUtenBG = wrapper.find(GraderingUtenBG2);
-    expect(graderingUtenBG).to.be.lengthOf(1);
+    const graderingUtenBG = wrapper.find(FieldArray);
+    expect(graderingUtenBG.at(1).props().component).equals(GraderingUtenBGFieldArrayComponent);
   });
+
   it('skal teste at GraderingUtenBG ikke vises når sokerHarGraderingPaaAndelUtenBG er false', () => {
     const wrapper = shallow(
       <BeregningFP
@@ -187,10 +203,13 @@ describe('<BeregningFP>', () => {
         submitCallback={sinon.spy}
         beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, null)}
         vilkar={vilkar}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         aksjonspunkter={gjeldendeAksjonspunkter}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
         readOnlySubmitButton
+        intl={intlMock}
+        handleSubmit={() => {}}
       />,
     );
     const graderingUtenBG = wrapper.find(GraderingUtenBG2);

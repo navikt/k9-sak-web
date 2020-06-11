@@ -16,17 +16,14 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 const radioGroupFieldName = 'erSNNyIArbeidslivet';
 
-const NyIArbeidslivetSNForm = ({
-  readOnly,
-  isAksjonspunktClosed,
-}) => (
+const NyIArbeidslivetSNForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
   <div>
     <Normaltekst>
       <FormattedMessage id="BeregningInfoPanel.NyIArbeidslivet.SelvstendigNaeringsdrivende" />
     </Normaltekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
-      name={radioGroupFieldName}
+      name={`${fieldArrayID}.${radioGroupFieldName}`}
       validate={[required]}
       readOnly={readOnly}
       isEdited={isAksjonspunktClosed}
@@ -40,24 +37,27 @@ const NyIArbeidslivetSNForm = ({
 NyIArbeidslivetSNForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-NyIArbeidslivetSNForm.buildInitialValues = (beregningsgrunnlag) => {
+NyIArbeidslivetSNForm.buildInitialValues = beregningsgrunnlag => {
   const initialValues = {};
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return initialValues;
   }
-  const alleAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode
-    .map((periode) => periode.beregningsgrunnlagPrStatusOgAndel);
-  const snAndeler = flatten(alleAndeler).filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const alleAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode.map(
+    periode => periode.beregningsgrunnlagPrStatusOgAndel,
+  );
+  const snAndeler = flatten(alleAndeler).filter(
+    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+  );
   if (snAndeler.length > 0) {
     initialValues[radioGroupFieldName] = snAndeler[0].erNyIArbeidslivet;
   }
   return initialValues;
 };
 
-NyIArbeidslivetSNForm.transformValues = (values) => ({
+NyIArbeidslivetSNForm.transformValues = values => ({
   vurderNyIArbeidslivet: { erNyIArbeidslivet: values[radioGroupFieldName] },
 });
 

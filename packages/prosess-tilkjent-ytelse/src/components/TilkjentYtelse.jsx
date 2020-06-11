@@ -20,14 +20,14 @@ const getOptions = nyePerioder => {
   const lastPeriod = nyePerioder[nyePerioder.length - 1];
 
   return {
-    end: moment(lastPeriod.tom).add(2, 'days'),
+    end: moment(lastPeriod?.tom).add(2, 'days'),
     locale: moment.locale('nb'),
     margin: { item: 10 },
     moment,
     orientation: { axis: 'top' },
     showCurrentTime: false,
     stack: false,
-    start: moment(firstPeriod.fom).subtract(1, 'days'),
+    start: moment(firstPeriod?.fom).subtract(1, 'days'),
     tooltip: { followMouse: true },
     width: '100%',
     zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,

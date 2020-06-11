@@ -6,13 +6,17 @@ import beregningsgrunnlagAksjonspunkterPropType from './propTypes/beregningsgrun
 import BeregningFP2 from './components/BeregningFP';
 
 import messages from '../i18n/nb_NO.json';
+import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const BeregningsgrunnlagProsessIndex = ({
   behandling,
@@ -24,7 +28,6 @@ const BeregningsgrunnlagProsessIndex = ({
   isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
-
 }) => (
   <RawIntlProvider value={intl}>
     <BeregningFP2
@@ -34,10 +37,12 @@ const BeregningsgrunnlagProsessIndex = ({
       submitCallback={submitCallback}
       readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+      apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
       isApOpen={isAksjonspunktOpen}
       vilkar={vilkar}
       alleKodeverk={alleKodeverk}
+      behandlingId={behandling.id}
+      behandlingVersjon={behandling.versjon}
     />
   </RawIntlProvider>
 );
@@ -50,7 +55,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  beregningsgrunnlag: PropTypes.shape(),
+  beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
   alleKodeverk: PropTypes.shape().isRequired,
 };
 

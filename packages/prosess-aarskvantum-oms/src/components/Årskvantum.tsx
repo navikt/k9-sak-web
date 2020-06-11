@@ -55,7 +55,7 @@ export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
 
 export const beregnDagerTimer = (dagerTimer: string) => {
   const duration = moment.duration(dagerTimer);
-  const totaltAntallTimer = duration.days() * 24 + duration.hours() + duration.minutes() / 60;
+  const totaltAntallTimer = duration.asHours();
 
   return {
     dager: Math.floor(totaltAntallTimer / 7.5),
@@ -71,7 +71,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   forbrukteDager,
   forbruktTid,
   antallDagerArbeidsgiverDekker,
-  antallDagerInfotrygd,
+  antallDagerInfotrygd = 0,
   benyttetRammemelding,
 }) => {
   const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
@@ -128,6 +128,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
                 ),
               },
               border: false,
+              key: 'opprinneligeDager',
             },
             {
               count: { bigCount: antallKoronadager, borderBottom: true },
@@ -139,6 +140,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
                 borderTop: true,
                 borderBottom: true,
               },
+              key: 'koronadager',
             },
             {
               count: { bigCount: opprinneligeDager + antallKoronadager },
@@ -148,12 +150,13 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
               infoText: {
                 content: <FormattedMessage id="Årskvantum.TotaleDager.InfoText" />,
               },
+              key: 'totaleDager',
             },
           ]}
         />
         <CounterBox
           count={{
-            bigCount: forbrukt.dager,
+            bigCount: forbrukt.dager + antallDagerInfotrygd,
             smallCount: forbrukt.timer ? (
               <FormattedMessage id="Årskvantum.Timer" values={{ timer: forbrukt.timer }} />
             ) : null,

@@ -19,17 +19,14 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 export const lonnsendringField = 'lonnsendringField';
 
-const LonnsendringForm = ({
-  readOnly,
-  isAksjonspunktClosed,
-}) => (
+const LonnsendringForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
   <div>
     <Normaltekst>
       <FormattedMessage id="BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring" />
     </Normaltekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
-      name={lonnsendringField}
+      name={`${fieldArrayID}.${lonnsendringField}`}
       validate={[required]}
       readOnly={readOnly}
       isEdited={isAksjonspunktClosed}
@@ -43,15 +40,18 @@ const LonnsendringForm = ({
 LonnsendringForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
-const buildInitialLonnsendring = (alleATAndeler) => {
-  const harSattLonnsendringTilTrue = alleATAndeler.find((andel) => andel.lonnsendringIBeregningsperioden === true) !== undefined;
-  const harSattLonnsendringTilFalse = alleATAndeler.find((andel) => andel.lonnsendringIBeregningsperioden === false) !== undefined;
+const buildInitialLonnsendring = alleATAndeler => {
+  const harSattLonnsendringTilTrue =
+    alleATAndeler.find(andel => andel.lonnsendringIBeregningsperioden === true) !== undefined;
+  const harSattLonnsendringTilFalse =
+    alleATAndeler.find(andel => andel.lonnsendringIBeregningsperioden === false) !== undefined;
   return harSattLonnsendringTilTrue || (harSattLonnsendringTilFalse ? false : undefined);
 };
 
-LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
+LonnsendringForm.buildInitialValues = beregningsgrunnlag => {
   let initialValues = {};
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return initialValues;
@@ -60,7 +60,7 @@ LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
   if (!alleAndeler || alleAndeler.length < 1) {
     return initialValues;
   }
-  const alleATAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+  const alleATAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
   if (!alleATAndeler || alleATAndeler.length < 1) {
     return initialValues;
   }
@@ -70,20 +70,21 @@ LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
   return initialValues;
 };
 
-
-export const harFieldLønnsendring = (field, faktaOmBeregning, values) => values[lonnsendringField] && faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
-  .find((andel) => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef) !== undefined;
-
+export const harFieldLønnsendring = (field, faktaOmBeregning, values) =>
+  values[lonnsendringField] &&
+  faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM.find(
+    andel => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef,
+  ) !== undefined;
 
 LonnsendringForm.transformValues = (values, faktaOmBeregning) => {
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
   if (!tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
     return {};
   }
-  return ({
+  return {
     faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_LONNSENDRING],
     vurdertLonnsendring: { erLønnsendringIBeregningsperioden: values[lonnsendringField] },
-  });
+  };
 };
 
 export default LonnsendringForm;

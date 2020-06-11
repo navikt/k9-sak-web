@@ -130,11 +130,13 @@ export class OpptjeningFaktaFormImpl extends Component<
 
   componentDidMount() {
     const { opptjeningList } = this.props;
-    const { selectedOpptjeningActivity } = this.state;
-    const { opptjeningAktivitetList } = opptjeningList[0];
-    const opptjeningActivityWithAp = opptjeningAktivitetList.find(o => o.erGodkjent === null);
-    const selected = selectedOpptjeningActivity || opptjeningActivityWithAp || opptjeningAktivitetList[0];
-    this.setSelectedOpptjeningActivity(selected, true);
+    if (opptjeningList && opptjeningList.length > 0) {
+      const { selectedOpptjeningActivity } = this.state;
+      const { opptjeningAktivitetList } = opptjeningList[0];
+      const opptjeningActivityWithAp = opptjeningAktivitetList.find(o => o.erGodkjent === null);
+      const selected = selectedOpptjeningActivity || opptjeningActivityWithAp || opptjeningAktivitetList[0];
+      this.setSelectedOpptjeningActivity(selected, true);
+    }
   }
 
   setActiveTab(index) {
@@ -280,6 +282,10 @@ export class OpptjeningFaktaFormImpl extends Component<
       alleMerknaderFraBeslutter,
       alleKodeverk,
     } = this.props;
+    if (!opptjeningList || opptjeningList.length === 0) {
+      return <Normaltekst>Fant ingen opptjeningsaktiviteter</Normaltekst>;
+    }
+
     const { selectedOpptjeningActivity, activeTab } = this.state;
 
     const activeOpptjeningObject = opptjeningList[activeTab];
@@ -334,6 +340,7 @@ export class OpptjeningFaktaFormImpl extends Component<
             opptjeningFomDato={opptjeningFom}
             opptjeningTomDato={opptjeningTom}
             selectedPeriod={selectedOpptjeningActivity}
+            harApneAksjonspunkter={harApneAksjonspunkter}
           />
           <TimeLineNavigation openPeriodInfo={this.openPeriodInfo} className={styles.timelineNavigationContainer} />
           <VerticalSpacer eightPx />

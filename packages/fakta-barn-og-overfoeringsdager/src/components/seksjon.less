@@ -1,0 +1,24 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.seksjon {
+  & + .seksjon {
+    margin: 1em 0;
+  }
+
+  min-width: fit-content;
+  padding: 1em;
+
+  &.grå {
+    background-color: #f3f4f4;
+  }
+}
+
+.tittel {
+  border-bottom: 1px solid @navGra40;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+
+  & > img {
+    margin-right: 0.5em;
+  }
+}

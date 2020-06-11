@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import moment from 'moment';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -11,9 +12,10 @@ import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { TIDENES_ENDE } from '@fpsak-frontend/utils';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
-  tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD &&
+  tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
   (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
@@ -110,15 +112,33 @@ export const shouldGiveBegrunnelse = (klageVurderingResultatNK, klageVurderingRe
     hasKlageVurderingSomIkkeErAvvist(klageVurderingResultatNFP, klageVurderingResultatNK));
 
 export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnlag, aksjonspunkter) => {
-  if (!beregningsgrunnlag || !aksjonspunkter) {
+  const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
+  if (!beregningsgrunnlag || !aksjonspunkter || (harFlereBeregningsgrunnlag && beregningsgrunnlag.length === 0)) {
     return false;
   }
   const behandlingHarLøstBGAP = aksjonspunkter.find(
     ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status.kode === aksjonspunktStatus.UTFORT,
   );
-  const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
+
+  const førstePeriode = harFlereBeregningsgrunnlag
+    ? beregningsgrunnlag[0].beregningsgrunnlagPeriode[0] // TODO (Hallvard) Er dette god nok løsning?
+    : beregningsgrunnlag.beregningsgrunnlagPeriode[0];
   const andelSomErManueltFastsatt = førstePeriode.beregningsgrunnlagPrStatusOgAndel.find(
     andel => andel.overstyrtPrAar || andel.overstyrtPrAar === 0,
   );
   return !!behandlingHarLøstBGAP || !!andelSomErManueltFastsatt;
+};
+
+export const finnSistePeriodeMedAvslagsårsakBeregning = (perioderMedAvslag, bgPerioder) => {
+  if (!perioderMedAvslag || perioderMedAvslag.length < 1) {
+    return null;
+  }
+  const kronologiskeBGPerioder = bgPerioder
+    .filter(periode => periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE)
+    .sort((a, b) => moment(a.beregningsgrunnlagPeriodeFom) - moment(b.beregningsgrunnlagPeriodeFom));
+  if (kronologiskeBGPerioder.length < 1) {
+    return null;
+  }
+  const sisteBGPeriode = kronologiskeBGPerioder[kronologiskeBGPerioder.length - 1];
+  return perioderMedAvslag.find(periode => periode.fom === sisteBGPeriode.beregningsgrunnlagPeriodeFom);
 };

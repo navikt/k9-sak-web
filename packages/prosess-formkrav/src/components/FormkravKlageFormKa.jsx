@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/form';
 
-import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
+import FormkravKlageForm, { getPaklagdVedtak, IKKE_PAKLAGD_VEDTAK } from './FormkravKlageForm';
 import { erTilbakekreving, påklagdTilbakekrevingInfo } from './FormkravKlageFormNfp';
 
 /**
@@ -59,27 +59,31 @@ export const transformValues = (values, avsluttedeBehandlinger) => ({
   erSignert: values.erSignert,
   begrunnelse: values.begrunnelse,
   kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
-  vedtak: values.vedtak === IKKE_PA_KLAGD_VEDTAK ? null : values.vedtak,
+  vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
 });
 
 const formName = 'FormkravKlageFormKa';
 
-const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering], (klageVurdering) => {
-  const klageFormkavResultatKa = klageVurdering ? klageVurdering.klageFormkravResultatKA : null;
-  return {
-    vedtak: klageFormkavResultatKa ? getPaKlagdVedtak(klageFormkavResultatKa) : null,
-    begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,
-    erKlagerPart: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagerPart : null,
-    erKonkret: klageFormkavResultatKa ? klageFormkavResultatKa.erKlageKonkret : null,
-    erFristOverholdt: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagefirstOverholdt : null,
-    erSignert: klageFormkavResultatKa ? klageFormkavResultatKa.erSignert : null,
-  };
-});
+const buildInitialValues = createSelector(
+  [ownProps => ownProps.klageVurdering, ownProps => ownProps.avsluttedeBehandlinger],
+  (klageVurdering, avsluttedeBehandlinger) => {
+    const klageFormkavResultatKa = klageVurdering ? klageVurdering.klageFormkravResultatKA : null;
+    return {
+      vedtak: klageFormkavResultatKa ? getPaklagdVedtak(klageFormkavResultatKa, avsluttedeBehandlinger) : null,
+      begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,
+      erKlagerPart: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagerPart : null,
+      erKonkret: klageFormkavResultatKa ? klageFormkavResultatKa.erKlageKonkret : null,
+      erFristOverholdt: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagefirstOverholdt : null,
+      erSignert: klageFormkavResultatKa ? klageFormkavResultatKa.erSignert : null,
+    };
+  },
+);
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
+  const onSubmit = values =>
+    initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     readOnly: ownProps.readOnly,
@@ -87,6 +91,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
-  form: formName,
-})(FormkravKlageFormKa));
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+  })(FormkravKlageFormKa),
+);

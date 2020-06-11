@@ -63,6 +63,7 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
     beregningsgrunnlag,
     sykdom,
     omsorgenFor,
+    forbrukteDager,
   } = data;
 
   const dataTilUtledingAvFpPaneler = {
@@ -76,6 +77,7 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
     hasFetchError,
     sykdom,
     omsorgenFor,
+    forbrukteDager,
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks.useFaktaPaneler(

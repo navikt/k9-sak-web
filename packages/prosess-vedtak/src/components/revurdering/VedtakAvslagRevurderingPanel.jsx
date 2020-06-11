@@ -6,6 +6,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import VedtakAvslagArsakOgBegrunnelsePanel from '../VedtakAvslagArsakOgBegrunnelsePanel';
 import { findTilbakekrevingText } from '../VedtakHelper';
@@ -45,13 +46,22 @@ export const VedtakAvslagRevurderingPanelImpl = ({
   tilbakekrevingText,
   alleKodeverk,
   vedtakVarsel,
+  ytelseTypeKode,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-    <Normaltekst>
-      {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
-      {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-    </Normaltekst>
+    {ytelseTypeKode === fagsakYtelseType.FRISINN && (
+      <Normaltekst>
+        {intl.formatMessage({ id: 'VedtakForm.FrisinnIkkeInnvilget' })}
+        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+      </Normaltekst>
+    )}
+    {ytelseTypeKode !== fagsakYtelseType.FRISINN && (
+      <Normaltekst>
+        {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
+        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+      </Normaltekst>
+    )}
     <VerticalSpacer sixteenPx />
     <VedtakAvslagArsakOgBegrunnelsePanel
       intl={intl}
@@ -78,6 +88,7 @@ VedtakAvslagRevurderingPanelImpl.propTypes = {
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
   vedtakVarsel: vedtakVarselPropType,
+  ytelseTypeKode: PropTypes.string.isRequired,
 };
 
 VedtakAvslagRevurderingPanelImpl.defaultProps = {

@@ -8,6 +8,7 @@ import {
   findDifferenceInMonthsAndDays,
   splitWeeksAndDays,
   timeFormat,
+  visningsdato,
 } from './dateUtils';
 
 describe('dateutils', () => {
@@ -41,7 +42,10 @@ describe('dateutils', () => {
     it('Skal kalkulere antall dager mellom to datoer inkludert helger og skrive det ut som uker og dager', () => {
       const days = 33;
       const weeks = 2;
-      expect(splitWeeksAndDays(weeks, days)).is.eql([{ weeks: 4, days: 1 }, { weeks: 4, days: 2 }]);
+      expect(splitWeeksAndDays(weeks, days)).is.eql([
+        { weeks: 4, days: 1 },
+        { weeks: 4, days: 2 },
+      ]);
     });
   });
 
@@ -90,6 +94,13 @@ describe('dateutils', () => {
       const fomDate = '2018-04-30';
       const tomDate = '2018-04-10';
       expect(findDifferenceInMonthsAndDays(fomDate, tomDate)).is.undefined;
+    });
+  });
+
+  describe('visningsdato', () => {
+    it('formaterer en ISO-dato til visningsdato', () => {
+      const isoDato = '2020-11-25';
+      expect(visningsdato(isoDato)).to.eql('25.11.2020');
     });
   });
 });

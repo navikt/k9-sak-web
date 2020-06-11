@@ -1,42 +1,31 @@
 import React from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import moment from 'moment';
 
+import { FormattedMessage } from 'react-intl';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
-
-const finnSamletBruttoForStatus = (andeler, status) => {
-  if (!andeler) {
-    return 0;
-  }
-  const inntekt = andeler
-    .filter(a => a.aktivitetStatus.kode === status)
-    .map(({ bruttoPrAar }) => bruttoPrAar)
-    .reduce((sum, brutto) => sum + brutto, 0);
-  if (!inntekt || inntekt === 0) {
-    return 0;
-  }
-  return inntekt;
-};
+import { finnVisningForStatusIPeriode } from './FrisinnUtils';
 
 const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
-  // Første periode inneholder alltid brutto vi ønsker å vise SBH
-  const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
-  const bruttoSN = finnSamletBruttoForStatus(
-    førstePeriode.beregningsgrunnlagPrStatusOgAndel,
+  // Vi ønsker alltid kun å vise data fra siste beregnede periode, dvs nest siste periode (koronologisk) i grunnlaget
+  if (beregningsgrunnlag.beregningsgrunnlagPeriode.length < 2) {
+    return null;
+  }
+  const kronologiskePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode.sort(
+    (a, b) => moment(a.beregningsgrunnlagPeriodeFom) - moment(b.beregningsgrunnlagPeriodeFom),
+  );
+  const gjeldendePeriode = kronologiskePerioder[kronologiskePerioder.length - 2];
+  const bruttoSN = finnVisningForStatusIPeriode(
     aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    beregningsgrunnlag,
+    gjeldendePeriode,
   );
-  const bruttoFL = finnSamletBruttoForStatus(
-    førstePeriode.beregningsgrunnlagPrStatusOgAndel,
-    aktivitetStatus.FRILANSER,
-  );
-  const bruttoAT = finnSamletBruttoForStatus(
-    førstePeriode.beregningsgrunnlagPrStatusOgAndel,
-    aktivitetStatus.ARBEIDSTAKER,
-  );
+  const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, beregningsgrunnlag, gjeldendePeriode);
+  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, beregningsgrunnlag, gjeldendePeriode);
   return (
     <div>
       <Row>

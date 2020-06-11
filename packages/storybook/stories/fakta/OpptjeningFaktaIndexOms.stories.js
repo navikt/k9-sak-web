@@ -178,7 +178,7 @@ export const visPanelUtenAksjonpunkt = () => (
     alleMerknaderFraBeslutter={{}}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', false)}
     submittable={boolean('submittable', true)}
   />
 );

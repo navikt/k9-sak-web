@@ -8,7 +8,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/form';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
+import FormkravKlageForm, { getPaklagdVedtak, IKKE_PAKLAGD_VEDTAK } from './FormkravKlageForm';
 
 /**
  * FormkravklageformNfp
@@ -81,24 +81,27 @@ const transformValues = (values, avsluttedeBehandlinger) => ({
   erSignert: values.erSignert,
   begrunnelse: values.begrunnelse,
   kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
-  vedtak: values.vedtak === IKKE_PA_KLAGD_VEDTAK ? null : values.vedtak,
+  vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
 });
 
 const formName = 'FormkravKlageFormNfp';
 
-const buildInitialValues = createSelector([ownProps => ownProps.klageVurdering], klageVurdering => {
-  const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
-  return {
-    vedtak: klageFormkavResultatNfp ? getPaKlagdVedtak(klageFormkavResultatNfp) : null,
-    begrunnelse: klageFormkavResultatNfp ? klageFormkavResultatNfp.begrunnelse : null,
-    erKlagerPart: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagerPart : null,
-    erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
-    erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
-    erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
-  };
-});
+const buildInitialValues = createSelector(
+  [ownProps => ownProps.klageVurdering, ownProps => ownProps.avsluttedeBehandlinger],
+  (klageVurdering, avsluttedeBehandlinger) => {
+    const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
+    return {
+      vedtak: klageFormkavResultatNfp ? getPaklagdVedtak(klageFormkavResultatNfp, avsluttedeBehandlinger) : null,
+      begrunnelse: klageFormkavResultatNfp ? klageFormkavResultatNfp.begrunnelse : null,
+      erKlagerPart: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagerPart : null,
+      erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
+      erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
+      erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
+    };
+  },
+);
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values =>
