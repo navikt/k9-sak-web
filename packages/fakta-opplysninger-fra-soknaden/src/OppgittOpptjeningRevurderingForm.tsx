@@ -1,5 +1,5 @@
 import { DatepickerField } from '@fpsak-frontend/form';
-import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
@@ -104,7 +104,11 @@ const transformValues = (
   return resultingData;
 };
 
-const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
+interface StateProps {
+  harSøktSomSSN: boolean;
+}
+
+const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & StateProps) => {
   const [activeTab, setActiveTab] = React.useState(0);
   const [formIsEditable, setFormIsEditable] = React.useState(false);
   const intl = useIntl();
@@ -113,6 +117,7 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
     behandling: { id: behandlingId, versjon: behandlingVersjon },
     kanEndrePåSøknadsopplysninger,
     oppgittOpptjening,
+    harSøktSomSSN,
   } = props;
 
   const handleSubmit = e => {
@@ -159,34 +164,37 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
           name={SøknadFormValue.SØKNADSPERIODER}
         />
       </div>
-
-      <div className={styles.fieldContainer}>
-        <InputField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
-          bredde="S"
-          label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
-          validate={[hasValidInteger]}
-          readOnly={formIsEditable}
-        />
-      </div>
-      <div className={styles.fieldContainer}>
-        <InputField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
-          bredde="S"
-          label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
-          validate={[hasValidInteger]}
-          readOnly={formIsEditable}
-        />
-      </div>
-      <div className={styles.fieldContainer}>
-        <DatepickerField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
-          validate={[hasValidDate]}
-          defaultValue={null}
-          readOnly={formIsEditable}
-          label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
-        />
-      </div>
+      {harSøktSomSSN && (
+        <>
+          <div className={styles.fieldContainer}>
+            <InputField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
+              bredde="S"
+              label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
+              validate={[hasValidInteger]}
+              readOnly={formIsEditable}
+            />
+          </div>
+          <div className={styles.fieldContainer}>
+            <InputField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
+              bredde="S"
+              label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
+              validate={[hasValidInteger]}
+              readOnly={formIsEditable}
+            />
+          </div>
+          <div className={styles.fieldContainer}>
+            <DatepickerField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
+              validate={[hasValidDate]}
+              defaultValue={null}
+              readOnly={formIsEditable}
+              label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
+            />
+          </div>
+        </>
+      )}
       {!formIsEditable && (
         <div className={styles.begrunnelseContainer}>
           <TextAreaField
@@ -387,8 +395,8 @@ const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpp
   return allErrors;
 };
 
-const mapStateToProps = (state, props) => {
-  const { oppgittOpptjening, submitCallback } = props;
+const mapStateToProps = (_, props) => {
+  const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon } = props;
   const onSubmit = formValues => {
     return new Promise((resolve, reject) => {
       const errors = validateForm(formValues, props.oppgittOpptjening);
@@ -403,7 +411,16 @@ const mapStateToProps = (state, props) => {
     const validationResult = validateForm(values, oppgittOpptjening);
     return validationResult;
   };
-  return () => ({ initialValues, onSubmit, validate });
+  return state => {
+    const søknadsperiodeFormValues = behandlingFormValueSelector(
+      'OpplysningerFraSoknadenForm',
+      behandlingId,
+      behandlingVersjon,
+    )(state, [SøknadFormValue.SØKNADSPERIODER]);
+    const harSøktSomSSN = søknadsperiodeFormValues?.some(søknadsperiode => søknadsperiode.harSøktSomSSN);
+
+    return { onSubmit, validate, initialValues, harSøktSomSSN };
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
