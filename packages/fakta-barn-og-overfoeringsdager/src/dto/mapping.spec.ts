@@ -23,6 +23,20 @@ const aleneOmOmsorgen: Rammevedtak = {
   gyldigTilOgMed: '2020-12-31',
 };
 
+const fosterbarn: Rammevedtak = {
+  type: RammevedtakEnum.FOSTERBARN,
+  mottaker: '010119',
+  gyldigFraOgMed: '2019-02-20',
+  gyldigTilOgMed: '2021-12-31',
+};
+
+const utenlandskBarn: Rammevedtak = {
+  type: RammevedtakEnum.UTENLANDSK_BARN,
+  fødselsdato: '030318',
+  gyldigFraOgMed: '2019-02-20',
+  gyldigTilOgMed: '2021-12-31',
+};
+
 const midlertidigAleneOmOmsorgen: Rammevedtak = {
   type: RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG,
   gyldigFraOgMed: '2020-01-01',
@@ -62,6 +76,8 @@ it('mapping fra DTO til formValues', () => {
     utvidetRettManglendeFnr,
     aleneOmOmsorgen,
     { ...aleneOmOmsorgen, aleneOmOmsorgenFor: annetBarnFnr },
+    fosterbarn,
+    utenlandskBarn,
     midlertidigAleneOmOmsorgen,
     uidentifisertRammevedtak,
     overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P1D'),
@@ -83,12 +99,16 @@ it('mapping fra DTO til formValues', () => {
     koronaoverføringGir,
   } = mapDtoTilFormValues(rammevedtak);
 
-  expect(barn).to.have.length(2);
+  expect(barn).to.have.length(4);
   expect(barn[0].fødselsnummer).to.equal(barnFnr);
   expect(barn[0].kroniskSykdom).to.eql({ fom: utvidetRett.gyldigFraOgMed, tom: utvidetRett.gyldigTilOgMed });
   expect(barn[0].aleneomsorg).to.eql({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
   expect(barn[1].kroniskSykdom).to.equal(undefined);
   expect(barn[1].aleneomsorg).to.eql({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
+  expect(barn[2].fødselsnummer).to.eql(fosterbarn.mottaker);
+  expect(barn[2].fosterbarn).to.eql({ fom: fosterbarn.gyldigFraOgMed, tom: fosterbarn.gyldigTilOgMed });
+  expect(barn[3].fødselsnummer).to.eql(utenlandskBarn.fødselsdato);
+  expect(barn[3].utenlandskBarn).to.eql({ fom: utenlandskBarn.gyldigFraOgMed, tom: utenlandskBarn.gyldigTilOgMed });
 
   const assertOverføring = (overføring, expectedDager, expectedMottakerAvsender, expectedFom, expectedTom) => {
     expect(overføring).to.eql([

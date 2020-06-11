@@ -14,64 +14,47 @@ const mapOverføring = (type: RammevedtakType, rammevedtak: Rammevedtak[]): Over
       mottakerAvsenderFnr: mottaker || avsender,
     }));
 
+const mapRammevedtakBarn = (
+  tmpBarn: Record<string, Barn>,
+  rammevedtak: Rammevedtak,
+  fnrFeltnavn: string,
+  typeFeltnavn: string,
+) => {
+  const fnr = rammevedtak[fnrFeltnavn];
+  if (!fnr) {
+    return tmpBarn;
+  }
+  const eksisterendeBarn = tmpBarn[fnr] || {};
+  return {
+    ...tmpBarn,
+    [fnr]: {
+      ...eksisterendeBarn,
+      fødselsnummer: fnr,
+      [typeFeltnavn]: {
+        fom: rammevedtak.gyldigFraOgMed,
+        tom: rammevedtak.gyldigTilOgMed,
+      },
+    },
+  };
+};
+
 const mapDtoTilFormValues = (rammevedtak: Rammevedtak[]): FormValues => {
   const barn: Barn[] = Object.values(
     rammevedtak.reduce((tmpBarn, rv) => {
       if (rv.type === RammevedtakEnum.UTVIDET_RETT) {
-        const fnr = rv.utvidetRettFor;
-        if (!fnr) {
-          return tmpBarn;
-        }
-        const kroniskSyktBarn = tmpBarn[fnr] || {};
-        return {
-          ...tmpBarn,
-          [fnr]: {
-            ...kroniskSyktBarn,
-            fødselsnummer: fnr,
-            kroniskSykdom: {
-              fom: rv.gyldigFraOgMed,
-              tom: rv.gyldigTilOgMed,
-            },
-          },
-        };
+        return mapRammevedtakBarn(tmpBarn, rv, 'utvidetRettFor', 'kroniskSykdom');
       }
 
       if (rv.type === RammevedtakEnum.ALENEOMSORG) {
-        const fnr = rv.aleneOmOmsorgenFor;
-        if (!fnr) {
-          return tmpBarn;
-        }
-        const aleneomsorgsbarn = tmpBarn[fnr] || {};
-        return {
-          ...tmpBarn,
-          [fnr]: {
-            ...aleneomsorgsbarn,
-            fødselsnummer: fnr,
-            aleneomsorg: {
-              fom: rv.gyldigFraOgMed,
-              tom: rv.gyldigTilOgMed,
-            },
-          },
-        };
+        return mapRammevedtakBarn(tmpBarn, rv, 'aleneOmOmsorgenFor', 'aleneomsorg');
       }
 
       if (rv.type === RammevedtakEnum.FOSTERBARN) {
-        const fnr = rv.mottaker;
-        if (!fnr) {
-          return tmpBarn;
-        }
-        const fosterbarn = tmpBarn[fnr] || {};
-        return {
-          ...tmpBarn,
-          [fnr]: {
-            ...fosterbarn,
-            fødselsnummer: fnr,
-            fosterbarn: {
-              fom: rv.gyldigFraOgMed,
-              tom: rv.gyldigTilOgMed,
-            },
-          },
-        };
+        return mapRammevedtakBarn(tmpBarn, rv, 'mottaker', 'fosterbarn');
+      }
+
+      if (rv.type === RammevedtakEnum.UTENLANDSK_BARN) {
+        return mapRammevedtakBarn(tmpBarn, rv, 'fødselsdato', 'utenlandskBarn');
       }
 
       return tmpBarn;
