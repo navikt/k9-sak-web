@@ -19,6 +19,7 @@ export default {
 };
 
 const vilkårInnvilget: VurderteVilkår = {
+  [VilkårEnum.ARBEIDSFORHOLD]: UtfallEnum.INNVILGET,
   [VilkårEnum.NOK_DAGER]: UtfallEnum.INNVILGET,
   [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
 };
@@ -51,7 +52,8 @@ const avslåttPeriode: Uttaksperiode = {
   utfall: UtfallEnum.AVSLÅTT,
   vurderteVilkår: {
     vilkår: {
-      ...vilkårInnvilget,
+      [VilkårEnum.ARBEIDSFORHOLD]: UtfallEnum.AVSLÅTT,
+      [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
       [VilkårEnum.NOK_DAGER]: UtfallEnum.AVSLÅTT,
     },
   },
