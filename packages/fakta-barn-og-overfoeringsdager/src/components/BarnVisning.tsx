@@ -12,7 +12,7 @@ interface BarnInputProps {
 }
 
 const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
-  const { aleneomsorg, kroniskSykdom, fosterbarn, fødselsnummer } = barnet;
+  const { aleneomsorg, kroniskSykdom, fosterbarn, utenlandskBarn, fødselsnummer } = barnet;
 
   return (
     <Panel border className={styles.barnInput}>
@@ -22,7 +22,7 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
         </h4>
         <span className={styles.italic}>{fødselsnummer}</span>
       </div>
-      {(aleneomsorg || kroniskSykdom || fosterbarn) && (
+      {(aleneomsorg || kroniskSykdom || fosterbarn || utenlandskBarn) && (
         <div className={styles.rammevedtak}>
           <div>
             <Element>
@@ -43,6 +43,11 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
                 <FormattedMessage id="FaktaRammevedtak.Barn.Fosterbarn" />
               </Normaltekst>
             )}
+            {utenlandskBarn && (
+              <Normaltekst>
+                <FormattedMessage id="FaktaRammevedtak.Barn.UtenlandskBarn" />
+              </Normaltekst>
+            )}
           </div>
           <div>
             <Element>
@@ -51,6 +56,7 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
             {kroniskSykdom && <Normaltekst>{formaterDato(kroniskSykdom.fom)}</Normaltekst>}
             {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.fom)}</Normaltekst>}
             {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.fom)}</Normaltekst>}
+            {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.fom)}</Normaltekst>}
           </div>
           <div>
             <Element>
@@ -59,6 +65,7 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
             {kroniskSykdom && <Normaltekst>{formaterDato(kroniskSykdom.tom)}</Normaltekst>}
             {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
             {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.tom)}</Normaltekst>}
+            {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.tom)}</Normaltekst>}
           </div>
         </div>
       )}

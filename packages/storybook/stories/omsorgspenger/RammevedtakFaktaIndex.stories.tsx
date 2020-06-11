@@ -58,6 +58,13 @@ const fosterbarnManglendeFnr: Rammevedtak = {
   fritekst: '@9-6 2 L FOST/',
 };
 
+const utenlandskBarn: Rammevedtak = {
+  type: RammevedtakEnum.UTENLANDSK_BARN,
+  fødselsdato: '030318',
+  gyldigFraOgMed: '2019-02-20',
+  gyldigTilOgMed: '2021-12-31',
+};
+
 const midlertidigAleneOmOmsorgen: Rammevedtak = {
   type: RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG,
   gyldigFraOgMed: '2020-01-01',
@@ -99,6 +106,7 @@ export const medBarnOgUidentifiserteRammevedtak = () => (
       },
       fosterbarn,
       fosterbarnManglendeFnr,
+      utenlandskBarn,
       aleneOmOmsorgen,
       aleneOmOmsorgenManglendeFnr,
       { ...aleneOmOmsorgen, aleneOmOmsorgenFor: '78978978978' },
