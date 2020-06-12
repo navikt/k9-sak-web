@@ -259,7 +259,7 @@ const validateSSNForm = (formData, måned, fieldArrayID) => {
   const errors = {};
   const ssnInntekt = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN];
   const ssnStartdato = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
-  const ssnInntektValidation = [required(ssnInntekt), hasValidInteger(ssnInntekt), (v => maxLength(5)(v))()];
+  const ssnInntektValidation = [required(ssnInntekt), hasValidInteger(ssnInntekt), maxLength(5)(ssnInntekt)];
   const ssnStartdatoValidation = [
     required(ssnStartdato),
     hasValidDate(ssnStartdato),
