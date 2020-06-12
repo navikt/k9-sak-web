@@ -4,6 +4,7 @@ import { withKnobs, object, number, boolean } from '@storybook/addon-knobs';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
+import { Behandling } from '@k9-sak-web/types';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
@@ -24,7 +25,6 @@ const behandlinger = [
       kode: behandlingStatus.AVSLUTTET,
       kodeverk: BEHANDLING_STATUS_KODEVERK,
     },
-    fagsakId: 3,
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     endret: '2017-08-03T00:54:25.455',
@@ -32,6 +32,8 @@ const behandlinger = [
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
     links: [],
     gjeldendeVedtak: false,
+    behandlingPaaVent: false,
+    behandlingHenlagt: false,
     behandlingsresultat: {
       type: {
         kode: 'AVSLÅTT',
@@ -50,7 +52,6 @@ const behandlinger = [
       kode: behandlingStatus.OPPRETTET,
       kodeverk: BEHANDLING_STATUS_KODEVERK,
     },
-    fagsakId: 3,
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     endret: '2017-08-03T00:54:25.455',
@@ -58,6 +59,8 @@ const behandlinger = [
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
     links: [],
     gjeldendeVedtak: true,
+    behandlingPaaVent: false,
+    behandlingHenlagt: false,
     behandlingsresultat: {
       type: {
         kode: 'INNVILGET',
@@ -76,19 +79,13 @@ const behandlinger = [
       kode: behandlingStatus.OPPRETTET,
       kodeverk: BEHANDLING_STATUS_KODEVERK,
     },
-    fagsakId: 3,
     opprettet: '2017-08-02T00:54:25.455',
     behandlendeEnhetId: '4812',
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
     links: [],
     gjeldendeVedtak: false,
-    førsteÅrsak: {
-      behandlingArsakType: {
-        kode: 'RE-ENDR-BER-GRUN',
-      },
-      erAutomatiskRevurdering: true,
-      manueltOpprettet: true,
-    },
+    behandlingPaaVent: false,
+    behandlingHenlagt: false,
   },
   {
     id: 4,
@@ -101,7 +98,6 @@ const behandlinger = [
       kode: behandlingStatus.AVSLUTTET,
       kodeverk: BEHANDLING_STATUS_KODEVERK,
     },
-    fagsakId: 3,
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     endret: '2017-08-03T00:54:25.455',
@@ -109,6 +105,8 @@ const behandlinger = [
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
     links: [],
     gjeldendeVedtak: false,
+    behandlingPaaVent: false,
+    behandlingHenlagt: false,
     behandlingsresultat: {
       type: {
         kode: 'HENLAGT_SØKNAD_TRUKKET',
@@ -129,13 +127,13 @@ export const visPanelForValgAvBehandlinger = () => {
   return (
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
-        behandlinger={object('behandlinger', behandlinger)}
-        saksnummer={1}
+        behandlinger={object('behandlinger', behandlinger as Behandling[])}
+        getBehandlingLocation={() => 'test'}
         noExistingBehandlinger={boolean('noExistingBehandlinger', false)}
         behandlingId={number('behandlingId', 1)}
         showAll={visAlle}
         toggleShowAll={() => toggleVisAlle(!visAlle)}
-        alleKodeverk={alleKodeverk}
+        alleKodeverk={alleKodeverk as any}
       />
     </div>
   );

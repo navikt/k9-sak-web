@@ -1,6 +1,11 @@
-import { ReduxEvents, ReduxRestApiBuilder, RestApiConfigBuilder } from '@fpsak-frontend/rest-api-redux';
+import {
+  ReduxEvents,
+  ReduxRestApiBuilder,
+  RestApiConfigBuilder,
+  reducerRegistry,
+  setRequestPollingMessage,
+} from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
-import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-felles';
 
 export const TilbakekrevingBehandlingApiKeys = {
   BEHANDLING_TILBAKE: 'BEHANDLING_TILBAKE',

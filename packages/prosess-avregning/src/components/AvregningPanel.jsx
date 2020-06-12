@@ -9,7 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { featureToggle } from '@fpsak-frontend/fp-felles';
+import { featureToggle } from '@k9-sak-web/konstanter';
 import {
   RadioGroupField,
   RadioOption,

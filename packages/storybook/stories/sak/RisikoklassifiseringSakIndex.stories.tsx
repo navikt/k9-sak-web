@@ -7,6 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
 
 const withWidthProvider = story => <div style={{ width: '600px' }}>{story()}</div>;
@@ -35,6 +36,7 @@ export const visPanelForLavRisikoklassifisering = () => (
     risikoklassifisering={{
       kontrollresultat: {
         kode: kontrollresultatKode.IKKE_HOY,
+        kodeverk: '',
       },
     }}
     isPanelOpen={boolean('isPanelOpen', false)}
@@ -48,18 +50,23 @@ export const visPanelForHøyRisikoklassifisering = () => (
   <RisikoklassifiseringSakIndex
     behandlingId={1}
     behandlingVersjon={1}
-    aksjonspunkt={{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_FARESIGNALER,
-      },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-    }}
+    aksjonspunkt={
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDER_FARESIGNALER,
+          kodeverk: '',
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+          kodeverk: '',
+        },
+        begrunnelse: undefined,
+      } as Aksjonspunkt
+    }
     risikoklassifisering={{
       kontrollresultat: {
         kode: kontrollresultatKode.HOY,
+        kodeverk: '',
       },
       medlFaresignaler: {
         faresignaler: ['Søker bor hos foreldre'],

@@ -323,12 +323,10 @@ export const visHistorikk = () => (
         <HistorikkSakIndex
           key={h.behandlingId}
           historieInnslag={h}
-          selectedBehandlingId="1"
           saksnummer="2"
-          location={{
-            pathname: 'historikk',
-          }}
+          getBehandlingLocation={() => 'url'}
           alleKodeverk={alleKodeverk}
+          createLocationForSkjermlenke={() => 'url'}
         />
       ))}
     </Router>

@@ -25,7 +25,7 @@ interface HistorikkmalFelles7og8Props {
   getKodeverknavn?: (kodeverkOjekt: Kodeverk, undertype?: string) => string;
   formatChangedField: (endretFelt: EndretFelt) => ReactElement;
   formatBegrunnelse: (begrunnelse: string) => string;
-  createLocationForHistorikkItems: (behandlingLocation: Location, skjermlenkeKode: string) => string;
+  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => string;
 }
 
 const HistorikkMalFelles7og8: React.FunctionComponent<HistorikkmalFelles7og8Props> = ({

@@ -7,6 +7,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
+import { Fagsak } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -21,6 +22,10 @@ const fagsaker = [
     sakstype: {
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: FAGSAK_YTELSE_KODEVERK,
+    },
+    relasjonsRolleType: {
+      kode: '',
+      kodeverk: '',
     },
     status: {
       kode: fagsakStatus.OPPRETTET,
@@ -74,12 +79,12 @@ export const visMeldingerPanel = () => {
   const [visResultat, toggleResultat] = useState(false);
   return (
     <FagsakSokSakIndex
-      fagsaker={visResultat ? object('fagsaker', fagsaker) : []}
+      fagsaker={visResultat ? object('fagsaker', fagsaker as Fagsak[]) : []}
       searchFagsakCallback={() => toggleResultat(true)}
       searchResultReceived={boolean('searchResultReceived', false)}
       selectFagsakCallback={action('button-click')}
       searchStarted={boolean('searchStarted', false)}
-      alleKodeverk={alleKodeverk}
+      alleKodeverk={alleKodeverk as any}
     />
   );
 };
@@ -94,6 +99,6 @@ export const visSøkDerEnIkkeHarAdgang = () => (
     searchResultAccessDenied={object('searchResultAccessDenied', {
       feilmelding: 'Har ikke adgang',
     })}
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
   />
 );

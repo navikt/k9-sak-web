@@ -38,20 +38,13 @@ const alleKodeverk = {
 export const visPanelForValgAvBehandlinger = () => (
   <div style={{ width: '600px', backgroundColor: 'white', padding: '30px' }}>
     <FagsakProfilSakIndex
-      saksnummer={232341251}
+      saksnummer="232341251"
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER, kodeverk: FAGSAK_YTELSE_KODEVERK }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET, kodeverk: FAGSAK_STATUS_KODEVERK }}
-      toggleShowAll={() => undefined}
-      annenPartLink={{
-        behandlingId: 1,
-        saksnr: {
-          verdi: 1234567,
-        },
-      }}
-      alleKodeverk={alleKodeverk}
-      createLink={annePartLink => `lenke_${annePartLink.behandlingId}`}
+      alleKodeverk={alleKodeverk as any}
       renderBehandlingMeny={() => <Knapp>Meny (Placeholder)</Knapp>}
       renderBehandlingVelger={() => <div>Liste (placeholder)</div>}
+      dekningsgrad={100}
     />
   </div>
 );

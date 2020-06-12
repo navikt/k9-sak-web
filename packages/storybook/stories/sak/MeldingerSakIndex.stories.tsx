@@ -22,7 +22,10 @@ const templates = [
   },
 ];
 
-const sprakKode = {};
+const sprakKode = {
+  kode: '',
+  kodeverk: '',
+};
 
 export default {
   title: 'sak/sak-meldinger',

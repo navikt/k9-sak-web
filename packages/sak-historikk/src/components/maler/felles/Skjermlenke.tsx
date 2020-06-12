@@ -10,7 +10,7 @@ interface SkjermlenkeProps {
   behandlingLocation?: Location;
   getKodeverknavn?: (kodeverkObjekt: Kodeverk, undertype?: string) => string;
   scrollUpOnClick?: boolean;
-  createLocationForHistorikkItems: (behandlingLocation: Location, skjermlenkeKode: string) => string;
+  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => string;
 }
 
 const Skjermlenke: React.FunctionComponent<SkjermlenkeProps> = ({
@@ -18,7 +18,7 @@ const Skjermlenke: React.FunctionComponent<SkjermlenkeProps> = ({
   behandlingLocation,
   getKodeverknavn,
   scrollUpOnClick,
-  createLocationForHistorikkItems,
+  createLocationForSkjermlenke,
 }) => {
   if (!skjermlenke) {
     return null;
@@ -26,7 +26,7 @@ const Skjermlenke: React.FunctionComponent<SkjermlenkeProps> = ({
   return (
     <Element>
       <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, skjermlenke.kode)}
+        to={createLocationForSkjermlenke(behandlingLocation, skjermlenke.kode)}
         onClick={scrollUpOnClick && scrollUp}
       >
         {getKodeverknavn(skjermlenke)}
