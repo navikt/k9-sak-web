@@ -2,7 +2,6 @@ import { BehandlingIdentifier, DataFetcher, featureToggle } from '@fpsak-fronten
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import klageApi from '@fpsak-frontend/behandling-klage/src/data/klageBehandlingApi';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import { kodeverkObjektPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
@@ -30,7 +29,7 @@ import {
   previewMessage,
 } from '../../behandling/duck';
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
-import fpsakApi, { reduxRestApi } from '../../data/fpsakApi';
+import fpsakApi from '../../data/fpsakApi';
 import { getAktorid, getFagsakYtelseType, getSaksnummer, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype } from '../../kodeverk/duck';
 
@@ -175,7 +174,6 @@ export class ApprovalIndex extends Component {
       behandlingId,
       behandlingTypeKode,
       erTilbakekreving,
-      klagebehandling,
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
@@ -183,10 +181,6 @@ export class ApprovalIndex extends Component {
 
     if (!totrinnskontrollSkjermlenkeContext && !totrinnskontrollReadOnlySkjermlenkeContext) {
       return null;
-    }
-
-    if (klagebehandling?.links) {
-      reduxRestApi.injectPaths(klagebehandling.links);
     }
 
     return (
@@ -272,7 +266,6 @@ ApprovalIndex.propTypes = {
   behandlingsresultat: PropTypes.shape(),
   behandlingId: PropTypes.number,
   behandlingTypeKode: PropTypes.string,
-  klagebehandling: PropTypes.shape(),
   aktørId: PropTypes.string,
   saksnummer: PropTypes.string,
 };
@@ -334,7 +327,6 @@ const mapStateToPropsFactory = initialState => {
       behandlingIdentifier,
       erTilbakekreving,
       behandlingTypeKode,
-      klagebehandling: klageApi.BEHANDLING_KLAGE.getRestApiData()(state),
     };
   };
 };
