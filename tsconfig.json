@@ -39,6 +39,7 @@
     "packages/prosess-aarskvantum-oms",
     "packages/prosess-vedtak",
     "packages/prosess-klagevurdering",
+    "packages/prosess-beregningsgrunnlag",
     "packages/fakta-opplysninger-fra-soknaden",
     "packages/fakta-barn-og-overfoeringsdager",
     "@types"
