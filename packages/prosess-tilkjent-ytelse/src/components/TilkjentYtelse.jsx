@@ -6,7 +6,7 @@ import Timeline from 'react-visjs-timeline';
 import { injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { calcDaysAndWeeks, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeksWithWeekends, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
@@ -40,10 +40,10 @@ const createTooltipContent = (intl, item) => `
     ${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      ${intl.formatMessage(
-       { id: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).id },
+       { id: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).id },
        {
-         weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
-         days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
+         weeks: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).weeks,
+         days: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).days,
        },
      )}
     </br>&nbsp;
