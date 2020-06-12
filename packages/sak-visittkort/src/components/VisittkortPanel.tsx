@@ -22,7 +22,6 @@ interface OwnProps {
   alleKodeverk: { [key: string]: [Kodeverk] };
   sprakkode: Kodeverk;
   personopplysninger?: Personopplysninger;
-  lenkeTilAnnenPart?: string;
   harTilbakekrevingVerge: boolean;
 }
 

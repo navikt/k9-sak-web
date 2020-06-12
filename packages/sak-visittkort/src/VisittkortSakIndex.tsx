@@ -21,14 +21,12 @@ interface OwnProps {
   sprakkode: Kodeverk;
   alleKodeverk: { [key: string]: [Kodeverk] };
   personopplysninger?: Personopplysninger;
-  lenkeTilAnnenPart?: string;
   harTilbakekrevingVerge?: boolean;
 }
 
 const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
   fagsak,
   personopplysninger,
-  lenkeTilAnnenPart,
   alleKodeverk,
   sprakkode,
   harTilbakekrevingVerge = false,
@@ -36,7 +34,6 @@ const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
   <RawIntlProvider value={intl}>
     <VisittkortPanel
       personopplysninger={personopplysninger}
-      lenkeTilAnnenPart={lenkeTilAnnenPart}
       fagsak={fagsak}
       alleKodeverk={alleKodeverk}
       sprakkode={sprakkode}

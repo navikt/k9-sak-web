@@ -17,7 +17,7 @@ const intl = createIntl(
 );
 
 interface OwnProps {
-  saksnummer: number;
+  saksnummer: string;
   sakstype: Kodeverk;
   fagsakStatus: Kodeverk;
   alleKodeverk: { [key: string]: [KodeverkMedNavn] };

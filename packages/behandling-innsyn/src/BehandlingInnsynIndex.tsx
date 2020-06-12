@@ -12,7 +12,7 @@ import {
   ReduxFormStateCleaner,
   BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, NavAnsatt, Aksjonspunkt, Dokument, Vilkar } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, NavAnsatt, Aksjonspunkt, Dokument, Vilkar } from '@k9-sak-web/types';
 
 import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 import InnsynGrid from './components/InnsynGrid';
@@ -31,10 +31,9 @@ interface DataProps {
 interface OwnProps {
   behandlingId: number;
   fagsak: FagsakInfo;
-  kodeverk: { [key: string]: Kodeverk[] };
+  kodeverk: { [key: string]: KodeverkMedNavn[] };
   navAnsatt: NavAnsatt;
-  location: {};
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -100,7 +99,7 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
       kodeverk,
       fagsak,
       navAnsatt,
-      oppdaterProsessStegIUrl,
+      oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       settPaVent,
       hentBehandling,
@@ -137,7 +136,7 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
               kodeverk={kodeverk}
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}

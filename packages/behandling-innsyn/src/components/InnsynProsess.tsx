@@ -6,7 +6,7 @@ import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
   FagsakInfo,
@@ -34,7 +34,7 @@ interface OwnProps {
   alleDokumenter: Dokument[];
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
 }
@@ -68,8 +68,8 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
   };
 
   setSteg = (nyttValg, forrigeSteg) => {
-    const { oppdaterProsessStegIUrl } = this.props;
-    oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
+    const { oppdaterProsessStegOgFaktaPanelIUrl } = this.props;
+    oppdaterProsessStegOgFaktaPanelIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
   };
 
   toggleIverksetterVedtakModal = () => {
@@ -83,7 +83,7 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
   };
 
   submitAksjonspunkter = aksjonspunktModels => {
-    const { fagsak, behandling, oppdaterProsessStegIUrl, lagreAksjonspunkt } = this.props;
+    const { fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, lagreAksjonspunkt } = this.props;
 
     const { id, versjon } = behandling;
     const models = aksjonspunktModels.map(ap => ({
@@ -103,7 +103,7 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
       if (isVedtak) {
         this.toggleIverksetterVedtakModal();
       } else {
-        oppdaterProsessStegIUrl('default');
+        oppdaterProsessStegOgFaktaPanelIUrl('default');
       }
     });
   };
@@ -154,7 +154,7 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
     });
 
     const valgtSteg = alleProsessMenySteg[alleProsessMenySteg.findIndex(p => p.prosessmenySteg.isActive)];
-    const vedtakStegVises = !!valgtSteg && valgtSteg.kode === bpc.VEDTAK;
+    const vedtakStegVises = !!valgtSteg && valgtSteg.kode === prosessStegCodes.VEDTAK;
 
     const fellesProps = {
       saksnummer: fagsak.saksnummer,
@@ -185,7 +185,7 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
               aksjonspunkter={valgtSteg.aksjonspunkter}
               isReadOnly={valgtSteg.isReadOnly}
             >
-              {!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN && (
+              {!!valgtSteg && valgtSteg.kode === prosessStegCodes.BEHANDLE_INNSYN && (
                 <InnsynProsessIndex
                   isSubmittable={valgtSteg.isSubmittable}
                   aksjonspunkter={valgtSteg.aksjonspunkter}

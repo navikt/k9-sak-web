@@ -148,6 +148,7 @@ const manuelleRevurderingsArsakerES = [
   behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
   behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
   behandlingArsakType.FEIL_PROSESSUELL,
+  behandlingArsakType.ETTER_KLAGE,
 ];
 
 const manuelleRevurderingsArsakerFP = [
@@ -261,12 +262,21 @@ const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values =>
+  const onSubmit = values => {
+    const klageOnlyValues =
+      values?.behandlingType === bType.KLAGE
+        ? {
+            aktørId: initialState.aktorId,
+            behandlendeEnhetId: initialState.gjeldendeVedtakBehandlendeEnhetId,
+          }
+        : undefined;
     initialOwnProps.submitCallback({
       ...values,
       eksternUuid: initialOwnProps.uuidForSistLukkede,
       fagsakYtelseType: initialOwnProps.ytelseType,
+      ...klageOnlyValues,
     });
+  };
   return (state, ownProps) => ({
     onSubmit,
     behandlingTyper: getBehandlingTyper(ownProps),

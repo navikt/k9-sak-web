@@ -16,7 +16,7 @@ interface OwnProps {
   innsynDokumenter: Dokument[];
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -33,7 +33,7 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
   innsynDokumenter,
   navAnsatt,
   valgtProsessSteg,
-  oppdaterProsessStegIUrl,
+  oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
@@ -57,7 +57,7 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
       alleDokumenter={innsynDokumenter}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}
-      oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+      oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
       opneSokeside={opneSokeside}
     />
