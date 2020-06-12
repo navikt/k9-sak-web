@@ -59,8 +59,11 @@ const trackRouteParam = config => WrappedComponent => {
       const {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         paramFromUrl,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         paramFromStore,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         storeParam,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         paramsAreEqual,
         ...otherProps
       } = this.props;

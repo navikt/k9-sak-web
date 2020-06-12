@@ -5,7 +5,7 @@ export const numberRegex = /^\d+([,.]\d+)?$/;
 export const integerRegex = /^\s*\d+\s*$/;
 export const decimalRegexWithMax = maxNumberOfDecimals => new RegExp(`^\\d+([.,]\\d{1,${maxNumberOfDecimals}})?$`);
 export const decimalRegex = decimalRegexWithMax(2);
-export const saksnummerOrFodselsnummerPattern = /^\d{0,18}$/;
+export const saksnummerOrFodselsnummerPattern = /^[a-zA-Z0-9_-]{0,18}$/;
 
 export const textRegex = /^[0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGgHhIiJjKkLlMmNnŊŋOoPpRrSsŠšTtŦŧUuVvZzŽžéôèÉöüäÖÜÄ .'\-/%§!?@_()+:;,="&\n]*$/;
 export const textGyldigRegex = /[0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGgHhIiJjKkLlMmNnŊŋOoPpRrSsŠšTtŦŧUuVvZzŽžéôèÉöüäÖÜÄ .'\-/%§!?@_()+:;,="&\n]*/g;

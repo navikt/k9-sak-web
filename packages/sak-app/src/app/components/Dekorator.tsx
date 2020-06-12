@@ -87,7 +87,7 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
 
   return (
     <HeaderWithErrorPanel
-      systemTittel={intl.formatMessage({ id: 'Header.Foreldrepenger' })}
+      systemTittel={intl.formatMessage({ id: 'Header.Ytelse' })}
       iconLinks={iconLinks}
       queryStrings={queryStrings}
       navAnsattName={navAnsattName}
