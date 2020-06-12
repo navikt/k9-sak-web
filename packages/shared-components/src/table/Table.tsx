@@ -18,7 +18,7 @@ const headers = (headerTextCodes, headerColumnContent, suppliedHeaders) => {
     return suppliedHeaders;
   }
 
-  if (headerTextCodes.lenght > 0) {
+  if (headerTextCodes.length > 0) {
     return headerTextCodes.map(headerElement => {
       if (isString(headerElement) && headerElement.startsWith(EMPTY_STRING)) {
         return <TableColumn key={headerElement}>&nbsp;</TableColumn>;

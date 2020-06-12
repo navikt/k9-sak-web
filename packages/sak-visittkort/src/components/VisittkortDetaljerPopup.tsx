@@ -7,8 +7,7 @@ import { Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { getLanguageCodeFromSprakkode, getAddresses } from '@fpsak-frontend/utils';
+import { getLanguageCodeFromSprakkode, getAddresses, getKodeverknavnFn } from '@fpsak-frontend/utils';
 
 import styles from './visittkortDetaljerPopup.less';
 

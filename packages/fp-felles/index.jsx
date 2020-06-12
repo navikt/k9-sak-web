@@ -3,8 +3,6 @@ export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';
 export { default as BehandlingErPaVentModal } from './src/behandlingPaVent/BehandlingErPaVentModal';
 export { default as SettBehandlingPaVentForm } from './src/behandlingPaVent/SettBehandlingPaVentForm';
 export { default as SettBehandlingPaVentModal } from './src/behandlingPaVent/SettBehandlingPaVentModal';
-export { getKodeverknavnFn } from './src/kodeverk/kodeverkUtils';
-export { default as injectKodeverk } from './src/kodeverk/injectKodeverk';
 export {
   getPathToFplos,
   getLocationWithDefaultBehandlingspunktAndFakta,

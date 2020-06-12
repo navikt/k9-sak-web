@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ProsessStegProperties } from '@fpsak-frontend/behandling-felles';
 import { Behandling, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@k9-sak-web/konstanter';
 import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';

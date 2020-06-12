@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 
 import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { hasValidText, maxLength, minLength, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

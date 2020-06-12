@@ -8,11 +8,10 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, formatCurrencyWithKr, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import { findTilbakekrevingText } from '../VedtakHelper';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';

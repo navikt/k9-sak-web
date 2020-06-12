@@ -8,36 +8,44 @@ import { HistorikkMalTypeForeldelse } from './HistorikkMalTypeForeldelse';
 
 describe('HistorikkMalTypeForeldelse', () => {
   it('skal vise alle historikkelement korrekt', () => {
-    const historikkinnslagDeler = [{
-      skjermlenke: {
-        kode: 'FORELDELSE',
+    const historikkinnslagDeler = [
+      {
+        skjermlenke: {
+          kode: 'FORELDELSE',
+        },
+        endredeFelter: [
+          {
+            endretFeltNavn: {
+              kode: 'feltkode',
+            },
+            fraVerdi: 'gammel verdi',
+            tilVerdi: 'ny verdi',
+          },
+          {
+            endretFeltNavn: {
+              kode: 'Anna feltkode',
+            },
+            tilVerdi: 'ny verdi 2',
+          },
+        ],
+        opplysninger: [
+          {
+            opplysningType: {
+              kode: historikkOpplysningTypeCodes.PERIODE_FOM.kode,
+              tilVerdi: '10.10.2018',
+            },
+          },
+          {
+            opplysningType: {
+              kode: historikkOpplysningTypeCodes.PERIODE_TOM.kode,
+              tilVerdi: '10.12.2018',
+            },
+          },
+        ],
       },
-      endredeFelter: [{
-        endretFeltNavn: {
-          kode: 'feltkode',
-        },
-        fraVerdi: 'gammel verdi',
-        tilVerdi: 'ny verdi',
-      }, {
-        endretFeltNavn: {
-          kode: 'Anna feltkode',
-        },
-        tilVerdi: 'ny verdi 2',
-      }],
-      opplysninger: [{
-        opplysningType: {
-          kode: historikkOpplysningTypeCodes.PERIODE_FOM.kode,
-          tilVerdi: '10.10.2018',
-        },
-      }, {
-        opplysningType: {
-          kode: historikkOpplysningTypeCodes.PERIODE_TOM.kode,
-          tilVerdi: '10.12.2018',
-        },
-      }],
-    }];
+    ];
 
-    const getKodeverknavn = (kodeverk) => {
+    const getKodeverknavn = kodeverk => {
       if (kodeverk.kode === 'feltkode') {
         return 'testing';
       }
@@ -47,11 +55,14 @@ describe('HistorikkMalTypeForeldelse', () => {
       return '';
     };
 
-    const wrapper = shallow(<HistorikkMalTypeForeldelse
-      historikkinnslagDeler={historikkinnslagDeler}
-      behandlingLocation={{}}
-      getKodeverknavn={getKodeverknavn}
-    />);
+    const wrapper = shallow(
+      <HistorikkMalTypeForeldelse
+        historikkinnslagDeler={historikkinnslagDeler}
+        behandlingLocation={{}}
+        getKodeverknavn={getKodeverknavn}
+        createLocationForSkjermlenke={() => 'url'}
+      />,
+    );
 
     const messages = wrapper.find(FormattedHTMLMessage);
     expect(messages).to.have.length(3);

@@ -37,7 +37,7 @@ describe('<FagsakResolver>', () => {
     expect(fetchFagsak).to.have.property('callCount', 1);
     const { args } = fetchFagsak.getCalls()[0];
     expect(args).to.have.length(2);
-    expect(args[0]).to.eql({ saksnummer: 12345 });
+    expect(args[0]).to.eql({ saksnummer: '12345' });
   });
 
   it('skal rendre children når all informasjon er hentet', () => {

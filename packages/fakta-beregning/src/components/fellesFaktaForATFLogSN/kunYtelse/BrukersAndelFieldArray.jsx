@@ -6,36 +6,42 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
 import {
-  formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber, required,
+  formatCurrencyNoKr,
+  isArrayEmpty,
+  parseCurrencyInput,
+  removeSpacesFromNumber,
+  required,
+  getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { createSelector } from 'reselect';
-import {
-  Image, Table, TableColumn, TableRow, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { Image, Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import styles from './brukersAndelFieldArray.less';
 import { validateUlikeAndelerWithGroupingFunction } from '../ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
 
 const defaultBGFordeling = (aktivitetStatuser, alleKodeverk) => ({
-  andel: getKodeverknavnFn(alleKodeverk, kodeverkTyper)(aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0]),
+  andel: getKodeverknavnFn(
+    alleKodeverk,
+    kodeverkTyper,
+  )(aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0]),
   fastsattBelop: '',
   inntektskategori: '',
   nyAndel: true,
   lagtTilAvSaksbehandler: true,
 });
 
-const inntektskategoriSelectValues = (kategorier) => kategorier.map((ik) => (
-  <option value={ik.kode} key={ik.kode}>
-    {ik.navn}
-  </option>
-));
+const inntektskategoriSelectValues = kategorier =>
+  kategorier.map(ik => (
+    <option value={ik.kode} key={ik.kode}>
+      {ik.navn}
+    </option>
+  ));
 
-const summerFordeling = (fields) => {
+const summerFordeling = fields => {
   let sum = 0;
   fields.forEach((andelElementFieldId, index) => {
     sum += fields.get(index).fastsattBelop ? parseInt(removeSpacesFromNumber(fields.get(index).fastsattBelop), 10) : 0;
@@ -43,12 +49,12 @@ const summerFordeling = (fields) => {
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
 
-const isDirty = (meta, isBeregningFormDirty) => (meta.dirty || isBeregningFormDirty);
+const isDirty = (meta, isBeregningFormDirty) => meta.dirty || isBeregningFormDirty;
 
 const renderMessage = (intl, error) => (error[0] && error[0].id ? intl.formatMessage(...error) : error);
 
-const getErrorMessage = (meta, intl, isBeregningFormDirty) => (meta.error && isDirty(meta, isBeregningFormDirty)
-&& meta.submitFailed ? renderMessage(intl, meta.error) : null);
+const getErrorMessage = (meta, intl, isBeregningFormDirty) =>
+  meta.error && isDirty(meta, isBeregningFormDirty) && meta.submitFailed ? renderMessage(intl, meta.error) : null;
 
 function skalViseSletteknapp(index, fields, readOnly) {
   return (fields.get(index).nyAndel || fields.get(index).lagtTilAvSaksbehandler) && !readOnly;
@@ -59,8 +65,8 @@ const onKeyDown = (fields, aktivitetStatuser, alleKodeverk) => ({ keyCode }) => 
   }
 };
 
-const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
-  inntektskategoriKoder, intl) => fields.map((andelElementFieldId, index) => (
+const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, intl) =>
+  fields.map((andelElementFieldId, index) => (
     <TableRow key={andelElementFieldId}>
       <TableColumn>
         <FormattedMessage id="BeregningInfoPanel.FordelingBG.Ytelse" />
@@ -86,39 +92,36 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
         />
       </TableColumn>
       <TableColumn>
-        {skalViseSletteknapp(index, fields, readOnly)
-      && (
-        <button
-          className={styles.buttonRemove}
-          type="button"
-          onClick={() => {
-            fields.remove(index);
-          }}
-          title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.FjernAndel' })}
-        />
-      )}
+        {skalViseSletteknapp(index, fields, readOnly) && (
+          <button
+            className={styles.buttonRemove}
+            type="button"
+            onClick={() => {
+              fields.remove(index);
+            }}
+            title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.FjernAndel' })}
+          />
+        )}
       </TableColumn>
     </TableRow>
-));
-const createBruttoBGSummaryRow = (sumFordeling) => (
+  ));
+const createBruttoBGSummaryRow = sumFordeling => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.FordelingBG.Sum" />
     </TableColumn>
     <TableColumn className={styles.rightAlign}>
-      <Undertekst>
-        {sumFordeling}
-      </Undertekst>
+      <Undertekst>{sumFordeling}</Undertekst>
     </TableColumn>
     <TableColumn />
   </TableRow>
 );
 
-const getHeaderTextCodes = () => ([
+const getHeaderTextCodes = () => [
   'BeregningInfoPanel.FordelingBG.Andel',
   'BeregningInfoPanel.FordelingBG.Fordeling',
-  'BeregningInfoPanel.FordelingBG.Inntektskategori']
-);
+  'BeregningInfoPanel.FordelingBG.Inntektskategori',
+];
 
 /**
  *  BrukersAndelFieldArray
@@ -145,11 +148,11 @@ export const BrukersAndelFieldArrayImpl = ({
       <Table headerTextCodes={getHeaderTextCodes()} noHover classNameTable={styles.inntektTable}>
         {tablerows}
       </Table>
-      {!readOnly
-      && (
+      {!readOnly && (
         <Row className={styles.buttonRow}>
           <Column xs="3">
-            {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
+            {
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
             }
             <div
               id="leggTilAndelDiv"
@@ -162,14 +165,9 @@ export const BrukersAndelFieldArrayImpl = ({
               tabIndex="0"
               title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.LeggTilAndel' })}
             >
-              <Image
-                className={styles.addCircleIcon}
-                src={addCircleIcon}
-              />
+              <Image className={styles.addCircleIcon} src={addCircleIcon} />
               <Undertekst className={styles.imageText}>
-                <FormattedMessage
-                  id="BeregningInfoPanel.FordelingBG.LeggTilAndel"
-                />
+                <FormattedMessage id="BeregningInfoPanel.FordelingBG.LeggTilAndel" />
               </Undertekst>
             </div>
           </Column>
@@ -179,7 +177,6 @@ export const BrukersAndelFieldArrayImpl = ({
     </NavFieldGroup>
   );
 };
-
 
 BrukersAndelFieldArrayImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -195,23 +192,22 @@ BrukersAndelFieldArrayImpl.propTypes = {
 
 const BrukersAndelFieldArray = injectIntl(BrukersAndelFieldArrayImpl);
 
-
-const mapBrukesAndelToSortedObject = (value) => {
+const mapBrukesAndelToSortedObject = value => {
   const { andel, inntektskategori } = value;
   return { andelsinfo: andel, inntektskategori };
 };
 
-BrukersAndelFieldArray.validate = (values) => {
+BrukersAndelFieldArray.validate = values => {
   if (!values) {
     return null;
   }
-  const arrayErrors = values.map((andelFieldValues) => {
+  const arrayErrors = values.map(andelFieldValues => {
     const fieldErrors = {};
     fieldErrors.fastsattBelop = required(andelFieldValues.fastsattBelop);
     fieldErrors.inntektskategori = required(andelFieldValues.inntektskategori);
     return fieldErrors.fastsattBelop || fieldErrors.inntektskategori ? fieldErrors : null;
   });
-  if (arrayErrors.some((errors) => errors !== null)) {
+  if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
   }
   if (isArrayEmpty(values)) {
@@ -225,8 +221,8 @@ BrukersAndelFieldArray.validate = (values) => {
 };
 
 export const getInntektskategorierAlfabetiskSortert = createSelector(
-  [(ownProps) => ownProps.alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI]],
-  (kodeverkListe) => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
+  [ownProps => ownProps.alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI]],
+  kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
 );
 
 const mapStateToProps = (state, ownProps) => {
@@ -238,6 +234,5 @@ const mapStateToProps = (state, ownProps) => {
     inntektskategoriKoder: getInntektskategorierAlfabetiskSortert(ownProps),
   };
 };
-
 
 export default connect(mapStateToProps)(BrukersAndelFieldArray);

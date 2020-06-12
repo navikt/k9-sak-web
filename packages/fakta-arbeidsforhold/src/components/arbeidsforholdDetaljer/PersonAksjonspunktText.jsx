@@ -4,8 +4,7 @@ import { FormattedHTMLMessage } from 'react-intl';
 import moment from 'moment';
 
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';
@@ -22,14 +21,16 @@ const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   };
 };
 
-const harPermisjonOgIkkeMottattIM = (arbeidsforhold) => arbeidsforhold.permisjoner
-    && arbeidsforhold.permisjoner.length === 1
-    && (arbeidsforhold.mottattDatoInntektsmelding === undefined || arbeidsforhold.mottattDatoInntektsmelding === null);
+const harPermisjonOgIkkeMottattIM = arbeidsforhold =>
+  arbeidsforhold.permisjoner &&
+  arbeidsforhold.permisjoner.length === 1 &&
+  (arbeidsforhold.mottattDatoInntektsmelding === undefined || arbeidsforhold.mottattDatoInntektsmelding === null);
 
-const harPermisjonOgMottattIM = (arbeidsforhold) => arbeidsforhold.permisjoner
-  && arbeidsforhold.permisjoner.length === 1
-  && (arbeidsforhold.mottattDatoInntektsmelding !== undefined && arbeidsforhold.mottattDatoInntektsmelding !== null);
-
+const harPermisjonOgMottattIM = arbeidsforhold =>
+  arbeidsforhold.permisjoner &&
+  arbeidsforhold.permisjoner.length === 1 &&
+  arbeidsforhold.mottattDatoInntektsmelding !== undefined &&
+  arbeidsforhold.mottattDatoInntektsmelding !== null;
 
 const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   if (!arbeidsforhold || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret)) {
@@ -63,7 +64,12 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
     return <FormattedHTMLMessage key="lagtTilAvSaksbehandler" id="PersonAksjonspunktText.LeggTilArbeidsforhold" />;
   }
   if (!arbeidsforhold.mottattDatoInntektsmelding) {
-    return <FormattedHTMLMessage key="mottattDatoInntektsmelding" id="PersonAksjonspunktText.AvklarManglendeInntektsmelding" />;
+    return (
+      <FormattedHTMLMessage
+        key="mottattDatoInntektsmelding"
+        id="PersonAksjonspunktText.AvklarManglendeInntektsmelding"
+      />
+    );
   }
   if (arbeidsforhold.replaceOptions.length > 0) {
     return <FormattedHTMLMessage key="replaceOptions" id="PersonAksjonspunktText.AvklarErstatteTidligere" />;
@@ -77,10 +83,7 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   return undefined;
 };
 
-export const PersonAksjonspunktTextImpl = ({
-  arbeidsforhold,
-  alleKodeverk,
-}) => {
+export const PersonAksjonspunktTextImpl = ({ arbeidsforhold, alleKodeverk }) => {
   const msg = lagAksjonspunktMessage(arbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper));
   if (msg === undefined) {
     return null;
@@ -88,9 +91,7 @@ export const PersonAksjonspunktTextImpl = ({
   return (
     <>
       <VerticalSpacer eightPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={arbeidsforhold.tilVurdering}>
-        {[msg]}
-      </AksjonspunktHelpText>
+      <AksjonspunktHelpText isAksjonspunktOpen={arbeidsforhold.tilVurdering}>{[msg]}</AksjonspunktHelpText>
     </>
   );
 };

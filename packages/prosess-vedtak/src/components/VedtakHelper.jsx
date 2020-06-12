@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -12,7 +11,7 @@ import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { TIDENES_ENDE } from '@fpsak-frontend/utils';
+import { TIDENES_ENDE, getKodeverknavnFn } from '@fpsak-frontend/utils';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&

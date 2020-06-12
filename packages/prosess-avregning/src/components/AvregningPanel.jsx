@@ -40,14 +40,6 @@ const simuleringAksjonspunkter = [aksjonspunktCodes.VURDER_FEILUTBETALING];
 const formName = 'AvregnigForm';
 const IKKE_SEND = 'IKKE_SEND';
 
-const createHelptextTooltip = () => ({
-  header: (
-    <Normaltekst>
-      <FormattedMessage id="Avregning.HjelpetekstPleiepenger" />
-    </Normaltekst>
-  ),
-});
-
 const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
   if (!simuleringResultat) {
     return simuleringResultat;
@@ -209,7 +201,7 @@ export class AvregningPanelImpl extends Component {
                                         src={questionNormalUrl}
                                         srcHover={questionHoverUrl}
                                         alt={intl.formatMessage({ id: 'Avregning.HjelpetekstForeldrepenger' })}
-                                        tooltip={createHelptextTooltip()}
+                                        tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
                                       />
                                     </Column>
                                   </Row>

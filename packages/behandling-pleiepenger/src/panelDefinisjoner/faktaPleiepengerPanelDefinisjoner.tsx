@@ -6,7 +6,7 @@ import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';

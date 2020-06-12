@@ -1,4 +1,4 @@
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@k9-sak-web/konstanter';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';

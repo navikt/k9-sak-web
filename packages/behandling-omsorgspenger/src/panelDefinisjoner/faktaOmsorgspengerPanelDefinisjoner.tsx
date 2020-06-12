@@ -4,7 +4,7 @@ import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';

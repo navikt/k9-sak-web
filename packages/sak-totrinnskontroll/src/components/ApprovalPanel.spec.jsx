@@ -130,7 +130,7 @@ describe('<ApprovalPanel>', () => {
 
     const nextProps = getNextProps(totrinnskontrollAksjonspunkter, behandlingStatus.FATTER_VEDTAK);
     const skjemalenkeTyper = getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter);
-    const context = mapPropsToContext(true, nextProps, skjemalenkeTyper);
+    const context = mapPropsToContext(true, nextProps, skjemalenkeTyper, () => 'url');
     expect(context).to.have.length(8);
     const foedselContext = context.filter(({ contextCode }) => contextCode === 'FAKTA_OM_FOEDSEL');
     expect(foedselContext).to.have.length(1);
@@ -183,6 +183,7 @@ describe('<ApprovalPanel>', () => {
         totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
         disableGodkjennKnapp={false}
+        createLocationForSkjermlenke={() => 'url'}
       />,
     );
 
@@ -217,6 +218,7 @@ describe('<ApprovalPanel>', () => {
         totrinnskontrollSkjermlenkeContext={undefined}
         skjemalenkeTyper={[]}
         disableGodkjennKnapp={false}
+        createLocationForSkjermlenke={() => 'url'}
       />,
     );
 
@@ -260,6 +262,7 @@ describe('<ApprovalPanel>', () => {
         totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
         disableGodkjennKnapp={false}
+        createLocationForSkjermlenke={() => 'url'}
       />,
     );
 

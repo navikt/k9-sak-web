@@ -9,47 +9,56 @@ import { HistorikkMalTypeTilbakekreving } from './HistorikkMalTypeTilbakekreving
 
 describe('HistorikkMalTypeTilbakekreving', () => {
   it('skal vise alle historikkelement korrekt', () => {
-    const historikkinnslagDeler = [{
-      skjermlenke: {
-        kode: 'TILBAKEKREVING',
-      },
-      endredeFelter: [{
-        endretFeltNavn: {
-          kode: historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT,
-        },
-        fraVerdi: 'gammel verdi',
-        tilVerdi: 'ny verdi',
-      }, {
-        endretFeltNavn: {
-          kode: 'Anna feltkode',
-        },
-        tilVerdi: 'ny verdi 2',
-      }],
-      opplysninger: [{
-        opplysningType: {
-          kode: historikkOpplysningTypeCodes.PERIODE_FOM.kode,
-          tilVerdi: '10.10.2018',
-        },
-      }, {
-        opplysningType: {
-          kode: historikkOpplysningTypeCodes.PERIODE_TOM.kode,
-          tilVerdi: '10.12.2018',
-        },
-      }, {
-        opplysningType: {
-          kode: historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
-          tilVerdi: 'test',
-        },
-      },
+    const historikkinnslagDeler = [
       {
-        opplysningType: {
-          kode: historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode,
-          tilVerdi: 'test',
+        skjermlenke: {
+          kode: 'TILBAKEKREVING',
         },
-      }],
-    }];
+        endredeFelter: [
+          {
+            endretFeltNavn: {
+              kode: historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT,
+            },
+            fraVerdi: 'gammel verdi',
+            tilVerdi: 'ny verdi',
+          },
+          {
+            endretFeltNavn: {
+              kode: 'Anna feltkode',
+            },
+            tilVerdi: 'ny verdi 2',
+          },
+        ],
+        opplysninger: [
+          {
+            opplysningType: {
+              kode: historikkOpplysningTypeCodes.PERIODE_FOM.kode,
+              tilVerdi: '10.10.2018',
+            },
+          },
+          {
+            opplysningType: {
+              kode: historikkOpplysningTypeCodes.PERIODE_TOM.kode,
+              tilVerdi: '10.12.2018',
+            },
+          },
+          {
+            opplysningType: {
+              kode: historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
+              tilVerdi: 'test',
+            },
+          },
+          {
+            opplysningType: {
+              kode: historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode,
+              tilVerdi: 'test',
+            },
+          },
+        ],
+      },
+    ];
 
-    const getKodeverknavn = (kodeverk) => {
+    const getKodeverknavn = kodeverk => {
       if (kodeverk.kode === historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT) {
         return 'testing';
       }
@@ -59,11 +68,14 @@ describe('HistorikkMalTypeTilbakekreving', () => {
       return '';
     };
 
-    const wrapper = shallow(<HistorikkMalTypeTilbakekreving
-      historikkinnslagDeler={historikkinnslagDeler}
-      behandlingLocation={{}}
-      getKodeverknavn={getKodeverknavn}
-    />);
+    const wrapper = shallow(
+      <HistorikkMalTypeTilbakekreving
+        historikkinnslagDeler={historikkinnslagDeler}
+        behandlingLocation={{}}
+        getKodeverknavn={getKodeverknavn}
+        createLocationForSkjermlenke={() => 'url'}
+      />,
+    );
 
     const messages = wrapper.find(FormattedHTMLMessage);
     expect(messages).to.have.length(3);

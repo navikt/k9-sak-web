@@ -8,7 +8,7 @@ import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import {
@@ -22,11 +22,7 @@ import {
 } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {
-  getKodeverknavnFn,
-  BehandlingspunktBegrunnelseTextField,
-  BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import styles from './checkPersonStatusForm.less';
 
@@ -54,7 +50,7 @@ export const CheckPersonStatusFormImpl = ({
       {[intl.formatMessage({ id: 'CheckPersonStatusForm.PersonStatus' }, { status: originalPersonstatusName })]}
     </AksjonspunktHelpTextTemp>
     <VerticalSpacer twentyPx />
-    { gjeldeneFom && (
+    {gjeldeneFom && (
       <Normaltekst>
         <FormattedMessage
           id="CheckPersonStatusForm.GjeldendeFom"
@@ -72,12 +68,12 @@ export const CheckPersonStatusFormImpl = ({
           </RadioGroupField>
         </Column>
       </Row>
-      {(fortsettBehandling === true) && (
+      {fortsettBehandling === true && (
         <ArrowBox alignOffset={readOnly ? 0 : 198}>
           <Undertekst>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Undertekst>
           <VerticalSpacer eightPx />
           <RadioGroupField name="personstatus" validate={[required]} readOnly={readOnly}>
-            {personStatuser.map((d) => (
+            {personStatuser.map(d => (
               <RadioOption key={d.kode} value={d.kode} label={d.navn} />
             ))}
           </RadioGroupField>
@@ -120,10 +116,14 @@ CheckPersonStatusFormImpl.defaultProps = {
   gjeldeneFom: undefined,
 };
 
-const getValgtOpplysning = (avklartPersonstatus) => {
+const getValgtOpplysning = avklartPersonstatus => {
   if (avklartPersonstatus && avklartPersonstatus.overstyrtPersonstatus) {
     const statusKode = avklartPersonstatus.overstyrtPersonstatus.kode;
-    if (statusKode === personstatusType.DOD || statusKode === personstatusType.BOSATT || statusKode === personstatusType.UTVANDRET) {
+    if (
+      statusKode === personstatusType.DOD ||
+      statusKode === personstatusType.BOSATT ||
+      statusKode === personstatusType.UTVANDRET
+    ) {
       return statusKode;
     }
   }
@@ -131,18 +131,22 @@ const getValgtOpplysning = (avklartPersonstatus) => {
 };
 
 export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.behandlingHenlagt,
+  [
+    (state, ownProps) => ownProps.behandlingHenlagt,
     (state, ownProps) => ownProps.aksjonspunkter,
     (state, ownProps) => ownProps.personopplysninger,
-    (state, ownProps) => ownProps.alleKodeverk],
+    (state, ownProps) => ownProps.alleKodeverk,
+  ],
   (behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk) => {
     const shouldContinueBehandling = !behandlingHenlagt;
     const { avklartPersonstatus, personstatus } = personopplysning;
     const aksjonspunkt = aksjonspunkter[0];
     const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
     return {
-      originalPersonstatusName: avklartPersonstatus && avklartPersonstatus.orginalPersonstatus
-        ? getKodeverknavn(avklartPersonstatus.orginalPersonstatus) : getKodeverknavn(personstatus),
+      originalPersonstatusName:
+        avklartPersonstatus && avklartPersonstatus.orginalPersonstatus
+          ? getKodeverknavn(avklartPersonstatus.orginalPersonstatus)
+          : getKodeverknavn(personstatus),
       fortsettBehandling: isAksjonspunktOpen(aksjonspunkt.status.kode) ? undefined : shouldContinueBehandling,
       personstatus: getValgtOpplysning(avklartPersonstatus),
       ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -151,8 +155,14 @@ export const buildInitialValues = createSelector(
 );
 
 const getFilteredKodeverk = createSelector(
-  [(state, ownProps) => ownProps.alleKodeverk[kodeverkTyper.PERSONSTATUS_TYPE]], (kodeverk) => kodeverk
-    .filter((ps) => ps.kode === personstatusType.DOD || ps.kode === personstatusType.BOSATT || ps.kode === personstatusType.UTVANDRET),
+  [(state, ownProps) => ownProps.alleKodeverk[kodeverkTyper.PERSONSTATUS_TYPE]],
+  kodeverk =>
+    kodeverk.filter(
+      ps =>
+        ps.kode === personstatusType.DOD ||
+        ps.kode === personstatusType.BOSATT ||
+        ps.kode === personstatusType.UTVANDRET,
+    ),
 );
 
 const transformValues = (values, aksjonspunkter) => ({
@@ -165,21 +175,29 @@ const transformValues = (values, aksjonspunkter) => ({
 const formName = 'CheckPersonStatusForm';
 
 const mapStateToPropsFactory = (initialState, staticOwnProps) => {
-  const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values, staticOwnProps.aksjonspunkter)]);
+  const onSubmit = values => staticOwnProps.submitCallback([transformValues(values, staticOwnProps.aksjonspunkter)]);
   const personStatuser = getFilteredKodeverk(initialState, staticOwnProps);
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon } = ownProps;
     return {
       initialValues: buildInitialValues(state, ownProps),
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'fortsettBehandling', 'originalPersonstatusName'),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
+        state,
+        'fortsettBehandling',
+        'originalPersonstatusName',
+      ),
       personStatuser,
       onSubmit,
     };
   };
 };
 
-const CheckPersonStatusForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
-  form: formName,
-})(CheckPersonStatusFormImpl)));
+const CheckPersonStatusForm = connect(mapStateToPropsFactory)(
+  injectIntl(
+    behandlingForm({
+      form: formName,
+    })(CheckPersonStatusFormImpl),
+  ),
+);
 
 export default CheckPersonStatusForm;

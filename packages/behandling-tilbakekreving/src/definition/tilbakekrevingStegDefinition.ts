@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import { ProsessStegProperties } from '@fpsak-frontend/behandling-felles';
 import { Behandling, Aksjonspunkt } from '@k9-sak-web/types';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
@@ -27,14 +27,14 @@ const getVedtakStatus = ({ beregningsresultat }) => {
  * @see ProsessStegProperties.Builder for mer informasjon.
  */
 const tilbakekrevingBuilders = [
-  new ProsessStegProperties.Builder(bpc.FORELDELSE, 'Foreldelse')
+  new ProsessStegProperties.Builder(prosessStegCodes.FORELDELSE, 'Foreldelse')
     .withAksjonspunktCodes(ac.VURDER_FORELDELSE)
     .withVisibilityWhen(() => true)
     .withStatus(getForeldelseStatus),
-  new ProsessStegProperties.Builder(bpc.TILBAKEKREVING, 'Tilbakekreving')
+  new ProsessStegProperties.Builder(prosessStegCodes.TILBAKEKREVING, 'Tilbakekreving')
     .withAksjonspunktCodes(ac.VURDER_TILBAKEKREVING)
     .withVisibilityWhen(() => true),
-  new ProsessStegProperties.Builder(bpc.VEDTAK, 'Vedtak')
+  new ProsessStegProperties.Builder(prosessStegCodes.VEDTAK, 'Vedtak')
     .withAksjonspunktCodes(ac.FORESLA_VEDTAK)
     .withVisibilityWhen(() => true)
     .withStatus(getVedtakStatus),

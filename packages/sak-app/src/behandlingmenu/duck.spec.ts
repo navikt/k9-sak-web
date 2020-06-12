@@ -75,14 +75,14 @@ describe('BehandlingMenu-reducer', () => {
           requestFinishedAction,
         ] = store.getActions();
 
-        expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
+        expect(requestStartedAction.type).to.contain('sak/api/behandlinger STARTED');
         expect(requestStartedAction.payload.params).is.eql(params);
         expect(requestStartedAction.meta).is.eql({ options: {} });
 
-        expect(requestStatusStartedAction.type).to.contain('fpsak/api/behandlinger STATUS_STARTED');
-        expect(requestStatusFinishedAction.type).to.contain('fpsak/api/behandlinger STATUS_FINISHED');
+        expect(requestStatusStartedAction.type).to.contain('sak/api/behandlinger STATUS_STARTED');
+        expect(requestStatusFinishedAction.type).to.contain('sak/api/behandlinger STATUS_FINISHED');
 
-        expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
+        expect(requestFinishedAction.type).to.contain('sak/api/behandlinger FINISHED');
         expect(requestFinishedAction.payload).is.eql(fagsak);
 
         // Andre restkall blir ikke testet
@@ -125,11 +125,11 @@ describe('BehandlingMenu-reducer', () => {
       expect(store.getActions()).to.have.length(4);
       const [requestStartedAction, requestFinishedAction] = store.getActions();
 
-      expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
+      expect(requestStartedAction.type).to.contain('sak/api/behandlinger STARTED');
       expect(requestStartedAction.payload.params).is.eql(params);
       expect(requestStartedAction.meta).is.eql({ options: {} });
 
-      expect(requestFinishedAction.type).to.contain('fpsak/api/behandlinger FINISHED');
+      expect(requestFinishedAction.type).to.contain('sak/api/behandlinger FINISHED');
       expect(requestFinishedAction.payload).is.eql(behandling);
 
       // Andre restkall blir ikke testet

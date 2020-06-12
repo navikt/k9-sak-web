@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@k9-sak-web/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -50,18 +50,20 @@ describe('<ProsessStegPanel>', () => {
     links: [],
   };
 
-  const aksjonspunkter = [{
-    status: {
-      kode: aksjonspunktStatus.OPPRETTET,
-      kodeverk: 'AKSJONSPUNKT_STATUS',
+  const aksjonspunkter = [
+    {
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+        kodeverk: 'AKSJONSPUNKT_STATUS',
+      },
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
+        kodeverk: 'AKSJONSPUNKT_KODE',
+      },
+      kanLoses: true,
+      erAktivt: true,
     },
-    definisjon: {
-      kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-      kodeverk: 'AKSJONSPUNKT_KODE',
-    },
-    kanLoses: true,
-    erAktivt: true,
-  }];
+  ];
 
   const fellesProsessStegData = {
     label: 'test',
@@ -69,23 +71,25 @@ describe('<ProsessStegPanel>', () => {
     isReadOnly: false,
     aksjonspunkter: [],
     status: vilkarUtfallType.IKKE_OPPFYLT,
-    panelData: [{
-      aksjonspunkter: [],
-      isReadOnly: false,
-      status: vilkarUtfallType.IKKE_OPPFYLT,
-      komponentData: {
-        isReadOnly: false,
-        readOnlySubmitButton: false,
+    panelData: [
+      {
         aksjonspunkter: [],
-        vilkar: [],
-        isAksjonspunktOpen: false,
-        overrideReadOnly: false,
-        kanOverstyreAccess: false,
-        toggleOverstyring: () => {
-          return undefined;
+        isReadOnly: false,
+        status: vilkarUtfallType.IKKE_OPPFYLT,
+        komponentData: {
+          isReadOnly: false,
+          readOnlySubmitButton: false,
+          aksjonspunkter: [],
+          vilkar: [],
+          isAksjonspunktOpen: false,
+          overrideReadOnly: false,
+          kanOverstyreAccess: false,
+          toggleOverstyring: () => {
+            return undefined;
+          },
         },
       },
-    }],
+    ],
   };
 
   it('skal vise panel for henlagt behandling når valgt panel er vedtakspanelet og behandling er henlagt', () => {
@@ -153,21 +157,24 @@ describe('<ProsessStegPanel>', () => {
       urlCode: bpc.INNGANGSVILKAR,
       erStegBehandlet: true,
       isReadOnly: false,
-      panelData: [{
-        ...fellesProsessStegData.panelData[0],
-        code: 'FODSEL',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }, {
-        ...fellesProsessStegData.panelData[0],
-        code: 'MEDLEMSKAP',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }],
+      panelData: [
+        {
+          ...fellesProsessStegData.panelData[0],
+          code: 'FODSEL',
+          renderComponent: () => undefined,
+          endpoints: [],
+          isAksjonspunktOpen: true,
+          aksjonspunktHelpTextCodes: [],
+        },
+        {
+          ...fellesProsessStegData.panelData[0],
+          code: 'MEDLEMSKAP',
+          renderComponent: () => undefined,
+          endpoints: [],
+          isAksjonspunktOpen: true,
+          aksjonspunktHelpTextCodes: [],
+        },
+      ],
       aksjonspunkter,
     };
 
@@ -198,14 +205,16 @@ describe('<ProsessStegPanel>', () => {
       urlCode: bpc.INNGANGSVILKAR,
       erStegBehandlet: true,
       isReadOnly: false,
-      panelData: [{
-        ...fellesProsessStegData.panelData[0],
-        code: 'FODSEL',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }],
+      panelData: [
+        {
+          ...fellesProsessStegData.panelData[0],
+          code: 'FODSEL',
+          renderComponent: () => undefined,
+          endpoints: [],
+          isAksjonspunktOpen: true,
+          aksjonspunktHelpTextCodes: [],
+        },
+      ],
       aksjonspunkter,
     };
 
@@ -236,21 +245,24 @@ describe('<ProsessStegPanel>', () => {
       urlCode: bpc.INNGANGSVILKAR,
       erStegBehandlet: true,
       isReadOnly: false,
-      panelData: [{
-        ...fellesProsessStegData.panelData[0],
-        code: 'FODSEL',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }, {
-        ...fellesProsessStegData.panelData[0],
-        code: 'MEDLEMSKAP',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }],
+      panelData: [
+        {
+          ...fellesProsessStegData.panelData[0],
+          code: 'FODSEL',
+          renderComponent: () => undefined,
+          endpoints: [],
+          isAksjonspunktOpen: true,
+          aksjonspunktHelpTextCodes: [],
+        },
+        {
+          ...fellesProsessStegData.panelData[0],
+          code: 'MEDLEMSKAP',
+          renderComponent: () => undefined,
+          endpoints: [],
+          isAksjonspunktOpen: true,
+          aksjonspunktHelpTextCodes: [],
+        },
+      ],
       aksjonspunkter,
     };
 
@@ -258,7 +270,7 @@ describe('<ProsessStegPanel>', () => {
     const makeRestApiRequest = sinon.spy();
     const behandlingApi = {
       SAVE_AKSJONSPUNKT: {
-        makeRestApiRequest: () => (data) => makeRestApiRequest(data),
+        makeRestApiRequest: () => data => makeRestApiRequest(data),
       },
     };
     const dispatch = () => Promise.resolve();
@@ -278,9 +290,11 @@ describe('<ProsessStegPanel>', () => {
 
     const panel = wrapper.find(InngangsvilkarPanel);
 
-    const aksjonspunktModels = [{
-      kode: aksjonspunkter[0].definisjon.kode,
-    }];
+    const aksjonspunktModels = [
+      {
+        kode: aksjonspunkter[0].definisjon.kode,
+      },
+    ];
     panel.prop('submitCallback')(aksjonspunktModels);
 
     expect(lagringSideeffekterCallback.getCalls()).to.have.length(1);
@@ -292,10 +306,12 @@ describe('<ProsessStegPanel>', () => {
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
-      bekreftedeAksjonspunktDtoer: [{
-        '@type': aksjonspunktModels[0].kode,
-        kode: aksjonspunktModels[0].kode,
-      }],
+      bekreftedeAksjonspunktDtoer: [
+        {
+          '@type': aksjonspunktModels[0].kode,
+          kode: aksjonspunktModels[0].kode,
+        },
+      ],
     });
   });
 });

@@ -9,9 +9,10 @@ import {
   parseCurrencyInput,
   removeSpacesFromNumber,
   required,
+  getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 
-import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 

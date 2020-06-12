@@ -154,3 +154,4 @@ export const getBehandlingArsaker = createSelector([getBehandling], behandling =
 export const getKanHenleggeBehandling = createSelector([getBehandling], behandling =>
   behandling ? behandling.kanHenleggeBehandling : false,
 );
+export const finnesVerge = createSelector([getBehandling], behandling => (behandling ? behandling.harVerge : false));

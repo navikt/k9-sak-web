@@ -51,14 +51,14 @@ describe('<kodeverkUtils>', () => {
   it('skal finne navn til gitt kodeverk-objekt når en har underkategori i kodeverk-json', () => {
     const alleKodeverk = {
       [kodeverkTyper.AVSLAGSARSAK]: {
-        [vilkarType.FODSELSVILKARET_MOR]: [
+        [vilkarType.MEDLEMSKAPSVILKARET]: [
           {
             kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
             kodeverk: 'AVSLAGSARSAK',
             navn: 'Ingen beregningsregler',
           },
         ],
-        [vilkarType.MEDLEMSKAPSVILKÅRET_LØPENDE]: [
+        [vilkarType.OPPTJENINGSPERIODE]: [
           {
             kode: 'test 2',
             kodeverk: 'AVSLAGSARSAK',
@@ -75,7 +75,7 @@ describe('<kodeverkUtils>', () => {
 
     // @ts-ignore (Kodeverket for avslagsårsak er anleis enn alle andre. Bør nok flyttast til eigen resttjeneste,
     // evt. må typen til alle-kodeverk endrast i heile appen)
-    const navn = getKodeverknavnFn(alleKodeverk, kodeverkTyper)(kodeverk, vilkarType.FODSELSVILKARET_MOR);
+    const navn = getKodeverknavnFn(alleKodeverk, kodeverkTyper)(kodeverk, vilkarType.MEDLEMSKAPSVILKARET);
 
     expect(navn).to.equal('Ingen beregningsregler');
   });

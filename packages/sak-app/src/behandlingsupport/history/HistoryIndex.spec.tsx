@@ -17,7 +17,7 @@ describe('<HistoryIndex>', () => {
 
   it('skal vise historikk', () => {
     const wrapper = shallow(
-      <HistoryIndex enabledContexts={[]} saksnummer={12345} location={locationMock} alleKodeverkFpsak={{}} />,
+      <HistoryIndex enabledContexts={[]} saksnummer="12345" location={locationMock} alleKodeverkFpsak={{}} />,
     );
 
     const dataFetcher = wrapper.find(DataFetcher);
