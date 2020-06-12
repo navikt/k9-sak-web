@@ -1,5 +1,5 @@
-import { SøknadsperiodeFormValues } from '../SøknadsperiodeFieldArrayComponent';
 import SøknadFormValue from './SøknadFormValue';
+import SøknadsperiodeFormValues from './SøknadsperiodeFormValues';
 
 export default interface OppgittOpptjeningRevurderingFormValues {
   [SøknadFormValue.SØKNADSPERIODER]: SøknadsperiodeFormValues[];
