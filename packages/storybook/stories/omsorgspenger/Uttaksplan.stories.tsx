@@ -3,7 +3,7 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
 import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
-import { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
+import Vilkår, { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
 import Uttaksperiode, { VurderteVilkår } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
 import { Behandling } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
@@ -24,18 +24,18 @@ const vilkårInnvilget: VurderteVilkår = {
   [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
 };
 
-const uavklartPeriode: Uttaksperiode = {
+const uavklartPeriode = (vilkår: Vilkår): Uttaksperiode => ({
   utfall: UtfallEnum.UAVKLART,
   vurderteVilkår: {
     vilkår: {
       ...vilkårInnvilget,
-      [VilkårEnum.UIDENTIFISERT_RAMMEVEDTAK]: UtfallEnum.UAVKLART,
+      [vilkår]: UtfallEnum.UAVKLART,
     },
   },
   periode: '2020-03-01/2020-03-10',
   utbetalingsgrad: 50,
   hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
-};
+});
 
 const innvilgetPeriode: Uttaksperiode = {
   utfall: UtfallEnum.INNVILGET,
@@ -127,10 +127,10 @@ export const standard = () => (
   <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} behandling={behandling} />
 );
 
-export const smittevernsdagerOgOverlappendePerioderInfotrygd = () => (
+export const smittevernsdagerOgInaktiv = () => (
   <ÅrskvantumIndex
     årskvantum={{
-      ...årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode, avslåttPeriode]),
+      ...årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode(VilkårEnum.NOK_DAGER)]),
       antallKoronadager: 10,
       forbruktTid: 'PT180H',
       restTid: 'PT-34H-30M',
@@ -142,16 +142,15 @@ export const smittevernsdagerOgOverlappendePerioderInfotrygd = () => (
     // @ts-ignore
     alleKodeverk={alleKodeverk}
     behandling={behandling}
-    isAksjonspunktOpen
+    isAksjonspunktOpen={false}
     submitCallback={action('bekreft')}
-    aksjonspunkterForSteg={aksjonspunkterForSteg}
   />
 );
 
 export const aksjonspunktUidentifiserteRammevedtak = () => (
   <ÅrskvantumIndex
     årskvantum={{
-      ...årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode]),
+      ...årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode(VilkårEnum.UIDENTIFISERT_RAMMEVEDTAK)]),
       rammevedtak: [uidentifisertRammevedtak],
     }}
     // @ts-ignore
@@ -190,7 +189,7 @@ export const aksjonspunktAvslåttePerioder = () => (
 
 export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
   <ÅrskvantumIndex
-    årskvantum={årskvantumMedPerioder([uavklartPeriode, avslåttPeriode])}
+    årskvantum={årskvantumMedPerioder([uavklartPeriode(VilkårEnum.NOK_DAGER), avslåttPeriode])}
     // @ts-ignore
     alleKodeverk={alleKodeverk}
     behandling={behandling}
