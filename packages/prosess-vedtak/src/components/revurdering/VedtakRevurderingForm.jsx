@@ -17,7 +17,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import {Column, Row} from "nav-frontend-grid";
+import { Column, Row } from 'nav-frontend-grid';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -28,8 +28,8 @@ import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
-import VedtakRedusertUtbetalingArsaker from "./VedtakRedusertUtbetalingArsaker";
-import redusertUtbetalingArsak from "../../kodeverk/redusertUtbetalingArsak";
+import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
+import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
@@ -74,15 +74,10 @@ export class VedtakRevurderingFormImpl extends Component {
 
   skalSkjuleSubmitPanel() {
     const { aksjonspunktKoder, ytelseTypeKode } = this.props;
-    const { host, hostname } = window.location;
-    const erIQ1 = host === 'app-q1.adeo.no';
-    const erLokalt = hostname === 'localhost';
     return (
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
-      ytelseTypeKode === fagsakYtelseType.FRISINN &&
-      !erIQ1 &&
-      !erLokalt
+      ytelseTypeKode === fagsakYtelseType.FRISINN
     );
   }
 
@@ -144,7 +139,7 @@ export class VedtakRevurderingFormImpl extends Component {
               />
             )}
             <Row>
-              <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? "4" : "12"}>
+              <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>
                 {isInnvilget(behandlingresultat.type.kode) && (
                   <VedtakInnvilgetRevurderingPanel
                     antallBarn={antallBarn}
@@ -332,9 +327,9 @@ const transformValues = values =>
       isVedtakSubmission,
     };
     if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
-      transformedValues.redusertUtbetalingÅrsaker = Object
-        .values(redusertUtbetalingArsak)
-        .filter(name => Object.keys(values).some(key => key === name && values[key]));
+      transformedValues.redusertUtbetalingÅrsaker = Object.values(redusertUtbetalingArsak).filter(name =>
+        Object.keys(values).some(key => key === name && values[key]),
+      );
     }
     return transformedValues;
   });
@@ -380,7 +375,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'skalBrukeOverstyrendeFritekstBrev',
       'overskrift',
       'brødtekst',
-      ...Object.values(redusertUtbetalingArsak)
+      ...Object.values(redusertUtbetalingArsak),
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
   });
