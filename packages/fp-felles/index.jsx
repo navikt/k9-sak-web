@@ -3,25 +3,6 @@ export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';
 export { default as BehandlingErPaVentModal } from './src/behandlingPaVent/BehandlingErPaVentModal';
 export { default as SettBehandlingPaVentForm } from './src/behandlingPaVent/SettBehandlingPaVentForm';
 export { default as SettBehandlingPaVentModal } from './src/behandlingPaVent/SettBehandlingPaVentModal';
-export {
-  getPathToFplos,
-  getLocationWithDefaultBehandlingspunktAndFakta,
-  DEFAULT_FAKTA,
-  DEFAULT_BEHANDLINGSPROSESS,
-  getFaktaLocation,
-  getBehandlingspunktLocation,
-  getSupportPanelLocationCreator,
-  getRiskPanelLocationCreator,
-  getLocationWithQueryParams,
-  fagsakPath,
-  aktoerPath,
-  behandlingerPath,
-  behandlingPath,
-  pathToFagsak,
-  pathToBehandlinger,
-  pathToBehandling,
-  pathToMissingPage,
-} from './src/paths';
 
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
 export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';

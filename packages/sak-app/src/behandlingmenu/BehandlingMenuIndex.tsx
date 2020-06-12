@@ -83,7 +83,7 @@ const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
 ];
 
 interface OwnProps {
-  saksnummer: number;
+  saksnummer: string;
   behandlingId?: number;
   behandlingVersion?: number;
   behandlingType: Kodeverk;
@@ -127,7 +127,7 @@ interface DispatchProps {
     isTilbakekreving: boolean,
     params: {},
   ) => void;
-  sjekkTilbakeKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
+  sjekkTilbakeKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
   sjekkTilbakeRevurdKanOpprettes: (params: { behandlingId: number }) => void;
 }
 

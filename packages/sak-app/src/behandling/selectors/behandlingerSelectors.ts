@@ -26,7 +26,7 @@ const getBehandlingerKlageMeta = fpsakApi.BEHANDLINGER_KLAGE.getRestApiMeta();
 
 interface MetaData {
   params: {
-    saksnummer?: number;
+    saksnummer?: string;
   };
 }
 

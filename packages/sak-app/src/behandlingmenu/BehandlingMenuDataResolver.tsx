@@ -36,7 +36,7 @@ interface OwnProps {
 }
 
 interface StateProps {
-  saksnummer: number;
+  saksnummer: string;
   ytelseType: Kodeverk;
   behandlingId?: number;
   behandlingVersion?: number;
