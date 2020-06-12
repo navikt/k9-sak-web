@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import { TabsPure } from 'nav-frontend-tabs';
 import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
@@ -57,7 +57,7 @@ const TilkjentYtelseTimeLineData = ({
   const { andeler } = selectedItemData;
   const valgtAndel = andeler[activeTab];
 
-  const numberOfDaysAndWeeks = calcDaysAndWeeks(selectedItemStartDate, selectedItemEndDate);
+  const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
   const intl = useIntl();
 
   return (

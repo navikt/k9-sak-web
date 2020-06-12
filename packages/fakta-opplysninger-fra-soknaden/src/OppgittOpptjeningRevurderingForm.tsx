@@ -1,5 +1,5 @@
 import { DatepickerField } from '@fpsak-frontend/form';
-import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
@@ -24,6 +24,7 @@ import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, FieldArray, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
+import { startdatoErISøknadsperiode } from './validators';
 import styles from './opplysningerFraSoknadenForm.less';
 import SøknadsperiodeFieldArrayComponent, {
   buildInitialValuesForSøknadsperiode,
@@ -48,118 +49,8 @@ interface Props {
   harApneAksjonspunkter: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
   oppgittOpptjening: OpplysningerFraSøknaden;
+  validate: (arg1: any, arg2: any) => object;
 }
-
-const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps) => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  const [formIsEditable, setFormIsEditable] = React.useState(false);
-  const intl = useIntl();
-
-  const {
-    behandling: { id: behandlingId, versjon: behandlingVersjon },
-    kanEndrePåSøknadsopplysninger,
-    oppgittOpptjening,
-    handleSubmit,
-  } = props;
-
-  return (
-    <form onSubmit={handleSubmit}>
-      {kanEndrePåSøknadsopplysninger && (
-        <Knapp
-          className={styles.formUnlockButton}
-          type="hoved"
-          htmlType="button"
-          onClick={() => setFormIsEditable(!formIsEditable)}
-        >
-          {formIsEditable ? 'Lås opp skjema' : 'Lås skjema'}
-        </Knapp>
-      )}
-      <TabsPure
-        tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
-          aktiv: activeTab === currentOppgittOpptjeningIndex,
-          label: `${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
-            currentOppgittOpptjening.måned.tom,
-          )}`,
-        }))}
-        onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
-      />
-      <div className={styles.tabContent}>
-        <FieldArray
-          component={SøknadsperiodeFieldArrayComponent}
-          props={{
-            måneder: oppgittOpptjening.måneder,
-            formIsEditable,
-            kanEndrePåSøknadsopplysninger,
-            behandlingId,
-            behandlingVersjon,
-            formChange: reduxFormChange,
-            formUntouch: reduxFormUntouch,
-            aktivMånedIndeks: activeTab,
-          }}
-          name={SøknadFormValue.SØKNADSPERIODER}
-        />
-      </div>
-
-      <div className={styles.fieldContainer}>
-        <InputField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
-          bredde="S"
-          label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
-          validate={[hasValidInteger]}
-          readOnly={formIsEditable}
-        />
-      </div>
-      <div className={styles.fieldContainer}>
-        <InputField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
-          bredde="S"
-          label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
-          validate={[hasValidInteger]}
-          readOnly={formIsEditable}
-        />
-      </div>
-      <div className={styles.fieldContainer}>
-        <DatepickerField
-          name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
-          validate={[hasValidDate]}
-          defaultValue={null}
-          readOnly={formIsEditable}
-          label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
-        />
-      </div>
-      {!formIsEditable && (
-        <div className={styles.begrunnelseContainer}>
-          <TextAreaField
-            name={SøknadFormValue.BEGRUNNELSE}
-            label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
-            validate={[required, minLength(3), maxLength(2000), hasValidText]}
-            readOnly={formIsEditable}
-            aria-label={intl.formatMessage({
-              id: 'OpplysningerFraSoknaden.Begrunnelse',
-            })}
-          />
-        </div>
-      )}
-      {kanEndrePåSøknadsopplysninger && !formIsEditable && (
-        <>
-          <Knapp htmlType="submit" type="hoved">
-            Bekreft og fortsett
-          </Knapp>
-          <Knapp
-            onClick={() => {
-              // eslint-disable-next-line no-self-assign
-              window.location = window.location;
-            }}
-            htmlType="button"
-            style={{ marginLeft: '8px', marginTop: '2px' }}
-          >
-            Tilbakestill skjema (OBS! Relaster siden)
-          </Knapp>
-        </>
-      )}
-    </form>
-  );
-};
 
 const transformValues = (
   formValues: OppgittOpptjeningRevurderingFormValues,
@@ -213,6 +104,131 @@ const transformValues = (
   return resultingData;
 };
 
+interface StateProps {
+  harSøktSomSSN: boolean;
+}
+
+const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & StateProps) => {
+  const [activeTab, setActiveTab] = React.useState(0);
+  const [formIsEditable, setFormIsEditable] = React.useState(false);
+  const intl = useIntl();
+
+  const {
+    behandling: { id: behandlingId, versjon: behandlingVersjon },
+    kanEndrePåSøknadsopplysninger,
+    oppgittOpptjening,
+    harSøktSomSSN,
+  } = props;
+
+  const handleSubmit = e => {
+    const promise = props.handleSubmit(e);
+    if (promise && promise.catch) {
+      promise.catch(() => null);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {kanEndrePåSøknadsopplysninger && (
+        <Knapp
+          className={styles.formUnlockButton}
+          type="hoved"
+          htmlType="button"
+          onClick={() => setFormIsEditable(!formIsEditable)}
+        >
+          {formIsEditable ? 'Lås opp skjema' : 'Lås skjema'}
+        </Knapp>
+      )}
+      <TabsPure
+        tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
+          aktiv: activeTab === currentOppgittOpptjeningIndex,
+          label: `${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
+            currentOppgittOpptjening.måned.tom,
+          )}`,
+        }))}
+        onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
+      />
+      <div className={styles.tabContent}>
+        <FieldArray
+          component={SøknadsperiodeFieldArrayComponent}
+          props={{
+            måneder: oppgittOpptjening.måneder,
+            formIsEditable,
+            kanEndrePåSøknadsopplysninger,
+            behandlingId,
+            behandlingVersjon,
+            formChange: reduxFormChange,
+            formUntouch: reduxFormUntouch,
+            aktivMånedIndeks: activeTab,
+          }}
+          name={SøknadFormValue.SØKNADSPERIODER}
+        />
+      </div>
+      {harSøktSomSSN && (
+        <>
+          <div className={styles.fieldContainer}>
+            <InputField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
+              bredde="S"
+              label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
+              validate={[hasValidInteger]}
+              readOnly={formIsEditable}
+            />
+          </div>
+          <div className={styles.fieldContainer}>
+            <InputField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
+              bredde="S"
+              label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
+              validate={[hasValidInteger]}
+              readOnly={formIsEditable}
+            />
+          </div>
+          <div className={styles.fieldContainer}>
+            <DatepickerField
+              name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
+              validate={[hasValidDate]}
+              defaultValue={null}
+              readOnly={formIsEditable}
+              label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
+            />
+          </div>
+        </>
+      )}
+      {!formIsEditable && (
+        <div className={styles.begrunnelseContainer}>
+          <TextAreaField
+            name={SøknadFormValue.BEGRUNNELSE}
+            label={{ id: 'OpplysningerFraSoknaden.Begrunnelse' }}
+            validate={[required, minLength(3), maxLength(2000), hasValidText]}
+            readOnly={formIsEditable}
+            aria-label={intl.formatMessage({
+              id: 'OpplysningerFraSoknaden.Begrunnelse',
+            })}
+          />
+        </div>
+      )}
+      {kanEndrePåSøknadsopplysninger && !formIsEditable && (
+        <>
+          <Knapp htmlType="submit" type="hoved">
+            Bekreft og fortsett
+          </Knapp>
+          <Knapp
+            onClick={() => {
+              // eslint-disable-next-line no-self-assign
+              window.location = window.location;
+            }}
+            htmlType="button"
+            style={{ marginLeft: '8px', marginTop: '2px' }}
+          >
+            Tilbakestill skjema (OBS! Relaster siden)
+          </Knapp>
+        </>
+      )}
+    </form>
+  );
+};
+
 const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   const { førSøkerPerioden } = values;
 
@@ -239,13 +255,172 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   };
 };
 
-const mapStateToProps = (state, props) => {
-  const { submitCallback, oppgittOpptjening } = props;
+const validateSSNForm = (formData, måned, fieldArrayID) => {
+  const errors = {};
+  const ssnInntekt = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN];
+  const ssnStartdato = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
+  const ssnInntektValidation = [required(ssnInntekt), hasValidInteger(ssnInntekt), maxLength(5)(ssnInntekt)];
+  const ssnStartdatoValidation = [
+    required(ssnStartdato),
+    hasValidDate(ssnStartdato),
+    maxLength(5)(ssnInntekt),
+    startdatoErISøknadsperiode(ssnStartdato, måned),
+  ];
+
+  const inntektError = ssnInntektValidation.find(v => Array.isArray(v));
+  if (inntektError !== undefined) {
+    errors[`${fieldArrayID}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
+  }
+  const startdatoError = ssnStartdatoValidation.find(v => Array.isArray(v));
+  if (startdatoError !== undefined) {
+    errors[`${fieldArrayID}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
+  }
+
+  const harSøktSomFrilanser = formData[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
+  if (!harSøktSomFrilanser) {
+    const frilansinntekt = formData[SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN];
+    const frilansinntektValidation = [hasValidInteger(frilansinntekt), maxLength(5)(frilansinntekt)];
+    const frilansinntektError = frilansinntektValidation.find(v => Array.isArray(v));
+    if (frilansinntektError !== undefined) {
+      errors[`${fieldArrayID}.${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`] = frilansinntektError;
+    }
+  }
+
+  return errors;
+};
+
+const validateFrilanserForm = (formData, måned, fieldArrayID) => {
+  const errors = {};
+  const frilansInntekt = formData[SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN];
+  const frilansStartdato = formData[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
+  const frilansInntektValidation = [
+    required(frilansInntekt),
+    hasValidInteger(frilansInntekt),
+    maxLength(5)(frilansInntekt),
+  ];
+  const frilansStartdatoValidation = [
+    required(frilansStartdato),
+    hasValidDate(frilansStartdato),
+    startdatoErISøknadsperiode(frilansStartdato, måned),
+  ];
+
+  const inntektError = frilansInntektValidation.find(v => Array.isArray(v));
+  if (inntektError !== undefined) {
+    errors[`${fieldArrayID}.${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
+  }
+  const startdatoError = frilansStartdatoValidation.find(v => Array.isArray(v));
+  if (startdatoError !== undefined) {
+    errors[`${fieldArrayID}.${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
+  }
+
+  const harSøktSomSSN = formData[SøknadFormValue.HAR_SØKT_SOM_SSN];
+  if (!harSøktSomSSN) {
+    const næringsinntektIFrilansperiode = formData[SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS];
+    const næringsinntektValidation = [
+      hasValidInteger(næringsinntektIFrilansperiode),
+      maxLength(5)(næringsinntektIFrilansperiode),
+    ];
+    const næringsinntektError = næringsinntektValidation.find(v => Array.isArray(v));
+    if (næringsinntektError !== undefined) {
+      errors[`${fieldArrayID}.${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`] = næringsinntektError;
+    }
+  }
+
+  return errors;
+};
+
+const validateArbeidstakerInntekt = (inntekt, fieldArrayID) => {
+  const inntektValidation = [hasValidInteger(inntekt), maxLength(5)(inntekt)];
+  const inntektError = inntektValidation.find(v => Array.isArray(v));
+  if (inntektError !== undefined) {
+    return {
+      [`${fieldArrayID}.${SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER}`]: inntektError,
+    };
+  }
+  return {};
+};
+
+const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraSøknaden) => {
+  let errors = {};
+  fieldArrayList.forEach((fieldArrayItem, index) => {
+    const { måned } = oppgittOpptjening.måneder[index];
+
+    const harSøktSomSSN = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_SSN];
+    if (harSøktSomSSN) {
+      const snErrors = validateSSNForm(fieldArrayItem, måned, `${fieldArrayName}[${index}]`);
+      errors = Object.assign(errors, snErrors);
+    }
+
+    const harSøktSomFrilanser = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
+    if (harSøktSomFrilanser) {
+      const frilansErrors = validateFrilanserForm(fieldArrayItem, måned, `${fieldArrayName}[${index}]`);
+      errors = Object.assign(errors, frilansErrors);
+    }
+
+    const arbeidstakerInntekt = fieldArrayItem[SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER];
+    if (arbeidstakerInntekt) {
+      errors = Object.assign(errors, validateArbeidstakerInntekt(arbeidstakerInntekt, `${fieldArrayName}[${index}]`));
+    }
+  });
+  return errors;
+};
+
+const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpptjening: OpplysningerFraSøknaden) => {
+  const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
+  const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
+  const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
+
+  const errors = {};
+
+  const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
+  if (nyoppstartetDatoValidation !== null) {
+    errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
+  }
+
+  const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
+  if (inntekt2019Validation !== null) {
+    errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
+  }
+  const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
+  if (inntekt2020Validation !== null) {
+    errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
+  }
+
+  let fieldArrayValidation = {};
+  if (values[fieldArrayName] && oppgittOpptjening && oppgittOpptjening.måneder) {
+    fieldArrayValidation = validateFieldArray(values[fieldArrayName], oppgittOpptjening);
+  }
+
+  const allErrors = { ...errors, ...fieldArrayValidation };
+  return allErrors;
+};
+
+const mapStateToProps = (_, props) => {
+  const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon } = props;
   const onSubmit = formValues => {
-    submitCallback([transformValues(formValues, oppgittOpptjening)]);
+    return new Promise((resolve, reject) => {
+      const errors = validateForm(formValues, props.oppgittOpptjening);
+      if (!errors || Object.keys(errors).length === 0) {
+        return resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
+      }
+      return reject(errors);
+    });
   };
   const initialValues = buildInitialValues(oppgittOpptjening);
-  return () => ({ onSubmit, initialValues });
+  const validate = values => {
+    const validationResult = validateForm(values, oppgittOpptjening);
+    return validationResult;
+  };
+  return state => {
+    const søknadsperiodeFormValues = behandlingFormValueSelector(
+      'OpplysningerFraSoknadenForm',
+      behandlingId,
+      behandlingVersjon,
+    )(state, [SøknadFormValue.SØKNADSPERIODER]);
+    const harSøktSomSSN = søknadsperiodeFormValues?.some(søknadsperiode => søknadsperiode.harSøktSomSSN);
+
+    return { onSubmit, validate, initialValues, harSøktSomSSN };
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -264,29 +439,6 @@ const connectedComponent = connect(
 )(
   behandlingForm({
     form: oppgittOpptjeningRevurderingFormName,
-    validate: (values: OppgittOpptjeningRevurderingFormValues) => {
-      const nyoppstartetDato = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO];
-      const inntekt2019 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019];
-      const inntekt2020 = values[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
-
-      const errors = {};
-
-      const nyoppstartetDatoValidation = nyoppstartetDatoIsValid(nyoppstartetDato, inntekt2019, inntekt2020);
-      if (nyoppstartetDatoValidation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO] = nyoppstartetDatoValidation;
-      }
-
-      const inntekt2019Validation = inntektIsValid(inntekt2019, inntekt2020);
-      if (inntekt2019Validation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] = inntekt2019Validation;
-      }
-      const inntekt2020Validation = inntektIsValid(inntekt2019, inntekt2020);
-      if (inntekt2020Validation !== null) {
-        errors[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020] = inntekt2020Validation;
-      }
-
-      return errors;
-    },
   })(OppgittOpptjeningRevurderingForm),
 );
 
