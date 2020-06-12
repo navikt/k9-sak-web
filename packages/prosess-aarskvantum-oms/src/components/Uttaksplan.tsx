@@ -4,7 +4,6 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { joinNonNullStrings } from '@fpsak-frontend/fp-felles/index';
@@ -16,7 +15,6 @@ import styles from './uttaksplan.less';
 
 interface UttaksplanProps {
   aktiviteter: Aktivitet[];
-  rammevedtak: Rammevedtak[];
   aktiv: boolean;
   aktivitetsstatuser: KodeverkMedNavn[];
   isAksjonspunktOpen: boolean;
@@ -28,7 +26,6 @@ interface UttaksplanProps {
 
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   aktiviteter = [],
-  rammevedtak = [],
   aktivitetsstatuser = [],
   aktiv,
   isAksjonspunktOpen,
@@ -56,7 +53,6 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
       {aksjonspunkterForSteg.length > 0 && (
         <AksjonspunktForm
           aktiviteter={aktiviteter}
-          rammevedtak={rammevedtak}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           submitCallback={submitCallback}
