@@ -169,7 +169,7 @@
   "Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt": "Dagsats (årsinntekt/260 dager)",
   "Beregningsgrunnlag.BeregningTable.Tittel": "Beregning av dagsats",
   "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt. Brutto beregningsgrunnlag er under en halv G ({halvG}).",
-  "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2": "Beløpet er under 1/2 G (G = 98 866) - søker har ikke rett til pleiepenger",
+  "Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2": "Beløpet er under 1/2 G (G = 98 866) - søker har ikke rett til {ytelseType}",
   "Beregningsgrunnlag.BeregningTable.Dagpenger": "Beregningsgrunnlag - Dagpenger",
   "Beregningsgrunnlag.BeregningTable.Fastsatt.AT": "Beregningsgrunnlag - fastsatt årsinntekt arbeid",
   "Beregningsgrunnlag.BeregningTable.Omberegnet.AT": "Beregningsgrunnlag - beregnet årsinntekt arbeid",

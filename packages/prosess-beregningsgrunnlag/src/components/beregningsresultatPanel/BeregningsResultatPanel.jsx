@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -13,6 +13,7 @@ import styles from './beregningsresultatTable.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
+import { BeregningContext } from '../../beregningContext';
 
 const lagSpesialRaderRad = visningsObjekt => {
   if (!visningsObjekt || !visningsObjekt.verdi || visningsObjekt.display === false) return null;
@@ -124,23 +125,36 @@ const lagTabellRader = (periodeData, ikkeVurdert) => {
   rows.push(lagDagsatsRad(dagsatser, ikkeVurdert));
   return rows;
 };
-const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key) => (
-  <React.Fragment key={`IVR2${key}`}>
-    {lagAndelerRader(listofAndeler)}
-    <VerticalSpacer twentyPx />
-    <Normaltekst className={beregningStyles.redError}>
-      <Image
-        className={styles.avslaat_icon}
-        alt={intl.formatMessage({ id: 'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' })}
-        src={avslaatIkonUrl}
-      />
-      <FormattedMessage
-        id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2"
-        values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
-      />
-    </Normaltekst>
-  </React.Fragment>
-);
+const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key, fagsakYtelseType) => {
+  let ytelsetype = 'pleiepenger';
+  if (fagsakYtelseType?.kode === 'OMP') {
+    ytelsetype = 'omsorgspenger';
+  }
+  return (
+    <React.Fragment key={`IVR2${key}`}>
+      {lagAndelerRader(listofAndeler)}
+      <VerticalSpacer twentyPx />
+      <Normaltekst className={beregningStyles.redError}>
+        <Image
+          className={styles.avslaat_icon}
+          alt={intl.formatMessage(
+            {
+              id: 'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2',
+            },
+            {
+              ytelseType: ytelsetype,
+            },
+          )}
+          src={avslaatIkonUrl}
+        />
+        <FormattedMessage
+          id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2"
+          values={{ halvG: formatCurrencyNoKr(halvGVerdi), ytelseType: ytelsetype }}
+        />
+      </Normaltekst>
+    </React.Fragment>
+  );
+};
 
 const lagPeriodeOverskrift = (header, periodeIndex) => (
   <>
@@ -159,7 +173,15 @@ const lagKeyForPeriode = (dagsats, header) => {
   return 'key';
 };
 
-const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, halvGVerdi, periodeIndex) => {
+const createPeriodeResultat = (
+  vilkaarBG,
+  periodeData,
+  lagPeriodeHeaders,
+  intl,
+  halvGVerdi,
+  periodeIndex,
+  fagsakYtelseType,
+) => {
   const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);
   const ikkeOppfylt = !!(
     vilkaarBG && vilkaarBG.perioder.every(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT)
@@ -171,12 +193,14 @@ const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, 
     <React.Fragment key={`Wr${key}`}>
       {periodeData && lagPeriodeHeaders && lagPeriodeOverskrift(periodeData.headers, periodeIndex)}
       {!ikkeOppfylt && lagTabellRader(periodeData, ikkeVurdert)}
-      {ikkeOppfylt && lagTabellRaderIkkeOppfylt(periodeData.rowsAndeler, intl, halvGVerdi, key)}
+      {ikkeOppfylt && lagTabellRaderIkkeOppfylt(periodeData.rowsAndeler, intl, halvGVerdi, key, fagsakYtelseType)}
     </React.Fragment>
   );
 };
 const BeregningsresutatPanel = ({ intl, vilkaarBG, periodeResultatTabeller, halvGVerdi }) => {
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
+  const context = useContext(BeregningContext);
+
   return (
     <Panel className={beregningStyles.panelRight}>
       <Element className={beregningStyles.avsnittOverskrift}>
@@ -184,7 +208,15 @@ const BeregningsresutatPanel = ({ intl, vilkaarBG, periodeResultatTabeller, halv
       </Element>
       <VerticalSpacer eightPx />
       {periodeResultatTabeller.map((periodeData, index) =>
-        createPeriodeResultat(vilkaarBG, periodeData, skalLagePeriodeHeaders, intl, halvGVerdi, index),
+        createPeriodeResultat(
+          vilkaarBG,
+          periodeData,
+          skalLagePeriodeHeaders,
+          intl,
+          halvGVerdi,
+          index,
+          context?.fagsakYtelseType,
+        ),
       )}
     </Panel>
   );
