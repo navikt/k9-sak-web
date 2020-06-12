@@ -55,8 +55,10 @@ export class VedtakRevurderingFormImpl extends Component {
   constructor(props) {
     super(props);
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
+    this.onToggleUndertrykkeBrev = this.onToggleUndertrykkeBrev.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
+      skalUndertrykkeBrev: props.skalUndertrykkeBrev
     };
   }
 
@@ -68,6 +70,11 @@ export class VedtakRevurderingFormImpl extends Component {
     });
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
     clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
+  }
+
+  onToggleUndertrykkeBrev() {
+    const { skalUndertrykkeBrev } = this.state;
+    this.setState({skalUndertrykkeBrev: !skalUndertrykkeBrev});
   }
 
   render() {
@@ -123,14 +130,21 @@ export class VedtakRevurderingFormImpl extends Component {
         >
           <VerticalSpacer eightPx />
           <>
-            {visOverstyringKnapp && (
+            {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
+              <VedtakOverstyrendeKnapp
+                toggleCallback={this.onToggleUndertrykkeBrev}
+                readOnly={readOnly || initialValues.skalUndertrykkeBrev === true}
+                keyName="skalUndertrykkeBrev"
+                readOnlyHideEmpty={false}
+              />
+            ) : (visOverstyringKnapp && (
               <VedtakOverstyrendeKnapp
                 toggleCallback={this.onToggleOverstyring}
                 readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
                 keyName="skalBrukeOverstyrendeFritekstBrev"
                 readOnlyHideEmpty={false}
               />
-            )}
+            ))}
             <Row>
               <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>
                 {isInnvilget(behandlingresultat.type.kode) && (
@@ -193,7 +207,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 </Column>
               )}
             </Row>
-            {skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.ENGANGSSTONAD && (
+            {skalBrukeOverstyrendeFritekstBrev && ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
               <FritekstBrevPanel
                 intl={intl}
                 readOnly={readOnly}
@@ -242,6 +256,7 @@ VedtakRevurderingFormImpl.propTypes = {
   revurderingsAarsakString: PropTypes.string,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
+  skalUndertrykkeBrev: PropTypes.bool,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
@@ -303,6 +318,7 @@ const buildInitialValues = createSelector(
       sprakkode,
       aksjonspunktKoder,
       skalBrukeOverstyrendeFritekstBrev: vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
+      skalUndertrykkeBrev: vedtakVarsel.vedtaksbrev.kode === 'INGEN',
       overskrift: decodeHtmlEntity(vedtakVarsel.overskrift),
       brødtekst: decodeHtmlEntity(vedtakVarsel.fritekstbrev),
     };
@@ -316,6 +332,7 @@ const transformValues = values =>
       begrunnelse: values.begrunnelse,
       fritekstBrev: values.brødtekst,
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
       overskrift: values.overskrift,
       isVedtakSubmission,
     };
@@ -366,6 +383,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'begrunnelse',
       'aksjonspunktKoder',
       'skalBrukeOverstyrendeFritekstBrev',
+      'skalUndertrykkeBrev',
       'overskrift',
       'brødtekst',
       ...Object.values(redusertUtbetalingArsak),
