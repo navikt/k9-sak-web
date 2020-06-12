@@ -1,6 +1,6 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { intlMock, mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import React from 'react';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
@@ -32,7 +32,7 @@ const vilkaarBG = {
 describe('BeregningsresultatPanel', () => {
   it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:IKKE VURDERT', () => {
     tableData.rowsAndeler[0].skalFastsetteGrunnlag = true;
-    const wrapper = mountWithIntl(
+    const wrapper = shallowWithIntl(
       <BeregningsresutatPanel.WrappedComponent
         intl={intlMock}
         periodeResultatTabeller={[tableData]}
@@ -55,7 +55,7 @@ describe('BeregningsresultatPanel', () => {
   it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:OPPFYLT', () => {
     vilkaarBG.perioder[0].vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
     vilkaarBG.perioder[0].vilkarStatus.kodeverk = 'VILKAR_UTFALL_TYPE';
-    const wrapper = mountWithIntl(
+    const wrapper = shallowWithIntl(
       <BeregningsresutatPanel.WrappedComponent
         intl={intlMock}
         periodeResultatTabeller={[tableData]}

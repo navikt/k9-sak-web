@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -199,28 +199,26 @@ const createPeriodeResultat = (
 };
 const BeregningsresutatPanel = ({ intl, vilkaarBG, periodeResultatTabeller, halvGVerdi }) => {
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
+  const context = useContext(BeregningContext);
+
   return (
-    <BeregningContext.Consumer>
-      {({ fagsakYtelseType }) => (
-        <Panel className={beregningStyles.panelRight}>
-          <Element className={beregningStyles.avsnittOverskrift}>
-            <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
-          </Element>
-          <VerticalSpacer eightPx />
-          {periodeResultatTabeller.map((periodeData, index) =>
-            createPeriodeResultat(
-              vilkaarBG,
-              periodeData,
-              skalLagePeriodeHeaders,
-              intl,
-              halvGVerdi,
-              index,
-              fagsakYtelseType,
-            ),
-          )}
-        </Panel>
+    <Panel className={beregningStyles.panelRight}>
+      <Element className={beregningStyles.avsnittOverskrift}>
+        <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
+      </Element>
+      <VerticalSpacer eightPx />
+      {periodeResultatTabeller.map((periodeData, index) =>
+        createPeriodeResultat(
+          vilkaarBG,
+          periodeData,
+          skalLagePeriodeHeaders,
+          intl,
+          halvGVerdi,
+          index,
+          context?.fagsakYtelseType,
+        ),
       )}
-    </BeregningContext.Consumer>
+    </Panel>
   );
 };
 BeregningsresutatPanel.propTypes = {
