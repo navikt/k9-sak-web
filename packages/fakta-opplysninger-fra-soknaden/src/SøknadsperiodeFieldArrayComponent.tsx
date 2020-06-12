@@ -2,7 +2,6 @@ import { behandlingFormValueSelector, CheckboxField, getBehandlingFormPrefix } f
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import { hasValidInteger, ISO_DATE_FORMAT, maxLength } from '@fpsak-frontend/utils';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
 import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import classnames from 'classnames/bind';
@@ -19,31 +18,10 @@ import SøknadsperiodeFormValues from './types/SøknadsperiodeFormValues';
 import SøknadFormValue from './types/SøknadFormValue';
 import OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
 import oppgittOpptjeningRevurderingFormName from './formName';
+import { startdatoErISøknadsperiode } from './validators';
 
 const classNames = classnames.bind(styles);
-
 const formName = oppgittOpptjeningRevurderingFormName;
-
-const fomDatoBegrensning = søknadsperiodeFom => {
-  const march30th = moment('2020-03-30', ISO_DATE_FORMAT);
-  if (søknadsperiodeFom.isBefore(march30th)) {
-    return march30th;
-  }
-  return søknadsperiodeFom;
-};
-
-const startdatoErISøknadsperiode = (startdato, søknadsperiode) => {
-  const søknadsperiodeFom = fomDatoBegrensning(moment(søknadsperiode.fom, ISO_DATE_FORMAT));
-  const søknadsperiodeTom = moment(søknadsperiode.tom, ISO_DATE_FORMAT);
-  const startdatoMoment = moment(startdato, ISO_DATE_FORMAT);
-  if (startdatoMoment.isSameOrAfter(søknadsperiodeFom) && startdatoMoment.isSameOrBefore(søknadsperiodeTom)) {
-    return null;
-  }
-  return [
-    { id: 'ValidationMessage.InvalidStartdato' },
-    { fom: søknadsperiodeFom.format(DDMMYYYY_DATE_FORMAT), tom: søknadsperiodeTom.format(DDMMYYYY_DATE_FORMAT) },
-  ];
-};
 
 const selvstendigNæringsdrivendeFields = [
   SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN,
