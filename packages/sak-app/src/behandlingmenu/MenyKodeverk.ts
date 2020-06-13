@@ -48,7 +48,9 @@ class MenyKodeverk {
   getKodeverkForBehandlingstyper(behandlingTypeKoder, kodeverkType) {
     return behandlingTypeKoder.reduce((acc, btk) => {
       const alleKodeverkForKodeverkType = this.getKodeverkForBehandlingstype(btk, kodeverkType);
-      return alleKodeverkForKodeverkType ? acc.concat([alleKodeverkForKodeverkType.find(k => k.kode === btk)]) : acc;
+      return alleKodeverkForKodeverkType && alleKodeverkForKodeverkType.some(k => k.kode === btk)
+        ? acc.concat([alleKodeverkForKodeverkType.find(k => k.kode === btk)])
+        : acc;
     }, []);
   }
 }

@@ -35,10 +35,10 @@ interface OwnProps {
   behandlingArsakTyper: KodeverkMedNavn[];
   enabledBehandlingstyper: KodeverkMedNavn[];
   behandlingId?: number;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingId: number }) => void;
   uuid?: string;
-  saksnummer: number;
+  saksnummer: string;
   erTilbakekrevingAktivert: boolean;
 }
 

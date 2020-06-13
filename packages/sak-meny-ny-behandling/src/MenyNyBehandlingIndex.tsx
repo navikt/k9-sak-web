@@ -26,7 +26,7 @@ export const getMenytekst = () => intl.formatMessage({ id: 'MenyNyBehandlingInde
 
 interface OwnProps {
   ytelseType: Kodeverk;
-  saksnummer: number;
+  saksnummer: string;
   behandlingId?: number;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
@@ -42,7 +42,7 @@ interface OwnProps {
   };
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingId: number }) => void;
   lukkModal: () => void;
   aktorId?: string;

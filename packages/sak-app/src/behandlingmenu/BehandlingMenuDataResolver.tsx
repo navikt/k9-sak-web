@@ -13,7 +13,6 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { getSelectedSaksnummer, getFagsakYtelseType } from '../fagsak/fagsakSelectors';
 import { getBehandlingVersjon, getBehandlingType, getSelectedBehandlingId } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
-import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
 import { hentVergeMenyvalg, resetVergeMenyvalg, fjernVerge, opprettVerge } from './duck';
 import BehandlingMenuIndex from './BehandlingMenuIndex';
 
@@ -56,7 +55,6 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
   behandlingId,
   behandlingVersion,
   behandlingType,
-  hentVerge,
   resetVerge,
   vergeMenyvalg,
   location,
@@ -67,8 +65,9 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
     const erBehandlingEndret =
       !ref.current || behandlingId !== ref.current.behandlingId || behandlingVersion !== ref.current.behandlingVersion;
     if (!!behandlingId && YTELSE_BEHANDLINGTYPER.includes(behandlingType.kode) && erBehandlingEndret) {
-      const params = new BehandlingIdentifier(saksnummer, behandlingId).toJson();
-      hentVerge(params);
+      // TODO Skal verge brukast?
+      // const params = new BehandlingIdentifier(saksnummer, behandlingId).toJson();
+      // hentVerge(params);
     }
 
     ref.current = { behandlingId, behandlingVersion };

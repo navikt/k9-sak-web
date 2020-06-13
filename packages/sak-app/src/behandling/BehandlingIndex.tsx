@@ -331,4 +331,4 @@ export default trackRouteParam({
   parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),
   storeParam: setUrlBehandlingId,
   getParamFromStore: getUrlBehandlingId,
-})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingType'])(BehandlingIndex)));
+})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingTypeKode'])(BehandlingIndex)));
