@@ -1,5 +1,5 @@
 import React, { ReactElement, FunctionComponent } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 
 import TableRow from './TableRow';
@@ -25,7 +25,7 @@ const headers = (headerTextCodes, headerColumnContent, suppliedHeaders) => {
       }
       return (
         <TableColumn key={headerElement.key ? headerElement.key : headerElement}>
-          <FormattedMessage id={headerElement} />
+          <FormattedHTMLMessage id={headerElement} />
         </TableColumn>
       );
     });

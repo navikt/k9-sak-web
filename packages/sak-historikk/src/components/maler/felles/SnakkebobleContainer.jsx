@@ -23,8 +23,18 @@ const snakkebobleIkonCls = (rolle, kjoennKode) =>
     'snakkeboble__ikon--ekstern': rolle === 'ARBEIDSGIVER',
   });
 
+const snakkeboblePanelCls = rolle =>
+  cx('snakkeboble__panel snakkeboble-panel', {
+    snakkeboble__saksbehandler: rolle === 'SBH',
+    snakkeboble__beslutter: rolle === 'BESL',
+    snakkeboble__losningen: rolle === 'VL',
+    snakkeboble__bruker: rolle === 'SOKER',
+    snakkeboble__ekstern: rolle === 'ARBEIDSGIVER',
+  });
+
 const SnakkebobleContainer = ({ dato, rolle, rolleNavn, kjoennKode, opprettetAv, children }) => (
   <Snakkeboble
+    className={`snakkeboble__kompakt ${snakkeboblePanelCls(rolle)}`}
     topp={`${formatDate(dato)} // ${rolleNavn} ${opprettetAv || ''}`}
     pilHoyre={pilHøyre(rolle)}
     ikonClass={snakkebobleIkonCls(rolle, kjoennKode)}
