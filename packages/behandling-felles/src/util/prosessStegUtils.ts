@@ -48,16 +48,14 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[]) => {
     const harFlereVilkår = vilkarStatusCodes.length > 1;
 
     const erDelvisIkkeVurdert =
-      vilkarStatusCodes.length > 1 &&
-      vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT) &&
-      !alleVilkårErIkkeVurdert;
+      vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT) && !alleVilkårErIkkeVurdert;
 
-    const erDelvisAvlsått =
+    const erDelvisIkkeOppfylt =
       vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
 
     const erDelvisOppfylt = vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.OPPFYLT) && !alleVilkårErOppfylt;
 
-    return harFlereVilkår && (erDelvisIkkeVurdert || erDelvisAvlsått || erDelvisOppfylt);
+    return harFlereVilkår && (erDelvisIkkeVurdert || erDelvisIkkeOppfylt || erDelvisOppfylt);
   }
 
   return false;
