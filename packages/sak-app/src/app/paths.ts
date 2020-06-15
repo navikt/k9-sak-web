@@ -56,6 +56,6 @@ export const getPathToFplos = () => {
 };
 
 export const createLocationForSkjermlenke = (behandlingLocation, skjermlenkeCode) => {
-  const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
+  const skjermlenke = skjermlenkeCodes[skjermlenkeCode] || { punktNavn: 'default', faktaNavn: 'default' };
   return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
 };

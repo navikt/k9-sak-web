@@ -27,6 +27,7 @@ interface StateProps {
   showCalendar?: boolean;
   inputOffsetTop?: number;
   inputOffsetWidth?: number;
+  isVisible?: boolean;
 }
 
 class Datepicker extends Component<OwnProps, StateProps> {

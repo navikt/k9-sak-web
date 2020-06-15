@@ -202,18 +202,8 @@ const skjermlenkeCodes = {
   FAKTA_OM_MEDISINSK: {
     kode: 'FAKTA_OM_MEDISINSK',
     faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR,
-<<<<<<< HEAD:packages/fp-felles/src/skjermlenkeCodes.jsx
-    punktNavn: behandlingspunktCodes.MEDISINSKVILKAAR,
+    punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
   },
-};
-
-export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
-  const skjermlenke = skjermlenkeCodes[skjermlenkeCode] || { punktNavn: 'default', faktaNavn: 'default' };
-  return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
-=======
-    punktNavn: prosessStegCodes.MEDISINSKVILKAAR,
-  },
->>>>>>> FIX div:packages/konstanter/src/skjermlenkeCodes.ts
 };
 
 export default skjermlenkeCodes;

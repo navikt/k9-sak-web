@@ -1,17 +1,3 @@
-<<<<<<< HEAD:packages/sak-app/src/behandlingsupport/approval/ApprovalIndex.jsx
-import { BehandlingIdentifier, DataFetcher, featureToggle } from '@fpsak-frontend/fp-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import { kodeverkObjektPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
-import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
-import { requireProps } from '@fpsak-frontend/shared-components';
-import { push } from 'connected-react-router';
-import PropTypes from 'prop-types';
-=======
->>>>>>> FIX div:packages/sak-app/src/behandlingsupport/approval/ApprovalIndex.tsx
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { RouteProps } from 'react-router';
@@ -33,10 +19,7 @@ import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import { createLocationForSkjermlenke } from '../../app/paths';
-import fpsakApi from '../../data/fpsakApi';
-import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../../app/duck';
-import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import {
   getBehandlingAnsvarligSaksbehandler,
   getBehandlingIdentifier,
@@ -49,15 +32,11 @@ import {
   getSelectedBehandlingId,
   getBehandlingsresultat,
 } from '../../behandling/duck';
-<<<<<<< HEAD:packages/sak-app/src/behandlingsupport/approval/ApprovalIndex.jsx
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import fpsakApi from '../../data/fpsakApi';
 import { getAktorid, getFagsakYtelseType, getSaksnummer, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
-import { getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype } from '../../kodeverk/duck';
-=======
 import { getKodeverk, getFpTilbakeKodeverk } from '../../kodeverk/duck';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
->>>>>>> FIX div:packages/sak-app/src/behandlingsupport/approval/ApprovalIndex.tsx
 
 const getArsaker = approval =>
   [
@@ -240,11 +219,8 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       return null;
     }
 
-<<<<<<< HEAD:packages/sak-app/src/behandlingsupport/approval/ApprovalIndex.jsx
-=======
     const harKlageEndepunkter = klageData.some(kd => kd.isEndpointEnabled());
 
->>>>>>> FIX div:packages/sak-app/src/behandlingsupport/approval/ApprovalIndex.tsx
     return (
       <DataFetcher
         fetchingTriggers={
@@ -325,59 +301,6 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
   }
 }
 
-<<<<<<< HEAD:packages/sak-app/src/behandlingsupport/approval/ApprovalIndex.jsx
-ApprovalIndex.propTypes = {
-  totrinnskontrollSkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
-  totrinnskontrollReadOnlySkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
-  approve: PropTypes.func.isRequired,
-  previewMessage: PropTypes.func.isRequired,
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
-  selectedBehandlingVersjon: PropTypes.number,
-  ansvarligSaksbehandler: PropTypes.string,
-  behandlingStatus: PropTypes.shape().isRequired,
-  toTrinnsBehandling: PropTypes.bool,
-  push: PropTypes.func.isRequired,
-  resetApproval: PropTypes.func.isRequired,
-  location: PropTypes.shape().isRequired,
-  navAnsatt: navAnsattPropType.isRequired,
-  skjemalenkeTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  erTilbakekreving: PropTypes.bool.isRequired,
-  behandlingUuid: PropTypes.string.isRequired,
-  fagsakYtelseType: kodeverkObjektPropType.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  erBehandlingEtterKlage: PropTypes.bool,
-  isForeldrepenger: PropTypes.bool.isRequired,
-  disableGodkjennKnapp: PropTypes.bool.isRequired,
-  erGodkjenningFerdig: PropTypes.bool,
-  behandlingsresultat: PropTypes.shape(),
-  behandlingId: PropTypes.number,
-  behandlingTypeKode: PropTypes.string,
-  aktørId: PropTypes.string,
-  saksnummer: PropTypes.string,
-};
-
-ApprovalIndex.defaultProps = {
-  ansvarligSaksbehandler: undefined,
-  totrinnskontrollSkjermlenkeContext: undefined,
-  totrinnskontrollReadOnlySkjermlenkeContext: undefined,
-  toTrinnsBehandling: false,
-  selectedBehandlingVersjon: undefined,
-  erBehandlingEtterKlage: false,
-  erGodkjenningFerdig: false,
-  behandlingId: undefined,
-  behandlingTypeKode: undefined,
-};
-
-const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsaker], (behandlingArsaker = []) =>
-  behandlingArsaker
-    .map(({ behandlingArsakType }) => behandlingArsakType)
-    .some(
-      bt =>
-        bt.kode === klageBehandlingArsakType.ETTER_KLAGE ||
-        bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK ||
-        bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK,
-    ),
-=======
 const erArsakTypeBehandlingEtterKlage = createSelector(
   [getBehandlingArsaker],
   (behandlingArsaker: { behandlingArsakType: Kodeverk }[] = []) =>
@@ -389,7 +312,6 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
           bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK ||
           bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK,
       ),
->>>>>>> FIX div:packages/sak-app/src/behandlingsupport/approval/ApprovalIndex.tsx
 );
 
 const mapStateToPropsFactory = initialState => {
