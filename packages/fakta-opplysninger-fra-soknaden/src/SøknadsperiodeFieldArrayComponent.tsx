@@ -247,11 +247,13 @@ export const lagOppgittEgenNæringForSøknadsperioden = (
   formValues: SøknadsperiodeFormValues,
   opprinneligTomDato: string,
 ) => {
+  const harSøktSomSN = formValues[SøknadFormValue.HAR_SØKT_SOM_SSN] === true;
+
   const næringsinntekt = getFormValueSafely(
     SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN,
     formValues,
   );
-  if (næringsinntekt !== null) {
+  if (næringsinntekt !== null && harSøktSomSN) {
     const fomDato = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
     return [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, næringsinntekt)];
   }
@@ -260,7 +262,7 @@ export const lagOppgittEgenNæringForSøknadsperioden = (
     SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS,
     formValues,
   );
-  if (næringsinntektISøknadsperiodeForFrilans !== null) {
+  if (næringsinntektISøknadsperiodeForFrilans !== null && !harSøktSomSN) {
     const fomDato = formValues[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
     return [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, næringsinntektISøknadsperiodeForFrilans)];
   }
@@ -269,8 +271,10 @@ export const lagOppgittEgenNæringForSøknadsperioden = (
 };
 
 export const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligTomDato: string) => {
+  const harSøktSomFL = formValues[SøknadFormValue.HAR_SØKT_SOM_FRILANSER] === true;
+
   const frilansinntekt = getFormValueSafely(SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN, formValues);
-  if (frilansinntekt !== null) {
+  if (frilansinntekt !== null && harSøktSomFL) {
     const fomDato = formValues[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
     return { oppgittFrilansoppdrag: [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, frilansinntekt)] };
   }
@@ -279,7 +283,7 @@ export const lagOppgittFrilansForSøknadsperioden = (formValues, opprinneligTomD
     SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN,
     formValues,
   );
-  if (frilansinntektISøknadsperiodeForSSN !== null) {
+  if (frilansinntektISøknadsperiodeForSSN !== null && !harSøktSomFL) {
     const fomDato = formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
     return {
       oppgittFrilansoppdrag: [byggPeriodeMedInntekt(fomDato, opprinneligTomDato, frilansinntektISøknadsperiodeForSSN)],
