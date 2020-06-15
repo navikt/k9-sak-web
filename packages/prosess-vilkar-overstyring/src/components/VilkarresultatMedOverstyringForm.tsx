@@ -22,6 +22,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
+import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.less';
 
@@ -58,6 +59,7 @@ interface VilkarresultatMedOverstyringFormProps {
   submitCallback: (props: SubmitCallback[]) => void;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   avslagKode?: string;
+  periode?: Vilkarperiode;
 }
 
 interface StateProps {
@@ -176,12 +178,19 @@ const buildInitialValues = createSelector(
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.aksjonspunkter,
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.status,
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.overstyringApKode,
+    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.periode,
   ],
-  (avslagKode, aksjonspunkter, status, overstyringApKode) => {
+  (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
-      ...VilkarresultatMedBegrunnelse.buildInitialValues(avslagKode, aksjonspunkter, status, overstyringApKode),
+      ...VilkarresultatMedBegrunnelse.buildInitialValues(
+        avslagKode,
+        aksjonspunkter,
+        status,
+        overstyringApKode,
+        periode,
+      ),
     };
   },
 );

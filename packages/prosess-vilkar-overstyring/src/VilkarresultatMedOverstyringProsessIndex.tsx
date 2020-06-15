@@ -119,6 +119,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             periodeFom={activePeriode.periode.fom}
             periodeTom={activePeriode.periode.tom}
             avslagKode={activePeriode.avslagKode}
+            periode={activePeriode}
           />
         </div>
       </div>
