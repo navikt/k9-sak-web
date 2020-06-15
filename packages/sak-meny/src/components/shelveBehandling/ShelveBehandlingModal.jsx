@@ -164,10 +164,14 @@ const henleggArsakerPerBehandlingType = {
   [behandlingType.DOKUMENTINNSYN]: [behandlingResultatType.HENLAGT_INNSYN_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET],
   [behandlingType.TILBAKEKREVING]: [behandlingResultatType.HENLAGT_FEILOPPRETTET],
   [behandlingType.TILBAKEKREVING_REVURDERING]: [behandlingResultatType.HENLAGT_FEILOPPRETTET],
-  [behandlingType.REVURDERING]: [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
-    behandlingResultatType.HENLAGT_SOKNAD_MANGLER],
-  OTHER: [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
-    behandlingResultatType.HENLAGT_SOKNAD_MANGLER, behandlingResultatType.MANGLER_BEREGNINGSREGLER],
+  [behandlingType.REVURDERING]: [behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
+    // behandlingResultatType.HENLAGT_SOKNAD_TRUKKET
+  ],
+  OTHER: [behandlingResultatType.HENLAGT_FEILOPPRETTET, behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
+    behandlingResultatType.MANGLER_BEREGNINGSREGLER,
+    // behandlingResultatType.HENLAGT_SOKNAD_TRUKKET
+  ],
 };
 
 export const getHenleggArsaker = createSelector([
