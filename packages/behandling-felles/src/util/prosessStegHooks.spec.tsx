@@ -143,6 +143,7 @@ describe('<prosessStegHooks>', () => {
         isAksjonspunktOpen: true,
         isReadOnly: false,
         prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
+        erDelvisBehandlet: false,
         panelData: [
           {
             aksjonspunktHelpTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
@@ -162,6 +163,7 @@ describe('<prosessStegHooks>', () => {
             },
             renderComponent: prosessStegPanelDefinisjoner[0].panels[0].renderComponent,
             status: vilkarUtfallType.IKKE_VURDERT,
+            erDelvisBehandlet: false,
           },
         ],
         status: vilkarUtfallType.IKKE_VURDERT,
@@ -178,6 +180,7 @@ describe('<prosessStegHooks>', () => {
         isFinished: false,
         label: 'Behandlingspunkt.Opplysningsplikt',
         type: StepType.warning,
+        usePartialStatus: false,
       },
     ]);
   });

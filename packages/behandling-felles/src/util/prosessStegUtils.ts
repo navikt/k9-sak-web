@@ -322,7 +322,7 @@ export const formaterPanelerForProsessmeny = (
       isDisabled: false,
       isFinished: type === StepType.success,
       type,
-      usePartialStatus: panel.erDelvisBehandlet,
+      usePartialStatus: panel.erDelvisBehandlet || false,
     };
   });
 
