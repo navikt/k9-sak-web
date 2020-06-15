@@ -74,15 +74,10 @@ export class VedtakRevurderingFormImpl extends Component {
 
   skalSkjuleSubmitPanel() {
     const { aksjonspunktKoder, ytelseTypeKode } = this.props;
-    const { host, hostname } = window.location;
-    const erIQ1 = host === 'app-q1.adeo.no';
-    const erLokalt = hostname === 'localhost';
     return (
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
-      ytelseTypeKode === fagsakYtelseType.FRISINN &&
-      !erIQ1 &&
-      !erLokalt
+      ytelseTypeKode === fagsakYtelseType.FRISINN
     );
   }
 

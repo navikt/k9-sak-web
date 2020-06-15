@@ -10,14 +10,14 @@ import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fps
 import { Element } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { RammevedtakEnum, Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
+import { VilkårEnum } from '../dto/Vilkår';
+import { VurderteVilkår } from '../dto/Uttaksperiode';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
-  rammevedtak: Rammevedtak[];
   isAksjonspunktOpen: boolean;
 }
 
@@ -114,21 +114,31 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
   );
 };
 
+const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilkår) =>
+  Object.entries(vurderteVilkår).some(
+    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
+  );
+
 const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & InjectedFormProps> = ({
   aktiviteter,
-  rammevedtak,
   handleSubmit,
   isAksjonspunktOpen,
 }) => {
-  const harUavklartePerioder = useMemo(
+  const uavklartePerioder = useMemo(
     () =>
-      aktiviteter.flatMap(({ uttaksperioder }) => uttaksperioder).some(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+      aktiviteter
+        .flatMap(({ uttaksperioder }) => uttaksperioder)
+        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
     [aktiviteter],
   );
 
+  const harUavklartePerioder = uavklartePerioder.length > 0;
+
   if (harUavklartePerioder) {
-    const harUidentifiserteRammevedtak = rammevedtak.some(({ type }) => type === RammevedtakEnum.UIDENTIFISERT);
-    if (!harUidentifiserteRammevedtak) {
+    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(({ vurderteVilkår }) =>
+      vilkårHarOverlappendePerioderIInfotrygd(vurderteVilkår.vilkår),
+    );
+    if (harOverlappendePerioderIInfotrygd) {
       return (
         <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
           {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd" />]}
@@ -159,7 +169,6 @@ export interface FormValues {
 
 interface AksjonspunktFormProps {
   aktiviteter: Aktivitet[];
-  rammevedtak: Rammevedtak[];
   behandlingId: number;
   behandlingVersjon: number;
   submitCallback: (values: any[]) => void;
@@ -185,12 +194,11 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
 
   return (
     state,
-    { aktiviteter, rammevedtak, isAksjonspunktOpen, aksjonspunkterForSteg = [] }: AksjonspunktFormProps,
+    { aktiviteter, isAksjonspunktOpen, aksjonspunkterForSteg = [] }: AksjonspunktFormProps,
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
     return {
       onSubmit,
       aktiviteter,
-      rammevedtak,
       isAksjonspunktOpen,
       initialValues: { begrunnelse: aksjonspunkterForSteg[0]?.begrunnelse },
     };

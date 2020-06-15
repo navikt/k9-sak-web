@@ -1,8 +1,8 @@
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import React from 'react';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
 const tableData = {
