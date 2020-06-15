@@ -56,7 +56,6 @@ export class VedtakRevurderingFormImpl extends Component {
   constructor(props) {
     super(props);
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
-    this.skalSkjuleSubmitPanel = this.skalSkjuleSubmitPanel.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
     };
@@ -70,15 +69,6 @@ export class VedtakRevurderingFormImpl extends Component {
     });
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
     clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
-  }
-
-  skalSkjuleSubmitPanel() {
-    const { aksjonspunktKoder, ytelseTypeKode } = this.props;
-    return (
-      aksjonspunktKoder &&
-      aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
-      ytelseTypeKode === fagsakYtelseType.FRISINN
-    );
   }
 
   render() {
@@ -208,7 +198,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 previewBrev={previewAutomatiskBrev}
               />
             )}
-            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && !this.skalSkjuleSubmitPanel() && (
+            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
                 brodtekst={brødtekst}
