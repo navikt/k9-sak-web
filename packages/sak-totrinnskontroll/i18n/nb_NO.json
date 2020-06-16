@@ -43,6 +43,7 @@
   "ToTrinnsForm.Beregning.VurderMilitærSiviltjeneste": "Det er vurdert om søker har hatt militær -eller siviltjeneste i opptjeningsperioden",
   "ToTrinnsForm.Beregning.VurderRefusjonskrav": "Det er vurdert om refusjonskrav om er fremsatt etter fristen skal tas med i beregning.",
   "ToTrinnsForm.Beregning.Tittel": "Vurderinger av beregningsgrunnlag med skjæringstidspunkt {dato}.",
+  "ToTrinnsForm.Beregning.Generell": "Det er gjort endring i beregning",
 
   "ToTrinnsForm.Godkjenn": "Godkjenn vedtaket",
   "ToTrinnsForm.SendTilbake": "Send til saksbehandler",
