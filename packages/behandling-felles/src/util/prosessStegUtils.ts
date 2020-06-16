@@ -47,15 +47,17 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[]) => {
     const alleVilkårErOppfylt = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.OPPFYLT);
     const harFlereVilkår = vilkarStatusCodes.length > 1;
 
-    const erDelvisIkkeVurdert =
-      vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT) && !alleVilkårErIkkeVurdert;
+    if (harFlereVilkår) {
+      const erDelvisIkkeVurdert =
+        vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT) && !alleVilkårErIkkeVurdert;
 
-    const erDelvisIkkeOppfylt =
-      vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
+      const erDelvisIkkeOppfylt =
+        vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
 
-    const erDelvisOppfylt = vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.OPPFYLT) && !alleVilkårErOppfylt;
+      const erDelvisOppfylt = vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.OPPFYLT) && !alleVilkårErOppfylt;
 
-    return harFlereVilkår && (erDelvisIkkeVurdert || erDelvisIkkeOppfylt || erDelvisOppfylt);
+      return erDelvisIkkeVurdert || erDelvisIkkeOppfylt || erDelvisOppfylt;
+    }
   }
 
   return false;
