@@ -83,7 +83,9 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
     [uttaksperioder],
   );
   const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
-  const restdagerErSmittevernsdager = erInnenSmittevernsperioden && (rest.dager < 0 || rest.timer < 0);
+  const restTidErNegativt = rest.dager < 0 || rest.timer < 0;
+  const restdagerErSmittevernsdager = erInnenSmittevernsperioden && restTidErNegativt;
+  const utbetaltFlereDagerEnnRett = !erInnenSmittevernsperioden && restTidErNegativt;
 
   const forbrukt = forbruktTid ? beregnDagerTimer(forbruktTid) : konverterDesimalTilDagerOgTimer(forbrukteDager);
   const opprinneligeDager = totaltAntallDager - antallDagerArbeidsgiverDekker;
@@ -187,7 +189,15 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           }}
           label={{ textId: 'Årskvantum.Restdager' }}
           theme="grønn"
-          infoText={{ content: <FormattedMessage id="Årskvantum.Restdager.InfoText" /> }}
+          infoText={{
+            content: (
+              <FormattedMessage
+                id={
+                  utbetaltFlereDagerEnnRett ? 'Årskvantum.Restdager.InfoText_negativt' : 'Årskvantum.Restdager.InfoText'
+                }
+              />
+            ),
+          }}
         />
       </CounterContainer>
     </BorderedContainer>
