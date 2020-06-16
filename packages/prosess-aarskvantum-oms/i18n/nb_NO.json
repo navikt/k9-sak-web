@@ -15,7 +15,7 @@
   "Årskvantum.TotaleDager": "Totale dager",
   "Årskvantum.TotaleDager.InfoText": "Totalt antall tilgjengelige dager per kalenderår. Viser summen av opprinnelige dager og koronadager som NAV kan utbetale",
   "Årskvantum.OpprinneligeDager": "Opprinnelige dager",
-  "Årskvantum.OpprinneligeDager.InfoText": "{totaltAntallDager} dager, {antallDagerArbeidsgiverDekker} av disse er dekket av arbeidsgiver",
+  "Årskvantum.OpprinneligeDager.InfoText": "{totaltAntallDager} dager, {antallDagerArbeidsgiverDekker} av disse er dekket av arbeidsgiver. Inkluderer deling av dager",
   "Årskvantum.Koronadager": "Koronadager",
   "Årskvantum.Koronadager.InfoText": "Dobling av dager gitt pga. Koronapandemien. Gjelder fra og med 13.03.2020 til og med 31.12.2020",
   "Årskvantum.ForbrukteDager": "Forbrukte dager",
