@@ -53,8 +53,6 @@ interface VilkarresultatMedOverstyringFormProps {
   medlemskapFom: string;
   overrideReadOnly: boolean;
   overstyringApKode: string;
-  periodeFom: string;
-  periodeTom: string;
   status: string;
   submitCallback: (props: SubmitCallback[]) => void;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
@@ -64,6 +62,8 @@ interface VilkarresultatMedOverstyringFormProps {
 
 interface StateProps {
   isSolvable: boolean;
+  periodeFom: string;
+  periodeTom: string;
 }
 
 /**
@@ -227,7 +227,9 @@ const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => (
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringFormProps) => {
-  const { overstyringApKode, submitCallback, periodeFom, periodeTom } = initialOwnProps;
+  const { overstyringApKode, submitCallback, periode } = initialOwnProps;
+  const periodeFom = periode?.periode?.fom;
+  const periodeTom = periode?.periode?.tom;
   const onSubmit = values => submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
   const validateFn = values => validate(values);
   const formName = getFormName(overstyringApKode);
@@ -253,6 +255,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
       hasAksjonspunkt: aksjonspunkt !== undefined,
       validate: validateFn,
       form: formName,
+      periodeFom,
+      periodeTom,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
     };
   };

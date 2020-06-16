@@ -116,8 +116,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             overstyringApKode={overstyringApKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             erMedlemskapsPanel={erMedlemskapsPanel}
-            periodeFom={activePeriode.periode.fom}
-            periodeTom={activePeriode.periode.tom}
             avslagKode={activePeriode.avslagKode}
             periode={activePeriode}
           />
