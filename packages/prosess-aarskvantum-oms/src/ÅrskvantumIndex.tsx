@@ -61,6 +61,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
         antallDagerInfotrygd={antallDagerInfotrygd}
         benyttetRammemelding={sisteUttaksplan.benyttetRammemelding}
+        uttaksperioder={sisteUttaksplan.aktiviteter.flatMap(({ uttaksperioder }) => uttaksperioder)}
       />
       <VerticalSpacer sixteenPx />
       <Uttaksplan

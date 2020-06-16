@@ -9,6 +9,8 @@ import info from '@fpsak-frontend/assets/images/information-circle.svg';
 import CounterBox from './CounterBox';
 import BorderedContainer from './BorderedContainer';
 import ComboCounterBox from './ComboCounterBox';
+import Uttaksperiode from '../dto/Uttaksperiode';
+import { periodeErISmittevernsperioden } from './utils';
 
 interface ÅrskvantumProps {
   totaltAntallDager: number;
@@ -20,6 +22,7 @@ interface ÅrskvantumProps {
   restTid?: string;
   antallDagerInfotrygd: number;
   benyttetRammemelding: boolean;
+  uttaksperioder: Uttaksperiode[];
 }
 
 const CounterContainer = styled.div`
@@ -73,9 +76,14 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   antallDagerArbeidsgiverDekker,
   antallDagerInfotrygd = 0,
   benyttetRammemelding,
+  uttaksperioder,
 }) => {
+  const erInnenSmittevernsperioden = React.useMemo(
+    () => uttaksperioder.some(({ periode }) => periodeErISmittevernsperioden(periode)),
+    [uttaksperioder],
+  );
   const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
-  const restdagerErSmittevernsdager = rest.dager < 0 || rest.timer < 0;
+  const restdagerErSmittevernsdager = erInnenSmittevernsperioden && (rest.dager < 0 || rest.timer < 0);
 
   const forbrukt = forbruktTid ? beregnDagerTimer(forbruktTid) : konverterDesimalTilDagerOgTimer(forbrukteDager);
   const opprinneligeDager = totaltAntallDager - antallDagerArbeidsgiverDekker;
