@@ -31,7 +31,7 @@ describe('Uttaksplan', () => {
   };
   it('rendrer en tabell per aktivitet', () => {
     const aktiviteter: Aktivitet[] = [aktivitet, aktivitet, aktivitet];
-    const wrapper = shallowWithIntl(<Uttaksplan aktiviteter={aktiviteter} aktivitetsstatuser={[]} />);
+    const wrapper = shallowWithIntl(<Uttaksplan aktiviteterBehandling={aktiviteter} aktivitetsstatuser={[]} />);
 
     const tabell = wrapper.find(AktivitetTabell);
 
