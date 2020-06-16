@@ -23,7 +23,7 @@
   "Årskvantum.DagerOgTimerFraInfotrygd": "<div>Antall forbrukte dager per siste dag i uttaksperioden.</div><div>{dager} dager, {timer}t utbetalt fra Infotrygd.</div>",
   "Årskvantum.Restdager": "Restdager",
   "Årskvantum.Restdager.InfoText": "Dager tilgode",
-  "Årskvantum.Restdager.InfoText_negativt": "Det er utbetalt fler dager i Infotrygd enn brukeren har rett til",
+  "Årskvantum.Restdager.InfoText_negativt": "Det er utbetalt fler dager enn brukeren har rett til",
   "Årskvantum.Smittevernsdager": "Smitteverndager",
   "Årskvantum.Smittevernsdager.InfoText": "Dager gitt pga dokumentert særlige smittevernhensyn i perioden 20.04.2020 til og med 30.06.2020",
   "Uttaksplan.Heading": "Uttaksoversikt",
