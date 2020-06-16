@@ -8,7 +8,7 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
-import { finnVisningForStatusIPeriode } from './FrisinnUtils';
+import { finnBruttoForStatusIPeriode } from './FrisinnUtils';
 
 const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
   // Vi ønsker alltid kun å vise data fra siste beregnede periode, dvs nest siste periode (koronologisk) i grunnlaget
@@ -19,13 +19,13 @@ const Inntektsopplysninger = ({ beregningsgrunnlag }) => {
     (a, b) => moment(a.beregningsgrunnlagPeriodeFom) - moment(b.beregningsgrunnlagPeriodeFom),
   );
   const gjeldendePeriode = kronologiskePerioder[kronologiskePerioder.length - 2];
-  const bruttoSN = finnVisningForStatusIPeriode(
+  const bruttoSN = finnBruttoForStatusIPeriode(
     aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
     beregningsgrunnlag,
     gjeldendePeriode,
   );
-  const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, beregningsgrunnlag, gjeldendePeriode);
-  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, beregningsgrunnlag, gjeldendePeriode);
+  const bruttoFL = finnBruttoForStatusIPeriode(aktivitetStatus.FRILANSER, beregningsgrunnlag, gjeldendePeriode);
+  const bruttoAT = finnBruttoForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, beregningsgrunnlag, gjeldendePeriode);
   return (
     <div>
       <Row>

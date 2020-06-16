@@ -58,25 +58,19 @@ export const erSøktForAndelISøknadsperiode = (status, bgPeriode, ytelsegrunnla
   return !!andeler && andeler.length > 0;
 };
 
-const erSøktForAndelIEnPeriode = (status, ytelsegrunnlag) => {
-  const { frisinnPerioder } = ytelsegrunnlag;
-  if (!frisinnPerioder) {
-    return null;
+/**
+ * hvis det er søkt frisinn for samme søknadsperiode som bgPeriode er i (hele måneder), skal man bruke tallet som ligger
+ * i første periode. Ellers skal man bruke tallet som ligger i perioden. For arbeidstakere skal man alltid bruke inntekten
+ * som ligger i perioden
+ */
+export const finnBruttoForStatusIPeriode = (status, bg, bgPeriode) => {
+  if (!status || !bg || !bgPeriode) {
+    return 0;
   }
-  const periodeDerStatusErSøktFor = frisinnPerioder.find(
-    periode => !!periode.frisinnAndeler.find(andel => andel.statusSøktFor.kode === status),
-  );
-  return !!periodeDerStatusErSøktFor;
-};
-
-export const finnVisningForStatusIPeriode = (status, bg, bgPeriode) => {
-  const erSøktForStatus = erSøktForAndelIEnPeriode(status, bg.ytelsesspesifiktGrunnlag);
-  if (erSøktForStatus) {
-    // Er det søkt ytelse for statusen kan vi finne den inntekten som ligger i første periode
+  if (erSøktForAndelISøknadsperiode(status, bgPeriode, bg.ytelsesspesifiktGrunnlag)) {
     const førstePeriode = bg.beregningsgrunnlagPeriode[0];
     return finnSamletBruttoForStatus(førstePeriode.beregningsgrunnlagPrStatusOgAndel, status);
   }
-  // Er det ikke søkt ytelse må vi ta den inntekten som ligger i perioden det er søkt om
   return finnSamletBruttoForStatus(bgPeriode.beregningsgrunnlagPrStatusOgAndel, status);
 };
 
