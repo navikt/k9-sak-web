@@ -107,6 +107,7 @@ describe('<FrisinnProsess>', () => {
         isFinished: false,
         label: 'Beregning',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -114,6 +115,7 @@ describe('<FrisinnProsess>', () => {
         isFinished: false,
         label: 'Tilkjent ytelse',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -121,6 +123,7 @@ describe('<FrisinnProsess>', () => {
         isFinished: false,
         label: 'Simulering',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -128,6 +131,7 @@ describe('<FrisinnProsess>', () => {
         isFinished: false,
         label: 'Vedtak',
         type: 'default',
+        usePartialStatus: false,
       },
     ]);
   });
