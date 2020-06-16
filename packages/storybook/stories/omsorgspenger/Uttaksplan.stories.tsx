@@ -123,7 +123,6 @@ const behandling: Behandling = {
 const aksjonspunkterForSteg: Aksjonspunkt[] = [{}];
 
 export const standard = () => (
-  // @ts-ignore
   <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} behandling={behandling} />
 );
 

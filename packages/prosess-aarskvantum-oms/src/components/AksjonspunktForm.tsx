@@ -37,6 +37,7 @@ const valgValues = {
 const GråBakgrunn = styled.div`
   padding: 1em;
   background-color: #e9e7e7;
+  margin-bottom: 1em;
 `;
 
 const SpaceBetween = styled.div`
@@ -140,9 +141,11 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
     );
     if (harOverlappendePerioderIInfotrygd) {
       return (
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
-          {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd" />]}
-        </AksjonspunktHelpTextTemp>
+        <GråBakgrunn>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
+            {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd" />]}
+          </AksjonspunktHelpTextTemp>
+        </GråBakgrunn>
       );
     }
   }
@@ -156,7 +159,6 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
           isAksjonspunktOpen={isAksjonspunktOpen}
         />
       </GråBakgrunn>
-      <VerticalSpacer sixteenPx />
     </form>
   );
 };

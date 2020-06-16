@@ -4,36 +4,20 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { joinNonNullStrings } from '@fpsak-frontend/fp-felles/index';
 import BorderedContainer from './BorderedContainer';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
-import AksjonspunktForm from './AksjonspunktForm';
 import styles from './uttaksplan.less';
 
 interface UttaksplanProps {
   aktiviteter: Aktivitet[];
   aktiv: boolean;
   aktivitetsstatuser: KodeverkMedNavn[];
-  isAksjonspunktOpen: boolean;
-  behandlingId: number;
-  behandlingVersjon: number;
-  submitCallback: (values: any[]) => void;
-  aksjonspunkterForSteg?: Aksjonspunkt[];
 }
 
-const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
-  aktiviteter = [],
-  aktivitetsstatuser = [],
-  aktiv,
-  isAksjonspunktOpen,
-  behandlingId,
-  behandlingVersjon,
-  submitCallback,
-  aksjonspunkterForSteg = [],
-}) => {
+const Uttaksplan: FunctionComponent<UttaksplanProps> = ({ aktiviteter = [], aktivitetsstatuser = [], aktiv }) => {
   return (
     <BorderedContainer
       heading={
@@ -50,16 +34,6 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
         </>
       }
     >
-      {aksjonspunkterForSteg.length > 0 && (
-        <AksjonspunktForm
-          aktiviteter={aktiviteter}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          submitCallback={submitCallback}
-          aksjonspunkterForSteg={aksjonspunkterForSteg}
-          isAksjonspunktOpen={isAksjonspunktOpen}
-        />
-      )}
       {aktiviteter.length ? (
         aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => (
           <AktivitetTabell

@@ -8,6 +8,7 @@ import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import Årskvantum from './components/Årskvantum';
 import Uttaksplan from './components/Uttaksplan';
+import AksjonspunktForm from './components/AksjonspunktForm';
 
 const cache = createIntlCache();
 
@@ -34,7 +35,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   isAksjonspunktOpen,
   behandling,
   submitCallback,
-  aksjonspunkterForSteg,
+  aksjonspunkterForSteg = [],
 }) => {
   const {
     totaltAntallDager,
@@ -51,6 +52,16 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
 
   return (
     <RawIntlProvider value={intl}>
+      {aksjonspunkterForSteg.length > 0 && (
+        <AksjonspunktForm
+          aktiviteter={sisteUttaksplan.aktiviteter}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          submitCallback={submitCallback}
+          aksjonspunkterForSteg={aksjonspunkterForSteg}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+        />
+      )}
       <Årskvantum
         totaltAntallDager={totaltAntallDager}
         antallKoronadager={antallKoronadager}
@@ -68,11 +79,6 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiviteter={sisteUttaksplan.aktiviteter}
         aktivitetsstatuser={aktivitetsstatuser}
         aktiv={sisteUttaksplan.aktiv}
-        isAksjonspunktOpen={isAksjonspunktOpen}
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        submitCallback={submitCallback}
-        aksjonspunkterForSteg={aksjonspunkterForSteg}
       />
     </RawIntlProvider>
   );
