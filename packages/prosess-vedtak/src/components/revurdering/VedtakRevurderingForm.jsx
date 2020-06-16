@@ -56,7 +56,6 @@ export class VedtakRevurderingFormImpl extends Component {
   constructor(props) {
     super(props);
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
-    this.skalSkjuleSubmitPanel = this.skalSkjuleSubmitPanel.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
     };
@@ -70,15 +69,6 @@ export class VedtakRevurderingFormImpl extends Component {
     });
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
     clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
-  }
-
-  skalSkjuleSubmitPanel() {
-    const { aksjonspunktKoder, ytelseTypeKode } = this.props;
-    return (
-      aksjonspunktKoder &&
-      aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
-      ytelseTypeKode === fagsakYtelseType.FRISINN
-    );
   }
 
   render() {
@@ -116,6 +106,10 @@ export class VedtakRevurderingFormImpl extends Component {
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
     const visOverstyringKnapp = kanOverstyre || readOnly;
+    const { host, hostname } = window.location;
+    const erIQ1 = host === 'app-q1.adeo.no';
+    const erLokalt = hostname === 'localhost';
+    const skalSkjuleSubmitPanel = !erIQ1 && !erLokalt;
     return (
       <>
         <VedtakFritekstbrevModal
@@ -208,7 +202,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 previewBrev={previewAutomatiskBrev}
               />
             )}
-            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && !this.skalSkjuleSubmitPanel() && (
+            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && !skalSkjuleSubmitPanel && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
                 brodtekst={brødtekst}

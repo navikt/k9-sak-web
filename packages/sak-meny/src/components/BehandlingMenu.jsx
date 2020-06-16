@@ -47,7 +47,7 @@ class BehandlingMenu extends Component {
     this.hasEnabledNewBehandling = this.hasEnabledNewBehandling.bind(this);
     this.isResumeBehandlingEnabled = this.isResumeBehandlingEnabled.bind(this);
     this.isPauseBehandlingEnabled = this.isPauseBehandlingEnabled.bind(this);
-    this.isShelveBehandlingEnebled = this.isShelveBehandlingEnebled.bind(this);
+    this.isShelveBehandlingEnabled = this.isShelveBehandlingEnabled.bind(this);
     this.isChangeBehandlendeEnhetEnabled = this.isChangeBehandlendeEnhetEnabled.bind(this);
     this.hasEnabledOpenBehandlingForChangesAccess = this.hasEnabledOpenBehandlingForChangesAccess.bind(this);
     this.state = {
@@ -129,7 +129,7 @@ class BehandlingMenu extends Component {
     );
   }
 
-  isShelveBehandlingEnebled() {
+  isShelveBehandlingEnabled() {
     const { behandlingData, rettigheter } = this.props;
     if (!behandlingData.harValgtBehandling || !rettigheter.henleggBehandlingAccess.employeeHasAccess) {
       return false;
@@ -235,7 +235,7 @@ class BehandlingMenu extends Component {
                 menyKodeverk={menyKodeverk}
               />
             )}
-            {this.isShelveBehandlingEnebled() && (!erFrisinn || behandlingData.type.kode === BehandlingType.KLAGE) && (
+            {this.isShelveBehandlingEnabled() && (
               <ShelveBehandlingMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 behandlingIdentifier={behandlingIdentifier}
