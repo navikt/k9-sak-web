@@ -122,10 +122,9 @@ export const buildInitialValues = createSelector(
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.vilkårsresultat,
     ownProps => ownProps.aksjonspunkter,
     ownProps => ownProps.status,
-    ownProps => ownProps.vilkårIndex,
   ],
-  (vilkårsresultat, aksjonspunkter, status, vilkårIndex) => ({
-    ...VilkarResultPicker.buildInitialValues(vilkårsresultat[vilkårIndex], aksjonspunkter, status),
+  (vilkårsresultat, aksjonspunkter, status) => ({
+    ...VilkarResultPicker.buildInitialValues(vilkårsresultat.avslagsårsak.kode, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
