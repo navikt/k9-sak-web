@@ -1,5 +1,9 @@
 import { expect } from 'chai';
-import { durationTilTimerMed7ogEnHalvTimesDagsbasis, periodeErIKoronaperioden } from './utils';
+import {
+  durationTilTimerMed7ogEnHalvTimesDagsbasis,
+  periodeErIKoronaperioden,
+  periodeErISmittevernsperioden,
+} from './utils';
 
 it('Gjør om periode til antall timer, der en dag er 7.5 time', () => {
   const timerOgMinutter = 'PT3H30M';
@@ -27,4 +31,24 @@ it('finner ut om en periode er i koronaperioden', () => {
 
   const begynnerDagenEtter = '2021-01-01/2021-01-12';
   expect(periodeErIKoronaperioden(begynnerDagenEtter)).to.equal(false);
+});
+
+it('finner ut om en periode er i smittevernsperioden', () => {
+  const slutterDagenfør = '2020-03-10/2020-04-19';
+  expect(periodeErISmittevernsperioden(slutterDagenfør)).to.equal(false);
+
+  const slutterFørsteDag = '2020-03-10/2020-04-20';
+  expect(periodeErISmittevernsperioden(slutterFørsteDag)).to.equal(true);
+
+  const slutterSisteDag = '2020-12-10/2020-12-31';
+  expect(periodeErISmittevernsperioden(slutterSisteDag)).to.equal(true);
+
+  const slutterDagenEtter = '2020-12-10/2021-01-01';
+  expect(periodeErISmittevernsperioden(slutterDagenEtter)).to.equal(true);
+
+  const kunDagenEtter = '2021-01-01/2021-01-01';
+  expect(periodeErISmittevernsperioden(kunDagenEtter)).to.equal(false);
+
+  const begynnerDagenEtter = '2021-01-01/2021-01-12';
+  expect(periodeErISmittevernsperioden(begynnerDagenEtter)).to.equal(false);
 });
