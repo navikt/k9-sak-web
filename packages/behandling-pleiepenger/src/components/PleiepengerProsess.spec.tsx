@@ -118,6 +118,7 @@ describe('<PleiepengerProsess>', () => {
         isFinished: false,
         label: 'Inngangsvilkår',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -125,6 +126,7 @@ describe('<PleiepengerProsess>', () => {
         isFinished: false,
         label: 'Beregning',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -132,6 +134,7 @@ describe('<PleiepengerProsess>', () => {
         isFinished: false,
         label: 'Uttak',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -139,6 +142,7 @@ describe('<PleiepengerProsess>', () => {
         isFinished: false,
         label: 'Tilkjent ytelse',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -146,6 +150,7 @@ describe('<PleiepengerProsess>', () => {
         isFinished: false,
         label: 'Simulering',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -153,6 +158,7 @@ describe('<PleiepengerProsess>', () => {
         isFinished: false,
         label: 'Vedtak',
         type: 'default',
+        usePartialStatus: false,
       },
     ]);
   });

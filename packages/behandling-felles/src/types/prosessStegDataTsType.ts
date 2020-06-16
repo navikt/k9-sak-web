@@ -39,6 +39,7 @@ interface ProsessStegData {
   aksjonspunkter: Aksjonspunkt[];
   status: vilkarUtfallType.IKKE_OPPFYLT | vilkarUtfallType.OPPFYLT | vilkarUtfallType.IKKE_VURDERT;
   panelData: ProsessStegPanelData[];
+  erDelvisBehandlet: boolean;
 }
 
 export default ProsessStegData;
