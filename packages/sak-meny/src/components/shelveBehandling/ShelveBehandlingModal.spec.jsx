@@ -12,9 +12,7 @@ import { getHenleggArsaker, ShelveBehandlingModalImpl } from './ShelveBehandling
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<ShelveBehandlingModal>', () => {
-  const henleggArsaker = [{
-    kode: 'HENLAGT_SØKNAD_TRUKKET',
-  },
+  const henleggArsaker = [
   {
     kode: 'HENLAGT_FEILOPPRETTET',
   }, {
@@ -101,10 +99,9 @@ describe('<ShelveBehandlingModal>', () => {
     expect(selectField).to.have.length(1);
     expect(selectField.prop('placeholder')).is.eql('Velg årsak til henleggelse');
     const values = selectField.prop('selectValues');
-    expect(values[0].props.value).is.eql(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
-    expect(values[1].props.value).is.eql(behandlingResultatType.HENLAGT_FEILOPPRETTET);
-    expect(values[2].props.value).is.eql(behandlingResultatType.MANGLER_BEREGNINGSREGLER);
-    expect(values).to.have.length(3);
+    expect(values[0].props.value).is.eql(behandlingResultatType.HENLAGT_FEILOPPRETTET);
+    expect(values[1].props.value).is.eql(behandlingResultatType.MANGLER_BEREGNINGSREGLER);
+    expect(values).to.have.length(2);
   });
 
   const behandlingResultatTyper = [{
@@ -142,14 +139,14 @@ describe('<ShelveBehandlingModal>', () => {
   it('skal bruke behandlingsresultat-typer for revudering', () => {
     const behandlingsType = { kode: behandlingType.REVURDERING };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
-    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_FEILOPPRETTET,
       behandlingResultatType.HENLAGT_SOKNAD_MANGLER]);
   });
 
   it('skal bruke behandlingsresultat-typer for førstegangsbehandling', () => {
     const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
-    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_FEILOPPRETTET,
       behandlingResultatType.HENLAGT_SOKNAD_MANGLER, behandlingResultatType.MANGLER_BEREGNINGSREGLER]);
   });
 

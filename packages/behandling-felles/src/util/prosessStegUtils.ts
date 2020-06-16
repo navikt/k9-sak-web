@@ -37,6 +37,32 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
+const finnErDelvisBehandlet = (vilkar: Vilkar[]) => {
+  if (vilkar.length > 0) {
+    const vilkarStatusCodes = [];
+    vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
+
+    const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT);
+    const alleVilkårErIkkeOppfylt = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT);
+    const alleVilkårErOppfylt = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.OPPFYLT);
+    const harFlereVilkår = vilkarStatusCodes.length > 1;
+
+    if (harFlereVilkår) {
+      const erDelvisIkkeVurdert =
+        vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT) && !alleVilkårErIkkeVurdert;
+
+      const erDelvisIkkeOppfylt =
+        vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
+
+      const erDelvisOppfylt = vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.OPPFYLT) && !alleVilkårErOppfylt;
+
+      return erDelvisIkkeVurdert || erDelvisIkkeOppfylt || erDelvisOppfylt;
+    }
+  }
+
+  return false;
+};
+
 const finnAksjonspunkterForSteg = (panel: ProsessStegPanelDefinisjon, aksjonspunkter: Aksjonspunkt[]) =>
   aksjonspunkter.filter(ap => panel.aksjonspunkterCodes.includes(ap.definisjon.kode));
 const finnVilkarForSteg = (panel: ProsessStegPanelDefinisjon, vilkar: Vilkar[]) =>
@@ -117,6 +143,8 @@ const lagPanelData = (
     ? panel.overrideStatus(dataForUtledingAvStatus)
     : finnStatus(vilkarForSteg, aksjonspunkterForSteg);
 
+  const erDelvisBehandlet = finnErDelvisBehandlet(vilkarForSteg);
+
   const opneAksjonspunkter = aksjonspunkterForSteg.filter(
     ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses,
   );
@@ -161,6 +189,7 @@ const lagPanelData = (
       ...overstyringsdata,
       ...panel.getData({ ...dataForUtledingAvPanel, aksjonspunkterForSteg, vilkarForSteg }),
     },
+    erDelvisBehandlet,
   };
 };
 
@@ -216,6 +245,8 @@ export const utledProsessStegPaneler = (
       const harStatusIkkeVurdert = panelData.some(p => p.status === vilkarUtfallType.IKKE_VURDERT);
       const harStatusAvslatt = panelData.some(p => p.status === vilkarUtfallType.IKKE_OPPFYLT);
       const harStatusOppfylt = panelData.some(p => p.status === vilkarUtfallType.OPPFYLT);
+      const erDelvisBehandlet = panelData.some(p => p.erDelvisBehandlet);
+
       const tempStatus =
         harStatusOppfylt && !harStatusIkkeVurdert ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT;
       const status = harStatusAvslatt ? vilkarUtfallType.IKKE_OPPFYLT : tempStatus;
@@ -234,6 +265,7 @@ export const utledProsessStegPaneler = (
           .reduce((acc, pd) => [...acc, ...pd.aksjonspunkter], []),
         status,
         panelData,
+        erDelvisBehandlet,
       };
     });
 };
@@ -290,6 +322,7 @@ export const formaterPanelerForProsessmeny = (
       isDisabled: false,
       isFinished: type === StepType.success,
       type,
+      usePartialStatus: panel.erDelvisBehandlet || false,
     };
   });
 

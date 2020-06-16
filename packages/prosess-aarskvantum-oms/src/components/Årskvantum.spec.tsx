@@ -3,15 +3,24 @@ import React from 'react';
 import Årskvantum, { beregnDagerTimer, konverterDesimalTilDagerOgTimer } from './Årskvantum';
 import CounterBox from './CounterBox';
 import { mountWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
+import Uttaksperiode from '../dto/Uttaksperiode';
 
 const sjekkKonvertering = ({ dager, timer }, expectedDager, expectedTimer) => {
   expect(dager).to.equal(expectedDager);
   expect(timer).to.equal(expectedTimer);
 };
 
-it('rendrer smittevern hvis restdager er nagativt, ellers ikke', () => {
-  const wrapper = restdager =>
-    mountWithIntl(
+it('rendrer smittevern hvis restdager er negative og i smittevernsperioden, ellers ikke', () => {
+  const wrapper = restdager => {
+    // @ts-ignore
+    const periodeISmittevernsperioden: Uttaksperiode = {
+      periode: '2020-05-05/2020-05-31',
+    };
+    // @ts-ignore
+    const periodeUtenforSmittevernsperioden: Uttaksperiode = {
+      periode: '2020-03-01/2020-03-31',
+    };
+    return mountWithIntl(
       <Årskvantum
         totaltAntallDager={20}
         antallDagerArbeidsgiverDekker={3}
@@ -19,8 +28,10 @@ it('rendrer smittevern hvis restdager er nagativt, ellers ikke', () => {
         restdager={restdager}
         benyttetRammemelding
         antallDagerInfotrygd={0}
+        uttaksperioder={[periodeISmittevernsperioden, periodeUtenforSmittevernsperioden]}
       />,
     );
+  };
 
   const bokserUtenSmittevern = wrapper(12).find(CounterBox);
   expect(bokserUtenSmittevern).to.have.length(5);
