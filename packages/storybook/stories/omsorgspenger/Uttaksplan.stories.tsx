@@ -32,7 +32,7 @@ const uavklartPeriode = (vilkår: Vilkår): Uttaksperiode => ({
       [vilkår]: UtfallEnum.UAVKLART,
     },
   },
-  periode: '2020-03-01/2020-03-10',
+  periode: '2020-05-01/2020-05-10',
   utbetalingsgrad: 50,
   hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
 });
@@ -43,7 +43,7 @@ const innvilgetPeriode: Uttaksperiode = {
     vilkår: vilkårInnvilget,
   },
   delvisFravær: 'P2DT4H30M',
-  periode: '2020-04-01/2020-04-30',
+  periode: '2020-04-01/2020-04-19',
   utbetalingsgrad: 100,
   hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
 };
@@ -127,17 +127,13 @@ export const standard = () => (
   <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} behandling={behandling} />
 );
 
-export const smittevernsdagerOgInaktiv = () => (
+export const negativeForbrukteDager = () => (
   <ÅrskvantumIndex
     årskvantum={{
-      ...årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode(VilkårEnum.NOK_DAGER)]),
+      ...årskvantumDto,
       antallKoronadager: 10,
       forbruktTid: 'PT180H',
       restTid: 'PT-34H-30M',
-      sisteUttaksplan: {
-        ...årskvantumDto.sisteUttaksplan,
-        aktiv: false,
-      },
     }}
     // @ts-ignore
     alleKodeverk={alleKodeverk}
@@ -146,6 +142,29 @@ export const smittevernsdagerOgInaktiv = () => (
     submitCallback={action('bekreft')}
   />
 );
+
+export const smittevernsdagerOgInaktiv = () => {
+  const årskvantum = årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode(VilkårEnum.NOK_DAGER)]);
+  return (
+    <ÅrskvantumIndex
+      årskvantum={{
+        ...årskvantum,
+        antallKoronadager: 10,
+        forbruktTid: 'PT180H',
+        restTid: 'PT-34H-30M',
+        sisteUttaksplan: {
+          ...årskvantum.sisteUttaksplan,
+          aktiv: false,
+        },
+      }}
+      // @ts-ignore
+      alleKodeverk={alleKodeverk}
+      behandling={behandling}
+      isAksjonspunktOpen={false}
+      submitCallback={action('bekreft')}
+    />
+  );
+};
 
 export const aksjonspunktUidentifiserteRammevedtak = () => (
   <ÅrskvantumIndex

@@ -1,4 +1,4 @@
-import { Rammevedtak } from '@k9-sak-web/types';
+import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import UttaksplanType from './UttaksplanType';
 
 interface ÅrskvantumForbrukteDager {
