@@ -160,15 +160,12 @@ VilkarResultPicker.validate = (erVilkarOk, avslagCode) => {
   return errors;
 };
 
-VilkarResultPicker.buildInitialValues = (behandlingsresultat, aksjonspunkter, status) => {
+VilkarResultPicker.buildInitialValues = (avslagKode, aksjonspunkter, status) => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
   return {
     erVilkarOk,
-    avslagCode:
-      erVilkarOk === false && behandlingsresultat && behandlingsresultat.avslagsarsak
-        ? behandlingsresultat.avslagsarsak.kode
-        : undefined,
+    avslagCode: erVilkarOk === false && avslagKode ? avslagKode : undefined,
   };
 };
 
