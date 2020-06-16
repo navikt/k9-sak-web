@@ -162,6 +162,7 @@ describe('<prosessStegUtils>', () => {
     const paneler = [
       {
         aksjonspunkter,
+        erDelvisBehandlet: false,
         erStegBehandlet: true,
         isAksjonspunktOpen: true,
         isReadOnly: false,
@@ -172,6 +173,7 @@ describe('<prosessStegUtils>', () => {
             aksjonspunkter,
             code: 'opplysningsplikt',
             endpoints: [],
+            erDelvisBehandlet: false,
             isAksjonspunktOpen: true,
             isReadOnly: false,
             komponentData: {
@@ -402,6 +404,7 @@ describe('<prosessStegUtils>', () => {
         isFinished: true,
         label: 'Behandlingspunkt.Test',
         type: 'success',
+        usePartialStatus: false,
       },
       {
         isActive: true,
@@ -409,6 +412,7 @@ describe('<prosessStegUtils>', () => {
         isFinished: false,
         label: 'Behandlingspunkt.Opplysningsplikt',
         type: 'warning',
+        usePartialStatus: false,
       },
     ]);
   });
