@@ -96,6 +96,7 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
       endpointParams={{
         [fpsakApi.HISTORY_FPSAK.name]: { saksnummer },
         [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer },
+        [fpsakApi.HISTORY_KLAGE.name]: { saksnummer },
       }}
       showOldDataWhenRefetching
       endpoints={enabledContexts}
