@@ -43,7 +43,8 @@ export const getAlleBehandlinger = createSelector<
   Behandling[]
 >(
   [props => props.behandlingerFpsak, props => props.behandlingerFptilbake, props => props.behandlingerKlage],
-  (behandlingerFpsak = [], behandlingerFptilbake = []) => behandlingerFpsak.concat(behandlingerFptilbake),
+  (behandlingerFpsak = [], behandlingerFptilbake = [], behandlingerKlage = []) =>
+    behandlingerFpsak.concat(behandlingerFptilbake).concat(behandlingerKlage),
 );
 
 const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
