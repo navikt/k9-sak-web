@@ -5,7 +5,7 @@ export const RammevedtakEnum = stringEnum({
   SMITTEVERNDAGER: 'Smittevern',
   OVERFØRING_FÅR: 'OverføringFår',
   OVERFØRING_GIR: 'OverføringGir',
-  FORDELING_FÅR: 'FordeligFår',
+  FORDELING_FÅR: 'FordelingFår',
   FORDELING_GIR: 'FordelingGir',
   KORONAOVERFØRING_FÅR: 'KoronaOverføringFår',
   KORONAOVERFØRING_GIR: 'KoronaOverføringGir',
