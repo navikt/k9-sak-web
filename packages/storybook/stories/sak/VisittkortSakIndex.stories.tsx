@@ -5,7 +5,6 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
@@ -53,32 +52,6 @@ const fagsak = {
   kanRevurderingOpprettes: false,
   skalBehandlesAvInfotrygd: false,
   dekningsgrad: 100,
-};
-
-const familieHendelse = {
-  oppgitt: {
-    skjaringstidspunkt: '2020-01-01',
-    avklartBarn: [],
-    termindato: '2020-01-21',
-    soknadType: {
-      kode: soknadType.FODSEL,
-      kodeverk: 'SOKNAD_TYPE',
-    },
-  },
-  gjeldende: {
-    skjaringstidspunkt: '2020-01-01',
-    soknadType: {
-      kode: soknadType.FODSEL,
-      kodeverk: 'SOKNAD_TYPE',
-    },
-  },
-  register: {
-    skjaringstidspunkt: '2020-01-01',
-    soknadType: {
-      kode: soknadType.FODSEL,
-      kodeverk: 'SOKNAD_TYPE',
-    },
-  },
 };
 
 const personopplysningerSoker = {
@@ -184,9 +157,7 @@ const personopplysningerAnnenPart = {
 export const visVisittkortNårEnHarBegrensetMedInformasjon = () => (
   <VisittkortSakIndex
     fagsak={fagsak}
-    familieHendelse={familieHendelse}
-    lenkeTilAnnenPart="testlenke til annen part"
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );
@@ -195,9 +166,7 @@ export const visVisittkortNårEnHarPersonopplysninger = () => (
   <VisittkortSakIndex
     fagsak={fagsak}
     personopplysninger={personopplysningerSoker}
-    familieHendelse={familieHendelse}
-    lenkeTilAnnenPart="testlenke til annen part"
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );
@@ -209,9 +178,7 @@ export const visVisittkortNårEnHarPersonopplysningerForBeggeParter = () => (
       ...personopplysningerSoker,
       annenPart: personopplysningerAnnenPart,
     }}
-    familieHendelse={familieHendelse}
-    lenkeTilAnnenPart="testlenke til annen part"
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );
@@ -226,9 +193,7 @@ export const visVisittkortForAnnenPartDerAktørIdErUkjent = () => (
         aktoerId: undefined,
       },
     }}
-    familieHendelse={familieHendelse}
-    lenkeTilAnnenPart="testlenke til annen part"
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );

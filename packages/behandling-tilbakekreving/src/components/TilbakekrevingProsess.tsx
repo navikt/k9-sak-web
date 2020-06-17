@@ -11,7 +11,7 @@ import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-til
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import {
   FagsakInfo,
   MargMarkering,
@@ -195,7 +195,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
       alleKodeverk: kodeverk,
     };
 
-    const vedtakStegVises = valgtStegKode === bpc.VEDTAK;
+    const vedtakStegVises = valgtStegKode === prosessStegCodes.VEDTAK;
     const apCodes = valgtSteg && valgtSteg.aksjonspunkter.map(a => a.definisjon.kode);
 
     if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
@@ -230,7 +230,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
               aksjonspunkter={valgtSteg.aksjonspunkter}
               isReadOnly={valgtSteg.isReadOnly}
             >
-              {valgtStegKode === bpc.FORELDELSE && (
+              {valgtStegKode === prosessStegCodes.FORELDELSE && (
                 <ForeldelseProsessIndex
                   perioderForeldelse={perioderForeldelse}
                   apCodes={apCodes}
@@ -245,7 +245,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
                 behandlingDataCache={this.behandlingDataCache}
                 behandlingVersion={behandling.versjon}
                 endpoints={tilbakekrevingData}
-                showComponent={valgtStegKode === bpc.TILBAKEKREVING}
+                showComponent={valgtStegKode === prosessStegCodes.TILBAKEKREVING}
                 render={dataProps => (
                   <TilbakekrevingProsessIndex
                     apCodes={apCodes}

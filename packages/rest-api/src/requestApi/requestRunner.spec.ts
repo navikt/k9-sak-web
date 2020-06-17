@@ -85,29 +85,29 @@ describe('RequestRunner', () => {
 
     const httpClientMock = {
       ...httpClientGeneralMock,
-      getAsync: () => Promise.resolve({
-        data: 'test',
-        status: HTTP_ACCEPTED,
-        headers: {
-          location: 'test',
-        },
-      }),
-      get: () => Promise.resolve({
-        data: {
-          status: asyncPollingStatus.PENDING,
-          message: 'Polling continues',
-          pollIntervalMillis: 0,
-        },
-        status: 200,
-        headers: {
-          location: '',
-        },
-      }),
+      getAsync: () =>
+        Promise.resolve({
+          data: 'test',
+          status: HTTP_ACCEPTED,
+          headers: {
+            location: 'test',
+          },
+        }),
+      get: () =>
+        Promise.resolve({
+          data: {
+            status: asyncPollingStatus.PENDING,
+            message: 'Polling continues',
+            pollIntervalMillis: 0,
+          },
+          status: 200,
+          headers: {
+            location: '',
+          },
+        }),
     };
 
-    const requestConfig = new RequestConfig('BEHANDLING', '/behandling', {
-      fetchLinkDataAutomatically: true,
-    }).withGetAsyncMethod();
+    const requestConfig = new RequestConfig('BEHANDLING', '/behandling').withGetAsyncMethod();
 
     const params = {
       behandlingId: 1,
@@ -117,7 +117,10 @@ describe('RequestRunner', () => {
     const runner = new RequestRunner(httpClientMock, context);
     const mapper = new NotificationMapper();
     // Etter en runde med polling vil en stoppe prosessen via event
-    mapper.addUpdatePollingMessageEventHandler(() => { runner.stopProcess(); return Promise.resolve(''); });
+    mapper.addUpdatePollingMessageEventHandler(() => {
+      runner.stopProcess();
+      return Promise.resolve('');
+    });
 
     const response = await runner.startProcess(params, mapper);
 

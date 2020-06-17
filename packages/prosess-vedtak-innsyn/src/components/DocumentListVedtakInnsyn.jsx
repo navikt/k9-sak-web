@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { ElementWrapper, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 
 import styles from './documentListVedtakInnsyn.less';
 
@@ -31,7 +31,7 @@ const DocumentListVedtakInnsyn = ({ documents, saksNr }) => {
   }
 
   return (
-    <ElementWrapper>
+    <>
       <Undertekst className={styles.noDocuments}>
         <FormattedMessage id="DocumentListVedtakInnsyn.InnsynsDok" />
       </Undertekst>
@@ -58,7 +58,7 @@ const DocumentListVedtakInnsyn = ({ documents, saksNr }) => {
           </Table>
         </Column>
       </Row>
-    </ElementWrapper>
+    </>
   );
 };
 

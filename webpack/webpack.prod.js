@@ -13,7 +13,7 @@ const config = {
   devtool: 'source-map',
   performance: { hints: false },
 
-  entry: ['@babel/polyfill', APP_DIR + '/index.jsx'],
+  entry: ['@babel/polyfill', APP_DIR + '/index.tsx'],
   output: {
     filename: '[name]-[contenthash].js',
     chunkFilename: '[name].[contenthash].chunk.js',

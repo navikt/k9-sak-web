@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 
 import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { hasValidText, maxLength, minLength, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -86,10 +86,10 @@ export const GraderingUtenBG2 = ({
     <div className={styles.graderingForm}>
       <AvsnittSkiller luftOver luftUnder dividerParagraf />
 
-      <ElementWrapper>
+      <>
         {lagAksjonspunktViser(aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn)}
         <VerticalSpacer sixteenPx />
-      </ElementWrapper>
+      </>
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.Gradering.Tittel" />
       </Element>

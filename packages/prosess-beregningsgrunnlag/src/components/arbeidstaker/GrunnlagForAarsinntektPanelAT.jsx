@@ -4,8 +4,8 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst, EtikettLiten } from 'nav-frontend-typografi';
 
-import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
-import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { behandlingFormValueSelector } from '@fpsak-frontend/form';

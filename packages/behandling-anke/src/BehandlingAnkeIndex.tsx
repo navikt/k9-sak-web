@@ -12,7 +12,7 @@ import {
   ReduxFormStateCleaner,
   BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, NavAnsatt, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, Kodeverk, NavAnsatt, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 
 import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
 import AnkeGrid from './components/AnkeGrid';
@@ -32,8 +32,8 @@ interface OwnProps {
   behandlingVersjon: number;
   fagsak: FagsakInfo;
   navAnsatt: NavAnsatt;
-  kodeverk: { [key: string]: Kodeverk[] };
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  kodeverk: { [key: string]: KodeverkMedNavn[] };
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -105,7 +105,7 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
       fagsak,
       navAnsatt,
       kodeverk,
-      oppdaterProsessStegIUrl,
+      oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       settPaVent,
       hentBehandling,
@@ -141,7 +141,7 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
               navAnsatt={navAnsatt}
               kodeverk={kodeverk}
               valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterProsessStegIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}

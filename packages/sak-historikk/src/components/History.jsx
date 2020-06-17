@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { pathToBehandling } from '@fpsak-frontend/fp-felles';
-
 import historikkinnslagPropType from '../propTypes/historikkinnslagPropType';
 import historikkinnslagType from '../kodeverk/historikkinnslagType';
 import SnakkebobleContainer from './maler/felles/SnakkebobleContainer';
@@ -98,7 +96,7 @@ const velgHistorikkMal = histType => {
  *
  * Historikken for en behandling
  */
-const History = ({ historieInnslag, saksNr, location, getKodeverknavn }) => {
+const History = ({ historieInnslag, saksNr, getBehandlingLocation, getKodeverknavn, createLocationForSkjermlenke }) => {
   const HistorikkMal = velgHistorikkMal(historieInnslag.type);
   const aktorIsVL = historieInnslag.aktoer.kode === 'VL';
   const aktorIsSOKER = historieInnslag.aktoer.kode === 'SOKER';
@@ -114,13 +112,11 @@ const History = ({ historieInnslag, saksNr, location, getKodeverknavn }) => {
       <HistorikkMal
         historikkinnslagDeler={historieInnslag.historikkinnslagDeler}
         dokumentLinks={historieInnslag.dokumentLinks}
-        behandlingLocation={{
-          ...location,
-          pathname: pathToBehandling(saksNr, historieInnslag.behandlingId),
-        }}
+        behandlingLocation={getBehandlingLocation(historieInnslag.behandlingId)}
         originType={historieInnslag.type}
         saksNr={saksNr}
         getKodeverknavn={getKodeverknavn}
+        createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
     </SnakkebobleContainer>
   );
@@ -129,10 +125,9 @@ const History = ({ historieInnslag, saksNr, location, getKodeverknavn }) => {
 History.propTypes = {
   historieInnslag: historikkinnslagPropType.isRequired,
   saksNr: PropTypes.string,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
+  getBehandlingLocation: PropTypes.func.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 History.defaultProps = {

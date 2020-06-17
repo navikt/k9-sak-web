@@ -7,13 +7,19 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import { findHendelseText, findResultatText } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
 
-const HistorikkMalType2 = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => (
+const HistorikkMalType2 = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  getKodeverknavn,
+  createLocationForSkjermlenke,
+}) => (
   <>
     <Skjermlenke
       skjermlenke={historikkinnslagDeler[0].skjermlenke}
       behandlingLocation={behandlingLocation}
       getKodeverknavn={getKodeverknavn}
       scrollUpOnClick
+      createLocationForSkjermlenke={createLocationForSkjermlenke}
     />
     {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
       <Element>
@@ -34,6 +40,7 @@ HistorikkMalType2.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalType2;

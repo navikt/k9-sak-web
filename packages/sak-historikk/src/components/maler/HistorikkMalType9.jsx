@@ -11,7 +11,13 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import styles from './historikkMalType.less';
 import Skjermlenke from './felles/Skjermlenke';
 
-export const HistorikkMalType9 = ({ historikkinnslagDeler, behandlingLocation, originType, getKodeverknavn }) => {
+export const HistorikkMalType9 = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  originType,
+  getKodeverknavn,
+  createLocationForSkjermlenke,
+}) => {
   const intl = useIntl();
   const getSplitPeriods = endredeFelter => {
     let text = '';
@@ -40,6 +46,7 @@ export const HistorikkMalType9 = ({ historikkinnslagDeler, behandlingLocation, o
           behandlingLocation={behandlingLocation}
           getKodeverknavn={getKodeverknavn}
           scrollUpOnClick={false}
+          createLocationForSkjermlenke={createLocationForSkjermlenke}
         />
 
         {historikkinnslagDel.endredeFelter && originType.kode === historikkinnslagType.OVST_UTTAK_SPLITT && (
@@ -98,6 +105,7 @@ HistorikkMalType9.propTypes = {
   behandlingLocation: PropTypes.shape().isRequired,
   originType: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalType9;

@@ -10,7 +10,7 @@ import AnkeMerknaderProsessIndex from '@fpsak-frontend/prosess-anke-merknader';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@k9-sak-web/konstanter';
 import {
   FagsakInfo,
   MargMarkering,

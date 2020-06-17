@@ -37,7 +37,7 @@ interface OwnProps {
   behandlingVersjon: number;
   fagsak: FagsakInfo;
   navAnsatt: NavAnsatt;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -110,7 +110,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
       kodeverk,
       fagsak,
       navAnsatt,
-      oppdaterProsessStegIUrl,
+      oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       settPaVent,
       hentBehandling,
@@ -147,7 +147,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
               kodeverk={kodeverk}
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterProsessStegIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}

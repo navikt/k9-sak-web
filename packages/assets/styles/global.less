@@ -1,6 +1,8 @@
 @import '@{coreModulePath}nav-frontend-core/less/core';
 @import './dayPicker';
 
+/* TODO Mesteparten i denne fila bør ikkje ligga her */
+
 html {
   height: 100%;
 }
@@ -31,37 +33,6 @@ som fra core/og muligen import fra alla andra komponenter
   color: @navMorkGra;
   font-size: 0.8rem;
   font-style: italic;
-}
-
-:global(.lenke) {
-  background: none;
-  border: 0;
-  border-bottom: solid 1px @navGra40;
-  color: @navBla;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: none;
-
-  &:hover,
-  &--hover {
-    border-bottom-color: @navBla;
-  }
-
-  &:focus,
-  &--focus {
-    background-color: @orangeFocus;
-    outline: none;
-  }
-
-  &:active,
-  &--active {
-    border-bottom-color: @navDypBla;
-    color: @navDypBla;
-  }
-
-  &--frittstaende {
-    border-bottom: 0;
-  }
 }
 
 :global(.skjemaelement > .skjemaelement) {
@@ -550,39 +521,6 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
     top: 0; // lesshint-disable zeroUnit
     width: 80px;
   }
-}
-
-[class^="behandlingSupportIndex_behandlingsupportIndex"] table {
-  background-color: white;
-  margin-top: -16px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 12px;
-}
-
-[class^="behandlingSupportIndex_behandlingsupportIndex"] form {
-  background-color: white;
-  margin-top: -16px;
-  min-width: 100%;
-  padding-bottom: 12px;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 12px;
-  width: 100%;
-}
-
-[class^="history_historyContainer"] {
-  background-color: white;
-  margin-top: -16px;
-  min-width: 100%;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 12px;
-  width: 100%;
-}
-
-[class^="behandlingSupportIndex_behandlingsupportIndex"] [class^="linkRow"] {
-  padding-top: 12px;
 }
 
 .snakkeboble {

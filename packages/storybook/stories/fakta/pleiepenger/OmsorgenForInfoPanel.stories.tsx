@@ -1,6 +1,6 @@
 import * as React from 'react';
 import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import withReduxProvider from '../../../decorators/withRedux';
 
 const behandling = {

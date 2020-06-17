@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import { ProsessStegProperties } from '@fpsak-frontend/behandling-felles';
 import { Behandling, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@k9-sak-web/konstanter';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 const hasNonDefaultBehandlingspunkt = ({ behandlingHenlagt }, bpLength) => bpLength > 0 || behandlingHenlagt;

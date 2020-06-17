@@ -9,7 +9,12 @@ import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningType
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import Skjermlenke from './felles/Skjermlenke';
 
-export const HistorikkMalTypeForeldelse = ({ historikkinnslagDeler, behandlingLocation, getKodeverknavn }) => {
+export const HistorikkMalTypeForeldelse = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  getKodeverknavn,
+  createLocationForSkjermlenke,
+}) => {
   if (historikkinnslagDeler.length === 0) {
     return null;
   }
@@ -20,6 +25,7 @@ export const HistorikkMalTypeForeldelse = ({ historikkinnslagDeler, behandlingLo
         behandlingLocation={behandlingLocation}
         getKodeverknavn={getKodeverknavn}
         scrollUpOnClick
+        createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
       {historikkinnslagDeler.map(historikkinnslagDel => {
         const { begrunnelseFritekst, opplysninger, endredeFelter } = historikkinnslagDel;
@@ -72,6 +78,7 @@ HistorikkMalTypeForeldelse.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalTypeForeldelse;

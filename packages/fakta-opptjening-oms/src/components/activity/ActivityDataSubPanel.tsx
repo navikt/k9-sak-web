@@ -1,6 +1,6 @@
 import { DatepickerField, DecimalField, InputField } from '@fpsak-frontend/form';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
   hasValidDecimal,
@@ -73,19 +73,19 @@ const ActivityDataSubPanel = ({
   isManuallyAdded,
   selectedActivityType,
 }: ActivityDataSubPanelProps) => (
-  <ElementWrapper>
+  <>
     {isOfType(selectedActivityType, ...[OAType.ARBEID, OAType.NARING, ...ytelseTypes]) && (
       <Row>
         <Column xs="7">
           {!isManuallyAdded && (
-            <ElementWrapper>
+            <>
               <Undertekst>
                 <FormattedMessage id={getOppdragsgiverMessageId(selectedActivityType)} />
               </Undertekst>
               <div className={styles.arbeidsgiver}>
                 <Normaltekst>{getArbeidsgiverText(initialValues)}</Normaltekst>
               </div>
-            </ElementWrapper>
+            </>
           )}
           {isManuallyAddedAndNotUtenlandskArbeidsforhold(isManuallyAdded, selectedActivityType) && (
             <InputField
@@ -129,7 +129,7 @@ const ActivityDataSubPanel = ({
         </Column>
       </Row>
     )}
-  </ElementWrapper>
+  </>
 );
 
 ActivityDataSubPanel.defaultProps = {

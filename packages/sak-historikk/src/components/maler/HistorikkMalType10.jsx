@@ -18,6 +18,7 @@ const HistorikkMalType10 = ({
   originType,
   saksNr,
   getKodeverknavn,
+  createLocationForSkjermlenke,
 }) => {
   const intl = useIntl();
   const historikkFromToValues = (endretFelt, fieldName) => {
@@ -127,6 +128,7 @@ const HistorikkMalType10 = ({
         behandlingLocation={behandlingLocation}
         getKodeverknavn={getKodeverknavn}
         scrollUpOnClick
+        createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
 
       {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.OVST_UTTAK && (
@@ -179,6 +181,7 @@ HistorikkMalType10.propTypes = {
   originType: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalType10;

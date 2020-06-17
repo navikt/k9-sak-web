@@ -5,7 +5,7 @@ import { ActionTypes } from './ActionTypesTsType';
  * createActionType og createActionTypeWithoutPath
  * Hjelpefunksjon for å generere actionType for actions relatert til AJAX-kall
  *
- * Eks: createRequestActionType('fetchBehandlinger', 'ERROR', get, '/k9/sak/api/behandlinger') -> '@@REST/fetchBehandlinger GET /k9/sak/api/behandlinger ERROR'
+ * Eks: createRequestActionType('fetchBehandlinger', 'ERROR', get, '/fpsak/api/behandlinger') -> '@@REST/fetchBehandlinger GET /fpsak/api/behandlinger ERROR'
  */
 const createActionType = (name, qualifier, restMethod = '', path = '') =>
   `@@REST/${name} ${restMethod} ${path} ${qualifier}`;
@@ -42,11 +42,11 @@ const getActionTypes = (requestRunner: RequestRunner) => ({
  * createRequestActionTypes
  * Hjelpefunksjon for å generere actionTypes for en gitt AJAX-metode og ressurs.
  *
- * Eks. createRequestActionType(fetchBehandlinger, get, '/k9/sak/api/behandlinger') -> {
- *   reset: '@@REST GET /k9/sak/api/behandlinger RESET',
- *   requestStarted: '@@REST GET /k9/sak/api/behandlinger STARTED',
- *   requestError: '@@REST GET /k9/sak/api/behandlinger ERROR',
- *   requestFinished: '@@REST GET /k9/sak/api/behandlinger FINISHED',
+ * Eks. createRequestActionType(fetchBehandlinger, get, '/fpsak/api/behandlinger') -> {
+ *   reset: '@@REST GET /fpsak/api/behandlinger RESET',
+ *   requestStarted: '@@REST GET /fpsak/api/behandlinger STARTED',
+ *   requestError: '@@REST GET /fpsak/api/behandlinger ERROR',
+ *   requestFinished: '@@REST GET /fpsak/api/behandlinger FINISHED',
  * }
  */
 const createRequestActionTypes = (requestRunner: RequestRunner): ActionTypes => getActionTypes(requestRunner);

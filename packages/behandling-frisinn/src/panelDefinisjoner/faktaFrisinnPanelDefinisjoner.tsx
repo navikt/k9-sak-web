@@ -2,7 +2,7 @@ import FaktaPanelDefinisjon from '@fpsak-frontend/behandling-felles/src/types/fa
 import InntektOgYtelser from '@fpsak-frontend/fakta-inntekt-og-ytelser';
 import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import * as React from 'react';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';

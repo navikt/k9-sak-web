@@ -12,8 +12,8 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { DateLabel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ISO_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   RadioGroupField,
   RadioOption,
@@ -26,22 +26,17 @@ import {
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import {
-  BehandlingspunktBegrunnelseTextField,
-  BehandlingspunktSubmitButton,
-  getKodeverknavnFn,
-} from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 
-const findRadioButtonTextCode = (erVilkarOk) => (erVilkarOk
-  ? 'ErSoknadsfristVilkaretOppfyltForm.VilkarOppfylt' : 'ErSoknadsfristVilkaretOppfyltForm.VilkarIkkeOppfylt');
+const findRadioButtonTextCode = erVilkarOk =>
+  erVilkarOk
+    ? 'ErSoknadsfristVilkaretOppfyltForm.VilkarOppfylt'
+    : 'ErSoknadsfristVilkaretOppfyltForm.VilkarIkkeOppfylt';
 
-const findSoknadsfristDate = (mottattDato, antallDagerSoknadLevertForSent) => (
-  moment(mottattDato)
-    .subtract(antallDagerSoknadLevertForSent, 'days')
-    .format(ISO_DATE_FORMAT)
-);
+const findSoknadsfristDate = (mottattDato, antallDagerSoknadLevertForSent) =>
+  moment(mottattDato).subtract(antallDagerSoknadLevertForSent, 'days').format(ISO_DATE_FORMAT);
 
 const isEdited = (hasAksjonspunkt, erVilkarOk) => hasAksjonspunkt && erVilkarOk !== undefined;
 const showAvslagsarsak = (erVilkarOk, avslagsarsak) => erVilkarOk === false && avslagsarsak;
@@ -72,7 +67,10 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
     <span className="typo-normal">
       <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart1" />
       <span className={styles.days}>
-        <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart2" values={{ numberOfDays: antallDagerSoknadLevertForSent }} />
+        <FormattedMessage
+          id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart2"
+          values={{ numberOfDays: antallDagerSoknadLevertForSent }}
+        />
       </span>
       <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart3" />
       {soknad.mottattDato && antallDagerSoknadLevertForSent && (
@@ -84,9 +82,15 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         <Panel className={styles.panel}>
           <SkjemaGruppe legend={intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.Consider' })}>
             <ul className={styles.hyphen}>
-              <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question1" /></li>
-              <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question2" /></li>
-              <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question3" /></li>
+              <li>
+                <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question1" />
+              </li>
+              <li>
+                <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question2" />
+              </li>
+              <li>
+                <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question3" />
+              </li>
             </ul>
           </SkjemaGruppe>
         </Panel>
@@ -96,51 +100,57 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
           <Row>
             <Column xs="6">
               <Undertekst>{intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.MottattDato' })}</Undertekst>
-              <span className="typo-normal">
-                {soknad.mottattDato && <DateLabel dateString={soknad.mottattDato} />}
-              </span>
+              <span className="typo-normal">{soknad.mottattDato && <DateLabel dateString={soknad.mottattDato} />}</span>
             </Column>
             <Column xs="6">
               {textCode && <Undertekst>{intl.formatMessage({ id: textCode })}</Undertekst>}
-              <span className="typo-normal">
-                {dato && <DateLabel id="date-label" dateString={dato} />}
-              </span>
+              <span className="typo-normal">{dato && <DateLabel id="date-label" dateString={dato} />}</span>
             </Column>
           </Row>
           <VerticalSpacer twentyPx />
           <Row>
             <Column xs="11">
-              <Undertekst>{intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.ExplanationFromApplication' })}</Undertekst>
-              <span className="typo-normal">
-                {soknad.begrunnelseForSenInnsending || '-'}
-              </span>
+              <Undertekst>
+                {intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.ExplanationFromApplication' })}
+              </Undertekst>
+              <span className="typo-normal">{soknad.begrunnelseForSenInnsending || '-'}</span>
             </Column>
           </Row>
         </Panel>
       </Column>
     </Row>
     <VerticalSpacer sixteenPx />
-    {!readOnly
-        && (
-        <Row>
-          <Column xs="6">
-            <RadioGroupField name="erVilkarOk" validate={[required]}>
-              <RadioOption label={<FormattedHTMLMessage id={findRadioButtonTextCode(true)} />} value />
-              <RadioOption label={<FormattedHTMLMessage id={findRadioButtonTextCode(false)} />} value={false} />
-            </RadioGroupField>
-          </Column>
-        </Row>
-        )}
-    {readOnly
-        && (
-        <ElementWrapper>
-          <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
-            {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
+    {!readOnly && (
+      <Row>
+        <Column xs="6">
+          <RadioGroupField name="erVilkarOk" validate={[required]}>
+            <RadioOption label={<FormattedHTMLMessage id={findRadioButtonTextCode(true)} />} value />
+            <RadioOption label={<FormattedHTMLMessage id={findRadioButtonTextCode(false)} />} value={false} />
           </RadioGroupField>
-          {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
-          && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
-        </ElementWrapper>
+        </Column>
+      </Row>
+    )}
+    {readOnly && (
+      <>
+        <RadioGroupField
+          name="dummy"
+          className={styles.text}
+          readOnly={readOnly}
+          isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}
+        >
+          {[
+            <RadioOption
+              key="dummy"
+              label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />}
+              value=""
+            />,
+          ]}
+        </RadioGroupField>
+        {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak) && (
+          <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>
         )}
+      </>
+    )}
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     <BehandlingspunktSubmitButton
       formName={formProps.form}
@@ -177,13 +187,13 @@ ErSoknadsfristVilkaretOppfyltFormImpl.defaultProps = {
   hasAksjonspunkt: false,
 };
 
-
-export const buildInitialValues = createSelector([
-  (state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.status],
-(aksjonspunkter, status) => ({
-  erVilkarOk: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : vilkarUtfallType.OPPFYLT === status,
-  ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
-}));
+export const buildInitialValues = createSelector(
+  [(state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.status],
+  (aksjonspunkter, status) => ({
+    erVilkarOk: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : vilkarUtfallType.OPPFYLT === status,
+    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+  }),
+);
 
 const transformValues = (values, aksjonspunkter) => ({
   erVilkarOk: values.erVilkarOk,
@@ -191,37 +201,45 @@ const transformValues = (values, aksjonspunkter) => ({
   ...BehandlingspunktBegrunnelseTextField.transformValues(values),
 });
 
-const findDate = createSelector([
-  (state, ownProps) => ownProps.soknad, (state, ownProps) => ownProps.gjeldendeFamiliehendelse], (soknad, familiehendelse) => {
-  if (soknad.soknadType.kode === soknadType.FODSEL) {
-    const soknadFodselsdato = soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined;
-    const fodselsdato = familiehendelse && familiehendelse.fodselsdato ? familiehendelse.fodselsdato : soknadFodselsdato;
-    const termindato = familiehendelse && familiehendelse.termindato ? familiehendelse.termindato : soknad.termindato;
-    return fodselsdato || termindato;
-  }
-  return familiehendelse && familiehendelse.omsorgsovertakelseDato ? familiehendelse.omsorgsovertakelseDato : soknad.omsorgsovertakelseDato;
-});
+const findDate = createSelector(
+  [(state, ownProps) => ownProps.soknad, (state, ownProps) => ownProps.gjeldendeFamiliehendelse],
+  (soknad, familiehendelse) => {
+    if (soknad.soknadType.kode === soknadType.FODSEL) {
+      const soknadFodselsdato = soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined;
+      const fodselsdato =
+        familiehendelse && familiehendelse.fodselsdato ? familiehendelse.fodselsdato : soknadFodselsdato;
+      const termindato = familiehendelse && familiehendelse.termindato ? familiehendelse.termindato : soknad.termindato;
+      return fodselsdato || termindato;
+    }
+    return familiehendelse && familiehendelse.omsorgsovertakelseDato
+      ? familiehendelse.omsorgsovertakelseDato
+      : soknad.omsorgsovertakelseDato;
+  },
+);
 
-const findTextCode = createSelector([
-  (state, ownProps) => ownProps.soknad, (state, ownProps) => ownProps.gjeldendeFamiliehendelse], (soknad, familiehendelse) => {
-  if (soknad.soknadType.kode === soknadType.FODSEL) {
-    const soknadFodselsdato = soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined;
-    const fodselsdato = familiehendelse && familiehendelse.fodselsdato ? familiehendelse.fodselsdato : soknadFodselsdato;
-    return fodselsdato ? 'ErSoknadsfristVilkaretOppfyltForm.Fodselsdato' : 'ErSoknadsfristVilkaretOppfyltForm.Termindato';
-  }
-  return 'ErSoknadsfristVilkaretOppfyltForm.Omsorgsovertakelsesdato';
-});
+const findTextCode = createSelector(
+  [(state, ownProps) => ownProps.soknad, (state, ownProps) => ownProps.gjeldendeFamiliehendelse],
+  (soknad, familiehendelse) => {
+    if (soknad.soknadType.kode === soknadType.FODSEL) {
+      const soknadFodselsdato = soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined;
+      const fodselsdato =
+        familiehendelse && familiehendelse.fodselsdato ? familiehendelse.fodselsdato : soknadFodselsdato;
+      return fodselsdato
+        ? 'ErSoknadsfristVilkaretOppfyltForm.Fodselsdato'
+        : 'ErSoknadsfristVilkaretOppfyltForm.Termindato';
+    }
+    return 'ErSoknadsfristVilkaretOppfyltForm.Omsorgsovertakelsesdato';
+  },
+);
 
 const formName = 'ErSoknadsfristVilkaretOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const {
-    aksjonspunkter, vilkar, alleKodeverk, submitCallback,
-  } = initialOwnProps;
-  const vilkarCodes = aksjonspunkter.map((a) => a.vilkarType.kode);
-  const onSubmit = (values) => submitCallback([transformValues(values, aksjonspunkter)]);
-  const antallDagerSoknadLevertForSent = vilkar
-    .find((v) => vilkarCodes.includes(v.vilkarType.kode)).merknadParametere.antallDagerSoeknadLevertForSent;
+  const { aksjonspunkter, vilkar, alleKodeverk, submitCallback } = initialOwnProps;
+  const vilkarCodes = aksjonspunkter.map(a => a.vilkarType.kode);
+  const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter)]);
+  const antallDagerSoknadLevertForSent = vilkar.find(v => vilkarCodes.includes(v.vilkarType.kode)).merknadParametere
+    .antallDagerSoeknadLevertForSent;
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (state, ownProps) => {
@@ -234,11 +252,20 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       dato: findDate(state, ownProps),
       textCode: findTextCode(state, ownProps),
       hasAksjonspunkt: aksjonspunkter.length > 0,
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'textCode', 'dato', 'erVilkarOk'),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
+        state,
+        'textCode',
+        'dato',
+        'erVilkarOk',
+      ),
     };
   };
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
-  form: formName,
-})(ErSoknadsfristVilkaretOppfyltFormImpl)));
+export default connect(mapStateToPropsFactory)(
+  injectIntl(
+    behandlingForm({
+      form: formName,
+    })(ErSoknadsfristVilkaretOppfyltFormImpl),
+  ),
+);

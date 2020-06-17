@@ -15,7 +15,7 @@ import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/dto/testdata';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -71,7 +71,7 @@ const PANEL_ATTRIBUTTER = {
 
 const prosessStegPanelDefinisjoner = [
   {
-    urlCode: bpc.VARSEL,
+    urlCode: prosessStegCodes.VARSEL,
     textCode: 'Behandlingspunkt.CheckVarselRevurdering',
     panels: [
       {
@@ -87,7 +87,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.SAKSOPPLYSNINGER,
+    urlCode: prosessStegCodes.SAKSOPPLYSNINGER,
     textCode: 'Behandlingspunkt.Saksopplysninger',
     panels: [
       {
@@ -99,7 +99,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.INNGANGSVILKAR,
+    urlCode: prosessStegCodes.INNGANGSVILKAR,
     textCode: 'Behandlingspunkt.Inngangsvilkar',
     panels: [
       {
@@ -144,7 +144,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.MEDISINSK_VILKAR,
+    urlCode: prosessStegCodes.MEDISINSK_VILKAR,
     textCode: 'Behandlingspunkt.MedisinskVilkar',
     panels: [
       {
@@ -160,7 +160,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.OPPTJENING,
+    urlCode: prosessStegCodes.OPPTJENING,
     textCode: 'Behandlingspunkt.Opptjening',
     panels: [
       {
@@ -183,7 +183,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.BEREGNINGSGRUNNLAG,
+    urlCode: prosessStegCodes.BEREGNINGSGRUNNLAG,
     textCode: 'Behandlingspunkt.Beregning',
     panels: [
       {
@@ -204,7 +204,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.FORTSATTMEDLEMSKAP,
+    urlCode: prosessStegCodes.FORTSATTMEDLEMSKAP,
     textCode: 'Behandlingspunkt.FortsattMedlemskap',
     panels: [
       {
@@ -215,7 +215,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.UTTAK,
+    urlCode: prosessStegCodes.UTTAK,
     textCode: 'Behandlingspunkt.Uttak',
     panels: [
       {
@@ -229,7 +229,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.TILKJENT_YTELSE,
+    urlCode: prosessStegCodes.TILKJENT_YTELSE,
     textCode: 'Behandlingspunkt.TilkjentYtelse',
     panels: [
       {
@@ -259,7 +259,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.AVREGNING,
+    urlCode: prosessStegCodes.AVREGNING,
     textCode: 'Behandlingspunkt.Avregning',
     panels: [
       {
@@ -278,7 +278,7 @@ const prosessStegPanelDefinisjoner = [
     ],
   },
   {
-    urlCode: bpc.VEDTAK,
+    urlCode: prosessStegCodes.VEDTAK,
     textCode: 'Behandlingspunkt.Vedtak',
     panels: [
       {

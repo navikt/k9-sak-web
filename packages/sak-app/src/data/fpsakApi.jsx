@@ -1,6 +1,11 @@
-import { ReduxEvents, ReduxRestApiBuilder, RestApiConfigBuilder } from '@fpsak-frontend/rest-api-redux';
+import {
+  reducerRegistry,
+  setRequestPollingMessage,
+  ReduxEvents,
+  ReduxRestApiBuilder,
+  RestApiConfigBuilder,
+} from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
-import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-felles';
 
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',
@@ -44,7 +49,7 @@ export const FpsakApiKeys = {
   HAR_APENT_KONTROLLER_REVURDERING_AP: 'HAR_APENT_KONTROLLER_REVURDERING_AP',
   TOTRINNS_KLAGE_VURDERING: 'TOTRINNS_KLAGE_VURDERING',
   HAR_REVURDERING_SAMME_RESULTAT: 'HAR_REVURDERING_SAMME_RESULTAT',
-  BEHANDLING_PERSONOPPLYSNINGER: 'BEHANDLING_PERSONOPPLYSNINGER'
+  BEHANDLING_PERSONOPPLYSNINGER: 'BEHANDLING_PERSONOPPLYSNINGER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -72,7 +77,10 @@ const endpoints = new RestApiConfigBuilder()
     fetchLinkDataAutomatically: false,
   })
   .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
-  .withGet('/fptilbake/api/behandlinger/kan-revurdering-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
+  .withGet(
+    '/fptilbake/api/behandlinger/kan-revurdering-opprettes',
+    FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES,
+  )
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
   .withGet(
     '/fptilbake/api/behandlinger/kan-revurdering-opprettes',
@@ -128,7 +136,10 @@ const endpoints = new RestApiConfigBuilder()
   /* k9/formidling/api/brev */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
   .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
-  .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-henleggelsesbrev', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE)
+  .withPostAndOpenBlob(
+    '/fptilbake/api/dokument/forhandsvis-henleggelsesbrev',
+    FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
+  )
 
   /* /sprak */
   .withGet('/k9/web/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)

@@ -9,7 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { featureToggle } from '@fpsak-frontend/fp-felles';
+import { featureToggle } from '@k9-sak-web/konstanter';
 import {
   RadioGroupField,
   RadioOption,
@@ -39,14 +39,6 @@ const maxLength1500 = maxLength(1500);
 const simuleringAksjonspunkter = [aksjonspunktCodes.VURDER_FEILUTBETALING];
 const formName = 'AvregnigForm';
 const IKKE_SEND = 'IKKE_SEND';
-
-const createHelptextTooltip = () => ({
-  header: (
-    <Normaltekst>
-      <FormattedMessage id="Avregning.HjelpetekstPleiepenger" />
-    </Normaltekst>
-  ),
-});
 
 const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
   if (!simuleringResultat) {
@@ -209,7 +201,7 @@ export class AvregningPanelImpl extends Component {
                                         src={questionNormalUrl}
                                         srcHover={questionHoverUrl}
                                         alt={intl.formatMessage({ id: 'Avregning.HjelpetekstForeldrepenger' })}
-                                        tooltip={createHelptextTooltip()}
+                                        tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
                                       />
                                     </Column>
                                   </Row>

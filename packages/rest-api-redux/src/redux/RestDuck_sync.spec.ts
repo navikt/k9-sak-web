@@ -64,7 +64,7 @@ describe('RestDuck (sync)', () => {
   });
 
   const ressursEndpoint = '/api/ressurs';
-  const ressursEndpointIncludingContextPath = `/sak${ressursEndpoint}`;
+  const ressursEndpointIncludingContextPath = `/fpsak${ressursEndpoint}`;
 
   it('skal sette flagg for started og finished og legge ressurs i state', () => {
     mockAxios.onGet(ressursEndpointIncludingContextPath).reply(200, {
@@ -74,7 +74,7 @@ describe('RestDuck (sync)', () => {
 
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
-    const requestApi = new RequestApi(httpClientApi, 'sak', [requestConfig]);
+    const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(
       requestApi.getRequestRunner(requestConfig.name),
       sinon.spy(),
@@ -118,7 +118,7 @@ describe('RestDuck (sync)', () => {
 
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
-    const requestApi = new RequestApi(httpClientApi, 'sak', [requestConfig]);
+    const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(
       requestApi.getRequestRunner(requestConfig.name),
       sinon.spy(),
@@ -147,7 +147,7 @@ describe('RestDuck (sync)', () => {
         data: undefined,
         meta: { params, timestamp: stateAfterRequestError.meta.timestamp },
         error: {
-          location: '/sak/api/ressurs',
+          location: '/fpsak/api/ressurs',
         },
         started: false,
         finished: true,
@@ -165,7 +165,7 @@ describe('RestDuck (sync)', () => {
 
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
-    const requestApi = new RequestApi(httpClientApi, 'sak', [requestConfig]);
+    const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(
       requestApi.getRequestRunner(requestConfig.name),
       sinon.spy(),
@@ -198,7 +198,7 @@ describe('RestDuck (sync)', () => {
 
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
-    const requestApi = new RequestApi(httpClientApi, 'sak', [requestConfig]);
+    const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(
       requestApi.getRequestRunner(requestConfig.name),
       sinon.spy(),
@@ -232,7 +232,7 @@ describe('RestDuck (sync)', () => {
     const getApiContext = state => state.dataContext;
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
-    const requestApi = new RequestApi(httpClientApi, 'sak', [requestConfig]);
+    const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(
       requestApi.getRequestRunner(requestConfig.name),
       getApiContext,

@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
@@ -35,7 +35,7 @@ export const InntektstabellPanelImpl = ({
   erOverstyrt,
   fieldArrayID,
 }) => (
-  <ElementWrapper>
+  <>
     {children}
     <div className={styles.fadeinTabell}>
       <VerticalSpacer sixteenPx />
@@ -50,17 +50,17 @@ export const InntektstabellPanelImpl = ({
         </div>
       )}
       {skalViseTabell && (
-        <ElementWrapper>
+        <>
           {hjelpeTekstId && (
             <Element>
               <FormattedMessage id={hjelpeTekstId} />
             </Element>
           )}
           {tabell}
-        </ElementWrapper>
+        </>
       )}
     </div>
-  </ElementWrapper>
+  </>
 );
 
 InntektstabellPanelImpl.propTypes = {

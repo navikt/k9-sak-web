@@ -1,7 +1,6 @@
 import React from 'react';
 import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import styles from './faktaBegrunnelseTextField.less';
@@ -20,7 +19,7 @@ const FaktaBegrunnelseTextField = ({
   hasVurderingText,
   name = 'begrunnelse',
 }: FaktaBegrunnelseTextFieldProps) => (
-  <ElementWrapper>
+  <>
     {(isSubmittable || hasBegrunnelse) && (
       <div className={styles.begrunnelseTextField}>
         <TextAreaField
@@ -33,7 +32,7 @@ const FaktaBegrunnelseTextField = ({
         />
       </div>
     )}
-  </ElementWrapper>
+  </>
 );
 
 interface FaktaBegrunnelseTextFieldProps {

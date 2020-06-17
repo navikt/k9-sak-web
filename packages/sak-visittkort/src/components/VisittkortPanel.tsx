@@ -19,10 +19,10 @@ const utledKjonn = kjonn => {
 
 interface OwnProps {
   fagsak: Fagsak;
-  personopplysninger?: Personopplysninger;
-  lenkeTilAnnenPart?: string;
   alleKodeverk: { [key: string]: [Kodeverk] };
   sprakkode: Kodeverk;
+  personopplysninger?: Personopplysninger;
+  harTilbakekrevingVerge: boolean;
 }
 
 const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -32,8 +32,9 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   // lenkeTilAnnenPart,
   alleKodeverk,
   sprakkode,
+  harTilbakekrevingVerge,
 }) => {
-  if (!personopplysninger) {
+  if (!personopplysninger && !harTilbakekrevingVerge) {
     const { person } = fagsak;
     return (
       <div className={styles.container}>
@@ -45,7 +46,21 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       </div>
     );
   }
-
+  if (harTilbakekrevingVerge) {
+    const { person } = fagsak;
+    return (
+      <div className={styles.container}>
+        <PersonCard
+          name={person.navn}
+          fodselsnummer={person.personnummer}
+          gender={person.erKvinne ? Gender.female : Gender.male}
+          renderLabelContent={(): JSX.Element => (
+            <VisittkortLabels personopplysninger={personopplysninger} harTilbakekrevingVerge={harTilbakekrevingVerge} />
+          )}
+        />
+      </div>
+    );
+  }
   // const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
 
   const soker = personopplysninger;
