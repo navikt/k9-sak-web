@@ -19,8 +19,12 @@ interface UttaksplanProps {
   aktivitetsstatuser: KodeverkMedNavn[];
 }
 
-const mapAktiviteterTilTabell = (aktiviteter: Aktivitet[], aktivitetsstatuser: KodeverkMedNavn[]) =>
-  aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => (
+const mapAktiviteterTilTabell = (aktiviteter: Aktivitet[], aktivitetsstatuser: KodeverkMedNavn[]) => {
+  if (!aktiviteter.length) {
+    return <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />;
+  }
+
+  return aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => (
     <AktivitetTabell
       arbeidsforhold={arbeidsforhold}
       uttaksperioder={uttaksperioder}
@@ -28,6 +32,7 @@ const mapAktiviteterTilTabell = (aktiviteter: Aktivitet[], aktivitetsstatuser: K
       key={joinNonNullStrings(Object.values(arbeidsforhold))}
     />
   ));
+};
 
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   aktiviteterBehandling = [],
@@ -60,12 +65,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
         onChange={(e, valgtIndex) => setValgtTabIndex(valgtIndex)}
       />
       <VerticalSpacer sixteenPx />
-      {valgtTabIndex === 0 &&
-        (aktiviteterBehandling.length ? (
-          mapAktiviteterTilTabell(aktiviteterBehandling, aktivitetsstatuser)
-        ) : (
-          <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />
-        ))}
+      {valgtTabIndex === 0 && mapAktiviteterTilTabell(aktiviteterBehandling, aktivitetsstatuser)}
       {valgtTabIndex === 1 && mapAktiviteterTilTabell(aktiviteterHittilIÅr, aktivitetsstatuser)}
     </BorderedContainer>
   );

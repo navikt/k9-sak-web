@@ -32,7 +32,7 @@ const behandling: Behandling = {
 };
 
 describe('<ÅrskvantumIndex>', () => {
-  it('rendrer aksjonspunkt hvis det finnes', () => {
+  it('rendrer aksjonspunkt-form hvis det finnes aksjonspunkter', () => {
     const wrapperAksjonspunkt = shallowWithIntl(
       <ÅrskvantumIndex
         årskvantum={årskvantum}
@@ -43,7 +43,9 @@ describe('<ÅrskvantumIndex>', () => {
     );
 
     expect(wrapperAksjonspunkt.find(AksjonspunktForm)).to.have.length(1);
+  });
 
+  it('rendrer ikke aksjonspunkt-form hvis det ikke finnes aksjonspunkter', () => {
     const wrapperIngenAksjonspunkt = shallowWithIntl(
       <ÅrskvantumIndex årskvantum={årskvantum} aksjonspunkterForSteg={[]} behandling={behandling} alleKodeverk={{}} />,
     );
