@@ -1,4 +1,3 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, Kodeverk, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import SideMenu from '@navikt/nap-side-menu';
@@ -99,6 +98,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             toggleOverstyring={toggleOverstyring}
           />
           <VilkarresultatMedOverstyringForm
+            key={`${activePeriode.periode.fom}-${activePeriode.periode.tom}`}
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
             behandlingType={behandling.type}
@@ -116,12 +116,8 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             overstyringApKode={overstyringApKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             erMedlemskapsPanel={erMedlemskapsPanel}
-            periodeFom={
-              activeVilkår.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET ? activePeriode.periode.fom : ''
-            }
-            periodeTom={
-              activeVilkår.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET ? activePeriode.periode.tom : ''
-            }
+            avslagKode={activePeriode.avslagKode}
+            periode={activePeriode}
           />
         </div>
       </div>

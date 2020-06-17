@@ -226,6 +226,10 @@ export const getAksjonspunktTextSelector = createSelector(
       return [buildVarigEndringBeregningText(aksjonspunkt.beregningDto)];
     }
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
+      // TODO Workaround for saker behandlet før TSF-818 ble rettet. Løst så de kan sende tilbake sakene i prod, skal fjernes etter at sakene er rettet
+      if (!aksjonspunkt.beregningDtoer && !aksjonspunkt.beregningDto) {
+        return [<FormattedMessage id="ToTrinnsForm.Beregning.Generell" />];
+      }
       return aksjonspunkt.beregningDtoer
         ? getFaktaOmBeregningTextFlereGrunnlag(aksjonspunkt.beregningDtoer)
         : getFaktaOmBeregningText(aksjonspunkt.beregningDto);
