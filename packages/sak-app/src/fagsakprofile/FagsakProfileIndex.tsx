@@ -34,14 +34,15 @@ const risikoklassifiseringData = [fpsakApi.RISIKO_AKSJONSPUNKT, fpsakApi.KONTROL
 const behandlingerRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.BEHANDLINGER_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.BEHANDLINGER_FPTILBAKE,
+  [ApplicationContextPath.KLAGE]: fpsakApi.BEHANDLINGER_KLAGE,
 };
 
 export const getAlleBehandlinger = createSelector<
-  { behandlingerFpsak?: Behandling[]; behandlingerFptilbake?: Behandling[] },
+  { behandlingerFpsak?: Behandling[]; behandlingerFptilbake?: Behandling[]; behandlingerKlage?: Behandling[] },
   Behandling[],
   Behandling[]
 >(
-  [props => props.behandlingerFpsak, props => props.behandlingerFptilbake],
+  [props => props.behandlingerFpsak, props => props.behandlingerFptilbake, props => props.behandlingerKlage],
   (behandlingerFpsak = [], behandlingerFptilbake = []) => behandlingerFpsak.concat(behandlingerFptilbake),
 );
 
@@ -109,6 +110,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
         endpointParams={{
           [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer },
           [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer },
+          [fpsakApi.BEHANDLINGER_KLAGE.name]: { saksnummer },
         }}
         showOldDataWhenRefetching
         endpoints={enabledApis}
