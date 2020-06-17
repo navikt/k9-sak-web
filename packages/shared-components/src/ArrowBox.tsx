@@ -96,12 +96,10 @@ const ArrowBox: FunctionComponent<OwnProps> = ({
   hideBorder = false,
 }) => (
   <>
-    <style
-      dangerouslySetInnerHTML={{
-        // eslint-disable-line react/no-danger
-        __html: getArrowBox(alignOffset, alignLeft, marginTop, marginLeft),
-      }}
-    />
+    {
+      // eslint-disable-next-line react/no-danger
+    }
+    <style dangerouslySetInnerHTML={{ __html: getArrowBox(alignOffset, alignLeft, marginTop, marginLeft) }} />
     <div className={getClassName(alignOffset, alignLeft, hideBorder)}>{children}</div>
   </>
 );
