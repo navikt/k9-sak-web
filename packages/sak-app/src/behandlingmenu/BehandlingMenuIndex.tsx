@@ -205,8 +205,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
           />
         )),
         new MenyData(
-          skalViseHenleggIMeny(behandlingId, behandlingType, kanHenlegge, rettigheter.henleggBehandlingAccess) &&
-            (!erFrisinn || behandlingType.kode === bType.KLAGE),
+          skalViseHenleggIMeny(behandlingId, behandlingType, kanHenlegge, rettigheter.henleggBehandlingAccess),
           getHenleggMenytekst(),
         ).medModal(lukkModal => (
           <MenyHenleggIndex
