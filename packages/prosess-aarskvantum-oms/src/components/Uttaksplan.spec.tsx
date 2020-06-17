@@ -6,7 +6,6 @@ import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
 import { VilkårEnum } from '../dto/Vilkår';
 import AktivitetTabell from './AktivitetTabell';
-import AksjonspunktForm from './AksjonspunktForm';
 
 describe('Uttaksplan', () => {
   const aktivitet: Aktivitet = {
@@ -32,24 +31,10 @@ describe('Uttaksplan', () => {
   };
   it('rendrer en tabell per aktivitet', () => {
     const aktiviteter: Aktivitet[] = [aktivitet, aktivitet, aktivitet];
-    const wrapper = shallowWithIntl(<Uttaksplan aktiviteter={aktiviteter} aktivitetsstatuser={[]} />);
+    const wrapper = shallowWithIntl(<Uttaksplan aktiviteterBehandling={aktiviteter} aktivitetsstatuser={[]} />);
 
     const tabell = wrapper.find(AktivitetTabell);
 
     expect(tabell).to.have.length(aktiviteter.length);
-  });
-
-  it('rendrer aksjonspunkt hvis det finnes', () => {
-    const wrapperAksjonspunkt = shallowWithIntl(
-      <Uttaksplan aksjonspunkterForSteg={[{}]} isAksjonspunktOpen={false} aktiviteter={[]} aktivitetsstatuser={[]} />,
-    );
-
-    expect(wrapperAksjonspunkt.find(AksjonspunktForm)).to.have.length(1);
-
-    const wrapperIngenAksjonspunkt = shallowWithIntl(
-      <Uttaksplan aksjonspunkterForSteg={[]} isAksjonspunktOpen={false} aktiviteter={[]} aktivitetsstatuser={[]} />,
-    );
-
-    expect(wrapperIngenAksjonspunkt.find(AksjonspunktForm)).to.have.length(0);
   });
 });

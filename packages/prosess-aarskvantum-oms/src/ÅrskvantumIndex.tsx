@@ -8,6 +8,8 @@ import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import Årskvantum from './components/Årskvantum';
 import Uttaksplan from './components/Uttaksplan';
+import AksjonspunktForm from './components/AksjonspunktForm';
+import Aktivitet from './dto/Aktivitet';
 
 const cache = createIntlCache();
 
@@ -21,6 +23,7 @@ const intl = createIntl(
 
 interface ÅrsakvantumIndexProps {
   årskvantum: ÅrskvantumForbrukteDager;
+  aktiviteterHittilIÅr: Aktivitet[];
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   isAksjonspunktOpen: boolean;
   behandling: Behandling;
@@ -30,11 +33,12 @@ interface ÅrsakvantumIndexProps {
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   årskvantum,
+  aktiviteterHittilIÅr,
   alleKodeverk,
   isAksjonspunktOpen,
   behandling,
   submitCallback,
-  aksjonspunkterForSteg,
+  aksjonspunkterForSteg = [],
 }) => {
   const {
     totaltAntallDager,
@@ -51,6 +55,16 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
 
   return (
     <RawIntlProvider value={intl}>
+      {aksjonspunkterForSteg.length > 0 && (
+        <AksjonspunktForm
+          aktiviteter={sisteUttaksplan.aktiviteter}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          submitCallback={submitCallback}
+          aksjonspunkterForSteg={aksjonspunkterForSteg}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+        />
+      )}
       <Årskvantum
         totaltAntallDager={totaltAntallDager}
         antallKoronadager={antallKoronadager}
@@ -65,14 +79,10 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
       />
       <VerticalSpacer sixteenPx />
       <Uttaksplan
-        aktiviteter={sisteUttaksplan.aktiviteter}
+        aktiviteterBehandling={sisteUttaksplan.aktiviteter}
+        aktiviteterHittilIÅr={aktiviteterHittilIÅr}
         aktivitetsstatuser={aktivitetsstatuser}
         aktiv={sisteUttaksplan.aktiv}
-        isAksjonspunktOpen={isAksjonspunktOpen}
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        submitCallback={submitCallback}
-        aksjonspunkterForSteg={aksjonspunkterForSteg}
       />
     </RawIntlProvider>
   );
