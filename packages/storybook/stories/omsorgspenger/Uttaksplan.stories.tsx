@@ -8,6 +8,7 @@ import Uttaksperiode, { VurderteVilkår } from '@k9-sak-web/prosess-aarskvantum-
 import { Behandling } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
+import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -75,6 +76,14 @@ const uidentifisertRammevedtak: Rammevedtak = {
   fritekst: 'utolkbart blabla',
 };
 
+const aktivitet: Aktivitet = {
+  arbeidsforhold: {
+    arbeidsforholdId: '888',
+    organisasjonsnummer: '999',
+    type: 'SN',
+  },
+  uttaksperioder: [innvilgetPeriode],
+};
 const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukteDager => ({
   totaltAntallDager: 17,
   antallKoronadager: 0,
@@ -93,14 +102,7 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
         },
         uttaksperioder: perioder,
       },
-      {
-        arbeidsforhold: {
-          arbeidsforholdId: '888',
-          organisasjonsnummer: '999',
-          type: 'SN',
-        },
-        uttaksperioder: [innvilgetPeriode],
-      },
+      aktivitet,
     ],
     aktiv: true,
     behandlingUUID: '1',
@@ -123,8 +125,13 @@ const behandling: Behandling = {
 const aksjonspunkterForSteg: Aksjonspunkt[] = [{}];
 
 export const standard = () => (
-  // @ts-ignore
-  <ÅrskvantumIndex årskvantum={årskvantumDto} alleKodeverk={alleKodeverk} behandling={behandling} />
+  <ÅrskvantumIndex
+    årskvantum={årskvantumDto}
+    // @ts-ignore
+    alleKodeverk={alleKodeverk}
+    behandling={behandling}
+    aktiviteterHittilIÅr={[aktivitet]}
+  />
 );
 
 export const negativeForbrukteDager = () => (
