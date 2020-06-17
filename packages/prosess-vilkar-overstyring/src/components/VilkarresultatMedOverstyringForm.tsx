@@ -22,6 +22,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
+import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.less';
 
@@ -52,15 +53,17 @@ interface VilkarresultatMedOverstyringFormProps {
   medlemskapFom: string;
   overrideReadOnly: boolean;
   overstyringApKode: string;
-  periodeFom: string;
-  periodeTom: string;
   status: string;
   submitCallback: (props: SubmitCallback[]) => void;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
+  avslagKode?: string;
+  periode?: Vilkarperiode;
 }
 
 interface StateProps {
   isSolvable: boolean;
+  periodeFom: string;
+  periodeTom: string;
 }
 
 /**
@@ -171,20 +174,22 @@ export const VilkarresultatMedOverstyringForm = ({
 
 const buildInitialValues = createSelector(
   [
-    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.behandlingsresultat,
+    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.avslagKode,
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.aksjonspunkter,
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.status,
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.overstyringApKode,
+    (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.periode,
   ],
-  (behandlingsresultat, aksjonspunkter, status, overstyringApKode) => {
+  (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
       ...VilkarresultatMedBegrunnelse.buildInitialValues(
-        behandlingsresultat,
+        avslagKode,
         aksjonspunkter,
         status,
         overstyringApKode,
+        periode,
       ),
     };
   },
@@ -222,7 +227,9 @@ const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => (
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringFormProps) => {
-  const { overstyringApKode, submitCallback, periodeFom, periodeTom } = initialOwnProps;
+  const { overstyringApKode, submitCallback, periode } = initialOwnProps;
+  const periodeFom = periode?.periode?.fom;
+  const periodeTom = periode?.periode?.tom;
   const onSubmit = values => submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
   const validateFn = values => validate(values);
   const formName = getFormName(overstyringApKode);
@@ -248,6 +255,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
       hasAksjonspunkt: aksjonspunkt !== undefined,
       validate: validateFn,
       form: formName,
+      periodeFom,
+      periodeTom,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
     };
   };
