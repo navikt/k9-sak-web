@@ -57,7 +57,7 @@ describe('<MenyNyBehandlingIndex>', () => {
     expect(kall[0].args[0]).to.eql(123);
     expect(kall[0].args[1]).to.eql(3);
     expect(kall[0].args[2]).to.eql(1);
-    expect(kall[0].args[3]).is.false;
+    expect(kall[0].args[3]).to.eql(behandlingType.FORSTEGANGSSOKNAD);
     expect(kall[0].args[4]).to.eql({
       saksnummer: '123',
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
