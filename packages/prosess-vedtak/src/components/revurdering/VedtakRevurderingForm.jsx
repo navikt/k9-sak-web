@@ -133,7 +133,7 @@ export class VedtakRevurderingFormImpl extends Component {
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
               <VedtakOverstyrendeKnapp
                 toggleCallback={this.onToggleUndertrykkeBrev}
-                readOnly={readOnly || initialValues.skalUndertrykkeBrev === true}
+                readOnly={readOnly}
                 keyName="skalUndertrykkeBrev"
                 readOnlyHideEmpty={false}
               />
