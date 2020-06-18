@@ -105,10 +105,6 @@ export class VedtakRevurderingFormImpl extends Component {
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
     const visOverstyringKnapp = kanOverstyre || readOnly;
-    const { host, hostname } = window.location;
-    const erIQ1 = host === 'app-q1.adeo.no';
-    const erLokalt = hostname === 'localhost';
-    const skalSkjuleSubmitPanel = !erIQ1 && !erLokalt;
     return (
       <>
         <VedtakFritekstbrevModal
@@ -207,7 +203,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 previewBrev={previewAutomatiskBrev}
               />
             )}
-            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && !skalSkjuleSubmitPanel && (
+            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
                 brodtekst={brødtekst}

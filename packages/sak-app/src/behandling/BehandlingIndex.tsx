@@ -300,13 +300,14 @@ export const getFagsakInfo = createSelector(
 const mapStateToProps = state => {
   const behandlingId = getUrlBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
+  const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
   return {
     behandlingId,
-    behandlingTypeKode: behandlingType ? behandlingType.kode : undefined,
+    behandlingTypeKode,
     behandlingVersjon: getTempBehandlingVersjon(state),
     location: state.router.location,
     featureToggles: getFeatureToggles(state),
-    kodeverk: getAlleKodeverkForBehandlingstype(behandlingType)(state),
+    kodeverk: getAlleKodeverkForBehandlingstype(behandlingTypeKode)(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
     navAnsatt: getNavAnsatt(state),

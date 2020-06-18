@@ -266,8 +266,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     const klageOnlyValues =
       values?.behandlingType === bType.KLAGE
         ? {
-            aktørId: initialState.aktorId,
-            behandlendeEnhetId: initialState.gjeldendeVedtakBehandlendeEnhetId,
+            aktørId: initialOwnProps.aktorId,
+            behandlendeEnhetId: initialOwnProps.gjeldendeVedtakBehandlendeEnhetId,
           }
         : undefined;
     initialOwnProps.submitCallback({
