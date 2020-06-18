@@ -71,7 +71,15 @@ describe('<VurderFaktaBeregningPanel>', () => {
         },
       ],
     };
-    const transformed = transformValuesVurderFaktaBeregning(values, [{}]);
+
+    const bg = {
+      faktaOmBeregning: {
+        avklarAktiviteter: {
+          skjæringstidspunkt: '2020-03-01',
+        },
+      },
+    };
+    const transformed = transformValuesVurderFaktaBeregning(values, [bg]);
     expect(transformed[0].grunnlag[0].begrunnelse).to.equal('begrunnelse');
     expect(transformed[0].kode).to.equal(VURDER_FAKTA_FOR_ATFL_SN);
   });
