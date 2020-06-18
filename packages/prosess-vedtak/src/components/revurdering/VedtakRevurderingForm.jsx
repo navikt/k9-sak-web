@@ -55,10 +55,8 @@ export class VedtakRevurderingFormImpl extends Component {
   constructor(props) {
     super(props);
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
-    this.onToggleUndertrykkeBrev = this.onToggleUndertrykkeBrev.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
-      skalUndertrykkeBrev: props.skalUndertrykkeBrev
     };
   }
 
@@ -70,11 +68,6 @@ export class VedtakRevurderingFormImpl extends Component {
     });
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
     clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
-  }
-
-  onToggleUndertrykkeBrev() {
-    const { skalUndertrykkeBrev } = this.state;
-    this.setState({skalUndertrykkeBrev: !skalUndertrykkeBrev});
   }
 
   render() {
@@ -132,7 +125,6 @@ export class VedtakRevurderingFormImpl extends Component {
           <>
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
               <VedtakOverstyrendeKnapp
-                toggleCallback={this.onToggleUndertrykkeBrev}
                 readOnly={readOnly}
                 keyName="skalUndertrykkeBrev"
                 readOnlyHideEmpty={false}
@@ -256,7 +248,6 @@ VedtakRevurderingFormImpl.propTypes = {
   revurderingsAarsakString: PropTypes.string,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
-  skalUndertrykkeBrev: PropTypes.bool,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
