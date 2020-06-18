@@ -24,7 +24,7 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
     if (vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
-    return vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.OPPFYLT)
+    return vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.OPPFYLT)
       ? vilkarUtfallType.OPPFYLT
       : vilkarUtfallType.IKKE_OPPFYLT;
   }
