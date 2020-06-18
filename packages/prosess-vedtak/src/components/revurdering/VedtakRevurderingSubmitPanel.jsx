@@ -119,7 +119,9 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           spinner={formProps.submitting}
         >
           {intl.formatMessage({
-            id: skalBrukeOverstyrendeFritekstBrev ? 'VedtakForm.TilGodkjenning' : submitKnappTextId,
+            id: skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.FRISINN
+              ? 'VedtakForm.TilGodkjenning'
+              : submitKnappTextId,
           })}
         </Hovedknapp>
       )}
