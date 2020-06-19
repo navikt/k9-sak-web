@@ -116,13 +116,12 @@ const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails, ingenP
       <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
         {tableTitle(mottaker)}
         <Table
-          headerTextCodes={getHeaderCodes(
+          headerColumnContent={getHeaderCodes(
             showCollapseButton(mottaker.resultatPerFagområde),
             { toggleDetails, showDetails: visDetaljer ? visDetaljer.show : false, mottakerIndex },
             rangeOfMonths,
             nesteMåned,
           )}
-          allowFormattedHeader
           key={`tableIndex${mottakerIndex + 1}`}
           classNameTable={styles.simuleringTable}
         >

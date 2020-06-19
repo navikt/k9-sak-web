@@ -132,7 +132,6 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
             <StyledColumn width="5%" />
           </>
         }
-        allowFormattedHeader
         stripet
         noHover
       >

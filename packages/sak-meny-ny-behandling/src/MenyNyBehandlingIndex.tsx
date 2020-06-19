@@ -80,7 +80,7 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         ...formValues,
       };
 
-      lagNyBehandling(saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data);
+      lagNyBehandling(saksnummer, behandlingId, behandlingVersjon, formValues.behandlingType, data);
 
       lukkModal();
     },

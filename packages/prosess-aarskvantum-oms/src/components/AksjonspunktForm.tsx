@@ -23,7 +23,7 @@ interface AksjonspunktFormImplProps {
 
 interface FormContentProps {
   handleSubmit: SubmitHandler;
-  harUavklartePerioder: boolean;
+  aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
 }
 
@@ -47,16 +47,39 @@ const SpaceBetween = styled.div`
   margin-top: 1em;
 `;
 
-export const FormContent: FunctionComponent<FormContentProps> = ({
-  handleSubmit,
-  harUavklartePerioder,
-  isAksjonspunktOpen,
-}) => {
+const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilkår) =>
+  Object.entries(vurderteVilkår).some(
+    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
+  );
+
+export const FormContent: FunctionComponent<FormContentProps> = ({ handleSubmit, aktiviteter, isAksjonspunktOpen }) => {
+  const uavklartePerioder = useMemo(
+    () =>
+      aktiviteter
+        .flatMap(({ uttaksperioder }) => uttaksperioder)
+        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+    [aktiviteter],
+  );
+
+  const harUavklartePerioder = uavklartePerioder.length > 0;
+
   if (harUavklartePerioder) {
+    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(({ vurderteVilkår }) =>
+      vilkårHarOverlappendePerioderIInfotrygd(vurderteVilkår.vilkår),
+    );
+
     return (
       <>
         <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
-          {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.UidentifiserteRammemeldinger" />]}
+          {[
+            <FormattedMessage
+              id={
+                harOverlappendePerioderIInfotrygd
+                  ? 'Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd'
+                  : 'Årskvantum.Aksjonspunkt.Uavklart.UidentifiserteRammemeldinger'
+              }
+            />,
+          ]}
         </AksjonspunktHelpTextTemp>
         {isAksjonspunktOpen && (
           <>
@@ -65,7 +88,11 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
               <CheckboxField
                 validate={[hasValidValue(true)]}
                 name="bekreftInfotrygd"
-                label={{ id: 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd' }}
+                label={{
+                  id: harOverlappendePerioderIInfotrygd
+                    ? 'Årskvantum.Aksjonspunkt.Overlapp.BekreftInfotrygd'
+                    : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
+                }}
               />
               <Hovedknapp onClick={handleSubmit} htmlType="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
@@ -115,49 +142,15 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
   );
 };
 
-const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilkår) =>
-  Object.entries(vurderteVilkår).some(
-    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
-  );
-
 const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & InjectedFormProps> = ({
   aktiviteter,
   handleSubmit,
   isAksjonspunktOpen,
 }) => {
-  const uavklartePerioder = useMemo(
-    () =>
-      aktiviteter
-        .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
-    [aktiviteter],
-  );
-
-  const harUavklartePerioder = uavklartePerioder.length > 0;
-
-  if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(({ vurderteVilkår }) =>
-      vilkårHarOverlappendePerioderIInfotrygd(vurderteVilkår.vilkår),
-    );
-    if (harOverlappendePerioderIInfotrygd) {
-      return (
-        <GråBakgrunn>
-          <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
-            {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd" />]}
-          </AksjonspunktHelpTextTemp>
-        </GråBakgrunn>
-      );
-    }
-  }
-
   return (
     <form onSubmit={handleSubmit}>
       <GråBakgrunn>
-        <FormContent
-          handleSubmit={handleSubmit}
-          harUavklartePerioder={harUavklartePerioder}
-          isAksjonspunktOpen={isAksjonspunktOpen}
-        />
+        <FormContent handleSubmit={handleSubmit} aktiviteter={aktiviteter} isAksjonspunktOpen={isAksjonspunktOpen} />
       </GråBakgrunn>
     </form>
   );

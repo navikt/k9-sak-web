@@ -5,11 +5,51 @@ import { CheckboxField, RadioOption } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
 import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues } from './AksjonspunktForm';
+import Uttaksperiode from '../dto/Uttaksperiode';
+import { UtfallEnum } from '../dto/Utfall';
+import { VilkårEnum } from '../dto/Vilkår';
+import Aktivitet from '../dto/Aktivitet';
 
 describe('<AksjonspunktForm>', () => {
+  const uavklartPeriode: Uttaksperiode = {
+    utfall: UtfallEnum.UAVKLART,
+    periode: '2020-03-01/2020-03-31',
+    utbetalingsgrad: 0,
+    hjemler: [],
+    vurderteVilkår: {
+      vilkår: {
+        [VilkårEnum.NOK_DAGER]: UtfallEnum.UAVKLART,
+      },
+    },
+  };
+
+  const innvilgetPeriode: Uttaksperiode = {
+    utfall: UtfallEnum.INNVILGET,
+    periode: '2020-03-01/2020-03-31',
+    utbetalingsgrad: 100,
+    hjemler: [],
+    vurderteVilkår: {
+      vilkår: {
+        [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
+      },
+    },
+  };
+
   describe('<FormContent>', () => {
     it('viser kun en checkbox hvis man har minst én uavklart periode', () => {
-      const wrapper = shallowWithIntl(<FormContent {...reduxFormPropsMock} harUavklartePerioder isAksjonspunktOpen />);
+      const aktiviteter: Aktivitet[] = [
+        {
+          uttaksperioder: [uavklartPeriode],
+          arbeidsforhold: { type: 'AT' },
+        },
+        {
+          uttaksperioder: [innvilgetPeriode],
+          arbeidsforhold: { type: 'AT' },
+        },
+      ];
+      const wrapper = shallowWithIntl(
+        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen />,
+      );
 
       const checkbox = wrapper.find(CheckboxField);
       const radios = wrapper.find(RadioOption);
@@ -19,8 +59,18 @@ describe('<AksjonspunktForm>', () => {
     });
 
     it('viser radios hvis man ikke har uavklarte perioder', () => {
+      const aktiviteter: Aktivitet[] = [
+        {
+          uttaksperioder: [innvilgetPeriode],
+          arbeidsforhold: { type: 'AT' },
+        },
+        {
+          uttaksperioder: [innvilgetPeriode],
+          arbeidsforhold: { type: 'AT' },
+        },
+      ];
       const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} harUavklartePerioder={false} isAksjonspunktOpen />,
+        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen />,
       );
 
       const checkbox = wrapper.find(CheckboxField);

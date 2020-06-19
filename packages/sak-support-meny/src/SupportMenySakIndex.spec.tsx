@@ -8,12 +8,14 @@ import TabMeny from './components/TabMeny';
 
 describe('<SupportMenySakIndex>', () => {
   it('skal lage tabs og sette Send melding som valgt', () => {
-    const wrapper = shallow(<SupportMenySakIndex
-      tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
-      valgbareTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
-      valgtIndex={1}
-      onClick={() => undefined}
-    />);
+    const wrapper = shallow(
+      <SupportMenySakIndex
+        tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
+        valgbareTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
+        valgtIndex={1}
+        onClick={() => undefined}
+      />,
+    );
 
     const tabMeny = wrapper.find(TabMeny);
     expect(tabMeny).has.length(1);
@@ -31,11 +33,13 @@ describe('<SupportMenySakIndex>', () => {
   });
 
   it('skal lage tabs og sette Send Melding til disablet', () => {
-    const wrapper = shallow(<SupportMenySakIndex
-      tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES]}
-      valgbareTabs={[supportTabs.HISTORY]}
-      onClick={() => undefined}
-    />);
+    const wrapper = shallow(
+      <SupportMenySakIndex
+        tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES]}
+        valgbareTabs={[supportTabs.HISTORY]}
+        onClick={() => undefined}
+      />,
+    );
 
     const tabMeny = wrapper.find(TabMeny);
     expect(tabMeny).has.length(1);

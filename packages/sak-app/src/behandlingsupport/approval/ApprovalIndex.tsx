@@ -35,7 +35,7 @@ import {
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import fpsakApi from '../../data/fpsakApi';
 import { getAktorid, getFagsakYtelseType, getSaksnummer, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
-import { getKodeverk, getFpTilbakeKodeverk } from '../../kodeverk/duck';
+import { getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype } from '../../kodeverk/duck';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 
 const getArsaker = approval =>
@@ -315,8 +315,6 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
 );
 
 const mapStateToPropsFactory = initialState => {
-  const skjermlenkeTyperFpsak = getKodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(initialState);
-  const skjermlenkeTyperFptilbake = getFpTilbakeKodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(initialState);
   return state => {
     const behandlingType = getBehandlingType(state);
     const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
@@ -334,10 +332,8 @@ const mapStateToPropsFactory = initialState => {
       behandlingStatus: getBehandlingStatus(state),
       toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
       navAnsatt: getNavAnsatt(state),
-      alleKodeverk: erTilbakekreving
-        ? fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state)
-        : fpsakApi.KODEVERK.getRestApiData()(state),
-      skjemalenkeTyper: erTilbakekreving ? skjermlenkeTyperFptilbake : skjermlenkeTyperFpsak,
+      alleKodeverk: getAlleKodeverkForBehandlingstype(behandlingTypeKode)(state),
+      skjemalenkeTyper: getKodeverkForBehandlingstype(behandlingTypeKode, kodeverkTyper.SKJERMLENKE_TYPE)(initialState),
       location: state.router.location,
       behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
       fagsakYtelseType: getFagsakYtelseType(state),
