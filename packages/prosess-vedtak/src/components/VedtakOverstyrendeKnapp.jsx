@@ -24,7 +24,7 @@ const VedtakOverstyrendeKnapp = ({
 );
 
 VedtakOverstyrendeKnapp.propTypes = {
-  toggleCallback: PropTypes.func.isRequired,
+  toggleCallback: PropTypes.func,
   keyName: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlyHideEmpty: PropTypes.bool,
