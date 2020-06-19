@@ -8,7 +8,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-import { finnVisningForStatusIPeriode, erSøktForAndelISøknadsperiode } from './FrisinnUtils';
+import { erSøktForAndelISøknadsperiode, finnBruttoForStatusIPeriode } from './FrisinnUtils';
 
 const førsteDato = moment('2020-04-01');
 
@@ -71,15 +71,15 @@ const starterFørISammeMåned = (frisinnPeriode, bgPeriode) => {
 
 const lagGrenseverdirad = (bg, bgPeriode) => {
   const frisinnGrunnlag = bg.ytelsesspesifiktGrunnlag;
-  const bruttoAT = finnVisningForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, bgPeriode);
+  const bruttoAT = finnBruttoForStatusIPeriode(aktivitetStatus.ARBEIDSTAKER, bg, bgPeriode);
   const originaltInntektstak = bg.grunnbeløp * 6;
   let annenInntektIkkeSøktFor = bruttoAT;
   if (!erSøktForAndelISøknadsperiode(aktivitetStatus.FRILANSER, bgPeriode, frisinnGrunnlag)) {
-    const bruttoFL = finnVisningForStatusIPeriode(aktivitetStatus.FRILANSER, bg, bgPeriode);
+    const bruttoFL = finnBruttoForStatusIPeriode(aktivitetStatus.FRILANSER, bg, bgPeriode);
     annenInntektIkkeSøktFor += bruttoFL;
   }
   if (!erSøktForAndelISøknadsperiode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bgPeriode, frisinnGrunnlag)) {
-    const bruttoSN = finnVisningForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, bgPeriode);
+    const bruttoSN = finnBruttoForStatusIPeriode(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, bg, bgPeriode);
     annenInntektIkkeSøktFor += bruttoSN;
   }
   const utregnetInntektstak =
