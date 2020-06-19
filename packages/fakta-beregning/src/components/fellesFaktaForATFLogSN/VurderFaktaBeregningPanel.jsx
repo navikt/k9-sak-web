@@ -244,6 +244,8 @@ export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnl
       const faktaBeregningValues = currentFormValues;
       const beg = faktaBeregningValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
       const kode = erOverstyring(currentFormValues) ? OVERSTYRING_AV_BEREGNINGSGRUNNLAG : VURDER_FAKTA_FOR_ATFL_SN;
+      const bg = alleBeregningsgrunnlag[index];
+      const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
       return {
         '@type': kode,
         kode,
@@ -252,7 +254,7 @@ export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnl
             '@type': kode,
             kode,
             begrunnelse: beg === undefined ? null : beg,
-            skjæringstidspunkt: alleBeregningsgrunnlag[index].skjæringstidspunkt,
+            skjæringstidspunkt: stpOpptjening,
             ...transformValuesFaktaForATFLOgSN(faktaBeregningValues, erOverstyring(currentFormValues)),
           },
         ],

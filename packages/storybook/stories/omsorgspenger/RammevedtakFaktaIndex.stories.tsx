@@ -5,7 +5,7 @@ import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
-  title: 'omsorgspenger/fakta/Dager til utbetaling',
+  title: 'omsorgspenger/fakta/Rammevedtak',
   component: FaktaRammevedtakIndex,
   decorators: [withReduxProvider],
 };
@@ -127,6 +127,7 @@ export const ingenBarn = () => (
     rammevedtak={[
       overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P13D'),
       overføringFårRammevedtak(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P5D'),
+      overføringFårRammevedtak(RammevedtakEnum.FORDELING_FÅR, 'P3D'),
       midlertidigAleneOmOmsorgen,
     ]}
     behandling={behandling}
