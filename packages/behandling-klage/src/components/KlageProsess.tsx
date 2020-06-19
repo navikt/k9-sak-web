@@ -38,7 +38,7 @@ interface OwnProps {
   kodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
   klageVurdering?: KlageVurdering;
@@ -91,8 +91,8 @@ class KlageProsess extends Component<Props, KlageProsessState> {
   };
 
   setSteg = (nyttValg, forrigeSteg) => {
-    const { oppdaterProsessStegIUrl } = this.props;
-    oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
+    const { oppdaterProsessStegOgFaktaPanelIUrl } = this.props;
+    oppdaterProsessStegOgFaktaPanelIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
   };
 
   toggleFatterVedtakModal = () => {
@@ -138,7 +138,7 @@ class KlageProsess extends Component<Props, KlageProsessState> {
   };
 
   submitAksjonspunkter = aksjonspunktModels => {
-    const { fagsak, behandling, lagreAksjonspunkt, oppdaterProsessStegIUrl } = this.props;
+    const { fagsak, behandling, lagreAksjonspunkt, oppdaterProsessStegOgFaktaPanelIUrl } = this.props;
     const skalByttTilKlageinstans = aksjonspunktModels.some(
       apValue =>
         apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
@@ -171,7 +171,7 @@ class KlageProsess extends Component<Props, KlageProsessState> {
       } else if (erVedtakAp) {
         this.toggleFatterVedtakModal();
       } else {
-        oppdaterProsessStegIUrl('default');
+        oppdaterProsessStegOgFaktaPanelIUrl('default');
       }
     });
   };

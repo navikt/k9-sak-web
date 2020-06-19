@@ -25,7 +25,7 @@ const SokerinfoTable: FunctionComponent<SokerinfoTableProps> = ({ header, forhol
   const intl = useIntl();
   return (
     <Table
-      headerTextCodes={[
+      headerColumnContent={[
         <>
           <span className={styles.tableheader}>
             {/* TODO: Riktig src ihht skisse. src for ikke alle forhold oppfylt? */}
@@ -34,7 +34,6 @@ const SokerinfoTable: FunctionComponent<SokerinfoTableProps> = ({ header, forhol
           </span>
         </>,
       ]}
-      allowFormattedHeader
       noHover
     >
       {forhold

@@ -15,7 +15,7 @@ interface OwnProps {
   kodeverk: { [key: string]: Kodeverk[] };
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -40,7 +40,7 @@ const KlageGrid: FunctionComponent<OwnProps> = ({
   kodeverk,
   navAnsatt,
   valgtProsessSteg,
-  oppdaterProsessStegIUrl,
+  oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
@@ -64,7 +64,7 @@ const KlageGrid: FunctionComponent<OwnProps> = ({
       kodeverk={kodeverk}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}
-      oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+      oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
       opneSokeside={opneSokeside}
       alleBehandlinger={alleBehandlinger}

@@ -28,8 +28,8 @@ export const getFpTilbakeKodeverk = kodeverkType =>
 export const getKlagekodeverk = kodeverkType =>
   createSelector([getAlleKlagekodeverk], (kodeverk = {}) => kodeverk[kodeverkType]);
 
-export const getAlleKodeverkForBehandlingstype = behandlingstype => {
-  switch (behandlingstype) {
+export const getAlleKodeverkForBehandlingstype = (behandlingTypeKode: string) => {
+  switch (behandlingTypeKode) {
     case behandlingType.TILBAKEKREVING:
     case behandlingType.TILBAKEKREVING_REVURDERING:
       return getAlleFpTilbakeKodeverk;

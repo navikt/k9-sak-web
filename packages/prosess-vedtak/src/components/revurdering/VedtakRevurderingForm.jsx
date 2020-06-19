@@ -105,10 +105,6 @@ export class VedtakRevurderingFormImpl extends Component {
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
     const visOverstyringKnapp = kanOverstyre || readOnly;
-    const { host, hostname } = window.location;
-    const erIQ1 = host === 'app-q1.adeo.no';
-    const erLokalt = hostname === 'localhost';
-    const skalSkjuleSubmitPanel = !erIQ1 && !erLokalt;
     return (
       <>
         <VedtakFritekstbrevModal
@@ -123,14 +119,20 @@ export class VedtakRevurderingFormImpl extends Component {
         >
           <VerticalSpacer eightPx />
           <>
-            {visOverstyringKnapp && (
+            {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
+              <VedtakOverstyrendeKnapp
+                readOnly={readOnly}
+                keyName="skalUndertrykkeBrev"
+                readOnlyHideEmpty={false}
+              />
+            ) : (visOverstyringKnapp && (
               <VedtakOverstyrendeKnapp
                 toggleCallback={this.onToggleOverstyring}
                 readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
                 keyName="skalBrukeOverstyrendeFritekstBrev"
                 readOnlyHideEmpty={false}
               />
-            )}
+            ))}
             <Row>
               <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>
                 {isInnvilget(behandlingresultat.type.kode) && (
@@ -193,7 +195,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 </Column>
               )}
             </Row>
-            {skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.ENGANGSSTONAD && (
+            {skalBrukeOverstyrendeFritekstBrev && ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
               <FritekstBrevPanel
                 intl={intl}
                 readOnly={readOnly}
@@ -201,7 +203,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 previewBrev={previewAutomatiskBrev}
               />
             )}
-            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && !skalSkjuleSubmitPanel && (
+            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
                 brodtekst={brødtekst}
@@ -303,6 +305,7 @@ const buildInitialValues = createSelector(
       sprakkode,
       aksjonspunktKoder,
       skalBrukeOverstyrendeFritekstBrev: vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
+      skalUndertrykkeBrev: vedtakVarsel.vedtaksbrev.kode === 'INGEN',
       overskrift: decodeHtmlEntity(vedtakVarsel.overskrift),
       brødtekst: decodeHtmlEntity(vedtakVarsel.fritekstbrev),
     };
@@ -316,6 +319,7 @@ const transformValues = values =>
       begrunnelse: values.begrunnelse,
       fritekstBrev: values.brødtekst,
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
       overskrift: values.overskrift,
       isVedtakSubmission,
     };
@@ -366,6 +370,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'begrunnelse',
       'aksjonspunktKoder',
       'skalBrukeOverstyrendeFritekstBrev',
+      'skalUndertrykkeBrev',
       'overskrift',
       'brødtekst',
       ...Object.values(redusertUtbetalingArsak),
