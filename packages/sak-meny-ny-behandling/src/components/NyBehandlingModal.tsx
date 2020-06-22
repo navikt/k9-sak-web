@@ -218,6 +218,7 @@ interface Props {
   behandlingstyper: KodeverkMedNavn[];
   hasEnabledCreateNewBehandling: boolean;
   hasEnabledCreateRevurdering: boolean;
+  kanKlageOpprettes: boolean;
   kanTilbakekrevingOpprettes?: {
     kanBehandlingOpprettes: boolean;
     kanRevurderingOpprettes: boolean;
@@ -234,12 +235,14 @@ export const getEnabledBehandlingstyper = createSelector(
     getBehandlingTyper,
     ownProps => ownProps.hasEnabledCreateNewBehandling,
     ownProps => ownProps.hasEnabledCreateRevurdering,
+    ownProps => ownProps.kanKlageOpprettes,
     ownProps => ownProps.kanTilbakekrevingOpprettes,
   ],
   (
     behandlingstyper,
     hasEnabledCreateNewBehandling,
     hasEnabledCreateRevurdering,
+    kanKlageOpprettes,
     kanTilbakekrevingOpprettes = {
       kanBehandlingOpprettes: false,
       kanRevurderingOpprettes: false,
@@ -250,6 +253,7 @@ export const getEnabledBehandlingstyper = createSelector(
       .filter(b =>
         b.kode === bType.TILBAKEKREVING_REVURDERING ? kanTilbakekrevingOpprettes.kanRevurderingOpprettes : true,
       )
+      .filter(b => (b.kode === bType.KLAGE ? kanKlageOpprettes : true))
       .filter(b => (b.kode === bType.FORSTEGANGSSOKNAD ? hasEnabledCreateNewBehandling : true))
       .filter(b => (b.kode === bType.REVURDERING ? hasEnabledCreateRevurdering : true)),
 );

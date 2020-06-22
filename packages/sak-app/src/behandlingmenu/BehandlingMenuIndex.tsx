@@ -264,6 +264,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
             opprettRevurderingEnabled={
               rettigheter.opprettRevurderingAccess.employeeHasAccess && rettigheter.opprettRevurderingAccess.isEnabled
             }
+            kanKlageOpprettes={!!gjeldendeVedtakBehandlendeEnhetId}
             kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
             erTilbakekrevingAktivert={erTilbakekrevingAktivert}
             behandlingstyper={menyKodeverk.getKodeverkForBehandlingstyper(

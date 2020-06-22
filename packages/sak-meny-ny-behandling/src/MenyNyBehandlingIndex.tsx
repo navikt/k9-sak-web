@@ -36,6 +36,7 @@ interface OwnProps {
   revurderingArsaker: KodeverkMedNavn[];
   opprettNyForstegangsBehandlingEnabled: boolean;
   opprettRevurderingEnabled: boolean;
+  kanKlageOpprettes: boolean;
   kanTilbakekrevingOpprettes: {
     kanBehandlingOpprettes: boolean;
     kanRevurderingOpprettes: boolean;
@@ -61,6 +62,7 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   revurderingArsaker,
   opprettNyForstegangsBehandlingEnabled,
   opprettRevurderingEnabled,
+  kanKlageOpprettes,
   kanTilbakekrevingOpprettes,
   uuidForSistLukkede,
   erTilbakekrevingAktivert,
@@ -98,6 +100,7 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         behandlingstyper={behandlingstyper}
         tilbakekrevingRevurderingArsaker={tilbakekrevingRevurderingArsaker}
         revurderingArsaker={revurderingArsaker}
+        kanKlageOpprettes={kanKlageOpprettes}
         kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
         behandlingType={behandlingType}
         behandlingId={behandlingId}
