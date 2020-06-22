@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { TIDENES_ENDE } from '@fpsak-frontend/utils';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 const finnSamletBruttoForStatus = (andeler, status) => {
   if (!andeler) {
@@ -133,7 +134,8 @@ export const finnAlleBGPerioderÅViseDetaljerFor = (bgPerioder, frisinnGrunnlag,
   const opprettetGrunnetEndring =
     behandlingÅrsaker &&
     behandlingÅrsaker.some(
-      årsak => årsak.behandlingArsakType && årsak.behandlingArsakType.kode === 'RE-END-FRA-BRUKER',
+      årsak =>
+        årsak.behandlingArsakType && årsak.behandlingArsakType.kode === behandlingArsakType.RE_ENDRING_FRA_BRUKER,
     );
   const perioder = [];
   for (let i = 0; i < bgPerioder.length; i += 1) {
