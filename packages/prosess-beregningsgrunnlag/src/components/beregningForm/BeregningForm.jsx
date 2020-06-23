@@ -30,6 +30,7 @@ import AvsnittSkiller from '../redesign/AvsnittSkiller';
 import YtelsegrunnlagPanel from '../ytelsesspesifikkseOpplysninger/YtelsegrunnlagPanel';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
+import beregningsgrunnlagBehandlingPropType from '../../propTypes/beregningsgrunnlagBehandlingPropType';
 
 // ------------------------------------------------------------------------------------------ //
 // Variables
@@ -293,8 +294,7 @@ export const BeregningFormImpl = ({
   relevanteStatuser,
   submitCallback,
   readOnlySubmitButton,
-  behandlingId,
-  behandlingVersjon,
+  behandling,
   alleKodeverk,
   vilkaarBG,
   fieldArrayID,
@@ -305,6 +305,7 @@ export const BeregningFormImpl = ({
     beregningsgrunnlagPeriode,
     faktaOmBeregning,
   } = beregningsgrunnlag;
+  const { id, versjon, behandlingÅrsaker } = behandling;
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
   const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
@@ -347,8 +348,8 @@ export const BeregningFormImpl = ({
                 formName={formName}
                 allePerioder={beregningsgrunnlagPeriode}
                 gjelderBesteberegning={gjelderBesteberegning}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
+                behandlingId={id}
+                behandlingVersjon={versjon}
                 alleKodeverk={alleKodeverk}
                 sammenligningsGrunnlagInntekter={beregningsgrunnlag.sammenligningsgrunnlagInntekter}
                 skjeringstidspunktDato={skjaeringstidspunktBeregning}
@@ -381,8 +382,8 @@ export const BeregningFormImpl = ({
                 readOnlySubmitButton={readOnlySubmitButton}
                 formName={formName}
                 allePerioder={beregningsgrunnlagPeriode}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
+                behandlingId={id}
+                behandlingVersjon={versjon}
                 alleKodeverk={alleKodeverk}
                 aksjonspunkter={gjeldendeAksjonspunkter}
                 relevanteStatuser={relevanteStatuser}
@@ -393,7 +394,11 @@ export const BeregningFormImpl = ({
           )}
           <>
             <AvsnittSkiller luftOver luftUnder rightPanel />
-            <YtelsegrunnlagPanel beregningsgrunnlag={beregningsgrunnlag} readOnly={readOnly} />
+            <YtelsegrunnlagPanel
+              beregningsgrunnlag={beregningsgrunnlag}
+              readOnly={readOnly}
+              behandlingÅrsaker={behandlingÅrsaker}
+            />
           </>
           {skalViseBeregningsresultat && (
             <>
@@ -423,8 +428,7 @@ BeregningFormImpl.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
+  behandling: beregningsgrunnlagBehandlingPropType,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   vilkaarBG: PropTypes.shape().isRequired,

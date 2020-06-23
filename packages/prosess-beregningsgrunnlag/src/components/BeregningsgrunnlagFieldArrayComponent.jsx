@@ -12,7 +12,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
   submitCallback,
   readOnlySubmitButton,
   alleKodeverk,
-  behandling: { id, versjon },
+  behandling,
   readOnly,
   vilkaarBG,
 }) => {
@@ -37,8 +37,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
         submitCallback={submitCallback}
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
-        behandlingId={id}
-        behandlingVersjon={versjon}
+        behandling={behandling}
         vilkaarBG={vilkaarBG}
         initialValues={initialValues[index]}
       />
