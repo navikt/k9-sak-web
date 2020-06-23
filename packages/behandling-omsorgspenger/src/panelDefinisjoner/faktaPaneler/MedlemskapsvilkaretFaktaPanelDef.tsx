@@ -27,15 +27,11 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ personopplysninger, soknad }) => personopplysninger && soknad;
 
-  getData: ({
-    fagsak,
+  getData = ({ fagsak, soknad, personopplysninger }) => ({
+    fagsakPerson: fagsak.fagsakPerson,
     soknad,
     personopplysninger,
-  }) => {
-    fagsakPerson: fagsak.fagsakPerson;
-    soknad;
-    personopplysninger;
-  };
+  });
 }
 
 export default MedlemskapsvilkaretFaktaPanelDef;

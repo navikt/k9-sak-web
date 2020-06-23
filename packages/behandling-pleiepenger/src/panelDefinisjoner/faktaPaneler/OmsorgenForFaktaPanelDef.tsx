@@ -22,7 +22,7 @@ class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
   getOverstyrVisningAvKomponent = ({ fagsak, personopplysninger }) =>
     personopplysninger && fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER;
 
-  getData: ({ personopplysninger }) => { personopplysninger };
+  getData = ({ personopplysninger }) => ({ personopplysninger });
 }
 
 export default OmsorgenForFaktaPanelDef;

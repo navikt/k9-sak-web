@@ -22,15 +22,10 @@
   "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
   "VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom": "Vilkåret er <b>ikke</b> oppfylt f.o.m. {fom}",
 
-  "Inngangsvilkar.Adopsjonsvilkaret": "Adopsjon",
-  "Inngangsvilkar.Fodselsvilkaret": "Fødsel",
-  "Inngangsvilkar.Omsorgsvilkaret": "Omsorg",
-  "Inngangsvilkar.Foreldreansvar": "Foreldreansvar",
-  "Inngangsvilkar.Opptjeningsvilkaret": "Opptjening",
   "Inngangsvilkar.Medlemskapsvilkaret": "Medlemskap",
-  "Inngangsvilkar.Svangerskapsvilkaret": "Svangerskap",
   "Inngangsvilkar.OmsorgenFor": "Alder og omsorg",
   "Inngangsvilkar.Medisinskvilkaret": "Medisinsk vilkår",
+  "Behandlingspunkt.Opptjening": "Opptjening",
   "Behandlingspunkt.Soknadsfristvilkaret": "Søknadsfrist",
 
   "VilkarBegrunnelse.BegrunnVurdering": "Begrunn vurderingen din",
