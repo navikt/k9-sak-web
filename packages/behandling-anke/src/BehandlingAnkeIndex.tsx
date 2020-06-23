@@ -5,33 +5,20 @@ import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import {
-  FagsakInfo,
-  DataFetcherBehandlingData,
-  SettPaVentParams,
-  ReduxFormStateCleaner,
-  BehandlingDataCache,
-} from '@fpsak-frontend/behandling-felles';
-import { Behandling, KodeverkMedNavn, Kodeverk, NavAnsatt, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
-import AnkeGrid from './components/AnkeGrid';
-import AnkeVurdering from './types/ankeVurderingTsType';
+import AnkePaneler from './components/AnkePaneler';
+import FetchedData from './types/fetchedDataTsType';
 
 const ankeData = [ankeApi.AKSJONSPUNKTER, ankeApi.VILKAR, ankeApi.ANKE_VURDERING];
 
-interface DataProps {
-  behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  ankeVurdering: AnkeVurdering;
-}
-
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
@@ -50,6 +37,7 @@ interface OwnProps {
 
 interface StateProps {
   behandling?: Behandling;
+  forrigeBehandling?: Behandling;
 }
 
 interface DispatchProps {
@@ -66,8 +54,6 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingAnkeIndex extends PureComponent<Props> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache();
-
   componentDidMount = () => {
     const {
       behandlingEventHandler,
@@ -87,7 +73,6 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
       henleggBehandling: params => henleggBehandling(params),
     });
 
-    this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
   };
 
@@ -101,9 +86,10 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
   render() {
     const {
       behandling,
+      forrigeBehandling,
       oppdaterBehandlingVersjon,
       fagsak,
-      navAnsatt,
+      rettigheter,
       kodeverk,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
@@ -119,35 +105,31 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
 
     reduxRestApi.injectPaths(behandling.links);
 
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
-    }
-
     return (
-      <DataFetcherBehandlingData
-        behandlingDataCache={this.behandlingDataCache}
-        behandlingVersion={behandling.versjon}
+      <DataFetcher
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={ankeData}
         showOldDataWhenRefetching
-        render={(dataProps: DataProps) => (
+        loadingPanel={<LoadingPanel />}
+        render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner
-              behandlingId={dataProps.behandling.id}
-              behandlingVersjon={dataProps.behandling.versjon}
+              behandlingId={behandling.id}
+              behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon}
             />
-            <AnkeGrid
+            <AnkePaneler
+              behandling={isFinished ? behandling : forrigeBehandling}
+              fetchedData={dataProps}
               fagsak={fagsak}
-              navAnsatt={navAnsatt}
-              kodeverk={kodeverk}
+              rettigheter={rettigheter}
+              alleKodeverk={kodeverk}
               valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}
               opneSokeside={opneSokeside}
               alleBehandlinger={alleBehandlinger}
-              {...dataProps}
             />
           </>
         )}
@@ -158,6 +140,7 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
 
 const mapStateToProps = state => ({
   behandling: ankeApi.BEHANDLING_ANKE.getRestApiData()(state),
+  forrigeBehandling: ankeApi.BEHANDLING_ANKE.getRestApiPreviousData()(state),
 });
 
 const getResetRestApiContext = () => dispatch => {

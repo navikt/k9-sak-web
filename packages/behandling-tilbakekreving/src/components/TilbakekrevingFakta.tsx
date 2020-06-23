@@ -1,125 +1,101 @@
-import React, { FunctionComponent, useMemo, useCallback } from 'react';
-import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
+import React, { FunctionComponent } from 'react';
+import { Dispatch } from 'redux';
 
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {
-  DataFetcherBehandlingData,
-  FagsakInfo,
-  SideMenuWrapper,
-  readOnlyUtils,
-  getAlleMerknaderFraBeslutter,
-  BehandlingDataCache,
-} from '@fpsak-frontend/behandling-felles';
-import { Behandling, Aksjonspunkt, Kodeverk, NavAnsatt } from '@k9-sak-web/types';
-import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { FagsakInfo, SideMenuWrapper, faktaHooks, Rettigheter } from '@fpsak-frontend/behandling-felles';
+import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
+import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaTilbakekrevingPanelDefinisjoner';
+import FetchedData from '../types/fetchedDataTsType';
 
-const feilutbetalingData = [tilbakekrevingApi.FEILUTBETALING_FAKTA, tilbakekrevingApi.FEILUTBETALING_AARSAK];
-
-interface DataProps {
-  feilutbetalingFakta: {};
-  feilutbetalingAarsak: {
-    ytelseType: Kodeverk;
-  }[];
-}
+const overstyringApCodes = [];
 
 interface OwnProps {
+  data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  kodeverk: { [key: string]: Kodeverk[] };
-  navAnsatt: NavAnsatt;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  fpsakKodeverk: { [key: string]: KodeverkMedNavn[] };
+  rettigheter: Rettigheter;
   hasFetchError: boolean;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
+  valgtFaktaSteg?: string;
+  dispatch: Dispatch;
 }
 
-const getBekreftFaktaCallback = (dispatch, fagsak, behandling, oppdaterProsessStegIUrl) => aksjonspunkter => {
-  const model = aksjonspunkter.map(ap => ({
-    '@type': ap.kode,
-    ...ap,
-  }));
+const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
+  data,
+  fagsak,
+  behandling,
+  rettigheter,
+  alleKodeverk,
+  fpsakKodeverk,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+  valgtFaktaSteg,
+  hasFetchError,
+  dispatch,
+}) => {
+  const { aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta } = data;
 
-  const params = {
-    saksnummer: fagsak.saksnummer,
-    behandlingId: behandling.id,
-    behandlingVersjon: behandling.versjon,
-    bekreftedeAksjonspunktDtoer: model,
+  const dataTilUtledingAvTilbakekrevingPaneler = {
+    fagsak,
+    behandling,
+    perioderForeldelse,
+    beregningsresultat,
+    feilutbetalingFakta,
+    fpsakKodeverk,
   };
 
-  return dispatch(tilbakekrevingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true })).then(() =>
-    oppdaterProsessStegIUrl('default'),
+  const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
+    faktaPanelDefinisjoner,
+    dataTilUtledingAvTilbakekrevingPaneler,
+    behandling,
+    rettigheter,
+    aksjonspunkter,
+    valgtFaktaSteg,
+    intl,
   );
+
+  const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
+    faktaPaneler,
+    fagsak,
+    behandling,
+    oppdaterProsessStegOgFaktaPanelIUrl,
+    'default',
+    overstyringApCodes,
+    tilbakekrevingApi,
+    dispatch,
+  );
+
+  if (sidemenyPaneler.length > 0) {
+    return (
+      <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
+        {valgtPanel && (
+          <DataFetcher
+            key={valgtPanel.getUrlKode()}
+            fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+            endpoints={valgtPanel.getPanelDef().getEndepunkter()}
+            loadingPanel={<LoadingPanel />}
+            render={dataProps =>
+              valgtPanel.getPanelDef().getKomponent({
+                ...dataProps,
+                behandling,
+                alleKodeverk,
+                fpsakKodeverk,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvTilbakekrevingPaneler, hasFetchError),
+              })
+            }
+          />
+        )}
+      </SideMenuWrapper>
+    );
+  }
+  return null;
 };
 
-const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
-  behandling,
-  fagsak,
-  aksjonspunkter,
-  kodeverk,
-  navAnsatt,
-  hasFetchError,
-  oppdaterProsessStegIUrl,
-}) => {
-  const intl = useIntl();
-  const apForPanel = useMemo(
-    () =>
-      aksjonspunkter.filter(
-        ap => ap.definisjon.kode === aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
-      ),
-    [aksjonspunkter],
-  );
-  const harApneAksjonspunkter = apForPanel.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
-  const readOnly = readOnlyUtils.erReadOnly(behandling, apForPanel, [], navAnsatt, fagsak, hasFetchError);
-
-  const dispatch = useDispatch();
-  const bekreftCallback = useCallback(getBekreftFaktaCallback(dispatch, fagsak, behandling, oppdaterProsessStegIUrl), [
-    behandling.versjon,
-  ]);
-
-  const cache = new BehandlingDataCache();
-  cache.setVersion(behandling.versjon);
-
-  return (
-    <SideMenuWrapper
-      paneler={[
-        {
-          tekst: intl.formatMessage({ id: 'TilbakekrevingFakta.FaktaFeilutbetaling' }),
-          erAktiv: true,
-          harAksjonspunkt: harApneAksjonspunkter,
-        },
-      ]}
-    >
-      <DataFetcherBehandlingData
-        behandlingDataCache={cache}
-        behandlingVersion={behandling.versjon}
-        endpoints={feilutbetalingData}
-        render={(dataProps: DataProps) => {
-          if (dataProps.feilutbetalingFakta) {
-            return (
-              <FeilutbetalingFaktaIndex
-                aksjonspunkter={apForPanel}
-                submitCallback={bekreftCallback}
-                readOnly={readOnly}
-                alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
-                alleKodeverk={kodeverk}
-                behandling={behandling}
-                feilutbetalingFakta={dataProps.feilutbetalingFakta}
-                feilutbetalingAarsak={dataProps.feilutbetalingAarsak.find(
-                  a => a.ytelseType.kode === fagsak.fagsakYtelseType.kode,
-                )}
-                hasOpenAksjonspunkter={harApneAksjonspunkter}
-                submittable={apForPanel.some(ap => !isAksjonspunktOpen(ap.status.kode) || ap.kanLoses)}
-              />
-            );
-          }
-          return null;
-        }}
-      />
-    </SideMenuWrapper>
-  );
-};
-
-export default TilbakekrevingFakta;
+export default injectIntl(TilbakekrevingFakta);

@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/behandling-pleiepenger",
   "version": "1.0.0",
-  "module": "index.tsx",
+  "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -11,7 +11,6 @@
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",
     "@fpsak-frontend/fakta-tilleggsopplysninger": "1.0.0",
     "@fpsak-frontend/fakta-verge": "1.0.0",
-    "@fpsak-frontend/fp-felles": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/prosess-avregning": "1.0.0",
     "@fpsak-frontend/prosess-beregningsresultat": "1.0.0",
@@ -25,7 +24,8 @@
     "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@navikt/nap-process-menu": "1.1.0",
+    "@k9-sak-web/konstanter": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
     "react": "^16.13.1",
     "react-intl": "^3.12.0",
     "react-redux": "^7.1.3",

@@ -1,14 +1,15 @@
 {
   "name": "@fpsak-frontend/behandling-felles",
   "version": "1.0.0",
-  "module": "index.jsx",
+  "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/fp-felles": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/konstanter": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
     "@navikt/nap-side-menu": "1.0.7",
     "classnames": "^2.2.6",
     "nav-frontend-core": "4.0.12",

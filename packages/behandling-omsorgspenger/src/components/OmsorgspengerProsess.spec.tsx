@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
+import { Behandling } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
   ProsessStegPanel,
   FatterVedtakStatusModal,
@@ -21,6 +22,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
+import FetchedData from '../types/fetchedDataTsType';
 import OmsorgspengerProsess from './OmsorgspengerProsess';
 
 describe('<OmsorgspengerProsess>', () => {
@@ -49,16 +51,15 @@ describe('<OmsorgspengerProsess>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [
     {
@@ -90,15 +91,20 @@ describe('<OmsorgspengerProsess>', () => {
     },
   };
 
+  const fetchedData: Partial<FetchedData> = {
+    aksjonspunkter,
+    vilkar,
+    soknad,
+  };
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+    const wrapper = shallow(
+      <OmsorgspengerProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="inngangsvilkar"
         valgtFaktaSteg="arbeidsforhold"
         hasFetchError={false}
@@ -116,7 +122,7 @@ describe('<OmsorgspengerProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Uttak',
+        labelId: 'Behandlingspunkt.Uttak',
         type: 'default',
         usePartialStatus: false,
       },
@@ -124,7 +130,7 @@ describe('<OmsorgspengerProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Beregning',
+        labelId: 'Behandlingspunkt.Beregning',
         type: 'default',
         usePartialStatus: false,
       },
@@ -132,7 +138,7 @@ describe('<OmsorgspengerProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Tilkjent ytelse',
+        labelId: 'Behandlingspunkt.TilkjentYtelse',
         type: 'default',
         usePartialStatus: false,
       },
@@ -140,7 +146,7 @@ describe('<OmsorgspengerProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Simulering',
+        labelId: 'Behandlingspunkt.Avregning',
         type: 'default',
         usePartialStatus: false,
       },
@@ -148,7 +154,7 @@ describe('<OmsorgspengerProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Vedtak',
+        labelId: 'Behandlingspunkt.Vedtak',
         type: 'default',
         usePartialStatus: false,
       },
@@ -157,14 +163,13 @@ describe('<OmsorgspengerProsess>', () => {
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+    const wrapper = shallow(
+      <OmsorgspengerProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -203,16 +208,21 @@ describe('<OmsorgspengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+    const customFetchedData: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
+    const wrapper = shallow(
+      <OmsorgspengerProsess
+        data={customFetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={vedtakBehandling}
+        behandling={vedtakBehandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -251,16 +261,21 @@ describe('<OmsorgspengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+    const customFetchedData: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
+    const wrapper = shallow(
+      <OmsorgspengerProsess
+        data={customFetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -299,16 +314,21 @@ describe('<OmsorgspengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+    const customFetchedData: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
+    const wrapper = shallow(
+      <OmsorgspengerProsess
+        data={customFetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -331,14 +351,13 @@ describe('<OmsorgspengerProsess>', () => {
 
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+    const wrapper = shallow(
+      <OmsorgspengerProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -362,14 +381,13 @@ describe('<OmsorgspengerProsess>', () => {
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
     const dispatch = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+    const wrapper = shallow(
+      <OmsorgspengerProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="vedtak"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -382,8 +400,8 @@ describe('<OmsorgspengerProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').urlCode).is.eql('vedtak');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewCallback;
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('vedtak');
+    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData().previewCallback;
     expect(forhandsvisCallback).is.not.null;
 
     forhandsvisCallback({ param: 'test' });
@@ -393,14 +411,13 @@ describe('<OmsorgspengerProsess>', () => {
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
     const dispatch = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+    const wrapper = shallow(
+      <OmsorgspengerProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="simulering"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -413,8 +430,9 @@ describe('<OmsorgspengerProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').urlCode).is.eql('simulering');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewFptilbakeCallback;
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('simulering');
+    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData()
+      .previewFptilbakeCallback;
     expect(forhandsvisCallback).is.not.null;
 
     forhandsvisCallback({ param: 'test' });

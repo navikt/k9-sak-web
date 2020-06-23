@@ -64,8 +64,8 @@ interface OwnProps {
   fagsakStatus: Kodeverk;
   selectedBehandlingId?: number;
   noExistingBehandlinger: boolean;
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
-  klagekodeverk?: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  klagekodeverk?: { [key: string]: KodeverkMedNavn[] };
   behandlingVersjon?: number;
   shouldRedirectToBehandlinger: boolean;
   location: RouteProps['location'];

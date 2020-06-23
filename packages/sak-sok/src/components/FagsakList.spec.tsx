@@ -81,7 +81,7 @@ describe('<FagsakList>', () => {
       <FagsakList
         fagsaker={[fagsak]}
         selectFagsakCallback={clickFunction}
-        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
+        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
       />,
     );
 
@@ -139,7 +139,7 @@ describe('<FagsakList>', () => {
       <FagsakList
         fagsaker={fagsaker as Fagsak[]}
         selectFagsakCallback={() => true}
-        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
+        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
       />,
     );
 
@@ -192,7 +192,7 @@ describe('<FagsakList>', () => {
       <FagsakList
         fagsaker={[fagsak, fagsak4 as Fagsak]}
         selectFagsakCallback={clickFunction}
-        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
+        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
       />,
     );
 

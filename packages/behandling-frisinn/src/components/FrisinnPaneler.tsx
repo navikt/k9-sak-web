@@ -1,14 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import {
-  Kodeverk,
-  NavAnsatt,
-  Behandling,
-  FagsakInfo,
-  BehandlingPaVent,
-  SettPaVentParams,
-} from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
+import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
 import FrisinnProsess from './FrisinnProsess';
 import FrisinnFakta from './FrisinnFakta';
@@ -18,9 +12,8 @@ interface OwnProps {
   fetchedData: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: Kodeverk[] };
-  navAnsatt: NavAnsatt;
-
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
@@ -37,7 +30,7 @@ const FrisinnPaneler: FunctionComponent<OwnProps> = ({
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
@@ -66,7 +59,7 @@ const FrisinnPaneler: FunctionComponent<OwnProps> = ({
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
@@ -82,7 +75,7 @@ const FrisinnPaneler: FunctionComponent<OwnProps> = ({
         data={fetchedData}
         fagsak={fagsak}
         alleKodeverk={alleKodeverk}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         hasFetchError={hasFetchError}
         valgtFaktaSteg={valgtFaktaSteg}
         valgtProsessSteg={valgtProsessSteg}

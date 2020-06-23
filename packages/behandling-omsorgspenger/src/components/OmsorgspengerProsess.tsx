@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState, useCallback, useMemo } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -7,13 +6,14 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   FagsakInfo,
+  Rettigheter,
   prosessStegHooks,
   IverksetterVedtakStatusModal,
   FatterVedtakStatusModal,
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, NavAnsatt, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
 import omsorgspengerBehandlingApi from '../data/omsorgspengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegOmsorgspengerPanelDefinisjoner';
@@ -25,8 +25,8 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: Kodeverk[] };
-  navAnsatt: NavAnsatt;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
   hasFetchError: boolean;
@@ -104,13 +104,12 @@ const getLagringSideeffekter = (
   };
 };
 
-const OmsorgspengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const OmsorgspengerProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   valgtFaktaSteg,
   hasFetchError,
@@ -144,12 +143,11 @@ const OmsorgspengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> 
     prosessStegPanelDefinisjoner,
     dataTilUtledingAvFpPaneler,
     fagsak,
-    navAnsatt,
+    rettigheter,
     behandling,
     data.aksjonspunkter,
     data.vilkar,
     hasFetchError,
-    intl,
     valgtProsessSteg,
     apentFaktaPanelInfo,
   );
@@ -219,4 +217,4 @@ const OmsorgspengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> 
   );
 };
 
-export default injectIntl(OmsorgspengerProsess);
+export default OmsorgspengerProsess;

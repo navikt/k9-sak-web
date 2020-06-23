@@ -44,7 +44,7 @@ interface OwnProps {
   behandlingType?: Kodeverk;
   selectedSaksnummer: string;
   requestPendingMessage?: string;
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   sprakkode?: Kodeverk;
   fagsak?: Fagsak;
   harVerge: boolean;

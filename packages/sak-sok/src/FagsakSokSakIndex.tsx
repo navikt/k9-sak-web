@@ -25,7 +25,7 @@ interface OwnProps {
   searchResultAccessDenied?: {
     feilmelding: string;
   };
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 /*

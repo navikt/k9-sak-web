@@ -59,23 +59,16 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/k9/sak/api/fagsak', FpsakApiKeys.FETCH_FAGSAK)
 
   /* /k9/sak/api/behandlinger */
-  .withGet('/k9/sak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
-  .withAsyncPut('/k9/sak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK, { fetchLinkDataAutomatically: false })
+  .withGet('/k9/sak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK)
+  .withAsyncPut('/k9/sak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK)
   .withGet('/k9/sak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
-  .withRel('bytt-behandlende-enhet', FpsakApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withRel('opne-for-endringer', FpsakApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
-  .withRel('henlegg-behandling', FpsakApiKeys.HENLEGG_BEHANDLING)
-  .withRel('gjenoppta-behandling', FpsakApiKeys.RESUME_BEHANDLING)
-  .withRel('sett-behandling-pa-vent', FpsakApiKeys.BEHANDLING_ON_HOLD)
   .withRel('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
   .withRel('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
   .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
 
   /* /fptilbake/api/behandlinger */
   .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
-  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE, {
-    fetchLinkDataAutomatically: false,
-  })
+  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
   .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
   .withGet(
     '/fptilbake/api/behandlinger/kan-revurdering-opprettes',
@@ -86,9 +79,7 @@ const endpoints = new RestApiConfigBuilder()
     '/fptilbake/api/behandlinger/kan-revurdering-opprettes',
     FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES,
   )
-  .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE, {
-    fetchLinkDataAutomatically: false,
-  })
+  .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
 
   /* /api/behandling/beregningsresultat */
   .withRel('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)

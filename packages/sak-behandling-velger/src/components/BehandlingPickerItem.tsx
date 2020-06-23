@@ -60,7 +60,7 @@ interface OwnProps {
   isActive: boolean;
   showAll: boolean;
   toggleShowAll: () => void;
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 const BehandlingPickerItem: FunctionComponent<OwnProps> = ({
