@@ -20,8 +20,6 @@ const frisinnData = [
   frisinnBehandlingApi.INNTEKT_ARBEID_YTELSE,
   frisinnBehandlingApi.BEREGNINGSRESULTAT_UTBETALT,
   frisinnBehandlingApi.BEREGNINGSGRUNNLAG,
-  frisinnBehandlingApi.UTTAK_STONADSKONTOER,
-  frisinnBehandlingApi.UTTAKSRESULTAT_PERIODER,
   frisinnBehandlingApi.SIMULERING_RESULTAT,
   frisinnBehandlingApi.VEDTAK_VARSEL,
 ];

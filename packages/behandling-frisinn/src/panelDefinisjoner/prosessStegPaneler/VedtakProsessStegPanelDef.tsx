@@ -23,12 +23,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => [
-    frisinnBehandlingApi.TILBAKEKREVINGVALG,
-    frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-    frisinnBehandlingApi.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
-    frisinnBehandlingApi.MEDLEMSKAP,
-  ];
+  getEndepunkter = () => [frisinnBehandlingApi.TILBAKEKREVINGVALG, frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING];
 
   getOverstyrVisningAvKomponent = () => true;
 
