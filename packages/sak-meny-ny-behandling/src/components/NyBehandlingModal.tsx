@@ -34,6 +34,7 @@ interface OwnProps {
   behandlingType?: string;
   behandlingArsakTyper: KodeverkMedNavn[];
   enabledBehandlingstyper: KodeverkMedNavn[];
+  behandlingerSomKanOpprettes: {[behandlingstype: string]: boolean};
   behandlingId?: number;
   sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingId: number }) => void;
@@ -216,12 +217,7 @@ export const getBehandlingAarsaker = createSelector(
 
 interface Props {
   behandlingstyper: KodeverkMedNavn[];
-  hasEnabledCreateNewBehandling: boolean;
-  hasEnabledCreateRevurdering: boolean;
-  kanTilbakekrevingOpprettes?: {
-    kanBehandlingOpprettes: boolean;
-    kanRevurderingOpprettes: boolean;
-  };
+  behandlingerSomKanOpprettes: {[behandlingstype: string]: boolean};
   behandlingType: Kodeverk;
 }
 
@@ -230,28 +226,9 @@ export const getBehandlingTyper = createSelector([(ownProps: Props) => ownProps.
 );
 
 export const getEnabledBehandlingstyper = createSelector(
-  [
-    getBehandlingTyper,
-    ownProps => ownProps.hasEnabledCreateNewBehandling,
-    ownProps => ownProps.hasEnabledCreateRevurdering,
-    ownProps => ownProps.kanTilbakekrevingOpprettes,
-  ],
-  (
-    behandlingstyper,
-    hasEnabledCreateNewBehandling,
-    hasEnabledCreateRevurdering,
-    kanTilbakekrevingOpprettes = {
-      kanBehandlingOpprettes: false,
-      kanRevurderingOpprettes: false,
-    },
-  ) =>
-    behandlingstyper
-      .filter(b => (b.kode === bType.TILBAKEKREVING ? kanTilbakekrevingOpprettes.kanBehandlingOpprettes : true))
-      .filter(b =>
-        b.kode === bType.TILBAKEKREVING_REVURDERING ? kanTilbakekrevingOpprettes.kanRevurderingOpprettes : true,
-      )
-      .filter(b => (b.kode === bType.FORSTEGANGSSOKNAD ? hasEnabledCreateNewBehandling : true))
-      .filter(b => (b.kode === bType.REVURDERING ? hasEnabledCreateRevurdering : true)),
+  [getBehandlingTyper, ownProps => ownProps.behandlingerSomKanOpprettes],
+  (behandlingstyper, behandlingerSomKanOpprettes) =>
+    behandlingstyper.filter(b => Object.prototype.hasOwnProperty.call(behandlingerSomKanOpprettes, b.kode) ? !!behandlingerSomKanOpprettes[b.kode] : true)
 );
 
 const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector(

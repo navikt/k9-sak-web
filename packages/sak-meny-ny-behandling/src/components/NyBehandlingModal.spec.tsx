@@ -339,22 +339,23 @@ describe('<CreateNewBehandlingModal>', () => {
         navn: '',
         kodeverk: 'BEHANDLING_TYPE',
       },
+      {
+        kode: behandlingType.KLAGE,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
     ];
-    const hasEnabledCreateNewBehandling = true;
-    const hasEnabledCreateRevurdering = true;
-    const kanTilbakekrevingOpprettes = {
-      kanBehandlingOpprettes: false,
-      kanRevurderingOpprettes: true,
+    const behandlingerSomKanOpprettes = {
+      [behandlingType.FORSTEGANGSSOKNAD]: true,
+      [behandlingType.REVURDERING]: true,
+      [behandlingType.TILBAKEKREVING]: false,
+      [behandlingType.TILBAKEKREVING_REVURDERING]: true,
+      [behandlingType.KLAGE]: true
     };
 
-    const res = getEnabledBehandlingstyper.resultFunc(
-      behandlingstyper,
-      hasEnabledCreateNewBehandling,
-      hasEnabledCreateRevurdering,
-      kanTilbakekrevingOpprettes,
-    );
+    const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
 
-    expect(res).is.eql([behandlingstyper[1], behandlingstyper[2], behandlingstyper[3]]);
+    expect(res).is.eql([behandlingstyper[1], behandlingstyper[2], behandlingstyper[3], behandlingstyper[4]]);
   });
 
   it('skal filtrere bort tilbakekreving-revurdering når denne ikke kan lages', () => {
@@ -379,22 +380,23 @@ describe('<CreateNewBehandlingModal>', () => {
         navn: '',
         kodeverk: 'BEHANDLING_TYPE',
       },
+      {
+        kode: behandlingType.KLAGE,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
     ];
-    const hasEnabledCreateNewBehandling = true;
-    const hasEnabledCreateRevurdering = true;
-    const kanTilbakekrevingOpprettes = {
-      kanBehandlingOpprettes: true,
-      kanRevurderingOpprettes: false,
+    const behandlingerSomKanOpprettes = {
+      [behandlingType.FORSTEGANGSSOKNAD]: true,
+      [behandlingType.REVURDERING]: true,
+      [behandlingType.TILBAKEKREVING]: true,
+      [behandlingType.TILBAKEKREVING_REVURDERING]: false,
+      [behandlingType.KLAGE]: true
     };
 
-    const res = getEnabledBehandlingstyper.resultFunc(
-      behandlingstyper,
-      hasEnabledCreateNewBehandling,
-      hasEnabledCreateRevurdering,
-      kanTilbakekrevingOpprettes,
-    );
+    const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
 
-    expect(res).is.eql([behandlingstyper[0], behandlingstyper[2], behandlingstyper[3]]);
+    expect(res).is.eql([behandlingstyper[0], behandlingstyper[2], behandlingstyper[3], behandlingstyper[4]]);
   });
 
   it('skal filtrere bort førstegangsbehandling når denne ikke kan lages', () => {
@@ -419,22 +421,23 @@ describe('<CreateNewBehandlingModal>', () => {
         navn: '',
         kodeverk: 'BEHANDLING_TYPE',
       },
+      {
+        kode: behandlingType.KLAGE,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
     ];
-    const hasEnabledCreateNewBehandling = false;
-    const hasEnabledCreateRevurdering = true;
-    const kanTilbakekrevingOpprettes = {
-      kanBehandlingOpprettes: true,
-      kanRevurderingOpprettes: true,
+    const behandlingerSomKanOpprettes = {
+      [behandlingType.FORSTEGANGSSOKNAD]: false,
+      [behandlingType.REVURDERING]: true,
+      [behandlingType.TILBAKEKREVING]: true,
+      [behandlingType.TILBAKEKREVING_REVURDERING]: true,
+      [behandlingType.KLAGE]: true
     };
 
-    const res = getEnabledBehandlingstyper.resultFunc(
-      behandlingstyper,
-      hasEnabledCreateNewBehandling,
-      hasEnabledCreateRevurdering,
-      kanTilbakekrevingOpprettes,
-    );
+    const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
 
-    expect(res).is.eql([behandlingstyper[0], behandlingstyper[1], behandlingstyper[3]]);
+    expect(res).is.eql([behandlingstyper[0], behandlingstyper[1], behandlingstyper[3], behandlingstyper[4]]);
   });
 
   it('skal filtrere bort revurdering når denne ikke kan lages', () => {
@@ -459,21 +462,63 @@ describe('<CreateNewBehandlingModal>', () => {
         navn: '',
         kodeverk: 'BEHANDLING_TYPE',
       },
+      {
+        kode: behandlingType.KLAGE,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
     ];
-    const hasEnabledCreateNewBehandling = true;
-    const hasEnabledCreateRevurdering = false;
-    const kanTilbakekrevingOpprettes = {
-      kanBehandlingOpprettes: true,
-      kanRevurderingOpprettes: true,
+    const behandlingerSomKanOpprettes = {
+      [behandlingType.FORSTEGANGSSOKNAD]: true,
+      [behandlingType.REVURDERING]: false,
+      [behandlingType.TILBAKEKREVING]: true,
+      [behandlingType.TILBAKEKREVING_REVURDERING]: true,
+      [behandlingType.KLAGE]: true
     };
 
-    const res = getEnabledBehandlingstyper.resultFunc(
-      behandlingstyper,
-      hasEnabledCreateNewBehandling,
-      hasEnabledCreateRevurdering,
-      kanTilbakekrevingOpprettes,
-    );
+    const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
 
-    expect(res).is.eql([behandlingstyper[0], behandlingstyper[1], behandlingstyper[2]]);
+    expect(res).is.eql([behandlingstyper[0], behandlingstyper[1], behandlingstyper[2], behandlingstyper[4]]);
+  });
+
+  it('Skal filtrere bort klage når denne ikke kan lages', () => {
+    const behandlingstyper = [
+      {
+        kode: behandlingType.TILBAKEKREVING,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
+      {
+        kode: behandlingType.TILBAKEKREVING_REVURDERING,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
+      {
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
+      {
+        kode: behandlingType.REVURDERING,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
+      {
+        kode: behandlingType.KLAGE,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
+    ];
+    const behandlingerSomKanOpprettes = {
+      [behandlingType.FORSTEGANGSSOKNAD]: true,
+      [behandlingType.REVURDERING]: true,
+      [behandlingType.TILBAKEKREVING]: true,
+      [behandlingType.TILBAKEKREVING_REVURDERING]: true,
+      [behandlingType.KLAGE]: false
+    };
+
+    const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
+
+    expect(res).is.eql([behandlingstyper[0], behandlingstyper[1], behandlingstyper[2], behandlingstyper[3]]);
   });
 });
