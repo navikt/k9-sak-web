@@ -4,7 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
+import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
