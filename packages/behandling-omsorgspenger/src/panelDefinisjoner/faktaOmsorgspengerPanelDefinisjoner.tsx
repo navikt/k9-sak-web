@@ -9,6 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
+import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
 import * as React from 'react';
 import omsorgspengerBehandlingApi from '../data/omsorgspengerBehandlingApi';
 
@@ -75,6 +76,15 @@ const faktaPanelDefinisjoner: FaktaPanelDefinisjon[] = [
     renderComponent: props => <FaktaRammevedtakIndex {...props} />,
     showComponent: ({ forbrukteDager }) => !!forbrukteDager,
     getData: ({ forbrukteDager }) => ({ rammevedtak: forbrukteDager?.rammevedtak || [] }),
+  },
+  {
+    urlCode: faktaPanelCodes.UTTAK_BARN,
+    textCode: 'FaktaBarn.Title',
+    aksjonspunkterCodes: [],
+    endpoints: [],
+    renderComponent: props => <FaktaBarnIndex {...props} />,
+    showComponent: ({ forbrukteDager }) => !!forbrukteDager,
+    getData: ({ forbrukteDager }) => ({ barn: forbrukteDager?.barna || [] }),
   },
   {
     urlCode: faktaPanelCodes.BEREGNING,

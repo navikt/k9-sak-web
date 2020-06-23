@@ -1,0 +1,11 @@
+{
+  "FaktaBarn.Tittel": "Barn brukt som grunnlag for beregning av dager",
+  "FaktaBarn.BarnNummer": "Barn #{index}",
+  "FaktaBarn.Behandlingsdato": "Informasjonen under viser barna slik det var i tidspunktet ved behandlingen",
+  "FaktaBarn.BorMedSøker": "Barnet bor med søker",
+  "FaktaBarn.BorIkkeMedSøker": "<span>Barnet bor <b>ikke</b> med søker<span>",
+  "FaktaBarn.Død": "Barnet døde den {dødsdato}",
+  "FaktaBarn.UtenlandskBarn": "Barnet bor i utlandet",
+  "FaktaBarn.Fosterbarn": "Barnet er fosterbarn",
+  "FaktaBarn.IngenBarn": "Det er ikke registrert noen barn på søkeren"
+}
