@@ -34,13 +34,7 @@ interface OwnProps {
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
   revurderingArsaker: KodeverkMedNavn[];
-  opprettNyForstegangsBehandlingEnabled: boolean;
-  opprettRevurderingEnabled: boolean;
-  kanKlageOpprettes: boolean;
-  kanTilbakekrevingOpprettes: {
-    kanBehandlingOpprettes: boolean;
-    kanRevurderingOpprettes: boolean;
-  };
+  behandlingerSomKanOpprettes: {[behandlingstype: string]: boolean};
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
   sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
@@ -60,10 +54,7 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   behandlingstyper,
   tilbakekrevingRevurderingArsaker,
   revurderingArsaker,
-  opprettNyForstegangsBehandlingEnabled,
-  opprettRevurderingEnabled,
-  kanKlageOpprettes,
-  kanTilbakekrevingOpprettes,
+  behandlingerSomKanOpprettes,
   uuidForSistLukkede,
   erTilbakekrevingAktivert,
   sjekkOmTilbakekrevingKanOpprettes,
@@ -95,13 +86,10 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         saksnummer={saksnummer}
         cancelEvent={lukkModal}
         submitCallback={submit}
-        hasEnabledCreateNewBehandling={opprettNyForstegangsBehandlingEnabled}
-        hasEnabledCreateRevurdering={opprettRevurderingEnabled}
         behandlingstyper={behandlingstyper}
+        behandlingerSomKanOpprettes={behandlingerSomKanOpprettes}
         tilbakekrevingRevurderingArsaker={tilbakekrevingRevurderingArsaker}
         revurderingArsaker={revurderingArsaker}
-        kanKlageOpprettes={kanKlageOpprettes}
-        kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
         behandlingType={behandlingType}
         behandlingId={behandlingId}
         uuidForSistLukkede={uuidForSistLukkede}
