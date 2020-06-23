@@ -22,7 +22,7 @@ import FetchedData from '../types/fetchedDataTsType';
 
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
-    saksnummer: 123456,
+    saksnummer: '123456',
     fagsakYtelseType: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
     fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
     fagsakPerson: {

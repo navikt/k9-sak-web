@@ -70,11 +70,16 @@ describe('<FrisinnProsess>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.ADOPSJONSVILKARET_FORELDREPENGER, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
       overstyrbar: true,
       perioder: [
         {
           vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          merknadParametere: {
+            antattGodkjentArbeid: 'P0D',
+            antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
+          },
+          periode: { fom: '2020-03-16', tom: '2020-03-19' },
         },
       ],
     },

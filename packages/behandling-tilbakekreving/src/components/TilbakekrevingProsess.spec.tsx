@@ -19,7 +19,7 @@ import vedtakResultatType from '../kodeverk/vedtakResultatType';
 
 describe('<TilbakekrevingProsess>', () => {
   const fagsak = {
-    saksnummer: 123456,
+    saksnummer: '123456',
     fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
     fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
     fagsakPerson: {

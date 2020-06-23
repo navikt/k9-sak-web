@@ -17,9 +17,9 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import KlageProsess from './KlageProsess';
 
-describe('<KlageProsess.>', () => {
+describe('<KlageProsess>', () => {
   const fagsak = {
-    saksnummer: 123456,
+    saksnummer: '123456',
     fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
     fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
     fagsakPerson: {
@@ -63,9 +63,18 @@ describe('<KlageProsess.>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.ADOPSJONSVILKARET, kodeverk: 'test' },
-      vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
       overstyrbar: true,
+      perioder: [
+        {
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          merknadParametere: {
+            antattGodkjentArbeid: 'P0D',
+            antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
+          },
+          periode: { fom: '2020-03-16', tom: '2020-03-19' },
+        },
+      ],
     },
   ];
   const klageVurdering = {

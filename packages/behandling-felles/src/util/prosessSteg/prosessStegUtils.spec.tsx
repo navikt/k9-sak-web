@@ -28,7 +28,7 @@ import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 
 describe('<prosessStegUtils>', () => {
   const fagsak = {
-    saksnummer: 123456,
+    saksnummer: '123456',
     fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
     fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
     fagsakPerson: {
@@ -70,6 +70,11 @@ describe('<prosessStegUtils>', () => {
       perioder: [
         {
           vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          merknadParametere: {
+            antattGodkjentArbeid: 'P0D',
+            antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
+          },
+          periode: { fom: '2020-03-16', tom: '2020-03-19' },
         },
       ],
     },

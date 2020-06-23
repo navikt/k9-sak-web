@@ -1,4 +1,4 @@
-import Kodeverk from './kodeverk';
+import Kodeverk from './kodeverkTsType';
 
 type FagsakPerson = Readonly<{
   erDod: boolean;
