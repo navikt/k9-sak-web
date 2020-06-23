@@ -3,17 +3,14 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment/moment';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, TIDENES_ENDE } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import PropTypes from 'prop-types';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-import {
-  erSøktForAndelISøknadsperiode,
-  finnBruttoForStatusIPeriode,
-  finnAlleBGPerioderÅViseDetaljerFor,
-} from './FrisinnUtils';
+import { erSøktForAndelISøknadsperiode, finnBruttoForStatusIPeriode } from './FrisinnUtils';
+
+const førsteDato = moment('2020-04-01');
 
 const lagGrenseveriPeriode = (originaltInntektstak, annenInntektIkkeSøktFor, utregnetInntektstak) => {
   return (
@@ -36,8 +33,35 @@ const lagGrenseveriPeriode = (originaltInntektstak, annenInntektIkkeSøktFor, ut
   );
 };
 
+const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {
+  const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
+  const bgTom = moment(bgPeriode.beregningsgrunnlagPeriodeTom);
+  return frisinnPerioder.some(p => !moment(p.fom).isBefore(bgFom) && !moment(p.tom).isAfter(bgTom));
+};
+
 /**
+ * Henter kun ut perioder som avsluttes på siste dag i en måned, da dette er de som skal vises for FRISINN.
+ * De må også overlappe med frisinnperiode
+ * De får rett startdato senere
  */
+const finnAllePerioderSomSkalVises = (bgPerioder, frisinnGrunnlag) => {
+  const perioder = [];
+  for (let i = 0; i < bgPerioder.length; i += 1) {
+    const periode = bgPerioder[i];
+    if (overlapperMedFrisinnPeriode(periode, frisinnGrunnlag.frisinnPerioder)) {
+      const tom = moment(periode.beregningsgrunnlagPeriodeTom);
+      const sisteDatoIMåned = moment(periode.beregningsgrunnlagPeriodeTom).endOf('month');
+      if (
+        tom.isAfter(førsteDato) &&
+        tom.isSame(sisteDatoIMåned, 'day') &&
+        periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE
+      ) {
+        perioder.push(periode);
+      }
+    }
+  }
+  return perioder;
+};
 
 const starterFørISammeMåned = (frisinnPeriode, bgPeriode) => {
   const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
@@ -93,11 +117,10 @@ const lagGrenseverdirad = (bg, bgPeriode) => {
  * Om det er søkt to perioder i en måned skal disse vises som en rad der vi tar utgangspunkt i den siste, fordi denne alltid
  * vil vare ut måneden.
  */
-const Grenseverdi = ({ beregningsgrunnlag, behandlingÅrsaker }) => {
-  const perioderSomSkalvises = finnAlleBGPerioderÅViseDetaljerFor(
+const Grenseverdi = ({ beregningsgrunnlag }) => {
+  const perioderSomSkalvises = finnAllePerioderSomSkalVises(
     beregningsgrunnlag.beregningsgrunnlagPeriode,
     beregningsgrunnlag.ytelsesspesifiktGrunnlag,
-    behandlingÅrsaker,
   );
   return (
     <>
@@ -108,7 +131,6 @@ const Grenseverdi = ({ beregningsgrunnlag, behandlingÅrsaker }) => {
   );
 };
 Grenseverdi.propTypes = {
-  behandlingÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: beregningsgrunnlagPropType,
 };
 

@@ -1,6 +1,4 @@
 import moment from 'moment';
-import { TIDENES_ENDE } from '@fpsak-frontend/utils';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 const finnSamletBruttoForStatus = (andeler, status) => {
   if (!andeler) {
@@ -86,74 +84,4 @@ export const finnOppgittInntektForAndelIPeriode = (status, bgPeriode, ytelsegrun
     return 0;
   }
   return inntekt;
-};
-
-const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {
-  const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
-  const bgTom = moment(bgPeriode.beregningsgrunnlagPeriodeTom);
-  return frisinnPerioder.some(p => !moment(p.fom).isBefore(bgFom) && !moment(p.tom).isAfter(bgTom));
-};
-
-const finnPerioderSomTilhørerSisteSøknadsperiode = (bgPerioder, frisinnGrunnlag) => {
-  const { frisinnPerioder } = frisinnGrunnlag;
-  if (!frisinnPerioder || frisinnPerioder.length < 1) {
-    return null;
-  }
-  if (frisinnPerioder.length === 1) {
-    return frisinnPerioder[0];
-  }
-  const kronologiskePerioder = frisinnPerioder.sort((a, b) => moment(a.fom) - moment(b.fom));
-  const sistePeriode = kronologiskePerioder[kronologiskePerioder.length - 1];
-  const nestSistePeriode = kronologiskePerioder[kronologiskePerioder.length - 2];
-  const tomSiste = moment(sistePeriode.tom);
-  const tomNestSiste = moment(nestSistePeriode.tom);
-
-  // Mars må spesialbehandles, skal alltid slutte i april
-  if (erMars2020(tomNestSiste)) {
-    return [nestSistePeriode, sistePeriode];
-  }
-
-  return tomSiste.month === tomNestSiste.month() && tomSiste.year() === tomNestSiste.year()
-    ? [nestSistePeriode, sistePeriode]
-    : [sistePeriode];
-};
-
-const førsteDato = moment('2020-03-30');
-
-/**
- *
- * @param bgPerioder - alle beregningsgrunnlagperioder
- * @param frisinnGrunnlag - grunnlag med alle frisinnperioder
- * @param behandlingÅrsaker - alle årsaker til at behandlingen er opprettet
- * @returns {[bgperioder]} en liste med alle bgperioder vi skal vise dagsatsberegning og inntektstakberegning for
- * Henter kun ut perioder som avsluttes på siste dag i en måned, da dette er de som skal vises for FRISINN.
- * De må også overlappe med frisinnperiode
- * Hvis behandlingen er opprettet pga endring fra bruker skal kun siste søknadsperiode vises
- */
-export const finnAlleBGPerioderÅViseDetaljerFor = (bgPerioder, frisinnGrunnlag, behandlingÅrsaker) => {
-  const opprettetGrunnetEndring =
-    behandlingÅrsaker &&
-    behandlingÅrsaker.some(
-      årsak =>
-        årsak.behandlingArsakType && årsak.behandlingArsakType.kode === behandlingArsakType.RE_ENDRING_FRA_BRUKER,
-    );
-  const perioder = [];
-  for (let i = 0; i < bgPerioder.length; i += 1) {
-    const periode = bgPerioder[i];
-    const frisinnPerioder = opprettetGrunnetEndring
-      ? finnPerioderSomTilhørerSisteSøknadsperiode(bgPerioder, frisinnGrunnlag)
-      : frisinnGrunnlag.frisinnPerioder;
-    if (overlapperMedFrisinnPeriode(periode, frisinnPerioder)) {
-      const tom = moment(periode.beregningsgrunnlagPeriodeTom);
-      const sisteDatoIMåned = moment(periode.beregningsgrunnlagPeriodeTom).endOf('month');
-      if (
-        tom.isAfter(førsteDato) &&
-        tom.isSame(sisteDatoIMåned, 'day') &&
-        periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE
-      ) {
-        perioder.push(periode);
-      }
-    }
-  }
-  return perioder;
 };
