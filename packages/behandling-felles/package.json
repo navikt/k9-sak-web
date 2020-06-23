@@ -10,6 +10,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
+    "@navikt/nap-process-menu": "1.0.13",
     "@navikt/nap-side-menu": "1.0.7",
     "classnames": "^2.2.6",
     "nav-frontend-core": "4.0.12",
