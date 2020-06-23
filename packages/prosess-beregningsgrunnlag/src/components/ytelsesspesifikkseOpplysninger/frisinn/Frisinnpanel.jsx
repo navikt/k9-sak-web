@@ -3,7 +3,6 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import Panel from 'nav-frontend-paneler';
-import PropTypes from 'prop-types';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import styles from './søknadsopplysninger.less';
 import Søknadsopplysninger from './Søknadsopplysninger';
@@ -13,7 +12,7 @@ import Grenseverdi from './Grenseverdi';
 
 const erDagsatsBeregnet = bg => bg.beregningsgrunnlagPeriode.some(p => p.dagsats || p.dagsats === 0);
 
-const Frisinnpanel = ({ beregningsgrunnlag, behandlingÅrsaker }) => {
+const Frisinnpanel = ({ beregningsgrunnlag }) => {
   return (
     <>
       <div className={styles.aksjonspunktBehandlerContainer}>
@@ -28,9 +27,9 @@ const Frisinnpanel = ({ beregningsgrunnlag, behandlingÅrsaker }) => {
           <VerticalSpacer sixteenPx />
           {erDagsatsBeregnet(beregningsgrunnlag) && (
             <>
-              <Grenseverdi beregningsgrunnlag={beregningsgrunnlag} behandlingÅrsaker={behandlingÅrsaker} />
+              <Grenseverdi beregningsgrunnlag={beregningsgrunnlag} />
               <VerticalSpacer sixteenPx />
-              <Beregningsresultat beregningsgrunnlag={beregningsgrunnlag} behandlingÅrsaker={behandlingÅrsaker} />
+              <Beregningsresultat beregningsgrunnlag={beregningsgrunnlag} />
             </>
           )}
         </Panel>
@@ -40,7 +39,6 @@ const Frisinnpanel = ({ beregningsgrunnlag, behandlingÅrsaker }) => {
 };
 Frisinnpanel.propTypes = {
   beregningsgrunnlag: beregningsgrunnlagPropType,
-  behandlingÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 Frisinnpanel.defaultProps = {
