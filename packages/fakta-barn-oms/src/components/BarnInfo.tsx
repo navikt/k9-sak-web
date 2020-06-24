@@ -7,7 +7,7 @@ import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/B
 
 interface BarnInfoProps {
   barnet: BarnDto;
-  index: number;
+  barnnummer: number;
 }
 
 export const BarnPanel = styled.article`
@@ -37,13 +37,13 @@ const Fnr = styled.span`
   font-style: italic;
 `;
 
-const BarnInfo: FunctionComponent<BarnInfoProps> = ({ barnet, index }) => {
+const BarnInfo: FunctionComponent<BarnInfoProps> = ({ barnet, barnnummer }) => {
   const { personIdent, harSammeBosted, fødselsdato, dødsdato, barnType } = barnet;
   return (
     <BarnPanel key={personIdent}>
       <PanelHeader>
         <h4>
-          <FormattedMessage id="FaktaBarn.BarnNummer" values={{ index: index + 1 }} />
+          <FormattedMessage id="FaktaBarn.BarnNummer" values={{ index: barnnummer }} />
         </h4>
         <Fnr>{personIdent.length === 11 ? personIdent : visningsdato(fødselsdato)}</Fnr>
       </PanelHeader>

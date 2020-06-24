@@ -20,7 +20,7 @@ const VanligeBarn: FC<VanligeBarnProps> = ({ barn }) => {
         <FormattedMessage id="FaktaBarn.Behandlingsdato" />
       </Element>
       {barn.map((barnet, index) => (
-        <BarnInfo barnet={barnet} index={index} key={barnet.personIdent} />
+        <BarnInfo barnet={barnet} barnnummer={index + 1} key={barnet.personIdent} />
       ))}
     </Gruppering>
   );

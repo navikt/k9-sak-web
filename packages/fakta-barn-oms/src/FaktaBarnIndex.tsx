@@ -31,7 +31,7 @@ const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [] }) =
       <Seksjon bakgrunn="hvit" title={{ id: 'FaktaBarn.Tittel' }} imgSrc={users}>
         {barn.length === 0 && <FormattedMessage id="FaktaBarn.IngenBarn" />}
         <VanligeBarn barn={vanligeBarn} />
-        <BarnFraRammevedtak barn={barnFraRammeVedtak} startIndex={vanligeBarn.length + 1} />
+        <BarnFraRammevedtak barn={barnFraRammeVedtak} startIndex={vanligeBarn.length} />
       </Seksjon>
     </RawIntlProvider>
   );

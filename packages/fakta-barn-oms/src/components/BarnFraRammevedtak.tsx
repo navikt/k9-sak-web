@@ -21,7 +21,7 @@ const BarnFraRammevedtak: FC<BarnFraRammevedtakProps> = ({ barn, startIndex }) =
         <FormattedMessage id="FaktaBarn.HentetLive" />
       </Element>
       {barn.map((barnet, index) => (
-        <BarnInfo barnet={barnet} index={index + startIndex} key={barnet.personIdent} />
+        <BarnInfo barnet={barnet} barnnummer={index + startIndex + 1} key={barnet.personIdent} />
       ))}
     </Gruppering>
   );
