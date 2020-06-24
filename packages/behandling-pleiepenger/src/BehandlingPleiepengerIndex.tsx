@@ -15,17 +15,12 @@ import FetchedData from './types/fetchedDataTsType';
 
 const pleiepengerData = [
   pleiepengerBehandlingApi.AKSJONSPUNKTER,
-  pleiepengerBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
   pleiepengerBehandlingApi.VILKAR,
   pleiepengerBehandlingApi.PERSONOPPLYSNINGER,
   pleiepengerBehandlingApi.SOKNAD,
-  pleiepengerBehandlingApi.INNTEKT_ARBEID_YTELSE,
-  pleiepengerBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,
+  pleiepengerBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
   pleiepengerBehandlingApi.BEREGNINGSGRUNNLAG,
-  pleiepengerBehandlingApi.UTTAK_STONADSKONTOER,
-  pleiepengerBehandlingApi.UTTAKSRESULTAT_PERIODER,
   pleiepengerBehandlingApi.SIMULERING_RESULTAT,
-  pleiepengerBehandlingApi.VEDTAK_VARSEL,
 ];
 
 interface OwnProps {

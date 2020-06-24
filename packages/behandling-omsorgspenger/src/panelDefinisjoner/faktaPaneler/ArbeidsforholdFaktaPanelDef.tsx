@@ -5,6 +5,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
 
+import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+
 class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.ARBEIDSFORHOLD;
 
@@ -12,11 +14,13 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
+  getEndepunkter = () => [omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE];
+
   getKomponent = props => <ArbeidsforholdFaktaIndex {...props} />;
 
   getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
-  getData = ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse });
+  getData = ({ personopplysninger }) => ({ personopplysninger });
 }
 
 export default ArbeidsforholdFaktaPanelDef;

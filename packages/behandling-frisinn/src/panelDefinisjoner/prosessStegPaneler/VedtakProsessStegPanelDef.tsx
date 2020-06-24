@@ -23,32 +23,25 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => [frisinnBehandlingApi.TILBAKEKREVINGVALG, frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING];
+  getEndepunkter = () => [
+    frisinnBehandlingApi.TILBAKEKREVINGVALG,
+    frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
+    frisinnBehandlingApi.VEDTAK_VARSEL,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
-  getData = ({
-    previewCallback,
-    rettigheter,
-    aksjonspunkter,
-    vilkar,
-    beregningresultatForeldrepenger,
-    simuleringResultat,
-    beregningsgrunnlag,
-    vedtakVarsel,
-  }) => ({
+  getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, beregningsgrunnlag }) => ({
     previewCallback,
     aksjonspunkter,
     vilkar,
-    beregningresultatForeldrepenger,
     simuleringResultat,
     beregningsgrunnlag,
     ytelseTypeKode: fagsakYtelseType.FRISINN,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-    vedtakVarsel,
   });
 }
 

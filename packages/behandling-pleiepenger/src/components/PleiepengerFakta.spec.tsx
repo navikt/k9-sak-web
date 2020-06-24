@@ -206,7 +206,6 @@ describe('<PleiepengerFakta>', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
-      inntektArbeidYtelse,
     };
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
@@ -227,9 +226,10 @@ describe('<PleiepengerFakta>', () => {
 
     const dataFetcher = wrapper.find(DataFetcher);
     expect(dataFetcher.prop('fetchingTriggers').triggers.behandlingVersion).is.eql(behandling.versjon);
-    expect(dataFetcher.prop('endpoints')).is.eql([]);
 
-    const arbeidsforholdPanel = dataFetcher.renderProp('render')({}).find(ArbeidsforholdFaktaIndex);
+    const arbeidsforholdPanel = dataFetcher
+      .renderProp('render')({ inntektArbeidYtelse })
+      .find(ArbeidsforholdFaktaIndex);
     // eslint-disable-next-line
     expect(arbeidsforholdPanel.prop('readOnly')).is.false;
     // eslint-disable-next-line

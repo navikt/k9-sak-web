@@ -49,26 +49,15 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setApentFaktaPanel,
   dispatch,
 }) => {
-  const {
-    aksjonspunkter,
-    vilkar,
-    personopplysninger,
-    inntektArbeidYtelse,
-    beregningsgrunnlag,
-    sykdom,
-    omsorgenFor,
-  } = data;
+  const { aksjonspunkter, vilkar, personopplysninger, beregningsgrunnlag } = data;
 
   const dataTilUtledingAvFpPaneler = {
     fagsak,
     behandling,
     vilkar,
     personopplysninger,
-    inntektArbeidYtelse,
     beregningsgrunnlag,
     hasFetchError,
-    sykdom,
-    omsorgenFor,
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(

@@ -21,15 +21,10 @@ const omsorgspengerData = [
   omsorgspengerBehandlingApi.VILKAR,
   omsorgspengerBehandlingApi.PERSONOPPLYSNINGER,
   omsorgspengerBehandlingApi.SOKNAD,
-  omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE,
   omsorgspengerBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
   omsorgspengerBehandlingApi.BEREGNINGSGRUNNLAG,
-  omsorgspengerBehandlingApi.UTTAK_STONADSKONTOER,
-  omsorgspengerBehandlingApi.UTTAKSRESULTAT_PERIODER,
   omsorgspengerBehandlingApi.SIMULERING_RESULTAT,
-  omsorgspengerBehandlingApi.VEDTAK_VARSEL,
   omsorgspengerBehandlingApi.FORBRUKTE_DAGER,
-  omsorgspengerBehandlingApi.FULL_UTTAKSPLAN,
 ];
 
 interface OwnProps {

@@ -17,11 +17,9 @@ const frisinnData = [
   frisinnBehandlingApi.AKSJONSPUNKTER,
   frisinnBehandlingApi.VILKAR,
   frisinnBehandlingApi.PERSONOPPLYSNINGER,
-  frisinnBehandlingApi.INNTEKT_ARBEID_YTELSE,
   frisinnBehandlingApi.BEREGNINGSRESULTAT_UTBETALT,
   frisinnBehandlingApi.BEREGNINGSGRUNNLAG,
   frisinnBehandlingApi.SIMULERING_RESULTAT,
-  frisinnBehandlingApi.VEDTAK_VARSEL,
 ];
 
 interface OwnProps {

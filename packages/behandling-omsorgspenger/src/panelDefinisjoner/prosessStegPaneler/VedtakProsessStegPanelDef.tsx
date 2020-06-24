@@ -28,6 +28,7 @@ class PanelDef extends ProsessStegPanelDef {
     omsorgspengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
     omsorgspengerBehandlingApi.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
     omsorgspengerBehandlingApi.MEDLEMSKAP,
+    omsorgspengerBehandlingApi.VEDTAK_VARSEL,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
@@ -35,25 +36,14 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
-  getData = ({
-    previewCallback,
-    rettigheter,
-    aksjonspunkter,
-    vilkar,
-    beregningsresultatUtbetaling,
-    simuleringResultat,
-    beregningsgrunnlag,
-    vedtakVarsel,
-  }) => ({
+  getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, beregningsgrunnlag }) => ({
     previewCallback,
     aksjonspunkter,
     vilkar,
-    beregningsresultatUtbetaling,
     simuleringResultat,
     beregningsgrunnlag,
     ytelseTypeKode: fagsakYtelseType.OMSORGSPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-    vedtakVarsel,
   });
 }
 

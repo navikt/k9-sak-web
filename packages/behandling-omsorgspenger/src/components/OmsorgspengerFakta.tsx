@@ -49,17 +49,7 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   setApentFaktaPanel,
   dispatch,
 }) => {
-  const {
-    aksjonspunkter,
-    soknad,
-    vilkar,
-    personopplysninger,
-    inntektArbeidYtelse,
-    beregningsgrunnlag,
-    sykdom,
-    omsorgenFor,
-    forbrukteDager,
-  } = data;
+  const { aksjonspunkter, soknad, vilkar, personopplysninger, beregningsgrunnlag, forbrukteDager } = data;
 
   const dataTilUtledingAvFpPaneler = {
     fagsak,
@@ -67,11 +57,8 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
     soknad,
     vilkar,
     personopplysninger,
-    inntektArbeidYtelse,
     beregningsgrunnlag,
     hasFetchError,
-    sykdom,
-    omsorgenFor,
     forbrukteDager,
   };
 

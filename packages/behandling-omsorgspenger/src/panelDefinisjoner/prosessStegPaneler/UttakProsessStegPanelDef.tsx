@@ -8,12 +8,16 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
+import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <ÅrskvantumIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE];
 
   getOverstyrVisningAvKomponent = () => true;
+
+  getEndepunkter = () => [omsorgspengerBehandlingApi.FULL_UTTAKSPLAN];
 
   getOverstyrtStatus = ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
     if (!forbrukteDager || !forbrukteDager.sisteUttaksplan) {
@@ -25,10 +29,9 @@ class PanelDef extends ProsessStegPanelDef {
     return allePerioderAvslått ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ forbrukteDager, aksjonspunkterForSteg, fullUttaksplan }) => ({
+  getData = ({ forbrukteDager, aksjonspunkterForSteg }) => ({
     årskvantum: forbrukteDager,
     aksjonspunkterForSteg,
-    aktiviteterHittilIÅr: fullUttaksplan?.aktiviteter,
   });
 }
 

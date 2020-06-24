@@ -22,7 +22,6 @@ export const FrisinnBehandlingApiKeys = {
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
   BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   BEREGNINGSRESULTAT_UTBETALT: 'BEREGNINGSRESULTAT_UTBETALT',
-  INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   OPPTJENING: 'OPPTJENING',
   INNTEKT_OG_YTELSER: 'INNTEKT_OG_YTELSER',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
@@ -50,7 +49,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilbakekrevingvalg', FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG)
   .withRel('beregningsgrunnlag', FrisinnBehandlingApiKeys.BEREGNINGSGRUNNLAG)
   .withRel('beregningsresultat-foreldrepenger', FrisinnBehandlingApiKeys.BEREGNINGRESULTAT)
-  .withRel('inntekt-arbeid-ytelse', FrisinnBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('opptjening-v2', FrisinnBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('uttak-kontroller-fakta-perioder', FrisinnBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
