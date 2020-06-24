@@ -10,10 +10,13 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VedtakKlageProsessIndex = ({
   behandling,
@@ -21,7 +24,7 @@ const VedtakKlageProsessIndex = ({
   aksjonspunkter,
   submitCallback,
   previewVedtakCallback,
-  readOnly,
+  isReadOnly,
   alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
@@ -34,7 +37,7 @@ const VedtakKlageProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       previewVedtakCallback={previewVedtakCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       alleKodeverk={alleKodeverk}
     />
   </RawIntlProvider>
@@ -46,7 +49,7 @@ VedtakKlageProsessIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(vedtakKlageAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
 

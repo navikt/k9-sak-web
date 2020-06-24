@@ -9,10 +9,13 @@ import foreldelseBehandlingPropType from './propTypes/foreldelseBehandlingPropTy
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const ForeldelseProsessIndex = ({
   behandling,
@@ -22,7 +25,7 @@ const ForeldelseProsessIndex = ({
   alleKodeverk,
   beregnBelop,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
   apCodes,
 }) => (
@@ -32,7 +35,7 @@ const ForeldelseProsessIndex = ({
       behandlingVersjon={behandling.versjon}
       perioderForeldelse={perioderForeldelse}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       apCodes={apCodes}
       readOnlySubmitButton={readOnlySubmitButton}
       navBrukerKjonn={navBrukerKjonn}
@@ -51,7 +54,7 @@ ForeldelseProsessIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   beregnBelop: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

@@ -11,10 +11,13 @@ import vilkarsvurderingPropType from './propTypes/vilkarsvurderingPropType';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const TilbakekrevingProsessIndex = ({
   behandling,
@@ -22,13 +25,13 @@ const TilbakekrevingProsessIndex = ({
   vilkarvurderingsperioder,
   vilkarvurdering,
   submitCallback,
-  readOnly,
-  apCodes,
+  isReadOnly,
   readOnlySubmitButton,
   navBrukerKjonn,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   beregnBelop,
+  aksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
     <TilbakekrevingForm
@@ -39,8 +42,8 @@ const TilbakekrevingProsessIndex = ({
       rettsgebyr={vilkarvurderingsperioder.rettsgebyr}
       vilkarvurdering={vilkarvurdering}
       submitCallback={submitCallback}
-      readOnly={readOnly}
-      apCodes={apCodes}
+      readOnly={isReadOnly}
+      apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
       readOnlySubmitButton={readOnlySubmitButton}
       navBrukerKjonn={navBrukerKjonn}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -60,9 +63,9 @@ TilbakekrevingProsessIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   beregnBelop: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default TilbakekrevingProsessIndex;

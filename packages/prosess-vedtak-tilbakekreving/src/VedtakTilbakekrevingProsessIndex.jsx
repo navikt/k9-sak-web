@@ -11,30 +11,31 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
-const tilbakekrevingÅrsakTyperKlage = [
-  behandlingArsakType.RE_KLAGE_KA,
-  behandlingArsakType.RE_KLAGE_NFP,
-];
+const tilbakekrevingÅrsakTyperKlage = [behandlingArsakType.RE_KLAGE_KA, behandlingArsakType.RE_KLAGE_NFP];
 
-const erTilbakekrevingÅrsakKlage = (årsak) => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
+const erTilbakekrevingÅrsakKlage = årsak => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
 
 const VedtakTilbakekrevingProsessIndex = ({
   behandling,
   beregningsresultat,
   vedtaksbrev,
   submitCallback,
-  readOnly,
+  isReadOnly,
   isBehandlingHenlagt,
   alleKodeverk,
   fetchPreviewVedtaksbrev,
   aksjonspunktKodeForeslaVedtak,
 }) => {
-  const erRevurderingTilbakekrevingKlage = behandling.førsteÅrsak && erTilbakekrevingÅrsakKlage(behandling.førsteÅrsak.behandlingArsakType);
+  const erRevurderingTilbakekrevingKlage =
+    behandling.førsteÅrsak && erTilbakekrevingÅrsakKlage(behandling.førsteÅrsak.behandlingArsakType);
   return (
     <RawIntlProvider value={intl}>
       <TilbakekrevingVedtak
@@ -44,7 +45,7 @@ const VedtakTilbakekrevingProsessIndex = ({
         resultat={beregningsresultat.vedtakResultatType}
         avsnittsliste={vedtaksbrev.avsnittsliste}
         submitCallback={submitCallback}
-        readOnly={readOnly}
+        readOnly={isReadOnly}
         isBehandlingHenlagt={isBehandlingHenlagt}
         alleKodeverk={alleKodeverk}
         fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
@@ -60,7 +61,7 @@ VedtakTilbakekrevingProsessIndex.propTypes = {
   beregningsresultat: vedtakTilbakekrevingBeregningsresultatPropType.isRequired,
   vedtaksbrev: vedtaksbrevPropType.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   isBehandlingHenlagt: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
