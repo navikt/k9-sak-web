@@ -12,8 +12,6 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import KlageProsess from './KlageProsess';
 
@@ -61,22 +59,6 @@ describe('<KlageProsess>', () => {
       erAktivt: true,
     },
   ];
-  const vilkar = [
-    {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
-      overstyrbar: true,
-      perioder: [
-        {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          merknadParametere: {
-            antattGodkjentArbeid: 'P0D',
-            antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
-          },
-          periode: { fom: '2020-03-16', tom: '2020-03-19' },
-        },
-      ],
-    },
-  ];
   const klageVurdering = {
     klageVurderingResultatNK: {
       klageVurdertAv: 'Espen Utvikler',
@@ -97,7 +79,7 @@ describe('<KlageProsess>', () => {
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallow(
       <KlageProsess
-        data={{ aksjonspunkter, vilkar, klageVurdering }}
+        data={{ aksjonspunkter, klageVurdering }}
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -160,7 +142,7 @@ describe('<KlageProsess>', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <KlageProsess
-        data={{ aksjonspunkter, vilkar, klageVurdering }}
+        data={{ aksjonspunkter, klageVurdering }}
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
