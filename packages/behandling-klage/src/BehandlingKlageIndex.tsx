@@ -13,7 +13,7 @@ import FetchedData from './types/fetchedDataTsType';
 import klageApi, { reduxRestApi, KlageBehandlingApiKeys } from './data/klageBehandlingApi';
 import KlagePaneler from './components/KlagePaneler';
 
-const klageData = [klageApi.AKSJONSPUNKTER, klageApi.VILKAR, klageApi.KLAGE_VURDERING];
+const klageData = [klageApi.AKSJONSPUNKTER, klageApi.KLAGE_VURDERING];
 
 interface OwnProps {
   behandlingId: number;

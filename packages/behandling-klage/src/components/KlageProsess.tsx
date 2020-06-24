@@ -130,7 +130,7 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
     rettigheter,
     behandling,
     data.aksjonspunkter,
-    data.vilkar,
+    [],
     false,
     valgtProsessSteg,
   );
