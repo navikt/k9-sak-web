@@ -2,11 +2,11 @@ import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import { Element } from 'nav-frontend-typografi';
 import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
 import users from '@fpsak-frontend/assets/images/users.svg';
 import messages from '../i18n/nb_NO.json';
-import BarnInfo from './components/BarnInfo';
+import VanligeBarn from './components/VanligeBarn';
+import BarnFraRammevedtak from './components/BarnFraRammevedtak';
 
 const cache = createIntlCache();
 
@@ -29,17 +29,9 @@ const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [] }) =
   return (
     <RawIntlProvider value={intl}>
       <Seksjon bakgrunn="hvit" title={{ id: 'FaktaBarn.Tittel' }} imgSrc={users}>
-        <Element>
-          <FormattedMessage id="FaktaBarn.Behandlingsdato" />
-        </Element>
         {barn.length === 0 && <FormattedMessage id="FaktaBarn.IngenBarn" />}
-        {vanligeBarn.map((barnet, index) => (
-          <BarnInfo barnet={barnet} index={index} key={barnet.personIdent} />
-        ))}
-        {/* TODO: legge i egne components og skrive at vanlige barn er lagret, mens de andre er 'live' */}
-        {barnFraRammeVedtak.map((barnet, index) => (
-          <BarnInfo barnet={barnet} index={index + vanligeBarn.length} key={barnet.personIdent} />
-        ))}
+        <VanligeBarn barn={vanligeBarn} />
+        <BarnFraRammevedtak barn={barnFraRammeVedtak} startIndex={vanligeBarn.length + 1} />
       </Seksjon>
     </RawIntlProvider>
   );

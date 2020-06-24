@@ -1,7 +1,8 @@
 {
   "FaktaBarn.Tittel": "Barn brukt som grunnlag for beregning av dager",
   "FaktaBarn.BarnNummer": "Barn #{index}",
-  "FaktaBarn.Behandlingsdato": "Informasjonen under viser barna slik det var i tidspunktet ved behandlingen",
+  "FaktaBarn.Behandlingsdato": "Disse barna er søkerens folkeregistrerte barn slik det var ved behandlingstidspunket",
+  "FaktaBarn.HentetLive": "Disse barna er hentet fra nåværende rammevedtak på søkeren, og kan avvike fra slik det var ved behandlingstidspunket",
   "FaktaBarn.BorMedSøker": "Barnet bor med søker",
   "FaktaBarn.BorIkkeMedSøker": "<span>Barnet bor <b>ikke</b> med søker<span>",
   "FaktaBarn.Død": "Barnet døde den {dødsdato}",
