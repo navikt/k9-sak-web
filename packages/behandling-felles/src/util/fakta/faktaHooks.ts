@@ -70,7 +70,7 @@ const useCallbacks = (
   dispatch: Dispatch,
 ) => {
   const velgFaktaPanelCallback = useCallback(
-    index => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].getUrlKode()),
+    (index: number): void => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].getUrlKode()),
     [behandling.versjon, valgtProsessSteg],
   );
 

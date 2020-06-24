@@ -14,6 +14,11 @@ interface DatepickerFieldProps {
   format?: (value: string) => string;
   parse?: (value: string) => string;
   isEdited?: boolean;
+  validate?: (
+    | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
+    | ((value: any) => { id: string }[])
+    | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
+  )[];
 }
 
 const isoToDdMmYyyy = (string: string): string => {

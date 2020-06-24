@@ -173,7 +173,7 @@ const OmsorgspengerProsess: FunctionComponent<OwnProps> = ({
 
   const fatterVedtakTextCode = useMemo(
     () =>
-      valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT
+      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
         ? 'FatterVedtakStatusModal.SendtBeslutter'
         : 'FatterVedtakStatusModal.ModalDescriptionFP',
     [behandling.versjon],

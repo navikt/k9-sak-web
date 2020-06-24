@@ -55,7 +55,7 @@ export const getBekreftAksjonspunktCallback = (
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void,
   overstyringApCodes: string[],
   api: { [name: string]: EndpointOperations },
-) => (aksjonspunkter: any[]) => {
+) => aksjonspunkter => {
   const model = aksjonspunkter.map(ap => ({
     '@type': ap.kode,
     ...ap,
