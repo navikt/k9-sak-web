@@ -9,7 +9,7 @@ it('rendrer tittel og children', () => {
   const content = <div id={testId} />;
   const titleId = 'titleId';
   const wrapper = shallowWithIntl(
-    <Seksjon imgSrc={null} titleId={titleId} bakgrunn="hvit">
+    <Seksjon imgSrc={null} title={{ id: titleId }} bakgrunn="hvit">
       {content}
     </Seksjon>,
   );
