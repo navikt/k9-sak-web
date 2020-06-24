@@ -1,14 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { isEmpty } from 'lodash';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import {
   behandlingForm,
   getBehandlingFormPrefix,
   getBehandlingFormValues,
 } from '@fpsak-frontend/form/src/behandlingForm';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
+import { FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
 import user from '@fpsak-frontend/assets/images/user.svg';
 import users from '@fpsak-frontend/assets/images/users.svg';
@@ -72,29 +73,34 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
       <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.Overføringer.Tittel" imgSrc={transferIcon}>
         {detFinnesOverføringer ? (
           <>
-            <FastBreddeAligner
-              rad={{ padding: '0 0 0 1em' }}
-              kolonner={[
-                {
-                  width: '225px',
-                  id: 'overføring.tittel.totalt',
-                  content: (
-                    <Element>
-                      <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
-                    </Element>
-                  ),
-                },
-                {
-                  width: '150px',
-                  id: 'overføring.tittel.type',
-                  content: (
-                    <Element>
-                      <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
-                    </Element>
-                  ),
-                },
-              ]}
-            />
+            <FlexRow spaceBetween>
+              <FastBreddeAligner
+                rad={{ padding: '0 0 0 1em' }}
+                kolonner={[
+                  {
+                    width: '225px',
+                    id: 'overføring.tittel.totalt',
+                    content: (
+                      <Element>
+                        <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
+                      </Element>
+                    ),
+                  },
+                  {
+                    width: '150px',
+                    id: 'overføring.tittel.type',
+                    content: (
+                      <Element>
+                        <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
+                      </Element>
+                    ),
+                  },
+                ]}
+              />
+              <Hjelpetekst>
+                <FormattedHTMLMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" />
+              </Hjelpetekst>
+            </FlexRow>
             <OverføringsdagerPanelgruppe
               overføringer={overføringFår}
               fordelinger={fordelingFår}
