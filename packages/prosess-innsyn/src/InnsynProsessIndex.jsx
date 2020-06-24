@@ -10,10 +10,13 @@ import innsynPropType from './propTypes/innsynPropType';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const InnsynProsessIndex = ({
   behandling,
@@ -22,8 +25,8 @@ const InnsynProsessIndex = ({
   saksnummer,
   aksjonspunkter,
   submitCallback,
-  readOnly,
-  isSubmittable,
+  isReadOnly,
+  readOnlySubmitButton,
   alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
@@ -40,8 +43,8 @@ const InnsynProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      readOnly={readOnly}
-      isSubmittable={isSubmittable}
+      readOnly={isReadOnly}
+      isSubmittable={readOnlySubmitButton}
     />
   </RawIntlProvider>
 );
@@ -53,8 +56,8 @@ InnsynProsessIndex.propTypes = {
   saksnummer: PropTypes.string.isRequired,
   aksjonspunkter: PropTypes.arrayOf(innsynAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  isSubmittable: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
 

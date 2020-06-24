@@ -13,41 +13,44 @@ import formkravKlageVurderingPropType from './propTypes/formkravKlageVurderingPr
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const FormkravProsessIndex = ({
   behandling,
   klageVurdering,
   avsluttedeBehandlinger,
-  apCodes,
+  aksjonspunkter,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
   alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
-    {apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP) && (
+    {aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP) && (
       <FormkravKlageFormNfp
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         klageVurdering={klageVurdering}
         submitCallback={submitCallback}
-        readOnly={readOnly}
+        readOnly={isReadOnly}
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
         avsluttedeBehandlinger={avsluttedeBehandlinger}
       />
     )}
-    {apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA) && (
+    {aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA) && (
       <FormkravKlageFormKa
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         klageVurdering={klageVurdering}
         submitCallback={submitCallback}
-        readOnly={readOnly}
+        readOnly={isReadOnly}
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
         avsluttedeBehandlinger={avsluttedeBehandlinger}
@@ -60,9 +63,9 @@ FormkravProsessIndex.propTypes = {
   behandling: formkravBehandlingPropType.isRequired,
   klageVurdering: formkravKlageVurderingPropType,
   avsluttedeBehandlinger: PropTypes.arrayOf(avsluttetBehandlingPropType).isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
