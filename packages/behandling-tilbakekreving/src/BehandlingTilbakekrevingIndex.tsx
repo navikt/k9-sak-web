@@ -4,41 +4,29 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import { FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, Rettigheter } from '@fpsak-frontend/behandling-felles';
+import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import {
-  FagsakInfo,
-  SettPaVentParams,
-  ReduxFormStateCleaner,
-  DataFetcherBehandlingData,
-  BehandlingDataCache,
-} from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, NavAnsatt, Behandling, Aksjonspunkt } from '@k9-sak-web/types';
 
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
-import TilbakekrevingGrid from './components/TilbakekrevingGrid';
-import PerioderForeldelse from './types/perioderForeldelseTsType';
-import Beregningsresultat from './types/beregningsresultatTsType';
+import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
+import FetchedData from './types/fetchedDataTsType';
 
 const tilbakekrevingData = [
   tilbakekrevingApi.AKSJONSPUNKTER,
+  tilbakekrevingApi.FEILUTBETALING_FAKTA,
   tilbakekrevingApi.PERIODER_FORELDELSE,
   tilbakekrevingApi.BEREGNINGSRESULTAT,
 ];
 
-interface DataProps {
-  behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  perioderForeldelse: PerioderForeldelse;
-  beregningsresultat: Beregningsresultat;
-}
-
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
+  valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: { [key: string]: (params: {}) => Promise<any> }) => void;
@@ -46,11 +34,13 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   harApenRevurdering: boolean;
+  kodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 interface StateProps {
   behandling?: Behandling;
-  kodeverk?: { [key: string]: [Kodeverk] };
+  forrigeBehandling?: Behandling;
+  tilbakekrevingKodeverk?: { [key: string]: KodeverkMedNavn[] };
   hasFetchError: boolean;
 }
 
@@ -62,6 +52,8 @@ interface DispatchProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   hentKodeverk: () => Promise<any>;
+  opprettVerge: (params: {}) => Promise<any>;
+  fjernVerge: (params: {}) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
   destroyReduxForm: (form: string) => void;
 }
@@ -69,8 +61,6 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache();
-
   componentDidMount = () => {
     const {
       behandlingEventHandler,
@@ -81,6 +71,8 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
       hentBehandling,
       behandlingId,
       hentKodeverk,
+      opprettVerge,
+      fjernVerge,
     } = this.props;
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: params =>
@@ -89,9 +81,10 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
         settBehandlingPaVent(params).then(() => hentBehandling({ behandlingId }, { keepData: true })),
       taBehandlingAvVent: params => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: params => henleggBehandling(params),
+      opprettVerge: params => opprettVerge(params),
+      fjernVerge: params => fjernVerge(params),
     });
 
-    this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
     hentKodeverk();
   };
@@ -106,12 +99,15 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
   render() {
     const {
       behandling,
+      forrigeBehandling,
       oppdaterBehandlingVersjon,
-      kodeverk,
+      kodeverk: fpsakKodeverk,
+      tilbakekrevingKodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
+      valgtFaktaSteg,
       settPaVent,
       hentBehandling,
       opneSokeside,
@@ -119,42 +115,40 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
       hasFetchError,
     } = this.props;
 
-    if (!behandling || !kodeverk) {
+    if (!behandling || !tilbakekrevingKodeverk) {
       return <LoadingPanel />;
     }
 
     reduxRestApi.injectPaths(behandling.links);
 
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
-    }
-
     return (
-      <DataFetcherBehandlingData
-        behandlingDataCache={this.behandlingDataCache}
-        behandlingVersion={behandling.versjon}
+      <DataFetcher
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={tilbakekrevingData}
         showOldDataWhenRefetching
-        render={(dataProps: DataProps) => (
+        loadingPanel={<LoadingPanel />}
+        render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner
-              behandlingId={dataProps.behandling.id}
-              behandlingVersjon={dataProps.behandling.versjon}
+              behandlingId={behandling.id}
+              behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon}
             />
-            <TilbakekrevingGrid
+            <TilbakekrevingPaneler
+              behandling={isFinished ? behandling : forrigeBehandling}
+              fetchedData={dataProps}
               fagsak={fagsak}
-              kodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              kodeverk={tilbakekrevingKodeverk}
+              fpsakKodeverk={fpsakKodeverk}
+              rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              valgtFaktaSteg={valgtFaktaSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}
               opneSokeside={opneSokeside}
               harApenRevurdering={harApenRevurdering}
               hasFetchError={hasFetchError}
-              {...dataProps}
             />
           </>
         )}
@@ -163,13 +157,14 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state): StateProps => ({
   behandling: tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiData()(state),
-  kodeverk: tilbakekrevingApi.TILBAKE_KODEVERK.getRestApiData()(state),
+  forrigeBehandling: tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiPreviousData()(state),
+  tilbakekrevingKodeverk: tilbakekrevingApi.TILBAKE_KODEVERK.getRestApiData()(state),
   hasFetchError: !!tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiError()(state),
 });
 
-const getResetRestApiContext = () => dispatch => {
+const getResetRestApiContext = () => (dispatch: Dispatch) => {
   Object.values(TilbakekrevingBehandlingApiKeys).forEach(value => {
     dispatch(tilbakekrevingApi[value].resetRestApi()());
   });
@@ -185,6 +180,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
       settPaVent: tilbakekrevingApi.UPDATE_ON_HOLD.makeRestApiRequest(),
       hentBehandling: tilbakekrevingApi.BEHANDLING_TILBAKE.makeRestApiRequest(),
       hentKodeverk: tilbakekrevingApi.TILBAKE_KODEVERK.makeRestApiRequest(),
+      opprettVerge: tilbakekrevingApi.VERGE_OPPRETT.makeRestApiRequest(),
+      fjernVerge: tilbakekrevingApi.VERGE_FJERN.makeRestApiRequest(),
       resetRestApiContext: getResetRestApiContext,
       destroyReduxForm: destroy,
     },
@@ -192,7 +189,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ),
 });
 
-export default connect<any, DispatchProps, OwnProps>(
+export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(BehandlingTilbakekrevingIndex);

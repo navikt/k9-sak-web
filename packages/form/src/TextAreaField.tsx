@@ -24,11 +24,18 @@ interface TextAreaWithBadgeProps {
 interface TextAreaFieldProps {
   name: string;
   label: LabelType;
-  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  validate?: (
+    | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
+    | ((value: any, allValues: any, props: any) => { id: string }[])
+    | ((value: any) => { id: string }[])
+    | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
+  )[];
   readOnly?: boolean;
   dataId?: string;
   textareaClass?: string;
   maxLength?: number;
+  badges?: Badges[];
+  placeholder?: string;
 }
 
 const TextAreaWithBadge = ({

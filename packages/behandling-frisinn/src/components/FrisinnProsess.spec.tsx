@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
+import { Behandling } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
   ProsessStegPanel,
   FatterVedtakStatusModal,
@@ -20,6 +21,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
+import FetchedData from '../types/fetchedDataTsType';
 import FrisinnProsess from './FrisinnProsess';
 
 describe('<FrisinnProsess>', () => {
@@ -48,16 +50,15 @@ describe('<FrisinnProsess>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [
     {
@@ -69,25 +70,34 @@ describe('<FrisinnProsess>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.ADOPSJONSVILKARET_FORELDREPENGER, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
       overstyrbar: true,
       perioder: [
         {
           vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          merknadParametere: {
+            antattGodkjentArbeid: 'P0D',
+            antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
+          },
+          periode: { fom: '2020-03-16', tom: '2020-03-19' },
         },
       ],
     },
   ];
 
+  const fetchedData: Partial<FetchedData> = {
+    aksjonspunkter,
+    vilkar,
+  };
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    const wrapper = shallowWithIntl(
-      <FrisinnProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+    const wrapper = shallow(
+      <FrisinnProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="inngangsvilkar"
         valgtFaktaSteg="arbeidsforhold"
         hasFetchError={false}
@@ -105,7 +115,7 @@ describe('<FrisinnProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Beregning',
+        labelId: 'Behandlingspunkt.Beregning',
         type: 'default',
         usePartialStatus: false,
       },
@@ -113,7 +123,7 @@ describe('<FrisinnProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Tilkjent ytelse',
+        labelId: 'Behandlingspunkt.TilkjentYtelse',
         type: 'default',
         usePartialStatus: false,
       },
@@ -121,7 +131,7 @@ describe('<FrisinnProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Simulering',
+        labelId: 'Behandlingspunkt.Avregning',
         type: 'default',
         usePartialStatus: false,
       },
@@ -129,7 +139,7 @@ describe('<FrisinnProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        label: 'Vedtak',
+        labelId: 'Behandlingspunkt.Vedtak',
         type: 'default',
         usePartialStatus: false,
       },
@@ -138,14 +148,13 @@ describe('<FrisinnProsess>', () => {
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <FrisinnProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+    const wrapper = shallow(
+      <FrisinnProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -184,16 +193,20 @@ describe('<FrisinnProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
-    const wrapper = shallowWithIntl(
-      <FrisinnProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar }}
+    const customFetchedData: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+    };
+
+    const wrapper = shallow(
+      <FrisinnProsess
+        data={customFetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={vedtakBehandling}
+        behandling={vedtakBehandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -232,16 +245,20 @@ describe('<FrisinnProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
-    const wrapper = shallowWithIntl(
-      <FrisinnProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar }}
+    const customFetchedData: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+    };
+
+    const wrapper = shallow(
+      <FrisinnProsess
+        data={customFetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -280,16 +297,20 @@ describe('<FrisinnProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
-    const wrapper = shallowWithIntl(
-      <FrisinnProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar }}
+    const customFetchedData: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+    };
+
+    const wrapper = shallow(
+      <FrisinnProsess
+        data={customFetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -312,14 +333,14 @@ describe('<FrisinnProsess>', () => {
 
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <FrisinnProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+
+    const wrapper = shallow(
+      <FrisinnProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -343,14 +364,13 @@ describe('<FrisinnProsess>', () => {
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
     const dispatch = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <FrisinnProsess.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+    const wrapper = shallow(
+      <FrisinnProsess
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="vedtak"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -363,8 +383,8 @@ describe('<FrisinnProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').urlCode).is.eql('vedtak');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewCallback;
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('vedtak');
+    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData().previewCallback;
     expect(forhandsvisCallback).is.not.null;
 
     forhandsvisCallback({ param: 'test' });

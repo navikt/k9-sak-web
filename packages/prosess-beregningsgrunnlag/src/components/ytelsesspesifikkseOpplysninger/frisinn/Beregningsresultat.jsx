@@ -3,15 +3,10 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import PropTypes from 'prop-types';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import BeregningsresultatPeriode from './BeregningsresultatPeriode';
-import {
-  erSøktForAndelISøknadsperiode,
-  finnBruttoForStatusIPeriode,
-  finnAlleBGPerioderÅViseDetaljerFor,
-} from './FrisinnUtils';
+import { erSøktForAndelISøknadsperiode, finnBruttoForStatusIPeriode } from './FrisinnUtils';
 
 const finnInntektstak = bg => (bg.grunnbeløp ? bg.grunnbeløp * 6 : null);
 
@@ -47,12 +42,7 @@ const finnBGNæring = (bg, periode) => {
   return snBrutto > inntektstak ? inntektstak : snBrutto;
 };
 
-const Beregningsresultat = ({ beregningsgrunnlag, behandlingÅrsaker }) => {
-  const perioderSomSkalVises = finnAlleBGPerioderÅViseDetaljerFor(
-    beregningsgrunnlag.beregningsgrunnlagPeriode,
-    beregningsgrunnlag.ytelsesspesifiktGrunnlag,
-    behandlingÅrsaker,
-  );
+const Beregningsresultat = ({ beregningsgrunnlag }) => {
   return (
     <div>
       <Row>
@@ -62,7 +52,7 @@ const Beregningsresultat = ({ beregningsgrunnlag, behandlingÅrsaker }) => {
           </Element>
         </Column>
       </Row>
-      {perioderSomSkalVises.map(periode => (
+      {beregningsgrunnlag.beregningsgrunnlagPeriode.map(periode => (
         <div key={periode.beregningsgrunnlagPeriodeFom}>
           <BeregningsresultatPeriode
             bgperiode={periode}
@@ -77,7 +67,6 @@ const Beregningsresultat = ({ beregningsgrunnlag, behandlingÅrsaker }) => {
   );
 };
 Beregningsresultat.propTypes = {
-  behandlingÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: beregningsgrunnlagPropType,
 };
 

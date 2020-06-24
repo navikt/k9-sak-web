@@ -10,7 +10,7 @@ import { Aksjonspunkt, NavAnsatt, Risikoklassifisering } from '@k9-sak-web/types
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 
-import { allAccessRights } from '@fpsak-frontend/fp-felles';
+import getAccessRights from '../../app/util/access';
 import { getRiskPanelLocationCreator } from '../../app/paths';
 import { getBehandlingerErPaaVentStatusMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import { getNavAnsatt } from '../../app/duck';
@@ -112,7 +112,7 @@ export class RisikoklassifiseringIndexImpl extends Component<OwnProps> {
 
 const getRettigheter = createSelector(
   [getNavAnsatt, getSelectedFagsakStatus, getBehandlingStatus, getBehandlingType],
-  allAccessRights,
+  getAccessRights,
 );
 
 const getReadOnly = createSelector(

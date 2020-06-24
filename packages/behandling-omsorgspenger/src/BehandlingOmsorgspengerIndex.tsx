@@ -5,44 +5,32 @@ import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import {
-  Kodeverk,
-  NavAnsatt,
-  Behandling,
-  FagsakInfo,
-  SettPaVentParams,
-  ReduxFormStateCleaner,
-  DataFetcherBehandlingDataV2,
-} from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
+import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
 import omsorgspengerBehandlingApi, {
   reduxRestApi,
-  PleiepengerBehandlingApiKeys,
+  OmsorgspengerBehandlingApiKeys,
 } from './data/omsorgspengerBehandlingApi';
 import OmsorgspengerPaneler from './components/OmsorgspengerPaneler';
 import FetchedData from './types/fetchedDataTsType';
 
-const foreldrepengerData = [
+const omsorgspengerData = [
   omsorgspengerBehandlingApi.AKSJONSPUNKTER,
   omsorgspengerBehandlingApi.VILKAR,
   omsorgspengerBehandlingApi.PERSONOPPLYSNINGER,
   omsorgspengerBehandlingApi.SOKNAD,
-  omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE,
   omsorgspengerBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
   omsorgspengerBehandlingApi.BEREGNINGSGRUNNLAG,
-  omsorgspengerBehandlingApi.UTTAK_STONADSKONTOER,
-  omsorgspengerBehandlingApi.UTTAKSRESULTAT_PERIODER,
   omsorgspengerBehandlingApi.SIMULERING_RESULTAT,
-  omsorgspengerBehandlingApi.VEDTAK_VARSEL,
   omsorgspengerBehandlingApi.FORBRUKTE_DAGER,
-  omsorgspengerBehandlingApi.FULL_UTTAKSPLAN,
 ];
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -58,7 +46,7 @@ interface OwnProps {
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
-  kodeverk?: { [key: string]: [Kodeverk] };
+  kodeverk?: { [key: string]: KodeverkMedNavn[] };
   hasFetchError: boolean;
 }
 
@@ -124,7 +112,7 @@ class BehandlingOmsorgspengerIndex extends PureComponent<Props> {
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       valgtFaktaSteg,
@@ -142,10 +130,11 @@ class BehandlingOmsorgspengerIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingDataV2
-        behandlingVersion={behandling.versjon}
-        endpoints={foreldrepengerData}
+      <DataFetcher
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+        endpoints={omsorgspengerData}
         showOldDataWhenRefetching
+        loadingPanel={<LoadingPanel />}
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner
@@ -157,7 +146,7 @@ class BehandlingOmsorgspengerIndex extends PureComponent<Props> {
               fetchedData={dataProps}
               fagsak={fagsak}
               alleKodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={valgtFaktaSteg}
@@ -182,7 +171,7 @@ const mapStateToProps = state => ({
 });
 
 const getResetRestApiContext = () => dispatch => {
-  Object.values(PleiepengerBehandlingApiKeys).forEach(value => {
+  Object.values(OmsorgspengerBehandlingApiKeys).forEach(value => {
     dispatch(omsorgspengerBehandlingApi[value].resetRestApi()());
   });
 };
@@ -207,4 +196,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ),
 });
 
-export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingOmsorgspengerIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BehandlingOmsorgspengerIndex);

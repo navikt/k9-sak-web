@@ -1,6 +1,4 @@
-import { Kodeverk } from '@k9-sak-web/types';
-
-import FagsakPerson from './fagsakPersonTsType';
+import { Kodeverk, FagsakPerson } from '@k9-sak-web/types';
 
 type FagsakInfo = Readonly<{
   saksnummer: string;

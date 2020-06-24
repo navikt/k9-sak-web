@@ -11,14 +11,16 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { Behandling } from '@k9-sak-web/types';
 
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import FrisinnFakta from './FrisinnFakta';
+import FetchedData from '../types/fetchedDataTsType';
 
 describe('<FrisinnFakta>', () => {
   const fagsak = {
-    saksnummer: 123456,
+    saksnummer: '123456',
     fagsakYtelseType: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
     fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
     fagsakPerson: {
@@ -42,16 +44,15 @@ describe('<FrisinnFakta>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [
     {
@@ -115,13 +116,18 @@ describe('<FrisinnFakta>', () => {
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
+    const fetchedData: Partial<FetchedData> = {
+      aksjonspunkter,
+      vilkar,
+      personopplysninger: soker,
+    };
     const wrapper = shallowWithIntl(
       <FrisinnFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, personopplysninger: soker }}
-        behandling={behandling}
+        data={fetchedData as FetchedData}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"
@@ -149,13 +155,18 @@ describe('<FrisinnFakta>', () => {
 
   it('skal oppdatere url ved valg av faktapanel', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const fetchedData: Partial<FetchedData> = {
+      aksjonspunkter,
+      vilkar,
+    };
+
     const wrapper = shallowWithIntl(
       <FrisinnFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
-        behandling={behandling}
+        data={fetchedData as FetchedData}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         valgtFaktaSteg="default"

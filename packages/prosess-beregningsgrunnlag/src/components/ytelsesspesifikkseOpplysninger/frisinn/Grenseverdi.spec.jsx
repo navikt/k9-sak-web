@@ -80,7 +80,7 @@ describe('<Grenseverdi>', () => {
     const bgAndeler = [lagBGAndel(aktivitetStatus.FRILANSER, 200000)];
     const bgPerioder = [lagBgPeriode('2020-04-01', '2020-04-30', bgAndeler)];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandlingÅrsaker={[]} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
@@ -103,7 +103,7 @@ describe('<Grenseverdi>', () => {
       lagBgPeriode('2020-05-01', '2020-05-31', bgAndeler),
     ];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandlingÅrsaker={[]} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
@@ -123,7 +123,7 @@ describe('<Grenseverdi>', () => {
     const bgAndeler = [lagBGAndel(aktivitetStatus.FRILANSER, 200000), lagBGAndel(aktivitetStatus.ARBEIDSTAKER, 300000)];
     const bgPerioder = [lagBgPeriode('2020-04-01', '2020-04-30', bgAndeler)];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandlingÅrsaker={[]} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
@@ -153,7 +153,7 @@ describe('<Grenseverdi>', () => {
       lagBgPeriode('2020-04-20', '2020-04-30', bgAndeler),
     ];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandlingÅrsaker={[]} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
@@ -185,7 +185,7 @@ describe('<Grenseverdi>', () => {
       lagBgPeriode('2020-05-01', '2020-05-31', bgAndeler),
     ];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandlingÅrsaker={[]} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(4);

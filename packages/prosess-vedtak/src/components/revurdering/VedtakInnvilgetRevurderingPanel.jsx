@@ -116,6 +116,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       )}
       {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER ||
         ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER ||
+        ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER ||
         ytelseTypeKode === fagsakYtelseType.FRISINN) && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>

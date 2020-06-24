@@ -250,43 +250,44 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
         new MenyData(
           skalViseNyBehandlingIMeny(erKoet, rettigheter.ikkeVisOpprettNyBehandling),
           getNyBehandlingMenytekst(),
-        ).medModal(lukkModal => (
-          <MenyNyBehandlingIndex
-            saksnummer={saksnummer}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersion}
-            behandlingType={behandlingType}
-            uuidForSistLukkede={uuidForSistLukkede}
-            opprettNyForstegangsBehandlingEnabled={
-              rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess &&
-              !!rettigheter.opprettNyForstegangsBehandlingAccess.isEnabled
-            }
-            opprettRevurderingEnabled={
-              rettigheter.opprettRevurderingAccess.employeeHasAccess && rettigheter.opprettRevurderingAccess.isEnabled
-            }
-            kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
-            erTilbakekrevingAktivert={erTilbakekrevingAktivert}
-            behandlingstyper={menyKodeverk.getKodeverkForBehandlingstyper(
-              BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES,
-              kodeverkTyper.BEHANDLING_TYPE,
-            )}
-            tilbakekrevingRevurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
-              bType.TILBAKEKREVING_REVURDERING,
-              kodeverkTyper.BEHANDLING_AARSAK,
-            )}
-            revurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
-              bType.REVURDERING,
-              kodeverkTyper.BEHANDLING_AARSAK,
-            )}
-            ytelseType={ytelseType}
-            lagNyBehandling={lagNyBehandling}
-            sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
-            sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
-            lukkModal={lukkModal}
-            aktorId={aktorId}
-            gjeldendeVedtakBehandlendeEnhetId={gjeldendeVedtakBehandlendeEnhetId}
-          />
-        )),
+        ).medModal(lukkModal => {
+          const behandlingstyper = menyKodeverk.getKodeverkForBehandlingstyper(BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES, kodeverkTyper.BEHANDLING_TYPE,);
+          const {opprettNyForstegangsBehandlingAccess, opprettRevurderingAccess} = rettigheter;
+          const behandlingerSomKanOpprettes = {
+            [bType.FORSTEGANGSSOKNAD]: opprettNyForstegangsBehandlingAccess.employeeHasAccess && !!opprettNyForstegangsBehandlingAccess.isEnabled,
+            [bType.REVURDERING]: opprettRevurderingAccess.employeeHasAccess && opprettRevurderingAccess.isEnabled,
+            [bType.TILBAKEKREVING]: kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
+            [bType.TILBAKEKREVING_REVURDERING]: kanTilbakekrevingOpprettes.kanRevurderingOpprettes,
+            [bType.KLAGE]: !!gjeldendeVedtakBehandlendeEnhetId
+          };
+          return (
+            <MenyNyBehandlingIndex
+              saksnummer={saksnummer}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersion}
+              behandlingType={behandlingType}
+              uuidForSistLukkede={uuidForSistLukkede}
+              behandlingerSomKanOpprettes={behandlingerSomKanOpprettes}
+              erTilbakekrevingAktivert={erTilbakekrevingAktivert}
+              behandlingstyper={behandlingstyper}
+              tilbakekrevingRevurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
+                bType.TILBAKEKREVING_REVURDERING,
+                kodeverkTyper.BEHANDLING_AARSAK,
+              )}
+              revurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
+                bType.REVURDERING,
+                kodeverkTyper.BEHANDLING_AARSAK,
+              )}
+              ytelseType={ytelseType}
+              lagNyBehandling={lagNyBehandling}
+              sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
+              sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
+              lukkModal={lukkModal}
+              aktorId={aktorId}
+              gjeldendeVedtakBehandlendeEnhetId={gjeldendeVedtakBehandlendeEnhetId}
+            />
+          );
+        }),
         new MenyData(
           (!!opprettVerge || !!fjernVerge) && !erFrisinn,
           getVergeMenytekst(!!opprettVerge),

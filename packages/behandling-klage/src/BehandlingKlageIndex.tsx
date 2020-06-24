@@ -4,35 +4,22 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import {
-  FagsakInfo,
-  DataFetcherBehandlingData,
-  SettPaVentParams,
-  ReduxFormStateCleaner,
-  BehandlingDataCache,
-} from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, NavAnsatt, Vilkar, Aksjonspunkt } from '@k9-sak-web/types';
 
+import FetchedData from './types/fetchedDataTsType';
 import klageApi, { reduxRestApi, KlageBehandlingApiKeys } from './data/klageBehandlingApi';
-import KlageGrid from './components/KlageGrid';
-import KlageVurdering from './types/klageVurderingTsType';
+import KlagePaneler from './components/KlagePaneler';
 
-const klageData = [klageApi.AKSJONSPUNKTER, klageApi.VILKAR, klageApi.KLAGE_VURDERING];
-
-interface DataProps {
-  behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  klageVurdering: KlageVurdering;
-}
+const klageData = [klageApi.AKSJONSPUNKTER, klageApi.KLAGE_VURDERING];
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  kodeverk: { [key: string]: Kodeverk[] };
-  navAnsatt: NavAnsatt;
+  kodeverk: { [key: string]: KodeverkMedNavn[] };
+  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -41,19 +28,19 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  alleBehandlinger: [
-    {
-      id: number;
-      type: Kodeverk;
-      avsluttet?: string;
-      status: Kodeverk;
-      uuid: string;
-    },
-  ];
+  alleBehandlinger: {
+    id: number;
+    uuid: string;
+    type: Kodeverk;
+    status: Kodeverk;
+    opprettet: string;
+    avsluttet?: string;
+  }[];
 }
 
 interface StateProps {
   behandling?: Behandling;
+  forrigeBehandling?: Behandling;
 }
 
 interface DispatchProps {
@@ -70,8 +57,6 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingKlageIndex extends PureComponent<Props> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache();
-
   componentDidMount = () => {
     const {
       behandlingEventHandler,
@@ -91,7 +76,6 @@ class BehandlingKlageIndex extends PureComponent<Props> {
       henleggBehandling: params => henleggBehandling(params),
     });
 
-    this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
   };
 
@@ -105,10 +89,11 @@ class BehandlingKlageIndex extends PureComponent<Props> {
   render() {
     const {
       behandling,
+      forrigeBehandling,
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       settPaVent,
@@ -123,28 +108,24 @@ class BehandlingKlageIndex extends PureComponent<Props> {
 
     reduxRestApi.injectPaths(behandling.links);
 
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
-      oppdaterBehandlingVersjon(behandling.versjon);
-    }
-
     return (
-      <DataFetcherBehandlingData
-        behandlingDataCache={this.behandlingDataCache}
-        behandlingVersion={behandling.versjon}
+      <DataFetcher
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={klageData}
         showOldDataWhenRefetching
-        render={(dataProps: DataProps) => (
+        loadingPanel={<LoadingPanel />}
+        render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner
-              behandlingId={dataProps.behandling.id}
-              behandlingVersjon={dataProps.behandling.versjon}
+              behandlingId={behandling.id}
+              behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon}
             />
-            <KlageGrid
+            <KlagePaneler
+              behandling={isFinished ? behandling : forrigeBehandling}
+              fetchedData={dataProps}
               fagsak={fagsak}
               kodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
@@ -152,7 +133,6 @@ class BehandlingKlageIndex extends PureComponent<Props> {
               hentBehandling={hentBehandling}
               opneSokeside={opneSokeside}
               alleBehandlinger={alleBehandlinger}
-              {...dataProps}
             />
           </>
         )}
@@ -163,6 +143,7 @@ class BehandlingKlageIndex extends PureComponent<Props> {
 
 const mapStateToProps = state => ({
   behandling: klageApi.BEHANDLING_KLAGE.getRestApiData()(state),
+  forrigeBehandling: klageApi.BEHANDLING_KLAGE.getRestApiPreviousData()(state),
 });
 
 const getResetRestApiContext = () => dispatch => {

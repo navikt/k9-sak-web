@@ -10,7 +10,6 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 export const KlageBehandlingApiKeys = {
   BEHANDLING_KLAGE: 'BEHANDLING_KLAGE',
   AKSJONSPUNKTER: 'AKSJONSPUNKTER',
-  VILKAR: 'VILKAR',
   KLAGE_VURDERING: 'KLAGE_VURDERING',
   BEHANDLING_NY_BEHANDLENDE_ENHET: 'BEHANDLING_NY_BEHANDLENDE_ENHET',
   HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
@@ -28,9 +27,9 @@ const endpoints = new RestApiConfigBuilder()
 
   // behandlingsdata
   .withRel('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar-v3', KlageBehandlingApiKeys.VILKAR)
   .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
 
+  // operasjoner
   .withPost('/k9/klage/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/klage/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/klage/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING, {

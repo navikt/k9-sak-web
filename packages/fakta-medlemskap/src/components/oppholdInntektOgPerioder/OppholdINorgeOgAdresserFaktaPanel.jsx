@@ -196,7 +196,7 @@ const createParent = (isApplicant, personopplysning) => ({
 OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjonspunkter) => {
   let opphold = {};
 
-  if (soknad !== null && soknad.oppgittTilknytning !== null) {
+  if (soknad && soknad.oppgittTilknytning) {
     const { oppgittTilknytning } = soknad;
     opphold = {
       oppholdNorgeNa: oppgittTilknytning.oppholdNorgeNa,

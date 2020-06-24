@@ -40,10 +40,12 @@ import {
   getBehandlingerTypesMappedById,
   getBehandlingerInfo,
   getBehandlingerLinksMappedById,
+  getBehandlingerStatusMappedById,
   BehandlingerInfo,
 } from './selectors/behandlingerSelectors';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
+import getAccessRights from '../app/util/access';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-omsorgspenger'));
@@ -71,7 +73,6 @@ interface OwnProps {
   behandlingVersjon: number;
   location: RouteProps['location'] & { query: { punkt?: string; fakta?: string } };
   oppdaterBehandlingVersjon: (behandlingVersjon: number) => void;
-  erAktivPapirsoknad?: boolean;
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
   featureToggles: {};
@@ -81,7 +82,16 @@ interface OwnProps {
   behandlingLinks: Link[];
   push: (location: RouteProps['location'] | string) => void;
   visFeilmelding: (data: {}) => void;
-  navAnsatt: NavAnsatt;
+  rettigheter: {
+    writeAccess: {
+      employeeHasAccess: boolean;
+      isEnabled: boolean;
+    };
+    kanOverstyreAccess: {
+      employeeHasAccess: boolean;
+      isEnabled: boolean;
+    };
+  };
 }
 
 /**
@@ -150,7 +160,7 @@ export class BehandlingIndex extends Component<OwnProps> {
       kodeverk,
       fagsak,
       fagsakBehandlingerInfo,
-      navAnsatt,
+      rettigheter,
       visFeilmelding,
     } = this.props;
 
@@ -160,7 +170,7 @@ export class BehandlingIndex extends Component<OwnProps> {
       behandlingEventHandler,
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
       key: behandlingId,
@@ -297,6 +307,27 @@ export const getFagsakInfo = createSelector(
   }),
 );
 
+const getRettigheter = createSelector(
+  [
+    getNavAnsatt,
+    getSelectedFagsakStatus,
+    getUrlBehandlingId,
+    getBehandlingerStatusMappedById,
+    getBehandlingerTypesMappedById,
+  ],
+  (
+    navAnsatt: NavAnsatt,
+    selectedFagsakStatus,
+    behandlingId,
+    behandlingerStatusMappedById,
+    behandlingerTypesMappedById,
+  ) => {
+    const status = behandlingerStatusMappedById[behandlingId];
+    const type = behandlingerTypesMappedById[behandlingId];
+    return getAccessRights(navAnsatt, selectedFagsakStatus, status, type);
+  },
+);
+
 const mapStateToProps = state => {
   const behandlingId = getUrlBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
@@ -310,8 +341,8 @@ const mapStateToProps = state => {
     kodeverk: getAlleKodeverkForBehandlingstype(behandlingTypeKode)(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
-    navAnsatt: getNavAnsatt(state),
     fagsak: getFagsakInfo(state),
+    rettigheter: getRettigheter(state),
   };
 };
 

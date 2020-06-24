@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Field } from 'redux-form';
 import CustomNavSelect from './CustomNavSelect';
 import LabelType from './LabelType';
@@ -9,10 +9,17 @@ interface SelectFieldProps {
   name: string;
   selectValues: object[];
   label: LabelType;
-  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  validate?: (
+    | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
+    | ((value: any) => { id: string }[])
+    | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
+  )[];
   readOnly?: boolean;
   placeholder?: string;
   hideValueOnDisable?: boolean;
+  bredde?: string;
+  disabled?: boolean;
+  onChange?: (elmt: ReactNode, value: object) => void;
 }
 
 /* eslint-disable-next-line react/prop-types */

@@ -22,7 +22,6 @@ export const FrisinnBehandlingApiKeys = {
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
   BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   BEREGNINGSRESULTAT_UTBETALT: 'BEREGNINGSRESULTAT_UTBETALT',
-  INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   OPPTJENING: 'OPPTJENING',
   INNTEKT_OG_YTELSER: 'INNTEKT_OG_YTELSER',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
@@ -37,27 +36,9 @@ export const FrisinnBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  /* /api/behandlinger */
   .withAsyncPost('/k9/sak/api/behandlinger', FrisinnBehandlingApiKeys.BEHANDLING_FP)
-  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', FrisinnBehandlingApiKeys.UPDATE_ON_HOLD)
 
-  /* /api/behandling */
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt/overstyr', FrisinnBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
-    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
-  })
-
-  /* fptilbake/api/dokument */
-  .withPostAndOpenBlob(
-    '/fptilbake/api/dokument/forhandsvis-varselbrev',
-    FrisinnBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-  )
-
-  /* /api/brev */
-  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
-
+  // behandlingsdata
   .withRel('oppgitt-opptjening-v2', FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING)
   .withRel('beregningsresultat-utbetalt', FrisinnBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALT)
   .withRel('inntekt', FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER)
@@ -68,12 +49,19 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilbakekrevingvalg', FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG)
   .withRel('beregningsgrunnlag', FrisinnBehandlingApiKeys.BEREGNINGSGRUNNLAG)
   .withRel('beregningsresultat-foreldrepenger', FrisinnBehandlingApiKeys.BEREGNINGRESULTAT)
-  .withRel('inntekt-arbeid-ytelse', FrisinnBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('opptjening-v2', FrisinnBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('uttak-kontroller-fakta-perioder', FrisinnBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('vedtak-varsel', FrisinnBehandlingApiKeys.VEDTAK_VARSEL)
 
+  // operasjoner
+  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', FrisinnBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
+  })
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt/overstyr', FrisinnBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
+    saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
+  })
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', FrisinnBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', FrisinnBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', FrisinnBehandlingApiKeys.RESUME_BEHANDLING, {
@@ -83,6 +71,15 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/opne-for-endringer', FrisinnBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
     saveResponseIn: FrisinnBehandlingApiKeys.BEHANDLING_FP,
   })
+
+  /* FPTILBAKE */
+  .withPostAndOpenBlob(
+    '/fptilbake/api/dokument/forhandsvis-varselbrev',
+    FrisinnBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+  )
+
+  /* K9FORMIDLING */
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
 
   .build();
 

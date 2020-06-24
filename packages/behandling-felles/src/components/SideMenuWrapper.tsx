@@ -7,7 +7,7 @@ import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 
 import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
 
-import styles from './faktaPanel.less';
+import styles from './sideMenuWrapper.less';
 
 interface OwnProps {
   paneler: FaktaPanelFaktaPanelMenyRadMeny[];

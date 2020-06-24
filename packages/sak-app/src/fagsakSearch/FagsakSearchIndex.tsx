@@ -22,7 +22,7 @@ interface OwnProps {
     feilmelding: string;
   };
   resetFagsakSearch: () => void;
-  alleKodeverk?: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk?: { [key: string]: KodeverkMedNavn[] };
 }
 
 /**

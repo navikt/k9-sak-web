@@ -1,14 +1,14 @@
-import Kodeverk from './kodeverk';
+import Kodeverk from './kodeverkTsType';
 
 type FagsakPerson = Readonly<{
-  alder: number,
-  diskresjonskode?: Kodeverk,
-  dodsdato?: string,
-  erDod: boolean,
-  erKvinne: boolean,
-  navn: string,
-  personnummer: string,
-  personstatusType: Kodeverk,
+  erDod: boolean;
+  navn: string;
+  alder: number;
+  personnummer: string;
+  erKvinne: boolean;
+  personstatusType: Kodeverk;
+  diskresjonskode?: Kodeverk;
+  dodsdato?: string;
 }>;
 
 export default FagsakPerson;

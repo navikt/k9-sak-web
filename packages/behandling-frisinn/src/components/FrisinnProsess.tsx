@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState, useCallback, useMemo } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -7,13 +6,14 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   FagsakInfo,
+  Rettigheter,
   prosessStegHooks,
   IverksetterVedtakStatusModal,
   FatterVedtakStatusModal,
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, NavAnsatt, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFrisinnPanelDefinisjoner';
@@ -25,8 +25,8 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: Kodeverk[] };
-  navAnsatt: NavAnsatt;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
   hasFetchError: boolean;
@@ -104,13 +104,12 @@ const getLagringSideeffekter = (
   };
 };
 
-const FrisinnProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const FrisinnProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   valgtFaktaSteg,
   hasFetchError,
@@ -144,12 +143,11 @@ const FrisinnProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     prosessStegPanelDefinisjoner,
     dataTilUtledingAvFpPaneler,
     fagsak,
-    navAnsatt,
+    rettigheter,
     behandling,
     data.aksjonspunkter,
     data.vilkar,
     hasFetchError,
-    intl,
     valgtProsessSteg,
     apentFaktaPanelInfo,
   );
@@ -175,7 +173,7 @@ const FrisinnProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
 
   const fatterVedtakTextCode = useMemo(
     () =>
-      valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT
+      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
         ? 'FatterVedtakStatusModal.SendtBeslutter'
         : 'FatterVedtakStatusModal.ModalDescriptionFP',
     [behandling.versjon],
@@ -219,4 +217,4 @@ const FrisinnProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   );
 };
 
-export default injectIntl(FrisinnProsess);
+export default FrisinnProsess;

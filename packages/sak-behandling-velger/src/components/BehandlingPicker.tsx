@@ -56,8 +56,8 @@ interface OwnProps {
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
-  klagekodeverk?: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  klagekodeverk?: { [key: string]: KodeverkMedNavn[] };
 }
 
 /**

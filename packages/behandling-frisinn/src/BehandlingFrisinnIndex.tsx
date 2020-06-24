@@ -3,17 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import {
-  Kodeverk,
-  NavAnsatt,
-  Behandling,
-  FagsakInfo,
-  SettPaVentParams,
-  ReduxFormStateCleaner,
-  DataFetcherBehandlingDataV2,
-} from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
+import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import frisinnBehandlingApi, { reduxRestApi, FrisinnBehandlingApiKeys } from './data/frisinnBehandlingApi';
 import FrisinnPaneler from './components/FrisinnPaneler';
@@ -23,20 +17,15 @@ const frisinnData = [
   frisinnBehandlingApi.AKSJONSPUNKTER,
   frisinnBehandlingApi.VILKAR,
   frisinnBehandlingApi.PERSONOPPLYSNINGER,
-  frisinnBehandlingApi.INNTEKT_ARBEID_YTELSE,
   frisinnBehandlingApi.BEREGNINGSRESULTAT_UTBETALT,
   frisinnBehandlingApi.BEREGNINGSGRUNNLAG,
-  frisinnBehandlingApi.UTTAK_STONADSKONTOER,
-  frisinnBehandlingApi.UTTAKSRESULTAT_PERIODER,
   frisinnBehandlingApi.SIMULERING_RESULTAT,
-  frisinnBehandlingApi.VEDTAK_VARSEL,
 ];
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -52,7 +41,7 @@ interface OwnProps {
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
-  kodeverk?: { [key: string]: [Kodeverk] };
+  kodeverk?: { [key: string]: KodeverkMedNavn[] };
   hasFetchError: boolean;
 }
 
@@ -112,7 +101,7 @@ class BehandlingFrisinnIndex extends PureComponent<Props> {
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       valgtFaktaSteg,
@@ -130,10 +119,11 @@ class BehandlingFrisinnIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingDataV2
-        behandlingVersion={behandling.versjon}
+      <DataFetcher
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={frisinnData}
         showOldDataWhenRefetching
+        loadingPanel={<LoadingPanel />}
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner
@@ -145,7 +135,7 @@ class BehandlingFrisinnIndex extends PureComponent<Props> {
               fetchedData={dataProps}
               fagsak={fagsak}
               alleKodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={valgtFaktaSteg}
@@ -193,4 +183,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ),
 });
 
-export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingFrisinnIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BehandlingFrisinnIndex);
