@@ -62,9 +62,9 @@ interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
   location: RouteProps['location'];
-  alleKodeverkFpsak: { [key: string]: [KodeverkMedNavn] };
-  alleKodeverkFptilbake?: { [key: string]: [KodeverkMedNavn] };
-  alleKodeverkKlage?: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverkFpsak: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverkFptilbake?: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverkKlage?: { [key: string]: KodeverkMedNavn[] };
 }
 
 /**

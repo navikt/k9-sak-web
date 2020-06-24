@@ -4,7 +4,8 @@ import sinon from 'sinon';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { SideMenuWrapper, DataFetcherBehandlingDataV2 } from '@fpsak-frontend/behandling-felles';
+import { SideMenuWrapper } from '@fpsak-frontend/behandling-felles';
+import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -12,14 +13,16 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { Behandling } from '@k9-sak-web/types';
 
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import ForeldrepengerFakta from './PleiepengerFakta';
+import FetchedData from '../types/fetchedDataTsType';
 
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
-    saksnummer: 123456,
+    saksnummer: '123456',
     fagsakYtelseType: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
     fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
     fagsakPerson: {
@@ -43,16 +46,15 @@ describe('<PleiepengerFakta>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [
     {
@@ -121,13 +123,18 @@ describe('<PleiepengerFakta>', () => {
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
+    const fetchedData: Partial<FetchedData> = {
+      aksjonspunkter,
+      vilkar,
+      personopplysninger: soker,
+    };
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, personopplysninger: soker }}
-        behandling={behandling}
+        data={fetchedData as FetchedData}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"
@@ -161,13 +168,18 @@ describe('<PleiepengerFakta>', () => {
 
   it('skal oppdatere url ved valg av faktapanel', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const fetchedData: Partial<FetchedData> = {
+      aksjonspunkter,
+      vilkar,
+    };
+
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
-        behandling={behandling}
+        data={fetchedData as FetchedData}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         valgtFaktaSteg="default"
@@ -191,13 +203,17 @@ describe('<PleiepengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
+    const fetchedData: Partial<FetchedData> = {
+      aksjonspunkter,
+      vilkar,
+    };
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, inntektArbeidYtelse }}
-        behandling={behandling}
+        data={fetchedData as FetchedData}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"
@@ -208,12 +224,11 @@ describe('<PleiepengerFakta>', () => {
       />,
     );
 
-    const dataFetcher = wrapper.find(DataFetcherBehandlingDataV2);
-    expect(dataFetcher.prop('behandlingVersion')).is.eql(behandling.versjon);
-    expect(dataFetcher.prop('endpoints')).is.eql([]);
+    const dataFetcher = wrapper.find(DataFetcher);
+    expect(dataFetcher.prop('fetchingTriggers').triggers.behandlingVersion).is.eql(behandling.versjon);
 
     const arbeidsforholdPanel = dataFetcher
-      .renderProp('render')({})
+      .renderProp('render')({ inntektArbeidYtelse })
       .find(ArbeidsforholdFaktaIndex);
     // eslint-disable-next-line
     expect(arbeidsforholdPanel.prop('readOnly')).is.false;

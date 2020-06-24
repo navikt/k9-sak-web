@@ -20,7 +20,7 @@ interface OwnProps {
   saksnummer: string;
   sakstype: Kodeverk;
   fagsakStatus: Kodeverk;
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   renderBehandlingMeny: () => ReactNode;
   renderBehandlingVelger: () => ReactNode;
   dekningsgrad?: number;

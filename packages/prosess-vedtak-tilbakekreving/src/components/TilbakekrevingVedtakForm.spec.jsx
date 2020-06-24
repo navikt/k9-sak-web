@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { BehandlingIdentifier, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
@@ -12,24 +12,29 @@ import underavsnittType from '../kodeverk/avsnittType';
 
 describe('<TilbakekrevingVedtakForm>', () => {
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
-    const wrapper = shallow(<TilbakekrevingVedtakForm
-      submitCallback={sinon.spy()}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      fetchPreviewVedtaksbrev={sinon.spy()}
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
-      formVerdier={{}}
-      vedtaksbrevAvsnitt={[{
-        avsnittstype: 'test',
-        overskrift: 'Dette er en overskrift',
-        underavsnittsliste: [{
-          fritekstTillatt: false,
-        }],
-      }]}
-      behandlingId={1}
-      behandlingVersjon={1}
-      perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
-    />);
+    const wrapper = shallow(
+      <TilbakekrevingVedtakForm
+        submitCallback={sinon.spy()}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        fetchPreviewVedtaksbrev={sinon.spy()}
+        formVerdier={{}}
+        vedtaksbrevAvsnitt={[
+          {
+            avsnittstype: 'test',
+            overskrift: 'Dette er en overskrift',
+            underavsnittsliste: [
+              {
+                fritekstTillatt: false,
+              },
+            ],
+          },
+        ]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+      />,
+    );
 
     expect(wrapper.find(TilbakekrevingEditerVedtaksbrevPanel)).to.have.length(1);
     const knapp = wrapper.find(BehandlingspunktSubmitButton);
@@ -40,32 +45,37 @@ describe('<TilbakekrevingVedtakForm>', () => {
 
   it('skal formatere data for forhåndsvisning av vedtaksbrevet', () => {
     const fetchPreview = sinon.spy();
-    const wrapper = shallow(<TilbakekrevingVedtakForm
-      submitCallback={sinon.spy()}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      fetchPreviewVedtaksbrev={fetchPreview}
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
-      formVerdier={{
-        OPPSUMMERING: 'Dette er oppsummeringen',
-        '2019-10-10_2019-11-10': {
-          FAKTA: 'dette er faktateksten',
-          VILKÅR: 'dette er vilkårteksten',
-          SÆRLIGEGRUNNER: 'dette er særligegrunnerteksten',
-          SÆRLIGEGRUNNER_ANNET: 'dette er særligegrunnerteksten for annet',
-        },
-      }}
-      vedtaksbrevAvsnitt={[{
-        avsnittstype: 'test',
-        overskrift: 'Dette er en overskrift',
-        underavsnittsliste: [{
-          fritekstTillatt: false,
-        }],
-      }]}
-      behandlingId={2}
-      behandlingVersjon={1}
-      perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
-    />);
+    const wrapper = shallow(
+      <TilbakekrevingVedtakForm
+        submitCallback={sinon.spy()}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        fetchPreviewVedtaksbrev={fetchPreview}
+        formVerdier={{
+          OPPSUMMERING: 'Dette er oppsummeringen',
+          '2019-10-10_2019-11-10': {
+            FAKTA: 'dette er faktateksten',
+            VILKÅR: 'dette er vilkårteksten',
+            SÆRLIGEGRUNNER: 'dette er særligegrunnerteksten',
+            SÆRLIGEGRUNNER_ANNET: 'dette er særligegrunnerteksten for annet',
+          },
+        }}
+        vedtaksbrevAvsnitt={[
+          {
+            avsnittstype: 'test',
+            overskrift: 'Dette er en overskrift',
+            underavsnittsliste: [
+              {
+                fritekstTillatt: false,
+              },
+            ],
+          },
+        ]}
+        behandlingId={2}
+        behandlingVersjon={1}
+        perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+      />,
+    );
 
     wrapper.find('a').prop('onClick')({ preventDefault: sinon.spy() });
 
@@ -73,36 +83,43 @@ describe('<TilbakekrevingVedtakForm>', () => {
     expect(fetchPreview.getCalls()[0].args[0]).is.eql({
       behandlingId: 2,
       oppsummeringstekst: 'Dette er oppsummeringen',
-      perioderMedTekst: [{
-        fom: '2019-10-10',
-        tom: '2019-11-10',
-        faktaAvsnitt: 'dette er faktateksten',
-        vilkaarAvsnitt: 'dette er vilkårteksten',
-        saerligeGrunnerAvsnitt: 'dette er særligegrunnerteksten',
-        saerligeGrunnerAnnetAvsnitt: 'dette er særligegrunnerteksten for annet',
-      }],
+      perioderMedTekst: [
+        {
+          fom: '2019-10-10',
+          tom: '2019-11-10',
+          faktaAvsnitt: 'dette er faktateksten',
+          vilkaarAvsnitt: 'dette er vilkårteksten',
+          saerligeGrunnerAvsnitt: 'dette er særligegrunnerteksten',
+          saerligeGrunnerAnnetAvsnitt: 'dette er særligegrunnerteksten for annet',
+        },
+      ],
     });
   });
 
   it('skal ikke vise trykkbar godkjenningsknapp og forhåndsvisningslenke når obligatoriske verdier ikke er utfylt', () => {
-    const wrapper = shallow(<TilbakekrevingVedtakForm
-      submitCallback={sinon.spy()}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      fetchPreviewVedtaksbrev={sinon.spy()}
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
-      formVerdier={{}}
-      vedtaksbrevAvsnitt={[{
-        avsnittstype: 'test',
-        overskrift: 'Dette er en overskrift',
-        underavsnittsliste: [{
-          fritekstTillatt: false,
-        }],
-      }]}
-      behandlingId={1}
-      behandlingVersjon={1}
-      perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-01-01_2019-02-02']}
-    />);
+    const wrapper = shallow(
+      <TilbakekrevingVedtakForm
+        submitCallback={sinon.spy()}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        fetchPreviewVedtaksbrev={sinon.spy()}
+        formVerdier={{}}
+        vedtaksbrevAvsnitt={[
+          {
+            avsnittstype: 'test',
+            overskrift: 'Dette er en overskrift',
+            underavsnittsliste: [
+              {
+                fritekstTillatt: false,
+              },
+            ],
+          },
+        ]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-01-01_2019-02-02']}
+      />,
+    );
 
     const knapp = wrapper.find(BehandlingspunktSubmitButton);
     expect(knapp).to.have.length(1);
@@ -111,33 +128,41 @@ describe('<TilbakekrevingVedtakForm>', () => {
   });
 
   it('skal ikke vise trykkbar godkjenningsknapp og forhåndsvisningslenke når obligatorisk oppsummering for revurdering tilbakekreving ikke er utfylt', () => {
-    const wrapper = shallow(<TilbakekrevingVedtakForm
-      submitCallback={sinon.spy()}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      fetchPreviewVedtaksbrev={sinon.spy()}
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
-      formVerdier={{}}
-      vedtaksbrevAvsnitt={[{
-        avsnittstype: 'test',
-        overskrift: 'Dette er en overskrift',
-        underavsnittsliste: [{
-          fritekstTillatt: false,
-        }],
-      }, {
-        avsnittstype: underavsnittType.OPPSUMMERING,
-        overskrift: 'Dette er en overskrift',
-        underavsnittsliste: [{
-          fritekstTillatt: false,
-          fritekstPåkrevet: true,
-        }],
-      }]}
-      behandlingId={1}
-      behandlingVersjon={1}
-      perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
-      erRevurderingTilbakekrevingKlage
-      fritekstOppsummeringPakrevdMenIkkeUtfylt
-    />);
+    const wrapper = shallow(
+      <TilbakekrevingVedtakForm
+        submitCallback={sinon.spy()}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        fetchPreviewVedtaksbrev={sinon.spy()}
+        formVerdier={{}}
+        vedtaksbrevAvsnitt={[
+          {
+            avsnittstype: 'test',
+            overskrift: 'Dette er en overskrift',
+            underavsnittsliste: [
+              {
+                fritekstTillatt: false,
+              },
+            ],
+          },
+          {
+            avsnittstype: underavsnittType.OPPSUMMERING,
+            overskrift: 'Dette er en overskrift',
+            underavsnittsliste: [
+              {
+                fritekstTillatt: false,
+                fritekstPåkrevet: true,
+              },
+            ],
+          },
+        ]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+        erRevurderingTilbakekrevingKlage
+        fritekstOppsummeringPakrevdMenIkkeUtfylt
+      />,
+    );
 
     const knapp = wrapper.find(BehandlingspunktSubmitButton);
     expect(knapp).to.have.length(1);

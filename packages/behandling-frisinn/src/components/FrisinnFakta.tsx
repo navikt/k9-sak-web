@@ -2,16 +2,11 @@ import React, { FunctionComponent } from 'react';
 import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import {
-  FagsakInfo,
-  Behandling,
-  SideMenuWrapper,
-  Kodeverk,
-  NavAnsatt,
-  DataFetcherBehandlingDataV2,
-  faktaHooks,
-} from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo, Rettigheter, SideMenuWrapper, faktaHooks } from '@fpsak-frontend/behandling-felles';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaFrisinnPanelDefinisjoner';
@@ -30,8 +25,8 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: Kodeverk[] };
-  navAnsatt: NavAnsatt;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
@@ -45,7 +40,7 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   data,
   behandling,
   fagsak,
-  navAnsatt,
+  rettigheter,
   alleKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
@@ -54,36 +49,23 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setApentFaktaPanel,
   dispatch,
 }) => {
-  const {
-    aksjonspunkter,
-    vilkar,
-    personopplysninger,
-    inntektArbeidYtelse,
-    beregningsgrunnlag,
-    sykdom,
-    omsorgenFor,
-  } = data;
+  const { aksjonspunkter, vilkar, personopplysninger, beregningsgrunnlag } = data;
 
   const dataTilUtledingAvFpPaneler = {
     fagsak,
     behandling,
     vilkar,
     personopplysninger,
-    inntektArbeidYtelse,
     beregningsgrunnlag,
     hasFetchError,
-    sykdom,
-    omsorgenFor,
   };
 
-  const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks.useFaktaPaneler(
+  const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
     faktaPanelDefinisjoner,
     dataTilUtledingAvFpPaneler,
-    fagsak,
     behandling,
-    navAnsatt,
+    rettigheter,
     aksjonspunkter,
-    hasFetchError,
     valgtFaktaSteg,
     intl,
   );
@@ -101,24 +83,26 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     dispatch,
   );
 
-  if (valgtPanel) {
+  if (sidemenyPaneler.length > 0) {
     return (
-      <SideMenuWrapper paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
-        <DataFetcherBehandlingDataV2
-          key={valgtPanel.urlCode}
-          behandlingVersion={behandling.versjon}
-          endpoints={valgtPanel.endpoints}
-          render={dataProps =>
-            valgtPanel.renderComponent({
-              ...dataProps,
-              behandling,
-              alleKodeverk,
-              navAnsatt,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.komponentData,
-            })
-          }
-        />
+      <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
+        {valgtPanel && (
+          <DataFetcher
+            key={valgtPanel.getUrlKode()}
+            fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+            endpoints={valgtPanel.getPanelDef().getEndepunkter()}
+            loadingPanel={<LoadingPanel />}
+            render={dataProps =>
+              valgtPanel.getPanelDef().getKomponent({
+                ...dataProps,
+                behandling,
+                alleKodeverk,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
+              })
+            }
+          />
+        )}
       </SideMenuWrapper>
     );
   }

@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 
+import { Behandling } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -24,23 +25,25 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
     links: [],
   };
 
-  const aksjonspunkter = [{
-    status: {
-      kode: aksjonspunktStatus.OPPRETTET,
-      kodeverk: 'AKSJONSPUNKT_STATUS',
+  const aksjonspunkter = [
+    {
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+        kodeverk: 'AKSJONSPUNKT_STATUS',
+      },
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
+        kodeverk: 'AKSJONSPUNKT_KODE',
+      },
+      kanLoses: true,
+      erAktivt: true,
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
     },
-    definisjon: {
-      kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-      kodeverk: 'AKSJONSPUNKT_KODE',
-    },
-    kanLoses: true,
-    erAktivt: true,
-    toTrinnsBehandling: true,
-    toTrinnsBehandlingGodkjent: false,
-  }];
+  ];
 
   it('skal hente alle merknader fra beslutter når behandlingstatus er BEHANDLING_UTREDER', () => {
-    const merknader = getAlleMerknaderFraBeslutter(behandling, aksjonspunkter);
+    const merknader = getAlleMerknaderFraBeslutter(behandling as Behandling, aksjonspunkter);
 
     expect(merknader).is.eql({
       [aksjonspunkter[0].definisjon.kode]: {
@@ -57,7 +60,7 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
         kodeverk: 'BEHANDLING_STATUS',
       },
     };
-    const merknader = getAlleMerknaderFraBeslutter(behandlingMedAnnenStatus, aksjonspunkter);
+    const merknader = getAlleMerknaderFraBeslutter(behandlingMedAnnenStatus as Behandling, aksjonspunkter);
 
     expect(merknader).is.eql({});
   });

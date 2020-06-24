@@ -22,8 +22,10 @@ const intl = createIntl(
 );
 
 interface ÅrsakvantumIndexProps {
+  fullUttaksplan: {
+    aktiviteter?: Aktivitet[];
+  };
   årskvantum: ÅrskvantumForbrukteDager;
-  aktiviteterHittilIÅr: Aktivitet[];
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   isAksjonspunktOpen: boolean;
   behandling: Behandling;
@@ -32,8 +34,8 @@ interface ÅrsakvantumIndexProps {
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
+  fullUttaksplan,
   årskvantum,
-  aktiviteterHittilIÅr,
   alleKodeverk,
   isAksjonspunktOpen,
   behandling,
@@ -80,7 +82,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
       <VerticalSpacer sixteenPx />
       <Uttaksplan
         aktiviteterBehandling={sisteUttaksplan.aktiviteter}
-        aktiviteterHittilIÅr={aktiviteterHittilIÅr}
+        aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
         aktivitetsstatuser={aktivitetsstatuser}
         aktiv={sisteUttaksplan.aktiv}
       />

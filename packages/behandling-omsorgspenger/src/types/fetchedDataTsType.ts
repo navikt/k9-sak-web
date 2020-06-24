@@ -1,16 +1,11 @@
 import {
   Aksjonspunkt,
   Beregningsgrunnlag,
-  BeregningsresultatFp,
-  InntektArbeidYtelse,
   Personopplysninger,
   SimuleringResultat,
   Soknad,
-  UttaksresultatPeriode,
-  UttakStonadskontoer,
   Vilkar,
-  Sykdom,
-  OmsorgenFor,
+  BeregningsresultatUtbetalt,
 } from '@k9-sak-web/types';
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 
@@ -19,14 +14,9 @@ interface FetchedData {
   vilkar: Vilkar[];
   personopplysninger: Personopplysninger;
   soknad: Soknad;
-  inntektArbeidYtelse: InntektArbeidYtelse;
-  beregningresultatForeldrepenger: BeregningsresultatFp;
+  beregningsresultatUtbetaling: BeregningsresultatUtbetalt;
   beregningsgrunnlag: Beregningsgrunnlag;
-  uttakStonadskontoer: UttakStonadskontoer;
-  uttaksresultatPerioder: UttaksresultatPeriode[];
   simuleringResultat: SimuleringResultat;
-  sykdom: Sykdom;
-  omsorgenFor: OmsorgenFor;
   forbrukteDager: ÅrskvantumForbrukteDager;
 }
 

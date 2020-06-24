@@ -30,7 +30,6 @@ export const PleiepengerBehandlingApiKeys = {
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
-  MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
@@ -53,35 +52,9 @@ export const PleiepengerBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  /* /api/behandlinger */
   .withAsyncPost('/k9/sak/api/behandlinger', PleiepengerBehandlingApiKeys.BEHANDLING_FP)
-  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', PleiepengerBehandlingApiKeys.UPDATE_ON_HOLD)
 
-  /* /api/behandling */
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withAsyncPost(
-    '/k9/sak/api/behandling/aksjonspunkt/overstyr',
-    PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
-    {
-      saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
-    },
-  )
-  .withPost(
-    '/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
-    PleiepengerBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
-  )
-
-  /* fptilbake/api/dokument */
-  .withPostAndOpenBlob(
-    '/fptilbake/api/dokument/forhandsvis-varselbrev',
-    PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-  )
-
-  /* /api/brev */
-  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
-
+  // behandlingsdata
   .withRel('beregningsresultat-utbetalt', PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
   .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', PleiepengerBehandlingApiKeys.VILKAR)
@@ -113,6 +86,22 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('vedtak-varsel', PleiepengerBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('omsorgen-for', PleiepengerBehandlingApiKeys.OMSORGEN_FOR)
 
+  // operasjoner
+  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', PleiepengerBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+  })
+  .withAsyncPost(
+    '/k9/sak/api/behandling/aksjonspunkt/overstyr',
+    PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+    {
+      saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+    },
+  )
+  .withPost(
+    '/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
+    PleiepengerBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
+  )
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', PleiepengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PleiepengerBehandlingApiKeys.RESUME_BEHANDLING, {
@@ -128,6 +117,15 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/verge/fjern', PleiepengerBehandlingApiKeys.VERGE_FJERN, {
     saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
   })
+
+  /* FPTILBAKE */
+  .withPostAndOpenBlob(
+    '/fptilbake/api/dokument/forhandsvis-varselbrev',
+    PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+  )
+
+  /* K9FORMIDLING */
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
 
   .build();
 

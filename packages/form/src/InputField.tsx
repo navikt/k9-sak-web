@@ -11,10 +11,16 @@ interface InputFieldProps {
   name: string;
   type?: string;
   label?: LabelType;
-  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  validate?: (
+    | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
+    | ((value: any, allValues: any, props: any) => { id: string }[])
+    | ((value: any) => { id: string }[])
+    | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
+  )[];
   readOnly?: boolean;
   isEdited?: boolean;
   renderReadOnlyValue?: (value: any) => any;
+  parse?: (value: string) => string | number;
 }
 
 const InputField = ({

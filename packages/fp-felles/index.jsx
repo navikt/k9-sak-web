@@ -1,5 +1,4 @@
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/ErrorTypes';
-export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';
 export { default as BehandlingErPaVentModal } from './src/behandlingPaVent/BehandlingErPaVentModal';
 export { default as SettBehandlingPaVentForm } from './src/behandlingPaVent/SettBehandlingPaVentForm';
 export { default as SettBehandlingPaVentModal } from './src/behandlingPaVent/SettBehandlingPaVentModal';
@@ -18,8 +17,5 @@ export { default as VilkarResultPicker } from './src/behandlingsprosess/vilkar/V
 export { default as VilkarResultPanel } from './src/behandlingsprosess/vilkar/VilkarResultPanel';
 export { default as ProsessPanelTemplate } from './src/behandlingsprosess/vilkar/ProsessPanelTemplate';
 export { createVisningsnavnForAktivitet, lagVisningsNavn } from './src/util/visningsnavnHelper';
-export { default as allAccessRights } from './src/navAnsatt/access';
-export { default as DataFetcher } from './src/DataFetcher';
-export { default as BehandlingFormFieldCleaner } from './src/behandlingsprosess/BehandlingFormFieldCleaner';
 export { default as usePrevious } from './src/util/componentHooks';
 export { default as joinNonNullStrings } from './src/util/stringUtils';

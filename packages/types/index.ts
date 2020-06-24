@@ -30,3 +30,4 @@ export { default as Vilkårresultat } from './src/opptjening/vilkårresultat';
 export { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknaden';
 export { default as FagsakPerson } from './src/fagsakPersonTsType';
 export { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
+export { default as BeregningsresultatUtbetalt } from './src/beregningsresultatUtbetaltTsType';

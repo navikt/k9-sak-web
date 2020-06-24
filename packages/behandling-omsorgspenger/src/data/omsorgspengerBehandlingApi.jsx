@@ -7,7 +7,7 @@ import {
 } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
-export const PleiepengerBehandlingApiKeys = {
+export const OmsorgspengerBehandlingApiKeys = {
   BEHANDLING_FP: 'BEHANDLING_FP',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
@@ -29,7 +29,6 @@ export const PleiepengerBehandlingApiKeys = {
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
-  MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
@@ -54,83 +53,82 @@ export const PleiepengerBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  /* /api/behandlinger */
-  .withAsyncPost('/k9/sak/api/behandlinger', PleiepengerBehandlingApiKeys.BEHANDLING_FP)
-  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', PleiepengerBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/k9/sak/api/behandlinger', OmsorgspengerBehandlingApiKeys.BEHANDLING_FP)
 
-  /* /api/behandling */
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+  // behandlingsdata
+  .withRel('beregningsresultat-utbetalt', OmsorgspengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
+  .withRel('aksjonspunkter', OmsorgspengerBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar-v3', OmsorgspengerBehandlingApiKeys.VILKAR)
+  .withRel('soeker-personopplysninger', OmsorgspengerBehandlingApiKeys.PERSONOPPLYSNINGER)
+  .withRel('simuleringResultat', OmsorgspengerBehandlingApiKeys.SIMULERING_RESULTAT)
+  .withRel('tilbakekrevingvalg', OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG)
+  .withRel('beregningsresultat-foreldrepenger', OmsorgspengerBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
+  .withRel('beregningsgrunnlag-alle', OmsorgspengerBehandlingApiKeys.BEREGNINGSGRUNNLAG)
+  .withRel('beregningsresultat-foreldrepenger', OmsorgspengerBehandlingApiKeys.BEREGNINGRESULTAT)
+  .withRel('familiehendelse-v2', OmsorgspengerBehandlingApiKeys.FAMILIEHENDELSE)
+  .withRel('soknad', OmsorgspengerBehandlingApiKeys.SOKNAD)
+  .withRel('soknad-original-behandling', OmsorgspengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
+  .withRel('familiehendelse-original-behandling', OmsorgspengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
+  .withRel(
+    'beregningsresultat-engangsstonad-original-behandling',
+    OmsorgspengerBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
+  )
+  .withRel('soeker-medlemskap-v2', OmsorgspengerBehandlingApiKeys.MEDLEMSKAP)
+  .withRel('uttak-periode-grense', OmsorgspengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
+  .withRel('inntekt-arbeid-ytelse', OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
+  .withRel('soeker-verge', OmsorgspengerBehandlingApiKeys.VERGE)
+  .withRel('opptjening-v2', OmsorgspengerBehandlingApiKeys.OPPTJENING)
+  .withRel('sendt-varsel-om-revurdering', OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
+  .withRel('fakta-arbeidsforhold', OmsorgspengerBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
+  .withRel('uttaksresultat-perioder', OmsorgspengerBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
+  .withRel('uttak-stonadskontoer', OmsorgspengerBehandlingApiKeys.UTTAK_STONADSKONTOER)
+  .withRel('uttak-kontroller-fakta-perioder', OmsorgspengerBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
+  .withRel('sykdom', OmsorgspengerBehandlingApiKeys.SYKDOM)
+  .withRel('vedtak-varsel', OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL)
+  .withRel('omsorgen-for', OmsorgspengerBehandlingApiKeys.OMSORGEN_FOR)
+  .withRel('forbrukte-dager', OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER)
+  .withRel('full-uttaksplan', OmsorgspengerBehandlingApiKeys.FULL_UTTAKSPLAN)
+
+  // operasjoner
+  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', OmsorgspengerBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', OmsorgspengerBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
+    saveResponseIn: OmsorgspengerBehandlingApiKeys.BEHANDLING_FP,
   })
   .withAsyncPost(
     '/k9/sak/api/behandling/aksjonspunkt/overstyr',
-    PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+    OmsorgspengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
     {
-      saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
+      saveResponseIn: OmsorgspengerBehandlingApiKeys.BEHANDLING_FP,
     },
   )
   .withPost(
     '/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
-    PleiepengerBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
+    OmsorgspengerBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
   )
+  .withPost('/k9/sak/api/behandlinger/bytt-enhet', OmsorgspengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/k9/sak/api/behandlinger/henlegg', OmsorgspengerBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', OmsorgspengerBehandlingApiKeys.RESUME_BEHANDLING, {
+    saveResponseIn: OmsorgspengerBehandlingApiKeys.BEHANDLING_FP,
+  })
+  .withPost('/k9/sak/api/behandlinger/sett-pa-vent', OmsorgspengerBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', OmsorgspengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
+    saveResponseIn: OmsorgspengerBehandlingApiKeys.BEHANDLING_FP,
+  })
+  .withPost('/k9/sak/api/verge/opprett', OmsorgspengerBehandlingApiKeys.VERGE_OPPRETT, {
+    saveResponseIn: OmsorgspengerBehandlingApiKeys.BEHANDLING_FP,
+  })
+  .withPost('/k9/sak/api/verge/fjern', OmsorgspengerBehandlingApiKeys.VERGE_FJERN, {
+    saveResponseIn: OmsorgspengerBehandlingApiKeys.BEHANDLING_FP,
+  })
 
-  /* fptilbake/api/dokument */
+  /* FPTILBAKE */
   .withPostAndOpenBlob(
     '/fptilbake/api/dokument/forhandsvis-varselbrev',
-    PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+    OmsorgspengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   )
 
-  /* /api/brev */
-  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
-
-  .withRel('beregningsresultat-utbetalt', PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
-  .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
-  .withRel('vilkar-v3', PleiepengerBehandlingApiKeys.VILKAR)
-  .withRel('soeker-personopplysninger', PleiepengerBehandlingApiKeys.PERSONOPPLYSNINGER)
-  .withRel('simuleringResultat', PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT)
-  .withRel('tilbakekrevingvalg', PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withRel('beregningsresultat-foreldrepenger', PleiepengerBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
-  .withRel('beregningsgrunnlag-alle', PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG)
-  .withRel('beregningsresultat-foreldrepenger', PleiepengerBehandlingApiKeys.BEREGNINGRESULTAT)
-  .withRel('familiehendelse-v2', PleiepengerBehandlingApiKeys.FAMILIEHENDELSE)
-  .withRel('soknad', PleiepengerBehandlingApiKeys.SOKNAD)
-  .withRel('soknad-original-behandling', PleiepengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
-  .withRel('familiehendelse-original-behandling', PleiepengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
-  .withRel(
-    'beregningsresultat-engangsstonad-original-behandling',
-    PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
-  )
-  .withRel('soeker-medlemskap-v2', PleiepengerBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('uttak-periode-grense', PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
-  .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
-  .withRel('soeker-verge', PleiepengerBehandlingApiKeys.VERGE)
-  .withRel('opptjening-v2', PleiepengerBehandlingApiKeys.OPPTJENING)
-  .withRel('sendt-varsel-om-revurdering', PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withRel('fakta-arbeidsforhold', PleiepengerBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
-  .withRel('uttaksresultat-perioder', PleiepengerBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
-  .withRel('uttak-stonadskontoer', PleiepengerBehandlingApiKeys.UTTAK_STONADSKONTOER)
-  .withRel('uttak-kontroller-fakta-perioder', PleiepengerBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
-  .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
-  .withRel('vedtak-varsel', PleiepengerBehandlingApiKeys.VEDTAK_VARSEL)
-  .withRel('omsorgen-for', PleiepengerBehandlingApiKeys.OMSORGEN_FOR)
-  .withRel('forbrukte-dager', PleiepengerBehandlingApiKeys.FORBRUKTE_DAGER)
-  .withRel('full-uttaksplan', PleiepengerBehandlingApiKeys.FULL_UTTAKSPLAN)
-
-  .withPost('/k9/sak/api/behandlinger/bytt-enhet', PleiepengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PleiepengerBehandlingApiKeys.RESUME_BEHANDLING, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PleiepengerBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', PleiepengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withPost('/k9/sak/api/verge/opprett', PleiepengerBehandlingApiKeys.VERGE_OPPRETT, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withPost('/k9/sak/api/verge/fjern', PleiepengerBehandlingApiKeys.VERGE_FJERN, {
-    saveResponseIn: PleiepengerBehandlingApiKeys.BEHANDLING_FP,
-  })
+  /* K9FORMIDLING */
+  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', OmsorgspengerBehandlingApiKeys.PREVIEW_MESSAGE)
 
   .build();
 

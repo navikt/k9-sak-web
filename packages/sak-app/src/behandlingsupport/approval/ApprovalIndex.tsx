@@ -82,7 +82,7 @@ interface OwnProps {
   erTilbakekreving: boolean;
   behandlingUuid: string;
   fagsakYtelseType: Kodeverk;
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   erBehandlingEtterKlage?: boolean;
   isForeldrepenger: boolean;
   disableGodkjennKnapp: boolean;
