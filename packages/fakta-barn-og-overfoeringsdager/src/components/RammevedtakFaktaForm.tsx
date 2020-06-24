@@ -69,7 +69,7 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
       <UidentifiserteRammevedtak type={RammevedtakEnum.UTVIDET_RETT} rammevedtak={rammevedtak} />
       <UidentifiserteRammevedtak type={RammevedtakEnum.ALENEOMSORG} rammevedtak={rammevedtak} />
       <UidentifiserteRammevedtak type={RammevedtakEnum.FOSTERBARN} rammevedtak={rammevedtak} />
-      <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.Overføringer.Tittel" imgSrc={transferIcon}>
+      <Seksjon bakgrunn="grå"  title={{ id: 'FaktaRammevedtak.Overføringer.Tittel' }} imgSrc={transferIcon}>
         {detFinnesOverføringer ? (
           <>
             <FastBreddeAligner
@@ -117,7 +117,7 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
           <FormattedMessage id="FaktaRammevedtak.Overføringer.IngenOverføringer" />
         )}
       </Seksjon>
-      <Seksjon bakgrunn="hvit" titleId="FaktaRammevedtak.Barn.Tittel" imgSrc={users}>
+      <Seksjon bakgrunn="hvit" title={{ id: 'FaktaRammevedtak.Barn.Tittel' }} imgSrc={users}>
         <>
           {!barn.length && <FormattedMessage id="FaktaRammevedtak.Barn.IngenBarn" />}
           {barn.map((barnet, index) => (
@@ -125,7 +125,7 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
           ))}
         </>
       </Seksjon>
-      <Seksjon bakgrunn="grå" titleId="FaktaRammevedtak.ErMidlertidigAlene.Tittel" imgSrc={user}>
+      <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.ErMidlertidigAlene.Tittel' }} imgSrc={user}>
         <MidlertidigAlene midlertidigAlene={midlertidigAleneansvar} />
       </Seksjon>
     </>
