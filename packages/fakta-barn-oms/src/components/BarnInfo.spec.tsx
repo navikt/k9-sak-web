@@ -1,34 +1,53 @@
-import React from 'react';
+import * as React from 'react';
 import { expect } from 'chai';
-import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-barn-oms';
-import BarnInfo, { BarnPanel } from './BarnInfo';
+import BarnInfo from './BarnInfo';
 
 describe('<BarnInfo>', () => {
-  it('Rendrer hvert barn', () => {
-    const barn: BarnDto[] = [
-      {
-        personIdent: '010116',
-        fødselsdato: '2016-01-01',
-        harSammeBosted: true,
-        barnType: BarnType.VANLIG,
-      },
-      {
-        personIdent: '02031845962',
-        fødselsdato: '2018-03-02',
-        harSammeBosted: false,
-        barnType: BarnType.FOSTERBARN,
-      },
-      {
-        personIdent: '05051952104',
-        fødselsdato: '2019-05-05',
-        harSammeBosted: true,
-        dødsdato: '2020-03-03',
-        barnType: BarnType.UTENLANDSK_BARN,
-      },
-    ];
-    const wrapper = shallowWithIntl(<BarnInfo barn={barn} />);
+  it('viser om barnet ikke bor med søker, men ikke om barnet er fosterbarn, dødt eller utenlandsk dersom det ikke er det', () => {
+    const wrapper = shallowWithIntl(
+      <BarnInfo
+        barnet={{
+          harSammeBosted: false,
+          personIdent: '123',
+          barnType: BarnType.VANLIG,
+        }}
+        barnnummer={1}
+      />,
+    );
 
-    expect(wrapper.find(BarnPanel)).to.have.length(barn.length);
+    const elementMedTekstId = tekstId =>
+      wrapper.find(FormattedHTMLMessage).filterWhere(message => message.prop('id') === tekstId);
+
+    expect(elementMedTekstId('FaktaBarn.BorIkkeMedSøker')).to.have.length(1);
+    expect(elementMedTekstId('FaktaBarn.Død')).to.have.length(0);
+    expect(elementMedTekstId('FaktaBarn.Fosterbarn')).to.have.length(0);
+    expect(elementMedTekstId('FaktaBarn.UtenlandskBarn')).to.have.length(0);
+  });
+
+  it('viser om barnet bor med søker, er fosterbarn, dødt eller utenlandsk', () => {
+    const wrapper = shallowWithIntl(
+      <BarnInfo
+        barnet={{
+          harSammeBosted: true,
+          personIdent: '123',
+          barnType: BarnType.FOSTERBARN,
+          dødsdato: '2020-06-05',
+        }}
+        barnnummer={1}
+      />,
+    );
+
+    const htmlElementMedTekstId = tekstId =>
+      wrapper.find(FormattedHTMLMessage).filterWhere(message => message.prop('id') === tekstId);
+
+    const elementMedTekstId = tekstId =>
+      wrapper.find(FormattedMessage).filterWhere(message => message.prop('id') === tekstId);
+
+    expect(htmlElementMedTekstId('FaktaBarn.BorMedSøker')).to.have.length(1);
+    expect(elementMedTekstId('FaktaBarn.Død')).to.have.length(1);
+    expect(elementMedTekstId('FaktaBarn.Fosterbarn')).to.have.length(1);
   });
 });
