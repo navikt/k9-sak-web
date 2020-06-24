@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { Element } from 'nav-frontend-typografi';
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 import BarnInfo from './BarnInfo';
 import Gruppering from './Gruppering';
 
@@ -9,8 +9,8 @@ interface VanligeBarnProps {
   barn: BarnDto[];
 }
 
-const VanligeBarn: FC<VanligeBarnProps> = ({ barn }) => {
-  if (!barn.length) {
+const VanligeBarn: FunctionComponent<VanligeBarnProps> = ({ barn }) => {
+  if (barn.length === 0) {
     return null;
   }
 

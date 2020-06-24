@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
@@ -23,8 +23,8 @@ interface FaktaBarnIndexProps {
 }
 
 const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [] }) => {
-  const vanligeBarn = barn.filter(({ barnType }) => barnType === BarnType.VANLIG);
-  const barnFraRammeVedtak = barn.filter(({ barnType }) => barnType !== BarnType.VANLIG);
+  const vanligeBarn = useMemo(() => barn.filter(({ barnType }) => barnType === BarnType.VANLIG), [barn]);
+  const barnFraRammeVedtak = useMemo(() => barn.filter(({ barnType }) => barnType !== BarnType.VANLIG), [barn]);
 
   return (
     <RawIntlProvider value={intl}>
