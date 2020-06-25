@@ -56,7 +56,7 @@ export const VedtakAvslagRevurderingPanelImpl = ({
         {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
       </Normaltekst>
     )}
-    {ytelseTypeKode !== fagsakYtelseType.FRISINN && (
+    {ytelseTypeKode !== fagsakYtelseType.FRISINN && ytelseTypeKode !== fagsakYtelseType.OMSORGSPENGER && (
       <Normaltekst>
         {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
         {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
