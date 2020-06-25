@@ -1,27 +1,15 @@
 import React from 'react';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
-const getVedtakStatus = (behandlingsresultat, aksjonspunkter) => {
+const getVedtakStatus = aksjonspunkter => {
   const harApentAksjonpunkt = aksjonspunkter.some(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET);
-  if (aksjonspunkter.length === 0 || harApentAksjonpunkt) {
-    return vilkarUtfallType.IKKE_VURDERT;
-  }
-
-  const resultatTypeCode = behandlingsresultat.type.kode;
-  if (
-    resultatTypeCode === behandlingResultatType.KLAGE_AVVIST ||
-    resultatTypeCode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET
-  ) {
-    return vilkarUtfallType.IKKE_OPPFYLT;
-  }
-  return vilkarUtfallType.OPPFYLT;
+  return aksjonspunkter.length === 0 || harApentAksjonpunkt ? vilkarUtfallType.IKKE_VURDERT : vilkarUtfallType.OPPFYLT;
 };
 
 class PanelDef extends ProsessStegPanelDef {
@@ -29,8 +17,8 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getOverstyrtStatus = ({ behandling, aksjonspunkterForSteg }) =>
-    getVedtakStatus(behandling.behandlingsresultat, aksjonspunkterForSteg);
+  getOverstyrtStatus = ({ aksjonspunkterForSteg }) =>
+    getVedtakStatus(aksjonspunkterForSteg);
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FORESLA_VEDTAK,
