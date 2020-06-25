@@ -11689,13 +11689,24 @@ nav-frontend-grid@1.0.27:
   version "1.0.27"
   resolved "https://registry.yarnpkg.com/nav-frontend-grid/-/nav-frontend-grid-1.0.27.tgz#68e54b138ccf4c416ad12faa95ae5d3bb4d013ad"
 
-nav-frontend-ikoner-assets@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-2.0.1.tgz#82060b7f4f67255eeca55d6823b04a565ba53f3c"
+nav-frontend-hjelpetekst-style@^2.0.25:
+  version "2.0.25"
+  resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst-style/-/nav-frontend-hjelpetekst-style-2.0.25.tgz#9fc964179cecdb8b30489dbafe0c8722525fbe7c"
+  integrity sha512-V2XQCFkwoXzjGz+KF0AxxCMzD8fbVPePg0/Fm5ivcJsG6E+Ls0QecXltP8DPL1zleuAX/6TX/kv3PLHMTO8yqw==
+
+nav-frontend-hjelpetekst@^2.0.29:
+  version "2.0.29"
+  resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-2.0.29.tgz#ee0631dde01705bc6cb41aa16bc3fe378645cae7"
+  integrity sha512-lahPrENsmZAhd1yzDSltja+wB4p4Zt/DDgGyQBu7kxSfoVcNMxMBrx2qqRYKbIXOAkPASiQGKCq1bJhRV5gj4A==
 
 nav-frontend-ikoner-assets@^1.0.3:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-1.0.5.tgz#03216fd6c3e16590c9c43ca01d404f2b05a9dad9"
+
+nav-frontend-ikoner-assets@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-2.0.1.tgz#82060b7f4f67255eeca55d6823b04a565ba53f3c"
+  integrity sha512-b3Xvu9XdpGQQO0y1G5f9Rikq1Q77m5ua6DJniKRq1pNG5X3z4qssj7ZO8LGRQ4gLl7D02zckK/QgaQ3bzfpRng==
 
 nav-frontend-ikonknapper@0.0.10:
   version "0.0.10"
@@ -11771,6 +11782,16 @@ nav-frontend-paneler@2.0.2, nav-frontend-paneler@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-2.0.2.tgz#0251f3f3f0622a31bdaeea50890907e2ee6215f0"
   integrity sha512-34H38Vy1KcuvT1hUKZoLg1A4lh3f4Hv9zl5vb8yTsmciXSKm1FLDHrfE0ZrA4Vg38eRaaxnnDdzZm81Atq4zAA==
+
+nav-frontend-popover-style@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/nav-frontend-popover-style/-/nav-frontend-popover-style-0.0.5.tgz#707dcf5a4e7e6ec237b72e00c2cfdf83903b01b8"
+  integrity sha512-5Sn/g0fS2S4sXbgWHqen9ODLGqj/bEPJgnkK2UX2v5gCszXCnLH+XL4qbBdYk7UeoAQTfksUYXjqqa4HI8SKnA==
+
+nav-frontend-popover@^0.0.25:
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/nav-frontend-popover/-/nav-frontend-popover-0.0.25.tgz#6eb93d5c57003471808a258d7079da5b27d06bf9"
+  integrity sha512-bhnpIfRQSgVbsvouVlRD5wDZzVRHyTlrUhOjkCyLbMonFVLX+PICmjUypif12Jw+gGkvCkhxGsfZhlS02kruFA==
 
 nav-frontend-skjema-style@2.0.6:
   version "2.0.6"
