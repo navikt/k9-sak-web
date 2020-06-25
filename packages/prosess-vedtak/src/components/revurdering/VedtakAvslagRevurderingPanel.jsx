@@ -9,7 +9,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import VedtakAvslagArsakOgBegrunnelsePanel from '../VedtakAvslagArsakOgBegrunnelsePanel';
-import { findTilbakekrevingText } from '../VedtakHelper';
+import { findTilbakekrevingText, findAvslagResultatText } from '../VedtakHelper';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
 export const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
@@ -50,9 +50,9 @@ export const VedtakAvslagRevurderingPanelImpl = ({
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-    {ytelseTypeKode === fagsakYtelseType.FRISINN && (
+    {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER) && (
       <Normaltekst>
-        {intl.formatMessage({ id: 'VedtakForm.FrisinnIkkeInnvilget' })}
+        {intl.formatMessage({ id: findAvslagResultatText(undefined, ytelseTypeKode) })}
         {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
       </Normaltekst>
     )}
