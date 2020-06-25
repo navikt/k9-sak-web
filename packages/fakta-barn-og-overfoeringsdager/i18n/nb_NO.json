@@ -22,6 +22,7 @@
   "FaktaRammevedtak.Overføringer.IngenOverføringer": "Det er ikke registrert noen overføringer eller fordelinger av dager",
   "FaktaRammevedtak.Overføringer.Totalt": "Totalt",
   "FaktaRammevedtak.Overføringer.Type": "Type",
+  "FaktaRammevedtak.Overføringer.Hjelpetekst": "Ved fordelte dager etter § 9-6 5. ledd eller overførte dager etter § 9-6 6. ledd, vil dagene ikke </br>påvirke søkers opprinnelige dager dersom dagene ikke overstiger søkers egen grunnrett.",
   "FaktaRammevedtak.Overføringsdager.AntallDager": "{totaltAntallDager} dager ",
   "FaktaRammevedtak.Overføringsdager.Dager": " dager ",
   "FaktaRammevedtak.Overføringsdager.Inn": "Får ",
