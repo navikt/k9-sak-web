@@ -9,10 +9,11 @@ import Søknadsopplysninger from './Søknadsopplysninger';
 import Beregningsresultat from './Beregningsresultat';
 import Inntektsopplysninger from './Inntektsopplysninger';
 import Grenseverdi from './Grenseverdi';
+import beregningsgrunnlagBehandlingPropType from '../../../propTypes/beregningsgrunnlagBehandlingPropType';
 
 const erDagsatsBeregnet = bg => bg.beregningsgrunnlagPeriode.some(p => p.dagsats || p.dagsats === 0);
 
-const Frisinnpanel = ({ beregningsgrunnlag }) => {
+const Frisinnpanel = ({ beregningsgrunnlag, behandling }) => {
   return (
     <>
       <div className={styles.aksjonspunktBehandlerContainer}>
@@ -27,9 +28,9 @@ const Frisinnpanel = ({ beregningsgrunnlag }) => {
           <VerticalSpacer sixteenPx />
           {erDagsatsBeregnet(beregningsgrunnlag) && (
             <>
-              <Grenseverdi beregningsgrunnlag={beregningsgrunnlag} />
+              <Grenseverdi beregningsgrunnlag={beregningsgrunnlag} behandling={behandling} />
               <VerticalSpacer sixteenPx />
-              <Beregningsresultat beregningsgrunnlag={beregningsgrunnlag} />
+              <Beregningsresultat beregningsgrunnlag={beregningsgrunnlag} behandling={behandling} />
             </>
           )}
         </Panel>
@@ -38,11 +39,8 @@ const Frisinnpanel = ({ beregningsgrunnlag }) => {
   );
 };
 Frisinnpanel.propTypes = {
-  beregningsgrunnlag: beregningsgrunnlagPropType,
-};
-
-Frisinnpanel.defaultProps = {
-  beregningsgrunnlag: undefined,
+  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  behandling: beregningsgrunnlagBehandlingPropType.isRequired,
 };
 
 export default Frisinnpanel;

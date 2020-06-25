@@ -164,6 +164,15 @@ const sammenligningsgrunnlag = kode => ({
   },
   differanseBeregnet: 12100,
 });
+const behandling = {
+  id: 1,
+  versjon: 1,
+  behandlingÅrsaker: [],
+  sprakkode: {
+    kode: 'NB',
+    kodeverk: 'Språkkode',
+  },
+};
 
 const getBGVilkar = vilkar =>
   vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
@@ -181,8 +190,7 @@ describe('<BeregningForm>', () => {
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton
-        behandlingId={1}
-        behandlingVersjon={1}
+        behandling={behandling}
         alleKodeverk={alleKodeverk}
         vilkaarBG={getBGVilkar(mockVilkar)}
         {...reduxFormPropsMock}
@@ -203,8 +211,7 @@ describe('<BeregningForm>', () => {
         readOnly={false}
         gjeldendeAksjonspunkter={apEttLukketOgEttApent}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
+        behandling={behandling}
         alleKodeverk={alleKodeverk}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
@@ -223,8 +230,7 @@ describe('<BeregningForm>', () => {
         readOnly={false}
         gjeldendeAksjonspunkter={apEttLukketOgEttApent}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
+        behandling={behandling}
         alleKodeverk={alleKodeverk}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
@@ -244,8 +250,7 @@ describe('<BeregningForm>', () => {
         readOnly={false}
         gjeldendeAksjonspunkter={apEttLukketOgEttApent}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
+        behandling={behandling}
         alleKodeverk={alleKodeverk}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
@@ -270,8 +275,7 @@ describe('<BeregningForm>', () => {
         readOnly={false}
         gjeldendeAksjonspunkter={apEttLukketOgEttApent}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
+        behandling={behandling}
         alleKodeverk={alleKodeverk}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
@@ -300,8 +304,7 @@ describe('<BeregningForm>', () => {
         readOnly={false}
         gjeldendeAksjonspunkter={apEttLukketOgEttApent}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
-        behandlingId={1}
-        behandlingVersjon={1}
+        behandling={behandling}
         alleKodeverk={alleKodeverk}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
@@ -323,8 +326,7 @@ describe('<BeregningForm>', () => {
         readOnly={false}
         gjeldendeAksjonspunkter={apEttLukketOgEttApent}
         beregningsgrunnlag={bg}
-        behandlingId={1}
-        behandlingVersjon={1}
+        behandling={behandling}
         alleKodeverk={alleKodeverk}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}

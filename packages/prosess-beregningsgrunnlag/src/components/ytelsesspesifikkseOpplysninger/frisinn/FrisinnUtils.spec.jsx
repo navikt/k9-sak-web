@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { erSøktForAndelISøknadsperiode } from './FrisinnUtils';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { erSøktForAndelISøknadsperiode, finnFrisinnperioderSomSkalVises } from './FrisinnUtils';
 
 const lagBgPeriode = (beregningsgrunnlagPeriodeFom, beregningsgrunnlagPeriodeTom) => {
   return {
@@ -29,6 +30,34 @@ const lagFrisinnPeriode = (fom, tom, frisinnAndeler) => {
 const lagFrisinngrunnlag = frisinnPerioder => {
   return {
     frisinnPerioder,
+  };
+};
+
+const lagFrisinngrunnlagBG = frisinnPerioder => {
+  return {
+    ytelsesspesifiktGrunnlag: {
+      frisinnPerioder,
+    },
+  };
+};
+
+const lagBehandling = kode => {
+  return {
+    id: 1,
+    versjon: 1,
+    behandlingÅrsaker: [
+      {
+        behandlingArsakType: {
+          kode,
+        },
+        erAutomatiskRevurdering: false,
+        manueltOpprettet: false,
+      },
+    ],
+    sprakkode: {
+      kode: 'NB',
+      kodeverk: 'Språkkode',
+    },
   };
 };
 
@@ -131,5 +160,89 @@ describe('<FrisinnUtils>', () => {
       lagFrisinngrunnlag(perioder),
     );
     expect(erSøktIPeriode).to.have.equal(true);
+  });
+  it('Skal finne frisinnperioder som skal vises når kun en periode ikke revurdering fra bruker', () => {
+    const andeler1 = [lagFrisinnAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 1000)];
+    const perioder = [lagFrisinnPeriode('2020-04-01', '2020-04-30', andeler1)];
+    const frisinnPerioder = finnFrisinnperioderSomSkalVises(lagFrisinngrunnlagBG(perioder), lagBehandling('dummy'));
+    expect(frisinnPerioder).to.have.length(1);
+    expect(frisinnPerioder[0].fom).to.have.equal('2020-04-01');
+    expect(frisinnPerioder[0].tom).to.have.equal('2020-04-30');
+  });
+  it('Skal finne frisinnperioder som skal vises når flere perioder ikke revurdering fra bruker', () => {
+    const andeler1 = [lagFrisinnAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 1000)];
+    const perioder = [
+      lagFrisinnPeriode('2020-04-01', '2020-04-30', andeler1),
+      lagFrisinnPeriode('2020-05-01', '2020-05-31', andeler1),
+    ];
+    const frisinnPerioder = finnFrisinnperioderSomSkalVises(lagFrisinngrunnlagBG(perioder), lagBehandling('dummy'));
+    expect(frisinnPerioder).to.have.length(2);
+    expect(frisinnPerioder[0].fom).to.have.equal('2020-04-01');
+    expect(frisinnPerioder[0].tom).to.have.equal('2020-04-30');
+    expect(frisinnPerioder[1].fom).to.have.equal('2020-05-01');
+    expect(frisinnPerioder[1].tom).to.have.equal('2020-05-31');
+  });
+  it('Skal finne frisinnperioder som skal vises når flere perioder revurdering fra bruker', () => {
+    const andeler1 = [lagFrisinnAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 1000)];
+    const perioder = [
+      lagFrisinnPeriode('2020-04-01', '2020-04-30', andeler1),
+      lagFrisinnPeriode('2020-05-01', '2020-05-31', andeler1),
+    ];
+    const frisinnPerioder = finnFrisinnperioderSomSkalVises(
+      lagFrisinngrunnlagBG(perioder),
+      lagBehandling(behandlingArsakType.RE_ENDRING_FRA_BRUKER),
+    );
+    expect(frisinnPerioder).to.have.length(1);
+    expect(frisinnPerioder[0].fom).to.have.equal('2020-05-01');
+    expect(frisinnPerioder[0].tom).to.have.equal('2020-05-31');
+  });
+  it('Skal finne frisinnperioder som skal vises når revurdering fra bruker og perioden er splittet', () => {
+    const andeler1 = [lagFrisinnAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 1000)];
+    const perioder = [
+      lagFrisinnPeriode('2020-05-01', '2020-05-17', andeler1),
+      lagFrisinnPeriode('2020-05-18', '2020-05-31', andeler1),
+    ];
+    const frisinnPerioder = finnFrisinnperioderSomSkalVises(
+      lagFrisinngrunnlagBG(perioder),
+      lagBehandling(behandlingArsakType.RE_ENDRING_FRA_BRUKER),
+    );
+    expect(frisinnPerioder).to.have.length(2);
+    expect(frisinnPerioder[0].fom).to.have.equal('2020-05-01');
+    expect(frisinnPerioder[0].tom).to.have.equal('2020-05-17');
+    expect(frisinnPerioder[1].fom).to.have.equal('2020-05-18');
+    expect(frisinnPerioder[1].tom).to.have.equal('2020-05-31');
+  });
+  it('Skal finne frisinnperioder som skal vises når flere perioder revurdering fra bruker og perioden er splittet', () => {
+    const andeler1 = [lagFrisinnAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 1000)];
+    const perioder = [
+      lagFrisinnPeriode('2020-04-01', '2020-04-30', andeler1),
+      lagFrisinnPeriode('2020-05-01', '2020-05-17', andeler1),
+      lagFrisinnPeriode('2020-05-18', '2020-05-31', andeler1),
+    ];
+    const frisinnPerioder = finnFrisinnperioderSomSkalVises(
+      lagFrisinngrunnlagBG(perioder),
+      lagBehandling(behandlingArsakType.RE_ENDRING_FRA_BRUKER),
+    );
+    expect(frisinnPerioder).to.have.length(2);
+    expect(frisinnPerioder[0].fom).to.have.equal('2020-05-01');
+    expect(frisinnPerioder[0].tom).to.have.equal('2020-05-17');
+    expect(frisinnPerioder[1].fom).to.have.equal('2020-05-18');
+    expect(frisinnPerioder[1].tom).to.have.equal('2020-05-31');
+  });
+  it('Skal finne frisinnperioder som skal vises når flere perioder ikke revurdering fra bruker og perioden er splittet', () => {
+    const andeler1 = [lagFrisinnAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 1000)];
+    const perioder = [
+      lagFrisinnPeriode('2020-04-01', '2020-04-30', andeler1),
+      lagFrisinnPeriode('2020-05-01', '2020-05-17', andeler1),
+      lagFrisinnPeriode('2020-05-18', '2020-05-31', andeler1),
+    ];
+    const frisinnPerioder = finnFrisinnperioderSomSkalVises(lagFrisinngrunnlagBG(perioder), lagBehandling('dummy'));
+    expect(frisinnPerioder).to.have.length(3);
+    expect(frisinnPerioder[0].fom).to.have.equal('2020-04-01');
+    expect(frisinnPerioder[0].tom).to.have.equal('2020-04-30');
+    expect(frisinnPerioder[1].fom).to.have.equal('2020-05-01');
+    expect(frisinnPerioder[1].tom).to.have.equal('2020-05-17');
+    expect(frisinnPerioder[2].fom).to.have.equal('2020-05-18');
+    expect(frisinnPerioder[2].tom).to.have.equal('2020-05-31');
   });
 });

@@ -8,7 +8,12 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-import { erSøktForAndelISøknadsperiode, finnBruttoForStatusIPeriode } from './FrisinnUtils';
+import {
+  erSøktForAndelISøknadsperiode,
+  finnBruttoForStatusIPeriode,
+  finnFrisinnperioderSomSkalVises,
+} from './FrisinnUtils';
+import beregningsgrunnlagBehandlingPropType from '../../../propTypes/beregningsgrunnlagBehandlingPropType';
 
 const førsteDato = moment('2020-04-01');
 
@@ -44,11 +49,11 @@ const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {
  * De må også overlappe med frisinnperiode
  * De får rett startdato senere
  */
-const finnAllePerioderSomSkalVises = (bgPerioder, frisinnGrunnlag) => {
+const finnAllePerioderSomSkalVises = (bgPerioder, frisinnperioder) => {
   const perioder = [];
   for (let i = 0; i < bgPerioder.length; i += 1) {
     const periode = bgPerioder[i];
-    if (overlapperMedFrisinnPeriode(periode, frisinnGrunnlag.frisinnPerioder)) {
+    if (overlapperMedFrisinnPeriode(periode, frisinnperioder)) {
       const tom = moment(periode.beregningsgrunnlagPeriodeTom);
       const sisteDatoIMåned = moment(periode.beregningsgrunnlagPeriodeTom).endOf('month');
       if (
@@ -117,10 +122,11 @@ const lagGrenseverdirad = (bg, bgPeriode) => {
  * Om det er søkt to perioder i en måned skal disse vises som en rad der vi tar utgangspunkt i den siste, fordi denne alltid
  * vil vare ut måneden.
  */
-const Grenseverdi = ({ beregningsgrunnlag }) => {
+const Grenseverdi = ({ beregningsgrunnlag, behandling }) => {
+  const relevanteFrisinnperioder = finnFrisinnperioderSomSkalVises(beregningsgrunnlag, behandling);
   const perioderSomSkalvises = finnAllePerioderSomSkalVises(
     beregningsgrunnlag.beregningsgrunnlagPeriode,
-    beregningsgrunnlag.ytelsesspesifiktGrunnlag,
+    relevanteFrisinnperioder,
   );
   return (
     <>
@@ -131,11 +137,8 @@ const Grenseverdi = ({ beregningsgrunnlag }) => {
   );
 };
 Grenseverdi.propTypes = {
-  beregningsgrunnlag: beregningsgrunnlagPropType,
-};
-
-Grenseverdi.defaultProps = {
-  beregningsgrunnlag: undefined,
+  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  behandling: beregningsgrunnlagBehandlingPropType.isRequired,
 };
 
 export default Grenseverdi;
