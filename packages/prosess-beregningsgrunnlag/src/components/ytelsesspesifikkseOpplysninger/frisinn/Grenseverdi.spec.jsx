@@ -72,6 +72,16 @@ const lagForventetVerdiRegnestykke = (originaltInntektstak, annenInntektIkkeSøk
   };
 };
 
+const behandling = {
+  id: 1,
+  versjon: 1,
+  behandlingÅrsaker: [],
+  sprakkode: {
+    kode: 'NB',
+    kodeverk: 'Språkkode',
+  },
+};
+
 describe('<Grenseverdi>', () => {
   it('Skal vise en rad når det søkes om ytelse for en måned og ingen arbeidsinntekt', () => {
     const frisinnAndeler = [lagFrisinnAndel(aktivitetStatus.FRILANSER, 1000)];
@@ -80,7 +90,7 @@ describe('<Grenseverdi>', () => {
     const bgAndeler = [lagBGAndel(aktivitetStatus.FRILANSER, 200000)];
     const bgPerioder = [lagBgPeriode('2020-04-01', '2020-04-30', bgAndeler)];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandling={behandling} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
@@ -103,7 +113,7 @@ describe('<Grenseverdi>', () => {
       lagBgPeriode('2020-05-01', '2020-05-31', bgAndeler),
     ];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandling={behandling} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
@@ -123,7 +133,7 @@ describe('<Grenseverdi>', () => {
     const bgAndeler = [lagBGAndel(aktivitetStatus.FRILANSER, 200000), lagBGAndel(aktivitetStatus.ARBEIDSTAKER, 300000)];
     const bgPerioder = [lagBgPeriode('2020-04-01', '2020-04-30', bgAndeler)];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandling={behandling} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
@@ -153,7 +163,7 @@ describe('<Grenseverdi>', () => {
       lagBgPeriode('2020-04-20', '2020-04-30', bgAndeler),
     ];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandling={behandling} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
@@ -185,7 +195,7 @@ describe('<Grenseverdi>', () => {
       lagBgPeriode('2020-05-01', '2020-05-31', bgAndeler),
     ];
     const bg = lagBG(bgPerioder, frisinnGrunnlag);
-    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} />);
+    const wrapper = shallow(<Grenseverdi beregningsgrunnlag={bg} behandling={behandling} />);
 
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(4);

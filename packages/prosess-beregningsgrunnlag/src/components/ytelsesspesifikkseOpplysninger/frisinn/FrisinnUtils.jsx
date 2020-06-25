@@ -1,4 +1,5 @@
 import moment from 'moment';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 const finnSamletBruttoForStatus = (andeler, status) => {
   if (!andeler) {
@@ -84,4 +85,27 @@ export const finnOppgittInntektForAndelIPeriode = (status, bgPeriode, ytelsegrun
     return 0;
   }
   return inntekt;
+};
+
+export const finnFrisinnperioderSomSkalVises = (beregningsgrunnlag, behandling) => {
+  const { frisinnPerioder } = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
+  if (behandling && behandling.behandlingÅrsaker && frisinnPerioder.length > 1) {
+    const årsaker = behandling.behandlingÅrsaker;
+    const eropprettetGrunetEndring = årsaker.some(
+      årsak => årsak.behandlingArsakType.kode === behandlingArsakType.RE_ENDRING_FRA_BRUKER,
+    );
+    if (eropprettetGrunetEndring) {
+      // Skal kun vise siste søknadsperiode
+      const kronologiskePerioder = frisinnPerioder.sort((a, b) => moment(a.fom) - moment(b.fom));
+      const sistePeriode = kronologiskePerioder[kronologiskePerioder.length - 1];
+      const sisteTom = moment(sistePeriode.tom);
+      if (sisteTom.month() === 3) {
+        // Returner alle periuoder som starter i mars eller april
+        return kronologiskePerioder.filter(p => moment(p.fom).month() === 3 || moment(p.fom).month() === 2);
+      }
+      // Returner alle perioder som starter i samme måned
+      return kronologiskePerioder.filter(p => moment(p.fom).month() === sisteTom.month());
+    }
+  }
+  return frisinnPerioder;
 };

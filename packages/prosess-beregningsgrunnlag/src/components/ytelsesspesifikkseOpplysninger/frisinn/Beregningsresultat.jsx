@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
@@ -6,7 +7,12 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import BeregningsresultatPeriode from './BeregningsresultatPeriode';
-import { erSøktForAndelISøknadsperiode, finnBruttoForStatusIPeriode } from './FrisinnUtils';
+import {
+  erSøktForAndelISøknadsperiode,
+  finnBruttoForStatusIPeriode,
+  finnFrisinnperioderSomSkalVises,
+} from './FrisinnUtils';
+import beregningsgrunnlagBehandlingPropType from '../../../propTypes/beregningsgrunnlagBehandlingPropType';
 
 const finnInntektstak = bg => (bg.grunnbeløp ? bg.grunnbeløp * 6 : null);
 
@@ -42,7 +48,17 @@ const finnBGNæring = (bg, periode) => {
   return snBrutto > inntektstak ? inntektstak : snBrutto;
 };
 
-const Beregningsresultat = ({ beregningsgrunnlag }) => {
+const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {
+  const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
+  const bgTom = moment(bgPeriode.beregningsgrunnlagPeriodeTom);
+  return frisinnPerioder.some(p => !moment(p.fom).isBefore(bgFom) && !moment(p.tom).isAfter(bgTom));
+};
+
+const Beregningsresultat = ({ beregningsgrunnlag, behandling }) => {
+  const frisinnPerioderSomSkalVises = finnFrisinnperioderSomSkalVises(beregningsgrunnlag, behandling);
+  const bgPerioderSomSkalVises = beregningsgrunnlag.beregningsgrunnlagPeriode.filter(p =>
+    overlapperMedFrisinnPeriode(p, frisinnPerioderSomSkalVises),
+  );
   return (
     <div>
       <Row>
@@ -52,7 +68,7 @@ const Beregningsresultat = ({ beregningsgrunnlag }) => {
           </Element>
         </Column>
       </Row>
-      {beregningsgrunnlag.beregningsgrunnlagPeriode.map(periode => (
+      {bgPerioderSomSkalVises.map(periode => (
         <div key={periode.beregningsgrunnlagPeriodeFom}>
           <BeregningsresultatPeriode
             bgperiode={periode}
@@ -67,7 +83,8 @@ const Beregningsresultat = ({ beregningsgrunnlag }) => {
   );
 };
 Beregningsresultat.propTypes = {
-  beregningsgrunnlag: beregningsgrunnlagPropType,
+  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  behandling: beregningsgrunnlagBehandlingPropType.isRequired,
 };
 
 export default Beregningsresultat;
