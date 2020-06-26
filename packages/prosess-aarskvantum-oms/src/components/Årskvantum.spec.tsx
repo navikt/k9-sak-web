@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import React from 'react';
-import Årskvantum, { beregnDagerTimer, konverterDesimalTilDagerOgTimer } from './Årskvantum';
+import Årskvantum, { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './Årskvantum';
 import CounterBox from './CounterBox';
 import { mountWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
 import Uttaksperiode from '../dto/Uttaksperiode';
 
-const sjekkKonvertering = ({ dager, timer }, expectedDager, expectedTimer) => {
+const sjekkKonvertering = ({ dager, timer }: DagerTimer, expectedDager, expectedTimer) => {
   expect(dager).to.equal(expectedDager);
   expect(timer).to.equal(expectedTimer);
 };
@@ -40,12 +40,12 @@ it('rendrer smittevern hvis restdager er negative og i smittevernsperioden, elle
   expect(bokserMedSmittevern).to.have.length(6);
 });
 
-it('konverterer desimaltall til hele dager og timer med max 1 desimal', () => {
+it('konverterer desimaltall til hele dager og timer med max 2 desimaler', () => {
   const desimal_1 = 9.4;
   sjekkKonvertering(konverterDesimalTilDagerOgTimer(desimal_1), 9, 3);
 
   const desimal_2 = 5.5;
-  sjekkKonvertering(konverterDesimalTilDagerOgTimer(desimal_2), 5, 3.8);
+  sjekkKonvertering(konverterDesimalTilDagerOgTimer(desimal_2), 5, 3.75);
 
   const heltall = 12;
   sjekkKonvertering(konverterDesimalTilDagerOgTimer(heltall), 12, null);
@@ -63,4 +63,36 @@ it('konverterer duration til dager og timer', () => {
 
   const duration_4 = 'PT802H30M';
   sjekkKonvertering(beregnDagerTimer(duration_4), 107, 0);
+});
+
+describe('summer dagerTimer', () => {
+  it('summerer dager', () => {
+    const dt1: DagerTimer = { dager: 2 };
+    const dt2: DagerTimer = { dager: 5 };
+
+    const sum = sumTid(dt1, dt2);
+
+    expect(sum.dager).to.eql(7);
+    expect(sum.timer).to.eql(0);
+  });
+
+  it('summerer dager og timer', () => {
+    const dt1: DagerTimer = { dager: 2, timer: 3 };
+    const dt2: DagerTimer = { dager: 5, timer: 2.5 };
+
+    const sum = sumTid(dt1, dt2);
+
+    expect(sum.dager).to.eql(7);
+    expect(sum.timer).to.eql(5.5);
+  });
+
+  it('timer over 7.5 gjøres om til dager og timer', () => {
+    const dt1: DagerTimer = { dager: 2, timer: 6 };
+    const dt2: DagerTimer = { dager: 5, timer: 5.25 };
+
+    const sum = sumTid(dt1, dt2);
+
+    expect(sum.dager).to.eql(8);
+    expect(sum.timer).to.eql(3.75);
+  });
 });
