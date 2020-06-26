@@ -13,7 +13,7 @@ import Aktivitet from './dto/Aktivitet';
 
 const cache = createIntlCache();
 
-const intl = createIntl(
+export const årskvantumIntl = createIntl(
   {
     locale: 'nb-NO',
     messages,
@@ -56,7 +56,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
   return (
-    <RawIntlProvider value={intl}>
+    <RawIntlProvider value={årskvantumIntl}>
       {aksjonspunkterForSteg.length > 0 && (
         <AksjonspunktForm
           aktiviteter={sisteUttaksplan.aktiviteter}

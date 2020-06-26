@@ -46,23 +46,39 @@ const InfoRammemelding = styled.span`
   }
 `;
 
-export const konverterDesimalTilDagerOgTimer = (desimal: number) => {
+interface DagerTimer {
+  dager: number;
+  timer?: number;
+}
+
+const formaterTimerDesimal = timerDesimal => Number.parseFloat(timerDesimal.toFixed(2).replace('.0', ''));
+
+export const konverterDesimalTilDagerOgTimer = (desimal: number): DagerTimer => {
   const dager = Math.floor(desimal);
   const timerDesimal = desimal % 1;
 
   return {
     dager,
-    timer: timerDesimal !== 0 ? Number.parseFloat((timerDesimal * 7.5).toFixed(1).replace('.0', '')) : null,
+    timer: timerDesimal !== 0 ? formaterTimerDesimal(timerDesimal * 7.5) : null,
   };
 };
 
-export const beregnDagerTimer = (dagerTimer: string) => {
+export const beregnDagerTimer = (dagerTimer: string): DagerTimer => {
   const duration = moment.duration(dagerTimer);
   const totaltAntallTimer = duration.asHours();
 
   return {
     dager: Math.floor(totaltAntallTimer / 7.5),
     timer: totaltAntallTimer % 7.5,
+  };
+};
+
+const sumTid = (dagerTimer_1: DagerTimer, dagerTimer_2: DagerTimer): DagerTimer => {
+  const sumTimer = (dagerTimer_2.timer || 0) + (dagerTimer_1.timer || 0);
+
+  return {
+    dager: dagerTimer_2.dager + dagerTimer_1.dager + Math.floor(sumTimer / 7.5),
+    timer: formaterTimerDesimal(sumTimer % 7.5),
   };
 };
 
@@ -87,7 +103,11 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
   const restdagerErSmittevernsdager = erInnenSmittevernsperioden && restTidErNegativt;
   const utbetaltFlereDagerEnnRett = !erInnenSmittevernsperioden && restTidErNegativt;
 
-  const forbrukt = forbruktTid ? beregnDagerTimer(forbruktTid) : konverterDesimalTilDagerOgTimer(forbrukteDager);
+  const forbruktDagerTimer = forbruktTid
+    ? beregnDagerTimer(forbruktTid)
+    : konverterDesimalTilDagerOgTimer(forbrukteDager);
+  const tidFraInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
+  const forbrukt = sumTid(forbruktDagerTimer, tidFraInfotrygd);
   const opprinneligeDager = totaltAntallDager - antallDagerArbeidsgiverDekker;
 
   return (
@@ -166,7 +186,7 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
         />
         <CounterBox
           count={{
-            bigCount: forbrukt.dager + antallDagerInfotrygd,
+            bigCount: forbrukt.dager,
             smallCount: forbrukt.timer ? (
               <FormattedMessage id="Årskvantum.Timer" values={{ timer: forbrukt.timer }} />
             ) : null,
@@ -174,8 +194,10 @@ const Årskvantum: FunctionComponent<ÅrskvantumProps> = ({
           label={{ textId: 'Årskvantum.ForbrukteDager' }}
           theme="rød"
           infoText={{
-            content: (
-              <FormattedHTMLMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: antallDagerInfotrygd }} />
+            content: tidFraInfotrygd.timer ? (
+              <FormattedHTMLMessage id="Årskvantum.DagerOgTimerFraInfotrygd" values={{ ...tidFraInfotrygd }} />
+            ) : (
+              <FormattedHTMLMessage id="Årskvantum.DagerFraInfotrygd" values={{ dager: tidFraInfotrygd.dager }} />
             ),
           }}
         />

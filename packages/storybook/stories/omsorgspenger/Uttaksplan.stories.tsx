@@ -111,6 +111,7 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
     benyttetRammemelding: true,
   },
   rammevedtak: [],
+  barna: [],
 });
 
 const årskvantumDto: ÅrskvantumForbrukteDager = årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode]);
