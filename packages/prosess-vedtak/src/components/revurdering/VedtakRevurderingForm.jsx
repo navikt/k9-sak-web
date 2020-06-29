@@ -36,7 +36,7 @@ export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
 const isVedtakSubmission = true;
 
-const getPreviewBrevCallback = (previewCallback, behandlingresultat, vedtakvarsel) => e => {
+const getPreviewBrevCallback = (previewCallback, behandlingresultat, redusertUtbetalingÅrsaker) => e => {
   const dokumentMal = () => {
     if (isInnvilget(behandlingresultat.type.kode)) {
       return dokumentMalType.INNVILGELSE;
@@ -48,12 +48,16 @@ const getPreviewBrevCallback = (previewCallback, behandlingresultat, vedtakvarse
   };
 
   const data = {
-    redusertUtbetalingÅrsaker: vedtakvarsel.redusertUtbetalingÅrsaker,
+    redusertUtbetalingÅrsaker,
     dokumentMal: dokumentMal(),
   };
   previewCallback(data);
   e.preventDefault();
 };
+
+const transformRedusertUtbetalingÅrsaker = formProps => Object.values(redusertUtbetalingArsak)
+  .filter(name => Object.keys(formProps).some(key => key === name && formProps[key]),
+  );
 
 /**
  * VedtakRevurderingForm
@@ -112,7 +116,8 @@ export class VedtakRevurderingFormImpl extends Component {
       bgPeriodeMedAvslagsårsak,
       ...formProps
     } = this.props;
-    const previewAutomatiskBrev = getPreviewBrevCallback(previewCallback, behandlingresultat, vedtakVarsel);
+    const previewAutomatiskBrev = getPreviewBrevCallback(previewCallback, behandlingresultat,
+      readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps));
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
       <>
@@ -335,9 +340,7 @@ const transformValues = values =>
       isVedtakSubmission,
     };
     if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
-      transformedValues.redusertUtbetalingÅrsaker = Object.values(redusertUtbetalingArsak).filter(name =>
-        Object.keys(values).some(key => key === name && values[key]),
-      );
+      transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values)
     }
     return transformedValues;
   });
