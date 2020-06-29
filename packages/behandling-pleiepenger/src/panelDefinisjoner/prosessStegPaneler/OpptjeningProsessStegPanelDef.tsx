@@ -13,7 +13,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET];
 
-  getVilkarKoder = () => [vilkarType.OPPTJENINGSPERIODE, vilkarType.OPPTJENINGSVILKARET];
+  getVilkarKoder = () => [vilkarType.OPPTJENINGSVILKARET];
 
   getEndepunkter = () => [pleiepengerBehandlingApi.OPPTJENING];
 
