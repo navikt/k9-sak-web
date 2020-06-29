@@ -51,7 +51,7 @@ export interface DagerTimer {
   timer?: number;
 }
 
-const formaterTimerDesimal = timerDesimal =>
+const formaterTimerDesimal = (timerDesimal: number): number =>
   Number.parseFloat(timerDesimal.toFixed(2).replace('.0', '').replace(/\.*0/, ''));
 
 export const konverterDesimalTilDagerOgTimer = (desimal: number): DagerTimer => {
