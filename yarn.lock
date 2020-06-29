@@ -2394,10 +2394,10 @@
     react "^16.13.1"
     react-popper "^2.2.2"
 
-"@navikt/nap-process-menu@1.0.13":
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.0.13.tgz#05dedf62ec494abc8244617160ce3b94ec0312c6"
-  integrity sha512-P/5jDfdk+F4kUdVJqPx90/+m7B4/N4nngMiBeclDmGE6s+rbTXpvqvebxn2djgPOgnzbmnKSQvrmQi/OltEsdg==
+"@navikt/nap-process-menu@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.1.0.tgz#abb98e445645e084e96b0d6dfd5606ed142df317"
+  integrity sha512-0CCG6E5cvl9gU0LlMUK9gpAwnaeqO0RF3JmChCDnKeIYu8Jhjm0/jcDtHkItHeeRWJ5t7FStqbNozTmboPjaaw==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     classnames "^2.2.6"
