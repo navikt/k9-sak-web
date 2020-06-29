@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
@@ -17,7 +17,6 @@ import { decodeHtmlEntity, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
-import classNames from 'classnames';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -31,7 +30,7 @@ import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
-import styles from '../vedtakForm.less';
+import PreviewLink from '../PreviewLink';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
@@ -49,7 +48,7 @@ const getPreviewBrevCallback = (previewCallback, behandlingresultat, vedtakvarse
   };
 
   const data = {
-    redusertUtbetalingÅrsak: vedtakvarsel.redusertUtbetalingÅrsaker,
+    redusertUtbetalingÅrsaker: vedtakvarsel.redusertUtbetalingÅrsaker,
     dokumentMal: dokumentMal(),
   };
   previewCallback(data);
@@ -204,14 +203,7 @@ export class VedtakRevurderingFormImpl extends Component {
               )}
             </Row>
             {ytelseTypeKode === fagsakYtelseType.FRISINN && (
-              <a
-                href=""
-                onClick={previewAutomatiskBrev}
-                onKeyDown={e => (e.keyCode === 13 ? previewAutomatiskBrev(e) : null)}
-                className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-              >
-                <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-              </a>
+              <PreviewLink intl={intl} previewCallback={previewAutomatiskBrev} />
             )}
             {skalBrukeOverstyrendeFritekstBrev &&
               ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
