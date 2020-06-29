@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
@@ -17,6 +17,8 @@ import { decodeHtmlEntity, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
+import classNames from 'classnames';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -29,18 +31,26 @@ import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
+import styles from '../vedtakForm.less';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
 const isVedtakSubmission = true;
 
-const getPreviewAutomatiskBrevCallback = (previewCallback, begrunnelse) => e => {
+const getPreviewBrevCallback = (previewCallback, behandlingresultat, vedtakvarsel) => e => {
+  const dokumentMal = () => {
+    if (isInnvilget(behandlingresultat.type.kode)) {
+      return dokumentMalType.INNVILGELSE;
+    }
+    if (isAvslag(behandlingresultat.type.kode)) {
+      return dokumentMalType.AVSLAG;
+    }
+    return dokumentMalType.UTLED;
+  };
+
   const data = {
-    fritekst: begrunnelse,
-    gjelderVedtak: true,
-    vedtaksbrev: {
-      kode: 'AUTOMATISK',
-    },
+    redusertUtbetalingÅrsak: vedtakvarsel.redusertUtbetalingÅrsaker,
+    dokumentMal: dokumentMal(),
   };
   previewCallback(data);
   e.preventDefault();
@@ -103,7 +113,7 @@ export class VedtakRevurderingFormImpl extends Component {
       bgPeriodeMedAvslagsårsak,
       ...formProps
     } = this.props;
-    const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
+    const previewAutomatiskBrev = getPreviewBrevCallback(previewCallback, behandlingresultat, vedtakVarsel);
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
       <>
@@ -120,19 +130,17 @@ export class VedtakRevurderingFormImpl extends Component {
           <VerticalSpacer eightPx />
           <>
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
-              <VedtakOverstyrendeKnapp
-                readOnly={readOnly}
-                keyName="skalUndertrykkeBrev"
-                readOnlyHideEmpty={false}
-              />
-            ) : (visOverstyringKnapp && (
-              <VedtakOverstyrendeKnapp
-                toggleCallback={this.onToggleOverstyring}
-                readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
-                keyName="skalBrukeOverstyrendeFritekstBrev"
-                readOnlyHideEmpty={false}
-              />
-            ))}
+              <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
+            ) : (
+              visOverstyringKnapp && (
+                <VedtakOverstyrendeKnapp
+                  toggleCallback={this.onToggleOverstyring}
+                  readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
+                  keyName="skalBrukeOverstyrendeFritekstBrev"
+                  readOnlyHideEmpty={false}
+                />
+              )
+            )}
             <Row>
               <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>
                 {isInnvilget(behandlingresultat.type.kode) && (
@@ -195,14 +203,25 @@ export class VedtakRevurderingFormImpl extends Component {
                 </Column>
               )}
             </Row>
-            {skalBrukeOverstyrendeFritekstBrev && ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
-              <FritekstBrevPanel
-                intl={intl}
-                readOnly={readOnly}
-                sprakkode={sprakkode}
-                previewBrev={previewAutomatiskBrev}
-              />
+            {ytelseTypeKode === fagsakYtelseType.FRISINN && (
+              <a
+                href=""
+                onClick={previewAutomatiskBrev}
+                onKeyDown={e => (e.keyCode === 13 ? previewAutomatiskBrev(e) : null)}
+                className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+              >
+                <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
+              </a>
             )}
+            {skalBrukeOverstyrendeFritekstBrev &&
+              ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
+                <FritekstBrevPanel
+                  intl={intl}
+                  readOnly={readOnly}
+                  sprakkode={sprakkode}
+                  previewBrev={previewAutomatiskBrev}
+                />
+              )}
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
