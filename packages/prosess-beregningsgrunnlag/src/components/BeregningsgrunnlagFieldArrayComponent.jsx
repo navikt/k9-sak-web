@@ -40,6 +40,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
         behandling={behandling}
         vilkaarBG={vilkaarBG}
         initialValues={initialValues[index]}
+        key={fieldId}
       />
     ) : null,
   );
