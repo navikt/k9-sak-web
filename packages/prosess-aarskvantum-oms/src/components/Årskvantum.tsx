@@ -52,7 +52,7 @@ export interface DagerTimer {
 }
 
 const formaterTimerDesimal = (timerDesimal: number): number =>
-  Number.parseFloat(timerDesimal.toFixed(2).replace('.0', '').replace(/\.*0/, ''));
+  Number.parseFloat(timerDesimal.toFixed(2).replace('.00', ''));
 
 export const konverterDesimalTilDagerOgTimer = (desimal: number): DagerTimer => {
   const dager = Math.floor(desimal);
