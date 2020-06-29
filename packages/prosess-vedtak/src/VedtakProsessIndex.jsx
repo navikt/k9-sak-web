@@ -98,7 +98,7 @@ VedtakProsessIndex.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
+  beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
 };
 
