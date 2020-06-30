@@ -18,7 +18,6 @@ import SøknadsperiodeFormValues from './types/SøknadsperiodeFormValues';
 import SøknadFormValue from './types/SøknadFormValue';
 import OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
 import oppgittOpptjeningRevurderingFormName from './formName';
-import { startdatoErISøknadsperiode } from './validators';
 
 const classNames = classnames.bind(styles);
 const formName = oppgittOpptjeningRevurderingFormName;
@@ -37,6 +36,8 @@ const frilansFields = [
   SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN,
   SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN,
 ];
+
+const erBeløpSatt = (beløp) => beløp || beløp === 0;
 
 export const buildInitialValuesForSøknadsperiode = (values: Måned) => {
   const { søkerFL, søkerSN, oppgittIMåned } = values;
@@ -62,9 +63,9 @@ export const buildInitialValuesForSøknadsperiode = (values: Måned) => {
     [SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN]: frilansoppdragBruttoinntekt,
 
     [SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN]:
-      !søkerFL && frilansoppdragBruttoinntekt ? frilansoppdragBruttoinntekt : null,
+      !søkerFL && erBeløpSatt(frilansoppdragBruttoinntekt) ? frilansoppdragBruttoinntekt : null,
     [SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS]:
-      !søkerSN && næringBruttoinntekt ? næringBruttoinntekt : null,
+      !søkerSN && erBeløpSatt(næringBruttoinntekt) ? næringBruttoinntekt : null,
     [SøknadFormValue.HAR_SØKT_SOM_FRILANSER]: søkerFL || false,
     [SøknadFormValue.HAR_SØKT_SOM_SSN]: søkerSN || false,
     [SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER]: arbeidsforholdBruttoinntekt,
@@ -163,7 +164,6 @@ const SøknadsperiodeFieldArrayComponent = (
           {harSøktSomSSN && (
             <SelvstendigNæringsdrivendeForm
               erFrilanser={harSøktSomFrilanser}
-              startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, måned)}
               readOnly={formIsEditable}
               clearSelvstendigValues={clearSelvstendigValues}
               fieldArrayId={field}
@@ -196,7 +196,6 @@ const SøknadsperiodeFieldArrayComponent = (
           {harSøktSomFrilanser && (
             <FrilanserForm
               erSelvstendigNæringsdrivende={harSøktSomSSN}
-              startdatoValidator={startdato => startdatoErISøknadsperiode(startdato, måned)}
               readOnly={formIsEditable}
               clearFrilansValues={clearFrilansValues}
               fieldArrayId={field}
