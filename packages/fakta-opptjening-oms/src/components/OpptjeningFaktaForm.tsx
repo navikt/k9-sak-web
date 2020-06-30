@@ -18,7 +18,7 @@ import moment from 'moment';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -295,13 +295,20 @@ export class OpptjeningFaktaFormImpl extends Component<
     return (
       <div className={styles.container}>
         {opptjeningList.length > 1 && (
-          <TabsPure
-            tabs={opptjeningList.map((currentOpptjening, currentOpptjeningIndex) => ({
-              aktiv: activeTab === currentOpptjeningIndex,
-              label: `Opptjeningsperiode ${currentOpptjeningIndex + 1}`,
-            }))}
-            onChange={(e, clickedIndex) => this.setActiveTab(clickedIndex)}
-          />
+          <>
+            <Undertittel>
+              <FormattedMessage id="OpptjeningFaktaForm.Opptjeningsperioder" />
+            </Undertittel>
+            <VerticalSpacer sixteenPx />
+            <TabsPure
+              tabs={opptjeningList.map((currentOpptjening, currentOpptjeningIndex) => ({
+                aktiv: activeTab === currentOpptjeningIndex,
+                label:
+                  opptjeningList.length <= 8 ? `Periode ${currentOpptjeningIndex + 1}` : currentOpptjeningIndex + 1,
+              }))}
+              onChange={(e, clickedIndex) => this.setActiveTab(clickedIndex)}
+            />
+          </>
         )}
         <div className={opptjeningList.length > 1 ? styles.tabContainer : ''}>
           {hasAksjonspunkt && (
