@@ -173,13 +173,12 @@ export class BehandlingIndex extends Component<OwnProps> {
       rettigheter,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
-      key: behandlingId,
     };
 
     if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingInnsynIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               {...defaultProps}
@@ -192,7 +191,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (behandlingTypeKode === BehandlingType.KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
@@ -206,7 +205,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (behandlingTypeKode === BehandlingType.ANKE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingAnkeIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
@@ -220,7 +219,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (erTilbakekreving(behandlingTypeKode)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingTilbakekrevingIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               harApenRevurdering={fagsakBehandlingerInfo.some(
@@ -236,7 +235,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.OMSORGSPENGER) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingOmsorgspengerIndex
               featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
@@ -251,7 +250,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.FRISINN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingFrisinnIndex
               featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
@@ -265,7 +264,7 @@ export class BehandlingIndex extends Component<OwnProps> {
 
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+        <ErrorBoundary errorMessageCallback={visFeilmelding}>
           <BehandlingPleiepengerIndex
             featureToggles={featureToggles}
             oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
