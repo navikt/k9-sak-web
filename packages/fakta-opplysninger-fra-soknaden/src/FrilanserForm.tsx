@@ -56,7 +56,7 @@ const FrilanserForm = ({
             name={`${fieldArrayId}.${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
-            validate={[hasValidInteger, maxLength(5)]}
+            validate={[required, hasValidInteger, maxLength(5)]}
             readOnly={readOnly}
           />
         </div>
