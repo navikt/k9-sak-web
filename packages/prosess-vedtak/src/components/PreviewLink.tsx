@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import styles from './vedtakForm.less';
 
 interface PreviewLinkProps {
-  previewCallback: (params: any) => void;
+  previewCallback: (event: React.SyntheticEvent) => void;
   children: ReactNode;
 }
 
