@@ -1,7 +1,6 @@
 import { DatepickerField } from '@fpsak-frontend/form';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { hasValidDate, required, hasValidInteger, maxLength } from '@fpsak-frontend/utils';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.less';
@@ -9,7 +8,6 @@ import SøknadFormValue from './types/SøknadFormValue';
 
 interface FrilanserFormProps {
   erSelvstendigNæringsdrivende: boolean;
-  startdatoValidator: (startdato: string) => void;
   readOnly: boolean;
   clearFrilansValues: () => void;
   fieldArrayId: string;
@@ -17,7 +15,6 @@ interface FrilanserFormProps {
 
 const FrilanserForm = ({
   erSelvstendigNæringsdrivende,
-  startdatoValidator,
   readOnly,
   clearFrilansValues,
   fieldArrayId,
@@ -35,7 +32,6 @@ const FrilanserForm = ({
       <div className={styles.fieldContainer}>
         <DatepickerField
           name={`${fieldArrayId}.${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`}
-          validate={[required, hasValidDate, startdatoValidator]}
           defaultValue={null}
           readOnly={readOnly}
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
@@ -46,7 +42,6 @@ const FrilanserForm = ({
           name={`${fieldArrayId}.${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`}
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
-          validate={[required, hasValidInteger, maxLength(5)]}
           readOnly={readOnly}
         />
       </div>
@@ -56,7 +51,6 @@ const FrilanserForm = ({
             name={`${fieldArrayId}.${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
-            validate={[required, hasValidInteger, maxLength(5)]}
             readOnly={readOnly}
           />
         </div>

@@ -171,7 +171,6 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & Sta
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
               bredde="S"
               label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
-              validate={[hasValidInteger]}
               readOnly={formIsEditable}
             />
           </div>
@@ -180,14 +179,12 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & Sta
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
               bredde="S"
               label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
-              validate={[hasValidInteger]}
               readOnly={formIsEditable}
             />
           </div>
           <div className={styles.fieldContainer}>
             <DatepickerField
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
-              validate={[hasValidDate]}
               defaultValue={null}
               readOnly={formIsEditable}
               label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
@@ -245,6 +242,7 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
     : false;
 
   return {
+    oppgittOpptjening: values,
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
       ? næringsinntektFørSøknadsperioden
       : null,
@@ -255,7 +253,7 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
   };
 };
 
-const validateSSNForm = (formData, måned, fieldArrayID) => {
+const validateSSNForm = (formData, måned) => {
   const errors = {};
   const ssnInntekt = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN];
   const ssnStartdato = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
@@ -269,11 +267,11 @@ const validateSSNForm = (formData, måned, fieldArrayID) => {
 
   const inntektError = ssnInntektValidation.find(v => Array.isArray(v));
   if (inntektError !== undefined) {
-    errors[`${fieldArrayID}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
+    errors[`${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
   }
   const startdatoError = ssnStartdatoValidation.find(v => Array.isArray(v));
   if (startdatoError !== undefined) {
-    errors[`${fieldArrayID}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
+    errors[`${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
   }
 
   const harSøktSomFrilanser = formData[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
@@ -282,14 +280,14 @@ const validateSSNForm = (formData, måned, fieldArrayID) => {
     const frilansinntektValidation = [hasValidInteger(frilansinntekt), maxLength(5)(frilansinntekt)];
     const frilansinntektError = frilansinntektValidation.find(v => Array.isArray(v));
     if (frilansinntektError !== undefined) {
-      errors[`${fieldArrayID}.${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`] = frilansinntektError;
+      errors[`${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`] = frilansinntektError;
     }
   }
 
   return errors;
 };
 
-const validateFrilanserForm = (formData, måned, fieldArrayID) => {
+const validateFrilanserForm = (formData, måned) => {
   const errors = {};
   const frilansInntekt = formData[SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN];
   const frilansStartdato = formData[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
@@ -306,61 +304,74 @@ const validateFrilanserForm = (formData, måned, fieldArrayID) => {
 
   const inntektError = frilansInntektValidation.find(v => Array.isArray(v));
   if (inntektError !== undefined) {
-    errors[`${fieldArrayID}.${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
+    errors[`${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`] = inntektError;
   }
   const startdatoError = frilansStartdatoValidation.find(v => Array.isArray(v));
   if (startdatoError !== undefined) {
-    errors[`${fieldArrayID}.${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
+    errors[`${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`] = startdatoError;
   }
 
   const harSøktSomSSN = formData[SøknadFormValue.HAR_SØKT_SOM_SSN];
   if (!harSøktSomSSN) {
     const næringsinntektIFrilansperiode = formData[SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS];
     const næringsinntektValidation = [
+      required(næringsinntektIFrilansperiode),
       hasValidInteger(næringsinntektIFrilansperiode),
       maxLength(5)(næringsinntektIFrilansperiode),
     ];
     const næringsinntektError = næringsinntektValidation.find(v => Array.isArray(v));
     if (næringsinntektError !== undefined) {
-      errors[`${fieldArrayID}.${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`] = næringsinntektError;
+      errors[`${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`] = næringsinntektError;
     }
   }
 
   return errors;
 };
 
-const validateArbeidstakerInntekt = (inntekt, fieldArrayID) => {
+const validateArbeidstakerInntekt = (inntekt) => {
   const inntektValidation = [hasValidInteger(inntekt), maxLength(5)(inntekt)];
   const inntektError = inntektValidation.find(v => Array.isArray(v));
   if (inntektError !== undefined) {
     return {
-      [`${fieldArrayID}.${SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER}`]: inntektError,
+      [`${SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER}`]: inntektError,
     };
   }
   return {};
 };
 
 const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraSøknaden) => {
-  let errors = {};
-  fieldArrayList.forEach((fieldArrayItem, index) => {
+  const errors = {};
+  errors[SøknadFormValue.SØKNADSPERIODER] = fieldArrayList.map((fieldArrayItem, index) => {
+    let arrayErrors = {}
     const { måned } = oppgittOpptjening.måneder[index];
 
     const harSøktSomSSN = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_SSN];
     if (harSøktSomSSN) {
-      const snErrors = validateSSNForm(fieldArrayItem, måned, `${fieldArrayName}[${index}]`);
-      errors = Object.assign(errors, snErrors);
+      const snErrors = validateSSNForm(fieldArrayItem, måned);
+      arrayErrors = { 
+        ...arrayErrors, 
+        ...snErrors
+      };
     }
 
     const harSøktSomFrilanser = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
     if (harSøktSomFrilanser) {
-      const frilansErrors = validateFrilanserForm(fieldArrayItem, måned, `${fieldArrayName}[${index}]`);
-      errors = Object.assign(errors, frilansErrors);
+      const frilansErrors = validateFrilanserForm(fieldArrayItem, måned);
+      arrayErrors = { 
+        ...arrayErrors,
+         ...frilansErrors
+        };
     }
 
     const arbeidstakerInntekt = fieldArrayItem[SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER];
     if (arbeidstakerInntekt) {
-      errors = Object.assign(errors, validateArbeidstakerInntekt(arbeidstakerInntekt, `${fieldArrayName}[${index}]`));
+      arrayErrors = { 
+        ...arrayErrors,  
+        ...validateArbeidstakerInntekt(arbeidstakerInntekt)
+      };
+
     }
+    return arrayErrors;
   });
   return errors;
 };
@@ -400,15 +411,7 @@ const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpp
 
 const mapStateToProps = (_, props) => {
   const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon } = props;
-  const onSubmit = formValues => {
-    return new Promise((resolve, reject) => {
-      const errors = validateForm(formValues, props.oppgittOpptjening);
-      if (!errors || Object.keys(errors).length === 0) {
-        return resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
-      }
-      return reject(errors);
-    });
-  };
+  const onSubmit = formValues => submitCallback([transformValues(formValues, props.oppgittOpptjening)]);
   const initialValues = buildInitialValues(oppgittOpptjening);
   const validate = values => {
     const validationResult = validateForm(values, oppgittOpptjening);
@@ -442,6 +445,7 @@ const connectedComponent = connect(
 )(
   behandlingForm({
     form: oppgittOpptjeningRevurderingFormName,
+    validate: validateForm
   })(OppgittOpptjeningRevurderingForm),
 );
 

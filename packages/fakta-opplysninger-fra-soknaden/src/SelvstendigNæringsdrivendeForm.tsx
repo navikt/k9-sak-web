@@ -1,7 +1,6 @@
 import { DatepickerField } from '@fpsak-frontend/form';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { hasValidDate, required, hasValidInteger, maxLength } from '@fpsak-frontend/utils';
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.less';
@@ -9,7 +8,6 @@ import SøknadFormValue from './types/SøknadFormValue';
 
 interface SelvstendigNæringsdrivendeFormProps {
   erFrilanser: boolean;
-  startdatoValidator: (startdato: string) => void;
   readOnly: boolean;
   clearSelvstendigValues: () => void;
   fieldArrayId: string;
@@ -17,7 +15,6 @@ interface SelvstendigNæringsdrivendeFormProps {
 
 const SelvstendigNæringsdrivendeForm = ({
   erFrilanser,
-  startdatoValidator,
   readOnly,
   clearSelvstendigValues,
   fieldArrayId,
@@ -35,7 +32,6 @@ const SelvstendigNæringsdrivendeForm = ({
       <div className={styles.fieldContainer}>
         <DatepickerField
           name={`${fieldArrayId}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`}
-          validate={[required, hasValidDate, startdatoValidator]}
           defaultValue={null}
           readOnly={readOnly}
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
@@ -46,7 +42,6 @@ const SelvstendigNæringsdrivendeForm = ({
           name={`${fieldArrayId}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`}
           bredde="S"
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
-          validate={[required, hasValidInteger, maxLength(5)]}
           readOnly={readOnly}
         />
       </div>
@@ -56,7 +51,6 @@ const SelvstendigNæringsdrivendeForm = ({
             name={`${fieldArrayId}.${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`}
             bredde="S"
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
-            validate={[hasValidInteger, maxLength(5)]}
             readOnly={readOnly}
           />
         </div>
