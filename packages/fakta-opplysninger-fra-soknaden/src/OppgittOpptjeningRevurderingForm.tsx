@@ -242,7 +242,6 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
     : false;
 
   return {
-    oppgittOpptjening: values,
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
       ? næringsinntektFørSøknadsperioden
       : null,
@@ -445,7 +444,6 @@ const connectedComponent = connect(
 )(
   behandlingForm({
     form: oppgittOpptjeningRevurderingFormName,
-    validate: validateForm
   })(OppgittOpptjeningRevurderingForm),
 );
 
