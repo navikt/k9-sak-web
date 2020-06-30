@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
@@ -55,8 +55,9 @@ const getPreviewBrevCallback = (previewCallback, behandlingresultat, redusertUtb
   e.preventDefault();
 };
 
-const transformRedusertUtbetalingÅrsaker = formProps => Object.values(redusertUtbetalingArsak)
-  .filter(name => Object.keys(formProps).some(key => key === name && formProps[key]),
+const transformRedusertUtbetalingÅrsaker = formProps =>
+  Object.values(redusertUtbetalingArsak).filter(name =>
+    Object.keys(formProps).some(key => key === name && formProps[key]),
   );
 
 /**
@@ -116,8 +117,11 @@ export class VedtakRevurderingFormImpl extends Component {
       bgPeriodeMedAvslagsårsak,
       ...formProps
     } = this.props;
-    const previewAutomatiskBrev = getPreviewBrevCallback(previewCallback, behandlingresultat,
-      readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps));
+    const previewAutomatiskBrev = getPreviewBrevCallback(
+      previewCallback,
+      behandlingresultat,
+      readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps),
+    );
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
       <>
@@ -208,7 +212,9 @@ export class VedtakRevurderingFormImpl extends Component {
               )}
             </Row>
             {ytelseTypeKode === fagsakYtelseType.FRISINN && (
-              <PreviewLink intl={intl} previewCallback={previewAutomatiskBrev} />
+              <PreviewLink previewCallback={previewAutomatiskBrev}>
+                <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
+              </PreviewLink>
             )}
             {skalBrukeOverstyrendeFritekstBrev &&
               ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
@@ -340,7 +346,7 @@ const transformValues = values =>
       isVedtakSubmission,
     };
     if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
-      transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values)
+      transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
     }
     return transformedValues;
   });
