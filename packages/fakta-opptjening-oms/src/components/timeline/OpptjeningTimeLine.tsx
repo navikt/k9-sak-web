@@ -10,7 +10,7 @@ import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLine.less';
 
 // Desse må alltid vare med for rett skala av tidslinjen då den alltid skall vare 10 månader fra skjæringstidpunkten
-const standardItems = (opptjeningFomDato: string, opptjeningTomDato: string) => {
+const standardItems = (opptjeningFomDato: string, opptjeningTomDato: string): any[] => {
   const items = [
     {
       id: 1000,

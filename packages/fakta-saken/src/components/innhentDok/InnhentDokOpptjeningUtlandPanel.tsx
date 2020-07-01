@@ -98,5 +98,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: 'InnhentDokOpptjeningUtlandPanel',
+    // @ts-ignore TODO Fiks
   })(InnhentDokOpptjeningUtlandPanel),
 );

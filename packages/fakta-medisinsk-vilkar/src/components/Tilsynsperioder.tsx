@@ -144,7 +144,6 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.TOM}`,
                   ]}
                   validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                  defaultValue={null}
                   readOnly={readOnly}
                   label={{ id: 'MedisinskVilkarForm.Periode' }}
                   disabledDays={{
@@ -226,7 +225,6 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
                     `${periodeMedBehovForKontinuerligTilsynId}.${MedisinskVilkårConsts.PERIODER_MED_UTVIDET_KONTINUERLIG_TILSYN_OG_PLEIE}.tom`,
                   ]}
                   validate={[required, hasValidDate, dateRangesNotOverlapping]}
-                  defaultValue={null}
                   readOnly={readOnly}
                   label={{ id: 'MedisinskVilkarForm.Periode' }}
                   disabledDays={{

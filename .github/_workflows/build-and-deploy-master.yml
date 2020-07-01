@@ -31,8 +31,11 @@ jobs:
       - name: Run yarn install
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
 
-      - name: Run linting and tests
+      - name: Run linting
         run: yarn less:lint
+
+      - name: Run typescript
+        run: yarn ts-check
 
       - name: Build
         run: |

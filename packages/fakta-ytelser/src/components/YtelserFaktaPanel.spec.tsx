@@ -37,6 +37,8 @@ describe('<YtelserFaktaPanel>', () => {
           ],
         },
       ],
+      skalKunneLeggeTilNyeArbeidsforhold: true,
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
     };
 
     const wrapper = shallow(
@@ -110,6 +112,8 @@ describe('<YtelserFaktaPanel>', () => {
           ],
         },
       ],
+      skalKunneLeggeTilNyeArbeidsforhold: true,
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
     };
 
     const wrapper = shallow(

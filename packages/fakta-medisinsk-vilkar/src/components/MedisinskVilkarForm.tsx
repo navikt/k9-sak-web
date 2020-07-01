@@ -1,4 +1,4 @@
-import { PeriodpickerField, behandlingForm } from '@fpsak-frontend/form';
+import { PeriodpickerField, DatepickerField, behandlingForm } from '@fpsak-frontend/form';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import { behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -15,7 +15,6 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import DatepickerField from '../../../form/src/DatepickerField';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
 import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
 import Legeerklaering from './Legeerklaering';
@@ -99,7 +98,6 @@ export const MedisinskVilkarForm = ({
           <DatepickerField
             name={MedisinskVilkårConsts.LEGEERKLÆRING_FOM}
             validate={[required, hasValidDate]}
-            defaultValue={null}
             readOnly={readOnly}
             label={
               <Label
@@ -129,7 +127,6 @@ export const MedisinskVilkarForm = ({
               `${MedisinskVilkårConsts.INNLEGGELSESPERIODE}.tom`,
             ]}
             validate={[required, hasValidDate, dateRangesNotOverlapping]}
-            defaultValue={null}
             readOnly={readOnly}
             label={{ id: 'MedisinskVilkarForm.Periode' }}
             disabledDays={{

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { EkspanderbartpanelBasePure } from 'nav-frontend-ekspanderbartpanel';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 
 import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import { Risikoklassifisering, Aksjonspunkt } from '@k9-sak-web/types';
@@ -35,11 +35,11 @@ const HoyRisikoTittel: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
 }) => (
-  <EkspanderbartpanelBasePure
+  <EkspanderbartpanelBase
     className={styles.hoyRisikoPanelTittel}
     apen={isRiskPanelOpen}
     onClick={toggleRiskPanel}
-    heading={<TittelMedDivider imageSrc={risikoIkon} tittel="Risikopanel.Tittel.Faresignaler" />}
+    tittel={<TittelMedDivider imageSrc={risikoIkon} tittel="Risikopanel.Tittel.Faresignaler" />}
     border
   >
     <HoyRisikoPanel
@@ -50,7 +50,7 @@ const HoyRisikoTittel: FunctionComponent<OwnProps> = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
     />
-  </EkspanderbartpanelBasePure>
+  </EkspanderbartpanelBase>
 );
 
 export default HoyRisikoTittel;

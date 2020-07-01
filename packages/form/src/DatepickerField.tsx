@@ -19,6 +19,11 @@ interface DatepickerFieldProps {
     | ((value: any) => { id: string }[])
     | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
   )[];
+  disabledDays?: {
+    before: Date;
+    after: Date;
+  };
+  dataId?: string;
 }
 
 const isoToDdMmYyyy = (string: string): string => {

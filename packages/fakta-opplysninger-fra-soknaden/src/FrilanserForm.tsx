@@ -32,7 +32,6 @@ const FrilanserForm = ({
       <div className={styles.fieldContainer}>
         <DatepickerField
           name={`${fieldArrayId}.${SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN}`}
-          defaultValue={null}
           readOnly={readOnly}
           label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
         />

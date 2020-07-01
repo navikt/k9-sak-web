@@ -16,6 +16,7 @@ describe('<HeaderWithErrorPanel>', () => {
         queryStrings={{}}
         showDetailedErrorMessages={false}
         setSiteHeight={() => undefined}
+        getPathToFplos={() => undefined}
       />,
     );
     const header = wrapper.find(Header);

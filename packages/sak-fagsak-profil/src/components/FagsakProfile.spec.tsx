@@ -46,7 +46,7 @@ describe('<FagsakProfile>', () => {
     };
     const wrapper = shallowWithIntl(
       <FagsakProfile
-        saksnummer={12345}
+        saksnummer="12345"
         sakstype={sakstype}
         fagsakStatus={status}
         alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
@@ -77,7 +77,7 @@ describe('<FagsakProfile>', () => {
     };
     const wrapper = shallowWithIntl(
       <FagsakProfile
-        saksnummer={12345}
+        saksnummer="12345"
         sakstype={sakstype}
         fagsakStatus={status}
         alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
@@ -113,7 +113,7 @@ describe('<FagsakProfile>', () => {
     };
     const wrapper = shallowWithIntl(
       <FagsakProfile
-        saksnummer={12345}
+        saksnummer="12345"
         sakstype={sakstype}
         fagsakStatus={status}
         alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
@@ -146,7 +146,7 @@ describe('<FagsakProfile>', () => {
     };
     const wrapper = shallowWithIntl(
       <FagsakProfile
-        saksnummer={12345}
+        saksnummer="12345"
         sakstype={sakstype}
         fagsakStatus={status}
         alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}

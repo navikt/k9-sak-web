@@ -139,7 +139,7 @@ const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
         <Column xs="1">
           <div className={styles.timelineIkonContainer}>
             {rader.map(({ ikon, id }) => (
-              <Image key={id} src={ikon.src} alt={ikon.imageText} title={ikon.title} />
+              <Image key={id} src={ikon.src} alt={ikon.imageText} tooltip={ikon.title} />
             ))}
           </div>
         </Column>

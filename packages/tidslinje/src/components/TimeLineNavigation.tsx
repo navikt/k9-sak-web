@@ -1,12 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, MouseEvent } from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { useIntl } from 'react-intl';
-import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import TimeLineButton from './TimeLineButton';
 
-const TimeLineNavigation: FunctionComponent<{ openPeriodInfo: EventCallback; className?: string }> = ({
+const TimeLineNavigation: FunctionComponent<{ openPeriodInfo: (event: MouseEvent) => void; className?: string }> = ({
   openPeriodInfo,
   className,
 }) => {
@@ -23,10 +21,6 @@ const TimeLineNavigation: FunctionComponent<{ openPeriodInfo: EventCallback; cla
       </Column>
     </Row>
   );
-};
-
-TimeLineNavigation.propTypes = {
-  openPeriodInfo: PropTypes.func.isRequired,
 };
 
 export default TimeLineNavigation;

@@ -5,8 +5,8 @@ import TimeLineButton from './TimeLineButton';
 
 interface LegendBoxProps {
   legends: {
-    src: string | object,
-    text: string,
+    src: string;
+    text: string;
   }[];
 }
 

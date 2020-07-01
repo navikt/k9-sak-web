@@ -2,15 +2,15 @@ import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { InntektArbeidYtelse, Kodeverk } from '@k9-sak-web/types';
+import { InntektArbeidYtelse, KodeverkMedNavn } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import PersonYtelserTable from './PersonYtelserTable';
 
 interface OwnProps {
   inntektArbeidYtelse: InntektArbeidYtelse;
-  relatertYtelseTyper: Kodeverk[];
-  relatertYtelseStatus: Kodeverk[];
+  relatertYtelseTyper: KodeverkMedNavn[];
+  relatertYtelseStatus: KodeverkMedNavn[];
 }
 
 const YtelserFaktaPanel: FunctionComponent<OwnProps> = ({

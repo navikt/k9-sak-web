@@ -44,7 +44,7 @@ const UttakFaktaPanel: FunctionComponent<UttakFaktaPanelProps> = ({ personopplys
       <Undertittel tag="span">{personopplysninger.navn}</Undertittel>
       <FlexColumn>
         <FlexRow>
-          <Image src={urlBuilding} className={styles.tittelbilde} style={{ marginRight: '1em' }} />
+          <Image src={urlBuilding} className={styles.tittelbilde} />
           <Undertittel tag="span">
             {intl.formatMessage(
               {

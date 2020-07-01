@@ -20,7 +20,7 @@ const MedisinskVilkarFormButtons = ({
   readOnly,
   submittable,
 }: MedisinskVilkarFormButtonsProps) => (
-  <FlexContainer fluid>
+  <FlexContainer>
     <FlexRow>
       <FlexColumn>
         <FaktaSubmitButton

@@ -54,8 +54,9 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
 
   const { periodeLabelText, visningsdatoer, timerFårJobbet, timerIJobbTilVanlig } = valgtPeriode
     ? {
-        periodeLabelText: `${intl.formatMessage({ id: 'FaktaOmUttakForm.Periode' })} ${`${valgtPeriodeIndex +
-          1}`.padStart(2, '0')}:`,
+        periodeLabelText: `${intl.formatMessage({ id: 'FaktaOmUttakForm.Periode' })} ${`${
+          valgtPeriodeIndex + 1
+        }`.padStart(2, '0')}:`,
         visningsdatoer: ` ${visningsdato(valgtPeriode.fom)} - ${visningsdato(valgtPeriode.tom)}`,
         timerFårJobbet: formaterTimer(valgtPeriode.timerFårJobbet, valgtPeriode.timerIJobbTilVanlig),
         timerIJobbTilVanlig: formaterTimer(valgtPeriode.timerIJobbTilVanlig),
@@ -102,7 +103,7 @@ const ValgtPeriode: FunctionComponent<ValgtPeriodeProps> = ({
         />
       )}
       {!redigererPeriode && (
-        <Flatknapp htmlType="button" onClick={endreValgtPeriodeCallback} mini knappeForm="kompakt">
+        <Flatknapp htmlType="button" onClick={endreValgtPeriodeCallback} mini kompakt>
           <Image src={endreSvg} className={styles.image} />
           <span>{intl.formatMessage({ id: 'FaktaOmUttakForm.EndrePeriode' })}</span>
         </Flatknapp>

@@ -23,7 +23,7 @@ interface AutocompleteProps {
   onInputValueChange: (searchString: string) => void;
   inputValue: string;
   name: string;
-  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  validate?: ((value: string) => boolean | undefined | { id: string }[])[] | ((value: string) => boolean | undefined);
   dataId?: string;
 }
 

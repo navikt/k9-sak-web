@@ -23,6 +23,7 @@ const årskvantum: ÅrskvantumForbrukteDager = {
     benyttetRammemelding: true,
   },
   rammevedtak: [],
+  barna: [],
 };
 
 // @ts-ignore
@@ -36,9 +37,25 @@ describe('<ÅrskvantumIndex>', () => {
     const wrapperAksjonspunkt = shallowWithIntl(
       <ÅrskvantumIndex
         årskvantum={årskvantum}
-        aksjonspunkterForSteg={[{}]}
+        aksjonspunkterForSteg={[
+          {
+            definisjon: {
+              kode: '',
+              kodeverk: '',
+            },
+            status: {
+              kode: '',
+              kodeverk: '',
+            },
+            kanLoses: true,
+            erAktivt: true,
+          },
+        ]}
         behandling={behandling}
         alleKodeverk={{}}
+        fullUttaksplan={{}}
+        isAksjonspunktOpen={false}
+        submitCallback={() => undefined}
       />,
     );
 
@@ -47,7 +64,15 @@ describe('<ÅrskvantumIndex>', () => {
 
   it('rendrer ikke aksjonspunkt-form hvis det ikke finnes aksjonspunkter', () => {
     const wrapperIngenAksjonspunkt = shallowWithIntl(
-      <ÅrskvantumIndex årskvantum={årskvantum} aksjonspunkterForSteg={[]} behandling={behandling} alleKodeverk={{}} />,
+      <ÅrskvantumIndex
+        årskvantum={årskvantum}
+        aksjonspunkterForSteg={[]}
+        behandling={behandling}
+        alleKodeverk={{}}
+        fullUttaksplan={{}}
+        isAksjonspunktOpen={false}
+        submitCallback={() => undefined}
+      />,
     );
 
     expect(wrapperIngenAksjonspunkt.find(AksjonspunktForm)).to.have.length(0);

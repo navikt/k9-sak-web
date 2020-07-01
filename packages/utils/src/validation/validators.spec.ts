@@ -249,7 +249,7 @@ describe('Validators', () => {
     });
 
     it('skal ikke feile når dato er tom', () => {
-      const result = hasValidDate();
+      const result = hasValidDate(undefined);
       expect(result).is.null;
     });
 
@@ -279,7 +279,7 @@ describe('Validators', () => {
     });
 
     it('skal ikke feile når dato er tom', () => {
-      const result = dateBeforeOrEqual(today)();
+      const result = dateBeforeOrEqual(today)(undefined);
       expect(result).is.null;
     });
   });
@@ -303,7 +303,7 @@ describe('Validators', () => {
     });
 
     it('skal ikke feile når dato er tom', () => {
-      const result = dateAfterOrEqual(today.add(1, 'days'))();
+      const result = dateAfterOrEqual(today.add(1, 'days'))(undefined);
       expect(result).is.null;
     });
   });
@@ -342,7 +342,7 @@ describe('Validators', () => {
     });
 
     it('skal ikke feile når dato er tom', () => {
-      const result = dateBeforeToday();
+      const result = dateBeforeToday(undefined);
       expect(result).is.null;
     });
   });
@@ -365,7 +365,7 @@ describe('Validators', () => {
     });
 
     it('skal ikke feile når dato er tom', () => {
-      const result = dateBeforeOrEqualToToday();
+      const result = dateBeforeOrEqualToToday(undefined);
       expect(result).is.null;
     });
   });
@@ -383,7 +383,7 @@ describe('Validators', () => {
     });
 
     it('skal ikke feile når dato er tom', () => {
-      const result = dateAfterToday();
+      const result = dateAfterToday(undefined);
       expect(result).is.null;
     });
   });
@@ -401,7 +401,7 @@ describe('Validators', () => {
     });
 
     it('skal ikke feile når dato er tom', () => {
-      const result = dateAfterOrEqualToToday();
+      const result = dateAfterOrEqualToToday(undefined);
       expect(result).is.null;
     });
   });

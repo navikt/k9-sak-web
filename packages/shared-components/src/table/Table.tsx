@@ -41,7 +41,7 @@ interface OwnProps {
   classNameTable?: string;
   noHover?: boolean;
   stripet?: boolean;
-  suppliedHeaders?: Element;
+  suppliedHeaders?: ReactElement;
 }
 
 /**

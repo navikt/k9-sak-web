@@ -34,8 +34,8 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
-      - name: Tester og linting
-        run: yarn test && yarn less:lint
+      - name: Tester, typescript-sjekk og linting
+        run: yarn test && yarn ts-check && yarn less:lint
       - name: Bygge dist
         run: yarn build
       - name: Sette Docker-navn og -tag

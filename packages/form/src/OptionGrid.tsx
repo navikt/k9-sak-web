@@ -4,7 +4,6 @@ import React from 'react';
 import styles from './optionGrid.less';
 
 interface OptionGridProps {
-  id?: string;
   columns?: number;
   options: React.ElementType[];
   spaceBetween?: boolean;
@@ -13,11 +12,11 @@ interface OptionGridProps {
   rows?: number;
 }
 
-export const OptionGrid = ({ id, columns, rows, options, spaceBetween, isEdited, direction }: OptionGridProps) => {
+export const OptionGrid = ({ columns, rows, options, spaceBetween, isEdited, direction }: OptionGridProps) => {
   if (direction === 'vertical') {
     const numRows = rows || options.length;
     return (
-      <FlexContainer fluid id={id}>
+      <FlexContainer>
         <FlexColumn className={styles.fullBreddeIE}>
           {range(numRows).map(rowIndex => (
             <FlexRow key={`row${rowIndex}`} spaceBetween={spaceBetween}>
@@ -31,7 +30,7 @@ export const OptionGrid = ({ id, columns, rows, options, spaceBetween, isEdited,
   }
   const numColumns = columns || options.length;
   return (
-    <FlexContainer fluid id={id}>
+    <FlexContainer>
       <FlexRow spaceBetween={spaceBetween}>
         {range(numColumns).map(columnIndex => (
           <FlexColumn key={`column${columnIndex}`}>
@@ -45,7 +44,6 @@ export const OptionGrid = ({ id, columns, rows, options, spaceBetween, isEdited,
 };
 
 OptionGrid.defaultProps = {
-  id: undefined,
   columns: 0,
   rows: 0,
   spaceBetween: false,

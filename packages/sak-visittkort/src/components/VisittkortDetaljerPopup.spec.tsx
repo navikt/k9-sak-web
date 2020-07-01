@@ -72,7 +72,7 @@ describe('<VisittkortDetaljerPopup>', () => {
         intl={intlMock}
         personopplysninger={personopplysningerSoker}
         alleKodeverk={{}}
-        sprakkode={{ kode: 'NN' }}
+        sprakkode={{ kode: 'NN', kodeverk: '' }}
       />,
     );
 
@@ -91,7 +91,7 @@ describe('<VisittkortDetaljerPopup>', () => {
         intl={intlMock}
         personopplysninger={personopplysningerSoker}
         alleKodeverk={{}}
-        sprakkode={{ kode: 'NN' }}
+        sprakkode={{ kode: 'NN', kodeverk: '' }}
       />,
     );
 

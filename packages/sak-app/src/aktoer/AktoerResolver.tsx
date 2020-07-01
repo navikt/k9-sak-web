@@ -45,7 +45,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateAktoer: updateAktoerCreator,
-      removeErrorMessage: errorHandler.removeErrorMessage,
+      removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
     },
     dispatch,
   );

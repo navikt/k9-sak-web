@@ -81,6 +81,7 @@ const SelectFieldArray = ({
   return (
     <NavFieldGroup
       title={titleTextCode ? intl.formatMessage({ id: titleTextCode }) : undefined}
+      // @ts-ignore Fikse denne
       errorMessage={showErrorMessage(meta) ? intl.formatMessage(...meta.error) : null}
     >
       {fields.map((selectElementFieldId, index) =>

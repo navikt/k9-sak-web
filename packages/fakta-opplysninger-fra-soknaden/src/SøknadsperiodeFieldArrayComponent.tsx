@@ -37,7 +37,7 @@ const frilansFields = [
   SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN,
 ];
 
-const erBeløpSatt = (beløp) => beløp || beløp === 0;
+const erBeløpSatt = beløp => beløp || beløp === 0;
 
 export const buildInitialValuesForSøknadsperiode = (values: Måned) => {
   const { søkerFL, søkerSN, oppgittIMåned } = values;
@@ -413,6 +413,7 @@ export const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstend
   return null;
 };
 
+// @ts-ignore Fiks denne!
 const connectedComponent = connect(mapStateToProps)(SøknadsperiodeFieldArrayComponent);
 
 export default connectedComponent;

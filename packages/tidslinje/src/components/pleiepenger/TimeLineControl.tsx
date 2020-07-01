@@ -1,11 +1,10 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode, MouseEvent } from 'react';
 import { Row } from 'nav-frontend-grid';
-import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import styles from './timeLineControl.less';
 import TimeLineButton from '../TimeLineButton';
 
 interface ButtonCallback {
-  callback: EventCallback;
+  callback: (event: MouseEvent) => void;
   buttonText: string;
 }
 

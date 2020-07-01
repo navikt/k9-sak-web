@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, MouseEvent } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
@@ -26,7 +26,7 @@ interface TidslinjeProps {
   };
   hovedsokerKjonnKode: Kjønnkode;
   medsokerKjonnKode?: Kjønnkode;
-  openPeriodInfo: (event: Event) => void;
+  openPeriodInfo: (event: MouseEvent) => void;
   selectedPeriod?: UttakPeriode;
   selectPeriodCallback: (eventProps: EventProps) => void;
   uttakPerioder: UttakPeriode[];
@@ -208,10 +208,5 @@ class Tidslinje extends Component<TidslinjeProps> {
     );
   }
 }
-
-Tidslinje.defaultProps = {
-  medsokerKjonnKode: undefined,
-  selectedPeriod: undefined,
-};
 
 export default Tidslinje;

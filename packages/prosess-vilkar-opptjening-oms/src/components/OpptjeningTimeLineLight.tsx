@@ -12,7 +12,7 @@ import styles from './opptjeningTimeLineLight.less';
 import TimeLineData from './TimeLineData';
 
 // Desse må alltid vare med for rett skala av tidslinjen
-const standardItems = (opptjeningFomDate: string, opptjeningTomDate: string) => {
+const standardItems = (opptjeningFomDate: string, opptjeningTomDate: string): any[] => {
   const items = [
     {
       id: 1000,
@@ -56,6 +56,7 @@ const createItems = (
   opptjeningTomDate: string,
 ) => {
   const items = opptjeningPeriods.map(ap => ({
+    // @ts-ignore Fiks dette
     id: ap.id,
     start: moment(ap.fom),
     end: moment(ap.tom),
@@ -105,7 +106,7 @@ interface OpptjeningTimeLineLightState {
 
 const OpptjeningTimeLineLight = React.memo(
   ({ opptjeningPeriods, opptjeningFomDate, opptjeningTomDate }: OpptjeningTimeLineLightProps) => {
-    const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom) - new Date(b.fom));
+    const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime());
     const items = createItems(unsortedItems, opptjeningFomDate, opptjeningTomDate);
     const [selectedPeriod, setSelectedPeriod] = useState<TimelineItem | undefined>(undefined);
     const timelineRef = useRef();

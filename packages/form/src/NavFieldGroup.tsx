@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import renderNavField from './renderNavField';
 
 const renderNavSkjemaGruppeWithError = renderNavField(({ title, feil, getChildren, className }) => (
-  <SkjemaGruppe title={title} feil={feil} className={className}>
+  <SkjemaGruppe description={title} feil={feil} className={className}>
     {getChildren()}
   </SkjemaGruppe>
 ));
@@ -20,7 +20,7 @@ interface NavFieldGroupProps {
 const NavFieldGroup = ({ errorMessageName, errorMessage, title, children, className }: NavFieldGroupProps) => {
   if (!errorMessageName) {
     return (
-      <SkjemaGruppe title={title} className={className} feil={errorMessage}>
+      <SkjemaGruppe description={title} className={className} feil={errorMessage}>
         {children}
       </SkjemaGruppe>
     );
