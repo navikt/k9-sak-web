@@ -372,7 +372,10 @@ const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraS�
     }
     return arrayErrors;
   });
-  return errors;
+  if (errors[SøknadFormValue.SØKNADSPERIODER].some(e => Object.keys(e).length > 0)) {
+    return errors;
+  }
+  return {};
 };
 
 const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpptjening: OpplysningerFraSøknaden) => {
@@ -410,7 +413,16 @@ const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpp
 
 const mapStateToProps = (_, props) => {
   const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon } = props;
-  const onSubmit = formValues => submitCallback([transformValues(formValues, props.oppgittOpptjening)]);
+  const onSubmit = formValues => {
+      // For å håndtere validering for deler av formen som ligger i andre måneder enn den som rendres
+    return new Promise((resolve, reject) => {
+      const errors = validateForm(formValues, props.oppgittOpptjening);
+      if (!errors || Object.keys(errors).length === 0) {
+        return resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
+      }
+      return reject(errors);
+    });
+  };
   const initialValues = buildInitialValues(oppgittOpptjening);
   const validate = values => {
     const validationResult = validateForm(values, oppgittOpptjening);
