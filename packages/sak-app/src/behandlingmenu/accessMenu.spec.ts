@@ -339,10 +339,10 @@ describe('accessMenu', () => {
 
   describe('byttBehandlendeEnhetAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
-    const validFagsakStatus = { kode: validFagsakStatuser[0] };
+    const validFagsakStatus = { kode: validFagsakStatuser[0], kodeverk: '' };
 
     const validBehandlingStatuser = [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES];
-    const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
+    const validBehandlingStatus = { kode: validBehandlingStatuser[0], kodeverk: '' };
 
     it('saksbehandler skal ha tilgang til å bytte behandlende enhet', () => {
       const accessForSaksbehandler = byttBehandlendeEnhetAccess(
@@ -373,8 +373,8 @@ describe('accessMenu', () => {
       it(getTestName('tilgang til å bytte behandlende enhet', expected, fagsakStatus, behandlingStatus), () => {
         const access = byttBehandlendeEnhetAccess(
           saksbehandlerAnsatt,
-          { kode: fagsakStatus },
-          { kode: behandlingStatus },
+          { kode: fagsakStatus, kodeverk: '' },
+          { kode: behandlingStatus, kodeverk: '' },
           BehandlingType.FORSTEGANGSSOKNAD,
         );
 
@@ -462,16 +462,17 @@ describe('accessMenu', () => {
 
   describe('opprettRevurderingAccess - Engangsstønad', () => {
     const validFagsakStatuser = [fagsakStatusCode.AVSLUTTET];
-    const validFagsakStatus = { kode: validFagsakStatuser[0] };
+    const validFagsakStatus = { kode: validFagsakStatuser[0], kodeverk: '' };
 
     const validBehandlingStatuser = [behandlingStatusCode.IVERKSETTER_VEDTAK, behandlingStatusCode.AVSLUTTET];
-    const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
+    const validBehandlingStatus = { kode: validBehandlingStatuser[0], kodeverk: '' };
 
     const kanIkkeOppretteRevurdering = false;
     const kanOppretteRevurdering = true;
-    const sakstype = { kode: fagsakYtelseType.ENGANGSSTONAD };
+    const sakstype = { kode: fagsakYtelseType.ENGANGSSTONAD, kodeverk: '' };
     const behandlingType = {
       kode: BehandlingType.REVURDERING,
+      kodeverk: '',
     };
 
     it('saksbehandler skal ha tilgang til å opprette revurdering', () => {
@@ -534,10 +535,10 @@ describe('accessMenu', () => {
 
   describe('opprettNyForstegangsBehandlingAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.AVSLUTTET];
-    const validFagsakStatus = { kode: validFagsakStatuser[0] };
+    const validFagsakStatus = { kode: validFagsakStatuser[0], kodeverk: '' };
 
     const validBehandlingStatuser = [behandlingStatusCode.AVSLUTTET];
-    const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
+    const validBehandlingStatus = { kode: validBehandlingStatuser[0], kodeverk: '' };
 
     it('saksbehandler skal ha tilgang til å opprette ny førstegangsbehandling', () => {
       const accessForSaksbehandler = opprettNyForstegangsBehandlingAccess(
@@ -583,10 +584,10 @@ describe('accessMenu', () => {
 
   describe('gjenopptaBehandlingAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
-    const validFagsakStatus = { kode: validFagsakStatuser[0] };
+    const validFagsakStatus = { kode: validFagsakStatuser[0], kodeverk: '' };
 
     const validBehandlingStatuser = [behandlingStatusCode.BEHANDLING_UTREDES];
-    const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
+    const validBehandlingStatus = { kode: validBehandlingStatuser[0], kodeverk: '' };
 
     it('saksbehandler skal ha tilgang til å gjenoppta behandling', () => {
       const accessForSaksbehandler = gjenopptaBehandlingAccess(

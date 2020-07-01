@@ -96,8 +96,6 @@ interface OwnProps {
     enhetId: string;
     enhetNavn: string;
   }[];
-  aktorId?: string;
-  gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
 interface StateProps {
@@ -116,6 +114,8 @@ interface StateProps {
   behandlendeEnhetNavn: string;
   kanHenlegge: boolean;
   rettigheter: Rettigheter;
+  aktorId?: string;
+  gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
 interface DispatchProps {
@@ -251,14 +251,19 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
           skalViseNyBehandlingIMeny(erKoet, rettigheter.ikkeVisOpprettNyBehandling),
           getNyBehandlingMenytekst(),
         ).medModal(lukkModal => {
-          const behandlingstyper = menyKodeverk.getKodeverkForBehandlingstyper(BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES, kodeverkTyper.BEHANDLING_TYPE,);
-          const {opprettNyForstegangsBehandlingAccess, opprettRevurderingAccess} = rettigheter;
+          const behandlingstyper = menyKodeverk.getKodeverkForBehandlingstyper(
+            BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES,
+            kodeverkTyper.BEHANDLING_TYPE,
+          );
+          const { opprettNyForstegangsBehandlingAccess, opprettRevurderingAccess } = rettigheter;
           const behandlingerSomKanOpprettes = {
-            [bType.FORSTEGANGSSOKNAD]: opprettNyForstegangsBehandlingAccess.employeeHasAccess && !!opprettNyForstegangsBehandlingAccess.isEnabled,
+            [bType.FORSTEGANGSSOKNAD]:
+              opprettNyForstegangsBehandlingAccess.employeeHasAccess &&
+              !!opprettNyForstegangsBehandlingAccess.isEnabled,
             [bType.REVURDERING]: opprettRevurderingAccess.employeeHasAccess && opprettRevurderingAccess.isEnabled,
             [bType.TILBAKEKREVING]: kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
             [bType.TILBAKEKREVING_REVURDERING]: kanTilbakekrevingOpprettes.kanRevurderingOpprettes,
-            [bType.KLAGE]: !!gjeldendeVedtakBehandlendeEnhetId
+            [bType.KLAGE]: !!gjeldendeVedtakBehandlendeEnhetId,
           };
           return (
             <MenyNyBehandlingIndex

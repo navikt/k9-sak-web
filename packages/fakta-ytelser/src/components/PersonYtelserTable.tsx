@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { Kodeverk } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import styles from './personYtelserTable.less';
 
@@ -19,8 +19,8 @@ interface OwnProps {
       saksNummer: string;
     }[];
   }[];
-  relatertYtelseTyper: Kodeverk[];
-  relatertYtelseStatus: Kodeverk[];
+  relatertYtelseTyper: KodeverkMedNavn[];
+  relatertYtelseStatus: KodeverkMedNavn[];
 }
 
 const HEADER_TEXT_CODES = [
@@ -52,12 +52,14 @@ export const PersonYtelserTable: FunctionComponent<OwnProps & WrappedComponentPr
       .map(ytelse => {
         const ytelseNavn = relatertYtelseTyper.filter(type => type.kode === ytelse.relatertYtelseType)[0].navn;
         if (ytelse.tilgrensendeYtelserListe.length === 0) {
-          return {
-            navn: ytelseNavn,
-            periode: intl.formatMessage({ id: 'PersonYtelserTable.Ingen' }),
-            status: '',
-            saksnummer: '',
-          };
+          return [
+            {
+              navn: ytelseNavn,
+              periode: intl.formatMessage({ id: 'PersonYtelserTable.Ingen' }),
+              status: '',
+              saksnummer: '',
+            },
+          ];
         }
 
         return ytelse.tilgrensendeYtelserListe.map((ytelseInfo, innerIndex) => {
@@ -74,7 +76,7 @@ export const PersonYtelserTable: FunctionComponent<OwnProps & WrappedComponentPr
           };
         });
       })
-      .reduce((a, b) => a.concat(b), []);
+      .reduce((allRows, rows) => allRows.concat(rows), []);
 
   return (
     <Table headerTextCodes={HEADER_TEXT_CODES} classNameTable={styles.tableStyle} noHover>

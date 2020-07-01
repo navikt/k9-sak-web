@@ -1,9 +1,9 @@
 import {
   Periode,
   PeriodeMedTilsynOgPleieResponse,
-  Sykdom,
   TransformValues,
 } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
+import { Sykdom } from '@k9-sak-web/types';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment, { Moment } from 'moment';
 

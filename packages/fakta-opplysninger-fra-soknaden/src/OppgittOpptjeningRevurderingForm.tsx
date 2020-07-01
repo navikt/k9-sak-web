@@ -185,7 +185,6 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & Sta
           <div className={styles.fieldContainer}>
             <DatepickerField
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
-              defaultValue={null}
               readOnly={formIsEditable}
               label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
             />
@@ -327,7 +326,7 @@ const validateFrilanserForm = (formData, måned) => {
   return errors;
 };
 
-const validateArbeidstakerInntekt = (inntekt) => {
+const validateArbeidstakerInntekt = inntekt => {
   const inntektValidation = [hasValidInteger(inntekt), maxLength(5)(inntekt)];
   const inntektError = inntektValidation.find(v => Array.isArray(v));
   if (inntektError !== undefined) {
@@ -341,34 +340,33 @@ const validateArbeidstakerInntekt = (inntekt) => {
 const validateFieldArray = (fieldArrayList, oppgittOpptjening: OpplysningerFraSøknaden) => {
   const errors = {};
   errors[SøknadFormValue.SØKNADSPERIODER] = fieldArrayList.map((fieldArrayItem, index) => {
-    let arrayErrors = {}
+    let arrayErrors = {};
     const { måned } = oppgittOpptjening.måneder[index];
 
     const harSøktSomSSN = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_SSN];
     if (harSøktSomSSN) {
       const snErrors = validateSSNForm(fieldArrayItem, måned);
-      arrayErrors = { 
-        ...arrayErrors, 
-        ...snErrors
+      arrayErrors = {
+        ...arrayErrors,
+        ...snErrors,
       };
     }
 
     const harSøktSomFrilanser = fieldArrayItem[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
     if (harSøktSomFrilanser) {
       const frilansErrors = validateFrilanserForm(fieldArrayItem, måned);
-      arrayErrors = { 
+      arrayErrors = {
         ...arrayErrors,
-         ...frilansErrors
-        };
+        ...frilansErrors,
+      };
     }
 
     const arbeidstakerInntekt = fieldArrayItem[SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER];
     if (arbeidstakerInntekt) {
-      arrayErrors = { 
-        ...arrayErrors,  
-        ...validateArbeidstakerInntekt(arbeidstakerInntekt)
+      arrayErrors = {
+        ...arrayErrors,
+        ...validateArbeidstakerInntekt(arbeidstakerInntekt),
       };
-
     }
     return arrayErrors;
   });
@@ -414,7 +412,7 @@ const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpp
 const mapStateToProps = (_, props) => {
   const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon } = props;
   const onSubmit = formValues => {
-      // For å håndtere validering for deler av formen som ligger i andre måneder enn den som rendres
+    // For å håndtere validering for deler av formen som ligger i andre måneder enn den som rendres
     return new Promise((resolve, reject) => {
       const errors = validateForm(formValues, props.oppgittOpptjening);
       if (!errors || Object.keys(errors).length === 0) {

@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment from 'moment';
+import { LegeerklæringKilde } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
 import {
   getPerioderMedKontinuerligTilsynOgPleie,
   getBegrunnelseForUtvidetTilsyn,
@@ -83,7 +84,7 @@ const sykdomRequestResponse = {
       fom: '2020-02-01',
       identifikator: '217a1447-a50e-46de-bb6d-8666c5fc033e',
       innleggelsesperioder: [{ fom: '2019-12-31', tom: '2020-01-31' }],
-      kilde: 'SPESIALISTHELSETJENESTE',
+      kilde: LegeerklæringKilde.SPESIALISTHELSETJENESTEN,
       tom: '2020-02-01',
     },
   ],
@@ -257,11 +258,7 @@ describe('medisinskVilkarUtils', () => {
     expect(result3.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
       expectedResult,
     );
-    const result4 = getMomentConvertedDate(
-      moment('2020-02-20')
-        .toDate()
-        .toString(),
-    );
+    const result4 = getMomentConvertedDate(moment('2020-02-20').toDate().toString());
     expect(result4.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
       expectedResult,
     );

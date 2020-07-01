@@ -3,7 +3,7 @@ import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl'
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import { Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -27,7 +27,7 @@ const findPersonStatus = personopplysning => {
 
 interface OwnProps {
   personopplysninger: Personopplysninger;
-  alleKodeverk: { [key: string]: Kodeverk[] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   sprakkode: Kodeverk;
 }
 

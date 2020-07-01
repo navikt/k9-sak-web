@@ -17,7 +17,7 @@ import moment from 'moment';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React, { Component } from 'react';
+import React, { Component, MouseEvent, KeyboardEvent } from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -169,7 +169,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     this.setSelectedOpptjeningActivity(opptjeningActivityWithAp || undefined);
   }
 
-  openPeriodInfo(event: Event) {
+  openPeriodInfo(event) {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     event.preventDefault();
@@ -182,7 +182,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     }
   }
 
-  selectNextPeriod(event: Event) {
+  selectNextPeriod(event: MouseEvent | KeyboardEvent) {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     const newIndex = opptjeningActivities.findIndex(oa => oa.id === selectedOpptjeningActivity.id) + 1;
@@ -192,7 +192,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     event.preventDefault();
   }
 
-  selectPrevPeriod(event: Event) {
+  selectPrevPeriod(event: MouseEvent | KeyboardEvent) {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     const newIndex = opptjeningActivities.findIndex(oa => oa.id === selectedOpptjeningActivity.id) - 1;

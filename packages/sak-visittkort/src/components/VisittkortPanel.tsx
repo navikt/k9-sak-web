@@ -1,6 +1,6 @@
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { Fagsak, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { Fagsak, Kodeverk, Personopplysninger, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Gender, PersonCard } from '@navikt/nap-person-card';
 import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps, FormattedMessage } from 'react-intl';
@@ -19,7 +19,7 @@ const utledKjonn = kjonn => {
 
 interface OwnProps {
   fagsak: Fagsak;
-  alleKodeverk: { [key: string]: Kodeverk[] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   sprakkode: Kodeverk;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge: boolean;

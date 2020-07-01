@@ -18,7 +18,6 @@ interface MedisinskVilkarIndexProps {
   readOnly: boolean;
   behandling: Behandling;
   submitCallback: (props: SubmitCallback[]) => void;
-  shouldOpenDefaultInfoPanels: boolean;
   harApneAksjonspunkter: boolean;
   submittable: boolean;
   sykdom: Sykdom;

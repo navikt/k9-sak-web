@@ -42,6 +42,7 @@ const SelectField = ({ name, label, selectValues, validate, readOnly, ...otherPr
     disabled={!!readOnly}
     {...otherProps}
     readOnly={readOnly}
+    // @ts-ignore TODO Fiks
     readOnlyHideEmpty
   />
 );

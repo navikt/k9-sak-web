@@ -129,5 +129,5 @@ const getGjeldendeVedtak = createSelector([getBehandlinger], (behandlinger = [])
 
 export const getBehandlendeEnhetIdOfGjeldendeVedtak = createSelector(
   [getGjeldendeVedtak],
-  (behandling = {}) => behandling.behandlendeEnhetId,
+  behandling => behandling?.behandlendeEnhetId,
 );

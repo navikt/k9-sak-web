@@ -15,7 +15,7 @@ interface OwnProps {
   alignItemsToFlexEnd?: boolean;
   wrap?: boolean;
   className?: string;
-  ustifyCenter?: boolean;
+  justifyCenter?: boolean;
   childrenMargin?: boolean;
   autoFlex?: boolean;
 }

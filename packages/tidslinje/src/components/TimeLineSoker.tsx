@@ -43,7 +43,7 @@ const TimeLineSoker: React.FunctionComponent<TimeLineSokerProps> = ({ hovedsoker
           className={styles.iconHovedsoker}
           src={getKjønn(hovedsokerKjonnKode).src}
           alt={intl.formatMessage({ id: 'Person.ImageText' })}
-          title={intl.formatMessage({ id: getKjønn(hovedsokerKjonnKode).title })}
+          tooltip={intl.formatMessage({ id: getKjønn(hovedsokerKjonnKode).title })}
         />
       </Row>
       <Row>
@@ -51,7 +51,7 @@ const TimeLineSoker: React.FunctionComponent<TimeLineSokerProps> = ({ hovedsoker
           className={styles.iconMedsoker}
           src={getKjønn(medsokerKjonnKode).src}
           alt={intl.formatMessage({ id: 'Person.ImageText' })}
-          title={intl.formatMessage({ id: getKjønn(medsokerKjonnKode).title })}
+          tooltip={intl.formatMessage({ id: getKjønn(medsokerKjonnKode).title })}
         />
       </Row>
     </div>

@@ -6,7 +6,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import editUtlandIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editUtlandDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
-import { RadioGroupField, RadioOption, behandlingFormValueSelector, behandlingForm  } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -151,5 +151,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: 'UtlandPanel',
+    // @ts-ignore TODO Fiks
   })(injectIntl(UtlandPanelImpl)),
 );

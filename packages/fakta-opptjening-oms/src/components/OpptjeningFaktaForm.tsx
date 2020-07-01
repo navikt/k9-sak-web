@@ -19,7 +19,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
 import { Undertittel, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React, { Component } from 'react';
+import React, { Component, MouseEvent, KeyboardEvent } from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -209,7 +209,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     this.setSelectedOpptjeningActivity(opptjeningActivityWithAp || undefined);
   }
 
-  openPeriodInfo(event: Event) {
+  openPeriodInfo(event) {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity, activeTab } = this.state;
     const { opptjeningAktivitetList } = opptjeningList[activeTab];
@@ -223,7 +223,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     }
   }
 
-  selectNextPeriod(event: Event) {
+  selectNextPeriod(event: MouseEvent | KeyboardEvent) {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity, activeTab } = this.state;
     const { opptjeningAktivitetList } = opptjeningList[activeTab];
@@ -234,7 +234,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     event.preventDefault();
   }
 
-  selectPrevPeriod(event: Event) {
+  selectPrevPeriod(event: MouseEvent | KeyboardEvent) {
     const { opptjeningList } = this.props;
     const { selectedOpptjeningActivity, activeTab } = this.state;
     const { opptjeningAktivitetList } = opptjeningList[activeTab];

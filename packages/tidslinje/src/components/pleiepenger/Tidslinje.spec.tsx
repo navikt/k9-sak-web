@@ -5,11 +5,10 @@ import { expect } from 'chai';
 
 import Tidslinje from './Tidslinje';
 import TidslinjeRad from './types/TidslinjeRad';
-import Periode from './types/Periode';
 
 describe('<Tidslinje>', () => {
   it('konverterer props til Timeline config', () => {
-    const rader: TidslinjeRad<Periode>[] = [
+    const rader: TidslinjeRad<{}>[] = [
       {
         ikon: {
           src: null,
@@ -23,12 +22,14 @@ describe('<Tidslinje>', () => {
             fom: '2019-10-10',
             tom: '2019-11-10',
             hoverText: '',
+            periodeinfo: {},
           },
           {
             id: '1-2',
             fom: '2017-10-10',
             tom: '2017-11-10',
             hoverText: '',
+            periodeinfo: {},
           },
         ],
       },
@@ -45,6 +46,7 @@ describe('<Tidslinje>', () => {
             fom: '2018-10-10',
             tom: '2018-11-10',
             hoverText: '',
+            periodeinfo: {},
           },
         ],
       },

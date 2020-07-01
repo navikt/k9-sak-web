@@ -1,7 +1,7 @@
 interface TidslinjeIkon {
   imageText: string;
   title: string;
-  src: SVGElement;
+  src: string;
 }
 
 export default TidslinjeIkon;

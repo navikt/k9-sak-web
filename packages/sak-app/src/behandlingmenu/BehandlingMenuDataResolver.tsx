@@ -94,7 +94,13 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
       fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion }, false)}
       showOldDataWhenRefetching
       loadingPanel={<LoadingPanel />}
-      render={(dataProps: { menyhandlingRettigheter?: { harSoknad: boolean } }) => (
+      render={(dataProps: {
+        menyhandlingRettigheter?: { harSoknad: boolean };
+        behandlendeEnheter: {
+          enhetId: string;
+          enhetNavn: string;
+        }[];
+      }) => (
         <BehandlingMenuIndex
           saksnummer={saksnummer}
           behandlingId={behandlingId}

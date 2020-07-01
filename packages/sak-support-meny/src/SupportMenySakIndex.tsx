@@ -65,7 +65,7 @@ const lagTabs = (tilgjengeligeTabs, valgbareTabs, valgtIndex) =>
 interface OwnProps {
   tilgjengeligeTabs: string[];
   valgbareTabs: string[];
-  valgtIndex: number;
+  valgtIndex?: number;
   onClick: (index: number) => void;
 }
 

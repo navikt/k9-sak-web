@@ -7,7 +7,7 @@ import { getBehandlinger, getBehandlingerIds, getNoExistingBehandlinger } from '
 describe('behandlingerSelectors', () => {
   describe('getBehandlinger', () => {
     it('skal hente behandlinger når valgt fagsak er lik den sist forespurte fagsak', () => {
-      const saksnummer = 1;
+      const saksnummer = '1';
       const behandling: Partial<Behandling> = {
         id: 2,
       };
@@ -23,13 +23,14 @@ describe('behandlingerSelectors', () => {
         behandlingerData as Behandling[],
         behandlingerMeta,
         behandlingerMeta,
+        behandlingerMeta,
       );
 
       expect(behandlinger).is.eql(behandlingerData);
     });
 
     it('skal ikke hente behandlinger når valgt fagsak er ulik den sist forespurte fagsak', () => {
-      const saksnummer = 1;
+      const saksnummer = '1';
       const behandlingerData = [
         {
           id: 2,
@@ -37,13 +38,14 @@ describe('behandlingerSelectors', () => {
       ];
       const behandlingerMeta = {
         params: {
-          saksnummer: 2,
+          saksnummer: '2',
         },
       };
 
       const behandlinger = getBehandlinger.resultFunc(
         saksnummer,
         behandlingerData as Behandling[],
+        behandlingerMeta,
         behandlingerMeta,
         behandlingerMeta,
       );

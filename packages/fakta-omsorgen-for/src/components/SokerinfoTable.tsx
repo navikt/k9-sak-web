@@ -13,7 +13,7 @@ interface SokerinfoTableProps {
   forhold: {
     forholdstekst: string;
     erOppfylt: boolean;
-    link: {
+    link?: {
       to: string;
       text: string;
     };

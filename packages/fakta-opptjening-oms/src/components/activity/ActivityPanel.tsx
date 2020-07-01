@@ -1,3 +1,4 @@
+import React, { KeyboardEvent, MouseEvent } from 'react';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -34,7 +35,6 @@ import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -120,8 +120,8 @@ interface ActivityPanelProps {
   opptjeningFomDato: string;
   opptjeningTomDato: string;
   readOnly: boolean;
-  selectNextPeriod: (event: Event) => void;
-  selectPrevPeriod: (event: Event) => void;
+  selectNextPeriod?: (event: MouseEvent | KeyboardEvent) => void;
+  selectPrevPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   updateActivity: (values: string) => void;
 }
 

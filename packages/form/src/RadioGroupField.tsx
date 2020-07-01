@@ -28,6 +28,8 @@ interface RadioGroupFieldProps {
     | ((value: string) => boolean | undefined);
   readOnly?: boolean;
   legend?: React.ReactNode;
+  isEdited?: boolean;
+  dataId?: string;
 }
 
 const classNames = classnames.bind(styles);
@@ -38,7 +40,6 @@ const renderRadioGroupField = renderNavField(
   ({
     label,
     columns,
-    id,
     name,
     value,
     onChange,
@@ -78,7 +79,6 @@ const renderRadioGroupField = renderNavField(
         {label.props.input && <div className={classNames('radioGroupLabel', { readOnly })}>{label}</div>}
         <OptionGrid
           direction={direction}
-          id={id}
           isEdited={readOnly && isEdited}
           options={options}
           spaceBetween={spaceBetween}

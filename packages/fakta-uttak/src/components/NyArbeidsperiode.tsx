@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-import { behandlingForm , behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import { required, hasValidDecimalMaxNumberOfDecimals } from '@fpsak-frontend/utils';
 import { numberRegex } from '@fpsak-frontend/utils/src/validation/validatorsHelper';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
@@ -134,7 +134,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: NyArbeidsperiode
 
     return {
       onSubmit,
-      form: nyArbeidsperiodeFormName,
       initialValues: initialPeriodeValues,
       formValues: { timerIJobbTilVanlig, timerFårJobbet },
     };
@@ -143,6 +142,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: NyArbeidsperiode
 
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
+    form: nyArbeidsperiodeFormName,
     enableReinitialize: true,
   })(NyArbeidsperiode),
 );

@@ -8,12 +8,12 @@ import LabelType from './LabelType';
 export interface RadioOptionProps {
   name?: string;
   label: LabelType;
-  value: string[] | string | number;
+  value: string[] | string | number | boolean;
   actualValue?: string[] | string | number;
   className?: string;
   disabled?: boolean;
   groupDisabled?: boolean;
-  onChange?: (value: string[] | string | number) => void;
+  onChange?: (value: string[] | string | number | boolean) => void;
   children: ReactNode | ReactNodeArray;
   style: object;
   manualHideChildren?: boolean;
@@ -45,6 +45,7 @@ export const RadioOption = ({
         name={name}
         className={className}
         label={<Label input={label} typographyElement={Normaltekst} />}
+        // @ts-ignore TODO Fjern denne. Må fjerna bruken av bolske verdiar som value
         value={value}
         checked={checked}
         disabled={disabled || groupDisabled}

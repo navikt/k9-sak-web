@@ -27,7 +27,7 @@ const TimeLineSokerEnsamSoker: FunctionComponent<{ hovedsokerKjonnKode: Kjønnko
           className={styles.iconMedsoker}
           src={isKvinne(hovedsokerKjonnKode) ? urlKvinne : urlMann}
           alt={intl.formatMessage({ id: 'Person.ImageText' })}
-          title={intl.formatMessage({ id: isKvinne(hovedsokerKjonnKode) ? 'Person.Woman' : 'Person.Man' })}
+          tooltip={intl.formatMessage({ id: isKvinne(hovedsokerKjonnKode) ? 'Person.Woman' : 'Person.Man' })}
         />
       </Row>
     </div>

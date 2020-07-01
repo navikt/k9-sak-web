@@ -2,13 +2,13 @@ import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { InntektArbeidYtelse, Kodeverk } from '@k9-sak-web/types';
+import { InntektArbeidYtelse, KodeverkMedNavn } from '@k9-sak-web/types';
 import YtelserFaktaPanel from './components/YtelserFaktaPanel';
 import messages from '../i18n/nb_NO.json';
 
 interface OwnProps {
   inntektArbeidYtelse: InntektArbeidYtelse;
-  alleKodeverk: { [key: string]: Kodeverk[] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 const cache = createIntlCache();

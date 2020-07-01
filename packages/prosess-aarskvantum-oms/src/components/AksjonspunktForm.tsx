@@ -86,6 +86,7 @@ export const FormContent: FunctionComponent<FormContentProps> = ({ handleSubmit,
             <VerticalSpacer sixteenPx />
             <SpaceBetween>
               <CheckboxField
+                // @ts-ignore Fiks
                 validate={[hasValidValue(true)]}
                 name="bekreftInfotrygd"
                 label={{

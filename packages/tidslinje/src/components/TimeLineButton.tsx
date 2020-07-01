@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { KeyboardEvent, MouseEvent } from 'react';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import { Image } from '@fpsak-frontend/shared-components';
@@ -12,21 +12,20 @@ import arrowDownImageUrl from '@fpsak-frontend/assets/images/arrow_down.svg';
 import arrowDownFilledImageUrl from '@fpsak-frontend/assets/images/arrow_down_filled.svg';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
-import EventCallback from '@k9-sak-web/types/src/EventCallback';
 import styles from './timeLineButton.less';
 
-interface ButtonType<T extends Element> {
-  src: T;
-  srcHover: T;
+interface ButtonType {
+  src: string;
+  srcHover: string;
 }
 
 type ButtonTypes = {
-  prev: ButtonType<SVGElement>;
-  next: ButtonType<SVGElement>;
-  zoomIn: ButtonType<SVGElement>;
-  zoomOut: ButtonType<SVGElement>;
-  openData: ButtonType<SVGElement>;
-  question: ButtonType<SVGElement>;
+  prev: ButtonType;
+  next: ButtonType;
+  zoomIn: ButtonType;
+  zoomOut: ButtonType;
+  openData: ButtonType;
+  question: ButtonType;
 };
 
 export const buttonTypes: ButtonTypes = {
@@ -57,7 +56,7 @@ export const buttonTypes: ButtonTypes = {
 };
 
 interface TimeLineButtonProps {
-  callback?: EventCallback;
+  callback?: (event: MouseEvent | KeyboardEvent) => void;
   inverted?: boolean;
   text: string;
   type: keyof ButtonTypes;
@@ -66,12 +65,13 @@ interface TimeLineButtonProps {
 const TimeLineButton: React.FunctionComponent<TimeLineButtonProps> = ({ callback, inverted, text, type }) => (
   <Image
     {...buttonTypes[type]}
-    tabIndex="0"
+    tabIndex={0}
     className={inverted ? styles.timeLineButtonInverted : styles.timeLineButton}
     alt={text}
-    title={text}
+    tooltip={text}
     onMouseDown={callback}
     onKeyDown={callback}
+    alignTooltipLeft
   />
 );
 

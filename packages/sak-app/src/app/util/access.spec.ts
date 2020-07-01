@@ -26,19 +26,20 @@ describe('access', () => {
 
   describe('writeAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.OPPRETTET, fagsakStatusCode.UNDER_BEHANDLING];
-    const validFagsakStatus = { kode: validFagsakStatuser[0] };
+    const validFagsakStatus = { kode: validFagsakStatuser[0], kodeverk: '' };
 
     const validBehandlingStatuser = [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES];
-    const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
+    const validBehandlingStatus = { kode: validBehandlingStatuser[0], kodeverk: '' };
 
-    const behandlingstypeSomIkkeErKlage = { kode: behandlingType.FORSTEGANGSSOKNAD };
-    const klage = { kode: behandlingType.KLAGE };
+    const behandlingstypeSomIkkeErKlage = { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: '' };
+    const klage = { kode: behandlingType.KLAGE, kodeverk: '' };
 
     it('saksbehandler skal ha skrivetilgang', () => {
       const accessForSaksbehandler = writeAccess(behandlingstypeSomIkkeErKlage)(
         saksbehandlerAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
+        behandlingstypeSomIkkeErKlage,
       );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
@@ -50,6 +51,7 @@ describe('access', () => {
         veilederAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
+        behandlingstypeSomIkkeErKlage,
       );
 
       expect(accessForVeileder).to.have.property('employeeHasAccess', true);
@@ -66,6 +68,7 @@ describe('access', () => {
           saksbehandlerAnsatt,
           { kode: fagsakStatus },
           { kode: behandlingStatus },
+          behandlingstype,
         );
 
         expect(access).to.have.property('isEnabled', expected);
@@ -83,11 +86,14 @@ describe('access', () => {
     const saksbehandlerOgOverstyrerAnsatt = { ...saksbehandlerAnsatt, kanOverstyre: true };
     const veilederOgOverstyrerAnsatt = { ...veilederAnsatt, kanOverstyre: false };
 
+    const behandlingstypeSomIkkeErKlage = { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: '' };
+
     it('saksbehandler med overstyrer-rolle skal ha tilgang til å overstyre', () => {
       const accessForSaksbehandler = kanOverstyreAccess(
         saksbehandlerOgOverstyrerAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
+        behandlingstypeSomIkkeErKlage,
       );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
@@ -95,14 +101,24 @@ describe('access', () => {
     });
 
     it('saksbehandler uten overstyrer-rolle skal ikke ha tilgang til å overstyre', () => {
-      const accessForSaksbehandler = kanOverstyreAccess(saksbehandlerAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForSaksbehandler = kanOverstyreAccess(
+        saksbehandlerAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        behandlingstypeSomIkkeErKlage,
+      );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', false);
       expect(accessForSaksbehandler).to.have.property('isEnabled', false);
     });
 
     it('veileder skal ikke ha aktivert tilgang til å overstyre', () => {
-      const accessForVeileder = kanOverstyreAccess(veilederAnsatt, validFagsakStatus, validBehandlingStatus);
+      const accessForVeileder = kanOverstyreAccess(
+        veilederAnsatt,
+        validFagsakStatus,
+        validBehandlingStatus,
+        behandlingstypeSomIkkeErKlage,
+      );
 
       expect(accessForVeileder).to.have.property('employeeHasAccess', true);
       expect(accessForVeileder).to.have.property('isEnabled', false);
@@ -111,6 +127,7 @@ describe('access', () => {
         veilederOgOverstyrerAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
+        behandlingstypeSomIkkeErKlage,
       );
 
       expect(accessForVeilederOverstyrer).to.have.property('employeeHasAccess', true);
@@ -119,15 +136,19 @@ describe('access', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
-      it(getTestName('tilgang til å overstyre', expected, fagsakStatus, behandlingStatus), () => {
-        const access = kanOverstyreAccess(
-          saksbehandlerOgOverstyrerAnsatt,
-          { kode: fagsakStatus },
-          { kode: behandlingStatus },
-        );
+      it(
+        getTestName('tilgang til å overstyre', expected, fagsakStatus, behandlingStatus, behandlingstypeSomIkkeErKlage),
+        () => {
+          const access = kanOverstyreAccess(
+            saksbehandlerOgOverstyrerAnsatt,
+            { kode: fagsakStatus },
+            { kode: behandlingStatus },
+            behandlingstypeSomIkkeErKlage,
+          );
 
-        expect(access).to.have.property('isEnabled', expected);
-      });
+          expect(access).to.have.property('isEnabled', expected);
+        },
+      );
     });
   });
 });

@@ -5,7 +5,6 @@ import { PersonCard, Gender } from '@navikt/nap-person-card';
 import { FlexContainer } from '@fpsak-frontend/shared-components';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -51,32 +50,6 @@ describe('<VisittkortPanel>', () => {
     kanRevurderingOpprettes: false,
     skalBehandlesAvInfotrygd: false,
     dekningsgrad: 100,
-  };
-
-  const familieHendelse = {
-    oppgitt: {
-      skjaringstidspunkt: '2020-01-01',
-      avklartBarn: [],
-      termindato: '2020-01-21',
-      soknadType: {
-        kode: soknadType.FODSEL,
-        kodeverk: 'SOKNAD_TYPE',
-      },
-    },
-    gjeldende: {
-      skjaringstidspunkt: '2020-01-01',
-      soknadType: {
-        kode: soknadType.FODSEL,
-        kodeverk: 'SOKNAD_TYPE',
-      },
-    },
-    register: {
-      skjaringstidspunkt: '2020-01-01',
-      soknadType: {
-        kode: soknadType.FODSEL,
-        kodeverk: 'SOKNAD_TYPE',
-      },
-    },
   };
 
   const personopplysningerSoker = {
@@ -183,10 +156,9 @@ describe('<VisittkortPanel>', () => {
       <VisittkortPanel.WrappedComponent
         intl={intlMock}
         fagsak={fagsak}
-        familieHendelse={familieHendelse}
-        lenkeTilAnnenPart="testlenke"
         alleKodeverk={{}}
-        sprakkode={{ kode: 'NN' }}
+        sprakkode={{ kode: 'NN', kodeverk: '' }}
+        harTilbakekrevingVerge={false}
       />,
     );
 
@@ -204,10 +176,9 @@ describe('<VisittkortPanel>', () => {
         intl={intlMock}
         fagsak={fagsak}
         personopplysninger={personopplysningerSoker}
-        familieHendelse={familieHendelse}
-        lenkeTilAnnenPart="testlenke"
         alleKodeverk={{}}
-        sprakkode={{ kode: 'NN' }}
+        sprakkode={{ kode: 'NN', kodeverk: '' }}
+        harTilbakekrevingVerge={false}
       />,
     );
 

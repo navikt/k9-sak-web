@@ -38,7 +38,7 @@ type Personopplysninger = Readonly<
       barnFraTpsRelatertTilSoknad?: PersonopplysningerBasic[];
     };
     barn: PersonopplysningerBasic[];
-    barnSoktFor?: Personopplysninger[];
+    barnSoktFor?: PersonopplysningerBasic[];
     barnFraTpsRelatertTilSoknad?: PersonopplysningerBasic[];
   }
 >;
