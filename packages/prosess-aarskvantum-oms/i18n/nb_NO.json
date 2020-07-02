@@ -26,7 +26,7 @@
   "Årskvantum.Restdager.InfoText": "Dager tilgode",
   "Årskvantum.Restdager.InfoText_negativt": "Det er utbetalt fler dager enn brukeren har rett til",
   "Årskvantum.Smittevernsdager": "Smitteverndager",
-  "Årskvantum.Smittevernsdager.InfoText": "Dager gitt pga dokumentert særlige smittevernhensyn i perioden 20.04.2020 til og med 30.06.2020",
+  "Årskvantum.Smittevernsdager.InfoText": "Dager gitt pga dokumentert særlige smittevernhensyn i perioden 20.04.2020 til og med 31.12.2020",
   "Uttaksplan.Heading": "Uttaksoversikt",
   "Uttaksplan.Inaktiv": "Uttaksoversikten er inaktiv som følge av avslag i behandlingen, og er ikke med i beregningen av forbrukte dager",
   "Uttaksplan.DenneBehandling": "Denne behandlingen",
