@@ -7,8 +7,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   dateFormat,
   hasValidDate,
-  hasValidInteger,
+  hasValidDecimalMaxNumberOfDecimals,
   hasValidText,
+  maxValue,
   ISO_DATE_FORMAT,
   maxLength,
   minLength,
@@ -255,11 +256,16 @@ const validateSSNForm = (formData, måned) => {
   const errors = {};
   const ssnInntekt = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN];
   const ssnStartdato = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
-  const ssnInntektValidation = [required(ssnInntekt), hasValidInteger(ssnInntekt), maxLength(5)(ssnInntekt)];
+  const ssnInntektValidation = [
+    required(ssnInntekt),
+    maxValue(99999)(ssnInntekt),
+    hasValidDecimalMaxNumberOfDecimals(2)(ssnInntekt),
+    maxLength(8)(ssnInntekt),
+  ];
   const ssnStartdatoValidation = [
     required(ssnStartdato),
     hasValidDate(ssnStartdato),
-    maxLength(5)(ssnInntekt),
+    maxLength(8)(ssnInntekt),
     startdatoErISøknadsperiode(ssnStartdato, måned),
   ];
 
@@ -275,7 +281,12 @@ const validateSSNForm = (formData, måned) => {
   const harSøktSomFrilanser = formData[SøknadFormValue.HAR_SØKT_SOM_FRILANSER];
   if (!harSøktSomFrilanser) {
     const frilansinntekt = formData[SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN];
-    const frilansinntektValidation = [hasValidInteger(frilansinntekt), maxLength(5)(frilansinntekt)];
+    const frilansinntektValidation = [
+      hasValidDecimalMaxNumberOfDecimals(2)(frilansinntekt),
+      required(frilansinntekt),
+      maxValue(99999)(frilansinntekt),
+      maxLength(8)(frilansinntekt),
+    ];
     const frilansinntektError = frilansinntektValidation.find(v => Array.isArray(v));
     if (frilansinntektError !== undefined) {
       errors[`${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`] = frilansinntektError;
@@ -291,8 +302,9 @@ const validateFrilanserForm = (formData, måned) => {
   const frilansStartdato = formData[SøknadFormValue.FRILANSER_STARTDATO_FOR_SØKNADEN];
   const frilansInntektValidation = [
     required(frilansInntekt),
-    hasValidInteger(frilansInntekt),
-    maxLength(5)(frilansInntekt),
+    hasValidDecimalMaxNumberOfDecimals(2)(frilansInntekt),
+    maxValue(99999)(frilansInntekt),
+    maxLength(8)(frilansInntekt),
   ];
   const frilansStartdatoValidation = [
     required(frilansStartdato),
@@ -314,8 +326,9 @@ const validateFrilanserForm = (formData, måned) => {
     const næringsinntektIFrilansperiode = formData[SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS];
     const næringsinntektValidation = [
       required(næringsinntektIFrilansperiode),
-      hasValidInteger(næringsinntektIFrilansperiode),
-      maxLength(5)(næringsinntektIFrilansperiode),
+      hasValidDecimalMaxNumberOfDecimals(2)(næringsinntektIFrilansperiode),
+      maxValue(99999)(næringsinntektIFrilansperiode),
+      maxLength(8)(næringsinntektIFrilansperiode),
     ];
     const næringsinntektError = næringsinntektValidation.find(v => Array.isArray(v));
     if (næringsinntektError !== undefined) {
@@ -327,7 +340,7 @@ const validateFrilanserForm = (formData, måned) => {
 };
 
 const validateArbeidstakerInntekt = inntekt => {
-  const inntektValidation = [hasValidInteger(inntekt), maxLength(5)(inntekt)];
+  const inntektValidation = [hasValidDecimalMaxNumberOfDecimals(2)(inntekt), maxLength(8)(inntekt)];
   const inntektError = inntektValidation.find(v => Array.isArray(v));
   if (inntektError !== undefined) {
     return {

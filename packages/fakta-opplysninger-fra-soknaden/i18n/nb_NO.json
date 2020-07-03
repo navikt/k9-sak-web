@@ -49,5 +49,7 @@
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.InvalidIncome": "Du kan bare oppgi inntekt for 2019 eller 2020.",
   "ValidationMessage.MissingIncome": "Du må oppgi inntekt for 2019 eller 2020.",
-  "ValidationMessage.InvalidStartdato": "Startdato må være innenfor søknadsperioden {fom} - {tom}"
+  "ValidationMessage.InvalidStartdato": "Startdato må være innenfor søknadsperioden {fom} - {tom}",
+  "ValidationMessage.InvalidInteger": "Tallet kan ikke ha desimaler",
+  "ValidationMessage.InvalidDecimal": "Tallet kan ikke inneholde mer enn to desimaler"
 }
