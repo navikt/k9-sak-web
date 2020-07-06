@@ -1,7 +1,7 @@
 import { behandlingFormValueSelector, CheckboxField, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { hasValidInteger, ISO_DATE_FORMAT, maxLength } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
 import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import classnames from 'classnames/bind';
@@ -209,7 +209,6 @@ const SøknadsperiodeFieldArrayComponent = (
                 name={`${field}.${SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER}`}
                 bredde="S"
                 label={{ id: 'OpplysningerFraSoknaden.inntektSomArbeidstaker' }}
-                validate={[hasValidInteger, maxLength(5)]}
                 readOnly={formIsEditable}
               />
             </div>
