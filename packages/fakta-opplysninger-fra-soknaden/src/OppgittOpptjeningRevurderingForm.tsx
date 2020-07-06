@@ -340,7 +340,11 @@ const validateFrilanserForm = (formData, måned) => {
 };
 
 const validateArbeidstakerInntekt = inntekt => {
-  const inntektValidation = [hasValidDecimalMaxNumberOfDecimals(2)(inntekt), maxLength(8)(inntekt)];
+  const inntektValidation = [
+    hasValidDecimalMaxNumberOfDecimals(2)(inntekt),
+    maxValue(99999)(inntekt),
+    maxLength(8)(inntekt),
+  ];
   const inntektError = inntektValidation.find(v => Array.isArray(v));
   if (inntektError !== undefined) {
     return {
