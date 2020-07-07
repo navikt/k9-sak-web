@@ -10,10 +10,9 @@ import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { required } from '@fpsak-frontend/utils';
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
-import { Image, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, PeriodLabel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import checkImage from '@fpsak-frontend/assets/images/check.svg';
 import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
 
@@ -80,10 +79,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
   alleKodeverk,
   alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe
-    aksjonspunktCode={aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}
-    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}
-  >
+  <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
     <Row>
       <Column xs="6">
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">

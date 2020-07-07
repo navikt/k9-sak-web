@@ -2,7 +2,7 @@ import React, { useMemo, FunctionComponent } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
-import { joinNonNullStrings } from '@fpsak-frontend/fp-felles/index';
+import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import styles from './uidentifisertRammevedtak.less';
 

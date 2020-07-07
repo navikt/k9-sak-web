@@ -13,8 +13,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { TextAreaField, behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, AksjonspunktHelpTextTemp, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
   hasValidText,
@@ -120,11 +119,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
               </Row>
               <Row className={styles.smallMarginTop}>
                 <Column xs="11">
-                  <FaktaGruppe
-                    aksjonspunktCode={aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING}
-                    merknaderFraBeslutter={merknaderFraBeslutter}
-                    withoutBorder
-                  >
+                  <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
                     <FeilutbetalingPerioderTable
                       behandlingId={behandlingId}
                       behandlingVersjon={behandlingVersjon}

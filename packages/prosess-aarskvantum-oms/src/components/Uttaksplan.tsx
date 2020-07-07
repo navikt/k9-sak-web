@@ -6,7 +6,7 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { joinNonNullStrings } from '@fpsak-frontend/fp-felles/index';
+import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import BorderedContainer from './BorderedContainer';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';

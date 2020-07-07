@@ -4,12 +4,12 @@ import beregningAktivitetPropType from './beregningAktivitetPropType';
 import VurderAktiviteterTabell, { lagAktivitetFieldId } from './VurderAktiviteterTabell';
 
 const harListeAktivitetSomSkalBrukes = (mapping, values) =>
-  mapping.aktiviteter.find(aktivitet => {
+  mapping.aktiviteter.some(aktivitet => {
     const fieldId = lagAktivitetFieldId(aktivitet);
-    const { skalBrukes } =
-      values[fieldId] !== undefined && values[fieldId] !== null ? values[fieldId] : aktivitet.skalBrukes;
+    const skalBrukes =
+      values[fieldId] !== undefined && values[fieldId] !== null ? values[fieldId].skalBrukes : aktivitet.skalBrukes;
     return skalBrukes;
-  }) !== undefined;
+  });
 
 const finnListerSomSkalVurderes = (aktiviteterTomDatoMapping, values) => {
   if (

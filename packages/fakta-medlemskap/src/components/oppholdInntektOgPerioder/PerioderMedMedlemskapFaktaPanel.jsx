@@ -16,12 +16,12 @@ import {
   TableColumn,
   TableRow,
   VerticalSpacer,
+  FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { createSelector } from 'reselect';
 
 const headerTextCodes = [
