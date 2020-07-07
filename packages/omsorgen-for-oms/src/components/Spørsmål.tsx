@@ -2,8 +2,7 @@ import React, { FunctionComponent, useEffect } from 'react';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form/index';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
-import { usePrevious } from '@fpsak-frontend/fp-felles/index';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
+import { VerticalSpacer, usePrevious } from '@fpsak-frontend/shared-components/index';
 import { Element } from 'nav-frontend-typografi';
 import styles from './spørsmål.less';
 

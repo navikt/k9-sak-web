@@ -7,12 +7,11 @@ import {
   SelectField,
   TextAreaField,
 } from '@fpsak-frontend/form';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import {
   findDifferenceInMonthsAndDays,
@@ -70,9 +69,6 @@ const shouldDisablePeriodpicker = (hasAksjonspunkt: boolean, initialValues: Part
   }
   return !initialValues.erManueltOpprettet && !!initialValues.erGodkjent && !initialValues.erEndret;
 };
-
-const hasMerknad = (activity: Partial<OpptjeningAktivitet>) =>
-  !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
 
 const findInYearsMonthsAndDays = (opptjeningFom: string, opptjeningTom: string) => {
   const difference = findDifferenceInMonthsAndDays(opptjeningFom, opptjeningTom);
@@ -159,7 +155,6 @@ export const ActivityPanel = ({
 }: ActivityPanelProps & WrappedComponentProps & StateProps & InjectedFormProps) => (
   <FaktaGruppe
     className={styles.panel}
-    aksjonspunktCode={hasMerknad(initialValues) ? aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING : undefined}
     merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}
   >
     <Row>

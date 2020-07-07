@@ -2,14 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 
-import {
-  hasValidDate, hasValidFodselsnummer, hasValidName, required,
-} from '@fpsak-frontend/utils';
-import {
-  DatepickerField, InputField, SelectField,
-} from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { hasValidDate, hasValidFodselsnummer, hasValidName, required } from '@fpsak-frontend/utils';
+import { DatepickerField, InputField, SelectField } from '@fpsak-frontend/form';
+import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import vergeType from '../kodeverk/vergeType';
@@ -19,14 +14,8 @@ import vergeType from '../kodeverk/vergeType';
  *
  * Formkomponent. Registrering og oppdatering av verge.
  */
-export const RegistrereVergeFaktaForm = ({
-  intl,
-  readOnly,
-  vergetyper,
-  alleMerknaderFraBeslutter,
-  valgtVergeType,
-}) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_VERGE} merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_VERGE]}>
+export const RegistrereVergeFaktaForm = ({ intl, readOnly, vergetyper, alleMerknaderFraBeslutter, valgtVergeType }) => (
+  <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_VERGE]}>
     <div>
       <Row>
         <Column xs="5">
@@ -35,7 +24,11 @@ export const RegistrereVergeFaktaForm = ({
             label={intl.formatMessage({ id: 'Verge.TypeVerge' })}
             placeholder={intl.formatMessage({ id: 'Verge.TypeVerge' })}
             validate={[required]}
-            selectValues={vergetyper.map((vt) => <option key={vt.kode} value={vt.kode}>{vt.navn}</option>)}
+            selectValues={vergetyper.map(vt => (
+              <option key={vt.kode} value={vt.kode}>
+                {vt.navn}
+              </option>
+            ))}
             readOnly={readOnly}
           />
         </Column>
@@ -101,10 +94,12 @@ export const RegistrereVergeFaktaForm = ({
 RegistrereVergeFaktaForm.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  vergetyper: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string,
-    name: PropTypes.string,
-  })),
+  vergetyper: PropTypes.arrayOf(
+    PropTypes.shape({
+      kode: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  ),
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,
@@ -116,7 +111,7 @@ RegistrereVergeFaktaForm.defaultProps = {
   valgtVergeType: undefined,
 };
 
-RegistrereVergeFaktaForm.buildInitialValues = (verge) => ({
+RegistrereVergeFaktaForm.buildInitialValues = verge => ({
   navn: verge.navn,
   gyldigFom: verge.gyldigFom,
   gyldigTom: verge.gyldigTom,
@@ -125,7 +120,7 @@ RegistrereVergeFaktaForm.buildInitialValues = (verge) => ({
   vergeType: verge.vergeType ? verge.vergeType.kode : undefined,
 });
 
-RegistrereVergeFaktaForm.transformValues = (values) => ({
+RegistrereVergeFaktaForm.transformValues = values => ({
   vergeType: values.vergeType,
   navn: values.navn,
   fnr: values.fnr,
