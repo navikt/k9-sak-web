@@ -6,7 +6,14 @@ import { findEndretFeltNavn, findEndretFeltVerdi } from './felles/historikkUtils
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import HistorikkMalFelles7og8 from './HistorikkmalFelles7og8';
 
-const HistorikkMalType7 = ({ historikkinnslagDeler, behandlingLocation, dokumentLinks, saksNr, getKodeverknavn }) => {
+const HistorikkMalType7 = ({
+  historikkinnslagDeler,
+  behandlingLocation,
+  dokumentLinks,
+  saksNr,
+  getKodeverknavn,
+  createLocationForSkjermlenke,
+}) => {
   const intl = useIntl();
   const formatChangedField = endretFelt => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
@@ -45,6 +52,7 @@ const HistorikkMalType7 = ({ historikkinnslagDeler, behandlingLocation, dokument
       getKodeverknavn={getKodeverknavn}
       formatChangedField={formatChangedField}
       formatBegrunnelse={formatBegrunnelse}
+      createLocationForSkjermlenke={createLocationForSkjermlenke}
     />
   );
 };
@@ -55,6 +63,7 @@ HistorikkMalType7.propTypes = {
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalType7;
