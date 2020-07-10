@@ -66,20 +66,20 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
   .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
 
-  /* /fptilbake/api/behandlinger */
-  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
-  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
-  .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
+  /* /k9/tilbake/api/behandlinger */
+  .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
+  .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
+  .withGet('/k9/tilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
   .withGet(
-    '/fptilbake/api/behandlinger/kan-revurdering-opprettes',
+    '/k9/tilbake/api/behandlinger/kan-revurdering-opprettes',
     FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES,
   )
-  .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
+  .withGet('/k9/tilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
   .withGet(
-    '/fptilbake/api/behandlinger/kan-revurdering-opprettes',
+    '/k9/tilbake/api/behandlinger/kan-revurdering-opprettes',
     FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES,
   )
-  .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
+  .withGet('/k9/tilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
 
   /* /api/behandling/beregningsresultat */
   .withRel('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
@@ -105,12 +105,12 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/historikk */
   .withGet('/k9/sak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
-  .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
+  .withGet('/k9/tilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
   .withGet('/k9/klage/api/historikk', FpsakApiKeys.HISTORY_KLAGE)
 
   /* /api/kodeverk */
   .withGet('/k9/sak/api/kodeverk', FpsakApiKeys.KODEVERK)
-  .withGet('/fptilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
+  .withGet('/k9/tilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
   .withGet('/k9/klage/api/kodeverk', FpsakApiKeys.KODEVERK_KLAGE)
   .withGet('/k9/sak/api/kodeverk/behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
 
@@ -126,9 +126,9 @@ const endpoints = new RestApiConfigBuilder()
 
   /* k9/formidling/api/brev */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
-  .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
+  .withPostAndOpenBlob('/k9/tilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
   .withPostAndOpenBlob(
-    '/fptilbake/api/dokument/forhandsvis-henleggelsesbrev',
+    '/k9/tilbake/api/dokument/forhandsvis-henleggelsesbrev',
     FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
   )
 
