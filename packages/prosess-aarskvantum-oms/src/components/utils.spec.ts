@@ -20,13 +20,13 @@ it('finner ut om en periode er i koronaperioden', () => {
   const slutterFørsteDag = '2020-03-10/2020-03-13';
   expect(periodeErIKoronaperioden(slutterFørsteDag)).to.equal(true);
 
-  const slutterSisteDag = '2020-12-10/2020-12-31';
+  const slutterSisteDag = '2020-05-10/2020-06-30';
   expect(periodeErIKoronaperioden(slutterSisteDag)).to.equal(true);
 
-  const slutterDagenEtter = '2020-12-10/2021-01-01';
+  const slutterDagenEtter = '2020-05-10/2020-07-01';
   expect(periodeErIKoronaperioden(slutterDagenEtter)).to.equal(true);
 
-  const kunDagenEtter = '2021-01-01/2021-01-01';
+  const kunDagenEtter = '2020-07-01/2020-07-01';
   expect(periodeErIKoronaperioden(kunDagenEtter)).to.equal(false);
 
   const begynnerDagenEtter = '2021-01-01/2021-01-12';
