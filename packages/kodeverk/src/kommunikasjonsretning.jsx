@@ -1,7 +1,6 @@
 const kommunikasjonsretning = {
-  INN: 'INN',
-  UT: 'UT',
+  INN: 'I',
+  UT: 'U',
   NOTAT: 'N',
 };
-
 export default kommunikasjonsretning;
