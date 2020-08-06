@@ -106,7 +106,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   antallDagerArbeidsgiverDekker,
   antallDagerInfotrygd,
   antallKoronadager,
-  totaltAntallDager,
+  totaltAntallDager: grunnrettsdager,
 }) => {
   const erInnenSmittevernsperioden = React.useMemo(
     () => uttaksperioder.some(({ periode }) => periodeErISmittevernsperioden(periode)),
@@ -122,8 +122,8 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
     : konverterDesimalTilDagerOgTimer(forbrukteDager);
   const tidFraInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
   const forbrukt = sumTid(forbruktDagerTimer, tidFraInfotrygd);
-  const dagerNavKanUtbetale = totaltAntallDager - antallDagerArbeidsgiverDekker;
-  const grunnrettsdager = totaltAntallDager - antallKoronadager;
+  const dagerRettPå = grunnrettsdager + antallKoronadager;
+  const dagerNavKanUtbetale = dagerRettPå - antallDagerArbeidsgiverDekker;
 
   const [viserDetaljerDagerRettPå, visDetaljerDagerRettPå] = React.useState<boolean>(false);
   const [viserDetaljerDagerKanUtbetale, visDetaljerDagerKanUtbetale] = React.useState<boolean>(false);
@@ -133,7 +133,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   return (
     <section>
       <Nøkkeltall
-        overskrift={{ antallDager: totaltAntallDager, overskrifttekstId: 'Nøkkeltall.DagerSøkerHarRettPå' }}
+        overskrift={{ antallDager: dagerRettPå, overskrifttekstId: 'Nøkkeltall.DagerSøkerHarRettPå' }}
         detaljer={[
           {
             antallDager: grunnrettsdager,
@@ -154,19 +154,26 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         overskrift={{ antallDager: dagerNavKanUtbetale, overskrifttekstId: 'Nøkkeltall.DagerNavKanUtbetale' }}
         detaljer={[
           {
-            antallDager: totaltAntallDager,
+            antallDager: dagerRettPå,
             overskrifttekstId: 'Nøkkeltall.TotaltAntallDager',
             infotekstContent: <FormattedMessage id="Nøkkeltall.TotaltAntallDager.InfoText" />,
           },
           {
             antallDager: -antallDagerArbeidsgiverDekker,
             overskrifttekstId: 'Nøkkeltall.DagerDekketAvArbeidsgiver',
+            infotekstContent: (
+              <FormattedMessage
+                id="Nøkkeltall.DagerDekketAvArbeidsgiver.InfoText"
+                values={{ dager: antallDagerArbeidsgiverDekker }}
+              />
+            ),
           },
         ]}
         farge="#634689"
         viserDetaljer={viserDetaljerDagerKanUtbetale}
         visDetaljer={() => visDetaljerDagerKanUtbetale(current => !current)}
       />
+      <hr />
       <Nøkkeltall
         overskrift={{
           antallDager: forbrukt.dager,

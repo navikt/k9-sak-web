@@ -28,7 +28,7 @@ const Container = styled.article<Pick<NøkkeltallProps, 'viserDetaljer'>>`
     viserDetaljer &&
     `
     box-shadow: 0 3px 3px -1px #c6c2bf;
-    border: 1px solid #f3f4f4;
+    outline: 1px solid #f3f4f4;
     padding-bottom: 1em;
   `}
 `;
@@ -37,6 +37,7 @@ const KnappStyle = styled.span`
   color: #0067c5;
   text-decoration: underline;
   padding: 0.2em;
+  font-size: 0.9em;
 `;
 
 const Overskrift = styled.button<Pick<NøkkeltallProps, 'farge'>>`
@@ -68,17 +69,20 @@ const Overskrift = styled.button<Pick<NøkkeltallProps, 'farge'>>`
   }
 `;
 
-const DagerOgTimer = styled.span`
-  width: 80px;
+const DagerOgTimer = styled.span<{ erDetalj: boolean }>`
+  flex: 0 0 ${({ erDetalj }) => (erDetalj ? `85px` : `80px`)};
   font-size: 1.3em;
+  display: flex;
+  align-items: baseline;
 
   > * {
     display: inline;
   }
 `;
 
-const Dager = styled.strong`
-  margin-left: 0.5em;
+const Dager = styled.span<{ erDetalj: boolean }>`
+  margin-left: ${({ erDetalj }) => (erDetalj ? `calc(0.5em + 5px)` : `0.5em`)};
+  ${({ erDetalj }) => !erDetalj && `font-weight: bold;`}
 `;
 
 const Timer = styled.span`
@@ -105,6 +109,24 @@ const Banner = styled.span`
   }
 `;
 
+const Detalj = styled.div`
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+`;
+
+const DetaljOverskrift = styled.span`
+  flex: 0 0 160px;
+  margin: 0 0.5em;
+  font-weight: bold;
+  font-size: 0.9em;
+`;
+
+const DetaljInfotekst = styled.span`
+  margin-right: 1em;
+  font-size: 0.9em;
+`;
+
 const Nøkkeltall: React.FunctionComponent<NøkkeltallProps> = ({
   overskrift,
   detaljer,
@@ -113,10 +135,10 @@ const Nøkkeltall: React.FunctionComponent<NøkkeltallProps> = ({
   farge,
 }) => {
   return (
-    <Container viserDetaljer={viserDetaljer}>
+    <Container viserDetaljer={viserDetaljer} aria-expanded={viserDetaljer}>
       <Overskrift farge={farge} onClick={visDetaljer}>
-        <DagerOgTimer>
-          <Dager>{overskrift.antallDager}</Dager>
+        <DagerOgTimer erDetalj={false}>
+          <Dager erDetalj={false}>{overskrift.antallDager}</Dager>
           {overskrift.antallTimer && <Timer>{overskrift.antallTimer}</Timer>}
         </DagerOgTimer>
         <Banner>
@@ -131,24 +153,20 @@ const Nøkkeltall: React.FunctionComponent<NøkkeltallProps> = ({
             )}
             <NavFrontendChevron type={viserDetaljer ? 'opp' : 'ned'} />
           </KnappStyle>
-          {/* <Flatknapp mini kompakt onClick={visDetaljer} htmlType="button"> */}
-          {/*  {viserDetaljer ? ( */}
-          {/*    <FormattedMessage id="Nøkkeltall.SkjulUtregning" /> */}
-          {/*  ) : ( */}
-          {/*    <FormattedMessage id="Nøkkeltall.VisUtregning" /> */}
-          {/*  )} */}
-          {/*  <NavFrontendChevron type={viserDetaljer ? 'opp' : 'ned'} /> */}
-          {/* </Flatknapp> */}
         </Banner>
       </Overskrift>
       {viserDetaljer &&
         detaljer.map(({ antallDager, antallTimer, overskrifttekstId, infotekstContent }) => (
-          <React.Fragment key={overskrifttekstId}>
-            <DagerOgTimer>
-              <Dager>{antallDager}</Dager>
+          <Detalj key={overskrifttekstId}>
+            <DagerOgTimer erDetalj>
+              <Dager erDetalj>{antallDager}</Dager>
               {antallTimer && <Timer>{antallTimer}</Timer>}
             </DagerOgTimer>
-          </React.Fragment>
+            <DetaljOverskrift>
+              <FormattedMessage id={overskrifttekstId} />
+            </DetaljOverskrift>
+            <DetaljInfotekst>{infotekstContent}</DetaljInfotekst>
+          </Detalj>
         ))}
     </Container>
   );
