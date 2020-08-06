@@ -61,6 +61,9 @@ export const sumTid = (dagerTimer_1: DagerTimer, dagerTimer_2: DagerTimer): Dage
   };
 };
 
+const formaterTimer = (timer: number | undefined) =>
+  timer ? <FormattedMessage id="Nøkkeltall.Timer" values={{ timer }} /> : null;
+
 const forbrukteDagerDetaljer = (
   tidFraInfotrygd: DagerTimer,
   forbruktDagerTimer: DagerTimer,
@@ -70,7 +73,7 @@ const forbrukteDagerDetaljer = (
   const detaljer: Nøkkeltalldetalj[] = [
     {
       antallDager: tidFraInfotrygd.dager,
-      antallTimer: <FormattedMessage id="Nøkkeltall.Timer" values={{ timer: tidFraInfotrygd.timer }} />,
+      antallTimer: formaterTimer(tidFraInfotrygd.timer),
       overskrifttekstId: 'Nøkkeltall.DagerFraInfotrygd',
       infotekstContent: tidFraInfotrygd.timer ? (
         <FormattedMessage id="Nøkkeltall.DagerFraInfotrygd.DagerOgTimer.InfoText" values={{ ...tidFraInfotrygd }} />
@@ -80,7 +83,7 @@ const forbrukteDagerDetaljer = (
     },
     {
       antallDager: forbruktDagerTimer.dager,
-      antallTimer: <FormattedMessage id="Nøkkeltall.Timer" values={{ timer: forbruktDagerTimer.timer }} />,
+      antallTimer: formaterTimer(forbruktDagerTimer.timer),
       overskrifttekstId: 'Nøkkeltall.ForbrukteDager',
       infotekstContent: forbruktDagerTimer.timer ? (
         <FormattedMessage id="Nøkkeltall.ForbrukteDager.DagerOgTimer.InfoText" values={{ ...forbruktDagerTimer }} />
@@ -146,12 +149,14 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   antallDagerArbeidsgiverDekker,
   antallDagerInfotrygd,
   antallKoronadager,
+  benyttetRammemelding,
   totaltAntallDager: grunnrettsdager,
 }) => {
   const erInnenSmittevernsperioden = React.useMemo(
     () => uttaksperioder.some(({ periode }) => periodeErISmittevernsperioden(periode)),
     [uttaksperioder],
   );
+
   const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
   const restTidErNegativt = rest.dager < 0 || rest.timer < 0;
   const restdagerErSmittevernsdager = erInnenSmittevernsperioden && restTidErNegativt;
@@ -212,7 +217,12 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
           {
             antallDager: grunnrettsdager,
             overskrifttekstId: 'Nøkkeltall.DagerGrunnrett',
-            infotekstContent: <FormattedMessage id="Nøkkeltall.DagerGrunnrett.InfoText" />,
+            infotekstContent: (
+              <>
+                <FormattedMessage id="Nøkkeltall.DagerGrunnrett.InfoText" />
+                {benyttetRammemelding && <FormattedMessage id="Nøkkeltall.Rammemelding" />}
+              </>
+            ),
           },
           {
             antallDager: antallKoronadager,
@@ -251,7 +261,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
       <Nøkkeltall
         overskrift={{
           antallDager: forbrukt.dager,
-          antallTimer: <FormattedMessage id="Nøkkeltall.Timer" values={{ timer: forbrukt.timer }} />,
+          antallTimer: formaterTimer(forbrukt.timer),
           overskrifttekstId: 'Nøkkeltall.ForbrukteDager',
         }}
         detaljer={forbrukteDagerDetaljer(tidFraInfotrygd, forbruktDagerTimer, restdagerErSmittevernsdager, rest)}
@@ -262,8 +272,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
       <Nøkkeltall
         overskrift={{
           antallDager: restdagerErSmittevernsdager ? 0 : rest.dager,
-          antallTimer:
-            rest.timer > 0 ? <FormattedMessage id="Nøkkeltall.Timer" values={{ timer: rest.timer }} /> : null,
+          antallTimer: restdagerErSmittevernsdager ? null : formaterTimer(rest.timer),
           overskrifttekstId: 'Nøkkeltall.Restdager.InfoText',
         }}
         detaljer={[
@@ -279,6 +288,16 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
                   </strong>
                 ) : null}
               </>
+            ),
+          },
+          {
+            antallDager: forbrukt.dager,
+            antallTimer: formaterTimer(forbrukt.timer),
+            overskrifttekstId: 'Nøkkeltall.TotaltForbrukte',
+            infotekstContent: forbrukt.timer ? (
+              <FormattedMessage id="Nøkkeltall.TotaltForbrukte.DagerOgTimer.InfoText" values={{ ...forbrukt }} />
+            ) : (
+              <FormattedMessage id="Nøkkeltall.TotaltForbrukte.Dager.InfoText" values={{ dager: forbrukt.dager }} />
             ),
           },
         ]}
