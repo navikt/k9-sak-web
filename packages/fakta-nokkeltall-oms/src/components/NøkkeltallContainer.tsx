@@ -3,7 +3,14 @@ import moment from 'moment';
 import { periodeErISmittevernsperioden } from '@k9-sak-web/prosess-aarskvantum-oms/src/components/utils';
 import Uttaksperiode from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
 import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
+import { Image } from '@fpsak-frontend/shared-components';
+import nøkkelhull from '@fpsak-frontend/assets/images/nøkkelhull.svg';
+import show from '@fpsak-frontend/assets/images/show.svg';
+import hide from '@fpsak-frontend/assets/images/hide.svg';
+import Hr from '@fpsak-frontend/shared-components/src/Hr';
 import Nøkkeltall, { Nøkkeltalldetalj } from './Nøkkeltall';
+import knappStyle from './toggleKnappStyle';
 
 interface NøkkeltallContainerProps {
   totaltAntallDager: number;
@@ -97,6 +104,39 @@ const forbrukteDagerDetaljer = (
   return detaljer;
 };
 
+const OverskriftContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+
+const Overskrift = styled.h3`
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0;
+  color: black;
+
+  img {
+    height: 24px;
+    width: 24px;
+    margin-right: 0.5em;
+    margin-bottom: 0.1ex;
+  }
+`;
+
+const ToggleDetaljerKnapp = styled.button`
+  ${knappStyle}
+  &:focus {
+    outline: 2px solid #0067c5;
+  }
+  img {
+    margin-left: 0.5em;
+    height: 24px;
+    width: 24px;
+    pointer-events: none;
+  }
+`;
+
 const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> = ({
   uttaksperioder,
   restTid,
@@ -130,8 +170,42 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   const [viserDetaljerForbrukteDager, visDetaljerForbrukteDager] = React.useState<boolean>(false);
   const [viserDetaljerRestdager, visDetaljerRestdager] = React.useState<boolean>(false);
 
+  const viserAlleDetaljer = React.useMemo<boolean>(
+    () =>
+      viserDetaljerDagerRettPå &&
+      viserDetaljerDagerKanUtbetale &&
+      viserDetaljerForbrukteDager &&
+      viserDetaljerRestdager,
+    [viserDetaljerDagerRettPå, viserDetaljerDagerKanUtbetale, viserDetaljerForbrukteDager, viserDetaljerRestdager],
+  );
+
+  const toggleDetaljer = () => {
+    if (viserAlleDetaljer) {
+      visDetaljerDagerRettPå(false);
+      visDetaljerDagerKanUtbetale(false);
+      visDetaljerForbrukteDager(false);
+      visDetaljerRestdager(false);
+    } else {
+      visDetaljerDagerRettPå(true);
+      visDetaljerDagerKanUtbetale(true);
+      visDetaljerForbrukteDager(true);
+      visDetaljerRestdager(true);
+    }
+  };
+
   return (
     <section>
+      <OverskriftContainer>
+        <Overskrift>
+          <Image src={nøkkelhull} />
+          <FormattedMessage id="Nøkkeltall.Heading" />
+        </Overskrift>
+        <ToggleDetaljerKnapp onClick={toggleDetaljer}>
+          <FormattedMessage id={viserAlleDetaljer ? 'Nøkkeltall.SkjulUtregninger' : 'Nøkkeltall.VisUtregninger'} />
+          <Image src={viserAlleDetaljer ? hide : show} />
+        </ToggleDetaljerKnapp>
+      </OverskriftContainer>
+      <Hr marginTopPx={12} marginBottomPx={16} />
       <Nøkkeltall
         overskrift={{ antallDager: dagerRettPå, overskrifttekstId: 'Nøkkeltall.DagerSøkerHarRettPå' }}
         detaljer={[
@@ -173,7 +247,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         viserDetaljer={viserDetaljerDagerKanUtbetale}
         visDetaljer={() => visDetaljerDagerKanUtbetale(current => !current)}
       />
-      <hr />
+      <Hr marginTopPx={14} marginBottomPx={12} />
       <Nøkkeltall
         overskrift={{
           antallDager: forbrukt.dager,

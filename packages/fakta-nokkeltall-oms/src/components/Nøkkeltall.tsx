@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import { FormattedMessage } from 'react-intl';
+import knappStyle from './toggleKnappStyle';
 
 export interface Nøkkeltalldetalj {
   antallDager: number;
@@ -34,10 +35,7 @@ const Container = styled.article<Pick<NøkkeltallProps, 'viserDetaljer'>>`
 `;
 
 const KnappStyle = styled.span`
-  color: #0067c5;
-  text-decoration: underline;
-  padding: 0.2em;
-  font-size: 0.9em;
+  ${knappStyle}
 `;
 
 const Overskrift = styled.button<Pick<NøkkeltallProps, 'farge'>>`
