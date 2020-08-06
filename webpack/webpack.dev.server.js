@@ -15,7 +15,7 @@ if (process.argv.includes('--no-fix')) {
 const options = {
   contentBase: ['packages'],
   watchContentBase: true,
-  before: function(app, server) {
+  before: function (app, server) {
     vtpLogin(app);
     sentryMock(app);
     fakeError(app);
@@ -25,16 +25,6 @@ const options = {
     }
   },
   proxy: {
-    '/oppdrag/**': {
-      target: process.env.APP_URL_FPOPPDRAG || 'https://vtp:8063/rest/dummy/fpoppdrag',
-      secure: false,
-      changeOrigin: !!process.env.APP_URL_FPOPPDRAG,
-    },
-    '/fptilbake/**': {
-      target: process.env.APP_URL_FPTILBAKE || 'http://localhost:8030',
-      secure: false,
-      changeOrigin: !!process.env.APP_URL_FPTILBAKE,
-    },
     '/k9/formidling/**': {
       target: process.env.APP_URL_K9FORMIDLING || 'http://localhost:8290',
       secure: false,
@@ -62,8 +52,13 @@ const options = {
     '/k9/klage/**': {
       target: process.env.APP_URL_KLAGE || 'http://localhost:8701',
       secure: false,
-      changeOrigin: !!process.env.APP_URL_KLAGE
-    }
+      changeOrigin: !!process.env.APP_URL_KLAGE,
+    },
+    '/k9/tilbake/**': {
+      target: process.env.APP_URL_K9TILBAKE || 'http://localhost:8030',
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_K9TILBAKE,
+    },
   },
   publicPath: config.output.publicPath,
   hot: true,
@@ -79,7 +74,7 @@ const options = {
 
 const wds = new WebpackDevServer(webpack(config), options);
 
-wds.listen(9000, 'localhost', function(err) {
+wds.listen(9000, 'localhost', function (err) {
   if (err) {
     return console.log(err); // NOSONAR
   }

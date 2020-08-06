@@ -32,8 +32,8 @@ export const TilbakekrevingBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/fptilbake/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE)
-  .withGet('/fptilbake/api/kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
+  .withAsyncPost('/k9/tilbake/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE)
+  .withGet('/k9/tilbake/api/kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
 
   // behandlingsdata
   .withRel('aksjonspunkter', TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER)
@@ -67,7 +67,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* FPFORMIDLING */
   .withPostAndOpenBlob(
-    '/fptilbake/api/dokument/forhandsvis-vedtaksbrev',
+    '/k9/tilbake/api/dokument/forhandsvis-vedtaksbrev',
     TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV,
   )
 
