@@ -1,8 +1,19 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import { FormattedMessage } from 'react-intl';
-import knappStyle from './toggleKnappStyle';
+import {
+  Banner,
+  Container,
+  Dager,
+  DagerOgTimer,
+  KnappStyle,
+  Overskrift,
+  OverskriftTekst,
+  Timer,
+  DetaljOverskrift,
+  Detalj,
+  DetaljInfotekst,
+} from './NøkkeltallStyles';
 
 export interface Nøkkeltalldetalj {
   antallDager: number;
@@ -11,7 +22,7 @@ export interface Nøkkeltalldetalj {
   infotekstContent?: React.ReactNode;
 }
 
-interface NøkkeltallProps {
+export interface NøkkeltallProps {
   overskrift: {
     antallDager: number;
     antallTimer?: React.ReactNode;
@@ -22,108 +33,6 @@ interface NøkkeltallProps {
   visDetaljer: () => void;
   farge: string;
 }
-
-const Container = styled.article<Pick<NøkkeltallProps, 'viserDetaljer'>>`
-  margin-bottom: 0.5em;
-  ${({ viserDetaljer }) =>
-    viserDetaljer &&
-    `
-    box-shadow: 0 3px 3px -1px #c6c2bf;
-    outline: 1px solid #f3f4f4;
-    padding-bottom: 1em;
-  `}
-`;
-
-const KnappStyle = styled.span`
-  ${knappStyle}
-`;
-
-const Overskrift = styled.button<Pick<NøkkeltallProps, 'farge'>>`
-  border-left: ${({ farge }) => `5px solid ${farge}`};
-  display: flex;
-  flex-wrap: nowrap;
-  border-right: none;
-  border-top: none;
-  border-bottom: none;
-  width: 100%;
-  background-color: inherit;
-  align-items: stretch;
-  padding: 0;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:focus {
-    outline: none;
-    ${KnappStyle} {
-      outline: 2px solid #0067c5;
-      border-radius: 5px;
-    }
-  }
-
-  > * {
-    padding: 0.1em 0;
-  }
-`;
-
-const DagerOgTimer = styled.span<{ erDetalj: boolean }>`
-  flex: 0 0 ${({ erDetalj }) => (erDetalj ? `85px` : `80px`)};
-  font-size: 1.3em;
-  display: flex;
-  align-items: baseline;
-
-  > * {
-    display: inline;
-  }
-`;
-
-const Dager = styled.span<{ erDetalj: boolean }>`
-  margin-left: ${({ erDetalj }) => (erDetalj ? `calc(0.5em + 5px)` : `0.5em`)};
-  ${({ erDetalj }) => !erDetalj && `font-weight: bold;`}
-`;
-
-const Timer = styled.span`
-  font-size: 0.7em;
-  margin: 0 0.5em;
-`;
-
-const OverskriftTekst = styled.strong`
-  font-size: 0.8em;
-`;
-
-const Banner = styled.span`
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f3f4f4;
-  > * {
-    margin: 0 0.5em;
-  }
-
-  ${OverskriftTekst} {
-    font-size: 1em;
-  }
-`;
-
-const Detalj = styled.div`
-  display: flex;
-  align-items: baseline;
-  flex-wrap: nowrap;
-`;
-
-const DetaljOverskrift = styled.span`
-  flex: 0 0 160px;
-  margin: 0 0.5em;
-  font-weight: bold;
-  font-size: 0.9em;
-`;
-
-const DetaljInfotekst = styled.span`
-  margin-right: 1em;
-  font-size: 0.9em;
-`;
 
 const Nøkkeltall: React.FunctionComponent<NøkkeltallProps> = ({
   overskrift,
