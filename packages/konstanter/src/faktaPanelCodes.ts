@@ -16,6 +16,7 @@ const faktaPanelCodes = {
   SAKEN: 'saken',
   TILLEGGSOPPLYSNINGER: 'tilleggsopplysninger',
   UTTAK: 'uttak',
+  NØKKELTALL: 'nokkeltall',
   BARN: 'barn',
   VERGE: 'verge',
   YTELSER: 'ytelser',
