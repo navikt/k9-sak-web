@@ -1,16 +1,15 @@
 import * as React from 'react';
-import moment from 'moment';
 import { periodeErISmittevernsperioden } from '@k9-sak-web/prosess-aarskvantum-oms/src/components/utils';
 import Uttaksperiode from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
 import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
 import { Image } from '@fpsak-frontend/shared-components';
 import nøkkelhull from '@fpsak-frontend/assets/images/nøkkelhull.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import hide from '@fpsak-frontend/assets/images/hide.svg';
 import Hr from '@fpsak-frontend/shared-components/src/Hr';
 import Nøkkeltall, { Nøkkeltalldetalj } from './Nøkkeltall';
-import knappStyle from './toggleKnappStyle';
+import { Overskrift, OverskriftContainer, ToggleDetaljerKnapp } from './NøkkeltallContainerStyles';
+import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
 
 interface NøkkeltallContainerProps {
   totaltAntallDager: number;
@@ -24,42 +23,6 @@ interface NøkkeltallContainerProps {
   benyttetRammemelding: boolean;
   uttaksperioder: Uttaksperiode[];
 }
-
-export interface DagerTimer {
-  dager: number;
-  timer?: number;
-}
-
-const formaterTimerDesimal = (timerDesimal: number): number => Number.parseFloat(timerDesimal.toFixed(2));
-
-export const konverterDesimalTilDagerOgTimer = (desimal: number): DagerTimer => {
-  const dager = Math.floor(desimal);
-  const timerDesimal = desimal % 1;
-
-  return {
-    dager,
-    timer: timerDesimal !== 0 ? formaterTimerDesimal(timerDesimal * 7.5) : null,
-  };
-};
-
-export const beregnDagerTimer = (dagerTimer: string): DagerTimer => {
-  const duration = moment.duration(dagerTimer);
-  const totaltAntallTimer = duration.asHours();
-
-  return {
-    dager: Math.floor(totaltAntallTimer / 7.5),
-    timer: totaltAntallTimer % 7.5,
-  };
-};
-
-export const sumTid = (dagerTimer_1: DagerTimer, dagerTimer_2: DagerTimer): DagerTimer => {
-  const sumTimer = (dagerTimer_2.timer || 0) + (dagerTimer_1.timer || 0);
-
-  return {
-    dager: dagerTimer_2.dager + dagerTimer_1.dager + Math.floor(sumTimer / 7.5),
-    timer: formaterTimerDesimal(sumTimer % 7.5),
-  };
-};
 
 const formaterTimer = (timer: number | undefined) =>
   timer ? <FormattedMessage id="Nøkkeltall.Timer" values={{ timer }} /> : null;
@@ -106,39 +69,6 @@ const forbrukteDagerDetaljer = (
 
   return detaljer;
 };
-
-const OverskriftContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-`;
-
-const Overskrift = styled.h3`
-  font-size: 1em;
-  font-weight: bold;
-  margin: 0;
-  color: black;
-
-  img {
-    height: 24px;
-    width: 24px;
-    margin-right: 0.5em;
-    margin-bottom: 0.1ex;
-  }
-`;
-
-const ToggleDetaljerKnapp = styled.button`
-  ${knappStyle}
-  &:focus {
-    outline: 2px solid #0067c5;
-  }
-  img {
-    margin-left: 0.5em;
-    height: 24px;
-    width: 24px;
-    pointer-events: none;
-  }
-`;
 
 const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> = ({
   uttaksperioder,
