@@ -74,7 +74,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* FPTILBAKE */
   .withPostAndOpenBlob(
-    '/fptilbake/api/dokument/forhandsvis-varselbrev',
+    '/k9/tilbake/api/dokument/forhandsvis-varselbrev',
     FrisinnBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   )
 

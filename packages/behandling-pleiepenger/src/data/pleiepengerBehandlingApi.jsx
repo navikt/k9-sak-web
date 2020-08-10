@@ -120,7 +120,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* FPTILBAKE */
   .withPostAndOpenBlob(
-    '/fptilbake/api/dokument/forhandsvis-varselbrev',
+    '/k9/tilbake/api/dokument/forhandsvis-varselbrev',
     PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   )
 
