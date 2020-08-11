@@ -53,7 +53,7 @@ export const koronatall = () => (
     antallKoronadager={10}
     forbruktTid="PT75H"
     antallDagerInfotrygd={0}
-    restTid="PTH"
+    restTid="PT52H30M"
     sisteUttaksplan={sisteUttaksplan}
     rammevedtak={[]}
     barna={[]}

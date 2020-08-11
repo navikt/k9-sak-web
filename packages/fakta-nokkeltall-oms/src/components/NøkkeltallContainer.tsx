@@ -7,11 +7,14 @@ import nøkkelhull from '@fpsak-frontend/assets/images/nøkkelhull.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import hide from '@fpsak-frontend/assets/images/hide.svg';
 import Hr from '@fpsak-frontend/shared-components/src/Hr';
-import Nøkkeltall, { Nøkkeltalldetalj } from './Nøkkeltall';
 import { Overskrift, OverskriftContainer, ToggleDetaljerKnapp } from './NøkkeltallContainerStyles';
 import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
+import DagerSøkerHarRettPå from './DagerSøkerHarRettPå';
+import DagerNavKanUtbetale from './DagerNavKanUtbetale';
+import ForbrukteDager from './ForbrukteDager';
+import Restdager from './Restdager';
 
-interface NøkkeltallContainerProps {
+export interface NøkkeltallContainerProps {
   totaltAntallDager: number;
   antallKoronadager?: number;
   antallDagerArbeidsgiverDekker: number;
@@ -24,51 +27,10 @@ interface NøkkeltallContainerProps {
   uttaksperioder: Uttaksperiode[];
 }
 
-const formaterTimer = (timer: number | undefined) =>
-  timer ? <FormattedMessage id="Nøkkeltall.Timer" values={{ timer }} /> : null;
-
-const forbrukteDagerDetaljer = (
-  tidFraInfotrygd: DagerTimer,
-  forbruktDagerTimer: DagerTimer,
-  restdagerErSmittevernsdager: boolean,
-  rest: DagerTimer,
-): Nøkkeltalldetalj[] => {
-  const detaljer: Nøkkeltalldetalj[] = [
-    {
-      antallDager: tidFraInfotrygd.dager,
-      antallTimer: formaterTimer(tidFraInfotrygd.timer),
-      overskrifttekstId: 'Nøkkeltall.DagerFraInfotrygd',
-      infotekstContent: tidFraInfotrygd.timer ? (
-        <FormattedMessage id="Nøkkeltall.DagerFraInfotrygd.DagerOgTimer.InfoText" values={{ ...tidFraInfotrygd }} />
-      ) : (
-        <FormattedMessage id="Nøkkeltall.DagerFraInfotrygd.Dager.InfoText" values={{ dager: tidFraInfotrygd.dager }} />
-      ),
-    },
-    {
-      antallDager: forbruktDagerTimer.dager,
-      antallTimer: formaterTimer(forbruktDagerTimer.timer),
-      overskrifttekstId: 'Nøkkeltall.ForbrukteDager',
-      infotekstContent: forbruktDagerTimer.timer ? (
-        <FormattedMessage id="Nøkkeltall.ForbrukteDager.DagerOgTimer.InfoText" values={{ ...forbruktDagerTimer }} />
-      ) : (
-        <FormattedMessage id="Nøkkeltall.ForbrukteDager.Dager.InfoText" values={{ dager: forbruktDagerTimer.dager }} />
-      ),
-    },
-  ];
-
-  if (restdagerErSmittevernsdager) {
-    detaljer.push({
-      antallDager: Math.abs(rest.dager),
-      antallTimer: rest.timer ? (
-        <FormattedMessage id="Nøkkeltall.Timer" values={{ timer: Math.abs(rest.timer) }} />
-      ) : null,
-      overskrifttekstId: 'Nøkkeltall.Smittevern',
-      infotekstContent: <FormattedMessage id="Nøkkeltall.Smittevern.InfoText" />,
-    });
-  }
-
-  return detaljer;
-};
+const absoluttverdiDagerTimer = ({ dager, timer }: DagerTimer): DagerTimer => ({
+  dager: Math.abs(dager),
+  timer: Math.abs(timer),
+});
 
 const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> = ({
   uttaksperioder,
@@ -92,13 +54,15 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   const restdagerErSmittevernsdager = erInnenSmittevernsperioden && restTidErNegativt;
   const utbetaltFlereDagerEnnRett = !erInnenSmittevernsperioden && restTidErNegativt;
 
-  const forbruktDagerTimer = forbruktTid
+  const totaltForbruktDagerTimer = forbruktTid
     ? beregnDagerTimer(forbruktTid)
     : konverterDesimalTilDagerOgTimer(forbrukteDager);
   const tidFraInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
-  const forbrukt = sumTid(forbruktDagerTimer, tidFraInfotrygd);
+  const navHarUtbetaltDagerTimer = sumTid(totaltForbruktDagerTimer, tidFraInfotrygd);
   const dagerRettPå = grunnrettsdager + antallKoronadager;
   const dagerNavKanUtbetale = dagerRettPå - antallDagerArbeidsgiverDekker;
+  const alleDagerErForbrukt = restdagerErSmittevernsdager || utbetaltFlereDagerEnnRett;
+  const forbruktDagerTimer = restTidErNegativt ? { dager: dagerNavKanUtbetale } : totaltForbruktDagerTimer;
 
   const [viserDetaljerDagerRettPå, visDetaljerDagerRettPå] = React.useState<boolean>(false);
   const [viserDetaljerDagerKanUtbetale, visDetaljerDagerKanUtbetale] = React.useState<boolean>(false);
@@ -141,97 +105,38 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         </ToggleDetaljerKnapp>
       </OverskriftContainer>
       <Hr marginTopPx={12} marginBottomPx={16} />
-      <Nøkkeltall
-        overskrift={{ antallDager: dagerRettPå, overskrifttekstId: 'Nøkkeltall.DagerSøkerHarRettPå' }}
-        detaljer={[
-          {
-            antallDager: grunnrettsdager,
-            overskrifttekstId: 'Nøkkeltall.DagerGrunnrett',
-            infotekstContent: (
-              <>
-                <FormattedMessage id="Nøkkeltall.DagerGrunnrett.InfoText" />
-                {benyttetRammemelding && <FormattedMessage id="Nøkkeltall.Rammemelding" />}
-              </>
-            ),
-          },
-          {
-            antallDager: antallKoronadager,
-            overskrifttekstId: 'Nøkkeltall.Koronadager',
-            infotekstContent: <FormattedMessage id="Nøkkeltall.Koronadager.InfoText" />,
-          },
-        ]}
-        farge="#66cbec"
+      <DagerSøkerHarRettPå
+        dagerRettPå={dagerRettPå}
+        antallOmsorgsdager={grunnrettsdager}
+        antallKoronadager={antallKoronadager}
+        benyttetRammemelding={benyttetRammemelding}
         viserDetaljer={viserDetaljerDagerRettPå}
         visDetaljer={() => visDetaljerDagerRettPå(current => !current)}
       />
-      <Nøkkeltall
-        overskrift={{ antallDager: dagerNavKanUtbetale, overskrifttekstId: 'Nøkkeltall.DagerNavKanUtbetale' }}
-        detaljer={[
-          {
-            antallDager: dagerRettPå,
-            overskrifttekstId: 'Nøkkeltall.TotaltAntallDager',
-            infotekstContent: <FormattedMessage id="Nøkkeltall.TotaltAntallDager.InfoText" />,
-          },
-          {
-            antallDager: -antallDagerArbeidsgiverDekker,
-            overskrifttekstId: 'Nøkkeltall.DagerDekketAvArbeidsgiver',
-            infotekstContent: (
-              <FormattedMessage
-                id="Nøkkeltall.DagerDekketAvArbeidsgiver.InfoText"
-                values={{ dager: antallDagerArbeidsgiverDekker }}
-              />
-            ),
-          },
-        ]}
-        farge="#634689"
-        viserDetaljer={viserDetaljerDagerKanUtbetale}
+      <DagerNavKanUtbetale
+        dagerNavKanUtbetale={dagerNavKanUtbetale}
+        dagerRettPå={dagerRettPå}
+        antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
         visDetaljer={() => visDetaljerDagerKanUtbetale(current => !current)}
+        viserDetaljer={viserDetaljerDagerKanUtbetale}
       />
       <Hr marginTopPx={14} marginBottomPx={12} />
-      <Nøkkeltall
-        overskrift={{
-          antallDager: forbrukt.dager,
-          antallTimer: formaterTimer(forbrukt.timer),
-          overskrifttekstId: 'Nøkkeltall.ForbrukteDager',
-        }}
-        detaljer={forbrukteDagerDetaljer(tidFraInfotrygd, forbruktDagerTimer, restdagerErSmittevernsdager, rest)}
-        farge="#ba3a26"
+      <ForbrukteDager
+        navHarUtbetaltDagerTimer={navHarUtbetaltDagerTimer}
+        infotrygdDagerTimer={tidFraInfotrygd}
+        forbrukteDagerTimer={forbruktDagerTimer}
+        smittevernDagerTimer={restdagerErSmittevernsdager ? absoluttverdiDagerTimer(rest) : null}
+        utbetaltForMangeDagerTimer={utbetaltFlereDagerEnnRett ? absoluttverdiDagerTimer(rest) : null}
         viserDetaljer={viserDetaljerForbrukteDager}
         visDetaljer={() => visDetaljerForbrukteDager(current => !current)}
       />
-      <Nøkkeltall
-        overskrift={{
-          antallDager: restdagerErSmittevernsdager ? 0 : rest.dager,
-          antallTimer: restdagerErSmittevernsdager ? null : formaterTimer(rest.timer),
-          overskrifttekstId: 'Nøkkeltall.Restdager.InfoText',
+      <Restdager
+        tilgodeDagertimer={{
+          dager: alleDagerErForbrukt ? 0 : rest.dager,
+          timer: alleDagerErForbrukt ? null : rest.timer,
         }}
-        detaljer={[
-          {
-            antallDager: dagerNavKanUtbetale,
-            overskrifttekstId: 'Nøkkeltall.KanUtbetales',
-            infotekstContent: (
-              <>
-                <FormattedMessage id="Nøkkeltall.KanUtbetales.InfoText" values={{ dager: dagerNavKanUtbetale }} />
-                {utbetaltFlereDagerEnnRett ? (
-                  <strong>
-                    <FormattedMessage id="Nøkkeltall.KanUtbetales.InfoText_negativt" />
-                  </strong>
-                ) : null}
-              </>
-            ),
-          },
-          {
-            antallDager: forbrukt.dager,
-            antallTimer: formaterTimer(forbrukt.timer),
-            overskrifttekstId: 'Nøkkeltall.TotaltForbrukte',
-            infotekstContent: forbrukt.timer ? (
-              <FormattedMessage id="Nøkkeltall.TotaltForbrukte.DagerOgTimer.InfoText" values={{ ...forbrukt }} />
-            ) : (
-              <FormattedMessage id="Nøkkeltall.TotaltForbrukte.Dager.InfoText" values={{ dager: forbrukt.dager }} />
-            ),
-          },
-        ]}
-        farge="#06893a"
+        dagerNavKanUtbetale={dagerNavKanUtbetale}
+        navHarUtbetaltDagerTimer={navHarUtbetaltDagerTimer}
         viserDetaljer={viserDetaljerRestdager}
         visDetaljer={() => visDetaljerRestdager(current => !current)}
       />
