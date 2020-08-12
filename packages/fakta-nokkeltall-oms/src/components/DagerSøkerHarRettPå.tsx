@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Link, useLocation } from 'react-router-dom';
+import { parseQueryString, formatQueryString } from '@fpsak-frontend/utils';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import Nøkkeltall from './Nøkkeltall';
 
 interface DagerSøkerHarRettPåProps {
@@ -21,6 +24,13 @@ const DagerSøkerHarRettPå: React.FunctionComponent<DagerSøkerHarRettPåProps>
   visDetaljer,
   viserDetaljer,
 }) => {
+  const location = useLocation();
+  const { search, pathname } = location;
+  const faktapanelUttak = {
+    ...parseQueryString(search),
+    fakta: faktaPanelCodes.UTTAK,
+  };
+
   const detaljer = [
     {
       antallDager: antallOmsorgsdager,
@@ -28,7 +38,14 @@ const DagerSøkerHarRettPå: React.FunctionComponent<DagerSøkerHarRettPåProps>
       infotekstContent: (
         <>
           <FormattedMessage id="Nøkkeltall.DagerGrunnrett.InfoText" />
-          {benyttetRammemelding && <FormattedMessage id="Nøkkeltall.Rammemelding" />}
+          {benyttetRammemelding && (
+            <>
+              <FormattedMessage id="Nøkkeltall.Rammemelding" />
+              <Link to={`${pathname}${formatQueryString(faktapanelUttak)}`}>
+                <FormattedMessage id="Nøkkeltall.Rammemelding.Linknavn" />
+              </Link>
+            </>
+          )}
         </>
       ),
     },

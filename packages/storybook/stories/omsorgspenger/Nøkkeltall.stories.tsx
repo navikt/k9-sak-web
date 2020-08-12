@@ -4,10 +4,12 @@ import UttaksplanType from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttakspl
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
 import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
 import { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
+import StoryRouter from 'storybook-react-router';
 
 export default {
   title: 'omsorgspenger/fakta/Nøkkeltall',
   component: NøkkeltallIndex,
+  decorators: [StoryRouter()],
 };
 
 const aktivitet = (periode: string): Aktivitet => ({
