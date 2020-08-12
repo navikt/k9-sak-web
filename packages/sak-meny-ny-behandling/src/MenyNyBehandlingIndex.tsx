@@ -34,11 +34,11 @@ interface OwnProps {
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
   revurderingArsaker: KodeverkMedNavn[];
-  behandlingerSomKanOpprettes: {[behandlingstype: string]: boolean};
+  behandlingerSomKanOpprettes: { [behandlingstype: string]: boolean };
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
   sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingId: number }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
   lukkModal: () => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;

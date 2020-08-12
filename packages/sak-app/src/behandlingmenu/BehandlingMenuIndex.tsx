@@ -128,7 +128,7 @@ interface DispatchProps {
     params: {},
   ) => void;
   sjekkTilbakeKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkTilbakeRevurdKanOpprettes: (params: { behandlingId: number }) => void;
+  sjekkTilbakeRevurdKanOpprettes: (params: { uuid: string }) => void;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
