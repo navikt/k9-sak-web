@@ -36,7 +36,7 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.6.1",
-    "history": "^4.9.0",
+    "history": "^5.0.0",
     "moment": "^2.24.0",
     "nav-frontend-core": "4.0.12",
     "nav-frontend-grid": "1.0.27",
