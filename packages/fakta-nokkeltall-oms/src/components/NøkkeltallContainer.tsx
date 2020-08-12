@@ -109,6 +109,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         dagerRettPå={dagerRettPå}
         antallOmsorgsdager={grunnrettsdager}
         antallKoronadager={antallKoronadager}
+        erISmittvernperioden={erInnenSmittevernsperioden}
         benyttetRammemelding={benyttetRammemelding}
         viserDetaljer={viserDetaljerDagerRettPå}
         visDetaljer={() => visDetaljerDagerRettPå(current => !current)}
