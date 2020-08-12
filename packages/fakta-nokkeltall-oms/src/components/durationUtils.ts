@@ -8,7 +8,7 @@ export interface DagerTimer {
 const formaterTimerDesimal = (timerDesimal: number): number => Number.parseFloat(timerDesimal.toFixed(2));
 
 export const konverterDesimalTilDagerOgTimer = (desimal: number): DagerTimer => {
-  const dager = Math.floor(desimal);
+  const dager = desimal > 0 ? Math.floor(desimal) : Math.ceil(desimal);
   const timerDesimal = desimal % 1;
 
   return {
@@ -22,7 +22,7 @@ export const beregnDagerTimer = (dagerTimer: string): DagerTimer => {
   const totaltAntallTimer = duration.asHours();
 
   return {
-    dager: Math.floor(totaltAntallTimer / 7.5),
+    dager: totaltAntallTimer > 0 ? Math.floor(totaltAntallTimer / 7.5) : Math.ceil(totaltAntallTimer / 7.5),
     timer: totaltAntallTimer % 7.5,
   };
 };

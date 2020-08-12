@@ -39,7 +39,7 @@ describe('<NøkkeltallContainer>', () => {
         periodeISmittevernstiden,
       );
 
-      expect(smittevernDagerTimer).to.eql({ dager: 2, timer: 3 });
+      expect(smittevernDagerTimer).to.eql({ dager: 1, timer: 3 });
       expect(utbetaltForMangeDagerTimer).to.eql(null);
     });
 
@@ -51,7 +51,7 @@ describe('<NøkkeltallContainer>', () => {
         periodeUtenomSmittevernstiden,
       );
 
-      expect(utbetaltForMangeDagerTimer).to.eql({ dager: 2, timer: 3 });
+      expect(utbetaltForMangeDagerTimer).to.eql({ dager: 1, timer: 3 });
       expect(smittevernDagerTimer).to.eql(null);
     });
   });

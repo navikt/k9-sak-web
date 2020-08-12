@@ -32,6 +32,14 @@ describe('durationUtils', () => {
     sjekkKonvertering(beregnDagerTimer(duration_4), 107, 0);
   });
 
+  it('konverterer negativt desimaltall eller duration til dager og timer', () => {
+    const desimal = -1.4;
+    sjekkKonvertering(konverterDesimalTilDagerOgTimer(desimal), -1, -3);
+
+    const duration = 'PT-10H-30M';
+    sjekkKonvertering(beregnDagerTimer(duration), -1, -3);
+  });
+
   it('summerer dager', () => {
     const dt1: DagerTimer = { dager: 2 };
     const dt2: DagerTimer = { dager: 5 };
