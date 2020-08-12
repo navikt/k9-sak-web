@@ -27,6 +27,7 @@
     "packages/fakta-barn-og-overfoeringsdager",
     "packages/fakta-barn-oms",
     "packages/fakta-medisinsk-vilkar",
+    "packages/fakta-nokkeltall-oms",
     "packages/fakta-omsorgen-for",
     "packages/fakta-opplysninger-fra-soknaden",
     "packages/fakta-opptjening",
