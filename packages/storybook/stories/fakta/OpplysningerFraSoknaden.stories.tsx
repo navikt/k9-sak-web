@@ -8,6 +8,21 @@ const behandling = {
   versjon: 1,
 };
 
+const aksjonspunkter = [ {
+  definisjon: {
+    kode: '8004',
+    kodeverk: 'AKSJONSPUNKT_DEFINISJON'
+  },
+  begrunnelse: "Dette akjsonspunktet har blitt løst tidligere",
+  status: {
+    kode: 'OPPR',
+    kodeverk: 'AKSJONSPUNKT_STATUS'
+  },
+  kanLoses: true,
+  erAktivt: true,
+}
+];
+
 const opplysningerFraSøknaden = {
   førSøkerPerioden: {
     oppgittEgenNæring: [
@@ -98,6 +113,7 @@ export const visOpplysningerFraSøknaden = () => {
       submittable
       kanEndrePåSøknadsopplysninger
       oppgittOpptjening={opplysningerFraSøknaden}
+      aksjonspunkter={aksjonspunkter}
     />
   );
 };
