@@ -219,7 +219,7 @@ export class VedtakForm extends Component {
             />
           )}
 
-          {skalBrukeOverstyrendeFritekstBrev && (
+          {skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.FRISINN && (
             <FritekstBrevPanel
               intl={intl}
               readOnly={readOnly}
