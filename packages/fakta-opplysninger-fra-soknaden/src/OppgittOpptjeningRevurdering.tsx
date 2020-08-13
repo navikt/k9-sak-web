@@ -1,10 +1,11 @@
-import { Behandling, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import * as React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import { InjectedFormProps } from 'redux-form';
 import messages from '../i18n/nb_NO.json';
 import OppgittOpptjeningRevurderingForm from './OppgittOpptjeningRevurderingForm';
+
 
 const cache = createIntlCache();
 
@@ -19,6 +20,7 @@ const intlConfig = createIntl(
 interface Props {
   readOnly: boolean;
   behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
   submitCallback: (props: SubmitCallback[]) => void;
   submittable: boolean;
   harApneAksjonspunkter: boolean;
