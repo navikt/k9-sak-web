@@ -260,6 +260,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
               disableGodkjennKnapp={disableGodkjennKnapp}
               erTilbakekreving={erTilbakekreving}
               createLocationForSkjermlenke={createLocationForSkjermlenke}
+              fagsakYtelseType={fagsakYtelseType}
             />
             {showBeslutterModal && (
               <DataFetcher

@@ -4,6 +4,8 @@ import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import ytelsestype from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
+import kodeverkTyper from "@fpsak-frontend/kodeverk/src/kodeverkTyper";
 
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
@@ -184,6 +186,7 @@ describe('<ApprovalPanel>', () => {
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
         disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
+        fagsakYtelseType={{kodeverk: kodeverkTyper.FAGSAK_YTELSE, kode: ytelsestype.FORELDREPENGER}}
       />,
     );
 
@@ -219,6 +222,7 @@ describe('<ApprovalPanel>', () => {
         skjemalenkeTyper={[]}
         disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
+        fagsakYtelseType={{kodeverk: kodeverkTyper.FAGSAK_YTELSE, kode: ytelsestype.FORELDREPENGER}}
       />,
     );
 
@@ -263,6 +267,7 @@ describe('<ApprovalPanel>', () => {
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
         disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
+        fagsakYtelseType={{kodeverk: kodeverkTyper.FAGSAK_YTELSE, kode: ytelsestype.FORELDREPENGER}}
       />,
     );
 

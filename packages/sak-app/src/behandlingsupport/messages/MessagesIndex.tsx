@@ -1,3 +1,4 @@
+import ytelsestype from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
 import React, { Component } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { push } from 'connected-react-router';
@@ -188,6 +189,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
       behandlingIdentifier,
       selectedBehandlingVersjon,
       revurderingVarslingArsak,
+      fagsakYtelseType
     } = this.props;
     const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
 
@@ -222,6 +224,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
               revurderingVarslingArsak={revurderingVarslingArsak}
               templates={props.brevmaler}
               isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
+              kanForhandsviseBrev={fagsakYtelseType.kode !== ytelsestype.OMSORGSPENGER}
             />
           )}
         />

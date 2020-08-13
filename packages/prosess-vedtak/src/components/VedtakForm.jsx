@@ -151,9 +151,10 @@ export class VedtakForm extends Component {
       false,
       previewCallback,
     );
-    const skalViseLink =
+    const skalViseLink = (
       vedtakVarsel.avslagsarsak === null ||
-      (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
+      (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)
+    ) && ytelseTypeKode !== fagsakYtelseType.OMSORGSPENGER;
     const skalSkjuleFattVedtakKnapp =
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
