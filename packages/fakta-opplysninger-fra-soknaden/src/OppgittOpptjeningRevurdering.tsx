@@ -53,6 +53,7 @@ const OppgittOpptjeningRevurdering = (props: Props & InjectedFormProps) => {
         kanEndrePåSøknadsopplysninger={
           kanEndrePåSøknadsopplysninger && harRelevantAksjonspunktSomKanLøses(aksjonspunkter)
         }
+        aksjonspunkter={aksjonspunkter}
       />
     </RawIntlProvider>
   );
