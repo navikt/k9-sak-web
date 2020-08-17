@@ -28,7 +28,7 @@ jobs:
           echo "::set-output name=dir::$(yarn cache dir)"
           echo "::set-env name=TAG::$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
       - name: Cache node modules
-        uses: actions/cache@v1.1.0
+        uses: actions/cache@v2.1.0
         with:
           path: ${{ steps.yarn-cache.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
