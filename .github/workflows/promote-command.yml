@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Set variabler for image, namespace og cluster
         shell: bash
         run: |
@@ -58,3 +57,14 @@ jobs:
                                     body: 'promote til ${{ github.event.client_payload.slash_command.args }} utført'})
             github.issues.addLabels({...issue, labels: ['deployment','${{ env.CLUSTER }}-${{ env.NAMESPACE }}']})
 
+      - name: Send versjonsnummer og source maps til Sentry
+        if: success()
+        uses: getsentry/action-release@v1.0.0
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        with:
+          environment: "production"
+          version: ${{ env.TAG }}
+          sourcemaps: "./dist"
