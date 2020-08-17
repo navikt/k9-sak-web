@@ -15,7 +15,7 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
-import { Behandling, SubmitCallback } from '@k9-sak-web/types';
+import { Behandling, SubmitCallback, Aksjonspunkt } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
@@ -226,7 +226,7 @@ const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & Sta
   );
 };
 
-const buildInitialValues = (values: OpplysningerFraSøknaden) => {
+const buildInitialValues = (values: OpplysningerFraSøknaden, aksjonspunkter: Aksjonspunkt[]) => {
   const { førSøkerPerioden } = values;
 
   const næringFørSøknadsperioden =
@@ -241,6 +241,8 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
     ? moment(næringFørSøknadsperioden[0].periode.tom, ISO_DATE_FORMAT).year() === 2020
     : false;
 
+  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING);
+
   return {
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
       ? næringsinntektFørSøknadsperioden
@@ -249,6 +251,7 @@ const buildInitialValues = (values: OpplysningerFraSøknaden) => {
       ? næringsinntektFørSøknadsperioden
       : null,
     [fieldArrayName]: values.måneder.map(måned => buildInitialValuesForSøknadsperiode(måned)),
+    [SøknadFormValue.BEGRUNNELSE]: aksjonspunkt ? aksjonspunkt.begrunnelse : null,
   };
 };
 
@@ -431,7 +434,7 @@ const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpp
 };
 
 const mapStateToProps = (_, props) => {
-  const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon } = props;
+  const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon, aksjonspunkter } = props;
   const onSubmit = formValues => {
     // For å håndtere validering for deler av formen som ligger i andre måneder enn den som rendres
     return new Promise((resolve, reject) => {
@@ -442,7 +445,7 @@ const mapStateToProps = (_, props) => {
       return reject(errors);
     });
   };
-  const initialValues = buildInitialValues(oppgittOpptjening);
+  const initialValues = buildInitialValues(oppgittOpptjening, aksjonspunkter);
   const validate = values => {
     const validationResult = validateForm(values, oppgittOpptjening);
     return validationResult;
