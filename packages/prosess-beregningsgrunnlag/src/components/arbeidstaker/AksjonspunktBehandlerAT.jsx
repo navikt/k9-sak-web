@@ -67,7 +67,7 @@ AksjonspunktBehandlerAT.propTypes = {
 AksjonspunktBehandlerAT.transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode) => {
   let inntektPrAndelList = null;
   let frilansInntekt = null;
-  if (relevanteStatuser.isArbeidstaker) {
+  if (relevanteStatuser && relevanteStatuser.isArbeidstaker) {
     inntektPrAndelList = finnAndelerSomSkalVisesAT(alleAndelerIForstePeriode).map(({ andelsnr }, index) => {
       const overstyrtInntekt = values[`inntekt${index}`];
       return {
@@ -77,7 +77,7 @@ AksjonspunktBehandlerAT.transformValues = (values, relevanteStatuser, alleAndele
       };
     });
   }
-  if (relevanteStatuser.isFrilanser) {
+  if (relevanteStatuser && relevanteStatuser.isFrilanser) {
     frilansInntekt = removeSpacesFromNumber(values.inntektFrilanser);
   }
   return {
