@@ -13,9 +13,11 @@ import configureStore from './configureStore';
 
 /* eslint no-undef: "error" */
 // @ts-ignore
+const isDevelopment = process.env.NODE_ENV === 'development';
 const environment = window.location.hostname;
+
 init({
-  dsn: 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
+  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
   environment,
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
