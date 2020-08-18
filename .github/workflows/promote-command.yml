@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Set variabler for image, namespace og cluster
         shell: bash
         run: |
@@ -21,7 +20,7 @@ jobs:
           echo "::set-env name=NAMESPACE::${{ github.event.client_payload.slash_command.arg2 }}"
 
       - name: Sjekk ut kode
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.2
         with:
           ref: ${{ env.TAG }}
 
@@ -34,7 +33,7 @@ jobs:
 
       - name: Oppdater kommentar med deployment status ved feil
         if: failure()
-        uses: actions/github-script@0.4.0
+        uses: actions/github-script@v2.0.1
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -47,7 +46,7 @@ jobs:
 
       - name: Oppdater kommentar med deployment status
         if: success()
-        uses: actions/github-script@0.4.0
+        uses: actions/github-script@v2.0.1
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -57,4 +56,15 @@ jobs:
             github.issues.createComment({...issue,
                                     body: 'promote til ${{ github.event.client_payload.slash_command.args }} utført'})
             github.issues.addLabels({...issue, labels: ['deployment','${{ env.CLUSTER }}-${{ env.NAMESPACE }}']})
-
+      # kommenterer dette ut for nå da AUTH_TOKEN må genereres i Sentry av noen som har rettigheter
+      #- name: Send versjonsnummer og source maps til Sentry
+      #  if: success()
+      #  uses: getsentry/action-release@v1.0.0
+      #  env:
+      #    SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      #    SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      #    SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+      #  with:
+      #    environment: "production"
+      #    version: ${{ env.TAG }}
+      #    sourcemaps: "./dist"

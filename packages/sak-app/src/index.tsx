@@ -11,15 +11,13 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
-/* global VERSION:true */
 /* eslint no-undef: "error" */
 // @ts-ignore
-const release = VERSION;
-const environment = window.location.hostname;
 const isDevelopment = process.env.NODE_ENV === 'development';
+const environment = window.location.hostname;
+
 init({
   dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
-  release,
   environment,
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
