@@ -41,7 +41,6 @@ server {
 
   location  "/k9/sak/" {
     proxy_set_header Host       $http_host;
-    proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -52,7 +51,6 @@ server {
 
   location  "/k9/formidling/" {
     proxy_set_header Host       $http_host;
-    proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL_K9FORMIDLING}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -63,7 +61,6 @@ server {
 
   location "/k9/oppdrag/" {
     proxy_set_header Host       $http_host;
-    proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL_K9OPPDRAG}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -74,7 +71,6 @@ server {
 
   location "/k9/klage/" {
     proxy_set_header Host       $http_host;
-    proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL_KLAGE}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -85,7 +81,6 @@ server {
 
   #location "/k9/tilbake/" {
   #  proxy_set_header Host       $http_host;
-  #  proxy_hide_header       Content-Security-Policy;
   #  proxy_pass "${APP_URL_K9TILBAKE}";
   #  proxy_intercept_errors on;
   #  error_page 401 = @401_json;
