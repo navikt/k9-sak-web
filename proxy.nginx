@@ -22,7 +22,7 @@ server {
   add_header              Last-Modified $date_gmt;
   add_header              X-Application-Id "${APP_NAME}:${APP_VERSION}, pod=${APP_HOSTNAME}";
   add_header              X-Cache-Status $upstream_cache_status;
-  add_header              Content-Security-Policy "default-src 'self'; script-src 'self' 'nonce-q/YPt9L9Ie+qVycDQ7fOW4abIqYB+EE3F18SkqJJZcQ='";
+  add_header              Content-Security-Policy "default-src 'self'";
   add_header              X-Content-Type-Options "nosniff";
   add_header              X-XSS-Protection "1;mode=block";
   add_header              Strict-Transport-Security "max-age=31536000";
