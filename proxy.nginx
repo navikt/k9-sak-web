@@ -27,10 +27,10 @@ server {
   add_header              X-XSS-Protection "1;mode=block";
   add_header              Strict-Transport-Security "max-age=31536000";
   
-  etag                    off;
-  expires                 off;
-  if_modified_since       off;
-  sendfile                off;
+  etag                    on;
+  expires                 on;
+  if_modified_since       on;
+  sendfile                on;
 
   # Health check for NAIS
   location = /isAlive {
