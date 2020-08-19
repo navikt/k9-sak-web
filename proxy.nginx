@@ -28,7 +28,6 @@ server {
   add_header              Strict-Transport-Security "max-age=31536000";
   
   etag                    on;
-  expires                 on;
   if_modified_since       on;
   sendfile                on;
 
