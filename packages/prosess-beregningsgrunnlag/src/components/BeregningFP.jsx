@@ -63,7 +63,7 @@ const visningForManglendeBG = () => (
 const getAksjonspunkterForBeregning = aksjonspunkter =>
   aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAksjonspunkt(ap.definisjon.kode)) : [];
 const getRelevanteStatuser = bg =>
-  bg.aktivitetStatus
+  bg && bg.aktivitetStatus
     ? {
         isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
         isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
@@ -225,7 +225,7 @@ BeregningFP.defaultProps = {
 };
 
 const getSammenligningsgrunnlagsPrStatus = bg =>
-  bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
+  bg && bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
 
 const formaterAksjonspunkter = aksjonspunkter => {
   return flattenArray(aksjonspunkter).map(aksjonspunkt => {
@@ -321,7 +321,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
           const transformedValues = transformValues(
             {
               ...currentBeregningsgrunnlagSkjemaverdier,
-              skjæringstidspunkt: beregningsgrunnlag[currentBeregningsgrunnlagIndex].skjæringstidspunkt,
+              skjæringstidspunkt:
+                (typeof beregningsgrunnlag === 'object' && beregningsgrunnlag.skjæringstidspunkt) ||
+                beregningsgrunnlag[currentBeregningsgrunnlagIndex].skjæringstidspunkt,
             },
             relevanteStatuser,
             alleAndelerIForstePeriode,
