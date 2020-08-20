@@ -19,13 +19,16 @@ server {
 
   # complete disable cache and send some debug headers
   add_header              Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
-  add_header              Last-Modified $date_gmt;
-  add_header              X-Application-Id "${APP_NAME}:${APP_VERSION}, pod=${APP_HOSTNAME}";
   add_header              X-Cache-Status $upstream_cache_status;
-  etag                    off;
-  expires                 off;
+  add_header              X-Application-Id "${APP_NAME}:${APP_VERSION}, pod=${APP_HOSTNAME}";
+  add_header              Content-Security-Policy "default-src 'self'";
+  add_header              X-Content-Type-Options "nosniff";
+  add_header              X-XSS-Protection "1;mode=block";
+  add_header              Strict-Transport-Security "max-age=31536000";
+
+  etag                    on;
   if_modified_since       off;
-  sendfile                off;
+  sendfile                on;
 
   # Health check for NAIS
   location = /isAlive {
@@ -41,7 +44,6 @@ server {
 
   location  "/k9/sak/" {
     proxy_set_header Host       $http_host;
-    proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -52,7 +54,6 @@ server {
 
   location  "/k9/formidling/" {
     proxy_set_header Host       $http_host;
-    proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL_K9FORMIDLING}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -63,7 +64,6 @@ server {
 
   location "/k9/oppdrag/" {
     proxy_set_header Host       $http_host;
-    proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL_K9OPPDRAG}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -74,7 +74,6 @@ server {
 
   location "/k9/klage/" {
     proxy_set_header Host       $http_host;
-    proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL_KLAGE}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -85,7 +84,6 @@ server {
 
   #location "/k9/tilbake/" {
   #  proxy_set_header Host       $http_host;
-  #  proxy_hide_header       Content-Security-Policy;
   #  proxy_pass "${APP_URL_K9TILBAKE}";
   #  proxy_intercept_errors on;
   #  error_page 401 = @401_json;
@@ -126,7 +124,7 @@ server {
     index  index.html index.htm;
     try_files $uri @rewrites;
 
-    # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
-    add_header Cache-Control no-cache;
+    # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!).. Prøver med etag + must-revalidate
+    add_header Cache-Control must-revalidate;
   }
 }
