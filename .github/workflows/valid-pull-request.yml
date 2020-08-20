@@ -8,7 +8,7 @@ jobs:
       - name: Hente kode
         uses: actions/checkout@v2
       - name: Sette opp Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v1
         with:
           node-version: 12.x
       - name: Get yarn cache
