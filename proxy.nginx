@@ -27,7 +27,7 @@ server {
   add_header              Strict-Transport-Security "max-age=31536000";
 
   etag                    on;
-  if_modified_since       exact;
+  if_modified_since       off;
   sendfile                on;
 
   # Health check for NAIS
