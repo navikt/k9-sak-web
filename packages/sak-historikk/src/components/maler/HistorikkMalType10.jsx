@@ -23,7 +23,7 @@ const HistorikkMalType10 = ({
   const intl = useIntl();
   const historikkFromToValues = (endretFelt, fieldName) => {
     const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
-    const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
+    const toValue = findEndretFeltVerdi(endretFelt, endretFelt?.tilVerdi, intl, getKodeverknavn);
     let messageId = fromValue ? 'Historikk.Template.10.ChangedFromTo' : 'Historikk.Template.10.FieldSetTo';
     if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PROSENT_UTBETALING.kode && fromValue) {
       messageId = 'Historikk.Template.10.ChangedFromToProsentUtbetaling';
@@ -38,7 +38,7 @@ const HistorikkMalType10 = ({
       endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PERIODE_RESULTAT_ÅRSAK.kode ||
       endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_GRADERING_AVSLAG_ÅRSAK.kode
     ) {
-      if (endretFelt.tilVerdi === '-') {
+      if (endretFelt?.tilVerdi === '-') {
         return '';
       }
       if (endretFelt.fraVerdi === '-') {
@@ -70,9 +70,9 @@ const HistorikkMalType10 = ({
       const fromValueWeeks = Math.floor(endretFelt.fraVerdi / 5);
       const fromValueDays =
         endretFelt.fraVerdi % 1 === 0 ? endretFelt.fraVerdi % 5 : (endretFelt.fraVerdi % 5).toFixed(1);
-      const toValueWeeks = Math.floor(endretFelt.tilVerdi / 5);
+      const toValueWeeks = Math.floor(endretFelt?.tilVerdi / 5);
       const toValueDays =
-        endretFelt.tilVerdi % 1 === 0 ? endretFelt.tilVerdi % 5 : (endretFelt.tilVerdi % 5).toFixed(1);
+        endretFelt?.tilVerdi % 1 === 0 ? endretFelt?.tilVerdi % 5 : (endretFelt?.tilVerdi % 5).toFixed(1);
 
       return (
         <div>
@@ -107,14 +107,14 @@ const HistorikkMalType10 = ({
     const [found] = opplysninger.filter(
       o => o.opplysningType.kode === historikkOpplysningTypeCodes.UTTAK_PERIODE_FOM.kode,
     );
-    return found.tilVerdi;
+    return found?.tilVerdi;
   };
 
   const finnTomOpplysning = opplysninger => {
     const [found] = opplysninger.filter(
       o => o.opplysningType.kode === historikkOpplysningTypeCodes.UTTAK_PERIODE_TOM.kode,
     );
-    return found.tilVerdi;
+    return found?.tilVerdi;
   };
 
   return historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
