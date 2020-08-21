@@ -3,7 +3,6 @@ import * as React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import { InjectedFormProps } from 'redux-form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import messages from '../i18n/nb_NO.json';
 import OppgittOpptjeningRevurderingForm from './OppgittOpptjeningRevurderingForm';
 
@@ -28,16 +27,6 @@ interface Props {
   oppgittOpptjening: OpplysningerFraSøknaden;
 }
 
-function harRelevantAksjonspunktSomKanLøses(aksjonspunkter) {
-  const aksjonspunkt = (aksjonspunkter || []).find(
-    ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
-  );
-  if (!aksjonspunkt) {
-    return false;
-  }
-  return aksjonspunkt.kanLoses === true;
-}
-
 const OppgittOpptjeningRevurdering = (props: Props & InjectedFormProps) => {
   const {
     behandling: { id, versjon },
@@ -50,9 +39,7 @@ const OppgittOpptjeningRevurdering = (props: Props & InjectedFormProps) => {
         behandlingId={id}
         behandlingVersjon={versjon}
         {...props}
-        kanEndrePåSøknadsopplysninger={
-          kanEndrePåSøknadsopplysninger && harRelevantAksjonspunktSomKanLøses(aksjonspunkter)
-        }
+        kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
         aksjonspunkter={aksjonspunkter}
       />
     </RawIntlProvider>
