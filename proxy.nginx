@@ -142,7 +142,6 @@ server {
 	add_header              Content-Security-Policy "default-src 'self'; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://sentry.gc.nav.no";
 	add_header              X-Content-Type-Options "nosniff";
 	add_header              X-XSS-Protection "1;mode=block";
-	add_header              Cache-Control "public";
 	add_header              Strict-Transport-Security "max-age=31536000";
 	
     # beholder default root slik at vi kan swappe ut med stock nginx
