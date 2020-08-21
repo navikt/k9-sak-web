@@ -16,7 +16,7 @@ map $sent_http_content_type $expires {
 
 # Cache-control map
 map $upstream_http_cache_control $custom_cache_control {
-    ''        'private, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+    ''        'no-cache, must-revalidate, proxy-revalidate, max-age=0';
 }
 
 server {
