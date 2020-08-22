@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosETAGCache from 'axios-etag-cache';
 
 import initRestMethods from './initRestMethods';
 
@@ -7,7 +8,8 @@ import initRestMethods from './initRestMethods';
  * Oppretter nytt http-klient api basert på Axios.
  */
 const getAxiosHttpClientApi = () => {
-  const axiosInstance = axios.create();
+	
+  const axiosInstance = axiosETAGCache(axios.create());
 
   // @ts-ignore
   axiosInstance.CancelToken = axios.CancelToken;
