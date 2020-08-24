@@ -46,7 +46,7 @@ class EtagCache {
 
   static getInstance() {
     if (!this.instance) {
-      this.instance = new Cache();
+      this.instance = new EtagCache();
     }
     return this.instance;
   }

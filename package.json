@@ -37,7 +37,6 @@
     "@navikt/nap-expandable-panel": "1.0.1",
     "@sentry/browser": "^5.21.1",
     "axios": "^0.19.2",
-    "axios-etag-cache": "^1.0.5",
     "core-js": "^3.6.5",
     "dotenv": "^8.0.0",
     "history": "^4.9.0",
