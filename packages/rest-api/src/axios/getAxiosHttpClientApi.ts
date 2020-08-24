@@ -1,5 +1,5 @@
 import axios from 'axios';
-import axiosETAGCache from 'axios-etag-cache';
+import axiosEtag from './axiosEtag';
 
 import initRestMethods from './initRestMethods';
 
@@ -9,7 +9,7 @@ import initRestMethods from './initRestMethods';
  */
 const getAxiosHttpClientApi = () => {
 	
-  const axiosInstance = axiosETAGCache(axios.create());
+  const axiosInstance = axiosEtag(axios.create());
 
   // @ts-ignore
   axiosInstance.CancelToken = axios.CancelToken;
