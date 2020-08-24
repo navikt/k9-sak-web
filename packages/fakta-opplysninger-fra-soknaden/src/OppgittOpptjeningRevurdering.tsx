@@ -1,4 +1,4 @@
-import { Behandling, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import * as React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
@@ -19,6 +19,7 @@ const intlConfig = createIntl(
 interface Props {
   readOnly: boolean;
   behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
   submitCallback: (props: SubmitCallback[]) => void;
   submittable: boolean;
   harApneAksjonspunkter: boolean;
@@ -29,10 +30,18 @@ interface Props {
 const OppgittOpptjeningRevurdering = (props: Props & InjectedFormProps) => {
   const {
     behandling: { id, versjon },
+    kanEndrePåSøknadsopplysninger,
+    aksjonspunkter,
   } = props;
   return (
     <RawIntlProvider value={intlConfig}>
-      <OppgittOpptjeningRevurderingForm behandlingId={id} behandlingVersjon={versjon} {...props} />
+      <OppgittOpptjeningRevurderingForm
+        behandlingId={id}
+        behandlingVersjon={versjon}
+        {...props}
+        kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
+        aksjonspunkter={aksjonspunkter}
+      />
     </RawIntlProvider>
   );
 };

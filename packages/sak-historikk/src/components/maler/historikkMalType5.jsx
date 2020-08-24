@@ -90,7 +90,7 @@ const HistorikkMalType5 = ({
   const formatChangedField = endretFelt => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
     const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
-    const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
+    const toValue = findEndretFeltVerdi(endretFelt, endretFelt?.tilVerdi, intl, getKodeverknavn);
 
     if (
       endretFelt.fraVerdi !== null &&
@@ -143,7 +143,7 @@ const HistorikkMalType5 = ({
         </>
       )}
       <br />
-      {` ${soeknadsperiode.tilVerdi}`}
+      {` ${soeknadsperiode?.tilVerdi}`}
     </>
   );
 
@@ -182,8 +182,8 @@ const HistorikkMalType5 = ({
         historikkinnslagDel.opplysninger.map(opplysning => (
           <FormattedHTMLMessage
             id={findIdForOpplysningCode(opplysning)}
-            values={{ antallBarn: opplysning.tilVerdi }}
-            key={`${getKodeverknavn(opplysning)}@${opplysning.tilVerdi}`}
+            values={{ antallBarn: opplysning?.tilVerdi }}
+            key={`${getKodeverknavn(opplysning)}@${opplysning?.tilVerdi}`}
           />
         ))}
 

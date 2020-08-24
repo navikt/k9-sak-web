@@ -22,12 +22,10 @@ export const OmsorgspengerBehandlingApiKeys = {
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
   BEREGNINGSRESULTAT_UTBETALING: 'BEREGNINGSRESULTAT_UTBETALING',
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
-  BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
-  BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
@@ -50,6 +48,7 @@ export const OmsorgspengerBehandlingApiKeys = {
   OMSORGEN_FOR: 'OMSORGEN_FOR',
   FORBRUKTE_DAGER: 'FORBRUKTE_DAGER',
   FULL_UTTAKSPLAN: 'FULL_UTTAKSPLAN',
+  INNTEKT_OG_YTELSER: 'INNTEKT_OG_YTELSER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -62,17 +61,11 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soeker-personopplysninger', OmsorgspengerBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', OmsorgspengerBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withRel('beregningsresultat-foreldrepenger', OmsorgspengerBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
   .withRel('beregningsgrunnlag-alle', OmsorgspengerBehandlingApiKeys.BEREGNINGSGRUNNLAG)
-  .withRel('beregningsresultat-foreldrepenger', OmsorgspengerBehandlingApiKeys.BEREGNINGRESULTAT)
   .withRel('familiehendelse-v2', OmsorgspengerBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', OmsorgspengerBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', OmsorgspengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
   .withRel('familiehendelse-original-behandling', OmsorgspengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
-  .withRel(
-    'beregningsresultat-engangsstonad-original-behandling',
-    OmsorgspengerBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
-  )
   .withRel('soeker-medlemskap-v2', OmsorgspengerBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', OmsorgspengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
@@ -88,6 +81,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('omsorgen-for', OmsorgspengerBehandlingApiKeys.OMSORGEN_FOR)
   .withRel('forbrukte-dager', OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER)
   .withRel('full-uttaksplan', OmsorgspengerBehandlingApiKeys.FULL_UTTAKSPLAN)
+  .withRel('inntekt', OmsorgspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
 
   // operasjoner
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', OmsorgspengerBehandlingApiKeys.UPDATE_ON_HOLD)

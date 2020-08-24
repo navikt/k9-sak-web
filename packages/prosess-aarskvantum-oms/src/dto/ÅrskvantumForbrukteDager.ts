@@ -11,7 +11,7 @@ interface ÅrskvantumForbrukteDager {
   restdager?: number;
   restTid?: string;
   antallDagerInfotrygd?: number;
-  sisteUttaksplan: UttaksplanType;
+  sisteUttaksplan?: UttaksplanType;
   rammevedtak: Rammevedtak[];
   barna: BarnDto[];
 }

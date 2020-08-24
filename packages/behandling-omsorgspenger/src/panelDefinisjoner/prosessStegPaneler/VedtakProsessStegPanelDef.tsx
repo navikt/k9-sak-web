@@ -26,7 +26,6 @@ class PanelDef extends ProsessStegPanelDef {
   getEndepunkter = () => [
     omsorgspengerBehandlingApi.TILBAKEKREVINGVALG,
     omsorgspengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-    omsorgspengerBehandlingApi.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING,
     omsorgspengerBehandlingApi.MEDLEMSKAP,
     omsorgspengerBehandlingApi.VEDTAK_VARSEL,
   ];
