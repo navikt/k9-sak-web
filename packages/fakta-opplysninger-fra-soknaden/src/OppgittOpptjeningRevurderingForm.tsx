@@ -15,7 +15,7 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
-import { Behandling, SubmitCallback, Aksjonspunkt } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
@@ -241,7 +241,9 @@ const buildInitialValues = (values: OpplysningerFraSøknaden, aksjonspunkter: Ak
     ? moment(næringFørSøknadsperioden[0].periode.tom, ISO_DATE_FORMAT).year() === 2020
     : false;
 
-  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING);
+  const aksjonspunkt = aksjonspunkter.find(
+    ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
+  );
 
   return {
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019]: inntektsperiodenFørSøknadsperiodeErI2019
