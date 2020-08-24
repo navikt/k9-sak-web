@@ -13,7 +13,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
-import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 import FortsattMedlemskapFaktaPanel from './FortsattMedlemskapFaktaPanel';
@@ -44,11 +43,6 @@ export const OppholdInntektOgPeriodeForm = ({
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
     />
     <VerticalSpacer twentyPx />
-    <InntektOgYtelserFaktaPanel
-      id={valgtPeriode.id}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-    />
     <PerioderMedMedlemskapFaktaPanel
       readOnly={readOnly}
       id={valgtPeriode.id}
@@ -142,12 +136,6 @@ const buildInitialValues = createSelector(
         'OppholdInntektOgPerioderForm',
         ownProps.behandlingId,
         ownProps.behandlingVersjon,
-      )(state, 'inntekter'),
-    (state, ownProps) =>
-      behandlingFormValueSelector(
-        'OppholdInntektOgPerioderForm',
-        ownProps.behandlingId,
-        ownProps.behandlingVersjon,
       )(state, 'medlemskapPerioder'),
     (state, ownProps) =>
       behandlingFormValueSelector(
@@ -157,7 +145,7 @@ const buildInitialValues = createSelector(
       )(state, 'gjeldendeFom'),
     (state, ownProps) => ownProps.alleKodeverk,
   ],
-  (valgtPeriode, alleAksjonspunkter, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
+  (valgtPeriode, alleAksjonspunkter, soknad, person, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
     const aksjonspunkter = alleAksjonspunkter
       .filter(
         ap =>
@@ -179,7 +167,6 @@ const buildInitialValues = createSelector(
     const kodeverkFn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
     return {
       ...valgtPeriode,
-      ...InntektOgYtelserFaktaPanel.buildInitialValues(person, inntekter),
       ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, valgtPeriode, aksjonspunkter),
       ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(
         valgtPeriode,

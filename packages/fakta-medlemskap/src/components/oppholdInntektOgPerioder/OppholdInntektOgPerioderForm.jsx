@@ -247,7 +247,6 @@ export const transformValues = (values, aksjonspunkter) => {
           id,
           fixedMedlemskapPerioder,
           foreldre,
-          inntekter,
           manuellVurderingType,
           hasBosattAksjonspunkt,
           hasPeriodeAksjonspunkt,
@@ -278,7 +277,6 @@ const buildInitalValues = createSelector(
     person,
     gjeldendeFom: medlem.fom,
     medlemskapPerioder: medlem.medlemskapPerioder || [],
-    inntekter: medlem.inntekt,
     perioder: (medlem.perioder || []).map(periode => ({
       ...periode,
       id: guid(),

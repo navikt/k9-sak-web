@@ -11,7 +11,7 @@ class NøkkeltallFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <NøkkeltallIndex {...props} />;
 
-  getOverstyrVisningAvKomponent = ({ forbrukteDager }) => !!forbrukteDager;
+  getOverstyrVisningAvKomponent = ({ forbrukteDager }) => !!forbrukteDager?.sisteUttaksplan;
 
   getData = ({ forbrukteDager }) => forbrukteDager;
 }
