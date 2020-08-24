@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2
       - name: Sette opp Node
         uses: actions/setup-node@v1
         with:
@@ -28,7 +28,7 @@ jobs:
           echo "::set-output name=dir::$(yarn cache dir)"
           echo "::set-env name=TAG::$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
       - name: Cache node modules
-        uses: actions/cache@v1.1.0
+        uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -52,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lukk gamle issues
-        uses: actions/github-script@v2
+        uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -105,7 +105,7 @@ jobs:
 
       - name: Trigg deploy til dev-fss
         if: success()
-        uses: actions/github-script@v2.0.1
+        uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GA_P_TOKEN}}
           script: |
