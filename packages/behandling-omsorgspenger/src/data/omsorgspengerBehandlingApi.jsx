@@ -48,6 +48,7 @@ export const OmsorgspengerBehandlingApiKeys = {
   OMSORGEN_FOR: 'OMSORGEN_FOR',
   FORBRUKTE_DAGER: 'FORBRUKTE_DAGER',
   FULL_UTTAKSPLAN: 'FULL_UTTAKSPLAN',
+  INNTEKT_OG_YTELSER: 'INNTEKT_OG_YTELSER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -80,6 +81,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('omsorgen-for', OmsorgspengerBehandlingApiKeys.OMSORGEN_FOR)
   .withRel('forbrukte-dager', OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER)
   .withRel('full-uttaksplan', OmsorgspengerBehandlingApiKeys.FULL_UTTAKSPLAN)
+  .withRel('inntekt', OmsorgspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
 
   // operasjoner
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', OmsorgspengerBehandlingApiKeys.UPDATE_ON_HOLD)
