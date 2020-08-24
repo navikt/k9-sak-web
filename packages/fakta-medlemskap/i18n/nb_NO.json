@@ -18,13 +18,6 @@
   "OppholdINorgeOgAdresserFaktaPanel.Yes": "Ja",
   "OppholdINorgeOgAdresserFaktaPanel.No": "Nei",
 
-  "InntektOgYtelserFaktaPanel.Person": "Person",
-  "InntektOgYtelserFaktaPanel.Employer": "Arbeidsgiver/ytelse",
-  "InntektOgYtelserFaktaPanel.Period": "Periode",
-  "InntektOgYtelserFaktaPanel.Amount": "Beløp",
-  "InntektOgYtelserFaktaPanel.ApplicationInformation": "Inntekt og ytelser fra NAV",
-  "InntektOgYtelserFaktaPanel.NoInformation": "Ingen inntekt i Norge de siste tre månedene",
-
   "PerioderMedMedlemskapFaktaPanel.ApplicationInformation": "Perioder med medlemskap",
   "PerioderMedMedlemskapFaktaPanel.Period": "Periode",
   "PerioderMedMedlemskapFaktaPanel.Coverage": "Dekning",
