@@ -27,7 +27,8 @@ SOFTWARE.
 */
 
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import * as NodeCache from 'node-cache';
+
+import NodeCache from 'node-cache' ;
 
 const byLowerCase = toFind => value => value.toLowerCase() === toFind;
 const getKeys = headers => Object.keys(headers);

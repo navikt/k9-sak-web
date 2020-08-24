@@ -9,7 +9,7 @@ import initRestMethods from './initRestMethods';
  */
 const getAxiosHttpClientApi = () => {
 	
-  const axiosInstance = axiosEtag(axios.create());
+  const axiosInstance = axiosEtag();
 
   // @ts-ignore
   axiosInstance.CancelToken = axios.CancelToken;
