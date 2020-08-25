@@ -54,10 +54,7 @@ export const ToTrinnsFormImpl = ({
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
       {totrinnskontrollContext.map(({
-                                      contextCode,
-                                      skjermlenke,
-                                      aksjonspunkter,
-                                      skjermlenkeNavn
+                                      contextCode, skjermlenke, aksjonspunkter, skjermlenkeNavn,
                                     }, contextIndex) => {
         if (aksjonspunkter.length > 0) {
           return (
