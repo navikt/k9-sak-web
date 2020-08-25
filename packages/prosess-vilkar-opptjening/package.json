@@ -12,7 +12,7 @@
     "nav-frontend-core": "4.0.12",
     "nav-frontend-grid": "1.0.27",
     "nav-frontend-lenker": "1.0.35",
-    "nav-frontend-lenker-style": "0.2.26",
+    "nav-frontend-lenker-style": "0.2.29",
     "nav-frontend-typografi": "2.0.18",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
