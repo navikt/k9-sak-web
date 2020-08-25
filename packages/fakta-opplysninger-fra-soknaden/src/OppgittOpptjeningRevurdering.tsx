@@ -6,7 +6,6 @@ import { InjectedFormProps } from 'redux-form';
 import messages from '../i18n/nb_NO.json';
 import OppgittOpptjeningRevurderingForm from './OppgittOpptjeningRevurderingForm';
 
-
 const cache = createIntlCache();
 
 const intlConfig = createIntl(
@@ -31,10 +30,18 @@ interface Props {
 const OppgittOpptjeningRevurdering = (props: Props & InjectedFormProps) => {
   const {
     behandling: { id, versjon },
+    kanEndrePåSøknadsopplysninger,
+    aksjonspunkter,
   } = props;
   return (
     <RawIntlProvider value={intlConfig}>
-      <OppgittOpptjeningRevurderingForm behandlingId={id} behandlingVersjon={versjon} {...props} />
+      <OppgittOpptjeningRevurderingForm
+        behandlingId={id}
+        behandlingVersjon={versjon}
+        {...props}
+        kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
+        aksjonspunkter={aksjonspunkter}
+      />
     </RawIntlProvider>
   );
 };
