@@ -10,7 +10,6 @@ import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import ytelsestype from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
 import ApprovalField from './ApprovalField';
 
 import styles from './ToTrinnsForm.less';
@@ -42,7 +41,7 @@ export const ToTrinnsFormImpl = ({
                                    alleKodeverk,
                                    disableGodkjennKnapp,
                                    erTilbakekreving,
-                                   fagsakYtelseType,
+                                   tilgjengeligeVedtaksbrev,
                                    ...formProps
                                  }) => {
   if (formState.length !== totrinnskontrollContext.length) {
@@ -50,12 +49,15 @@ export const ToTrinnsFormImpl = ({
   }
 
   const erKlage = !!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK;
-  const erOmsorgspenger = fagsakYtelseType.kode === ytelsestype.OMSORGSPENGER;
+  const harVedtaksbrev = Array.isArray(tilgjengeligeVedtaksbrev) && !!tilgjengeligeVedtaksbrev.length;
 
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
       {totrinnskontrollContext.map(({
-                                      contextCode, skjermlenke, aksjonspunkter, skjermlenkeNavn,
+                                      contextCode,
+                                      skjermlenke,
+                                      aksjonspunkter,
+                                      skjermlenkeNavn
                                     }, contextIndex) => {
         if (aksjonspunkter.length > 0) {
           return (
@@ -100,7 +102,7 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving && !erOmsorgspenger && (
+        {harVedtaksbrev && !erKlage && !erBehandlingEtterKlage && !erTilbakekreving && (
           <>
             <VerticalSpacer eightPx />
             <button
@@ -129,7 +131,7 @@ ToTrinnsFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
-  fagsakYtelseType: PropTypes.shape().isRequired
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 ToTrinnsFormImpl.defaultProps = {

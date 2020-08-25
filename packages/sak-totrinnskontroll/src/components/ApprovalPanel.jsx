@@ -107,7 +107,7 @@ export class ApprovalPanel extends Component {
       erBehandlingEtterKlage,
       disableGodkjennKnapp,
       erTilbakekreving,
-      fagsakYtelseType
+      tilgjengeligeVedtaksbrev
     } = this.props;
     const { approvals } = this.state;
 
@@ -141,7 +141,7 @@ export class ApprovalPanel extends Component {
                   erBehandlingEtterKlage={erBehandlingEtterKlage}
                   disableGodkjennKnapp={disableGodkjennKnapp}
                   erTilbakekreving={erTilbakekreving}
-                  fagsakYtelseType={fagsakYtelseType}
+                  tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
                 />
               </div>
             ) : (
@@ -189,7 +189,7 @@ ApprovalPanel.propTypes = {
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
-  fagsakYtelseType: PropTypes.shape().isRequired
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 ApprovalPanel.defaultProps = {
