@@ -1,4 +1,3 @@
-import ytelsestype from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
 import React, { Component } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { push } from 'connected-react-router';
@@ -226,7 +225,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
               revurderingVarslingArsak={revurderingVarslingArsak}
               templates={props.brevmaler}
               isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
-              kanForhandsviseBrev={!!props.tilgjengeligeVedtaksbrev.length}
+              kanForhandsviseBrev={!!props.tilgjengeligeVedtaksbrev?.length}
             />
           }
         />

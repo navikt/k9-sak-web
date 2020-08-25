@@ -5,8 +5,6 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import ytelsestype from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
-import kodeverkTyper from "@fpsak-frontend/kodeverk/src/kodeverkTyper";
 import { FormattedMessage } from 'react-intl';
 import { ToTrinnsFormImpl } from './ToTrinnsForm';
 import ApprovalField from './ApprovalField';
@@ -141,7 +139,7 @@ describe('<ToTrinnsForm>', () => {
       readOnly={false}
       intl={intlMock}
       disableGodkjennKnapp={false}
-      fagsakYtelseType={{kodeverk: kodeverkTyper.FAGSAK_YTELSE, kode: ytelsestype.FORELDREPENGER}}
+      tilgjengeligeVedtaksbrev={['FRITEKST']}
     />);
 
     const form = wrapper.find('form');
@@ -177,7 +175,7 @@ describe('<ToTrinnsForm>', () => {
       readOnly={false}
       intl={intlMock}
       disableGodkjennKnapp={false}
-      fagsakYtelseType={{kodeverk: kodeverkTyper.FAGSAK_YTELSE, kode: ytelsestype.FORELDREPENGER}}
+      tilgjengeligeVedtaksbrev={['FRITEKST']}
     />);
 
     const form = wrapper.find('form');
@@ -245,7 +243,7 @@ describe('<ToTrinnsForm>', () => {
       readOnly={false}
       intl={intlMock}
       disableGodkjennKnapp={false}
-      fagsakYtelseType={{kodeverk: kodeverkTyper.FAGSAK_YTELSE, kode: ytelsestype.FORELDREPENGER}}
+      tilgjengeligeVedtaksbrev={['FRITEKST']}
     />);
 
     const form = wrapper.find('form');
@@ -288,7 +286,7 @@ describe('<ToTrinnsForm>', () => {
       intl={intlMock}
       disableGodkjennKnapp={false}
       erTilbakekreving
-      fagsakYtelseType={{kodeverk: kodeverkTyper.FAGSAK_YTELSE, kode: ytelsestype.FORELDREPENGER}}
+      tilgjengeligeVedtaksbrev={['FRITEKST']}
     />);
 
     const form = wrapper.find('form');
