@@ -153,6 +153,11 @@ describe('<OmsorgspengerFakta>', () => {
         harAksjonspunkt: true,
         tekst: 'Arbeidsforhold',
       },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Inntekt og ytelser',
+      },
     ]);
   });
 
