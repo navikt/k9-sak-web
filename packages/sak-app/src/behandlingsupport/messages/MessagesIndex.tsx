@@ -214,7 +214,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
           endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
           endpointParams={{[fpsakApi.TILGJENGELIGE_VEDTAKSBREV.name]: {behandlingsid: behandlingUuid}}}
           loadingPanel={<LoadingPanel />}
-          render={(props: DataProps) =>
+          render={(props: DataProps) => (
             <MeldingerSakIndex
               submitCallback={this.submitCallback}
               recipients={recipients}
@@ -227,7 +227,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
               isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
               kanForhandsviseBrev={!!props.tilgjengeligeVedtaksbrev?.length}
             />
-          }
+          )}
         />
 
         {submitFinished && showSettPaVentModal && (

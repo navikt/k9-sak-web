@@ -60,7 +60,7 @@ export class BehandlingsupportDataResolver extends Component<OwnProps> {
       }
     }
     if (behandlingUuid) {
-      fetchTilgjengeligeVedtaksbrev({behandlingsid: behandlingUuid}); // TODO: Må ha UUID. Ny selector?
+      fetchTilgjengeligeVedtaksbrev({behandlingsid: behandlingUuid});
     }
   };
 
