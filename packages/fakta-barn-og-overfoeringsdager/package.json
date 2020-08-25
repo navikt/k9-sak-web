@@ -27,7 +27,7 @@
     "nav-frontend-popover-style": "^0.0.5",
     "nav-frontend-js-utils": "^1.0.8",
     "react": "^16.13.1",
-    "react-intl": "^3.12.0"
+    "react-intl": "^5.7.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
