@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosEtag from './axiosEtag';
 
 import initRestMethods from './initRestMethods';
 
@@ -7,7 +8,7 @@ import initRestMethods from './initRestMethods';
  * Oppretter nytt http-klient api basert på Axios.
  */
 const getAxiosHttpClientApi = () => {
-  const axiosInstance = axios.create();
+  const axiosInstance = axiosEtag();
 
   // @ts-ignore
   axiosInstance.CancelToken = axios.CancelToken;
@@ -17,7 +18,7 @@ const getAxiosHttpClientApi = () => {
 
   // TODO (TOR) sentry bør ikkje vera ein avhengighet til pakka "rest-api". Konfigurer dette utanfor
   axiosInstance.interceptors.request.use((c): any => {
-    const navCallId = `CallId_${(new Date()).getTime()}_${Math.floor(Math.random() * 1000000000)}`;
+    const navCallId = `CallId_${new Date().getTime()}_${Math.floor(Math.random() * 1000000000)}`;
     const config = { ...c };
     config.headers['Nav-Callid'] = navCallId;
     return config;

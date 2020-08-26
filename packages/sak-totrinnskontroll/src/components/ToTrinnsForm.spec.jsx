@@ -12,85 +12,77 @@ import getAksjonspunktText from './ApprovalTextUtils';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
 describe('<ToTrinnsForm>', () => {
-  const getTotrinnsaksjonspunkterFoedsel = () => (
-    [
-      {
-        aksjonspunktKode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
-        beregningDto: null,
-        besluttersBegrunnelse: null,
-        opptjeningAktiviteter: [],
-        totrinnskontrollGodkjent: null,
-        vilkar: vilkarType.FODSELSVILKARET_MOR,
-        vurderPaNyttArsaker: [],
-      },
-      {
-        aksjonspunktKode: aksjonspunktCodes.TERMINBEKREFTELSE,
-        beregningDto: null,
-        besluttersBegrunnelse: null,
-        opptjeningAktiviteter: [],
-        totrinnskontrollGodkjent: null,
-        vilkar: vilkarType.FODSELSVILKARET_MOR,
-        vurderPaNyttArsaker: [],
-      },
-      {
-        aksjonspunktKode: aksjonspunktCodes.AUTO_VENT_PÅ_FODSELREGISTRERING,
-        beregningDto: null,
-        besluttersBegrunnelse: null,
-        opptjeningAktiviteter: [],
-        totrinnskontrollGodkjent: null,
-        vilkar: vilkarType.FODSELSVILKARET_MOR,
-        vurderPaNyttArsaker: [],
-      },
-    ]
-  );
+  const getTotrinnsaksjonspunkterFoedsel = () => [
+    {
+      aksjonspunktKode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+      beregningDto: null,
+      besluttersBegrunnelse: null,
+      opptjeningAktiviteter: [],
+      totrinnskontrollGodkjent: null,
+      vilkar: vilkarType.FODSELSVILKARET_MOR,
+      vurderPaNyttArsaker: [],
+    },
+    {
+      aksjonspunktKode: aksjonspunktCodes.TERMINBEKREFTELSE,
+      beregningDto: null,
+      besluttersBegrunnelse: null,
+      opptjeningAktiviteter: [],
+      totrinnskontrollGodkjent: null,
+      vilkar: vilkarType.FODSELSVILKARET_MOR,
+      vurderPaNyttArsaker: [],
+    },
+    {
+      aksjonspunktKode: aksjonspunktCodes.AUTO_VENT_PÅ_FODSELREGISTRERING,
+      beregningDto: null,
+      besluttersBegrunnelse: null,
+      opptjeningAktiviteter: [],
+      totrinnskontrollGodkjent: null,
+      vilkar: vilkarType.FODSELSVILKARET_MOR,
+      vurderPaNyttArsaker: [],
+    },
+  ];
 
+  const getTotrinnsaksjonspunkterOmsorg = () => [
+    {
+      aksjonspunktKode: aksjonspunktCodes.OMSORGSOVERTAKELSE,
+      beregningDto: null,
+      besluttersBegrunnelse: null,
+      opptjeningAktiviteter: [],
+      totrinnskontrollGodkjent: null,
+      vilkar: vilkarType.OMSORGSVILKARET,
+      vurderPaNyttArsaker: [],
+    },
+    {
+      aksjonspunktKode: aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET,
+      beregningDto: null,
+      besluttersBegrunnelse: null,
+      opptjeningAktiviteter: [],
+      totrinnskontrollGodkjent: null,
+      vilkar: vilkarType.OMSORGSVILKARET,
+      vurderPaNyttArsaker: [],
+    },
+  ];
 
-  const getTotrinnsaksjonspunkterOmsorg = () => (
-    [
-      {
-        aksjonspunktKode: aksjonspunktCodes.OMSORGSOVERTAKELSE,
-        beregningDto: null,
-        besluttersBegrunnelse: null,
-        opptjeningAktiviteter: [],
-        totrinnskontrollGodkjent: null,
-        vilkar: vilkarType.OMSORGSVILKARET,
-        vurderPaNyttArsaker: [],
-      },
-      {
-        aksjonspunktKode: aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET,
-        beregningDto: null,
-        besluttersBegrunnelse: null,
-        opptjeningAktiviteter: [],
-        totrinnskontrollGodkjent: null,
-        vilkar: vilkarType.OMSORGSVILKARET,
-        vurderPaNyttArsaker: [],
-      },
-    ]
-  );
-
-  const getTotrinnsaksjonspunkterForeldreansvar = () => (
-    [
-      {
-        aksjonspunktKode: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
-        beregningDto: null,
-        besluttersBegrunnelse: null,
-        opptjeningAktiviteter: [],
-        totrinnskontrollGodkjent: null,
-        vilkar: vilkarType.FORELDREANSVARSVILKARET_4_LEDD,
-        vurderPaNyttArsaker: [],
-      },
-      {
-        aksjonspunktKode: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD,
-        beregningDto: null,
-        besluttersBegrunnelse: null,
-        opptjeningAktiviteter: [],
-        totrinnskontrollGodkjent: null,
-        vilkar: vilkarType.FORELDREANSVARSVILKARET_2_LEDD,
-        vurderPaNyttArsaker: [],
-      },
-    ]
-  );
-
+  const getTotrinnsaksjonspunkterForeldreansvar = () => [
+    {
+      aksjonspunktKode: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
+      beregningDto: null,
+      besluttersBegrunnelse: null,
+      opptjeningAktiviteter: [],
+      totrinnskontrollGodkjent: null,
+      vilkar: vilkarType.FORELDREANSVARSVILKARET_4_LEDD,
+      vurderPaNyttArsaker: [],
+    },
+    {
+      aksjonspunktKode: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD,
+      beregningDto: null,
+      besluttersBegrunnelse: null,
+      opptjeningAktiviteter: [],
+      totrinnskontrollGodkjent: null,
+      vilkar: vilkarType.FORELDREANSVARSVILKARET_2_LEDD,
+      vurderPaNyttArsaker: [],
+    },
+  ];
 
   const getBehandling = () => ({
     id: 1234,
@@ -109,72 +101,84 @@ describe('<ToTrinnsForm>', () => {
   });
 
   it('skal ikkje vise noko om approvals i formstate er ulik approvals frå resttjeneste', () => {
-    const formState = [{
-      contextCode: 'test',
-      aksjonspunkter: [],
-    },
+    const formState = [
+      {
+        contextCode: 'test',
+        aksjonspunkter: [],
+      },
       {
         contextCode: 'test2',
         aksjonspunkter: [],
-      }];
+      },
+    ];
 
-    const totrinnskontrollContext = [{
-      contextCode: 'test',
-      aksjonspunkter: [],
-    },
+    const totrinnskontrollContext = [
+      {
+        contextCode: 'test',
+        aksjonspunkter: [],
+      },
     ];
 
     const behandling = getBehandling();
 
     const isForeldrepenger = true;
 
-    const wrapper = shallowWithIntl(<ToTrinnsFormImpl
-      {...reduxFormPropsMock}
-      totrinnskontrollContext={totrinnskontrollContext}
-      formState={formState}
-      location={{ pathname: 'test' }}
-      forhandsvisVedtaksbrev={sinon.spy()}
-      behandling={behandling}
-      getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
-      readOnly={false}
-      intl={intlMock}
-      disableGodkjennKnapp={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <ToTrinnsFormImpl
+        {...reduxFormPropsMock}
+        totrinnskontrollContext={totrinnskontrollContext}
+        formState={formState}
+        location={{ pathname: 'test' }}
+        forhandsvisVedtaksbrev={sinon.spy()}
+        behandling={behandling}
+        getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
+        readOnly={false}
+        intl={intlMock}
+        disableGodkjennKnapp={false}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
+      />,
+    );
 
     const form = wrapper.find('form');
     expect(form).to.have.length(0);
   });
 
   it('skal rendre form om approvals i formstate er lik lengde som approvals frå resttjeneste', () => {
-    const formState = [{
-      contextCode: 'test',
-      aksjonspunkter: [],
-    }];
+    const formState = [
+      {
+        contextCode: 'test',
+        aksjonspunkter: [],
+      },
+    ];
 
-    const totrinnskontrollContext = [{
-      contextCode: 'test',
-      skjermlenkeId: 'Behandlingspunkt.Fodselsvilkaret',
-      skjermlenke: 'testLocation',
-      aksjonspunkter: [],
-    },
+    const totrinnskontrollContext = [
+      {
+        contextCode: 'test',
+        skjermlenkeId: 'Behandlingspunkt.Fodselsvilkaret',
+        skjermlenke: 'testLocation',
+        aksjonspunkter: [],
+      },
     ];
 
     const behandling = getBehandling();
 
     const isForeldrepenger = true;
 
-    const wrapper = shallowWithIntl(<ToTrinnsFormImpl
-      {...reduxFormPropsMock}
-      totrinnskontrollContext={totrinnskontrollContext}
-      formState={formState}
-      location={{ pathname: 'test' }}
-      forhandsvisVedtaksbrev={sinon.spy()}
-      behandling={behandling}
-      getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
-      readOnly={false}
-      intl={intlMock}
-      disableGodkjennKnapp={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <ToTrinnsFormImpl
+        {...reduxFormPropsMock}
+        totrinnskontrollContext={totrinnskontrollContext}
+        formState={formState}
+        location={{ pathname: 'test' }}
+        forhandsvisVedtaksbrev={sinon.spy()}
+        behandling={behandling}
+        getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
+        readOnly={false}
+        intl={intlMock}
+        disableGodkjennKnapp={false}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
+      />,
+    );
 
     const form = wrapper.find('form');
     expect(form).to.have.length(1);
@@ -186,17 +190,12 @@ describe('<ToTrinnsForm>', () => {
     expect(mes.prop('id')).equal('ToTrinnsForm.ForhandvisBrev');
   });
 
-
   it('skal rendre form om approvals i formstate er lik lengde som approvals frå resttjeneste', () => {
     const aksjonspunkterFoedsel = getTotrinnsaksjonspunkterFoedsel();
     const aksjonspunkterOmsorg = getTotrinnsaksjonspunkterOmsorg();
     const aksjonspunkterForeldreansvar = getTotrinnsaksjonspunkterForeldreansvar();
 
-
-    const formState = [{
-      contextCode: 'test',
-      aksjonspunkter: [],
-    },
+    const formState = [
       {
         contextCode: 'test',
         aksjonspunkter: [],
@@ -204,14 +203,20 @@ describe('<ToTrinnsForm>', () => {
       {
         contextCode: 'test',
         aksjonspunkter: [],
-      }];
+      },
+      {
+        contextCode: 'test',
+        aksjonspunkter: [],
+      },
+    ];
 
-    const totrinnskontrollContext = [{
-      contextCode: 'FOEDSEL',
-      skjermlenkeId: 'Behandlingspunkt.Fodselsvilkaret',
-      skjermlenke: 'testLocation',
-      aksjonspunkter: aksjonspunkterFoedsel,
-    },
+    const totrinnskontrollContext = [
+      {
+        contextCode: 'FOEDSEL',
+        skjermlenkeId: 'Behandlingspunkt.Fodselsvilkaret',
+        skjermlenke: 'testLocation',
+        aksjonspunkter: aksjonspunkterFoedsel,
+      },
       {
         contextCode: 'OMSORG',
         skjermlenkeId: 'Behandlingspunkt.Omsorgsvilkaret',
@@ -230,18 +235,21 @@ describe('<ToTrinnsForm>', () => {
 
     const isForeldrepenger = true;
 
-    const wrapper = shallowWithIntl(<ToTrinnsFormImpl
-      {...reduxFormPropsMock}
-      totrinnskontrollContext={totrinnskontrollContext}
-      formState={formState}
-      location={{ pathname: 'test' }}
-      forhandsvisVedtaksbrev={sinon.spy()}
-      behandling={behandling}
-      getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
-      readOnly={false}
-      intl={intlMock}
-      disableGodkjennKnapp={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <ToTrinnsFormImpl
+        {...reduxFormPropsMock}
+        totrinnskontrollContext={totrinnskontrollContext}
+        formState={formState}
+        location={{ pathname: 'test' }}
+        forhandsvisVedtaksbrev={sinon.spy()}
+        behandling={behandling}
+        getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
+        readOnly={false}
+        intl={intlMock}
+        disableGodkjennKnapp={false}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
+      />,
+    );
 
     const form = wrapper.find('form');
     expect(form).to.have.length(1);
@@ -254,36 +262,42 @@ describe('<ToTrinnsForm>', () => {
   });
 
   it('skal ikke vise preview brev link for tilbakekreving', () => {
-    const formState = [{
-      contextCode: 'test',
-      aksjonspunkter: [],
-    }];
+    const formState = [
+      {
+        contextCode: 'test',
+        aksjonspunkter: [],
+      },
+    ];
 
-    const totrinnskontrollContext = [{
-      contextCode: 'test',
-      skjermlenkeId: 'Behandlingspunkt.Fodselsvilkaret',
-      skjermlenke: 'testLocation',
-      aksjonspunkter: [],
-    },
+    const totrinnskontrollContext = [
+      {
+        contextCode: 'test',
+        skjermlenkeId: 'Behandlingspunkt.Fodselsvilkaret',
+        skjermlenke: 'testLocation',
+        aksjonspunkter: [],
+      },
     ];
 
     const behandling = getBehandling();
 
     const isForeldrepenger = true;
 
-    const wrapper = shallowWithIntl(<ToTrinnsFormImpl
-      {...reduxFormPropsMock}
-      totrinnskontrollContext={totrinnskontrollContext}
-      formState={formState}
-      location={{ pathname: 'test' }}
-      forhandsvisVedtaksbrev={sinon.spy()}
-      behandling={behandling}
-      getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
-      readOnly={false}
-      intl={intlMock}
-      disableGodkjennKnapp={false}
-      erTilbakekreving
-    />);
+    const wrapper = shallowWithIntl(
+      <ToTrinnsFormImpl
+        {...reduxFormPropsMock}
+        totrinnskontrollContext={totrinnskontrollContext}
+        formState={formState}
+        location={{ pathname: 'test' }}
+        forhandsvisVedtaksbrev={sinon.spy()}
+        behandling={behandling}
+        getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
+        readOnly={false}
+        intl={intlMock}
+        disableGodkjennKnapp={false}
+        erTilbakekreving
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
+      />,
+    );
 
     const form = wrapper.find('form');
     expect(form).to.have.length(1);

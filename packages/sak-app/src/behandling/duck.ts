@@ -117,6 +117,7 @@ export const getBehandlingVersjon = createSelector(
   behandlingContext => behandlingContext.behandlingVersjon,
 );
 
+export const getSelectedBehandlingUuid = createSelector([getBehandling], behandling => behandling?.uuid);
 export const getBehandlingStatus = createSelector([getBehandling], behandling =>
   behandling ? behandling.status : undefined,
 );
