@@ -184,6 +184,7 @@ describe('<ApprovalPanel>', () => {
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
         disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -219,6 +220,7 @@ describe('<ApprovalPanel>', () => {
         skjemalenkeTyper={[]}
         disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -263,6 +265,7 @@ describe('<ApprovalPanel>', () => {
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
         disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 

@@ -73,6 +73,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -139,6 +140,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
     const label = wrapper.find('Element');
@@ -201,6 +203,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -265,6 +268,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -325,6 +329,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -388,6 +393,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -454,6 +460,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -519,6 +526,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -581,6 +589,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -644,6 +653,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -834,6 +844,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -866,6 +877,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -898,6 +910,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
