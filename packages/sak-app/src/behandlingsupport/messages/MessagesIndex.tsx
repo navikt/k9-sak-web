@@ -30,8 +30,8 @@ import fpsakApi from '../../data/fpsakApi';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import { resetSubmitMessageActionCreator, submitMessageActionCreator } from './duck';
 
-const revurderingData = [fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP, fpsakApi.BREVMALER];
-const meldingData = [fpsakApi.BREVMALER];
+const revurderingData = [fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP, fpsakApi.BREVMALER, fpsakApi.TILGJENGELIGE_VEDTAKSBREV];
+const meldingData = [fpsakApi.BREVMALER, fpsakApi.TILGJENGELIGE_VEDTAKSBREV];
 
 interface OwnProps {
   submitFinished?: boolean;
@@ -67,6 +67,7 @@ interface DataProps {
     tilgjengelig: boolean;
   }[];
   harApentKontrollerRevurderingAp?: boolean;
+  tilgjengeligeVedtaksbrev: string[];
 }
 
 /**
@@ -188,6 +189,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
       behandlingIdentifier,
       selectedBehandlingVersjon,
       revurderingVarslingArsak,
+      behandlingUuid
     } = this.props;
     const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
 
@@ -210,6 +212,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
           }
           key={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? 0 : 1}
           endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
+          endpointParams={{[fpsakApi.TILGJENGELIGE_VEDTAKSBREV.name]: {behandlingsid: behandlingUuid}}}
           loadingPanel={<LoadingPanel />}
           render={(props: DataProps) => (
             <MeldingerSakIndex
@@ -222,6 +225,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
               revurderingVarslingArsak={revurderingVarslingArsak}
               templates={props.brevmaler}
               isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
+              kanForhandsviseBrev={!!props.tilgjengeligeVedtaksbrev?.length}
             />
           )}
         />
