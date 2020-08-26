@@ -41,6 +41,7 @@ export const ToTrinnsFormImpl = ({
                                    alleKodeverk,
                                    disableGodkjennKnapp,
                                    erTilbakekreving,
+                                   tilgjengeligeVedtaksbrev,
                                    ...formProps
                                  }) => {
   if (formState.length !== totrinnskontrollContext.length) {
@@ -48,6 +49,7 @@ export const ToTrinnsFormImpl = ({
   }
 
   const erKlage = !!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK;
+  const harVedtaksbrev = Array.isArray(tilgjengeligeVedtaksbrev) && !!tilgjengeligeVedtaksbrev.length;
 
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
@@ -97,7 +99,7 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving && (
+        {harVedtaksbrev && !erKlage && !erBehandlingEtterKlage && !erTilbakekreving && (
           <>
             <VerticalSpacer eightPx />
             <button
@@ -126,6 +128,7 @@ ToTrinnsFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 ToTrinnsFormImpl.defaultProps = {
