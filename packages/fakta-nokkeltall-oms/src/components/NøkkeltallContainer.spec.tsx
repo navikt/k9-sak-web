@@ -7,7 +7,7 @@ import ForbrukteDager from './ForbrukteDager';
 
 describe('<NøkkeltallContainer>', () => {
   describe('Forbrukte dager', () => {
-    const forbrukteDagerPropsForRestTidOgPeriode = (restTid: string, periode: string) => {
+    const forbrukteDagerPropsForRestTidOgPeriode = (restTid: string, periode: string, smitteverndager?: string) => {
       // @ts-ignore
       const uttaksperiode: Uttaksperiode = {
         periode,
@@ -20,6 +20,7 @@ describe('<NøkkeltallContainer>', () => {
           restTid={restTid}
           benyttetRammemelding
           antallDagerInfotrygd={0}
+          smitteverndager={smitteverndager}
           uttaksperioder={[uttaksperiode]}
         />,
       );
@@ -30,20 +31,22 @@ describe('<NøkkeltallContainer>', () => {
       return forbrukteDagerBoks.props();
     };
 
-    it('rendrer smittevern dersom restdager er negative og i smittevernsperioden', () => {
+    it('rendrer smittevern dersom smitteverndager finnes', () => {
       const negativRestTid = 'PT-10H-30M';
+      const smitteverndager = 'PT10H30M';
       const periodeISmittevernstiden = '2020-05-05/2020-05-31';
 
       const { smittevernDagerTimer, utbetaltForMangeDagerTimer } = forbrukteDagerPropsForRestTidOgPeriode(
         negativRestTid,
         periodeISmittevernstiden,
+        smitteverndager,
       );
 
       expect(smittevernDagerTimer).to.eql({ dager: 1, timer: 3 });
       expect(utbetaltForMangeDagerTimer).to.eql(null);
     });
 
-    it('rendrer for mange utbetalte dager dersom restdager er negative og utenfor smittevernsperioden', () => {
+    it('rendrer for mange utbetalte dager dersom restdager er negative smitteverndager ikke finnes', () => {
       const negativRestTid = 'PT-10H-30M';
       const periodeUtenomSmittevernstiden = '2020-02-05/2020-02-31';
       const { smittevernDagerTimer, utbetaltForMangeDagerTimer } = forbrukteDagerPropsForRestTidOgPeriode(
