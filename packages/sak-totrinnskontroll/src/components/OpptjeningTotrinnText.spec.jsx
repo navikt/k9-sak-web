@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
-const lagOpptjeningAktivitetArbeidMedNavn = (resultat) => ({
+const lagOpptjeningAktivitetArbeidMedNavn = resultat => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Arbeid',
   arbeidsgiverNavn: 'Andersen Transport AS',
@@ -11,7 +11,7 @@ const lagOpptjeningAktivitetArbeidMedNavn = (resultat) => ({
   godkjent: resultat === 'GODKJENT',
 });
 
-const lagOpptjeningAktivitetArbeidUtenNavn = (resultat) => ({
+const lagOpptjeningAktivitetArbeidUtenNavn = resultat => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Arbeid',
   arbeidsgiverNavn: null,
@@ -19,7 +19,7 @@ const lagOpptjeningAktivitetArbeidUtenNavn = (resultat) => ({
   godkjent: resultat === 'GODKJENT',
 });
 
-const lagOpptjeningAktivitet = (resultat) => ({
+const lagOpptjeningAktivitet = resultat => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Aktivitet',
   arbeidsgiverNavn: null,
@@ -29,87 +29,76 @@ const lagOpptjeningAktivitet = (resultat) => ({
 
 describe('<OpptjeningTotrinnnText>', () => {
   it('skal vise korrekt tekst for opptjening med endring av arbeid med navn', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitetArbeidMedNavn('ENDRING')}
-    />);
+    const wrapper = shallowWithIntl(
+      <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('ENDRING')} />,
+    );
     const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.EndringArbeidMedNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med endring av arbeid uten navn', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('ENDRING')}
-    />);
+    const wrapper = shallowWithIntl(
+      <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('ENDRING')} />,
+    );
     const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.EndringArbeidUtenNavn');
   });
 
-
   it('skal vise korrekt tekst for opptjening med endring av aktivitet', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitet('ENDRING')}
-    />);
+    const wrapper = shallowWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('ENDRING')} />);
     const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.EndringAktivitet');
   });
 
-
   it('skal vise korrekt tekst for opptjening med godkjenning av arbeid med navn', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitetArbeidMedNavn('GODKJENT')}
-    />);
+    const wrapper = shallowWithIntl(
+      <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('GODKJENT')} />,
+    );
     const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.GodkjenningArbeidMedNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med godkjenning av arbeid uten navn', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('GODKJENT')}
-    />);
+    const wrapper = shallowWithIntl(
+      <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('GODKJENT')} />,
+    );
     const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.GodkjenningArbeidUtenNavn');
   });
 
-
   it('skal vise korrekt tekst for opptjening med godkjenning av aktivitet', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitet('GODKJENT')}
-    />);
+    const wrapper = shallowWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('GODKJENT')} />);
     const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.GodkjenningAktivitet');
   });
 
-
   it('skal vise korrekt tekst for opptjening med underkjenning av arbeid med navn', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitetArbeidMedNavn('UNDERKJENNING')}
-    />);
-    const normaltekstFields = wrapper.find('FormattedHTMLMessage');
+    const wrapper = shallowWithIntl(
+      <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('UNDERKJENNING')} />,
+    );
+    const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningArbeidMedNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med underkjenning av arbeid uten navn', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('UNDERKJENNING')}
-    />);
-    const normaltekstFields = wrapper.find('FormattedHTMLMessage');
+    const wrapper = shallowWithIntl(
+      <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('UNDERKJENNING')} />,
+    );
+    const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn');
   });
 
-
   it('skal vise korrekt tekst for opptjening med underkjenning av aktivitet', () => {
-    const wrapper = shallowWithIntl(<OpptjeningTotrinnText
-      aktivitet={lagOpptjeningAktivitet('UNDERKJENNING')}
-    />);
-    const normaltekstFields = wrapper.find('FormattedHTMLMessage');
+    const wrapper = shallowWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('UNDERKJENNING')} />);
+    const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningAktivitet');
   });

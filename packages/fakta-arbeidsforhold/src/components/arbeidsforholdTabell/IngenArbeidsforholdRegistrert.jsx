@@ -7,10 +7,8 @@ import Table from '@fpsak-frontend/shared-components/src/table/Table';
 import TableRow from '@fpsak-frontend/shared-components/src/table/TableRow';
 import TableColumn from '@fpsak-frontend/shared-components/src/table/TableColumn';
 
-const IngenArbeidsforholdRegistrert = ({
-  headerTextCodes,
-}) => (
-  <Table headerTextCodes={headerTextCodes} noHover>
+const IngenArbeidsforholdRegistrert = ({ headerColumnContent }) => (
+  <Table headerColumnContent={headerColumnContent} noHover>
     <TableRow>
       <TableColumn>
         <Normaltekst>
@@ -27,7 +25,7 @@ const IngenArbeidsforholdRegistrert = ({
 );
 
 IngenArbeidsforholdRegistrert.propTypes = {
-  headerTextCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  headerColumnContent: PropTypes.arrayOf(PropTypes.node).isRequired,
 };
 
 export default IngenArbeidsforholdRegistrert;

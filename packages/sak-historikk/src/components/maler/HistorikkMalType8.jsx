@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { findEndretFeltNavn, findEndretFeltVerdi } from './felles/historikkUtils';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
@@ -23,12 +23,13 @@ const HistorikkMalType8 = ({
     if (endretFelt.fraVerdi !== null) {
       return (
         <div>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.8.ChangedFromTo"
             values={{
               fieldName,
               fromValue,
               toValue,
+              b: chunks => <b>{chunks}</b>,
             }}
           />
         </div>
@@ -36,11 +37,12 @@ const HistorikkMalType8 = ({
     }
     return (
       <div>
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="Historikk.Template.8.LagtTil"
           values={{
             fieldName,
             value: toValue,
+            b: chunks => <b>{chunks}</b>,
           }}
         />
       </div>

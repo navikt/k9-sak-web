@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, useIntl } from 'react-intl';
-
+import { FormattedMessage, useIntl } from 'react-intl';
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
@@ -52,12 +51,13 @@ const HistorikkMalType10 = ({
     }
     return (
       <div>
-        <FormattedHTMLMessage
+        <FormattedMessage
           id={messageId}
           values={{
             fieldName,
             fromValue,
             toValue,
+            b: chunks => <b>{chunks}</b>,
           }}
         />
       </div>
@@ -76,7 +76,7 @@ const HistorikkMalType10 = ({
 
       return (
         <div>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.10.ChangedFromToTrekkdager"
             values={{
               fieldName,
@@ -84,6 +84,7 @@ const HistorikkMalType10 = ({
               fromValueDays,
               toValueWeeks,
               toValueDays,
+              b: chunks => <b>{chunks}</b>,
             }}
           />
         </div>
@@ -132,21 +133,23 @@ const HistorikkMalType10 = ({
       />
 
       {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.OVST_UTTAK && (
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="Historikk.Template.10.OverstyrtVurderingPeriode"
           values={{
             periodeFom: finnFomOpplysning(historikkinnslagDel.opplysninger),
             periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
+            b: chunks => <b>{chunks}</b>,
           }}
         />
       )}
 
       {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.FASTSATT_UTTAK && (
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="Historikk.Template.10.ManuellVurderingPeriode"
           values={{
             periodeFom: finnFomOpplysning(historikkinnslagDel.opplysninger),
             periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
+            b: chunks => <b>{chunks}</b>,
           }}
         />
       )}
