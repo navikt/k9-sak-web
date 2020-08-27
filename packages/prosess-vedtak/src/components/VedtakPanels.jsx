@@ -47,6 +47,7 @@ const VedtakPanels = ({
   sendVarselOmRevurdering,
   resultatstrukturOriginalBehandling,
   vedtakVarsel,
+  tilgjengeligeVedtaksbrev
 }) => {
   const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(
     beregningsgrunnlag,
@@ -112,6 +113,7 @@ const VedtakPanels = ({
       vilkar={vilkar}
       beregningErManueltFastsatt={beregningErManueltFastsatt}
       vedtakVarsel={vedtakVarsel}
+      tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
     />
   );
 };
@@ -141,6 +143,7 @@ VedtakPanels.propTypes = {
   behandlingTypeKode: PropTypes.string.isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string)
 };
 
 VedtakPanels.defaultProps = {

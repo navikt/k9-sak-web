@@ -30,8 +30,8 @@ import fpsakApi from '../../data/fpsakApi';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import { resetSubmitMessageActionCreator, submitMessageActionCreator } from './duck';
 
-const revurderingData = [fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP, fpsakApi.BREVMALER, fpsakApi.TILGJENGELIGE_VEDTAKSBREV];
-const meldingData = [fpsakApi.BREVMALER, fpsakApi.TILGJENGELIGE_VEDTAKSBREV];
+const revurderingData = [fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP, fpsakApi.BREVMALER];
+const meldingData = [fpsakApi.BREVMALER];
 
 interface OwnProps {
   submitFinished?: boolean;
@@ -44,6 +44,7 @@ interface OwnProps {
   ventearsaker?: Kodeverk[];
   behandlingTypeKode: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
+  tilgjengeligeVedtaksbrev: string[];
 }
 
 interface DispatchProps {
@@ -189,7 +190,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
       behandlingIdentifier,
       selectedBehandlingVersjon,
       revurderingVarslingArsak,
-      behandlingUuid
+      tilgjengeligeVedtaksbrev
     } = this.props;
     const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
 
@@ -212,7 +213,6 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
           }
           key={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? 0 : 1}
           endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
-          endpointParams={{[fpsakApi.TILGJENGELIGE_VEDTAKSBREV.name]: {behandlingsid: behandlingUuid}}}
           loadingPanel={<LoadingPanel />}
           render={(props: DataProps) => (
             <MeldingerSakIndex
@@ -225,7 +225,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
               revurderingVarslingArsak={revurderingVarslingArsak}
               templates={props.brevmaler}
               isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
-              kanForhandsviseBrev={!!props.tilgjengeligeVedtaksbrev?.length}
+              kanForhandsviseBrev={!!tilgjengeligeVedtaksbrev?.length}
             />
           )}
         />
@@ -254,6 +254,7 @@ const mapStateToProps = (state: any): OwnProps => ({
   behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
   behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId].kode,
   fagsakYtelseType: getFagsakYtelseType(state),
+  tilgjengeligeVedtaksbrev: fpsakApi.TILGJENGELIGE_VEDTAKSBREV.getRestApiData()(state)
 });
 
 // @ts-ignore (Korleis fikse denne?)
