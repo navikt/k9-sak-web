@@ -51,7 +51,6 @@ interface OwnProps {
   brevmalkode?: string;
   fritekst?: string;
   arsakskode?: string;
-  kanForhandsviseBrev: boolean;
 }
 
 /**
@@ -72,7 +71,6 @@ export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & 
   brevmalkode,
   fritekst,
   arsakskode,
-  kanForhandsviseBrev,
   ...formProps
 }) => {
   if (!sprakKode) {
@@ -154,16 +152,14 @@ export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & 
         <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
           {intl.formatMessage({ id: 'Messages.Submit' })}
         </Hovedknapp>
-        {kanForhandsviseBrev && (
-          <a
-            href=""
-            onClick={previewMessage}
-            onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
-            className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-          >
-            {intl.formatMessage({ id: 'Messages.Preview' })}
-          </a>
-        )}
+        <a
+          href=""
+          onClick={previewMessage}
+          onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
+          className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+        >
+          {intl.formatMessage({ id: 'Messages.Preview' })}
+        </a>
       </div>
     </form>
   );
