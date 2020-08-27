@@ -79,7 +79,7 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/redux-form": "^8.2.3",
-    "@types/sinon": "^7.5.2",
+    "@types/sinon": "^9.0.5",
     "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
