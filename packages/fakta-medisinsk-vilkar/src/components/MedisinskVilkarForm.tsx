@@ -56,7 +56,7 @@ const getHelpTexts = aksjonspunkter => {
 
 const formName = 'MedisinskVilkarForm';
 
-export const MedisinskVilkarForm = ({
+export const MedisinskVilkarFormImpl = ({
   behandlingId,
   behandlingVersjon,
   handleSubmit,
@@ -259,11 +259,11 @@ const mapStateToProps = (_, props: MedisinskVilkarFormProps) => {
   });
 };
 
-const connectedComponent = connect(mapStateToProps)(
+const MedisinskVilkarForm = connect(mapStateToProps)(
   behandlingForm({
     form: formName,
     enableReinitialize: true,
-  })(MedisinskVilkarForm),
+  })(injectIntl(MedisinskVilkarFormImpl)),
 );
 
-export default injectIntl(connectedComponent);
+export default MedisinskVilkarForm;

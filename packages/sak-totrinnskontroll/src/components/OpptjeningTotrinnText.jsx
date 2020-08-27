@@ -1,7 +1,6 @@
 import React from 'react';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-
 
 const mapAktivitetTextEndring = (arbeidsgiverNavn, orgnr, aktivitetType) => {
   if (arbeidsgiverNavn && orgnr) {
@@ -14,41 +13,38 @@ const mapAktivitetTextEndring = (arbeidsgiverNavn, orgnr, aktivitetType) => {
   }
   if (orgnr) {
     return (
-      <FormattedMessage
-        id="ToTrinnsForm.Opptjening.EndringArbeidUtenNavn"
-        values={{ a: aktivitetType, b: orgnr }}
-      />
+      <FormattedMessage id="ToTrinnsForm.Opptjening.EndringArbeidUtenNavn" values={{ a: aktivitetType, b: orgnr }} />
     );
   }
-  return (
-    <FormattedMessage
-      id="ToTrinnsForm.Opptjening.EndringAktivitet"
-      values={{ a: aktivitetType }}
-    />
-  );
+  return <FormattedMessage id="ToTrinnsForm.Opptjening.EndringAktivitet" values={{ a: aktivitetType }} />;
 };
 
 const mapAktivitetTextUnderkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => {
   if (arbeidsgiverNavn && orgnr) {
     return (
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="ToTrinnsForm.Opptjening.UnderkjenningArbeidMedNavn"
-        values={{ a: aktivitetType, b: arbeidsgiverNavn, c: orgnr }}
+        values={{
+          a: aktivitetType,
+          bb: arbeidsgiverNavn,
+          c: orgnr,
+          b: chunks => <b>{chunks}</b>,
+        }}
       />
     );
   }
   if (orgnr) {
     return (
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn"
-        values={{ a: aktivitetType, b: orgnr }}
+        values={{ a: aktivitetType, bb: orgnr, b: chunks => <b>{chunks}</b> }}
       />
     );
   }
   return (
-    <FormattedHTMLMessage
+    <FormattedMessage
       id="ToTrinnsForm.Opptjening.UnderkjenningAktivitet"
-      values={{ a: aktivitetType }}
+      values={{ a: aktivitetType, b: chunks => <b>{chunks}</b> }}
     />
   );
 };
@@ -70,14 +66,8 @@ const mapAktivitetTextGodkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => 
       />
     );
   }
-  return (
-    <FormattedMessage
-      id="ToTrinnsForm.Opptjening.GodkjenningAktivitet"
-      values={{ a: aktivitetType }}
-    />
-  );
+  return <FormattedMessage id="ToTrinnsForm.Opptjening.GodkjenningAktivitet" values={{ a: aktivitetType }} />;
 };
-
 
 /*
  * OpptjeningTotrinnText
@@ -86,14 +76,25 @@ const mapAktivitetTextGodkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => 
  */
 export const OpptjeningTotrinnText = ({ aktivitet }) => {
   if (aktivitet.erEndring) {
-    return mapAktivitetTextEndring(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null);
+    return mapAktivitetTextEndring(
+      aktivitet.arbeidsgiverNavn,
+      aktivitet.orgnr,
+      aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+    );
   }
   if (aktivitet.godkjent) {
-    return mapAktivitetTextGodkjenning(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null);
+    return mapAktivitetTextGodkjenning(
+      aktivitet.arbeidsgiverNavn,
+      aktivitet.orgnr,
+      aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+    );
   }
-  return mapAktivitetTextUnderkjenning(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null);
+  return mapAktivitetTextUnderkjenning(
+    aktivitet.arbeidsgiverNavn,
+    aktivitet.orgnr,
+    aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+  );
 };
-
 
 OpptjeningTotrinnText.propTypes = {
   aktivitet: PropTypes.shape(),

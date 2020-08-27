@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Location } from 'history';
-import { FormattedHTMLMessage, IntlFormatters } from 'react-intl';
+import { FormattedMessage, IntlFormatters } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { Kodeverk } from '@k9-sak-web/types';
@@ -69,10 +69,7 @@ const HistorikkMalFelles7og8: React.FunctionComponent<HistorikkmalFelles7og8Prop
 
         {historikkinnslagDel.opplysninger &&
           historikkinnslagDel.opplysninger.map(opplysning => (
-            <FormattedHTMLMessage
-              id={findIdForOpplysningCode(opplysning)}
-              values={{ antallBarn: opplysning.tilVerdi }}
-            />
+            <FormattedMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />
           ))}
 
         {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}

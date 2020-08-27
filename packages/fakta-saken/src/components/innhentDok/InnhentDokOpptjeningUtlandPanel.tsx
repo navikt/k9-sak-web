@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 
@@ -55,7 +55,14 @@ export const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
           value={OpptjeningIUtlandDokStatus.DOKUMENTASJON_VIL_BLI_INNHENTET}
         />
         <RadioOption
-          label={<FormattedHTMLMessage id="InnhentDokOpptjeningUtlandPanel.InnhentesIkke" />}
+          label={
+            <FormattedMessage
+              id="InnhentDokOpptjeningUtlandPanel.InnhentesIkke"
+              values={{
+                b: chunks => <b>{chunks}</b>,
+              }}
+            />
+          }
           value={OpptjeningIUtlandDokStatus.DOKUMENTASJON_VIL_IKKE_BLI_INNHENTET}
         />
       </RadioGroupField>
