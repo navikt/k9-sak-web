@@ -132,6 +132,7 @@ export class VedtakForm extends Component {
       vilkar,
       beregningErManueltFastsatt,
       vedtakVarsel,
+      tilgjengeligeVedtaksbrev,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
@@ -298,6 +299,7 @@ VedtakForm.defaultProps = {
   kanOverstyre: undefined,
   resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
+  tilgjengeligeVedtaksbrev: undefined
 };
 
 export const buildInitialValues = createSelector(

@@ -38,6 +38,7 @@ export class BehandlingsupportDataResolver extends Component<OwnProps> {
       fetchTotrinnsaksjonspunkterReadonly,
       resetTotrinnsaksjonspunkter,
       resetTotrinnsaksjonspunkterReadonly,
+      fetchTilgjengeligeVedtaksbrev,
       behandlingId,
       behandlingStatusKode,
       isInnsyn,
@@ -85,6 +86,7 @@ const mapDispatchToProps = dispatch =>
       resetTotrinnsaksjonspunkterReadonly: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.resetRestApi(),
       fetchTotrinnsaksjonspunkter: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER.makeRestApiRequest(),
       fetchTotrinnsaksjonspunkterReadonly: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.makeRestApiRequest(),
+      fetchTilgjengeligeVedtaksbrev: fpsakApi.TILGJENGELIGE_VEDTAKSBREV.makeRestApiRequest()
     },
     dispatch,
   );
