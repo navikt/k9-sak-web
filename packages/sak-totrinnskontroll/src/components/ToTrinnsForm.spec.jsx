@@ -139,7 +139,6 @@ describe('<ToTrinnsForm>', () => {
       readOnly={false}
       intl={intlMock}
       disableGodkjennKnapp={false}
-      tilgjengeligeVedtaksbrev={['FRITEKST']}
     />);
 
     const form = wrapper.find('form');
@@ -175,7 +174,6 @@ describe('<ToTrinnsForm>', () => {
       readOnly={false}
       intl={intlMock}
       disableGodkjennKnapp={false}
-      tilgjengeligeVedtaksbrev={['FRITEKST']}
     />);
 
     const form = wrapper.find('form');
@@ -243,7 +241,6 @@ describe('<ToTrinnsForm>', () => {
       readOnly={false}
       intl={intlMock}
       disableGodkjennKnapp={false}
-      tilgjengeligeVedtaksbrev={['FRITEKST']}
     />);
 
     const form = wrapper.find('form');
@@ -286,7 +283,6 @@ describe('<ToTrinnsForm>', () => {
       intl={intlMock}
       disableGodkjennKnapp={false}
       erTilbakekreving
-      tilgjengeligeVedtaksbrev={['FRITEKST']}
     />);
 
     const form = wrapper.find('form');

@@ -127,7 +127,6 @@ describe('<ApprovalIndex>', () => {
         behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         aktørId="1"
         saksnummer="2323"
-        tilgjengeligeVedtaksbrev={['FRITEKST', 'AUTOMATISK']}
       />,
     );
 
@@ -168,7 +167,6 @@ describe('<ApprovalIndex>', () => {
         disableGodkjennKnapp={false}
         aktørId="1"
         saksnummer="2323"
-        tilgjengeligeVedtaksbrev={['FRITEKST', 'AUTOMATISK']}
       />,
     );
 

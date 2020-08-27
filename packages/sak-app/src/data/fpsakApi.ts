@@ -38,7 +38,6 @@ export const FpsakApiKeys = {
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY: 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
   BREVMALER: 'BREVMALER',
-  TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   PREVIEW_MESSAGE_TILBAKEKREVING: 'PREVIEW_MESSAGE_TILBAKEKREVING',
   PREVIEW_MESSAGE_FORMIDLING: 'PREVIEW_MESSAGE_FORMIDLING',
@@ -93,7 +92,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* Brev */
   .withGet('/k9/formidling/api/brev/maler', FpsakApiKeys.BREVMALER)
-  .withGet('/k9/formidling/api/brev/tilgjengeligevedtaksbrev', FpsakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
 
