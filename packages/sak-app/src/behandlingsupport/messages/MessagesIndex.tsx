@@ -68,7 +68,6 @@ interface DataProps {
     tilgjengelig: boolean;
   }[];
   harApentKontrollerRevurderingAp?: boolean;
-  tilgjengeligeVedtaksbrev: string[];
 }
 
 /**

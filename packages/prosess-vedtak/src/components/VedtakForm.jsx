@@ -132,7 +132,6 @@ export class VedtakForm extends Component {
       vilkar,
       beregningErManueltFastsatt,
       vedtakVarsel,
-      tilgjengeligeVedtaksbrev,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
@@ -152,6 +151,7 @@ export class VedtakForm extends Component {
       false,
       previewCallback,
     );
+
     const harVedtaksbrev = !Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length;
     const skalViseLink = (
       vedtakVarsel.avslagsarsak === null ||
