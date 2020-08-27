@@ -49,7 +49,10 @@ const BarnInfo: FunctionComponent<BarnInfoProps> = ({ barnet, barnnummer }) => {
       </PanelHeader>
       <PanelContent>
         <Normaltekst>
-          <FormattedMessage id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'} />
+          <FormattedMessage
+            id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
+            values={{ b: chunks => <b>{chunks}</b> }}
+          />
         </Normaltekst>
         {dødsdato && (
           <Normaltekst>
