@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 
@@ -30,18 +30,37 @@ export const getFaktaOmArbeidsforholdMessages = (arbeidforholdDto, arbeidsforhol
   const formattedMessages = [];
   const { kode } = arbeidforholdDto.arbeidsforholdHandlingType;
   if (arbeidforholdDto.brukPermisjon === true) {
-    formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon" />);
+    formattedMessages.push(
+      <FormattedMessage
+        id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon"
+        values={{
+          b: chunks => <b>{chunks}</b>,
+        }}
+      />,
+    );
     return formattedMessages;
   }
   if (arbeidforholdDto.brukPermisjon === false) {
-    formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon" />);
+    formattedMessages.push(
+      <FormattedMessage
+        id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon"
+        values={{
+          b: chunks => <b>{chunks}</b>,
+        }}
+      />,
+    );
     if (kode === arbeidsforholdHandlingType.BRUK) {
       return formattedMessages;
     }
   }
   const type = arbeidsforholdHandlingTyper.find(t => t.kode === kode);
   const melding = type !== undefined && type !== null ? type.navn : '';
-  formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding" values={{ melding }} />);
+  formattedMessages.push(
+    <FormattedMessage
+      id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding"
+      values={{ melding, b: chunks => <b>{chunks}</b> }}
+    />,
+  );
   return formattedMessages;
 };
 
@@ -50,7 +69,7 @@ const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) =>
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     return (
       <>
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
           values={{
             orgnavn: arbeidforholdDto.navn,
@@ -58,6 +77,7 @@ const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) =>
             arbeidsforholdId: arbeidforholdDto.arbeidsforholdId
               ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}`
               : '',
+            b: chunks => <b>{chunks}</b>,
           }}
         />
         {formattedMessages.map(formattedMessage => (

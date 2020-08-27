@@ -34,7 +34,7 @@ import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
@@ -230,7 +230,7 @@ export const ActivityPanel = ({
             isEdited={initialValues.erEndret}
           >
             <RadioOption value label={{ id: 'ActivityPanel.Godkjent' }} />
-            <RadioOption value={false} label={<FormattedHTMLMessage id="ActivityPanel.IkkeGodkjent" />} />
+            <RadioOption value={false} label={<FormattedMessage id="ActivityPanel.IkkeGodkjent" />} />
           </RadioGroupField>
         )}
       </>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
@@ -50,23 +50,27 @@ export const HistorikkMalType9 = ({
         />
 
         {historikkinnslagDel.endredeFelter && originType.kode === historikkinnslagType.OVST_UTTAK_SPLITT && (
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.9"
             values={{
               opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
               numberOfPeriods: historikkinnslagDel.endredeFelter.length,
               splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
+              b: chunks => <b>{chunks}</b>,
+              br: <br />,
             }}
           />
         )}
 
         {historikkinnslagDel.endredeFelter && originType.kode === historikkinnslagType.FASTSATT_UTTAK_SPLITT && (
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.9.ManuellVurdering"
             values={{
               opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
               numberOfPeriods: historikkinnslagDel.endredeFelter.length,
               splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
+              b: chunks => <b>{chunks}</b>,
+              br: <br />,
             }}
           />
         )}
@@ -77,11 +81,12 @@ export const HistorikkMalType9 = ({
             .filter(endretFelt => endretFelt.tilVerdi !== tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK)
             .map((endretFelt, index) => (
               <div className={styles.tilbakekrevingTekst} key={`endretFelt${index + 1}`}>
-                <FormattedHTMLMessage
+                <FormattedMessage
                   id="Historikk.Template.9.TilbakekrViderebehandling"
                   values={{
                     felt: getKodeverknavn(endretFelt.endretFeltNavn),
                     verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn),
+                    b: chunks => <b>{chunks}</b>,
                   }}
                 />
               </div>

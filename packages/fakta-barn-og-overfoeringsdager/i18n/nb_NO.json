@@ -16,7 +16,7 @@
   "FaktaRammevedtak.Barn.UtenlandskBarn": "Utenlandsk barn",
   "FaktaRammevedtak.Barn.IngenBarn": "Det er ikke registrert rammemeldinger på brukerens barn",
   "FaktaRammevedtak.ErMidlertidigAlene.Tittel": "Midlertidig aleneomsorg",
-  "FaktaRammevedtak.MidlertidigAlene": "<div>Brukeren har midlertidig aleneomsorg for alle barn.</div><div>Gyldig fra og med <b>{fom}</b> til og med <b>{tom}</b>.</div>",
+  "FaktaRammevedtak.MidlertidigAlene": "Brukeren har midlertidig aleneomsorg for alle barn.{br}Gyldig fra og med <b>{fom}</b> til og med <b>{tom}</b>.",
   "FaktaRammevedtak.IkkeMidlertidigAlene": "Det er ikke registrert midlertidig aleneomsorg",
   "FaktaRammevedtak.Overføringer.Tittel": "Overføringer og fordelinger",
   "FaktaRammevedtak.Overføringer.IngenOverføringer": "Det er ikke registrert noen overføringer eller fordelinger av dager",
