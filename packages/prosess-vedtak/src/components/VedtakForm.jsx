@@ -19,7 +19,6 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fpsakApi from "@fpsak-frontend/sak-app/src/data/fpsakApi";
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import FritekstBrevPanel from './FritekstBrevPanel';
@@ -153,7 +152,7 @@ export class VedtakForm extends Component {
       false,
       previewCallback,
     );
-    const harVedtaksbrev = Array.isArray(tilgjengeligeVedtaksbrev) && !!tilgjengeligeVedtaksbrev.length;
+    const harVedtaksbrev = !Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length;
     const skalViseLink = (
       vedtakVarsel.avslagsarsak === null ||
       (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)
@@ -287,7 +286,7 @@ VedtakForm.propTypes = {
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   vedtakVarsel: PropTypes.shape(),
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   ...formPropTypes,
 };
 
@@ -369,7 +368,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     behandlingStatusKode: ownProps.behandlingStatus.kode,
     aksjonspunktKoder: getAksjonspunktKoder(ownProps),
     erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
-    tilgjengeligeVedtaksbrev: fpsakApi.TILGJENGELIGE_VEDTAKSBREV.getRestApiData()(state)
   });
 };
 

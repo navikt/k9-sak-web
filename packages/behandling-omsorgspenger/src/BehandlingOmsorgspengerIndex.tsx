@@ -25,6 +25,7 @@ const omsorgspengerData = [
   omsorgspengerBehandlingApi.BEREGNINGSGRUNNLAG,
   omsorgspengerBehandlingApi.SIMULERING_RESULTAT,
   omsorgspengerBehandlingApi.FORBRUKTE_DAGER,
+  omsorgspengerBehandlingApi.TILGJENGELIGE_VEDTAKSBREV
 ];
 
 interface OwnProps {
@@ -61,6 +62,7 @@ interface DispatchProps {
   lagreRisikoklassifiseringAksjonspunkt: (params: {}) => Promise<any>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  tilgjengeligeVedtaksbrev: (params: {}) => Promise<void>;
   resetRestApiContext: () => (dspatch: any) => void;
   destroyReduxForm: (form: string) => void;
 }
@@ -94,6 +96,7 @@ const BehandlingOmsorgspengerIndex: FunctionComponent<Props> = ({
   valgtFaktaSteg,
   hasFetchError,
   featureToggles,
+  tilgjengeligeVedtaksbrev
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -109,6 +112,7 @@ const BehandlingOmsorgspengerIndex: FunctionComponent<Props> = ({
       opprettVerge: params => opprettVerge(params),
       fjernVerge: params => fjernVerge(params),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
+      tilgjengeligeVedtaksbrev: params => tilgjengeligeVedtaksbrev(params)
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
@@ -189,6 +193,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
       fjernVerge: omsorgspengerBehandlingApi.VERGE_FJERN.makeRestApiRequest(),
       hentBehandling: omsorgspengerBehandlingApi.BEHANDLING_FP.makeRestApiRequest(),
       lagreRisikoklassifiseringAksjonspunkt: omsorgspengerBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
+      tilgjengeligeVedtaksbrev: omsorgspengerBehandlingApi.TILGJENGELIGE_VEDTAKSBREV.makeRestApiRequest,
       resetRestApiContext: getResetRestApiContext,
       destroyReduxForm: destroy,
     },

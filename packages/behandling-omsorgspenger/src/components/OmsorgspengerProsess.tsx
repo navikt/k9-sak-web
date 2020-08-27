@@ -211,6 +211,7 @@ const OmsorgspengerProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={omsorgspengerBehandlingApi}
           dispatch={dispatch}
+          tilgjengeligeVedtaksbrev={data.tilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>
     </>
