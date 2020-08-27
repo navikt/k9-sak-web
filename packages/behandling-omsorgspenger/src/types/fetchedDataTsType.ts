@@ -18,7 +18,7 @@ interface FetchedData {
   beregningsgrunnlag: Beregningsgrunnlag;
   simuleringResultat: SimuleringResultat;
   forbrukteDager: ÅrskvantumForbrukteDager;
-  tilgjengeligeVedtaksbrev?: string[];
+  tilgjengeligeVedtaksbrev: string[];
 }
 
 export default FetchedData;
