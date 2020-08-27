@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { findEndretFeltNavn, findEndretFeltVerdi } from './felles/historikkUtils';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
@@ -25,13 +25,14 @@ const HistorikkMalType7 = ({
     if (endretFelt.fraVerdi !== null) {
       return (
         <div>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.7.ChangedFromTo"
             values={{
               sub1,
               sub2,
               fromValue,
               toValue,
+              b: chunks => <b>{chunks}</b>,
             }}
           />
         </div>

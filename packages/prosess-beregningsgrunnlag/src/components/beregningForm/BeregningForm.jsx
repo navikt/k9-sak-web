@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -109,10 +109,10 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
         <>
           <AksjonspunktHelpTextHTML>
             {apneAksjonspunkt.map(ap => (
-              <FormattedHTMLMessage
+              <FormattedMessage
                 key={ap.definisjon.kode}
                 id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
-                values={{ verdi: avvikProsent }}
+                values={{ verdi: avvikProsent, b: chunks => <b>{chunks}</b>, br: <br /> }}
               />
             ))}
           </AksjonspunktHelpTextHTML>

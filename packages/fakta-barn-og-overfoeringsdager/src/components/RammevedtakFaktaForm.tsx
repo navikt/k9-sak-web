@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { isEmpty } from 'lodash';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import {
@@ -70,7 +70,7 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
       <UidentifiserteRammevedtak type={RammevedtakEnum.UTVIDET_RETT} rammevedtak={rammevedtak} />
       <UidentifiserteRammevedtak type={RammevedtakEnum.ALENEOMSORG} rammevedtak={rammevedtak} />
       <UidentifiserteRammevedtak type={RammevedtakEnum.FOSTERBARN} rammevedtak={rammevedtak} />
-      <Seksjon bakgrunn="grå"  title={{ id: 'FaktaRammevedtak.Overføringer.Tittel' }} imgSrc={transferIcon}>
+      <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.Overføringer.Tittel' }} imgSrc={transferIcon}>
         {detFinnesOverføringer ? (
           <>
             <FlexRow spaceBetween>
@@ -98,7 +98,7 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
                 ]}
               />
               <Hjelpetekst>
-                <FormattedHTMLMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" />
+                <FormattedMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" />
               </Hjelpetekst>
             </FlexRow>
             <OverføringsdagerPanelgruppe

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
@@ -115,9 +115,9 @@ const TilkjentYtelseTimeLineData = ({
         <VerticalSpacer fourPx />
         <Row>
           <Column xs="12">
-            <FormattedHTMLMessage
+            <FormattedMessage
               id="TilkjentYtelse.PeriodeData.Dagsats"
-              values={{ dagsatsVerdi: selectedItemData.dagsats }}
+              values={{ dagsatsVerdi: selectedItemData.dagsats, b: chunks => <b>{chunks}</b> }}
             />
           </Column>
         </Row>
@@ -137,7 +137,7 @@ const TilkjentYtelseTimeLineData = ({
       <div style={{ padding: '1rem' }}>
         <Row>
           <Column xs="12">
-            <FormattedHTMLMessage
+            <FormattedMessage
               id="TilkjentYtelse.PeriodeData.UtbetaltRefusjon"
               values={{ utbetaltRefusjonVerdi: valgtAndel?.refusjon }}
             />
@@ -145,7 +145,7 @@ const TilkjentYtelseTimeLineData = ({
         </Row>
         <Row>
           <Column xs="12">
-            <FormattedHTMLMessage
+            <FormattedMessage
               id="TilkjentYtelse.PeriodeData.UtbetaltTilSoker"
               values={{ utbetaltTilSokerVerdi: valgtAndel?.tilSoker }}
             />
@@ -153,7 +153,7 @@ const TilkjentYtelseTimeLineData = ({
         </Row>
         <Row>
           <Column xs="12">
-            <FormattedHTMLMessage
+            <FormattedMessage
               id="TilkjentYtelse.PeriodeData.Utbetalingsgrad"
               values={{ utbetalingsgradVerdi: valgtAndel?.utbetalingsgrad }}
             />
@@ -161,7 +161,7 @@ const TilkjentYtelseTimeLineData = ({
         </Row>
         <Row>
           <Column xs="12">
-            <FormattedHTMLMessage
+            <FormattedMessage
               id="TilkjentYtelse.PeriodeData.Aktivitetsstatus"
               values={{
                 aktivitetsstatusVerdi: intl.formatMessage({

@@ -18,14 +18,17 @@ export { default as messages } from '../../../public/sprak/nb_NO.json';
 // Create the IntlProvider to retrieve context for wrapping around.
 const cache = createIntlCache();
 
-const getIntlObject = (moduleMessages) => {
+const getIntlObject = moduleMessages => {
   const selectedMessages = moduleMessages || messages;
 
-  return createIntl({
-    locale: 'nb-NO',
-    defaultLocale: 'nb-NO',
-    messages: selectedMessages,
-  }, cache);
+  return createIntl(
+    {
+      locale: 'nb-NO',
+      defaultLocale: 'nb-NO',
+      messages: selectedMessages,
+    },
+    cache,
+  );
 };
 
 /**
@@ -36,7 +39,7 @@ function nodeWithIntlProp(node, moduleMessages) {
   return React.cloneElement(node, { intl: getIntlObject(selectedMessages) });
 }
 
-const getOptions = (moduleMessages) => {
+const getOptions = moduleMessages => {
   const selectedMessages = moduleMessages || messages;
 
   return {
@@ -65,6 +68,5 @@ export const intlMock = {
   formatNumber: sinon.spy(),
   formatPlural: sinon.spy(),
   formatMessage: sinon.spy(),
-  formatHTMLMessage: sinon.spy(),
   now: sinon.spy(),
 };
