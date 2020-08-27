@@ -192,6 +192,8 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
       tilgjengeligeVedtaksbrev
     } = this.props;
     const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
+    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
+    const kanForhandsviseBrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
 
     return (
       <>
@@ -224,7 +226,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
               revurderingVarslingArsak={revurderingVarslingArsak}
               templates={props.brevmaler}
               isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
-              kanForhandsviseBrev={!Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length}
+              kanForhandsviseBrev={kanForhandsviseBrev}
             />
           )}
         />

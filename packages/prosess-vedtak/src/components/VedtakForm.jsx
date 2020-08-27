@@ -153,7 +153,8 @@ export class VedtakForm extends Component {
       previewCallback,
     );
 
-    const harTilgjengeligeVedtaksbrev = !Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length;
+    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
+    const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
     const skalViseLink = (
       vedtakVarsel.avslagsarsak === null ||
       (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)
