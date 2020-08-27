@@ -44,7 +44,7 @@ interface OwnProps {
   ventearsaker?: Kodeverk[];
   behandlingTypeKode: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
-  tilgjengeligeVedtaksbrev: string[];
+  tilgjengeligeVedtaksbrev?: string[];
 }
 
 interface DispatchProps {
@@ -224,7 +224,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
               revurderingVarslingArsak={revurderingVarslingArsak}
               templates={props.brevmaler}
               isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
-              kanForhandsviseBrev={!!tilgjengeligeVedtaksbrev?.length}
+              kanForhandsviseBrev={!Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length}
             />
           )}
         />
