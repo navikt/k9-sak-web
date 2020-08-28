@@ -27,7 +27,6 @@ interface OwnProps {
   ) => any;
   behandlingApi: { [name: string]: EndpointOperations };
   dispatch: Dispatch;
-  tilgjengeligeVedtaksbrev?: string[];
 }
 
 const ProsessStegPanel: FunctionComponent<OwnProps> = ({
@@ -40,7 +39,6 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   lagringSideeffekterCallback,
   behandlingApi,
   dispatch,
-  tilgjengeligeVedtaksbrev
 }) => {
   const erHenlagtOgVedtakStegValgt =
     behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.getUrlKode() === prosessStegCodes.VEDTAK;
@@ -88,7 +86,6 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
                     alleKodeverk,
                     submitCallback: bekreftAksjonspunktCallback,
                     ...delPaneler[0].getKomponentData(),
-                    tilgjengeligeVedtaksbrev
                   })
                 }
               />
