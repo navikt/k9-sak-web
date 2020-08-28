@@ -28,6 +28,7 @@ class PanelDef extends ProsessStegPanelDef {
     omsorgspengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
     omsorgspengerBehandlingApi.MEDLEMSKAP,
     omsorgspengerBehandlingApi.VEDTAK_VARSEL,
+    omsorgspengerBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
