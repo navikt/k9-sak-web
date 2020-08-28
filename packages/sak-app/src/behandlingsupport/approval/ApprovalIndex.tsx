@@ -92,6 +92,7 @@ interface OwnProps {
   behandlingTypeKode?: string;
   aktørId: string;
   saksnummer: string;
+  tilgjengeligeVedtaksbrev?: string[];
 }
 
 interface StateProps {
@@ -210,6 +211,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       behandlingId,
       behandlingTypeKode,
       erTilbakekreving,
+      tilgjengeligeVedtaksbrev
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
@@ -260,6 +262,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
               disableGodkjennKnapp={disableGodkjennKnapp}
               erTilbakekreving={erTilbakekreving}
               createLocationForSkjermlenke={createLocationForSkjermlenke}
+              tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             />
             {showBeslutterModal && (
               <DataFetcher
@@ -348,6 +351,7 @@ const mapStateToPropsFactory = initialState => {
       behandlingIdentifier,
       erTilbakekreving,
       behandlingTypeKode,
+      tilgjengeligeVedtaksbrev: fpsakApi.TILGJENGELIGE_VEDTAKSBREV.getRestApiData()(state)
     };
   };
 };
