@@ -20,7 +20,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
 import { Undertittel, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { Component, MouseEvent, KeyboardEvent } from 'react';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
@@ -322,7 +322,7 @@ export class OpptjeningFaktaFormImpl extends Component<
           {dokStatus && (
             <>
               <AlertStripeInfo className={styles.info}>
-                <FormattedHTMLMessage
+                <FormattedMessage
                   id={
                     dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET
                       ? 'OpptjeningFaktaForm.DetErInnhentetDok'

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -30,19 +30,19 @@ const lagGjeldendeFraInnslag = historikkinnslagDel => {
   if (historikkinnslagDel.gjeldendeFra && historikkinnslagDel.gjeldendeFra.navn) {
     return (
       <>
-        <FormattedHTMLMessage
+        <FormattedMessage
           id={historikkEndretFeltTypeCodes[historikkinnslagDel.gjeldendeFra.navn].feltId}
-          values={{ value: historikkinnslagDel.gjeldendeFra.verdi }}
+          values={{ value: historikkinnslagDel.gjeldendeFra.verdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
         />
         {historikkinnslagDel.gjeldendeFra.fra && (
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.5.VerdiGjeldendeFra"
-            values={{ dato: historikkinnslagDel.gjeldendeFra.fra }}
+            values={{ value: historikkinnslagDel.gjeldendeFra.verdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
           />
         )}
         {isGjeldendeFraUtenEndredeFelter(historikkinnslagDel) && (
           <div>
-            <FormattedHTMLMessage id="Historikk.Template.5.IngenEndring" />
+            <FormattedMessage id="Historikk.Template.5.IngenEndring" />
           </div>
         )}
       </>
@@ -51,13 +51,13 @@ const lagGjeldendeFraInnslag = historikkinnslagDel => {
   if (historikkinnslagDel.gjeldendeFra && !historikkinnslagDel.gjeldendeFra.navn) {
     return (
       <>
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="Historikk.Template.5.GjeldendeFra"
-          values={{ dato: historikkinnslagDel.gjeldendeFra.fra }}
+          values={{ value: historikkinnslagDel.gjeldendeFra.verdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
         />
         {isGjeldendeFraUtenEndredeFelter(historikkinnslagDel) && (
           <div>
-            <FormattedHTMLMessage id="Historikk.Template.5.IngenEndring" />
+            <FormattedMessage id="Historikk.Template.5.IngenEndring" />
           </div>
         )}
       </>
@@ -98,12 +98,13 @@ const HistorikkMalType5 = ({
     ) {
       return (
         <div>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.5.ChangedFromTo"
             values={{
               fieldName,
               fromValue,
               toValue,
+              b: chunks => <b>{chunks}</b>,
             }}
           />
         </div>
@@ -111,11 +112,12 @@ const HistorikkMalType5 = ({
     }
     return (
       <div>
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="Historikk.Template.5.FieldSetTo"
           values={{
             fieldName,
             value: toValue,
+            b: chunks => <b>{chunks}</b>,
           }}
         />
       </div>
@@ -127,7 +129,12 @@ const HistorikkMalType5 = ({
     if (tema) {
       const heading = historikkEndretFeltTypeHeadingCodes[tema.endretFeltNavn.kode];
       if (heading && tema.navnVerdi) {
-        return <FormattedHTMLMessage id={heading.feltId} values={{ value: tema.navnVerdi }} />;
+        return (
+          <FormattedMessage
+            id={heading.feltId}
+            values={{ value: tema.navnVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
+          />
+        );
       }
     }
     return undefined;
@@ -180,9 +187,9 @@ const HistorikkMalType5 = ({
 
       {historikkinnslagDel.opplysninger &&
         historikkinnslagDel.opplysninger.map(opplysning => (
-          <FormattedHTMLMessage
+          <FormattedMessage
             id={findIdForOpplysningCode(opplysning)}
-            values={{ antallBarn: opplysning?.tilVerdi }}
+            values={{ antallBarn: opplysning?.tilVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
             key={`${getKodeverknavn(opplysning)}@${opplysning?.tilVerdi}`}
           />
         ))}

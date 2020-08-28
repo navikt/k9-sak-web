@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -48,9 +48,9 @@ export const HistorikkMalTypeTilbakekreving = ({
         return (
           <div key={periodeFom + periodeTom}>
             <Normaltekst>
-              <FormattedHTMLMessage
+              <FormattedMessage
                 id="Historikk.Template.Tilbakekreving.VurderingAvPerioden"
-                values={{ periodeFom, periodeTom }}
+                values={{ periodeFom, periodeTom, b: chunks => <b>{chunks}</b> }}
               />
             </Normaltekst>
             <VerticalSpacer eightPx />
@@ -79,7 +79,7 @@ export const HistorikkMalTypeTilbakekreving = ({
                     {visAktsomhetBegrunnelse && begrunnelseFritekst}
                     {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
                     <Normaltekst>
-                      <FormattedHTMLMessage
+                      <FormattedMessage
                         id={
                           felt.fraVerdi
                             ? 'Historikk.Template.Tilbakekreving.ChangedFromTo'
@@ -89,6 +89,7 @@ export const HistorikkMalTypeTilbakekreving = ({
                           navn: getKodeverknavn(endretFeltNavn),
                           fraVerdi: formatertFraVerdi,
                           tilVerdi: formatertTilVerdi,
+                          b: chunks => <b>{chunks}</b>,
                         }}
                       />
                     </Normaltekst>
