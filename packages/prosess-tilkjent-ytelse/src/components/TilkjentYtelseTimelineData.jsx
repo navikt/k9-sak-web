@@ -139,7 +139,7 @@ const TilkjentYtelseTimeLineData = ({
           <Column xs="12">
             <FormattedMessage
               id="TilkjentYtelse.PeriodeData.UtbetaltRefusjon"
-              values={{ utbetaltRefusjonVerdi: valgtAndel?.refusjon }}
+              values={{ utbetaltRefusjonVerdi: valgtAndel?.refusjon, b: chunks => <b>{chunks}</b> }}
             />
           </Column>
         </Row>
@@ -147,7 +147,7 @@ const TilkjentYtelseTimeLineData = ({
           <Column xs="12">
             <FormattedMessage
               id="TilkjentYtelse.PeriodeData.UtbetaltTilSoker"
-              values={{ utbetaltTilSokerVerdi: valgtAndel?.tilSoker }}
+              values={{ utbetaltTilSokerVerdi: valgtAndel?.tilSoker, b: chunks => <b>{chunks}</b> }}
             />
           </Column>
         </Row>
@@ -155,7 +155,7 @@ const TilkjentYtelseTimeLineData = ({
           <Column xs="12">
             <FormattedMessage
               id="TilkjentYtelse.PeriodeData.Utbetalingsgrad"
-              values={{ utbetalingsgradVerdi: valgtAndel?.utbetalingsgrad }}
+              values={{ utbetalingsgradVerdi: valgtAndel?.utbetalingsgrad, b: chunks => <b>{chunks}</b> }}
             />
           </Column>
         </Row>
@@ -167,6 +167,7 @@ const TilkjentYtelseTimeLineData = ({
                 aktivitetsstatusVerdi: intl.formatMessage({
                   id: finnAktivitetsstatusIntlKey(valgtAndel?.aktivitetStatus.kode),
                 }),
+                b: chunks => <b>{chunks}</b>,
               }}
             />
           </Column>
