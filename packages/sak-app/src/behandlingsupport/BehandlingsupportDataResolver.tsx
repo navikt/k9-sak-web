@@ -17,7 +17,6 @@ interface OwnProps {
   fetchTotrinnsaksjonspunkterReadonly: () => void;
   resetTotrinnsaksjonspunkter: () => void;
   resetTotrinnsaksjonspunkterReadonly: () => void;
-  fetchTilgjengeligeVedtaksbrev: () => void;
   behandlingId?: number;
   behandlingStatusKode?: string;
   isInnsyn: boolean;
@@ -38,7 +37,6 @@ export class BehandlingsupportDataResolver extends Component<OwnProps> {
       fetchTotrinnsaksjonspunkterReadonly,
       resetTotrinnsaksjonspunkter,
       resetTotrinnsaksjonspunkterReadonly,
-      fetchTilgjengeligeVedtaksbrev,
       behandlingId,
       behandlingStatusKode,
       isInnsyn,
@@ -50,7 +48,6 @@ export class BehandlingsupportDataResolver extends Component<OwnProps> {
     ) {
       resetTotrinnsaksjonspunkter();
       resetTotrinnsaksjonspunkterReadonly();
-      fetchTilgjengeligeVedtaksbrev();
       if (!isInnsyn && behandlingStatusKode === BehandlingStatus.FATTER_VEDTAK) {
         fetchTotrinnsaksjonspunkter();
       }
@@ -86,7 +83,6 @@ const mapDispatchToProps = dispatch =>
       resetTotrinnsaksjonspunkterReadonly: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.resetRestApi(),
       fetchTotrinnsaksjonspunkter: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER.makeRestApiRequest(),
       fetchTotrinnsaksjonspunkterReadonly: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.makeRestApiRequest(),
-      fetchTilgjengeligeVedtaksbrev: fpsakApi.TILGJENGELIGE_VEDTAKSBREV.makeRestApiRequest()
     },
     dispatch,
   );

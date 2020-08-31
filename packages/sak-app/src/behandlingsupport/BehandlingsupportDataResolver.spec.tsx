@@ -17,7 +17,6 @@ describe('<BehandlingsupportDataResolver>', () => {
         fetchTotrinnsaksjonspunkterReadonly={fetchTotrinnsaksjonspunkterReadonly}
         resetTotrinnsaksjonspunkter={sinon.spy()}
         resetTotrinnsaksjonspunkterReadonly={sinon.spy()}
-        fetchTilgjengeligeVedtaksbrev={sinon.spy()}
         behandlingId={1}
         isInnsyn={false}
       >
@@ -43,7 +42,6 @@ describe('<BehandlingsupportDataResolver>', () => {
         fetchTotrinnsaksjonspunkterReadonly={fetchTotrinnsaksjonspunkterReadonly}
         resetTotrinnsaksjonspunkter={sinon.spy()}
         resetTotrinnsaksjonspunkterReadonly={sinon.spy()}
-        fetchTilgjengeligeVedtaksbrev={sinon.spy()}
         behandlingId={1}
         isInnsyn={false}
       >
