@@ -56,10 +56,16 @@ const createTooltipContent = (intl, item) => `
    </p>
 `;
 
-const harDelvisInnvilgedeAndeler = periode => {
+const andelerUtgjør100ProsentTilsammen = periode => {
   const { andeler } = periode;
-  if (Array.isArray(andeler)) {
-    return andeler.some(andel => andel.utbetalingsgrad < 100);
+  if (Array.isArray(andeler) && andeler.length > 0) {
+    let totalUtbetalingsgrad = andeler[0].utbetalingsgrad;
+    if (andeler.length > 1) {
+      andeler.slice(1, andeler.length).forEach(({ utbetalingsgrad }) => {
+        totalUtbetalingsgrad += utbetalingsgrad;
+      });
+    }
+    return totalUtbetalingsgrad >= 100;
   }
   return false;
 };
@@ -67,7 +73,7 @@ const harDelvisInnvilgedeAndeler = periode => {
 const prepareTimelineData = (periode, index, intl) => {
   return {
     ...periode,
-    className: harDelvisInnvilgedeAndeler(periode) ? 'gradert' : 'innvilget',
+    className: andelerUtgjør100ProsentTilsammen(periode) ? 'innvilget' : 'gradert',
     group: 1,
     id: index,
     start: parseDateString(periode.fom),
