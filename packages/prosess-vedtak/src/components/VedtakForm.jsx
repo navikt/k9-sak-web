@@ -132,6 +132,7 @@ export class VedtakForm extends Component {
       vilkar,
       beregningErManueltFastsatt,
       vedtakVarsel,
+      tilgjengeligeVedtaksbrev,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
@@ -151,9 +152,13 @@ export class VedtakForm extends Component {
       false,
       previewCallback,
     );
-    const skalViseLink =
+
+    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
+    const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
+    const skalViseLink = (
       vedtakVarsel.avslagsarsak === null ||
-      (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
+      (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)
+    ) && harTilgjengeligeVedtaksbrev;
     const skalSkjuleFattVedtakKnapp =
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
@@ -283,6 +288,7 @@ VedtakForm.propTypes = {
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   vedtakVarsel: PropTypes.shape(),
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   ...formPropTypes,
 };
 
@@ -294,6 +300,7 @@ VedtakForm.defaultProps = {
   kanOverstyre: undefined,
   resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
+  tilgjengeligeVedtaksbrev: undefined
 };
 
 export const buildInitialValues = createSelector(

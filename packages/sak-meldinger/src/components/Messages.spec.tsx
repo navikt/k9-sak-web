@@ -17,6 +17,7 @@ const mockProps = {
   validateModel: () => undefined,
   isSubmitting: false,
   intl: intlMock,
+  kanForhandsviseBrev: true,
   ...reduxFormPropsMock,
 };
 

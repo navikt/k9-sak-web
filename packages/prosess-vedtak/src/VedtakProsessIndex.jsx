@@ -46,6 +46,7 @@ const VedtakProsessIndex = ({
   employeeHasAccess,
   alleKodeverk,
   vedtakVarsel,
+  tilgjengeligeVedtaksbrev
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -77,6 +78,7 @@ const VedtakProsessIndex = ({
       submitCallback={submitCallback}
       alleKodeverk={alleKodeverk}
       vedtakVarsel={vedtakVarsel}
+      tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
     />
   </RawIntlProvider>
 );
@@ -100,6 +102,7 @@ VedtakProsessIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string)
 };
 
 VedtakProsessIndex.defaultProps = {
@@ -110,6 +113,7 @@ VedtakProsessIndex.defaultProps = {
   tilbakekrevingvalg: undefined,
   sendVarselOmRevurdering: false,
   beregningsgrunnlag: undefined,
+  tilgjengeligeVedtaksbrev: undefined
 };
 
 export default VedtakProsessIndex;

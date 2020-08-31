@@ -152,14 +152,16 @@ export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & 
         <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
           {intl.formatMessage({ id: 'Messages.Submit' })}
         </Hovedknapp>
-        <a
-          href=""
-          onClick={previewMessage}
-          onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
-          className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-        >
-          {intl.formatMessage({ id: 'Messages.Preview' })}
-        </a>
+        {!!templates.length && (
+          <a
+            href=""
+            onClick={previewMessage}
+            onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
+            className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+          >
+            {intl.formatMessage({ id: 'Messages.Preview' })}
+          </a>
+        )}
       </div>
     </form>
   );
