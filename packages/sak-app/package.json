@@ -32,7 +32,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@sentry/browser": "^5.15.5",
+    "@sentry/browser": "^5.22.3",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.6.1",
