@@ -60,8 +60,9 @@ const getArsaker = approval =>
     .filter(arsak => arsak.isSet)
     .map(arsak => arsak.code);
 
-const klageData = [fpsakApi.TOTRINNS_KLAGE_VURDERING];
+const klageOgVedtaksbrevData = [fpsakApi.TOTRINNS_KLAGE_VURDERING, fpsakApi.TILGJENGELIGE_VEDTAKSBREV];
 const revurderingData = [fpsakApi.HAR_REVURDERING_SAMME_RESULTAT];
+const vedtaksbrevdata = [fpsakApi.TILGJENGELIGE_VEDTAKSBREV];
 const ingenData = [];
 
 interface OwnProps {
@@ -92,7 +93,7 @@ interface OwnProps {
   behandlingTypeKode?: string;
   aktørId: string;
   saksnummer: string;
-  tilgjengeligeVedtaksbrev: string[];
+  tilgjengeligeVedtaksbrev?: string[];
 }
 
 interface StateProps {
@@ -211,7 +212,6 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       behandlingId,
       behandlingTypeKode,
       erTilbakekreving,
-      tilgjengeligeVedtaksbrev,
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
@@ -221,7 +221,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       return null;
     }
 
-    const harKlageEndepunkter = klageData.some(kd => kd.isEndpointEnabled());
+    const harKlageEndepunkter = klageOgVedtaksbrevData.some(kd => kd.isEndpointEnabled());
 
     return (
       <DataFetcher
@@ -232,7 +232,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
           )
         }
         key={harKlageEndepunkter ? 0 : 1}
-        endpoints={harKlageEndepunkter ? klageData : ingenData}
+        endpoints={harKlageEndepunkter ? klageOgVedtaksbrevData : vedtaksbrevdata}
         loadingPanel={<LoadingPanel />}
         render={(props: {
           totrinnsKlageVurdering?: {
@@ -241,6 +241,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
             klageVurderingResultatNFP?: {};
             klageVurderingResultatNK?: {};
           };
+          tilgjengeligeVedtaksbrev: string[];
         }) => (
           <>
             <TotrinnskontrollSakIndex
@@ -262,7 +263,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
               disableGodkjennKnapp={disableGodkjennKnapp}
               erTilbakekreving={erTilbakekreving}
               createLocationForSkjermlenke={createLocationForSkjermlenke}
-              tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+              tilgjengeligeVedtaksbrev={props.tilgjengeligeVedtaksbrev}
             />
             {showBeslutterModal && (
               <DataFetcher
@@ -351,7 +352,6 @@ const mapStateToPropsFactory = initialState => {
       behandlingIdentifier,
       erTilbakekreving,
       behandlingTypeKode,
-      tilgjengeligeVedtaksbrev: fpsakApi.TILGJENGELIGE_VEDTAKSBREV.getRestApiData()(state),
     };
   };
 };

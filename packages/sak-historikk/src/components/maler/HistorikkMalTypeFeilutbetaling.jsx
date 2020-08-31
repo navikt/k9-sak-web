@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -43,10 +43,20 @@ const buildEndretFeltText = (endredeFelter, getKodeverknavn) => {
       underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''
     }`;
     const tilVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
-    return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.endretFelt" values={{ fraVerdi, tilVerdi }} />;
+    return (
+      <FormattedMessage
+        id="Historikk.Template.Feilutbetaling.endretFelt"
+        values={{ fraVerdi, tilVerdi, b: chunks => <b>{chunks}</b> }}
+      />
+    );
   }
   const feltVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
-  return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.sattFelt" values={{ feltVerdi }} />;
+  return (
+    <FormattedMessage
+      id="Historikk.Template.Feilutbetaling.sattFelt"
+      values={{ feltVerdi, b: chunks => <b>{chunks}</b> }}
+    />
+  );
 };
 
 const HistorikkMalTypeFeilutbetaling = ({
@@ -66,11 +76,12 @@ const HistorikkMalTypeFeilutbetaling = ({
     {historikkinnslagDeler.map((historikkinnslagDel, index) =>
       historikkinnslagDel.endredeFelter ? (
         <div key={`historikkinnslagDel${index + 1}`}>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.Feilutbetaling.FaktaFeilutbetalingPeriode"
             values={{
               periodeFom: finnFomOpplysning(historikkinnslagDel.opplysninger),
               periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
+              b: chunks => <b>{chunks}</b>,
             }}
           />
           <Normaltekst>{buildEndretFeltText(historikkinnslagDel.endredeFelter, getKodeverknavn)}</Normaltekst>

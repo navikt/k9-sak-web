@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-barn-oms';
 import BarnInfo from './BarnInfo';
 
@@ -19,7 +19,7 @@ describe('<BarnInfo>', () => {
     );
 
     const elementMedTekstId = tekstId =>
-      wrapper.find(FormattedHTMLMessage).filterWhere(message => message.prop('id') === tekstId);
+      wrapper.find(FormattedMessage).filterWhere(message => message.prop('id') === tekstId);
 
     expect(elementMedTekstId('FaktaBarn.BorIkkeMedSøker')).to.have.length(1);
     expect(elementMedTekstId('FaktaBarn.Død')).to.have.length(0);
@@ -41,7 +41,7 @@ describe('<BarnInfo>', () => {
     );
 
     const htmlElementMedTekstId = tekstId =>
-      wrapper.find(FormattedHTMLMessage).filterWhere(message => message.prop('id') === tekstId);
+      wrapper.find(FormattedMessage).filterWhere(message => message.prop('id') === tekstId);
 
     const elementMedTekstId = tekstId =>
       wrapper.find(FormattedMessage).filterWhere(message => message.prop('id') === tekstId);

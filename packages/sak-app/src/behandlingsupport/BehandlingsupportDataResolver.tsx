@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import { getSelectedBehandlingId, getSelectedBehandlingUuid } from '../behandling/duck';
+import { getSelectedBehandlingId } from '../behandling/duck';
 import {
   getBehandlingerTypesMappedById,
   getBehandlingerStatusMappedById,
@@ -17,9 +17,7 @@ interface OwnProps {
   fetchTotrinnsaksjonspunkterReadonly: () => void;
   resetTotrinnsaksjonspunkter: () => void;
   resetTotrinnsaksjonspunkterReadonly: () => void;
-  fetchTilgjengeligeVedtaksbrev: (params: any) => void;
   behandlingId?: number;
-  behandlingUuid?: string;
   behandlingStatusKode?: string;
   isInnsyn: boolean;
   children: ReactNode;
@@ -39,9 +37,7 @@ export class BehandlingsupportDataResolver extends Component<OwnProps> {
       fetchTotrinnsaksjonspunkterReadonly,
       resetTotrinnsaksjonspunkter,
       resetTotrinnsaksjonspunkterReadonly,
-      fetchTilgjengeligeVedtaksbrev,
       behandlingId,
-      behandlingUuid,
       behandlingStatusKode,
       isInnsyn,
     } = this.props;
@@ -59,9 +55,6 @@ export class BehandlingsupportDataResolver extends Component<OwnProps> {
         fetchTotrinnsaksjonspunkterReadonly();
       }
     }
-    if (behandlingUuid) {
-      fetchTilgjengeligeVedtaksbrev({ behandlingsid: behandlingUuid });
-    }
   };
 
   render() {
@@ -72,7 +65,6 @@ export class BehandlingsupportDataResolver extends Component<OwnProps> {
 
 const mapStateToProps = state => {
   const behandlingId = getSelectedBehandlingId(state);
-  const behandlingUuid = getSelectedBehandlingUuid(state);
   const behandlingStatus = getBehandlingerStatusMappedById(state)[behandlingId];
   const bType = getBehandlingerTypesMappedById(state)[behandlingId];
   const isInnsyn = !!bType && bType.kode === behandlingType.DOKUMENTINNSYN;
@@ -81,7 +73,6 @@ const mapStateToProps = state => {
     behandlingStatusKode: behandlingStatus ? behandlingStatus.kode : undefined,
     isInnsyn,
     behandlingId,
-    behandlingUuid,
   };
 };
 
@@ -92,7 +83,6 @@ const mapDispatchToProps = dispatch =>
       resetTotrinnsaksjonspunkterReadonly: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.resetRestApi(),
       fetchTotrinnsaksjonspunkter: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER.makeRestApiRequest(),
       fetchTotrinnsaksjonspunkterReadonly: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.makeRestApiRequest(),
-      fetchTilgjengeligeVedtaksbrev: fpsakApi.TILGJENGELIGE_VEDTAKSBREV.makeRestApiRequest(),
     },
     dispatch,
   );

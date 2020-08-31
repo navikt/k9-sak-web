@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -38,7 +38,7 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   }
   if (harPermisjonOgIkkeMottattIM(arbeidsforhold)) {
     return (
-      <FormattedHTMLMessage
+      <FormattedMessage
         key="permisjonUtenMottattIM"
         id="PersonAksjonspunktText.SokerHarPermisjonOgIkkeMottattIM"
         values={utledPermisjonValues(arbeidsforhold.permisjoner[0], getKodeverknavn)}
@@ -47,7 +47,7 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   }
   if (harPermisjonOgMottattIM(arbeidsforhold)) {
     return (
-      <FormattedHTMLMessage
+      <FormattedMessage
         key="permisjonMedMottattIM"
         id="PersonAksjonspunktText.SokerHarPermisjonOgMottattIM"
         values={utledPermisjonValues(arbeidsforhold.permisjoner[0], getKodeverknavn)}
@@ -55,30 +55,31 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
     );
   }
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1) {
-    return <FormattedHTMLMessage key="permisjoner" id="PersonAksjonspunktText.SokerHarFlerePermisjoner" />;
+    return <FormattedMessage key="permisjoner" id="PersonAksjonspunktText.SokerHarFlerePermisjoner" />;
   }
   if (arbeidsforhold.kilde.navn === arbeidsforholdKilder.INNTEKTSMELDING) {
-    return <FormattedHTMLMessage key="basertPaInntektsmelding" id="PersonAksjonspunktText.BasertPaInntektsmelding" />;
+    return <FormattedMessage key="basertPaInntektsmelding" id="PersonAksjonspunktText.BasertPaInntektsmelding" />;
   }
   if (arbeidsforhold.lagtTilAvSaksbehandler) {
-    return <FormattedHTMLMessage key="lagtTilAvSaksbehandler" id="PersonAksjonspunktText.LeggTilArbeidsforhold" />;
+    return <FormattedMessage key="lagtTilAvSaksbehandler" id="PersonAksjonspunktText.LeggTilArbeidsforhold" />;
   }
   if (!arbeidsforhold.mottattDatoInntektsmelding) {
     return (
-      <FormattedHTMLMessage
+      <FormattedMessage
         key="mottattDatoInntektsmelding"
         id="PersonAksjonspunktText.AvklarManglendeInntektsmelding"
+        values={{ br: <br /> }}
       />
     );
   }
   if (arbeidsforhold.replaceOptions.length > 0) {
-    return <FormattedHTMLMessage key="replaceOptions" id="PersonAksjonspunktText.AvklarErstatteTidligere" />;
+    return <FormattedMessage key="replaceOptions" id="PersonAksjonspunktText.AvklarErstatteTidligere" />;
   }
   if (arbeidsforhold.harErstattetEttEllerFlere) {
-    return <FormattedHTMLMessage key="harErstattetEttEllerFlere" id="PersonAksjonspunktText.AvklarErstatteAlle" />;
+    return <FormattedMessage key="harErstattetEttEllerFlere" id="PersonAksjonspunktText.AvklarErstatteAlle" />;
   }
   if (arbeidsforhold.ikkeRegistrertIAaRegister) {
-    return <FormattedHTMLMessage key="ikkeRegistrertIAaRegister" id="PersonAksjonspunktText.AvklarIkkeRegistrertIAa" />;
+    return <FormattedMessage key="ikkeRegistrertIAaRegister" id="PersonAksjonspunktText.AvklarIkkeRegistrertIAa" />;
   }
   return undefined;
 };

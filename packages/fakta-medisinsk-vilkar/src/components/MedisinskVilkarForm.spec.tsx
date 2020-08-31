@@ -7,7 +7,7 @@ import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medisinsk-
 import DiagnosekodeSelector from './DiagnosekodeSelector';
 import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
 import Legeerklaering from './Legeerklaering';
-import { MedisinskVilkarForm } from './MedisinskVilkarForm';
+import { MedisinskVilkarFormImpl as MedisinskVilkarForm } from './MedisinskVilkarForm';
 import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
 
 const aksjonspunkter = [

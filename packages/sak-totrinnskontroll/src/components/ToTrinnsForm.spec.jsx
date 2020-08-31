@@ -135,7 +135,6 @@ describe('<ToTrinnsForm>', () => {
         readOnly={false}
         intl={intlMock}
         disableGodkjennKnapp={false}
-        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -176,7 +175,6 @@ describe('<ToTrinnsForm>', () => {
         readOnly={false}
         intl={intlMock}
         disableGodkjennKnapp={false}
-        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -247,7 +245,6 @@ describe('<ToTrinnsForm>', () => {
         readOnly={false}
         intl={intlMock}
         disableGodkjennKnapp={false}
-        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
@@ -295,7 +292,6 @@ describe('<ToTrinnsForm>', () => {
         intl={intlMock}
         disableGodkjennKnapp={false}
         erTilbakekreving
-        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
 
