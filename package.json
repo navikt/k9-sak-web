@@ -35,7 +35,7 @@
     "@babel/runtime": "^7.9.6",
     "@navikt/nap-autocomplete": "^1.0.2",
     "@navikt/nap-expandable-panel": "1.0.1",
-    "@sentry/browser": "^5.21.4",
+    "@sentry/browser": "^5.22.3",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "dotenv": "^8.0.0",
