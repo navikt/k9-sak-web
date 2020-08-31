@@ -56,15 +56,25 @@ const createTooltipContent = (intl, item) => `
    </p>
 `;
 
-const prepareTimelineData = (periode, index, intl) => ({
-  ...periode,
-  className: periode.utbetalingsgrad < 100 ? 'gradert' : 'innvilget',
-  group: 1,
-  id: index,
-  start: parseDateString(periode.fom),
-  end: moment(parseDateString(periode.tom)).add(1, 'day'),
-  title: createTooltipContent(intl, periode),
-});
+const harDelvisInnvilgedeAndeler = periode => {
+  const { andeler } = periode;
+  if (Array.isArray(andeler)) {
+    return andeler.some(andel => andel.utbetalingsgrad < 100);
+  }
+  return false;
+};
+
+const prepareTimelineData = (periode, index, intl) => {
+  return {
+    ...periode,
+    className: harDelvisInnvilgedeAndeler(periode) ? 'gradert' : 'innvilget',
+    group: 1,
+    id: index,
+    start: parseDateString(periode.fom),
+    end: moment(parseDateString(periode.tom)).add(1, 'day'),
+    title: createTooltipContent(intl, periode),
+  };
+};
 
 /**
  * TilkjentYtelse
