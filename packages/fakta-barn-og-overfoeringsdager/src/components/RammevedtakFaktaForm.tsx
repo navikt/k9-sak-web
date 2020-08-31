@@ -98,7 +98,7 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
                 ]}
               />
               <Hjelpetekst>
-                <FormattedMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" />
+                <FormattedMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" values={{ br: <br /> }} />
               </Hjelpetekst>
             </FlexRow>
             <OverføringsdagerPanelgruppe
