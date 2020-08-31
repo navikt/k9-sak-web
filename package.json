@@ -35,7 +35,7 @@
     "@babel/runtime": "^7.9.6",
     "@navikt/nap-autocomplete": "^1.0.2",
     "@navikt/nap-expandable-panel": "1.0.1",
-    "@sentry/browser": "^5.21.4",
+    "@sentry/browser": "^5.22.3",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "dotenv": "^8.0.0",
@@ -59,7 +59,7 @@
     "@istanbuljs/nyc-config-babel": "^3.0.0",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-centered": "^5.3.18",
-    "@storybook/addon-docs": "^5.3.18",
+    "@storybook/addon-docs": "^6.0.20",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addons": "^6.0.16",
     "@storybook/cli": "^5.3.18",
@@ -79,7 +79,7 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/redux-form": "^8.2.3",
-    "@types/sinon": "^7.5.2",
+    "@types/sinon": "^9.0.0",
     "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
@@ -124,7 +124,7 @@
     "nyc": "^15.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^2.0.5",
-    "react-test-renderer": "^16.13.0",
+    "react-test-renderer": "^16.13.1",
     "redux-mock-store": "^1.5.4",
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
@@ -141,7 +141,7 @@
     "webpack-merge": "^4.2.1"
   },
   "resolutions": {
-    "react-test-renderer": "^16.12.0",
+    "react-test-renderer": "^16.13.1",
     "minimist": "^1.2.5"
   },
   "nyc": {

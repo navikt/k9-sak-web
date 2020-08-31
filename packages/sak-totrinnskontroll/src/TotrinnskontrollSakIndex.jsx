@@ -34,7 +34,7 @@ const TotrinnskontrollSakIndex = ({
   disableGodkjennKnapp,
   erTilbakekreving,
   createLocationForSkjermlenke,
-  tilgjengeligeVedtaksbrev
+  tilgjengeligeVedtaksbrev,
 }) => (
   <RawIntlProvider value={intl}>
     <ApprovalPanel
@@ -85,7 +85,7 @@ TotrinnskontrollSakIndex.propTypes = {
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string).isRequired
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
 };
 
 TotrinnskontrollSakIndex.defaultProps = {

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { visningsdato } from '@fpsak-frontend/utils';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 
@@ -49,7 +49,10 @@ const BarnInfo: FunctionComponent<BarnInfoProps> = ({ barnet, barnnummer }) => {
       </PanelHeader>
       <PanelContent>
         <Normaltekst>
-          <FormattedHTMLMessage id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'} />
+          <FormattedMessage
+            id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
+            values={{ b: chunks => <b>{chunks}</b> }}
+          />
         </Normaltekst>
         {dødsdato && (
           <Normaltekst>

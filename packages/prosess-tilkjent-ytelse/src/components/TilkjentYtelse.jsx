@@ -46,7 +46,7 @@ const createTooltipContent = (intl, item) => `
          days: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).days,
        },
      )}
-    </br>&nbsp;
+    <br />&nbsp;
     ${intl.formatMessage(
       { id: 'Timeline.tooltip.dagsats' },
       {

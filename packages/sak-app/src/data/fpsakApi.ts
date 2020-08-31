@@ -93,7 +93,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* Brev */
   .withGet('/k9/formidling/api/brev/maler', FpsakApiKeys.BREVMALER)
-  .withGet('/k9/formidling/api/brev/tilgjengeligevedtaksbrev', FpsakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('tilgjengelige-vedtaksbrev', FpsakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
 

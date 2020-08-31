@@ -4,7 +4,7 @@
   "FaktaBarn.Behandlingsdato": "Disse barna er søkerens folkeregistrerte barn slik det var ved tidspunktet for beregning av dager",
   "FaktaBarn.HentetLive": "Disse barna er hentet fra nåværende rammevedtak på søkeren, og kan avvike fra slik det var ved tidspunktet for beregning av dager",
   "FaktaBarn.BorMedSøker": "Barnet bor med søker",
-  "FaktaBarn.BorIkkeMedSøker": "<span>Barnet bor <b>ikke</b> med søker<span>",
+  "FaktaBarn.BorIkkeMedSøker": "Barnet bor <b>ikke</b> med søker",
   "FaktaBarn.Død": "Barnet døde den {dødsdato}",
   "FaktaBarn.UtenlandskBarn": "Barnet bor i utlandet",
   "FaktaBarn.Fosterbarn": "Barnet er fosterbarn",

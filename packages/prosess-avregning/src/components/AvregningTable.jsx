@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';
@@ -42,7 +42,7 @@ const getHeaderCodes = (showCollapseButton, collapseProps, rangeOfMonths, nextPe
         })}
         key={`${month.month}-${month.year}`}
       >
-        <FormattedHTMLMessage id={`Avregning.headerText.${month.month}`} />
+        <FormattedMessage id={`Avregning.headerText.${month.month}`} />
       </span>
     )),
   ];

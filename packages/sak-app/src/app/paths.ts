@@ -47,7 +47,7 @@ export const getLocationWithDefaultProsessStegAndFakta = (location: RouteProps['
 export const getPathToFplos = () => {
   const { host } = window.location;
   if (host === 'app-q1.adeo.no') {
-    return 'https://k9-los-web.nais.preprod.local/';
+    return 'https://k9-los-web.dev.adeo.no/';
   }
   if (host === 'app.adeo.no') {
     return 'https://k9-los-web.nais.adeo.no/';

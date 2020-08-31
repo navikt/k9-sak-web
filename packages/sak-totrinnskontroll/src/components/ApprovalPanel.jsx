@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -147,7 +147,12 @@ export class ApprovalPanel extends Component {
             ) : (
               <div>
                 <div className={styles.resultatFraGodkjenningTextContainer}>
-                  <FormattedHTMLMessage id="ToTrinnsForm.LøstAksjonspunkt" />
+                  <FormattedMessage
+                    id="ToTrinnsForm.LøstAksjonspunkt"
+                    values={{
+                      b: chunks => <b>{chunks}</b>,
+                    }}
+                  />
                 </div>
                 <div>
                   <ToTrinnsFormReadOnly
@@ -189,7 +194,7 @@ ApprovalPanel.propTypes = {
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string).isRequired
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string)
 };
 
 ApprovalPanel.defaultProps = {
@@ -197,6 +202,7 @@ ApprovalPanel.defaultProps = {
   totrinnskontrollReadOnlySkjermlenkeContext: undefined,
   behandlingKlageVurdering: undefined,
   erTilbakekreving: false,
+  tilgjengeligeVedtaksbrev: undefined
 };
 
 export default ApprovalPanel;
