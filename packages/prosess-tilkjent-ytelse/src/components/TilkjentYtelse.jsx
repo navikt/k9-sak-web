@@ -58,14 +58,9 @@ const createTooltipContent = (intl, item) => `
 
 const andelerUtgjør100ProsentTilsammen = periode => {
   const { andeler } = periode;
-  if (Array.isArray(andeler) && andeler.length > 0) {
-    let totalUtbetalingsgrad = andeler[0].utbetalingsgrad;
-    if (andeler.length > 1) {
-      andeler.slice(1, andeler.length).forEach(({ utbetalingsgrad }) => {
-        totalUtbetalingsgrad += utbetalingsgrad;
-      });
-    }
-    return totalUtbetalingsgrad >= 100;
+  const totalUtbetalingsgrad = (andeler || []).reduce((accumulator, andel) => accumulator + andel.utbetalingsgrad, 0);
+  if (totalUtbetalingsgrad >= 100) {
+    return true;
   }
   return false;
 };
