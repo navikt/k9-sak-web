@@ -2,15 +2,18 @@ import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import UttaksplanType from './UttaksplanType';
 import BarnDto from './BarnDto';
 
+type Duration = string;
+
 interface ÅrskvantumForbrukteDager {
   totaltAntallDager: number;
   antallKoronadager?: number;
   antallDagerArbeidsgiverDekker: number;
   forbrukteDager?: number;
-  forbruktTid?: string;
+  forbruktTid?: Duration;
   restdager?: number;
-  restTid?: string;
+  restTid?: Duration;
   antallDagerInfotrygd?: number;
+  smitteverndager?: Duration;
   sisteUttaksplan?: UttaksplanType;
   rammevedtak: Rammevedtak[];
   barna: BarnDto[];
