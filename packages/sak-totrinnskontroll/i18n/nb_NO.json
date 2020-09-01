@@ -124,6 +124,7 @@
   "ToTrinnsForm.Klage.OmgjortTilUgunst": "Omgjort til ugunst",
   "ToTrinnsForm.Vedtak.Fritekstbrev": "Det er laget et fritekstbrev",
   "ToTrinnsForm.ForhandvisBrev": "Forhåndsvis brev",
+  "ToTrinnsForm.IkkeVedtaksbrev": "I denne behandlingen er det ikke vedtaksbrev.",
 
   "FatterVedtakApprovalModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "FatterVedtakApprovalModal.Ok": "OK",

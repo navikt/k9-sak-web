@@ -19,6 +19,7 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import {AlertStripeInfo} from "nav-frontend-alertstriper";
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import FritekstBrevPanel from './FritekstBrevPanel';
@@ -254,6 +255,9 @@ export class VedtakForm extends Component {
                 )}
                 {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage && (
                   <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
+                )}
+                {!harTilgjengeligeVedtaksbrev && (
+                  <AlertStripeInfo>{intl.formatMessage({id: 'VedtakForm.IkkeVedtaksbrev'})}</AlertStripeInfo>
                 )}
               </Column>
             </Row>
