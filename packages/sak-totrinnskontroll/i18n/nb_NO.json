@@ -133,6 +133,7 @@
   "FatterVedtakApprovalModal.VedtakReturneresTilSaksbehandler": "Vedtak returneres til saksbehandler for ny vurdering.",
   "FatterVedtakApprovalModal.IkkeInnvilgetES": "Engangsstønad er avslått",
   "FatterVedtakApprovalModal.IkkeInnvilgetFP": "Pleiepenger er avslått",
+  "FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger": "Omsorgspenger er avslått",
   "FatterVedtakApprovalModal.IkkeInnvilgetSVP": "Svangerskapspenger er avslått",
   "FatterVedtakApprovalModal.ModalDescriptionESApproval": "Engangsstønad er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.",
   "FatterVedtakApprovalModal.ModalDescriptionFPApproval": "Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.",
