@@ -107,7 +107,7 @@ export class ApprovalPanel extends Component {
       erBehandlingEtterKlage,
       disableGodkjennKnapp,
       erTilbakekreving,
-      tilgjengeligeVedtaksbrev
+      tilgjengeligeVedtaksbrev,
     } = this.props;
     const { approvals } = this.state;
 
@@ -194,7 +194,7 @@ ApprovalPanel.propTypes = {
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string)
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
 };
 
 ApprovalPanel.defaultProps = {
@@ -202,7 +202,7 @@ ApprovalPanel.defaultProps = {
   totrinnskontrollReadOnlySkjermlenkeContext: undefined,
   behandlingKlageVurdering: undefined,
   erTilbakekreving: false,
-  tilgjengeligeVedtaksbrev: undefined
+  tilgjengeligeVedtaksbrev: undefined,
 };
 
 export default ApprovalPanel;

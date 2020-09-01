@@ -40,6 +40,7 @@ const VedtakTilbakekrevingProsessIndex = ({
     <RawIntlProvider value={intl}>
       <TilbakekrevingVedtak
         behandlingId={behandling.id}
+        behandlingUuid={behandling.uuid}
         behandlingVersjon={behandling.versjon}
         perioder={beregningsresultat.beregningResultatPerioder}
         resultat={beregningsresultat.vedtakResultatType}
