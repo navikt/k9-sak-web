@@ -17,6 +17,7 @@ import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
 
+import { getBehandlingerUuidsMappedById } from '@fpsak-frontend/sak-app/src/behandling/selectors/behandlingerSelectors';
 import styles from './nyBehandlingModal.less';
 
 const createOptions = (bt, enabledBehandlingstyper, intl) => {
@@ -34,10 +35,10 @@ interface OwnProps {
   behandlingType?: string;
   behandlingArsakTyper: KodeverkMedNavn[];
   enabledBehandlingstyper: KodeverkMedNavn[];
-  behandlingerSomKanOpprettes: {[behandlingstype: string]: boolean};
-  behandlingId?: number;
+  behandlingerSomKanOpprettes: { [behandlingstype: string]: boolean };
+  behandlingUuid?: string;
   sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingId: number }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
   uuid?: string;
   saksnummer: string;
   erTilbakekrevingAktivert: boolean;
@@ -57,7 +58,7 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
   behandlingType,
   behandlingArsakTyper,
   enabledBehandlingstyper,
-  behandlingId,
+  behandlingUuid,
   sjekkOmTilbakekrevingKanOpprettes,
   sjekkOmTilbakekrevingRevurderingKanOpprettes,
   uuid,
@@ -69,8 +70,8 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
       if (uuid !== undefined) {
         sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid });
       }
-      if (behandlingId !== undefined) {
-        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingId });
+      if (behandlingUuid !== undefined) {
+        sjekkOmTilbakekrevingRevurderingKanOpprettes({ uuid: behandlingUuid });
       }
     }
   }, []);
@@ -217,7 +218,7 @@ export const getBehandlingAarsaker = createSelector(
 
 interface Props {
   behandlingstyper: KodeverkMedNavn[];
-  behandlingerSomKanOpprettes: {[behandlingstype: string]: boolean};
+  behandlingerSomKanOpprettes: { [behandlingstype: string]: boolean };
   behandlingType: Kodeverk;
 }
 
@@ -228,7 +229,11 @@ export const getBehandlingTyper = createSelector([(ownProps: Props) => ownProps.
 export const getEnabledBehandlingstyper = createSelector(
   [getBehandlingTyper, ownProps => ownProps.behandlingerSomKanOpprettes],
   (behandlingstyper, behandlingerSomKanOpprettes) =>
-    behandlingstyper.filter(b => Object.prototype.hasOwnProperty.call(behandlingerSomKanOpprettes, b.kode) ? !!behandlingerSomKanOpprettes[b.kode] : true)
+    behandlingstyper.filter(b =>
+      Object.prototype.hasOwnProperty.call(behandlingerSomKanOpprettes, b.kode)
+        ? !!behandlingerSomKanOpprettes[b.kode]
+        : true,
+    ),
 );
 
 const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector(
@@ -259,7 +264,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     behandlingTyper: getBehandlingTyper(ownProps),
     enabledBehandlingstyper: getEnabledBehandlingstyper(ownProps),
     uuid: ownProps.uuidForSistLukkede,
-    behandlingId: isTilbakekrevingEllerTilbakekrevingRevurdering(ownProps) ? ownProps.behandlingId : undefined,
+    behandlingUuid: isTilbakekrevingEllerTilbakekrevingRevurdering(ownProps)
+      ? getBehandlingerUuidsMappedById(initialState)[ownProps.behandlingId]
+      : undefined,
     behandlingArsakTyper: getBehandlingAarsaker(state, ownProps),
     behandlingType: formValueSelector(formName)(state, 'behandlingType'),
   });

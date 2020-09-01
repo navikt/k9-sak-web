@@ -155,10 +155,10 @@ export class VedtakForm extends Component {
 
     const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
     const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-    const skalViseLink = (
-      vedtakVarsel.avslagsarsak === null ||
-      (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)
-    ) && harTilgjengeligeVedtaksbrev;
+    const skalViseLink =
+      (vedtakVarsel.avslagsarsak === null ||
+        (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)) &&
+      harTilgjengeligeVedtaksbrev;
     const skalSkjuleFattVedtakKnapp =
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
@@ -300,7 +300,7 @@ VedtakForm.defaultProps = {
   kanOverstyre: undefined,
   resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
-  tilgjengeligeVedtaksbrev: undefined
+  tilgjengeligeVedtaksbrev: undefined,
 };
 
 export const buildInitialValues = createSelector(
