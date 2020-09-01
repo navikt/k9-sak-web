@@ -115,6 +115,7 @@ export class VedtakRevurderingFormImpl extends Component {
       beregningErManueltFastsatt,
       vedtakVarsel,
       bgPeriodeMedAvslagsårsak,
+      tilgjengeligeVedtaksbrev,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewBrevCallback(
@@ -123,6 +124,8 @@ export class VedtakRevurderingFormImpl extends Component {
       readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps),
     );
     const visOverstyringKnapp = kanOverstyre || readOnly;
+    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
+    const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
     return (
       <>
         <VedtakFritekstbrevModal
@@ -211,7 +214,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 </Column>
               )}
             </Row>
-            {ytelseTypeKode === fagsakYtelseType.FRISINN && (
+            {ytelseTypeKode === fagsakYtelseType.FRISINN && harTilgjengeligeVedtaksbrev && (
               <PreviewLink previewCallback={previewAutomatiskBrev}>
                 <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
               </PreviewLink>
@@ -269,6 +272,7 @@ VedtakRevurderingFormImpl.propTypes = {
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
+  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   ...formPropTypes,
 };
 
@@ -282,6 +286,7 @@ VedtakRevurderingFormImpl.defaultProps = {
   resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
   bgPeriodeMedAvslagsårsak: undefined,
+  tilgjengeligeVedtaksbrev: undefined,
 };
 
 const buildInitialValues = createSelector(
