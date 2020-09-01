@@ -84,6 +84,7 @@ export const smittevernsdager = () => (
     forbruktTid="PT138H"
     antallDagerInfotrygd={0}
     restTid="PT-10H-30M"
+    smitteverndager="PT10H30M"
     sisteUttaksplan={{ ...sisteUttaksplan, aktiviteter: [aktivitetISmittevernsperioden] }}
     rammevedtak={[]}
     barna={[]}

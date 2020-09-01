@@ -9,7 +9,7 @@ interface DagerSøkerHarRettPåProps {
   dagerRettPå: number;
   antallOmsorgsdager: number;
   antallKoronadager: number;
-  erISmittvernperioden: boolean;
+  erIKoronaperioden: boolean;
   benyttetRammemelding: boolean;
   visDetaljer: () => void;
   viserDetaljer: boolean;
@@ -19,7 +19,7 @@ const DagerSøkerHarRettPå: React.FunctionComponent<DagerSøkerHarRettPåProps>
   dagerRettPå,
   antallOmsorgsdager,
   antallKoronadager,
-  erISmittvernperioden,
+  erIKoronaperioden,
   benyttetRammemelding,
   visDetaljer,
   viserDetaljer,
@@ -51,7 +51,7 @@ const DagerSøkerHarRettPå: React.FunctionComponent<DagerSøkerHarRettPåProps>
     },
   ];
 
-  if (erISmittvernperioden || antallKoronadager > 0) {
+  if (erIKoronaperioden || antallKoronadager > 0) {
     detaljer.push({
       antallDager: antallKoronadager,
       overskrifttekstId: 'Nøkkeltall.Koronadager',
