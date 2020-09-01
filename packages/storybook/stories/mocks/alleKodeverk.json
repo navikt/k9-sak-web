@@ -1755,7 +1755,7 @@
       "kode": "ENDRING_I_BEREGNING",
       "navn": "Endring i beregning",
       "kodeverk": "KONSEKVENS_FOR_YTELSEN"
-    }
+    },
     {
       "kode": "YTELSE_OPPHØRER",
       "navn": "Ytelsen opphører",
