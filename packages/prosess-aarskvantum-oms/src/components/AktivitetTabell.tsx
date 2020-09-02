@@ -8,7 +8,7 @@ import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import { joinNonNullStrings, calcDays } from '@fpsak-frontend/utils';
+import { joinNonNullStrings, calcDays, convertHoursToDays } from '@fpsak-frontend/utils';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
 import Arbeidsforhold from '../dto/Arbeidsforhold';
 import Uttaksperiode from '../dto/Uttaksperiode';
@@ -32,12 +32,17 @@ const antallDager = (periode: string): string => {
   return calcDays(fom, tom);
 };
 
-const formaterDelvisFravær = (delvisFravær?: string): ReactNode => {
+const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => {
   if (delvisFravær) {
     const timer = durationTilTimerMed7ogEnHalvTimesDagsbasis(delvisFravær);
-    return <FormattedMessage id="Uttaksplan.DelvisFravær" values={{ timer }} />;
+    const { days, hours } = convertHoursToDays(timer);
+    if (days > 0) {
+      return <FormattedMessage id="Uttaksplan.DelvisFraværMedDager" values={{ dager: days, timer: hours }} />;
+    }
+    return <FormattedMessage id="Uttaksplan.DelvisFravær" values={{ timer: hours }} />;
   }
-  return <FormattedMessage id="Uttaksplan.FulltFravær" />;
+  const dager = antallDager(periode);
+  return <FormattedMessage id="Uttaksplan.FulltFravær" values={{ dager }} />;
 };
 
 const utfallSymbolMap = {
@@ -128,10 +133,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
             <StyledColumn width="20%">
               <FormattedMessage id="Uttaksplan.Utfall" />
             </StyledColumn>
-            <StyledColumn width="5%">
-              <FormattedMessage id="Uttaksplan.Dager" />
-            </StyledColumn>
-            <StyledColumn width="25%">
+            <StyledColumn width="30%">
               <FormattedMessage id="Uttaksplan.Fravær" />
             </StyledColumn>
 
@@ -197,13 +199,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               </StyledColumn>
               <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
-                  {antallDager(periode)}
-                  {erValgt && <ExpandedContent fyllBorder />}
-                </>
-              </StyledColumn>
-              <StyledColumn koronaperiode={erKoronaperiode}>
-                <>
-                  {formaterDelvisFravær(delvisFravær)}
+                  {formaterFravær(periode, delvisFravær)}
                   {erValgt && <ExpandedContent fyllBorder />}
                 </>
               </StyledColumn>

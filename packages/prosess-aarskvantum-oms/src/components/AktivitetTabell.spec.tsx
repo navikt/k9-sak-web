@@ -44,14 +44,13 @@ describe('<AktivitetTabell />', () => {
     );
     const kolonner = wrapper.find(StyledColumn);
 
-    expect(kolonner).to.have.length(6);
+    expect(kolonner).to.have.length(5);
 
     const kolonnerMedTekst = tekst => kolonner.findWhere(kolonne => kolonne.text() === tekst);
     const kolonnerMedFormatterTekstId = tekstId =>
       kolonner.find(FormattedMessage).findWhere(formatert => formatert.prop('id') === tekstId);
 
     expect(kolonnerMedTekst('01.03.2020 - 31.03.2020')).to.have.length(1);
-    expect(kolonnerMedTekst('22')).to.have.length(2);
     expect(kolonnerMedFormatterTekstId('Uttaksplan.Utfall.AVSLÅTT')).to.have.length(1);
     expect(kolonnerMedTekst('0%')).to.have.length(2);
     expect(kolonnerMedFormatterTekstId('Uttaksplan.FulltFravær')).to.have.length(1);
@@ -72,7 +71,7 @@ describe('<AktivitetTabell />', () => {
 
     const expandedContent = wrapper.find(ExpandedContent);
 
-    expect(expandedContent).to.have.length(6);
+    expect(expandedContent).to.have.length(5);
 
     const vilkår = expandedContent.first().find(Normaltekst);
 

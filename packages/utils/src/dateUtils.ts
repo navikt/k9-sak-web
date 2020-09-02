@@ -3,6 +3,7 @@ import 'moment/locale/nb';
 import { DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
 
 export const TIDENES_ENDE = '9999-12-31';
+export const TIMER_PER_DAG = 7.5;
 
 // TODO Denne funksjonen må ut ifrå utils. Dette er uttakslogikk
 const checkDays = (weeks, days) => {
@@ -68,6 +69,12 @@ export const calcDays = (fraDatoPeriode, tilDatoPeriode, notWeekends = true) => 
   }
 
   return numOfDays;
+};
+
+export const convertHoursToDays = hoursToConvert => {
+  const days = Math.floor(hoursToConvert / TIMER_PER_DAG);
+  const hours = hoursToConvert % TIMER_PER_DAG;
+  return { days, hours };
 };
 
 export const calcDaysAndWeeks = (fraDatoPeriode, tilDatoPeriode) => {
