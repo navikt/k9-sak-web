@@ -3,7 +3,7 @@
 .buttonRow {
   margin-top: 16px;
 
-  > :not(:first-child) {
+  > :not(:first-child):not(.infoIkkeVedtaksbrev) {
     margin-left: 15px;
   }
 }
@@ -19,4 +19,8 @@
   cursor: pointer;
   font: inherit;
   padding: 0;
+}
+
+.infoIkkeVedtaksbrev {
+  margin-top: 1rem;
 }
