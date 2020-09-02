@@ -10,16 +10,21 @@ import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import { joinNonNullStrings, calcDays, convertHoursToDays } from '@fpsak-frontend/utils';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
-import Arbeidsforhold from '../dto/Arbeidsforhold';
 import Uttaksperiode from '../dto/Uttaksperiode';
 import Utfalltype, { UtfallEnum } from '../dto/Utfall';
 import StyledColumn from './StyledColumn';
 import Vilkår, { VilkårEnum } from '../dto/Vilkår';
 
 interface AktivitetTabellProps {
-  arbeidsforhold: Arbeidsforhold;
+  arbeidsforhold: AktivitetArbeidsforhold;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
+}
+
+interface AktivitetArbeidsforhold {
+  organisjonsnummer: string;
+  type: string;
+  navn?: string;
 }
 
 const periodevisning = (periode: string): string => {
@@ -118,12 +123,19 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
     }
   };
 
+  const arbeidsforholdType: string =
+    aktivitetsstatuser.find(aktivitetsstatus => aktivitetsstatus.kode === arbeidsforhold.type)?.navn ||
+    arbeidsforhold.type;
+  const { navn } = arbeidsforhold;
+  let beskrivelse = arbeidsforholdType;
+  if (navn) {
+    beskrivelse += `, ${navn}`;
+  }
+  beskrivelse += ` (${arbeidsforhold.organisjonsnummer})`;
+
   return (
     <div key={joinNonNullStrings(Object.values(arbeidsforhold))}>
-      <Element>
-        {aktivitetsstatuser.find(aktivitetsstatus => aktivitetsstatus.kode === arbeidsforhold.type)?.navn ||
-          arbeidsforhold.type}
-      </Element>
+      <Element>{beskrivelse}</Element>
       <Table
         suppliedHeaders={
           <>

@@ -32,6 +32,16 @@ const behandling: Behandling = {
   versjon: 1,
 };
 
+const inntektArbeidYtelse: InntektArbeidYtelse = {
+  arbeidsforhold: [
+    // @ts-ignore
+    {
+      navn: 'Bedrift AS',
+      arbeidsgiverIdentifikator: '999',
+    },
+  ],
+};
+
 describe('<ÅrskvantumIndex>', () => {
   it('rendrer aksjonspunkt-form hvis det finnes aksjonspunkter', () => {
     const wrapperAksjonspunkt = shallowWithIntl(
@@ -56,6 +66,7 @@ describe('<ÅrskvantumIndex>', () => {
         fullUttaksplan={{}}
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
+        inntektArbeidYtelse={inntektArbeidYtelse}
       />,
     );
 
@@ -72,6 +83,7 @@ describe('<ÅrskvantumIndex>', () => {
         fullUttaksplan={{}}
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
+        inntektArbeidYtelse={inntektArbeidYtelse}
       />,
     );
 
