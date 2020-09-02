@@ -18,6 +18,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import {AlertStripeInfo} from "nav-frontend-alertstriper";
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -26,6 +27,7 @@ import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
+import styles from './vedtakRevurderingForm.less';
 import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
@@ -218,6 +220,11 @@ export class VedtakRevurderingFormImpl extends Component {
               <PreviewLink previewCallback={previewAutomatiskBrev}>
                 <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
               </PreviewLink>
+            )}
+            {!harTilgjengeligeVedtaksbrev && (
+              <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
+                {intl.formatMessage({id: 'VedtakForm.IkkeVedtaksbrev'})}
+              </AlertStripeInfo>
             )}
             {skalBrukeOverstyrendeFritekstBrev &&
               ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
