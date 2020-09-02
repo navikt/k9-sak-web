@@ -10,7 +10,7 @@ import { VilkårEnum } from '../dto/Vilkår';
 import AktivitetTabell, { ExpandButton, ExpandedContent } from './AktivitetTabell';
 import StyledColumn from './StyledColumn';
 
-describe('AktivitetTabell', () => {
+describe('<AktivitetTabell />', () => {
   const aktivitet: Aktivitet = {
     arbeidsforhold: {
       arbeidsforholdId: '888',
