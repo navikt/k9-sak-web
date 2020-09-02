@@ -8,7 +8,7 @@ import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import { joinNonNullStrings } from '@fpsak-frontend/utils';
+import { joinNonNullStrings, calcDays } from '@fpsak-frontend/utils';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
 import Arbeidsforhold from '../dto/Arbeidsforhold';
 import Uttaksperiode from '../dto/Uttaksperiode';
@@ -25,6 +25,11 @@ interface AktivitetTabellProps {
 const periodevisning = (periode: string): string => {
   const [fom, tom] = periode.split('/');
   return `${formatDate(fom)} - ${formatDate(tom)}`;
+};
+
+const antallDager = (periode: string): string => {
+  const [fom, tom] = periode.split('/');
+  return calcDays(fom, tom);
 };
 
 const formaterDelvisFravær = (delvisFravær?: string): ReactNode => {
@@ -123,9 +128,13 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
             <StyledColumn width="20%">
               <FormattedMessage id="Uttaksplan.Utfall" />
             </StyledColumn>
-            <StyledColumn width="30%">
+            <StyledColumn width="5%">
+              <FormattedMessage id="Uttaksplan.Dager" />
+            </StyledColumn>
+            <StyledColumn width="25%">
               <FormattedMessage id="Uttaksplan.Fravær" />
             </StyledColumn>
+
             <StyledColumn width="15%">
               <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
             </StyledColumn>
@@ -188,10 +197,17 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               </StyledColumn>
               <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
+                  {antallDager(periode)}
+                  {erValgt && <ExpandedContent fyllBorder />}
+                </>
+              </StyledColumn>
+              <StyledColumn koronaperiode={erKoronaperiode}>
+                <>
                   {formaterDelvisFravær(delvisFravær)}
                   {erValgt && <ExpandedContent fyllBorder />}
                 </>
               </StyledColumn>
+
               <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
                   {`${utbetalingsgrad}%`}
