@@ -128,7 +128,7 @@ interface DispatchProps {
     params: {},
   ) => void;
   sjekkTilbakeKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkTilbakeRevurdKanOpprettes: (params: { behandlingId: number }) => void;
+  sjekkTilbakeRevurdKanOpprettes: (params: { uuid: string }) => void;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -176,13 +176,17 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
 
   const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
 
+  const erTilbakekreving =
+    behandlingType &&
+    (bType.TILBAKEKREVING === behandlingType.kode || bType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
   const erFrisinn = fagsakYtelseType.FRISINN === ytelseType.kode;
 
   return (
     <MenySakIndex
       data={[
         new MenyData(
-          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) && !erFrisinn,
+          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getTaAvVentMenytekst(),
         ).medModal(lukkModal => (
           <MenyTaAvVentIndex
@@ -193,7 +197,8 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
           />
         )),
         new MenyData(
-          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) && !erFrisinn,
+          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getSettPaVentMenytekst(),
         ).medModal(lukkModal => (
           <MenySettPaVentIndex
@@ -222,7 +227,8 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
           />
         )),
         new MenyData(
-          skalViseIMeny(behandlingId, behandlendeEnheter, erKoet, rettigheter.byttBehandlendeEnhetAccess) && !erFrisinn,
+          skalViseIMeny(behandlingId, behandlendeEnheter, erKoet, rettigheter.byttBehandlendeEnhetAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getMenytekst(),
         ).medModal(lukkModal => (
           <MenyEndreBehandlendeEnhetIndex
@@ -237,7 +243,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
         )),
         new MenyData(
           skalViseApneForEndringerIMeny(behandlingId, erPaVent, erKoet, rettigheter.opneBehandlingForEndringerAccess) &&
-            !erFrisinn,
+            (!erFrisinn || erTilbakekreving),
           getApneForEndringerMenytekst(),
         ).medModal(lukkModal => (
           <MenyApneForEndringerIndex

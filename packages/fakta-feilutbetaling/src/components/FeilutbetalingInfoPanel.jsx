@@ -180,9 +180,10 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </Undertekst>
                   {feilutbetaling.behandlingsresultat && (
                     <Normaltekst className={styles.smallPaddingRight}>
-                      {feilutbetaling.behandlingsresultat.konsekvenserForYtelsen
-                        .map(ba => getKodeverknavn(ba))
-                        .join(', ')}
+                      {feilutbetaling.behandlingsresultat.konsekvenserForYtelsen &&
+                        feilutbetaling.behandlingsresultat.konsekvenserForYtelsen
+                          .map(ba => getKodeverknavn(ba))
+                          .join(', ')}
                     </Normaltekst>
                   )}
                 </Column>

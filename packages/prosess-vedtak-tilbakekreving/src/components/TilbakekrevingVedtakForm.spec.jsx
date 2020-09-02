@@ -31,6 +31,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
           },
         ]}
         behandlingId={1}
+        behandlingUuid="uuid"
         behandlingVersjon={1}
         perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
       />,
@@ -72,6 +73,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
           },
         ]}
         behandlingId={2}
+        behandlingUuid="uuid"
         behandlingVersjon={1}
         perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
       />,
@@ -81,7 +83,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
 
     expect(fetchPreview.calledOnce).to.true;
     expect(fetchPreview.getCalls()[0].args[0]).is.eql({
-      behandlingId: 2,
+      uuid: 'uuid',
       oppsummeringstekst: 'Dette er oppsummeringen',
       perioderMedTekst: [
         {
@@ -116,6 +118,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
           },
         ]}
         behandlingId={1}
+        behandlingUuid="uuid"
         behandlingVersjon={1}
         perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-01-01_2019-02-02']}
       />,
@@ -157,6 +160,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
           },
         ]}
         behandlingId={1}
+        behandlingUuid="uuid"
         behandlingVersjon={1}
         perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
         erRevurderingTilbakekrevingKlage

@@ -92,23 +92,32 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
   }
 
   submitCallback(values) {
-    const { behandlingIdentifier, submitMessage } = this.props;
+    const { behandlingIdentifier, submitMessage, behandlingUuid, behandlingTypeKode } = this.props;
     const { submitCounter } = this.state;
 
     const isInnhentEllerForlenget =
       values.brevmalkode === dokumentMalType.INNHENT_DOK ||
       values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
       values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
+    const erTilbakekreving =
+      BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
+      BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
 
     this.setState({ showMessagesModal: !isInnhentEllerForlenget });
 
-    const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      mottaker: values.mottaker,
-      brevmalkode: values.brevmalkode,
-      fritekst: values.fritekst,
-      arsakskode: values.arsakskode,
-    };
+    const data = erTilbakekreving
+      ? {
+          behandlingUuid,
+          fritekst: values.fritekst,
+          brevmalkode: values.brevmalkode,
+        }
+      : {
+          behandlingId: behandlingIdentifier.behandlingId,
+          mottaker: values.mottaker,
+          brevmalkode: values.brevmalkode,
+          fritekst: values.fritekst,
+          arsakskode: values.arsakskode,
+        };
 
     return submitMessage(data)
       .then(() => this.resetMessage())
@@ -143,13 +152,13 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
   }
 
   previewCallback(mottaker, dokumentMal, fritekst, aarsakskode) {
-    const { behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode, behandlingIdentifier } = this.props;
+    const { behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode } = this.props;
     const erTilbakekreving =
       BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
       BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
     const data = erTilbakekreving
       ? {
-          behandlingId: behandlingIdentifier.behandlingId,
+          behandlingUuid,
           fritekst: fritekst || ' ',
           brevmalkode: dokumentMal,
         }

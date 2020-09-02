@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { periodeErISmittevernsperioden } from '@k9-sak-web/prosess-aarskvantum-oms/src/components/utils';
+import { periodeErIKoronaperioden } from '@k9-sak-web/prosess-aarskvantum-oms/src/components/utils';
 import Uttaksperiode from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
 import { FormattedMessage } from 'react-intl';
 import { Image } from '@fpsak-frontend/shared-components';
@@ -7,6 +7,7 @@ import nøkkelhull from '@fpsak-frontend/assets/images/nøkkelhull.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import hide from '@fpsak-frontend/assets/images/hide.svg';
 import Hr from '@fpsak-frontend/shared-components/src/Hr';
+import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import { Overskrift, OverskriftContainer, ToggleDetaljerKnapp } from './NøkkeltallContainerStyles';
 import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
 import DagerSøkerHarRettPå from './DagerSøkerHarRettPå';
@@ -14,18 +15,21 @@ import DagerNavKanUtbetale from './DagerNavKanUtbetale';
 import ForbrukteDager from './ForbrukteDager';
 import Restdager from './Restdager';
 
-export interface NøkkeltallContainerProps {
-  totaltAntallDager: number;
-  antallKoronadager?: number;
-  antallDagerArbeidsgiverDekker: number;
-  forbrukteDager?: number;
-  forbruktTid?: string;
-  restdager?: number;
-  restTid?: string;
-  antallDagerInfotrygd: number;
-  benyttetRammemelding: boolean;
+export type NøkkeltallContainerProps = Pick<
+  ÅrskvantumForbrukteDager,
+  | 'totaltAntallDager'
+  | 'antallKoronadager'
+  | 'antallDagerArbeidsgiverDekker'
+  | 'forbrukteDager'
+  | 'forbruktTid'
+  | 'restdager'
+  | 'restTid'
+  | 'antallDagerInfotrygd'
+  | 'smitteverndager'
+> & {
   uttaksperioder: Uttaksperiode[];
-}
+  benyttetRammemelding: boolean;
+};
 
 const absoluttverdiDagerTimer = ({ dager, timer }: DagerTimer): DagerTimer => ({
   dager: Math.abs(dager),
@@ -41,18 +45,18 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   antallDagerArbeidsgiverDekker,
   antallDagerInfotrygd,
   antallKoronadager,
+  smitteverndager,
   benyttetRammemelding,
   totaltAntallDager: grunnrettsdager,
 }) => {
-  const erInnenSmittevernsperioden = React.useMemo(
-    () => uttaksperioder.some(({ periode }) => periodeErISmittevernsperioden(periode)),
+  const erIKoronaPerioden = React.useMemo(
+    () => uttaksperioder.some(({ periode }) => periodeErIKoronaperioden(periode)),
     [uttaksperioder],
   );
 
   const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
   const restTidErNegativt = rest.dager < 0 || rest.timer < 0;
-  const restdagerErSmittevernsdager = erInnenSmittevernsperioden && restTidErNegativt;
-  const utbetaltFlereDagerEnnRett = !erInnenSmittevernsperioden && restTidErNegativt;
+  const utbetaltFlereDagerEnnRett = !smitteverndager && restTidErNegativt;
 
   const totaltForbruktDagerTimer = forbruktTid
     ? beregnDagerTimer(forbruktTid)
@@ -61,8 +65,9 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   const navHarUtbetaltDagerTimer = sumTid(totaltForbruktDagerTimer, tidFraInfotrygd);
   const dagerRettPå = grunnrettsdager + antallKoronadager;
   const dagerNavKanUtbetale = dagerRettPå - antallDagerArbeidsgiverDekker;
-  const alleDagerErForbrukt = restdagerErSmittevernsdager || utbetaltFlereDagerEnnRett;
+  const alleDagerErForbrukt = !!smitteverndager || utbetaltFlereDagerEnnRett;
   const forbruktDagerTimer = restTidErNegativt ? { dager: dagerNavKanUtbetale } : totaltForbruktDagerTimer;
+  const smittevernDagerTimer = smitteverndager ? beregnDagerTimer(smitteverndager) : null;
 
   const [viserDetaljerDagerRettPå, visDetaljerDagerRettPå] = React.useState<boolean>(false);
   const [viserDetaljerDagerKanUtbetale, visDetaljerDagerKanUtbetale] = React.useState<boolean>(false);
@@ -109,7 +114,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         dagerRettPå={dagerRettPå}
         antallOmsorgsdager={grunnrettsdager}
         antallKoronadager={antallKoronadager}
-        erISmittvernperioden={erInnenSmittevernsperioden}
+        erIKoronaperioden={erIKoronaPerioden}
         benyttetRammemelding={benyttetRammemelding}
         viserDetaljer={viserDetaljerDagerRettPå}
         visDetaljer={() => visDetaljerDagerRettPå(current => !current)}
@@ -126,7 +131,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         navHarUtbetaltDagerTimer={navHarUtbetaltDagerTimer}
         infotrygdDagerTimer={tidFraInfotrygd}
         forbrukteDagerTimer={forbruktDagerTimer}
-        smittevernDagerTimer={restdagerErSmittevernsdager ? absoluttverdiDagerTimer(rest) : null}
+        smittevernDagerTimer={smittevernDagerTimer}
         utbetaltForMangeDagerTimer={utbetaltFlereDagerEnnRett ? absoluttverdiDagerTimer(rest) : null}
         viserDetaljer={viserDetaljerForbrukteDager}
         visDetaljer={() => visDetaljerForbrukteDager(current => !current)}

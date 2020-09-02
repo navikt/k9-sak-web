@@ -27,7 +27,7 @@ const ForeldelseProsessIndex = ({
   submitCallback,
   isReadOnly,
   readOnlySubmitButton,
-  apCodes,
+  aksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
     <ForeldelseForm
@@ -36,7 +36,7 @@ const ForeldelseProsessIndex = ({
       perioderForeldelse={perioderForeldelse}
       submitCallback={submitCallback}
       readOnly={isReadOnly}
-      apCodes={apCodes}
+      apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
       readOnlySubmitButton={readOnlySubmitButton}
       navBrukerKjonn={navBrukerKjonn}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -56,7 +56,7 @@ ForeldelseProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default ForeldelseProsessIndex;
