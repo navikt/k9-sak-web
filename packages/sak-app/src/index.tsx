@@ -17,8 +17,9 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const environment = window.location.hostname;
 
 init({
-  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
   environment,
+  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
+  release: '1', // TODO endre denne til å bli satt av github actions
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
