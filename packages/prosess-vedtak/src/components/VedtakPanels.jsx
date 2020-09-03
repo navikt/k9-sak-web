@@ -87,6 +87,7 @@ const VedtakPanels = ({
         beregningErManueltFastsatt={beregningErManueltFastsatt}
         vedtakVarsel={vedtakVarsel}
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       />
     );
   }
