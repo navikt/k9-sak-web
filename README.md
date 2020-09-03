@@ -55,4 +55,4 @@ FAKE_ERROR_BODY={"error":"dette fikk galt"}
 This project uses Streamline Icons. If you use k9-sak-web in your project please adhere to the Streamline Icons license agreement found here: https://streamlineicons.com/ux/extended-license.html
 
 ### For NAV-ansatte
-Interne henvendelser kan sendes via Slack i kanalen **#p2-frontend**.
+Interne henvendelser kan sendes via Slack i kanalen **##k9sak-frontend-tech**.
