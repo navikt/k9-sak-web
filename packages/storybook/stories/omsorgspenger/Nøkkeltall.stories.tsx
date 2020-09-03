@@ -70,6 +70,7 @@ export const standardtall = () => (
     forbruktTid="PT22H30M"
     antallDagerInfotrygd={0}
     restTid="PT22H30M"
+    smitteverndager="PT0S"
     sisteUttaksplan={{ ...sisteUttaksplan, benyttetRammemelding: false }}
     rammevedtak={[]}
     barna={[]}

@@ -35,6 +35,7 @@ const InputField = ({
   <Field
     name={name}
     validate={validate}
+    // @ts-ignore TODO Fiks
     component={readOnly ? ReadOnlyField : renderNavInput}
     type={type}
     label={label}
