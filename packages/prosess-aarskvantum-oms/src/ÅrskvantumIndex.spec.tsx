@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, InntektArbeidYtelse } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../i18n/intl-enzyme-test-helper-uttaksplan';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
 import AksjonspunktForm from './components/AksjonspunktForm';
@@ -32,6 +32,16 @@ const behandling: Behandling = {
   versjon: 1,
 };
 
+const inntektArbeidYtelse: InntektArbeidYtelse = {
+  // @ts-ignore
+  arbeidsforhold: [
+    {
+      navn: 'Bedrift AS',
+      arbeidsgiverIdentifikator: '999',
+    },
+  ],
+};
+
 describe('<ÅrskvantumIndex>', () => {
   it('rendrer aksjonspunkt-form hvis det finnes aksjonspunkter', () => {
     const wrapperAksjonspunkt = shallowWithIntl(
@@ -56,6 +66,7 @@ describe('<ÅrskvantumIndex>', () => {
         fullUttaksplan={{}}
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
+        inntektArbeidYtelse={inntektArbeidYtelse}
       />,
     );
 
@@ -72,6 +83,7 @@ describe('<ÅrskvantumIndex>', () => {
         fullUttaksplan={{}}
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
+        inntektArbeidYtelse={inntektArbeidYtelse}
       />,
     );
 
