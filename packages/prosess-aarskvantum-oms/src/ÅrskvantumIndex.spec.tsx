@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, InntektArbeidYtelse } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../i18n/intl-enzyme-test-helper-uttaksplan';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
 import AksjonspunktForm from './components/AksjonspunktForm';
@@ -33,8 +33,8 @@ const behandling: Behandling = {
 };
 
 const inntektArbeidYtelse: InntektArbeidYtelse = {
+  // @ts-ignore
   arbeidsforhold: [
-    // @ts-ignore
     {
       navn: 'Bedrift AS',
       arbeidsgiverIdentifikator: '999',

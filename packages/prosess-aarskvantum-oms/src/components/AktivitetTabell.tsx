@@ -21,8 +21,8 @@ interface AktivitetTabellProps {
   aktivitetsstatuser: KodeverkMedNavn[];
 }
 
-interface AktivitetArbeidsforhold {
-  organisjonsnummer: string;
+export interface AktivitetArbeidsforhold {
+  organisasjonsnummer: string;
   type: string;
   navn?: string;
 }
@@ -131,7 +131,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   if (navn) {
     beskrivelse += `, ${navn}`;
   }
-  beskrivelse += ` (${arbeidsforhold.organisjonsnummer})`;
+  beskrivelse += ` (${arbeidsforhold.organisasjonsnummer})`;
 
   return (
     <div key={joinNonNullStrings(Object.values(arbeidsforhold))}>

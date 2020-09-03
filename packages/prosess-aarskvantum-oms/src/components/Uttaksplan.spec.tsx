@@ -31,7 +31,7 @@ describe('Uttaksplan', () => {
     ],
   };
 
-  const arbeidsforhold: Arbeidsforhold = [
+  const arbeidsforhold: Arbeidsforhold[] = [
     // @ts-ignore
     {
       navn: 'Bedrift AS',

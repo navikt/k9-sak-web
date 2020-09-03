@@ -63,6 +63,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
         aktivitetsstatuser={aktivitetsstatuser}
         aktiv={sisteUttaksplan.aktiv}
+        // @ts-ignore
         arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
       />
     </RawIntlProvider>

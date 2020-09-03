@@ -36,7 +36,7 @@ const mapAktiviteterTilTabell = (
       <AktivitetTabell
         arbeidsforhold={{
           type: arbeidsforhold.type,
-          organisjonsnummer: arbeidsforhold.organisasjonsnummer,
+          organisasjonsnummer: arbeidsforhold.organisasjonsnummer,
           navn: gjeldendeArbeidsforhold?.navn,
         }}
         uttaksperioder={uttaksperioder}
