@@ -19,6 +19,7 @@ export {
   getRangeOfMonths,
   visningsdato,
   isValidDate,
+  convertHoursToDays,
 } from './src/dateUtils';
 export { default as decodeHtmlEntity } from './src/decodeHtmlEntity';
 export { fodselsnummerPattern, isValidFodselsnummer } from './src/fodselsnummerUtils';

@@ -54,9 +54,11 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
     [uttaksperioder],
   );
 
+  const smittevernDagerTimer = smitteverndager ? beregnDagerTimer(smitteverndager) : null;
+  const harSmitteverndager = smittevernDagerTimer?.timer > 0 || smittevernDagerTimer?.dager > 0;
   const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
   const restTidErNegativt = rest.dager < 0 || rest.timer < 0;
-  const utbetaltFlereDagerEnnRett = !smitteverndager && restTidErNegativt;
+  const utbetaltFlereDagerEnnRett = !harSmitteverndager && restTidErNegativt;
 
   const totaltForbruktDagerTimer = forbruktTid
     ? beregnDagerTimer(forbruktTid)
@@ -65,9 +67,8 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   const navHarUtbetaltDagerTimer = sumTid(totaltForbruktDagerTimer, tidFraInfotrygd);
   const dagerRettPå = grunnrettsdager + antallKoronadager;
   const dagerNavKanUtbetale = dagerRettPå - antallDagerArbeidsgiverDekker;
-  const alleDagerErForbrukt = !!smitteverndager || utbetaltFlereDagerEnnRett;
+  const alleDagerErForbrukt = !!harSmitteverndager || utbetaltFlereDagerEnnRett;
   const forbruktDagerTimer = restTidErNegativt ? { dager: dagerNavKanUtbetale } : totaltForbruktDagerTimer;
-  const smittevernDagerTimer = smitteverndager ? beregnDagerTimer(smitteverndager) : null;
 
   const [viserDetaljerDagerRettPå, visDetaljerDagerRettPå] = React.useState<boolean>(false);
   const [viserDetaljerDagerKanUtbetale, visDetaljerDagerKanUtbetale] = React.useState<boolean>(false);
