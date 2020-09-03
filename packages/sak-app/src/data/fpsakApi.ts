@@ -69,15 +69,9 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /k9/tilbake/api/behandlinger */
   .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
-  .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
   .withGet('/k9/tilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
   .withGet(
-    '/k9/tilbake/api/behandlinger/kan-revurdering-opprettes',
-    FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES,
-  )
-  .withGet('/k9/tilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
-  .withGet(
-    '/k9/tilbake/api/behandlinger/kan-revurdering-opprettes',
+    '/k9/tilbake/api/behandlinger/kan-revurdering-opprettes-v2',
     FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES,
   )
   .withGet('/k9/tilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
@@ -92,7 +86,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
 
   /* Brev */
-  .withGet('/k9/formidling/api/brev/maler', FpsakApiKeys.BREVMALER)
+  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
   .withRel('tilgjengelige-vedtaksbrev', FpsakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)

@@ -28,7 +28,7 @@ SOFTWARE.
 
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import NodeCache from 'node-cache' ;
+import NodeCache from 'node-cache';
 
 const byLowerCase = toFind => value => value.toLowerCase() === toFind;
 const getKeys = headers => Object.keys(headers);
@@ -40,9 +40,8 @@ interface CacheValue {
 }
 
 class EtagCache {
-  
   static instance: EtagCache;
-  
+
   cache: NodeCache;
 
   static getInstance() {
@@ -70,7 +69,7 @@ class EtagCache {
 }
 
 function isCacheableMethod(config: AxiosRequestConfig) {
-  return ['GET', 'HEAD'].indexOf(config.method.toUpperCase())>=0;
+  return ['GET', 'HEAD'].indexOf(config.method.toUpperCase()) >= 0;
 }
 
 function getUUIDByAxiosConfig(config: AxiosRequestConfig) {
@@ -86,7 +85,7 @@ function requestInterceptor(config: AxiosRequestConfig) {
     const uuid = getUUIDByAxiosConfig(config);
     const lastCachedResult = EtagCache.get(uuid);
     if (lastCachedResult) {
-	  // eslint-disable-next-line no-param-reassign
+      // eslint-disable-next-line no-param-reassign
       config.headers = { ...config.headers, 'If-None-Match': lastCachedResult.etag };
     }
   }
@@ -128,6 +127,3 @@ export default function axiosEtag(config?: AxiosRequestConfig) {
 
   return instance;
 }
-
-
-

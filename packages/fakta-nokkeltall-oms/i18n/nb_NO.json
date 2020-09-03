@@ -30,7 +30,7 @@
   "Nøkkeltall.Smittevern.InfoText": "Dager gitt pga dokumentert særlige smittevernhensyn i perioden 20.04.2020 til og med 31.12.2020",
   "Nøkkeltall.KanUtbetales": "Kan utbetales",
   "Nøkkeltall.KanUtbetales.InfoText": "{dager} dager som NAV kan utbetale",
-  "Nøkkeltall.TotaltForbrukte": "Totalt forbukte",
+  "Nøkkeltall.TotaltForbrukte": "Totalt forbrukte",
   "Nøkkeltall.TotaltForbrukte.Dager.InfoText": "{dager} dager forbrukt",
   "Nøkkeltall.TotaltForbrukte.DagerOgTimer.InfoText": "{dager} dager og {timer} timer forbrukt",
   "Nøkkeltall.VisUtregning": "Vis utregning",

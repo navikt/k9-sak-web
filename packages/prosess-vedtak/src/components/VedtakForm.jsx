@@ -19,6 +19,7 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import {AlertStripeInfo} from "nav-frontend-alertstriper";
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import FritekstBrevPanel from './FritekstBrevPanel';
@@ -156,10 +157,10 @@ export class VedtakForm extends Component {
     const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
     const kanHaFritekstbrev = !isTilgjengeligeVedtaksbrevArray || tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
     const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-    const skalViseLink = (
-      vedtakVarsel.avslagsarsak === null ||
-      (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)
-    ) && harTilgjengeligeVedtaksbrev;
+    const skalViseLink =
+      (vedtakVarsel.avslagsarsak === null ||
+        (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)) &&
+      harTilgjengeligeVedtaksbrev;
     const skalSkjuleFattVedtakKnapp =
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
@@ -256,6 +257,9 @@ export class VedtakForm extends Component {
                 {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage && (
                   <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
                 )}
+                {!harTilgjengeligeVedtaksbrev && (
+                  <AlertStripeInfo>{intl.formatMessage({id: 'VedtakForm.IkkeVedtaksbrev'})}</AlertStripeInfo>
+                )}
               </Column>
             </Row>
           )}
@@ -301,7 +305,7 @@ VedtakForm.defaultProps = {
   kanOverstyre: undefined,
   resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
-  tilgjengeligeVedtaksbrev: undefined
+  tilgjengeligeVedtaksbrev: undefined,
 };
 
 export const buildInitialValues = createSelector(

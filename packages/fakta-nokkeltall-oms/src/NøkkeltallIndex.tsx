@@ -21,6 +21,7 @@ const NøkkeltallIndex: FunctionComponent<ÅrskvantumForbrukteDager> = ({
   restTid,
   forbrukteDager,
   forbruktTid,
+  smitteverndager,
   antallDagerArbeidsgiverDekker,
   antallDagerInfotrygd = 0,
   sisteUttaksplan,
@@ -34,6 +35,7 @@ const NøkkeltallIndex: FunctionComponent<ÅrskvantumForbrukteDager> = ({
         restTid={restTid}
         forbrukteDager={forbrukteDager}
         forbruktTid={forbruktTid}
+        smitteverndager={smitteverndager}
         antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
         antallDagerInfotrygd={antallDagerInfotrygd}
         benyttetRammemelding={sisteUttaksplan.benyttetRammemelding}
