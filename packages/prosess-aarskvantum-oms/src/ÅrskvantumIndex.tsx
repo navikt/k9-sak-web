@@ -3,6 +3,7 @@ import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
+import InntektArbeidYtelse from '@k9-sak-web/types/src/inntektArbeidYtelseTsType';
 import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import Uttaksplan from './components/Uttaksplan';
@@ -29,6 +30,7 @@ interface ÅrsakvantumIndexProps {
   behandling: Behandling;
   submitCallback: (values: any[]) => void;
   aksjonspunkterForSteg?: Aksjonspunkt[];
+  inntektArbeidYtelse: InntektArbeidYtelse;
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
@@ -39,6 +41,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   behandling,
   submitCallback,
   aksjonspunkterForSteg = [],
+  inntektArbeidYtelse,
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
@@ -60,6 +63,8 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
         aktivitetsstatuser={aktivitetsstatuser}
         aktiv={sisteUttaksplan.aktiv}
+        // @ts-ignore
+        arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
       />
     </RawIntlProvider>
   );
