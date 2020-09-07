@@ -39,7 +39,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "dotenv": "^8.0.0",
-    "history": "^4.9.0",
+    "history": "^5.0.0",
     "node-cache": "^5.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
