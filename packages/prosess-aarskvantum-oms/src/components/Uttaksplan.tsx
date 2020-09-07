@@ -4,7 +4,7 @@ import Tabs from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Arbeidsforhold } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import BorderedContainer from './BorderedContainer';
@@ -17,21 +17,34 @@ interface UttaksplanProps {
   aktiviteterHittilIÅr: Aktivitet[];
   aktiv: boolean;
   aktivitetsstatuser: KodeverkMedNavn[];
+  arbeidsforhold: Arbeidsforhold[];
 }
 
-const mapAktiviteterTilTabell = (aktiviteter: Aktivitet[], aktivitetsstatuser: KodeverkMedNavn[]) => {
+const mapAktiviteterTilTabell = (
+  aktiviteter: Aktivitet[],
+  aktivitetsstatuser: KodeverkMedNavn[],
+  alleArbeidsforhold: Arbeidsforhold[],
+) => {
   if (!aktiviteter.length) {
     return <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />;
   }
-
-  return aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => (
-    <AktivitetTabell
-      arbeidsforhold={arbeidsforhold}
-      uttaksperioder={uttaksperioder}
-      aktivitetsstatuser={aktivitetsstatuser}
-      key={joinNonNullStrings(Object.values(arbeidsforhold))}
-    />
-  ));
+  return aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => {
+    const gjeldendeArbeidsforhold = alleArbeidsforhold.find(
+      arb => arb.arbeidsgiverIdentifikator === arbeidsforhold.organisasjonsnummer,
+    );
+    return (
+      <AktivitetTabell
+        arbeidsforhold={{
+          type: arbeidsforhold.type,
+          organisasjonsnummer: arbeidsforhold.organisasjonsnummer,
+          navn: gjeldendeArbeidsforhold?.navn,
+        }}
+        uttaksperioder={uttaksperioder}
+        aktivitetsstatuser={aktivitetsstatuser}
+        key={joinNonNullStrings(Object.values(arbeidsforhold))}
+      />
+    );
+  });
 };
 
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
@@ -39,6 +52,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   aktiviteterHittilIÅr = [],
   aktivitetsstatuser = [],
   aktiv,
+  arbeidsforhold,
 }) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
   return (
@@ -65,8 +79,8 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
         onChange={(e, valgtIndex) => setValgtTabIndex(valgtIndex)}
       />
       <VerticalSpacer sixteenPx />
-      {valgtTabIndex === 0 && mapAktiviteterTilTabell(aktiviteterBehandling, aktivitetsstatuser)}
-      {valgtTabIndex === 1 && mapAktiviteterTilTabell(aktiviteterHittilIÅr, aktivitetsstatuser)}
+      {valgtTabIndex === 0 && mapAktiviteterTilTabell(aktiviteterBehandling, aktivitetsstatuser, arbeidsforhold)}
+      {valgtTabIndex === 1 && mapAktiviteterTilTabell(aktiviteterHittilIÅr, aktivitetsstatuser, arbeidsforhold)}
     </BorderedContainer>
   );
 };

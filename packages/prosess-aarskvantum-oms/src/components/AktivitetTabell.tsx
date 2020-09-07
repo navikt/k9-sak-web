@@ -8,18 +8,23 @@ import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import { joinNonNullStrings } from '@fpsak-frontend/utils';
+import { joinNonNullStrings, calcDays, convertHoursToDays } from '@fpsak-frontend/utils';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
-import Arbeidsforhold from '../dto/Arbeidsforhold';
 import Uttaksperiode from '../dto/Uttaksperiode';
 import Utfalltype, { UtfallEnum } from '../dto/Utfall';
 import StyledColumn from './StyledColumn';
 import Vilkår, { VilkårEnum } from '../dto/Vilkår';
 
 interface AktivitetTabellProps {
-  arbeidsforhold: Arbeidsforhold;
+  arbeidsforhold: AktivitetArbeidsforhold;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
+}
+
+export interface AktivitetArbeidsforhold {
+  organisasjonsnummer: string;
+  type: string;
+  navn?: string;
 }
 
 const periodevisning = (periode: string): string => {
@@ -27,12 +32,22 @@ const periodevisning = (periode: string): string => {
   return `${formatDate(fom)} - ${formatDate(tom)}`;
 };
 
-const formaterDelvisFravær = (delvisFravær?: string): ReactNode => {
+const antallDager = (periode: string): string => {
+  const [fom, tom] = periode.split('/');
+  return calcDays(fom, tom);
+};
+
+const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => {
   if (delvisFravær) {
     const timer = durationTilTimerMed7ogEnHalvTimesDagsbasis(delvisFravær);
-    return <FormattedMessage id="Uttaksplan.DelvisFravær" values={{ timer }} />;
+    const { days, hours } = convertHoursToDays(timer);
+    if (days > 0) {
+      return <FormattedMessage id="Uttaksplan.DelvisFraværMedDager" values={{ dager: days, timer: hours }} />;
+    }
+    return <FormattedMessage id="Uttaksplan.DelvisFravær" values={{ timer: hours }} />;
   }
-  return <FormattedMessage id="Uttaksplan.FulltFravær" />;
+  const dager = antallDager(periode);
+  return <FormattedMessage id="Uttaksplan.FulltFravær" values={{ dager }} />;
 };
 
 const utfallSymbolMap = {
@@ -108,12 +123,19 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
     }
   };
 
+  const arbeidsforholdType: string =
+    aktivitetsstatuser.find(aktivitetsstatus => aktivitetsstatus.kode === arbeidsforhold.type)?.navn ||
+    arbeidsforhold.type;
+  const { navn } = arbeidsforhold;
+  let beskrivelse = arbeidsforholdType;
+  if (navn) {
+    beskrivelse += `, ${navn}`;
+  }
+  beskrivelse += ` (${arbeidsforhold.organisasjonsnummer})`;
+
   return (
     <div key={joinNonNullStrings(Object.values(arbeidsforhold))}>
-      <Element>
-        {aktivitetsstatuser.find(aktivitetsstatus => aktivitetsstatus.kode === arbeidsforhold.type)?.navn ||
-          arbeidsforhold.type}
-      </Element>
+      <Element>{beskrivelse}</Element>
       <Table
         suppliedHeaders={
           <>
@@ -126,6 +148,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
             <StyledColumn width="30%">
               <FormattedMessage id="Uttaksplan.Fravær" />
             </StyledColumn>
+
             <StyledColumn width="15%">
               <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
             </StyledColumn>
@@ -188,10 +211,11 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               </StyledColumn>
               <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
-                  {formaterDelvisFravær(delvisFravær)}
+                  {formaterFravær(periode, delvisFravær)}
                   {erValgt && <ExpandedContent fyllBorder />}
                 </>
               </StyledColumn>
+
               <StyledColumn koronaperiode={erKoronaperiode}>
                 <>
                   {`${utbetalingsgrad}%`}

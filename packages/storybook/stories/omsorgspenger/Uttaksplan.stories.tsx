@@ -9,6 +9,7 @@ import { Behandling } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
+import InntektArbeidYtelse from '@k9-sak-web/types/src/inntektArbeidYtelseTsType';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -114,8 +115,6 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
   barna: [],
 });
 
-const årskvantumDto: ÅrskvantumForbrukteDager = årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode]);
-
 // @ts-ignore
 const behandling: Behandling = {
   id: 1,
@@ -125,53 +124,14 @@ const behandling: Behandling = {
 // @ts-ignore
 const aksjonspunkterForSteg: Aksjonspunkt[] = [{}];
 
-export const standard = () => (
-  <ÅrskvantumIndex
-    årskvantum={årskvantumDto}
+const inntektArbeidYtelseMedNavn: InntektArbeidYtelse = {
+  arbeidsforhold: [
     // @ts-ignore
-    alleKodeverk={alleKodeverk}
-    behandling={behandling}
-    aktiviteterHittilIÅr={[aktivitet]}
-  />
-);
-
-export const negativeForbrukteDager = () => (
-  <ÅrskvantumIndex
-    årskvantum={{
-      ...årskvantumDto,
-      antallKoronadager: 10,
-      forbruktTid: 'PT180H',
-      restTid: 'PT-34H-30M',
-    }}
-    // @ts-ignore
-    alleKodeverk={alleKodeverk}
-    behandling={behandling}
-    isAksjonspunktOpen={false}
-    submitCallback={action('bekreft')}
-  />
-);
-
-export const smittevernsdagerOgInaktiv = () => {
-  const årskvantum = årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode(VilkårEnum.NOK_DAGER)]);
-  return (
-    <ÅrskvantumIndex
-      årskvantum={{
-        ...årskvantum,
-        antallKoronadager: 10,
-        forbruktTid: 'PT180H',
-        restTid: 'PT-34H-30M',
-        sisteUttaksplan: {
-          ...årskvantum.sisteUttaksplan,
-          aktiv: false,
-        },
-      }}
-      // @ts-ignore
-      alleKodeverk={alleKodeverk}
-      behandling={behandling}
-      isAksjonspunktOpen={false}
-      submitCallback={action('bekreft')}
-    />
-  );
+    {
+      navn: 'Bedrift AS',
+      arbeidsgiverIdentifikator: '999',
+    },
+  ],
 };
 
 export const aksjonspunktUidentifiserteRammevedtak = () => (
@@ -186,6 +146,7 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
+    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
   />
 );
 
@@ -199,6 +160,7 @@ export const behandletAksjonspunkt = () => (
     submitCallback={action('bekreft')}
     // @ts-ignore
     aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }]}
+    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
   />
 );
 
@@ -211,6 +173,7 @@ export const aksjonspunktAvslåttePerioder = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
+    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
   />
 );
 
@@ -223,5 +186,6 @@ export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
+    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
   />
 );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
+import { Arbeidsforhold } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
 import Uttaksplan from './Uttaksplan';
 import Aktivitet from '../dto/Aktivitet';
@@ -29,10 +30,25 @@ describe('Uttaksplan', () => {
       },
     ],
   };
+
+  const arbeidsforhold: Arbeidsforhold[] = [
+    // @ts-ignore
+    {
+      navn: 'Bedrift AS',
+      arbeidsgiverIdentifikator: '999',
+    },
+  ];
+
   it('rendrer en tabell per aktivitet', () => {
     const aktiviteter: Aktivitet[] = [aktivitet, aktivitet, aktivitet];
     const wrapper = shallowWithIntl(
-      <Uttaksplan aktiviteterBehandling={aktiviteter} aktivitetsstatuser={[]} aktiviteterHittilIÅr={[]} aktiv />,
+      <Uttaksplan
+        aktiviteterBehandling={aktiviteter}
+        aktivitetsstatuser={[]}
+        aktiviteterHittilIÅr={[]}
+        arbeidsforhold={arbeidsforhold}
+        aktiv
+      />,
     );
 
     const tabell = wrapper.find(AktivitetTabell);

@@ -17,7 +17,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.FULL_UTTAKSPLAN];
+  getEndepunkter = () => [omsorgspengerBehandlingApi.FULL_UTTAKSPLAN, omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE];
 
   getOverstyrtStatus = ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
     if (!forbrukteDager || !forbrukteDager.sisteUttaksplan) {

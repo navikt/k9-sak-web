@@ -7,10 +7,11 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
 import { VilkårEnum } from '../dto/Vilkår';
-import AktivitetTabell, { ExpandButton, ExpandedContent } from './AktivitetTabell';
+import AktivitetTabell, { ExpandButton, ExpandedContent, AktivitetArbeidsforhold } from './AktivitetTabell';
+
 import StyledColumn from './StyledColumn';
 
-describe('AktivitetTabell', () => {
+describe('<AktivitetTabell />', () => {
   const aktivitet: Aktivitet = {
     arbeidsforhold: {
       arbeidsforholdId: '888',
@@ -34,11 +35,17 @@ describe('AktivitetTabell', () => {
     ],
   };
 
+  const arbeidsforhold: AktivitetArbeidsforhold = {
+    navn: 'Bedrift AS',
+    organisasjonsnummer: '999',
+    type: 'Arbeidsgiver',
+  };
+
   it('rendrer tabellrad med rett info', () => {
     const wrapper = shallow(
       <AktivitetTabell
         uttaksperioder={aktivitet.uttaksperioder}
-        arbeidsforhold={aktivitet.arbeidsforhold}
+        arbeidsforhold={arbeidsforhold}
         aktivitetsstatuser={[]}
       />,
     );
@@ -61,7 +68,7 @@ describe('AktivitetTabell', () => {
     const wrapper = shallow(
       <AktivitetTabell
         uttaksperioder={aktivitet.uttaksperioder}
-        arbeidsforhold={aktivitet.arbeidsforhold}
+        arbeidsforhold={arbeidsforhold}
         aktivitetsstatuser={[]}
       />,
     );
