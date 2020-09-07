@@ -155,6 +155,7 @@ export class VedtakForm extends Component {
     );
 
     const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
+    const kanHaFritekstbrev = !isTilgjengeligeVedtaksbrevArray || tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
     const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
     const skalViseLink =
       (vedtakVarsel.avslagsarsak === null ||
@@ -220,7 +221,7 @@ export class VedtakForm extends Component {
             />
           )}
 
-          {skalBrukeOverstyrendeFritekstBrev && (
+          {skalBrukeOverstyrendeFritekstBrev && kanHaFritekstbrev && (
             <FritekstBrevPanel
               intl={intl}
               readOnly={readOnly}
