@@ -6,6 +6,7 @@ type Arbeidsforhold = Readonly<{
   arbeidsgiverIdentifikator?: string;
   arbeidsgiverIdentifiktorGUI?: string;
   arbeidsforholdId?: string;
+  eksternArbeidsforholdId?: string;
   fomDato?: string;
   tomDato?: string;
   kilde: {
