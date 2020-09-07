@@ -30,15 +30,15 @@ const mapAktiviteterTilTabell = (
   }
   return aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => {
     const gjeldendeArbeidsforhold = alleArbeidsforhold.find(
-      arb => arb.arbeidsgiverIdentifikator === arbeidsforhold.organisasjonsnummer,
+      arb =>
+        arb.arbeidsgiverIdentifikator === arbeidsforhold.organisasjonsnummer ||
+        arb.arbeidsgiverIdentifiktorGUI === arbeidsforhold.organisasjonsnummer,
     );
+
     return (
       <AktivitetTabell
-        arbeidsforhold={{
-          type: arbeidsforhold.type,
-          organisasjonsnummer: arbeidsforhold.organisasjonsnummer,
-          navn: gjeldendeArbeidsforhold?.navn,
-        }}
+        arbeidsforhold={gjeldendeArbeidsforhold}
+        arbeidsforholdtypeKode={arbeidsforhold.type}
         uttaksperioder={uttaksperioder}
         aktivitetsstatuser={aktivitetsstatuser}
         key={joinNonNullStrings(Object.values(arbeidsforhold))}
