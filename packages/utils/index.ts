@@ -19,6 +19,7 @@ export {
   getRangeOfMonths,
   visningsdato,
   isValidDate,
+  convertHoursToDays,
 } from './src/dateUtils';
 export { default as decodeHtmlEntity } from './src/decodeHtmlEntity';
 export { fodselsnummerPattern, isValidFodselsnummer } from './src/fodselsnummerUtils';
@@ -30,6 +31,7 @@ export {
   ACCEPTED_DATE_INPUT_FORMATS,
 } from './src/formats';
 export { default as guid } from './src/guid';
+export { default as utledArbeidsforholdNavn } from './src/arbeidsforholdUtils';
 export { replaceNorwegianCharacters, getLanguageCodeFromSprakkode } from './src/languageUtils';
 export {
   notNull,

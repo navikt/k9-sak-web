@@ -5,19 +5,19 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@k9-sak-web/types": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "nav-frontend-ekspanderbartpanel": "3.0.16",
-    "nav-frontend-alertstriper": "3.0.15",
+    "nav-frontend-alertstriper": "3.0.23",
     "nav-frontend-alertstriper-style": "2.0.17",
-    "nav-frontend-knapper": "2.0.1",
+    "nav-frontend-ekspanderbartpanel": "3.0.23",
+    "nav-frontend-knapper": "2.0.9",
     "nav-frontend-knapper-style": "0.3.35",
-    "nav-frontend-paneler": "^2.0.2",
-    "nav-frontend-typografi": "2.0.18",
-    "nav-frontend-typografi-style": "1.0.19",
+    "nav-frontend-paneler": "^2.0.10",
+    "nav-frontend-typografi": "2.0.26",
+    "nav-frontend-typografi-style": "1.0.22",
     "react": "^16.13.1",
     "react-intl": "^5.7.1"
   },
@@ -25,6 +25,6 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^9.0.2"
+    "sinon": "^9.0.3"
   }
 }
