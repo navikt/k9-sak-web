@@ -23,17 +23,19 @@ const formName = 'ArbeidsforholdInfoPanel';
 // METHODS
 // ----------------------------------------------------------------------------
 
-export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = (arbeidsforhold) => arbeidsforhold.map((a) => {
-  if (a.lagtTilAvSaksbehandler === true) {
-    return {
-      ...a,
-      id: null,
-    };
-  }
-  return a;
-});
+export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
+  arbeidsforhold.map(a => {
+    if (a.lagtTilAvSaksbehandler === true) {
+      return {
+        ...a,
+        id: null,
+      };
+    }
+    return a;
+  });
 
-const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode);
+const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
+  aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 /**
  * ArbeidsforholdInfoPanelImpl:
@@ -53,12 +55,18 @@ export const ArbeidsforholdInfoPanelImpl = ({
   ...formProps
 }) => (
   <>
-    { aksjonspunkter.length > 0 && (
+    {aksjonspunkter.length > 0 && (
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
-        {[<FormattedMessage
-          key="ArbeidsforholdInfoPanelAksjonspunkt"
-          id={skalKunneLeggeTilNyeArbeidsforhold ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert' : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'}
-        />]}
+        {[
+          <FormattedMessage
+            key="ArbeidsforholdInfoPanelAksjonspunkt"
+            id={
+              skalKunneLeggeTilNyeArbeidsforhold
+                ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert'
+                : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'
+            }
+          />,
+        ]}
       </AksjonspunktHelpTextTemp>
     )}
     <form onSubmit={formProps.handleSubmit}>
@@ -73,17 +81,16 @@ export const ArbeidsforholdInfoPanelImpl = ({
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
       />
-      { harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
-      <BekreftOgForsettKnapp
-        readOnly={readOnly || (!hasOpenAksjonspunkter && formProps.pristine)}
-        isSubmitting={formProps.submitting}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
+      {harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
+        <BekreftOgForsettKnapp
+          readOnly
+          isSubmitting={formProps.submitting}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
       )}
     </form>
   </>
-
 );
 
 ArbeidsforholdInfoPanelImpl.propTypes = {
@@ -100,28 +107,29 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
   }).isRequired,
 };
 
-const buildInitialValues = createSelector(
-  [(ownProps) => ownProps.arbeidsforhold],
-  (arbeidsforhold) => ({
-    ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
-  }),
-);
+const buildInitialValues = createSelector([ownProps => ownProps.arbeidsforhold], arbeidsforhold => ({
+  ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
+}));
 
-const transformValues = (values) => {
+const transformValues = values => {
   const arbeidsforhold = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(values.arbeidsforhold);
   return {
-    arbeidsforhold: arbeidsforhold.map((a) => omit(a,
-      'erEndret',
-      'replaceOptions',
-      'originalFomDato',
-      'arbeidsforholdHandlingField',
-      'aktivtArbeidsforholdHandlingField')),
+    arbeidsforhold: arbeidsforhold.map(a =>
+      omit(
+        a,
+        'erEndret',
+        'replaceOptions',
+        'originalFomDato',
+        'arbeidsforholdHandlingField',
+        'aktivtArbeidsforholdHandlingField',
+      ),
+    ),
     kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
   };
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     onSubmit,
