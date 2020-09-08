@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -20,19 +20,6 @@ const headerColumnContent = [
   <FormattedMessage key={5} id="PersonArbeidsforholdTable.MottattDato" values={{ br: <br /> }} />,
   <></>,
 ];
-
-const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
-
-const utledNavn = arbeidsforhold => {
-  if (arbeidsforhold.lagtTilAvSaksbehandler) {
-    return arbeidsforhold.navn;
-  }
-  return arbeidsforhold.arbeidsforholdId
-    ? `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})${getEndCharFromId(
-        arbeidsforhold.eksternArbeidsforholdId,
-      )}`
-    : `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})`;
-};
 
 export const utledNøkkel = arbeidsforhold => {
   if (arbeidsforhold.lagtTilAvSaksbehandler) {
@@ -54,7 +41,7 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
             a.stillingsprosent !== undefined && a.stillingsprosent !== null
               ? `${parseFloat(a.stillingsprosent).toFixed(2)} %`
               : '';
-          const navn = utledNavn(a);
+          const navn = utledArbeidsforholdNavn(a);
           return (
             <TableRow
               key={utledNøkkel(a)}

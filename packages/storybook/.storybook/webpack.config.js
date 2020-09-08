@@ -7,151 +7,145 @@ const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
 
 // Export a function. Accept the base config as the only param.
 module.exports = async ({ config, mode }) => {
-  //Fjern default svg-loader
-  config.module.rules = config.module.rules.map(data => {
-    if (/svg\|/.test(String(data.test))) {
-      data.test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani)(\?.*)?$/;
-    }
-    return data;
+  // Make whatever fine-grained changes you need
+  config.module.rules.push({
+    test: /\.(tsx?|ts?|jsx?)$/,
+    enforce: 'pre',
+    loader: 'eslint-loader',
+    options: {
+      failOnWarning: false,
+      failOnError: false,
+      configFile: path.resolve(__dirname, '../../../eslint/eslintrc.dev.js'),
+      fix: true,
+      cache: true,
+      emitWarning: true,
+    },
+    include: [PACKAGES_DIR],
   });
 
-  config.devtool = 'cheap-module-eval-source-map';
+  config.module.rules.push({
+    test: /\.(jsx?|js?|tsx?|ts?)$/,
+    use: [
+      { loader: 'cache-loader' },
+      {
+        loader: 'thread-loader',
+        options: {
+          workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
+          workerParallelJobs: 50,
+        },
+      },
+      {
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+        },
+      },
+    ],
+    include: PACKAGES_DIR,
+  });
 
-  // Make whatever fine-grained changes you need
-  config.module.rules = config.module.rules.concat(
-    {
-      test: /\.(tsx?|ts?|jsx?)$/,
-      enforce: 'pre',
-      loader: 'eslint-loader',
-      options: {
-        failOnWarning: false,
-        failOnError: false,
-        configFile: path.resolve(__dirname, '../../../eslint/eslintrc.dev.js'),
-        fix: true,
-        cache: true,
-        emitWarning: true,
+  config.module.rules.push({
+    test: /\.(less|css)?$/,
+    use: [
+      {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          publicPath: './',
+        },
       },
-      include: [PACKAGES_DIR],
-    },
-    {
-      test: /\.(jsx?|js?|tsx?|ts?)$/,
-      use: [
-        { loader: 'cache-loader' },
-        {
-          loader: 'thread-loader',
-          options: {
-            workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
-            workerParallelJobs: 50,
+      {
+        loader: 'css-loader',
+        options: {
+          importLoaders: 1,
+          modules: {
+            localIdentName: '[name]_[local]_[contenthash:base64:5]',
           },
         },
-        {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-          },
-        },
-      ],
-      include: PACKAGES_DIR,
-    },
-    {
-      test: /\.(less|css)?$/,
-      use: [
-        {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            publicPath: './',
-          },
-        },
-        {
-          loader: 'css-loader',
-          options: {
-            importLoaders: 1,
-            modules: {
-              localIdentName: '[name]_[local]_[contenthash:base64:5]',
-            },
-          },
-        },
-        {
-          loader: 'less-loader',
-          options: {
-            modules: {
-              localIdentName: '[name]_[local]_[contenthash:base64:5]',
-            },
-            modifyVars: {
-              nodeModulesPath: '~',
-              coreModulePath: '~',
-            },
-          },
-        },
-      ],
-      include: [PACKAGES_DIR],
-      exclude: [CSS_DIR],
-    },
-    {
-      test: /\.(less)?$/,
-      use: [
-        {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            publicPath: './',
-          },
-        },
-        {
-          loader: 'css-loader',
-        },
-        {
-          loader: 'less-loader',
-          options: {
-            modifyVars: {
-              nodeModulesPath: '~',
-              coreModulePath: '~',
-            },
-          },
-        },
-      ],
-      include: [CSS_DIR, CORE_DIR],
-    },
-    {
-      test: /\.(svg)$/,
-      issuer: {
-        test: /\.less?$/,
       },
-      loader: 'file-loader',
-      options: {
-        esModule: false,
-        name: '[name]_[hash].[ext]',
-      },
-      include: [IMAGE_DIR],
-    },
-    {
-      test: /\.(svg)$/,
-      issuer: {
-        test: /\.(jsx?|js?|tsx?|ts?)?$/,
-      },
-      use: [
-        {
-          loader: '@svgr/webpack',
-        },
-        {
-          loader: 'file-loader',
-          options: {
-            esModule: false,
-            name: '[name]_[hash].[ext]',
+      {
+        loader: 'less-loader',
+        options: {
+          modules: {
+            localIdentName: '[name]_[local]_[contenthash:base64:5]',
+          },
+          modifyVars: {
+            nodeModulesPath: '~',
+            coreModulePath: '~',
           },
         },
-      ],
-      include: [IMAGE_DIR],
-    },
-    {
-      test: /\.(svg)$/,
-      loader: 'file-loader',
-      options: {
-        esModule: false,
-        name: '[name]_[hash].[ext]',
       },
-      include: [CORE_DIR],
+    ],
+    include: [PACKAGES_DIR],
+    exclude: [CSS_DIR],
+  });
+
+  config.module.rules.push({
+    test: /\.(less)?$/,
+    use: [
+      {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          publicPath: './',
+        },
+      },
+      {
+        loader: 'css-loader',
+      },
+      {
+        loader: 'less-loader',
+        options: {
+          modifyVars: {
+            nodeModulesPath: '~',
+            coreModulePath: '~',
+          },
+        },
+      },
+    ],
+    include: [CSS_DIR, CORE_DIR],
+  });
+
+  config.module.rules.push({
+    test: /\.(svg)$/,
+    issuer: {
+      test: /\.less?$/,
     },
-  );
+    loader: 'file-loader',
+    options: {
+      esModule: false,
+      name: '[name]_[hash].[ext]',
+    },
+    include: [IMAGE_DIR],
+  });
+
+  config.module.rules.push({
+    test: /\.(svg)$/,
+    issuer: {
+      test: /\.(jsx?|js?|tsx?|ts?)?$/,
+    },
+    use: [
+      {
+        loader: '@svgr/webpack',
+      },
+      {
+        loader: 'file-loader',
+        options: {
+          esModule: false,
+          name: '[name]_[hash].[ext]',
+        },
+      },
+    ],
+    include: [IMAGE_DIR],
+  });
+
+  config.module.rules.push({
+    test: /\.(svg)$/,
+    loader: 'file-loader',
+    options: {
+      esModule: false,
+      name: '[name]_[hash].[ext]',
+    },
+    include: [CORE_DIR],
+  });
 
   config.plugins.push(
     new MiniCssExtractPlugin({

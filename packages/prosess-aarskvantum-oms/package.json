@@ -11,22 +11,23 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "moment": "^2.24.0",
-    "nav-frontend-alertstriper": "3.0.15",
+    "nav-frontend-alertstriper": "3.0.23",
     "nav-frontend-alertstriper-style": "2.0.17",
     "nav-frontend-core": "4.0.12",
-    "nav-frontend-grid": "1.0.27",
+    "nav-frontend-grid": "1.0.32",
+    "nav-frontend-paneler": "^2.0.10",
     "nav-frontend-tabs": "^0.0.38",
-    "nav-frontend-typografi": "2.0.18",
-    "nav-frontend-typografi-style": "1.0.19",
+    "nav-frontend-typografi": "2.0.26",
+    "nav-frontend-typografi-style": "1.0.22",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^5.7.1",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^9.0.2"
+    "sinon": "^9.0.3"
   }
 }

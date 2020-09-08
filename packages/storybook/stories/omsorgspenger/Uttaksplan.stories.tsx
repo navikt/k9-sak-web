@@ -9,6 +9,7 @@ import { Behandling } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
+import InntektArbeidYtelse from '@k9-sak-web/types/src/inntektArbeidYtelseTsType';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -76,14 +77,20 @@ const uidentifisertRammevedtak: Rammevedtak = {
   fritekst: 'utolkbart blabla',
 };
 
+const orgNr1 = '456';
+
+const arbForhId1 = '123456789';
+const arbForhId2 = '987654321';
+
 const aktivitet: Aktivitet = {
   arbeidsforhold: {
-    arbeidsforholdId: '888',
-    organisasjonsnummer: '999',
+    arbeidsforholdId: arbForhId1,
+    organisasjonsnummer: orgNr1,
     type: 'SN',
   },
   uttaksperioder: [innvilgetPeriode],
 };
+
 const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukteDager => ({
   totaltAntallDager: 17,
   antallKoronadager: 0,
@@ -96,8 +103,8 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
     aktiviteter: [
       {
         arbeidsforhold: {
-          arbeidsforholdId: '123',
-          organisasjonsnummer: '456',
+          arbeidsforholdId: arbForhId2,
+          organisasjonsnummer: orgNr1,
           type: 'AT',
         },
         uttaksperioder: perioder,
@@ -114,8 +121,6 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
   barna: [],
 });
 
-const årskvantumDto: ÅrskvantumForbrukteDager = årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode]);
-
 // @ts-ignore
 const behandling: Behandling = {
   id: 1,
@@ -125,53 +130,22 @@ const behandling: Behandling = {
 // @ts-ignore
 const aksjonspunkterForSteg: Aksjonspunkt[] = [{}];
 
-export const standard = () => (
-  <ÅrskvantumIndex
-    årskvantum={årskvantumDto}
-    // @ts-ignore
-    alleKodeverk={alleKodeverk}
-    behandling={behandling}
-    aktiviteterHittilIÅr={[aktivitet]}
-  />
-);
-
-export const negativeForbrukteDager = () => (
-  <ÅrskvantumIndex
-    årskvantum={{
-      ...årskvantumDto,
-      antallKoronadager: 10,
-      forbruktTid: 'PT180H',
-      restTid: 'PT-34H-30M',
-    }}
-    // @ts-ignore
-    alleKodeverk={alleKodeverk}
-    behandling={behandling}
-    isAksjonspunktOpen={false}
-    submitCallback={action('bekreft')}
-  />
-);
-
-export const smittevernsdagerOgInaktiv = () => {
-  const årskvantum = årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode(VilkårEnum.NOK_DAGER)]);
-  return (
-    <ÅrskvantumIndex
-      årskvantum={{
-        ...årskvantum,
-        antallKoronadager: 10,
-        forbruktTid: 'PT180H',
-        restTid: 'PT-34H-30M',
-        sisteUttaksplan: {
-          ...årskvantum.sisteUttaksplan,
-          aktiv: false,
-        },
-      }}
-      // @ts-ignore
-      alleKodeverk={alleKodeverk}
-      behandling={behandling}
-      isAksjonspunktOpen={false}
-      submitCallback={action('bekreft')}
-    />
-  );
+const inntektArbeidYtelseMedNavn: InntektArbeidYtelse = {
+  // @ts-ignore
+  arbeidsforhold: [
+    {
+      navn: 'Bedrift AS',
+      arbeidsgiverIdentifiktorGUI: orgNr1,
+      eksternArbeidsforholdId: arbForhId1,
+      arbeidsforholdId: arbForhId1,
+    },
+    {
+      navn: 'Bedrift AS',
+      arbeidsgiverIdentifiktorGUI: orgNr1,
+      eksternArbeidsforholdId: arbForhId2,
+      arbeidsforholdId: arbForhId2,
+    },
+  ],
 };
 
 export const aksjonspunktUidentifiserteRammevedtak = () => (
@@ -186,6 +160,7 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
+    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
   />
 );
 
@@ -199,6 +174,7 @@ export const behandletAksjonspunkt = () => (
     submitCallback={action('bekreft')}
     // @ts-ignore
     aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }]}
+    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
   />
 );
 
@@ -211,6 +187,7 @@ export const aksjonspunktAvslåttePerioder = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
+    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
   />
 );
 
@@ -223,5 +200,6 @@ export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
+    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
   />
 );

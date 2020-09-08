@@ -4,13 +4,15 @@ import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
+import { Arbeidsforhold } from '@k9-sak-web/types';
 import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';
 import { VilkårEnum } from '../dto/Vilkår';
 import AktivitetTabell, { ExpandButton, ExpandedContent } from './AktivitetTabell';
+
 import StyledColumn from './StyledColumn';
 
-describe('AktivitetTabell', () => {
+describe('<AktivitetTabell />', () => {
   const aktivitet: Aktivitet = {
     arbeidsforhold: {
       arbeidsforholdId: '888',
@@ -34,11 +36,20 @@ describe('AktivitetTabell', () => {
     ],
   };
 
+  // @ts-ignore
+  const arbeidsforhold: Arbeidsforhold = {
+    navn: 'Bedrift AS',
+    arbeidsgiverIdentifiktorGUI: '999',
+    eksternArbeidsforholdId: '1',
+    arbeidsforholdId: '123',
+  };
+
   it('rendrer tabellrad med rett info', () => {
     const wrapper = shallow(
       <AktivitetTabell
         uttaksperioder={aktivitet.uttaksperioder}
-        arbeidsforhold={aktivitet.arbeidsforhold}
+        arbeidsforholdtypeKode="AT"
+        arbeidsforhold={arbeidsforhold}
         aktivitetsstatuser={[]}
       />,
     );
@@ -61,7 +72,8 @@ describe('AktivitetTabell', () => {
     const wrapper = shallow(
       <AktivitetTabell
         uttaksperioder={aktivitet.uttaksperioder}
-        arbeidsforhold={aktivitet.arbeidsforhold}
+        arbeidsforhold={arbeidsforhold}
+        arbeidsforholdtypeKode="AT"
         aktivitetsstatuser={[]}
       />,
     );
