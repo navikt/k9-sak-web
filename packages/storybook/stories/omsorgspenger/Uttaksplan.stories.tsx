@@ -78,12 +78,14 @@ const uidentifisertRammevedtak: Rammevedtak = {
 };
 
 const orgNr1 = '456';
-const orgNr2 = '999';
+
+const arbForhId1 = '123456789';
+const arbForhId2 = '987654321';
 
 const aktivitet: Aktivitet = {
   arbeidsforhold: {
-    arbeidsforholdId: '888',
-    organisasjonsnummer: orgNr2,
+    arbeidsforholdId: arbForhId1,
+    organisasjonsnummer: orgNr1,
     type: 'SN',
   },
   uttaksperioder: [innvilgetPeriode],
@@ -101,7 +103,7 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
     aktiviteter: [
       {
         arbeidsforhold: {
-          arbeidsforholdId: '123',
+          arbeidsforholdId: arbForhId2,
           organisasjonsnummer: orgNr1,
           type: 'AT',
         },
@@ -134,14 +136,14 @@ const inntektArbeidYtelseMedNavn: InntektArbeidYtelse = {
     {
       navn: 'Bedrift AS',
       arbeidsgiverIdentifiktorGUI: orgNr1,
-      eksternArbeidsforholdId: '1',
-      arbeidsforholdId: '123',
+      eksternArbeidsforholdId: arbForhId1,
+      arbeidsforholdId: arbForhId1,
     },
     {
-      navn: 'Amazon',
-      arbeidsgiverIdentifiktorGUI: orgNr2,
-      eksternArbeidsforholdId: '1',
-      arbeidsforholdId: '123',
+      navn: 'Bedrift AS',
+      arbeidsgiverIdentifiktorGUI: orgNr1,
+      eksternArbeidsforholdId: arbForhId2,
+      arbeidsforholdId: arbForhId2,
     },
   ],
 };
