@@ -34,6 +34,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
         behandlingStatusKode="UTR"
         ytelseTypeKode="ES"
         submitKnappTextId="VedtakForm.TilGodkjenning"
+        harRedusertUtbetaling={false}
+        visFeilmeldingFordiArsakerMangler={sinon.spy()}
       />,
     );
     const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);
@@ -56,6 +58,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
         behandlingStatusKode="UTR"
         ytelseTypeKode="ES"
         submitKnappTextId="VedtakForm.TilGodkjenning"
+        harRedusertUtbetaling={false}
+        visFeilmeldingFordiArsakerMangler={sinon.spy()}
       />,
     );
     expect(wrapper.find(ForhaandsvisningsKnapp)).to.have.length(0);
@@ -77,6 +81,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
         ytelseTypeKode="ES"
         submitKnappTextId="VedtakForm.TilGodkjenning"
         erBehandlingEtterKlage={false}
+        harRedusertUtbetaling={false}
+        visFeilmeldingFordiArsakerMangler={sinon.spy()}
       />,
     );
     const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);
@@ -99,6 +105,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
         readOnly={false}
         ytelseTypeKode="PSB"
         submitKnappTextId="VedtakForm.TilGodkjenning"
+        harRedusertUtbetaling={false}
+        visFeilmeldingFordiArsakerMangler={sinon.spy()}
       />,
     );
     const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);

@@ -73,6 +73,7 @@ export class VedtakRevurderingFormImpl extends Component {
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
+      erSendtInnUtenArsaker: false
     };
   }
 
@@ -120,6 +121,7 @@ export class VedtakRevurderingFormImpl extends Component {
       tilgjengeligeVedtaksbrev,
       ...formProps
     } = this.props;
+    const {erSendtInnUtenArsaker} = this.state;
     const previewAutomatiskBrev = getPreviewBrevCallback(
       previewCallback,
       behandlingresultat,
@@ -128,6 +130,7 @@ export class VedtakRevurderingFormImpl extends Component {
     const visOverstyringKnapp = kanOverstyre || readOnly;
     const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
     const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
+    const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN && simuleringResultat?.simuleringResultat?.sumFeilutbetaling < 0;
     return (
       <>
         <VedtakFritekstbrevModal
@@ -206,12 +209,14 @@ export class VedtakRevurderingFormImpl extends Component {
                   />
                 )}
               </Column>
-              {ytelseTypeKode === fagsakYtelseType.FRISINN && (
+              {harRedusertUtbetaling && (
                 <Column xs="8">
                   <VedtakRedusertUtbetalingArsaker
+                    intl={intl}
                     readOnly={readOnly}
                     values={new Map(Object.values(redusertUtbetalingArsak).map(a => [a, !!formProps[a]]))}
                     vedtakVarsel={vedtakVarsel}
+                    erSendtInnUtenArsaker={erSendtInnUtenArsaker}
                   />
                 </Column>
               )}
@@ -234,7 +239,7 @@ export class VedtakRevurderingFormImpl extends Component {
                   sprakkode={sprakkode}
                   previewBrev={previewAutomatiskBrev}
                 />
-              )}
+            )}
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
@@ -251,6 +256,8 @@ export class VedtakRevurderingFormImpl extends Component {
                 originaltBeregningResultat={resultatstrukturOriginalBehandling}
                 behandlingArsaker={behandlingArsaker}
                 behandlingResultat={behandlingresultat}
+                harRedusertUtbetaling={harRedusertUtbetaling}
+                visFeilmeldingFordiArsakerMangler={() => this.setState({erSendtInnUtenArsaker: true})}
               />
             )}
           </>
