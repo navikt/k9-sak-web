@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -25,10 +25,11 @@ const TilkjentYtelseTimeLineData = ({
   callbackBackward,
   getKodeverknavn,
 }) => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  React.useEffect(() => {
+  const [activeTab, setActiveTab] = useState(0);
+  useEffect(() => {
     setActiveTab(0);
   }, [selectedItemData]);
+
   const { andeler } = selectedItemData;
   const valgtAndel = andeler[activeTab];
   const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
