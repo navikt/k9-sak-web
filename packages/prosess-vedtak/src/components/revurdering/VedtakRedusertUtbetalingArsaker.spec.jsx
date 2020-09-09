@@ -1,12 +1,19 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import { intlMock } from "@fpsak-frontend/utils-test/src/intl-enzyme-test-helper";
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
 describe('VedtakRedusertUtbetalingArsaker', () => {
-  const vedtakRedusertUtbetalingArsaker = (readOnly = false, values = new Map(), vedtakVarsel = {}) => {
-    const attributter = { vedtakVarsel, readOnly, values };
+
+  const vedtakRedusertUtbetalingArsaker = (
+    readOnly = false,
+    values = new Map(),
+    vedtakVarsel = {},
+    erSendtInnUtenArsaker = false
+  ) => {
+    const attributter = { intl: intlMock, vedtakVarsel, readOnly, values, erSendtInnUtenArsaker };
     return shallow(<VedtakRedusertUtbetalingArsaker {...attributter} />);
   };
 
