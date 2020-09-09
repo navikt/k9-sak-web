@@ -5,10 +5,9 @@ import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
 import TilkjentYtelse from './TilkjentYtelse';
@@ -35,7 +34,7 @@ export const TilkjentYtelsePanelImpl = ({
   vurderTilbaketrekkAP,
   submitCallback,
   readOnlySubmitButton,
-  alleKodeverk,
+  getKodeverknavn,
   behandlingId,
   behandlingVersjon,
 }) => {
@@ -57,7 +56,7 @@ export const TilkjentYtelsePanelImpl = ({
         <TilkjentYtelse
           items={formatPerioder(beregningsresultatMedUttaksplan.perioder)}
           groups={groups}
-          alleKodeverk={alleKodeverk}
+          getKodeverknavn={getKodeverknavn}
         />
       )}
       {vurderTilbaketrekkAP && (
@@ -79,7 +78,7 @@ TilkjentYtelsePanelImpl.propTypes = {
   vurderTilbaketrekkAP: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
 };
@@ -105,6 +104,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     beregningsresultatMedUttaksplan: ownProps.beregningsresultat,
     vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
+    getKodeverknavn: getKodeverknavnFn(ownProps.alleKodeverk, kodeverkTyper),
   };
 };
 

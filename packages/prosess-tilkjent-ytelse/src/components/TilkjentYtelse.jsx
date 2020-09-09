@@ -5,11 +5,11 @@ import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-
 import { calcDaysAndWeeksWithWeekends, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
+import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
 
 import styles from './tilkjentYtelse.less';
 
@@ -35,26 +35,46 @@ const getOptions = nyePerioder => {
   };
 };
 
-const createTooltipContent = (intl, item) => `
+const createTooltipContent = (intl, item, getKodeverknavn) => {
+  const { formatMessage } = intl;
+  const periodeDato = `${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}`;
+  return `
   <p>
-    ${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     ${intl.formatMessage(
+    ${periodeDato}
+     ${formatMessage(
        { id: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).id },
        {
          weeks: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).weeks,
          days: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).days,
        },
      )}
-    <br />&nbsp;
-    ${intl.formatMessage(
+    <br />
+    ${formatMessage(
       { id: 'Timeline.tooltip.dagsats' },
       {
         dagsats: item.dagsats,
       },
     )}
+    <br />
+    ${
+      (item.andeler || []).length > 1
+        ? item.andeler
+            .map(andel =>
+              formatMessage(
+                { id: 'Timeline.tooltip.dagsatsPerAndel' },
+                {
+                  arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn),
+                  dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
+                  br: '<br />',
+                },
+              ),
+            )
+            .join('')
+        : ''
+    }
    </p>
 `;
+};
 
 const andelerUtgjør100ProsentTilsammen = periode => {
   const { andeler } = periode;
@@ -65,7 +85,7 @@ const andelerUtgjør100ProsentTilsammen = periode => {
   return false;
 };
 
-const prepareTimelineData = (periode, index, intl) => {
+const prepareTimelineData = (periode, index, intl, getKodeverknavn) => {
   return {
     ...periode,
     className: andelerUtgjør100ProsentTilsammen(periode) ? 'innvilget' : 'gradert',
@@ -73,7 +93,7 @@ const prepareTimelineData = (periode, index, intl) => {
     id: index,
     start: parseDateString(periode.fom),
     end: moment(parseDateString(periode.tom)).add(1, 'day'),
-    title: createTooltipContent(intl, periode),
+    title: createTooltipContent(intl, periode, getKodeverknavn),
   };
 };
 
@@ -205,13 +225,13 @@ export class TilkjentYtelse extends Component {
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, intl, alleKodeverk },
+      props: { groups, items, intl, getKodeverknavn },
       selectHandler,
       state: { selectedItem },
       zoomIn,
       zoomOut,
     } = this;
-    const timelineData = items.map((periode, index) => prepareTimelineData(periode, index, intl));
+    const timelineData = items.map((periode, index) => prepareTimelineData(periode, index, intl, getKodeverknavn));
     return (
       <div className={styles.timelineContainer}>
         <VerticalSpacer sixteenPx />
@@ -243,7 +263,7 @@ export class TilkjentYtelse extends Component {
         </Row>
         {selectedItem && (
           <TilkjentYtelseTimelineData
-            alleKodeverk={alleKodeverk}
+            getKodeverknavn={getKodeverknavn}
             selectedItemStartDate={selectedItem.fom.toString()}
             selectedItemEndDate={selectedItem.tom.toString()}
             selectedItemData={selectedItem}
@@ -260,7 +280,7 @@ TilkjentYtelse.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   groups: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   intl: PropTypes.shape().isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 export default injectIntl(TilkjentYtelse);

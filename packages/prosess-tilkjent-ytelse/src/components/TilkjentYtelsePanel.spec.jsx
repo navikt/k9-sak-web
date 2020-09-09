@@ -19,6 +19,16 @@ const tilbaketrekkAP = {
   begrunnelse: undefined,
 };
 
+const getKodeverknavn = kodeverk => {
+  if (kodeverk.kode === aktivitetStatuser.ARBEIDSTAKER) {
+    return 'Arbeidstaker';
+  }
+  if (kodeverk.kode === aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE) {
+    return 'Selvstendig næringsdrivende';
+  }
+  return '';
+};
+
 describe('<TilkjentYtelsePanelImpl>', () => {
   it('skall innehålla rätt undertekst', () => {
     const familieDate = new Date('2018-04-04');
@@ -33,7 +43,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         stonadskontoer={null}
         submitCallback={sinon.spy()}
         readOnlySubmitButton
-        alleKodeverk={{}}
+        getKodeverknavn={getKodeverknavn}
         behandlingId={1}
         behandlingVersjon={1}
       />,
@@ -57,7 +67,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         submitCallback={sinon.spy()}
         readOnlySubmitButton
         vurderTilbaketrekkAP={tilbaketrekkAP}
-        alleKodeverk={{}}
+        getKodeverknavn={getKodeverknavn}
         behandlingId={1}
         behandlingVersjon={1}
       />,
