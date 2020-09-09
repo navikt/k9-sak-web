@@ -130,7 +130,7 @@ export class VedtakRevurderingFormImpl extends Component {
     const visOverstyringKnapp = kanOverstyre || readOnly;
     const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
     const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-    const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN && simuleringResultat?.sumFeilutbetaling < 0;
+    const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN && simuleringResultat?.simuleringResultat?.sumFeilutbetaling < 0;
     return (
       <>
         <VedtakFritekstbrevModal
