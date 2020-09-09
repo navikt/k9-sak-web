@@ -180,9 +180,10 @@ som fra core/og muligen import fra alla andra komponenter
 :global(.gradert) {
   @lClr: @white;
   @brPnt: 20%;
-
+  /* stylelint-disable */
   background: @navGronn
-    repeating-linear-gradient(45deg, @lClr, @lClr @brPnt, transparent @brPnt, transparent 50%, @lClr 50%); // stylelint-disable-line max-line-length
+    repeating-linear-gradient(45deg, @lClr, @lClr @brPnt, transparent @brPnt, transparent 50%, @lClr 50%);
+  /* stylelint-enable */
   background-size: 12px 12px;
   opacity: 0.9;
 }
