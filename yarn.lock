@@ -702,19 +702,12 @@
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/plugin-syntax-logical-assignment-operators" "^7.10.4"
 
-"@babel/plugin-proposal-nullish-coalescing-operator@^7.10.1", "@babel/plugin-proposal-nullish-coalescing-operator@^7.10.4":
+"@babel/plugin-proposal-nullish-coalescing-operator@^7.10.1", "@babel/plugin-proposal-nullish-coalescing-operator@^7.10.4", "@babel/plugin-proposal-nullish-coalescing-operator@^7.7.4", "@babel/plugin-proposal-nullish-coalescing-operator@^7.8.3":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.10.4.tgz#02a7e961fc32e6d5b2db0649e01bf80ddee7e04a"
   integrity sha512-wq5n1M3ZUlHl9sqT2ok1T2/MTt6AXE0e1Lz4WzWBr95LsAZ5qDXe4KnFuauYyEyLiohvXFMdbsOTMyLZs91Zlw==
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
-    "@babel/plugin-syntax-nullish-coalescing-operator" "^7.8.0"
-
-"@babel/plugin-proposal-nullish-coalescing-operator@^7.7.4", "@babel/plugin-proposal-nullish-coalescing-operator@^7.8.3":
-  version "7.8.3"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.8.3.tgz#e4572253fdeed65cddeecfdab3f928afeb2fd5d2"
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-nullish-coalescing-operator" "^7.8.0"
 
 "@babel/plugin-proposal-numeric-separator@^7.10.4":
@@ -8684,8 +8677,9 @@ eventemitter3@^3.1.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
 
 eventemitter3@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.0.tgz#d65176163887ee59f386d64c82610b696a4a74eb"
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
 events@^3.0.0:
   version "3.1.0"
@@ -9148,10 +9142,9 @@ follow-redirects@1.5.10:
     debug "=3.1.0"
 
 follow-redirects@^1.0.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.10.0.tgz#01f5263aee921c6a54fb91667f08f4155ce169eb"
-  dependencies:
-    debug "^3.0.0"
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
+  integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
 
 for-in@^0.1.3:
   version "0.1.8"
@@ -10183,8 +10176,9 @@ http-proxy-middleware@0.19.1:
     micromatch "^3.1.10"
 
 http-proxy@^1.17.0:
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.0.tgz#dbe55f63e75a347db7f3d99974f2692a314a6a3a"
+  version "1.18.1"
+  resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
+  integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
   dependencies:
     eventemitter3 "^4.0.0"
     follow-redirects "^1.0.0"
@@ -12965,20 +12959,15 @@ nav-frontend-paneler@2.0.10, nav-frontend-paneler@^2.0.10:
   resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-2.0.10.tgz#5b87b19a24fa45cf192bc0cb3d11ff140d736a9e"
   integrity sha512-HTQi6UgpZDN3ARD98uZJGwp0Jf1ypQw/v2lpvMGsXBqOuGoiUaSIUCrhwlaYzw6dDIfGAK5POPmuaDitdEuX+A==
 
-nav-frontend-paneler@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-2.0.2.tgz#0251f3f3f0622a31bdaeea50890907e2ee6215f0"
-  integrity sha512-34H38Vy1KcuvT1hUKZoLg1A4lh3f4Hv9zl5vb8yTsmciXSKm1FLDHrfE0ZrA4Vg38eRaaxnnDdzZm81Atq4zAA==
-
 nav-frontend-popover-style@^0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/nav-frontend-popover-style/-/nav-frontend-popover-style-0.0.5.tgz#707dcf5a4e7e6ec237b72e00c2cfdf83903b01b8"
   integrity sha512-5Sn/g0fS2S4sXbgWHqen9ODLGqj/bEPJgnkK2UX2v5gCszXCnLH+XL4qbBdYk7UeoAQTfksUYXjqqa4HI8SKnA==
 
-nav-frontend-popover@^0.0.25:
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/nav-frontend-popover/-/nav-frontend-popover-0.0.25.tgz#6eb93d5c57003471808a258d7079da5b27d06bf9"
-  integrity sha512-bhnpIfRQSgVbsvouVlRD5wDZzVRHyTlrUhOjkCyLbMonFVLX+PICmjUypif12Jw+gGkvCkhxGsfZhlS02kruFA==
+nav-frontend-popover@^0.0.28:
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/nav-frontend-popover/-/nav-frontend-popover-0.0.28.tgz#2b0152e50c92d69ca2cc8ea74b79b3ec3d2fa2ec"
+  integrity sha512-ITNBEAVEne2rhCupf/QPCIegskF/XW1UERPqJk93owxpi/AJ3JciEzzny/SzFojZ5Q5aFPvLteCfrl76LOTV6g==
 
 nav-frontend-skjema-style@2.0.10:
   version "2.0.10"
@@ -13008,9 +12997,10 @@ nav-frontend-spinner@2.0.5:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.5.tgz#39568893f8843e4d2012c26207dbbd079c0f964e"
   integrity sha512-sIIZ1UapN78egxio1JIFboxWq9Cv2mJl9VP6MIPEIVsEn8buANNhm2l2rCwYPwNK6/Pl0+vEq73SmDTLoO3R9g==
 
-nav-frontend-tabs-style@^0.0.24:
-  version "0.0.24"
-  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.24.tgz#990fc8f5cd0b5f3774b2addb777e379f829a75ce"
+nav-frontend-tabs-style@^0.0.27:
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.27.tgz#8306f8a82f63da69e97a416ef072cc768082fec5"
+  integrity sha512-rY+kyIR2yD3SpIpl2SjwcOl9KuwQ7tr9fH91cAVRFmcGmxEdhiPBhQqYhF0iByi6BsyH7Y1xuEXZl0MtdgfOGg==
 
 nav-frontend-tabs@^0.0.38:
   version "0.0.38"
@@ -15980,6 +15970,7 @@ require-main-filename@^2.0.0:
 requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+  integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
 reselect@^4.0.0:
   version "4.0.0"
