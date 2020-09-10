@@ -78,12 +78,13 @@ const config = {
           {
             loader: 'less-loader',
             options: {
-              modules: {
+              lessOptions: {
+                modules: true,
                 localIdentName: '[name]_[local]_[contenthash:base64:5]',
-              },
-              modifyVars: {
-                nodeModulesPath: '~',
-                coreModulePath: '~',
+                modifyVars: {
+                  nodeModulesPath: '~',
+                  coreModulePath: '~',
+                },
               },
             },
           },
@@ -106,9 +107,11 @@ const config = {
           {
             loader: 'less-loader',
             options: {
-              modifyVars: {
-                nodeModulesPath: '~',
-                coreModulePath: '~',
+              lessOptions: {
+                modifyVars: {
+                  nodeModulesPath: '~',
+                  coreModulePath: '~',
+                },
               },
             },
           },
