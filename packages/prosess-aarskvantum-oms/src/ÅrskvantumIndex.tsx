@@ -55,14 +55,14 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
           aksjonspunkterForSteg={aksjonspunkterForSteg}
-          isAksjonspunktOpen={isAksjonspunktOpen}
+          isAksjonspunxktOpen={isAksjonspunktOpen}
         />
       )}
       <Uttaksplan
         aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
         aktivitetsstatuser={aktivitetsstatuser}
-        aktiv={sisteUttaksplan.aktiv}
+        aktiv={sisteUttaksplan?.aktiv}
         // @ts-ignore
         arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
       />
