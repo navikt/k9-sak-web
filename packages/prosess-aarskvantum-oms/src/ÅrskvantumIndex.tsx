@@ -50,7 +50,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
     <RawIntlProvider value={årskvantumIntl}>
       {aksjonspunkterForSteg.length > 0 && (
         <AksjonspunktForm
-          aktiviteter={sisteUttaksplan.aktiviteter}
+          aktiviteter={sisteUttaksplan?.aktiviteter}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
@@ -59,7 +59,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         />
       )}
       <Uttaksplan
-        aktiviteterBehandling={sisteUttaksplan.aktiviteter}
+        aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
         aktivitetsstatuser={aktivitetsstatuser}
         aktiv={sisteUttaksplan.aktiv}
