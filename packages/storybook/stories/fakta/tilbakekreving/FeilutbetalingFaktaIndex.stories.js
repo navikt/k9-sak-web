@@ -25,33 +25,40 @@ const behandling = {
 
 const feilutbetalingFakta = {
   behandlingFakta: {
-    perioder: [{
-      fom: '2018-01-01',
-      tom: '2019-01-01',
-      belop: 1000,
-    }],
+    perioder: [
+      {
+        fom: '2018-01-01',
+        tom: '2019-01-01',
+        belop: 1000,
+      },
+    ],
     totalPeriodeFom: '2019-01-01',
     totalPeriodeTom: '2019-01-02',
     aktuellFeilUtbetaltBeløp: 10000,
     tidligereVarseltBeløp: 5000,
-    behandlingÅrsaker: [{
-      behandlingArsakType: {
-        kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-        kodeverk: BEHANDLING_AARSAK_KODEVERK,
+    behandlingÅrsaker: [
+      {
+        behandlingArsakType: {
+          kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+          kodeverk: BEHANDLING_AARSAK_KODEVERK,
+        },
       },
-    }],
+    ],
     behandlingsresultat: {
       type: {
         kode: behandlingResultatType.INNVILGET,
         kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
       },
-      konsekvenserForYtelsen: [{
-        kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-        kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-      }, {
-        kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
-        kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-      }],
+      konsekvenserForYtelsen: [
+        {
+          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
+          kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+        },
+        {
+          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
+          kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+        },
+      ],
     },
     tilbakekrevingValg: {
       videreBehandling: {
@@ -64,58 +71,74 @@ const feilutbetalingFakta = {
 };
 
 const feilutbetalingAarsak = {
-  hendelseTyper: [{
-    hendelseType: {
-      kode: 'OPPTJENING',
-      navn: '§14-6 Opptjening',
+  hendelseTyper: [
+    {
+      hendelseType: {
+        kode: 'OPPTJENING',
+        navn: '§14-6 Opptjening',
+      },
+      hendelseUndertyper: [],
     },
-    hendelseUndertyper: [],
-  }, {
-    hendelseType: {
-      kode: 'ANNET',
-      navn: 'Annet',
+    {
+      hendelseType: {
+        kode: 'ANNET',
+        navn: 'Annet',
+      },
+      hendelseUndertyper: [],
     },
-    hendelseUndertyper: [],
-  }, {
-    hendelseType: {
-      kode: 'MEDLEM',
-      navn: '§14-2 Medlemskap',
+    {
+      hendelseType: {
+        kode: 'MEDLEM',
+        navn: '§14-2 Medlemskap',
+      },
+      hendelseUndertyper: [
+        {
+          kode: 'IKKE_EØS',
+          navn: 'Ikke oppholdsrett EØS',
+        },
+        {
+          kode: 'IKKE_BOSATT',
+          navn: 'Ikke bosatt',
+        },
+      ],
     },
-    hendelseUndertyper: [{
-      kode: 'IKKE_EØS',
-      navn: 'Ikke oppholdsrett EØS',
-    }, {
-      kode: 'IKKE_BOSATT',
-      navn: 'Ikke bosatt',
-    }],
-  }],
+  ],
 };
 
 const alleKodeverk = {
-  [kodeverkTyper.BEHANDLING_AARSAK]: [{
-    kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-    navn: 'Feil i lovanvendelse',
-    kodeverk: BEHANDLING_AARSAK_KODEVERK,
-  }],
-  [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [{
-    kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
-    navn: 'Tilbakekreving inntrekk',
-    kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-  }],
-  [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [{
-    kode: behandlingResultatType.INNVILGET,
-    navn: 'Innvilget',
-    kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
-  }],
-  [kodeverkTyper.KONSEKVENS_FOR_YTELSEN]: [{
-    kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-    navn: 'Foreldrepenger opphører',
-    kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-  }, {
-    kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
-    navn: 'Endring i beregning',
-    kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-  }],
+  [kodeverkTyper.BEHANDLING_AARSAK]: [
+    {
+      kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+      navn: 'Feil i lovanvendelse',
+      kodeverk: BEHANDLING_AARSAK_KODEVERK,
+    },
+  ],
+  [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [
+    {
+      kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
+      navn: 'Tilbakekreving inntrekk',
+      kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+    },
+  ],
+  [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [
+    {
+      kode: behandlingResultatType.INNVILGET,
+      navn: 'Innvilget',
+      kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
+    },
+  ],
+  [kodeverkTyper.KONSEKVENS_FOR_YTELSEN]: [
+    {
+      kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
+      navn: 'Foreldrepenger opphører',
+      kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+    },
+    {
+      kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
+      navn: 'Endring i beregning',
+      kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+    },
+  ],
 };
 
 const merknaderFraBeslutter = {
@@ -133,20 +156,26 @@ export const visAksjonspunktForFeilutbetaling = () => (
     behandling={behandling}
     feilutbetalingFakta={object('feilutbetalingFakta', feilutbetalingFakta)}
     feilutbetalingAarsak={object('feilutbetalingAarsak', feilutbetalingAarsak)}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     alleKodeverk={alleKodeverk}
+    fpsakKodeverk={alleKodeverk}
     alleMerknaderFraBeslutter={{
-      [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING]: object(
+        'merknaderFraBeslutter',
+        merknaderFraBeslutter,
+      ),
     }}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
