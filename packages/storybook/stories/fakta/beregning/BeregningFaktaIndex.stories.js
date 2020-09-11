@@ -18,10 +18,23 @@ import withReduxProvider from '../../../decorators/withRedux';
 
 import alleKodeverk from '../../mocks/alleKodeverk.json';
 
+const skjæringstidspunkt = '2020-01-01';
+
 const behandling = {
   id: 1,
   versjon: 1,
+  behandlingsresultat: {
+    vilkårResultat: {
+      BEREGNINGSGRUNNLAGVILKÅR: [
+        { periode: {
+          fom: skjæringstidspunkt,
+        }
+        }
+      ]
+    }
+  }
 };
+
 
 const {
   VURDER_MOTTAR_YTELSE,
@@ -40,6 +53,7 @@ const {
 const lagBeregningsgrunnlagAvklarAktiviteter = aktiviteter => ({
   faktaOmBeregning: {
     avklarAktiviteter: {
+      skjæringstidspunkt,
       aktiviteterTomDatoMapping: [
         {
           tom: '01.01.2020',
@@ -56,8 +70,8 @@ const lagBeregningsgrunnlag = (andeler, faktaOmBeregning) => ({
     {
       beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({
         andelsnr: andel.andelsnr,
-        aktivitetStatus: { kode: andel.aktivitetStatus },
-        inntektskategori: { kode: andel.inntektskategori },
+        aktivitetStatus: andel.aktivitetStatus,
+        inntektskategori: andel.inntektskategori,
         erNyoppstartet: andel.erNyoppstartet,
       })),
     },
@@ -279,6 +293,7 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
     refusjonskravSomKommerForSentListe,
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
+      skjæringstidspunkt,
       aktiviteterTomDatoMapping: [
         {
           tom: '01-01-2020',
@@ -354,6 +369,9 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     arbeidsforholdMedLønnsendringUtenIM: [arbeidstakerBeregningsgrunnlagAndel],
     vurderMottarYtelse,
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    }
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
 
@@ -408,6 +426,9 @@ export const DagpengerOgArbeidstakerMedVurderingAvBesteberegning = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_BESTEBEREGNING]),
     vurderBesteberegning,
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    }
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
 
@@ -462,6 +483,9 @@ export const KunArbeidstakerMedVurderingAvBesteberegning = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_BESTEBEREGNING]),
     vurderBesteberegning,
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    }
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -517,7 +541,10 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT]),
     refusjonskravSomKommerForSentListe,
     andelerForFaktaOmBeregning,
-  };
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    }
+   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
 
   return (
@@ -576,6 +603,9 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
     arbeidstakerOgFrilanserISammeOrganisasjonListe: [arbeidstakerBeregningsgrunnlagAndel],
     vurderMottarYtelse,
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    }
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -619,6 +649,9 @@ export const VurderingAvMilitær = () => {
   const faktaOmBeregning = {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_MILITÆR_SIVILTJENESTE]),
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    }
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -682,6 +715,9 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
     kortvarigeArbeidsforhold: [arbeidstakerBeregningsgrunnlagAndel],
     vurderMottarYtelse,
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    }
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -727,6 +763,9 @@ export const KunTidsbegrensetArbeidsforhold = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD]),
     kortvarigeArbeidsforhold: [arbeidstakerBeregningsgrunnlagAndel],
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -771,6 +810,9 @@ export const VurderingAvEtterlønnSluttpakke = () => {
   const faktaOmBeregning = {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_ETTERLONN_SLUTTPAKKE]),
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -819,6 +861,9 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([FASTSETT_BG_KUN_YTELSE]),
     andelerForFaktaOmBeregning,
     kunYtelse,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -862,6 +907,9 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
   const faktaOmBeregning = {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_SN_NY_I_ARBEIDSLIVET]),
     andelerForFaktaOmBeregning,
+    avklarAktiviteter: {
+      skjæringstidspunkt
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -1055,6 +1103,7 @@ export const KombinasjonstestForFaktapanel = () => {
     andelerForFaktaOmBeregning,
     vurderMottarYtelse,
     avklarAktiviteter: {
+      skjæringstidspunkt,
       aktiviteterTomDatoMapping: [
         {
           tom: '01-01-2020',
@@ -1136,6 +1185,7 @@ export const OverstyringAvInntekt = () => {
     faktaOmBeregningTilfeller: [],
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
+      skjæringstidspunkt,
       aktiviteterTomDatoMapping: [
         {
           tom: '01-01-2020',
@@ -1192,6 +1242,9 @@ export const VurderKunYtelseBesteberegning = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([FASTSETT_BG_KUN_YTELSE]),
     andelerForFaktaOmBeregning,
     kunYtelse,
+    avklarAktiviteter: {
+      skjæringstidspunkt,
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (

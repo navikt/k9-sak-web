@@ -82,6 +82,7 @@ const BeregningFaktaIndex = ({
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           beregningsgrunnlag={aktivtBeregningsrunnlag}
+          behandlingResultatPerioder={behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR}
           erOverstyrer={erOverstyrer}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}

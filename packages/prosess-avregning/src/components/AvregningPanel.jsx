@@ -200,7 +200,7 @@ export class AvregningPanelImpl extends Component {
                                         tabIndex="0"
                                         src={questionNormalUrl}
                                         srcHover={questionHoverUrl}
-                                        alt={intl.formatMessage({ id: 'Avregning.HjelpetekstForeldrepenger' })}
+                                        alt={intl.formatMessage({ id: 'Avregning.HjelpetekstPleiepenger' })}
                                         tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
                                       />
                                     </Column>
