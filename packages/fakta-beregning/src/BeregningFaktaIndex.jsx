@@ -31,16 +31,21 @@ const {
 
 const lagLabel = (bg, vilkårsperioder) => {
   const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
-  const vilkårPeriode = vilkårsperioder.find(({periode}) => periode.fom === stpOpptjening);
+  const vilkårPeriode = vilkårsperioder.find(({ periode }) => periode.fom === stpOpptjening);
   if (vilkårPeriode) {
-    const {fom, tom } = vilkårPeriode.periode;
+    const { fom, tom } = vilkårPeriode.periode;
     if (tom !== null) {
       return `${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`;
     }
     return `${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - `;
   }
-  return `${moment(stpOpptjening).format(DDMMYYYY_DATE_FORMAT)}`
-}
+  return `${moment(stpOpptjening).format(DDMMYYYY_DATE_FORMAT)}`;
+};
+
+const harTilfeller = beregningsgrunnlag =>
+  beregningsgrunnlag.faktaOmBeregning &&
+  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller &&
+  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
 
 const BeregningFaktaIndex = ({
   behandling,
@@ -68,6 +73,7 @@ const BeregningFaktaIndex = ({
           tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
             aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
             label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
+            className: harTilfeller(currentBeregningsgrunnlag) ? 'harAksjonspunkt' : '', // TODO finne en måte finne ut om det finnes et aksjonspunkt eller ikke
           }))}
           onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
         />
