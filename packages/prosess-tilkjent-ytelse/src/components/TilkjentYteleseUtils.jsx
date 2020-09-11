@@ -1,38 +1,3 @@
-/*
- "aktivitetStatus": {
-            "kode": "AT",
-            "kodeverk": "AKTIVITET_STATUS"
-          },
-          "inntektskategori": {
-            "kode": "ARBEIDSTAKER",
-            "kodeverk": "INNTEKTSKATEGORI"
-          },
-          "aktørId": null,
-          "arbeidsforholdId": "fddaa46b-e776-4d8e-8a12-878d6820eba6",
-          "arbeidsforholdType": {
-            "kode": "-",
-            "kodeverk": "OPPTJENING_AKTIVITET_TYPE"
-          },
-          "arbeidsgiverNavn": "BEDRIFT1 AS",
-          "arbeidsgiverOrgnr": "915142990",
-          "eksternArbeidsforholdId": "ARB002-001",
-          "refusjon": 185,
-          "sisteUtbetalingsdato": "2020-04-28",
-          "stillingsprosent": 0,
-          "tilSoker": 0,
-          "utbetalingsgrad": 100,
-          "uttak": [
-            {
-              "periode": {
-                "fom": "2020-04-20",
-                "tom": "2020-04-24"
-              },
-              "utbetalingsgrad": 100,
-              "utfall": "INNVILGET"
-            }
-
-            */
-
 export const getAktivitet = (aktivitetStatus, getKodeverknavn) => {
   return getKodeverknavn(aktivitetStatus);
 };
