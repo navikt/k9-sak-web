@@ -55,7 +55,7 @@ const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilk�
 export const FormContent: FunctionComponent<FormContentProps> = ({ handleSubmit, aktiviteter, isAksjonspunktOpen }) => {
   const uavklartePerioder = useMemo(
     () =>
-      aktiviteter
+      (aktiviteter || [])
         .flatMap(({ uttaksperioder }) => uttaksperioder)
         .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
     [aktiviteter],
