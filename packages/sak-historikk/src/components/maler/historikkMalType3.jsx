@@ -85,8 +85,12 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT]: 'Historikk.FaktaUttak.VurderAnnenForelder',
 };
 
-const formaterAksjonspunkt = (aksjonspunkt, intl) => {
-  const aksjonspktText = aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode];
+const tilbakekrevingsAksjonspunktCodesToTextCode = {};
+
+const formaterAksjonspunkt = (aksjonspunkt, intl, erTilbakekreving) => {
+  const aksjonspktText = erTilbakekreving
+    ? tilbakekrevingsAksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode]
+    : aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode];
   const { formatMessage } = intl;
 
   if (aksjonspunkt.godkjent) {
@@ -114,6 +118,7 @@ const HistorikkMalType3 = ({
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
+  erTilbakekreving,
 }) => (
   <>
     {historikkinnslagDeler &&
@@ -135,7 +140,7 @@ const HistorikkMalType3 = ({
           {historikkinnslagDel.aksjonspunkter &&
             historikkinnslagDel.aksjonspunkter.map(aksjonspunkt => (
               <div key={aksjonspunkt.aksjonspunktKode}>
-                {formaterAksjonspunkt(aksjonspunkt, useIntl())}
+                {formaterAksjonspunkt(aksjonspunkt, useIntl(), erTilbakekreving)}
                 <VerticalSpacer fourPx />
               </div>
             ))}
@@ -149,6 +154,11 @@ HistorikkMalType3.propTypes = {
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
+  erTilbakekreving: PropTypes.bool,
+};
+
+HistorikkMalType3.defaultProps = {
+  erTilbakekreving: false,
 };
 
 export default HistorikkMalType3;

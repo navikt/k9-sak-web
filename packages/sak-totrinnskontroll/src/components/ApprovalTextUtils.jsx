@@ -13,7 +13,9 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
+import totrinnskontrollaksjonspunktTextCodes, {
+  totrinnsTilbakekrevingkontrollaksjonspunktTextCodes,
+} from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
@@ -122,6 +124,11 @@ const buildOpptjeningText = aksjonspunkt =>
 
 const getTextFromAksjonspunktkode = aksjonspunkt => {
   const aksjonspunktTextId = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
+  return aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null;
+};
+
+const getTextFromTilbakekrevingAksjonspunktkode = aksjonspunkt => {
+  const aksjonspunktTextId = totrinnsTilbakekrevingkontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
   return aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null;
 };
 
@@ -234,8 +241,15 @@ export const getAksjonspunktTextSelector = createSelector(
     ownProps => ownProps.behandlingKlageVurdering,
     ownProps => ownProps.behandlingStatus,
     ownProps => ownProps.alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE],
+    ownProps => ownProps.erTilbakekreving,
   ],
-  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper) => aksjonspunkt => {
+  (
+    isForeldrepenger,
+    klagebehandlingVurdering,
+    behandlingStatus,
+    arbeidsforholdHandlingTyper,
+    erTilbakekreving,
+  ) => aksjonspunkt => {
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
       return buildOpptjeningText(aksjonspunkt);
     }
@@ -273,6 +287,9 @@ export const getAksjonspunktTextSelector = createSelector(
     }
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
       return buildArbeidsforholdText(aksjonspunkt, arbeidsforholdHandlingTyper);
+    }
+    if (erTilbakekreving) {
+      return [getTextFromTilbakekrevingAksjonspunktkode(aksjonspunkt)];
     }
     return [getTextFromAksjonspunktkode(aksjonspunkt)];
   },
