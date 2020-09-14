@@ -33,7 +33,6 @@ const groups = [
 export const TilkjentYtelsePanelImpl = ({
   beregningsresultatMedUttaksplan,
   vurderTilbaketrekkAP,
-  readOnly,
   submitCallback,
   readOnlySubmitButton,
   alleKodeverk,
@@ -65,7 +64,7 @@ export const TilkjentYtelsePanelImpl = ({
         <Tilbaketrekkpanel
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
-          readOnly={readOnly}
+          readOnly
           vurderTilbaketrekkAP={vurderTilbaketrekkAP}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
@@ -78,7 +77,6 @@ export const TilkjentYtelsePanelImpl = ({
 TilkjentYtelsePanelImpl.propTypes = {
   beregningsresultatMedUttaksplan: tilkjentYtelseBeregningresultatPropType,
   vurderTilbaketrekkAP: PropTypes.shape(),
-  readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

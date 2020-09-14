@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Tabs from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
+import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { KodeverkMedNavn, Arbeidsforhold } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
@@ -29,11 +29,13 @@ const mapAktiviteterTilTabell = (
     return <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />;
   }
   return aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => {
-    const gjeldendeArbeidsforhold = alleArbeidsforhold.find(
-      arb =>
-        arb.arbeidsgiverIdentifikator === arbeidsforhold.organisasjonsnummer ||
-        arb.arbeidsgiverIdentifiktorGUI === arbeidsforhold.organisasjonsnummer,
-    );
+    const gjeldendeArbeidsforhold = alleArbeidsforhold
+      .filter(
+        arb =>
+          arb.arbeidsgiverIdentifikator === arbeidsforhold.organisasjonsnummer ||
+          arb.arbeidsgiverIdentifiktorGUI === arbeidsforhold.organisasjonsnummer,
+      )
+      .find(arb => arb.arbeidsforholdId === arbeidsforhold.arbeidsforholdId);
 
     return (
       <AktivitetTabell
@@ -78,7 +80,6 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
         ]}
         onChange={(e, valgtIndex) => setValgtTabIndex(valgtIndex)}
       />
-      <VerticalSpacer sixteenPx />
       {valgtTabIndex === 0 && mapAktiviteterTilTabell(aktiviteterBehandling, aktivitetsstatuser, arbeidsforhold)}
       {valgtTabIndex === 1 && mapAktiviteterTilTabell(aktiviteterHittilIÅr, aktivitetsstatuser, arbeidsforhold)}
     </BorderedContainer>

@@ -11,6 +11,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
 
 import styles from '../vedtakForm.less';
+import redusertUtbetalingArsak from "../../kodeverk/redusertUtbetalingArsak";
 
 const getPreviewCallback = (formProps, begrunnelse, previewCallback) => e => {
   if (formProps.valid || formProps.pristine) {
@@ -96,6 +97,8 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   brodtekst,
   overskrift,
   behandlingResultat,
+  harRedusertUtbetaling,
+  visFeilmeldingFordiArsakerMangler
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewCallback);
   const previewOverstyrtBrev = getPreviewManueltBrevCallback(
@@ -107,6 +110,11 @@ export const VedtakRevurderingSubmitPanelImpl = ({
     previewCallback,
   );
 
+  const onClick = event =>
+    !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formProps[a])
+      ? formProps.handleSubmit(event)
+      : visFeilmeldingFordiArsakerMangler();
+
   return (
     <div>
       <div className={styles.margin} />
@@ -114,7 +122,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
         <Hovedknapp
           mini
           className={styles.mainButton}
-          onClick={formProps.handleSubmit}
+          onClick={onClick}
           disabled={formProps.submitting}
           spinner={formProps.submitting}
         >
@@ -159,6 +167,8 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   brodtekst: PropTypes.string,
   overskrift: PropTypes.string,
   behandlingResultat: PropTypes.shape(),
+  harRedusertUtbetaling: PropTypes.bool.isRequired,
+  visFeilmeldingFordiArsakerMangler: PropTypes.func.isRequired,
 };
 
 VedtakRevurderingSubmitPanelImpl.defaultProps = {

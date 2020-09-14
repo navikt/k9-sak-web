@@ -3,7 +3,6 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
 const harIngenAndeler = perioder => {
@@ -28,7 +27,7 @@ const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <TilkjentYtelseProsessIndex {...props} />;
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_TILBAKETREKK];
+  getAksjonspunktKoder = () => [];
 
   getOverstyrVisningAvKomponent = () => true;
 
