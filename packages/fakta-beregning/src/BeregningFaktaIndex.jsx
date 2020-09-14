@@ -2,6 +2,8 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TabsPure } from 'nav-frontend-tabs';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import React, { useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
@@ -27,6 +29,24 @@ const {
   OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
 } = aksjonspunktCodes;
 
+const lagLabel = (bg, vilkårsperioder) => {
+  const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
+  const vilkårPeriode = vilkårsperioder.find(({ periode }) => periode.fom === stpOpptjening);
+  if (vilkårPeriode) {
+    const { fom, tom } = vilkårPeriode.periode;
+    if (tom !== null) {
+      return `${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`;
+    }
+    return `${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - `;
+  }
+  return `${moment(stpOpptjening).format(DDMMYYYY_DATE_FORMAT)}`;
+};
+
+const harTilfeller = beregningsgrunnlag =>
+  beregningsgrunnlag.faktaOmBeregning &&
+  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller &&
+  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
+
 const BeregningFaktaIndex = ({
   behandling,
   beregningsgrunnlag,
@@ -44,13 +64,16 @@ const BeregningFaktaIndex = ({
     ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
     : beregningsgrunnlag;
 
+  const vilkårsperioder = behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR;
+
   return (
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
         <TabsPure
           tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
             aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
-            label: `Beregningsgrunnlag ${currentBeregningsgrunnlagIndex + 1}`,
+            label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
+            className: harTilfeller(currentBeregningsgrunnlag) ? 'harAksjonspunkt' : '', // TODO finne en måte finne ut om det finnes et aksjonspunkt eller ikke
           }))}
           onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
         />
@@ -82,7 +105,7 @@ const BeregningFaktaIndex = ({
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           beregningsgrunnlag={aktivtBeregningsrunnlag}
-          behandlingResultatPerioder={behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR}
+          behandlingResultatPerioder={vilkårsperioder}
           erOverstyrer={erOverstyrer}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
