@@ -31,7 +31,7 @@ const periodevisning = (periode: string): string => {
 
 const antallDager = (periode: string): string => {
   const [fom, tom] = periode.split('/');
-  return calcDays(fom, tom);
+  return calcDays(fom, tom, false);
 };
 
 const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => {
