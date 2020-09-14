@@ -28,6 +28,7 @@ import {
   minLength,
   required,
   getKodeverknavnFn,
+  decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
 
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
@@ -315,7 +316,7 @@ FeilutbetalingInfoPanelImpl.propTypes = {
 const buildInitialValues = createSelector([ownProps => ownProps.feilutbetalingFakta], feilutbetalingFakta => {
   const { perioder, begrunnelse } = feilutbetalingFakta;
   return {
-    begrunnelse,
+    begrunnelse: decodeHtmlEntity(begrunnelse),
     perioder: perioder
       .sort((a, b) => moment(a.fom) - moment(b.fom))
       .map(p => {

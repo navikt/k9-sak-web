@@ -5,6 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import BubbleText from './felles/bubbleText';
@@ -90,7 +91,10 @@ const HistorikkMalTypeFeilutbetaling = ({
       ) : null,
     )}
     {historikkinnslagDeler[0] && historikkinnslagDeler[0].begrunnelseFritekst && (
-      <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} className="snakkeboble-panel__tekst" />
+      <BubbleText
+        bodyText={decodeHtmlEntity(historikkinnslagDeler[0].begrunnelseFritekst)}
+        className="snakkeboble-panel__tekst"
+      />
     )}
   </>
 );

@@ -24,6 +24,7 @@ import {
   minLength,
   required,
   DDMMYYYY_DATE_FORMAT,
+  decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
 import { AdvarselModal, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
@@ -479,13 +480,13 @@ TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => 
     foreldetData = {
       erForeldet,
       periodenErForeldet: true,
-      foreldetBegrunnelse: foreldelsePeriode.begrunnelse,
+      foreldetBegrunnelse: decodeHtmlEntity(foreldelsePeriode.begrunnelse),
     };
   }
 
   const initialValues = {
     valgtVilkarResultatType: vilkarResultatKode,
-    begrunnelse,
+    begrunnelse: decodeHtmlEntity(begrunnelse),
     ...foreldetData,
   };
 
@@ -499,7 +500,7 @@ TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => 
       : {};
   return {
     ...initialValues,
-    vurderingBegrunnelse: vilkarResultatInfo ? vilkarResultatInfo.begrunnelse : undefined,
+    vurderingBegrunnelse: vilkarResultatInfo ? decodeHtmlEntity(vilkarResultatInfo.begrunnelse) : undefined,
     [initialValues.valgtVilkarResultatType]: {
       ...godTroData,
       ...annetData,

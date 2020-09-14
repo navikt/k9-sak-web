@@ -6,6 +6,7 @@ import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import skjermlenkeCodes from '@k9-sak-web/konstanter/src/skjermlenkeCodes';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 
@@ -20,6 +21,12 @@ const sorterteSkjermlenkeCodesForTilbakekreving = [
 
 const sorterTilbakekrevingContext = approvals =>
   sorterteSkjermlenkeCodesForTilbakekreving.map(s => approvals.find(el => el.contextCode === s.kode)).filter(s => s);
+
+const håndterSpeiselleTegn = aksjonspunkter =>
+  aksjonspunkter.map(aksjonspunkt => ({
+    ...aksjonspunkt,
+    besluttersBegrunnelse: decodeHtmlEntity(aksjonspunkt.besluttersBegrunnelse),
+  }));
 
 export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke) => {
   if (toTrinnsBehandling) {
@@ -42,7 +49,7 @@ export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, c
           contextCode: context.skjermlenkeType,
           skjermlenke: createLocationForSkjermlenke(props.location, context.skjermlenkeType),
           skjermlenkeNavn: skjermlenkeTypeKodeverk.navn,
-          aksjonspunkter: context.totrinnskontrollAksjonspunkter,
+          aksjonspunkter: håndterSpeiselleTegn(context.totrinnskontrollAksjonspunkter),
         };
       });
       if (props.erTilbakekreving) {

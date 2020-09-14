@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -6,6 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
@@ -108,7 +110,7 @@ const formaterAksjonspunkt = (aksjonspunkt, intl, erTilbakekreving) => {
           `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Historikk.ikkeGodkjent' })}`}
         {!aksjonspktText && formatMessage({ id: 'Historikk.ikkeGodkjentKomplett' })}
       </Element>
-      <Normaltekst>{aksjonspunkt.aksjonspunktBegrunnelse}</Normaltekst>
+      <Normaltekst>{decodeHtmlEntity(aksjonspunkt.aksjonspunktBegrunnelse)}</Normaltekst>
     </span>
   );
 };

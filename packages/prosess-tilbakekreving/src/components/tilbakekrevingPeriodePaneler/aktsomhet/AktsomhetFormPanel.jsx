@@ -5,18 +5,14 @@ import { FormSection } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
 import { ANDELER, EGENDEFINERT } from './AktsomhetReduksjonAvBelopFormPanel';
 
-const uaktsomhetCodes = [
-  Aktsomhet.GROVT_UAKTSOM,
-  Aktsomhet.SIMPEL_UAKTSOM,
-  Aktsomhet.FORSETT,
-];
+const uaktsomhetCodes = [Aktsomhet.GROVT_UAKTSOM, Aktsomhet.SIMPEL_UAKTSOM, Aktsomhet.FORSETT];
 
 const forstoBurdeForstattTekster = {
   [Aktsomhet.FORSETT]: 'AktsomhetFormPanel.AktsomhetTyperLabel.Forsett',
@@ -44,21 +40,22 @@ const AktsomhetFormPanel = ({
       <FormattedMessage id="AktsomhetFormPanel.HandletUaktsomhetGrad" />
     </Undertekst>
     <VerticalSpacer eightPx />
-    <RadioGroupField
-      validate={[required]}
-      name="handletUaktsomhetGrad"
-      readOnly={readOnly}
-      onChange={resetFields}
-    >
-      {aktsomhetTyper.map((vrt) => (
+    <RadioGroupField validate={[required]} name="handletUaktsomhetGrad" readOnly={readOnly} onChange={resetFields}>
+      {aktsomhetTyper.map(vrt => (
         <RadioOption
           key={vrt.kode}
-          label={erValgtResultatTypeForstoBurdeForstaatt ? <FormattedMessage id={forstoBurdeForstattTekster[vrt.kode]} /> : vrt.navn}
+          label={
+            erValgtResultatTypeForstoBurdeForstaatt ? (
+              <FormattedMessage id={forstoBurdeForstattTekster[vrt.kode]} />
+            ) : (
+              vrt.navn
+            )
+          }
           value={vrt.kode}
         />
       ))}
     </RadioGroupField>
-    { uaktsomhetCodes.includes(handletUaktsomhetGrad) && (
+    {uaktsomhetCodes.includes(handletUaktsomhetGrad) && (
       <FormSection name={handletUaktsomhetGrad} key={handletUaktsomhetGrad}>
         <AktsomhetGradFormPanel
           harGrunnerTilReduksjon={harGrunnerTilReduksjon}
@@ -113,18 +110,24 @@ const parseFloatAndelSomTilbakekreves = (andelSomTilbakekreves, harGrunnerTilRed
 };
 
 const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
-  const sarligeGrunner = sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []);
+  const sarligeGrunner = sarligGrunnTyper.reduce(
+    (acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc),
+    [],
+  );
 
   const { harGrunnerTilReduksjon } = aktsomhet;
-  const andelSomTilbakekreves = aktsomhet.andelSomTilbakekreves === EGENDEFINERT
-    ? parseFloatAndelSomTilbakekreves(aktsomhet.andelSomTilbakekrevesManuell, harGrunnerTilReduksjon)
-    : parseIntAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves, harGrunnerTilReduksjon);
+  const andelSomTilbakekreves =
+    aktsomhet.andelSomTilbakekreves === EGENDEFINERT
+      ? parseFloatAndelSomTilbakekreves(aktsomhet.andelSomTilbakekrevesManuell, harGrunnerTilReduksjon)
+      : parseIntAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves, harGrunnerTilReduksjon);
 
   return {
     harGrunnerTilReduksjon,
     ileggRenter: harGrunnerTilReduksjon ? undefined : aktsomhet.skalDetTilleggesRenter,
     sarligGrunner: sarligeGrunner.length > 0 ? sarligeGrunner : undefined,
-    tilbakekrevesBelop: aktsomhet.harGrunnerTilReduksjon ? removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves) : undefined,
+    tilbakekrevesBelop: aktsomhet.harGrunnerTilReduksjon
+      ? removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves)
+      : undefined,
     annetBegrunnelse: aktsomhet.annetBegrunnelse,
     sarligGrunnerBegrunnelse: aktsomhet.sarligGrunnerBegrunnelse,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
@@ -142,23 +145,32 @@ AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper, vurderingBegrunnel
   };
 };
 
-
-AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
+AktsomhetFormPanel.buildInitalValues = vilkarResultatInfo => {
   const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
-  const andelSomTilbakekreves = aktsomhetInfo && aktsomhetInfo.andelTilbakekreves ? `${aktsomhetInfo.andelTilbakekreves}` : undefined;
-  const aktsomhetData = aktsomhetInfo ? {
-    [aktsomhet.kode ? aktsomhet.kode : aktsomhet]: {
-      andelSomTilbakekreves: andelSomTilbakekreves === undefined || ANDELER.includes(andelSomTilbakekreves) ? andelSomTilbakekreves : EGENDEFINERT,
-      andelSomTilbakekrevesManuell: !ANDELER.includes(andelSomTilbakekreves) ? aktsomhetInfo.andelTilbakekreves : undefined,
-      harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
-      skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
-      belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
-      annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
-      sarligGrunnerBegrunnelse: aktsomhetInfo.sarligGrunnerBegrunnelse,
-      tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
-      ...(aktsomhetInfo.sarligGrunner ? aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [(sg.kode ? sg.kode : sg)]: true }), {}) : {}),
-    },
-  } : {};
+  const andelSomTilbakekreves =
+    aktsomhetInfo && aktsomhetInfo.andelTilbakekreves ? `${aktsomhetInfo.andelTilbakekreves}` : undefined;
+  const aktsomhetData = aktsomhetInfo
+    ? {
+        [aktsomhet.kode ? aktsomhet.kode : aktsomhet]: {
+          andelSomTilbakekreves:
+            andelSomTilbakekreves === undefined || ANDELER.includes(andelSomTilbakekreves)
+              ? andelSomTilbakekreves
+              : EGENDEFINERT,
+          andelSomTilbakekrevesManuell: !ANDELER.includes(andelSomTilbakekreves)
+            ? aktsomhetInfo.andelTilbakekreves
+            : undefined,
+          harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
+          skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
+          belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
+          annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
+          sarligGrunnerBegrunnelse: decodeHtmlEntity(aktsomhetInfo.sarligGrunnerBegrunnelse),
+          tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
+          ...(aktsomhetInfo.sarligGrunner
+            ? aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [sg.kode ? sg.kode : sg]: true }), {})
+            : {}),
+        },
+      }
+    : {};
 
   return {
     handletUaktsomhetGrad: aktsomhet && aktsomhet.kode ? aktsomhet.kode : aktsomhet,
