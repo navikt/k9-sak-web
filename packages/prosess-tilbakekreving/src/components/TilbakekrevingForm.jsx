@@ -238,6 +238,7 @@ export class TilbakekrevingFormImpl extends Component {
                     behandlingVersjon={behandlingVersjon}
                     alleKodeverk={alleKodeverk}
                     beregnBelop={beregnBelop}
+                    vilkarsVurdertePerioder={vilkarsVurdertePerioder}
                   />
                 )}
               </>
