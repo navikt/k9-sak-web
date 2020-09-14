@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearFields, formPropTypes } from 'redux-form';
+import { clearFields, change, formPropTypes, getFormValues } from 'redux-form';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
@@ -12,7 +12,14 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { TextAreaField, behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import {
+  TextAreaField,
+  behandlingForm,
+  getBehandlingFormPrefix,
+  CheckboxField,
+  behandlingFormValueSelector,
+  getBehandlingFormName,
+} from '@fpsak-frontend/form';
 import { VerticalSpacer, AksjonspunktHelpTextTemp, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
@@ -35,13 +42,55 @@ const feilutbetalingAksjonspunkter = [aksjonspunktCodesTilbakekreving.AVKLAR_FAK
 export class FeilutbetalingInfoPanelImpl extends Component {
   constructor(props) {
     super(props);
-    this.resetFields = this.resetFields.bind(this);
+    this.onChangeÅrsak = this.onChangeÅrsak.bind(this);
+    this.onChangeUnderÅrsak = this.onChangeUnderÅrsak.bind(this);
   }
 
-  resetFields(elementId, årsak) {
-    const { behandlingFormPrefix, clearFields: clearFormFields } = this.props;
+  onChangeÅrsak(event, elementId, årsak) {
+    const {
+      behandlingFormPrefix,
+      clearFields: clearFormFields,
+      change: changeValue,
+      formValues,
+      behandlePerioderSamlet,
+    } = this.props;
+
+    if (behandlePerioderSamlet) {
+      const { perioder } = formValues;
+      const { value: nyÅrsak } = event.target;
+
+      for (let i = 0; i < perioder.length; i += 1) {
+        if (i !== elementId) {
+          const { årsak: periodeÅrsak } = perioder[i];
+          const fields = [`perioder.${i}.${periodeÅrsak}`];
+          clearFormFields(`${behandlingFormPrefix}.${formName}`, false, false, ...fields);
+          changeValue(`perioder.${i}.årsak`, nyÅrsak, true, false);
+        }
+      }
+    }
+
     const fields = [`perioder.${elementId}.${årsak}`];
     clearFormFields(`${behandlingFormPrefix}.${formName}`, false, false, ...fields);
+  }
+
+  onChangeUnderÅrsak(event, elementId, årsak) {
+    const { change: changeValue, formValues, behandlePerioderSamlet } = this.props;
+
+    if (behandlePerioderSamlet) {
+      const { perioder } = formValues;
+      const { value: nyUnderÅrsak } = event.target;
+
+      for (let i = 0; i < perioder.length; i += 1) {
+        const { årsak: elementÅrsak } = perioder[i];
+        /*
+          Passer på at man endrer bare for perioder med samme årsak.
+          Just in case noen har klikket av behandlePerioderSamlet, endret årsak og underÅrsak på element, og så klikket på behandlePerioderSamlet igjen.
+        */
+        if (i !== elementId && elementÅrsak === årsak) {
+          changeValue(`perioder.${i}.${årsak}.underÅrsak`, nyUnderÅrsak, true, false);
+        }
+      }
+    }
   }
 
   render() {
@@ -121,6 +170,15 @@ export class FeilutbetalingInfoPanelImpl extends Component {
               </Row>
               <Row className={styles.smallMarginTop}>
                 <Column xs="11">
+                  <CheckboxField
+                    name="behandlePerioderSamlet"
+                    label={{ id: 'FeilutbetalingInfoPanel.BehandlePerioderSamlet' }}
+                    readOnly={readOnly}
+                  />
+                </Column>
+              </Row>
+              <Row className={styles.smallMarginTop}>
+                <Column xs="11">
                   <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
                     <FeilutbetalingPerioderTable
                       behandlingId={behandlingId}
@@ -129,7 +187,8 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                       formName={formName}
                       årsaker={årsaker}
                       readOnly={readOnly}
-                      resetFields={this.resetFields}
+                      onChangeÅrsak={this.onChangeÅrsak}
+                      onChangeUnderÅrsak={this.onChangeUnderÅrsak}
                     />
                   </FaktaGruppe>
                 </Column>
@@ -337,6 +396,13 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
     merknaderFraBeslutter:
       ownProps.alleMerknaderFraBeslutter[aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING],
+    behandlePerioderSamlet: behandlingFormValueSelector(
+      formName,
+      ownProps.behandlingId,
+      ownProps.behandlingVersjon,
+    )(state, 'behandlePerioderSamlet'),
+    formValues:
+      getFormValues(getBehandlingFormName(ownProps.behandlingId, ownProps.behandlingVersjon, formName))(state) || {},
     onSubmit: submitCallback,
   });
 };
@@ -345,6 +411,7 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(
     {
       clearFields,
+      change,
     },
     dispatch,
   ),
