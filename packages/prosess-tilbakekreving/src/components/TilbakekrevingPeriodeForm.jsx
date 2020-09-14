@@ -62,6 +62,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     behandlingId: PropTypes.number.isRequired,
     behandlingVersjon: PropTypes.number.isRequired,
     beregnBelop: PropTypes.func.isRequired,
+    intl: PropTypes.shape().isRequired,
     ...formPropTypes,
   };
 
@@ -135,6 +136,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       behandlingId,
       behandlingVersjon,
       beregnBelop,
+      intl,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
@@ -188,6 +190,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                     validate={[required, minLength3, maxLength1500, hasValidText]}
                     maxLength={1500}
                     readOnly={readOnly}
+                    textareaClass={styles.explanationTextarea}
+                    placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
                   />
                   <VerticalSpacer twentyPx />
                   <Undertekst>
@@ -226,7 +230,12 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                     <VerticalSpacer eightPx />
                     <TextAreaField
                       name="vurderingBegrunnelse"
-                      label={{ id: 'TilbakekrevingPeriodeForm.Vurdering' }}
+                      label={{
+                        id:
+                          valgtVilkarResultatType === VilkarResultat.GOD_TRO
+                            ? 'TilbakekrevingPeriodeForm.VurderingMottattIGodTro'
+                            : 'TilbakekrevingPeriodeForm.VurderingAktsomhet',
+                      }}
                       validate={[required, minLength3, maxLength1500, hasValidText]}
                       maxLength={1500}
                       readOnly={readOnly}
