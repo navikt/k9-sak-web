@@ -315,7 +315,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       fomDato: undefined,
       tomDato: undefined,
       kilde: {
-        navn: arbeidsforholdKilder.SAKSBEHANDLER,
+        kode: arbeidsforholdKilder.SAKSBEHANDLER,
       },
       mottattDatoInntektsmelding: undefined,
       begrunnelse: undefined,

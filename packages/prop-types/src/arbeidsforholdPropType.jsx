@@ -17,7 +17,6 @@ export const arbeidsforholdBeregningProptype = PropTypes.shape({
   arbeidsforholdId: PropTypes.string,
 });
 
-
 export const arbeidsforholdPropType = PropTypes.shape({
   id: PropTypes.string,
   navn: PropTypes.string,
@@ -27,7 +26,7 @@ export const arbeidsforholdPropType = PropTypes.shape({
   fomDato: PropTypes.string,
   tomDato: PropTypes.string,
   kilde: PropTypes.shape({
-    navn: PropTypes.string.isRequired,
+    kode: PropTypes.string.isRequired,
   }),
   mottattDatoInntektsmelding: PropTypes.string,
   stillingsprosent: PropTypes.number,
@@ -48,15 +47,17 @@ export const arbeidsforholdPropType = PropTypes.shape({
   inntektMedTilBeregningsgrunnlag: PropTypes.bool,
   skjaeringstidspunkt: PropTypes.string,
   begrunnelse: PropTypes.string,
-  permisjoner: PropTypes.arrayOf(PropTypes.shape({
-    permisjonFom: PropTypes.string,
-    permisjonTom: PropTypes.string,
-    permisjonsprosent: PropTypes.number,
-    type: PropTypes.shape({
-      kode: PropTypes.string,
-      kodeverk: PropTypes.string,
+  permisjoner: PropTypes.arrayOf(
+    PropTypes.shape({
+      permisjonFom: PropTypes.string,
+      permisjonTom: PropTypes.string,
+      permisjonsprosent: PropTypes.number,
+      type: PropTypes.shape({
+        kode: PropTypes.string,
+        kodeverk: PropTypes.string,
+      }),
     }),
-  })),
+  ),
   brukPermisjon: PropTypes.bool,
 });
 

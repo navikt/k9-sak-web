@@ -60,7 +60,7 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
                 </Normaltekst>
               </TableColumn>
               <TableColumn>
-                <Normaltekst>{a.kilde?.navn}</Normaltekst>
+                <Normaltekst>{a.kilde.kode}</Normaltekst>
               </TableColumn>
               <TableColumn>
                 <Normaltekst>{stillingsprosent}</Normaltekst>

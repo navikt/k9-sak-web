@@ -122,7 +122,7 @@ const utledAktivtArbeidsforholdLabel = arbeidsforhold => {
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0) {
     return 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon';
   }
-  if (arbeidsforhold.kilde.navn === arbeidsforholdKilder.INNTEKTSMELDING) {
+  if (arbeidsforhold.kilde.kode === arbeidsforholdKilder.INNTEKTSMELDING) {
     return 'PersonArbeidsforholdDetailForm.OppdaterArbeidsforhold';
   }
   return 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt';

@@ -57,7 +57,7 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1) {
     return <FormattedMessage key="permisjoner" id="PersonAksjonspunktText.SokerHarFlerePermisjoner" />;
   }
-  if (arbeidsforhold.kilde.navn === arbeidsforholdKilder.INNTEKTSMELDING) {
+  if (arbeidsforhold.kilde.kode === arbeidsforholdKilder.INNTEKTSMELDING) {
     return <FormattedMessage key="basertPaInntektsmelding" id="PersonAksjonspunktText.BasertPaInntektsmelding" />;
   }
   if (arbeidsforhold.lagtTilAvSaksbehandler) {
