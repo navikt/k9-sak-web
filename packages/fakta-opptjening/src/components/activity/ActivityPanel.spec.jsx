@@ -4,23 +4,24 @@ import sinon from 'sinon';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { FormattedMessage } from 'react-intl';
-import {
-  PeriodpickerField, RadioGroupField, SelectField, TextAreaField,
-} from '@fpsak-frontend/form';
+import { PeriodpickerField, RadioGroupField, SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { ActivityPanel } from './ActivityPanel';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-opptjening';
+import shallowWithIntl from '../../../i18n';
 
 describe('<ActivityPanel>', () => {
-  const opptjeningAktivitetTypes = [{
-    kode: OAType.ARBEID,
-    navn: 'Arbeid',
-  }, {
-    kode: OAType.NARING,
-    navn: 'Næring',
-  }];
+  const opptjeningAktivitetTypes = [
+    {
+      kode: OAType.ARBEID,
+      navn: 'Arbeid',
+    },
+    {
+      kode: OAType.NARING,
+      navn: 'Næring',
+    },
+  ];
 
   it('skal vise periodevelger som aktiv når aktivitet ikke er godkjent eller avvist og en har aksjonspunkt', () => {
     const activity = {
@@ -29,20 +30,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const periodevelger = wrapper.find(PeriodpickerField);
     expect(periodevelger).to.have.length(1);
@@ -56,20 +59,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: 'en begrunnelse',
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const periodevelger = wrapper.find(PeriodpickerField);
     expect(periodevelger).to.have.length(1);
@@ -83,20 +88,22 @@ describe('<ActivityPanel>', () => {
       erEndret: true,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const periodevelger = wrapper.find(PeriodpickerField);
     expect(periodevelger).to.have.length(1);
@@ -110,20 +117,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt={false}
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt={false}
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const periodevelger = wrapper.find(PeriodpickerField);
     expect(periodevelger).to.have.length(1);
@@ -137,20 +146,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt={false}
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt={false}
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const daysInPeriodLabel = wrapper.find(FormattedMessage);
     expect(daysInPeriodLabel).to.have.length(2);
@@ -167,27 +178,28 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const select = wrapper.find(SelectField);
     expect(select).to.have.length(1);
-    expect(select.prop('selectValues').map((sv) => sv.key)).is.eql([OAType.ARBEID, OAType.NARING]);
+    expect(select.prop('selectValues').map(sv => sv.key)).is.eql([OAType.ARBEID, OAType.NARING]);
     expect(select.prop('readOnly')).is.false;
   });
-
 
   it('skal kun vise valgt opptjeningsaktivitet når aktivitet ikke manuelt er lagt til', () => {
     const activity = {
@@ -196,20 +208,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const select = wrapper.find(SelectField);
     expect(select).to.have.length(1);
@@ -223,25 +237,26 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     expect(wrapper.find(Hovedknapp)).to.have.length(1);
     expect(wrapper.find(RadioGroupField)).to.have.length(1);
   });
-
 
   it('skal ikke kunne oppdatere aktivitet når den ikke er manuelt lagt til eller del av aksjonspunkt', () => {
     const activity = {
@@ -250,20 +265,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt={false}
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt={false}
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     expect(wrapper.find(Hovedknapp)).to.have.length(0);
   });
@@ -275,20 +292,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     expect(wrapper.find(Hovedknapp)).to.have.length(1);
     expect(wrapper.find(RadioGroupField)).to.have.length(0);
@@ -302,20 +321,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     const tekstFelt = wrapper.find(TextAreaField);
     expect(tekstFelt).to.have.length(1);
     expect(tekstFelt.props().readOnly).to.eql(true);
@@ -330,20 +351,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     const tekstFelt = wrapper.find(TextAreaField);
     expect(tekstFelt).to.have.length(1);
     expect(tekstFelt.props().readOnly).to.eql(true);
@@ -358,20 +381,22 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(<ActivityPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      initialValues={activity}
-      readOnly={false}
-      opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-      cancelSelectedOpptjeningActivity={sinon.spy()}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-      opptjeningFom="2017-08-15"
-      opptjeningTom="2017-12-31"
-      hasAksjonspunkt
-      activityId={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <ActivityPanel
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        initialValues={activity}
+        readOnly={false}
+        opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+        cancelSelectedOpptjeningActivity={sinon.spy()}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        opptjeningFom="2017-08-15"
+        opptjeningTom="2017-12-31"
+        hasAksjonspunkt
+        activityId={1}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     const tekstFelt = wrapper.find(TextAreaField);
     expect(tekstFelt).to.have.length(1);
     expect(tekstFelt.props().readOnly).to.eql(false);

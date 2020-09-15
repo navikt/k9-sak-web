@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mountWithIntl } from '../../i18n/intl-enzyme-test-helper-nøkkeltall';
+import { mountWithIntl } from '../../i18n';
 import Nøkkeltall from './Nøkkeltall';
 import { Detalj } from './NøkkeltallStyles';
 

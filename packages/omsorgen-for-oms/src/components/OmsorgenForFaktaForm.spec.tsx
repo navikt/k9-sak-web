@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
+import { shallowWithIntl } from '../../i18n';
 import { OmsorgenForFaktaFormImpl } from './OmsorgenForFaktaForm';
 import Spørsmål from './Spørsmål';
 

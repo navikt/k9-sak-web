@@ -4,7 +4,7 @@ import { expect } from 'chai';
 
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
 
-import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../i18n';
 import MenyApneForEndringerIndex from './MenyApneForEndringerIndex';
 
 describe('<MenyApneForEndringerIndex>', () => {

@@ -17,7 +17,7 @@ import {
   getBehandlingTyper,
   getEnabledBehandlingstyper,
 } from './NyBehandlingModal';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../../i18n';
 
 describe('<CreateNewBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();
@@ -350,7 +350,7 @@ describe('<CreateNewBehandlingModal>', () => {
       [behandlingType.REVURDERING]: true,
       [behandlingType.TILBAKEKREVING]: false,
       [behandlingType.TILBAKEKREVING_REVURDERING]: true,
-      [behandlingType.KLAGE]: true
+      [behandlingType.KLAGE]: true,
     };
 
     const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
@@ -391,7 +391,7 @@ describe('<CreateNewBehandlingModal>', () => {
       [behandlingType.REVURDERING]: true,
       [behandlingType.TILBAKEKREVING]: true,
       [behandlingType.TILBAKEKREVING_REVURDERING]: false,
-      [behandlingType.KLAGE]: true
+      [behandlingType.KLAGE]: true,
     };
 
     const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
@@ -432,7 +432,7 @@ describe('<CreateNewBehandlingModal>', () => {
       [behandlingType.REVURDERING]: true,
       [behandlingType.TILBAKEKREVING]: true,
       [behandlingType.TILBAKEKREVING_REVURDERING]: true,
-      [behandlingType.KLAGE]: true
+      [behandlingType.KLAGE]: true,
     };
 
     const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
@@ -473,7 +473,7 @@ describe('<CreateNewBehandlingModal>', () => {
       [behandlingType.REVURDERING]: false,
       [behandlingType.TILBAKEKREVING]: true,
       [behandlingType.TILBAKEKREVING_REVURDERING]: true,
-      [behandlingType.KLAGE]: true
+      [behandlingType.KLAGE]: true,
     };
 
     const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);
@@ -514,7 +514,7 @@ describe('<CreateNewBehandlingModal>', () => {
       [behandlingType.REVURDERING]: true,
       [behandlingType.TILBAKEKREVING]: true,
       [behandlingType.TILBAKEKREVING_REVURDERING]: true,
-      [behandlingType.KLAGE]: false
+      [behandlingType.KLAGE]: false,
     };
 
     const res = getEnabledBehandlingstyper.resultFunc(behandlingstyper, behandlingerSomKanOpprettes);

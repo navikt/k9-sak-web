@@ -12,9 +12,13 @@ import { Table } from '@fpsak-frontend/shared-components';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import { AndelRow } from './InntektFieldArrayRow';
 import SummaryRow from './SummaryRow';
-import InntektFieldArray, { InntektFieldArrayImpl, leggTilDagpengerOmBesteberegning, mapStateToProps } from './InntektFieldArray';
+import InntektFieldArray, {
+  InntektFieldArrayImpl,
+  leggTilDagpengerOmBesteberegning,
+  mapStateToProps,
+} from './InntektFieldArray';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-beregning';
+import shallowWithIntl from '../../../i18n';
 
 const aksjonspunkter = [
   {
@@ -27,30 +31,35 @@ const behandlingId = 1000051;
 const behandlingVersjon = 1;
 
 const alleKodeverk = {
-  [kodeverkTyper.AKTIVITET_STATUS]: [{
-    kode: aktivitetStatuser.ARBEIDSTAKER,
-    navn: 'Arbeidstaker',
-  }, {
-    kode: aktivitetStatuser.FRILANSER,
-    navn: 'Frilanser',
-  },
-  {
-    kode: aktivitetStatuser.DAGPENGER,
-    navn: 'Dagpenger',
-  },
-  {
-    kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
-    navn: 'Selvstendig næringsdrivende',
-  },
-  {
-    kode: aktivitetStatuser.BRUKERS_ANDEL,
-    navn: 'Brukers andel',
-  },
+  [kodeverkTyper.AKTIVITET_STATUS]: [
+    {
+      kode: aktivitetStatuser.ARBEIDSTAKER,
+      navn: 'Arbeidstaker',
+    },
+    {
+      kode: aktivitetStatuser.FRILANSER,
+      navn: 'Frilanser',
+    },
+    {
+      kode: aktivitetStatuser.DAGPENGER,
+      navn: 'Dagpenger',
+    },
+    {
+      kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
+      navn: 'Selvstendig næringsdrivende',
+    },
+    {
+      kode: aktivitetStatuser.BRUKERS_ANDEL,
+      navn: 'Brukers andel',
+    },
   ],
 };
 
 const ownProps = {
-  behandlingId, behandlingVersjon, alleKodeverk, isAksjonspunktClosed: false,
+  behandlingId,
+  behandlingVersjon,
+  alleKodeverk,
+  isAksjonspunktClosed: false,
 };
 
 describe('<InntektFieldArray>', () => {
@@ -59,9 +68,7 @@ describe('<InntektFieldArray>', () => {
       faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
     };
     const bg = {
-      beregningsgrunnlagPeriode: [
-        {},
-      ],
+      beregningsgrunnlagPeriode: [{}],
       faktaOmBeregning,
     };
     const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
@@ -69,7 +76,6 @@ describe('<InntektFieldArray>', () => {
     expect(props.isBeregningFormDirty).to.eql(false);
     expect(props.erKunYtelse).to.eql(false);
   });
-
 
   it('skal med dagpengeandel lagt til tidligere', () => {
     const faktaOmBeregning = {
@@ -79,9 +85,7 @@ describe('<InntektFieldArray>', () => {
     const bg = {
       beregningsgrunnlagPeriode: [
         {
-          andelerLagtTilManueltIForrige: [
-            dagpengeAndel,
-          ],
+          andelerLagtTilManueltIForrige: [dagpengeAndel],
         },
       ],
       faktaOmBeregning,
@@ -97,16 +101,13 @@ describe('<InntektFieldArray>', () => {
       faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE }],
     };
     const bg = {
-      beregningsgrunnlagPeriode: [
-        {},
-      ],
+      beregningsgrunnlagPeriode: [{}],
       faktaOmBeregning,
     };
     const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
     const props = mapStateToProps(state, { ...ownProps, beregningsgrunnlag: bg });
     expect(props.erKunYtelse).to.eql(true);
   });
-
 
   const andelField = {
     nyAndel: false,
@@ -130,24 +131,30 @@ describe('<InntektFieldArray>', () => {
   initial.fieldArrayName = [andelField];
   initial[besteberegningField] = true;
   const bg = {
-    beregningsgrunnlagPeriode: [
-      {},
-    ],
+    beregningsgrunnlagPeriode: [{}],
     faktaOmBeregning,
   };
-  const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning, initial, initial);
+  const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
+    aksjonspunkter,
+    bg,
+    formNameVurderFaktaBeregning,
+    initial,
+    initial,
+  );
   const props = mapStateToProps(state, { ...ownProps, beregningsgrunnlag: bg });
 
   it('skal vise komponent', () => {
-    const wrapper = shallowWithIntl(<InntektFieldArrayImpl
-      intl={intlMock}
-      fields={fields}
-      meta={{}}
-      readOnly={false}
-      beregningsgrunnlag={bg}
-      {...ownProps}
-      {...props}
-    />);
+    const wrapper = shallowWithIntl(
+      <InntektFieldArrayImpl
+        intl={intlMock}
+        fields={fields}
+        meta={{}}
+        readOnly={false}
+        beregningsgrunnlag={bg}
+        {...ownProps}
+        {...props}
+      />,
+    );
     const table = wrapper.find(Table);
     expect(table.length).to.eql(1);
     const andelRows = table.find(AndelRow);
@@ -166,16 +173,18 @@ describe('<InntektFieldArray>', () => {
       aktivitetStatus: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
     };
     const newFields = new MockFieldsWithContent('fieldArrayName', [andelField, SNandel]);
-    const wrapper = shallowWithIntl(<InntektFieldArrayImpl
-      intl={intlMock}
-      fields={newFields}
-      meta={{}}
-      readOnly={false}
-      skalFastsetteSN={false}
-      beregningsgrunnlag={bg}
-      {...ownProps}
-      {...props}
-    />);
+    const wrapper = shallowWithIntl(
+      <InntektFieldArrayImpl
+        intl={intlMock}
+        fields={newFields}
+        meta={{}}
+        readOnly={false}
+        skalFastsetteSN={false}
+        beregningsgrunnlag={bg}
+        {...ownProps}
+        {...props}
+      />,
+    );
     const table = wrapper.find(Table);
     expect(table.length).to.eql(1);
     const andelRows = table.find(AndelRow);
@@ -194,16 +203,18 @@ describe('<InntektFieldArray>', () => {
       aktivitetStatus: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
     };
     const newFields = new MockFieldsWithContent('fieldArrayName', [andelField, SNandel]);
-    const wrapper = shallowWithIntl(<InntektFieldArrayImpl
-      intl={intlMock}
-      fields={newFields}
-      meta={{}}
-      readOnly={false}
-      beregningsgrunnlag={bg}
-      {...props}
-      {...ownProps}
-      skalFastsetteSN
-    />);
+    const wrapper = shallowWithIntl(
+      <InntektFieldArrayImpl
+        intl={intlMock}
+        fields={newFields}
+        meta={{}}
+        readOnly={false}
+        beregningsgrunnlag={bg}
+        {...props}
+        {...ownProps}
+        skalFastsetteSN
+      />,
+    );
     const table = wrapper.find(Table);
     expect(table.length).to.eql(1);
     const andelRows = table.find(AndelRow);
@@ -217,25 +228,30 @@ describe('<InntektFieldArray>', () => {
     const newbg = {
       beregningsgrunnlagPeriode: [
         {
-          andelerLagtTilManueltIForrige: [
-            dagpengeAndel,
-          ],
+          andelerLagtTilManueltIForrige: [dagpengeAndel],
         },
       ],
       faktaOmBeregning,
     };
     const values = { [besteberegningField]: true };
-    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, newbg, formNameVurderFaktaBeregning, values);
+    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
+      aksjonspunkter,
+      newbg,
+      formNameVurderFaktaBeregning,
+      values,
+    );
     const newprops = mapStateToProps(newstate, { ...ownProps, beregningsgrunnlag: newbg });
-    const wrapper = shallowWithIntl(<InntektFieldArrayImpl
-      intl={intlMock}
-      fields={fields}
-      meta={{}}
-      readOnly={false}
-      beregningsgrunnlag={newbg}
-      {...ownProps}
-      {...newprops}
-    />);
+    const wrapper = shallowWithIntl(
+      <InntektFieldArrayImpl
+        intl={intlMock}
+        fields={fields}
+        meta={{}}
+        readOnly={false}
+        beregningsgrunnlag={newbg}
+        {...ownProps}
+        {...newprops}
+      />,
+    );
     const table = wrapper.find(Table);
     expect(table.length).to.eql(1);
     const andelRows = table.find(AndelRow);
@@ -245,13 +261,17 @@ describe('<InntektFieldArray>', () => {
   });
 
   it('skal fjerne dagpengeandel om dagpenger og lagt til manuelt', () => {
-    const newfields = new MockFieldsWithContent('fieldArrayName', [{ aktivitetStatus: aktivitetStatuser.DAGPENGER, lagtTilAvSaksbehandler: true }]);
+    const newfields = new MockFieldsWithContent('fieldArrayName', [
+      { aktivitetStatus: aktivitetStatuser.DAGPENGER, lagtTilAvSaksbehandler: true },
+    ]);
     leggTilDagpengerOmBesteberegning(newfields, false, [aktivitetStatuser.DAGPENGER], undefined);
     expect(newfields.length).to.equal(0);
   });
 
   it('skal ikkje fjerne dagpengeandel om dagpenger og ikkje lagt til manuelt', () => {
-    const newfields = new MockFieldsWithContent('fieldArrayName', [{ aktivitetStatus: aktivitetStatuser.DAGPENGER, lagtTilAvSaksbehandler: false }]);
+    const newfields = new MockFieldsWithContent('fieldArrayName', [
+      { aktivitetStatus: aktivitetStatuser.DAGPENGER, lagtTilAvSaksbehandler: false },
+    ]);
     leggTilDagpengerOmBesteberegning(newfields, false, [aktivitetStatuser.DAGPENGER], undefined);
     expect(newfields.length).to.equal(1);
   });
@@ -261,22 +281,29 @@ describe('<InntektFieldArray>', () => {
     const newbg = {
       beregningsgrunnlagPeriode: [
         {
-          andelerLagtTilManueltIForrige: [
-            dagpengeAndel,
-          ],
+          andelerLagtTilManueltIForrige: [dagpengeAndel],
         },
       ],
       faktaOmBeregning,
     };
     const values = { [besteberegningField]: true };
-    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, newbg, formNameVurderFaktaBeregning, values);
+    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
+      aksjonspunkter,
+      newbg,
+      formNameVurderFaktaBeregning,
+      values,
+    );
     const newprops = mapStateToProps(newstate, { ...ownProps, beregningsgrunnlag: newbg });
     const newfields = [];
-    leggTilDagpengerOmBesteberegning(newfields, newprops.skalHaBesteberegning, newprops.aktivitetStatuser, newprops.dagpengeAndelLagtTilIForrige);
+    leggTilDagpengerOmBesteberegning(
+      newfields,
+      newprops.skalHaBesteberegning,
+      newprops.aktivitetStatuser,
+      newprops.dagpengeAndelLagtTilIForrige,
+    );
     expect(newfields.length).to.equal(1);
     expect(newfields[0].fastsattBelop).to.equal('10 000');
   });
-
 
   it('skal validere eksisterende andeler uten errors', () => {
     const skalRedigereInntekt = () => true;

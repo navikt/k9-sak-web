@@ -8,57 +8,69 @@ import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Table, TableRow } from '@fpsak-frontend/shared-components';
-import { buildInitialValues, getSortedManglendeVedlegg, SokersOpplysningspliktFormImpl } from './SokersOpplysningspliktForm';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vilkar-sokers-opplysningsplikt';
+import {
+  buildInitialValues,
+  getSortedManglendeVedlegg,
+  SokersOpplysningspliktFormImpl,
+} from './SokersOpplysningspliktForm';
+import shallowWithIntl from '../../i18n';
 
 describe('<SokersOpplysningspliktForm>', () => {
   const getKodeverknavn = () => undefined;
 
   it('skal vise tabell med manglende vedlegg', () => {
-    const manglendeVedlegg = [{
-      dokumentType: {
+    const manglendeVedlegg = [
+      {
+        dokumentType: {
+          kode: dokumentTypeId.INNTEKTSMELDING,
+          navn: 'Inntektsmelding',
+        },
+        arbeidsgiver: {
+          navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
+          organisasjonsnummer: '973861778',
+        },
+        brukerHarSagtAtIkkeKommer: false,
+      },
+      {
+        dokumentType: {
+          kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
+          navn: 'terminbekreftelse',
+        },
+        arbeidsgiver: null,
+        brukerHarSagtAtIkkeKommer: null,
+      },
+    ];
+    const dokumentTypeIds = [
+      {
         kode: dokumentTypeId.INNTEKTSMELDING,
         navn: 'Inntektsmelding',
       },
-      arbeidsgiver: {
-        navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
-        organisasjonsnummer: '973861778',
-      },
-      brukerHarSagtAtIkkeKommer: false,
-    }, {
-      dokumentType: {
+      {
         kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
         navn: 'terminbekreftelse',
       },
-      arbeidsgiver: null,
-      brukerHarSagtAtIkkeKommer: null,
-    }];
-    const dokumentTypeIds = [{
-      kode: dokumentTypeId.INNTEKTSMELDING,
-      navn: 'Inntektsmelding',
-    }, {
-      kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
-      navn: 'terminbekreftelse',
-    }];
+    ];
 
-    const wrapper = shallowWithIntl(<SokersOpplysningspliktFormImpl
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      behandlingsresultat={{}}
-      hasSoknad
-      erVilkarOk={undefined}
-      hasAksjonspunkt
-      manglendeVedlegg={manglendeVedlegg}
-      dokumentTypeIds={dokumentTypeIds}
-      inntektsmeldingerSomIkkeKommer={undefined}
-      reduxFormChange={() => undefined}
-      behandlingFormPrefix="form"
-      getKodeverknavn={getKodeverknavn}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    const wrapper = shallowWithIntl(
+      <SokersOpplysningspliktFormImpl
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        behandlingsresultat={{}}
+        hasSoknad
+        erVilkarOk={undefined}
+        hasAksjonspunkt
+        manglendeVedlegg={manglendeVedlegg}
+        dokumentTypeIds={dokumentTypeIds}
+        inntektsmeldingerSomIkkeKommer={undefined}
+        reduxFormChange={() => undefined}
+        behandlingFormPrefix="form"
+        getKodeverknavn={getKodeverknavn}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+    );
 
     const table = wrapper.find(Table);
     expect(table).to.have.length(1);
@@ -80,48 +92,53 @@ describe('<SokersOpplysningspliktForm>', () => {
     const manglendeVedlegg = [];
     const dokumentTypeIds = [];
 
-    const wrapper = shallowWithIntl(<SokersOpplysningspliktFormImpl
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      behandlingsresultat={{}}
-      hasSoknad
-      erVilkarOk={undefined}
-      hasAksjonspunkt
-      manglendeVedlegg={manglendeVedlegg}
-      dokumentTypeIds={dokumentTypeIds}
-      inntektsmeldingerSomIkkeKommer={undefined}
-      reduxFormChange={() => undefined}
-      behandlingFormPrefix="form"
-      getKodeverknavn={getKodeverknavn}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    const wrapper = shallowWithIntl(
+      <SokersOpplysningspliktFormImpl
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        behandlingsresultat={{}}
+        hasSoknad
+        erVilkarOk={undefined}
+        hasAksjonspunkt
+        manglendeVedlegg={manglendeVedlegg}
+        dokumentTypeIds={dokumentTypeIds}
+        inntektsmeldingerSomIkkeKommer={undefined}
+        reduxFormChange={() => undefined}
+        behandlingFormPrefix="form"
+        getKodeverknavn={getKodeverknavn}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+    );
 
     expect(wrapper.find(Table)).to.have.length(0);
   });
 
   describe('selectors', () => {
     it('skal sortere manglende vedlegg', () => {
-      const manglendeVedlegg = [{
-        dokumentType: {
-          kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
-          navn: 'terminbekreftelse',
+      const manglendeVedlegg = [
+        {
+          dokumentType: {
+            kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
+            navn: 'terminbekreftelse',
+          },
+          arbeidsgiver: null,
+          brukerHarSagtAtIkkeKommer: null,
         },
-        arbeidsgiver: null,
-        brukerHarSagtAtIkkeKommer: null,
-      }, {
-        dokumentType: {
-          kode: dokumentTypeId.INNTEKTSMELDING,
-          navn: 'Inntektsmelding',
+        {
+          dokumentType: {
+            kode: dokumentTypeId.INNTEKTSMELDING,
+            navn: 'Inntektsmelding',
+          },
+          arbeidsgiver: {
+            navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
+            organisasjonsnummer: '973861778',
+          },
+          brukerHarSagtAtIkkeKommer: false,
         },
-        arbeidsgiver: {
-          navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
-          organisasjonsnummer: '973861778',
-        },
-        brukerHarSagtAtIkkeKommer: false,
-      }];
+      ];
 
       const smv = getSortedManglendeVedlegg.resultFunc({
         manglendeVedlegg,
@@ -131,20 +148,27 @@ describe('<SokersOpplysningspliktForm>', () => {
     });
 
     it('skal sette opp formens initielle verdier', () => {
-      const manglendeVedlegg = [{
-        dokumentType: {
-          kode: dokumentTypeId.INNTEKTSMELDING,
-          navn: 'Inntektsmelding',
+      const manglendeVedlegg = [
+        {
+          dokumentType: {
+            kode: dokumentTypeId.INNTEKTSMELDING,
+            navn: 'Inntektsmelding',
+          },
+          arbeidsgiver: {
+            navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
+            organisasjonsnummer: '973861778',
+          },
+          brukerHarSagtAtIkkeKommer: false,
         },
-        arbeidsgiver: {
-          navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
-          organisasjonsnummer: '973861778',
-        },
-        brukerHarSagtAtIkkeKommer: false,
-      }];
+      ];
       const aksjonspunkter = [];
 
-      const intitialValues = buildInitialValues.resultFunc(manglendeVedlegg, true, vilkarUtfallType.OPPFYLT, aksjonspunkter);
+      const intitialValues = buildInitialValues.resultFunc(
+        manglendeVedlegg,
+        true,
+        vilkarUtfallType.OPPFYLT,
+        aksjonspunkter,
+      );
 
       expect(intitialValues).to.eql({
         aksjonspunktKode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,

@@ -14,7 +14,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-visittkort';
+import shallowWithIntl from '../../i18n';
 import VisittkortPanel from './VisittkortPanel';
 
 describe('<VisittkortPanel>', () => {

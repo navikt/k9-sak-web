@@ -7,7 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { TilkjentYtelsePanelImpl } from './TilkjentYtelsePanel';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-tilkjent-ytelse';
+import shallowWithIntl from '../../i18n';
 
 const tilbaketrekkAP = {
   definisjon: {

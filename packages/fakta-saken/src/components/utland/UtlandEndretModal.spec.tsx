@@ -5,7 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-saken';
+import shallowWithIntl from '../../../i18n';
 import UtlandEndretModal from './UtlandEndretModal';
 
 describe('<UtlandEndretModal>', () => {

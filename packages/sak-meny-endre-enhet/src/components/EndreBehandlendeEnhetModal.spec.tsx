@@ -7,7 +7,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { EndreBehandlendeEnhetModal } from './EndreBehandlendeEnhetModal';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../../i18n';
 
 describe('<ChangeBehandlendeEnhetModal>', () => {
   const behandlendeEnheter = [

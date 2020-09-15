@@ -13,7 +13,7 @@ import {
   buildInitialValues,
   ErSoknadsfristVilkaretOppfyltFormImpl as UnwrappedForm,
 } from './ErSoknadsfristVilkaretOppfyltForm';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vilkar-soknadsfrist';
+import shallowWithIntl from '../../i18n';
 
 describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
   const behandlingspunkt = {
