@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { shallowWithIntl } from '../../i18n/shallowWithIntl';
+import { shallowWithIntl } from '../../i18n';
 import { RammevedtakFaktaFormImpl } from './RammevedtakFaktaForm';
 import FormValues from '../types/FormValues';
 import Seksjon from './Seksjon';

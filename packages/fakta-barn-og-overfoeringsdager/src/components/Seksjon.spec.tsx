@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
-import { shallowWithIntl } from '../../i18n/shallowWithIntl';
+import { shallowWithIntl } from '../../i18n';
 import Seksjon from './Seksjon';
 
 it('rendrer tittel og children', () => {

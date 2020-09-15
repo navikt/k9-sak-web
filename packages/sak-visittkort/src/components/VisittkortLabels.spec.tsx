@@ -11,7 +11,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Tooltip } from '@fpsak-frontend/shared-components';
 
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-visittkort';
+import shallowWithIntl from '../../i18n';
 import VisittkortLabels from './VisittkortLabels';
 
 describe('<VisittkortLabels>', () => {

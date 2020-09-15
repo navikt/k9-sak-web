@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-klagevurdering';
+import shallowWithIntl from '../../../i18n';
 
 describe('<KlageVurderingRadioOptionsNfp>', () => {
   const sprakkode = {
@@ -21,17 +21,19 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   ];
 
   it('skal vise to options når klage opprettholdt', () => {
-    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsNfp
-      readOnly={false}
-      readOnlySubmitButton
-      medholdReasons={medholdReasons}
-      aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-      klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
-      previewCallback={sinon.spy()}
-      intl={intlMock}
-      formProps={{}}
-      sprakkode={sprakkode}
-    />);
+    const wrapper = shallowWithIntl(
+      <KlageVurderingRadioOptionsNfp
+        readOnly={false}
+        readOnlySubmitButton
+        medholdReasons={medholdReasons}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
+    );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(2);
     expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');
@@ -39,17 +41,19 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   });
 
   it('skal vise fem options når klage medhold', () => {
-    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsNfp
-      readOnly={false}
-      readOnlySubmitButton
-      aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-      klageVurdering={klageVurdering.MEDHOLD_I_KLAGE}
-      medholdReasons={medholdReasons}
-      previewCallback={sinon.spy()}
-      intl={intlMock}
-      formProps={{}}
-      sprakkode={sprakkode}
-    />);
+    const wrapper = shallowWithIntl(
+      <KlageVurderingRadioOptionsNfp
+        readOnly={false}
+        readOnlySubmitButton
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        klageVurdering={klageVurdering.MEDHOLD_I_KLAGE}
+        medholdReasons={medholdReasons}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
+    );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(5);
     expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import React from 'react';
 import sinon from 'sinon';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../i18n';
 import AvslagsårsakListe from './AvslagsårsakListe';
 
 describe('<AvslagårsakListe>', () => {

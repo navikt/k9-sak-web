@@ -7,7 +7,7 @@ import { Element } from 'nav-frontend-typografi';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { buildInitialValues, GraderingUtenBG2 as UnwrappedForm } from './GraderingUtenBG';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
+import shallowWithIntl from '../../../i18n';
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, status) => ({
   definisjon: {

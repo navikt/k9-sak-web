@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { RadioOption } from '@fpsak-frontend/form/index';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
+import { shallowWithIntl } from '../../i18n';
 import Spørsmål from './Spørsmål';
 
 it('rendres ikke hvis vis er falsy', () => {

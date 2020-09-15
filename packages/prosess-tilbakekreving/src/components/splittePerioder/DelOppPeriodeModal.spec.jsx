@@ -10,7 +10,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { DelOppPeriodeModalImpl, mapStateToPropsFactory } from './DelOppPeriodeModal';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-tilbakekreving';
+import shallowWithIntl from '../../../i18n';
 
 describe('<DelOppPeriodeModal>', () => {
   const periodeData = {
@@ -20,13 +20,15 @@ describe('<DelOppPeriodeModal>', () => {
   const cancelEvent = sinon.spy();
 
   it('skal rendre modal for del opp periode', () => {
-    const wrapper = shallowWithIntl(<DelOppPeriodeModalImpl
-      {...reduxFormPropsMock}
-      periodeData={periodeData}
-      showModal
-      intl={intlMock}
-      cancelEvent={cancelEvent}
-    />);
+    const wrapper = shallowWithIntl(
+      <DelOppPeriodeModalImpl
+        {...reduxFormPropsMock}
+        periodeData={periodeData}
+        showModal
+        intl={intlMock}
+        cancelEvent={cancelEvent}
+      />,
+    );
 
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
@@ -42,13 +44,15 @@ describe('<DelOppPeriodeModal>', () => {
   });
 
   it('skal lukke modal ved klikk på avbryt-knapp', () => {
-    const wrapper = shallowWithIntl(<DelOppPeriodeModalImpl
-      {...reduxFormPropsMock}
-      periodeData={periodeData}
-      showModal
-      intl={intlMock}
-      cancelEvent={cancelEvent}
-    />);
+    const wrapper = shallowWithIntl(
+      <DelOppPeriodeModalImpl
+        {...reduxFormPropsMock}
+        periodeData={periodeData}
+        showModal
+        intl={intlMock}
+        cancelEvent={cancelEvent}
+      />,
+    );
     wrapper.find(Knapp).simulate('click');
     expect(cancelEvent).to.have.property('callCount', 1);
   });
@@ -118,7 +122,7 @@ describe('<DelOppPeriodeModal>', () => {
         fom: '2019-10-10',
         tom: '2019-11-10',
       },
-      splitPeriod: (value) => value,
+      splitPeriod: value => value,
     };
 
     const validateAndOnSubmit = mapStateToPropsFactory(initialState, ownProps)();

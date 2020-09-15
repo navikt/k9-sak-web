@@ -8,10 +8,9 @@ import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-tilkjent-ytelse';
+import shallowWithIntl from '../../../i18n';
 
-
-const lagAksjonspunktTilbaketrekk = (begrunnelse) => ({
+const lagAksjonspunktTilbaketrekk = begrunnelse => ({
   definisjon: {
     kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
   },
@@ -23,16 +22,18 @@ const lagAksjonspunktTilbaketrekk = (begrunnelse) => ({
 
 describe('<Tilbaketrekkpanel>', () => {
   it('skal teste at komponent vises korrekt', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      intl={intlMock}
-      readOnly={false}
-      submitCallback={sinon.spy()}
-      readOnlySubmitButton={false}
-      vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk(undefined)}
-      behandlingId={1}
-      behandlingVersjon={1}
-      {...reduxFormPropsMock}
-    />);
+    const wrapper = shallowWithIntl(
+      <UnwrappedForm
+        intl={intlMock}
+        readOnly={false}
+        submitCallback={sinon.spy()}
+        readOnlySubmitButton={false}
+        vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk(undefined)}
+        behandlingId={1}
+        behandlingVersjon={1}
+        {...reduxFormPropsMock}
+      />,
+    );
 
     const radioOption = wrapper.find(RadioOption);
     expect(radioOption).to.have.length(2);

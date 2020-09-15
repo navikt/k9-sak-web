@@ -2,13 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import {
-  DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow,
-} from '@fpsak-frontend/shared-components';
+import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import PersonArbeidsforholdTable, { utledNøkkel } from './PersonArbeidsforholdTable';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
-import { mountWithIntl } from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
-
+import { mountWithIntl } from '../../../i18n';
 
 describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
@@ -31,13 +28,16 @@ describe('<PersonArbeidsforholdTable>', () => {
     lagtTilAvSaksbehandler: false,
   };
 
-  const fagsystemer = [{
-    kode: 'AA',
-    navn: 'aa',
-  }, {
-    kode: 'INNTEKT',
-    navn: 'inntekt',
-  }];
+  const fagsystemer = [
+    {
+      kode: 'AA',
+      navn: 'aa',
+    },
+    {
+      kode: 'INNTEKT',
+      navn: 'inntekt',
+    },
+  ];
 
   it('skal vise tabell med to arbeidsforhold der den ene raden er markert som valgt', () => {
     const arbeidsforhold2 = {
@@ -59,12 +59,14 @@ describe('<PersonArbeidsforholdTable>', () => {
       lagtTilAvSaksbehandler: false,
     };
 
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[arbeidsforhold, arbeidsforhold2]}
-      selectedId={arbeidsforhold.id}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[arbeidsforhold, arbeidsforhold2]}
+        selectedId={arbeidsforhold.id}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
 
     const table = wrapper.find(Table);
     expect(table).has.length(1);
@@ -86,12 +88,14 @@ describe('<PersonArbeidsforholdTable>', () => {
   });
 
   it('skal ikke vise mottatt dato for inntektsmelding når denne ikke finnes', () => {
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[arbeidsforhold]}
-      selectedId={arbeidsforhold.id}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[arbeidsforhold]}
+        selectedId={arbeidsforhold.id}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
 
     const cols = wrapper.find(TableColumn);
 
@@ -105,12 +109,14 @@ describe('<PersonArbeidsforholdTable>', () => {
       mottattDatoInntektsmelding: '2018-05-05',
     };
 
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[newArbeidsforhold]}
-      selectedId={newArbeidsforhold.id}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[newArbeidsforhold]}
+        selectedId={newArbeidsforhold.id}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
 
     const cols = wrapper.find(TableColumn);
     expect(cols).has.length(12);
@@ -118,12 +124,14 @@ describe('<PersonArbeidsforholdTable>', () => {
   });
 
   it('skal ikke vise ikon for at arbeidsforholdet er i bruk', () => {
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[arbeidsforhold]}
-      selectedId={arbeidsforhold.id}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[arbeidsforhold]}
+        selectedId={arbeidsforhold.id}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
 
     const cols = wrapper.find(TableColumn);
     expect(cols).has.length(12);
@@ -136,12 +144,14 @@ describe('<PersonArbeidsforholdTable>', () => {
       brukArbeidsforholdet: true,
     };
 
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[newArbeidsforhold]}
-      selectedId={newArbeidsforhold.id}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[newArbeidsforhold]}
+        selectedId={newArbeidsforhold.id}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
 
     const cols = wrapper.find(TableColumn);
     expect(cols).has.length(12);
@@ -149,12 +159,14 @@ describe('<PersonArbeidsforholdTable>', () => {
   });
 
   it('skal vise IngenArbeidsforholdRegistrert komponent når ingen arbeidsforhold', () => {
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[]}
-      selectedId={undefined}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[]}
+        selectedId={undefined}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
     const element = wrapper.find(IngenArbeidsforholdRegistrert);
     expect(element).has.length(1);
   });
@@ -164,12 +176,14 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       stillingsprosent: 0,
     };
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[endretArbeidsforhold]}
-      selectedId={undefined}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[endretArbeidsforhold]}
+        selectedId={undefined}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
     const tableRow = wrapper.find(TableRow).at(1);
     expect(tableRow.props().model.stillingsprosent).to.eql(0);
   });
@@ -179,12 +193,14 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       lagtTilAvSaksbehandler: true,
     };
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[endretArbeidsforhold]}
-      selectedId={undefined}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[endretArbeidsforhold]}
+        selectedId={undefined}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
     const tableRow = wrapper.find(TableRow).at(1);
     expect(tableRow.props().model.navn).to.eql('Svendsen Eksos');
   });
@@ -193,12 +209,14 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       overstyrtTom: '2025-01-01',
     };
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[endretArbeidsforhold]}
-      selectedId={undefined}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[endretArbeidsforhold]}
+        selectedId={undefined}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
     const periodeLabel = wrapper.find(PeriodLabel);
     expect(periodeLabel.props().dateStringTom).to.eql('2025-01-01');
   });
@@ -206,12 +224,14 @@ describe('<PersonArbeidsforholdTable>', () => {
     const endretArbeidsforhold = {
       ...arbeidsforhold,
     };
-    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
-      alleArbeidsforhold={[endretArbeidsforhold]}
-      selectedId={undefined}
-      selectArbeidsforholdCallback={sinon.spy()}
-      fagsystemer={fagsystemer}
-    />);
+    const wrapper = mountWithIntl(
+      <PersonArbeidsforholdTable
+        alleArbeidsforhold={[endretArbeidsforhold]}
+        selectedId={undefined}
+        selectArbeidsforholdCallback={sinon.spy()}
+        fagsystemer={fagsystemer}
+      />,
+    );
     const periodeLabel = wrapper.find(PeriodLabel);
     expect(periodeLabel.props().dateStringTom).to.eql('2018-10-10');
   });

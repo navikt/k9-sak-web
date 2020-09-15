@@ -7,7 +7,7 @@ import Modal from 'nav-frontend-modal';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { FatterVedtakApprovalModal } from './FatterVedtakApprovalModal';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
+import shallowWithIntl from '../../../i18n';
 
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = sinon.spy();

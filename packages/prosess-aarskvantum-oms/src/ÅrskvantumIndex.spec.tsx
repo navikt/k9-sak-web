@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { Behandling, InntektArbeidYtelse } from '@k9-sak-web/types';
-import { shallowWithIntl } from '../i18n/intl-enzyme-test-helper-uttaksplan';
+import { shallowWithIntl } from '../i18n';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
 import AksjonspunktForm from './components/AksjonspunktForm';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';

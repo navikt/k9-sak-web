@@ -10,7 +10,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
-import shallowWithIntl from '@fpsak-frontend/prosess-vedtak/i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '@fpsak-frontend/prosess-vedtak/i18n';
 import { BeregningFormImpl, transformValues } from './BeregningForm';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel2 from '../fellesPaneler/SkjeringspunktOgStatusPanel';

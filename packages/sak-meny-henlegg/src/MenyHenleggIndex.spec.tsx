@@ -7,7 +7,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import HenleggBehandlingModal from './components/HenleggBehandlingModal';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
-import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../i18n';
 import MenyHenleggIndex from './MenyHenleggIndex';
 
 describe('<MenyHenleggIndex>', () => {

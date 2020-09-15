@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import TilstotendeYtelser2, { getTekstForAndelBruktIBeregning } from './TilstotendeYtelser';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
+import shallowWithIntl from '../../../i18n';
 
 const dagpengerInntekt = 200000;
 const aapInntekt = 300000;
@@ -39,11 +39,13 @@ const relevanteStatuser = (erSN, erKombo) => ({
 const andeler = [dpAndel, aapAndel, urelatertAndel];
 describe('<TilstotendeYtelser>', () => {
   it('Skal teste at de korrekte ytelser for dagpenger / AAP vises og at urelaterte andeler ikke vises', () => {
-    const wrapper = shallowWithIntl(<TilstotendeYtelser2
-      alleAndeler={andeler}
-      relevanteStatuser={relevanteStatuser(false, false)}
-      gjelderBesteberegning={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <TilstotendeYtelser2
+        alleAndeler={andeler}
+        relevanteStatuser={relevanteStatuser(false, false)}
+        gjelderBesteberegning={false}
+      />,
+    );
     const formattedMessage = wrapper.find('FormattedMessage');
     expect(formattedMessage).to.have.length(4);
     expect(formattedMessage.at(0).prop('id')).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned');

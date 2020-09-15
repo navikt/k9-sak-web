@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { Arbeidsforhold } from '@k9-sak-web/types';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
+import { shallowWithIntl } from '../../i18n';
 import Uttaksplan from './Uttaksplan';
 import Aktivitet from '../dto/Aktivitet';
 import { UtfallEnum } from '../dto/Utfall';

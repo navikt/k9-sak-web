@@ -2,14 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import YtelserFraInfotrygd from './YtelserFraInfotrygd';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
+import shallowWithIntl from '../../../i18n';
 
 describe('<YtelserFraInfotrygd>', () => {
   it('Skal teste at de korrekte verdier for ytelse', () => {
     const brutto = 290000;
-    const wrapper = shallowWithIntl(<YtelserFraInfotrygd
-      bruttoPrAar={brutto}
-    />);
+    const wrapper = shallowWithIntl(<YtelserFraInfotrygd bruttoPrAar={brutto} />);
 
     const formattedMessage = wrapper.find('FormattedMessage');
 
