@@ -17,10 +17,11 @@ import { Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-comp
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { arbeidsforholdBeregningProptype, kodeverkPropType } from '@fpsak-frontend/prop-types';
+import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
+import { arbeidsforholdPropType } from '../../propTypes/arbeidsforholdPropType';
 
 import 'core-js/features/array/flat-map';
 
@@ -441,7 +442,7 @@ RenderFordelBGFieldArrayImpl.propTypes = {
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,
-  arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdBeregningProptype).isRequired,
+  arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   periodeUtenAarsak: PropTypes.bool.isRequired,
