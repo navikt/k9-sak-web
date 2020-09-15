@@ -2,7 +2,7 @@ import * as React from 'react';
 import { expect } from 'chai';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { FormattedMessage } from 'react-intl';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-barn-oms';
+import { shallowWithIntl } from '../../i18n/shallowWithIntl';
 import BarnInfo from './BarnInfo';
 
 describe('<BarnInfo>', () => {

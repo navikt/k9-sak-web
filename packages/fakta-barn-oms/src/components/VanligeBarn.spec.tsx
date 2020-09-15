@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-barn-oms';
+import { shallowWithIntl } from '../../i18n/shallowWithIntl';
 import BarnInfo from './BarnInfo';
 import VanligeBarn from './VanligeBarn';
 

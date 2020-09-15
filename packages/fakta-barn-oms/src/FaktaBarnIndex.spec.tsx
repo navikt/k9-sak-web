@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { expect } from 'chai';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import { shallowWithIntl } from '../i18n/intl-enzyme-test-helper-fakta-barn-oms';
+import { shallowWithIntl } from '../i18n/shallowWithIntl';
 import FaktaBarnIndex from './FaktaBarnIndex';
 import VanligeBarn from './components/VanligeBarn';
 import BarnFraRammevedtak from './components/BarnFraRammevedtak';
