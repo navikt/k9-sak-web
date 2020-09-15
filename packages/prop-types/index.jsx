@@ -1,10 +1,6 @@
 export { default as aksjonspunktPropType } from './src/aksjonspunktPropType';
 export { default as behandlingIListePropType } from './src/behandlingIListePropType';
-export {
-  arbeidsforholdPropType,
-  arbeidsgiverUttakPropType,
-  arbeidsforholdBeregningProptype,
-} from './src/arbeidsforholdPropType';
+export { arbeidsgiverUttakPropType } from './src/arbeidsforholdPropType';
 export {
   uttakPropType,
   beregningsresultatPeriodeAndelPropType,
@@ -16,10 +12,7 @@ export { kodeverkPropType, kodeverkObjektPropType } from './src/kodeverkPropType
 export { default as navAnsattPropType } from './src/navAnsattPropType';
 export { default as personopplysningPropType } from './src/personopplysningPropType';
 export { default as rettighetPropType } from './src/rettighetPropType';
-export {
-  stonadskontoPropType,
-  stonadskontoerPropType,
-} from './src/stonadskontoPropType';
+export { stonadskontoPropType, stonadskontoerPropType } from './src/stonadskontoPropType';
 export {
   uttaksresultatAktivitetPropType,
   uttaksresultatPeriodePropType,
