@@ -99,9 +99,10 @@ const TilkjentYtelseTimeLineData = ({
             />
             <br />
             {(andeler || []).length > 1 &&
-              andeler.map(andel => (
+              andeler.map((andel, index) => (
                 <FormattedMessage
                   id="Timeline.tooltip.dagsatsPerAndel"
+                  key={`index${index + 1}`}
                   values={{
                     arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn),
                     dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
