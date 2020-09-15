@@ -4,7 +4,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 
 import { TidsbegrensetArbeidsforholdFormImpl } from './TidsbegrensetArbeidsforholdForm';
-import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-fakta-beregning';
+import shallowWithIntl from '../../../../i18n';
 
 const andeler = [
   {

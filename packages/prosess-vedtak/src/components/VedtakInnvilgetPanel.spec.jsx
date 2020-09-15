@@ -5,7 +5,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../i18n';
 
 const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
@@ -37,48 +37,18 @@ describe('<VedtakInnvilgetPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(3);
-    expect(
-      undertekstFields
-        .first()
-        .childAt(0)
-        .text(),
-    ).to.eql('Resultat');
-    expect(
-      undertekstFields
-        .at(1)
-        .childAt(0)
-        .text(),
-    ).to.eql('Beregnet engangsstønad');
-    expect(
-      undertekstFields
-        .last()
-        .childAt(0)
-        .text(),
-    ).to.eql('Antall barn');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.at(1).childAt(0).text()).to.eql('Beregnet engangsstønad');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('Antall barn');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(1);
-    expect(
-      normaltekstFields
-        .first()
-        .childAt(0)
-        .text(),
-    ).to.eql('Engangsstønad er innvilget');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er innvilget');
 
     const elementFields = wrapper.find('Element');
     expect(elementFields).to.have.length(2);
-    expect(
-      elementFields
-        .first()
-        .childAt(0)
-        .text(),
-    ).to.eql('100 kr');
-    expect(
-      elementFields
-        .last()
-        .childAt(0)
-        .text(),
-    ).to.eql('1');
+    expect(elementFields.first().childAt(0).text()).to.eql('100 kr');
+    expect(elementFields.last().childAt(0).text()).to.eql('1');
   });
 
   it('skal rendre innvilget panel for foreldrepenger', () => {
@@ -102,21 +72,11 @@ describe('<VedtakInnvilgetPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(1);
-    expect(
-      undertekstFields
-        .first()
-        .childAt(0)
-        .text(),
-    ).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(1);
-    expect(
-      normaltekstFields
-        .first()
-        .childAt(0)
-        .text(),
-    ).to.eql('Pleiepenger er innvilget');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Pleiepenger er innvilget');
 
     const elementFields = wrapper.find('Element');
     expect(elementFields).to.have.length(0);

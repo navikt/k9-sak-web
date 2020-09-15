@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 
 import Table from '@fpsak-frontend/shared-components/src/table/Table';
-import mountWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorgen-for';
+import mountWithIntl from '../../i18n';
 import SokerinfoTable from './SokerinfoTable';
 
 describe('<SokerinfoTable>', () => {

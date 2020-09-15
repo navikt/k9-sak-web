@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import HistorikkDokumentLenke from './HistorikkDokumentLenke';
-import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-sak-historikk';
+import shallowWithIntl from '../../../../i18n';
 
 const saksNr = '123';
 const dokumentLenke = {
@@ -17,11 +17,6 @@ describe('HistorikkDokumentLenke', () => {
       <HistorikkDokumentLenke.WrappedComponent dokumentLenke={dokumentLenke} saksNr={saksNr} />,
     );
 
-    expect(
-      wrapper
-        .find('FormattedMessage')
-        .at(0)
-        .prop('id'),
-    ).to.eql('Historikk.Utgått');
+    expect(wrapper.find('FormattedMessage').at(0).prop('id')).to.eql('Historikk.Utgått');
   });
 });

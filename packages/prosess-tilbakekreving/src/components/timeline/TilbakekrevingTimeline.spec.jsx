@@ -8,24 +8,26 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-tilbakekreving';
-
+import shallowWithIntl from '../../../i18n';
 
 describe('<TilbakekrevingTimeline>', () => {
   it('skal rendre tidslinje korrekt', () => {
-    const perioder = [{
-      id: 1,
-      fom: '2019-10-10',
-      tom: '2019-11-10',
-      isAksjonspunktOpen: true,
-      isGodkjent: true,
-    }, {
-      id: 2,
-      fom: '2019-11-11',
-      tom: '2019-12-10',
-      isAksjonspunktOpen: false,
-      isGodkjent: true,
-    }];
+    const perioder = [
+      {
+        id: 1,
+        fom: '2019-10-10',
+        tom: '2019-11-10',
+        isAksjonspunktOpen: true,
+        isGodkjent: true,
+      },
+      {
+        id: 2,
+        fom: '2019-11-11',
+        tom: '2019-12-10',
+        isAksjonspunktOpen: false,
+        isGodkjent: true,
+      },
+    ];
     const valgtPeriode = {
       id: 1,
       fom: '2019-10-10',

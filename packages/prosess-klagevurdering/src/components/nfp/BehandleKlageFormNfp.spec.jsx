@@ -8,7 +8,7 @@ import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BehandleKlageFormNfpImpl } from './BehandleKlageFormNfp';
 import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-klagevurdering';
+import shallowWithIntl from '../../../i18n';
 
 describe('<BehandleKlageFormNfpImpl>', () => {
   const sprakkode = {

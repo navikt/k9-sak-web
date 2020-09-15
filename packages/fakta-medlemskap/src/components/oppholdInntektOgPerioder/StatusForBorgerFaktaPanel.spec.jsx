@@ -3,18 +3,20 @@ import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
+import shallowWithIntl from '../../../i18n';
 
 describe('<StatusForBorgerFaktaPanel>', () => {
   it('skal vise radioknapper for vurdering av oppholdsrett', () => {
-    const wrapper = shallowWithIntl(<StatusForBorgerFaktaPanel.WrappedComponent
-      apKode={aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}
-      intl={intlMock}
-      erEosBorger
-      readOnly={false}
-      isBorgerAksjonspunktClosed={false}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <StatusForBorgerFaktaPanel.WrappedComponent
+        apKode={aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}
+        intl={intlMock}
+        erEosBorger
+        readOnly={false}
+        isBorgerAksjonspunktClosed={false}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     const groups = wrapper.find('RadioGroupField');
     expect(groups).to.have.length(2);
 
@@ -29,14 +31,16 @@ describe('<StatusForBorgerFaktaPanel>', () => {
   });
 
   it('skal vise radioknapper for vurdering av lovlig opphold', () => {
-    const wrapper = shallowWithIntl(<StatusForBorgerFaktaPanel.WrappedComponent
-      apKode={aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}
-      intl={intlMock}
-      erEosBorger={false}
-      readOnly={false}
-      isBorgerAksjonspunktClosed={false}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <StatusForBorgerFaktaPanel.WrappedComponent
+        apKode={aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}
+        intl={intlMock}
+        erEosBorger={false}
+        readOnly={false}
+        isBorgerAksjonspunktClosed={false}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const groups = wrapper.find('RadioGroupField');
     expect(groups).to.have.length(2);
@@ -53,14 +57,15 @@ describe('<StatusForBorgerFaktaPanel>', () => {
     const periode = {
       aksjonspunkter: [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT],
     };
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+    const aksjonspunkter = [
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        },
+        status: {
+          kode: 'UTFO',
+        },
       },
-      status: {
-        kode: 'UTFO',
-      },
-    },
     ];
     const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
@@ -97,14 +102,16 @@ describe('<StatusForBorgerFaktaPanel>', () => {
     const periode = {
       aksjonspunkter: [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT],
     };
-    const aksjonspunkter = [{
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+    const aksjonspunkter = [
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        },
+        status: {
+          kode: 'UTFO',
+        },
       },
-      status: {
-        kode: 'UTFO',
-      },
-    }];
+    ];
 
     const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 

@@ -14,7 +14,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AndelRowImpl, mapStateToProps } from './InntektFieldArrayRow';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-beregning';
+import shallowWithIntl from '../../../i18n';
 
 const aksjonspunkter = [
   {

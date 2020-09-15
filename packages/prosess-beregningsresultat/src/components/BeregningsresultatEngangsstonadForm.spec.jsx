@@ -5,8 +5,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { BeregningsresultatEngangsstonadFormImpl } from './BeregningsresultatEngangsstonadForm';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-beregningresultat';
-
+import shallowWithIntl from '../../i18n';
 
 describe('<BeregningsresultatEngangsstonadForm>', () => {
   it('skal vise beregningsgrunnlaget', () => {
@@ -16,16 +15,18 @@ describe('<BeregningsresultatEngangsstonadForm>', () => {
       antallBarn: 2,
     };
 
-    const wrapper = shallowWithIntl(<BeregningsresultatEngangsstonadFormImpl
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      beregningResultat={beregningResultat}
-      aksjonspunktCodes={[]}
-      isOverstyrt={false}
-      kanOverstyreAccess={{
-        isEnabled: true,
-      }}
-    />);
+    const wrapper = shallowWithIntl(
+      <BeregningsresultatEngangsstonadFormImpl
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        beregningResultat={beregningResultat}
+        aksjonspunktCodes={[]}
+        isOverstyrt={false}
+        kanOverstyreAccess={{
+          isEnabled: true,
+        }}
+      />,
+    );
 
     const texts = wrapper.find('Normaltekst');
 

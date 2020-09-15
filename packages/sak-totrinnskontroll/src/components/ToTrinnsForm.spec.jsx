@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { ToTrinnsFormImpl } from './ToTrinnsForm';
 import ApprovalField from './ApprovalField';
 import getAksjonspunktText from './ApprovalTextUtils';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
+import shallowWithIntl from '../../i18n';
 
 describe('<ToTrinnsForm>', () => {
   const getTotrinnsaksjonspunkterFoedsel = () => [

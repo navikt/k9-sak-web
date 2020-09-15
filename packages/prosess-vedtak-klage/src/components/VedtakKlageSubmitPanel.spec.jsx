@@ -6,11 +6,10 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { isMedholdIKlage, VedtakKlageSubmitPanelImpl } from './VedtakKlageSubmitPanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-vedtak-klage';
+import shallowWithIntl from '../../i18n';
 
 describe('<VedtakKlageSubmitPanel>', () => {
   const forhandsvisVedtaksbrevFunc = sinon.spy();
-
 
   it('skal returnere false om behandling ikke har medhold i klage', () => {
     const klageVurderingResultatNK = {
@@ -27,15 +26,16 @@ describe('<VedtakKlageSubmitPanel>', () => {
       klageVurdering: 'TEST',
     };
 
-    const wrapper = shallowWithIntl(<VedtakKlageSubmitPanelImpl
-      intl={intlMock}
-      formProps={reduxFormPropsMock}
-      readOnly={false}
-      behandlingPaaVent={false}
-      klageVurderingResultatNK={klageVurderingResultatNK}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-    />);
-
+    const wrapper = shallowWithIntl(
+      <VedtakKlageSubmitPanelImpl
+        intl={intlMock}
+        formProps={reduxFormPropsMock}
+        readOnly={false}
+        behandlingPaaVent={false}
+        klageVurderingResultatNK={klageVurderingResultatNK}
+        previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
@@ -45,20 +45,21 @@ describe('<VedtakKlageSubmitPanel>', () => {
     expect(wrapper.find('FormattedMessage').first().prop('id')).to.eql('VedtakKlageForm.ForhandvisBrev');
   });
 
-
   it('skal rendre submit panel med medhold i klagevurdering', () => {
     const klageVurderingResultatNK = {
       klageVurdering: klageVurdering.MEDHOLD_I_KLAGE,
     };
 
-    const wrapper = shallowWithIntl(<VedtakKlageSubmitPanelImpl
-      intl={intlMock}
-      formProps={reduxFormPropsMock}
-      readOnly={false}
-      behandlingPaaVent={false}
-      klageVurderingResultatNK={klageVurderingResultatNK}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakKlageSubmitPanelImpl
+        intl={intlMock}
+        formProps={reduxFormPropsMock}
+        readOnly={false}
+        behandlingPaaVent={false}
+        klageVurderingResultatNK={klageVurderingResultatNK}
+        previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
@@ -67,15 +68,16 @@ describe('<VedtakKlageSubmitPanel>', () => {
     expect(a).to.have.length(1);
   });
 
-
   it('skal rendre submit panel med behandling på vent', () => {
-    const wrapper = shallowWithIntl(<VedtakKlageSubmitPanelImpl
-      intl={intlMock}
-      formProps={reduxFormPropsMock}
-      readOnly={false}
-      behandlingPaaVent
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-    />);
+    const wrapper = shallowWithIntl(
+      <VedtakKlageSubmitPanelImpl
+        intl={intlMock}
+        formProps={reduxFormPropsMock}
+        readOnly={false}
+        behandlingPaaVent
+        previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      />,
+    );
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);

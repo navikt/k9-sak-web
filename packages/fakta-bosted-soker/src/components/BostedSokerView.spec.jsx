@@ -8,7 +8,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import { Normaltekst } from 'nav-frontend-typografi';
 import EtikettBase from 'nav-frontend-etiketter';
 import { BostedSokerView } from './BostedSokerView';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-bosted-soker';
+import shallowWithIntl from '../../i18n';
 
 describe('<BostedsokerView>', () => {
   const soker = {
@@ -48,55 +48,68 @@ describe('<BostedsokerView>', () => {
       kode: 'NORDEN',
       navn: 'Norden',
     },
-    adresser: [{
-      adresselinje1: 'Vei 1',
-      postNummer: '1000',
-      poststed: 'Oslo',
-      adresseType: {
-        kode: opplysningAdresseType.POSTADRESSE,
-        navn: 'Bostedsadresse',
+    adresser: [
+      {
+        adresselinje1: 'Vei 1',
+        postNummer: '1000',
+        poststed: 'Oslo',
+        adresseType: {
+          kode: opplysningAdresseType.POSTADRESSE,
+          navn: 'Bostedsadresse',
+        },
       },
-    }],
+    ],
   };
 
-  const regionTypes = [{
-    kode: 'NORDEN',
-    navn: 'Norden',
-  }];
-  const sivilstandTypes = [{
-    kode: sivilstandType.UGIFT,
-    navn: 'Ugift',
-  }];
-  const personstatusTypes = [{
-    kode: personstatusType.BOSATT,
-    navn: 'Bosatt',
-  }, {
-    kode: personstatusType.DOD,
-    navn: 'Bosatt',
-  }];
+  const regionTypes = [
+    {
+      kode: 'NORDEN',
+      navn: 'Norden',
+    },
+  ];
+  const sivilstandTypes = [
+    {
+      kode: sivilstandType.UGIFT,
+      navn: 'Ugift',
+    },
+  ];
+  const personstatusTypes = [
+    {
+      kode: personstatusType.BOSATT,
+      navn: 'Bosatt',
+    },
+    {
+      kode: personstatusType.DOD,
+      navn: 'Bosatt',
+    },
+  ];
 
   it('vise navn', () => {
-    const wrapper = shallowWithIntl(<BostedSokerView
-      intl={intlMock}
-      personopplysninger={soker}
-      regionTypes={regionTypes}
-      sivilstandTypes={sivilstandTypes}
-      personstatusTypes={personstatusTypes}
-      sokerTypeTextId="BostedSokerFaktaIndex.Soker"
-    />);
+    const wrapper = shallowWithIntl(
+      <BostedSokerView
+        intl={intlMock}
+        personopplysninger={soker}
+        regionTypes={regionTypes}
+        sivilstandTypes={sivilstandTypes}
+        personstatusTypes={personstatusTypes}
+        sokerTypeTextId="BostedSokerFaktaIndex.Soker"
+      />,
+    );
 
     expect(wrapper.find('Element').childAt(0).text()).to.eql('Espen Utvikler');
   });
 
   it('skal vise  adresse informasjon', () => {
-    const wrapper = shallowWithIntl(<BostedSokerView
-      intl={intlMock}
-      personopplysninger={soker}
-      regionTypes={regionTypes}
-      sivilstandTypes={sivilstandTypes}
-      personstatusTypes={personstatusTypes}
-      sokerTypeTextId="BostedSokerFaktaIndex.Soker"
-    />);
+    const wrapper = shallowWithIntl(
+      <BostedSokerView
+        intl={intlMock}
+        personopplysninger={soker}
+        regionTypes={regionTypes}
+        sivilstandTypes={sivilstandTypes}
+        personstatusTypes={personstatusTypes}
+        sokerTypeTextId="BostedSokerFaktaIndex.Soker"
+      />,
+    );
     const adr = wrapper.find(Normaltekst);
     expect(adr).to.have.length(2);
     expect(adr.first().childAt(0).text()).to.eql('Vei 1, 1000 Oslo');
@@ -104,14 +117,16 @@ describe('<BostedsokerView>', () => {
   });
 
   it('skal vise etiketter', () => {
-    const wrapper = shallowWithIntl(<BostedSokerView
-      intl={intlMock}
-      personopplysninger={soker}
-      regionTypes={regionTypes}
-      sivilstandTypes={sivilstandTypes}
-      personstatusTypes={personstatusTypes}
-      sokerTypeTextId="BostedSokerFaktaIndex.Soker"
-    />);
+    const wrapper = shallowWithIntl(
+      <BostedSokerView
+        intl={intlMock}
+        personopplysninger={soker}
+        regionTypes={regionTypes}
+        sivilstandTypes={sivilstandTypes}
+        personstatusTypes={personstatusTypes}
+        sokerTypeTextId="BostedSokerFaktaIndex.Soker"
+      />,
+    );
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
     const personstatus = etikettfokus.at(0);
@@ -131,14 +146,16 @@ describe('<BostedsokerView>', () => {
       kode: '-',
     };
 
-    const wrapper = shallowWithIntl(<BostedSokerView
-      intl={intlMock}
-      personopplysninger={soker}
-      regionTypes={regionTypes}
-      sivilstandTypes={sivilstandTypes}
-      personstatusTypes={personstatusTypes}
-      sokerTypeTextId="BostedSokerFaktaIndex.Soker"
-    />);
+    const wrapper = shallowWithIntl(
+      <BostedSokerView
+        intl={intlMock}
+        personopplysninger={soker}
+        regionTypes={regionTypes}
+        sivilstandTypes={sivilstandTypes}
+        personstatusTypes={personstatusTypes}
+        sokerTypeTextId="BostedSokerFaktaIndex.Soker"
+      />,
+    );
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
     const personstatus = etikettfokus.at(0);

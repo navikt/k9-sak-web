@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import TableColumn from '@fpsak-frontend/shared-components/src/table/TableColumn';
 import { FormattedMessage } from 'react-intl';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
+import shallowWithIntl from '../../../i18n';
 
 describe('<IngenArbeidsforholdRegistrert>', () => {
   const headerColumnContent = [

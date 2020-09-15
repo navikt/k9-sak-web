@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 
 import EndreBehandlendeEnhetModal from './components/EndreBehandlendeEnhetModal';
-import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../i18n';
 import MenyEndreBehandlendeEnhetIndex from './MenyEndreBehandlendeEnhetIndex';
 
 describe('<MenyEndreBehandlendeEnhetIndex>', () => {

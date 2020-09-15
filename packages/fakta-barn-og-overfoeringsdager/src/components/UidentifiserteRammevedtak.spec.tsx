@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-rammevedtak';
+import { shallowWithIntl } from '../../i18n';
 import UidentifiserteRammevedtak from './UidentifiserteRammevedtak';
 
 describe('<UidentifiserteRammevedtak>', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
+import shallowWithIntl from '../../i18n';
 
 const lagOpptjeningAktivitetArbeidMedNavn = resultat => ({
   erEndring: resultat === 'ENDRING',
