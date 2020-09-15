@@ -1,5 +1,6 @@
 export const getAktivitet = (aktivitetStatus, getKodeverknavn) => {
-  return getKodeverknavn(aktivitetStatus);
+  // hvis valgtAndel ikke satt ennå return tom string.
+  return aktivitetStatus === undefined ? '' : getKodeverknavn(aktivitetStatus);
 };
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
