@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
-import { arbeidsforholdPropType } from '../../propTypes/arbeidsforholdPropType';
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
 import styles from './personArbeidsforholdTable.less';

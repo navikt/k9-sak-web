@@ -8,7 +8,7 @@ import { dateAfterOrEqual, hasValidDate, required, dateIsBefore } from '@fpsak-f
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ArrowBox } from '@fpsak-frontend/shared-components';
 
-import arbeidsforholdPropType from '../../propTypes/arbeidsforholdPropType';
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import aktivtArbeidsforholdHandling from '../../kodeverk/aktivtArbeidsforholdHandling';
 import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
 import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';

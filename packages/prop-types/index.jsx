@@ -1,12 +1,17 @@
 export { default as aksjonspunktPropType } from './src/aksjonspunktPropType';
 export { default as behandlingIListePropType } from './src/behandlingIListePropType';
-export { arbeidsgiverUttakPropType } from './src/arbeidsforholdPropType';
+export {
+  arbeidsgiverUttakPropType,
+  arbeidsforholdBeregningProptype,
+  arbeidsforholdPropType,
+} from './src/arbeidsforholdPropType';
 export {
   uttakPropType,
   beregningsresultatPeriodeAndelPropType,
   beregningsresultatPeriodePropType,
   beregningresultatMedUttaksplanPropType,
 } from './src/beregningresultatMedUttaksplanPropType';
+
 export { default as fagsakPropType } from './src/fagsakPropType';
 export { kodeverkPropType, kodeverkObjektPropType } from './src/kodeverkPropType';
 export { default as navAnsattPropType } from './src/navAnsattPropType';

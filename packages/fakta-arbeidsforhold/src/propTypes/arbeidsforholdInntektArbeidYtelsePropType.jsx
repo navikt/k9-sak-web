@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import arbeidsforholdPropType from './arbeidsforholdPropType';
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 
 const arbeidsforholdInntektArbeidYtelsePropType = PropTypes.shape({
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType),
