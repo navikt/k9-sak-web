@@ -14,6 +14,7 @@
     "test:watch": "cross-env NODE_ICU_DATA=./node_modules/full-icu mochapack --watch --webpack-config webpack/webpack.test.watch.js \"packages/**/*.spec.*\"",
     "test:coverage": "cross-env NODE_ICU_DATA=./node_modules/full-icu nyc mochapack --webpack-config webpack/webpack.test.coverage.js \"packages/**/*.spec.*\"",
     "dev": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
+    "dev-med-formidling": "yarn dev --med-formidling",
     "build": "cross-env NODE_ENV=production webpack --no-progress --colors --config webpack/webpack.prod.js",
     "lerna": "lerna",
     "lerna:publish": "(lerna updated && lerna publish --cd-version patch --yes -m \"publish [ci skip]\") || echo \"Ingen endringer avslutter OK\"",

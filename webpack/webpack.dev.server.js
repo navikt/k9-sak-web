@@ -26,7 +26,8 @@ const options = {
   },
   proxy: {
     '/k9/formidling/**': {
-      target: process.env.APP_URL_K9FORMIDLING || 'http://localhost:8290',
+      target: process.env.APP_URL_K9FORMIDLING ||
+        (process.argv.includes('--med-formidling') ? 'http://localhost:8290' : 'http://localhost:8060/rest/dummy'),
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9FORMIDLING,
     },
