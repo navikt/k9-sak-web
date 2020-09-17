@@ -4,6 +4,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FordelingForm from './FordelingForm';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
+import vilkårPeriodePropType from '../propTypes/vilkårPeriodePropType';
 
 const {
   FORDEL_BEREGNINGSGRUNNLAG,
@@ -54,29 +55,38 @@ export class FordelBeregningsgrunnlagPanel extends Component {
         alleMerknaderFraBeslutter,
         behandlingType,
         submittable,
+        kreverManuellBehandling,
+        aktivtBeregningsgrunnlagIndex,
+        alleBeregningsgrunnlag,
+        vilkårsperioder,
       },
       state: {
         submitEnabled,
       },
     } = this;
+    
     const fordelAP = getFordelAksjonspunkt(aksjonspunkter);
     if (harIkkeFordelInfo(beregningsgrunnlag) || !fordelAP) {
       return null;
     }
     return (
       <FordelingForm
-        submitEnabled={submitEnabled}
-        submittable={submittable}
-        readOnly={readOnly}
-        submitCallback={submitCallback}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        alleKodeverk={alleKodeverk}
-        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        beregningsgrunnlag={beregningsgrunnlag}
-        behandlingType={behandlingType}
-        aksjonspunkter={aksjonspunkter}
-      />
+      submitEnabled={submitEnabled}
+      submittable={submittable}
+      readOnly={readOnly}
+      submitCallback={submitCallback}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      alleKodeverk={alleKodeverk}
+      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      beregningsgrunnlag={beregningsgrunnlag}
+      behandlingType={behandlingType}
+      aksjonspunkter={aksjonspunkter}
+      kreverManuellBehandling={kreverManuellBehandling}
+      aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
+      alleBeregningsgrunnlag={alleBeregningsgrunnlag}
+      vilkårsperioder={vilkårsperioder}
+    />
     );
   }
 }
@@ -94,6 +104,10 @@ FordelBeregningsgrunnlagPanel.propTypes = {
     notAccepted: PropTypes.bool,
   }).isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
+  kreverManuellBehandling: PropTypes.bool.isRequired,
+  aktivtBeregningsgrunnlagIndex: PropTypes.number.isRequired,
+  alleBeregningsgrunnlag: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  vilkårsperioder: PropTypes.arrayOf(vilkårPeriodePropType).isRequired,
 };
 
 export default FordelBeregningsgrunnlagPanel;

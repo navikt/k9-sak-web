@@ -5,7 +5,7 @@ import { FieldArray } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Element } from 'nav-frontend-typografi';
-import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import {
   DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
   formatCurrencyNoKr,
@@ -50,7 +50,7 @@ const renderDateHeading = (fom, tom) => {
  * Presentasjonskomponent. Viser ekspanderbart panel for perioder i nytt/endret beregningsgrunnlag
  */
 
-const FordelBeregningsgrunnlagPeriodePanel = ({
+const FordelBeregningsgrunnlagPeriodePanelImpl = ({
   readOnly,
   fordelBGFieldArrayName,
   fom,
@@ -63,7 +63,7 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
   alleKodeverk,
   behandlingType,
 }) => (
-  <EkspanderbartpanelPure
+  <EkspanderbartpanelBase
     className={readOnly ? styles.statusOk : classNames(`fordelBeregningsgrunnlagPeriode--${fom}`)}
     tittel={renderDateHeading(fom, tom)}
     apen={open}
@@ -79,10 +79,10 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
       beregningsgrunnlag={beregningsgrunnlag}
       behandlingType={behandlingType}
     />
-  </EkspanderbartpanelPure>
+  </EkspanderbartpanelBase>
 );
 
-FordelBeregningsgrunnlagPeriodePanel.propTypes = {
+FordelBeregningsgrunnlagPeriodePanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fordelBGFieldArrayName: PropTypes.string.isRequired,
   fom: PropTypes.string.isRequired,
@@ -96,12 +96,12 @@ FordelBeregningsgrunnlagPeriodePanel.propTypes = {
   behandlingType: kodeverkObjektPropType.isRequired,
 };
 
-FordelBeregningsgrunnlagPeriodePanel.defaultProps = {
+FordelBeregningsgrunnlagPeriodePanelImpl.defaultProps = {
   open: null,
   tom: null,
 };
 
-FordelBeregningsgrunnlagPeriodePanel.validate = (values, sumIPeriode, skalValidereMotRapportert,
+FordelBeregningsgrunnlagPeriodePanelImpl.validate = (values, sumIPeriode, skalValidereMotRapportert,
   getKodeverknavn, grunnbeløp, periodeDato) => RenderFordelBGFieldArray
   .validate(values, sumIPeriode, skalValidereMotRapportert, getKodeverknavn, grunnbeløp, periodeDato);
 
@@ -120,7 +120,7 @@ const finnBeregningsgrunnlagPrAar = (bgAndel) => {
   return null;
 };
 
-FordelBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn) => {
+FordelBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn) => {
   if (!periode || !periode.fordelBeregningsgrunnlagAndeler) {
     return {};
   }
@@ -153,4 +153,4 @@ FordelBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, s
   );
 };
 
-export default FordelBeregningsgrunnlagPeriodePanel;
+export default FordelBeregningsgrunnlagPeriodePanelImpl;
