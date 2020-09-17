@@ -191,6 +191,11 @@
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
     },
     {
+      "kode": "VEDTAK_FATTET_AUTOMATISK",
+      "navn": "Vedtak fattet automatisk",
+      "kodeverk": "HISTORIKKINNSLAG_TYPE"
+    },
+    {
       "kode": "BREV_BESTILT",
       "navn": "Brev bestilt",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
