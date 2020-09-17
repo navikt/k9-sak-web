@@ -154,44 +154,47 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     const perioder = [periode1, periode2, periode3];
     const bgPerioder = [bgPeriode1, bgPeriode2, bgPeriode3];
 
+    const bg = {
+      aktivitetStatus: [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }],
+      beregningsgrunnlagPeriode: bgPerioder,
+      skjaeringstidspunktBeregning: '2019-03-30',
+      faktaOmFordeling: {
+        fordelBeregningsgrunnlag: {
+          fordelBeregningsgrunnlagPerioder: perioder,
+        }
+      }
+    };
+
     const bt = {
       kode: 'BT-003',
     };
 
     const wrapper = shallow(<FordelBeregningsgrunnlagForm
-      perioder={perioder}
-      bgPerioder={bgPerioder}
       isAksjonspunktClosed={false}
       readOnly={false}
-      beregningsgrunnlag={{}}
+      beregningsgrunnlag={bg}
       alleKodeverk={{}}
       behandlingType={bt}
+      grunnlagFieldId="1"
     />);
 
     const periodePanel = wrapper.find(FordelBeregningsgrunnlagPeriodePanel);
     expect(periodePanel.length).to.equal(2);
-    const fieldName1 = periodePanel.get(0).props.fordelBGFieldArrayName;
     const fom1 = periodePanel.get(0).props.fom;
     const andeler1 = perioder.find(({ fom }) => fom === fom1).fordelBeregningsgrunnlagAndeler;
-    const fieldName2 = periodePanel.get(1).props.fordelBGFieldArrayName;
     const fom2 = periodePanel.get(1).props.fom;
     const andeler2 = perioder.find(({ fom }) => fom === fom2).fordelBeregningsgrunnlagAndeler;
 
-    const bg = {
-      aktivitetStatus: [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }],
-      beregningsgrunnlagPeriode: [bgPeriode1, bgPeriode2, bgPeriode3],
-      skjaeringstidspunktBeregning: '2019-03-30',
-    };
 
-    const initialValues = FordelBeregningsgrunnlagForm.buildInitialValues(perioder, bg, getKodeverknavn);
-    expect(initialValues[fieldName1].length).to.equal(andeler1.length);
-    expect(initialValues[fieldName2].length).to.equal(andeler2.length);
+    const initialValues = FordelBeregningsgrunnlagForm.buildInitialValues(bg, getKodeverknavn);
+    expect(initialValues[getFieldNameKey(0)].length).to.equal(andeler1.length);
+    expect(initialValues[getFieldNameKey(1)].length).to.equal(andeler2.length);
 
 
     const values = {};
-    values[getFieldNameKey(0)] = initialValues[fieldName1];
-    values[getFieldNameKey(1)] = initialValues[fieldName2];
-    const errors = FordelBeregningsgrunnlagForm.validate(values, perioder, bg, getKodeverknavn);
+    values[getFieldNameKey(0)] = initialValues[getFieldNameKey(0)];
+    values[getFieldNameKey(1)] = initialValues[getFieldNameKey(1)];
+    const errors = FordelBeregningsgrunnlagForm.validate(values, bg, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.equal(null);
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
@@ -420,8 +423,14 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
   it('skal ikkje validere om det ikkje finnes perioder', () => {
     const values = {};
     const fordelBGPerioder = [];
-    const beregningsgrunnlag = {};
-    const errors = FordelBeregningsgrunnlagForm.validate(values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn);
+    const beregningsgrunnlag = {
+      faktaOmFordeling: {
+        fordelBeregningsgrunnlag: {
+          fordelBeregningsgrunnlagPerioder: fordelBGPerioder,
+        }
+      }
+    };
+    const errors = FordelBeregningsgrunnlagForm.validate(values, beregningsgrunnlag, getKodeverknavn);
     expect(errors).to.be.empty;
   });
 
@@ -435,8 +444,13 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
         beregningsgrunnlagPeriodeFom: '2018-01-01',
         beregningsgrunnlagPrStatusOgAndel: [],
       }],
+      faktaOmFordeling: {
+        fordelBeregningsgrunnlag: {
+          fordelBeregningsgrunnlagPerioder: fordelBGPerioder,
+        }
+      }
     };
-    const errors = FordelBeregningsgrunnlagForm.validate(values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn);
+    const errors = FordelBeregningsgrunnlagForm.validate(values, beregningsgrunnlag, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
   });
 
@@ -456,8 +470,13 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
         beregningsgrunnlagPeriodeFom: '2018-07-02',
         beregningsgrunnlagPrStatusOgAndel: [],
       }],
+      faktaOmFordeling: {
+        fordelBeregningsgrunnlag: {
+          fordelBeregningsgrunnlagPerioder: fordelBGPerioder,
+        }
+      }
     };
-    const errors = FordelBeregningsgrunnlagForm.validate(values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn);
+    const errors = FordelBeregningsgrunnlagForm.validate(values, beregningsgrunnlag, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
@@ -505,9 +524,17 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       { fom: '2018-06-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: true },
     ];
     const values = {};
+    const bg = {
+      beregningsgrunnlagPeriode: bgPerioder,
+      faktaOmFordeling: {
+        fordelBeregningsgrunnlag: {
+          fordelBeregningsgrunnlagPerioder: fordelBGPerioder,
+        }
+      }
+    };
     values[getFieldNameKey(0)] = [{ ...andel1 }, { ...andel2 }];
     values[getFieldNameKey(1)] = [{ ...andel1, fastsattBelop: '10 000' }, andel2];
-    const perioder = transformPerioder(fordelBGPerioder, values, bgPerioder);
+    const perioder = transformPerioder(values, bg);
     expect(perioder.length).to.equal(1);
     expect(perioder[0].fom).to.equal('2018-06-02');
     expect(perioder[0].tom).to.equal(null);
@@ -554,10 +581,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
     ];
     const values = {};
+    const bg = {
+      beregningsgrunnlagPeriode: bgPerioder,
+      faktaOmFordeling: {
+        fordelBeregningsgrunnlag: {
+          fordelBeregningsgrunnlagPerioder: fordelBGPerioder,
+        }
+      }
+    };
     values[getFieldNameKey(0)] = [{ ...andel1, fastsattBelop: '10 000' }, andel2];
     values[getFieldNameKey(1)] = [{ ...andel1 }, { ...andel2 }];
 
-    const perioder = transformPerioder(fordelBGPerioder, values, bgPerioder);
+    const perioder = transformPerioder(values, bg);
     expect(perioder.length).to.equal(2);
     expect(perioder[0].fom).to.equal('2018-01-01');
     expect(perioder[0].tom).to.equal('2018-06-01');
@@ -624,10 +659,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
     ];
     const values = {};
+    const bg = {
+      beregningsgrunnlagPeriode: bgPerioder,
+      faktaOmFordeling: {
+        fordelBeregningsgrunnlag: {
+          fordelBeregningsgrunnlagPerioder: fordelBGPerioder,
+        }
+      }
+    };
     values[getFieldNameKey(0)] = [{ ...andel1 }, { ...andel2 }];
     values[getFieldNameKey(1)] = [{ ...andel1, fastsattBelop: '10 000' }, andel2];
 
-    const perioder = transformPerioder(fordelBGPerioder, values, bgPerioder);
+    const perioder = transformPerioder(values, bg);
 
     expect(perioder.length).to.equal(2);
     expect(perioder[0].fom).to.equal('2018-06-02');
@@ -700,10 +743,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       { fom: '2018-11-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false },
     ];
     const values = {};
+    const bg = {
+      beregningsgrunnlagPeriode: bgPerioder,
+      faktaOmFordeling: {
+        fordelBeregningsgrunnlag: {
+          fordelBeregningsgrunnlagPerioder: fordelBGPerioder,
+        }
+      }
+    };
     values[getFieldNameKey(0)] = [{ ...andel1 }, { ...andel2 }];
     values[getFieldNameKey(1)] = [{ ...andel1, fastsattBelop: '10 000' }, andel2];
 
-    const perioder = transformPerioder(fordelBGPerioder, values, bgPerioder);
+    const perioder = transformPerioder(values, bg);
 
     expect(perioder.length).to.equal(2);
     expect(perioder[0].fom).to.equal('2018-06-02');

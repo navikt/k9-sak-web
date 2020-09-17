@@ -294,7 +294,10 @@ export const validateVurderFaktaBeregning = values => {
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = values =>
-    initialProps.submitCallback(transformValuesVurderFaktaBeregning(values, initialProps.alleBeregningsgrunnlag, initialProps.behandlingResultatPerioder));
+    initialProps.submitCallback(transformValuesVurderFaktaBeregning(
+      values, 
+      initialProps.alleBeregningsgrunnlag, 
+      initialProps.behandlingResultatPerioder));
   const validate = values => validateVurderFaktaBeregning(values);
   return (state, ownProps) => {
     const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex } = ownProps;
