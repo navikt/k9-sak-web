@@ -11,7 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VedtakFritekstPanel from './VedtakFritekstPanel';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../i18n';
 
 const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;

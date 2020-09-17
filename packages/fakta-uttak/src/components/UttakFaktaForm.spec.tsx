@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../../i18n';
 import { oppdaterPerioderFor, transformValues, UttakFaktaFormImpl } from './UttakFaktaForm';
 import UttakFormKolonne from './UttakFormKolonne';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';

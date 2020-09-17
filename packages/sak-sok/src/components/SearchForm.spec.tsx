@@ -6,7 +6,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { SearchForm } from './SearchForm';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-sok';
+import shallowWithIntl from '../../i18n';
 
 describe('<Search>', () => {
   it('skal ha et søkefelt og en søkeknapp', () => {

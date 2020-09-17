@@ -7,7 +7,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VedtakAvslagArsakOgBegrunnelsePanel } from './VedtakAvslagArsakOgBegrunnelsePanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../i18n';
 
 describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
   it('skal rendre avslagspanel og textArea når en har ikke oppfylt søknadsfristvilkår', () => {

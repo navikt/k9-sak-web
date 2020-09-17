@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../i18n';
 import NyBehandlingModal from './components/NyBehandlingModal';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 

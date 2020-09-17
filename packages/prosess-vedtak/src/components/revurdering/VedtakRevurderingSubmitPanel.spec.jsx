@@ -6,7 +6,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import vedtaksbrevStatus from '@fpsak-frontend/kodeverk/src/vedtakbrevStatus';
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
 import { getSubmitKnappTekst, VedtakRevurderingSubmitPanelImpl as UnwrappedForm } from './VedtakRevurderingSubmitPanel';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../../i18n';
 
 const previewCallback = sinon.spy();
 
@@ -34,6 +34,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
         behandlingStatusKode="UTR"
         ytelseTypeKode="ES"
         submitKnappTextId="VedtakForm.TilGodkjenning"
+        harRedusertUtbetaling={false}
+        visFeilmeldingFordiArsakerMangler={sinon.spy()}
       />,
     );
     const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);
@@ -56,6 +58,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
         behandlingStatusKode="UTR"
         ytelseTypeKode="ES"
         submitKnappTextId="VedtakForm.TilGodkjenning"
+        harRedusertUtbetaling={false}
+        visFeilmeldingFordiArsakerMangler={sinon.spy()}
       />,
     );
     expect(wrapper.find(ForhaandsvisningsKnapp)).to.have.length(0);
@@ -77,6 +81,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
         ytelseTypeKode="ES"
         submitKnappTextId="VedtakForm.TilGodkjenning"
         erBehandlingEtterKlage={false}
+        harRedusertUtbetaling={false}
+        visFeilmeldingFordiArsakerMangler={sinon.spy()}
       />,
     );
     const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);
@@ -99,6 +105,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
         readOnly={false}
         ytelseTypeKode="PSB"
         submitKnappTextId="VedtakForm.TilGodkjenning"
+        harRedusertUtbetaling={false}
+        visFeilmeldingFordiArsakerMangler={sinon.spy()}
       />,
     );
     const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);

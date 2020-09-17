@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -9,34 +9,8 @@ import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT } from '@fpsak-front
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import { TabsPure } from 'nav-frontend-tabs';
 import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
+import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import styles from './tilkjentYtelse.less';
-
-const finnAktivitetsstatusIntlKey = aktivitetStatusKode => {
-  const prefix = 'TilkjentYtelse.PeriodeData.Aktivitetsstatus.';
-  if (aktivitetStatusKode === 'AT') {
-    return `${prefix}Arbeidstaker`;
-  }
-  if (aktivitetStatusKode === 'SN') {
-    return `${prefix}SelvstendigNæringsdrivende`;
-  }
-  if (aktivitetStatusKode === 'FL') {
-    return `${prefix}Frilans`;
-  }
-  return `${prefix}${aktivitetStatusKode}`;
-};
-
-const finnTabLabel = ({ arbeidsgiverNavn, arbeidsgiverOrgnr, aktivitetStatus: { kode } }) => {
-  if (kode === 'AT') {
-    return `${arbeidsgiverNavn} (${arbeidsgiverOrgnr})`;
-  }
-  if (kode === 'SN') {
-    return 'Selvstendig næringsdrivende';
-  }
-  if (kode === 'FL') {
-    return 'Frilans';
-  }
-  return kode;
-};
 
 /**
  * TimeLineData
@@ -49,14 +23,15 @@ const TilkjentYtelseTimeLineData = ({
   selectedItemData,
   callbackForward,
   callbackBackward,
+  getKodeverknavn,
 }) => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  React.useEffect(() => {
+  const [activeTab, setActiveTab] = useState(0);
+  useEffect(() => {
     setActiveTab(0);
   }, [selectedItemData]);
+
   const { andeler } = selectedItemData;
   const valgtAndel = andeler[activeTab];
-
   const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
   const intl = useIntl();
 
@@ -117,15 +92,31 @@ const TilkjentYtelseTimeLineData = ({
           <Column xs="12">
             <FormattedMessage
               id="TilkjentYtelse.PeriodeData.Dagsats"
-              values={{ dagsatsVerdi: selectedItemData.dagsats, b: chunks => <b>{chunks}</b> }}
+              values={{
+                dagsatsVerdi: selectedItemData.dagsats,
+                b: chunks => <b>{chunks}</b>,
+              }}
             />
+            <br />
+            {(andeler || []).length > 1 &&
+              andeler.map((andel, index) => (
+                <FormattedMessage
+                  id="Timeline.tooltip.dagsatsPerAndel"
+                  key={`index${index + 1}`}
+                  values={{
+                    arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn),
+                    dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
+                    br: <br />,
+                  }}
+                />
+              ))}
           </Column>
         </Row>
       </div>
       <VerticalSpacer eightPx />
       <TabsPure
         tabs={andeler.map((andel, currentAndelIndex) => {
-          const label = finnTabLabel(andel);
+          const label = createVisningsnavnForAndel(andel, getKodeverknavn);
           return {
             aktiv: activeTab === currentAndelIndex,
             label,
@@ -164,9 +155,7 @@ const TilkjentYtelseTimeLineData = ({
             <FormattedMessage
               id="TilkjentYtelse.PeriodeData.Aktivitetsstatus"
               values={{
-                aktivitetsstatusVerdi: intl.formatMessage({
-                  id: finnAktivitetsstatusIntlKey(valgtAndel?.aktivitetStatus.kode),
-                }),
+                aktivitetsstatus: getAktivitet(valgtAndel?.aktivitetStatus, getKodeverknavn),
                 b: chunks => <b>{chunks}</b>,
               }}
             />
@@ -215,6 +204,7 @@ TilkjentYtelseTimeLineData.propTypes = {
   selectedItemData: tilkjentYtelseBeregningresultatPropType,
   callbackForward: PropTypes.func.isRequired,
   callbackBackward: PropTypes.func.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 TilkjentYtelseTimeLineData.defaultProps = {

@@ -6,7 +6,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { VurderSoknadsfristPleiepengerFormImpl as UnwrappedForm } from './VurderSoknadsfristPleiepengerForm';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-soknadsfrist';
+import shallowWithIntl from '../../i18n';
 
 describe('<VurderSoknadsfristPleiepengerForm>', () => {
   it('skal rendre form og vise søknadsfristdato som er lik mottatt dato minus antallDagerSoknadLevertForSent', () => {
@@ -51,20 +51,10 @@ describe('<VurderSoknadsfristPleiepengerForm>', () => {
     const normalTekst = wrapper.find('Normaltekst');
     expect(normalTekst).has.length(2);
     // Mottattdato
-    expect(
-      normalTekst
-        .first()
-        .childAt(0)
-        .text(),
-    ).to.eql('15.10.2017');
+    expect(normalTekst.first().childAt(0).text()).to.eql('15.10.2017');
 
     // Periode
-    expect(
-      normalTekst
-        .at(1)
-        .childAt(0)
-        .text(),
-    ).to.eql('05.06.2017 - 01.11.2017');
+    expect(normalTekst.at(1).childAt(0).text()).to.eql('05.06.2017 - 01.11.2017');
   });
 
   it('skal rendre radiobuttons', () => {

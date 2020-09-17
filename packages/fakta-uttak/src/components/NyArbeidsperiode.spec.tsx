@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { createBrowserHistory } from 'history';
 import configureStore from '@fpsak-frontend/sak-app/src/configureStore';
 import { expect } from 'chai';
-import { mountWithIntl } from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
+import { mountWithIntl } from '../../i18n';
 import NyArbeidsperiode from './NyArbeidsperiode';
 
 const history = createBrowserHistory({

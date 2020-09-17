@@ -252,14 +252,17 @@ const vurderRefusjonskravTransform = faktaOmBeregning => (vurderFaktaValues, val
 };
 
 export const transformValues = (
-  aktivePaneler,
+  tilfeller,
   nyIArbTransform,
   kortvarigTransform,
   militaerTransform,
   vurderRefusjonTransform,
 ) => (vurderFaktaValues, values) => {
+  if (tilfeller.length === 0) {
+    return null;
+  }
   let transformed = { ...vurderFaktaValues };
-  aktivePaneler.forEach(kode => {
+  tilfeller.forEach(kode => {
     if (kode === faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET) {
       transformed = nyIArbTransform(transformed, values);
     }
@@ -289,7 +292,7 @@ export const setInntektValues = (
 };
 
 const setValuesForVurderFakta = (
-  aktivePaneler,
+  tilfeller,
   values,
   kortvarigeArbeidsforhold,
   faktaOmBeregning,
@@ -297,14 +300,14 @@ const setValuesForVurderFakta = (
   erOverstyrt,
 ) => {
   const vurderFaktaValues = setInntektValues(
-    aktivePaneler,
-    kunYtelseTransform(faktaOmBeregning, aktivePaneler),
+    tilfeller,
+    kunYtelseTransform(faktaOmBeregning, tilfeller),
     VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag),
     erOverstyrt,
   )(values);
   return {
     fakta: transformValues(
-      aktivePaneler,
+      tilfeller,
       nyIArbeidslivetTransform,
       kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
       vurderMilitaerSiviltjenesteTransform,

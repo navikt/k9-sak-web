@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 
 import VurderEtterlonnSluttpakkeForm from './VurderEtterlonnSluttpakkeForm';
-import shallowWithIntl from '../../../../../i18n/intl-enzyme-test-helper-fakta-beregning';
+import shallowWithIntl from '../../../../../i18n';
 
 describe('<VurderEtterlonnSluttpakkeForm>', () => {
   it('Skal teste at komponenten vises korrekt', () => {

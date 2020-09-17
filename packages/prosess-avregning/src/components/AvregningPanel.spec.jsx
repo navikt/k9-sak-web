@@ -14,7 +14,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 import { AvregningPanelImpl, transformValues } from './AvregningPanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-avregning';
+import shallowWithIntl from '../../i18n';
 
 const simuleringResultat = {
   simuleringResultat: {

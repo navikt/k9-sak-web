@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 
 import SettBehandlingPaVentModal from './components/SettBehandlingPaVentModal';
-import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../i18n';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
 describe('<MenySettPaVentIndex>', () => {

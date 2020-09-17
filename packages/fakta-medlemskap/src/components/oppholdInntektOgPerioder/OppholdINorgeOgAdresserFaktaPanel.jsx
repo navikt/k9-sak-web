@@ -95,7 +95,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
           <VerticalSpacer fourPx />
           {sjekkOpphold(opphold.oppholdSistePeriode, intl)}
           <VerticalSpacer eightPx />
-          {lagOppholdIUtland(opphold.utlandsoppholdFor, intl)}
+          {lagOppholdIUtland(opphold.utlandsoppholdFor)}
           <VerticalSpacer sixteenPx />
           <Undertekst>
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingInNorwayNext12" />
@@ -103,7 +103,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
           <VerticalSpacer fourPx />
           {sjekkOpphold(opphold.oppholdNestePeriode, intl)}
           <VerticalSpacer eightPx />
-          {lagOppholdIUtland(opphold.utlandsoppholdEtter, intl)}
+          {lagOppholdIUtland(opphold.utlandsoppholdEtter)}
         </FaktaGruppe>
       </Column>
       <Column xs="6">
