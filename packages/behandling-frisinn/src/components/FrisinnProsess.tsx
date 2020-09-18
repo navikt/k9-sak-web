@@ -213,6 +213,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={frisinnBehandlingApi}
           dispatch={dispatch}
+          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

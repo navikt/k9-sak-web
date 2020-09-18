@@ -50,6 +50,7 @@ export const OmsorgspengerBehandlingApiKeys = {
   FULL_UTTAKSPLAN: 'FULL_UTTAKSPLAN',
   INNTEKT_OG_YTELSER: 'INNTEKT_OG_YTELSER',
   TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
+  DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -125,6 +126,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', OmsorgspengerBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withRel('dokumentdata-lagre', OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
 
   .build();
 
