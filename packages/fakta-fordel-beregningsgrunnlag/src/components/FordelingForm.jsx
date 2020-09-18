@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { formPropTypes } from 'redux-form';
+import { formPropTypes, FieldArray } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { FaktaSubmitButton, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
@@ -12,7 +12,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import FastsettFordeltBeregningsgrunnlag from './fordeling/FastsettFordeltBeregningsgrunnlag';
+import FordelBeregningsgrunnlagForm from './fordeling/FordelBeregningsgrunnlagForm';
 import FordelingHelpText from './FordelingHelpText';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 
@@ -24,6 +24,77 @@ const findAksjonspunktMedBegrunnelse = aksjonspunkter =>
   aksjonspunkter.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
+
+const fieldArrayName = 'fordelingListe';
+
+
+const renderFordeling = ({
+  fields,
+  readOnly,
+  submittable,
+  isAksjonspunktClosed,
+  hasBegrunnelse,
+  submitEnabled,
+  behandlingId,
+  behandlingVersjon,
+  beregningsgrunnlag,
+  alleKodeverk,
+  behandlingType,
+  aksjonspunkter,
+  kreverManuellBehandling,
+  aktivtBeregningsgrunnlagIndex,
+  formProps
+}) => (
+  fields.map(
+    (field, index) =>
+      index === aktivtBeregningsgrunnlagIndex && (
+        <div key={field}>
+          {kreverManuellBehandling &&
+    <>
+    <FordelingHelpText
+      isAksjonspunktClosed={isAksjonspunktClosed}
+      alleKodeverk={alleKodeverk}
+      aksjonspunkter={aksjonspunkter}
+      beregningsgrunnlag={beregningsgrunnlag}
+    />
+    <VerticalSpacer twentyPx />
+    </>
+  }
+  <FordelBeregningsgrunnlagForm
+    readOnly={readOnly}
+    isAksjonspunktClosed={isAksjonspunktClosed}
+    beregningsgrunnlag={beregningsgrunnlag}
+    alleKodeverk={alleKodeverk}
+    behandlingType={behandlingType}
+    grunnlagFieldId={field}
+  />
+  <VerticalSpacer twentyPx />
+  {kreverManuellBehandling &&
+    <>
+      <FaktaBegrunnelseTextField
+        name={BEGRUNNELSE_FORDELING_NAME}
+        isDirty={formProps.dirty}
+        isSubmittable={submittable}
+        isReadOnly={readOnly}
+        hasBegrunnelse={hasBegrunnelse}
+      />
+      <VerticalSpacer twentyPx />
+      <FaktaSubmitButton
+        formName={formProps.form}
+        isSubmittable={submittable && submitEnabled}
+        isReadOnly={readOnly}
+        hasOpenAksjonspunkter={!isAksjonspunktClosed}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+      />
+    </>
+  }
+  </div>
+      )
+
+  )
+);
+
 
 /**
  * FordelingForm
@@ -42,42 +113,29 @@ const FordelingFormImpl = ({
   alleKodeverk,
   behandlingType,
   aksjonspunkter,
+  kreverManuellBehandling,
+  aktivtBeregningsgrunnlagIndex,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
-    <FordelingHelpText
-      isAksjonspunktClosed={isAksjonspunktClosed}
-      alleKodeverk={alleKodeverk}
-      aksjonspunkter={aksjonspunkter}
-      beregningsgrunnlag={beregningsgrunnlag}
-    />
-    <VerticalSpacer twentyPx />
-    <FastsettFordeltBeregningsgrunnlag
-      readOnly={readOnly}
-      isAksjonspunktClosed={isAksjonspunktClosed}
-      beregningsgrunnlag={beregningsgrunnlag}
-      alleKodeverk={alleKodeverk}
-      behandlingType={behandlingType}
-    />
-    <VerticalSpacer twentyPx />
-    <FaktaBegrunnelseTextField
-      name={BEGRUNNELSE_FORDELING_NAME}
-      isDirty={formProps.dirty}
-      isSubmittable={submittable}
-      isReadOnly={readOnly}
-      hasBegrunnelse={hasBegrunnelse}
-    />
-    <>
-      <VerticalSpacer twentyPx />
-      <FaktaSubmitButton
-        formName={formProps.form}
-        isSubmittable={submittable && submitEnabled}
-        isReadOnly={readOnly}
-        hasOpenAksjonspunkter={!isAksjonspunktClosed}
+      <FieldArray 
+        name={fieldArrayName} 
+        component={renderFordeling}
+        submitEnabled={submitEnabled}
+        submittable={submittable}
+        readOnly={readOnly}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+        beregningsgrunnlag={beregningsgrunnlag}
+        behandlingType={behandlingType}
+        aksjonspunkter={aksjonspunkter}
+        kreverManuellBehandling={kreverManuellBehandling}
+        aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
+        hasBegrunnelse={hasBegrunnelse}
+        isAksjonspunktClosed={isAksjonspunktClosed}
+        formProps={formProps}
       />
-    </>
   </form>
 );
 
@@ -94,23 +152,52 @@ FordelingFormImpl.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType).isRequired,
+  kreverManuellBehandling: PropTypes.bool.isRequired,
+  aktivtBeregningsgrunnlagIndex: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
+const kreverManuellBehandling = (bg) => {
+  const fordeling = bg.faktaOmFordeling;
+  if (fordeling){
+    const fordelBg = fordeling.fordelBeregningsgrunnlag;
+    if (fordelBg) {
+      return fordelBg.fordelBeregningsgrunnlagPerioder.some(p => p.skalRedigereInntekt || p.skalKunneEndreRefusjon);
+    }
+  }
+  return false;
+}
+
+
+const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, vilkårsperioder) => {
+  return fieldArrayList
+  .filter((currentFormValues, index) => kreverManuellBehandling(alleBeregningsgrunnlag[index]))
+  .map((currentFormValues, index) => {
+    const bg = alleBeregningsgrunnlag[index];
+    const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
+    const vilkarPeriode = vilkårsperioder.find(periode => periode.periode.fom === stpOpptjening);
+    return {
+        periode: vilkarPeriode.periode,
+        ...FordelBeregningsgrunnlagForm.transformValues(currentFormValues, bg),
+    };
+  });
+}
+
 export const transformValuesFordelBeregning = createSelector(
-  [ownProps => ownProps.beregningsgrunnlag, ownProps => ownProps.aksjonspunkter],
-  (beregningsgrunnlag, aksjonspunkter) => values => {
-    const bgPerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
-    const fordelBGPerioder =
-      beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
+  [ownProps => ownProps.alleBeregningsgrunnlag, 
+    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.vilkårsperioder
+  ],
+  (alleBeregningsgrunnlag, aksjonspunkter, vilkårsperioder) => values => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
+      const fieldArrayList = values[fieldArrayName];
       const faktaBeregningValues = values;
       const begrunnelse = faktaBeregningValues[BEGRUNNELSE_FORDELING_NAME];
       return [
         {
           begrunnelse,
           kode: FORDEL_BEREGNINGSGRUNNLAG,
-          ...FastsettFordeltBeregningsgrunnlag.transformValues(values, fordelBGPerioder, bgPerioder),
+          grunnlag: mapGrunnlagsliste(fieldArrayList, alleBeregningsgrunnlag, vilkårsperioder),
         },
       ];
     }
@@ -119,10 +206,11 @@ export const transformValuesFordelBeregning = createSelector(
 );
 
 export const buildInitialValuesFordelBeregning = createSelector(
-  [ownProps => ownProps.beregningsgrunnlag, ownProps => ownProps.alleKodeverk, ownProps => ownProps.aksjonspunkter],
-  (beregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
-    const fordelBGPerioder =
-      beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
+  [ownProps => ownProps.alleBeregningsgrunnlag, 
+    ownProps => ownProps.alleKodeverk,
+    ownProps => ownProps.aksjonspunkter],
+  (alleBeregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
+
     if (!hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {};
     }
@@ -131,25 +219,20 @@ export const buildInitialValuesFordelBeregning = createSelector(
         findAksjonspunktMedBegrunnelse(aksjonspunkter),
         BEGRUNNELSE_FORDELING_NAME,
       ),
-      ...FastsettFordeltBeregningsgrunnlag.buildInitialValues(
-        fordelBGPerioder,
-        beregningsgrunnlag,
-        getKodeverknavnFn(alleKodeverk, kodeverkTyper),
-      ),
-    };
-  },
+      [fieldArrayName]: alleBeregningsgrunnlag.map((bg) => FordelBeregningsgrunnlagForm.buildInitialValues(
+        bg,
+        getKodeverknavnFn(alleKodeverk, kodeverkTyper)))
+      } 
+    }
 );
 
 export const getValidationFordelBeregning = createSelector(
   [ownProps => ownProps.beregningsgrunnlag, ownProps => ownProps.alleKodeverk, ownProps => ownProps.aksjonspunkter],
   (beregningsgrunnlag, alleKodeverk, aksjonspunkter) => values => {
-    const fordelBGPerioder =
-      beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {
-        ...FastsettFordeltBeregningsgrunnlag.validate(
+        ...FordelBeregningsgrunnlagForm.validate(
           values,
-          fordelBGPerioder,
           beregningsgrunnlag,
           getKodeverknavnFn(alleKodeverk, kodeverkTyper),
         ),
