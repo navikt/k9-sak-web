@@ -1,5 +1,5 @@
 'use strict';
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
@@ -21,8 +21,7 @@ const config = {
           {
             loader: 'thread-loader',
             options: {
-              workers: process.env.CIRCLE_NODE_TOTAL || require('os')
-                .cpus() - 1,
+              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
               workerParallelJobs: 50,
             },
           },
@@ -36,7 +35,7 @@ const config = {
       },
     ],
   },
-  plugins: []
+  plugins: [],
 };
 
 module.exports = merge(common, config);
