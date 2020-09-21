@@ -2,7 +2,7 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const commonDevAndProd = require('./webpack.common.dev_and_prod');
 
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
