@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { CheckboxField, RadioOption } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-uttaksplan';
+import { shallowWithIntl } from '../../i18n';
 import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues } from './AksjonspunktForm';
 import Uttaksperiode from '../dto/Uttaksperiode';
 import { UtfallEnum } from '../dto/Utfall';

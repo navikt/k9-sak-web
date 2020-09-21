@@ -77,14 +77,20 @@ const uidentifisertRammevedtak: Rammevedtak = {
   fritekst: 'utolkbart blabla',
 };
 
+const orgNr1 = '456';
+
+const arbForhId1 = '123456789';
+const arbForhId2 = '987654321';
+
 const aktivitet: Aktivitet = {
   arbeidsforhold: {
-    arbeidsforholdId: '888',
-    organisasjonsnummer: '999',
+    arbeidsforholdId: arbForhId1,
+    organisasjonsnummer: orgNr1,
     type: 'SN',
   },
   uttaksperioder: [innvilgetPeriode],
 };
+
 const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukteDager => ({
   totaltAntallDager: 17,
   antallKoronadager: 0,
@@ -97,8 +103,8 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
     aktiviteter: [
       {
         arbeidsforhold: {
-          arbeidsforholdId: '123',
-          organisasjonsnummer: '456',
+          arbeidsforholdId: arbForhId2,
+          organisasjonsnummer: orgNr1,
           type: 'AT',
         },
         uttaksperioder: perioder,
@@ -125,11 +131,19 @@ const behandling: Behandling = {
 const aksjonspunkterForSteg: Aksjonspunkt[] = [{}];
 
 const inntektArbeidYtelseMedNavn: InntektArbeidYtelse = {
+  // @ts-ignore
   arbeidsforhold: [
-    // @ts-ignore
     {
       navn: 'Bedrift AS',
-      arbeidsgiverIdentifikator: '999',
+      arbeidsgiverIdentifiktorGUI: orgNr1,
+      eksternArbeidsforholdId: arbForhId1,
+      arbeidsforholdId: arbForhId1,
+    },
+    {
+      navn: 'Bedrift AS',
+      arbeidsgiverIdentifiktorGUI: orgNr1,
+      eksternArbeidsforholdId: arbForhId2,
+      arbeidsforholdId: arbForhId2,
     },
   ],
 };

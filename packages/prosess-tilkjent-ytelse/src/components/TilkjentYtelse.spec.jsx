@@ -5,10 +5,13 @@ import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { TilkjentYtelse } from './TilkjentYtelse';
 
+const getKodeverknavn = () => {};
+
 describe('<TilkjentYtelse>', () => {
   it('skall innehålla korrekt antal felter', () => {
     const wrapper = shallow(
       <TilkjentYtelse
+        getKodeverknavn={getKodeverknavn}
         items={[
           {
             id: 1,

@@ -14,7 +14,7 @@ import { buildInitialValues, VedtakForm } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../i18n';
 
 describe('<VedtakForm>', () => {
   const sprakkode = {

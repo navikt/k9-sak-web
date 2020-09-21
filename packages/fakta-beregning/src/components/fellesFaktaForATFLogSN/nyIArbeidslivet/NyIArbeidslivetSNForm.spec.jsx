@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 
 import NyIArbeidslivetSNForm from './NyIArbeidslivetSNForm';
-import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-fakta-beregning';
+import shallowWithIntl from '../../../../i18n';
 
 describe('<NyIArbeidslivetSNForm>', () => {
   it('skal teste at korrekt antall radioknapper vises med korrekte props', () => {

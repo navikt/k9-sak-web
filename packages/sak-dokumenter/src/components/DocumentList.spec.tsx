@@ -8,7 +8,7 @@ import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components'
 import { FormattedMessage } from 'react-intl';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import DocumentList from './DocumentList';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-dokumenter';
+import shallowWithIntl from '../../i18n';
 
 describe('<DocumentList>', () => {
   it('skal vise to dokumenter i liste', () => {

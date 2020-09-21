@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 
 import VurderMilitaer, { vurderMilitaerField } from './VurderMilitaer';
-import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-fakta-beregning';
+import shallowWithIntl from '../../../../i18n';
 
 const mockBGMedStatus = mili => ({
   vurderMilitaer: {

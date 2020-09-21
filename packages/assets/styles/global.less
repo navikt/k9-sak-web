@@ -47,6 +47,7 @@ som fra core/og muligen import fra alla andra komponenter
 
 :global(.vis-timeline) {
   border: 0;
+  overflow: inherit !important; // stylelint-disable-line declaration-no-important
 }
 
 :global(.currentDate) {
@@ -179,8 +180,10 @@ som fra core/og muligen import fra alla andra komponenter
 :global(.gradert) {
   @lClr: @white;
   @brPnt: 20%;
-
-  background: @navGronn repeating-linear-gradient(45deg, @lClr, @lClr @brPnt, transparent @brPnt, transparent 50%, @lClr 50%); // stylelint-disable-line max-line-length
+  /* stylelint-disable */
+  background: @navGronn
+    repeating-linear-gradient(45deg, @lClr, @lClr @brPnt, transparent @brPnt, transparent 50%, @lClr 50%);
+  /* stylelint-enable */
   background-size: 12px 12px;
   opacity: 0.9;
 }
@@ -505,7 +508,7 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
   }
 }
 
-:global([class^="vis-custom-time barndod"]) {
+:global([class^='vis-custom-time barndod']) {
   background-color: black;
   color: white;
   pointer-events: none;
@@ -521,6 +524,11 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
     top: 0; // lesshint-disable zeroUnit
     width: 80px;
   }
+}
+
+.nav-frontend-tabs__tab-inner.harAksjonspunkt {
+  border-top-color: @navOransjeLighten60 !important; // stylelint-disable-line declaration-no-important
+  border-top-width: 5px !important; // stylelint-disable-line declaration-no-important
 }
 
 .snakkeboble {

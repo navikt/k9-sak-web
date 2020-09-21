@@ -1,30 +1,27 @@
 import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { Arbeidsforhold, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Table, TableRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
+import Panel from 'nav-frontend-paneler';
 import styled from 'styled-components';
 import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import { joinNonNullStrings, calcDays, convertHoursToDays } from '@fpsak-frontend/utils';
+import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
 import Uttaksperiode from '../dto/Uttaksperiode';
 import Utfalltype, { UtfallEnum } from '../dto/Utfall';
 import StyledColumn from './StyledColumn';
 import Vilkår, { VilkårEnum } from '../dto/Vilkår';
+import styles from './aktivitetTabell.less';
 
 interface AktivitetTabellProps {
-  arbeidsforhold: AktivitetArbeidsforhold;
+  arbeidsforhold?: Arbeidsforhold;
+  arbeidsforholdtypeKode: string;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
-}
-
-export interface AktivitetArbeidsforhold {
-  organisasjonsnummer: string;
-  type: string;
-  navn?: string;
 }
 
 const periodevisning = (periode: string): string => {
@@ -34,7 +31,7 @@ const periodevisning = (periode: string): string => {
 
 const antallDager = (periode: string): string => {
   const [fom, tom] = periode.split('/');
-  return calcDays(fom, tom);
+  return calcDays(fom, tom, false);
 };
 
 const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => {
@@ -110,6 +107,7 @@ const arbeidsforholdSist = (_, [vilkår_2]: [Vilkår, Utfalltype]): number =>
 
 const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   arbeidsforhold,
+  arbeidsforholdtypeKode,
   uttaksperioder,
   aktivitetsstatuser,
 }) => {
@@ -124,17 +122,15 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   };
 
   const arbeidsforholdType: string =
-    aktivitetsstatuser.find(aktivitetsstatus => aktivitetsstatus.kode === arbeidsforhold.type)?.navn ||
-    arbeidsforhold.type;
-  const { navn } = arbeidsforhold;
-  let beskrivelse = arbeidsforholdType;
-  if (navn) {
-    beskrivelse += `, ${navn}`;
-  }
-  beskrivelse += ` (${arbeidsforhold.organisasjonsnummer})`;
+    aktivitetsstatuser.find(aktivitetsstatus => aktivitetsstatus.kode === arbeidsforholdtypeKode)?.navn ||
+    arbeidsforholdtypeKode;
+
+  const beskrivelse = arbeidsforhold
+    ? `${arbeidsforholdType}, ${utledArbeidsforholdNavn(arbeidsforhold)}`
+    : arbeidsforholdType;
 
   return (
-    <div key={joinNonNullStrings(Object.values(arbeidsforhold))}>
+    <Panel border className={styles.aktivitetTabell}>
       <Element>{beskrivelse}</Element>
       <Table
         suppliedHeaders={
@@ -234,7 +230,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
           );
         })}
       </Table>
-    </div>
+    </Panel>
   );
 };
 

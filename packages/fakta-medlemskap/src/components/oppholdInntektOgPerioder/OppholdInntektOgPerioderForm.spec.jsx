@@ -7,26 +7,28 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { OppholdInntektOgPerioderForm, transformValues } from './OppholdInntektOgPerioderForm';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
+import shallowWithIntl from '../../../i18n';
 
 const perioder = [];
 
 describe('<OppholdInntektOgPerioderForm>', () => {
   it('skal vise informasjon uten editeringsmuligheter når det ikke finnes aksjonspunkter', () => {
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
-      {...reduxFormPropsMock}
-      initialValues={{}}
-      intl={intlMock}
-      aksjonspunkter={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter={false}
-      submittable
-      isRevurdering={false}
-      perioder={perioder}
-      readOnly
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <OppholdInntektOgPerioderForm
+        {...reduxFormPropsMock}
+        initialValues={{}}
+        intl={intlMock}
+        aksjonspunkter={[]}
+        openInfoPanels={['medlemskapsvilkaret']}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter={false}
+        submittable
+        isRevurdering={false}
+        perioder={perioder}
+        readOnly
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
@@ -50,20 +52,21 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
-      {...reduxFormPropsMock}
-      initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
-      intl={intlMock}
-      aksjonspunkter={[bosattAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly={false}
-      isRevurdering={false}
-      alleMerknaderFraBeslutter={{}}
-    />);
-
+    const wrapper = shallowWithIntl(
+      <OppholdInntektOgPerioderForm
+        {...reduxFormPropsMock}
+        initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
+        intl={intlMock}
+        aksjonspunkter={[bosattAksjonspunkt]}
+        openInfoPanels={['omsorgsvilkaaret']}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        submittable
+        readOnly={false}
+        isRevurdering={false}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
@@ -90,21 +93,28 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
-      {...reduxFormPropsMock}
-      initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE}`]: 'test', begrunnelse: 'test' }}
-      intl={intlMock}
-      aksjonspunkter={[periodeAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly={false}
-      isRevurdering={false}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <OppholdInntektOgPerioderForm
+        {...reduxFormPropsMock}
+        initialValues={{
+          [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE}`]: 'test',
+          begrunnelse: 'test',
+        }}
+        intl={intlMock}
+        aksjonspunkter={[periodeAksjonspunkt]}
+        openInfoPanels={['omsorgsvilkaaret']}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        submittable
+        readOnly={false}
+        isRevurdering={false}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
-    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.GyldigMedlemFolketrygden');
+    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql(
+      'MedlemskapInfoPanel.GyldigMedlemFolketrygden',
+    );
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
@@ -126,21 +136,25 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
-      {...reduxFormPropsMock}
-      initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}`]: 'test', begrunnelse: 'test' }}
-      intl={intlMock}
-      aksjonspunkter={[oppholdsrettAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly={false}
-      isRevurdering={false}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <OppholdInntektOgPerioderForm
+        {...reduxFormPropsMock}
+        initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}`]: 'test', begrunnelse: 'test' }}
+        intl={intlMock}
+        aksjonspunkter={[oppholdsrettAksjonspunkt]}
+        openInfoPanels={['omsorgsvilkaaret']}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        submittable
+        readOnly={false}
+        isRevurdering={false}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
-    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.EOSBorgerMedOppholdsrett');
+    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql(
+      'MedlemskapInfoPanel.EOSBorgerMedOppholdsrett',
+    );
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
@@ -162,25 +176,28 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
-      {...reduxFormPropsMock}
-      initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}`]: 'test', begrunnelse: 'test' }}
-      intl={intlMock}
-      aksjonspunkter={[lovligOppholdAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly={false}
-      isRevurdering={false}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <OppholdInntektOgPerioderForm
+        {...reduxFormPropsMock}
+        initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}`]: 'test', begrunnelse: 'test' }}
+        intl={intlMock}
+        aksjonspunkter={[lovligOppholdAksjonspunkt]}
+        openInfoPanels={['omsorgsvilkaaret']}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        submittable
+        readOnly={false}
+        isRevurdering={false}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
-    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold');
+    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql(
+      'MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold',
+    );
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
-
 
   it('skal avklare fortsatt medlemskap når en har dette aksjonspunktet', () => {
     const fortsattMedlemskapAksjonspunkt = {
@@ -199,25 +216,28 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
-      {...reduxFormPropsMock}
-      initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP}`]: 'test', begrunnelse: 'test' }}
-      intl={intlMock}
-      aksjonspunkter={[fortsattMedlemskapAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly={false}
-      isRevurdering={false}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallowWithIntl(
+      <OppholdInntektOgPerioderForm
+        {...reduxFormPropsMock}
+        initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP}`]: 'test', begrunnelse: 'test' }}
+        intl={intlMock}
+        aksjonspunkter={[fortsattMedlemskapAksjonspunkt]}
+        openInfoPanels={['omsorgsvilkaaret']}
+        toggleInfoPanelCallback={sinon.spy()}
+        hasOpenAksjonspunkter
+        submittable
+        readOnly={false}
+        isRevurdering={false}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
-    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.HarFortsattMedlemskap');
+    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql(
+      'MedlemskapInfoPanel.HarFortsattMedlemskap',
+    );
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
-
 
   it('skal kun avklare aksjonspunkt som er aktive', () => {
     const lovligOppholdAksjonspunkt = {

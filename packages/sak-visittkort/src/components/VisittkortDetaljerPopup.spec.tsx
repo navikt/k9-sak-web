@@ -11,7 +11,7 @@ import region from '@fpsak-frontend/kodeverk/src/region';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-visittkort';
+import shallowWithIntl from '../../i18n';
 
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 

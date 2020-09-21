@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import Popover from '@navikt/nap-popover';
 import { Knapp } from 'nav-frontend-knapper';
 
-import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../i18n';
 import MenySakIndex from './MenySakIndex';
 import MenyData from './MenyData';
 

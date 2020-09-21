@@ -4,7 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { expect } from 'chai';
 import React from 'react';
 import sinon from 'sinon';
-import shallowWithIntl from '../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
+import shallowWithIntl from '../i18n';
 import BeregningsgrunnlagProsessIndex from './BeregningsgrunnlagProsessIndex';
 import BeregningFP from './components/BeregningFP';
 

@@ -27,6 +27,7 @@ class PanelDef extends ProsessStegPanelDef {
     frisinnBehandlingApi.TILBAKEKREVINGVALG,
     frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
     frisinnBehandlingApi.VEDTAK_VARSEL,
+    frisinnBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
   ];
 
   getOverstyrVisningAvKomponent = () => true;

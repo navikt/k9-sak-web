@@ -52,7 +52,11 @@ const vilk책rHarOverlappendePerioderIInfotrygd = (vurderteVilk책r: VurderteVilk�
     ([vilk책r, utfall]) => vilk책r === Vilk책rEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
   );
 
-export const FormContent: FunctionComponent<FormContentProps> = ({ handleSubmit, aktiviteter, isAksjonspunktOpen }) => {
+export const FormContent: FunctionComponent<FormContentProps> = ({
+  handleSubmit,
+  aktiviteter = [],
+  isAksjonspunktOpen,
+}) => {
   const uavklartePerioder = useMemo(
     () =>
       aktiviteter

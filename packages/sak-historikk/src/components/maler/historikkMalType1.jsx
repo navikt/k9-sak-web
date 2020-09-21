@@ -67,6 +67,7 @@ export default HistorikkMalType1;
  | FORSLAG_VEDTAK             |
  | FORSLAG_VEDTAK_UTEN_TOTRINN|
  | VEDTAK_FATTET              |
+ | VEDTAK_FATTET_AUTOMATISK   |
  | OVERSTYRT (hvis beslutter) |
  | REGISTRER_OM_VERGE         |
  +----------------------------+

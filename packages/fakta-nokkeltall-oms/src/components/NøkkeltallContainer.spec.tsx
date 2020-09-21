@@ -1,7 +1,7 @@
 import Uttaksperiode from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '../../i18n/intl-enzyme-test-helper-nøkkeltall';
+import { shallowWithIntl } from '../../i18n';
 import NøkkeltallContainer from './NøkkeltallContainer';
 import ForbrukteDager from './ForbrukteDager';
 

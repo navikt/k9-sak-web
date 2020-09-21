@@ -9,7 +9,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
+import shallowWithIntl from '../../i18n';
 
 describe('<MedlemskapInfoPanel>', () => {
   it('skal vise form for startdato for foreldrepengerperioden når en har overstyr-aksjonspunktet for dette', () => {

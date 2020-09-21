@@ -3,7 +3,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { expect } from 'chai';
 import React from 'react';
 import sinon from 'sinon';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medisinsk-vilkar';
+import shallowWithIntl from '../../i18n';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
 import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
 import Legeerklaering from './Legeerklaering';

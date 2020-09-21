@@ -31,6 +31,7 @@ export {
   ACCEPTED_DATE_INPUT_FORMATS,
 } from './src/formats';
 export { default as guid } from './src/guid';
+export { default as utledArbeidsforholdNavn } from './src/arbeidsforholdUtils';
 export { replaceNorwegianCharacters, getLanguageCodeFromSprakkode } from './src/languageUtils';
 export {
   notNull,

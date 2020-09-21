@@ -7,7 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { TilkjentYtelsePanelImpl } from './TilkjentYtelsePanel';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-tilkjent-ytelse';
+import shallowWithIntl from '../../i18n';
 
 const tilbaketrekkAP = {
   definisjon: {
@@ -17,6 +17,16 @@ const tilbaketrekkAP = {
     kode: 'OPPR',
   },
   begrunnelse: undefined,
+};
+
+const getKodeverknavn = kodeverk => {
+  if (kodeverk.kode === aktivitetStatuser.ARBEIDSTAKER) {
+    return 'Arbeidstaker';
+  }
+  if (kodeverk.kode === aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE) {
+    return 'Selvstendig næringsdrivende';
+  }
+  return '';
 };
 
 describe('<TilkjentYtelsePanelImpl>', () => {
@@ -33,7 +43,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         stonadskontoer={null}
         submitCallback={sinon.spy()}
         readOnlySubmitButton
-        alleKodeverk={{}}
+        getKodeverknavn={getKodeverknavn}
         behandlingId={1}
         behandlingVersjon={1}
       />,
@@ -57,7 +67,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         submitCallback={sinon.spy()}
         readOnlySubmitButton
         vurderTilbaketrekkAP={tilbaketrekkAP}
-        alleKodeverk={{}}
+        getKodeverknavn={getKodeverknavn}
         behandlingId={1}
         behandlingVersjon={1}
       />,
