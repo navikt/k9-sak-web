@@ -49,3 +49,6 @@ spec:
     # setter denne til å peke på k9-sak, inntil k9-tilbake instansen er oppe i prod
     - name: APP_URL_K9TILBAKE
       value: "http://k9-sak"
+    # setter denne til å peke på k9-sak, inntil diagnosekode-apiinstansen er oppe i prod
+    - name: APP_DIAGNOSEKODER
+      value: "http://k9-sak"

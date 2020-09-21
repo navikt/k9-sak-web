@@ -59,6 +59,14 @@ const options = {
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9TILBAKE,
     },
+    '/k9/diagnosekoder': {
+      target: process.env.APP_URL_DIAGNOSEKODER || 'http://localhost:8300',
+      pathRewrite: {
+        '^/k9': '',
+      },
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_DIAGNOSEKODER,
+    },
   },
   publicPath: config.output.publicPath,
   hot: true,

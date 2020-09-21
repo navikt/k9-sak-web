@@ -49,3 +49,5 @@ spec:
       value: 'http://k9-klage'
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake"
+    - name: APP_DIAGNOSEKODER
+      value: "http://diagnosekode-api"
