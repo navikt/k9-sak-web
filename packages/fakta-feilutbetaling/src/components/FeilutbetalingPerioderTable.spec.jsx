@@ -26,16 +26,15 @@ const mockProps = {
   årsaker: [],
   formName: 'FaktaFeilutbetalingForm',
   readOnly: false,
-  resetFields: sinon.spy(),
+  onChangeÅrsak: sinon.spy(),
+  onChangeUnderÅrsak: sinon.spy(),
   behandlingId: 1,
   behandlingVersjon: 1,
 };
 
 describe('<FeilutbetalingPerioderTable>', () => {
   it('skal rendre FeilutbetalingInfoPanel', () => {
-    const wrapper = shallow(<FeilutbetalingPerioderTable
-      {...mockProps}
-    />);
+    const wrapper = shallow(<FeilutbetalingPerioderTable {...mockProps} />);
 
     const table = wrapper.find('Table');
     expect(table).has.length(1);

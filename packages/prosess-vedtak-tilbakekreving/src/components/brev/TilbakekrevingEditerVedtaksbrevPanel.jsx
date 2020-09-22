@@ -6,6 +6,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
 import vedtaksbrevAvsnittPropType from '../../propTypes/vedtaksbrevAvsnittPropType';
 import underavsnittType from '../../kodeverk/avsnittType';
@@ -27,11 +28,12 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
       <FormattedMessage id="TilbakekrevingVedtak.Vedtaksbrev" />
     </Undertittel>
     <VerticalSpacer eightPx />
-    {vedtaksbrevAvsnitt.map((avsnitt) => {
+    {vedtaksbrevAvsnitt.map(avsnitt => {
       const underavsnitter = avsnitt.underavsnittsliste;
       const periode = `${avsnitt.fom}_${avsnitt.tom}`;
-      const harPeriodeSomManglerObligatoriskVerdi = perioderSomIkkeHarUtfyltObligatoriskVerdi.some((p) => p === periode);
-      const visApen = avsnitt.avsnittstype === underavsnittType.OPPSUMMERING && fritekstOppsummeringPakrevdMenIkkeUtfylt;
+      const harPeriodeSomManglerObligatoriskVerdi = perioderSomIkkeHarUtfyltObligatoriskVerdi.some(p => p === periode);
+      const visApen =
+        avsnitt.avsnittstype === underavsnittType.OPPSUMMERING && fritekstOppsummeringPakrevdMenIkkeUtfylt;
       return (
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
           <Ekspanderbartpanel
@@ -40,23 +42,19 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
             tag="h2"
             apen={harPeriodeSomManglerObligatoriskVerdi || visApen}
           >
-            {underavsnitter.map((underavsnitt) => (
+            {underavsnitter.map(underavsnitt => (
               <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
-                {underavsnitt.overskrift && (
-                  <Element>
-                    {underavsnitt.overskrift}
-                  </Element>
-                )}
-                {underavsnitt.brødtekst && (
-                  <Normaltekst>
-                    {underavsnitt.brødtekst}
-                  </Normaltekst>
-                )}
+                {underavsnitt.overskrift && <Element>{underavsnitt.overskrift}</Element>}
+                {underavsnitt.brødtekst && <Normaltekst>{underavsnitt.brødtekst}</Normaltekst>}
                 {underavsnitt.fritekstTillatt && (
                   <>
                     <VerticalSpacer eightPx />
                     <TilbakekrevingVedtakUtdypendeTekstPanel
-                      type={underavsnitt.underavsnittstype ? `${periode}.${underavsnitt.underavsnittstype}` : avsnitt.avsnittstype}
+                      type={
+                        underavsnitt.underavsnittstype
+                          ? `${periode}.${underavsnitt.underavsnittstype}`
+                          : avsnitt.avsnittstype
+                      }
                       formName={formName}
                       readOnly={readOnly}
                       behandlingId={behandlingId}
@@ -90,22 +88,28 @@ TilbakekrevingEditerVedtaksbrevPanel.defaultProps = {
   fritekstOppsummeringPakrevdMenIkkeUtfylt: false,
 };
 
-TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) => vedtaksbrevAvsnitt
-  .filter((avsnitt) => avsnitt.underavsnittsliste.some((underavsnitt) => underavsnitt.fritekst))
-  .reduce((acc, avsnitt) => {
-    const underavsnitter = avsnitt.underavsnittsliste;
-    const friteksterForUnderavsnitt = underavsnitter
-      .filter((underavsnitt) => underavsnitt.fritekst)
-      .reduce((underAcc, underavsnitt) => ({
-        ...underAcc,
-        [underavsnitt.underavsnittstype ? underavsnitt.underavsnittstype : avsnitt.avsnittstype]: underavsnitt.fritekst,
-      }), {});
+TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = vedtaksbrevAvsnitt =>
+  vedtaksbrevAvsnitt
+    .filter(avsnitt => avsnitt.underavsnittsliste.some(underavsnitt => underavsnitt.fritekst))
+    .reduce((acc, avsnitt) => {
+      const underavsnitter = avsnitt.underavsnittsliste;
+      const friteksterForUnderavsnitt = underavsnitter
+        .filter(underavsnitt => underavsnitt.fritekst)
+        .reduce(
+          (underAcc, underavsnitt) => ({
+            ...underAcc,
+            [underavsnitt.underavsnittstype ? underavsnitt.underavsnittstype : avsnitt.avsnittstype]: decodeHtmlEntity(
+              underavsnitt.fritekst,
+            ),
+          }),
+          {},
+        );
 
-    const nyeFritekster = avsnitt.fom
-      ? { [`${avsnitt.fom}_${avsnitt.tom}`]: friteksterForUnderavsnitt }
-      : friteksterForUnderavsnitt;
+      const nyeFritekster = avsnitt.fom
+        ? { [`${avsnitt.fom}_${avsnitt.tom}`]: friteksterForUnderavsnitt }
+        : friteksterForUnderavsnitt;
 
-    return { ...acc, ...nyeFritekster };
-  }, {});
+      return { ...acc, ...nyeFritekster };
+    }, {});
 
 export default TilbakekrevingEditerVedtaksbrevPanel;

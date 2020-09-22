@@ -17,7 +17,6 @@ import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
 
-import { getBehandlingerUuidsMappedById } from '@fpsak-frontend/sak-app/src/behandling/selectors/behandlingerSelectors';
 import styles from './nyBehandlingModal.less';
 
 const createOptions = (bt, enabledBehandlingstyper, intl) => {
@@ -32,7 +31,7 @@ const createOptions = (bt, enabledBehandlingstyper, intl) => {
 interface OwnProps {
   cancelEvent: () => void;
   behandlingTyper: KodeverkMedNavn[];
-  behandlingType?: string;
+  valgtBehandlingTypeKode?: string;
   behandlingArsakTyper: KodeverkMedNavn[];
   enabledBehandlingstyper: KodeverkMedNavn[];
   behandlingerSomKanOpprettes: { [behandlingstype: string]: boolean };
@@ -42,6 +41,7 @@ interface OwnProps {
   uuid?: string;
   saksnummer: string;
   erTilbakekrevingAktivert: boolean;
+  erTilbakekreving: boolean;
 }
 
 /**
@@ -55,7 +55,6 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
   cancelEvent,
   intl,
   behandlingTyper,
-  behandlingType,
   behandlingArsakTyper,
   enabledBehandlingstyper,
   behandlingUuid,
@@ -64,13 +63,15 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
   uuid,
   saksnummer,
   erTilbakekrevingAktivert,
+  valgtBehandlingTypeKode,
+  erTilbakekreving,
 }) => {
   useEffect(() => {
     if (erTilbakekrevingAktivert) {
       if (uuid !== undefined) {
         sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid });
       }
-      if (behandlingUuid !== undefined) {
+      if (erTilbakekreving) {
         sjekkOmTilbakekrevingRevurderingKanOpprettes({ uuid: behandlingUuid });
       }
     }
@@ -107,7 +108,7 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
               bredde="l"
             />
             <VerticalSpacer eightPx />
-            {behandlingType === bType.FORSTEGANGSSOKNAD && (
+            {valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD && (
               <CheckboxField
                 name="nyBehandlingEtterKlage"
                 label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyBehandlingEtterKlage' })}
@@ -236,13 +237,6 @@ export const getEnabledBehandlingstyper = createSelector(
     ),
 );
 
-const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector(
-  [(ownProps: Props) => ownProps.behandlingType],
-  behandlingType =>
-    behandlingType &&
-    (behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING),
-);
-
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => {
     const klageOnlyValues =
@@ -264,11 +258,11 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     behandlingTyper: getBehandlingTyper(ownProps),
     enabledBehandlingstyper: getEnabledBehandlingstyper(ownProps),
     uuid: ownProps.uuidForSistLukkede,
-    behandlingUuid: isTilbakekrevingEllerTilbakekrevingRevurdering(ownProps)
-      ? getBehandlingerUuidsMappedById(initialState)[ownProps.behandlingId]
-      : undefined,
     behandlingArsakTyper: getBehandlingAarsaker(state, ownProps),
-    behandlingType: formValueSelector(formName)(state, 'behandlingType'),
+    valgtBehandlingTypeKode: formValueSelector(formName)(state, 'behandlingType'),
+    erTilbakekreving:
+      ownProps.behandlingType.kode === bType.TILBAKEKREVING ||
+      ownProps.behandlingType.kode === bType.TILBAKEKREVING_REVURDERING,
   });
 };
 

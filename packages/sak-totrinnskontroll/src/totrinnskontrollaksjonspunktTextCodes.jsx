@@ -72,4 +72,6 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET]: 'ToTrinnsForm.Opptjening.VurderOpptjeningsvilkåret',
 };
 
+export const totrinnsTilbakekrevingkontrollaksjonspunktTextCodes = {};
+
 export default totrinnskontrollaksjonspunktTextCodes;

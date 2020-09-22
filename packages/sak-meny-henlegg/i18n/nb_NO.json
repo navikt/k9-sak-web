@@ -6,6 +6,7 @@
   "HenleggBehandlingModal.ArsakField": "Velg årsak",
   "HenleggBehandlingModal.ArsakFieldDefaultValue": "Velg årsak til henleggelse",
   "HenleggBehandlingModal.BegrunnelseField": "Begrunnelse",
+  "HenleggBehandlingModal.Fritekst": "Fritekst til brev",
   "HenleggBehandlingModal.HenleggBehandlingSubmit": "Henlegg behandling",
   "HenleggBehandlingModal.Avbryt": "Avbryt",
   "HenleggBehandlingModal.SokerInformeres": "Informer søker",
@@ -18,6 +19,9 @@
   "HenlagtBehandlingModal.Ok": "OK",
 
   "HENLAGT_SØKNAD_TRUKKET": "Søknaden er trukket",
+  "HENLAGT_FEILOPPRETTET": "Behandlingen er feilaktig opprettet",
+  "HENLAGT_FEILOPPRETTET_MED_BREV": "Feilaktig opprettet - med henleggelsesbrev",
+  "HENLAGT_FEILOPPRETTET_UTEN_BREV": "Feilaktig opprettet - uten henleggelsesbrev",
   "HENLAGT_FEILOPPRETTET": "Behandlingen er feilaktig opprettet",
   "HENLAGT_KLAGE_TRUKKET": "Klagen er trukket",
   "HENLAGT_INNSYN_TRUKKET": "Innsynskrav er trukket",
