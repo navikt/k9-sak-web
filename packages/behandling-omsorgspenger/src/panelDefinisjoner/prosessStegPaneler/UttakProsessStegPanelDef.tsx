@@ -32,6 +32,7 @@ class PanelDef extends ProsessStegPanelDef {
   getData = ({ forbrukteDager, aksjonspunkterForSteg }) => ({
     årskvantum: forbrukteDager,
     aksjonspunkterForSteg,
+    uttaksperioder: forbrukteDager.sisteUttaksplan.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
   });
 }
 
