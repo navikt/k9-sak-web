@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { TabsPure } from 'nav-frontend-tabs';
 import moment from 'moment';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import FordelBeregningsgrunnlagPanel from './components/FordelBeregningsgrunnlagPanel';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from './propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
