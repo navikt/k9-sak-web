@@ -49,7 +49,7 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]
     }
   }
 
-  // todo uttak her må man sjekke uttaksperioder i tilegg
+  // uttak må sjekke uttaksperioder i tillegg
   if ((uttaksperioder || []).length > 0) {
     const alleUttaksperioderAvslått = uttaksperioder.every(p => p.utfall === UtfallEnum.AVSLÅTT);
     const alleUttaksperioderInnvilget = uttaksperioder.every(p => p.utfall === UtfallEnum.INNVILGET);
