@@ -56,15 +56,17 @@ jobs:
             github.issues.createComment({...issue,
                                     body: 'promote til ${{ github.event.client_payload.slash_command.args }} utført'})
             github.issues.addLabels({...issue, labels: ['deployment','${{ env.CLUSTER }}-${{ env.NAMESPACE }}']})
-      # kommenterer dette ut for nå da AUTH_TOKEN må genereres i Sentry av noen som har rettigheter
-      #- name: Send versjonsnummer og source maps til Sentry
-      #  if: success()
-      #  uses: getsentry/action-release@v1.0.0
-      #  env:
-      #    SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      #    SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      #    SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-      #  with:
-      #    environment: "app-q1.adeo.no"
-      #    version: ${{ env.TAG }}
-      #    sourcemaps: "./dist"
+        #FIX fikse riktig enviroment, i sentry så er det app-q1.adeo.no og app.adeo.no. sjekk om man kan bruke ${{ env.CLUSTER }}
+      - name: Send versjonsnummer og source maps til Sentry
+        if: success()
+        uses: getsentry/action-release@v1.0.2
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_URL: ${{ secrets.SENTRY_URL }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        with:
+          environment: if (${{ env.CLUSTER }} == 'prod-fss') { 'app.adeo.no'  } else  { 'app-q1.adeo.no' }
+          version: ${{ env.TAG }}
+          sourcemaps: './dist'
