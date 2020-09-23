@@ -93,6 +93,7 @@ const AvklareAktiviteterPanelContent = props => {
     aktivtBeregningsgrunnlagIndex,
     fields,
     beregningsgrunnlag,
+    initializeAktiviteter,
     submitEnabled,
     ...formProps
   } = props;
@@ -125,7 +126,7 @@ const AvklareAktiviteterPanelContent = props => {
                 name={`${field}.${MANUELL_OVERSTYRING_FIELD}`}
                 label={{ id: 'AvklareAktiviteter.ManuellOverstyring' }}
                 readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) || readOnly}
-                onChange={() => this.initializeAktiviteter()}
+                onChange={initializeAktiviteter}
               />
             </div>
           )}
