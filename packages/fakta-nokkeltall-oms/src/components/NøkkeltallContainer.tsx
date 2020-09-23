@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { periodeErIKoronaperioden } from '@k9-sak-web/prosess-aarskvantum-oms/src/components/utils';
-import Uttaksperiode from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
+import { Uttaksperiode } from '@k9-sak-web/types';
 import { FormattedMessage } from 'react-intl';
 import { Image } from '@fpsak-frontend/shared-components';
 import nøkkelhull from '@fpsak-frontend/assets/images/nøkkelhull.svg';
