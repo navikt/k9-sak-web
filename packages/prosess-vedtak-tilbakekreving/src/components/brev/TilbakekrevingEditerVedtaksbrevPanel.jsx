@@ -37,7 +37,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
       return (
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
           <Ekspanderbartpanel
-            className={harPeriodeSomManglerObligatoriskVerdi ? styles.panelMedGulmarkering : styles.panel}
+            className={harPeriodeSomManglerObligatoriskVerdi || visApen ? styles.panelMedGulmarkering : styles.panel}
             tittel={avsnitt.overskrift ? avsnitt.overskrift : ''}
             tag="h2"
             apen={harPeriodeSomManglerObligatoriskVerdi || visApen}
