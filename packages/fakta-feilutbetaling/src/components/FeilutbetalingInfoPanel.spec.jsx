@@ -78,18 +78,21 @@ const feilutbetalingFakta = {
 };
 
 const alleKodeverk = {
-  [kodeverkTyper.BEHANDLING_AARSAK]: [
-    {
-      kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-      navn: 'Feil i lovanvendelse',
-      kodeverk: BEHANDLING_AARSAK_KODEVERK,
-    },
-  ],
   [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [
     {
       kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
       navn: 'Tilbakekreving inntrekk',
       kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+    },
+  ],
+};
+
+const fpsakKodeverk = {
+  [kodeverkTyper.BEHANDLING_AARSAK]: [
+    {
+      kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+      navn: 'Feil i lovanvendelse',
+      kodeverk: BEHANDLING_AARSAK_KODEVERK,
     },
   ],
   [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [
@@ -132,6 +135,7 @@ describe('<FeilutbetalingInfoPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={alleKodeverk}
+        fpsakKodeverk={fpsakKodeverk}
       />,
     );
 

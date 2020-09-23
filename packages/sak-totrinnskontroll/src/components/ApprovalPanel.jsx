@@ -4,11 +4,29 @@ import { FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import skjermlenkeCodes from '@k9-sak-web/konstanter/src/skjermlenkeCodes';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 
 import styles from './approvalPanel.less';
+
+const sorterteSkjermlenkeCodesForTilbakekreving = [
+  skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
+  skjermlenkeCodes.FORELDELSE,
+  skjermlenkeCodes.TILBAKEKREVING,
+  skjermlenkeCodes.VEDTAK,
+];
+
+const sorterTilbakekrevingContext = approvals =>
+  sorterteSkjermlenkeCodesForTilbakekreving.map(s => approvals.find(el => el.contextCode === s.kode)).filter(s => s);
+
+const håndterSpeiselleTegn = aksjonspunkter =>
+  aksjonspunkter.map(aksjonspunkt => ({
+    ...aksjonspunkt,
+    besluttersBegrunnelse: decodeHtmlEntity(aksjonspunkt.besluttersBegrunnelse),
+  }));
 
 export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke) => {
   if (toTrinnsBehandling) {
@@ -31,9 +49,13 @@ export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, c
           contextCode: context.skjermlenkeType,
           skjermlenke: createLocationForSkjermlenke(props.location, context.skjermlenkeType),
           skjermlenkeNavn: skjermlenkeTypeKodeverk.navn,
-          aksjonspunkter: context.totrinnskontrollAksjonspunkter,
+          aksjonspunkter: håndterSpeiselleTegn(context.totrinnskontrollAksjonspunkter),
         };
       });
+      if (props.erTilbakekreving) {
+        return totrinnsContext ? sorterTilbakekrevingContext(totrinnsContext) : null;
+      }
+
       return totrinnsContext || null;
     }
   }
@@ -161,6 +183,7 @@ export class ApprovalPanel extends Component {
                     behandlingKlageVurdering={behandlingKlageVurdering}
                     behandlingStatus={behandlingStatus}
                     alleKodeverk={alleKodeverk}
+                    erTilbakekreving={erTilbakekreving}
                   />
                 </div>
               </div>

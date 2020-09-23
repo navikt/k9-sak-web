@@ -10,7 +10,7 @@ import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import {AlertStripeInfo} from "nav-frontend-alertstriper";
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import ApprovalField from './ApprovalField';
 
 import styles from './ToTrinnsForm.less';
@@ -75,6 +75,7 @@ export const ToTrinnsFormImpl = ({
                     behandlingKlageVurdering={behandlingKlageVurdering}
                     behandlingStatus={behandlingStatus}
                     alleKodeverk={alleKodeverk}
+                    erTilbakekreving={erTilbakekreving}
                   />
                 </div>
               ))}
@@ -109,9 +110,9 @@ export const ToTrinnsFormImpl = ({
         )}
         {!harTilgjengeligeVedtaksbrev && (
           <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
-            <FormattedMessage id="ToTrinnsForm.IkkeVedtaksbrev"/>
+            <FormattedMessage id="ToTrinnsForm.IkkeVedtaksbrev" />
           </AlertStripeInfo>
-          )}
+        )}
       </div>
     </form>
   );

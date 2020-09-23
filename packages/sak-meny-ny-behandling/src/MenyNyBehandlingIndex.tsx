@@ -28,6 +28,7 @@ interface OwnProps {
   ytelseType: Kodeverk;
   saksnummer: string;
   behandlingId?: number;
+  behandlingUuid?: string;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
   lagNyBehandling: (saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data) => void;
@@ -48,6 +49,7 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   ytelseType,
   saksnummer,
   behandlingId,
+  behandlingUuid,
   behandlingVersjon,
   behandlingType,
   lagNyBehandling,
@@ -92,6 +94,7 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         revurderingArsaker={revurderingArsaker}
         behandlingType={behandlingType}
         behandlingId={behandlingId}
+        behandlingUuid={behandlingUuid}
         uuidForSistLukkede={uuidForSistLukkede}
         erTilbakekrevingAktivert={erTilbakekrevingAktivert}
         sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}

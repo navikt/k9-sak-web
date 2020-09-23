@@ -30,6 +30,13 @@ const historikkOpplysningTypeCodes = {
   SÆRLIG_GRUNNER_BEGRUNNELSE: {
     kode: 'SÆRLIG_GRUNNER_BEGRUNNELSE',
   },
+  KRAVGRUNNLAG_VEDTAK_ID: {
+    kode: 'KRAVGRUNNLAG_VEDTAK_ID',
+    feltId: 'historikk.opplysningtypeomkravgrunnlagvedtakid',
+  },
+  KRAVGRUNNLAG_STATUS: {
+    kode: 'KRAVGRUNNLAG_STATUS',
+  },
 };
 
 export default historikkOpplysningTypeCodes;

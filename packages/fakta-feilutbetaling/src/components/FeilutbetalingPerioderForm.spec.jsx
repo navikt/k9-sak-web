@@ -17,14 +17,13 @@ const mockProps = {
   elementId: 0,
   årsaker: [],
   readOnly: false,
-  resetFields: sinon.spy(),
+  onChangeÅrsak: sinon.spy(),
+  onChangeUnderÅrsak: sinon.spy(),
 };
 
 describe('<FeilutbetalingPerioderFormImpl>', () => {
   it('skal rendre FeilutbetalingInfoPanel', () => {
-    const wrapper = shallow(<FeilutbetalingPerioderFormImpl
-      {...mockProps}
-    />);
+    const wrapper = shallow(<FeilutbetalingPerioderFormImpl {...mockProps} />);
 
     const tableRow = wrapper.find('TableRow');
     expect(tableRow).has.length(1);
@@ -36,26 +35,28 @@ describe('<FeilutbetalingPerioderFormImpl>', () => {
 
   it('skal rendre underÅrsak selectfield hvis årsak har underÅrsaker', () => {
     const årsak = 'MEDLEMSKAP_VILKAARET_TYPE';
-    const årsaker = [{
-      kodeverk: 'MEDLEMSKAP_VILKAARET_TYPE',
-      årsak: 'Medlemskapsvilkåret §14-2',
-      hendelseType: {
-        kode: 'MEDLEMSKAP_VILKAARET_TYPE',
+    const årsaker = [
+      {
+        kodeverk: 'MEDLEMSKAP_VILKAARET_TYPE',
+        årsak: 'Medlemskapsvilkåret §14-2',
+        hendelseType: {
+          kode: 'MEDLEMSKAP_VILKAARET_TYPE',
+        },
+        hendelseUndertyper: [
+          {
+            kodeverk: 'MEDLEMSKAP_VILKAAR',
+            underÅrsak: 'Utvandret – fødsel',
+            underÅrsakKode: 'UTVANDRET_FODSEL',
+          },
+        ],
       },
-      hendelseUndertyper: [{
-        kodeverk: 'MEDLEMSKAP_VILKAAR',
-        underÅrsak: 'Utvandret – fødsel',
-        underÅrsakKode: 'UTVANDRET_FODSEL',
-      }],
-    }];
+    ];
     const props = {
       ...mockProps,
       årsak,
       årsaker,
     };
-    const wrapper = shallow(<FeilutbetalingPerioderFormImpl
-      {...props}
-    />);
+    const wrapper = shallow(<FeilutbetalingPerioderFormImpl {...props} />);
 
     const tableRow = wrapper.find('TableRow');
     expect(tableRow).has.length(1);

@@ -32,7 +32,8 @@ export const getAlleKodeverkForBehandlingstype = (behandlingTypeKode: string) =>
   switch (behandlingTypeKode) {
     case behandlingType.TILBAKEKREVING:
     case behandlingType.TILBAKEKREVING_REVURDERING:
-      return getAlleFpTilbakeKodeverk;
+      // Tilbakekreving bruker kodeverk både fra k9-sak og k9-tilbake. Henter k9-tilbake-spesifikke i BehandlingTilbakekrevingIndex.tsx.
+      return getAlleFpSakKodeverk;
     case behandlingType.KLAGE:
       return getAlleKlagekodeverk;
     default:
