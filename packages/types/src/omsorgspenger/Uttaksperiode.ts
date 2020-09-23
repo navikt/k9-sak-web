@@ -1,4 +1,4 @@
-import stringEnum from '@k9-sak-web/types/src/tsUtils';
+import stringEnum from '../tsUtils';
 
 export const VilkårEnum = stringEnum({
   OMSORGSVILKÅRET: 'OMSORGSVILKÅRET',
@@ -11,7 +11,7 @@ export const VilkårEnum = stringEnum({
   ARBEIDSFORHOLD: 'ARBEIDSFORHOLD',
 });
 
-type Vilkår = typeof VilkårEnum[keyof typeof VilkårEnum];
+export type Vilkår = typeof VilkårEnum[keyof typeof VilkårEnum];
 
 export const UtfallEnum = stringEnum({
   INNVILGET: 'INNVILGET',
@@ -19,7 +19,7 @@ export const UtfallEnum = stringEnum({
   UAVKLART: 'UAVKLART',
 });
 
-type Utfalltype = typeof UtfallEnum[keyof typeof UtfallEnum];
+export type Utfalltype = typeof UtfallEnum[keyof typeof UtfallEnum];
 
 export type Map<Key extends string | number, Value> = {
   [key in Key]?: Value;

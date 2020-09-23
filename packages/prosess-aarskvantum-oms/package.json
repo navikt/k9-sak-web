@@ -10,6 +10,7 @@
     "@fpsak-frontend/sak-app": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
+    "@k9-frontend/types": "1.0.0",
     "moment": "^2.24.0",
     "nav-frontend-alertstriper": "3.0.23",
     "nav-frontend-alertstriper-style": "2.0.17",

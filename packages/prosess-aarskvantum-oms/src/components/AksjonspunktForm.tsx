@@ -10,11 +10,8 @@ import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fps
 import { Element } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
+import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-web/types';
 import Aktivitet from '../dto/Aktivitet';
-import { UtfallEnum } from '../dto/Utfall';
-import { VilkårEnum } from '../dto/Vilkår';
-import { VurderteVilkår } from '../dto/Uttaksperiode';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];

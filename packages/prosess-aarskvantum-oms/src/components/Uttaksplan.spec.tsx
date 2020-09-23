@@ -1,11 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { Arbeidsforhold } from '@k9-sak-web/types';
+import { Arbeidsforhold, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../../i18n';
 import Uttaksplan from './Uttaksplan';
 import Aktivitet from '../dto/Aktivitet';
-import { UtfallEnum } from '../dto/Utfall';
-import { VilkårEnum } from '../dto/Vilkår';
 import AktivitetTabell from './AktivitetTabell';
 
 describe('Uttaksplan', () => {

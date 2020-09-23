@@ -33,4 +33,11 @@ export { default as FagsakPerson } from './src/fagsakPersonTsType';
 export { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
 export { default as BeregningsresultatUtbetalt } from './src/beregningsresultatUtbetaltTsType';
 
-export { Uttaksperiode, UtfallEnum } from './src/Uttaksperiode';
+export {
+  Uttaksperiode,
+  UtfallEnum,
+  Utfalltype,
+  Vilkår,
+  VurderteVilkår,
+  VilkårEnum,
+} from './src/omsorgspenger/Uttaksperiode';
