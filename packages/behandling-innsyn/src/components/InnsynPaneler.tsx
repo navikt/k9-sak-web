@@ -19,6 +19,7 @@ interface OwnProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
+  featureToggles: {};
 }
 
 const InnsynPaneler: FunctionComponent<OwnProps> = ({
@@ -33,6 +34,7 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
   settPaVent,
   hentBehandling,
   opneSokeside,
+  featureToggles,
 }) => {
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
@@ -57,6 +59,7 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
         dispatch={dispatch}
+        featureToggles={featureToggles}
       />
     </>
   );

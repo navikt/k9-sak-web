@@ -20,6 +20,7 @@ export const KlageBehandlingApiKeys = {
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   SAVE_KLAGE_VURDERING: 'SAVE_KLAGE_VURDERING',
   SAVE_REOPEN_KLAGE_VURDERING: 'SAVE_REOPEN_KLAGE_VURDERING',
+  DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -52,6 +53,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withRel('dokumentdata-lagre', KlageBehandlingApiKeys.DOKUMENTDATA_LAGRE)
   .build();
 
 const reducerName = 'dataContextKlageBehandling';

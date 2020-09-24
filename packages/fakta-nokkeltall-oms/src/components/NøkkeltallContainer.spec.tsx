@@ -1,4 +1,4 @@
-import Uttaksperiode from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
+import { Uttaksperiode } from '@k9-sak-web/types';
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '../../i18n';

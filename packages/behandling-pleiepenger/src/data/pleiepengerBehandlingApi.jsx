@@ -46,6 +46,7 @@ export const PleiepengerBehandlingApiKeys = {
   SYKDOM: 'SYKDOM',
   VEDTAK_VARSEL: 'VEDTAK_VARSEL',
   OMSORGEN_FOR: 'OMSORGEN_FOR',
+  DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -117,6 +118,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
 
   .build();
 
