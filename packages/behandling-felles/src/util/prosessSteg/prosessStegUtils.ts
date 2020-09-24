@@ -1,3 +1,4 @@
+import { featureToggle } from "@k9-sak-web/konstanter";
 import { SetStateAction } from 'react';
 import { Dispatch } from 'redux';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
@@ -167,7 +168,7 @@ export const getBekreftAksjonspunktCallback = (
       ),
     ).then(etterLagringCallback);
 
-  if (featureToggles?.['k9sak.aktiver-dokumentdata'] && api.DOKUMENTDATA_LAGRE) {
+  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && api.DOKUMENTDATA_LAGRE) {
     // TODO: Sende data til endepunktet
     return dispatch(api.DOKUMENTDATA_LAGRE.makeRestApiRequest()({})).then(saveAksjonspunkt);
   }
