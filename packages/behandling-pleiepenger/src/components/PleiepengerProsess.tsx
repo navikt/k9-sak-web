@@ -211,6 +211,7 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={pleiepengerBehandlingApi}
           dispatch={dispatch}
+          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

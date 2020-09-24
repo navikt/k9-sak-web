@@ -20,6 +20,7 @@ export const InnsynBehandlingApiKeys = {
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   INNSYN_DOKUMENTER: 'INNSYN_DOKUMENTER',
+  DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -45,6 +46,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* FPFORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withRel('dokumentdata-lagre', InnsynBehandlingApiKeys.DOKUMENTDATA_LAGRE)
   .build();
 
 const reducerName = 'dataContextInnsynBehandling';
