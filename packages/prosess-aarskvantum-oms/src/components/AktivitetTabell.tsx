@@ -1,6 +1,14 @@
 import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Arbeidsforhold, KodeverkMedNavn } from '@k9-sak-web/types';
+import {
+  Arbeidsforhold,
+  KodeverkMedNavn,
+  Utfalltype,
+  UtfallEnum,
+  VilkårEnum,
+  Uttaksperiode,
+  Vilkår,
+} from '@k9-sak-web/types';
 import { Table, TableRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
@@ -9,12 +17,10 @@ import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
+
 import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
-import Uttaksperiode from '../dto/Uttaksperiode';
-import Utfalltype, { UtfallEnum } from '../dto/Utfall';
 import StyledColumn from './StyledColumn';
-import Vilkår, { VilkårEnum } from '../dto/Vilkår';
 import styles from './aktivitetTabell.less';
 
 interface AktivitetTabellProps {
