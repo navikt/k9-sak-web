@@ -56,8 +56,9 @@ jobs:
             github.issues.createComment({...issue,
                                     body: 'promote til ${{ github.event.client_payload.slash_command.args }} utført'})
             github.issues.addLabels({...issue, labels: ['deployment','${{ env.CLUSTER }}-${{ env.NAMESPACE }}']})
-        #https://github.com/getsentry/action-release/issues/21
-        #TODO fikse riktig enviroment, i sentry så er det app-q1.adeo.no og app.adeo.no. ${{ env.CLUSTER }}
+      
+      #  https://github.com/getsentry/action-release/issues/21
+      #  TODO fikse riktig enviroment, i sentry så er det app-q1.adeo.no og app.adeo.no. ${{ env.CLUSTER }}
       #- name: Send versjonsnummer og source maps til Sentry
       #  if: success()
       #  uses: getsentry/action-release@v1.0.2
@@ -71,3 +72,4 @@ jobs:
       #    environment: 'app-q1.adeo.no'
       #    version: ${{ env.TAG }}
       #    sourcemaps: './dist'
+      
