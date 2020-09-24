@@ -25,6 +25,11 @@ const options = {
     }
   },
   proxy: {
+    '/k9/formidling/dokumentdata/**': {
+      target: process.env.APP_URL_DOKUMENTDATA || 'http://localhost:8294',
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_DOKUMENTDATA,
+    },
     '/k9/formidling/**': {
       target: process.env.APP_URL_K9FORMIDLING || 'http://localhost:8290',
       secure: false,

@@ -29,6 +29,7 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
   dispatch: Dispatch;
+  featureToggles: {};
 }
 
 const previewCallback = (dispatch, fagsak, behandling) => data => {
@@ -72,6 +73,7 @@ const InnsynProsess: FunctionComponent<OwnProps> = ({
   oppdaterBehandlingVersjon,
   opneSokeside,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -134,6 +136,7 @@ const InnsynProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={innsynBehandlingApi}
           dispatch={dispatch}
+          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

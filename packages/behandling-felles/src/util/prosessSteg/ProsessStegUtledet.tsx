@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum } from '@k9-sak-web/types';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -26,7 +26,7 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
-const finnErDelvisBehandlet = (vilkar: Vilkar[]) => {
+const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]) => {
   if (vilkar.length > 0) {
     const vilkarStatusCodes = [];
     vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
@@ -49,6 +49,17 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[]) => {
     }
   }
 
+  // uttak må sjekke uttaksperioder i tillegg
+  if ((uttaksperioder || []).length > 0) {
+    const alleUttaksperioderAvslått = uttaksperioder.every(p => p.utfall === UtfallEnum.AVSLÅTT);
+    const alleUttaksperioderInnvilget = uttaksperioder.every(p => p.utfall === UtfallEnum.INNVILGET);
+
+    if (alleUttaksperioderAvslått || alleUttaksperioderInnvilget) {
+      return false;
+    }
+
+    return true;
+  }
   return false;
 };
 
@@ -134,8 +145,10 @@ export class ProsessStegPanelUtledet {
   public getErReadOnly = (): boolean =>
     this.isReadOnlyCheck(this.getAksjonspunkterForPanel(), this.getVilkarForPanel());
 
-  public getErDelvisBehandlet = (): boolean =>
-    finnErDelvisBehandlet(this.prosessStegPanelDef.finnVilkarForSteg(this.vilkar));
+  public getErDelvisBehandlet = (): boolean => {
+    const { uttaksperioder } = this.getKomponentData();
+    return finnErDelvisBehandlet(this.prosessStegPanelDef.finnVilkarForSteg(this.vilkar), uttaksperioder);
+  };
 
   public getKomponentData = () => {
     const status = this.getStatus();
