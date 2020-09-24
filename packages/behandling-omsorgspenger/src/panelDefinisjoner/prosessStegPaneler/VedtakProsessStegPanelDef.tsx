@@ -52,7 +52,7 @@ class PanelDef extends ProsessStegPanelDef {
     beregningsgrunnlag,
     ytelseTypeKode: fagsakYtelseType.OMSORGSPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-    uttaksperioder: forbrukteDager?.sisteUttaksplan.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
+    uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
   });
 }
 
