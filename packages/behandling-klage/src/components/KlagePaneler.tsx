@@ -27,6 +27,7 @@ interface OwnProps {
     opprettet: string;
     avsluttet?: string;
   }[];
+  featureToggles: {};
 }
 
 const KlagePaneler: FunctionComponent<OwnProps> = ({
@@ -42,6 +43,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   hentBehandling,
   opneSokeside,
   alleBehandlinger,
+  featureToggles,
 }) => {
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
@@ -67,6 +69,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
         alleBehandlinger={alleBehandlinger}
         dispatch={dispatch}
         alleKodeverk={kodeverk}
+        featureToggles={featureToggles}
       />
     </>
   );

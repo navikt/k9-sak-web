@@ -118,6 +118,7 @@ export const getBekreftAksjonspunktCallback = (
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],
   api: { [name: string]: EndpointOperations },
+  featureToggles?: {},
 ) => aksjonspunktModels => {
   const models = aksjonspunktModels.map(ap => ({
     '@type': ap.kode,
@@ -155,13 +156,21 @@ export const getBekreftAksjonspunktCallback = (
     }
   }
 
-  return dispatch(
-    api.SAVE_AKSJONSPUNKT.makeRestApiRequest()(
-      {
-        ...params,
-        bekreftedeAksjonspunktDtoer: models,
-      },
-      { keepData: true },
-    ),
-  ).then(etterLagringCallback);
+  const saveAksjonspunkt = () =>
+    dispatch(
+      api.SAVE_AKSJONSPUNKT.makeRestApiRequest()(
+        {
+          ...params,
+          bekreftedeAksjonspunktDtoer: models,
+        },
+        { keepData: true },
+      ),
+    ).then(etterLagringCallback);
+
+  if (featureToggles?.['k9sak.aktiver-dokumentdata'] && api.DOKUMENTDATA_LAGRE) {
+    // TODO: Sende data til endepunktet
+    return dispatch(api.DOKUMENTDATA_LAGRE.makeRestApiRequest()({})).then(saveAksjonspunkt);
+  }
+
+  return saveAksjonspunkt();
 };

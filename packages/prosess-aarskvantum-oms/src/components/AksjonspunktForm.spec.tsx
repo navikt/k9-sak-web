@@ -1,13 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { CheckboxField, RadioOption } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { shallowWithIntl } from '../../i18n';
 import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues } from './AksjonspunktForm';
-import Uttaksperiode from '../dto/Uttaksperiode';
-import { UtfallEnum } from '../dto/Utfall';
-import { VilkårEnum } from '../dto/Vilkår';
+
 import Aktivitet from '../dto/Aktivitet';
 
 describe('<AksjonspunktForm>', () => {
