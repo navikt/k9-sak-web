@@ -9,6 +9,7 @@ import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell, { ExpandButton, ExpandedContent } from './AktivitetTabell';
 
 import StyledColumn from './StyledColumn';
+import Utfall from './Utfall';
 
 describe('<AktivitetTabell />', () => {
   const aktivitet: Aktivitet = {
@@ -60,7 +61,8 @@ describe('<AktivitetTabell />', () => {
       kolonner.find(FormattedMessage).findWhere(formatert => formatert.prop('id') === tekstId);
 
     expect(kolonnerMedTekst('01.03.2020 - 31.03.2020')).to.have.length(1);
-    expect(kolonnerMedFormatterTekstId('Uttaksplan.Utfall.AVSLÅTT')).to.have.length(1);
+    const uttak = kolonner.find(Utfall);
+    expect(uttak.prop('utfall')).to.equal('AVSLÅTT');
     expect(kolonnerMedTekst('0%')).to.have.length(2);
     expect(kolonnerMedFormatterTekstId('Uttaksplan.FulltFravær')).to.have.length(1);
     expect(kolonner.find(NavFrontendChevron)).to.have.length(1);

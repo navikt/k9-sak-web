@@ -2,8 +2,7 @@ import React from 'react';
 import NøkkeltallIndex from '@k9-sak-web/fakta-nokkeltall-oms';
 import UttaksplanType from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/UttaksplanType';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
-import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
-import { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
+import { UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import StoryRouter from 'storybook-react-router';
 
 export default {

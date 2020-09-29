@@ -2,10 +2,14 @@ import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
-import { UtfallEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Utfall';
-import Vilkår, { VilkårEnum } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Vilkår';
-import Uttaksperiode, { VurderteVilkår } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Uttaksperiode';
-import { Behandling } from '@k9-sak-web/types';
+import {
+  Behandling,
+  UtfallEnum,
+  Uttaksperiode,
+  Vilkår,
+  VilkårEnum,
+  VurderteVilkår,
+} from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
@@ -46,6 +50,17 @@ const innvilgetPeriode: Uttaksperiode = {
   },
   delvisFravær: 'P2DT4H30M',
   periode: '2020-04-01/2020-04-19',
+  utbetalingsgrad: 100,
+  hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
+};
+
+const nullFravær: Uttaksperiode = {
+  utfall: UtfallEnum.INNVILGET,
+  vurderteVilkår: {
+    vilkår: vilkårInnvilget,
+  },
+  delvisFravær: 'PT0H',
+  periode: '2020-04-19/2020-04-19',
   utbetalingsgrad: 100,
   hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
 };
@@ -166,7 +181,7 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
 
 export const behandletAksjonspunkt = () => (
   <ÅrskvantumIndex
-    årskvantum={årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode])}
+    årskvantum={årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode, nullFravær])}
     // @ts-ignore
     alleKodeverk={alleKodeverk}
     behandling={behandling}
