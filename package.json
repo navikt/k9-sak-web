@@ -1,13 +1,13 @@
 {
-  "name": "fpsak-frontend",
-  "description": "Klient for FPSAK",
+  "name": "k9-sak-web",
+  "description": "Klient for K9",
   "main": "./dist/index.js",
   "author": "NAV",
   "private": true,
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/navikt/fpsak-frontend.git"
+    "url": "git+https://github.com/navikt/k9-sak-web.git"
   },
   "scripts": {
     "test": "cross-env NODE_ICU_DATA=./node_modules/full-icu mochapack --colors --webpack-config webpack/webpack.test.js \"packages/**/*.spec.*\"",
