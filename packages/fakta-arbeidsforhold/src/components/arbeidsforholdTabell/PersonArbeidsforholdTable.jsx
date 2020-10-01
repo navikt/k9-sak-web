@@ -2,12 +2,10 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-
-import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
-
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
 import styles from './personArbeidsforholdTable.less';
@@ -60,7 +58,7 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
                 </Normaltekst>
               </TableColumn>
               <TableColumn>
-                <Normaltekst>{a.kilde?.navn}</Normaltekst>
+                <Normaltekst>{a.kilde.kode}</Normaltekst>
               </TableColumn>
               <TableColumn>
                 <Normaltekst>{stillingsprosent}</Normaltekst>

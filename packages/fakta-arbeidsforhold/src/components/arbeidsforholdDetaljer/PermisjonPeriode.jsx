@@ -4,9 +4,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
 
-import { arbeidsforholdPropType } from '../../propTypes/arbeidsforholdPropType';
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 
-const utledPermisjonLabelID = (arbeidsforhold) => {
+const utledPermisjonLabelID = arbeidsforhold => {
   if (arbeidsforhold.permisjoner.length > 1) {
     return 'PersonArbeidsforholdDetailForm.Permisjoner';
   }
@@ -15,17 +15,15 @@ const utledPermisjonLabelID = (arbeidsforhold) => {
 
 const utledPeriodeLabelKey = (id, index) => id + index;
 
-const PermisjonPeriode = ({
-  arbeidsforhold,
-}) => (
+const PermisjonPeriode = ({ arbeidsforhold }) => (
   <>
-    { arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0 && (
+    {arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0 && (
       <div>
         <VerticalSpacer sixteenPx />
         <Normaltekst>
           <FormattedMessage id={utledPermisjonLabelID(arbeidsforhold)} />
         </Normaltekst>
-        { arbeidsforhold.permisjoner.map((permisjon, index) => (
+        {arbeidsforhold.permisjoner.map((permisjon, index) => (
           <div key={utledPeriodeLabelKey(arbeidsforhold.id, index)}>
             <PeriodLabel
               dateStringFom={permisjon.permisjonFom}

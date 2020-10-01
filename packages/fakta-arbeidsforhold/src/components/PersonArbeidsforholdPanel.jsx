@@ -11,10 +11,10 @@ import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-fro
 import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import arbeidsforholdHandling from '../kodeverk/arbeidsforholdHandling';
 import aktivtArbeidsforholdHandling from '../kodeverk/aktivtArbeidsforholdHandling';
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
-import { arbeidsforholdPropType } from '../propTypes/arbeidsforholdPropType';
 import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
 import PersonArbeidsforholdDetailForm, {
   PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
@@ -315,7 +315,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       fomDato: undefined,
       tomDato: undefined,
       kilde: {
-        navn: arbeidsforholdKilder.SAKSBEHANDLER,
+        kode: arbeidsforholdKilder.SAKSBEHANDLER,
       },
       mottattDatoInntektsmelding: undefined,
       begrunnelse: undefined,

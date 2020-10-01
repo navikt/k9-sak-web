@@ -36,32 +36,37 @@ describe('<PersonArbeidsforholdPanel>', () => {
     permisjoner: undefined,
     basertPaInntektsmelding: false,
   };
-  const fagsystemer = [{
-    kode: 'AA',
-    navn: 'aa',
-  }, {
-    kode: 'INNTEKT',
-    navn: 'inntekt',
-  }];
+  const fagsystemer = [
+    {
+      kode: 'AA',
+      navn: 'aa',
+    },
+    {
+      kode: 'INNTEKT',
+      navn: 'inntekt',
+    },
+  ];
 
   it('skal rendre komponent', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     expect(wrapper.find(PersonArbeidsforholdTable)).has.length(1);
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(1);
   });
@@ -72,46 +77,50 @@ describe('<PersonArbeidsforholdPanel>', () => {
       id: '2',
       erSlettet: true,
     };
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold, arbeidsforhold2]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold, arbeidsforhold2]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const table = wrapper.find(PersonArbeidsforholdTable);
     expect(table.prop('alleArbeidsforhold')).is.eql([arbeidsforhold]);
   });
 
   it('skal ikke vise arbeidsforhold-detaljer når ingen er valgt i tabell', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     wrapper.setState({ selectedArbeidsforhold: undefined });
 
@@ -119,97 +128,108 @@ describe('<PersonArbeidsforholdPanel>', () => {
   });
 
   it('skal automatisk vise arbeidsforhold når det er til vurdering og ikke allerede er endret av saksbehandler', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(1);
   });
 
   it('skal ikke vise arbeidsforhold automatisk når det er endret', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[{
-        ...arbeidsforhold,
-        tilVurdering: true,
-        erEndret: true,
-      }]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[
+          {
+            ...arbeidsforhold,
+            tilVurdering: true,
+            erEndret: true,
+          },
+        ]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
   });
 
   it('skal ikke vise arbeidsforhold automatisk når saksbehandler har det ikke er aksjonspunkt på det', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[{
-        ...arbeidsforhold,
-        tilVurdering: false,
-      }]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[
+          {
+            ...arbeidsforhold,
+            tilVurdering: false,
+          },
+        ]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
   });
 
   it('skal fjerne detaljepanel ved avbryt', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
-
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     expect(wrapper.state().selectedArbeidsforhold).is.eql(arbeidsforhold);
     const detailForm = wrapper.find(PersonArbeidsforholdDetailForm);
@@ -228,23 +248,25 @@ describe('<PersonArbeidsforholdPanel>', () => {
       erNyttArbeidsforhold: true,
     };
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[newArbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[newArbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     const editedArbeidsforhold = {
       ...newArbeidsforhold,
       arbeidsforholdHandlingField: arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD,
@@ -257,16 +279,18 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
-    expect(args[2]).to.eql([{
-      ...editedArbeidsforhold,
-      erNyttArbeidsforhold: undefined,
-      brukArbeidsforholdet: false,
-      erEndret: true,
-      fortsettBehandlingUtenInntektsmelding: false,
-      brukMedJustertPeriode: false,
-      brukPermisjon: undefined,
-      inntektMedTilBeregningsgrunnlag: undefined,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...editedArbeidsforhold,
+        erNyttArbeidsforhold: undefined,
+        brukArbeidsforholdet: false,
+        erEndret: true,
+        fortsettBehandlingUtenInntektsmelding: false,
+        brukMedJustertPeriode: false,
+        brukPermisjon: undefined,
+        inntektMedTilBeregningsgrunnlag: undefined,
+      },
+    ]);
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
   });
 
@@ -285,23 +309,25 @@ describe('<PersonArbeidsforholdPanel>', () => {
       mottattDatoInntektsmelding: '2018-10-01',
     };
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[newArbeidsforhold, oldArbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[newArbeidsforhold, oldArbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const editedArbeidsforhold = {
       ...newArbeidsforhold,
@@ -320,19 +346,22 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args[1]).to.eql('arbeidsforhold');
 
     // FIXME (TOR) fomDato skal ikkje vera undefined her
-    expect(args[2]).to.eql([{
-      ...oldArbeidsforhold,
-      erSlettet: false,
-    }, {
-      ...editedArbeidsforhold,
-      erstatterArbeidsforholdId: undefined,
-      erEndret: true,
-      fomDato: undefined,
-      brukMedJustertPeriode: false,
-      fortsettBehandlingUtenInntektsmelding: undefined,
-      brukPermisjon: undefined,
-      inntektMedTilBeregningsgrunnlag: undefined,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...oldArbeidsforhold,
+        erSlettet: false,
+      },
+      {
+        ...editedArbeidsforhold,
+        erstatterArbeidsforholdId: undefined,
+        erEndret: true,
+        fomDato: undefined,
+        brukMedJustertPeriode: false,
+        fortsettBehandlingUtenInntektsmelding: undefined,
+        brukPermisjon: undefined,
+        inntektMedTilBeregningsgrunnlag: undefined,
+      },
+    ]);
 
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
   });
@@ -362,7 +391,13 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const arbeidsforholdListe = [arbeidsforhold, arbeidsforhold2, arbeidsforhold3, arbeidsforhold4, arbeidsforhold5];
     const sorterteArbeidsforhol = sortArbeidsforhold(arbeidsforholdListe);
 
-    expect(sorterteArbeidsforhol).is.eql([arbeidsforhold5, arbeidsforhold4, arbeidsforhold2, arbeidsforhold3, arbeidsforhold]);
+    expect(sorterteArbeidsforhol).is.eql([
+      arbeidsforhold5,
+      arbeidsforhold4,
+      arbeidsforhold2,
+      arbeidsforhold3,
+      arbeidsforhold,
+    ]);
   });
 
   it('skal legge gamle arbeidsforhold med samme orgnr på nytt arbeidsforhold', () => {
@@ -386,103 +421,108 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold, oldArbeidsforhold]);
 
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [oldArbeidsforhold],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
-        aktivtArbeidsforholdHandlingField: undefined,
-        overstyrtTom: undefined,
-      }, {
-        ...oldArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
-        aktivtArbeidsforholdHandlingField: undefined,
-        overstyrtTom: undefined,
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [oldArbeidsforhold],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
+          aktivtArbeidsforholdHandlingField: undefined,
+          overstyrtTom: undefined,
+        },
+        {
+          ...oldArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
+          aktivtArbeidsforholdHandlingField: undefined,
+          overstyrtTom: undefined,
+        },
+      ],
     });
   });
 
   it('skal ikke kunne fortsette uten inntekstmelding når en har to arbeidsforhold fra samme arbeidsgiver der en ikke har inntektsmelding for den ene', () => {
-    const toArbeidsforhold = [{
-      id: '1',
-      arbeidsforholdId: '1231-2345',
-      navn: 'Svendsen Eksos',
-      arbeidsgiverIdentifikator: '1234567',
-      arbeidsgiverIdentifiktorGUI: '1234567',
-      fomDato: '2018-01-01',
-      tomDato: '2018-10-10',
-      kilde: {
-        kode: 'INNTEKT',
-        navn: '',
+    const toArbeidsforhold = [
+      {
+        id: '1',
+        arbeidsforholdId: '1231-2345',
+        navn: 'Svendsen Eksos',
+        arbeidsgiverIdentifikator: '1234567',
+        arbeidsgiverIdentifiktorGUI: '1234567',
+        fomDato: '2018-01-01',
+        tomDato: '2018-10-10',
+        kilde: {
+          kode: 'INNTEKT',
+        },
+        mottattDatoInntektsmelding: false,
+        brukArbeidsforholdet: true,
+        erNyttArbeidsforhold: undefined,
+        erstatterArbeidsforholdId: undefined,
+        tilVurdering: true,
       },
-      mottattDatoInntektsmelding: false,
-      brukArbeidsforholdet: true,
-      erNyttArbeidsforhold: undefined,
-      erstatterArbeidsforholdId: undefined,
-      tilVurdering: true,
-    }, {
-      id: '2',
-      arbeidsforholdId: '1231-2345',
-      navn: 'Svendsen Eksos',
-      arbeidsgiverIdentifikator: '1234567',
-      arbeidsgiverIdentifiktorGUI: '1234567',
-      fomDato: '2018-01-01',
-      tomDato: '2018-10-10',
-      kilde: {
-        kode: 'INNTEKT',
-        navn: '',
+      {
+        id: '2',
+        arbeidsforholdId: '1231-2345',
+        navn: 'Svendsen Eksos',
+        arbeidsgiverIdentifikator: '1234567',
+        arbeidsgiverIdentifiktorGUI: '1234567',
+        fomDato: '2018-01-01',
+        tomDato: '2018-10-10',
+        kilde: {
+          kode: 'INNTEKT',
+        },
+        mottattDatoInntektsmelding: true,
+        brukArbeidsforholdet: true,
+        erNyttArbeidsforhold: undefined,
+        erstatterArbeidsforholdId: undefined,
+        tilVurdering: false,
       },
-      mottattDatoInntektsmelding: true,
-      brukArbeidsforholdet: true,
-      erNyttArbeidsforhold: undefined,
-      erstatterArbeidsforholdId: undefined,
-      tilVurdering: false,
-    }];
+    ];
     const isAllowed = erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM(toArbeidsforhold);
 
     expect(isAllowed).is.false;
   });
 
   it('skal kunne fortsette uten inntekstmelding når en har to arbeidsforhold fra samme arbeidsgiver der begge har inntektsmelding', () => {
-    const toArbeidsforhold = [{
-      id: '1',
-      arbeidsforholdId: '1231-2345',
-      navn: 'Svendsen Eksos',
-      arbeidsgiverIdentifikator: '1234567',
-      arbeidsgiverIdentifiktorGUI: '1234567',
-      basertPaInntektsmelding: false,
-      fomDato: '2018-01-01',
-      tomDato: '2018-10-10',
-      kilde: {
-        kode: 'INNTEKT',
-        navn: '',
+    const toArbeidsforhold = [
+      {
+        id: '1',
+        arbeidsforholdId: '1231-2345',
+        navn: 'Svendsen Eksos',
+        arbeidsgiverIdentifikator: '1234567',
+        arbeidsgiverIdentifiktorGUI: '1234567',
+        basertPaInntektsmelding: false,
+        fomDato: '2018-01-01',
+        tomDato: '2018-10-10',
+        kilde: {
+          kode: 'INNTEKT',
+        },
+        mottattDatoInntektsmelding: true,
+        brukArbeidsforholdet: true,
+        erNyttArbeidsforhold: undefined,
+        erstatterArbeidsforholdId: undefined,
+        tilVurdering: true,
       },
-      mottattDatoInntektsmelding: true,
-      brukArbeidsforholdet: true,
-      erNyttArbeidsforhold: undefined,
-      erstatterArbeidsforholdId: undefined,
-      tilVurdering: true,
-    }, {
-      id: '2',
-      arbeidsforholdId: '1231-2345',
-      navn: 'Svendsen Eksos',
-      arbeidsgiverIdentifikator: '1234567',
-      arbeidsgiverIdentifiktorGUI: '1234567',
-      basertPaInntektsmelding: false,
-      fomDato: '2018-01-01',
-      tomDato: '2018-10-10',
-      kilde: {
-        kode: 'INNTEKT',
-        navn: '',
+      {
+        id: '2',
+        arbeidsforholdId: '1231-2345',
+        navn: 'Svendsen Eksos',
+        arbeidsgiverIdentifikator: '1234567',
+        arbeidsgiverIdentifiktorGUI: '1234567',
+        basertPaInntektsmelding: false,
+        fomDato: '2018-01-01',
+        tomDato: '2018-10-10',
+        kilde: {
+          kode: 'INNTEKT',
+        },
+        mottattDatoInntektsmelding: true,
+        brukArbeidsforholdet: true,
+        erNyttArbeidsforhold: undefined,
+        erstatterArbeidsforholdId: undefined,
+        tilVurdering: false,
       },
-      mottattDatoInntektsmelding: true,
-      brukArbeidsforholdet: true,
-      erNyttArbeidsforhold: undefined,
-      erstatterArbeidsforholdId: undefined,
-      tilVurdering: false,
-    }];
+    ];
     const isAllowed = erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM(toArbeidsforhold);
 
     expect(isAllowed).is.true;
@@ -490,23 +530,25 @@ describe('<PersonArbeidsforholdPanel>', () => {
 
   it('skal oppdatere arbeidsforholdet korrekt med når man skal fjerne arbeidsforholdet', () => {
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const editedArbeidsforhold = {
       ...arbeidsforhold,
@@ -522,38 +564,42 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
-    expect(args[2]).to.eql([{
-      ...editedArbeidsforhold,
-      erEndret: true,
-      brukArbeidsforholdet: false,
-      fortsettBehandlingUtenInntektsmelding: false,
-      brukMedJustertPeriode: false,
-      brukPermisjon: undefined,
-      inntektMedTilBeregningsgrunnlag: undefined,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...editedArbeidsforhold,
+        erEndret: true,
+        brukArbeidsforholdet: false,
+        fortsettBehandlingUtenInntektsmelding: false,
+        brukMedJustertPeriode: false,
+        brukPermisjon: undefined,
+        inntektMedTilBeregningsgrunnlag: undefined,
+      },
+    ]);
 
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
   });
 
   it('skal oppdatere arbeidsforholdet korrekt med når man skal fortsette uten inntektsmelding', () => {
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const editedArbeidsforhold = {
       ...arbeidsforhold,
@@ -570,37 +616,41 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
-    expect(args[2]).to.eql([{
-      ...editedArbeidsforhold,
-      erEndret: true,
-      fortsettBehandlingUtenInntektsmelding: true,
-      brukMedJustertPeriode: false,
-      brukPermisjon: undefined,
-      inntektMedTilBeregningsgrunnlag: undefined,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...editedArbeidsforhold,
+        erEndret: true,
+        fortsettBehandlingUtenInntektsmelding: true,
+        brukMedJustertPeriode: false,
+        brukPermisjon: undefined,
+        inntektMedTilBeregningsgrunnlag: undefined,
+      },
+    ]);
 
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
   });
 
   it('skal oppdatere arbeidsforholdet korrekt når nødvendig inntektsmelding ikke mottatt', () => {
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const editedArbeidsforhold = {
       ...arbeidsforhold,
@@ -617,37 +667,41 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
-    expect(args[2]).to.eql([{
-      ...editedArbeidsforhold,
-      erEndret: true,
-      fortsettBehandlingUtenInntektsmelding: false,
-      brukMedJustertPeriode: false,
-      brukPermisjon: undefined,
-      inntektMedTilBeregningsgrunnlag: undefined,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...editedArbeidsforhold,
+        erEndret: true,
+        fortsettBehandlingUtenInntektsmelding: false,
+        brukMedJustertPeriode: false,
+        brukPermisjon: undefined,
+        inntektMedTilBeregningsgrunnlag: undefined,
+      },
+    ]);
 
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
   });
 
   it('skal oppdatere arbeidsforholdet korrekt når overstyrtTom satt av saksbehandler', () => {
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const editedArbeidsforhold = {
       ...arbeidsforhold,
@@ -665,36 +719,40 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
-    expect(args[2]).to.eql([{
-      ...editedArbeidsforhold,
-      erEndret: true,
-      fortsettBehandlingUtenInntektsmelding: true,
-      brukMedJustertPeriode: true,
-      brukPermisjon: undefined,
-      inntektMedTilBeregningsgrunnlag: undefined,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...editedArbeidsforhold,
+        erEndret: true,
+        fortsettBehandlingUtenInntektsmelding: true,
+        brukMedJustertPeriode: true,
+        brukPermisjon: undefined,
+        inntektMedTilBeregningsgrunnlag: undefined,
+      },
+    ]);
 
     expect(wrapper.state().selectedArbeidsforhold).is.undefined;
   });
 
   it('skal lage nytt arbeidsforhold object', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     const instance = wrapper.instance();
     expect(wrapper.state().selectedArbeidsforhold).to.eql(undefined);
     instance.leggTilArbeidsforhold();
@@ -702,9 +760,11 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(wrapper.state().selectedArbeidsforhold.id).to.not.eql(undefined);
     expect(wrapper.state().selectedArbeidsforhold.lagtTilAvSaksbehandler).to.eql(true);
     expect(wrapper.state().selectedArbeidsforhold.tilVurdering).to.eql(true);
-    expect(wrapper.state().selectedArbeidsforhold.kilde.navn).to.eql('Saksbehandler');
+    expect(wrapper.state().selectedArbeidsforhold.kilde.kode).to.eql('Saksbehandler');
     expect(wrapper.state().selectedArbeidsforhold.brukArbeidsforholdet).to.eql(true);
-    expect(wrapper.state().selectedArbeidsforhold.arbeidsforholdHandlingField).to.eql(arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD);
+    expect(wrapper.state().selectedArbeidsforhold.arbeidsforholdHandlingField).to.eql(
+      arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
+    );
     expect(wrapper.state().selectedArbeidsforhold.erEndret).to.eql(undefined);
     expect(wrapper.state().selectedArbeidsforhold.vurderOmSkalErstattes).to.eql(undefined);
     expect(wrapper.state().selectedArbeidsforhold.ikkeRegistrertIAaRegister).to.eql(undefined);
@@ -725,23 +785,25 @@ describe('<PersonArbeidsforholdPanel>', () => {
   });
 
   it('skal vise knapp for å legge til arbeidsforhold', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     const btn = wrapper.find('button');
     expect(btn).to.have.length(1);
     expect(btn.props().children.props.id).to.eql('PersonArbeidsforholdTable.LeggTilArbeidsforhold');
@@ -749,23 +811,25 @@ describe('<PersonArbeidsforholdPanel>', () => {
   });
 
   it('skal ikke vise knapp for å legge til arbeidsforhold', () => {
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
     const btn = wrapper.find('button');
     expect(btn).to.have.length(0);
     expect(wrapper.state().selectedArbeidsforhold).to.eql(undefined);
@@ -773,23 +837,25 @@ describe('<PersonArbeidsforholdPanel>', () => {
 
   it('skal oppdatere arbeidsforholdet korrekt når man skal bruke permisjon', () => {
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const editedArbeidsforhold = {
       ...arbeidsforhold,
@@ -811,36 +877,40 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
-    expect(args[2]).to.eql([{
-      ...editedArbeidsforhold,
-      erEndret: true,
-      brukArbeidsforholdet: true,
-      fortsettBehandlingUtenInntektsmelding: true,
-      brukMedJustertPeriode: false,
-      brukPermisjon: true,
-      inntektMedTilBeregningsgrunnlag: undefined,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...editedArbeidsforhold,
+        erEndret: true,
+        brukArbeidsforholdet: true,
+        fortsettBehandlingUtenInntektsmelding: true,
+        brukMedJustertPeriode: false,
+        brukPermisjon: true,
+        inntektMedTilBeregningsgrunnlag: undefined,
+      },
+    ]);
   });
 
   it('skal oppdatere arbeidsforholdet korrekt når man ikke skal bruke permisjon', () => {
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const editedArbeidsforhold = {
       ...arbeidsforhold,
@@ -868,36 +938,40 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
-    expect(args[2]).to.eql([{
-      ...editedArbeidsforhold,
-      erEndret: true,
-      brukArbeidsforholdet: true,
-      fortsettBehandlingUtenInntektsmelding: true,
-      brukMedJustertPeriode: false,
-      brukPermisjon: false,
-      inntektMedTilBeregningsgrunnlag: undefined,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...editedArbeidsforhold,
+        erEndret: true,
+        brukArbeidsforholdet: true,
+        fortsettBehandlingUtenInntektsmelding: true,
+        brukMedJustertPeriode: false,
+        brukPermisjon: false,
+        inntektMedTilBeregningsgrunnlag: undefined,
+      },
+    ]);
   });
 
   it('skal oppdatere arbeidsforholdet korrekt når man ikke skal ha inntekt med til beregningsgrunnlaget', () => {
     const formChangeCallback = sinon.spy();
-    const wrapper = shallow(<PersonArbeidsforholdPanelImpl
-      readOnly={false}
-      hasAksjonspunkter
-      hasOpenAksjonspunkter
-      arbeidsforhold={[arbeidsforhold]}
-      behandlingFormPrefix="panel"
-      reduxFormChange={formChangeCallback}
-      reduxFormInitialize={sinon.spy()}
-      fagsystemer={fagsystemer}
-      aktivtArbeidsforholdTillatUtenIM
-      skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={{}}
-      alleMerknaderFraBeslutter={{}}
-    />);
+    const wrapper = shallow(
+      <PersonArbeidsforholdPanelImpl
+        readOnly={false}
+        hasAksjonspunkter
+        hasOpenAksjonspunkter
+        arbeidsforhold={[arbeidsforhold]}
+        behandlingFormPrefix="panel"
+        reduxFormChange={formChangeCallback}
+        reduxFormInitialize={sinon.spy()}
+        fagsystemer={fagsystemer}
+        aktivtArbeidsforholdTillatUtenIM
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+      />,
+    );
 
     const editedArbeidsforhold = {
       ...arbeidsforhold,
@@ -912,15 +986,17 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(args).to.have.length(3);
     expect(args[0]).to.eql('panel.ArbeidsforholdInfoPanel');
     expect(args[1]).to.eql('arbeidsforhold');
-    expect(args[2]).to.eql([{
-      ...editedArbeidsforhold,
-      erEndret: true,
-      brukArbeidsforholdet: true,
-      fortsettBehandlingUtenInntektsmelding: true,
-      brukMedJustertPeriode: false,
-      brukPermisjon: undefined,
-      inntektMedTilBeregningsgrunnlag: false,
-    }]);
+    expect(args[2]).to.eql([
+      {
+        ...editedArbeidsforhold,
+        erEndret: true,
+        brukArbeidsforholdet: true,
+        fortsettBehandlingUtenInntektsmelding: true,
+        brukMedJustertPeriode: false,
+        brukPermisjon: undefined,
+        inntektMedTilBeregningsgrunnlag: false,
+      },
+    ]);
   });
 
   it('skal ikke utlede handlingstyper når arbeidsforholdet ikke er endret eller ikke til vurdering', () => {
@@ -937,21 +1013,24 @@ describe('<PersonArbeidsforholdPanel>', () => {
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold, oldArbeidsforhold]);
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: undefined,
-        aktivtArbeidsforholdHandlingField: undefined,
-        overstyrtTom: undefined,
-      }, {
-        ...oldArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: undefined,
-        aktivtArbeidsforholdHandlingField: undefined,
-        overstyrtTom: undefined,
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: undefined,
+          aktivtArbeidsforholdHandlingField: undefined,
+          overstyrtTom: undefined,
+        },
+        {
+          ...oldArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: undefined,
+          aktivtArbeidsforholdHandlingField: undefined,
+          overstyrtTom: undefined,
+        },
+      ],
     });
   });
 
@@ -962,38 +1041,44 @@ describe('<PersonArbeidsforholdPanel>', () => {
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.OVERSTYR_TOM,
-        aktivtArbeidsforholdHandlingField: undefined,
-        overstyrtTom: '2018-10-10',
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.OVERSTYR_TOM,
+          aktivtArbeidsforholdHandlingField: undefined,
+          overstyrtTom: '2018-10-10',
+        },
+      ],
     });
   });
 
   it('skal utlede riktig handlingstyper når arbeidsforholdet skal bruke pemisjon', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
-      permisjoner: [{
-        permisjonFom: '2012-01-01',
-        permisjonTom: undefined,
-        permisjonsprosent: 100,
-        permisjonsÅrsak: 'aarsak',
-      }],
+      permisjoner: [
+        {
+          permisjonFom: '2012-01-01',
+          permisjonTom: undefined,
+          permisjonsprosent: 100,
+          permisjonsÅrsak: 'aarsak',
+        },
+      ],
       brukPermisjon: true,
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.SOKER_ER_I_PERMISJON,
-        aktivtArbeidsforholdHandlingField: undefined,
-        overstyrtTom: undefined,
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.SOKER_ER_I_PERMISJON,
+          aktivtArbeidsforholdHandlingField: undefined,
+          overstyrtTom: undefined,
+        },
+      ],
     });
   });
 
@@ -1004,14 +1089,16 @@ describe('<PersonArbeidsforholdPanel>', () => {
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD,
-        aktivtArbeidsforholdHandlingField: undefined,
-        overstyrtTom: undefined,
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD,
+          aktivtArbeidsforholdHandlingField: undefined,
+          overstyrtTom: undefined,
+        },
+      ],
     });
   });
 
@@ -1023,14 +1110,16 @@ describe('<PersonArbeidsforholdPanel>', () => {
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
-        aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
-        overstyrtTom: undefined,
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
+          aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.AVSLA_YTELSE,
+          overstyrtTom: undefined,
+        },
+      ],
     });
   });
 
@@ -1042,14 +1131,16 @@ describe('<PersonArbeidsforholdPanel>', () => {
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
-        aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.INNTEKT_IKKE_MED_I_BG,
-        overstyrtTom: undefined,
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
+          aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.INNTEKT_IKKE_MED_I_BG,
+          overstyrtTom: undefined,
+        },
+      ],
     });
   });
 
@@ -1061,14 +1152,16 @@ describe('<PersonArbeidsforholdPanel>', () => {
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
-        aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.BENYTT_A_INNTEKT_I_BG,
-        overstyrtTom: undefined,
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
+          aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.BENYTT_A_INNTEKT_I_BG,
+          overstyrtTom: undefined,
+        },
+      ],
     });
   });
 
@@ -1076,24 +1169,28 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
       brukPermisjon: false,
-      permisjoner: [{
-        permisjonFom: '2012-01-01',
-        permisjonTom: undefined,
-        permisjonsprosent: 100,
-        permisjonsÅrsak: 'aarsak',
-      }],
+      permisjoner: [
+        {
+          permisjonFom: '2012-01-01',
+          permisjonTom: undefined,
+          permisjonsprosent: 100,
+          permisjonsÅrsak: 'aarsak',
+        },
+      ],
       fortsettBehandlingUtenInntektsmelding: true,
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
     expect(initialValues).is.eql({
-      arbeidsforhold: [{
-        ...newArbeidsforhold,
-        originalFomDato: '2018-01-01',
-        replaceOptions: [],
-        arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
-        aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.BENYTT_A_INNTEKT_I_BG,
-        overstyrtTom: undefined,
-      }],
+      arbeidsforhold: [
+        {
+          ...newArbeidsforhold,
+          originalFomDato: '2018-01-01',
+          replaceOptions: [],
+          arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
+          aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.BENYTT_A_INNTEKT_I_BG,
+          overstyrtTom: undefined,
+        },
+      ],
     });
   });
 });

@@ -6,10 +6,9 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
@@ -17,7 +16,6 @@ import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 import PermisjonPeriode from './PermisjonPeriode';
 import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
-import arbeidsforholdPropType from '../../propTypes/arbeidsforholdPropType';
 
 // ----------------------------------------------------------------------------------
 // VARIABLES

@@ -8,7 +8,7 @@ export const arbeidsgiverUttakPropType = PropTypes.shape({
   virksomhet: PropTypes.bool,
 });
 
-// fra beregning
+// beregning
 export const arbeidsforholdBeregningProptype = PropTypes.shape({
   arbeidsgiverNavn: PropTypes.string,
   arbeidsgiverId: PropTypes.string,
@@ -16,7 +16,6 @@ export const arbeidsforholdBeregningProptype = PropTypes.shape({
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
 });
-
 
 export const arbeidsforholdPropType = PropTypes.shape({
   id: PropTypes.string,
@@ -27,7 +26,7 @@ export const arbeidsforholdPropType = PropTypes.shape({
   fomDato: PropTypes.string,
   tomDato: PropTypes.string,
   kilde: PropTypes.shape({
-    navn: PropTypes.string.isRequired,
+    kode: PropTypes.string.isRequired,
   }),
   mottattDatoInntektsmelding: PropTypes.string,
   stillingsprosent: PropTypes.number,
@@ -48,15 +47,17 @@ export const arbeidsforholdPropType = PropTypes.shape({
   inntektMedTilBeregningsgrunnlag: PropTypes.bool,
   skjaeringstidspunkt: PropTypes.string,
   begrunnelse: PropTypes.string,
-  permisjoner: PropTypes.arrayOf(PropTypes.shape({
-    permisjonFom: PropTypes.string,
-    permisjonTom: PropTypes.string,
-    permisjonsprosent: PropTypes.number,
-    type: PropTypes.shape({
-      kode: PropTypes.string,
-      kodeverk: PropTypes.string,
+  permisjoner: PropTypes.arrayOf(
+    PropTypes.shape({
+      permisjonFom: PropTypes.string,
+      permisjonTom: PropTypes.string,
+      permisjonsprosent: PropTypes.number,
+      type: PropTypes.shape({
+        kode: PropTypes.string,
+        kodeverk: PropTypes.string,
+      }),
     }),
-  })),
+  ),
   brukPermisjon: PropTypes.bool,
 });
 
