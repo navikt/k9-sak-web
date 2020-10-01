@@ -23,7 +23,7 @@
     {
       "kode": "BEH_GJEN",
       "navn": "Behandling gjenopptatt",
-      "kodeverk": "HISTORIKKINNSLAG_TYPE"
+      "kodeverk": " SLAG_TYPE"
     },
     {
       "kode": "KLAGEBEH_STARTET",
@@ -37,7 +37,7 @@
     },
     {
       "kode": "REVURD_OPPR",
-      "navn": "Revurdering opprettet",
+      "navn": "Tilbakekreving Revurdering opprettet",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
     },
     {
@@ -191,6 +191,11 @@
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
     },
     {
+      "kode": "VEDTAK_FATTET_AUTOMATISK",
+      "navn": "Vedtak fattet automatisk",
+      "kodeverk": "HISTORIKKINNSLAG_TYPE"
+    },
+    {
       "kode": "BREV_BESTILT",
       "navn": "Brev bestilt",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
@@ -233,6 +238,11 @@
     {
       "kode": "NY_INFO_FRA_TPS",
       "navn": "Ny info fra TPS",
+      "kodeverk": "HISTORIKKINNSLAG_TYPE"
+    },
+    {
+      "kode": "NY_GRUNNLAG_MOTTATT",
+      "navn": "NY_GRUNNLAG_MOTTATT",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
     }
   ],
@@ -2823,6 +2833,16 @@
     {
       "kode": "HENLAGT_FEILOPPRETTET",
       "navn": "Henlagt, søknaden er feilopprettet",
+      "kodeverk": "BEHANDLING_RESULTAT_TYPE"
+    },
+    {
+      "kode": "HENLAGT_FEILOPPRETTET_MED_BREV",
+      "navn": "Feilaktig opprettet - med henleggelsesbrev",
+      "kodeverk": "BEHANDLING_RESULTAT_TYPE"
+    },
+    {
+      "kode": "HENLAGT_FEILOPPRETTET_UTEN_BREV",
+      "navn": "Feilaktig opprettet - uten henleggelsesbrev",
       "kodeverk": "BEHANDLING_RESULTAT_TYPE"
     },
     {

@@ -47,6 +47,7 @@ const velgHistorikkMal = histType => {
     case historikkinnslagType.FORSLAG_VEDTAK:
     case historikkinnslagType.FORSLAG_VEDTAK_UTEN_TOTRINN:
     case historikkinnslagType.VEDTAK_FATTET:
+    case historikkinnslagType.VEDTAK_FATTET_AUTOMATISK:
     case historikkinnslagType.UENDRET_UTFALL:
     case historikkinnslagType.REGISTRER_OM_VERGE:
       return HistorikkMalType2;
@@ -68,6 +69,7 @@ const velgHistorikkMal = histType => {
     case historikkinnslagType.ANKE_BEH:
       return HistorikkMalType5;
     case historikkinnslagType.NY_INFO_FRA_TPS:
+    case historikkinnslagType.NY_GRUNNLAG_MOTTATT:
       return HistorikkMalType6;
     case historikkinnslagType.OVERSTYRT:
       return HistorikkMalType7;

@@ -5,37 +5,34 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import {
-  required, hasValidText, maxLength, minLength,
-} from '@fpsak-frontend/utils';
-import { TextAreaField , behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { required, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
+import { TextAreaField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 
 import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.less';
 
 const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
+const maxLength4000 = maxLength(4000);
 
-const valideringsregler = [minLength3, maxLength1500, hasValidText];
-const valideringsreglerPakrevet = [required, minLength3, maxLength1500, hasValidText];
+const valideringsregler = [minLength3, maxLength4000, hasValidText];
+const valideringsreglerPakrevet = [required, minLength3, maxLength4000, hasValidText];
 
-export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
-  intl,
-  isEmpty,
-  type,
-  readOnly,
-  fritekstPakrevet,
-}) => {
+export const TilbakekrevingVedtakUtdypendeTekstPanel = ({ intl, isEmpty, type, readOnly, fritekstPakrevet }) => {
   const [isTextfieldHidden, hideTextField] = useState(isEmpty && !fritekstPakrevet);
   return (
     <>
-      {(isTextfieldHidden && !readOnly) && (
+      {isTextfieldHidden && !readOnly && (
         <>
           <VerticalSpacer eightPx />
           <div
-            onClick={(event) => { event.preventDefault(); hideTextField(false); }}
-            onKeyDown={(event) => { event.preventDefault(); hideTextField(false); }}
+            onClick={event => {
+              event.preventDefault();
+              hideTextField(false);
+            }}
+            onKeyDown={event => {
+              event.preventDefault();
+              hideTextField(false);
+            }}
             className={styles.addPeriode}
             role="button"
             tabIndex="0"
@@ -46,24 +43,26 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
               alt={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst' })}
             />
             <Undertekst className={styles.imageText}>
-              <FormattedMessage className={styles.text} id="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst" />
+              <FormattedMessage
+                className={styles.text}
+                id="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst"
+              />
             </Undertekst>
           </div>
         </>
       )}
-      {!isTextfieldHidden
-        && (
-          <>
-            <VerticalSpacer eightPx />
-            <TextAreaField
-              name={type}
-              label={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.UtdypendeTekst' })}
-              validate={fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler}
-              maxLength={1500}
-              readOnly={readOnly}
-            />
-          </>
-        )}
+      {!isTextfieldHidden && (
+        <>
+          <VerticalSpacer eightPx />
+          <TextAreaField
+            name={type}
+            label={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.UtdypendeTekst' })}
+            validate={fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler}
+            maxLength={4000}
+            readOnly={readOnly}
+          />
+        </>
+      )}
     </>
   );
 };
@@ -77,7 +76,12 @@ TilbakekrevingVedtakUtdypendeTekstPanel.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  isEmpty: behandlingFormValueSelector(ownProps.formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, ownProps.type) === undefined,
+  isEmpty:
+    behandlingFormValueSelector(
+      ownProps.formName,
+      ownProps.behandlingId,
+      ownProps.behandlingVersjon,
+    )(state, ownProps.type) === undefined,
 });
 
 export default connect(mapStateToProps)(injectIntl(TilbakekrevingVedtakUtdypendeTekstPanel));

@@ -5,13 +5,12 @@ import PropTypes from 'prop-types';
 
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { SelectField , behandlingFormValueSelector } from '@fpsak-frontend/form';
-
+import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import styles from './feilutbetalingPerioderTable.less';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
-  const årsak = årsaker.find((a) => a.hendelseType.kode === årsakNavn);
+  const årsak = årsaker.find(a => a.hendelseType.kode === årsakNavn);
   return årsak && årsak.hendelseUndertyper.length > 0 ? årsak.hendelseUndertyper : null;
 };
 
@@ -21,7 +20,8 @@ export const FeilutbetalingPerioderFormImpl = ({
   elementId,
   årsaker,
   readOnly,
-  resetFields,
+  onChangeÅrsak,
+  onChangeUnderÅrsak,
 }) => {
   const hendelseUndertyper = getHendelseUndertyper(årsak, årsaker);
   return (
@@ -32,27 +32,34 @@ export const FeilutbetalingPerioderFormImpl = ({
       <TableColumn>
         <SelectField
           name={`perioder.${elementId}.årsak`}
-          selectValues={årsaker.map((a) => <option key={a.hendelseType.kode} value={a.hendelseType.kode}>{a.hendelseType.navn}</option>)}
+          selectValues={årsaker.map(a => (
+            <option key={a.hendelseType.kode} value={a.hendelseType.kode}>
+              {a.hendelseType.navn}
+            </option>
+          ))}
           validate={[required]}
           disabled={readOnly}
-          onChange={() => resetFields(elementId, årsak)}
+          onChange={event => onChangeÅrsak(event, elementId, årsak)}
           bredde="m"
           label=""
         />
         {hendelseUndertyper && (
           <SelectField
             name={`perioder.${elementId}.${årsak}.underÅrsak`}
-            selectValues={hendelseUndertyper.map((a) => <option key={a.kode} value={a.kode}>{a.navn}</option>)}
+            selectValues={hendelseUndertyper.map(a => (
+              <option key={a.kode} value={a.kode}>
+                {a.navn}
+              </option>
+            ))}
             validate={[required]}
             disabled={readOnly}
+            onChange={event => onChangeUnderÅrsak(event, elementId, årsak)}
             bredde="m"
             label=""
           />
         )}
       </TableColumn>
-      <TableColumn className={styles.redText}>
-        {periode.belop}
-      </TableColumn>
+      <TableColumn className={styles.redText}>{periode.belop}</TableColumn>
     </TableRow>
   );
 };
@@ -67,11 +74,16 @@ FeilutbetalingPerioderFormImpl.propTypes = {
   årsak: PropTypes.string,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool.isRequired,
-  resetFields: PropTypes.func.isRequired,
+  onChangeÅrsak: PropTypes.func.isRequired,
+  onChangeUnderÅrsak: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  årsak: behandlingFormValueSelector(ownProps.formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, `perioder.${ownProps.elementId}.årsak`),
+  årsak: behandlingFormValueSelector(
+    ownProps.formName,
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `perioder.${ownProps.elementId}.årsak`),
 });
 
 const FeilutbetalingPerioderForm = connect(mapStateToProps)(FeilutbetalingPerioderFormImpl);

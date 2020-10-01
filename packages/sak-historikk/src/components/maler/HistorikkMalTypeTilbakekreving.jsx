@@ -5,6 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
@@ -36,14 +37,18 @@ export const HistorikkMalTypeTilbakekreving = ({
         const periodeTom = opplysninger.find(
           o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode,
         ).tilVerdi;
-        const begrunnelse = opplysninger.find(
-          o => o.opplysningType.kode === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
-        ).tilVerdi;
+        const begrunnelse = decodeHtmlEntity(
+          opplysninger.find(
+            o => o.opplysningType.kode === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
+          ).tilVerdi,
+        );
         const sarligGrunnerBegrunnelseFelt = opplysninger.find(
           o => o.opplysningType.kode === historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode,
         );
         const sarligGrunnerBegrunnelse =
-          sarligGrunnerBegrunnelseFelt !== undefined ? sarligGrunnerBegrunnelseFelt.tilVerdi : undefined;
+          sarligGrunnerBegrunnelseFelt !== undefined
+            ? decodeHtmlEntity(sarligGrunnerBegrunnelseFelt.tilVerdi)
+            : undefined;
 
         return (
           <div key={periodeFom + periodeTom}>
@@ -76,7 +81,7 @@ export const HistorikkMalTypeTilbakekreving = ({
                   <React.Fragment key={endretFeltNavn.kode}>
                     {visBegrunnelse && begrunnelse}
                     {visBegrunnelse && <VerticalSpacer eightPx />}
-                    {visAktsomhetBegrunnelse && begrunnelseFritekst}
+                    {visAktsomhetBegrunnelse && decodeHtmlEntity(begrunnelseFritekst)}
                     {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
                     <Normaltekst>
                       <FormattedMessage

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -6,6 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
@@ -85,8 +87,12 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT]: 'Historikk.FaktaUttak.VurderAnnenForelder',
 };
 
-const formaterAksjonspunkt = (aksjonspunkt, intl) => {
-  const aksjonspktText = aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode];
+const tilbakekrevingsAksjonspunktCodesToTextCode = {};
+
+const formaterAksjonspunkt = (aksjonspunkt, intl, erTilbakekreving) => {
+  const aksjonspktText = erTilbakekreving
+    ? tilbakekrevingsAksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode]
+    : aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode];
   const { formatMessage } = intl;
 
   if (aksjonspunkt.godkjent) {
@@ -104,7 +110,7 @@ const formaterAksjonspunkt = (aksjonspunkt, intl) => {
           `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Historikk.ikkeGodkjent' })}`}
         {!aksjonspktText && formatMessage({ id: 'Historikk.ikkeGodkjentKomplett' })}
       </Element>
-      <Normaltekst>{aksjonspunkt.aksjonspunktBegrunnelse}</Normaltekst>
+      <Normaltekst>{decodeHtmlEntity(aksjonspunkt.aksjonspunktBegrunnelse)}</Normaltekst>
     </span>
   );
 };
@@ -114,6 +120,7 @@ const HistorikkMalType3 = ({
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
+  erTilbakekreving,
 }) => (
   <>
     {historikkinnslagDeler &&
@@ -135,7 +142,7 @@ const HistorikkMalType3 = ({
           {historikkinnslagDel.aksjonspunkter &&
             historikkinnslagDel.aksjonspunkter.map(aksjonspunkt => (
               <div key={aksjonspunkt.aksjonspunktKode}>
-                {formaterAksjonspunkt(aksjonspunkt, useIntl())}
+                {formaterAksjonspunkt(aksjonspunkt, useIntl(), erTilbakekreving)}
                 <VerticalSpacer fourPx />
               </div>
             ))}
@@ -149,6 +156,11 @@ HistorikkMalType3.propTypes = {
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
+  erTilbakekreving: PropTypes.bool,
+};
+
+HistorikkMalType3.defaultProps = {
+  erTilbakekreving: false,
 };
 
 export default HistorikkMalType3;

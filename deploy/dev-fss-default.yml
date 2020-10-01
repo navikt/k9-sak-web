@@ -43,9 +43,13 @@ spec:
       value: "9000"
     - name: APP_URL_K9FORMIDLING
       value: "http://k9-formidling"
+    - name: APP_URL_K9FORMIDLING_DD
+      value: "http://k9-formidling-dokumentdata.k9saksbehandling"
     - name: APP_URL_K9OPPDRAG
       value: "http://k9-oppdrag"
     - name: APP_URL_KLAGE
       value: 'http://k9-klage'
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake"
+    - name: APP_DIAGNOSEKODER
+      value: "http://diagnosekode-api"

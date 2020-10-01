@@ -1,5 +1,5 @@
+import { Uttaksperiode } from '@k9-sak-web/types';
 import Arbeidsforhold from './Arbeidsforhold';
-import Uttaksperiode from './Uttaksperiode';
 
 interface Aktivitet {
   arbeidsforhold: Arbeidsforhold;

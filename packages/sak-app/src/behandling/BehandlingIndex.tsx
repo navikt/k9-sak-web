@@ -173,6 +173,7 @@ export class BehandlingIndex extends Component<OwnProps> {
       rettigheter,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
+      featureToggles,
     };
 
     if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
@@ -237,7 +238,6 @@ export class BehandlingIndex extends Component<OwnProps> {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingOmsorgspengerIndex
-              featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
@@ -252,7 +252,6 @@ export class BehandlingIndex extends Component<OwnProps> {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingFrisinnIndex
-              featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
@@ -266,7 +265,6 @@ export class BehandlingIndex extends Component<OwnProps> {
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={visFeilmelding}>
           <BehandlingPleiepengerIndex
-            featureToggles={featureToggles}
             oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
             valgtFaktaSteg={location.query.fakta}
             {...defaultProps}

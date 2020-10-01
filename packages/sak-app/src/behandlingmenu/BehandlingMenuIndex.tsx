@@ -275,6 +275,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
             <MenyNyBehandlingIndex
               saksnummer={saksnummer}
               behandlingId={behandlingId}
+              behandlingUuid={uuid}
               behandlingVersjon={behandlingVersion}
               behandlingType={behandlingType}
               uuidForSistLukkede={uuidForSistLukkede}

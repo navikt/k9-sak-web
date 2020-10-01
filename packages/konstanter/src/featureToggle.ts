@@ -5,6 +5,7 @@ const featureToggle = {
   BESLUTT_TILBAKEKREVING: 'k9sak.beslutt-tilbakekreving',
   AKTIVER_KLAGEBEHANDLING: 'k9sak.aktiver-klagebehandling',
   AKTIVER_UTTAK_AKSJONSPUNKT: 'k9sak.frontend.uttak.aksjonspunkt',
+  AKTIVER_DOKUMENTDATA: 'k9sak.aktiver-dokumentdata',
 };
 
 export default featureToggle;

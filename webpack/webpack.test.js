@@ -1,5 +1,5 @@
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const commonTest = require('./webpack.common.test.js');
 
 const PACKAGES_DIR = path.join(__dirname, '../packages');

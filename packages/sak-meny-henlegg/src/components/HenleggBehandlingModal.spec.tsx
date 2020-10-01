@@ -103,6 +103,16 @@ describe('<HenleggBehandlingModal>', () => {
       navn: '',
     },
     {
+      kode: behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV,
+      kodeverk: 'BEHANDLING_RESULT_TYPE',
+      navn: '',
+    },
+    {
+      kode: behandlingResultatType.HENLAGT_FEILOPPRETTET_UTEN_BREV,
+      kodeverk: 'BEHANDLING_RESULT_TYPE',
+      navn: '',
+    },
+    {
       kode: behandlingResultatType.HENLAGT_INNSYN_TRUKKET,
       kodeverk: 'BEHANDLING_RESULT_TYPE',
       navn: '',
@@ -148,6 +158,15 @@ describe('<HenleggBehandlingModal>', () => {
     expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_FEILOPPRETTET]);
   });
 
+  it('skal bruke behandlingsresultat-typer for tilbakekreving revurdering', () => {
+    const behandlingsType = { kode: behandlingType.TILBAKEKREVING_REVURDERING, kodeverk: 'BEHANDLING_TYPE' };
+    const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
+    expect(resultat.map(r => r.kode)).is.eql([
+      behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV,
+      behandlingResultatType.HENLAGT_FEILOPPRETTET_UTEN_BREV,
+    ]);
+  });
+
   it('skal bruke behandlingsresultat-typer for revudering', () => {
     const behandlingsType = { kode: behandlingType.REVURDERING, kodeverk: 'BEHANDLING_TYPE' };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
@@ -176,6 +195,30 @@ describe('<HenleggBehandlingModal>', () => {
         previewHenleggBehandling={sinon.spy()}
         henleggArsaker={henleggArsaker}
         behandlingTypeKode="BT-002"
+        intl={intlMock}
+        showLink
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+          kodeverk: 'FAGSAK_YTELSE_TYPE',
+        }}
+        behandlingUuid="123"
+        behandlingId={123}
+      />,
+    );
+
+    const button = wrapper.find('Hovedknapp');
+    expect(button.prop('disabled')).is.true;
+  });
+
+  it('skal disable knapp for lagring når behandlingsresultat-type, begrunnnelse og fritekst ikke er valgt for tilbakekreving revurdering', () => {
+    const wrapper = shallowWithIntl(
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={sinon.spy()}
+        henleggArsaker={henleggArsaker}
+        behandlingTypeKode="BT-009"
         intl={intlMock}
         showLink
         ytelseType={{
@@ -266,6 +309,39 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingTypeKode="BT-002"
         årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
         begrunnelse="Dette er en begrunnelse"
+        intl={intlMock}
+        showLink
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+          kodeverk: 'FAGSAK_YTELSE_TYPE',
+        }}
+        behandlingUuid="123"
+        behandlingId={123}
+      />,
+    );
+
+    const previewLink = wrapper.find('a');
+    expect(previewLink).to.have.length(1);
+    expect(previewLink.text()).to.eql('Forhåndsvis brev');
+
+    expect(previewEventCallback.called).is.false;
+    previewLink.simulate('click', { preventDefault: sinon.spy() });
+    expect(previewEventCallback.called).is.true;
+  });
+
+  it('skal vise forhåndvisningslenke når tilbakekreving revurdering henlagt ved feilaktig opprettet med henleggelsesbrev', () => {
+    const previewEventCallback = sinon.spy();
+    const wrapper = shallowWithIntl(
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={previewEventCallback}
+        henleggArsaker={henleggArsaker}
+        behandlingTypeKode="BT-009"
+        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV}
+        begrunnelse="Dette er en begrunnelse"
+        fritekst="Dette er en friteskt"
         intl={intlMock}
         showLink
         ytelseType={{

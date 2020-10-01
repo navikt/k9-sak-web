@@ -25,6 +25,11 @@ const options = {
     }
   },
   proxy: {
+    '/k9/formidling/dokumentdata/**': {
+      target: process.env.APP_URL_K9FORMIDLING_DD || 'http://localhost:8294',
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_K9FORMIDLING_DD,
+    },
     '/k9/formidling/**': {
       target: process.env.APP_URL_K9FORMIDLING || 'http://localhost:8290',
       secure: false,
@@ -58,6 +63,14 @@ const options = {
       target: process.env.APP_URL_K9TILBAKE || 'http://localhost:8030',
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9TILBAKE,
+    },
+    '/k9/diagnosekoder': {
+      target: process.env.APP_URL_DIAGNOSEKODER || 'http://localhost:8300',
+      pathRewrite: {
+        '^/k9': '',
+      },
+      secure: false,
+      changeOrigin: !!process.env.APP_URL_DIAGNOSEKODER,
     },
   },
   publicPath: config.output.publicPath,

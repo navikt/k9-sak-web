@@ -125,7 +125,7 @@ describe('<CreateNewBehandlingModal>', () => {
         cancelEvent={cancelEventCallback}
         intl={intlMock}
         behandlingTyper={behandlingstyper}
-        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
+        valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         behandlingArsakTyper={[
           { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
         ]}

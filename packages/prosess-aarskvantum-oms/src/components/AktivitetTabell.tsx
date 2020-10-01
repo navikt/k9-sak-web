@@ -1,21 +1,24 @@
 import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Arbeidsforhold, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Table, TableRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
+import {
+  Arbeidsforhold,
+  KodeverkMedNavn,
+  Utfalltype,
+  VilkårEnum,
+  Uttaksperiode,
+  Vilkår,
+} from '@k9-sak-web/types';
+import { Table, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
 import styled from 'styled-components';
-import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
-import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import NavFrontendChevron from 'nav-frontend-chevron';
+
 import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
-import Uttaksperiode from '../dto/Uttaksperiode';
-import Utfalltype, { UtfallEnum } from '../dto/Utfall';
 import StyledColumn from './StyledColumn';
-import Vilkår, { VilkårEnum } from '../dto/Vilkår';
 import styles from './aktivitetTabell.less';
+import Utfall from './Utfall';
 
 interface AktivitetTabellProps {
   arbeidsforhold?: Arbeidsforhold;
@@ -34,10 +37,17 @@ const antallDager = (periode: string): string => {
   return calcDays(fom, tom, false);
 };
 
+const dagerOgTimer = (duration?: string) => {
+  if (duration) {
+    const timer = durationTilTimerMed7ogEnHalvTimesDagsbasis(duration);
+    return convertHoursToDays(timer);
+  }
+  return { days: 0, hours: 0 };
+}
+
 const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => {
   if (delvisFravær) {
-    const timer = durationTilTimerMed7ogEnHalvTimesDagsbasis(delvisFravær);
-    const { days, hours } = convertHoursToDays(timer);
+    const { days, hours } = dagerOgTimer(delvisFravær);
     if (days > 0) {
       return <FormattedMessage id="Uttaksplan.DelvisFraværMedDager" values={{ dager: days, timer: hours }} />;
     }
@@ -45,12 +55,6 @@ const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => 
   }
   const dager = antallDager(periode);
   return <FormattedMessage id="Uttaksplan.FulltFravær" values={{ dager }} />;
-};
-
-const utfallSymbolMap = {
-  [UtfallEnum.INNVILGET]: innvilget,
-  [UtfallEnum.AVSLÅTT]: avslått,
-  [UtfallEnum.UAVKLART]: advarsel,
 };
 
 const Vilkårsutfall = styled.div`
@@ -62,14 +66,6 @@ export const ExpandButton = styled.button`
   border: none;
   background: inherit;
   line-height: 17px;
-`;
-
-const UtfallImage = styled.span`
-  img {
-    margin-right: 0.5em;
-    height: 20px;
-    width: 20px;
-  }
 `;
 
 export const ExpandedContent = styled.div<{ fyllBorder?: boolean }>`
@@ -93,14 +89,16 @@ export const ExpandedContent = styled.div<{ fyllBorder?: boolean }>`
   `}
 `;
 
-const renderUtfall = (utfall: Utfalltype, key?: string): ReactNode => (
-  <div key={key}>
-    <UtfallImage>
-      <Image src={utfallSymbolMap[utfall]} />
-    </UtfallImage>
-    <FormattedMessage id={`Uttaksplan.Utfall.${utfall}`} />
-  </div>
-);
+const utfallErIngenUtbetaling = (delvisFravær: string) => {
+  if (delvisFravær) {
+    const { days, hours } = dagerOgTimer(delvisFravær);
+
+    if (days === 0 && hours === 0) {
+      return true;
+    }
+  }
+  return false;
+}
 
 const arbeidsforholdSist = (_, [vilkår_2]: [Vilkår, Utfalltype]): number =>
   vilkår_2 === VilkårEnum.ARBEIDSFORHOLD ? -1 : 0;
@@ -160,6 +158,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
           const sorterteVilkår = useMemo(() => Object.entries(vurderteVilkår.vilkår).sort(arbeidsforholdSist), [
             vurderteVilkår.vilkår,
           ]);
+          const utfallIngenUtbetaling = utfallErIngenUtbetaling(delvisFravær);
 
           return (
             <TableRow key={periode}>
@@ -194,12 +193,18 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                 )}
               </StyledColumn>
               <StyledColumn koronaperiode={erKoronaperiode}>
-                {renderUtfall(utfall)}
+                <Utfall
+                  utfall={utfall}
+                  textId={utfallIngenUtbetaling ? 'Uttaksplan.Utfall.IngenUtbetaling' : undefined}
+                />
                 {erValgt && (
                   <ExpandedContent fyllBorder>
                     <Vilkårsutfall>
                       {sorterteVilkår.map(([key, vilkårsutfall]) =>
-                        renderUtfall(vilkårsutfall, `${periode}--${key}.${vilkårsutfall}`),
+                        <Utfall
+                          utfall={vilkårsutfall}
+                          key={`${periode}--${key}.${vilkårsutfall}`}
+                        />
                       )}
                     </Vilkårsutfall>
                   </ExpandedContent>

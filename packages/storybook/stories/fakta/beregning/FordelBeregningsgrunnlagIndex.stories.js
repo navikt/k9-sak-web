@@ -17,13 +17,23 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-const behandling = {
+const lagBehandling = (perioder) => (
+  {
   id: 1,
   versjon: 1,
   type: {
     kode: 'BT-003',
   },
-};
+  behandlingsresultat: {
+    vilkårResultat: {
+      BEREGNINGSGRUNNLAGVILKÅR: perioder.map(p => ({
+        periode: {
+          ...p,
+        }
+      }))
+}}
+}
+);
 
 const merknaderFraBeslutter = {
   notAccepted: false,
@@ -106,6 +116,7 @@ const lagBG = (perioder, faktaOmFordeling) => {
       besteberegningAndeler: null,
       vurderMottarYtelse: null,
       avklarAktiviteter: {
+        skjæringstidspunkt: '2019-09-16',
         aktiviteterTomDatoMapping: [
           {
             tom: '2019-09-16',
@@ -264,6 +275,7 @@ const lagFordelPeriode = (fordelAndeler, fom, tom, graderingEllerRef, skalKunneE
   fom,
   fordelBeregningsgrunnlagAndeler: fordelAndeler,
   harPeriodeAarsakGraderingEllerRefusjon: graderingEllerRef,
+  skalRedigereInntekt: graderingEllerRef,
   skalKunneEndreRefusjon: skalKunneEndreRef,
   tom,
 });
@@ -314,7 +326,7 @@ export const aapOgRefusjon = () => {
   const bg = lagBG([førsteBGPeriode, andreBGPperiode], faktaOmFordeling);
   return (
     <FordelBeregningsgrunnlagFaktaIndex
-      behandling={behandling}
+      behandling={lagBehandling([{fom: '2019-09-16'}])}
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
@@ -355,7 +367,7 @@ export const kanEndreRefusjonskrav = () => {
   const bg = lagBG([førsteBGPeriode, andreBGPperiode], faktaOmFordeling);
   return (
     <FordelBeregningsgrunnlagFaktaIndex
-      behandling={behandling}
+      behandling={lagBehandling([{fom: '2019-09-16'}])}
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
@@ -417,7 +429,7 @@ export const skalSlåSammenNaturalytelseperioder = () => {
   const bg = lagBG([førsteBGPeriode, andreBGPperiode, tredjeBGPeriode], faktaOmFordeling);
   return (
     <FordelBeregningsgrunnlagFaktaIndex
-      behandling={behandling}
+      behandling={lagBehandling([{fom: '2019-09-16'}])}
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),

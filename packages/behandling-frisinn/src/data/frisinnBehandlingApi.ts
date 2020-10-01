@@ -34,6 +34,7 @@ export const FrisinnBehandlingApiKeys = {
   VEDTAK_VARSEL: 'VEDTAK_VARSEL',
   OPPGITT_OPPTJENING: 'OPPGITT_OPPTJENING',
   TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
+  DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -82,6 +83,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withRel('dokumentdata-lagre', FrisinnBehandlingApiKeys.DOKUMENTDATA_LAGRE)
 
   .build();
 

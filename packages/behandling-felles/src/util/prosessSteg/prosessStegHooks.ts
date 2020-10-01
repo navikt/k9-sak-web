@@ -105,6 +105,7 @@ const useBekreftAksjonspunkt = (
   lagringSideEffectsCallback: (aksjonspunktModeller: {}) => () => void,
   dispatch: Dispatch,
   valgtPanel?: ProsessStegUtledet,
+  featureToggles?: {},
 ) =>
   useCallback(
     aksjonspunktModels =>
@@ -115,6 +116,7 @@ const useBekreftAksjonspunkt = (
         behandling,
         valgtPanel ? valgtPanel.getAksjonspunkter() : [],
         behandlingApi,
+        featureToggles,
       )(aksjonspunktModels),
     [behandling.versjon, valgtPanel],
   );

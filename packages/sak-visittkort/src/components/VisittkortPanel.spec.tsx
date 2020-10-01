@@ -170,6 +170,25 @@ describe('<VisittkortPanel>', () => {
     expect(visittkort.prop('gender')).is.eql(Gender.female);
   });
 
+  it('skal vise visittkort når en har harTilbakekrevingVerge', () => {
+    const wrapper = shallowWithIntl(
+      <VisittkortPanel.WrappedComponent
+        intl={intlMock}
+        fagsak={fagsak}
+        alleKodeverk={{}}
+        sprakkode={{ kode: 'NN', kodeverk: '' }}
+        harTilbakekrevingVerge
+      />,
+    );
+
+    expect(wrapper.find(FlexContainer)).has.length(0);
+    const visittkort = wrapper.find(PersonCard);
+    expect(visittkort).has.length(1);
+    expect(visittkort.prop('name')).is.eql(fagsak.person.navn);
+    expect(visittkort.prop('fodselsnummer')).is.eql(fagsak.person.personnummer);
+    expect(visittkort.prop('gender')).is.eql(Gender.female);
+  });
+
   it('skal vise visittkort når en har personopplysninger', () => {
     const wrapper = shallowWithIntl(
       <VisittkortPanel.WrappedComponent
