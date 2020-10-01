@@ -12982,10 +12982,10 @@ nav-frontend-popover@^0.0.28:
   resolved "https://registry.yarnpkg.com/nav-frontend-popover/-/nav-frontend-popover-0.0.28.tgz#2b0152e50c92d69ca2cc8ea74b79b3ec3d2fa2ec"
   integrity sha512-ITNBEAVEne2rhCupf/QPCIegskF/XW1UERPqJk93owxpi/AJ3JciEzzny/SzFojZ5Q5aFPvLteCfrl76LOTV6g==
 
-nav-frontend-skjema-style@2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-2.0.10.tgz#aef352aa334e6bc289a678aa745ee044da83fc04"
-  integrity sha512-CSqseIXOOoaFKnCLQZGdYzRfm2pljh8xhb1zwo0fzpFwUeHPsyvwBE30u+MvYaJwJ6S6Xj8CWxMOu45fOOaA7A==
+nav-frontend-skjema-style@2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-2.0.11.tgz#d12b0c5c8da70f5894bf969ae6617010f77067b1"
+  integrity sha512-cZRsWJgdbnct0skDU2dfAFXY9ROoPCWmkd2c3WIVzzrpbBBjES24HT7IdMtOsalVPX4C0KkmbA3qS6LUhW+SWw==
 
 nav-frontend-skjema@3.0.19:
   version "3.0.19"
