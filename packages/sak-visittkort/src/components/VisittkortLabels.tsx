@@ -20,9 +20,10 @@ const VisittkortLabels: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   personopplysninger,
   harTilbakekrevingVerge = false,
 }) => {
-  const erSokerUnder18 = useMemo(() => moment().diff(personopplysninger.fodselsdato, 'years') < 18, [
-    personopplysninger,
-  ]);
+  const erSokerUnder18 = useMemo(
+    () => personopplysninger && moment().diff(personopplysninger.fodselsdato, 'years') < 18,
+    [personopplysninger],
+  );
   const harVerge = personopplysninger
     ? personopplysninger.harVerge && !personopplysninger.dodsdato
     : harTilbakekrevingVerge;

@@ -106,7 +106,7 @@ const buildInitialValues = createSelector(
         ? decodeHtmlEntity(verge.begrunnelse)
         : FaktaBegrunnelseTextField.buildInitialValues(
             aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0],
-          ),
+          ).begrunnelse,
     ...RegistrereVergeFaktaForm.buildInitialValues(verge || {}),
   }),
 );
