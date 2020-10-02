@@ -14,12 +14,6 @@ yarn install
 yarn dev
 yarn build
 ````
-
-#### TODO
-* velge namespace, bruker scoped nå(@fpsak-frontend)
-* lage et felles repo for felles moduler som er brukt i fpsak-frontend.
-* legge pakker ut på npm.
-
 ## Intellj og stubs
 Disse må installeres manuelt, følg denne tråden:
 
