@@ -8,9 +8,13 @@ const history = createBrowserHistory({
   basename: '/k9/web/',
 });
 
-const withReduxProvider = story => {
+const withReduxProvider = Story => {
   const store = configureStore(history);
-  return <Provider store={store}>{story()}</Provider>;
+  return (
+    <Provider store={store}>
+      <Story />
+    </Provider>
+  );
 };
 
 export default withReduxProvider;
