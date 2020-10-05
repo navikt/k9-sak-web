@@ -143,7 +143,9 @@
   },
   "resolutions": {
     "react-test-renderer": "^16.13.1",
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "nyc": {
     "branches": 40,
