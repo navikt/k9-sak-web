@@ -301,7 +301,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
           );
         }),
         new MenyData(
-          (!!opprettVerge || !!fjernVerge) && !erFrisinn,
+          (!!opprettVerge || !!fjernVerge) && (!erFrisinn || erTilbakekreving),
           getVergeMenytekst(!!opprettVerge),
         ).medModal(lukkModal => (
           <MenyVergeIndex fjernVerge={fjernVerge} opprettVerge={opprettVerge} lukkModal={lukkModal} />
