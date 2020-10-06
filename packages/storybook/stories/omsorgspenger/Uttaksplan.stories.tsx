@@ -2,14 +2,7 @@ import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
-import {
-  Behandling,
-  UtfallEnum,
-  Uttaksperiode,
-  Vilkår,
-  VilkårEnum,
-  VurderteVilkår,
-} from '@k9-sak-web/types';
+import { Behandling, UtfallEnum, Uttaksperiode, Vilkår, VilkårEnum, VurderteVilkår } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';

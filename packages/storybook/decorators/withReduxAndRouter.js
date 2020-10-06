@@ -9,12 +9,14 @@ const history = createBrowserHistory({
   basename: '/k9/web/',
 });
 
-const withReduxAndRouterProvider = story => {
+const withReduxAndRouterProvider = Story => {
   const store = configureStore(history);
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>{story()}</ConnectedRouter>
+      <ConnectedRouter history={history}>
+        <Story />
+      </ConnectedRouter>
     </Provider>
   );
 };
