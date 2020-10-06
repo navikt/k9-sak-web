@@ -18,7 +18,6 @@ describe('<AppIndex>', () => {
     const wrapper = shallow(<AppIndex.WrappedComponent navAnsattName="Peder" location={locationMock} />);
     const headerComp = wrapper.find(Dekorator);
     expect(headerComp).to.have.length(1);
-    expect(headerComp.prop('navAnsattName')).to.eql('Peder');
     expect(headerComp.prop('errorMessages').length).is.eql(0);
 
     const homeComp = wrapper.find(Home);
@@ -36,7 +35,6 @@ describe('<AppIndex>', () => {
 
     const headerComp = wrapper.find(Dekorator);
     expect(headerComp).to.have.length(1);
-    expect(headerComp.prop('navAnsattName')).to.eql('Peder');
     expect(headerComp.prop('errorMessages').length).is.eql(1);
 
     const homeComp = wrapper.find(Home);

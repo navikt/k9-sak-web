@@ -34,6 +34,12 @@ describe('<BehandlingPickerItem>', () => {
     gjeldendeVedtak: false,
   };
 
+  const getKodeverkFn = () => ({
+    kode: '',
+    kodeverk: '',
+    navn: '',
+  });
+
   it('skal vise behandling uten lenke når det kun finnes en behandling og denne er valgt', () => {
     const wrapper = shallow(
       <BehandlingPickerItem
@@ -43,7 +49,7 @@ describe('<BehandlingPickerItem>', () => {
         isActive
         showAll
         toggleShowAll={() => undefined}
-        alleKodeverk={{}}
+        getKodeverkFn={getKodeverkFn}
       />,
     );
 
@@ -60,7 +66,7 @@ describe('<BehandlingPickerItem>', () => {
         isActive={false}
         showAll
         toggleShowAll={() => undefined}
-        alleKodeverk={{}}
+        getKodeverkFn={getKodeverkFn}
       />,
     );
 
@@ -77,7 +83,7 @@ describe('<BehandlingPickerItem>', () => {
         isActive
         showAll={false}
         toggleShowAll={() => undefined}
-        alleKodeverk={{}}
+        getKodeverkFn={getKodeverkFn}
       />,
     );
 

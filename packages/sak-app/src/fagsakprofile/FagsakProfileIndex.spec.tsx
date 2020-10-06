@@ -1,16 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { Redirect } from 'react-router-dom';
+import sinon from 'sinon';
 
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
-import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
+import { Fagsak } from '@k9-sak-web/types';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
+import * as useLocation from '../app/useLocation';
+import * as useRouteMatch from '../app/useRouteMatch';
+import { requestApi, FpsakApiKeys } from '../data/fpsakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
+import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 
 describe('<FagsakProfileIndex>', () => {
   const locationMock = {
@@ -20,125 +24,96 @@ describe('<FagsakProfileIndex>', () => {
     hash: 'test',
   };
 
+  const fagsak = {
+    saksnummer: 123,
+    sakstype: {
+      kode: fagsakYtelseType.FORELDREPENGER,
+      kodeverk: 'FAGSAK_YTELSE',
+    },
+    status: {
+      kode: fagsakStatus.OPPRETTET,
+      kodeverk: 'FAGSAK_STATUS',
+    },
+  };
+
+  const alleKodeverk = {
+    [kodeverkTyper.FAGSAK_YTELSE]: [
+      {
+        kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE',
+        navn: 'Foreldrepenger',
+      },
+    ],
+    [kodeverkTyper.FAGSAK_STATUS]: [
+      {
+        kode: fagsakStatus.OPPRETTET,
+        kodeverk: 'FAGSAK_STATUS',
+        navn: 'Opprettet',
+      },
+    ],
+  };
+
+  const behandling = {
+    id: 1,
+  };
+
+  let contextStubLocation;
+  let contextStubMatch;
+  beforeEach(() => {
+    contextStubLocation = sinon.stub(useLocation, 'default').callsFake(() => locationMock);
+    // @ts-ignore
+    contextStubMatch = sinon.stub(useRouteMatch, 'default').callsFake(() => ({ isExact: false }));
+  });
+
+  afterEach(() => {
+    contextStubLocation.restore();
+    contextStubMatch.restore();
+  });
+
   it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', () => {
+    requestApi.mock(FpsakApiKeys.KODEVERK, alleKodeverk);
+    requestApi.mock(FpsakApiKeys.KODEVERK_FPTILBAKE, {});
+    requestApi.mock(FpsakApiKeys.RISIKO_AKSJONSPUNKT, {});
+    requestApi.mock(FpsakApiKeys.KONTROLLRESULTAT, {});
+
     const wrapper = shallow(
       <FagsakProfileIndex
-        saksnummer="123"
-        sakstype={{ kode: fagsakYtelseType.FORELDREPENGER, kodeverk: '' }}
-        fagsakStatus={{ kode: fagsakStatus.OPPRETTET, kodeverk: '' }}
-        noExistingBehandlinger
-        alleKodeverk={{}}
-        enabledApis={[]}
-        shouldRedirectToBehandlinger={false}
-        location={locationMock}
-        dekningsgrad={100}
+        fagsak={fagsak as Fagsak}
+        alleBehandlinger={[behandling] as BehandlingAppKontekst[]}
+        harHentetBehandlinger
+        oppfriskBehandlinger={sinon.spy()}
       />,
     );
 
-    const dataFetchers = wrapper.find(DataFetcher);
-    expect(dataFetchers.at(1).prop('showComponent')).is.false;
-
-    const fagsakProfile = dataFetchers.at(0).renderProp('render')({}, true).find(FagsakProfilSakIndex);
+    const fagsakProfile = wrapper.find(FagsakProfilSakIndex);
     expect(fagsakProfile).has.length(1);
 
-    // @ts-ignore (Korleis fikse denne?)
-    const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')({}).find(BehandlingVelgerSakIndex);
+    const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')().find(BehandlingVelgerSakIndex);
     expect(behandlingVelger).has.length(1);
     expect(behandlingVelger.prop('showAll')).is.true;
   });
 
   it('skal ikke vise alle behandlinger når behandling er valgt', () => {
+    requestApi.mock(FpsakApiKeys.KODEVERK, alleKodeverk);
+    requestApi.mock(FpsakApiKeys.KODEVERK_FPTILBAKE, {});
+    requestApi.mock(FpsakApiKeys.RISIKO_AKSJONSPUNKT, {});
+    requestApi.mock(FpsakApiKeys.KONTROLLRESULTAT, {});
+
     const wrapper = shallow(
       <FagsakProfileIndex
-        saksnummer="123"
-        sakstype={{ kode: fagsakYtelseType.FORELDREPENGER, kodeverk: '' }}
-        fagsakStatus={{ kode: fagsakStatus.OPPRETTET, kodeverk: '' }}
-        selectedBehandlingId={1}
-        noExistingBehandlinger
-        alleKodeverk={{}}
-        enabledApis={[]}
-        shouldRedirectToBehandlinger={false}
-        location={locationMock}
-        dekningsgrad={100}
+        fagsak={fagsak as Fagsak}
+        alleBehandlinger={[behandling] as BehandlingAppKontekst[]}
+        harHentetBehandlinger
+        oppfriskBehandlinger={sinon.spy()}
+        behandlingId={1}
       />,
     );
 
-    const dataFetchers = wrapper.find(DataFetcher);
-    expect(dataFetchers.at(1).prop('showComponent')).is.false;
-
-    const fagsakProfile = dataFetchers.at(0).renderProp('render')({}, true).find(FagsakProfilSakIndex);
+    const fagsakProfile = wrapper.find(FagsakProfilSakIndex);
     expect(fagsakProfile).has.length(1);
 
-    // @ts-ignore (Korleis fikse denne?)
-    const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')({}).find(BehandlingVelgerSakIndex);
+    const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')().find(BehandlingVelgerSakIndex);
     expect(behandlingVelger).has.length(1);
     expect(behandlingVelger.prop('showAll')).is.false;
-  });
-
-  it('skal omdirigere til behandling hvis flagget er satt', () => {
-    const behandlingId = 67890;
-    const saksnummer = '123';
-    const pathToBehandlingerForFagsak = pathToBehandlinger(saksnummer);
-    const locationForBehandling = getLocationWithDefaultProsessStegAndFakta({
-      ...locationMock,
-      pathname: pathToBehandling(saksnummer, behandlingId),
-    });
-
-    const wrapper = shallow(
-      <FagsakProfileIndex
-        saksnummer={saksnummer}
-        sakstype={{ kode: fagsakYtelseType.FORELDREPENGER, kodeverk: '' }}
-        fagsakStatus={{ kode: fagsakStatus.OPPRETTET, kodeverk: '' }}
-        selectedBehandlingId={1}
-        noExistingBehandlinger
-        alleKodeverk={{}}
-        enabledApis={[]}
-        shouldRedirectToBehandlinger={false}
-        location={locationMock}
-        dekningsgrad={100}
-      />,
-    );
-
-    let redirect = wrapper.find(DataFetcher).at(0).renderProp('render')({}, true).find(Redirect);
-    expect(redirect).to.have.length(0);
-
-    wrapper.setProps({ shouldRedirectToBehandlinger: true });
-
-    redirect = wrapper
-      .find(DataFetcher)
-      .at(0)
-      .renderProp('render')(
-        {
-          behandlingerFpsak: [
-            {
-              id: 67890,
-            },
-            {
-              id: 2,
-            },
-          ],
-        },
-        true,
-      )
-      .find(Redirect);
-    expect(redirect).to.have.length(1);
-    expect(redirect.at(0).props()).to.have.property('to').that.eql(pathToBehandlingerForFagsak);
-
-    redirect = wrapper
-      .find(DataFetcher)
-      .at(0)
-      .renderProp('render')(
-        {
-          behandlingerFpsak: [
-            {
-              id: 67890,
-            },
-          ],
-        },
-        true,
-      )
-      .find(Redirect);
-    expect(redirect).to.have.length(1);
-    expect(redirect.at(0).props()).to.have.property('to').that.eql(locationForBehandling);
   });
 });

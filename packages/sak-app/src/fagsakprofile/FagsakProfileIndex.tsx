@@ -1,51 +1,22 @@
 import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { RouteProps } from 'react-router';
-import { createSelector } from 'reselect';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
-import { Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
-import { DataFetcher, DataFetcherTriggers, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { KodeverkMedNavn, Fagsak, Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
+import useLocation from '../app/useLocation';
+import useRouteMatch from '../app/useRouteMatch';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
-import { getEnabledApplicationContexts } from '../app/duck';
-import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import BehandlingMenuDataResolver from '../behandlingmenu/BehandlingMenuDataResolver';
-import fpsakApi from '../data/fpsakApi';
-import {
-  getFagsakYtelseType,
-  getSelectedFagsakStatus,
-  getSelectedSaksnummer,
-  getSelectedFagsakDekningsgrad,
-} from '../fagsak/fagsakSelectors';
-import { getNoExistingBehandlinger } from '../behandling/selectors/behandlingerSelectors';
-import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
-import { getAlleKodeverk, getAlleKlagekodeverk } from '../kodeverk/duck';
+import { FpsakApiKeys, restApiHooks, requestApi } from '../data/fpsakApi';
+import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
 
 import styles from './fagsakProfileIndex.less';
-
-const risikoklassifiseringData = [fpsakApi.RISIKO_AKSJONSPUNKT, fpsakApi.KONTROLLRESULTAT];
-
-const behandlingerRestApis = {
-  [ApplicationContextPath.FPSAK]: fpsakApi.BEHANDLINGER_FPSAK,
-  [ApplicationContextPath.FPTILBAKE]: fpsakApi.BEHANDLINGER_FPTILBAKE,
-  [ApplicationContextPath.KLAGE]: fpsakApi.BEHANDLINGER_KLAGE,
-};
-
-export const getAlleBehandlinger = createSelector<
-  { behandlingerFpsak?: Behandling[]; behandlingerFptilbake?: Behandling[]; behandlingerKlage?: Behandling[] },
-  Behandling[],
-  Behandling[]
->(
-  [props => props.behandlingerFpsak, props => props.behandlingerFptilbake, props => props.behandlingerKlage],
-  (behandlingerFpsak = [], behandlingerFptilbake = [], behandlingerKlage = []) =>
-    behandlingerFpsak.concat(behandlingerFptilbake).concat(behandlingerKlage),
-);
+import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 
 const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
   if (alleBehandlinger.length === 1) {
@@ -58,137 +29,113 @@ const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
 };
 
 interface OwnProps {
-  enabledApis: EndpointOperations[];
-  saksnummer: string;
-  sakstype: Kodeverk;
-  fagsakStatus: Kodeverk;
-  selectedBehandlingId?: number;
-  noExistingBehandlinger: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  klagekodeverk?: { [key: string]: KodeverkMedNavn[] };
+  fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
+  behandlingId?: number;
   behandlingVersjon?: number;
-  shouldRedirectToBehandlinger: boolean;
-  location: RouteProps['location'];
-  dekningsgrad: number;
+  harHentetBehandlinger: boolean;
+  oppfriskBehandlinger: () => void;
 }
 
 export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
-  sakstype,
-  selectedBehandlingId,
+  fagsak,
+  alleBehandlinger,
+  harHentetBehandlinger,
+  behandlingId,
   behandlingVersjon,
-  alleKodeverk,
-  klagekodeverk,
-  noExistingBehandlinger,
-  fagsakStatus,
-  saksnummer,
-  location,
-  enabledApis,
-  shouldRedirectToBehandlinger,
-  dekningsgrad,
+  oppfriskBehandlinger,
 }) => {
-  const [showAll, setShowAll] = useState(!selectedBehandlingId);
+  const [showAll, setShowAll] = useState(!behandlingId);
   const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
 
-  useEffect(() => {
-    setShowAll(!selectedBehandlingId);
-  }, [selectedBehandlingId]);
+  const getKodeverkFn = useGetKodeverkFn();
 
+  const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
+  const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
+
+  const { data: risikoAksjonspunkt, state: risikoAksjonspunktState } = restApiHooks.useRestApi<Aksjonspunkt>(
+    FpsakApiKeys.RISIKO_AKSJONSPUNKT,
+    undefined,
+    {
+      updateTriggers: [behandlingId, behandlingVersjon],
+      suspendRequest: !requestApi.hasPath(FpsakApiKeys.RISIKO_AKSJONSPUNKT),
+    },
+  );
+  const { data: kontrollresultat, state: kontrollresultatState } = restApiHooks.useRestApi<Risikoklassifisering>(
+    FpsakApiKeys.KONTROLLRESULTAT,
+    undefined,
+    {
+      updateTriggers: [behandlingId, behandlingVersjon],
+      suspendRequest: !requestApi.hasPath(FpsakApiKeys.KONTROLLRESULTAT),
+    },
+  );
+
+  useEffect(() => {
+    setShowAll(!behandlingId);
+  }, [behandlingId]);
+
+  const match = useRouteMatch();
+  const shouldRedirectToBehandlinger = match.isExact;
+
+  const location = useLocation();
   const getBehandlingLocation = useCallback(
-    behandlingId =>
+    valgtBehandlingId =>
       getLocationWithDefaultProsessStegAndFakta({
         ...location,
-        pathname: pathToBehandling(saksnummer, behandlingId),
+        pathname: pathToBehandling(fagsak.saksnummer, valgtBehandlingId),
       }),
-    [saksnummer],
+    [fagsak.saksnummer],
   );
 
   return (
     <div className={styles.panelPadding}>
-      <DataFetcher
-        fetchingTriggers={
-          new DataFetcherTriggers({ behandlingId: selectedBehandlingId, behandlingVersion: behandlingVersjon }, false)
-        }
-        endpointParams={{
-          [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer },
-          [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer },
-          [fpsakApi.BEHANDLINGER_KLAGE.name]: { saksnummer },
-        }}
-        showOldDataWhenRefetching
-        endpoints={enabledApis}
-        loadingPanel={<LoadingPanel />}
-        render={dataProps => {
-          const alleBehandlinger = getAlleBehandlinger(dataProps);
-          if (shouldRedirectToBehandlinger) {
-            return <Redirect to={findPathToBehandling(saksnummer, location, alleBehandlinger)} />;
-          }
-          return (
-            <FagsakProfilSakIndex
-              saksnummer={saksnummer}
-              sakstype={sakstype}
-              dekningsgrad={dekningsgrad}
-              fagsakStatus={fagsakStatus}
-              alleKodeverk={alleKodeverk}
-              renderBehandlingMeny={() => <BehandlingMenuDataResolver />}
-              renderBehandlingVelger={() => (
-                <BehandlingVelgerSakIndex
-                  behandlinger={alleBehandlinger}
-                  getBehandlingLocation={getBehandlingLocation}
-                  noExistingBehandlinger={noExistingBehandlinger}
-                  behandlingId={selectedBehandlingId}
-                  showAll={showAll}
-                  toggleShowAll={toggleShowAll}
-                  alleKodeverk={alleKodeverk}
-                  klagekodeverk={klagekodeverk}
-                />
-              )}
+      {!harHentetBehandlinger && <LoadingPanel />}
+      {harHentetBehandlinger && shouldRedirectToBehandlinger && (
+        <Redirect to={findPathToBehandling(fagsak.saksnummer, location, alleBehandlinger)} />
+      )}
+      {harHentetBehandlinger && !shouldRedirectToBehandlinger && (
+        <FagsakProfilSakIndex
+          saksnummer={fagsak.saksnummer}
+          fagsakYtelseType={fagsakYtelseTypeMedNavn}
+          fagsakStatus={fagsakStatusMedNavn}
+          dekningsgrad={fagsak.dekningsgrad}
+          renderBehandlingMeny={() => (
+            <BehandlingMenuDataResolver
+              fagsak={fagsak}
+              alleBehandlinger={alleBehandlinger}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              oppfriskBehandlinger={oppfriskBehandlinger}
             />
-          );
-        }}
-      />
-      <DataFetcher
-        fetchingTriggers={
-          new DataFetcherTriggers({ behandlingId: selectedBehandlingId, behandlingVersion: behandlingVersjon }, true)
-        }
-        showComponent={risikoklassifiseringData.every(d => d.isEndpointEnabled())}
-        endpoints={risikoklassifiseringData}
-        showOldDataWhenRefetching
-        render={dataProps => <RisikoklassifiseringIndex {...dataProps} />}
-        loadingPanel={<LoadingPanel />}
-      />
+          )}
+          renderBehandlingVelger={() => (
+            <BehandlingVelgerSakIndex
+              behandlinger={alleBehandlinger}
+              getBehandlingLocation={getBehandlingLocation}
+              noExistingBehandlinger={alleBehandlinger.length === 0}
+              behandlingId={behandlingId}
+              showAll={showAll}
+              toggleShowAll={toggleShowAll}
+              getKodeverkFn={getKodeverkFn}
+            />
+          )}
+        />
+      )}
+      {(kontrollresultatState === RestApiState.LOADING || risikoAksjonspunktState === RestApiState.LOADING) && (
+        <LoadingPanel />
+      )}
+      {kontrollresultatState === RestApiState.SUCCESS && risikoAksjonspunktState === RestApiState.SUCCESS && (
+        <RisikoklassifiseringIndex
+          fagsak={fagsak}
+          alleBehandlinger={alleBehandlinger}
+          risikoAksjonspunkt={risikoAksjonspunkt}
+          kontrollresultat={kontrollresultat}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+      )}
     </div>
   );
 };
 
-export const getEnabledApis = createSelector([getEnabledApplicationContexts], enabledApplicationContexts =>
-  enabledApplicationContexts.map(c => behandlingerRestApis[c]),
-);
-
-const mapStateToProps = state => ({
-  enabledApis: getEnabledApis(state),
-  saksnummer: getSelectedSaksnummer(state),
-  dekningsgrad: getSelectedFagsakDekningsgrad(state),
-  sakstype: getFagsakYtelseType(state),
-  fagsakStatus: getSelectedFagsakStatus(state),
-  selectedBehandlingId: getSelectedBehandlingId(state),
-  noExistingBehandlinger: getNoExistingBehandlinger(state),
-  alleKodeverk: getAlleKodeverk(state),
-  klagekodeverk: getAlleKlagekodeverk(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...ownProps,
-  ...stateProps,
-  ...dispatchProps,
-  shouldRedirectToBehandlinger: ownProps.match.isExact,
-});
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-    mergeProps,
-  )(requireProps(['saksnummer'], <LoadingPanel />)(FagsakProfileIndex)),
-);
+export default requireProps(['fagsak'], <LoadingPanel />)(FagsakProfileIndex);

@@ -9,7 +9,7 @@ import { DashboardResolver } from './DashboardResolver';
 
 describe('<DashboardResolver>', () => {
   it('skal vise fremsiden til fpsak når miljø er lik development', () => {
-    const wrapper = shallowWithIntl(<DashboardResolver intl={intlMock} addErrorMessage={() => undefined} />);
+    const wrapper = shallowWithIntl(<DashboardResolver intl={intlMock} />);
 
     expect(wrapper.find(Dashboard)).to.have.length(1);
     expect(wrapper.find(LoadingPanel)).to.have.length(0);

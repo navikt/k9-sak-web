@@ -1,11 +1,9 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 
-import fpsakApi from '../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 
 interface OwnProps {
-  nbMessages: {};
   children: ReactNode;
 }
 
@@ -14,14 +12,14 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente språkfilen.
  */
-export const LanguageProvider: FunctionComponent<OwnProps> = ({ nbMessages, children }) => (
-  <IntlProvider locale="nb-NO" messages={nbMessages}>
-    {children}
-  </IntlProvider>
-);
+const LanguageProvider: FunctionComponent<OwnProps> = ({ children }) => {
+  const nbMessages = restApiHooks.useGlobalStateRestApiData<any>(FpsakApiKeys.LANGUAGE_FILE);
 
-const mapStateToProps = state => ({
-  nbMessages: fpsakApi.LANGUAGE_FILE.getRestApiData()(state),
-});
+  return (
+    <IntlProvider locale="nb-NO" messages={nbMessages}>
+      {children}
+    </IntlProvider>
+  );
+};
 
-export default connect(mapStateToProps)(LanguageProvider);
+export default LanguageProvider;

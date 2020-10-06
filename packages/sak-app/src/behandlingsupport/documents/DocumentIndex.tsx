@@ -1,29 +1,24 @@
-import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import React, { FunctionComponent, useMemo } from 'react';
 
-import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 import { Dokument } from '@k9-sak-web/types';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
-import fpsakApi from '../../data/fpsakApi';
-import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
-import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
+import useBehandlingEndret from '../../behandling/useBehandligEndret';
+import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
 
 // TODO (hb) lag linker, ikke callback
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
 const selectDocument = saksNr => (e, id, document) => {
   window.open(
-    `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`,
+    `/fpsak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`,
     '_blank',
   );
 };
 
-const dokumentData = [fpsakApi.ALL_DOCUMENTS];
-
-const getSortedDocuments = createSelector([allDocuments => allDocuments], (alleDokumenter: Dokument[]) =>
-  (alleDokumenter || []).sort((a, b) => {
+const hentSorterteDokumenter = (alleDokumenter: Dokument[] = []) =>
+  alleDokumenter.sort((a, b) => {
     if (!a.tidspunkt) {
       return +1;
     }
@@ -32,11 +27,10 @@ const getSortedDocuments = createSelector([allDocuments => allDocuments], (alleD
       return -1;
     }
     return b.tidspunkt.localeCompare(a.tidspunkt);
-  }),
-);
+  });
 
 interface OwnProps {
-  saksNr: number;
+  saksnummer: number;
   behandlingId?: number;
   behandlingVersjon?: number;
 }
@@ -46,27 +40,32 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente sakens dokumenter fra state og rendre det i en liste.
  */
-export const DocumentIndex: FunctionComponent<OwnProps> = ({ behandlingId, behandlingVersjon, saksNr }) => (
-  <DataFetcher
-    fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion: behandlingVersjon }, false)}
-    endpoints={dokumentData}
-    endpointParams={{ [fpsakApi.ALL_DOCUMENTS.name]: { saksnummer: saksNr } }}
-    showOldDataWhenRefetching
-    loadingPanel={<LoadingPanel />}
-    render={(dataProps: { allDocuments: Dokument[] }) => (
-      <DokumenterSakIndex
-        documents={getSortedDocuments(dataProps.allDocuments)}
-        selectDocumentCallback={selectDocument(saksNr)}
-        behandlingId={behandlingId}
-      />
-    )}
-  />
-);
+export const DocumentIndex: FunctionComponent<OwnProps> = ({ behandlingId, behandlingVersjon, saksnummer }) => {
+  const forrigeSaksnummer = usePrevious(saksnummer);
+  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
+  const { data: alleDokumenter, state } = restApiHooks.useRestApi<Dokument[]>(
+    FpsakApiKeys.ALL_DOCUMENTS,
+    { saksnummer },
+    {
+      updateTriggers: [behandlingId, behandlingVersjon],
+      suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
+      keepData: true,
+    },
+  );
 
-const mapStateToProps = state => ({
-  saksNr: getSelectedSaksnummer(state),
-  behandlingId: getSelectedBehandlingId(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-});
+  const sorterteDokumenter = useMemo(() => hentSorterteDokumenter(alleDokumenter), [alleDokumenter]);
 
-export default connect(mapStateToProps)(requireProps(['saksNr'], <LoadingPanel />)(DocumentIndex));
+  if (state === RestApiState.LOADING) {
+    return <LoadingPanel />;
+  }
+
+  return (
+    <DokumenterSakIndex
+      documents={sorterteDokumenter}
+      selectDocumentCallback={selectDocument(saksnummer)}
+      behandlingId={behandlingId}
+    />
+  );
+};
+
+export default requireProps(['saksnummer'], <LoadingPanel />)(DocumentIndex);

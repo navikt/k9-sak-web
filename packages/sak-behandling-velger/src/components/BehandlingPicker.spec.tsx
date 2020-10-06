@@ -42,7 +42,7 @@ describe('<BehandlingPicker>', () => {
         getBehandlingLocation={() => 'url'}
         showAll={false}
         toggleShowAll={sinon.spy()}
-        alleKodeverk={{}}
+        getKodeverkFn={sinon.spy()}
       />,
     );
 
@@ -76,7 +76,7 @@ describe('<BehandlingPicker>', () => {
         getBehandlingLocation={() => 'url'}
         showAll
         toggleShowAll={sinon.spy()}
-        alleKodeverk={{}}
+        getKodeverkFn={sinon.spy()}
       />,
     );
 
@@ -113,7 +113,7 @@ describe('<BehandlingPicker>', () => {
         getBehandlingLocation={() => 'url'}
         showAll
         toggleShowAll={sinon.spy()}
-        alleKodeverk={{}}
+        getKodeverkFn={sinon.spy()}
       />,
     );
 

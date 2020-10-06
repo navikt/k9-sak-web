@@ -1,14 +1,17 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, useMemo, useCallback } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import EventType from '@fpsak-frontend/rest-api/src/requestApi/eventType';
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
+import { useRestApiError, useRestApiErrorDispatcher } from '@fpsak-frontend/rest-api-hooks';
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
-import { getPathToFplos } from '../paths';
+import { NavAnsatt } from '@k9-sak-web/types';
+import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
+import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 
 const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
   const resolvedErrorMessages = [];
@@ -39,9 +42,7 @@ interface OwnProps {
     errorcode?: string;
     errormessage?: string;
   };
-  navAnsattName: string;
   removeErrorMessage: () => void;
-  showDetailedErrorMessages?: boolean;
   hideErrorMessages?: boolean;
   errorMessages?: {
     type: EventType;
@@ -57,17 +58,36 @@ interface OwnProps {
 const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   errorMessages = [],
-  navAnsattName,
   queryStrings,
   setSiteHeight,
   removeErrorMessage: removeErrorMsg,
-  showDetailedErrorMessages = false,
   hideErrorMessages = false,
 }) => {
-  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, errorMessages, queryStrings), [
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
+  const showDetailedErrorMessages = restApiHooks.useGlobalStateRestApiData<boolean>(
+    FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES,
+  );
+
+  const errorMessagesNew = useRestApiError() || [];
+  const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessagesNew, undefined), [
+    errorMessagesNew,
+  ]);
+
+  const allErrorMessage = useMemo(() => formaterteFeilmeldinger.concat(errorMessages), [
+    formaterteFeilmeldinger,
     errorMessages,
+  ]);
+  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, allErrorMessage, queryStrings), [
+    allErrorMessage,
     queryStrings,
   ]);
+
+  const { removeErrorMessages } = useRestApiErrorDispatcher();
+
+  const removeErrorAllErrorMsg = useCallback(() => {
+    removeErrorMsg();
+    removeErrorMessages();
+  }, []);
 
   const iconLinks = useMemo(
     () => [
@@ -87,15 +107,14 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
 
   return (
     <HeaderWithErrorPanel
-      systemTittel={intl.formatMessage({ id: 'Header.Ytelse' })}
+      systemTittel={intl.formatMessage({ id: 'Header.Foreldrepenger' })}
       iconLinks={iconLinks}
       queryStrings={queryStrings}
-      navAnsattName={navAnsattName}
-      removeErrorMessage={removeErrorMsg}
+      navAnsattName={navAnsatt.navn}
+      removeErrorMessage={removeErrorAllErrorMsg}
       showDetailedErrorMessages={showDetailedErrorMessages}
       errorMessages={hideErrorMessages ? [] : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
-      getPathToFplos={getPathToFplos}
     />
   );
 };

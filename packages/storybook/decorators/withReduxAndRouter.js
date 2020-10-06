@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import configureStore from '@fpsak-frontend/sak-app/src/configureStore';
@@ -14,9 +14,9 @@ const withReduxAndRouterProvider = Story => {
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>
+      <Router history={history}>
         <Story />
-      </ConnectedRouter>
+      </Router>
     </Provider>
   );
 };

@@ -4,52 +4,29 @@ import sinon from 'sinon';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Tooltip } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-fagsak-profil';
 import { FagsakProfile } from './FagsakProfile';
 
 describe('<FagsakProfile>', () => {
-  const alleKodeverk = {
-    [kodeverkTyper.FAGSAK_YTELSE]: [
-      {
-        kode: 'ES',
-        navn: 'Engangsstønad',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
-      {
-        kode: 'FP',
-        navn: 'Foreldrepenger',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
-    ],
-    [kodeverkTyper.FAGSAK_STATUS]: [
-      {
-        kode: 'OPPR',
-        navn: 'Opprettet',
-        kodeverk: 'FAGSAK_STATUS',
-      },
-    ],
-  };
-
   it('skal vise en fagsak med tilhørende informasjon', () => {
-    const sakstype = {
+    const fagsakYtelseType = {
       kode: 'ES',
       kodeverk: 'FAGSAK_YTELSE',
+      navn: 'Engangsstønad',
     };
     const status = {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
+      navn: 'Opprettet',
     };
     const wrapper = shallowWithIntl(
       <FagsakProfile
-        saksnummer="12345"
-        sakstype={sakstype}
+        saksnummer={12345}
+        fagsakYtelseType={fagsakYtelseType}
         fagsakStatus={status}
-        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
         renderBehandlingMeny={sinon.spy()}
         renderBehandlingVelger={sinon.spy()}
         dekningsgrad={100}
@@ -67,20 +44,21 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal vise dekningsgrad for foreldrepenger om den eksisterer', () => {
-    const sakstype = {
+    const fagsakYtelseType = {
       kode: 'FP',
       kodeverk: 'FAGSAK_YTELSE',
+      navn: 'Foreldrepenger',
     };
     const status = {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
+      navn: 'Opprettet',
     };
     const wrapper = shallowWithIntl(
       <FagsakProfile
-        saksnummer="12345"
-        sakstype={sakstype}
+        saksnummer={12345}
+        fagsakYtelseType={fagsakYtelseType}
         fagsakStatus={status}
-        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
         renderBehandlingMeny={sinon.spy()}
         renderBehandlingVelger={sinon.spy()}
         dekningsgrad={100}
@@ -103,20 +81,21 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal ikke vise dekningsgrad for foreldrepenger om den ikke eksisterer', () => {
-    const sakstype = {
+    const fagsakYtelseType = {
       kode: 'FP',
       kodeverk: 'FAGSAK_YTELSE',
+      navn: 'Foreldrepenger',
     };
     const status = {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
+      navn: 'Opprettet',
     };
     const wrapper = shallowWithIntl(
       <FagsakProfile
-        saksnummer="12345"
-        sakstype={sakstype}
+        saksnummer={12345}
+        fagsakYtelseType={fagsakYtelseType}
         fagsakStatus={status}
-        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
         renderBehandlingMeny={sinon.spy()}
         renderBehandlingVelger={sinon.spy()}
         intl={intlMock}
@@ -136,20 +115,21 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal ikke vise ugyldig dekningsgrad for foreldrepenger', () => {
-    const sakstype = {
+    const fagsakYtelseType = {
       kode: 'FP',
       kodeverk: 'FAGSAK_YTELSE',
+      navn: 'Foreldrepenger',
     };
     const status = {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
+      navn: 'Opprettet',
     };
     const wrapper = shallowWithIntl(
       <FagsakProfile
-        saksnummer="12345"
-        sakstype={sakstype}
+        saksnummer={12345}
+        fagsakYtelseType={fagsakYtelseType}
         fagsakStatus={status}
-        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
         renderBehandlingMeny={sinon.spy()}
         renderBehandlingVelger={sinon.spy()}
         dekningsgrad={73}

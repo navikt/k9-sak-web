@@ -1,25 +1,27 @@
 import React from 'react';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
 import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
+import { RestApiErrorProvider, RestApiProvider } from '@fpsak-frontend/rest-api-hooks';
 
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
+/* global VERSION:true */
 /* eslint no-undef: "error" */
 // @ts-ignore
-const isDevelopment = process.env.NODE_ENV === 'development';
+const release = VERSION;
 const environment = window.location.hostname;
-
+const isDevelopment = process.env.NODE_ENV === 'development';
 init({
+  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://d1b7de8cc42949569da03849b47d3ea1@sentry.gc.nav.no/17',
+  release,
   environment,
-  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
-  release: '1', // TODO endre denne til å bli satt av github actions
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
@@ -47,9 +49,9 @@ init({
 });
 
 const history = createBrowserHistory({
-  basename: '/k9/web/',
+  basename: '/fpsak/',
 });
-const store = configureStore(history);
+const store = configureStore();
 
 reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
 
@@ -60,9 +62,13 @@ const renderFunc = Component => {
   }
   render(
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Component />
-      </ConnectedRouter>
+      <Router history={history}>
+        <RestApiProvider>
+          <RestApiErrorProvider>
+            <Component />
+          </RestApiErrorProvider>
+        </RestApiProvider>
+      </Router>
     </Provider>,
     app,
   );

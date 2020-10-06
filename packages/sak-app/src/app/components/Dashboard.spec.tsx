@@ -1,12 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
+import { requestApi, FpsakApiKeys } from '../../data/fpsakApi';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
-import { Dashboard } from './Dashboard';
+import Dashboard from './Dashboard';
 
 describe('<Dashboard>', () => {
   const integrationStatusList = [
@@ -20,35 +21,25 @@ describe('<Dashboard>', () => {
   ];
 
   it('skal vise søkeskjermbildet, men ikke systemstatuser', () => {
-    const fetchCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <Dashboard
-        showIntegrationStatus={false}
-        integrationStatusList={integrationStatusList}
-        fetchIntegrationStatus={fetchCallback}
-      />,
-    );
+    requestApi.mock(FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES, false);
+    requestApi.mock(FpsakApiKeys.INTEGRATION_STATUS, []);
+
+    const wrapper = shallow(<Dashboard />);
 
     expect(wrapper.find(IntegrationStatusPanel)).to.have.length(0);
     expect(wrapper.find(FagsakSearchIndex)).to.have.length(1);
-    expect(fetchCallback.called).is.false;
   });
 
   it('skal vise søkeskjermbildet og systemstatuser', () => {
-    const fetchCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <Dashboard
-        showIntegrationStatus
-        integrationStatusList={integrationStatusList}
-        fetchIntegrationStatus={fetchCallback}
-      />,
-    );
+    requestApi.mock(FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES, true);
+    requestApi.mock(FpsakApiKeys.INTEGRATION_STATUS, integrationStatusList);
+
+    const wrapper = shallowWithIntl(<Dashboard />);
 
     const statusPanel = wrapper.find(IntegrationStatusPanel);
     expect(statusPanel).to.have.length(1);
     expect(statusPanel.prop('integrationStatusList')).is.eql(integrationStatusList);
 
     expect(wrapper.find(FagsakSearchIndex)).to.have.length(1);
-    expect(fetchCallback.called).is.true;
   });
 });

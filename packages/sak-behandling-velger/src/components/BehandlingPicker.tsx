@@ -3,7 +3,7 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
 import behandlingstype from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import BehandlingPickerItem from './BehandlingPickerItem';
@@ -24,15 +24,7 @@ export const sortBehandlinger = behandlinger =>
     return moment(b2.opprettet).diff(moment(b1.opprettet));
   });
 
-const renderListItems = (
-  behandlinger,
-  getBehandlingLocation,
-  behandlingId,
-  showAll,
-  toggleShowAll,
-  alleKodeverk,
-  klagekodeverk,
-) =>
+  const renderListItems = (behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, getKodeverkFn) => (
   sortBehandlinger(behandlinger)
     .filter(behandling => showAll || behandling.id === behandlingId)
     .map(behandling => (
@@ -44,7 +36,7 @@ const renderListItems = (
           isActive={behandling.id === behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
-          alleKodeverk={behandling.type.kode === behandlingstype.KLAGE ? klagekodeverk : alleKodeverk}
+          getKodeverkFn={getKodeverkFn}
         />
       </li>
     ));
@@ -56,8 +48,7 @@ interface OwnProps {
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  klagekodeverk?: { [key: string]: KodeverkMedNavn[] };
+  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
 /**
@@ -72,8 +63,7 @@ const BehandlingPicker: FunctionComponent<OwnProps> = ({
   behandlingId,
   showAll,
   toggleShowAll,
-  alleKodeverk,
-  klagekodeverk,
+  getKodeverkFn
 }) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && (
@@ -88,8 +78,7 @@ const BehandlingPicker: FunctionComponent<OwnProps> = ({
         behandlingId,
         showAll,
         toggleShowAll,
-        alleKodeverk,
-        klagekodeverk,
+        getKodeverkFn,
       )}
   </ul>
 );

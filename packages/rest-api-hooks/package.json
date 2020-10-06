@@ -1,0 +1,12 @@
+{
+  "name": "@fpsak-frontend/rest-api-hooks",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "^16.13.1",
+    "@fpsak-frontend/rest-api-new": "1.0.0"
+  },
+  "devDependencies": {}
+}

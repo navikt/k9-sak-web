@@ -6,7 +6,7 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, Rettigheter } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { DataFetcher, DataFetcherTriggers, getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
@@ -36,6 +36,7 @@ interface OwnProps {
   harApenRevurdering: boolean;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   featureToggles: {};
+  setRequestPendingMessage: (message: string) => void;
 }
 
 interface StateProps {
@@ -43,6 +44,7 @@ interface StateProps {
   forrigeBehandling?: Behandling;
   tilbakekrevingKodeverk?: { [key: string]: KodeverkMedNavn[] };
   hasFetchError: boolean;
+  requestPollingMessage?: string;
 }
 
 interface DispatchProps {
@@ -89,6 +91,8 @@ const BehandlingTilbakekrevingIndex: FunctionComponent<Props> = ({
   harApenRevurdering,
   hasFetchError,
   featureToggles,
+  requestPollingMessage,
+  setRequestPendingMessage,
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -115,6 +119,10 @@ const BehandlingTilbakekrevingIndex: FunctionComponent<Props> = ({
       }, 1000);
     };
   }, [behandlingId]);
+
+  useEffect(() => {
+    setRequestPendingMessage(requestPollingMessage);
+  }, [requestPollingMessage]);
 
   if (!behandling || !tilbakekrevingKodeverk) {
     return <LoadingPanel />;
@@ -165,6 +173,7 @@ const mapStateToProps = (state): StateProps => ({
   forrigeBehandling: tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiPreviousData()(state),
   tilbakekrevingKodeverk: tilbakekrevingApi.TILBAKE_KODEVERK.getRestApiData()(state),
   hasFetchError: !!tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiError()(state),
+  requestPollingMessage: getRequestPollingMessage(state),
 });
 
 const getResetRestApiContext = () => (dispatch: Dispatch) => {

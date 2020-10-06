@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-
+import { Behandling, KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
 import BehandlingPicker from './components/BehandlingPicker';
 import messages from '../i18n/nb_NO.json';
 
@@ -23,8 +22,7 @@ interface OwnProps {
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  klagekodeverk?: { [key: string]: KodeverkMedNavn[] };
+  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
 const BehandlingVelgerSakIndex: FunctionComponent<OwnProps> = ({
@@ -34,8 +32,7 @@ const BehandlingVelgerSakIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   showAll,
   toggleShowAll,
-  alleKodeverk,
-  klagekodeverk,
+  getKodeverkFn,
 }) => (
   <RawIntlProvider value={intl}>
     <BehandlingPicker
@@ -45,8 +42,7 @@ const BehandlingVelgerSakIndex: FunctionComponent<OwnProps> = ({
       behandlingId={behandlingId}
       showAll={showAll}
       toggleShowAll={toggleShowAll}
-      alleKodeverk={alleKodeverk}
-      klagekodeverk={klagekodeverk}
+      getKodeverkFn={getKodeverkFn}
     />
   </RawIntlProvider>
 );

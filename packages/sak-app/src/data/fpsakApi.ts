@@ -1,11 +1,5 @@
-import {
-  reducerRegistry,
-  setRequestPollingMessage,
-  ReduxEvents,
-  ReduxRestApiBuilder,
-  RestApiConfigBuilder,
-} from '@fpsak-frontend/rest-api-redux';
-import errorHandler from '@fpsak-frontend/error-api-redux';
+import { RestApiConfigBuilder, createRequestApi } from '@fpsak-frontend/rest-api-new';
+import { RestApiHooks } from '@fpsak-frontend/rest-api-hooks';
 
 export const FpsakApiKeys = {
   LANGUAGE_FILE: 'LANGUAGE_FILE',
@@ -53,7 +47,9 @@ export const FpsakApiKeys = {
   BEHANDLING_PERSONOPPLYSNINGER: 'BEHANDLING_PERSONOPPLYSNINGER',
 };
 
-const endpoints = new RestApiConfigBuilder()
+const CONTEXT_PATH = '';
+
+const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
 
   /* /api/fagsak */
   .withPost('/k9/sak/api/fagsak/sok', FpsakApiKeys.SEARCH_FAGSAK)
@@ -121,10 +117,10 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/k9/sak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
   /* k9/formidling/api/brev */
-  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
-  .withPostAndOpenBlob('/k9/tilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
-  .withPostAndOpenBlob(
-    '/k9/tilbake/api/dokument/forhandsvis-henleggelsesbrev',
+  .withPost('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
+  .withPost('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
+  .withPost(
+    '/fptilbake/api/dokument/forhandsvis-henleggelsesbrev',
     FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
   )
 
@@ -140,17 +136,6 @@ const endpoints = new RestApiConfigBuilder()
 
   .build();
 
-const reducerName = 'dataContext';
+export const requestApi = createRequestApi(endpoints);
 
-export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withReduxEvents(
-    new ReduxEvents()
-      .withErrorActionCreator(errorHandler.getErrorActionCreator())
-      .withPollingMessageActionCreator(setRequestPollingMessage),
-  )
-  .build();
-
-reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
-
-const fpsakApi = reduxRestApi.getEndpointApi();
-export default fpsakApi;
+export const restApiHooks = RestApiHooks.initHooks(requestApi);

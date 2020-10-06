@@ -26,7 +26,7 @@ const HistorikkMalType6 = ({ historikkinnslagDeler, getKodeverknavn }) => {
       {historikkinnslagDeler.map(del => (
         <div key={del.hendelse}>
           <Element className="snakkeboble-panel__tekst">{findHendelseText(del.hendelse, getKodeverknavn)}</Element>
-          {del.opplysninger.map(formaterOpplysning)}
+          {del.opplysninger.map(formaterOpplysning(del.hendelse.kode))}
         </div>
       ))}
     </div>

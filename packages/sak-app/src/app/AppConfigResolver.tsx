@@ -1,86 +1,57 @@
-import React, { Component, ReactNode } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { FunctionComponent, ReactElement } from 'react';
 
+import { featureToggle } from '@k9-sak-web/konstanter';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
-import fpsakApi from '../data/fpsakApi';
-import {
-  fetchAlleKodeverk as fetchAlleKodeverkAC,
-  getFeatureToggles,
-  isFinishedLoadingData,
-  fetchAllFeatureToggles,
-  isFinishedLoadingErrorPageData,
-} from './duck';
+import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 
 interface OwnProps {
-  finishedLoadingBlockers: boolean;
-  children: ReactNode;
-  fetchNavAnsatt: () => void;
-  fetchLanguageFile: () => void;
-  fetchAlleKodeverk: (featureToggles: {}) => void;
-  fetchShowDetailedErrorMessages: () => void;
-  fetchFeatureToggles: () => void;
-  featureToggles: {};
-  appIsInErroneousState?: boolean;
-  finishedLoadingErrorPageBlockers?: boolean;
+  children: ReactElement;
 }
 
-class AppConfigResolver extends Component<OwnProps> {
-  static defaultProps = {
-    featureToggles: undefined,
-  };
+const NO_PARAMS = {};
 
-  constructor(props) {
-    super(props);
-    this.resolveAppConfig();
-  }
+/**
+ * Komponent som henter backend-data som skal kunne aksesseres globalt i applikasjonen. Denne dataen blir kun hentet en gang.
+ */
+const AppConfigResolver: FunctionComponent<OwnProps> = ({ children }) => {
+  const { state: navAnsattState } = restApiHooks.useGlobalStateRestApi(FpsakApiKeys.NAV_ANSATT);
+  const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(FpsakApiKeys.LANGUAGE_FILE);
+  const { state: behandlendeEnheterState } = restApiHooks.useGlobalStateRestApi(FpsakApiKeys.BEHANDLENDE_ENHETER);
+  const { state: visDetaljerteFeilmeldingerState } = restApiHooks.useGlobalStateRestApi(
+    FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES,
+  );
+  const featureToggleParams = { toggles: Object.values(featureToggle).map(ft => ({ navn: ft })) };
+  const { data: featureToggles, state: featureToggleState } = restApiHooks.useGlobalStateRestApi<{
+    featureToggles: { [key: string]: boolean };
+  }>(FpsakApiKeys.FEATURE_TOGGLE, featureToggleParams);
 
-  componentDidUpdate(prevProps) {
-    const { fetchAlleKodeverk, featureToggles } = this.props;
-
-    if (featureToggles !== prevProps.featureToggles) {
-      fetchAlleKodeverk(featureToggles);
-    }
-  }
-
-  resolveAppConfig = () => {
-    const { fetchNavAnsatt, fetchLanguageFile, fetchShowDetailedErrorMessages, fetchFeatureToggles } = this.props;
-
-    fetchNavAnsatt();
-    fetchLanguageFile();
-    fetchShowDetailedErrorMessages();
-    fetchFeatureToggles();
-  };
-
-  render = () => {
-    const { finishedLoadingBlockers, children, appIsInErroneousState, finishedLoadingErrorPageBlockers } = this.props;
-    if (appIsInErroneousState && finishedLoadingErrorPageBlockers) {
-      return children;
-    }
-    if (!finishedLoadingBlockers) {
-      return <LoadingPanel />;
-    }
-    return children;
-  };
-}
-
-const mapStateToProps = state => ({
-  finishedLoadingBlockers: isFinishedLoadingData(state),
-  featureToggles: getFeatureToggles(state),
-  finishedLoadingErrorPageBlockers: isFinishedLoadingErrorPageData(state),
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
+  const { state: kodeverkFpSakStatus } = restApiHooks.useGlobalStateRestApi(FpsakApiKeys.KODEVERK, NO_PARAMS, {
+    suspendRequest: featureToggleState !== RestApiState.SUCCESS,
+    updateTriggers: [!!featureToggles],
+  });
+  const skalHenteFpTilbakeKodeverk = featureToggles
+    ? featureToggles.featureToggles[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]
+    : false;
+  const { state: kodeverkFpTilbakeStatus } = restApiHooks.useGlobalStateRestApi(
+    FpsakApiKeys.KODEVERK_FPTILBAKE,
+    NO_PARAMS,
     {
-      fetchNavAnsatt: fpsakApi.NAV_ANSATT.makeRestApiRequest(),
-      fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
-      fetchShowDetailedErrorMessages: fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.makeRestApiRequest(),
-      fetchAlleKodeverk: fetchAlleKodeverkAC,
-      fetchFeatureToggles: fetchAllFeatureToggles,
+      suspendRequest: !skalHenteFpTilbakeKodeverk,
+      updateTriggers: [!!featureToggles],
     },
-    dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppConfigResolver);
+  const erFerdig =
+    navAnsattState === RestApiState.SUCCESS &&
+    sprakFilState === RestApiState.SUCCESS &&
+    behandlendeEnheterState === RestApiState.SUCCESS &&
+    visDetaljerteFeilmeldingerState === RestApiState.SUCCESS &&
+    kodeverkFpSakStatus === RestApiState.SUCCESS &&
+    (kodeverkFpTilbakeStatus === RestApiState.SUCCESS || !skalHenteFpTilbakeKodeverk);
+
+  return erFerdig ? children : <LoadingPanel />;
+};
+
+export default AppConfigResolver;

@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { push } from 'connected-react-router';
-import { connect } from 'react-redux';
+import React, { FunctionComponent, useState, useCallback } from 'react';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
@@ -9,270 +6,215 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
+import { Fagsak } from '@k9-sak-web/types';
+import SettPaVentModalIndex from '@fpsak-frontend/modal-sett-pa-vent';
 
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
-import {
-  getBehandlingerUuidsMappedById,
-  getBehandlingerTypesMappedById,
-} from '../../behandling/selectors/behandlingerSelectors';
-import { getKodeverk } from '../../kodeverk/duck';
-import {
-  getBehandlingSprak,
-  getBehandlingVersjon,
-  getBehandlingIdentifier,
-  previewMessage,
-} from '../../behandling/duck';
-import { setBehandlingOnHold } from '../../behandlingmenu/duck';
-import fpsakApi from '../../data/fpsakApi';
-import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
-import { resetSubmitMessageActionCreator, submitMessageActionCreator } from './duck';
+import useHistory from '../../app/useHistory';
+import BehandlingAppKontekst from '../../behandling/behandlingAppKontekstTsType';
+import { useFpSakKodeverk } from '../../data/useKodeverk';
+import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
+import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
+import { FpsakApiKeys, restApiHooks, requestApi } from '../../data/fpsakApi';
 
-const revurderingData = [fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP, fpsakApi.BREVMALER];
-const meldingData = [fpsakApi.BREVMALER];
+const getSubmitCallback = (
+  setShowMessageModal,
+  behandlingId,
+  submitMessage,
+  resetMessage,
+  setShowSettPaVentModal,
+  setSubmitCounter,
+) => values => {
+  const isInnhentEllerForlenget =
+    values.brevmalkode === dokumentMalType.INNHENT_DOK ||
+    values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
+    values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
+
+  setShowMessageModal(!isInnhentEllerForlenget);
+
+  const data = {
+    behandlingId,
+    mottaker: values.mottaker,
+    brevmalkode: values.brevmalkode,
+    fritekst: values.fritekst,
+    arsakskode: values.arsakskode,
+  };
+  return submitMessage(data)
+    .then(() => resetMessage())
+    .then(() => {
+      setShowSettPaVentModal(isInnhentEllerForlenget);
+      setSubmitCounter(prevValue => prevValue + 1);
+    });
+};
+
+const getPreviewCallback = (behandlingTypeKode, behandlingId, behandlingUuid, fagsakYtelseType, fetchPreview) => (
+  mottaker,
+  dokumentMal,
+  fritekst,
+  aarsakskode,
+) => {
+  const erTilbakekreving =
+    BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
+    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
+  const data = erTilbakekreving
+    ? {
+        behandlingId,
+        fritekst: fritekst || ' ',
+        brevmalkode: dokumentMal,
+      }
+    : {
+        behandlingUuid,
+        ytelseType: fagsakYtelseType,
+        fritekst: fritekst || ' ',
+        arsakskode: aarsakskode || null,
+        mottaker,
+        dokumentMal,
+      };
+  fetchPreview(erTilbakekreving, false, data);
+};
 
 interface OwnProps {
-  submitFinished?: boolean;
-  behandlingIdentifier?: BehandlingIdentifier;
-  behandlingUuid: string;
-  fagsakYtelseType: Kodeverk;
-  selectedBehandlingVersjon?: number;
-  selectedBehandlingSprak?: Kodeverk;
-  recipients?: string[];
-  ventearsaker?: Kodeverk[];
-  behandlingTypeKode: string;
-  revurderingVarslingArsak: KodeverkMedNavn[];
+  fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
+  behandlingId: number;
+  behandlingVersjon?: number;
 }
 
-interface DispatchProps {
-  fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
-  submitMessage: (data: {}) => Promise<any>;
-  setBehandlingOnHold: (params: {}) => void;
-  push: (param: string) => void;
-  resetSubmitMessage: () => void;
+interface Brevmal {
+  kode: string;
+  navn: string;
+  tilgjengelig: boolean;
 }
 
-interface StateProps {
-  showSettPaVentModal: boolean;
-  showMessagesModal: boolean;
-  submitCounter: number;
-}
-
-interface DataProps {
-  brevmaler?: {
-    kode: string;
-    navn: string;
-    tilgjengelig: boolean;
-  }[];
-  harApentKontrollerRevurderingAp?: boolean;
-}
+const EMPTY_ARRAY = [];
+const RECIPIENTS = ['Søker'];
 
 /**
  * MessagesIndex
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProps> {
-  static defaultProps = {
-    submitFinished: false,
-    ventearsaker: [],
-    recipients: ['Søker'],
-  };
+const MessagesIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, behandlingId, behandlingVersjon }) => {
+  const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
+  const [showMessagesModal, setShowMessageModal] = useState(false);
+  const [submitCounter, setSubmitCounter] = useState(0);
 
-  constructor(props) {
-    super(props);
-    this.submitCallback = this.submitCallback.bind(this);
-    this.previewCallback = this.previewCallback.bind(this);
-    this.afterSubmit = this.afterSubmit.bind(this);
-    this.hideSettPaVentModal = this.hideSettPaVentModal.bind(this);
-    this.handleSubmitFromModal = this.handleSubmitFromModal.bind(this);
-    this.state = { showSettPaVentModal: false, showMessagesModal: false, submitCounter: undefined };
-  }
+  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
-  submitCallback(values) {
-    const { behandlingIdentifier, submitMessage, behandlingUuid, behandlingTypeKode } = this.props;
-    const { submitCounter } = this.state;
+  const history = useHistory();
 
-    const isInnhentEllerForlenget =
-      values.brevmalkode === dokumentMalType.INNHENT_DOK ||
-      values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
-      values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-    const erTilbakekreving =
-      BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
-      BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
+  const ventearsaker = useFpSakKodeverk(kodeverkTyper.VENT_AARSAK) || EMPTY_ARRAY;
+  const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
 
-    this.setState({ showMessagesModal: !isInnhentEllerForlenget });
+  const { startRequest: submitMessage, state: submitState } = restApiHooks.useRestApiRunner(
+    FpsakApiKeys.SUBMIT_MESSAGE,
+  );
 
-    const data = erTilbakekreving
-      ? {
-          behandlingUuid,
-          fritekst: values.fritekst,
-          brevmalkode: values.brevmalkode,
-        }
-      : {
-          behandlingId: behandlingIdentifier.behandlingId,
-          mottaker: values.mottaker,
-          brevmalkode: values.brevmalkode,
-          fritekst: values.fritekst,
-          arsakskode: values.arsakskode,
-        };
-
-    return submitMessage(data)
-      .then(() => this.resetMessage())
-      .then(() =>
-        this.setState({
-          showSettPaVentModal: isInnhentEllerForlenget,
-          submitCounter: submitCounter ? submitCounter + 1 : 1,
-        }),
-      );
-  }
-
-  handleSubmitFromModal(formValues) {
-    const { behandlingIdentifier, selectedBehandlingVersjon, setBehandlingOnHold: setOnHold } = this.props;
-    const values = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      behandlingVersjon: selectedBehandlingVersjon,
-      frist: formValues.frist,
-      ventearsak: formValues.ventearsak,
-    };
-    setOnHold(values);
-    this.hideSettPaVentModal();
-    this.goToSearchPage();
-  }
-
-  hideSettPaVentModal() {
-    this.setState({ showSettPaVentModal: false });
-  }
-
-  goToSearchPage() {
-    const { push: pushLocation } = this.props;
-    pushLocation('/');
-  }
-
-  previewCallback(mottaker, dokumentMal, fritekst, aarsakskode) {
-    const { behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode } = this.props;
-    const erTilbakekreving =
-      BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
-      BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
-    const data = erTilbakekreving
-      ? {
-          behandlingUuid,
-          fritekst: fritekst || ' ',
-          brevmalkode: dokumentMal,
-        }
-      : {
-          behandlingUuid,
-          ytelseType: fagsakYtelseType,
-          fritekst: fritekst || ' ',
-          arsakskode: aarsakskode || null,
-          mottaker,
-          dokumentMal,
-        };
-    fetchPreview(erTilbakekreving, false, data);
-  }
-
-  afterSubmit() {
-    this.setState({
-      showMessagesModal: false,
-    });
-    return this.resetMessage();
-  }
-
-  resetMessage() {
-    const { resetSubmitMessage: resetMessage } = this.props;
-    resetMessage();
-
+  const resetMessage = () => {
     // FIXME temp fiks for å unngå prod-feil (her skjer det ein oppdatering av behandling, så må oppdatera)
     window.location.reload();
-  }
+  };
 
-  render() {
-    const {
-      recipients,
-      submitFinished,
-      selectedBehandlingSprak,
-      ventearsaker,
-      behandlingIdentifier,
-      selectedBehandlingVersjon,
-      revurderingVarslingArsak,
-    } = this.props;
-    const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
+  const submitCallback = useCallback(
+    getSubmitCallback(
+      setShowMessageModal,
+      behandlingId,
+      submitMessage,
+      resetMessage,
+      setShowSettPaVentModal,
+      setSubmitCounter,
+    ),
+    [behandlingId, behandlingVersjon],
+  );
 
-    return (
-      <>
-        {showMessagesModal && (
-          <MessagesModalSakIndex showModal={submitFinished && showMessagesModal} closeEvent={this.afterSubmit} />
-        )}
+  const hideSettPaVentModal = useCallback(() => {
+    setShowSettPaVentModal(false);
+  }, []);
 
-        <DataFetcher
-          fetchingTriggers={
-            new DataFetcherTriggers(
-              {
-                behandlingId: behandlingIdentifier.behandlingId,
-                behandlingVersion: selectedBehandlingVersjon,
-                submitCounter,
-              },
-              true,
-            )
-          }
-          key={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? 0 : 1}
-          endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
-          loadingPanel={<LoadingPanel />}
-          render={(props: DataProps) => (
-            <MeldingerSakIndex
-              submitCallback={this.submitCallback}
-              recipients={recipients}
-              sprakKode={selectedBehandlingSprak}
-              previewCallback={this.previewCallback}
-              behandlingId={behandlingIdentifier.behandlingId}
-              behandlingVersjon={selectedBehandlingVersjon}
-              revurderingVarslingArsak={revurderingVarslingArsak}
-              templates={props.brevmaler}
-              isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
-            />
-          )}
-        />
-
-        {submitFinished && showSettPaVentModal && (
-          <MessageBehandlingPaVentModal
-            showModal={submitFinished && showSettPaVentModal}
-            cancelEvent={this.hideSettPaVentModal}
-            onSubmit={this.handleSubmitFromModal}
-            ventearsak={venteArsakType.AVV_DOK}
-            ventearsaker={ventearsaker}
-          />
-        )}
-      </>
-    );
-  }
-}
-
-const mapStateToProps = (state: any): OwnProps => ({
-  submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
-  behandlingIdentifier: getBehandlingIdentifier(state),
-  selectedBehandlingVersjon: getBehandlingVersjon(state),
-  selectedBehandlingSprak: getBehandlingSprak(state),
-  ventearsaker: getKodeverk(kodeverkTyper.VENT_AARSAK)(state),
-  revurderingVarslingArsak: getKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK)(state),
-  behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
-  behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId].kode,
-  fagsakYtelseType: getFagsakYtelseType(state),
-});
-
-// @ts-ignore (Korleis fikse denne?)
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  ...bindActionCreators(
-    {
-      push,
-      setBehandlingOnHold,
-      fetchPreview: previewMessage,
-      submitMessage: submitMessageActionCreator,
-      resetSubmitMessage: resetSubmitMessageActionCreator,
+  const handleSubmitFromModal = useCallback(
+    formValues => {
+      const values = {
+        behandlingId,
+        behandlingVersjon,
+        frist: formValues.frist,
+        ventearsak: formValues.ventearsak,
+      };
+      setBehandlingOnHold(values);
+      hideSettPaVentModal();
+      history.push('/');
     },
-    dispatch,
-  ),
-});
+    [behandlingId, behandlingVersjon],
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesIndex);
+  const fetchPreview = useVisForhandsvisningAvMelding();
+
+  const previewCallback = useCallback(
+    getPreviewCallback(behandling.type.kode, behandlingId, behandling.uuid, fagsak.sakstype, fetchPreview),
+    [behandlingId, behandlingVersjon],
+  );
+
+  const afterSubmit = useCallback(() => {
+    setShowMessageModal(false);
+    return resetMessage();
+  }, []);
+
+  const skalHenteRevAp = requestApi.hasPath(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP);
+  const { data: harApentKontrollerRevAp, state: stateRevAp } = restApiHooks.useRestApi<boolean>(
+    FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP,
+    undefined,
+    {
+      updateTriggers: [behandlingId, behandlingVersjon, submitCounter],
+      suspendRequest: !skalHenteRevAp,
+    },
+  );
+
+  const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmal[]>(
+    FpsakApiKeys.BREVMALER,
+    undefined,
+    {
+      updateTriggers: [behandlingId, behandlingVersjon, submitCounter],
+    },
+  );
+
+  if (stateBrevmaler === RestApiState.LOADING || (skalHenteRevAp && stateRevAp === RestApiState.LOADING)) {
+    return <LoadingPanel />;
+  }
+
+  const submitFinished = submitState === RestApiState.SUCCESS;
+  return (
+    <>
+      {showMessagesModal && (
+        <MessagesModalSakIndex showModal={submitFinished && showMessagesModal} closeEvent={afterSubmit} />
+      )}
+
+      <MeldingerSakIndex
+        submitCallback={submitCallback}
+        recipients={RECIPIENTS}
+        sprakKode={behandling?.sprakkode}
+        previewCallback={previewCallback}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        revurderingVarslingArsak={revurderingVarslingArsak}
+        templates={brevmaler}
+        isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
+      />
+
+      {submitFinished && showSettPaVentModal && (
+        <SettPaVentModalIndex
+          showModal={submitFinished && showSettPaVentModal}
+          cancelEvent={hideSettPaVentModal}
+          submitCallback={handleSubmitFromModal}
+          ventearsak={venteArsakType.AVV_DOK}
+          ventearsaker={ventearsaker}
+          hasManualPaVent={false}
+          erTilbakekreving={
+            behandling.type.kode === BehandlingType.TILBAKEKREVING ||
+            behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+          }
+        />
+      )}
+    </>
+  );
+};
+
+export default MessagesIndex;

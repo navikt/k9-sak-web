@@ -20,7 +20,7 @@ const utledKjonn = kjonn => {
 interface OwnProps {
   fagsak: Fagsak;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode: Kodeverk;
+  sprakkode?: Kodeverk;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge: boolean;
 }
