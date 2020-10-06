@@ -19,6 +19,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Column, Row } from 'nav-frontend-grid';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import {AlertStripeInfo} from "nav-frontend-alertstriper";
+import {dokumentdatatype, featureToggle} from "@k9-sak-web/konstanter";
+import frisinnBehandlingApi from "@fpsak-frontend/behandling-frisinn/src/data/frisinnBehandlingApi";
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -287,6 +289,7 @@ VedtakRevurderingFormImpl.propTypes = {
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  featureToggles: PropTypes.shape(),
   ...formPropTypes,
 };
 
@@ -434,6 +437,12 @@ const VedtakRevurderingForm = connect(
   injectIntl(
     behandlingForm({
       form: VEDTAK_REVURDERING_FORM_NAME,
+      onChange(values, dispatch, props) {
+        if (props.featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA]) {
+          const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
+          dispatch(frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker}));
+        }
+      }
     })(VedtakRevurderingFormImpl),
   ),
 );

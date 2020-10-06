@@ -120,6 +120,7 @@ export const getBekreftAksjonspunktCallback = (
   aksjonspunkter: Aksjonspunkt[],
   api: { [name: string]: EndpointOperations },
   featureToggles?: {},
+  dokumentdata?: {},
 ) => aksjonspunktModels => {
   const models = aksjonspunktModels.map(ap => ({
     '@type': ap.kode,
@@ -169,8 +170,7 @@ export const getBekreftAksjonspunktCallback = (
     ).then(etterLagringCallback);
 
   if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && api.DOKUMENTDATA_LAGRE) {
-    // TODO: Sende data til endepunktet
-    return dispatch(api.DOKUMENTDATA_LAGRE.makeRestApiRequest()({})).then(saveAksjonspunkt);
+    return dispatch(api.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata)).then(saveAksjonspunkt);
   }
 
   return saveAksjonspunkt();

@@ -47,6 +47,7 @@ const VedtakProsessIndex = ({
   alleKodeverk,
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
+  featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -79,6 +80,7 @@ const VedtakProsessIndex = ({
       alleKodeverk={alleKodeverk}
       vedtakVarsel={vedtakVarsel}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+      featureToggles={featureToggles}
     />
   </RawIntlProvider>
 );
@@ -103,6 +105,7 @@ VedtakProsessIndex.propTypes = {
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  featureToggles: PropTypes.shape(),
 };
 
 VedtakProsessIndex.defaultProps = {
