@@ -1,3 +1,4 @@
+import {dokumentdatatype} from "@k9-sak-web/konstanter";
 import React, { FunctionComponent, useState, useCallback, useMemo } from 'react';
 import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
@@ -214,6 +215,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
           behandlingApi={frisinnBehandlingApi}
           dispatch={dispatch}
           featureToggles={featureToggles}
+          dokumentdata={{[dokumentdatatype.VEDTAKSBREV_TYPE]: 'AUTOMATISK'}}
         />
       </ProsessStegContainer>
     </>

@@ -1,0 +1,8 @@
+const dokumentdatatype = {
+  FRITEKST: 'FRITEKST',
+  REDUSERT_UTBETALING_AARSAK: 'REDUSERT_UTBETALING_AARSAK',
+  AVSLAG_AARSAK: 'AVSLAG_AARSAK',
+  VEDTAKSBREV_TYPE: 'VEDTAKSBREV_TYPE'
+};
+
+export default dokumentdatatype;

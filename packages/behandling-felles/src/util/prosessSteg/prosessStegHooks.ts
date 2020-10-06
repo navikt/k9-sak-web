@@ -106,6 +106,7 @@ const useBekreftAksjonspunkt = (
   dispatch: Dispatch,
   valgtPanel?: ProsessStegUtledet,
   featureToggles?: {},
+  dokumentdata?: {},
 ) =>
   useCallback(
     aksjonspunktModels =>
@@ -117,6 +118,7 @@ const useBekreftAksjonspunkt = (
         valgtPanel ? valgtPanel.getAksjonspunkter() : [],
         behandlingApi,
         featureToggles,
+        dokumentdata,
       )(aksjonspunktModels),
     [behandling.versjon, valgtPanel],
   );
