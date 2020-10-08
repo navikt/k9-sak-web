@@ -121,7 +121,6 @@ describe('<ApprovalIndex>', () => {
         }}
         alleKodeverk={{}}
         isForeldrepenger
-        disableGodkjennKnapp={false}
         behandlingsresultat={{}}
         behandlingId={1}
         behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
@@ -164,7 +163,6 @@ describe('<ApprovalIndex>', () => {
         }}
         alleKodeverk={{}}
         isForeldrepenger
-        disableGodkjennKnapp={false}
         aktørId="1"
         saksnummer="2323"
       />,

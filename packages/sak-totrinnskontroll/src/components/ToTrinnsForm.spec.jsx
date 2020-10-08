@@ -134,7 +134,6 @@ describe('<ToTrinnsForm>', () => {
         getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
         readOnly={false}
         intl={intlMock}
-        disableGodkjennKnapp={false}
       />,
     );
 
@@ -174,7 +173,6 @@ describe('<ToTrinnsForm>', () => {
         getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
         readOnly={false}
         intl={intlMock}
-        disableGodkjennKnapp={false}
       />,
     );
 
@@ -244,7 +242,6 @@ describe('<ToTrinnsForm>', () => {
         getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
         readOnly={false}
         intl={intlMock}
-        disableGodkjennKnapp={false}
       />,
     );
 
@@ -290,7 +287,6 @@ describe('<ToTrinnsForm>', () => {
         getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
         readOnly={false}
         intl={intlMock}
-        disableGodkjennKnapp={false}
         erTilbakekreving
       />,
     );
