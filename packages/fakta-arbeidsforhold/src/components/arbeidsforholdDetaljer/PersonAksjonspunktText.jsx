@@ -7,8 +7,8 @@ import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-com
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';
-import { arbeidsforholdPropType } from '../../propTypes/arbeidsforholdPropType';
 
 const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   const kodeverknavn = getKodeverknavn(permisjon.type);
@@ -57,7 +57,7 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1) {
     return <FormattedMessage key="permisjoner" id="PersonAksjonspunktText.SokerHarFlerePermisjoner" />;
   }
-  if (arbeidsforhold.kilde.navn === arbeidsforholdKilder.INNTEKTSMELDING) {
+  if (arbeidsforhold.kilde.kode === arbeidsforholdKilder.INNTEKTSMELDING) {
     return <FormattedMessage key="basertPaInntektsmelding" id="PersonAksjonspunktText.BasertPaInntektsmelding" />;
   }
   if (arbeidsforhold.lagtTilAvSaksbehandler) {

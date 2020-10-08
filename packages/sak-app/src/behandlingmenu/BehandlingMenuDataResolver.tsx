@@ -15,6 +15,7 @@ import { getBehandlingVersjon, getBehandlingType, getSelectedBehandlingId } from
 import fpsakApi from '../data/fpsakApi';
 import { hentVergeMenyvalg, resetVergeMenyvalg, fjernVerge, opprettVerge } from './duck';
 import BehandlingMenuIndex from './BehandlingMenuIndex';
+import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
 
 const YTELSE_BEHANDLINGTYPER = [
   BehandlingType.FORSTEGANGSSOKNAD,
@@ -24,6 +25,10 @@ const YTELSE_BEHANDLINGTYPER = [
 ];
 const menyDataBehandlingValgt = [fpsakApi.MENYHANDLING_RETTIGHETER, fpsakApi.BEHANDLENDE_ENHETER];
 const menyData = [fpsakApi.BEHANDLENDE_ENHETER];
+const BEHANDLINGER_STØTTER_VERGE: BehandlingType[] = [
+  BehandlingType.TILBAKEKREVING,
+  BehandlingType.TILBAKEKREVING_REVURDERING,
+];
 
 const VERGE_MENYVALG = {
   FJERN: 'FJERN',
@@ -59,15 +64,21 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
   vergeMenyvalg,
   location,
   pushLocation,
+  hentVerge,
 }) => {
   const ref = useRef<{ behandlingId: number; behandlingVersion: number }>();
   useEffect(() => {
     const erBehandlingEndret =
       !ref.current || behandlingId !== ref.current.behandlingId || behandlingVersion !== ref.current.behandlingVersion;
-    if (!!behandlingId && YTELSE_BEHANDLINGTYPER.includes(behandlingType.kode) && erBehandlingEndret) {
+    if (
+      !!behandlingId &&
+      YTELSE_BEHANDLINGTYPER.includes(behandlingType.kode) &&
+      BEHANDLINGER_STØTTER_VERGE.includes(behandlingType.kode) &&
+      erBehandlingEndret
+    ) {
       // TODO Skal verge brukast?
-      // const params = new BehandlingIdentifier(saksnummer, behandlingId).toJson();
-      // hentVerge(params);
+      const params = new BehandlingIdentifier(saksnummer, behandlingId).toJson();
+      hentVerge(params);
     }
 
     ref.current = { behandlingId, behandlingVersion };

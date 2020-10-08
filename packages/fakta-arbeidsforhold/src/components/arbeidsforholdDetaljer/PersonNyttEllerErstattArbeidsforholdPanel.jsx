@@ -6,8 +6,8 @@ import { required } from '@fpsak-frontend/utils';
 import { ArrowBox } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
-import arbeidsforholdPropType from '../../propTypes/arbeidsforholdPropType';
 
 const getEndCharFromId = id => id.substring(id.length - 4, id.length);
 

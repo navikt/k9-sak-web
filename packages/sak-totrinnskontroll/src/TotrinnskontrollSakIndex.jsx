@@ -31,7 +31,6 @@ const TotrinnskontrollSakIndex = ({
   behandlingKlageVurdering,
   alleKodeverk,
   erBehandlingEtterKlage,
-  disableGodkjennKnapp,
   erTilbakekreving,
   createLocationForSkjermlenke,
   tilgjengeligeVedtaksbrev,
@@ -53,7 +52,6 @@ const TotrinnskontrollSakIndex = ({
       behandlingKlageVurdering={behandlingKlageVurdering}
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage={erBehandlingEtterKlage}
-      disableGodkjennKnapp={disableGodkjennKnapp}
       erTilbakekreving={erTilbakekreving}
       createLocationForSkjermlenke={createLocationForSkjermlenke}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
@@ -82,7 +80,6 @@ TotrinnskontrollSakIndex.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,
-  disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
