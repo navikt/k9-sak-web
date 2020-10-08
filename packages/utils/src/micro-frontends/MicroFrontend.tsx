@@ -1,3 +1,7 @@
+// inspired by
+// https://github.com/micro-frontends-demo
+// https://github.com/micro-frontends-demo/container
+
 import * as React from 'react';
 
 interface MicroFrontendProps {
