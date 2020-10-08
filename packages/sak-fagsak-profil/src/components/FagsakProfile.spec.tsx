@@ -7,7 +7,7 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Tooltip } from '@fpsak-frontend/shared-components';
 
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-fagsak-profil';
+import shallowWithIntl from '../../i18n';
 import { FagsakProfile } from './FagsakProfile';
 
 describe('<FagsakProfile>', () => {

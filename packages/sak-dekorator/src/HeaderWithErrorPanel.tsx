@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useState, useMemo, useCallback, useEffect, useRef } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import BoxedListWithLinks from '@navikt/boxed-list-with-links';
 import Header from '@navikt/nap-header';
 import Popover from '@navikt/nap-popover';
 import SystemButton from '@navikt/nap-system-button';
 import UserPanel from '@navikt/nap-user-panel';
 
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import ErrorMessagePanel from './ErrorMessagePanel';
 
 import messages from '../i18n/nb_NO.json';

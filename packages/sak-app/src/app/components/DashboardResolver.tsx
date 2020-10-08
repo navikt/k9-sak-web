@@ -1,7 +1,5 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import axios from 'axios';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { parseQueryString } from '@fpsak-frontend/utils';

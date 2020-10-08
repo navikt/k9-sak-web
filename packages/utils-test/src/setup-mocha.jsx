@@ -7,4 +7,5 @@ import { switchOnTestMode } from '@fpsak-frontend/rest-api-new';
 configureEnzyme({ adapter: new Adapter() });
 
 configure(ShallowWrapper);
+
 switchOnTestMode();

@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Behandling, KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
-import behandlingstype from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import BehandlingPickerItem from './BehandlingPickerItem';
 
@@ -24,7 +23,7 @@ export const sortBehandlinger = behandlinger =>
     return moment(b2.opprettet).diff(moment(b1.opprettet));
   });
 
-  const renderListItems = (behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, getKodeverkFn) => (
+const renderListItems = (behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, getKodeverkFn) =>
   sortBehandlinger(behandlinger)
     .filter(behandling => showAll || behandling.id === behandlingId)
     .map(behandling => (
@@ -63,7 +62,7 @@ const BehandlingPicker: FunctionComponent<OwnProps> = ({
   behandlingId,
   showAll,
   toggleShowAll,
-  getKodeverkFn
+  getKodeverkFn,
 }) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && (
@@ -72,14 +71,7 @@ const BehandlingPicker: FunctionComponent<OwnProps> = ({
       </Normaltekst>
     )}
     {!noExistingBehandlinger &&
-      renderListItems(
-        behandlinger,
-        getBehandlingLocation,
-        behandlingId,
-        showAll,
-        toggleShowAll,
-        getKodeverkFn,
-      )}
+      renderListItems(behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, getKodeverkFn)}
   </ul>
 );
 

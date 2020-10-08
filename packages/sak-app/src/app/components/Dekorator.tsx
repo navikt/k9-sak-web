@@ -8,8 +8,8 @@ import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-
 import { NavAnsatt } from '@k9-sak-web/types';
+import { getPathToFplos } from '../paths';
 import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 
@@ -107,7 +107,7 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
 
   return (
     <HeaderWithErrorPanel
-      systemTittel={intl.formatMessage({ id: 'Header.Foreldrepenger' })}
+      systemTittel={intl.formatMessage({ id: 'Header.Ytelse' })}
       iconLinks={iconLinks}
       queryStrings={queryStrings}
       navAnsattName={navAnsatt.navn}
@@ -115,6 +115,7 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       showDetailedErrorMessages={showDetailedErrorMessages}
       errorMessages={hideErrorMessages ? [] : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
+      getPathToFplos={getPathToFplos}
     />
   );
 };
