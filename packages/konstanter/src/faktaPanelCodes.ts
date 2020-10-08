@@ -14,7 +14,6 @@ const faktaPanelCodes = {
   OMSORGEN_FOR: 'omsorgenfor', // FIXME: oppdater navn når det er landet
   OMSORGSVILKARET: 'omsorgsvilkaaret',
   OPPTJENINGSVILKARET: 'opptjeningsvilkaaret',
-  OPPTJENINGSVILKARET_V2: 'opptjeningsvilkaaret-v2',
   SAKEN: 'saken',
   TILLEGGSOPPLYSNINGER: 'tilleggsopplysninger',
   UTTAK: 'uttak',
