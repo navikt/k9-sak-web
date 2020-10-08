@@ -9,6 +9,7 @@ const faktaPanelCodes = {
   FODSELSVILKARET: 'foedselsvilkaaret',
   MEDLEMSKAPSVILKARET: 'medlemskapsvilkaaret',
   MEDISINSKVILKAAR: 'medisinskvilkaar',
+  MEDISINSKVILKAAR_V2: 'medisinskvilkaar-v2',
   OMSORG: 'omsorg',
   OMSORGEN_FOR: 'omsorgenfor', // FIXME: oppdater navn når det er landet
   OMSORGSVILKARET: 'omsorgsvilkaaret',

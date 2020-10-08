@@ -3,30 +3,31 @@ import * as React from 'react';
 interface MicroFrontendProps {
   id: string;
   jsSrc: string;
-  stylesheetSrc: string;
+  jsIntegrity: string;
+  stylesheetSrc?: string;
+  stylesheetIntegrity?: string;
   onReady: () => void;
   onError: () => void;
 }
 
-const scriptId = 'microfrontend-opptjening-js';
-const linkId = 'microfrontend-opptjening-css';
-
-const createScriptTagElement = (src, onReady, onError) => {
+const createScriptTagElement = (src, id, integrity, onReady, onError) => {
   const scriptElement = document.createElement('script');
   scriptElement.src = src;
   scriptElement.onload = onReady;
   scriptElement.onerror = onError;
-  scriptElement.crossOrigin = '';
-  scriptElement.id = scriptId;
-  scriptElement.integrity = 'sha384-NG24if4CVSxHnx0mFo2GALNOcB8jBK6LKteXpZKJZ5jV272IqfFMVpQaV2BITwx+';
+  scriptElement.integrity = integrity;
+  scriptElement.crossOrigin = 'anonymous';
+  scriptElement.id = id;
   return scriptElement;
 };
 
-const createLinkTagElement = src => {
+const createLinkTagElement = (src, id, integrity) => {
   const linkElement = document.createElement('link');
   linkElement.rel = 'stylesheet';
   linkElement.href = src;
-  linkElement.id = linkId;
+  linkElement.id = id;
+  linkElement.integrity = integrity;
+  linkElement.crossOrigin = 'anonymous';
   return linkElement;
 };
 
@@ -35,20 +36,31 @@ const addElementToDOM = elementCreator => {
   document.head.appendChild(element);
 };
 
-const cleanupExternals = () => {
+const cleanupExternals = (scriptId, linkId) => {
   document.getElementById(scriptId).remove();
   document.getElementById(linkId).remove();
 };
 
-export default ({ jsSrc, stylesheetSrc, id, onReady, onError }: MicroFrontendProps) => {
+export default ({
+  jsSrc,
+  stylesheetSrc,
+  jsIntegrity,
+  stylesheetIntegrity,
+  id,
+  onReady,
+  onError,
+}: MicroFrontendProps) => {
+  const scriptId = `${id}-js`;
+  const linkId = `${id}-styles`;
+
   React.useEffect(() => {
     if (document.getElementById(scriptId) === null) {
-      addElementToDOM(() => createScriptTagElement(jsSrc, onReady, onError));
+      addElementToDOM(() => createScriptTagElement(jsSrc, scriptId, jsIntegrity, onReady, onError));
     }
-    if (document.getElementById(linkId) === null) {
-      addElementToDOM(() => createLinkTagElement(stylesheetSrc));
+    if (document.getElementById(linkId) === null && stylesheetSrc) {
+      addElementToDOM(() => createLinkTagElement(stylesheetSrc, linkId, stylesheetIntegrity));
     }
-    return cleanupExternals;
+    return () => cleanupExternals(scriptId, linkId);
   }, []);
 
   return <main id={id} />;
