@@ -11338,10 +11338,10 @@ nav-frontend-snakkeboble-style@0.2.25:
   version "0.2.25"
   resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.25.tgz#4aaa58122d0af8079d2933906f17fd42cb65a9ec"
 
-nav-frontend-snakkeboble@2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-2.0.10.tgz#ebcbba8a4d935b60b3af9e6405d9c745022e46cb"
-  integrity sha512-ICfLblt3P1ymMXYB0WfNqgHIM43g9VzbD0iAJwHOKSaOsInu2zaGgOeiv0SXHW3v1vOQz3ygwGhZBrvaZqy8pQ==
+nav-frontend-snakkeboble@2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-2.0.11.tgz#62d3313ec731d3c3bf6983b29ee2f92d18375066"
+  integrity sha512-cRx4e0xX2COlHm4Rj3lONsyJG6LG67eoVY3MzpsFy1pnznJOfg5+WttRRTnAlZUp1BQQhU5FMKhHIHKuMT/iWA==
 
 nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
