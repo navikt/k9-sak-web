@@ -3551,9 +3551,9 @@
     redux "^3.6.0 || ^4.0.0"
 
 "@types/sinon@^9.0.0":
-  version "9.0.5"
-  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-9.0.5.tgz#56b2a12662dd8c7d081cdc511af5f872cb37377f"
-  integrity sha512-4CnkGdM/5/FXDGqL32JQ1ttVrGvhOoesLLF7VnTh4KdjK5N5VQOtxaylFqqTjnHx55MnD9O02Nbk5c1ELC8wlQ==
+  version "9.0.8"
+  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-9.0.8.tgz#1ed0038d356784f75b086104ef83bfd4130bb81b"
+  integrity sha512-IVnI820FZFMGI+u1R+2VdRaD/82YIQTdqLYC9DLPszZuynAJDtCvCtCs3bmyL66s7FqRM3+LPX7DhHnVTaagDw==
   dependencies:
     "@types/sinonjs__fake-timers" "*"
 
@@ -11334,9 +11334,10 @@ nav-frontend-skjema@3.0.19:
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-3.0.19.tgz#9effa65f8e679adc3da51fba3a8ab7fa90335683"
   integrity sha512-zXGRwDcabvhM3Fsi0hZWkM6SC8zuLz6h2DbtVLU4Jjt1SDQaSApp8OcflN2jzvei+qJ5s5Kfzlz3CE+XWWQMrQ==
 
-nav-frontend-snakkeboble-style@0.2.25:
-  version "0.2.25"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.25.tgz#4aaa58122d0af8079d2933906f17fd42cb65a9ec"
+nav-frontend-snakkeboble-style@0.2.31:
+  version "0.2.31"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.31.tgz#8ce74f76a4b3bab90d11226949a600b2fd456f9e"
+  integrity sha512-+zSdPmW2d8BhLFZ4gIBdiJHZAuu88aCWS2yIRroiPyjdRFz16RF54to4/Bbo5FZPWHuw1xOeXmgdiDdKxTRqLQ==
 
 nav-frontend-snakkeboble@2.0.11:
   version "2.0.11"
@@ -11352,10 +11353,10 @@ nav-frontend-spinner@2.0.5:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.5.tgz#39568893f8843e4d2012c26207dbbd079c0f964e"
   integrity sha512-sIIZ1UapN78egxio1JIFboxWq9Cv2mJl9VP6MIPEIVsEn8buANNhm2l2rCwYPwNK6/Pl0+vEq73SmDTLoO3R9g==
 
-nav-frontend-tabs-style@^0.0.27:
-  version "0.0.27"
-  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.27.tgz#8306f8a82f63da69e97a416ef072cc768082fec5"
-  integrity sha512-rY+kyIR2yD3SpIpl2SjwcOl9KuwQ7tr9fH91cAVRFmcGmxEdhiPBhQqYhF0iByi6BsyH7Y1xuEXZl0MtdgfOGg==
+nav-frontend-tabs-style@^0.0.30:
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.30.tgz#1a4da45a055240c5c12e2086d7e7105ca65d76d5"
+  integrity sha512-ygeLFl9eslTolGbqgxjC+X62T77MrTfu79jUKhW8HNujFwSjzm9MT3TTMaZuxyJufDFHPKxD69v8W49Pa8OsHQ==
 
 nav-frontend-tabs@^0.0.38:
   version "0.0.38"

@@ -204,7 +204,6 @@ describe('<ApprovalPanel>', () => {
         location={{ pathname: 'test' }}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
-        disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
       />,
     );
@@ -239,7 +238,6 @@ describe('<ApprovalPanel>', () => {
         location={{ pathname: 'test' }}
         totrinnskontrollSkjermlenkeContext={undefined}
         skjemalenkeTyper={[]}
-        disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
       />,
     );
@@ -275,7 +273,6 @@ describe('<ApprovalPanel>', () => {
         location={{ pathname: 'test' }}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkecontexts}
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollSkjermlenkecontexts)}
-        disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
         erTilbakekreving
       />,
@@ -324,7 +321,6 @@ describe('<ApprovalPanel>', () => {
         location={{ pathname: 'test' }}
         totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
         skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
-        disableGodkjennKnapp={false}
         createLocationForSkjermlenke={() => 'url'}
       />,
     );

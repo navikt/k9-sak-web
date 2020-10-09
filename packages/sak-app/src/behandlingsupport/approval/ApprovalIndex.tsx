@@ -10,7 +10,6 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { featureToggle } from '@k9-sak-web/konstanter';
 import { NavAnsatt, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
@@ -19,7 +18,7 @@ import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import { createLocationForSkjermlenke } from '../../app/paths';
-import { getNavAnsatt, getFeatureToggles } from '../../app/duck';
+import { getNavAnsatt } from '../../app/duck';
 import {
   getBehandlingAnsvarligSaksbehandler,
   getBehandlingIdentifier,
@@ -86,7 +85,6 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   erBehandlingEtterKlage?: boolean;
   isForeldrepenger: boolean;
-  disableGodkjennKnapp: boolean;
   erGodkjenningFerdig?: boolean;
   behandlingsresultat?: {};
   behandlingId?: number;
@@ -205,7 +203,6 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       alleKodeverk,
       erBehandlingEtterKlage,
       isForeldrepenger,
-      disableGodkjennKnapp,
       fagsakYtelseType,
       erGodkjenningFerdig,
       behandlingsresultat,
@@ -260,7 +257,6 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
               alleKodeverk={alleKodeverk}
               behandlingKlageVurdering={props.totrinnsKlageVurdering}
               erBehandlingEtterKlage={erBehandlingEtterKlage}
-              disableGodkjennKnapp={disableGodkjennKnapp}
               erTilbakekreving={erTilbakekreving}
               createLocationForSkjermlenke={createLocationForSkjermlenke}
               tilgjengeligeVedtaksbrev={props.tilgjengeligeVedtaksbrev}
@@ -346,7 +342,6 @@ const mapStateToPropsFactory = initialState => {
       erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
       behandlingsresultat: getBehandlingsresultat(state),
       behandlingId: getSelectedBehandlingId(state),
-      disableGodkjennKnapp: erTilbakekreving ? !getFeatureToggles(state)[featureToggle.BESLUTT_TILBAKEKREVING] : false,
       aktørId: getAktorid(state),
       saksnummer: getSaksnummer(state),
       behandlingIdentifier,

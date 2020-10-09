@@ -105,5 +105,7 @@ export {
   dateNotAfterOrEqualMessage,
 } from './src/validation/messages';
 
+export { default as MicroFrontend } from './src/micro-frontends/MicroFrontend';
+
 export { getKodeverknavnFn } from './src/kodeverkUtils';
 export { default as joinNonNullStrings } from './src/stringUtils';
