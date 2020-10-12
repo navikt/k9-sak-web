@@ -21,7 +21,7 @@
     "nav-frontend-typografi-style": "1.0.22",
     "react": "^16.13.1",
     "react-intl": "^5.8.0",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

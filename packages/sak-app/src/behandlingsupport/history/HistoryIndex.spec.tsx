@@ -51,7 +51,7 @@ describe('<HistoryIndex>', () => {
       },
     ]);
 
-    const wrapper = shallow(<HistoryIndex saksnummer={12345} behandlingId={1} behandlingVersjon={2} />);
+    const wrapper = shallow(<HistoryIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />);
 
     const index = wrapper.find(HistorikkSakIndex);
     expect(index).to.have.length(1);
@@ -91,7 +91,7 @@ describe('<HistoryIndex>', () => {
       },
     ]);
 
-    const wrapper = shallow(<HistoryIndex saksnummer={12345} behandlingId={1} behandlingVersjon={2} />);
+    const wrapper = shallow(<HistoryIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />);
 
     const index = wrapper.find(HistorikkSakIndex);
     expect(index).to.have.length(3);
