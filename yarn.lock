@@ -11270,10 +11270,10 @@ nav-frontend-lukknapp-style@0.2.24:
   resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.24.tgz#c0ff77f935ee8bff59cc904a180fa54c17e61d45"
   integrity sha512-ScpBh8BzIRKGJAaxbIH5gScSdXT5htJ9V6qh1NBqdKCtVRfFuhAk3rAWRZDKSOV3323isP20/0DlnR5cK2DaZg==
 
-nav-frontend-lukknapp@1.0.31:
-  version "1.0.31"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.31.tgz#e6823f8960a4c4c618a2687485618d10ffa09969"
-  integrity sha512-SXCkmGeNb80tbloDwCCOuTgjPY9qSWlkOJRK3LD4bSCqOOtJ7Ee7qtp8xqPwI85DYQAmhE9/SxOBLFEwR+MkYQ==
+nav-frontend-lukknapp@1.0.32:
+  version "1.0.32"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.32.tgz#635ab98172007527823e603e112bd60e5cbae10f"
+  integrity sha512-IYUD2kb8T/2ql/Fc6ZZxuEtoHr2w2esEDPr3DP4cbhs3ptzqMaFdmDldSqrhz2p6hJiIhOIjEjPVgAEY+b6Rwg==
 
 nav-frontend-modal-style@0.3.33:
   version "0.3.33"
@@ -11315,14 +11315,15 @@ nav-frontend-skjema@3.0.19:
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-3.0.19.tgz#9effa65f8e679adc3da51fba3a8ab7fa90335683"
   integrity sha512-zXGRwDcabvhM3Fsi0hZWkM6SC8zuLz6h2DbtVLU4Jjt1SDQaSApp8OcflN2jzvei+qJ5s5Kfzlz3CE+XWWQMrQ==
 
-nav-frontend-snakkeboble-style@0.2.25:
-  version "0.2.25"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.25.tgz#4aaa58122d0af8079d2933906f17fd42cb65a9ec"
+nav-frontend-snakkeboble-style@0.2.31:
+  version "0.2.31"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.31.tgz#8ce74f76a4b3bab90d11226949a600b2fd456f9e"
+  integrity sha512-+zSdPmW2d8BhLFZ4gIBdiJHZAuu88aCWS2yIRroiPyjdRFz16RF54to4/Bbo5FZPWHuw1xOeXmgdiDdKxTRqLQ==
 
-nav-frontend-snakkeboble@2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-2.0.10.tgz#ebcbba8a4d935b60b3af9e6405d9c745022e46cb"
-  integrity sha512-ICfLblt3P1ymMXYB0WfNqgHIM43g9VzbD0iAJwHOKSaOsInu2zaGgOeiv0SXHW3v1vOQz3ygwGhZBrvaZqy8pQ==
+nav-frontend-snakkeboble@2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble/-/nav-frontend-snakkeboble-2.0.11.tgz#62d3313ec731d3c3bf6983b29ee2f92d18375066"
+  integrity sha512-cRx4e0xX2COlHm4Rj3lONsyJG6LG67eoVY3MzpsFy1pnznJOfg5+WttRRTnAlZUp1BQQhU5FMKhHIHKuMT/iWA==
 
 nav-frontend-spinner-style@0.2.5:
   version "0.2.5"
@@ -11333,10 +11334,10 @@ nav-frontend-spinner@2.0.5:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.5.tgz#39568893f8843e4d2012c26207dbbd079c0f964e"
   integrity sha512-sIIZ1UapN78egxio1JIFboxWq9Cv2mJl9VP6MIPEIVsEn8buANNhm2l2rCwYPwNK6/Pl0+vEq73SmDTLoO3R9g==
 
-nav-frontend-tabs-style@^0.0.27:
-  version "0.0.27"
-  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.27.tgz#8306f8a82f63da69e97a416ef072cc768082fec5"
-  integrity sha512-rY+kyIR2yD3SpIpl2SjwcOl9KuwQ7tr9fH91cAVRFmcGmxEdhiPBhQqYhF0iByi6BsyH7Y1xuEXZl0MtdgfOGg==
+nav-frontend-tabs-style@^0.0.30:
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.30.tgz#1a4da45a055240c5c12e2086d7e7105ca65d76d5"
+  integrity sha512-ygeLFl9eslTolGbqgxjC+X62T77MrTfu79jUKhW8HNujFwSjzm9MT3TTMaZuxyJufDFHPKxD69v8W49Pa8OsHQ==
 
 nav-frontend-tabs@^0.0.38:
   version "0.0.38"
