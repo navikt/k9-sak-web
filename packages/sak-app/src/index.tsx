@@ -12,10 +12,9 @@ import { RestApiErrorProvider, RestApiProvider } from '@fpsak-frontend/rest-api-
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
-/* global VERSION:true */
 /* eslint no-undef: "error" */
 // @ts-ignore
-const release = VERSION;
+const release = 1;
 const environment = window.location.hostname;
 const isDevelopment = process.env.NODE_ENV === 'development';
 init({

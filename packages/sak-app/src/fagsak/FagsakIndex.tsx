@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Personopplysninger, Fagsak } from '@k9-sak-web/types';
 
 import { LoadingPanel, DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -16,19 +16,10 @@ import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex'
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import ApplicationContextPath from '../app/ApplicationContextPath';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
-import {
-  pathToMissingPage,
-  erUrlUnderBehandling,
-  erBehandlingValgt,
-  behandlingerPath,
-  pathToAnnenPart,
-} from '../app/paths';
+import { pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerPath } from '../app/paths';
 import FagsakGrid from './components/FagsakGrid';
 import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
-
-const finnLenkeTilAnnenPart = annenPartBehandling =>
-  pathToAnnenPart(annenPartBehandling.saksnr.verdi, annenPartBehandling.behandlingId);
 
 const erTilbakekreving = behandlingType =>
   behandlingType &&
@@ -123,14 +114,6 @@ const FagsakIndex: FunctionComponent = () => {
   const { data: behandlingPersonopplysninger, state: personopplysningerState } = restApiHooks.useRestApi<
     Personopplysninger
   >(FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
-  const { data: behandlingFamilieHendelse, state: familieHendelseState } = restApiHooks.useRestApi<
-    FamilieHendelseSamling
-  >(FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE, undefined, options);
-  const { data: annenPartBehandling, state: annenPartState } = restApiHooks.useRestApi<AnnenPartBehandling>(
-    FpsakApiKeys.ANNEN_PART_BEHANDLING,
-    { saksnummer: selectedSaksnummer },
-    options,
-  );
 
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
@@ -185,19 +168,13 @@ const FagsakIndex: FunctionComponent = () => {
             return null;
           }
 
-          if (
-            personopplysningerState === RestApiState.LOADING ||
-            familieHendelseState === RestApiState.LOADING ||
-            annenPartState === RestApiState.LOADING
-          ) {
+          if (personopplysningerState === RestApiState.LOADING) {
             return <LoadingPanel />;
           }
 
           return (
             <VisittkortSakIndex
               personopplysninger={behandlingPersonopplysninger}
-              familieHendelse={behandlingFamilieHendelse}
-              lenkeTilAnnenPart={annenPartBehandling ? finnLenkeTilAnnenPart(annenPartBehandling) : undefined}
               alleKodeverk={alleKodeverk}
               sprakkode={behandling?.sprakkode}
               fagsak={fagsak}
