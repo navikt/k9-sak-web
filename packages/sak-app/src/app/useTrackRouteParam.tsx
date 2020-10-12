@@ -8,6 +8,7 @@ const defaultConfig = {
   paramName: '',
   parse: a => a,
   isQueryParam: false,
+  getParamFromStore: () => undefined,
   paramsAreEqual: (paramFromUrl, paramFromStore) => paramFromUrl === paramFromStore,
 };
 
@@ -27,9 +28,11 @@ function useTrackRouteParam<T>(config: Config): { location: Location; selected: 
   const [selected, setSelected] = useState<T>();
 
   const trackingConfig = { ...defaultConfig, ...config };
-
+  console.log('track', selected);
   const location = useLocation();
   const match = useRouteMatch();
+
+  console.log('BACON', location, match);
 
   const paramFromUrl = mapMatchToParam(match, location, trackingConfig);
   const { paramsAreEqual } = trackingConfig;
@@ -38,6 +41,7 @@ function useTrackRouteParam<T>(config: Config): { location: Location; selected: 
 
   useEffect(() => {
     if (ref.current && !paramsAreEqual(paramFromUrl, ref.current)) {
+      console.log(ref.current);
       setSelected(paramFromUrl);
     } else if (!paramsAreEqual(paramFromUrl, undefined)) {
       setSelected(paramFromUrl);

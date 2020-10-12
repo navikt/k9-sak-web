@@ -42,6 +42,7 @@ const FagsakSearchIndex: FunctionComponent = () => {
   const sokFerdig = sokeStatus === RestApiState.SUCCESS;
 
   useEffect(() => {
+    console.log('fagsaker', fagsaker);
     if (sokFerdig && fagsaker.length === 1) {
       goToFagsak(fagsaker[0].saksnummer);
     }

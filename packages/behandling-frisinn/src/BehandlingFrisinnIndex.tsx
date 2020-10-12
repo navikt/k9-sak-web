@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { DataFetcher, DataFetcherTriggers, getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
@@ -36,6 +36,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: {};
+  setRequestPendingMessage: (message: string) => void;
 }
 
 interface StateProps {
@@ -43,6 +44,7 @@ interface StateProps {
   forrigeBehandling?: Behandling;
   kodeverk?: { [key: string]: KodeverkMedNavn[] };
   hasFetchError: boolean;
+  requestPollingMessage?: string;
 }
 
 interface DispatchProps {
@@ -85,6 +87,8 @@ const BehandlingFrisinnIndex: FunctionComponent<Props> = ({
   lagreRisikoklassifiseringAksjonspunkt,
   hasFetchError,
   featureToggles,
+  setRequestPendingMessage,
+  requestPollingMessage,
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -110,6 +114,10 @@ const BehandlingFrisinnIndex: FunctionComponent<Props> = ({
       }, 1000);
     };
   }, [behandlingId]);
+
+  useEffect(() => {
+    setRequestPendingMessage(requestPollingMessage);
+  }, [requestPollingMessage]);
 
   if (!behandling) {
     return <LoadingPanel />;
@@ -157,6 +165,7 @@ const mapStateToProps = state => ({
   behandling: frisinnBehandlingApi.BEHANDLING_FP.getRestApiData()(state),
   forrigeBehandling: frisinnBehandlingApi.BEHANDLING_FP.getRestApiPreviousData()(state),
   hasFetchError: !!frisinnBehandlingApi.BEHANDLING_FP.getRestApiError()(state),
+  requestPollingMessage: getRequestPollingMessage(state),
 });
 
 const getResetRestApiContext = () => dispatch => {

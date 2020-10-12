@@ -7,11 +7,10 @@ export enum FpsakApiKeys {
   ANNEN_PART_BEHANDLING = 'ANNEN_PART_BEHANDLING',
 }
 
-const CONTEXT_PATH = 'fpsak';
+const CONTEXT_PATH = '';
 
 const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
-  .withRel('familiehendelse-v2', FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE)
   .withGet('/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
   .build();
 

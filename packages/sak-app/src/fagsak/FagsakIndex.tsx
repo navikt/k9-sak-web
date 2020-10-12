@@ -51,10 +51,12 @@ const FagsakIndex: FunctionComponent = () => {
 
   const oppfriskBehandlinger = useCallback(() => setBehandlingTeller(behandlingerTeller + 1), [behandlingerTeller]);
 
-  const { selected: selectedSaksnummer } = useTrackRouteParam<number>({
+  const { selected: selectedSaksnummer } = useTrackRouteParam<string>({
     paramName: 'saksnummer',
-    parse: saksnummerFromUrl => Number.parseInt(saksnummerFromUrl, 10),
+    parse: saksnummerFromUrl => saksnummerFromUrl,
   });
+
+  console.log('selected', selectedSaksnummer);
 
   const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
     FpsakApiKeys.KODEVERK,
@@ -114,6 +116,8 @@ const FagsakIndex: FunctionComponent = () => {
   const { data: behandlingPersonopplysninger, state: personopplysningerState } = restApiHooks.useRestApi<
     Personopplysninger
   >(FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
+
+  console.log('fagsak', fagsak);
 
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {

@@ -14,7 +14,7 @@ import configureStore from './configureStore';
 
 /* eslint no-undef: "error" */
 // @ts-ignore
-const release = 1;
+const release = '1';
 const environment = window.location.hostname;
 const isDevelopment = process.env.NODE_ENV === 'development';
 init({
@@ -48,7 +48,7 @@ init({
 });
 
 const history = createBrowserHistory({
-  basename: '/fpsak/',
+  basename: '/k9/web/',
 });
 const store = configureStore();
 
