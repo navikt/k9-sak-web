@@ -204,6 +204,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
   },
+  FAKTA_OM_AARSKVANTUM: {
+    kode: 'FAKTA_OM_AARSKVANTUM',
+    faktaNavn: faktaPanelCodes.NØKKELTALL,
+    punktNavn: prosessStegCodes.UTTAK,
+  },
 };
 
 export default skjermlenkeCodes;
