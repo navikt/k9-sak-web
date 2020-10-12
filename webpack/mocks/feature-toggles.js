@@ -5,7 +5,6 @@ const toggles = {
     'fpsak.aksjonspunkt-marker-utenlandssak': false,
     'k9sak.simuler-oppdrag-varseltekst': false,
     'k9sak.aktiver-tilbakekrevingbehandling': false,
-    'k9sak.beslutt-tilbakekreving': false,
     'k9sak.aktiver-klagebehandling': true,
     'k9sak.frontend.uttak.aksjonspunkt': false,
     'k9sak.aktiver-dokumentdata': false,
