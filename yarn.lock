@@ -3595,18 +3595,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*":
-  version "16.9.34"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.34.tgz#f7d5e331c468f53affed17a8a4d488cd44ea9349"
-  integrity sha512-8AJlYMOfPe1KGLKyHpflCg5z46n0b5DbRfqDksxBLBTUpB75ypDBAO9eCUcjNwE6LCUslwTz00yyG/X9gaVtow==
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
-
-"@types/react@^16.9.48":
-  version "16.9.49"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.49.tgz#09db021cf8089aba0cdb12a49f8021a69cce4872"
-  integrity sha512-DtLFjSj0OYAdVLBbyjhuV9CdGVHCkHn2R+xr3XkBvK2rS1Y1tkc14XSGjYgm5Fjjr90AxH9tiSzc1pCFMGO06g==
+"@types/react@*", "@types/react@^16.9.48":
+  version "16.9.51"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.51.tgz#f8aa51ffa9996f1387f63686696d9b59713d2b60"
+  integrity sha512-lQa12IyO+DMlnSZ3+AGHRUiUcpK47aakMMoBG8f7HGxJT8Yfe+WE128HIXaHOHVPReAW0oDS3KAI0JI2DDe1PQ==
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
@@ -3619,9 +3611,9 @@
     redux "^3.6.0 || ^4.0.0"
 
 "@types/sinon@^9.0.0":
-  version "9.0.5"
-  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-9.0.5.tgz#56b2a12662dd8c7d081cdc511af5f872cb37377f"
-  integrity sha512-4CnkGdM/5/FXDGqL32JQ1ttVrGvhOoesLLF7VnTh4KdjK5N5VQOtxaylFqqTjnHx55MnD9O02Nbk5c1ELC8wlQ==
+  version "9.0.8"
+  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-9.0.8.tgz#1ed0038d356784f75b086104ef83bfd4130bb81b"
+  integrity sha512-IVnI820FZFMGI+u1R+2VdRaD/82YIQTdqLYC9DLPszZuynAJDtCvCtCs3bmyL66s7FqRM3+LPX7DhHnVTaagDw==
   dependencies:
     "@types/sinonjs__fake-timers" "*"
 
@@ -6239,7 +6231,7 @@ cssstyle@^2.2.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^2.2.0, csstype@^2.5.7:
+csstype@^2.5.7:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.9.tgz#05141d0cd557a56b8891394c1911c40c8a98d098"
 
@@ -11316,10 +11308,10 @@ nav-frontend-lukknapp-style@0.2.24:
   resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.24.tgz#c0ff77f935ee8bff59cc904a180fa54c17e61d45"
   integrity sha512-ScpBh8BzIRKGJAaxbIH5gScSdXT5htJ9V6qh1NBqdKCtVRfFuhAk3rAWRZDKSOV3323isP20/0DlnR5cK2DaZg==
 
-nav-frontend-lukknapp@1.0.31:
-  version "1.0.31"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.31.tgz#e6823f8960a4c4c618a2687485618d10ffa09969"
-  integrity sha512-SXCkmGeNb80tbloDwCCOuTgjPY9qSWlkOJRK3LD4bSCqOOtJ7Ee7qtp8xqPwI85DYQAmhE9/SxOBLFEwR+MkYQ==
+nav-frontend-lukknapp@1.0.32:
+  version "1.0.32"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp/-/nav-frontend-lukknapp-1.0.32.tgz#635ab98172007527823e603e112bd60e5cbae10f"
+  integrity sha512-IYUD2kb8T/2ql/Fc6ZZxuEtoHr2w2esEDPr3DP4cbhs3ptzqMaFdmDldSqrhz2p6hJiIhOIjEjPVgAEY+b6Rwg==
 
 nav-frontend-modal-style@0.3.33:
   version "0.3.33"
@@ -11361,9 +11353,10 @@ nav-frontend-skjema@3.0.19:
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-3.0.19.tgz#9effa65f8e679adc3da51fba3a8ab7fa90335683"
   integrity sha512-zXGRwDcabvhM3Fsi0hZWkM6SC8zuLz6h2DbtVLU4Jjt1SDQaSApp8OcflN2jzvei+qJ5s5Kfzlz3CE+XWWQMrQ==
 
-nav-frontend-snakkeboble-style@0.2.25:
-  version "0.2.25"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.25.tgz#4aaa58122d0af8079d2933906f17fd42cb65a9ec"
+nav-frontend-snakkeboble-style@0.2.31:
+  version "0.2.31"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.31.tgz#8ce74f76a4b3bab90d11226949a600b2fd456f9e"
+  integrity sha512-+zSdPmW2d8BhLFZ4gIBdiJHZAuu88aCWS2yIRroiPyjdRFz16RF54to4/Bbo5FZPWHuw1xOeXmgdiDdKxTRqLQ==
 
 nav-frontend-snakkeboble@2.0.11:
   version "2.0.11"
@@ -11379,10 +11372,10 @@ nav-frontend-spinner@2.0.5:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.5.tgz#39568893f8843e4d2012c26207dbbd079c0f964e"
   integrity sha512-sIIZ1UapN78egxio1JIFboxWq9Cv2mJl9VP6MIPEIVsEn8buANNhm2l2rCwYPwNK6/Pl0+vEq73SmDTLoO3R9g==
 
-nav-frontend-tabs-style@^0.0.27:
-  version "0.0.27"
-  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.27.tgz#8306f8a82f63da69e97a416ef072cc768082fec5"
-  integrity sha512-rY+kyIR2yD3SpIpl2SjwcOl9KuwQ7tr9fH91cAVRFmcGmxEdhiPBhQqYhF0iByi6BsyH7Y1xuEXZl0MtdgfOGg==
+nav-frontend-tabs-style@^0.0.30:
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.30.tgz#1a4da45a055240c5c12e2086d7e7105ca65d76d5"
+  integrity sha512-ygeLFl9eslTolGbqgxjC+X62T77MrTfu79jUKhW8HNujFwSjzm9MT3TTMaZuxyJufDFHPKxD69v8W49Pa8OsHQ==
 
 nav-frontend-tabs@^0.0.38:
   version "0.0.38"
