@@ -91,8 +91,6 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
                     behandling,
                     alleKodeverk,
                     submitCallback: bekreftAksjonspunktCallback,
-                    featureToggles,
-                    behandlingApi,
                     ...delPaneler[0].getKomponentData(),
                   })
                 }
