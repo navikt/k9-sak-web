@@ -16,7 +16,7 @@ const lagFagsakSortObj = fagsak => ({
 
 interface OwnProps {
   fagsaker: Fagsak[];
-  selectFagsakCallback: (e: Event, saksnummer: number) => void;
+  selectFagsakCallback: (e: Event, saksnummer: string) => void;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 

@@ -82,7 +82,7 @@ type BehandlendeEnheter = {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  saksnummer: number;
+  saksnummer: string;
   behandlingId?: number;
   behandlingVersion?: number;
   fjernVerge: () => void;
@@ -152,10 +152,14 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   const erTilbakekrevingAktivert = useGetEnabledApplikasjonContext().includes(ApplicationContextPath.FPTILBAKE);
 
   const alleFpSakKodeverk = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.KODEVERK);
+  // const alleKlageKodeverk = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.KODEVERK_KLAGE);
+
   const alleFpTilbakeKodeverk = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.KODEVERK_FPTILBAKE);
+
   const menyKodeverk = new MenyKodeverk(behandling?.type)
     .medFpSakKodeverk(alleFpSakKodeverk)
     .medFpTilbakeKodeverk(alleFpTilbakeKodeverk);
+  // .medKlagekodeverk(alleKlageKodeverk);
 
   const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
 
@@ -191,6 +195,13 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   const erKoet = behandling ? behandling.behandlingKoet : false;
   const erPaVent = behandling ? behandling.behandlingPaaVent : false;
   const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
+
+  const test = menyKodeverk.getKodeverkForBehandlingstyper(
+    BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES,
+    kodeverkTyper.BEHANDLING_TYPE,
+  );
+
+  console.log(test);
 
   return (
     <MenySakIndex

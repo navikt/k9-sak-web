@@ -20,7 +20,7 @@ interface OwnProps {
   fagsaker?: Fagsak[];
   searchFagsakCallback: () => void;
   searchResultReceived: boolean;
-  selectFagsakCallback: (e: Event, saksnummer: number) => void;
+  selectFagsakCallback: (e: Event, saksnummer: string) => void;
   searchStarted?: boolean;
   searchResultAccessDenied?: {
     feilmelding: string;

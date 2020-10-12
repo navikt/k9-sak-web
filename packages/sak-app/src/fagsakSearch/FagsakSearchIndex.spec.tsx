@@ -12,7 +12,7 @@ import FagsakSearchIndex from './FagsakSearchIndex';
 
 describe('<FagsakSearchIndex>', () => {
   const fagsak: Partial<Fagsak> = {
-    saksnummer: 12345,
+    saksnummer: '12345',
     sakstype: {
       kode: 'ES',
       kodeverk: 'test',
@@ -39,7 +39,7 @@ describe('<FagsakSearchIndex>', () => {
   };
   const fagsak2: Partial<Fagsak> = {
     ...fagsak,
-    saksnummer: 23456,
+    saksnummer: '23456',
   };
   const fagsaker = [fagsak, fagsak2];
 
@@ -79,7 +79,7 @@ describe('<FagsakSearchIndex>', () => {
     const wrapper = shallow(<FagsakSearchIndex />);
 
     const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
-    const velgFagsak = fagsakSearchIndex.prop('selectFagsakCallback') as (event: any, saksnummer: number) => undefined;
+    const velgFagsak = fagsakSearchIndex.prop('selectFagsakCallback') as (event: any, saksnummer: string) => undefined;
     velgFagsak('', fagsak.saksnummer);
 
     expect(push.calledOnce).to.be.true;
