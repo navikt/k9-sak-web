@@ -267,8 +267,8 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
               opprettNyForstegangsBehandlingAccess.employeeHasAccess &&
               !!opprettNyForstegangsBehandlingAccess.isEnabled,
             [bType.REVURDERING]: opprettRevurderingAccess.employeeHasAccess && opprettRevurderingAccess.isEnabled,
-            [bType.TILBAKEKREVING]: kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
-            [bType.TILBAKEKREVING_REVURDERING]: kanTilbakekrevingOpprettes.kanRevurderingOpprettes,
+            [bType.TILBAKEKREVING]: erFrisinn && kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
+            [bType.TILBAKEKREVING_REVURDERING]: erFrisinn && kanTilbakekrevingOpprettes.kanRevurderingOpprettes,
             [bType.KLAGE]: !!gjeldendeVedtakBehandlendeEnhetId,
           };
           return (
