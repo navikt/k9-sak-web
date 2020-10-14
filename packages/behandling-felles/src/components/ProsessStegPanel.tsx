@@ -41,8 +41,6 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   lagringSideeffekterCallback,
   behandlingApi,
   dispatch,
-  featureToggles,
-  dokumentdata,
 }) => {
   const erHenlagtOgVedtakStegValgt =
     behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.getUrlKode() === prosessStegCodes.VEDTAK;
@@ -63,8 +61,6 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
     lagringSideeffekterCallback,
     dispatch,
     valgtProsessSteg,
-    featureToggles,
-    dokumentdata,
   );
 
   const delPaneler = valgtProsessSteg.getDelPaneler();

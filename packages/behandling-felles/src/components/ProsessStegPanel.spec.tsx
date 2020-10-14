@@ -285,7 +285,7 @@ describe('<ProsessStegPanel>', () => {
     expect(wrapper.find(InngangsvilkarPanel)).to.have.length(0);
   });
 
-  it('skal lagre aksjonspunkt', () => {
+  it('skal lagre aksjonspunkt', async () => {
     const fodselAksjonspunkter = [
       {
         ...aksjonspunkter[0],
@@ -356,7 +356,7 @@ describe('<ProsessStegPanel>', () => {
     ];
     panel.prop('submitCallback')(aksjonspunktModels);
 
-    expect(lagringSideeffekterCallback.getCalls()).to.have.length(1);
+    expect(await lagringSideeffekterCallback.getCalls()).to.have.length(1);
 
     const requestKall = makeRestApiRequest.getCalls();
     expect(requestKall).to.have.length(1);
