@@ -186,7 +186,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     () =>
       valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
         ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionFP',
+        : 'FatterVedtakStatusModal.ModalDescriptionFRISINN',
     [behandling.versjon],
   );
 

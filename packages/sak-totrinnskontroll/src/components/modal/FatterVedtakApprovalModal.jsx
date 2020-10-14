@@ -118,21 +118,26 @@ const getModalDescriptionTextCode = createSelector(
     if (isOpphor) {
       return 'FatterVedtakApprovalModal.ModalDescriptionOpphort';
     }
-    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
-      return 'FatterVedtakApprovalModal.ModalDescriptionESApproval';
+    if (ytelseType.kode === fagsakYtelseType.FRISINN) {
+      return 'FatterVedtakApprovalModal.ModalDescriptionFRISINNApproval';
     }
-    if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
-      return 'FatterVedtakApprovalModal.ModalDescriptionSVPApproval';
+    if (ytelseType.kode === fagsakYtelseType.PLEIEPENGER) {
+      return 'FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval';
     }
-    return 'FatterVedtakApprovalModal.ModalDescriptionFPApproval';
+    return 'FatterVedtakApprovalModal.ModalDescriptionOMSApproval';
   },
 );
 
-const getAltImgTextCode = createSelector([ownProps => ownProps.fagsakYtelseType], ytelseType =>
-  ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-    ? 'FatterVedtakApprovalModal.InnvilgetES'
-    : 'FatterVedtakApprovalModal.InnvilgetFP',
-);
+const getAltImgTextCode = createSelector([ownProps => ownProps.fagsakYtelseType], ytelseType => {
+  switch (ytelseType.kode) {
+    case fagsakYtelseType.FRISINN:
+      return 'FatterVedtakApprovalModal.InnvilgetFRISINN';
+    case fagsakYtelseType.PLEIEPENGER:
+      return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
+    default:
+      return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
+  }
+});
 
 const getInfoTextCode = createSelector(
   [
@@ -151,43 +156,53 @@ const getInfoTextCode = createSelector(
     erKlageWithKA,
     isOpphor,
   ) => {
+    // HVIS TILBAKEKREVING
     if (behandlingtypeKode === BehandlingType.TILBAKEKREVING) {
       return 'FatterVedtakApprovalModal.Tilbakekreving';
     }
     if (behandlingtypeKode === BehandlingType.TILBAKEKREVING_REVURDERING) {
       return 'FatterVedtakApprovalModal.TilbakekrevingRevurdering';
     }
+    // HVIS KLAGE
     if (behandlingtypeKode === BehandlingType.KLAGE) {
       if (erKlageWithKA) {
         return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
       }
       return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
     }
+    // HVIS INGEN ENDRING
     if (harSammeResultatSomOriginalBehandling) {
       return 'FatterVedtakApprovalModal.UendretUtfall';
     }
+    // HVIS AVSLÅTT
     if (behandlingsresultat.type.kode === behandlingResultatType.AVSLATT) {
-      if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
-        return 'FatterVedtakApprovalModal.IkkeInnvilgetES';
+      if (ytelseType.kode === fagsakYtelseType.PLEIEPENGER) {
+        return 'FatterVedtakApprovalModal.IkkeInnvilgetPleiepenger';
       }
-      if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
-        return 'FatterVedtakApprovalModal.IkkeInnvilgetSVP';
+      if (ytelseType.kode === fagsakYtelseType.FRISINN) {
+        return 'FatterVedtakApprovalModal.IkkeInnvilgetFRISINN';
       }
-      if (ytelseType.kode === fagsakYtelseType.OMSORGSPENGER) {
-        return 'FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger';
-      }
-      return 'FatterVedtakApprovalModal.IkkeInnvilgetFP';
+      return 'FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger';
     }
+    // HVIS OPPHØRT
     if (isOpphor) {
-      return 'FatterVedtakApprovalModal.OpphortForeldrepenger';
+      if (ytelseType.kode === fagsakYtelseType.PLEIEPENGER) {
+        return 'FatterVedtakApprovalModal.OpphortPleiepenger';
+      }
+      if (ytelseType.kode === fagsakYtelseType.FRISINN) {
+        return 'FatterVedtakApprovalModal.OpphortFRISINN';
+      }
+      return 'FatterVedtakApprovalModal.OpphortOmsorgpenger';
     }
-    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
-      return 'FatterVedtakApprovalModal.InnvilgetEngangsstonad';
+
+    // HVIS INNVILGET
+    if (ytelseType.kode === fagsakYtelseType.FRISINN) {
+      return 'FatterVedtakApprovalModal.InnvilgetFRISINN';
     }
-    if (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
-      return 'FatterVedtakApprovalModal.InnvilgetSvangerskapspenger';
+    if (ytelseType.kode === fagsakYtelseType.PLEIEPENGER) {
+      return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
     }
-    return 'FatterVedtakApprovalModal.InnvilgetForeldrepenger';
+    return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
   },
 );
 
