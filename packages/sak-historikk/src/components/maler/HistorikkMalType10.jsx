@@ -118,6 +118,14 @@ const HistorikkMalType10 = ({
     return found?.tilVerdi;
   };
 
+  const begrunnelse = historikkinnslagDel => {
+    let tekst = historikkinnslagDel.begrunnelse;
+    if (!tekst) {
+      tekst = historikkinnslagDel.begrunnelseFritekst;
+    }
+    return tekst;
+  };
+
   return historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
     <div
       key={
@@ -159,8 +167,8 @@ const HistorikkMalType10 = ({
           <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>
         ))}
 
-      {historikkinnslagDel.begrunnelse && (
-        <BubbleText bodyText={historikkinnslagDel.begrunnelse} className="snakkeboble-panel__tekst" />
+      {begrunnelse(historikkinnslagDel) && (
+        <BubbleText bodyText={begrunnelse(historikkinnslagDel)} className="snakkeboble-panel__tekst" />
       )}
 
       <div>
