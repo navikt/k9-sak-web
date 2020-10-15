@@ -80,8 +80,9 @@ const velgHistorikkMal = histType => {
     case historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING:
       return HistorikkMalType9;
     case historikkinnslagType.OVST_UTTAK:
-    case historikkinnslagType.FASTSATT_UTTAK:
       return HistorikkMalType10;
+    case historikkinnslagType.FASTSATT_UTTAK:
+      return HistorikkMalType5;
     case historikkinnslagType.FAKTA_OM_FEILUTBETALING:
       return HistorikkMalTypeFeilutbetaling;
     case historikkinnslagType.FORELDELSE:
