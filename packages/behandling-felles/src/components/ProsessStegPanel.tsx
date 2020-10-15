@@ -28,7 +28,6 @@ interface OwnProps {
   behandlingApi: { [name: string]: EndpointOperations };
   dispatch: Dispatch;
   featureToggles?: {};
-  dokumentdata?: {};
 }
 
 const ProsessStegPanel: FunctionComponent<OwnProps> = ({

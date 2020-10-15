@@ -95,8 +95,8 @@ const getLagringSideeffekter = (
     toggleOppdatereFagsakContext(false);
   }
 
-  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA]) {
-    await dispatch(frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.VEDTAKSBREV_TYPE]: 'AUTOMATISK'}))
+  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
+    await dispatch(frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.VEDTAKSBREV_TYPE]: 'AUTOMATISK'}));
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -223,7 +223,6 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
           behandlingApi={frisinnBehandlingApi}
           dispatch={dispatch}
           featureToggles={featureToggles}
-          dokumentdata={{[dokumentdatatype.VEDTAKSBREV_TYPE]: 'AUTOMATISK'}}
         />
       </ProsessStegContainer>
     </>
