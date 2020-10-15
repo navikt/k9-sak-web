@@ -119,10 +119,7 @@ const HistorikkMalType10 = ({
   };
 
   const begrunnelse = historikkinnslagDel => {
-    let tekst = historikkinnslagDel.begrunnelse;
-    if (!tekst) {
-      tekst = historikkinnslagDel.begrunnelseFritekst;
-    }
+    const tekst = historikkinnslagDel.begrunnelse ?? historikkinnslagDel.begrunnelseFritekst;
     if (tekst) {
       return <BubbleText bodyText={tekst} className="snakkeboble-panel__tekst" />;
     }
