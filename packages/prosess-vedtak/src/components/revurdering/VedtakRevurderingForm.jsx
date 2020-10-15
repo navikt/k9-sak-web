@@ -287,6 +287,7 @@ VedtakRevurderingFormImpl.propTypes = {
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  lagreArsakerTilRedusertUtbetaling: PropTypes.func,
   ...formPropTypes,
 };
 
@@ -434,6 +435,8 @@ const VedtakRevurderingForm = connect(
   injectIntl(
     behandlingForm({
       form: VEDTAK_REVURDERING_FORM_NAME,
+      onChange: (values, dispatch, props) =>
+        props.lagreArsakerTilRedusertUtbetaling(values, dispatch),
     })(VedtakRevurderingFormImpl),
   ),
 );

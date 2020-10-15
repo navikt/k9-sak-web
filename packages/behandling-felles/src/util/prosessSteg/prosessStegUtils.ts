@@ -1,4 +1,3 @@
-import { featureToggle } from "@k9-sak-web/konstanter";
 import { SetStateAction } from 'react';
 import { Dispatch } from 'redux';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
@@ -119,8 +118,7 @@ export const getBekreftAksjonspunktCallback = (
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],
   api: { [name: string]: EndpointOperations },
-  featureToggles?: {},
-) => aksjonspunktModels => {
+) => async aksjonspunktModels => {
   const models = aksjonspunktModels.map(ap => ({
     '@type': ap.kode,
     ...ap,
@@ -132,7 +130,7 @@ export const getBekreftAksjonspunktCallback = (
     behandlingVersjon: behandling.versjon,
   };
 
-  const etterLagringCallback = lagringSideEffectsCallback(aksjonspunktModels);
+  const etterLagringCallback = await lagringSideEffectsCallback(aksjonspunktModels);
 
   if (api.SAVE_OVERSTYRT_AKSJONSPUNKT) {
     const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
@@ -157,21 +155,13 @@ export const getBekreftAksjonspunktCallback = (
     }
   }
 
-  const saveAksjonspunkt = () =>
-    dispatch(
-      api.SAVE_AKSJONSPUNKT.makeRestApiRequest()(
-        {
-          ...params,
-          bekreftedeAksjonspunktDtoer: models,
-        },
-        { keepData: true },
-      ),
-    ).then(etterLagringCallback);
-
-  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && api.DOKUMENTDATA_LAGRE) {
-    // TODO: Sende data til endepunktet
-    return dispatch(api.DOKUMENTDATA_LAGRE.makeRestApiRequest()({})).then(saveAksjonspunkt);
-  }
-
-  return saveAksjonspunkt();
+  return dispatch(
+    api.SAVE_AKSJONSPUNKT.makeRestApiRequest()(
+      {
+        ...params,
+        bekreftedeAksjonspunktDtoer: models,
+      },
+      { keepData: true },
+    ),
+  ).then(etterLagringCallback);
 };
