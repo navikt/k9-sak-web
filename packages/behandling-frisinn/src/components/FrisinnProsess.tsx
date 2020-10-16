@@ -3,6 +3,7 @@ import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   FagsakInfo,
@@ -96,7 +97,11 @@ const getLagringSideeffekter = (
   }
 
   if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
-    await dispatch(frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.VEDTAKSBREV_TYPE]: 'AUTOMATISK'}));
+    let brevtype;
+    if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
+    else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;
+    else brevtype = vedtaksbrevtype.AUTOMATISK;
+    await dispatch(frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.VEDTAKSBREV_TYPE]: brevtype}));
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
