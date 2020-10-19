@@ -53,45 +53,50 @@ export const ArbeidsforholdInfoPanelImpl = ({
   behandlingId,
   behandlingVersjon,
   ...formProps
-}) => (
-  <>
-    {aksjonspunkter.length > 0 && (
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
-        {[
-          <FormattedMessage
-            key="ArbeidsforholdInfoPanelAksjonspunkt"
-            id={
-              skalKunneLeggeTilNyeArbeidsforhold
-                ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert'
-                : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'
-            }
-          />,
-        ]}
-      </AksjonspunktHelpTextTemp>
-    )}
-    <form onSubmit={formProps.handleSubmit}>
-      <PersonArbeidsforholdPanel
-        readOnly={readOnly}
-        hasAksjonspunkter={aksjonspunkter.length > 0}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
-        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        alleKodeverk={alleKodeverk}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
-      {harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
-        <BekreftOgForsettKnapp
-          readOnly
-          isSubmitting={formProps.submitting}
+}) => {
+  const { host } = window.location;
+  const shouldDisableSubmitButton = (!hasOpenAksjonspunkter && formProps.pristine) || host !== 'app-q1.adeo.no';
+
+  return (
+    <>
+      {aksjonspunkter.length > 0 && (
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
+          {[
+            <FormattedMessage
+              key="ArbeidsforholdInfoPanelAksjonspunkt"
+              id={
+                skalKunneLeggeTilNyeArbeidsforhold
+                  ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert'
+                  : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'
+              }
+            />,
+          ]}
+        </AksjonspunktHelpTextTemp>
+      )}
+      <form onSubmit={formProps.handleSubmit}>
+        <PersonArbeidsforholdPanel
+          readOnly={readOnly}
+          hasAksjonspunkter={aksjonspunkter.length > 0}
+          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+          skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
+          skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
+          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+          alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
         />
-      )}
-    </form>
-  </>
-);
+        {harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
+          <BekreftOgForsettKnapp
+            readOnly={readOnly || shouldDisableSubmitButton}
+            isSubmitting={formProps.submitting}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+        )}
+      </form>
+    </>
+  );
+};
 
 ArbeidsforholdInfoPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
