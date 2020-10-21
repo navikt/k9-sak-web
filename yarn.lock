@@ -11328,10 +11328,10 @@ nav-frontend-spinner@2.0.5:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.5.tgz#39568893f8843e4d2012c26207dbbd079c0f964e"
   integrity sha512-sIIZ1UapN78egxio1JIFboxWq9Cv2mJl9VP6MIPEIVsEn8buANNhm2l2rCwYPwNK6/Pl0+vEq73SmDTLoO3R9g==
 
-nav-frontend-tabs-style@^0.0.30:
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.30.tgz#1a4da45a055240c5c12e2086d7e7105ca65d76d5"
-  integrity sha512-ygeLFl9eslTolGbqgxjC+X62T77MrTfu79jUKhW8HNujFwSjzm9MT3TTMaZuxyJufDFHPKxD69v8W49Pa8OsHQ==
+nav-frontend-tabs-style@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.31.tgz#53121523172131bb9b59826f9a754a3d55b0cfae"
+  integrity sha512-p5cwf+MrmN0sCdmcKJT6rp3kAVRUwUFcfhw39ACSm57o9l2cXl7ocM7l2vyK3AB4LSXdZduK500Y+11jjh3JUQ==
 
 nav-frontend-tabs@^0.0.38:
   version "0.0.38"
