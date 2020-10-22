@@ -127,8 +127,8 @@ server {
   location  "/k9/microfrontend/medisinsk-vilkar" {
     proxy_set_header Host	$http_host;
     proxy_pass "${MEDISINSK_VILKAR_FRONTEND_URL}";
-#    proxy_http_version 1.1;
-#    proxy_set_header Upgrade $http_upgrade;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
     proxy_ssl_server_name on;
     proxy_intercept_errors on;
     error_page 401 = @401_json;
