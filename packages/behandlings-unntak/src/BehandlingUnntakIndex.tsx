@@ -13,7 +13,14 @@ import FetchedData from './types/fetchedDataTsType';
 import unntakApi, { reduxRestApi, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import UnntakPaneler from './components/UnntakPaneler';
 
-const unntakData = [unntakApi.AKSJONSPUNKTER, unntakApi.KLAGE_VURDERING];
+const unntakData = [
+  unntakApi.AKSJONSPUNKTER,
+  unntakApi.VILKAR,
+  unntakApi.PERSONOPPLYSNINGER,
+  unntakApi.BEREGNINGSRESULTAT_UTBETALT,
+  unntakApi.BEREGNINGSGRUNNLAG,
+  unntakApi.SIMULERING_RESULTAT,
+];
 
 interface OwnProps {
   behandlingId: number;
@@ -57,7 +64,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-const BehandlingUnntaksLøypeIndex: FunctionComponent<Props> = ({
+const BehandlingUnntakIndex: FunctionComponent<Props> = ({
   behandlingEventHandler,
   nyBehandlendeEnhet,
   settBehandlingPaVent,
@@ -74,10 +81,13 @@ const BehandlingUnntaksLøypeIndex: FunctionComponent<Props> = ({
   rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtProsessSteg,
+  valgtFaktaSteg,
   settPaVent,
   opneSokeside,
   forrigeBehandling,
-  alleBehandlinger,
+  opneBehandlingForEndringer,
+  lagreRisikoklassifiseringAksjonspunkt,
+  hasFetchError,
   featureToggles,
 }) => {
   const forrigeVersjon = useRef<number>();
@@ -90,6 +100,8 @@ const BehandlingUnntaksLøypeIndex: FunctionComponent<Props> = ({
         settBehandlingPaVent(params).then(() => hentBehandling({ behandlingId }, { keepData: true })),
       taBehandlingAvVent: params => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: params => henleggBehandling(params),
+      opneBehandlingForEndringer: params => opneBehandlingForEndringer(params),
+      lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
@@ -127,15 +139,16 @@ const BehandlingUnntaksLøypeIndex: FunctionComponent<Props> = ({
             behandling={isFinished ? behandling : forrigeBehandling}
             fetchedData={dataProps}
             fagsak={fagsak}
-            kodeverk={kodeverk}
+            alleKodeverk={kodeverk}
             rettigheter={rettigheter}
             valgtProsessSteg={valgtProsessSteg}
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={valgtFaktaSteg}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             settPaVent={settPaVent}
             hentBehandling={hentBehandling}
             opneSokeside={opneSokeside}
-            alleBehandlinger={alleBehandlinger}
+            hasFetchError={hasFetchError}
             featureToggles={featureToggles}
           />
         </>
@@ -145,8 +158,9 @@ const BehandlingUnntaksLøypeIndex: FunctionComponent<Props> = ({
 };
 
 const mapStateToProps = state => ({
-  behandling: unntakApi.BEHANDLING_KLAGE.getRestApiData()(state),
-  forrigeBehandling: unntakApi.BEHANDLING_KLAGE.getRestApiPreviousData()(state),
+  behandling: unntakApi.BEHANDLING_FP.getRestApiData()(state),
+  forrigeBehandling: unntakApi.BEHANDLING_FP.getRestApiPreviousData()(state),
+  hasFetchError: !!unntakApi.BEHANDLING_FP.getRestApiError()(state),
 });
 
 const getResetRestApiContext = () => dispatch => {
@@ -163,7 +177,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
       taBehandlingAvVent: unntakApi.RESUME_BEHANDLING.makeRestApiRequest(),
       henleggBehandling: unntakApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
       settPaVent: unntakApi.UPDATE_ON_HOLD.makeRestApiRequest(),
-      hentBehandling: unntakApi.BEHANDLING_KLAGE.makeRestApiRequest(),
+      opneBehandlingForEndringer: unntakApi.OPEN_BEHANDLING_FOR_CHANGES.makeRestApiRequest(),
+      hentBehandling: unntakApi.BEHANDLING_FP.makeRestApiRequest(),
+      lagreRisikoklassifiseringAksjonspunkt: unntakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
       resetRestApiContext: getResetRestApiContext,
       destroyReduxForm: destroy,
     },
@@ -171,7 +187,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(BehandlingUnntaksLøypeIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingUnntakIndex);
