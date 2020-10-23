@@ -2,7 +2,7 @@ import React from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { featureToggle, prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
@@ -26,7 +26,9 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK];
 
-  getEndepunkter = () => [tilbakekrevingApi.VEDTAKSBREV];
+  getEndepunkter = featureToggles => featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA]
+    ? [tilbakekrevingApi.VEDTAKSBREV, tilbakekrevingApi.DOKUMENTDATA_HENTE]
+    : [tilbakekrevingApi.VEDTAKSBREV];
 
   getData = ({ behandling, beregningsresultat, fetchPreviewVedtaksbrev }) => ({
     beregningsresultat,

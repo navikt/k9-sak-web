@@ -48,6 +48,7 @@ const VedtakProsessIndex = ({
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
   lagreArsakerTilRedusertUtbetaling,
+  dokumentdataHente,
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -81,6 +82,7 @@ const VedtakProsessIndex = ({
       vedtakVarsel={vedtakVarsel}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       lagreArsakerTilRedusertUtbetaling={lagreArsakerTilRedusertUtbetaling}
+      dokumentdata={dokumentdataHente}
     />
   </RawIntlProvider>
 );
@@ -106,6 +108,7 @@ VedtakProsessIndex.propTypes = {
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   lagreArsakerTilRedusertUtbetaling: PropTypes.func,
+  dokumentdataHente: PropTypes.shape(),
 };
 
 VedtakProsessIndex.defaultProps = {

@@ -30,6 +30,7 @@ export const TilbakekrevingBehandlingApiKeys = {
   VERGE_OPPRETT: 'VERGE_OPPRETT',
   VERGE_FJERN: 'VERGE_FJERN',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
+  DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -66,6 +67,7 @@ const endpoints = new RestApiConfigBuilder()
     saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE,
   })
   .withRel('dokumentdata-lagre', TilbakekrevingBehandlingApiKeys.DOKUMENTDATA_LAGRE)
+  .withRel('dokumentdata-hente', TilbakekrevingBehandlingApiKeys.DOKUMENTDATA_HENTE)
 
   /* FPFORMIDLING */
   .withPostAndOpenBlob(

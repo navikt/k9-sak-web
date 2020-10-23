@@ -4,9 +4,11 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { featureToggle, prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+
+import innsynBehandlingApi from "../../data/innsynBehandlingApi";
 
 const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
   const harApentAksjonpunkt = aksjonspunkter.some(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET);
@@ -27,6 +29,9 @@ class PanelDef extends ProsessStegPanelDef {
     innsyn ? getVedtakStatus(innsyn.innsynResultatType, aksjonspunkterForSteg) : vilkarUtfallType.IKKE_VURDERT;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.FORESLA_VEDTAK];
+
+  getEndepunkter = featureToggles =>
+    featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] ? [innsynBehandlingApi.DOKUMENTDATA_HENTE] : [];
 
   getData = ({ innsyn, alleDokumenter, fagsak, previewCallback, aksjonspunkter }) => ({
     innsyn,

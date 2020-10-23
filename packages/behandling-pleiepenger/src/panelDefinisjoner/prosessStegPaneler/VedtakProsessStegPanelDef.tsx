@@ -2,7 +2,7 @@ import React from 'react';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { featureToggle, prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
@@ -23,12 +23,16 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => [
-    pleiepengerBehandlingApi.TILBAKEKREVINGVALG,
-    pleiepengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-    pleiepengerBehandlingApi.MEDLEMSKAP,
-    pleiepengerBehandlingApi.VEDTAK_VARSEL,
-  ];
+  getEndepunkter = featureToggles => {
+    const endepunkterUtenDd = [
+      pleiepengerBehandlingApi.TILBAKEKREVINGVALG,
+      pleiepengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
+      pleiepengerBehandlingApi.MEDLEMSKAP,
+      pleiepengerBehandlingApi.VEDTAK_VARSEL,
+    ];
+    const endepunkterMedDd = endepunkterUtenDd.concat([pleiepengerBehandlingApi.DOKUMENTDATA_HENTE]);
+    return featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] ? endepunkterMedDd : endepunkterUtenDd;
+  };
 
   getOverstyrVisningAvKomponent = () => true;
 
