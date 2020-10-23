@@ -12,7 +12,6 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
@@ -145,14 +144,6 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
 const formName = 'NyBehandlingModal';
 
 // TODO Denne inndelinga burde vel flyttast til DB (KODELISTE.EKSTRA_DATA)?
-const manuelleRevurderingsArsakerES = [
-  behandlingArsakType.ANNET,
-  behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-  behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
-  behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
-  behandlingArsakType.FEIL_PROSESSUELL,
-  behandlingArsakType.ETTER_KLAGE,
-];
 
 const manuelleRevurderingsArsakerFP = [
   behandlingArsakType.BEREEGNINGSGRUNNLAG,
@@ -165,17 +156,6 @@ const manuelleRevurderingsArsakerFP = [
   behandlingArsakType.SØKNADSFRIST,
   behandlingArsakType.KLAGE_U_INNTK,
   behandlingArsakType.KLAGE_M_INNTK,
-];
-
-const manuelleRevurderingsArsakerSVP = [
-  behandlingArsakType.KLAGE_U_INNTK,
-  behandlingArsakType.KLAGE_M_INNTK,
-  behandlingArsakType.RE_ENDRET_INNTEKTSMELDING,
-  behandlingArsakType.RE_ENDRING_FRA_BRUKER,
-  behandlingArsakType.FØDSEL,
-  behandlingArsakType.DØD,
-  behandlingArsakType.ANNET,
-  behandlingArsakType.INNTEKT,
 ];
 
 const tilbakekrevingRevurderingArsaker = [
@@ -200,16 +180,8 @@ export const getBehandlingAarsaker = createSelector(
     }
 
     if (valgtBehandlingType === bType.REVURDERING) {
-      const isForeldrepenger = ytelseType.kode === fagsakYtelseType.FORELDREPENGER;
-      const isSvangerskap = ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER;
-      let manuelleRevurderingsArsaker = isForeldrepenger
-        ? manuelleRevurderingsArsakerFP
-        : manuelleRevurderingsArsakerES;
-      if (isSvangerskap) {
-        manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
-      }
       return alleRevurderingArsaker
-        .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
+        .filter(bat => manuelleRevurderingsArsakerFP.indexOf(bat.kode) > -1)
         .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
     }
 

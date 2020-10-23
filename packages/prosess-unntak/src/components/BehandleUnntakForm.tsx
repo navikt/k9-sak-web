@@ -45,8 +45,9 @@ export const BehandleUnntakFormImpl = ({
         </Undertittel>
       </FlexRow>
       <VerticalSpacer fourPx />
+
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
-        {[<FormattedMessage id="Unntak.HelpText" key={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR} />]}
+        {[<FormattedMessage id="Unntak.AvklarAkjsonspunkt" key={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR} />]}
       </AksjonspunktHelpTextTemp>
 
       <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
