@@ -7,13 +7,13 @@ import { TextAreaField } from '@fpsak-frontend/form';
 
 import styles from './fritekstBrevTextField.less';
 
-const FritekstBrevTextField = ({ sprakkode, intl }) => (
+const FritekstBrevTextField = ({ sprakkode, readOnly, intl }) => (
   <div className={styles.fritekstTilBrevTextArea}>
     <TextAreaField
       name="fritekstTilBrev"
       label={intl.formatMessage({ id: 'FritekstBrevTextField.Fritekst' })}
       validate={[required, hasValidText]}
-      // readOnly={readOnly}
+      readOnly={readOnly}
       textareaClass={styles.explanationTextarea}
       maxLength={100000}
       badges={[
@@ -30,11 +30,11 @@ const FritekstBrevTextField = ({ sprakkode, intl }) => (
 FritekstBrevTextField.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,
-  // readOnly: PropTypes.bool,
+  readOnly: PropTypes.bool,
 };
 
 FritekstBrevTextField.defaultProps = {
-  // readOnly: true,
+  readOnly: true,
 };
 
 export default injectIntl(FritekstBrevTextField);

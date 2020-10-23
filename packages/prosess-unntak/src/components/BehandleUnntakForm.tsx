@@ -46,7 +46,7 @@ export const BehandleUnntakFormImpl = ({
       </FlexRow>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
-        {[<FormattedMessage id="Unntak.HelpText" key={aksjonspunktCodes.BEHANDLE_KLAGE_NK} />]}
+        {[<FormattedMessage id="Unntak.HelpText" key={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR} />]}
       </AksjonspunktHelpTextTemp>
 
       <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
@@ -67,7 +67,7 @@ export const BehandleUnntakFormImpl = ({
           formValues={formValues}
           saveUnntak={saveUnntak}
           // readOnly={readOnly}
-          aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+          aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
           previewCallback={previewCallback}
         />
       )}
@@ -76,7 +76,7 @@ export const BehandleUnntakFormImpl = ({
         formValues={formValues}
         saveUnntak={saveUnntak}
         // readOnly={readOnly}
-        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+        aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
       />
       <VerticalSpacer twentyPx />
 
