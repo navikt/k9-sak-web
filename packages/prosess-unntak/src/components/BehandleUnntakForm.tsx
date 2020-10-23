@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import unntakVurdering from '@fpsak-frontend/kodeverk/src/unntakVurdering';
 import {
   behandlingForm,
   RadioGroupField,
@@ -54,8 +55,8 @@ export const BehandleUnntakFormImpl = ({
       <VerticalSpacer twentyPx />
 
       <RadioGroupField name="unntakVurdering" validate={[required]} direction="horizontal" readOnly={readOnly}>
-        <RadioOption value label={{ id: 'Unntak.Innvilg' }} />
-        <RadioOption value="false" label={{ id: 'Unntak.Avslå' }} />
+        <RadioOption value={unntakVurdering.INNVILG} label={{ id: 'Unntak.Innvilg' }} />
+        <RadioOption value={unntakVurdering.AVSLÅ} label={{ id: 'Unntak.Avslå' }} />
       </RadioGroupField>
 
       <BehandlingspunktSubmitButton
@@ -86,6 +87,7 @@ BehandleUnntakFormImpl.defaultProps = {
 
 export const buildInitialValues = createSelector([ownProps => ownProps.unntakVurdering], unntakResultat => ({
   fritekst: unntakResultat ? unntakResultat.fritekst : null,
+  unntakVurdering: unntakResultat ? unntakResultat.unntakVurdering : null,
 }));
 
 export const transformValues = values => ({

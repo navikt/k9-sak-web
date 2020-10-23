@@ -8,7 +8,7 @@ import { TempSaveAndPreviewLink } from './TempSaveAndPreviewLink';
 describe('<TempSaveAndPreviewLink>', () => {
   const formValuesWithEmptyStrings = {
     unntakVurdering: klageVurderingType.STADFESTE_YTELSESVEDTAK,
-    fritekstTilBrev: '',
+    fritekst: '',
     begrunnelse: '',
   };
 

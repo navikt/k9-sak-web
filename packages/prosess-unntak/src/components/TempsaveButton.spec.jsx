@@ -9,7 +9,7 @@ import TempsaveButton from './TempsaveButton';
 describe('<TempsaveButton>', () => {
   const formValuesWithEmptyStrings = {
     unntakVurdering: klageVurderingType.STADFESTE_YTELSESVEDTAK,
-    fritekstTilBrev: '',
+    fritekst: '',
     begrunnelse: '',
   };
 
