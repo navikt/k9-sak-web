@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 
-import styles from './fritekstBrevTextField.less';
+import styles from './fritekstTextField.less';
 
-const FritekstBrevTextField = ({ sprakkode, readOnly, intl }) => (
-  <div className={styles.fritekstTilBrevTextArea}>
+const FritekstTextField = ({ sprakkode, readOnly, intl }) => (
+  <div className={styles.fritekstTextArea}>
     <TextAreaField
-      name="fritekstTilBrev"
-      label={intl.formatMessage({ id: 'FritekstBrevTextField.Fritekst' })}
+      name="fritekst"
+      label={intl.formatMessage({ id: 'FritekstTextField.Fritekst' })}
       validate={[required, hasValidText]}
       readOnly={readOnly}
       textareaClass={styles.explanationTextarea}
@@ -27,14 +27,14 @@ const FritekstBrevTextField = ({ sprakkode, readOnly, intl }) => (
   </div>
 );
 
-FritekstBrevTextField.propTypes = {
+FritekstTextField.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
 };
 
-FritekstBrevTextField.defaultProps = {
+FritekstTextField.defaultProps = {
   readOnly: true,
 };
 
-export default injectIntl(FritekstBrevTextField);
+export default injectIntl(FritekstTextField);

@@ -1,9 +1,11 @@
 {
   "Unntak.Title": "Behandle Unntak",
+  "Unntak.Innvilg": "Innvilg",
+  "Unntak.Avslå": "Avslå",
   "Unntak.TempSaveButton": "Lagre",
   "Unntak.TempSaveAndPreviewButton": "Lagre og forhåndsvis brev",
   "UnntakVurderingRadioOptionsKa.VurderingForUnntak": "Vurdering",
-  "FritekstBrevTextField.Fritekst": "Fritekst til brev",
+  "FritekstTextField.Fritekst": "Notat",
   "BehandleUnntakFormNfp.BegrunnelseForUnntak": "Begrunnelse",
   "PreviewUnntakLink.ForhandvisBrev": "Forhåndsvis brev",
   "Unntak.AvklarAkjsonspunkt": "Avklar vilkår",

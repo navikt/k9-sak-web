@@ -3,23 +3,26 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
   behandlingForm,
+  RadioGroupField,
+  RadioOption,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
 import { VerticalSpacer, FlexContainer, FlexRow, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
-
-import FritekstBrevTextField from './FritekstBrevTextField';
+import FritekstTextField from './FritekstTextField';
 
 // MANUELL_TILKJENT_YTELSE: '5057',
 // MANUELL_VURDERING_VILKÅR: '5059',
+
+const FORM_NAME = 'BehandleUnntakForm';
 
 export const BehandleUnntakFormImpl = ({
   behandlingId,
@@ -39,13 +42,21 @@ export const BehandleUnntakFormImpl = ({
           <FormattedMessage id="Unntak.Title" />
         </Undertittel>
       </FlexRow>
-      <VerticalSpacer fourPx />
+      <VerticalSpacer twentyPx />
 
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Unntak.AvklarAkjsonspunkt" key={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR} />]}
       </AksjonspunktHelpTextTemp>
+      <VerticalSpacer twentyPx />
 
-      <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
+      <FritekstTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
+
+      <VerticalSpacer twentyPx />
+
+      <RadioGroupField name="unntakVurdering" validate={[required]} direction="horizontal" readOnly={readOnly}>
+        <RadioOption value label={{ id: 'Unntak.Innvilg' }} />
+        <RadioOption value="false" label={{ id: 'Unntak.Avslå' }} />
+      </RadioGroupField>
 
       <BehandlingspunktSubmitButton
         formName={formProps.form}
@@ -57,18 +68,6 @@ export const BehandleUnntakFormImpl = ({
         isBehandlingFormDirty={isBehandlingFormDirty}
         hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
       />
-
-      <VerticalSpacer twentyPx />
-      {!readOnly && (
-        <FlexRow>
-          <Hovedknapp mini htmlType="button" onClick={() => {}}>
-            Innvilg og fortsett
-          </Hovedknapp>
-          <Hovedknapp mini htmlType="button" onClick={() => {}}>
-            Avslå og fortsett
-          </Hovedknapp>
-        </FlexRow>
-      )}
     </FlexContainer>
   </form>
 );
@@ -86,26 +85,25 @@ BehandleUnntakFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector([ownProps => ownProps.unntakVurdering], unntakResultat => ({
-  begrunnelse: unntakResultat ? unntakResultat.begrunnelse : null,
-  fritekstTilBrev: unntakResultat ? unntakResultat.fritekstTilBrev : null,
+  fritekst: unntakResultat ? unntakResultat.fritekst : null,
 }));
 
 export const transformValues = values => ({
-  fritekstTilBrev: values.fritekstTilBrev,
-  begrunnelse: values.begrunnelse,
+  unntakVurdering: values.unntakVurdering,
+  fritekst: values.fritekst,
+  begrunnelse: '',
   kode: aksjonspunktCodes.MANUELL_VURDERING_VILKÅR,
 });
-
-const formName = 'BehandleUnntakForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
-    formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
+    formValues: behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
+      'unntakVurdering',
       'begrunnelse',
-      'fritekstTilBrev',
+      'fritekst',
     ),
     onSubmit,
   });
@@ -113,7 +111,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 
 const BehandleUnntakForm = connect(mapStateToPropsFactory)(
   behandlingForm({
-    form: formName,
+    form: FORM_NAME,
   })(BehandleUnntakFormImpl),
 );
 
