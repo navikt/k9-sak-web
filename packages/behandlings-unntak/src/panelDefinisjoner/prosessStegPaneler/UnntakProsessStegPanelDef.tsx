@@ -8,10 +8,13 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-
 
 import unntakBehandlingApi from '../../data/unntakBehandlingApi';
 
+// MANUELL_TILKJENT_YTELSE: '5057',
+// MANUELL_VURDERING_VILKÅR: '5059',
+
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UnntakProsessIndex {...props} />;
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_FEILUTBETALING];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.MANUELL_VURDERING_VILKÅR];
 
   getEndepunkter = () => [unntakBehandlingApi.TILBAKEKREVINGVALG];
 

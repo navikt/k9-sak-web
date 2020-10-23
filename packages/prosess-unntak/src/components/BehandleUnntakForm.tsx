@@ -20,11 +20,9 @@ import FritekstBrevTextField from './FritekstBrevTextField';
 import TempSaveAndPreviewLink from './TempSaveAndPreviewLink';
 import TempsaveButton from './TempsaveButton';
 
-/**
- * BehandleklageformNfp
- *
- * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (KA).
- */
+// MANUELL_TILKJENT_YTELSE: '5057',
+// MANUELL_VURDERING_VILKÅR: '5059',
+
 export const BehandleUnntakFormImpl = ({
   behandlingId,
   behandlingVersjon,
