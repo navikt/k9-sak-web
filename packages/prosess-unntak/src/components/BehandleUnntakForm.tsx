@@ -17,8 +17,6 @@ import {
 import { VerticalSpacer, FlexContainer, FlexRow, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 
 import FritekstBrevTextField from './FritekstBrevTextField';
-import TempSaveAndPreviewLink from './TempSaveAndPreviewLink';
-import TempsaveButton from './TempsaveButton';
 
 // MANUELL_TILKJENT_YTELSE: '5057',
 // MANUELL_VURDERING_VILKÅR: '5059',
@@ -28,11 +26,8 @@ export const BehandleUnntakFormImpl = ({
   behandlingVersjon,
   readOnly,
   handleSubmit,
-  saveUnntak,
-  previewCallback,
   readOnlySubmitButton,
   sprakkode,
-  formValues,
   intl,
   // alleKodeverk,
   ...formProps
@@ -63,22 +58,6 @@ export const BehandleUnntakFormImpl = ({
         hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
       />
 
-      {!readOnly && formValues.fritekstTilBrev && formValues.fritekstTilBrev.length > 2 && (
-        <TempSaveAndPreviewLink
-          formValues={formValues}
-          saveUnntak={saveUnntak}
-          readOnly={readOnly}
-          aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
-          previewCallback={previewCallback}
-        />
-      )}
-
-      <TempsaveButton
-        formValues={formValues}
-        saveUnntak={saveUnntak}
-        readOnly={readOnly}
-        aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
-      />
       <VerticalSpacer twentyPx />
       {!readOnly && (
         <FlexRow>
@@ -97,13 +76,11 @@ export const BehandleUnntakFormImpl = ({
 BehandleUnntakFormImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   saveUnntak: PropTypes.func.isRequired,
-  formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
 };
 
 BehandleUnntakFormImpl.defaultProps = {
-  formValues: {},
   readOnly: true,
   readOnlySubmitButton: true,
 };

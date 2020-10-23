@@ -179,7 +179,7 @@ export const getBehandlingAarsaker = createSelector(
         .sort((ba1, ba2) => ba1.navn.localeCompare(ba2.navn));
     }
 
-    if (valgtBehandlingType === bType.REVURDERING) {
+    if ([bType.REVURDERING, bType.UNNTAK].some(type => type === valgtBehandlingType)) {
       return alleRevurderingArsaker
         .filter(bat => manuelleRevurderingsArsakerFP.indexOf(bat.kode) > -1)
         .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));

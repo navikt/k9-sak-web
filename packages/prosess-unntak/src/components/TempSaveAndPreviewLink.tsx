@@ -59,12 +59,12 @@ export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   aksjonspunktCode,
   readOnly,
   previewCallback,
-  hasFinishedUnntakUnntak,
+  hasFinishedUnntak,
   resetSaveUnntak,
 }) => {
   const setSkalForhaandsvise = useForhaandsvise(
     readOnly,
-    hasFinishedUnntakUnntak,
+    hasFinishedUnntak,
     previewCallback,
     formValues,
     resetSaveUnntak,
@@ -93,7 +93,7 @@ export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
 };
 
 const mapStateToProps = state => ({
-  hasFinishedUnntakUnntak: !!unntakApi.SAVE_KLAGE_VURDERING.getRestApiFinished()(state),
+  hasFinishedUnntak: !!unntakApi.SAVE_KLAGE_VURDERING.getRestApiFinished()(state),
 });
 
 const mapDispatchToProps = dispatch => ({
