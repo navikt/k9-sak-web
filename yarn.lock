@@ -11231,9 +11231,9 @@ nav-frontend-knapper@^1.0.37:
   resolved "https://registry.yarnpkg.com/nav-frontend-knapper/-/nav-frontend-knapper-1.0.40.tgz#21e2b5556bf68b7cb179c13947f780700c77799a"
 
 nav-frontend-lenkepanel-style@^0.3.31:
-  version "0.3.31"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel-style/-/nav-frontend-lenkepanel-style-0.3.31.tgz#5ac9a0ac18d8b44e16bb5311f3a814aae955e107"
-  integrity sha512-QQmeLwFfqSuB6gNL84pknE9wtX5q2lnZt+V/2J7BGSeFh+sS5vxYI1XBGQf1uPx80HKLBwF16d00WqZTL3ip7g==
+  version "0.3.35"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel-style/-/nav-frontend-lenkepanel-style-0.3.35.tgz#26db6f3ea020affabf1ed53e4d584abfe16c5d8a"
+  integrity sha512-grKU82tEoN5dqmh8UyUHCz4Os1A5SXsn9aTj3u0Te8FQ/AiOjxA1JrDYczkUps4TTxec9w09GOi+kI2wo92QPg==
 
 nav-frontend-lenkepanel@^1.0.47:
   version "1.0.47"
