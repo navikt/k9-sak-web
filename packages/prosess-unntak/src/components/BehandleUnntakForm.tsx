@@ -66,7 +66,7 @@ export const BehandleUnntakFormImpl = ({
         <TempSaveAndPreviewLink
           formValues={formValues}
           saveUnntak={saveUnntak}
-          // readOnly={readOnly}
+          readOnly={readOnly}
           aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
           previewCallback={previewCallback}
         />
@@ -75,19 +75,20 @@ export const BehandleUnntakFormImpl = ({
       <TempsaveButton
         formValues={formValues}
         saveUnntak={saveUnntak}
-        // readOnly={readOnly}
+        readOnly={readOnly}
         aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
       />
       <VerticalSpacer twentyPx />
-
-      <FlexRow>
-        <Hovedknapp mini htmlType="button" onClick={() => {}}>
-          Innvilg og fortsett
-        </Hovedknapp>
-        <Hovedknapp mini htmlType="button" onClick={() => {}}>
-          Avslå og fortsett
-        </Hovedknapp>
-      </FlexRow>
+      {!readOnly && (
+        <FlexRow>
+          <Hovedknapp mini htmlType="button" onClick={() => {}}>
+            Innvilg og fortsett
+          </Hovedknapp>
+          <Hovedknapp mini htmlType="button" onClick={() => {}}>
+            Avslå og fortsett
+          </Hovedknapp>
+        </FlexRow>
+      )}
     </FlexContainer>
   </form>
 );
@@ -114,7 +115,7 @@ export const buildInitialValues = createSelector([ownProps => ownProps.unntakVur
 export const transformValues = values => ({
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
-  kode: aksjonspunktCodes.BEHANDLE_KLAGE_NK,
+  kode: aksjonspunktCodes.MANUELL_VURDERING_VILKÅR,
 });
 
 const formName = 'BehandleUnntakForm';
