@@ -54,4 +54,4 @@ spec:
     - name: APP_DIAGNOSEKODER
       value: "http://diagnosekode-api"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
-      value: "https://medisinsk-vilkar-frontend.intern.dev.adeo.no"
+      value: "https://medisinsk-vilkar-frontend.intern.dev.adeo.no/"
