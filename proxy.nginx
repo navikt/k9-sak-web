@@ -124,7 +124,7 @@ server {
     error_page 504 = @504_json;
   }
 
-  location  "/k9/microfrontend/medisinsk-vilkar" {
+  location  "/k9/microfrontend/medisinsk-vilkar/" {
     proxy_ssl_server_name on;
     proxy_pass "${MEDISINSK_VILKAR_FRONTEND_URL}";
     proxy_intercept_errors on;
