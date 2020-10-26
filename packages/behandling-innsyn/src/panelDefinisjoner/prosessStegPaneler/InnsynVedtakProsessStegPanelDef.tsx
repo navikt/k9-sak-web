@@ -30,6 +30,9 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.FORESLA_VEDTAK];
 
+  getEndepunkter = featureToggles =>
+    featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] ? [innsynBehandlingApi.DOKUMENTDATA_HENTE] : [];
+
   getData = ({ innsyn, alleDokumenter, fagsak, previewCallback, aksjonspunkter, featureToggles }) => ({
     innsyn,
     alleDokumenter,

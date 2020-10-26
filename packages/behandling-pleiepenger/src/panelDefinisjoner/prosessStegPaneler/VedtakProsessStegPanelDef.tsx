@@ -24,12 +24,16 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => [
-    pleiepengerBehandlingApi.TILBAKEKREVINGVALG,
-    pleiepengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-    pleiepengerBehandlingApi.MEDLEMSKAP,
-    pleiepengerBehandlingApi.VEDTAK_VARSEL,
-  ];
+  getEndepunkter = featureToggles => {
+    const endepunkterUtenDd = [
+      pleiepengerBehandlingApi.TILBAKEKREVINGVALG,
+      pleiepengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
+      pleiepengerBehandlingApi.MEDLEMSKAP,
+      pleiepengerBehandlingApi.VEDTAK_VARSEL,
+    ];
+    const endepunkterMedDd = endepunkterUtenDd.concat([pleiepengerBehandlingApi.DOKUMENTDATA_HENTE]);
+    return featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] ? endepunkterMedDd : endepunkterUtenDd;
+  };
 
   getOverstyrVisningAvKomponent = () => true;
 

@@ -27,7 +27,9 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK];
 
-  getEndepunkter = () => [tilbakekrevingApi.VEDTAKSBREV];
+  getEndepunkter = featureToggles => featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA]
+    ? [tilbakekrevingApi.VEDTAKSBREV, tilbakekrevingApi.DOKUMENTDATA_HENTE]
+    : [tilbakekrevingApi.VEDTAKSBREV];
 
   getData = ({ behandling, beregningsresultat, fetchPreviewVedtaksbrev, featureToggles }) => ({
     beregningsresultat,

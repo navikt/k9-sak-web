@@ -6,8 +6,13 @@ import styles from './vedtakRedusertUtbetalingArsaker.less';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
-const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, vedtakVarsel, erSendtInnUtenArsaker }) => {
+const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, vedtakVarsel, erSendtInnUtenArsaker, merkedeArsaker }) => {
+
   const ingenArsakErValgt = !Array.from(values.values()).includes(true);
+
+  // Hvis merkedeArsaker ikke er satt, betyr det at dokumentdata ikke har blitt hentet => feature-toggle er deaktivert
+  const arsaker = merkedeArsaker || vedtakVarsel.redusertUtbetalingÅrsaker;
+
   return (
     <CheckboxGruppe
       className={styles.wrapper}
@@ -19,7 +24,7 @@ const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, vedtakVarsel,
           key={name}
           label={{ id: `VedtakForm.RedusertUtbetalingArsak.${name}` }}
           disabled={readOnly}
-          checked={readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker?.some(key => key === name) : values.get(name)}
+          checked={readOnly ? arsaker?.some(key => key === name) : values.get(name)}
         />
       ))}
     </CheckboxGruppe>
@@ -32,6 +37,7 @@ VedtakRedusertUtbetalingArsaker.propTypes = {
   values: PropTypes.instanceOf(Map),
   vedtakVarsel: vedtakVarselPropType,
   erSendtInnUtenArsaker: PropTypes.bool.isRequired,
+  merkedeArsaker: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default VedtakRedusertUtbetalingArsaker;
