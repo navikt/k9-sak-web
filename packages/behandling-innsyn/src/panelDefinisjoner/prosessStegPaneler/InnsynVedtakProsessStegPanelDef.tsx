@@ -10,8 +10,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import innsynBehandlingApi from "../../data/innsynBehandlingApi";
 
-import innsynBehandlingApi from "../../data/innsynBehandlingApi";
-
 const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
   const harApentAksjonpunkt = aksjonspunkter.some(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET);
   if (aksjonspunkter.length === 0 || harApentAksjonpunkt) {
