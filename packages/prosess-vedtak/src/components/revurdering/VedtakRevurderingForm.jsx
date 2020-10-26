@@ -440,7 +440,9 @@ const VedtakRevurderingForm = connect(
     behandlingForm({
       form: VEDTAK_REVURDERING_FORM_NAME,
       onChange: (values, dispatch, props) =>
-        props.lagreArsakerTilRedusertUtbetaling ? props.lagreArsakerTilRedusertUtbetaling(values, dispatch) : null,
+        props.lagreArsakerTilRedusertUtbetaling && props.behandlingStatusKode !== behandlingStatusCode.AVSLUTTET
+          ? props.lagreArsakerTilRedusertUtbetaling(values, dispatch)
+          : null,
     })(VedtakRevurderingFormImpl),
   ),
 );
