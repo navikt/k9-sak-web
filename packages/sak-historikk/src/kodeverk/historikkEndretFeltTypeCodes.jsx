@@ -1,6 +1,5 @@
 // @TODO kodeverk_i_frontend
 const historikkEndretFeltTypeCodes = {
-
   ADOPSJONSVILKARET: {
     kode: 'ADOPSJONSVILKARET',
     feltId: 'HistorikkEndretFelt.Adopsjonsvilkaret',
@@ -460,6 +459,10 @@ const historikkEndretFeltTypeCodes = {
   NY_REFUSJONSFRIST: {
     kode: 'NY_REFUSJONSFRIST',
     feltId: 'HistorikkEndretFelt.NyRefusjonsfrist',
+  },
+  VALG: {
+    kode: 'VALG',
+    feltId: 'HistorikkEndretFelt.Valg',
   },
 };
 

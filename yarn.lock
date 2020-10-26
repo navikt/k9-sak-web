@@ -3077,9 +3077,9 @@
     regenerator-runtime "^0.13.3"
 
 "@storybook/storybook-deployer@^2.8.6":
-  version "2.8.6"
-  resolved "https://registry.yarnpkg.com/@storybook/storybook-deployer/-/storybook-deployer-2.8.6.tgz#00c2e84f27dfaa88cb0785361453f23b1ebb4ea3"
-  integrity sha512-Bpe7ZtsR5NUuohK3VsQa+nxEHtVxMZZo3DRlRUZW5IZOmzmvSID3i+jkizloG9xO7sw5zUvlD31YMHm7OtdrMA==
+  version "2.8.7"
+  resolved "https://registry.yarnpkg.com/@storybook/storybook-deployer/-/storybook-deployer-2.8.7.tgz#c1eed33d03bd9267f884c60eea8e03dc3261ec11"
+  integrity sha512-O0hKHV6hg93fPMvKGC5M/sd7KTL473+SzMKm+WZNVEyLEfXXcVU+Ts9/VL1IhmC1P2A8Bg9oBnkcPqAqjAN46w==
   dependencies:
     git-url-parse "^11.1.2"
     glob "^7.1.3"
@@ -7175,9 +7175,9 @@ eslint-config-airbnb@^18.1.0:
     object.entries "^1.1.1"
 
 eslint-config-prettier@^6.11.0:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.11.0.tgz#f6d2238c1290d01c859a8b5c1f7d352a0b0da8b1"
-  integrity sha512-oB8cpLWSAjOVFEJhhyMZh6NOEOtBVziaqdDQ86+qhDHFbZXoRTM7pNSvFRfW/W/L/LrQ38C99J5CGuRBBzBsdA==
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.13.0.tgz#207d88796b5624e5bb815bbbdfc5891ceb9ebffa"
+  integrity sha512-LcT0i0LSmnzqK2t764pyIt7kKH2AuuqKRTtJTdddWxOiUja9HdG5GXBVF2gmCTvVYWVsTu8J2MhJLVGRh+pj8w==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -8859,14 +8859,14 @@ humanize-ms@^1.2.1:
     ms "^2.0.0"
 
 husky@^4.2.5:
-  version "4.2.5"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-4.2.5.tgz#2b4f7622673a71579f901d9885ed448394b5fa36"
-  integrity sha512-SYZ95AjKcX7goYVZtVZF2i6XiZcHknw50iXvY7b0MiGoj5RwdgRQNEHdb+gPDPCXKlzwrybjFjkL6FOj8uRhZQ==
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-4.3.0.tgz#0b2ec1d66424e9219d359e26a51c58ec5278f0de"
+  integrity sha512-tTMeLCLqSBqnflBZnlVDhpaIMucSGaYyX6855jM4AguGeWCeSzNdb1mfyWduTZ3pe3SJVvVWGL0jO1iKZVPfTA==
   dependencies:
     chalk "^4.0.0"
     ci-info "^2.0.0"
     compare-versions "^3.6.0"
-    cosmiconfig "^6.0.0"
+    cosmiconfig "^7.0.0"
     find-versions "^3.2.0"
     opencollective-postinstall "^2.0.2"
     pkg-dir "^4.2.0"
@@ -11191,9 +11191,9 @@ nav-frontend-hjelpetekst-style@^2.0.25:
   integrity sha512-V2XQCFkwoXzjGz+KF0AxxCMzD8fbVPePg0/Fm5ivcJsG6E+Ls0QecXltP8DPL1zleuAX/6TX/kv3PLHMTO8yqw==
 
 nav-frontend-hjelpetekst@^2.0.32:
-  version "2.0.32"
-  resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-2.0.32.tgz#1c457a381d7d5c8872a54f90cb760019214f0890"
-  integrity sha512-S4iZyxBEsZD2Y0QLZfjd560rFgFyimebV1mnRtX0sc6XAf09VznxYB9ExBYc2i/0QKcHAOu2Hr4IY53ZcrCwcw==
+  version "2.0.38"
+  resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-2.0.38.tgz#a808fcf9a867bb345668407350a12ee50dc4b864"
+  integrity sha512-VoS1L7ExSlamKh+ChMgKUikn/0xKlHTZT+9TXR4CsG25k3CG4lnR33OSiPsK8N0nHPJgmtS+LcdUxGnAFpwDsQ==
 
 nav-frontend-ikoner-assets@^1.0.3:
   version "1.0.5"
@@ -11250,9 +11250,10 @@ nav-frontend-lenker@1.0.44:
   resolved "https://registry.yarnpkg.com/nav-frontend-lenker/-/nav-frontend-lenker-1.0.44.tgz#a0ba74340862813f46e0c87af35e1aa655d73974"
   integrity sha512-o8RjOFCIO+SvQvyrtQDYNPNGcs5IbPoMfHPEPZne13cyohtH6EcTP3vn5cxCNcSIdslA5uhsGEyc1z+gSvRfIg==
 
-nav-frontend-lesmerpanel-style@0.0.28:
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel-style/-/nav-frontend-lesmerpanel-style-0.0.28.tgz#d637d34d6bcf096cf5d6a649f3414839c6d9631a"
+nav-frontend-lesmerpanel-style@0.0.34:
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel-style/-/nav-frontend-lesmerpanel-style-0.0.34.tgz#401a97748288293bea7b495298e06ece4bca3139"
+  integrity sha512-o+tM9L7B0kmqvWfkpifV/zItr58gXSD2OHhulPRTMFKG5/bf8A1cU1ZL5juWjRPcmzib3SyY/mB8zq+pncDiGg==
 
 nav-frontend-lesmerpanel@0.0.35:
   version "0.0.35"
@@ -11288,10 +11289,10 @@ nav-frontend-paneler@2.0.10, nav-frontend-paneler@^2.0.10:
   resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-2.0.10.tgz#5b87b19a24fa45cf192bc0cb3d11ff140d736a9e"
   integrity sha512-HTQi6UgpZDN3ARD98uZJGwp0Jf1ypQw/v2lpvMGsXBqOuGoiUaSIUCrhwlaYzw6dDIfGAK5POPmuaDitdEuX+A==
 
-nav-frontend-popover-style@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/nav-frontend-popover-style/-/nav-frontend-popover-style-0.0.5.tgz#707dcf5a4e7e6ec237b72e00c2cfdf83903b01b8"
-  integrity sha512-5Sn/g0fS2S4sXbgWHqen9ODLGqj/bEPJgnkK2UX2v5gCszXCnLH+XL4qbBdYk7UeoAQTfksUYXjqqa4HI8SKnA==
+nav-frontend-popover-style@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/nav-frontend-popover-style/-/nav-frontend-popover-style-0.0.8.tgz#f9f25207c05c490fd29288dcf8cfa8ca40695e1a"
+  integrity sha512-p6SemqUJsjGlUNfCMp2zD1e5fccBfrcofI4A6WrD4zJCsyWpaY18XcO8MrMsmWudOQpoMJo0kUE7+12YZq4ydg==
 
 nav-frontend-popover@^0.0.29:
   version "0.0.29"
@@ -11327,10 +11328,10 @@ nav-frontend-spinner@2.0.5:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.5.tgz#39568893f8843e4d2012c26207dbbd079c0f964e"
   integrity sha512-sIIZ1UapN78egxio1JIFboxWq9Cv2mJl9VP6MIPEIVsEn8buANNhm2l2rCwYPwNK6/Pl0+vEq73SmDTLoO3R9g==
 
-nav-frontend-tabs-style@^0.0.30:
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.30.tgz#1a4da45a055240c5c12e2086d7e7105ca65d76d5"
-  integrity sha512-ygeLFl9eslTolGbqgxjC+X62T77MrTfu79jUKhW8HNujFwSjzm9MT3TTMaZuxyJufDFHPKxD69v8W49Pa8OsHQ==
+nav-frontend-tabs-style@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs-style/-/nav-frontend-tabs-style-0.0.31.tgz#53121523172131bb9b59826f9a754a3d55b0cfae"
+  integrity sha512-p5cwf+MrmN0sCdmcKJT6rp3kAVRUwUFcfhw39ACSm57o9l2cXl7ocM7l2vyK3AB4LSXdZduK500Y+11jjh3JUQ==
 
 nav-frontend-tabs@^0.0.38:
   version "0.0.38"
@@ -16677,13 +16678,6 @@ yargs-parser@^15.0.0:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs-parser@^16.1.0:
-  version "16.1.0"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-16.1.0.tgz#73747d53ae187e7b8dbe333f95714c76ea00ecf1"
-  dependencies:
-    camelcase "^5.0.0"
-    decamelize "^1.2.0"
-
 yargs-parser@^18.1.2, yargs-parser@^18.1.3:
   version "18.1.3"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-18.1.3.tgz#be68c4975c6b2abf469236b0c870362fab09a7b0"
@@ -16765,7 +16759,7 @@ yargs@^14.2.2:
     y18n "^4.0.0"
     yargs-parser "^15.0.0"
 
-yargs@^15.0.0:
+yargs@^15.0.0, yargs@^15.0.2:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.4.1.tgz#0d87a16de01aee9d8bec2bfbf74f67851730f4f8"
   integrity sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==
@@ -16781,22 +16775,6 @@ yargs@^15.0.0:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
-
-yargs@^15.0.2:
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.1.0.tgz#e111381f5830e863a89550bd4b136bb6a5f37219"
-  dependencies:
-    cliui "^6.0.0"
-    decamelize "^1.2.0"
-    find-up "^4.1.0"
-    get-caller-file "^2.0.1"
-    require-directory "^2.1.1"
-    require-main-filename "^2.0.0"
-    set-blocking "^2.0.0"
-    string-width "^4.2.0"
-    which-module "^2.0.0"
-    y18n "^4.0.0"
-    yargs-parser "^16.1.0"
 
 yauzl@^2.10.0:
   version "2.10.0"
