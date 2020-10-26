@@ -3,6 +3,7 @@ import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   FagsakInfo,
@@ -13,6 +14,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
+import { dokumentdatatype, featureToggle } from "@k9-sak-web/konstanter";
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
@@ -70,7 +72,9 @@ const getLagringSideeffekter = (
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
-) => aksjonspunktModels => {
+  dispatch,
+  featureToggles,
+) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
     apModel =>
       (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
@@ -88,6 +92,21 @@ const getLagringSideeffekter = (
 
   if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
     toggleOppdatereFagsakContext(false);
+  }
+
+  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
+    let dokumentdata;
+    if (aksjonspunktModels[0].skalUndertrykkeBrev) {
+      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.INGEN}
+    } else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) {
+      dokumentdata = {
+        [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.FRITEKST,
+        [dokumentdatatype.FRITEKST]: aksjonspunktModels[0].fritekstBrev,
+      };
+    } else {
+      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK};
+    }
+    await dispatch(pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata));
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -160,6 +179,8 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
     toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
+    dispatch,
+    featureToggles,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
