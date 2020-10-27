@@ -139,7 +139,7 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/k9/klage/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_KLAGE)
   .withAsyncPut('/k9/klage/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_KLAGE)
 
-  /* /unnak */
+  /* Unntak */
   .withAsyncPut('/k9/sak/api/behandlinger/unntak', FpsakApiKeys.NEW_BEHANDLING_UNNTAK)
 
   .build();

@@ -5,50 +5,46 @@ import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import FetchedData from './types/fetchedDataTsType';
-import unntakApi, { reduxRestApi, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
+import unntakBehandlingApi, { reduxRestApi, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import UnntakPaneler from './components/UnntakPaneler';
 
-const unntakData = [
-  unntakApi.AKSJONSPUNKTER,
-  unntakApi.VILKAR,
-  unntakApi.PERSONOPPLYSNINGER,
-  unntakApi.BEREGNINGSRESULTAT_UTBETALT,
-  unntakApi.BEREGNINGSGRUNNLAG,
-  unntakApi.SIMULERING_RESULTAT,
+const omsorgspengerData = [
+  unntakBehandlingApi.AKSJONSPUNKTER,
+  unntakBehandlingApi.VILKAR,
+  unntakBehandlingApi.PERSONOPPLYSNINGER,
+  unntakBehandlingApi.SOKNAD,
+  unntakBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
+  unntakBehandlingApi.BEREGNINGSGRUNNLAG,
+  unntakBehandlingApi.SIMULERING_RESULTAT,
+  unntakBehandlingApi.FORBRUKTE_DAGER,
 ];
 
 interface OwnProps {
   behandlingId: number;
   fagsak: FagsakInfo;
-  kodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
+  valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: { [key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
   };
   opneSokeside: () => void;
-  alleBehandlinger: {
-    id: number;
-    uuid: string;
-    type: Kodeverk;
-    status: Kodeverk;
-    opprettet: string;
-    avsluttet?: string;
-  }[];
   featureToggles: {};
 }
 
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
+  kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  hasFetchError: boolean;
 }
 
 interface DispatchProps {
@@ -56,6 +52,10 @@ interface DispatchProps {
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
+  opneBehandlingForEndringer: (params: {}) => Promise<any>;
+  opprettVerge: (params: {}) => Promise<any>;
+  fjernVerge: (params: {}) => Promise<any>;
+  lagreRisikoklassifiseringAksjonspunkt: (params: {}) => Promise<any>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
@@ -64,7 +64,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-const BehandlingUnntakIndex: FunctionComponent<Props> = ({
+const BehandlingOmsorgspengerIndex: FunctionComponent<Props> = ({
   behandlingEventHandler,
   nyBehandlendeEnhet,
   settBehandlingPaVent,
@@ -81,12 +81,14 @@ const BehandlingUnntakIndex: FunctionComponent<Props> = ({
   rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtProsessSteg,
-  valgtFaktaSteg,
   settPaVent,
   opneSokeside,
   forrigeBehandling,
   opneBehandlingForEndringer,
+  opprettVerge,
+  fjernVerge,
   lagreRisikoklassifiseringAksjonspunkt,
+  valgtFaktaSteg,
   hasFetchError,
   featureToggles,
 }) => {
@@ -101,6 +103,8 @@ const BehandlingUnntakIndex: FunctionComponent<Props> = ({
       taBehandlingAvVent: params => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: params => henleggBehandling(params),
       opneBehandlingForEndringer: params => opneBehandlingForEndringer(params),
+      opprettVerge: params => opprettVerge(params),
+      fjernVerge: params => fjernVerge(params),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
@@ -126,7 +130,7 @@ const BehandlingUnntakIndex: FunctionComponent<Props> = ({
   return (
     <DataFetcher
       fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-      endpoints={unntakData}
+      endpoints={omsorgspengerData}
       showOldDataWhenRefetching
       loadingPanel={<LoadingPanel />}
       render={(dataProps: FetchedData, isFinished) => (
@@ -158,28 +162,30 @@ const BehandlingUnntakIndex: FunctionComponent<Props> = ({
 };
 
 const mapStateToProps = state => ({
-  behandling: unntakApi.BEHANDLING_FP.getRestApiData()(state),
-  forrigeBehandling: unntakApi.BEHANDLING_FP.getRestApiPreviousData()(state),
-  hasFetchError: !!unntakApi.BEHANDLING_FP.getRestApiError()(state),
+  behandling: unntakBehandlingApi.BEHANDLING_FP.getRestApiData()(state),
+  forrigeBehandling: unntakBehandlingApi.BEHANDLING_FP.getRestApiPreviousData()(state),
+  hasFetchError: !!unntakBehandlingApi.BEHANDLING_FP.getRestApiError()(state),
 });
 
 const getResetRestApiContext = () => dispatch => {
   Object.values(UnntakBehandlingApiKeys).forEach(value => {
-    dispatch(unntakApi[value].resetRestApi()());
+    dispatch(unntakBehandlingApi[value].resetRestApi()());
   });
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators(
     {
-      nyBehandlendeEnhet: unntakApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest(),
-      settBehandlingPaVent: unntakApi.BEHANDLING_ON_HOLD.makeRestApiRequest(),
-      taBehandlingAvVent: unntakApi.RESUME_BEHANDLING.makeRestApiRequest(),
-      henleggBehandling: unntakApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
-      settPaVent: unntakApi.UPDATE_ON_HOLD.makeRestApiRequest(),
-      opneBehandlingForEndringer: unntakApi.OPEN_BEHANDLING_FOR_CHANGES.makeRestApiRequest(),
-      hentBehandling: unntakApi.BEHANDLING_FP.makeRestApiRequest(),
-      lagreRisikoklassifiseringAksjonspunkt: unntakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
+      nyBehandlendeEnhet: unntakBehandlingApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest(),
+      settBehandlingPaVent: unntakBehandlingApi.BEHANDLING_ON_HOLD.makeRestApiRequest(),
+      taBehandlingAvVent: unntakBehandlingApi.RESUME_BEHANDLING.makeRestApiRequest(),
+      henleggBehandling: unntakBehandlingApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
+      settPaVent: unntakBehandlingApi.UPDATE_ON_HOLD.makeRestApiRequest(),
+      opneBehandlingForEndringer: unntakBehandlingApi.OPEN_BEHANDLING_FOR_CHANGES.makeRestApiRequest(),
+      opprettVerge: unntakBehandlingApi.VERGE_OPPRETT.makeRestApiRequest(),
+      fjernVerge: unntakBehandlingApi.VERGE_FJERN.makeRestApiRequest(),
+      hentBehandling: unntakBehandlingApi.BEHANDLING_FP.makeRestApiRequest(),
+      lagreRisikoklassifiseringAksjonspunkt: unntakBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
       resetRestApiContext: getResetRestApiContext,
       destroyReduxForm: destroy,
     },
@@ -187,4 +193,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingUnntakIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BehandlingOmsorgspengerIndex);

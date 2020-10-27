@@ -7,6 +7,7 @@ import tilkjentYtelseFagsakPropType from './propTypes/tilkjentYtelseFagsakPropTy
 import tilkjentYtelseBeregningresultatPropType from './propTypes/tilkjentYtelseBeregningresultatPropType';
 import tilkjentYtelseAksjonspunkterPropType from './propTypes/tilkjentYtelseAksjonspunkterPropType';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
+import TilkjentYtelseForm from './components/TilkjentYtelseForm';
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
@@ -31,6 +32,17 @@ const TilkjentYtelseProsessIndex = ({
 }) => (
   <RawIntlProvider value={intl}>
     <TilkjentYtelsePanel
+      behandlingId={behandling.id}
+      behandlingVersjon={behandling.versjon}
+      beregningsresultat={beregningsresultat}
+      fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
+      aksjonspunkter={aksjonspunkter}
+      alleKodeverk={alleKodeverk}
+      readOnly={isReadOnly}
+      submitCallback={submitCallback}
+      readOnlySubmitButton={readOnlySubmitButton}
+    />
+    <TilkjentYtelseForm
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       beregningsresultat={beregningsresultat}
