@@ -95,11 +95,10 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
 const transformValues = (values: any) => {
   return {
     id: guid(),
-    updated: false,
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
-    begrunnelse: '',
+    andeler: [],
   };
 };
 

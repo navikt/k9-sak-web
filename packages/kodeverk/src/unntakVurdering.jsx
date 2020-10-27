@@ -1,6 +1,6 @@
 const unntakVurdering = {
-  INNVILG: 'INNVILG',
-  AVSLÅ: 'AVSLÅ',
+  INNVILGET: 'INNVILGET',
+  AVSLÅTT: 'AVSLÅTT',
 };
 
 export default unntakVurdering;

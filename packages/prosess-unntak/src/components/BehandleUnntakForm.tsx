@@ -54,9 +54,9 @@ export const BehandleUnntakFormImpl = ({
 
       <VerticalSpacer twentyPx />
 
-      <RadioGroupField name="unntakVurdering" validate={[required]} direction="horizontal" readOnly={readOnly}>
-        <RadioOption value={unntakVurdering.INNVILG} label={{ id: 'Unntak.Innvilg' }} />
-        <RadioOption value={unntakVurdering.AVSLÅ} label={{ id: 'Unntak.Avslå' }} />
+      <RadioGroupField name="behandlingResultatType" validate={[required]} direction="horizontal" readOnly={readOnly}>
+        <RadioOption value={unntakVurdering.INNVILGET} label={{ id: 'Unntak.Innvilg' }} />
+        <RadioOption value={unntakVurdering.AVSLÅTT} label={{ id: 'Unntak.Avslå' }} />
       </RadioGroupField>
 
       <BehandlingspunktSubmitButton
@@ -87,11 +87,11 @@ BehandleUnntakFormImpl.defaultProps = {
 
 export const buildInitialValues = createSelector([ownProps => ownProps.unntakVurdering], unntakResultat => ({
   fritekst: unntakResultat ? unntakResultat.fritekst : null,
-  unntakVurdering: unntakResultat ? unntakResultat.unntakVurdering : null,
+  behandlingResultatType: unntakResultat ? unntakResultat.behandlingResultatType : null,
 }));
 
 export const transformValues = values => ({
-  unntakVurdering: values.unntakVurdering,
+  behandlingResultatType: values.behandlingResultatType,
   fritekst: values.fritekst,
   begrunnelse: '',
   kode: aksjonspunktCodes.MANUELL_VURDERING_VILKÅR,
@@ -103,7 +103,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     initialValues: buildInitialValues(ownProps),
     formValues: behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
-      'unntakVurdering',
+      'behandlingResultatType',
       'begrunnelse',
       'fritekst',
     ),

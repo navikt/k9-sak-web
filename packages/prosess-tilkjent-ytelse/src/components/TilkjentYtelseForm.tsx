@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import { InjectedFormProps } from 'redux-form';
 import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -24,7 +25,7 @@ interface OwnProps {
 
 const FORM_NAME = 'TilkjentYtelseForm';
 
-export const TilkjentYtelseForm = ({
+export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   readOnly,
   hasOpenAksjonspunkter,
   aksjonspunkter,
@@ -76,7 +77,7 @@ export const transformValues = (values: any) => {
   // const origPeriode = initialValues.perioder.filter((p: CustomUttakKontrollerFaktaPerioder) => !p.isFromSoknad);
   return {
     perioder: values.perioder,
-    nyePerider: [],
+    nyePerioder: [],
     begrunnelse: '',
     kode: aksjonspunktCodes.MANUELL_VURDERING_VILKÅR,
   };
@@ -109,6 +110,6 @@ const mapStateToPropsFactory = (_initialState: any, props: PureOwnProps) => {
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: FORM_NAME,
-    // enableReinitialize: true,
+    enableReinitialize: true,
   })(TilkjentYtelseForm),
 );

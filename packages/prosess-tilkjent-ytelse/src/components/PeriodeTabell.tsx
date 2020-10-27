@@ -19,20 +19,23 @@ import NyPeriode from './NyPeriode';
 
 const FORM_NAME = 'TilkjentYtelseForm';
 
-const Periode = ({ fields }) => (
-  <div>
-    {fields.map((fieldId: string, index: number, field: any[]) => {
-      const periode = field.get(index);
-      // console.info(periode);
-      return (
-        <div>
-          {JSON.stringify(periode.fom)}
-          <hr />
-        </div>
-      );
-    })}
-  </div>
-);
+const Periode = ({ fields }) => {
+  return (
+    <div>
+      {fields.map((fieldId: string, index: number, field: any[]) => {
+        const periode = field.get(index);
+        // console.info(periode);
+        return (
+          <div>
+            {index}
+            {JSON.stringify(periode.fom)}
+            <hr />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 export const PerioideTabell = ({
   readOnly,
@@ -52,6 +55,8 @@ export const PerioideTabell = ({
     const newPerioder = perioder.concat(nyPeriode).sort((a: any, b: any) => a.fom.localeCompare(b.fom));
 
     reduxFormChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'perioder', newPerioder);
+
+    console.info(newPerioder);
 
     setNyPeriodeFormOpen(!isNyPeriodeFormOpen);
   };
