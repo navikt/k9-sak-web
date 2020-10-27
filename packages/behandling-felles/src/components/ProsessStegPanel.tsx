@@ -40,6 +40,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   lagringSideeffekterCallback,
   behandlingApi,
   dispatch,
+  featureToggles,
 }) => {
   const erHenlagtOgVedtakStegValgt =
     behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.getUrlKode() === prosessStegCodes.VEDTAK;
@@ -78,7 +79,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
               <DataFetcher
                 key={valgtProsessSteg.getUrlKode()}
                 fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-                endpoints={delPaneler[0].getProsessStegDelPanelDef().getEndepunkter()}
+                endpoints={delPaneler[0].getProsessStegDelPanelDef().getEndepunkter(featureToggles)}
                 loadingPanel={<LoadingPanel />}
                 render={dataProps =>
                   delPaneler[0].getProsessStegDelPanelDef().getKomponent({

@@ -19,6 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Column, Row } from 'nav-frontend-grid';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import {AlertStripeInfo} from "nav-frontend-alertstriper";
+import {dokumentdatatype} from "@k9-sak-web/konstanter";
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -119,6 +120,7 @@ export class VedtakRevurderingFormImpl extends Component {
       vedtakVarsel,
       bgPeriodeMedAvslagsårsak,
       tilgjengeligeVedtaksbrev,
+      dokumentdata,
       ...formProps
     } = this.props;
     const {erSendtInnUtenArsaker} = this.state;
@@ -217,6 +219,7 @@ export class VedtakRevurderingFormImpl extends Component {
                     values={new Map(Object.values(redusertUtbetalingArsak).map(a => [a, !!formProps[a]]))}
                     vedtakVarsel={vedtakVarsel}
                     erSendtInnUtenArsaker={erSendtInnUtenArsaker}
+                    merkedeArsaker={dokumentdata?.[dokumentdatatype.REDUSERT_UTBETALING_AARSAK]}
                   />
                 </Column>
               )}
@@ -288,6 +291,7 @@ VedtakRevurderingFormImpl.propTypes = {
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   lagreArsakerTilRedusertUtbetaling: PropTypes.func,
+  dokumentdata: PropTypes.shape(),
   ...formPropTypes,
 };
 

@@ -24,12 +24,16 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => [
-    frisinnBehandlingApi.TILBAKEKREVINGVALG,
-    frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-    frisinnBehandlingApi.VEDTAK_VARSEL,
-    frisinnBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
-  ];
+  getEndepunkter = featureToggles => {
+    const endepunkterUtenDd = [
+      frisinnBehandlingApi.TILBAKEKREVINGVALG,
+      frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
+      frisinnBehandlingApi.VEDTAK_VARSEL,
+      frisinnBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
+    ];
+    const endepunkterMedDd = endepunkterUtenDd.concat([frisinnBehandlingApi.DOKUMENTDATA_HENTE]);
+    return featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] ? endepunkterMedDd : endepunkterUtenDd;
+  };
 
   getOverstyrVisningAvKomponent = () => true;
 
