@@ -2,7 +2,8 @@ import React from 'react';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import redusertUtbetalingArsak from "@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak";
+import { dokumentdatatype, featureToggle, prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
@@ -23,19 +24,31 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => [
-    pleiepengerBehandlingApi.TILBAKEKREVINGVALG,
-    pleiepengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-    pleiepengerBehandlingApi.MEDLEMSKAP,
-    pleiepengerBehandlingApi.VEDTAK_VARSEL,
-  ];
+  getEndepunkter = featureToggles => {
+    const endepunkterUtenDd = [
+      pleiepengerBehandlingApi.TILBAKEKREVINGVALG,
+      pleiepengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
+      pleiepengerBehandlingApi.MEDLEMSKAP,
+      pleiepengerBehandlingApi.VEDTAK_VARSEL,
+    ];
+    const endepunkterMedDd = endepunkterUtenDd.concat([pleiepengerBehandlingApi.DOKUMENTDATA_HENTE]);
+    return featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] ? endepunkterMedDd : endepunkterUtenDd;
+  };
 
   getOverstyrVisningAvKomponent = () => true;
 
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
-  getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, beregningsgrunnlag }) => ({
+  getData = ({
+    previewCallback,
+    rettigheter,
+    aksjonspunkter,
+    vilkar,
+    simuleringResultat,
+    beregningsgrunnlag,
+    featureToggles,
+  }) => ({
     previewCallback,
     aksjonspunkter,
     vilkar,
@@ -43,6 +56,12 @@ class PanelDef extends ProsessStegPanelDef {
     beregningsgrunnlag,
     ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+    lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
+      if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE) {
+        const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
+        dispatch(pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker}));
+      }
+    }
   });
 }
 
