@@ -13,7 +13,7 @@ import FetchedData from './types/fetchedDataTsType';
 import unntakBehandlingApi, { reduxRestApi, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import UnntakPaneler from './components/UnntakPaneler';
 
-const omsorgspengerData = [
+const unntakData = [
   unntakBehandlingApi.AKSJONSPUNKTER,
   unntakBehandlingApi.VILKAR,
   unntakBehandlingApi.PERSONOPPLYSNINGER,
@@ -64,7 +64,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-const BehandlingOmsorgspengerIndex: FunctionComponent<Props> = ({
+const BehandlingUnntakIndex: FunctionComponent<Props> = ({
   behandlingEventHandler,
   nyBehandlendeEnhet,
   settBehandlingPaVent,
@@ -130,7 +130,7 @@ const BehandlingOmsorgspengerIndex: FunctionComponent<Props> = ({
   return (
     <DataFetcher
       fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-      endpoints={omsorgspengerData}
+      endpoints={unntakData}
       showOldDataWhenRefetching
       loadingPanel={<LoadingPanel />}
       render={(dataProps: FetchedData, isFinished) => (
@@ -193,7 +193,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(BehandlingOmsorgspengerIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingUnntakIndex);

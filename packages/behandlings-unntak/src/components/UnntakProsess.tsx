@@ -133,10 +133,6 @@ const UnntakProsess: FunctionComponent<OwnProps> = ({
       behandling.versjon,
     ]),
     dispatchSubmitFailed: useCallback(formName => dispatch(setSubmitFailed(formName)), []),
-    tempUpdateStonadskontoer: useCallback(
-      params => dispatch(unntakBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params)),
-      [behandling.versjon],
-    ),
     alleKodeverk,
     featureToggles,
     ...data,
