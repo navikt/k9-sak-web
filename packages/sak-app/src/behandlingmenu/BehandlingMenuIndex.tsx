@@ -114,7 +114,7 @@ interface StateProps {
   behandlendeEnhetNavn: string;
   kanHenlegge: boolean;
   rettigheter: Rettigheter;
-  featureToggles: {};
+  featureToggles?: {};
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
 }

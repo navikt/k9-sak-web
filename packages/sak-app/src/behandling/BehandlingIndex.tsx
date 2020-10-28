@@ -224,7 +224,7 @@ export class BehandlingIndex extends Component<OwnProps> {
           <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingUnntakIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
-              alleBehandlinger={fagsakBehandlingerInfo}
+              valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
             />
           </ErrorBoundary>
