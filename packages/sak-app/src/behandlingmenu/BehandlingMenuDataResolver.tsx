@@ -118,7 +118,7 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
           behandlingType={behandlingType}
           ytelseType={ytelseType}
           vergeMenyvalg={vergeMenyvalg}
-          menyhandlingRettigheter={dataProps.menyhandlingRettigheter}
+          // menyhandlingRettigheter={dataProps.menyhandlingRettigheter}
           behandlendeEnheter={dataProps.behandlendeEnheter}
           fjernVerge={fjernVergeFn}
           opprettVerge={opprettVergeFn}
