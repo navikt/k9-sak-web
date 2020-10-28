@@ -181,8 +181,6 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
     (bType.TILBAKEKREVING === behandlingType.kode || bType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
   const erFrisinn = fagsakYtelseType.FRISINN === ytelseType.kode;
 
-  // console.info(rettigheter.settBehandlingPaVentAccess);
-
   return (
     <MenySakIndex
       data={[
@@ -197,6 +195,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
             lukkModal={lukkModal}
           />
         )),
+        // https://github.com/navikt/k9-sak-web/compare/Sett-behandling-på-vent
         new MenyData(
           skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) && !erFrisinn,
           getSettPaVentMenytekst(),

@@ -59,7 +59,7 @@ const henleggBehandlingAccessSelector = behandlingstype => {
 
 export const henleggBehandlingAccess = (navansatt, fagsakstatus, behandlingsstatus, behandlingstype) =>
   henleggBehandlingAccessSelector(behandlingstype)(navansatt, fagsakstatus, behandlingsstatus, behandlingstype);
-
+// https://github.com/navikt/k9-sak-web/compare/Sett-behandling-på-vent
 const settBehandlingPaVentAccessSelector = () => {
   return accessSelector(
     [kanSaksbehandle],
