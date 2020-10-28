@@ -145,7 +145,7 @@ const formName = 'NyBehandlingModal';
 
 // TODO Denne inndelinga burde vel flyttast til DB (KODELISTE.EKSTRA_DATA)?
 
-const manuelleRevurderingsArsakerFP = [
+const manuelleRevurderingsArsaker = [
   behandlingArsakType.BEREEGNINGSGRUNNLAG,
   behandlingArsakType.MEDLEMSKAP,
   behandlingArsakType.OPPTJENING,
@@ -181,7 +181,7 @@ export const getBehandlingAarsaker = createSelector(
 
     if ([bType.REVURDERING, bType.UNNTAK].some(type => type === valgtBehandlingType)) {
       return alleRevurderingArsaker
-        .filter(bat => manuelleRevurderingsArsakerFP.indexOf(bat.kode) > -1)
+        .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
         .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
     }
 
