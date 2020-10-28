@@ -6,7 +6,7 @@ import { InjectedFormProps } from 'redux-form';
 import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { getKodeverknavnFn, guid } from '@fpsak-frontend/utils';
 import { getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
 import PeriodeTabell from './PeriodeTabell';
 
@@ -62,22 +62,34 @@ TilkjentYtelseForm.defaultProps = {
 };
 
 interface PureOwnProps {
-  perioder: any[];
+  beregningsresultat: any[];
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
   behandlingVersjon: number;
   submitCallback: (...args: any[]) => any;
 }
 
-const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregningsresultat], beregningsresultat => {
-  return { perioder: beregningsresultat ? beregningsresultat.perioder : null };
+const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregningsresultat?.perioder], perioder => {
+  if (perioder) {
+    return {
+      perioder: perioder.map((periode: any) => ({
+        ...periode,
+        id: guid(),
+        openForm: false,
+        updated: false,
+        isFromSøknad: true,
+      })),
+    };
+  }
+
+  return undefined;
 });
 
-export const transformValues = (values: any) => {
-  // const origPeriode = initialValues.perioder.filter((p: CustomUttakKontrollerFaktaPerioder) => !p.isFromSoknad);
+export const transformValues = (values: any, initialValues) => {
+  const origPeriode = initialValues.perioder.filter(p => !p.isFromSoknad);
   return {
     perioder: values.perioder,
-    nyePerioder: [],
+    nyePerioder: origPeriode,
     begrunnelse: '',
     kode: aksjonspunktCodes.MANUELL_VURDERING_VILKÅR,
   };

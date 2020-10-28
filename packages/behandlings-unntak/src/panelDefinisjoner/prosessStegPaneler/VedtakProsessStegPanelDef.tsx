@@ -35,6 +35,7 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
+  // TODO fiks dynamisk fagsakytelse
   getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, beregningsgrunnlag }) => ({
     previewCallback,
     aksjonspunkter,

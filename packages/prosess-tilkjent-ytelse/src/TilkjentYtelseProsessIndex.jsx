@@ -7,7 +7,7 @@ import tilkjentYtelseFagsakPropType from './propTypes/tilkjentYtelseFagsakPropTy
 import tilkjentYtelseBeregningresultatPropType from './propTypes/tilkjentYtelseBeregningresultatPropType';
 import tilkjentYtelseAksjonspunkterPropType from './propTypes/tilkjentYtelseAksjonspunkterPropType';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
-import TilkjentYtelseForm from './components/TilkjentYtelseForm';
+import TilkjentYtelseForm from './components/manuellePerioder/TilkjentYtelseForm';
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();

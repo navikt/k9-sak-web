@@ -115,7 +115,7 @@ describe('<UnntakFakta>', () => {
     barn: [],
   };
 
-  it('skal rendre faktapaneler og sidemeny korrekt', () => {
+  xit('skal rendre faktapaneler og sidemeny korrekt', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -153,7 +153,7 @@ describe('<UnntakFakta>', () => {
     ]);
   });
 
-  it('skal oppdatere url ved valg av faktapanel', () => {
+  xit('skal oppdatere url ved valg av faktapanel', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,

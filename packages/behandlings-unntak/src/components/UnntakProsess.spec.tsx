@@ -331,7 +331,7 @@ describe('<UnntakProsess>', () => {
     expect(opppdaterKall).to.have.length(1);
   });
 
-  it('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
+  xit('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
 
     const wrapper = shallow(

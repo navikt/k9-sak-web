@@ -10,7 +10,7 @@ import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-fronten
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import styles from './nyPeriode.less';
+import styles from './periode.less';
 
 type NyPeriodeType = {
   fom: string;
@@ -75,6 +75,7 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
           </FlexRow>
         </FlexContainer>
         <VerticalSpacer twentyPx />
+
         <Hovedknapp
           className={styles.oppdaterMargin}
           htmlType="button"
