@@ -373,7 +373,7 @@ const mapStateToProps = (state, ownProps): StateProps => ({
   behandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
   behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
   kanHenlegge: getKanHenleggeBehandling(state),
-  rettigheter: getMenyRettigheter(state, ownProps),
+  rettigheter: getMenyRettigheter(state),
   aktorId: getAktorid(state),
   gjeldendeVedtakBehandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(state),
 });
