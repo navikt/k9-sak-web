@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import tilkjentYtelseBehandlingPropType from './propTypes/tilkjentYtelseBehandlingPropType';
 import tilkjentYtelseFagsakPropType from './propTypes/tilkjentYtelseFagsakPropType';
 import tilkjentYtelseBeregningresultatPropType from './propTypes/tilkjentYtelseBeregningresultatPropType';
@@ -19,6 +20,8 @@ const intl = createIntl(
   },
   cache,
 );
+
+const { MANUELL_TILKJENT_YTELSE } = aksjonspunktCodes;
 
 const TilkjentYtelseProsessIndex = ({
   behandling,
@@ -42,17 +45,19 @@ const TilkjentYtelseProsessIndex = ({
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
     />
-    <TilkjentYtelseForm
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      beregningsresultat={beregningsresultat}
-      fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
-      aksjonspunkter={aksjonspunkter}
-      alleKodeverk={alleKodeverk}
-      readOnly={isReadOnly}
-      submitCallback={submitCallback}
-      readOnlySubmitButton={readOnlySubmitButton}
-    />
+    {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (
+      <TilkjentYtelseForm
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        beregningsresultat={beregningsresultat}
+        fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
+        aksjonspunkter={aksjonspunkter}
+        alleKodeverk={alleKodeverk}
+        readOnly={isReadOnly}
+        submitCallback={submitCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
+    )}
   </RawIntlProvider>
 );
 
