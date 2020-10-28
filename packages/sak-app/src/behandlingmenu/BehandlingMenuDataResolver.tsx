@@ -106,7 +106,6 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
       showOldDataWhenRefetching
       loadingPanel={<LoadingPanel />}
       render={(dataProps: {
-        menyhandlingRettigheter?: { harSoknad: boolean };
         behandlendeEnheter: {
           enhetId: string;
           enhetNavn: string;

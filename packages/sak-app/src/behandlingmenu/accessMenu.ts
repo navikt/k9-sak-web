@@ -60,38 +60,16 @@ const henleggBehandlingAccessSelector = behandlingstype => {
 export const henleggBehandlingAccess = (navansatt, fagsakstatus, behandlingsstatus, behandlingstype) =>
   henleggBehandlingAccessSelector(behandlingstype)(navansatt, fagsakstatus, behandlingsstatus, behandlingstype);
 
-const settBehandlingPaVentAccessSelector = (navAnsatt, harSoknad, erIInnhentSoknadopplysningerSteg, type) => {
-  const isBehandlingAvKlageEllerInnsynEllerTilbakekreving = type
-    ? type.kode === BehandlingType.KLAGE ||
-      type.kode === BehandlingType.DOKUMENTINNSYN ||
-      type.kode === BehandlingType.TILBAKEKREVING ||
-      type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
-    : false;
-
-  if (harSoknad || erIInnhentSoknadopplysningerSteg || isBehandlingAvKlageEllerInnsynEllerTilbakekreving) {
-    return accessSelector(
-      [kanSaksbehandle],
-      [fagsakStatusCode.UNDER_BEHANDLING],
-      [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES, behandlingStatusCode.FORESLA_VEDTAK],
-    );
-  }
-  return accessSelector([kanSaksbehandle, kanVeilede], [], []);
+const settBehandlingPaVentAccessSelector = () => {
+  return accessSelector(
+    [kanSaksbehandle],
+    [fagsakStatusCode.UNDER_BEHANDLING],
+    [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES, behandlingStatusCode.FORESLA_VEDTAK],
+  );
 };
 
-export const settBehandlingPaVentAccess = (
-  navAnsatt,
-  fagsakStatus,
-  behandlingStatus,
-  harSoknad,
-  erIInnhentSoknadopplysningerSteg,
-  type,
-) =>
-  settBehandlingPaVentAccessSelector(navAnsatt, harSoknad, erIInnhentSoknadopplysningerSteg, type)(
-    navAnsatt,
-    fagsakStatus,
-    behandlingStatus,
-    type,
-  );
+export const settBehandlingPaVentAccess = (navAnsatt, fagsakStatus, behandlingStatus, type) =>
+  settBehandlingPaVentAccessSelector()(navAnsatt, fagsakStatus, behandlingStatus, type);
 
 export const byttBehandlendeEnhetAccess = accessSelector(
   [kanSaksbehandle],
@@ -186,19 +164,10 @@ export const allMenuAccessRights = (
   skalBehandlesAvInfotrygd: boolean,
   sakstype: Kodeverk,
   behandlingStatus: Kodeverk,
-  harSoknad: boolean,
-  erIInnhentSoknadopplysningerSteg: boolean,
   behandlingType: Kodeverk,
 ) => ({
   henleggBehandlingAccess: henleggBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
-  settBehandlingPaVentAccess: settBehandlingPaVentAccess(
-    navAnsatt,
-    fagsakStatus,
-    behandlingStatus,
-    harSoknad,
-    erIInnhentSoknadopplysningerSteg,
-    behandlingType,
-  ),
+  settBehandlingPaVentAccess: settBehandlingPaVentAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   byttBehandlendeEnhetAccess: byttBehandlendeEnhetAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   opprettRevurderingAccess: opprettRevurderingAccess(
     navAnsatt,

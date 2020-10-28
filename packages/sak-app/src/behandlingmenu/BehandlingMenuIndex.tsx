@@ -181,12 +181,13 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
     (bType.TILBAKEKREVING === behandlingType.kode || bType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
   const erFrisinn = fagsakYtelseType.FRISINN === ytelseType.kode;
 
+  // console.info(rettigheter.settBehandlingPaVentAccess);
+
   return (
     <MenySakIndex
       data={[
         new MenyData(
-          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) &&
-            (!erFrisinn || erTilbakekreving),
+          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) && !erFrisinn,
           getTaAvVentMenytekst(),
         ).medModal(lukkModal => (
           <MenyTaAvVentIndex
@@ -197,8 +198,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
           />
         )),
         new MenyData(
-          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) &&
-            (!erFrisinn || erTilbakekreving),
+          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) && !erFrisinn,
           getSettPaVentMenytekst(),
         ).medModal(lukkModal => (
           <MenySettPaVentIndex
@@ -341,7 +341,6 @@ const getMenyRettigheter = createSelector(
     getFagsakYtelseType,
     getBehandlingStatus,
     getBehandlingType,
-    (_state, ownProps) => ownProps.menyhandlingRettigheter,
   ],
   (
     navAnsatt: NavAnsatt,
@@ -351,7 +350,6 @@ const getMenyRettigheter = createSelector(
     sakstype,
     behandlingStatus,
     behandlingType,
-    menyhandlingRettigheter,
   ) =>
     allMenuAccessRights(
       navAnsatt,
@@ -360,8 +358,6 @@ const getMenyRettigheter = createSelector(
       skalBehandlesAvInfotrygd,
       sakstype,
       behandlingStatus,
-      menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false,
-      false,
       behandlingType,
     ),
 );
