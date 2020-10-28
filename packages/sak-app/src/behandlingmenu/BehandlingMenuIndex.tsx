@@ -185,8 +185,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
     <MenySakIndex
       data={[
         new MenyData(
-          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) &&
-            (!erFrisinn || erTilbakekreving),
+          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) && !erFrisinn,
           getTaAvVentMenytekst(),
         ).medModal(lukkModal => (
           <MenyTaAvVentIndex
@@ -196,9 +195,9 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
             lukkModal={lukkModal}
           />
         )),
+        // https://github.com/navikt/k9-sak-web/compare/Sett-behandling-på-vent
         new MenyData(
-          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) &&
-            (!erFrisinn || erTilbakekreving),
+          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) && !erFrisinn,
           getSettPaVentMenytekst(),
         ).medModal(lukkModal => (
           <MenySettPaVentIndex
@@ -341,7 +340,6 @@ const getMenyRettigheter = createSelector(
     getFagsakYtelseType,
     getBehandlingStatus,
     getBehandlingType,
-    (_state, ownProps) => ownProps.menyhandlingRettigheter,
   ],
   (
     navAnsatt: NavAnsatt,
@@ -351,7 +349,6 @@ const getMenyRettigheter = createSelector(
     sakstype,
     behandlingStatus,
     behandlingType,
-    menyhandlingRettigheter,
   ) =>
     allMenuAccessRights(
       navAnsatt,
@@ -360,8 +357,6 @@ const getMenyRettigheter = createSelector(
       skalBehandlesAvInfotrygd,
       sakstype,
       behandlingStatus,
-      menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false,
-      false,
       behandlingType,
     ),
 );
@@ -378,7 +373,7 @@ const mapStateToProps = (state, ownProps): StateProps => ({
   behandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
   behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
   kanHenlegge: getKanHenleggeBehandling(state),
-  rettigheter: getMenyRettigheter(state, ownProps),
+  rettigheter: getMenyRettigheter(state),
   aktorId: getAktorid(state),
   gjeldendeVedtakBehandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(state),
 });

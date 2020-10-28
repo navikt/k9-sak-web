@@ -3,7 +3,6 @@ import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import {
   byttBehandlendeEnhetAccess,
@@ -88,39 +87,6 @@ describe('accessMenu', () => {
   });
 
   describe('settBehandlingPaVentAccess når behandling har søknad', () => {
-    const behandling = {
-      id: 1,
-      versjon: 123,
-      aksjonspunkter: [],
-      type: {
-        kode: '',
-        navn: '',
-      },
-      status: {
-        kode: behandlingStatusCode.BEHANDLING_UTREDES,
-        navn: '',
-      },
-      fagsakId: 1,
-      opprettet: '15.10.2017',
-      soknad: {
-        soknadType: {
-          kode: 'test',
-          navn: '',
-        },
-      },
-      vilkar: [
-        {
-          vilkarType: {
-            kode: '1',
-            navn: '',
-          },
-          avslagKode: '2',
-          lovReferanse: '§ 22-13, 2. ledd',
-        },
-      ],
-      behandlingPaaVent: false,
-    };
-
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };
 
@@ -130,15 +96,12 @@ describe('accessMenu', () => {
       behandlingStatusCode.FORESLA_VEDTAK,
     ];
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
-    const erIInnhentSoknadopplysningerSteg = false;
 
     it('saksbehandler skal ha tilgang til å sette behandling på vent', () => {
       const accessForSaksbehandler = settBehandlingPaVentAccess(
         saksbehandlerAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
-        behandling,
-        erIInnhentSoknadopplysningerSteg,
         BehandlingType.FORSTEGANGSSOKNAD,
       );
 
@@ -151,8 +114,6 @@ describe('accessMenu', () => {
         veilederAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
-        behandling,
-        erIInnhentSoknadopplysningerSteg,
         BehandlingType.FORSTEGANGSSOKNAD,
       );
 
@@ -167,8 +128,6 @@ describe('accessMenu', () => {
           saksbehandlerAnsatt,
           { kode: fagsakStatus },
           { kode: behandlingStatus },
-          behandling,
-          erIInnhentSoknadopplysningerSteg,
           BehandlingType.FORSTEGANGSSOKNAD,
         );
 
@@ -178,36 +137,6 @@ describe('accessMenu', () => {
   });
 
   describe('saksbehandler skal ha tilgang til å sette behandling på vent når aksjonspunkt er REGISTRER_PAPIRSOKNAD', () => {
-    const behandling = {
-      id: 1,
-      versjon: 123,
-      aksjonspunkter: [
-        {
-          id: 0,
-          definisjon: {
-            kode: aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD,
-            navn: 'Registrer papirsøknad engangsstønad',
-          },
-          status: {
-            kode: 'OPPR',
-            navn: 'Opprettet',
-          },
-        },
-      ],
-      type: {
-        kode: '',
-        navn: '',
-      },
-      soknad: [],
-      status: {
-        kode: behandlingStatusCode.BEHANDLING_UTREDES,
-        navn: '',
-      },
-      fagsakId: 1,
-      opprettet: '15.10.2017',
-      behandlingPaaVent: false,
-    };
-
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };
 
@@ -217,15 +146,12 @@ describe('accessMenu', () => {
       behandlingStatusCode.FORESLA_VEDTAK,
     ];
     const validBehandlingStatus = { kode: validBehandlingStatuser[1] };
-    const erIInnhentSoknadopplysningerSteg = false;
 
     it('saksbehandler skal ha tilgang til å sette behandling på vent når aksjonspunkt er REGISTRER_PAPIRSOKNAD', () => {
       const accessForSaksbehandler = settBehandlingPaVentAccess(
         saksbehandlerAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
-        behandling,
-        erIInnhentSoknadopplysningerSteg,
         BehandlingType.FORSTEGANGSSOKNAD,
       );
 
@@ -238,8 +164,6 @@ describe('accessMenu', () => {
         veilederAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
-        behandling,
-        erIInnhentSoknadopplysningerSteg,
         BehandlingType.FORSTEGANGSSOKNAD,
       );
 
@@ -254,8 +178,6 @@ describe('accessMenu', () => {
           saksbehandlerAnsatt,
           { kode: fagsakStatus },
           { kode: behandlingStatus },
-          behandling,
-          erIInnhentSoknadopplysningerSteg,
           BehandlingType.FORSTEGANGSSOKNAD,
         );
 
@@ -265,22 +187,6 @@ describe('accessMenu', () => {
   });
 
   describe('saksbehandler skal ha tilgang til å sette behandling på vent når det er behandling av klage', () => {
-    const behandling = {
-      fagsakId: 1000001,
-      id: 2,
-      aksjonspunkter: [],
-      status: {
-        kode: behandlingStatusCode.BEHANDLING_UTREDES,
-        navn: 'Behandling utredes',
-      },
-      type: {
-        kode: BehandlingType.KLAGE,
-        navn: 'Klage',
-      },
-      beregningResultat: null,
-      opprettet: '2017-09-19 15:32:58',
-    };
-
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };
 
@@ -290,15 +196,12 @@ describe('accessMenu', () => {
       behandlingStatusCode.FORESLA_VEDTAK,
     ];
     const validBehandlingStatus = { kode: validBehandlingStatuser[0] };
-    const erIInnhentSoknadopplysningerSteg = false;
 
     it('saksbehandler skal ha tilgang til å sette behandling på vent når det er behandling av klage', () => {
       const accessForSaksbehandler = settBehandlingPaVentAccess(
         saksbehandlerAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
-        behandling,
-        erIInnhentSoknadopplysningerSteg,
         BehandlingType.FORSTEGANGSSOKNAD,
       );
 
@@ -311,8 +214,6 @@ describe('accessMenu', () => {
         veilederAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
-        behandling,
-        erIInnhentSoknadopplysningerSteg,
         BehandlingType.FORSTEGANGSSOKNAD,
       );
 
@@ -327,8 +228,6 @@ describe('accessMenu', () => {
           saksbehandlerAnsatt,
           { kode: fagsakStatus },
           { kode: behandlingStatus },
-          behandling,
-          erIInnhentSoknadopplysningerSteg,
           BehandlingType.FORSTEGANGSSOKNAD,
         );
 
