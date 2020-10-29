@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import unntakVurdering from '@fpsak-frontend/kodeverk/src/unntakVurdering';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BehandleUnntakFormImpl } from './BehandleUnntakForm';
 import shallowWithIntl from '../../i18n';
@@ -16,7 +16,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
   };
   const formValues1 = {
     fritekst: '123',
-    unntakVurdering: unntakVurdering.INNVILG,
+    behandlingResultatType: behandlingResultatType.INNVILG,
   };
 
   xit('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
@@ -60,7 +60,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
     expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(0);
   });
   const formValues3 = {
-    unntakVurdering: unntakVurdering.AVSLÅ,
+    behandlingResultatType: behandlingResultatType.AVSLÅ,
   };
 
   xit('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {

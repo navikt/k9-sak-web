@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { expect } from 'chai';
 import React from 'react';
 import { shallow } from 'enzyme/build';
@@ -7,7 +7,7 @@ import { TempSaveAndPreviewLink } from './TempSaveAndPreviewLink';
 
 describe('<TempSaveAndPreviewLink>', () => {
   const formValuesWithEmptyStrings = {
-    unntakVurdering: klageVurderingType.STADFESTE_YTELSESVEDTAK,
+    behandlingResultatType: behandlingResultatType.INNNVILGET,
     fritekst: '',
     begrunnelse: '',
   };
