@@ -7,6 +7,7 @@ import fpsakApi from '../data/fpsakApi';
 import behandlingEventHandler from '../behandling/BehandlingEventHandler';
 
 const LAG_NY_BEHANDLING_ENDEPUNKTER = {
+  [BehandlingType.UNNTAK]: fpsakApi.NEW_BEHANDLING_UNNTAK,
   [BehandlingType.KLAGE]: fpsakApi.NEW_BEHANDLING_KLAGE,
   [BehandlingType.TILBAKEKREVING]: fpsakApi.NEW_BEHANDLING_FPTILBAKE,
   [BehandlingType.TILBAKEKREVING_REVURDERING]: fpsakApi.NEW_BEHANDLING_FPTILBAKE,
