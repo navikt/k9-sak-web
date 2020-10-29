@@ -29,6 +29,7 @@ const UnntakProsessIndex = ({
 }) => (
   <RawIntlProvider value={intl}>
     <BehandleUnntak
+      behandlingsresultat={behandling.behandlingsresultat}
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       sprakkode={behandling.sprakkode}

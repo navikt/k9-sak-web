@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
-import unntakVurdering from '@fpsak-frontend/kodeverk/src/unntakVurdering';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import {
   behandlingForm,
   RadioGroupField,
@@ -19,9 +19,6 @@ import {
 import { required } from '@fpsak-frontend/utils';
 import { VerticalSpacer, FlexContainer, FlexRow, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import FritekstTextField from './FritekstTextField';
-
-// MANUELL_TILKJENT_YTELSE: '5057',
-// MANUELL_VURDERING_VILKÅR: '5059',
 
 const FORM_NAME = 'BehandleUnntakForm';
 
@@ -55,8 +52,8 @@ export const BehandleUnntakFormImpl = ({
       <VerticalSpacer twentyPx />
 
       <RadioGroupField name="behandlingResultatType" validate={[required]} direction="horizontal" readOnly={readOnly}>
-        <RadioOption value={unntakVurdering.INNVILGET} label={{ id: 'Unntak.Innvilg' }} />
-        <RadioOption value={unntakVurdering.AVSLÅTT} label={{ id: 'Unntak.Avslå' }} />
+        <RadioOption value={behandlingResultatType.INNVILGET} label={{ id: 'Unntak.Innvilg' }} />
+        <RadioOption value={behandlingResultatType.AVSLATT} label={{ id: 'Unntak.Avslå' }} />
       </RadioGroupField>
 
       <BehandlingspunktSubmitButton
@@ -80,14 +77,9 @@ BehandleUnntakFormImpl.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
 };
 
-BehandleUnntakFormImpl.defaultProps = {
-  readOnly: true,
-  readOnlySubmitButton: true,
-};
-
-export const buildInitialValues = createSelector([ownProps => ownProps.unntakVurdering], unntakResultat => ({
-  fritekst: unntakResultat ? unntakResultat.fritekst : null,
-  behandlingResultatType: unntakResultat ? unntakResultat.behandlingResultatType : null,
+export const buildInitialValues = createSelector([ownProps => ownProps.behandlingsresultat], behandlingsresultat => ({
+  fritekst: behandlingsresultat ? behandlingsresultat.fritekst : null,
+  behandlingResultatType: behandlingsresultat ? behandlingsresultat.type.kode : null,
 }));
 
 export const transformValues = values => ({
