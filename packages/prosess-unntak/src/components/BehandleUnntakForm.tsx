@@ -77,6 +77,11 @@ BehandleUnntakFormImpl.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
 };
 
+BehandleUnntakFormImpl.defaultProps = {
+  readOnly: true,
+  readOnlySubmitButton: true,
+};
+
 export const buildInitialValues = createSelector([ownProps => ownProps.behandlingsresultat], behandlingsresultat => ({
   fritekst: behandlingsresultat ? behandlingsresultat.fritekst : null,
   behandlingResultatType: behandlingsresultat ? behandlingsresultat.type.kode : null,
