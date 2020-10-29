@@ -10,7 +10,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { dokumentdatatype, featureToggle } from "@k9-sak-web/konstanter";
+import { dokumentdatatype, featureToggle } from '@k9-sak-web/konstanter';
 import { Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
@@ -90,14 +90,14 @@ const getLagringSideeffekter = (
   if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
     let dokumentdata;
     if (aksjonspunktModels[0].skalUndertrykkeBrev) {
-      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.INGEN}
+      dokumentdata = { [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.INGEN };
     } else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) {
       dokumentdata = {
         [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.FRITEKST,
         [dokumentdatatype.FRITEKST]: aksjonspunktModels[0].fritekstBrev,
       };
     } else {
-      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK};
+      dokumentdata = { [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK };
     }
     await dispatch(ankeBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata));
   }

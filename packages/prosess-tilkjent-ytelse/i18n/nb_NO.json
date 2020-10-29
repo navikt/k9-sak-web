@@ -32,6 +32,8 @@
   "TilkjentYtelse.PeriodeData.Arbeidstaker": "Arbeidstaker",
   "TilkjentYtelse.PeriodeData.BrukersAndel": "Brukers andel",
   "TilkjentYtelse.Opphoersdato": "Opphørsdato: {opphoersdato}",
+  "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
+  "TilkjentYtelse.AksjonspunktHelpText": "Manuell tilkjent ytelse",
 
   "TilkjentYtelse.BekreftOgFortsett": "Bekreft og fortsett",
   "TilkjentYtelse.LeggTilPeriode": "Legg til ny periode",

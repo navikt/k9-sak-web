@@ -218,7 +218,7 @@ export class BehandlingIndex extends Component<OwnProps> {
       );
     }
 
-    if (behandlingTypeKode === BehandlingType.UNNTAKSBEHANDLING) {
+    if (behandlingTypeKode === BehandlingType.UNNTAK) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary errorMessageCallback={visFeilmelding}>

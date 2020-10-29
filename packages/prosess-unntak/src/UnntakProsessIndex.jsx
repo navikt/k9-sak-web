@@ -6,8 +6,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import messages from '../i18n/nb_NO.json';
 import BehandleUnntak from './components/BehandleUnntakForm';
-import klageVurderingPropType from './propTypes/klageVurderingPropType';
-import klagevurderingBehandlingPropType from './propTypes/klagevurderingBehandlingPropType';
+import unntakBehandlingPropType from './propTypes/unntakBehandlingPropType';
 
 const cache = createIntlCache();
 
@@ -21,9 +20,7 @@ const intl = createIntl(
 
 const UnntakProsessIndex = ({
   behandling,
-  unntakVurdering,
   alleKodeverk,
-  saveUnntak,
   submitCallback,
   isReadOnly,
   previewCallback,
@@ -36,8 +33,6 @@ const UnntakProsessIndex = ({
       behandlingVersjon={behandling.versjon}
       sprakkode={behandling.sprakkode}
       aksjonspunkter={aksjonspunkter}
-      unntakVurdering={unntakVurdering}
-      saveUnntak={saveUnntak}
       submitCallback={submitCallback}
       readOnly={isReadOnly}
       previewCallback={previewCallback}
@@ -48,10 +43,8 @@ const UnntakProsessIndex = ({
 );
 
 UnntakProsessIndex.propTypes = {
-  behandling: klagevurderingBehandlingPropType.isRequired,
-  unntakVurdering: klageVurderingPropType.isRequired,
+  behandling: unntakBehandlingPropType.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  saveUnntak: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,

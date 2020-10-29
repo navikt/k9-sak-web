@@ -8,11 +8,13 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn, guid } from '@fpsak-frontend/utils';
 import { getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FormattedMessage } from 'react-intl';
 import PeriodeTabell from './PeriodeTabell';
 
 interface OwnProps {
   readOnly: boolean;
-  hasOpenAksjonspunkter: boolean;
+  readOnlySubmitButton: boolean;
   behandlingFormPrefix: string;
   submitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
@@ -27,7 +29,7 @@ const FORM_NAME = 'TilkjentYtelseForm';
 
 export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   readOnly,
-  hasOpenAksjonspunkter,
+  readOnlySubmitButton,
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
@@ -36,20 +38,36 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
-    <form onSubmit={formProps.handleSubmit}>
-      {formProps.warning && <span>{formProps.warning}</span>}
-      <PeriodeTabell
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
-        submitting={formProps.submitting}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        alleKodeverk={alleKodeverk}
-        getKodeverknavn={getKodeverknavn}
-      />
-      {formProps.error && <span>{formProps.error}</span>}
-    </form>
+    <>
+      {aksjonspunkter.length > 0 && (
+        <>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+            {[
+              <FormattedMessage
+                id="TilkjentYtelse.AksjonspunktHelpText"
+                key={aksjonspunktCodes.MANUELL_TILKJENT_YTELSE}
+              />,
+            ]}
+          </AksjonspunktHelpTextTemp>
+          <VerticalSpacer twentyPx />
+        </>
+      )}
+
+      <form onSubmit={formProps.handleSubmit}>
+        {formProps.warning && <span>{formProps.warning}</span>}
+        <PeriodeTabell
+          // readOnlySubmitButton={readOnlySubmitButton}
+          readOnly={readOnly}
+          aksjonspunkter={aksjonspunkter}
+          submitting={formProps.submitting}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          alleKodeverk={alleKodeverk}
+          getKodeverknavn={getKodeverknavn}
+        />
+        {formProps.error && <span>{formProps.error}</span>}
+      </form>
+    </>
   );
 };
 
@@ -82,7 +100,9 @@ const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregn
     };
   }
 
-  return undefined;
+  return {
+    perioder: [],
+  };
 });
 
 export const transformValues = (values: any, initialValues) => {
@@ -101,8 +121,8 @@ const lagSubmitFn = createSelector(
 );
 
 const mapStateToPropsFactory = (_initialState: any, props: PureOwnProps) => {
-  const { behandlingId, behandlingVersjon } = props;
   const initialValues = buildInitialValues(props);
+  const { behandlingId, behandlingVersjon } = props;
 
   // const validate = (values: any) => validateUttakForm(values, props.aksjonspunkter);
   // const warn = (values: any) => warningsUttakForm(values);

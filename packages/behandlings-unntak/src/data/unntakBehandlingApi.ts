@@ -54,7 +54,7 @@ export const UnntakBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger/unntak', UnntakBehandlingApiKeys.BEHANDLING_FP)
+  .withAsyncPost('/k9/sak/api/behandlinger', UnntakBehandlingApiKeys.BEHANDLING_FP)
 
   // behandlingsdata
   // behandlingsdata

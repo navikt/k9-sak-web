@@ -42,7 +42,7 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   isNyPeriodeFormOpen,
   readOnly,
-  // isAnyFormOpen,
+  isAnyFormOpen,
 }) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
   return (

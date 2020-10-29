@@ -93,7 +93,7 @@ export const buildInitialValues = createSelector([ownProps => ownProps.unntakVur
 export const transformValues = values => ({
   behandlingResultatType: values.behandlingResultatType,
   fritekst: values.fritekst,
-  begrunnelse: '',
+  // begrunnelse: '',
   kode: aksjonspunktCodes.MANUELL_VURDERING_VILKÅR,
 });
 
