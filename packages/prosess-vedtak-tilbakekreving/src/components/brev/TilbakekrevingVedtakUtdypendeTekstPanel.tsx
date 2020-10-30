@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, useState } from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
@@ -14,11 +13,28 @@ import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.less';
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
 
-const valideringsregler = [minLength3, maxLength4000, hasValidText];
-const valideringsreglerPakrevet = [required, minLength3, maxLength4000, hasValidText];
+const valideringsregler = [minLength3, hasValidText];
+const valideringsreglerPakrevet = [required, minLength3, hasValidText];
 
-export const TilbakekrevingVedtakUtdypendeTekstPanel = ({ intl, isEmpty, type, readOnly, fritekstPakrevet }) => {
+interface OwnProps {
+  type: string;
+  isEmpty: boolean;
+  readOnly: boolean;
+  fritekstPakrevet: boolean;
+  maximumLength?: number;
+}
+
+export const TilbakekrevingVedtakUtdypendeTekstPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
+  isEmpty,
+  type,
+  readOnly,
+  fritekstPakrevet,
+  maximumLength,
+}) => {
   const [isTextfieldHidden, hideTextField] = useState(isEmpty && !fritekstPakrevet);
+  const valideringsRegler = fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler;
+  valideringsRegler.push(maximumLength ? maxLength(maximumLength) : maxLength4000);
   return (
     <>
       {isTextfieldHidden && !readOnly && (
@@ -35,7 +51,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({ intl, isEmpty, type, r
             }}
             className={styles.addPeriode}
             role="button"
-            tabIndex="0"
+            tabIndex={0}
           >
             <Image
               className={styles.addCircleIcon}
@@ -57,8 +73,8 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({ intl, isEmpty, type, r
           <TextAreaField
             name={type}
             label={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.UtdypendeTekst' })}
-            validate={fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler}
-            maxLength={4000}
+            validate={valideringsRegler}
+            maxLength={maximumLength || 4000}
             readOnly={readOnly}
           />
         </>
@@ -67,15 +83,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({ intl, isEmpty, type, r
   );
 };
 
-TilbakekrevingVedtakUtdypendeTekstPanel.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  type: PropTypes.string.isRequired,
-  isEmpty: PropTypes.bool.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  fritekstPakrevet: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state: any, ownProps: any) => ({
   isEmpty:
     behandlingFormValueSelector(
       ownProps.formName,
