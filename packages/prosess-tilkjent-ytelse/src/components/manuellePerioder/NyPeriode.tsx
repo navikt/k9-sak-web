@@ -5,12 +5,57 @@ import { InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
+import {
+  hasValidDecimal,
+  maxValue,
+  minValue,
+  calcDaysAndWeeks,
+  guid,
+  hasValidPeriod,
+  required,
+} from '@fpsak-frontend/utils';
+
+import {
+  DecimalField,
+  SelectField,
+  DatepickerField,
+  behandlingForm,
+  behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
+
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './periode.less';
+
+const minValue0 = minValue(0);
+const maxValue200 = maxValue(200);
+
+const getMottaker = kategorier =>
+  kategorier.map(ik => (
+    <option value={ik.kode} key={ik.kode}>
+      {ik.navn}
+    </option>
+  ));
+
+const getInntektskategori = alleKodeverk => {
+  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
+  return aktivitetsstatuser.map(ik => (
+    <option value={ik.kode} key={ik.kode}>
+      {ik.navn}
+    </option>
+  ));
+};
+
+const getAktivitetsStatus = alleKodeverk => {
+  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
+  return aktivitetsstatuser.map(ik => (
+    <option value={ik.kode} key={ik.kode}>
+      {ik.navn}
+    </option>
+  ));
+};
 
 type NyPeriodeType = {
   fom: string;
@@ -32,6 +77,7 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
   // getKodeverknavn,
   // nyPeriodeDisabledDaysFom,
   // andeler,
+  alleKodeverk,
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
@@ -52,10 +98,10 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
             <FlexColumn>
               <FlexRow>
                 <FlexColumn>
-                  <DatepickerField name="fom" label="Fra" />
+                  <DatepickerField name="fom" label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }} />
                 </FlexColumn>
                 <FlexColumn>
-                  <DatepickerField name="tom" label="Til" />
+                  <DatepickerField name="tom" label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }} />
                 </FlexColumn>
                 <FlexColumn className={styles.suffix}>
                   <div id="antallDager">
@@ -69,6 +115,55 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
                       />
                     )}
                   </div>
+                </FlexColumn>
+              </FlexRow>
+              <VerticalSpacer twentyPx />
+              <FlexRow>
+                <FlexColumn>
+                  <DecimalField
+                    name="dagsats"
+                    label={{ id: 'TilkjentYtelse.NyPeriode.Dagsats' }}
+                    validate={[required, minValue0, hasValidDecimal]}
+                    bredde="S"
+                    format={value => value}
+                    // @ts-ignore Fiks denne
+                    normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                  />
+                </FlexColumn>
+                <FlexColumn>
+                  <SelectField
+                    label={{ id: 'TilkjentYtelse.NyPeriode.Mottaker' }}
+                    name="mottaker"
+                    bredde="l"
+                    selectValues={getMottaker([])}
+                  />
+                </FlexColumn>
+                <FlexColumn>
+                  <SelectField
+                    label={{ id: 'TilkjentYtelse.NyPeriode.AktivitetsStatus' }}
+                    name="aktivitetsstatus"
+                    bredde="l"
+                    selectValues={getAktivitetsStatus(alleKodeverk)}
+                  />
+                </FlexColumn>
+                <FlexColumn>
+                  <SelectField
+                    label={{ id: 'TilkjentYtelse.NyPeriode.Inntektskategori' }}
+                    name="inntektskategori"
+                    bredde="l"
+                    selectValues={getInntektskategori(alleKodeverk)}
+                  />
+                </FlexColumn>
+                <FlexColumn>
+                  <DecimalField
+                    name="utbetalingsgrad"
+                    label={{ id: 'TilkjentYtelse.NyPeriode.Ubetalingsgrad' }}
+                    validate={[required, minValue0, maxValue200, hasValidDecimal]}
+                    bredde="S"
+                    format={value => value}
+                    // @ts-ignore Fiks denne
+                    normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                  />
                 </FlexColumn>
               </FlexRow>
             </FlexColumn>
@@ -99,6 +194,12 @@ const transformValues = (values: any) => {
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
+    lagtTilAvSaksbehandler: true,
+    utbetalingsgrad: values.utbetalingsgrad,
+    aktivitetsstatus: values.aktivitetsstatus,
+    mottaker: values.mottaker,
+    dagsats: values.dagsats,
+    inntektskategori: values.inntektskategori,
     andeler: [],
   };
 };
