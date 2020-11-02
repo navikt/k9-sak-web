@@ -4,13 +4,45 @@ import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import { Kodeverk } from '@k9-sak-web/types';
-import { Table, TableRow, TableColumn, PeriodLabel, Image } from '@fpsak-frontend/shared-components';
+import { FlexRow, FlexColumn, Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components';
 import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { DecimalField, SelectField, DatepickerField } from '@fpsak-frontend/form';
+
+import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 
 import styles from './periode.less';
+
+const minValue0 = minValue(0);
+const maxValue200 = maxValue(200);
+
+const getMottaker = kategorier =>
+  kategorier.map(ik => (
+    <option value={ik.kode} key={ik.kode}>
+      {ik.navn}
+    </option>
+  ));
+
+const getInntektskategori = alleKodeverk => {
+  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
+  return aktivitetsstatuser.map(ik => (
+    <option value={ik.kode} key={ik.kode}>
+      {ik.navn}
+    </option>
+  ));
+};
+
+const getAktivitetsStatus = alleKodeverk => {
+  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
+  return aktivitetsstatuser.map(ik => (
+    <option value={ik.kode} key={ik.kode}>
+      {ik.navn}
+    </option>
+  ));
+};
 
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;
@@ -26,6 +58,7 @@ interface OwnProps {
   behandlingVersjon: number;
   behandlingId: number;
   behandlingStatus: Kodeverk;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 const headerTextCodes = ['Periode', 'Mottaker', 'Dagsats', 'Aktivitetsstatus', 'Inntektskategori', 'Utbetalingsgrad'];
@@ -37,7 +70,7 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   meta,
   openSlettPeriodeModalCallback,
   // updatePeriode,
-  // getKodeverknavn,
+  alleKodeverk,
   // id,
   intl,
   isNyPeriodeFormOpen,
@@ -56,13 +89,67 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
           return (
             <TableRow key={periode.id} id={periode.id}>
               <TableColumn>
-                <PeriodLabel showTodayString dateStringFom={periode.fom} dateStringTom={periode.tom} />
+                <FlexRow>
+                  <FlexColumn>
+                    <DatepickerField name={`${fieldId}.fom`} label="" value={periode.fom} />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <DatepickerField name={`${fieldId}.tom`} label="" value={periode.tom} />
+                  </FlexColumn>
+                </FlexRow>
               </TableColumn>
-              <TableColumn>mottaker</TableColumn>
-              <TableColumn>dagsats</TableColumn>
-              <TableColumn>Aktivitetsstatus</TableColumn>
-              <TableColumn>Inntektskategori</TableColumn>
-              <TableColumn>Utbetalingsgrad</TableColumn>
+              <TableColumn>
+                <SelectField
+                  label=""
+                  name={`${fieldId}.mottaker`}
+                  value={periode.mottaker}
+                  bredde="l"
+                  selectValues={getMottaker([])}
+                />
+              </TableColumn>
+              <TableColumn>
+                <DecimalField
+                  name={`${fieldId}.dagsats`}
+                  value={periode.dagsats}
+                  validate={[required, minValue0, hasValidDecimal]}
+                  bredde="S"
+                  format={value => value}
+                  // @ts-ignore Fiks denne
+                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                />
+              </TableColumn>
+              <TableColumn>
+                <SelectField
+                  label=""
+                  bredde="l"
+                  name={`${fieldId}.aktivitetsstatus`}
+                  value={periode.aktivitetsstatus}
+                  readOnly={readOnly}
+                  selectValues={getAktivitetsStatus(alleKodeverk)}
+                />
+              </TableColumn>
+              <TableColumn>
+                <SelectField
+                  label=""
+                  bredde="l"
+                  name={`${fieldId}.inntektskategori`}
+                  value={periode.inntektskategori}
+                  readOnly={readOnly}
+                  selectValues={getInntektskategori(alleKodeverk)}
+                />
+              </TableColumn>
+              <TableColumn>
+                <DecimalField
+                  name={`${fieldId}.utbetalingsgrad`}
+                  value={periode.utbetalingsgrad}
+                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
+                  bredde="S"
+                  readOnly={readOnly}
+                  format={value => value}
+                  // @ts-ignore Fiks denne
+                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                />
+              </TableColumn>
               <TableColumn>
                 {!readOnly && (
                   <div className={styles.iconContainer}>

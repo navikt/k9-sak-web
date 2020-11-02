@@ -264,7 +264,6 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
     return (
       <>
         <VerticalSpacer twentyPx />
-
         <FieldArray
           name="perioder"
           component={PeriodeRad}
