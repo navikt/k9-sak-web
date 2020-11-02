@@ -196,11 +196,35 @@ const transformValues = (values: any) => {
     isFromSøknad: false,
     lagtTilAvSaksbehandler: true,
     utbetalingsgrad: values.utbetalingsgrad,
-    aktivitetsstatus: values.aktivitetsstatus,
+    // AKTIVITET_STATUS
+    aktivitetStatus: values.aktivitetsstatus,
     mottaker: values.mottaker,
     dagsats: values.dagsats,
+    // INNTEKTSKATEGORI
     inntektskategori: values.inntektskategori,
-    andeler: [],
+    stillingsprosent: 0,
+    eksternArbeidsforholdId: null,
+    refusjon: 0,
+    sisteUtbetalingsdato: null,
+    tilSoker: 0,
+    // OPPTJENING_AKTIVITET_TYPE
+    arbeidsforholdType: '-',
+    arbeidsgiver: {
+      identifikator: '890484832',
+      navn: 'BEDRIFT2 AS',
+    },
+    aktørId: null,
+    arbeidsforholdId: null,
+    uttak: [
+      {
+        periode: {
+          fom: values.fom,
+          tom: values.tom,
+        },
+        utbetalingsgrad: values.utbetalingsgrad,
+        utfall: 'INNVILGET',
+      },
+    ],
   };
 };
 
