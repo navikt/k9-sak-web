@@ -45,7 +45,9 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         readOnlySubmitButton
         getKodeverknavn={getKodeverknavn}
         behandlingId={1}
+        alleKodeverk={{}}
         behandlingVersjon={1}
+        aksjonspunkter={[]}
       />,
     );
     expect(wrapper.find(Undertittel)).to.have.length(1);
@@ -59,6 +61,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
       <TilkjentYtelsePanelImpl
         intl={intlMock}
         readOnly
+        aksjonspunkter={[]}
         beregningsresultatMedUttaksplan={null}
         hovedsokerKjonn="K"
         medsokerKjonn="M"
@@ -69,6 +72,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         vurderTilbaketrekkAP={tilbaketrekkAP}
         getKodeverknavn={getKodeverknavn}
         behandlingId={1}
+        alleKodeverk={{}}
         behandlingVersjon={1}
       />,
     );

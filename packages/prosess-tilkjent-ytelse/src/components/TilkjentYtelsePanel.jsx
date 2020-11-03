@@ -6,8 +6,11 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import tilkjentYtelseAksjonspunkterPropType from '../propTypes/tilkjentYtelseAksjonspunkterPropType';
+import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
 import TilkjentYtelse from './TilkjentYtelse';
@@ -29,6 +32,8 @@ const groups = [
   { id: 2, content: '' },
 ];
 
+const { MANUELL_TILKJENT_YTELSE } = aksjonspunktCodes;
+
 export const TilkjentYtelsePanelImpl = ({
   beregningsresultatMedUttaksplan,
   vurderTilbaketrekkAP,
@@ -37,6 +42,9 @@ export const TilkjentYtelsePanelImpl = ({
   getKodeverknavn,
   behandlingId,
   behandlingVersjon,
+  aksjonspunkter,
+  readOnly,
+  alleKodeverk,
 }) => {
   const opphoersdato = beregningsresultatMedUttaksplan?.opphoersdato;
   return (
@@ -59,6 +67,20 @@ export const TilkjentYtelsePanelImpl = ({
           getKodeverknavn={getKodeverknavn}
         />
       )}
+
+      {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (
+        <TilkjentYtelseForm
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          beregningsresultat={beregningsresultatMedUttaksplan}
+          aksjonspunkter={aksjonspunkter}
+          alleKodeverk={alleKodeverk}
+          readOnly={readOnly}
+          submitCallback={submitCallback}
+          readOnlySubmitButton={readOnlySubmitButton}
+        />
+      )}
+
       {vurderTilbaketrekkAP && (
         <Tilbaketrekkpanel
           behandlingId={behandlingId}
@@ -81,6 +103,9 @@ TilkjentYtelsePanelImpl.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(tilkjentYtelseAksjonspunkterPropType).isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 TilkjentYtelsePanelImpl.defaultProps = {
