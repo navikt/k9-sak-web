@@ -195,7 +195,8 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
     <MenySakIndex
       data={[
         new MenyData(
-          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) && !erFrisinn,
+          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getTaAvVentMenytekst(),
         ).medModal(lukkModal => (
           <MenyTaAvVentIndex
@@ -207,7 +208,8 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
         )),
         // https://github.com/navikt/k9-sak-web/compare/Sett-behandling-på-vent
         new MenyData(
-          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) && !erFrisinn,
+          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getSettPaVentMenytekst(),
         ).medModal(lukkModal => (
           <MenySettPaVentIndex
