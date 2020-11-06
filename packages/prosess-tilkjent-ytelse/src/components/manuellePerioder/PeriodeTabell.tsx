@@ -306,6 +306,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             alleKodeverk={alleKodeverk}
+            readOnly={readOnly}
           />
         )}
 

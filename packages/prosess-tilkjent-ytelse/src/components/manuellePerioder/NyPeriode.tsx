@@ -1,61 +1,22 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { InjectedFormProps } from 'redux-form';
+import { FieldArray, InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import {
-  hasValidDecimal,
-  maxValue,
-  minValue,
-  calcDaysAndWeeks,
-  guid,
-  hasValidPeriod,
-  required,
-} from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks, guid, hasValidPeriod, required, hasValidDecimal, minValue } from '@fpsak-frontend/utils';
 
-import {
-  DecimalField,
-  SelectField,
-  DatepickerField,
-  behandlingForm,
-  behandlingFormValueSelector,
-} from '@fpsak-frontend/form';
+import { DecimalField, DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import NyAndel from './NyAndel';
 
 import styles from './periode.less';
 
 const minValue0 = minValue(0);
-const maxValue200 = maxValue(200);
-
-const getMottaker = kategorier =>
-  kategorier.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-
-const getInntektskategori = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
-
-const getAktivitetsStatus = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
 
 type NyPeriodeType = {
   fom: string;
@@ -74,9 +35,10 @@ interface OwnProps {
 export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = ({
   newPeriodeResetCallback,
   nyPeriode,
-  // getKodeverknavn,
+  getKodeverknavn,
   // nyPeriodeDisabledDaysFom,
   // andeler,
+  readOnly,
   alleKodeverk,
   ...formProps
 }) => {
@@ -131,38 +93,13 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
                   />
                 </FlexColumn>
                 <FlexColumn>
-                  <SelectField
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Mottaker' }}
-                    name="mottaker"
-                    bredde="l"
-                    selectValues={getMottaker([])}
-                  />
-                </FlexColumn>
-                <FlexColumn>
-                  <SelectField
-                    label={{ id: 'TilkjentYtelse.NyPeriode.AktivitetsStatus' }}
-                    name="aktivitetsstatus"
-                    bredde="l"
-                    selectValues={getAktivitetsStatus(alleKodeverk)}
-                  />
-                </FlexColumn>
-                <FlexColumn>
-                  <SelectField
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Inntektskategori' }}
-                    name="inntektskategori"
-                    bredde="l"
-                    selectValues={getInntektskategori(alleKodeverk)}
-                  />
-                </FlexColumn>
-                <FlexColumn>
-                  <DecimalField
-                    name="utbetalingsgrad"
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Ubetalingsgrad' }}
-                    validate={[required, minValue0, maxValue200, hasValidDecimal]}
-                    bredde="S"
-                    format={value => value}
-                    // @ts-ignore Fiks denne
-                    normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                  <FieldArray
+                    name="andeler"
+                    component={NyAndel}
+                    readOnly={readOnly}
+                    // andeler={andeler}
+                    alleKodeverk={alleKodeverk}
+                    getKodeverknavn={getKodeverknavn}
                   />
                 </FlexColumn>
               </FlexRow>
@@ -193,38 +130,40 @@ const transformValues = (values: any) => {
     id: guid(),
     fom: values.fom,
     tom: values.tom,
-    isFromSøknad: false,
-    lagtTilAvSaksbehandler: true,
-    utbetalingsgrad: values.utbetalingsgrad,
-    // AKTIVITET_STATUS
-    aktivitetStatus: values.aktivitetsstatus,
-    mottaker: values.mottaker,
     dagsats: values.dagsats,
-    // INNTEKTSKATEGORI
-    inntektskategori: values.inntektskategori,
-    stillingsprosent: 0,
-    eksternArbeidsforholdId: null,
-    refusjon: 0,
-    sisteUtbetalingsdato: null,
-    tilSoker: 0,
-    // OPPTJENING_AKTIVITET_TYPE
-    arbeidsforholdType: '-',
-    arbeidsgiver: {
-      identifikator: '890484832',
-      navn: 'BEDRIFT2 AS',
-    },
-    aktørId: null,
-    arbeidsforholdId: null,
-    uttak: [
-      {
-        periode: {
-          fom: values.fom,
-          tom: values.tom,
-        },
-        utbetalingsgrad: values.utbetalingsgrad,
-        utfall: 'INNVILGET',
+    andeler: values.andeler.map(andel => ({
+      utbetalingsgrad: andel.utbetalingsgrad,
+      // AKTIVITET_STATUS
+      aktivitetStatus: { kode: andel.aktivitetStatus },
+      mottaker: andel.mottaker,
+
+      // INNTEKTSKATEGORI
+      inntektskategori: { kode: andel.inntektskategori },
+      stillingsprosent: 0,
+      eksternArbeidsforholdId: null,
+      refusjon: 0,
+      sisteUtbetalingsdato: null,
+      tilSoker: 0,
+      // OPPTJENING_AKTIVITET_TYPE
+      arbeidsforholdType: '-',
+      arbeidsgiver: {
+        identifikator: '890484832',
+        navn: 'BEDRIFT2 AS',
       },
-    ],
+      aktørId: null,
+      arbeidsforholdId: null,
+      uttak: [
+        {
+          periode: {
+            fom: values.fom,
+            tom: values.tom,
+          },
+          utbetalingsgrad: andel.utbetalingsgrad,
+          utfall: 'INNVILGET',
+        },
+      ],
+    })),
+    lagtTilAvSaksbehandler: true,
   };
 };
 
@@ -258,14 +197,7 @@ interface PureOwnProps {
 }
 
 const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
-  const {
-    newPeriodeCallback,
-    // getKodeverknavn,
-    andeler,
-    behandlingId,
-    behandlingVersjon,
-    // alleKodeverk,
-  } = ownProps;
+  const { newPeriodeCallback, andeler, behandlingId, behandlingVersjon } = ownProps;
 
   const onSubmit = (values: any) => newPeriodeCallback(transformValues(values));
 
