@@ -95,7 +95,6 @@ const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregn
         id: guid(),
         openForm: false,
         updated: false,
-        isFromSøknad: true,
       })),
     };
   }
@@ -109,7 +108,7 @@ export const transformValues = (values: any) => {
   return [
     {
       kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
-      andeler: values.perioder,
+      perioder: values.perioder,
       // begrunnelse: '',
     },
   ];

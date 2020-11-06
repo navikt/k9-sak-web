@@ -1,48 +1,20 @@
 import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
+import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
-
 import { Kodeverk } from '@k9-sak-web/types';
 import { FlexRow, FlexColumn, Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components';
 import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { DecimalField, SelectField, DatepickerField } from '@fpsak-frontend/form';
-
-import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
+import { DecimalField, DatepickerField } from '@fpsak-frontend/form';
+import { hasValidDecimal, minValue, required } from '@fpsak-frontend/utils';
+import Andeler from './Andeler';
 
 import styles from './periode.less';
 
 const minValue0 = minValue(0);
-const maxValue200 = maxValue(200);
-
-const getMottaker = kategorier =>
-  kategorier.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-
-const getInntektskategori = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
-
-const getAktivitetsStatus = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
 
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;
@@ -61,7 +33,7 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
-const headerTextCodes = ['Periode', 'Mottaker', 'Dagsats', 'Aktivitetsstatus', 'Inntektskategori', 'Utbetalingsgrad'];
+const headerTextCodes = ['Periode', 'Dagsats', 'Andeler'];
 
 const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   // cancelEditPeriode,
@@ -71,6 +43,7 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   openSlettPeriodeModalCallback,
   // updatePeriode,
   alleKodeverk,
+  getKodeverknavn,
   // id,
   intl,
   isNyPeriodeFormOpen,
@@ -91,24 +64,17 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               <TableColumn>
                 <FlexRow>
                   <FlexColumn>
-                    <DatepickerField name={`${fieldId}.fom`} label="" value={periode.fom} />
+                    <DatepickerField name={`${fieldId}.fom`} label="" value={periode.fom} readOnly={readOnly} />
                   </FlexColumn>
                   <FlexColumn>
-                    <DatepickerField name={`${fieldId}.tom`} label="" value={periode.tom} />
+                    <DatepickerField name={`${fieldId}.tom`} label="" value={periode.tom} readOnly={readOnly} />
                   </FlexColumn>
                 </FlexRow>
               </TableColumn>
-              <TableColumn>
-                <SelectField
-                  label=""
-                  name={`${fieldId}.mottaker`}
-                  value={periode.mottaker}
-                  bredde="l"
-                  selectValues={getMottaker([])}
-                />
-              </TableColumn>
+
               <TableColumn>
                 <DecimalField
+                  readOnly={readOnly}
                   name={`${fieldId}.dagsats`}
                   value={periode.dagsats}
                   validate={[required, minValue0, hasValidDecimal]}
@@ -119,35 +85,13 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                 />
               </TableColumn>
               <TableColumn>
-                <SelectField
-                  label=""
-                  bredde="l"
-                  name={`${fieldId}.aktivitetsstatus`}
-                  value={periode.aktivitetsstatus}
+                <FieldArray
+                  name={`${fieldId}.andeler`}
+                  component={Andeler}
+                  // andeler={andeler}
                   readOnly={readOnly}
-                  selectValues={getAktivitetsStatus(alleKodeverk)}
-                />
-              </TableColumn>
-              <TableColumn>
-                <SelectField
-                  label=""
-                  bredde="l"
-                  name={`${fieldId}.inntektskategori`}
-                  value={periode.inntektskategori}
-                  readOnly={readOnly}
-                  selectValues={getInntektskategori(alleKodeverk)}
-                />
-              </TableColumn>
-              <TableColumn>
-                <DecimalField
-                  name={`${fieldId}.utbetalingsgrad`}
-                  value={periode.utbetalingsgrad}
-                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
-                  bredde="S"
-                  readOnly={readOnly}
-                  format={value => value}
-                  // @ts-ignore Fiks denne
-                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                  alleKodeverk={alleKodeverk}
+                  getKodeverknavn={getKodeverknavn}
                 />
               </TableColumn>
               <TableColumn>
