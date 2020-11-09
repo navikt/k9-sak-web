@@ -125,6 +125,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
     const { showModalSlettPeriode } = this.state;
     const { perioder } = this.props;
     const periodeSlett = perioder.filter((periode: any) => periode.id === id);
+
     this.setState({
       showModalSlettPeriode: !showModalSlettPeriode,
       periodeSlett: periodeSlett[0],
@@ -219,7 +220,6 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
       openForm: !updatedPeriode.openForm,
       isFromSøknad: updatedPeriode.isFromSøknad,
       updated: true,
-      originalResultat: updatedPeriode.resultat,
     };
 
     const newPerioder = await createNewPerioder(perioder, id, newPeriodeObject);

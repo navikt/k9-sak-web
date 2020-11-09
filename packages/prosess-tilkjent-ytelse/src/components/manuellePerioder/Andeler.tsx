@@ -22,15 +22,6 @@ const getInntektskategori = alleKodeverk => {
   ));
 };
 
-const getAktivitetsStatus = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
-
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;
   meta: FieldArrayMetaProps;
@@ -48,7 +39,7 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
-const headerTextCodes = ['Mottaker', 'Aktivitetsstatus', 'Inntektskategori', 'Utbetalingsgrad'];
+const headerTextCodes = ['Arbeidsforhold', 'Refusjon', 'Inntektskategori', 'Utbetalingsgrad'];
 
 const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   fields,
@@ -77,13 +68,15 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                 />
               </TableColumn>
               <TableColumn>
-                <SelectField
-                  label=""
-                  bredde="l"
-                  name={`${fieldId}.aktivitetStatus.kode`}
-                  value={andel.aktivitetStatus.kode}
+                <DecimalField
+                  name={`${fieldId}.refusjon`}
+                  value={andel.refusjon}
+                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
+                  bredde="S"
                   readOnly={readOnly}
-                  selectValues={getAktivitetsStatus(alleKodeverk)}
+                  format={value => value}
+                  // @ts-ignore Fiks denne
+                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                 />
               </TableColumn>
               <TableColumn>

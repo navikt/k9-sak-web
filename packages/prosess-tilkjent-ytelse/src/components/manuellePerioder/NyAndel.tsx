@@ -19,15 +19,6 @@ const getInntektskategori = alleKodeverk => {
   ));
 };
 
-const getAktivitetsStatus = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
-
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;
   getKodeverknavn: (...args: any[]) => any;
@@ -57,18 +48,21 @@ const NyAndel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     {(periodeElementFieldId, index, getRemoveButton) => (
       <FlexRow key={periodeElementFieldId}>
         <FlexColumn>
-          <InputField
-            label={{ id: 'TilkjentYtelse.NyPeriode.Mottaker' }}
-            name={`${periodeElementFieldId}.mottaker`}
-            bredde="l"
+          <DecimalField
+            name={`${periodeElementFieldId}.refusjon`}
+            label={{ id: 'TilkjentYtelse.NyPeriode.Refusjon' }}
+            validate={[required, minValue0, hasValidDecimal]}
+            bredde="S"
+            format={value => value}
+            // @ts-ignore Fiks denne
+            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           />
         </FlexColumn>
         <FlexColumn>
-          <SelectField
-            label={{ id: 'TilkjentYtelse.NyPeriode.AktivitetsStatus' }}
-            name={`${periodeElementFieldId}.aktivitetsStatus`}
+          <InputField
+            label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsforhold' }}
+            name={`${periodeElementFieldId}.Arbeidsforhold`}
             bredde="l"
-            selectValues={getAktivitetsStatus(alleKodeverk)}
           />
         </FlexColumn>
         <FlexColumn>

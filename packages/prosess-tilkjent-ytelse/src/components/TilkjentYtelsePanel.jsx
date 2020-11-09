@@ -43,6 +43,7 @@ export const TilkjentYtelsePanelImpl = ({
   behandlingId,
   behandlingVersjon,
   aksjonspunkter,
+  // arbeidsforhold,
   readOnly,
   alleKodeverk,
 }) => {
