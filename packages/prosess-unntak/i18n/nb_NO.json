@@ -1,7 +1,7 @@
 {
-  "Unntak.Title": "Behandle Unntak",
-  "Unntak.Innvilg": "Innvilg",
-  "Unntak.Avslå": "Avslå",
+  "Unntak.Title": "Behandle Vilkår",
+  "Unntak.Innvilg": "Innvilget eller ingen endringer",
+  "Unntak.Avslå": "Avslå eller gjør endringer",
   "Unntak.TempSaveButton": "Lagre",
   "Unntak.TempSaveAndPreviewButton": "Lagre og forhåndsvis brev",
   "FritekstTextField.Fritekst": "Notat",

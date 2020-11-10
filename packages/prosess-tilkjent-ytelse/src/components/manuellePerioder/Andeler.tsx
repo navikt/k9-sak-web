@@ -63,15 +63,15 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                 <InputField
                   readOnly={readOnly}
                   label=""
-                  name={`${fieldId}.arbeidsgiverNavn`}
-                  value={andel.arbeidsgiverNavn}
+                  name={`${fieldId}.arbeidsgiver.navn`}
+                  value={andel.arbeidsgiver.navn}
                 />
               </TableColumn>
               <TableColumn>
                 <DecimalField
                   name={`${fieldId}.refusjon`}
                   value={andel.refusjon}
-                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
+                  validate={[required, minValue0, hasValidDecimal]}
                   bredde="S"
                   readOnly={readOnly}
                   format={value => value}

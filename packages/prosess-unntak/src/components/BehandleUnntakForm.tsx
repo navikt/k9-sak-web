@@ -17,7 +17,13 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { VerticalSpacer, FlexContainer, FlexRow, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import {
+  VerticalSpacer,
+  FlexContainer,
+  FlexRow,
+  AksjonspunktHelpTextTemp,
+  FlexColumn,
+} from '@fpsak-frontend/shared-components';
 import FritekstTextField from './FritekstTextField';
 
 const FORM_NAME = 'BehandleUnntakForm';
@@ -56,16 +62,18 @@ export const BehandleUnntakFormImpl = ({
         <RadioOption value={behandlingResultatType.AVSLATT} label={{ id: 'Unntak.Avslå' }} />
       </RadioGroupField>
 
-      <BehandlingspunktSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnlySubmitButton}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-      />
+      <FlexColumn>
+        <BehandlingspunktSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnlySubmitButton}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+        />
+      </FlexColumn>
     </FlexContainer>
   </form>
 );

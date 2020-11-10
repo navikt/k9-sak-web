@@ -117,7 +117,7 @@ const transformValues = (values: any) => {
     id: guid(),
     fom: values.fom,
     tom: values.tom,
-    refusjon: values.refusjon,
+    // refusjon: values.refusjon,
     andeler: values.andeler.map(andel => ({
       utbetalingsgrad: andel.utbetalingsgrad,
       // INNTEKTSKATEGORI
@@ -126,7 +126,7 @@ const transformValues = (values: any) => {
       eksternArbeidsforholdId: null,
       refusjon: andel.refusjon,
       sisteUtbetalingsdato: null,
-      tilSoker: 0,
+      tilSoker: null,
       // OPPTJENING_AKTIVITET_TYPE
       arbeidsforholdType: '-',
       arbeidsgiver: {
@@ -146,7 +146,7 @@ const transformValues = (values: any) => {
         },
       ],
     })),
-    lagtTilAvSaksbehandler: true,
+    // lagtTilAvSaksbehandler: true,
   };
 };
 
