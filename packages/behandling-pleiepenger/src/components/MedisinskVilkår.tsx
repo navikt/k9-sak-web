@@ -10,10 +10,10 @@ export default () => {
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.2.5/app.js"
-      jsIntegrity="sha384-/uGRdTyp2QwP9PWwBumQ+fcNDnNMqBwTvWz4dEuBkCTfMyoX7pva1vNrdTh7z4c3"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.2.5/styles.css"
-      stylesheetIntegrity="sha384-ZGZZotybL/3+R0eExim0DQusuq82HK/7uMrZVZPFo8gzjwwPXw/9xzjGQZxDJAfk"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.2.6/app.js"
+      jsIntegrity="sha384-qTnyStGj6sn1c3JxomeYPRE1qHE8LAv8ud1a7XdSGAlPlL4tI9quiLsHoN+jgnnM"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.2.6/styles.css"
+      stylesheetIntegrity="sha384-Ne062nisMfvu3jnm8XVwXx66SQNgeXD+lE0faJN6lvsGUYpVfrSNSpYRTEal3Wzx"
       onReady={() => initializeMedisinskVilkår(medisinskVilkårAppID)}
       onError={() => {}}
     />
