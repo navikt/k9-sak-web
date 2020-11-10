@@ -104,72 +104,21 @@ const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregn
   };
 });
 
-export const transformValues = () => {
+export const transformValues = (values: any) => {
   return [
     {
       kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
       tilkjentYtelse: {
-        perioder: [
-          {
-            andeler: [
-              {
-                erBrukerMottaker: true,
-                aktivitetStatus: {
-                  kode: 'AT',
-                  kodeverk: 'AKTIVITET_STATUS',
-                  navn: 'Arbeidstaker',
-                },
-                inntektskategori: {
-                  kode: 'ARBEIDSTAKER',
-                  kodeverk: 'INNTEKTSKATEGORI',
-                  navn: 'Arbeidstaker',
-                },
-                aktørId: null,
-                arbeidsforholdId: null,
-                arbeidsgiver: {
-                  identifikator: '910909088',
-                  identifikatorGUI: '910909088',
-                  navn: 'BEDRIFT AS',
-                },
-                arbeidsforholdType: {
-                  kode: '-',
-                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                  navn: 'Arbeidstaker',
-                },
-                arbeidsgiverNavn: 'BEDRIFT AS',
-                arbeidsgiverOrgnr: '910909088',
-                eksternArbeidsforholdId: null,
-                refusjon: 231,
-                sisteUtbetalingsdato: '2020-05-21',
-                stillingsprosent: 0,
-                tilSoker: 0,
-                utbetalingsgrad: 100,
-                uttak: [
-                  {
-                    periode: {
-                      fom: '2020-04-27',
-                      tom: '2020-05-01',
-                    },
-                    utbetalingsgrad: 100,
-                    utfall: 'INNVILGET',
-                  },
-                ],
-              },
-            ],
-            // dagsats: 231,
-            fom: '2020-04-27',
-            tom: '2020-05-01',
-          },
-        ],
+        perioder: values.perioder,
       },
-      begrunnelse: '2345',
+      // begrunnelse: '',
     },
   ];
 };
 
 const lagSubmitFn = createSelector(
   [(ownProps: PureOwnProps) => ownProps.submitCallback, buildInitialValues],
-  submitCallback => () => submitCallback(transformValues()),
+  submitCallback => (values: any) => submitCallback(transformValues(values)),
 );
 
 const mapStateToPropsFactory = (_initialState: any, props: PureOwnProps) => {
