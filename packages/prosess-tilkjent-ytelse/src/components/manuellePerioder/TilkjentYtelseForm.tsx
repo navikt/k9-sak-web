@@ -151,11 +151,7 @@ export const transformValues = () => {
                       tom: '2020-05-01',
                     },
                     utbetalingsgrad: 100,
-                    utfall: {
-                      navn: 'Innvilget',
-                      kode: 'INNVILGET',
-                      kodeverk: 'UTTAK_UTFALL_TYPE',
-                    },
+                    utfall: 'INNVILGET',
                   },
                 ],
               },
