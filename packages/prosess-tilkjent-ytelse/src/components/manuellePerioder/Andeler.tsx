@@ -6,7 +6,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Kodeverk } from '@k9-sak-web/types';
 import { Table, TableColumn } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { DecimalField, SelectField, InputField } from '@fpsak-frontend/form';
+import { SelectField, InputField } from '@fpsak-frontend/form';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 // import { createVisningsnavnForAndel } from '../TilkjentYteleseUtils';
 
@@ -68,15 +68,13 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                 />
               </TableColumn>
               <TableColumn>
-                <DecimalField
+                <InputField
+                  readOnly={readOnly}
+                  label=""
                   name={`${fieldId}.refusjon`}
                   value={andel.refusjon}
                   validate={[required, minValue0, hasValidDecimal]}
-                  bredde="S"
-                  readOnly={readOnly}
                   format={value => value}
-                  // @ts-ignore Fiks denne
-                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                 />
               </TableColumn>
               <TableColumn>
@@ -90,15 +88,12 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                 />
               </TableColumn>
               <TableColumn>
-                <DecimalField
-                  name={`${fieldId}.utbetalingsgrad`}
-                  value={andel.utbetalingsgrad}
-                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
-                  bredde="S"
+                <InputField
+                  label=""
                   readOnly={readOnly}
+                  name={`${fieldId}.utbetalingsgrad`}
+                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
                   format={value => value}
-                  // @ts-ignore Fiks denne
-                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                 />
               </TableColumn>
             </>

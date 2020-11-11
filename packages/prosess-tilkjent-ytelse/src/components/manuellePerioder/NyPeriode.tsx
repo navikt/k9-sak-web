@@ -120,6 +120,8 @@ const transformValues = (values: any) => {
     // refusjon: values.refusjon,
     andeler: values.andeler.map(andel => ({
       utbetalingsgrad: andel.utbetalingsgrad,
+      // DUMMY
+      aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
       // INNTEKTSKATEGORI
       inntektskategori: { kode: andel.inntektskategori },
       stillingsprosent: 0,
@@ -130,8 +132,8 @@ const transformValues = (values: any) => {
       // OPPTJENING_AKTIVITET_TYPE
       arbeidsforholdType: '-',
       arbeidsgiver: {
-        identifikator: '890484832',
-        navn: 'BEDRIFT2 AS',
+        identifikator: '910909088',
+        navn: 'BEDRIFT AS',
       },
       aktørId: null,
       arbeidsforholdId: null,

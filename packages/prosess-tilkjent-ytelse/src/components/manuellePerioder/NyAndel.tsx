@@ -1,14 +1,33 @@
 import React, { FunctionComponent } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps } from 'redux-form';
-
 import { FlexColumn, FlexRow, PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { InputField, DecimalField, SelectField } from '@fpsak-frontend/form';
+import { InputField, SelectField } from '@fpsak-frontend/form';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 
 const minValue0 = minValue(0);
-const maxValue200 = maxValue(200);
+const maxValue100 = maxValue(100);
+const maxValue3999 = maxValue(3999);
+
+const arbeidsForholdArray = [
+  {
+    identifikator: '910909088',
+    identifikatorGUI: '910909088',
+    navn: 'BEDRIFT AS',
+  },
+];
+
+const mapArbeidsforhold = (arbeidsForhold: any) =>
+  arbeidsForhold.map((andel: any, index) => {
+    const { identifikator, navn } = andel;
+    const key = `${navn}${index}`;
+    return (
+      <option value={`${identifikator}|${navn}`} key={key}>
+        {navn} {identifikator}
+      </option>
+    );
+  });
 
 const getInntektskategori = alleKodeverk => {
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
@@ -48,21 +67,20 @@ const NyAndel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     {(periodeElementFieldId, index, getRemoveButton) => (
       <FlexRow key={periodeElementFieldId}>
         <FlexColumn>
-          <DecimalField
+          <InputField
+            label="Refusjon"
             name={`${periodeElementFieldId}.refusjon`}
-            label={{ id: 'TilkjentYtelse.NyPeriode.Refusjon' }}
-            validate={[required, minValue0, hasValidDecimal]}
-            bredde="S"
+            validate={[required, minValue0, maxValue3999, hasValidDecimal]}
             format={value => value}
-            // @ts-ignore Fiks denne
-            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           />
         </FlexColumn>
         <FlexColumn>
-          <InputField
-            label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsforhold' }}
-            name={`${periodeElementFieldId}.Arbeidsforhold`}
-            bredde="l"
+          <SelectField
+            label="Arbeidsforhold"
+            bredde="xl"
+            name={`${periodeElementFieldId}.arbeidsgiver`}
+            validate={[required]}
+            selectValues={mapArbeidsforhold(arbeidsForholdArray)}
           />
         </FlexColumn>
         <FlexColumn>
@@ -74,14 +92,11 @@ const NyAndel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
           />
         </FlexColumn>
         <FlexColumn>
-          <DecimalField
-            name={`${periodeElementFieldId}.utbetalingsgrad`}
+          <InputField
             label={{ id: 'TilkjentYtelse.NyPeriode.Ubetalingsgrad' }}
-            validate={[required, minValue0, maxValue200, hasValidDecimal]}
-            bredde="S"
+            name={`${periodeElementFieldId}.utbetalingsgrad`}
+            validate={[required, minValue0, maxValue100, hasValidDecimal]}
             format={value => value}
-            // @ts-ignore Fiks denne
-            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           />
         </FlexColumn>
         <FlexColumn>{getRemoveButton()}</FlexColumn>
