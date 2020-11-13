@@ -96,13 +96,13 @@ BehandleUnntakFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [ownProps => ownProps.vilkårsresultat, ownProps => ownProps.behandlingsresultat],
-  (vilkårsresultat, behandlingsresultat) => ({
+  [ownProps => ownProps.vilkårsresultat, ownProps => ownProps.behandlingsresultat, ownProps => ownProps.vilkar],
+  (vilkårsresultat, behandlingsresultat, vilkar) => ({
     periode: vilkårsresultat ? vilkårsresultat[0].periode : null,
     avslagsårsak: vilkårsresultat ? vilkårsresultat[0].avslagsårsak : null,
     utfall: vilkårsresultat ? vilkårsresultat[0].utfall : null,
     behandlingsresultat: behandlingsresultat ? behandlingsresultat?.type?.kode : null,
-    begrunnelse: vilkårsresultat ? vilkårsresultat[0].begrunnelse : null,
+    begrunnelse: vilkar ? vilkar[0].perioder[0].begrunnelse : null,
   }),
 );
 
