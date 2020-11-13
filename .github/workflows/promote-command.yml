@@ -14,10 +14,10 @@ jobs:
       - name: Set variabler for image, namespace og cluster
         shell: bash
         run: |
-          echo "::set-env name=TAG::$(echo ${{ github.event.client_payload.github.payload.issue.title }} | awk '{print $NF}' | awk -F- '{print $NF}')"
-          echo "::set-env name=IMAGE::$IMAGE_BASE:$(echo ${{ github.event.client_payload.github.payload.issue.title }} | awk '{print $NF}')"
-          echo "::set-env name=CLUSTER::${{ github.event.client_payload.slash_command.arg1 }}"
-          echo "::set-env name=NAMESPACE::${{ github.event.client_payload.slash_command.arg2 }}"
+          echo "TAG=$(echo ${{ github.event.client_payload.github.payload.issue.title }} | awk '{print $NF}' | awk -F- '{print $NF}')" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE_BASE:$(echo ${{ github.event.client_payload.github.payload.issue.title }} | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "CLUSTER=${{ github.event.client_payload.slash_command.arg1 }}" >> $GITHUB_ENV
+          echo "NAMESPACE=${{ github.event.client_payload.slash_command.arg2 }}" >> $GITHUB_ENV
 
       - name: Sjekk ut kode
         uses: actions/checkout@v1
@@ -56,7 +56,7 @@ jobs:
             github.issues.createComment({...issue,
                                     body: 'promote til ${{ github.event.client_payload.slash_command.args }} utført'})
             github.issues.addLabels({...issue, labels: ['deployment','${{ env.CLUSTER }}-${{ env.NAMESPACE }}']})
-      
+
       #  https://github.com/getsentry/action-release/issues/21
       #  TODO fikse riktig enviroment, i sentry så er det app-q1.adeo.no og app.adeo.no. ${{ env.CLUSTER }}
       #- name: Send versjonsnummer og source maps til Sentry
@@ -72,4 +72,3 @@ jobs:
       #    environment: 'app-q1.adeo.no'
       #    version: ${{ env.TAG }}
       #    sourcemaps: './dist'
-      
