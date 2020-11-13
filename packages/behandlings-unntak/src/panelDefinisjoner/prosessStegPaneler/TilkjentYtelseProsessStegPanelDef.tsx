@@ -5,7 +5,6 @@ import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
-import unntakBehandlingApi from '../../data/unntakBehandlingApi';
 
 const harIngenAndeler = perioder => {
   const alleAndeler = perioder.flatMap(({ andeler }) => {
@@ -32,8 +31,6 @@ class PanelDef extends ProsessStegPanelDef {
   getAksjonspunktKoder = () => [aksjonspunktCodes.MANUELL_TILKJENT_YTELSE];
 
   getOverstyrVisningAvKomponent = () => true;
-
-  getEndepunkter = () => [unntakBehandlingApi.INNTEKT_OG_YTELSER];
 
   getOverstyrtStatus = ({ beregningsresultatUtbetaling }) => {
     const manglerBeregningsresultatUtbetaling =

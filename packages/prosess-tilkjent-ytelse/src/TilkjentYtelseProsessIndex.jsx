@@ -26,14 +26,12 @@ const TilkjentYtelseProsessIndex = ({
   alleKodeverk,
   isReadOnly,
   submitCallback,
-  inntektArbeidYtelse,
   readOnlySubmitButton,
 }) => (
   <RawIntlProvider value={intl}>
     <TilkjentYtelsePanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      arbeidsforhold={inntektArbeidYtelse?.arbeidsforhold}
       beregningsresultat={beregningsresultat}
       fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
       aksjonspunkter={aksjonspunkter}
@@ -54,7 +52,6 @@ TilkjentYtelseProsessIndex.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  inntektArbeidYtelse: PropTypes.shape(),
 };
 
 export default TilkjentYtelseProsessIndex;
