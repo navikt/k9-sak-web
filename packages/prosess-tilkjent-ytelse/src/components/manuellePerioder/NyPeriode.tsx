@@ -5,9 +5,9 @@ import { FieldArray, InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { calcDaysAndWeeks, guid, hasValidPeriod, required, hasValidDecimal, minValue } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 
-import { DecimalField, DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -15,8 +15,6 @@ import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
-
-const minValue0 = minValue(0);
 
 type NyPeriodeType = {
   fom: string;
@@ -82,17 +80,6 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
               <VerticalSpacer twentyPx />
               <FlexRow>
                 <FlexColumn>
-                  <DecimalField
-                    name="dagsats"
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Dagsats' }}
-                    validate={[required, minValue0, hasValidDecimal]}
-                    bredde="S"
-                    format={value => value}
-                    // @ts-ignore Fiks denne
-                    normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                  />
-                </FlexColumn>
-                <FlexColumn>
                   <FieldArray
                     name="andeler"
                     component={NyAndel}
@@ -130,25 +117,23 @@ const transformValues = (values: any) => {
     id: guid(),
     fom: values.fom,
     tom: values.tom,
-    dagsats: values.dagsats,
+    // refusjon: values.refusjon,
     andeler: values.andeler.map(andel => ({
       utbetalingsgrad: andel.utbetalingsgrad,
-      // AKTIVITET_STATUS
-      aktivitetStatus: { kode: andel.aktivitetStatus },
-      mottaker: andel.mottaker,
-
+      // DUMMY
+      aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
       // INNTEKTSKATEGORI
       inntektskategori: { kode: andel.inntektskategori },
       stillingsprosent: 0,
       eksternArbeidsforholdId: null,
-      refusjon: 0,
+      refusjon: andel.refusjon,
       sisteUtbetalingsdato: null,
-      tilSoker: 0,
+      tilSoker: null,
       // OPPTJENING_AKTIVITET_TYPE
       arbeidsforholdType: '-',
       arbeidsgiver: {
-        identifikator: '890484832',
-        navn: 'BEDRIFT2 AS',
+        identifikator: '910909088',
+        navn: 'BEDRIFT AS',
       },
       aktørId: null,
       arbeidsforholdId: null,
@@ -163,7 +148,7 @@ const transformValues = (values: any) => {
         },
       ],
     })),
-    lagtTilAvSaksbehandler: true,
+    // lagtTilAvSaksbehandler: true,
   };
 };
 
