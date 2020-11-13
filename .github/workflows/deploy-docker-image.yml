@@ -40,7 +40,7 @@ jobs:
       - name: Sette Docker-navn og -tag
         run: |
           echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
-          echo "IMAGE=$IMAGE_BASE:$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE_BASE:$TIMESTAMP" >> $GITHUB_ENV
       - name: Bygg og laste opp docker-image
         run: |
           docker pull nginx:1.17.8-alpine
