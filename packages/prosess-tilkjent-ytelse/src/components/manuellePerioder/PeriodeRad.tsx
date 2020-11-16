@@ -29,7 +29,7 @@ interface OwnProps {
   isAnyFormOpen: (...args: any[]) => any;
 }
 
-const headerTextCodes = ['Periode', 'Andeler'];
+const headerTextCodes = ['TilkjentYtelse.Periode', 'TilkjentYtelse.Andeler'];
 
 const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   // cancelEditPeriode,
