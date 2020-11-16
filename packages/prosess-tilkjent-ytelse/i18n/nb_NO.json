@@ -34,10 +34,9 @@
   "TilkjentYtelse.Opphoersdato": "Opphørsdato: {opphoersdato}",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "TilkjentYtelse.AksjonspunktHelpText": "Manuell tilkjent ytelse",
-
   "TilkjentYtelse.NyPeriode.Ubetalingsgrad": "Utbetalingsgrad",
-  "TilkjentYtelse.NyPeriode.Dagsats": "Dagsats",
-  "TilkjentYtelse.NyPeriode.Mottaker": "Mottaker",
+  "TilkjentYtelse.NyPeriode.Refusjon": "Refusjon",
+  "TilkjentYtelse.NyPeriode.Arbeidsforhold": "Arbeidsforhold",
   "TilkjentYtelse.NyPeriode.AktivitetsStatus": "Aktivitetsstatus",
   "TilkjentYtelse.NyPeriode.Inntektskategori": "Inntektskategori",
   "TilkjentYtelse.NyPeriode.Fom": "Fra",

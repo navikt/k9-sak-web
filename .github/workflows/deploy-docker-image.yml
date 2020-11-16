@@ -26,7 +26,7 @@ jobs:
         id: yarn-cache
         run: |
           echo "::set-output name=dir::$(yarn cache dir)"
-          echo "::set-env name=TAG::$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
+          echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -40,11 +40,12 @@ jobs:
         run: yarn build
       - name: Sette Docker-navn og -tag
         run: |
-          echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
+          echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE_BASE:$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
       - name: Bygg og laste opp docker-image
         run: |
           docker pull nginx:1.17.8-alpine
-          docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
+          docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest --label "version=${TAG}" .
           echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
           docker push ${IMAGE_BASE}:latest
           docker push ${IMAGE}
