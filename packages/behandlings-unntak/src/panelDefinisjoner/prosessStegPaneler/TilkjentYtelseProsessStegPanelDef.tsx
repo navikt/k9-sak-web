@@ -3,9 +3,15 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+
+const harIngenAndeler = perioder => {
+  const alleAndeler = perioder.flatMap(({ andeler }) => {
+    return [...andeler];
+  });
+  return alleAndeler.length === 0;
+};
 
 const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const { perioder } = beregningsresultatUtbetaling;
@@ -16,7 +22,6 @@ const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
       }),
     ];
   });
-  // TODO Burde bruka kodeverk-konstant (ikkje hardkode 'INNVILGET')
   return !alleUtfall.some(utfall => utfall === 'INNVILGET');
 };
 
@@ -27,25 +32,26 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getOverstyrtStatus = ({ beregningsresultatUtbetalt }) => {
-    if (
-      !beregningsresultatUtbetalt ||
-      !beregningsresultatUtbetalt.perioder ||
-      beregningsresultatUtbetalt.perioder.length === 0
-    ) {
+  getOverstyrtStatus = ({ beregningsresultatUtbetaling }) => {
+    const manglerBeregningsresultatUtbetaling =
+      !beregningsresultatUtbetaling ||
+      !beregningsresultatUtbetaling.perioder ||
+      beregningsresultatUtbetaling.perioder.length === 0;
+    if (manglerBeregningsresultatUtbetaling) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
-    if (harKunAvslåtteUttak(beregningsresultatUtbetalt)) {
+
+    if (harIngenAndeler(beregningsresultatUtbetaling.perioder) || harKunAvslåtteUttak(beregningsresultatUtbetaling)) {
       return vilkarUtfallType.IKKE_OPPFYLT;
     }
     return vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ fagsak, beregningsresultatUtbetalt, personopplysninger }) => {
+  getData = ({ fagsak, beregningsresultatUtbetaling, personopplysninger }) => {
     return {
       fagsak,
       personopplysninger,
-      beregningsresultat: beregningsresultatUtbetalt,
+      beregningsresultat: beregningsresultatUtbetaling,
     };
   };
 }

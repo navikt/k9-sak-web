@@ -1,48 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
+import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
-
 import { Kodeverk } from '@k9-sak-web/types';
 import { FlexRow, FlexColumn, Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components';
-import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
-import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { DecimalField, SelectField, DatepickerField } from '@fpsak-frontend/form';
-
-import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
+import { DatepickerField } from '@fpsak-frontend/form';
+import Andeler from './Andeler';
 
 import styles from './periode.less';
-
-const minValue0 = minValue(0);
-const maxValue200 = maxValue(200);
-
-const getMottaker = kategorier =>
-  kategorier.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-
-const getInntektskategori = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
-
-const getAktivitetsStatus = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
 
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;
@@ -59,19 +26,20 @@ interface OwnProps {
   behandlingId: number;
   behandlingStatus: Kodeverk;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  isAnyFormOpen: (...args: any[]) => any;
 }
 
-const headerTextCodes = ['Periode', 'Mottaker', 'Dagsats', 'Aktivitetsstatus', 'Inntektskategori', 'Utbetalingsgrad'];
+const headerTextCodes = ['Periode', 'Andeler'];
 
 const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   // cancelEditPeriode,
-  editPeriode,
+  // editPeriode,
   fields,
   meta,
   openSlettPeriodeModalCallback,
   // updatePeriode,
   alleKodeverk,
-  // id,
+  getKodeverknavn,
   intl,
   isNyPeriodeFormOpen,
   readOnly,
@@ -91,78 +59,32 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               <TableColumn>
                 <FlexRow>
                   <FlexColumn>
-                    <DatepickerField name={`${fieldId}.fom`} label="" value={periode.fom} />
+                    <DatepickerField name={`${fieldId}.fom`} label="" value={periode.fom} readOnly />
                   </FlexColumn>
                   <FlexColumn>
-                    <DatepickerField name={`${fieldId}.tom`} label="" value={periode.tom} />
+                    <DatepickerField name={`${fieldId}.tom`} label="" value={periode.tom} readOnly />
                   </FlexColumn>
                 </FlexRow>
               </TableColumn>
               <TableColumn>
-                <SelectField
-                  label=""
-                  name={`${fieldId}.mottaker`}
-                  value={periode.mottaker}
-                  bredde="l"
-                  selectValues={getMottaker([])}
-                />
-              </TableColumn>
-              <TableColumn>
-                <DecimalField
-                  name={`${fieldId}.dagsats`}
-                  value={periode.dagsats}
-                  validate={[required, minValue0, hasValidDecimal]}
-                  bredde="S"
-                  format={value => value}
-                  // @ts-ignore Fiks denne
-                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                />
-              </TableColumn>
-              <TableColumn>
-                <SelectField
-                  label=""
-                  bredde="l"
-                  name={`${fieldId}.aktivitetsstatus`}
-                  value={periode.aktivitetsstatus}
-                  readOnly={readOnly}
-                  selectValues={getAktivitetsStatus(alleKodeverk)}
-                />
-              </TableColumn>
-              <TableColumn>
-                <SelectField
-                  label=""
-                  bredde="l"
-                  name={`${fieldId}.inntektskategori`}
-                  value={periode.inntektskategori}
-                  readOnly={readOnly}
-                  selectValues={getInntektskategori(alleKodeverk)}
-                />
-              </TableColumn>
-              <TableColumn>
-                <DecimalField
-                  name={`${fieldId}.utbetalingsgrad`}
-                  value={periode.utbetalingsgrad}
-                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
-                  bredde="S"
-                  readOnly={readOnly}
-                  format={value => value}
-                  // @ts-ignore Fiks denne
-                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                <FieldArray
+                  name={`${fieldId}.andeler`}
+                  component={Andeler}
+                  // andeler={andeler}
+                  readOnly
+                  alleKodeverk={alleKodeverk}
+                  getKodeverknavn={getKodeverknavn}
                 />
               </TableColumn>
               <TableColumn>
                 {!readOnly && (
                   <div className={styles.iconContainer}>
                     <Image
-                      className={styles.editIcon}
-                      src={isAnyFormOrNyPeriodeOpen ? editPeriodeDisabledIcon : editPeriodeIcon}
-                      onClick={isAnyFormOrNyPeriodeOpen ? () => undefined : () => editPeriode(id)}
-                      alt={intl.formatMessage({ id: 'TilkjentYtelse.EndrePerioden' })}
-                    />
-                    <Image
                       className={styles.removeIcon}
                       src={isAnyFormOrNyPeriodeOpen ? removePeriodDisabled : removePeriod}
-                      onClick={isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(id)}
+                      onClick={
+                        isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(periode.id)
+                      }
                       alt={intl.formatMessage({ id: 'TilkjentYtelse.SlettPerioden' })}
                     />
                   </div>

@@ -22,7 +22,6 @@ interface OwnProps {
   closeEvent: (...args: any[]) => any;
   cancelEvent: (...args: any[]) => any;
   periode: any;
-  getKodeverknavn: (...args: any[]) => any;
 }
 
 export const SlettPeriodeModalImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
@@ -31,12 +30,10 @@ export const SlettPeriodeModalImpl: FunctionComponent<OwnProps & WrappedComponen
   cancelEvent,
   intl,
   periode,
-  getKodeverknavn,
   ...formProps
 }) => {
   const fom = moment(periode.fom).format(DDMMYYYY_DATE_FORMAT);
   const tom = moment(periode.tom).format(DDMMYYYY_DATE_FORMAT);
-  const uttakPeriodeType = periode.uttakPeriodeType !== undefined ? getKodeverknavn(periode.uttakPeriodeType) : null;
   return (
     <Modal
       className={styles.modal}
@@ -57,7 +54,7 @@ export const SlettPeriodeModalImpl: FunctionComponent<OwnProps & WrappedComponen
           </FlexColumn>
           <FlexColumn className={styles.fullWidth}>
             <Normaltekst className={styles.modalLabel}>
-              <FormattedMessage id="TilkjentYtelse.PeriodenSlettes" values={{ fom, tom, uttakPeriodeType }} />
+              <FormattedMessage id="TilkjentYtelse.PeriodenSlettes" values={{ fom, tom }} />
             </Normaltekst>
             <FlexRow>
               <FlexColumn className={styles.fullWidth}>

@@ -8,7 +8,7 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UnntakProsessIndex {...props} />;
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.MANUELL_VURDERING_VILKÅR];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR];
 
   getOverstyrVisningAvKomponent = () => true;
 
