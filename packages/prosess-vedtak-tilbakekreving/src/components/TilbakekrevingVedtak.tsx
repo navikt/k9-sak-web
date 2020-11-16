@@ -1,18 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import vedtaksbrevAvsnittPropType from '../propTypes/vedtaksbrevAvsnittPropType';
 import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
 import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
+import { VedtaksbrevAvsnitt } from '../types/vedtaksbrevAvsnittTsType';
+import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
-const TilbakekrevingVedtak = ({
+interface OwnProps {
+  submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
+  readOnly: boolean;
+  resultat: Kodeverk;
+  perioder: BeregningResultatPeriode[];
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  behandlingId: number;
+  behandlingUuid: string;
+  behandlingVersjon: number;
+  avsnittsliste: VedtaksbrevAvsnitt[];
+  fetchPreviewVedtaksbrev: (data: any) => Promise<any>;
+  aksjonspunktKodeForeslaVedtak: string;
+  erRevurderingTilbakekrevingKlage?: boolean;
+  erRevurderingTilbakekrevingFeilBeløpBortfalt?: boolean;
+}
+
+const TilbakekrevingVedtak: FunctionComponent<OwnProps> = ({
   submitCallback,
   readOnly,
   resultat,
@@ -25,10 +41,11 @@ const TilbakekrevingVedtak = ({
   fetchPreviewVedtaksbrev,
   aksjonspunktKodeForeslaVedtak,
   erRevurderingTilbakekrevingKlage,
+  erRevurderingTilbakekrevingFeilBeløpBortfalt,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
-    <FadingPanel>
+    <>
       <Undertittel>
         <FormattedMessage id="TilbakekrevingVedtak.Vedtak" />
       </Undertittel>
@@ -50,24 +67,10 @@ const TilbakekrevingVedtak = ({
         fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
         aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
         erRevurderingTilbakekrevingKlage={erRevurderingTilbakekrevingKlage}
+        erRevurderingTilbakekrevingFeilBeløpBortfalt={erRevurderingTilbakekrevingFeilBeløpBortfalt}
       />
-    </FadingPanel>
+    </>
   );
-};
-
-TilbakekrevingVedtak.propTypes = {
-  submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  resultat: kodeverkObjektPropType.isRequired,
-  perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingUuid: PropTypes.string.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  avsnittsliste: PropTypes.arrayOf(vedtaksbrevAvsnittPropType).isRequired,
-  fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
-  aksjonspunktKodeForeslaVedtak: PropTypes.string.isRequired,
-  erRevurderingTilbakekrevingKlage: PropTypes.bool,
 };
 
 export default TilbakekrevingVedtak;
