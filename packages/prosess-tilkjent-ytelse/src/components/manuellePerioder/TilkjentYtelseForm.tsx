@@ -94,8 +94,7 @@ const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregn
         ...periode,
         id: guid(),
         openForm: false,
-        updated: false,
-        isFromSøknad: true,
+        // updated: false,
       })),
     };
   }
@@ -105,19 +104,21 @@ const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregn
   };
 });
 
-export const transformValues = (values: any, initialValues) => {
-  const origPeriode = initialValues.perioder.filter(p => !p.isFromSoknad);
-  return {
-    perioder: values.perioder,
-    nyePerioder: origPeriode,
-    begrunnelse: '',
-    kode: aksjonspunktCodes.MANUELL_VURDERING_VILKÅR,
-  };
+export const transformValues = (values: any) => {
+  return [
+    {
+      kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
+      tilkjentYtelse: {
+        perioder: values.perioder,
+      },
+      // begrunnelse: '',
+    },
+  ];
 };
 
 const lagSubmitFn = createSelector(
   [(ownProps: PureOwnProps) => ownProps.submitCallback, buildInitialValues],
-  (submitCallback, initialValues) => (values: any) => submitCallback(transformValues(values, initialValues)),
+  submitCallback => (values: any) => submitCallback(transformValues(values)),
 );
 
 const mapStateToPropsFactory = (_initialState: any, props: PureOwnProps) => {

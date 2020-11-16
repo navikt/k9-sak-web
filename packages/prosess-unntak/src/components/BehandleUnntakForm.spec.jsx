@@ -24,7 +24,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       <BehandleUnntakFormImpl
         readOnly={false}
         readOnlySubmitButton
-        aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
+        aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
         formValues={formValues1}
         previewCallback={sinon.spy()}
         saveUnntak={sinon.spy()}
@@ -47,7 +47,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues2}
-        aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
+        aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
         previewCallback={sinon.spy()}
         saveUnntak={sinon.spy()}
         intl={intlMock}
@@ -69,7 +69,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues3}
-        aksjonspunktCode={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR}
+        aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
         previewCallback={sinon.spy()}
         saveUnntak={sinon.spy()}
         intl={intlMock}

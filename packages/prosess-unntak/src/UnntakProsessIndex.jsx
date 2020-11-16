@@ -26,22 +26,27 @@ const UnntakProsessIndex = ({
   previewCallback,
   readOnlySubmitButton,
   aksjonspunkter,
-}) => (
-  <RawIntlProvider value={intl}>
-    <BehandleUnntak
-      behandlingsresultat={behandling.behandlingsresultat}
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      sprakkode={behandling.sprakkode}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={submitCallback}
-      readOnly={isReadOnly}
-      previewCallback={previewCallback}
-      readOnlySubmitButton={readOnlySubmitButton}
-      alleKodeverk={alleKodeverk}
-    />
-  </RawIntlProvider>
-);
+}) => {
+  const { behandlingsresultat } = behandling;
+  const vilkårsresultat = behandlingsresultat?.vilkårResultat?.K9_VILKÅRET;
+  return (
+    <RawIntlProvider value={intl}>
+      <BehandleUnntak
+        behandlingsresultat={behandlingsresultat}
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        sprakkode={behandling.sprakkode}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={isReadOnly}
+        previewCallback={previewCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
+        alleKodeverk={alleKodeverk}
+        vilkårsresultat={vilkårsresultat}
+      />
+    </RawIntlProvider>
+  );
+};
 
 UnntakProsessIndex.propTypes = {
   behandling: unntakBehandlingPropType.isRequired,

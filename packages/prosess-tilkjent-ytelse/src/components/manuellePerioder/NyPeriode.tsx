@@ -1,14 +1,18 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { InjectedFormProps } from 'redux-form';
+import { FieldArray, InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
+
+import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import NyAndel from './NyAndel';
 
 import styles from './periode.less';
 
@@ -29,9 +33,11 @@ interface OwnProps {
 export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = ({
   newPeriodeResetCallback,
   nyPeriode,
-  // getKodeverknavn,
+  getKodeverknavn,
   // nyPeriodeDisabledDaysFom,
   // andeler,
+  readOnly,
+  alleKodeverk,
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
@@ -52,10 +58,10 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
             <FlexColumn>
               <FlexRow>
                 <FlexColumn>
-                  <DatepickerField name="fom" label="Fra" />
+                  <DatepickerField name="fom" label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }} />
                 </FlexColumn>
                 <FlexColumn>
-                  <DatepickerField name="tom" label="Til" />
+                  <DatepickerField name="tom" label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }} />
                 </FlexColumn>
                 <FlexColumn className={styles.suffix}>
                   <div id="antallDager">
@@ -69,6 +75,19 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
                       />
                     )}
                   </div>
+                </FlexColumn>
+              </FlexRow>
+              <VerticalSpacer twentyPx />
+              <FlexRow>
+                <FlexColumn>
+                  <FieldArray
+                    name="andeler"
+                    component={NyAndel}
+                    readOnly={readOnly}
+                    // andeler={andeler}
+                    alleKodeverk={alleKodeverk}
+                    getKodeverknavn={getKodeverknavn}
+                  />
                 </FlexColumn>
               </FlexRow>
             </FlexColumn>
@@ -98,8 +117,38 @@ const transformValues = (values: any) => {
     id: guid(),
     fom: values.fom,
     tom: values.tom,
-    isFromSøknad: false,
-    andeler: [],
+    // refusjon: values.refusjon,
+    andeler: values.andeler.map(andel => ({
+      utbetalingsgrad: andel.utbetalingsgrad,
+      // DUMMY
+      aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+      // INNTEKTSKATEGORI
+      inntektskategori: { kode: andel.inntektskategori },
+      stillingsprosent: 0,
+      eksternArbeidsforholdId: null,
+      refusjon: andel.refusjon,
+      sisteUtbetalingsdato: null,
+      tilSoker: null,
+      // OPPTJENING_AKTIVITET_TYPE
+      arbeidsforholdType: '-',
+      arbeidsgiver: {
+        identifikator: '910909088',
+        navn: 'BEDRIFT AS',
+      },
+      aktørId: null,
+      arbeidsforholdId: null,
+      uttak: [
+        {
+          periode: {
+            fom: values.fom,
+            tom: values.tom,
+          },
+          utbetalingsgrad: andel.utbetalingsgrad,
+          utfall: 'INNVILGET',
+        },
+      ],
+    })),
+    // lagtTilAvSaksbehandler: true,
   };
 };
 
@@ -133,14 +182,7 @@ interface PureOwnProps {
 }
 
 const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
-  const {
-    newPeriodeCallback,
-    // getKodeverknavn,
-    andeler,
-    behandlingId,
-    behandlingVersjon,
-    // alleKodeverk,
-  } = ownProps;
+  const { newPeriodeCallback, andeler, behandlingId, behandlingVersjon } = ownProps;
 
   const onSubmit = (values: any) => newPeriodeCallback(transformValues(values));
 

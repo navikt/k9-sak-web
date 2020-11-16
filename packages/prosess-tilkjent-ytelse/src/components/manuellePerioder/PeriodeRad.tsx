@@ -1,14 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
+import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
-
 import { Kodeverk } from '@k9-sak-web/types';
-import { Table, TableRow, TableColumn, PeriodLabel, Image } from '@fpsak-frontend/shared-components';
-import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
-import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
+import { FlexRow, FlexColumn, Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
+import { DatepickerField } from '@fpsak-frontend/form';
+import Andeler from './Andeler';
 
 import styles from './periode.less';
 
@@ -26,19 +25,21 @@ interface OwnProps {
   behandlingVersjon: number;
   behandlingId: number;
   behandlingStatus: Kodeverk;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  isAnyFormOpen: (...args: any[]) => any;
 }
 
-const headerTextCodes = ['Periode', 'Mottaker', 'Dagsats', 'Aktivitetsstatus', 'Inntektskategori', 'Utbetalingsgrad'];
+const headerTextCodes = ['Periode', 'Andeler'];
 
 const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   // cancelEditPeriode,
-  editPeriode,
+  // editPeriode,
   fields,
   meta,
   openSlettPeriodeModalCallback,
   // updatePeriode,
-  // getKodeverknavn,
-  // id,
+  alleKodeverk,
+  getKodeverknavn,
   intl,
   isNyPeriodeFormOpen,
   readOnly,
@@ -56,26 +57,34 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
           return (
             <TableRow key={periode.id} id={periode.id}>
               <TableColumn>
-                <PeriodLabel showTodayString dateStringFom={periode.fom} dateStringTom={periode.tom} />
+                <FlexRow>
+                  <FlexColumn>
+                    <DatepickerField name={`${fieldId}.fom`} label="" value={periode.fom} readOnly />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <DatepickerField name={`${fieldId}.tom`} label="" value={periode.tom} readOnly />
+                  </FlexColumn>
+                </FlexRow>
               </TableColumn>
-              <TableColumn>mottaker</TableColumn>
-              <TableColumn>dagsats</TableColumn>
-              <TableColumn>Aktivitetsstatus</TableColumn>
-              <TableColumn>Inntektskategori</TableColumn>
-              <TableColumn>Utbetalingsgrad</TableColumn>
+              <TableColumn>
+                <FieldArray
+                  name={`${fieldId}.andeler`}
+                  component={Andeler}
+                  // andeler={andeler}
+                  readOnly
+                  alleKodeverk={alleKodeverk}
+                  getKodeverknavn={getKodeverknavn}
+                />
+              </TableColumn>
               <TableColumn>
                 {!readOnly && (
                   <div className={styles.iconContainer}>
                     <Image
-                      className={styles.editIcon}
-                      src={isAnyFormOrNyPeriodeOpen ? editPeriodeDisabledIcon : editPeriodeIcon}
-                      onClick={isAnyFormOrNyPeriodeOpen ? () => undefined : () => editPeriode(id)}
-                      alt={intl.formatMessage({ id: 'TilkjentYtelse.EndrePerioden' })}
-                    />
-                    <Image
                       className={styles.removeIcon}
                       src={isAnyFormOrNyPeriodeOpen ? removePeriodDisabled : removePeriod}
-                      onClick={isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(id)}
+                      onClick={
+                        isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(periode.id)
+                      }
                       alt={intl.formatMessage({ id: 'TilkjentYtelse.SlettPerioden' })}
                     />
                   </div>
