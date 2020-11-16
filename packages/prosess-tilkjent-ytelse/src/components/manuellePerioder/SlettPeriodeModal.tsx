@@ -7,15 +7,12 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 
-import { TextAreaField, behandlingForm } from '@fpsak-frontend/form';
-import { DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { behandlingForm } from '@fpsak-frontend/form';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './periode.less';
-
-const minLength3 = minLength(3);
-const maxLength2000 = maxLength(2000);
 
 interface OwnProps {
   showModal?: boolean;
@@ -56,19 +53,6 @@ export const SlettPeriodeModalImpl: FunctionComponent<OwnProps & WrappedComponen
             <Normaltekst className={styles.modalLabel}>
               <FormattedMessage id="TilkjentYtelse.PeriodenSlettes" values={{ fom, tom }} />
             </Normaltekst>
-            <FlexRow>
-              <FlexColumn className={styles.fullWidth}>
-                <VerticalSpacer sixteenPx />
-                <TextAreaField
-                  name="begrunnelse"
-                  textareaClass={styles.textAreaStyle}
-                  label={{ id: 'TilkjentYtelse.BegrunnEndringen' }}
-                  validate={[required, minLength3, maxLength2000, hasValidText]}
-                  maxLength={2000}
-                  autoFocus
-                />
-              </FlexColumn>
-            </FlexRow>
           </FlexColumn>
         </FlexRow>
 
