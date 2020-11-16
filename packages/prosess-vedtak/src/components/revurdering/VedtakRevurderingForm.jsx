@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
@@ -18,22 +18,19 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import {AlertStripeInfo} from "nav-frontend-alertstriper";
-import {dokumentdatatype} from "@k9-sak-web/konstanter";
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
-import FritekstBrevPanel from '../FritekstBrevPanel';
+
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
-import styles from './vedtakRevurderingForm.less';
-import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
-import PreviewLink from '../PreviewLink';
+import BrevPanel from '../brev/BrevPanel';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
@@ -74,7 +71,7 @@ export class VedtakRevurderingFormImpl extends Component {
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
-      erSendtInnUtenArsaker: false
+      erSendtInnUtenArsaker: false,
     };
   }
 
@@ -123,23 +120,16 @@ export class VedtakRevurderingFormImpl extends Component {
       dokumentdata,
       ...formProps
     } = this.props;
-    const {erSendtInnUtenArsaker} = this.state;
+    const { erSendtInnUtenArsaker } = this.state;
     const previewAutomatiskBrev = getPreviewBrevCallback(
       previewCallback,
       behandlingresultat,
       readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps),
     );
     const visOverstyringKnapp = kanOverstyre || readOnly;
-    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
-    const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-    const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN && simuleringResultat?.simuleringResultat?.sumFeilutbetaling < 0;
+    const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
     return (
       <>
-        <VedtakFritekstbrevModal
-          readOnly={readOnly}
-          behandlingsresultat={behandlingresultat}
-          erSVP={ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER}
-        />
         <VedtakAksjonspunktPanel
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
@@ -224,25 +214,15 @@ export class VedtakRevurderingFormImpl extends Component {
                 </Column>
               )}
             </Row>
-            {ytelseTypeKode === fagsakYtelseType.FRISINN && harTilgjengeligeVedtaksbrev && (
-              <PreviewLink previewCallback={previewAutomatiskBrev}>
-                <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-              </PreviewLink>
-            )}
-            {!harTilgjengeligeVedtaksbrev && (
-              <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
-                {intl.formatMessage({id: 'VedtakForm.IkkeVedtaksbrev'})}
-              </AlertStripeInfo>
-            )}
-            {skalBrukeOverstyrendeFritekstBrev &&
-              ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
-                <FritekstBrevPanel
-                  intl={intl}
-                  readOnly={readOnly}
-                  sprakkode={sprakkode}
-                  previewBrev={previewAutomatiskBrev}
-                />
-            )}
+            <BrevPanel
+              intl={intl}
+              readonly={readOnly}
+              sprakkode={sprakkode}
+              vedtakVarsel={vedtakVarsel}
+              tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              previewAutomatiskBrev={previewAutomatiskBrev}
+            />
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
@@ -260,7 +240,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 behandlingArsaker={behandlingArsaker}
                 behandlingResultat={behandlingresultat}
                 harRedusertUtbetaling={harRedusertUtbetaling}
-                visFeilmeldingFordiArsakerMangler={() => this.setState({erSendtInnUtenArsaker: true})}
+                visFeilmeldingFordiArsakerMangler={() => this.setState({ erSendtInnUtenArsaker: true })}
               />
             )}
           </>

@@ -14,7 +14,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { dokumentdatatype, featureToggle } from "@k9-sak-web/konstanter";
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
@@ -73,7 +73,6 @@ const getLagringSideeffekter = (
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   dispatch,
-  featureToggles,
 ) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
     apModel =>
@@ -94,17 +93,20 @@ const getLagringSideeffekter = (
     toggleOppdatereFagsakContext(false);
   }
 
-  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
+  if (aksjonspunktModels[0].isVedtakSubmission) {
     let dokumentdata;
     if (aksjonspunktModels[0].skalUndertrykkeBrev) {
-      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.INGEN}
+      dokumentdata = { [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.INGEN };
     } else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) {
       dokumentdata = {
         [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.FRITEKST,
-        [dokumentdatatype.FRITEKST]: aksjonspunktModels[0].fritekstBrev,
+        [dokumentdatatype.FRITEKST]: {
+          tekst: aksjonspunktModels[0].fritekstBrev,
+          overskrift: aksjonspunktModels[0].overskrift,
+        },
       };
     } else {
-      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK};
+      dokumentdata = { [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK };
     }
     await dispatch(pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata));
   }
@@ -180,7 +182,6 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     dispatch,
-    featureToggles,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
