@@ -85,7 +85,7 @@ export const BehandleUnntakFormImpl = ({
 
 BehandleUnntakFormImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
-  saveUnntak: PropTypes.func.isRequired,
+  // saveUnntak: PropTypes.func.isRequired,
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
 };

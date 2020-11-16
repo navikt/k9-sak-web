@@ -1,6 +1,4 @@
 import React from 'react';
-
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -36,15 +34,25 @@ class PanelDef extends ProsessStegPanelDef {
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
   // TODO fiks dynamisk fagsakytelse
-  getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, beregningsgrunnlag }) => ({
+  getData = ({
+    fagsak,
     previewCallback,
+    rettigheter,
     aksjonspunkter,
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsakYtelseType.FRISINN,
-    employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-  });
+  }) => {
+    return {
+      previewCallback,
+      aksjonspunkter,
+      vilkar,
+      simuleringResultat,
+      beregningsgrunnlag,
+      ytelseTypeKode: fagsak?.fagsakYtelseType?.kode,
+      employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+    };
+  };
 }
 
 class VedtakProsessStegPanelDef extends ProsessStegDef {
