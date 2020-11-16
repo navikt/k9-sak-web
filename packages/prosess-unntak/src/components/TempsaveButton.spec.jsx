@@ -10,7 +10,6 @@ import TempsaveButton from './TempsaveButton';
 describe('<TempsaveButton>', () => {
   const formValuesWithEmptyStrings = {
     behandlingResultatType: behandlingResultatType.INNVILGET,
-    fritekst: '',
     begrunnelse: '',
   };
 

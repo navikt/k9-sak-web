@@ -6,7 +6,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Kodeverk } from '@k9-sak-web/types';
 import { Table, TableColumn } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { DecimalField, SelectField, InputField } from '@fpsak-frontend/form';
+import { SelectField, InputField } from '@fpsak-frontend/form';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 // import { createVisningsnavnForAndel } from '../TilkjentYteleseUtils';
 
@@ -15,15 +15,6 @@ const maxValue200 = maxValue(200);
 
 const getInntektskategori = alleKodeverk => {
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
-  return aktivitetsstatuser.map(ik => (
-    <option value={ik.kode} key={ik.kode}>
-      {ik.navn}
-    </option>
-  ));
-};
-
-const getAktivitetsStatus = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
   return aktivitetsstatuser.map(ik => (
     <option value={ik.kode} key={ik.kode}>
       {ik.navn}
@@ -48,7 +39,7 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
-const headerTextCodes = ['Mottaker', 'Aktivitetsstatus', 'Inntektskategori', 'Utbetalingsgrad'];
+const headerTextCodes = ['Arbeidsforhold', 'Refusjon', 'Inntektskategori', 'Utbetalingsgrad'];
 
 const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   fields,
@@ -72,18 +63,18 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                 <InputField
                   readOnly={readOnly}
                   label=""
-                  name={`${fieldId}.arbeidsgiverNavn`}
-                  value={andel.arbeidsgiverNavn}
+                  name={`${fieldId}.arbeidsgiver.navn`}
+                  value={andel.arbeidsgiver.navn}
                 />
               </TableColumn>
               <TableColumn>
-                <SelectField
-                  label=""
-                  bredde="l"
-                  name={`${fieldId}.aktivitetStatus.kode`}
-                  value={andel.aktivitetStatus.kode}
+                <InputField
                   readOnly={readOnly}
-                  selectValues={getAktivitetsStatus(alleKodeverk)}
+                  label=""
+                  name={`${fieldId}.refusjon`}
+                  value={andel.refusjon}
+                  validate={[required, minValue0, hasValidDecimal]}
+                  format={value => value}
                 />
               </TableColumn>
               <TableColumn>
@@ -97,15 +88,12 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                 />
               </TableColumn>
               <TableColumn>
-                <DecimalField
-                  name={`${fieldId}.utbetalingsgrad`}
-                  value={andel.utbetalingsgrad}
-                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
-                  bredde="S"
+                <InputField
+                  label=""
                   readOnly={readOnly}
+                  name={`${fieldId}.utbetalingsgrad`}
+                  validate={[required, minValue0, maxValue200, hasValidDecimal]}
                   format={value => value}
-                  // @ts-ignore Fiks denne
-                  normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                 />
               </TableColumn>
             </>

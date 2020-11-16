@@ -17,7 +17,13 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { VerticalSpacer, FlexContainer, FlexRow, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import {
+  VerticalSpacer,
+  FlexContainer,
+  FlexRow,
+  AksjonspunktHelpTextTemp,
+  FlexColumn,
+} from '@fpsak-frontend/shared-components';
 import FritekstTextField from './FritekstTextField';
 
 const FORM_NAME = 'BehandleUnntakForm';
@@ -43,7 +49,12 @@ export const BehandleUnntakFormImpl = ({
       <VerticalSpacer twentyPx />
 
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
-        {[<FormattedMessage id="Unntak.AvklarAkjsonspunkt" key={aksjonspunktCodes.MANUELL_VURDERING_VILKÅR} />]}
+        {[
+          <FormattedMessage
+            id="Unntak.AvklarAkjsonspunkt"
+            key={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
+          />,
+        ]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer twentyPx />
 
@@ -51,21 +62,23 @@ export const BehandleUnntakFormImpl = ({
 
       <VerticalSpacer twentyPx />
 
-      <RadioGroupField name="behandlingResultatType" validate={[required]} direction="horizontal" readOnly={readOnly}>
+      <RadioGroupField name="behandlingsresultat" validate={[required]} direction="horizontal" readOnly={readOnly}>
         <RadioOption value={behandlingResultatType.INNVILGET} label={{ id: 'Unntak.Innvilg' }} />
         <RadioOption value={behandlingResultatType.AVSLATT} label={{ id: 'Unntak.Avslå' }} />
       </RadioGroupField>
 
-      <BehandlingspunktSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnlySubmitButton}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-      />
+      <FlexColumn>
+        <BehandlingspunktSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnlySubmitButton}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+        />
+      </FlexColumn>
     </FlexContainer>
   </form>
 );
@@ -82,17 +95,27 @@ BehandleUnntakFormImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([ownProps => ownProps.behandlingsresultat], behandlingsresultat => ({
-  fritekst: behandlingsresultat ? behandlingsresultat.fritekst : null,
-  behandlingResultatType: behandlingsresultat ? behandlingsresultat.type.kode : null,
-}));
+export const buildInitialValues = createSelector(
+  [ownProps => ownProps.vilkårsresultat, ownProps => ownProps.behandlingsresultat],
+  (vilkårsresultat, behandlingsresultat) => ({
+    periode: vilkårsresultat ? vilkårsresultat[0].periode : null,
+    avslagsårsak: vilkårsresultat ? vilkårsresultat[0].avslagsårsak : null,
+    utfall: vilkårsresultat ? vilkårsresultat[0].utfall : null,
+    behandlingsresultat: behandlingsresultat ? behandlingsresultat?.type?.kode : null,
+    begrunnelse: vilkårsresultat ? vilkårsresultat[0].begrunnelse : null,
+  }),
+);
 
-export const transformValues = values => ({
-  behandlingResultatType: values.behandlingResultatType,
-  fritekst: values.fritekst,
-  // begrunnelse: '',
-  kode: aksjonspunktCodes.MANUELL_VURDERING_VILKÅR,
-});
+export const transformValues = values => {
+  return {
+    periode: values.periode,
+    avslagsårsak: values.avslagsårsak,
+    utfall: values.utfall,
+    behandlingResultatType: values.behandlingsresultat,
+    begrunnelse: values.begrunnelse,
+    kode: aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR,
+  };
+};
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
@@ -100,9 +123,10 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     initialValues: buildInitialValues(ownProps),
     formValues: behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
-      'behandlingResultatType',
+      'periode',
       'begrunnelse',
-      'fritekst',
+      'avslagsårsak',
+      'utfall',
     ),
     onSubmit,
   });

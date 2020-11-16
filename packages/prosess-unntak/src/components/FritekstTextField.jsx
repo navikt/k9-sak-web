@@ -10,7 +10,7 @@ import styles from './fritekstTextField.less';
 const FritekstTextField = ({ sprakkode, readOnly, intl }) => (
   <div className={styles.fritekstTextArea}>
     <TextAreaField
-      name="fritekst"
+      name="begrunnelse"
       label={intl.formatMessage({ id: 'FritekstTextField.Fritekst' })}
       validate={[required, hasValidText]}
       readOnly={readOnly}

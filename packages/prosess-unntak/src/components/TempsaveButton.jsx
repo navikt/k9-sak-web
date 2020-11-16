@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 const transformValues = (values, aksjonspunktCode) => ({
-  fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
   kode: aksjonspunktCode,
 });

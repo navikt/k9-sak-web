@@ -94,7 +94,7 @@ const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregn
         ...periode,
         id: guid(),
         openForm: false,
-        updated: false,
+        // updated: false,
       })),
     };
   }
@@ -108,7 +108,9 @@ export const transformValues = (values: any) => {
   return [
     {
       kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
-      perioder: values.perioder,
+      tilkjentYtelse: {
+        perioder: values.perioder,
+      },
       // begrunnelse: '',
     },
   ];
@@ -116,7 +118,7 @@ export const transformValues = (values: any) => {
 
 const lagSubmitFn = createSelector(
   [(ownProps: PureOwnProps) => ownProps.submitCallback, buildInitialValues],
-  (submitCallback, initialValues) => (values: any) => submitCallback(transformValues(values, initialValues)),
+  submitCallback => (values: any) => submitCallback(transformValues(values)),
 );
 
 const mapStateToPropsFactory = (_initialState: any, props: PureOwnProps) => {
