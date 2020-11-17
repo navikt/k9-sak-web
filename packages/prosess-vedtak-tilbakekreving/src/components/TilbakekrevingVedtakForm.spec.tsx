@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
@@ -14,9 +15,9 @@ describe('<TilbakekrevingVedtakForm>', () => {
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
+        {...reduxFormPropsMock}
         submitCallback={sinon.spy()}
         readOnly={false}
-        readOnlySubmitButton={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
         formVerdier={{}}
         vedtaksbrevAvsnitt={[
@@ -48,9 +49,9 @@ describe('<TilbakekrevingVedtakForm>', () => {
     const fetchPreview = sinon.spy();
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
+        {...reduxFormPropsMock}
         submitCallback={sinon.spy()}
         readOnly={false}
-        readOnlySubmitButton={false}
         fetchPreviewVedtaksbrev={fetchPreview}
         formVerdier={{
           OPPSUMMERING: 'Dette er oppsummeringen',
@@ -79,6 +80,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
       />,
     );
 
+    // @ts-ignore
     wrapper.find('a').prop('onClick')({ preventDefault: sinon.spy() });
 
     expect(fetchPreview.calledOnce).to.true;
@@ -101,9 +103,9 @@ describe('<TilbakekrevingVedtakForm>', () => {
   it('skal ikke vise trykkbar godkjenningsknapp og forhåndsvisningslenke når obligatoriske verdier ikke er utfylt', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
+        {...reduxFormPropsMock}
         submitCallback={sinon.spy()}
         readOnly={false}
-        readOnlySubmitButton={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
         formVerdier={{}}
         vedtaksbrevAvsnitt={[
@@ -133,9 +135,9 @@ describe('<TilbakekrevingVedtakForm>', () => {
   it('skal ikke vise trykkbar godkjenningsknapp og forhåndsvisningslenke når obligatorisk oppsummering for revurdering tilbakekreving ikke er utfylt', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
+        {...reduxFormPropsMock}
         submitCallback={sinon.spy()}
         readOnly={false}
-        readOnlySubmitButton={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
         formVerdier={{}}
         vedtaksbrevAvsnitt={[

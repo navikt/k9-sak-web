@@ -39,7 +39,12 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
-const headerTextCodes = ['Arbeidsforhold', 'Refusjon', 'Inntektskategori', 'Utbetalingsgrad'];
+const headerTextCodes = [
+  'TilkjentYtelse.NyPeriode.Arbeidsforhold',
+  'TilkjentYtelse.NyPeriode.Refusjon',
+  'TilkjentYtelse.NyPeriode.Inntektskategori',
+  'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
+];
 
 const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   fields,

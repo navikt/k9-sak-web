@@ -25,6 +25,7 @@ const behandlingArsakType = {
   RE_KLAGE_NFP: 'RE_KLAGE_NFP',
   RE_VILKÅR: 'RE_VILKÅR',
   RE_FORELDELSE: 'RE_FORELDELSE',
+  RE_FEILUTBETALT_BELØP_REDUSERT: 'RE_FEILUTBETALT_BELØP_REDUSERT',
 };
 
 export default behandlingArsakType;
