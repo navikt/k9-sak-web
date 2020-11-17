@@ -1,15 +1,17 @@
 import Kodeverk from './kodeverkTsType';
 
+export type AndelUttak = {
+  stonadskontoType: string;
+  periodeResultatType: string;
+  gradering: boolean;
+};
+
 export type BeregningsresultatPeriodeAndel = Readonly<{
   arbeidsgiverNavn: string;
   arbeidsgiverOrgnr: string;
   refusjon: number;
   tilSoker: number;
-  uttak: {
-    stonadskontoType: string;
-    periodeResultatType: string;
-    gradering: boolean;
-  }[];
+  uttak: AndelUttak[];
   utbetalingsgrad: number;
   sisteUtbetalingsdato: string;
   aktivitetStatus: Kodeverk;

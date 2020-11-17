@@ -7,7 +7,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Kodeverk, KodeverkMedNavn, InntektArbeidYtelse } from '@k9-sak-web/types';
+import { KodeverkMedNavn, InntektArbeidYtelse } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
@@ -169,26 +169,19 @@ const validateNyPeriodeForm = (values: any) => {
   return errors;
 };
 
-const EMPTY_ARRAY = [];
-
 interface PureOwnProps {
   newPeriodeCallback: (values: any) => void;
-  uttakPeriodeVurderingTyper: KodeverkMedNavn[];
-  getKodeverknavn: (kodeverk: Kodeverk) => string;
-  andeler: any[];
   behandlingId: number;
   behandlingVersjon: number;
-
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
-  const { newPeriodeCallback, andeler, behandlingId, behandlingVersjon } = ownProps;
+  const { newPeriodeCallback, behandlingId, behandlingVersjon } = ownProps;
 
   const onSubmit = (values: any) => newPeriodeCallback(transformValues(values));
 
   return (state: any) => ({
-    andeler: andeler || EMPTY_ARRAY,
     initialValues: {
       fom: null,
       tom: null,

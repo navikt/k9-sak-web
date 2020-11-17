@@ -65,7 +65,6 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
         <PeriodeTabell
           // readOnlySubmitButton={readOnlySubmitButton}
           readOnly={readOnly}
-          aksjonspunkter={aksjonspunkter}
           submitting={formProps.submitting}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
@@ -93,7 +92,7 @@ interface PureOwnProps {
   behandlingVersjon: number;
   submitCallback: (...args: any[]) => any;
 }
-
+// @ts-ignore
 const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregningsresultat?.perioder], perioder => {
   if (perioder) {
     return {

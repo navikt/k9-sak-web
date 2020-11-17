@@ -99,7 +99,7 @@ const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
   };
 };
 
-// @ts-ignore Dynamisk navn på form
+// @ts-ignore
 const SlettPeriodeModal = connect(mapStateToPropsFactory)(
   behandlingForm({
     enableReinitialize: true,

@@ -182,27 +182,30 @@ const TilkjentYtelseTimeLineData: FC<OwnProps> = ({
               'TilkjentYtelse.PeriodeData.Column.Utfall',
             ]}
           >
-            {(valgtAndel.uttak || []).map(({ periode, utbetalingsgrad, utfall }, index) => (
-              <TableRow key={`index${index + 1}`}>
-                <TableColumn>
-                  <Normaltekst>
-                    <FormattedMessage
-                      id="TilkjentYtelse.PeriodeData.Periode"
-                      values={{
-                        fomVerdi: moment(periode.fom).format(DDMMYYYY_DATE_FORMAT).toString(),
-                        tomVerdi: moment(periode.tom).format(DDMMYYYY_DATE_FORMAT).toString(),
-                      }}
-                    />
-                  </Normaltekst>
-                </TableColumn>
-                <TableColumn>
-                  <Normaltekst>{utbetalingsgrad}</Normaltekst>
-                </TableColumn>
-                <TableColumn>
-                  <Normaltekst>{utfall}</Normaltekst>
-                </TableColumn>
-              </TableRow>
-            ))}
+            {
+              // @ts-ignore
+              (valgtAndel.uttak || []).map(({ periode, utbetalingsgrad, utfall }, index) => (
+                <TableRow key={`index${index + 1}`}>
+                  <TableColumn>
+                    <Normaltekst>
+                      <FormattedMessage
+                        id="TilkjentYtelse.PeriodeData.Periode"
+                        values={{
+                          fomVerdi: moment(periode.fom).format(DDMMYYYY_DATE_FORMAT).toString(),
+                          tomVerdi: moment(periode.tom).format(DDMMYYYY_DATE_FORMAT).toString(),
+                        }}
+                      />
+                    </Normaltekst>
+                  </TableColumn>
+                  <TableColumn>
+                    <Normaltekst>{utbetalingsgrad}</Normaltekst>
+                  </TableColumn>
+                  <TableColumn>
+                    <Normaltekst>{utfall}</Normaltekst>
+                  </TableColumn>
+                </TableRow>
+              ))
+            }
           </Table>
         )}
       </div>

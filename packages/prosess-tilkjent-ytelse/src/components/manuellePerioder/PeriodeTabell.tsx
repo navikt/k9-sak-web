@@ -4,7 +4,7 @@ import { change as reduxFormChange, FieldArray, getFormInitialValues, reset as r
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Personopplysninger, InntektArbeidYtelse } from '@k9-sak-web/types';
+import { KodeverkMedNavn, InntektArbeidYtelse } from '@k9-sak-web/types';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { ariaCheck } from '@fpsak-frontend/utils';
@@ -45,14 +45,8 @@ interface OwnProps {
   initialValues: {
     perioder?: any[];
   };
-  personopplysninger: Personopplysninger;
-  aksjonspunkter: Aksjonspunkt[];
-  kanOverstyre: boolean;
-  getKodeverknavn: (kodeverk: Kodeverk) => string;
-  andeler: any[];
   behandlingId: number;
   behandlingVersjon: number;
-  behandlingStatus: Kodeverk;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   slettedePerioder?: any[];
   inntektArbeidYtelse: InntektArbeidYtelse;
