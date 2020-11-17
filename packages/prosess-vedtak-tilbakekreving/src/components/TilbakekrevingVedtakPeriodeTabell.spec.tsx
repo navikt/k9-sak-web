@@ -5,43 +5,46 @@ import { shallow } from 'enzyme';
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 
 import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
+import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
 describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
   it('skal lage tabell med to perioder og en sum-rad', () => {
-    const perioder = [{
-      periode: {
-        fom: '2019-10-10',
-        tom: '2019-12-10',
+    const perioder = [
+      {
+        periode: {
+          fom: '2019-10-10',
+          tom: '2019-12-10',
+        },
+        feilutbetaltBeløp: 15430,
+        vurdering: {
+          kode: 'SIMP',
+          kodeverk: 'VURDERING',
+        },
+        andelAvBeløp: 100,
+        renterProsent: 10,
+        tilbakekrevingBeløp: 15430,
+        tilbakekrevingBeløpEtterSkatt: 14000,
       },
-      feilutbetaltBeløp: 15430,
-      vurdering: {
-        kode: 'SIMP',
-        kodeverk: 'VURDERING',
+      {
+        periode: {
+          fom: '2019-05-10',
+          tom: '2019-06-10',
+        },
+        feilutbetaltBeløp: 14000,
+        vurdering: {
+          kode: 'SIMP',
+          kodeverk: 'VURDERING',
+        },
+        andelAvBeløp: 50,
+        tilbakekrevingBeløp: 7000,
+        tilbakekrevingBeløpEtterSkatt: 6000,
       },
-      andelAvBeløp: 100,
-      renterProsent: 10,
-      tilbakekrevingBeløp: 15430,
-      tilbakekrevingBeløpEtterSkatt: 14000,
-    }, {
-      periode: {
-        fom: '2019-05-10',
-        tom: '2019-06-10',
-      },
-      feilutbetaltBeløp: 14000,
-      vurdering: {
-        kode: 'SIMP',
-        kodeverk: 'VURDERING',
-      },
-      andelAvBeløp: 50,
-      tilbakekrevingBeløp: 7000,
-      tilbakekrevingBeløpEtterSkatt: 6000,
-    }];
+    ] as BeregningResultatPeriode[];
     const getKodeverknavn = () => 'Simpel uaktsomhet';
 
-    const wrapper = shallow(<TilbakekrevingVedtakPeriodeTabell
-      perioder={perioder}
-      getKodeverknavn={getKodeverknavn}
-    />);
+    const wrapper = shallow(
+      <TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />,
+    );
 
     const rader = wrapper.find(TableRow);
     expect(rader).to.have.length(3);
