@@ -6,7 +6,6 @@ import { InjectedFormProps } from 'redux-form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-
 import { behandlingForm } from '@fpsak-frontend/form';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
@@ -99,11 +98,13 @@ const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
   };
 };
 
-// @ts-ignore
 const SlettPeriodeModal = connect(mapStateToPropsFactory)(
-  behandlingForm({
-    enableReinitialize: true,
-  })(injectIntl(SlettPeriodeModalImpl)),
+  behandlingForm(
+    // @ts-ignore
+    {
+      enableReinitialize: true,
+    },
+  )(injectIntl(SlettPeriodeModalImpl)),
 );
 
 export default SlettPeriodeModal;
