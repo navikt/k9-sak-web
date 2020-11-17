@@ -1,29 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
-import PropTypes from 'prop-types';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import { TabsPure } from 'nav-frontend-tabs';
-import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
+import { PeriodeMedId } from './TilkjentYtelse';
+
 import styles from './tilkjentYtelse.less';
+
+interface OwnProps {
+  selectedItemStartDate: string;
+  selectedItemEndDate: string;
+  selectedItemData?: PeriodeMedId;
+  callbackForward: (...args: any[]) => any;
+  callbackBackward: (...args: any[]) => any;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+}
 
 /**
  * TimeLineData
  *
  * Viser opp data fra valgt periode i tilkjent ytelse-tidslinjen
  */
-const TilkjentYtelseTimeLineData = ({
+const TilkjentYtelseTimeLineData: FC<OwnProps> = ({
   selectedItemStartDate,
   selectedItemEndDate,
   selectedItemData,
   callbackForward,
   callbackBackward,
-  getKodeverknavn,
+  alleKodeverk,
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   useEffect(() => {
@@ -34,6 +45,7 @@ const TilkjentYtelseTimeLineData = ({
   const valgtAndel = andeler[activeTab];
   const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
   const intl = useIntl();
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
     <TimeLineDataContainer>
@@ -170,45 +182,35 @@ const TilkjentYtelseTimeLineData = ({
               'TilkjentYtelse.PeriodeData.Column.Utfall',
             ]}
           >
-            {valgtAndel.uttak.map(({ periode, utbetalingsgrad, utfall }, index) => (
-              <TableRow key={`index${index + 1}`}>
-                <TableColumn>
-                  <Normaltekst>
-                    <FormattedMessage
-                      id="TilkjentYtelse.PeriodeData.Periode"
-                      values={{
-                        fomVerdi: moment(periode.fom).format(DDMMYYYY_DATE_FORMAT).toString(),
-                        tomVerdi: moment(periode.tom).format(DDMMYYYY_DATE_FORMAT).toString(),
-                      }}
-                    />
-                  </Normaltekst>
-                </TableColumn>
-                <TableColumn>
-                  <Normaltekst>{utbetalingsgrad}</Normaltekst>
-                </TableColumn>
-                <TableColumn>
-                  <Normaltekst>{utfall}</Normaltekst>
-                </TableColumn>
-              </TableRow>
-            ))}
+            {
+              // @ts-ignore
+              (valgtAndel.uttak || []).map(({ periode, utbetalingsgrad, utfall }, index) => (
+                <TableRow key={`index${index + 1}`}>
+                  <TableColumn>
+                    <Normaltekst>
+                      <FormattedMessage
+                        id="TilkjentYtelse.PeriodeData.Periode"
+                        values={{
+                          fomVerdi: moment(periode.fom).format(DDMMYYYY_DATE_FORMAT).toString(),
+                          tomVerdi: moment(periode.tom).format(DDMMYYYY_DATE_FORMAT).toString(),
+                        }}
+                      />
+                    </Normaltekst>
+                  </TableColumn>
+                  <TableColumn>
+                    <Normaltekst>{utbetalingsgrad}</Normaltekst>
+                  </TableColumn>
+                  <TableColumn>
+                    <Normaltekst>{utfall}</Normaltekst>
+                  </TableColumn>
+                </TableRow>
+              ))
+            }
           </Table>
         )}
       </div>
     </TimeLineDataContainer>
   );
-};
-
-TilkjentYtelseTimeLineData.propTypes = {
-  selectedItemStartDate: PropTypes.string.isRequired,
-  selectedItemEndDate: PropTypes.string.isRequired,
-  selectedItemData: tilkjentYtelseBeregningresultatPropType,
-  callbackForward: PropTypes.func.isRequired,
-  callbackBackward: PropTypes.func.isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
-};
-
-TilkjentYtelseTimeLineData.defaultProps = {
-  selectedItemData: undefined,
 };
 
 export default TilkjentYtelseTimeLineData;
