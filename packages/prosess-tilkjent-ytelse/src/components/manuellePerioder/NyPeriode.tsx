@@ -1,17 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
-
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn, InntektArbeidYtelse } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
@@ -27,15 +23,14 @@ interface OwnProps {
   nyPeriode: NyPeriodeType;
   nyPeriodeDisabledDaysFom: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  getKodeverknavn: (kodeverk: Kodeverk) => string;
+  inntektArbeidYtelse: InntektArbeidYtelse;
+  readOnly: boolean;
 }
 
-export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = ({
+export const UttakNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   newPeriodeResetCallback,
   nyPeriode,
-  getKodeverknavn,
-  // nyPeriodeDisabledDaysFom,
-  // andeler,
+  inntektArbeidYtelse,
   readOnly,
   alleKodeverk,
   ...formProps
@@ -82,11 +77,11 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
                 <FlexColumn>
                   <FieldArray
                     name="andeler"
+                    // @ts-ignore
                     component={NyAndel}
                     readOnly={readOnly}
-                    // andeler={andeler}
                     alleKodeverk={alleKodeverk}
-                    getKodeverknavn={getKodeverknavn}
+                    inntektArbeidYtelse={inntektArbeidYtelse}
                   />
                 </FlexColumn>
               </FlexRow>
@@ -112,13 +107,21 @@ export const UttakNyPeriode: FunctionComponent<OwnProps & InjectedFormProps> = (
   );
 };
 
-const transformValues = (values: any) => {
-  return {
-    id: guid(),
-    fom: values.fom,
-    tom: values.tom,
-    // refusjon: values.refusjon,
-    andeler: values.andeler.map(andel => ({
+const transformValues = (values: any) => ({
+  id: guid(),
+  fom: values.fom,
+  tom: values.tom,
+  // refusjon: values.refusjon,
+  andeler: values.andeler.map(andel => {
+    const arbeidsForhold = andel.arbeidsgiver ? andel.arbeidsgiver.split('|') : [];
+
+    const arbeidsgiverValues = {
+      identifikator: arbeidsForhold ? arbeidsForhold[0] : null,
+      identifikatorGUI: arbeidsForhold ? arbeidsForhold[0] : null,
+      navn: arbeidsForhold ? arbeidsForhold[1] : null,
+    };
+
+    return {
       utbetalingsgrad: andel.utbetalingsgrad,
       // DUMMY
       aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
@@ -131,10 +134,7 @@ const transformValues = (values: any) => {
       tilSoker: null,
       // OPPTJENING_AKTIVITET_TYPE
       arbeidsforholdType: '-',
-      arbeidsgiver: {
-        identifikator: '910909088',
-        navn: 'BEDRIFT AS',
-      },
+      arbeidsgiver: arbeidsgiverValues,
       aktørId: null,
       arbeidsforholdId: null,
       uttak: [
@@ -147,10 +147,10 @@ const transformValues = (values: any) => {
           utfall: 'INNVILGET',
         },
       ],
-    })),
-    // lagtTilAvSaksbehandler: true,
-  };
-};
+    };
+  }),
+  // lagtTilAvSaksbehandler: true,
+});
 
 const validateNyPeriodeForm = (values: any) => {
   const errors = {};
@@ -178,6 +178,7 @@ interface PureOwnProps {
   andeler: any[];
   behandlingId: number;
   behandlingVersjon: number;
+
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 

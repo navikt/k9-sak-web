@@ -4,8 +4,7 @@ import { change as reduxFormChange, FieldArray, getFormInitialValues, reset as r
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Personopplysninger, InntektArbeidYtelse } from '@k9-sak-web/types';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { ariaCheck } from '@fpsak-frontend/utils';
@@ -37,7 +36,6 @@ const createNewPerioder = (perioder, id: string, values: any) => {
 
 interface OwnProps {
   readOnly: boolean;
-  hasOpenAksjonspunkter: boolean;
   behandlingFormPrefix: string;
   perioder?: any[];
   openForms: boolean;
@@ -57,6 +55,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   slettedePerioder?: any[];
+  inntektArbeidYtelse: InntektArbeidYtelse;
 }
 
 interface OwnState {
@@ -251,13 +250,11 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
     const {
       readOnly,
       perioder,
-      // aksjonspunkter,
       submitting,
-      // hasOpenAksjonspunkter,
-      getKodeverknavn,
       behandlingId,
       behandlingVersjon,
       alleKodeverk,
+      inntektArbeidYtelse,
     } = this.props;
     const { periodeSlett, isNyPeriodeFormOpen, showModalSlettPeriode } = this.state;
 
@@ -266,6 +263,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
         <VerticalSpacer twentyPx />
         <FieldArray
           name="perioder"
+          // @ts-ignore
           component={PeriodeRad}
           openSlettPeriodeModalCallback={this.openSlettPeriodeModalCallback}
           updatePeriode={this.updatePeriode}
@@ -276,7 +274,6 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
           isNyPeriodeFormOpen={isNyPeriodeFormOpen}
           perioder={perioder}
           readOnly={readOnly}
-          getKodeverknavn={getKodeverknavn}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           alleKodeverk={alleKodeverk}
@@ -301,24 +298,25 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
         {isNyPeriodeFormOpen && (
           <NyPeriode
             newPeriodeCallback={this.newPeriodeCallback}
-            newPeriodeResetCallback={this.newPeriodeResetCallback}
-            getKodeverknavn={getKodeverknavn}
+            // newPeriodeResetCallback={this.newPeriodeResetCallback}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             alleKodeverk={alleKodeverk}
+            // @ts-ignore
+            inntektArbeidYtelse={inntektArbeidYtelse}
             readOnly={readOnly}
           />
         )}
 
         {periodeSlett && (
           <SlettPeriodeModal
+            // @ts-ignore
             showModal={showModalSlettPeriode}
             periode={periodeSlett}
             cancelEvent={this.hideModal}
             closeEvent={this.removePeriode}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
-            getKodeverknavn={getKodeverknavn}
           />
         )}
       </>

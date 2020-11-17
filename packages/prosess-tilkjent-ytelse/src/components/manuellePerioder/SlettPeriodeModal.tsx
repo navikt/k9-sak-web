@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import moment from 'moment';
@@ -21,7 +21,7 @@ interface OwnProps {
   periode: any;
 }
 
-export const SlettPeriodeModalImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const SlettPeriodeModalImpl: FC<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
   showModal,
   closeEvent,
   cancelEvent,
