@@ -534,8 +534,6 @@ describe('accessMenu', () => {
     const validBehandlingStatuser = [behandlingStatusCode.BEHANDLING_UTREDES];
     const validBehandlingStatus = { kode: validBehandlingStatuser[0], kodeverk: 'BEHANDLING_STATUS' };
 
-    const foreldrepengerFagsak = { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'FAGSAK_YTELSE_TYPE' };
-
     it('saksbehandler skal ha tilgang til å åpne behandling for endringer når behandlingstype er revurdering', () => {
       const behandlingType = {
         kode: BehandlingType.REVURDERING,
@@ -546,7 +544,6 @@ describe('accessMenu', () => {
         saksbehandlerAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
-        foreldrepengerFagsak,
       );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
@@ -563,25 +560,6 @@ describe('accessMenu', () => {
         saksbehandlerAnsatt,
         validFagsakStatus,
         validBehandlingStatus,
-        foreldrepengerFagsak,
-      );
-
-      expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
-      expect(accessForSaksbehandler).to.have.property('isEnabled', false);
-    });
-
-    it('saksbehandler skal ikke ha tilgang til å åpne behandling for endringer når sakstype er engangsstønad', () => {
-      const sakstype = { kode: fagsakYtelseType.ENGANGSSTONAD, kodeverk: 'FAGSAK_YTELSE_TYPE' };
-      const behandlingType = {
-        kode: BehandlingType.REVURDERING,
-        kodeverk: 'BEHANDLING_TYPE',
-      };
-      const accessForSaksbehandler = opneBehandlingForEndringerAccess(
-        behandlingType,
-        saksbehandlerAnsatt,
-        validFagsakStatus,
-        validBehandlingStatus,
-        sakstype,
       );
 
       expect(accessForSaksbehandler).to.have.property('employeeHasAccess', true);
@@ -600,7 +578,6 @@ describe('accessMenu', () => {
           saksbehandlerAnsatt,
           { kode: fagsakStatus, kodeverk: 'FAGSAK_STATUS' },
           { kode: behandlingStatus, kodeverk: 'BEHANDLING_STATUS' },
-          foreldrepengerFagsak,
         );
 
         expect(access).to.have.property('isEnabled', expected);
