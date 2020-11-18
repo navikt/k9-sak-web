@@ -24,7 +24,7 @@
   "TilbakekrevingTimeline.Man": "Mann",
 
   "AktsomhetGradForsettFormPanel.Andel": "Andel som skal tilbakekreves",
-  "AktsomhetGradForsettFormPanel.Renter": "Det legges til 10% renter",
+  "AktsomhetGradForsettFormPanel.Renter": "Det legges til 10 % renter",
 
   "AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves": "Angi andel som skal tilbakekreves",
   "AktsomhetReduksjonAvBelopFormPanel.andelSomTilbakekreves": "Andel som skal tilbakekreves",
@@ -45,7 +45,7 @@
   "AktsomhetGradUaktsomhetFormPanel.Ja": "Ja",
   "AktsomhetGradUaktsomhetFormPanel.Tilbakekrev": "Totalbeløpet er under 4 rettsgebyr (6. ledd). Skal det tilbakekreves?",
   "AktsomhetGradUaktsomhetFormPanel.SærligGrunner": "Særlige grunner 4. ledd",
-  "AktsomhetGradUaktsomhetFormPanel.VurderSærligGrunner": "Vurder særlige grunner du har vektlagt for resultatet**",
+  "AktsomhetGradUaktsomhetFormPanel.VurderSærligGrunner": "Vurder særlige grunner du har vektlagt for resultatet",
   "AktsomhetGradUaktsomhetFormPanel.VurderSærligGrunner.Hjelpetekst": "Begrunn om det foreligger/ ikke foreligger særlige grunner for reduksjon av beløpet som kreves tilbake. Kryss av hvilke særlige grunner som er vektlagt for resultatet",
   "AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon": "Særlige grunner som er vektlagt (4.ledd)",
 
