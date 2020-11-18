@@ -1,9 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
-
-import { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Table, TableColumn } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { SelectField, InputField } from '@fpsak-frontend/form';
@@ -32,7 +31,6 @@ interface OwnProps {
   readOnly: boolean;
   perioder: any[];
   isNyPeriodeFormOpen: boolean;
-  getKodeverknavn: (...args: any[]) => any;
   behandlingVersjon: number;
   behandlingId: number;
   behandlingStatus: Kodeverk;
@@ -46,20 +44,14 @@ const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
 ];
 
-const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  fields,
-  meta,
-  alleKodeverk,
-  readOnly,
-  // getKodeverknavn,
-}) => {
+const Andeler: FC<OwnProps & WrappedComponentProps> = ({ fields, meta, alleKodeverk, readOnly }) => {
   return (
     <div>
       {meta.error && <AlertStripe type="feil">{meta.error}</AlertStripe>}
       {meta.warning && <AlertStripe type="info">{meta.warning}</AlertStripe>}
 
       <Table headerTextCodes={headerTextCodes}>
-        {fields.map((fieldId: string, index: number, field: any[]) => {
+        {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
           const andel = field.get(index);
           // const label = createVisningsnavnForAndel(andel, getKodeverknavn);
           return (
@@ -79,7 +71,6 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                   name={`${fieldId}.refusjon`}
                   value={andel.refusjon}
                   validate={[required, minValue0, hasValidDecimal]}
-                  format={value => value}
                 />
               </TableColumn>
               <TableColumn>
@@ -87,6 +78,7 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                   label=""
                   bredde="l"
                   name={`${fieldId}.inntektskategori.kode`}
+                  // @ts-ignore
                   value={andel.inntektskategori.kode}
                   readOnly={readOnly}
                   selectValues={getInntektskategori(alleKodeverk)}
@@ -98,7 +90,6 @@ const Andeler: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                   readOnly={readOnly}
                   name={`${fieldId}.utbetalingsgrad`}
                   validate={[required, minValue0, maxValue200, hasValidDecimal]}
-                  format={value => value}
                 />
               </TableColumn>
             </>

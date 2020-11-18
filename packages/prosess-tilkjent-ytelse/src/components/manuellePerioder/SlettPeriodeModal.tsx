@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import moment from 'moment';
@@ -6,7 +6,6 @@ import { InjectedFormProps } from 'redux-form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-
 import { behandlingForm } from '@fpsak-frontend/form';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
@@ -21,7 +20,7 @@ interface OwnProps {
   periode: any;
 }
 
-export const SlettPeriodeModalImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const SlettPeriodeModalImpl: FC<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
   showModal,
   closeEvent,
   cancelEvent,
@@ -99,11 +98,13 @@ const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
   };
 };
 
-// @ts-ignore Dynamisk navn på form
 const SlettPeriodeModal = connect(mapStateToPropsFactory)(
-  behandlingForm({
-    enableReinitialize: true,
-  })(injectIntl(SlettPeriodeModalImpl)),
+  behandlingForm(
+    // @ts-ignore
+    {
+      enableReinitialize: true,
+    },
+  )(injectIntl(SlettPeriodeModalImpl)),
 );
 
 export default SlettPeriodeModal;

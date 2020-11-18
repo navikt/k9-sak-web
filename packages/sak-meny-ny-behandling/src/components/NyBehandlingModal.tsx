@@ -156,6 +156,12 @@ const manuelleRevurderingsArsaker = [
   behandlingArsakType.SØKNADSFRIST,
   behandlingArsakType.KLAGE_U_INNTK,
   behandlingArsakType.KLAGE_M_INNTK,
+  behandlingArsakType.ANNET,
+  behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+  behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
+  behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
+  behandlingArsakType.FEIL_PROSESSUELL,
+  behandlingArsakType.ETTER_KLAGE,
 ];
 
 const tilbakekrevingRevurderingArsaker = [
@@ -179,7 +185,7 @@ export const getBehandlingAarsaker = createSelector(
         .map(ar => alleTilbakekrevingRevurderingArsaker.find(el => el.kode === ar))
         .filter(ar => ar);
     }
-
+    // TODO lage en egen for UNNTAK når vi vet hvilke det skal være
     if ([bType.REVURDERING, bType.UNNTAK].some(type => type === valgtBehandlingType)) {
       return alleRevurderingArsaker
         .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)

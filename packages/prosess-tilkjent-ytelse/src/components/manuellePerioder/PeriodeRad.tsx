@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { FlexRow, FlexColumn, Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
@@ -21,7 +21,6 @@ interface OwnProps {
   readOnly: boolean;
   perioder: any[];
   isNyPeriodeFormOpen: boolean;
-  getKodeverknavn: (...args: any[]) => any;
   behandlingVersjon: number;
   behandlingId: number;
   behandlingStatus: Kodeverk;
@@ -32,14 +31,10 @@ interface OwnProps {
 const headerTextCodes = ['TilkjentYtelse.Periode', 'TilkjentYtelse.Andeler'];
 
 const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  // cancelEditPeriode,
-  // editPeriode,
   fields,
   meta,
   openSlettPeriodeModalCallback,
-  // updatePeriode,
   alleKodeverk,
-  getKodeverknavn,
   intl,
   isNyPeriodeFormOpen,
   readOnly,
@@ -52,28 +47,39 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       {meta.warning && <AlertStripe type="info">{meta.warning}</AlertStripe>}
 
       <Table headerTextCodes={headerTextCodes}>
-        {fields.map((fieldId: string, index: number, field: any[]) => {
+        {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
           const periode = field.get(index);
           return (
             <TableRow key={periode.id} id={periode.id}>
               <TableColumn>
                 <FlexRow>
                   <FlexColumn>
-                    <DatepickerField name={`${fieldId}.fom`} label="" value={periode.fom} readOnly />
+                    <DatepickerField
+                      name={`${fieldId}.fom`}
+                      label=""
+                      // @ts-ignore
+                      value={periode.fom}
+                      readOnly
+                    />
                   </FlexColumn>
                   <FlexColumn>
-                    <DatepickerField name={`${fieldId}.tom`} label="" value={periode.tom} readOnly />
+                    <DatepickerField
+                      name={`${fieldId}.tom`}
+                      label=""
+                      // @ts-ignore
+                      value={periode.tom}
+                      readOnly
+                    />
                   </FlexColumn>
                 </FlexRow>
               </TableColumn>
               <TableColumn>
                 <FieldArray
                   name={`${fieldId}.andeler`}
+                  // @ts-ignore
                   component={Andeler}
-                  // andeler={andeler}
                   readOnly
                   alleKodeverk={alleKodeverk}
-                  getKodeverknavn={getKodeverknavn}
                 />
               </TableColumn>
               <TableColumn>

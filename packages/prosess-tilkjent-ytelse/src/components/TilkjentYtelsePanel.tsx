@@ -1,23 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import {
+  Aksjonspunkt,
+  BeregningsresultatUtbetalt,
+  BeregningsresultatPeriode,
+  FamilieHendelse,
+  KodeverkMedNavn,
+  Personopplysninger,
+  InntektArbeidYtelse,
+  Soknad,
+} from '@k9-sak-web/types';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import tilkjentYtelseAksjonspunkterPropType from '../propTypes/tilkjentYtelseAksjonspunkterPropType';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
-import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
-import TilkjentYtelse from './TilkjentYtelse';
+import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 
 const perioderMedClassName = [];
 
-const formatPerioder = perioder => {
+const formatPerioder = (perioder: BeregningsresultatPeriode[]): PeriodeMedId[] => {
   perioderMedClassName.length = 0;
   perioder.forEach(item => {
     if (item.andeler[0] && item.dagsats >= 0) {
@@ -34,20 +40,39 @@ const groups = [
 
 const { MANUELL_TILKJENT_YTELSE } = aksjonspunktCodes;
 
-export const TilkjentYtelsePanelImpl = ({
-  beregningsresultatMedUttaksplan,
+interface PureOwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  beregningresultat: BeregningsresultatUtbetalt;
+  gjeldendeFamiliehendelse: FamilieHendelse;
+  personopplysninger: Personopplysninger;
+  soknad: Soknad;
+  fagsakYtelseTypeKode: string;
+  aksjonspunkter: Aksjonspunkt[];
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  readOnly: boolean;
+  submitCallback: (data: any) => Promise<any>;
+  readOnlySubmitButton: boolean;
+  inntektArbeidYtelse: InntektArbeidYtelse;
+}
+
+interface MappedOwnProps {
+  vurderTilbaketrekkAP?: Aksjonspunkt;
+}
+
+export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
+  beregningresultat,
   vurderTilbaketrekkAP,
   submitCallback,
   readOnlySubmitButton,
-  getKodeverknavn,
   behandlingId,
   behandlingVersjon,
   aksjonspunkter,
-  // arbeidsforhold,
+  inntektArbeidYtelse,
   readOnly,
   alleKodeverk,
 }) => {
-  const opphoersdato = beregningsresultatMedUttaksplan?.opphoersdato;
+  const opphoersdato = beregningresultat?.opphoersdato;
   return (
     <>
       <Undertittel>
@@ -61,11 +86,12 @@ export const TilkjentYtelsePanelImpl = ({
           }}
         />
       )}
-      {beregningsresultatMedUttaksplan && (
+      {beregningresultat && (
         <TilkjentYtelse
-          items={formatPerioder(beregningsresultatMedUttaksplan.perioder)}
+          // @ts-ignore
+          items={formatPerioder(beregningresultat.perioder)}
           groups={groups}
-          getKodeverknavn={getKodeverknavn}
+          alleKodeverk={alleKodeverk}
         />
       )}
 
@@ -73,7 +99,8 @@ export const TilkjentYtelsePanelImpl = ({
         <TilkjentYtelseForm
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
-          beregningsresultat={beregningsresultatMedUttaksplan}
+          beregningsresultat={beregningresultat}
+          inntektArbeidYtelse={inntektArbeidYtelse}
           aksjonspunkter={aksjonspunkter}
           alleKodeverk={alleKodeverk}
           readOnly={readOnly}
@@ -90,28 +117,11 @@ export const TilkjentYtelsePanelImpl = ({
           vurderTilbaketrekkAP={vurderTilbaketrekkAP}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
-          beregningsresultat={beregningsresultatMedUttaksplan}
+          beregningsresultat={beregningresultat}
         />
       )}
     </>
   );
-};
-TilkjentYtelsePanelImpl.propTypes = {
-  beregningsresultatMedUttaksplan: tilkjentYtelseBeregningresultatPropType,
-  vurderTilbaketrekkAP: PropTypes.shape(),
-  submitCallback: PropTypes.func.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(tilkjentYtelseAksjonspunkterPropType).isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-};
-
-TilkjentYtelsePanelImpl.defaultProps = {
-  beregningsresultatMedUttaksplan: undefined,
-  vurderTilbaketrekkAP: undefined,
 };
 
 const finnTilbaketrekkAksjonspunkt = createSelector(
@@ -128,10 +138,9 @@ const finnTilbaketrekkAksjonspunkt = createSelector(
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    beregningsresultatMedUttaksplan: ownProps.beregningsresultat,
+    beregningresultat: ownProps.beregningsresultat,
     vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
-    getKodeverknavn: getKodeverknavnFn(ownProps.alleKodeverk, kodeverkTyper),
   };
 };
 
-export default connect(mapStateToProps)(injectIntl(TilkjentYtelsePanelImpl));
+export default connect(mapStateToProps)(TilkjentYtelsePanelImpl);

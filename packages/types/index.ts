@@ -2,7 +2,6 @@ export { default as Aksjonspunkt } from './src/aksjonspunktTsType';
 export { default as Arbeidsforhold } from './src/arbeidsforholdTsType';
 export { default as Behandling } from './src/behandlingTsType';
 export { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsType';
-export { default as BeregningsresultatEs } from './src/beregningsresultatEsTsType';
 export { default as BeregningsresultatFp } from './src/beregningsresultatFpTsType';
 export { default as Dokument } from './src/dokumentTsType';
 export { default as InntektArbeidYtelse } from './src/inntektArbeidYtelseTsType';
@@ -31,7 +30,12 @@ export { Rammevedtak } from './src/omsorgspenger/Rammevedtak';
 export { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknaden';
 export { default as FagsakPerson } from './src/fagsakPersonTsType';
 export { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
-export { default as BeregningsresultatUtbetalt } from './src/beregningsresultatUtbetaltTsType';
+export { default as FagsakInfo } from './src/fagsakInfoTsType';
+export {
+  BeregningsresultatUtbetalt,
+  BeregningsresultatPeriode,
+  BeregningsresultatPeriodeAndel,
+} from './src/beregningsresultatUtbetaltTsType';
 
 export {
   Uttaksperiode,

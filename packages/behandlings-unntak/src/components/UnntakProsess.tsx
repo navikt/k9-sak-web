@@ -177,6 +177,7 @@ const UnntakProsess: FunctionComponent<OwnProps> = ({
     valgtPanel,
   );
 
+  // todo dynamisk ytelse
   const fatterVedtakTextCode = useMemo(
     () =>
       valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
