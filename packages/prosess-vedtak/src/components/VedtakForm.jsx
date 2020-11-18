@@ -19,6 +19,7 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -39,7 +40,7 @@ const getPreviewManueltBrevCallback = (
   if (formProps.valid || formProps.pristine) {
     const data = {
       fritekst: skalOverstyre ? brodtekst : begrunnelse,
-      dokumentMal: skalOverstyre ? 'FRITKS' : undefined,
+      dokumentMal: skalOverstyre ? 'FRITKS' : 'UTLED',
       tittel: overskrift,
       gjelderVedtak: true,
     };
@@ -200,7 +201,7 @@ export class VedtakForm extends Component {
             intl={intl}
             readOnly={readOnly}
             sprakkode={sprakkode}
-            vedtakVarsel={vedtakVarsel}
+            ytelseTypeKode={ytelseTypeKode}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             beregningErManueltFastsatt={beregningErManueltFastsatt}
             dokumentdata={dokumentdata}
@@ -293,15 +294,26 @@ export const buildInitialValues = createSelector(
     ownProps => ownProps.behandlingresultat,
     ownProps => ownProps.sprakkode,
     ownProps => ownProps.vedtakVarsel,
+    ownProps => ownProps.dokumentdata,
   ],
-  (status, beregningResultat, aksjonspunkter, ytelseTypeKode, behandlingresultat, sprakkode, vedtakVarsel) => ({
+  (
+    status,
+    beregningResultat,
+    aksjonspunkter,
+    ytelseTypeKode,
+    behandlingresultat,
+    sprakkode,
+    vedtakVarsel,
+    dokumentdata,
+  ) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseTypeKode ? ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD : false,
     antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
     aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
-    skalBrukeOverstyrendeFritekstBrev: vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
-    overskrift: decodeHtmlEntity(vedtakVarsel.overskrift),
-    brødtekst: decodeHtmlEntity(vedtakVarsel.fritekstbrev),
+    skalBrukeOverstyrendeFritekstBrev:
+      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === 'FRITEKST' || vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
+    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
+    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
   }),
 );
 

@@ -4,17 +4,16 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
-import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
 const BrevPanel = props => {
   const {
     intl,
     readOnly,
     sprakkode,
-    vedtakVarsel,
     beregningErManueltFastsatt,
     dokumentdata,
     tilgjengeligeVedtaksbrev,
@@ -26,19 +25,6 @@ const BrevPanel = props => {
   const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
   const kanHaFritekstbrev = !isTilgjengeligeVedtaksbrevArray || tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
   const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-
-  const AutomatiskVedtaksbrev = () => (
-    <>
-      <InformasjonsbehovAutomatiskVedtaksbrev
-        intl={intl}
-        readOnly={readOnly}
-        sprakkode={sprakkode}
-        vedtakVarsel={vedtakVarsel}
-        beregningErManueltFastsatt={beregningErManueltFastsatt}
-        dokumentdata={dokumentdata}
-      />
-    </>
-  );
 
   const getPreviewAutomatiskBrevCallback = fritekst => e => {
     const formValues = {
@@ -52,6 +38,19 @@ const BrevPanel = props => {
     e.preventDefault();
   };
   const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse);
+
+  const AutomatiskVedtaksbrev = () => (
+    <>
+      <InformasjonsbehovAutomatiskVedtaksbrev
+        intl={intl}
+        readOnly={readOnly}
+        sprakkode={sprakkode}
+        beregningErManueltFastsatt={beregningErManueltFastsatt}
+        begrunnelse={begrunnelse}
+        dokumentdata={dokumentdata}
+      />
+    </>
+  );
 
   const Vedtaksbrev = () => (
     <>
@@ -82,26 +81,24 @@ BrevPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  vedtakVarsel: vedtakVarselPropType,
-  dokumentdata: PropTypes.shape(),
+  dokumentdata: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
-  skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
+  skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
+  beregningErManueltFastsatt: PropTypes.bool,
   previewCallback: PropTypes.func.isRequired,
 };
 
 BrevPanel.defaultProps = {
   tilgjengeligeVedtaksbrev: undefined,
-  dokumentdata: undefined,
-  begrunnelse: undefined,
+  begrunnelse: null,
 };
 
 export const brevselector = createSelector(
-  [ownProps => ownProps.sprakkode, ownProps => ownProps.vedtakVarsel],
-  (sprakkode, vedtakVarsel) => ({
+  [ownProps => ownProps.sprakkode, ownProps => ownProps.vedtakVarsel, ownProps => ownProps.dokumentdata],
+  (sprakkode, vedtakVarsel, dokumentdata) => ({
     sprakkode,
-    begrunnelse: decodeHtmlEntity(vedtakVarsel.fritekst),
+    begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
   }),
 );
 

@@ -44,6 +44,8 @@ const getForhandsvisCallback = (dispatch, fagsak, behandling) => data => {
     ...data,
     behandlingUuid: behandling.uuid,
     ytelseType: fagsak.fagsakYtelseType,
+    saksnummer: fagsak.saksnummer,
+    aktørId: fagsak.fagsakPerson.aktørId,
   };
   return dispatch(omsorgspengerBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };

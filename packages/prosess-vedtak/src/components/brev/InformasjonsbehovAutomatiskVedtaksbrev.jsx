@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
-import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
 const InformasjonsbehovAutomatiskVedtaksbrev = ({
   intl,
   sprakkode,
   readOnly,
-  vedtakVarsel,
+  begrunnelse,
   beregningErManueltFastsatt,
 }) => {
   const tilgjengeligeInformasjonsbehov = {
@@ -30,7 +29,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
           readOnly={readOnly}
           sprakkode={sprakkode}
           labelTextCode={behov}
-          vedtakVarsel={vedtakVarsel}
+          begrunnelse={begrunnelse}
         />
       ))}
     </>
@@ -41,10 +40,13 @@ InformasjonsbehovAutomatiskVedtaksbrev.propTypes = {
   intl: PropTypes.shape().isRequired,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  vedtakVarsel: vedtakVarselPropType,
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
+  begrunnelse: PropTypes.bool,
+  beregningErManueltFastsatt: PropTypes.bool,
 };
 
-InformasjonsbehovAutomatiskVedtaksbrev.defaultProps = {};
+InformasjonsbehovAutomatiskVedtaksbrev.defaultProps = {
+  begrunnelse: null,
+  beregningErManueltFastsatt: false,
+};
 
 export default InformasjonsbehovAutomatiskVedtaksbrev;

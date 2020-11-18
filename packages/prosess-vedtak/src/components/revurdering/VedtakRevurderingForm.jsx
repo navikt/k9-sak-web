@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
@@ -31,6 +31,7 @@ import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import BrevPanel from '../brev/BrevPanel';
+import PreviewLink from '../PreviewLink';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
@@ -128,6 +129,8 @@ export class VedtakRevurderingFormImpl extends Component {
     );
     const visOverstyringKnapp = kanOverstyre || readOnly;
     const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
+    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
+    const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
     return (
       <>
         <VedtakAksjonspunktPanel
@@ -216,13 +219,19 @@ export class VedtakRevurderingFormImpl extends Component {
             </Row>
             <BrevPanel
               intl={intl}
-              readonly={readOnly}
+              readOnly={readOnly}
               sprakkode={sprakkode}
-              vedtakVarsel={vedtakVarsel}
+              ytelseTypeKode={ytelseTypeKode}
+              dokumentdata={dokumentdata}
               tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              previewAutomatiskBrev={previewAutomatiskBrev}
+              previewCallback={previewAutomatiskBrev}
             />
+            {ytelseTypeKode === fagsakYtelseType.FRISINN && harTilgjengeligeVedtaksbrev && (
+              <PreviewLink previewCallback={previewAutomatiskBrev}>
+                <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
+              </PreviewLink>
+            )}
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}
@@ -297,6 +306,7 @@ const buildInitialValues = createSelector(
     ownProps => ownProps.behandlingresultat,
     ownProps => ownProps.sprakkode,
     ownProps => ownProps.vedtakVarsel,
+    ownProps => ownProps.dokumentdata,
   ],
   (
     beregningResultat,
@@ -306,6 +316,7 @@ const buildInitialValues = createSelector(
     behandlingresultat,
     sprakkode,
     vedtakVarsel,
+    dokumentdata,
   ) => {
     const aksjonspunktKoder = aksjonspunkter
       .filter(ap => ap.erAktivt)
@@ -330,10 +341,13 @@ const buildInitialValues = createSelector(
     return {
       sprakkode,
       aksjonspunktKoder,
-      skalBrukeOverstyrendeFritekstBrev: vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
-      skalUndertrykkeBrev: vedtakVarsel.vedtaksbrev.kode === 'INGEN',
-      overskrift: decodeHtmlEntity(vedtakVarsel.overskrift),
-      brødtekst: decodeHtmlEntity(vedtakVarsel.fritekstbrev),
+      skalBrukeOverstyrendeFritekstBrev:
+        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === 'FRITEKST' ||
+        vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
+      skalUndertrykkeBrev:
+        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === 'INGEN' || vedtakVarsel.vedtaksbrev.kode === 'INGEN',
+      overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
+      brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
     };
   },
 );
