@@ -20,6 +20,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -311,7 +312,8 @@ export const buildInitialValues = createSelector(
     antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
     aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev:
-      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === 'FRITEKST' || vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
+      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
+      vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
   }),

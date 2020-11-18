@@ -19,6 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Column, Row } from 'nav-frontend-grid';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -342,10 +343,11 @@ const buildInitialValues = createSelector(
       sprakkode,
       aksjonspunktKoder,
       skalBrukeOverstyrendeFritekstBrev:
-        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === 'FRITEKST' ||
-        vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
+        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
+        vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
       skalUndertrykkeBrev:
-        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === 'INGEN' || vedtakVarsel.vedtaksbrev.kode === 'INGEN',
+        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
+        vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
     };

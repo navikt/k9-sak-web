@@ -95,7 +95,7 @@ const getLagringSideeffekter = (
   }
 
   if (aksjonspunktModels[0].isVedtakSubmission) {
-    const dokumentdata = lagDokumentdata(aksjonspunktModels);
+    const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
     await dispatch(omsorgspengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata));
   }
 
