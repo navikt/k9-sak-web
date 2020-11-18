@@ -88,7 +88,12 @@ const AktsomhetFormPanel: FunctionComponent<OwnProps> & StaticFunctions = ({
       <FormattedMessage id="AktsomhetFormPanel.HandletUaktsomhetGrad" />
     </Undertekst>
     <VerticalSpacer eightPx />
-    <RadioGroupField validate={[required]} name="handletUaktsomhetGrad" readOnly={readOnly} onChange={resetFields}>
+    <RadioGroupField
+        validate={[required]}
+        name="handletUaktsomhetGrad"
+        readOnly={readOnly}
+        // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+        onChange={resetFields}>
       {aktsomhetTyper.map((vrt: KodeverkMedNavn) => (
         <RadioOption
           key={vrt.kode}

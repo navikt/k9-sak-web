@@ -43,7 +43,7 @@ const TilbakekrevingEditerVedtaksbrevPanel: FunctionComponent<OwnProps> & Static
       <FormattedMessage id="TilbakekrevingVedtak.Vedtaksbrev" />
     </Undertittel>
     <VerticalSpacer eightPx />
-    {vedtaksbrevAvsnitt.map(avsnitt => {
+    {vedtaksbrevAvsnitt.map((avsnitt: VedtaksbrevAvsnitt) => {
       const underavsnitter = avsnitt.underavsnittsliste;
       const periode = `${avsnitt.fom}_${avsnitt.tom}`;
       const harPeriodeSomManglerObligatoriskVerdi = perioderSomIkkeHarUtfyltObligatoriskVerdi.some(p => p === periode);
@@ -54,10 +54,9 @@ const TilbakekrevingEditerVedtaksbrevPanel: FunctionComponent<OwnProps> & Static
           <Ekspanderbartpanel
             className={harPeriodeSomManglerObligatoriskVerdi || visApen ? styles.panelMedGulmarkering : styles.panel}
             tittel={avsnitt.overskrift ? avsnitt.overskrift : ''}
-            tag="h2"
             apen={harPeriodeSomManglerObligatoriskVerdi || visApen}
           >
-            {underavsnitter.map(underavsnitt => (
+            {underavsnitter.map((underavsnitt: any) => (
               <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
                 {underavsnitt.overskrift && <Element>{underavsnitt.overskrift}</Element>}
                 {underavsnitt.brødtekst && <Normaltekst>{underavsnitt.brødtekst}</Normaltekst>}

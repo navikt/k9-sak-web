@@ -9,7 +9,7 @@ import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
 import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
-import { VedtaksbrevAvsnitt } from '../types/vedtaksbrevAvsnittTsType';
+import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
 interface OwnProps {
