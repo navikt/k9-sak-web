@@ -73,7 +73,7 @@ const emptyFeltverdiOmFinnes = (periode: CustomVilkarsVurdertePeriode) => {
   return periode;
 };
 
-const formaterPerioderForTidslinje = (perioder: DataForPeriode[] = [], vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[]) =>
+const formaterPerioderForTidslinje = (vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[], perioder: DataForPeriode[] = []) =>
   perioder.map((periode: DataForPeriode, index: number): TidslinjePeriode => {
     const per = vilkarsVurdertePerioder.find((p: CustomVilkarsVurdertePeriode) => p.fom === periode.fom && p.tom === periode.tom);
     const erBelopetIBehold =
@@ -230,7 +230,7 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
     } = this.props;
     const { valgtPeriode } = this.state;
 
-    const perioderFormatertForTidslinje = formaterPerioderForTidslinje(dataForDetailForm, vilkarsVurdertePerioder);
+    const perioderFormatertForTidslinje = formaterPerioderForTidslinje(vilkarsVurdertePerioder, dataForDetailForm);
     const isApOpen = perioderFormatertForTidslinje.some((p: TidslinjePeriode) => p.isAksjonspunktOpen);
     const valgtPeriodeFormatertForTidslinje = valgtPeriode
       ? perioderFormatertForTidslinje.find((p: TidslinjePeriode) => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom)

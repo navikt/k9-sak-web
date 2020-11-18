@@ -4,6 +4,6 @@ enum SarligGrunn {
   STOERRELSE_BELOEP = 'STOERRELSE_BELOEP',
   TID_FRA_UTBETALING = 'TID_FRA_UTBETALING',
   ANNET = 'ANNET',
-};
+}
 
 export default SarligGrunn;
