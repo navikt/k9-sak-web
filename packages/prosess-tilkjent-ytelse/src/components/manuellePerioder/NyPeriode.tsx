@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import moment from 'moment';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, InntektArbeidYtelse } from '@k9-sak-web/types';
+import { KodeverkMedNavn, InntektArbeidYtelse, Vilkar } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
@@ -25,6 +26,7 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   inntektArbeidYtelse: InntektArbeidYtelse;
   readOnly: boolean;
+  vilkar: Vilkar[];
 }
 
 export const UttakNyPeriode: FC<OwnProps & InjectedFormProps> = ({
@@ -33,10 +35,11 @@ export const UttakNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   inntektArbeidYtelse,
   readOnly,
   alleKodeverk,
+  vilkar,
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
-
+  const vilkårsPeriode = vilkar[0].perioder[0].periode;
   return (
     <div className={styles.periodeContainer}>
       <div className={styles.periodeType}>
@@ -53,10 +56,24 @@ export const UttakNyPeriode: FC<OwnProps & InjectedFormProps> = ({
             <FlexColumn>
               <FlexRow>
                 <FlexColumn>
-                  <DatepickerField name="fom" label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }} />
+                  <DatepickerField
+                    name="fom"
+                    label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }}
+                    disabledDays={{
+                      before: moment(vilkårsPeriode.fom).toDate(),
+                      after: moment(vilkårsPeriode.tom).toDate(),
+                    }}
+                  />
                 </FlexColumn>
                 <FlexColumn>
-                  <DatepickerField name="tom" label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }} />
+                  <DatepickerField
+                    name="tom"
+                    label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }}
+                    disabledDays={{
+                      before: moment(vilkårsPeriode.fom).toDate(),
+                      after: moment(vilkårsPeriode.tom).toDate(),
+                    }}
+                  />
                 </FlexColumn>
                 <FlexColumn className={styles.suffix}>
                   <div id="antallDager">
