@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { InjectedFormProps } from 'redux-form';
 import {
   Aksjonspunkt,
@@ -9,6 +10,7 @@ import {
   BeregningsresultatUtbetalt,
   InntektArbeidYtelse,
   KodeverkMedNavn,
+  Vilkar,
 } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
@@ -30,6 +32,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   inntektArbeidYtelse: InntektArbeidYtelse;
   vilkarForSykdomExists: boolean;
+  vilkar: Vilkar[];
 }
 
 const FORM_NAME = 'TilkjentYtelseForm';
@@ -42,6 +45,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   behandlingVersjon,
   alleKodeverk,
   inntektArbeidYtelse,
+  vilkar,
   ...formProps
 }) => {
   return (
@@ -70,6 +74,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
           behandlingVersjon={behandlingVersjon}
           alleKodeverk={alleKodeverk}
           inntektArbeidYtelse={inntektArbeidYtelse}
+          vilkar={vilkar}
         />
         {formProps.error && <span>{formProps.error}</span>}
       </form>
@@ -83,6 +88,41 @@ TilkjentYtelseForm.propTypes = {
 
 TilkjentYtelseForm.defaultProps = {
   readOnly: true,
+};
+
+export const sjekkOverlappendePerioder = (index: number, nestePeriode: any, forrigePeriode: any) =>
+  index !== 0 && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
+
+const validateForm = (values: any) => {
+  // NOSONAR må ha disse sjekkene
+  const errors = {};
+  if (!values.perioder) {
+    return errors;
+  }
+
+  if (values.perioder.length === 0) {
+    return {
+      perioder: {
+        _error: <FormattedMessage id="TilkjentYtelse.IngenPerioder" />,
+      },
+    };
+  }
+
+  values.perioder.forEach((periode: any, index: number) => {
+    const forrigePeriode = values.perioder[index - 1];
+    const nestePeriode = periode;
+
+    if (sjekkOverlappendePerioder(index, nestePeriode, forrigePeriode)) {
+      return {
+        perioder: {
+          _error: <FormattedMessage id="TilkjentYtelse.OverlappendePerioder" />,
+        },
+      };
+    }
+    return {};
+  });
+
+  return errors;
 };
 
 interface PureOwnProps {
@@ -131,16 +171,14 @@ const mapStateToPropsFactory = (_initialState: any, props: PureOwnProps) => {
   const initialValues = buildInitialValues(props);
   const { behandlingId, behandlingVersjon } = props;
 
-  // const validate = (values: any) => validateUttakForm(values, props.aksjonspunkter);
-  // const warn = (values: any) => warningsUttakForm(values);
+  const validate = (values: any) => validateForm(values);
 
   return (_state, ownProps) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     return {
       initialValues,
       behandlingFormPrefix,
-      // validate,
-      // warn,
+      validate,
       onSubmit: lagSubmitFn(ownProps),
     };
   };
