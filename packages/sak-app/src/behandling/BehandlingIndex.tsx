@@ -54,6 +54,7 @@ const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
 const BehandlingFrisinnIndex = React.lazy(() => import('@fpsak-frontend/behandling-frisinn'));
+const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
 
 const erTilbakekreving = behandlingTypeKode =>
   behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
@@ -210,6 +211,20 @@ export class BehandlingIndex extends Component<OwnProps> {
             <BehandlingAnkeIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (behandlingTypeKode === BehandlingType.UNNTAK) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
+            <BehandlingUnntakIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
+              valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
             />
           </ErrorBoundary>

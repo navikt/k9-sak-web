@@ -18,21 +18,20 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import {AlertStripeInfo} from "nav-frontend-alertstriper";
-import {dokumentdatatype} from "@k9-sak-web/konstanter";
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
-import FritekstBrevPanel from '../FritekstBrevPanel';
+
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
-import styles from './vedtakRevurderingForm.less';
-import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
 import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
+import BrevPanel from '../brev/BrevPanel';
 import PreviewLink from '../PreviewLink';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
@@ -74,7 +73,7 @@ export class VedtakRevurderingFormImpl extends Component {
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
-      erSendtInnUtenArsaker: false
+      erSendtInnUtenArsaker: false,
     };
   }
 
@@ -123,23 +122,18 @@ export class VedtakRevurderingFormImpl extends Component {
       dokumentdata,
       ...formProps
     } = this.props;
-    const {erSendtInnUtenArsaker} = this.state;
+    const { erSendtInnUtenArsaker } = this.state;
     const previewAutomatiskBrev = getPreviewBrevCallback(
       previewCallback,
       behandlingresultat,
       readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps),
     );
     const visOverstyringKnapp = kanOverstyre || readOnly;
+    const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
     const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
     const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-    const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN && simuleringResultat?.simuleringResultat?.sumFeilutbetaling < 0;
     return (
       <>
-        <VedtakFritekstbrevModal
-          readOnly={readOnly}
-          behandlingsresultat={behandlingresultat}
-          erSVP={ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER}
-        />
         <VedtakAksjonspunktPanel
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
@@ -224,24 +218,20 @@ export class VedtakRevurderingFormImpl extends Component {
                 </Column>
               )}
             </Row>
+            <BrevPanel
+              intl={intl}
+              readOnly={readOnly}
+              sprakkode={sprakkode}
+              ytelseTypeKode={ytelseTypeKode}
+              dokumentdata={dokumentdata}
+              tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              previewCallback={previewAutomatiskBrev}
+            />
             {ytelseTypeKode === fagsakYtelseType.FRISINN && harTilgjengeligeVedtaksbrev && (
               <PreviewLink previewCallback={previewAutomatiskBrev}>
                 <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
               </PreviewLink>
-            )}
-            {!harTilgjengeligeVedtaksbrev && (
-              <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
-                {intl.formatMessage({id: 'VedtakForm.IkkeVedtaksbrev'})}
-              </AlertStripeInfo>
-            )}
-            {skalBrukeOverstyrendeFritekstBrev &&
-              ![fagsakYtelseType.ENGANGSSTONAD, fagsakYtelseType.FRISINN].includes(ytelseTypeKode) && (
-                <FritekstBrevPanel
-                  intl={intl}
-                  readOnly={readOnly}
-                  sprakkode={sprakkode}
-                  previewBrev={previewAutomatiskBrev}
-                />
             )}
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
@@ -260,7 +250,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 behandlingArsaker={behandlingArsaker}
                 behandlingResultat={behandlingresultat}
                 harRedusertUtbetaling={harRedusertUtbetaling}
-                visFeilmeldingFordiArsakerMangler={() => this.setState({erSendtInnUtenArsaker: true})}
+                visFeilmeldingFordiArsakerMangler={() => this.setState({ erSendtInnUtenArsaker: true })}
               />
             )}
           </>
@@ -317,6 +307,7 @@ const buildInitialValues = createSelector(
     ownProps => ownProps.behandlingresultat,
     ownProps => ownProps.sprakkode,
     ownProps => ownProps.vedtakVarsel,
+    ownProps => ownProps.dokumentdata,
   ],
   (
     beregningResultat,
@@ -326,6 +317,7 @@ const buildInitialValues = createSelector(
     behandlingresultat,
     sprakkode,
     vedtakVarsel,
+    dokumentdata,
   ) => {
     const aksjonspunktKoder = aksjonspunkter
       .filter(ap => ap.erAktivt)
@@ -350,10 +342,14 @@ const buildInitialValues = createSelector(
     return {
       sprakkode,
       aksjonspunktKoder,
-      skalBrukeOverstyrendeFritekstBrev: vedtakVarsel.vedtaksbrev.kode === 'FRITEKST',
-      skalUndertrykkeBrev: vedtakVarsel.vedtaksbrev.kode === 'INGEN',
-      overskrift: decodeHtmlEntity(vedtakVarsel.overskrift),
-      brødtekst: decodeHtmlEntity(vedtakVarsel.fritekstbrev),
+      skalBrukeOverstyrendeFritekstBrev:
+        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
+        vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
+      skalUndertrykkeBrev:
+        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
+        vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
+      overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
+      brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
     };
   },
 );
