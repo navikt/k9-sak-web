@@ -90,7 +90,7 @@ export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & Injected
       erRevurderingTilbakekrevingFeilBeløpBortfalt={erRevurderingTilbakekrevingFeilBeløpBortfalt}
     />
     <VerticalSpacer twentyPx />
-    <FlexContainer fluid>
+    <FlexContainer>
       <FlexRow>
         <FlexColumn>
           <BehandlingspunktSubmitButton
