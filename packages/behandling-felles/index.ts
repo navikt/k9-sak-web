@@ -20,3 +20,5 @@ export { default as ProsessStegOverstyringPanelDef } from './src/util/prosessSte
 export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
 export { default as Rettigheter } from './src/types/rettigheterTsType';
 export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';
+
+export { default as lagDokumentdata } from './src/util/dokumentdataUtils';

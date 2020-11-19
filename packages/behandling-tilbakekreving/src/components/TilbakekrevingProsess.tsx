@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState, useCallback } from 'react';
 import { Dispatch } from 'redux';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo,
@@ -12,7 +11,6 @@ import {
   ProsessStegContainer,
   Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import { dokumentdatatype, featureToggle } from "@k9-sak-web/konstanter";
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
@@ -46,27 +44,10 @@ const getLagringSideeffekter = (
   toggleFatterVedtakModal,
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  dispatch,
-  featureToggles,
 ) => async aksjonspunktModels => {
   const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
   if (isFatterVedtakAp) {
     toggleOppdatereFagsakContext(false);
-  }
-
-  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
-    let dokumentdata;
-    if (aksjonspunktModels[0].skalUndertrykkeBrev) {
-      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.INGEN}
-    } else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) {
-      dokumentdata = {
-        [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.FRITEKST,
-        [dokumentdatatype.FRITEKST]: aksjonspunktModels[0].fritekstBrev,
-      };
-    } else {
-      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK};
-    }
-    await dispatch(tilbakekrevingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata));
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -123,8 +104,6 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps> = ({
     toggleFatterVedtakModal,
     toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
-    dispatch,
-    featureToggles,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(

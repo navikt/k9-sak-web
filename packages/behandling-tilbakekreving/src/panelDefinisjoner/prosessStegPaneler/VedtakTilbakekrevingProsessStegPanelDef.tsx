@@ -2,7 +2,7 @@ import React from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
-import redusertUtbetalingArsak from "@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak";
+import redusertUtbetalingArsak from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
 import { dokumentdatatype, featureToggle, prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
@@ -27,9 +27,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK];
 
-  getEndepunkter = featureToggles => featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA]
-    ? [tilbakekrevingApi.VEDTAKSBREV, tilbakekrevingApi.DOKUMENTDATA_HENTE]
-    : [tilbakekrevingApi.VEDTAKSBREV];
+  getEndepunkter = () => [tilbakekrevingApi.VEDTAKSBREV];
 
   getData = ({ behandling, beregningsresultat, fetchPreviewVedtaksbrev, featureToggles }) => ({
     beregningsresultat,
@@ -39,9 +37,13 @@ class PanelDef extends ProsessStegPanelDef {
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
       if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA]) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
-        dispatch(tilbakekrevingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker}));
+        dispatch(
+          tilbakekrevingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({
+            [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
+          }),
+        );
       }
-    }
+    },
   });
 }
 

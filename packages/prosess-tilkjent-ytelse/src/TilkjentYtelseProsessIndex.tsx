@@ -6,6 +6,7 @@ import {
   Aksjonspunkt,
   KodeverkMedNavn,
   FagsakInfo,
+  Vilkar,
 } from '@k9-sak-web/types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
@@ -21,6 +22,7 @@ interface OwnProps {
   isReadOnly: boolean;
   submitCallback: () => void;
   readOnlySubmitButton: boolean;
+  vilkar: Vilkar[];
 }
 
 const cache = createIntlCache();
@@ -43,6 +45,7 @@ const TilkjentYtelseProsessIndex: FC<OwnProps> = ({
   submitCallback,
   readOnlySubmitButton,
   inntektArbeidYtelse,
+  vilkar,
 }) => (
   <RawIntlProvider value={intl}>
     <TilkjentYtelsePanel
@@ -51,6 +54,7 @@ const TilkjentYtelseProsessIndex: FC<OwnProps> = ({
       beregningsresultat={beregningsresultat}
       // @ts-ignore
       fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
+      vilkar={vilkar}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       readOnly={isReadOnly}
