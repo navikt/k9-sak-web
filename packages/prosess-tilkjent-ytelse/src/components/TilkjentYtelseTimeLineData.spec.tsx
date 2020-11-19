@@ -76,7 +76,7 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         selectedItemData={selectedItemDataFL}
         selectedItemStartDate={selectedItemStartDate}
         selectedItemEndDate={selectedItemEndDate}
-        getKodeverknavn={getKodeverknavn}
+        alleKodeverk={{}}
       />,
     );
     expect(wrapper.find('FormattedMessage')).to.have.lengthOf(12);

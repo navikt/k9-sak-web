@@ -1,11 +1,14 @@
 import Kodeverk from './kodeverk';
 import FagsakPerson from './fagsakPersonTsType';
 
-type FagsakInfo = Readonly<{
-  saksnummer: number,
-  fagsakYtelseType: Kodeverk,
-  fagsakPerson: FagsakPerson,
-  fagsakStatus: Kodeverk,
+export type FagsakInfo = Readonly<{
+  saksnummer: string;
+  fagsakYtelseType: Kodeverk;
+  fagsakPerson: FagsakPerson;
+  fagsakStatus: Kodeverk;
+  isForeldrepengerFagsak: boolean;
+  kanRevurderingOpprettes: boolean;
+  skalBehandlesAvInfotrygd: boolean;
 }>;
 
 export default FagsakInfo;

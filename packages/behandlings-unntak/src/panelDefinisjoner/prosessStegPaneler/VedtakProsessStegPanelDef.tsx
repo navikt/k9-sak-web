@@ -26,6 +26,7 @@ class PanelDef extends ProsessStegPanelDef {
     unntakBehandlingApi.SEND_VARSEL_OM_REVURDERING,
     unntakBehandlingApi.VEDTAK_VARSEL,
     unntakBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
+    unntakBehandlingApi.DOKUMENTDATA_HENTE,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
@@ -33,15 +34,14 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
-  // TODO fiks dynamisk fagsakytelse
   getData = ({
-    fagsak,
     previewCallback,
     rettigheter,
     aksjonspunkter,
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
+    fagsak,
   }) => {
     return {
       previewCallback,

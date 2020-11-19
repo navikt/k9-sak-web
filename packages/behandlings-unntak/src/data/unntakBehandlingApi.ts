@@ -51,14 +51,13 @@ export const UnntakBehandlingApiKeys = {
   INNTEKT_OG_YTELSER: 'INNTEKT_OG_YTELSER',
   TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
+  DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
 };
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/sak/api/behandlinger', UnntakBehandlingApiKeys.BEHANDLING_FP)
 
-  // behandlingsdata
-  // behandlingsdata
-  .withRel('beregningsresultat-utbetalt', UnntakBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
+  .withRel('beregningsresultat-utbetalt', UnntakBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING) // behandlingsdata
   .withRel('aksjonspunkter', UnntakBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', UnntakBehandlingApiKeys.VILKAR)
   .withRel('soeker-personopplysninger', UnntakBehandlingApiKeys.PERSONOPPLYSNINGER)
@@ -124,6 +123,7 @@ const endpoints = new RestApiConfigBuilder()
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', UnntakBehandlingApiKeys.PREVIEW_MESSAGE)
   .withRel('dokumentdata-lagre', UnntakBehandlingApiKeys.DOKUMENTDATA_LAGRE)
+  .withRel('dokumentdata-hente', UnntakBehandlingApiKeys.DOKUMENTDATA_HENTE)
 
   .build();
 

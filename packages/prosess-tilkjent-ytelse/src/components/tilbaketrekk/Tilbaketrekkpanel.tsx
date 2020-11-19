@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
@@ -21,6 +21,7 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { Aksjonspunkt, BeregningsresultatFp } from '@k9-sak-web/types';
 
 import styles from './tilbaketrekkpanel.less';
 
@@ -31,7 +32,17 @@ const formName = 'vurderTilbaketrekkForm';
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
-export const Tilbaketrekkpanel = ({
+interface PureOwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  readOnly: boolean;
+  vurderTilbaketrekkAP?: Aksjonspunkt;
+  submitCallback: (data: any) => Promise<any>;
+  readOnlySubmitButton: boolean;
+  beregningsresultat?: BeregningsresultatFp;
+}
+
+export const Tilbaketrekkpanel: FC<PureOwnProps & WrappedComponentProps & InjectedFormProps> = ({
   intl,
   readOnly,
   vurderTilbaketrekkAP,
@@ -75,14 +86,8 @@ export const Tilbaketrekkpanel = ({
             readOnly={readOnly}
             isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
           >
-            <RadioOption
-              label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />}
-              value={false}
-            />
-            <RadioOption
-              label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />}
-              value
-            />
+            <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />} value={false} />
+            <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />} value />
           </RadioGroupField>
         </Column>
       </Row>
@@ -114,19 +119,9 @@ export const Tilbaketrekkpanel = ({
       </Row>
     </form>
   </div>
-
 );
 
-Tilbaketrekkpanel.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  vurderTilbaketrekkAP: PropTypes.shape().isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-};
-
-export const transformValues = (values) => {
+export const transformValues = values => {
   const hindreTilbaketrekk = values[radioFieldName];
   const begrunnelse = values[begrunnelseFieldName];
   return {
@@ -136,22 +131,23 @@ export const transformValues = (values) => {
   };
 };
 
-export const buildInitialValues = createSelector([
-  (state, ownProps) => ownProps.vurderTilbaketrekkAP,
-  (state, ownProps) => ownProps.beregningsresultat], (ap, tilkjentYtelse) => {
-  const tidligereValgt = tilkjentYtelse.skalHindreTilbaketrekk;
-  if (tidligereValgt === undefined || tidligereValgt === null || !ap || !ap.begrunnelse) {
-    return undefined;
-  }
-  return {
-    radioVurderTilbaketrekk: tidligereValgt,
-    begrunnelseVurderTilbaketrekk: ap.begrunnelse,
-  };
-});
+export const buildInitialValues = createSelector(
+  [(state, ownProps) => ownProps.vurderTilbaketrekkAP, (state, ownProps) => ownProps.beregningsresultat],
+  (ap, tilkjentYtelse) => {
+    const tidligereValgt = tilkjentYtelse.skalHindreTilbaketrekk;
+    if (tidligereValgt === undefined || tidligereValgt === null || !ap || !ap.begrunnelse) {
+      return undefined;
+    }
+    return {
+      radioVurderTilbaketrekk: tidligereValgt,
+      begrunnelseVurderTilbaketrekk: ap.begrunnelse,
+    };
+  },
+);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
-  return (state) => ({
+  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  return state => ({
     onSubmit,
     initialValues: buildInitialValues(state, ownProps),
   });
