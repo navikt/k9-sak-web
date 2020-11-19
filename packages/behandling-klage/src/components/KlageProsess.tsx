@@ -10,11 +10,9 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { dokumentdatatype, featureToggle } from "@k9-sak-web/konstanter";
 import { Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 
 import KlageBehandlingModal from './KlageBehandlingModal';
 import klageBehandlingApi from '../data/klageBehandlingApi';
@@ -75,8 +73,6 @@ const getLagringSideeffekter = (
   toggleKlageModal,
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  dispatch,
-  featureToggles,
 ) => async aksjonspunktModels => {
   const skalByttTilKlageinstans = aksjonspunktModels.some(
     apValue =>
@@ -89,21 +85,6 @@ const getLagringSideeffekter = (
 
   if (skalByttTilKlageinstans || erVedtakAp) {
     toggleOppdatereFagsakContext(false);
-  }
-
-  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
-    let dokumentdata;
-    if (aksjonspunktModels[0].skalUndertrykkeBrev) {
-      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.INGEN}
-    } else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) {
-      dokumentdata = {
-        [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.FRITEKST,
-        [dokumentdatatype.FRITEKST]: aksjonspunktModels[0].fritekstBrev,
-      };
-    } else {
-      dokumentdata = {[dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK};
-    }
-    await dispatch(klageBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata));
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -163,8 +144,6 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
     toggleKlageModal,
     toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
-    dispatch,
-    featureToggles,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(

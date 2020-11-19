@@ -1,7 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { WrappedComponentProps } from 'react-intl';
-import { FieldArrayFieldsProps } from 'redux-form';
+import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import { FlexColumn, FlexRow, PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { KodeverkMedNavn, InntektArbeidYtelse } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
@@ -10,21 +11,13 @@ const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
 const maxValue3999 = maxValue(3999);
 
-const arbeidsForholdArray = [
-  {
-    identifikator: '910909088',
-    identifikatorGUI: '910909088',
-    navn: 'BEDRIFT AS',
-  },
-];
-
 const mapArbeidsforhold = (arbeidsForhold: any) =>
   arbeidsForhold.map((andel: any, index) => {
-    const { identifikator, navn } = andel;
+    const { arbeidsgiverIdentifikator, navn } = andel;
     const key = `${navn}${index}`;
     return (
-      <option value={`${identifikator}|${navn}`} key={key}>
-        {navn} {identifikator}
+      <option value={`${arbeidsgiverIdentifikator}|${navn}`} key={key}>
+        {navn} {arbeidsgiverIdentifikator}
       </option>
     );
   });
@@ -38,23 +31,25 @@ const getInntektskategori = alleKodeverk => {
   ));
 };
 
-interface OwnProps {
-  fields: FieldArrayFieldsProps<any>;
-  getKodeverknavn: (...args: any[]) => any;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-}
-
 const defaultAndel = {
-  dagsats: '',
-  Mottaker: '',
+  fom: '',
+  tom: '',
 };
 
-const NyAndel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+interface OwnProps {
+  meta: FieldArrayMetaProps;
+  readOnly: boolean;
+  fields: FieldArrayFieldsProps<any>;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  inntektArbeidYtelse: InntektArbeidYtelse;
+}
+
+export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
   fields,
   meta,
   alleKodeverk,
   readOnly,
-  // getKodeverknavn,
+  inntektArbeidYtelse,
 }) => (
   <PeriodFieldArray
     shouldShowAddButton
@@ -80,7 +75,7 @@ const NyAndel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
             bredde="xl"
             name={`${periodeElementFieldId}.arbeidsgiver`}
             validate={[required]}
-            selectValues={mapArbeidsforhold(arbeidsForholdArray)}
+            selectValues={mapArbeidsforhold(inntektArbeidYtelse?.arbeidsforhold)}
           />
         </FlexColumn>
         <FlexColumn>

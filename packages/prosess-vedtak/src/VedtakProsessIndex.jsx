@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-
 import VedtakPanels from './components/VedtakPanels';
 import messages from '../i18n/nb_NO.json';
 import vedtakBehandlingPropType from './propTypes/vedtakBehandlingPropType';
@@ -30,7 +27,6 @@ const intl = createIntl(
 const VedtakProsessIndex = ({
   behandling,
   beregningresultatForeldrepenger,
-  beregningresultatEngangsstonad,
   tilbakekrevingvalg,
   simuleringResultat,
   beregningsgrunnlag,
@@ -64,11 +60,7 @@ const VedtakProsessIndex = ({
       vilkar={vilkar}
       tilbakekrevingvalg={tilbakekrevingvalg}
       simuleringResultat={simuleringResultat}
-      resultatstruktur={
-        ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
-          ? beregningresultatEngangsstonad
-          : beregningresultatForeldrepenger
-      }
+      resultatstruktur={beregningresultatForeldrepenger}
       sendVarselOmRevurdering={sendVarselOmRevurdering}
       resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
       medlemskapFom={medlemskap ? medlemskap.fom : undefined}
@@ -90,7 +82,6 @@ const VedtakProsessIndex = ({
 VedtakProsessIndex.propTypes = {
   behandling: vedtakBehandlingPropType.isRequired,
   beregningresultatForeldrepenger: vedtakBeregningsresultatPropType,
-  beregningresultatEngangsstonad: vedtakBeregningsresultatPropType,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   sendVarselOmRevurdering: PropTypes.bool,
   beregningsresultatOriginalBehandling: vedtakOriginalBehandlingPropType,
@@ -113,7 +104,6 @@ VedtakProsessIndex.propTypes = {
 
 VedtakProsessIndex.defaultProps = {
   beregningresultatForeldrepenger: undefined,
-  beregningresultatEngangsstonad: undefined,
   beregningsresultatOriginalBehandling: undefined,
   simuleringResultat: undefined,
   tilbakekrevingvalg: undefined,

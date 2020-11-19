@@ -127,12 +127,8 @@ export const gjenopptaBehandlingAccess = accessSelector(
   [behandlingStatusCode.BEHANDLING_UTREDES],
 );
 
-const opneBehandlingForEndringerAccessSelector = (behandlingType, sakstype) => {
-  if (
-    !behandlingType ||
-    behandlingType.kode !== BehandlingType.REVURDERING ||
-    sakstype.kode === fagsakYtelseType.ENGANGSSTONAD
-  ) {
+const opneBehandlingForEndringerAccessSelector = behandlingType => {
+  if (!behandlingType || behandlingType.kode !== BehandlingType.REVURDERING) {
     return accessSelector([kanSaksbehandle], [], []);
   }
 
@@ -148,14 +144,8 @@ export const opneBehandlingForEndringerAccess = (
   navAnsatt: NavAnsatt,
   fagsakStatus: Kodeverk,
   behandlingStatus: Kodeverk,
-  sakstype: Kodeverk,
 ) =>
-  opneBehandlingForEndringerAccessSelector(behandlingType, sakstype)(
-    navAnsatt,
-    fagsakStatus,
-    behandlingStatus,
-    behandlingType,
-  );
+  opneBehandlingForEndringerAccessSelector(behandlingType)(navAnsatt, fagsakStatus, behandlingStatus, behandlingType);
 
 export const allMenuAccessRights = (
   navAnsatt: NavAnsatt,
@@ -189,7 +179,6 @@ export const allMenuAccessRights = (
     navAnsatt,
     fagsakStatus,
     behandlingStatus,
-    sakstype,
   ),
   ikkeVisOpprettNyBehandling: sjekkOmSkalTilInfotrygdAccess(skalBehandlesAvInfotrygd),
 });

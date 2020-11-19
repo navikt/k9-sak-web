@@ -156,13 +156,20 @@ const manuelleRevurderingsArsaker = [
   behandlingArsakType.SØKNADSFRIST,
   behandlingArsakType.KLAGE_U_INNTK,
   behandlingArsakType.KLAGE_M_INNTK,
+  behandlingArsakType.ANNET,
+  behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+  behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
+  behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
+  behandlingArsakType.FEIL_PROSESSUELL,
+  behandlingArsakType.ETTER_KLAGE,
 ];
 
 const tilbakekrevingRevurderingArsaker = [
+  behandlingArsakType.RE_FORELDELSE,
+  behandlingArsakType.RE_VILKÅR,
   behandlingArsakType.RE_KLAGE_KA,
   behandlingArsakType.RE_KLAGE_NFP,
-  behandlingArsakType.RE_VILKÅR,
-  behandlingArsakType.RE_FORELDELSE,
+  behandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT,
 ];
 
 export const getBehandlingAarsaker = createSelector(
@@ -174,11 +181,11 @@ export const getBehandlingAarsaker = createSelector(
   ],
   (ytelseType, alleRevurderingArsaker, alleTilbakekrevingRevurderingArsaker, valgtBehandlingType) => {
     if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
-      return alleTilbakekrevingRevurderingArsaker
-        .filter(ba => tilbakekrevingRevurderingArsaker.includes(ba.kode))
-        .sort((ba1, ba2) => ba1.navn.localeCompare(ba2.navn));
+      return tilbakekrevingRevurderingArsaker
+        .map(ar => alleTilbakekrevingRevurderingArsaker.find(el => el.kode === ar))
+        .filter(ar => ar);
     }
-
+    // TODO lage en egen for UNNTAK når vi vet hvilke det skal være
     if ([bType.REVURDERING, bType.UNNTAK].some(type => type === valgtBehandlingType)) {
       return alleRevurderingArsaker
         .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)

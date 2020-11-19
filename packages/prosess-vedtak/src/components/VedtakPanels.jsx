@@ -119,6 +119,7 @@ const VedtakPanels = ({
       beregningErManueltFastsatt={beregningErManueltFastsatt}
       vedtakVarsel={vedtakVarsel}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+      dokumentdata={dokumentdata}
     />
   );
 };

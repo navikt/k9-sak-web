@@ -26,6 +26,7 @@ const UnntakProsessIndex = ({
   previewCallback,
   readOnlySubmitButton,
   aksjonspunkter,
+  vilkar,
 }) => {
   const { behandlingsresultat } = behandling;
   const vilkårsresultat = behandlingsresultat?.vilkårResultat?.K9_VILKÅRET;
@@ -43,6 +44,7 @@ const UnntakProsessIndex = ({
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
         vilkårsresultat={vilkårsresultat}
+        vilkar={vilkar}
       />
     </RawIntlProvider>
   );
@@ -56,6 +58,7 @@ UnntakProsessIndex.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default UnntakProsessIndex;

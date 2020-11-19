@@ -3,6 +3,7 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
@@ -47,10 +48,11 @@ class PanelDef extends ProsessStegPanelDef {
     return vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ fagsak, beregningsresultatUtbetaling, personopplysninger }) => {
+  getData = ({ fagsak, beregningsresultatUtbetaling, inntektArbeidYtelse, personopplysninger }) => {
     return {
       fagsak,
       personopplysninger,
+      inntektArbeidYtelse,
       beregningsresultat: beregningsresultatUtbetaling,
     };
   };

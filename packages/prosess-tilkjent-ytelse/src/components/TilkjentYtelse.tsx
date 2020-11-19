@@ -1,11 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, RefObject } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
-import { injectIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { calcDaysAndWeeksWithWeekends, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
+import {
+  calcDaysAndWeeksWithWeekends,
+  DDMMYY_DATE_FORMAT,
+  ISO_DATE_FORMAT,
+  getKodeverknavnFn,
+} from '@fpsak-frontend/utils';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
@@ -13,9 +19,11 @@ import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
 
 import styles from './tilkjentYtelse.less';
 
+export type PeriodeMedId = BeregningsresultatPeriode & { id: number };
+
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 
-const getOptions = nyePerioder => {
+const getOptions = (nyePerioder: PeriodeMedId[]) => {
   const firstPeriod = nyePerioder[0];
   const lastPeriod = nyePerioder[nyePerioder.length - 1];
 
@@ -97,15 +105,30 @@ const prepareTimelineData = (periode, index, intl, getKodeverknavn) => {
   };
 };
 
+interface OwnProps {
+  items: PeriodeMedId[];
+  groups: {
+    id: number;
+    content: string;
+  }[];
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+}
+
+interface OwnState {
+  selectedItem?: PeriodeMedId;
+}
+
 /**
  * TilkjentYtelse
  *
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for tilkjent ytelse
  */
 
-export class TilkjentYtelse extends Component {
-  constructor() {
-    super();
+export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, OwnState> {
+  timelineRef: RefObject<any>;
+
+  constructor(props: OwnProps & WrappedComponentProps) {
+    super(props);
 
     this.state = {
       selectedItem: null,
@@ -176,7 +199,7 @@ export class TilkjentYtelse extends Component {
     }
   }
 
-  selectHandler(eventProps) {
+  selectHandler(eventProps: { items: number[] }) {
     const {
       props: { items },
     } = this;
@@ -225,12 +248,14 @@ export class TilkjentYtelse extends Component {
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, intl, getKodeverknavn },
+      props: { groups, items, intl, alleKodeverk },
       selectHandler,
       state: { selectedItem },
       zoomIn,
       zoomOut,
     } = this;
+    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
     const timelineData = items.map((periode, index) => prepareTimelineData(periode, index, intl, getKodeverknavn));
     return (
       <div className={styles.timelineContainer}>
@@ -263,7 +288,7 @@ export class TilkjentYtelse extends Component {
         </Row>
         {selectedItem && (
           <TilkjentYtelseTimelineData
-            getKodeverknavn={getKodeverknavn}
+            alleKodeverk={alleKodeverk}
             selectedItemStartDate={selectedItem.fom.toString()}
             selectedItemEndDate={selectedItem.tom.toString()}
             selectedItemData={selectedItem}
@@ -275,12 +300,5 @@ export class TilkjentYtelse extends Component {
     );
   }
 }
-
-TilkjentYtelse.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  groups: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  intl: PropTypes.shape().isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
-};
 
 export default injectIntl(TilkjentYtelse);
