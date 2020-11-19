@@ -12,6 +12,7 @@ import {
   FatterVedtakStatusModal,
   ProsessStegPanel,
   ProsessStegContainer,
+  lagDokumentdata,
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
@@ -43,6 +44,8 @@ const getForhandsvisCallback = (dispatch, fagsak, behandling) => data => {
     ...data,
     behandlingUuid: behandling.uuid,
     ytelseType: fagsak.fagsakYtelseType,
+    saksnummer: fagsak.saksnummer,
+    aktørId: fagsak.fagsakPerson.aktørId,
   };
   return dispatch(omsorgspengerBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };
@@ -70,7 +73,8 @@ const getLagringSideeffekter = (
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
-) => aksjonspunktModels => {
+  dispatch,
+) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
     apModel =>
       (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
@@ -88,6 +92,11 @@ const getLagringSideeffekter = (
 
   if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
     toggleOppdatereFagsakContext(false);
+  }
+
+  if (aksjonspunktModels[0].isVedtakSubmission) {
+    const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
+    await dispatch(omsorgspengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata));
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -160,6 +169,7 @@ const OmsorgspengerProsess: FunctionComponent<OwnProps> = ({
     toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
+    dispatch,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
@@ -175,7 +185,7 @@ const OmsorgspengerProsess: FunctionComponent<OwnProps> = ({
     () =>
       valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
         ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionFP',
+        : 'FatterVedtakStatusModal.ModalDescriptionOMS',
     [behandling.versjon],
   );
 

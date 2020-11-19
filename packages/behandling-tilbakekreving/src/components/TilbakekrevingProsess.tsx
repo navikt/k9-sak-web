@@ -44,7 +44,7 @@ const getLagringSideeffekter = (
   toggleFatterVedtakModal,
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
-) => aksjonspunktModels => {
+) => async aksjonspunktModels => {
   const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
   if (isFatterVedtakAp) {
     toggleOppdatereFagsakContext(false);

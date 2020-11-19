@@ -21,6 +21,7 @@ export const FpsakApiKeys = {
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
   NEW_BEHANDLING_FPSAK: 'NEW_BEHANDLING_FPSAK',
+  NEW_BEHANDLING_UNNTAK: 'NEW_BEHANDLING_UNNTAK',
   NEW_BEHANDLING_FPTILBAKE: 'NEW_BEHANDLING_FPTILBAKE',
   NEW_BEHANDLING_KLAGE: 'NEW_BEHANDLING_KLAGE',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
@@ -137,6 +138,9 @@ const endpoints = new RestApiConfigBuilder()
   /* Klage */
   .withGet('/k9/klage/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_KLAGE)
   .withAsyncPut('/k9/klage/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_KLAGE)
+
+  /* Unntak */
+  .withAsyncPut('/k9/sak/api/behandlinger/unntak', FpsakApiKeys.NEW_BEHANDLING_UNNTAK)
 
   .build();
 

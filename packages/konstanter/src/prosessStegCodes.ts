@@ -5,6 +5,7 @@ const prosessStegCodes = {
   AVREGNING: 'simulering',
   BEHANDLE_INNSYN: 'behandle_innsyn',
   BEREGNING: 'beregning',
+  UNNTAK: 'unntak',
   BEREGNINGSGRUNNLAG: 'beregningsgrunnlag',
   KLAGE_NAV_FAMILIE_OG_PENSJON: 'klage_nav_familie_og_pensjon',
   KLAGE_NAV_KLAGEINSTANS: 'klage_nav_klageinstans',

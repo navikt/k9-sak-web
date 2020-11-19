@@ -40,7 +40,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         showModal
         infoTextCode="testInfo"
         altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
-        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionESApproval"
+        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval"
         closeEvent={closeEventCallback}
         resolveProsessAksjonspunkterSuccess
       />,
@@ -50,21 +50,21 @@ describe('<FatterVedtakApprovalModal>', () => {
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('contentLabel')).is.eql(
-      'Engangsstønad er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+      'Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
     );
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
   });
 
-  it('skal rendre modal for iverksetter vedtak foreldrepenger', () => {
+  it('skal rendre modal for iverksetter vedtak Pleiepenger', () => {
     const wrapper = shallowWithIntl(
       <FatterVedtakApprovalModal
         intl={intlMock}
         showModal
         infoTextCode="testInfo"
         altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
-        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionFPApproval"
+        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval"
         closeEvent={closeEventCallback}
         resolveProsessAksjonspunkterSuccess
       />,
@@ -88,7 +88,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         showModal={false}
         infoTextCode="testInfo"
         altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
-        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionFPApproval"
+        modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval"
         closeEvent={closeEventCallback}
         resolveProsessAksjonspunkterSuccess
       />,

@@ -695,6 +695,9 @@ describe('<VedtakForm>', () => {
       avslagsarsak: null,
       avslagsarsakFritekst: null,
     };
+    const dokumentdata = {
+      VEDTAKSBREV_TYPE: 'AUTOMATISK',
+    };
     // eslint-disable-next-line
     const model = buildInitialValues.resultFunc(
       behandlingStatus.BEHANDLING_UTREDES,
@@ -704,6 +707,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat,
       sprakkode,
       vedtakVarsel,
+      dokumentdata,
     );
 
     expect(model).to.eql({
@@ -758,6 +762,13 @@ describe('<VedtakForm>', () => {
       overskrift: 'Overskrift',
       fritekstbrev: 'Brødtekst',
     };
+    const dokumentdata = {
+      VEDTAKSBREV_TYPE: 'FRITEKST',
+      FRITEKST: {
+        overskrift: 'Overskrift',
+        brødtekst: 'Brødtekst',
+      },
+    };
 
     const model = buildInitialValues.resultFunc(
       behandlingStatus.BEHANDLING_UTREDES,
@@ -767,6 +778,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat,
       sprakkode,
       vedtakVarsel,
+      dokumentdata,
     );
     expect(model).to.eql({
       aksjonspunktKoder: ['5033'],
@@ -810,6 +822,14 @@ describe('<VedtakForm>', () => {
     },
   };
 
+  const dokumentdata = {
+    VEDTAKSBREV_TYPE: 'FRITEKST',
+    FRITEKST: {
+      overskrift: 'Overskrift',
+      brødtekst: 'Brødtekst',
+    },
+  };
+
   it('skal vise avkrysningsboks i lesemodus for rolle med overstyringstilgang', () => {
     const wrapper = shallowWithIntl(
       <VedtakForm
@@ -834,6 +854,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        dokumentdata={dokumentdata}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -866,6 +887,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        dokumentdata={dokumentdata}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -898,6 +920,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        dokumentdata={dokumentdata}
       />,
     );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');

@@ -73,7 +73,7 @@ const getLagringSideeffekter = (
   toggleKlageModal,
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
-) => aksjonspunktModels => {
+) => async aksjonspunktModels => {
   const skalByttTilKlageinstans = aksjonspunktModels.some(
     apValue =>
       apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&

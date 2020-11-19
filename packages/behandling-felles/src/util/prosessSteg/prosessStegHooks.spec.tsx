@@ -241,7 +241,7 @@ describe('<prosessStegHooks>', () => {
     expect(opppdaterKall[0].args[1]).to.eql('default');
   });
 
-  it('skal bekrefte aksjonspunkt', () => {
+  it('skal bekrefte aksjonspunkt', async () => {
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
@@ -279,7 +279,7 @@ describe('<prosessStegHooks>', () => {
     );
     const bekreftAksjonspunkt = wrapper.find('div').prop('data-values') as (number) => void;
 
-    bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
+    await bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
 
     const requestKall = makeRestApiRequest.getCalls();
     expect(requestKall).to.have.length(1);

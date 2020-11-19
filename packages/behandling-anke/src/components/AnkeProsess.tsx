@@ -70,7 +70,7 @@ const getLagringSideeffekter = (
   toggleAnkeModal,
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
-) => aksjonspunktModels => {
+) => async aksjonspunktModels => {
   const skalTilMedunderskriver = aksjonspunktModels.some(apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
   const skalFerdigstilles = aksjonspunktModels.some(
     apValue => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,

@@ -53,3 +53,5 @@ spec:
       value: "http://k9-tilbake"
     - name: APP_DIAGNOSEKODER
       value: "http://diagnosekode-api"
+    - name: MEDISINSK_VILKAR_FRONTEND_URL
+      value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"

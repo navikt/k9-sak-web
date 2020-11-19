@@ -30,7 +30,7 @@ import MenyNyBehandlingIndex, {
   skalViseIMeny as skalViseNyBehandlingIMeny,
   getMenytekst as getNyBehandlingMenytekst,
 } from '@fpsak-frontend/sak-meny-ny-behandling';
-
+import { featureToggle } from '@k9-sak-web/konstanter';
 import {
   getAktorid,
   getSkalBehandlesAvInfotrygd,
@@ -55,7 +55,7 @@ import {
   getKanHenleggeBehandling,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
-import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
+import { getNavAnsatt, getFeatureToggles, getEnabledApplicationContexts } from '../app/duck';
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk } from '../kodeverk/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
@@ -72,7 +72,7 @@ import {
 import MenyKodeverk from './MenyKodeverk';
 import Rettigheter from './rettigheterTsType';
 
-const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
+let BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   bType.FORSTEGANGSSOKNAD,
   bType.KLAGE,
   bType.REVURDERING,
@@ -114,6 +114,7 @@ interface StateProps {
   behandlendeEnhetNavn: string;
   kanHenlegge: boolean;
   rettigheter: Rettigheter;
+  featureToggles?: {};
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
 }
@@ -160,6 +161,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   pushLocation,
   rettigheter,
   aktorId,
+  featureToggles,
   gjeldendeVedtakBehandlendeEnhetId,
 }) => {
   if (
@@ -175,6 +177,14 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   }
 
   const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
+
+  // FIX remove this when unntaksløype er lansert
+  if (
+    featureToggles?.[featureToggle.AKTIVER_UNNTAKSBEHANDLING] &&
+    !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(bType.UNNTAK)
+  ) {
+    BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.concat(bType.UNNTAK);
+  }
 
   const erTilbakekreving =
     behandlingType &&
@@ -196,6 +206,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
             lukkModal={lukkModal}
           />
         )),
+        // https://github.com/navikt/k9-sak-web/compare/Sett-behandling-på-vent
         new MenyData(
           skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) &&
             (!erFrisinn || erTilbakekreving),
@@ -267,8 +278,8 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
               opprettNyForstegangsBehandlingAccess.employeeHasAccess &&
               !!opprettNyForstegangsBehandlingAccess.isEnabled,
             [bType.REVURDERING]: opprettRevurderingAccess.employeeHasAccess && opprettRevurderingAccess.isEnabled,
-            [bType.TILBAKEKREVING]: kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
-            [bType.TILBAKEKREVING_REVURDERING]: kanTilbakekrevingOpprettes.kanRevurderingOpprettes,
+            [bType.TILBAKEKREVING]: erFrisinn && kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
+            [bType.TILBAKEKREVING_REVURDERING]: erFrisinn && kanTilbakekrevingOpprettes.kanRevurderingOpprettes,
             [bType.KLAGE]: !!gjeldendeVedtakBehandlendeEnhetId,
           };
           return (
@@ -341,7 +352,6 @@ const getMenyRettigheter = createSelector(
     getFagsakYtelseType,
     getBehandlingStatus,
     getBehandlingType,
-    (_state, ownProps) => ownProps.menyhandlingRettigheter,
   ],
   (
     navAnsatt: NavAnsatt,
@@ -351,7 +361,6 @@ const getMenyRettigheter = createSelector(
     sakstype,
     behandlingStatus,
     behandlingType,
-    menyhandlingRettigheter,
   ) =>
     allMenuAccessRights(
       navAnsatt,
@@ -360,28 +369,29 @@ const getMenyRettigheter = createSelector(
       skalBehandlesAvInfotrygd,
       sakstype,
       behandlingStatus,
-      menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false,
-      false,
       behandlingType,
     ),
 );
 
-const mapStateToProps = (state, ownProps): StateProps => ({
-  kanVeilede: getNavAnsatt(state).kanVeilede,
-  kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
-  erTilbakekrevingAktivert: getEnabledApplicationContexts(state).includes(ApplicationContextPath.FPTILBAKE),
-  uuid: ownProps.behandlingId ? getBehandlingerUuidsMappedById(state)[ownProps.behandlingId] : undefined,
-  uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
-  menyKodeverk: getMenyKodeverk(state),
-  erKoet: erBehandlingKoet(state),
-  erPaVent: erBehandlingPaVent(state),
-  behandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
-  behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
-  kanHenlegge: getKanHenleggeBehandling(state),
-  rettigheter: getMenyRettigheter(state, ownProps),
-  aktorId: getAktorid(state),
-  gjeldendeVedtakBehandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(state),
-});
+const mapStateToProps = (state, ownProps): StateProps => {
+  return {
+    kanVeilede: getNavAnsatt(state).kanVeilede,
+    kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
+    erTilbakekrevingAktivert: getEnabledApplicationContexts(state).includes(ApplicationContextPath.FPTILBAKE),
+    uuid: ownProps.behandlingId ? getBehandlingerUuidsMappedById(state)[ownProps.behandlingId] : undefined,
+    uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
+    menyKodeverk: getMenyKodeverk(state),
+    erKoet: erBehandlingKoet(state),
+    erPaVent: erBehandlingPaVent(state),
+    behandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
+    behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
+    kanHenlegge: getKanHenleggeBehandling(state),
+    rettigheter: getMenyRettigheter(state),
+    aktorId: getAktorid(state),
+    featureToggles: getFeatureToggles(state),
+    gjeldendeVedtakBehandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(state),
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch, { location, pushLocation }): DispatchProps =>
   bindActionCreators(

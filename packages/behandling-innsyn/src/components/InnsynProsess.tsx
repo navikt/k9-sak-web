@@ -45,7 +45,7 @@ const getLagringSideeffekter = (
   toggleIverksetterVedtakModal,
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
-) => aksjonspunktModels => {
+) => async aksjonspunktModels => {
   const isVedtak = aksjonspunktModels.some(a => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
   if (isVedtak) {

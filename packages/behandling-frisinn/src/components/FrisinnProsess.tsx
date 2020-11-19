@@ -3,6 +3,7 @@ import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   FagsakInfo,
@@ -13,6 +14,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
+import { dokumentdatatype, featureToggle } from "@k9-sak-web/konstanter";
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
@@ -72,7 +74,9 @@ const getLagringSideeffekter = (
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
-) => aksjonspunktModels => {
+  dispatch,
+  featureToggles,
+) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
     apModel =>
       (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
@@ -90,6 +94,14 @@ const getLagringSideeffekter = (
 
   if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
     toggleOppdatereFagsakContext(false);
+  }
+
+  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
+    let brevtype;
+    if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
+    else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;
+    else brevtype = vedtaksbrevtype.AUTOMATISK;
+    await dispatch(frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.VEDTAKSBREV_TYPE]: brevtype}));
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -162,6 +174,8 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
+    dispatch,
+    featureToggles,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
@@ -177,7 +191,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     () =>
       valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
         ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionFP',
+        : 'FatterVedtakStatusModal.ModalDescriptionFRISINN',
     [behandling.versjon],
   );
 

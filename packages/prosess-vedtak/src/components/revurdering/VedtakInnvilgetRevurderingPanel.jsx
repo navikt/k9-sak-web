@@ -14,8 +14,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import { findTilbakekrevingText } from '../VedtakHelper';
-import VedtakFritekstPanel from '../VedtakFritekstPanel';
-import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 
 const mapFraAvslagskodeTilTekst = kode => {
   switch (kode) {
@@ -79,12 +77,8 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   ytelseTypeKode,
   konsekvenserForYtelsen,
   revurderingsAarsakString,
-  sprakKode,
-  readOnly,
-  vedtakVarsel,
   tilbakekrevingText,
   alleKodeverk,
-  beregningErManueltFastsatt,
   bgPeriodeMedAvslagsårsak,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
@@ -132,14 +126,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
           <VerticalSpacer sixteenPx />
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
           {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
-          {beregningErManueltFastsatt && (
-            <VedtakFritekstPanel
-              readOnly={readOnly}
-              sprakkode={sprakKode}
-              labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
-              vedtakVarsel={vedtakVarsel}
-            />
-          )}
         </div>
       )}
     </>
@@ -154,12 +140,8 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   konsekvenserForYtelsen: PropTypes.arrayOf(PropTypes.shape()),
   revurderingsAarsakString: PropTypes.string,
-  sprakKode: PropTypes.shape(),
-  readOnly: PropTypes.bool.isRequired,
-  vedtakVarsel: vedtakVarselPropType,
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
 };
 
@@ -169,7 +151,6 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
   originaltBeregningResultat: undefined,
   konsekvenserForYtelsen: undefined,
   revurderingsAarsakString: undefined,
-  sprakKode: undefined,
   tilbakekrevingText: null,
   bgPeriodeMedAvslagsårsak: undefined,
 };
