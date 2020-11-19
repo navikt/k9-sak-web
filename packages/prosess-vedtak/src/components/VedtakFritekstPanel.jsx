@@ -16,12 +16,11 @@ import {
 } from '@fpsak-frontend/utils';
 
 import styles from './vedtakAvslagPanel.less';
-import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
-const VedtakFritekstPanelImpl = ({ intl, vedtakVarsel, sprakkode, readOnly, labelTextCode }) => (
+const VedtakFritekstPanelImpl = ({ intl, begrunnelse, sprakkode, readOnly, labelTextCode }) => (
   <>
     {!readOnly && (
       <Row>
@@ -44,20 +43,24 @@ const VedtakFritekstPanelImpl = ({ intl, vedtakVarsel, sprakkode, readOnly, labe
         </Column>
       </Row>
     )}
-    {readOnly && vedtakVarsel.avslagsarsakFritekst !== null && (
+    {readOnly && begrunnelse !== null && (
       <span>
         <VerticalSpacer twentyPx />
         <Undertekst>{intl.formatMessage({ id: labelTextCode })}</Undertekst>
         <VerticalSpacer eightPx />
-        <div className={styles.fritekstItem}>{decodeHtmlEntity(vedtakVarsel.avslagsarsakFritekst)}</div>
+        <div className={styles.fritekstItem}>{decodeHtmlEntity(begrunnelse)}</div>
       </span>
     )}
   </>
 );
 
+VedtakFritekstPanelImpl.defaultProps = {
+  begrunnelse: null,
+};
+
 VedtakFritekstPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  vedtakVarsel: vedtakVarselPropType,
+  begrunnelse: PropTypes.string,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   labelTextCode: PropTypes.string.isRequired,

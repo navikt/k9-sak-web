@@ -12,6 +12,7 @@ import {
   FatterVedtakStatusModal,
   ProsessStegPanel,
   ProsessStegContainer,
+  lagDokumentdata,
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
@@ -72,7 +73,8 @@ const getLagringSideeffekter = (
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
-) => aksjonspunktModels => {
+  dispatch,
+) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
     apModel =>
       (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
@@ -90,6 +92,11 @@ const getLagringSideeffekter = (
 
   if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
     toggleOppdatereFagsakContext(false);
+  }
+
+  if (aksjonspunktModels[0].isVedtakSubmission) {
+    const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
+    await dispatch(unntakBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()(dokumentdata));
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -158,6 +165,7 @@ const UnntakProsess: FunctionComponent<OwnProps> = ({
     toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
+    dispatch,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
