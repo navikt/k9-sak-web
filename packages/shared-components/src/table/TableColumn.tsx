@@ -6,7 +6,7 @@ import styles from './tableColumn.less';
 const classNames = classnames.bind(styles);
 
 interface OwnProps {
-  children: number | string | ReactNode;
+  children?: number | string | ReactNode;
   className?: string;
   hidden?: boolean;
 }
