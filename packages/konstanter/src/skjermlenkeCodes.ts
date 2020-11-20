@@ -207,8 +207,13 @@ const skjermlenkeCodes = {
   FAKTA_OM_AARSKVANTUM: {
     kode: 'FAKTA_OM_AARSKVANTUM',
     faktaNavn: faktaPanelCodes.NØKKELTALL,
-    punktNavn: prosessStegCodes.UTTAK
-  }
+    punktNavn: prosessStegCodes.UTTAK,
+  },
+  PUNKT_FOR_MAN_VILKÅRSVURDERING: {
+    kode: 'PUNKT_FOR_MAN_VILKÅRSVURDERING',
+    faktaNavn: '',
+    punktNavn: prosessStegCodes.UNNTAK,
+  },
 };
 
 export default skjermlenkeCodes;
