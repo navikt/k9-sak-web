@@ -13,6 +13,8 @@ import {
 import { Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
+import avsenderApplikasjon from "@fpsak-frontend/kodeverk/src/avsenderApplikasjon";
+import BehandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
 import AnkeBehandlingModal from './AnkeBehandlingModal';
 import ankeBehandlingApi from '../data/ankeBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegAnkePanelDefinisjoner';
@@ -59,8 +61,9 @@ const saveAnkeText = (dispatch, behandling, aksjonspunkter) => aksjonspunktModel
 const previewCallback = (dispatch, fagsak, behandling) => data => {
   const brevData = {
     ...data,
-    behandlingUuid: behandling.uuid,
+    eksternReferanse: behandling.uuid,
     ytelseType: fagsak.fagsakYtelseType,
+    avsenderApplikasjon: behandling.type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK
   };
   return dispatch(ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };

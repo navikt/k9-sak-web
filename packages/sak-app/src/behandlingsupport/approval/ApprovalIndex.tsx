@@ -16,6 +16,7 @@ import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fp
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
 
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { getNavAnsatt } from '../../app/duck';
@@ -175,11 +176,13 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       behandlingTypeKode,
     } = this.props;
     fetchPreview(erTilbakekreving, false, {
+      eksternReferanse: behandlingUuid,
       behandlingUuid,
       ytelseType: fagsakYtelseType,
       aktørId,
       saksnummer,
-      dokumentMal: behandlingTypeKode === BehandlingType.KLAGE ? dokumentMalType.UTLED_KLAGE : dokumentMalType.UTLED,
+      dokumentMal: dokumentMalType.UTLED,
+      avsenderApplikasjon: behandlingTypeKode === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK
     });
   }
 

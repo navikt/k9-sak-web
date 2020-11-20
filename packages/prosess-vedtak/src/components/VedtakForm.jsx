@@ -21,6 +21,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import dokumentMalType from "@fpsak-frontend/kodeverk/src/dokumentMalType";
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -39,12 +40,15 @@ const getPreviewManueltBrevCallback = (
   previewCallback,
 ) => e => {
   if (formProps.valid || formProps.pristine) {
-    const data = {
-      fritekst: skalOverstyre ? brodtekst : begrunnelse,
-      dokumentMal: skalOverstyre ? 'FRITKS' : 'UTLED',
-      tittel: overskrift,
-      gjelderVedtak: true,
-    };
+    const data = skalOverstyre ?
+      {
+        dokumentdata: { fritekstbrev: { brødtekst: brodtekst, overskrift } },
+        dokumentMal: dokumentMalType.FRITKS,
+      } :
+      {
+        dokumentdata: { fritekst: begrunnelse },
+        dokumentMal: dokumentMalType.UTLED,
+      }
 
     previewCallback(data);
   } else {

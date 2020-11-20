@@ -21,7 +21,7 @@ const getBrevKode = (ankeVurdering) => {
 
 const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => {
   const data = {
-    fritekst: fritekstTilBrev || '',
+    dokumentdata: { fritekst: fritekstTilBrev || ''} ,
     mottaker: '',
     dokumentMal: getBrevKode(ankeVurdering),
   };

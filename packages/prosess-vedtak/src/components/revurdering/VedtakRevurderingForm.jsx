@@ -50,7 +50,7 @@ const getPreviewBrevCallback = (previewCallback, behandlingresultat, redusertUtb
   };
 
   const data = {
-    redusertUtbetalingÅrsaker,
+    dokumentdata: { redusertUtbetalingÅrsaker },
     dokumentMal: dokumentMal(),
   };
   previewCallback(data);

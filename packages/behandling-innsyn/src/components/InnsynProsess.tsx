@@ -12,10 +12,11 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
+import avsenderApplikasjon from "@fpsak-frontend/kodeverk/src/avsenderApplikasjon";
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
 
+import FetchedData from '../types/fetchedDataTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
@@ -36,7 +37,9 @@ const previewCallback = (dispatch, fagsak, behandling) => data => {
   const brevData = {
     ...data,
     behandlingUuid: behandling.uuid,
+    eksternReferanse: behandling.uuid,
     ytelseType: fagsak.fagsakYtelseType,
+    avsenderApplikasjon: avsenderApplikasjon.K9SAK
   };
   return dispatch(innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };

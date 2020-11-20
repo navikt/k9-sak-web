@@ -36,11 +36,8 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
 const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
   const klageVurdertAvNK = klageResultat.klageVurdertAv === 'KA';
   const data = {
-    fritekst: begrunnelse || '',
-    mottaker: '',
+    dokumentdata: {fritekst: begrunnelse || ''},
     dokumentMal: getBrevKode(klageResultat.klageVurdering, klageVurdertAvNK),
-    klageVurdertAv: klageResultat.klageVurdertAv,
-    erOpphevetKlage: klageResultat.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
   };
   if (formProps.valid || formProps.pristine) {
     previewVedtakCallback(data);

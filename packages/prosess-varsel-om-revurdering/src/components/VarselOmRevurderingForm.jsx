@@ -60,7 +60,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
       const data = {
         mottaker: '',
         dokumentMal: 'REVURD',
-        fritekst: fritekst || ' ',
+        dokumentdata: {fritekst: fritekst || ' '},
       };
       previewCallback(data);
     } else {
