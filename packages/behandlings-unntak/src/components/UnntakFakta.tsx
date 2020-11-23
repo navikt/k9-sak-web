@@ -18,7 +18,6 @@ const overstyringApCodes = [
   ac.OVERSTYR_AVKLAR_STARTDATO,
   ac.MANUELL_AVKLAR_FAKTA_UTTAK,
   ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-  ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
 ];
 
 interface OwnProps {
@@ -49,14 +48,13 @@ const UnntakFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setApentFaktaPanel,
   dispatch,
 }) => {
-  const { aksjonspunkter, vilkar, personopplysninger, beregningsgrunnlag } = data;
+  const { aksjonspunkter, vilkar, personopplysninger } = data;
 
   const dataTilUtledingAvFpPaneler = {
     fagsak,
     behandling,
     vilkar,
     personopplysninger,
-    beregningsgrunnlag,
     hasFetchError,
   };
 

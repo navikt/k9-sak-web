@@ -21,7 +21,6 @@ export const UnntakBehandlingApiKeys = {
   SIMULERING_RESULTAT: 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
   BEREGNINGSRESULTAT_UTBETALING: 'BEREGNINGSRESULTAT_UTBETALING',
-  BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
@@ -63,7 +62,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soeker-personopplysninger', UnntakBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', UnntakBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', UnntakBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withRel('beregningsgrunnlag-alle', UnntakBehandlingApiKeys.BEREGNINGSGRUNNLAG)
   .withRel('familiehendelse-v2', UnntakBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', UnntakBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', UnntakBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
