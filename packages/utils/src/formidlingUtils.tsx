@@ -8,6 +8,10 @@ function mapFagsakYtelseType(type: any): string {
   return type.kode === fagsakYtelseType.OMSORGSPENGER ? "OMSORGSPENGER" : type.kode;
 }
 
+export function bestemAvsenderApp(type: string) {
+  return type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK;
+}
+
 const lagForhåndsvisRequest = (behandling: Behandling, fagsak: FagsakInfo, data: any): ForhåndsvisRequest => {
   const {dokumentMal, dokumentdata} = data
   return {
@@ -16,7 +20,7 @@ const lagForhåndsvisRequest = (behandling: Behandling, fagsak: FagsakInfo, data
     ytelseType: mapFagsakYtelseType(fagsak.fagsakYtelseType),
     saksnummer: fagsak.saksnummer,
     aktørId: fagsak.fagsakPerson.aktørId,
-    avsenderApplikasjon: behandling.type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK,
+    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
     dokumentMal,
     dokumentdata
   }

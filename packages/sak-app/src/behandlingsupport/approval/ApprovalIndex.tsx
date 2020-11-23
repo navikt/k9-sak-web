@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { RouteProps } from 'react-router';
-import { push } from 'connected-react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
+import {RouteProps} from 'react-router';
+import {push} from 'connected-react-router';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {createSelector} from 'reselect';
 
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -12,14 +12,13 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { NavAnsatt, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
-import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
+import TotrinnskontrollSakIndex, {FatterVedtakApprovalModalSakIndex} from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import {DataFetcher, DataFetcherTriggers} from '@fpsak-frontend/rest-api-redux';
+import {bestemAvsenderApp} from "@fpsak-frontend/utils/src/formidlingUtils";
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
-
-import { createLocationForSkjermlenke } from '../../app/paths';
-import { getNavAnsatt } from '../../app/duck';
+import {createLocationForSkjermlenke} from '../../app/paths';
+import {getNavAnsatt} from '../../app/duck';
 import {
   getBehandlingAnsvarligSaksbehandler,
   getBehandlingIdentifier,
@@ -32,10 +31,10 @@ import {
   getSelectedBehandlingId,
   getBehandlingsresultat,
 } from '../../behandling/duck';
-import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
+import {getBehandlingerUuidsMappedById} from '../../behandling/selectors/behandlingerSelectors';
 import fpsakApi from '../../data/fpsakApi';
-import { getAktorid, getFagsakYtelseType, getSaksnummer, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
-import { getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype } from '../../kodeverk/duck';
+import {getAktorid, getFagsakYtelseType, getSaksnummer, isForeldrepengerFagsak} from '../../fagsak/fagsakSelectors';
+import {getAlleKodeverkForBehandlingstype, getKodeverkForBehandlingstype} from '../../kodeverk/duck';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 
 const getArsaker = approval =>
@@ -175,15 +174,16 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       saksnummer,
       behandlingTypeKode,
     } = this.props;
-    fetchPreview(erTilbakekreving, false, {
-      eksternReferanse: behandlingUuid,
-      behandlingUuid,
-      ytelseType: fagsakYtelseType,
-      aktørId,
-      saksnummer,
-      dokumentMal: dokumentMalType.UTLED,
-      avsenderApplikasjon: behandlingTypeKode === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK
-    });
+    const data = erTilbakekreving ?
+      { behandlingUuid, ytelseType: fagsakYtelseType, aktørId, saksnummer} :
+      { eksternReferanse: behandlingUuid,
+        ytelseType: fagsakYtelseType,
+        aktørId,
+        saksnummer,
+        dokumentMal: dokumentMalType.UTLED,
+        avsenderApplikasjon: bestemAvsenderApp(behandlingTypeKode)
+      }
+    fetchPreview(erTilbakekreving, false, data);
   }
 
   async goToSearchPage() {
