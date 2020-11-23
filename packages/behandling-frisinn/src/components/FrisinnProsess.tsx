@@ -5,6 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
 import {
   FagsakInfo,
   Rettigheter,
@@ -15,13 +16,12 @@ import {
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
 import { dokumentdatatype, featureToggle } from "@k9-sak-web/konstanter";
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
-import avsenderApplikasjon from "@fpsak-frontend/kodeverk/src/avsenderApplikasjon";
+import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFrisinnPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
 
+import FetchedData from '../types/fetchedDataTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
@@ -41,17 +41,9 @@ interface OwnProps {
   dispatch: Dispatch;
 }
 
-const getForhandsvisCallback = (dispatch, fagsak, behandling) => data => {
-  const brevData = {
-    ...data,
-    behandlingUuid: behandling.uuid,
-    eksternReferanse: behandling.uuid,
-    ytelseType: fagsak.fagsakYtelseType,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsak.fagsakPerson.aktørId,
-    avsenderApplikasjon: avsenderApplikasjon.K9SAK
-  };
-  return dispatch(frisinnBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
+  return dispatch(frisinnBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
 const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (

@@ -16,7 +16,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
-import avsenderApplikasjon from "@fpsak-frontend/kodeverk/src/avsenderApplikasjon";
+import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -40,16 +40,9 @@ interface OwnProps {
   dispatch: Dispatch;
 }
 
-const getForhandsvisCallback = (dispatch, fagsak, behandling) => data => {
-  const brevData = {
-    ...data,
-    eksternReferanse: behandling.uuid,
-    ytelseType: fagsak.fagsakYtelseType,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsak.fagsakPerson.aktørId,
-    avsenderApplikasjon: avsenderApplikasjon.K9SAK
-  };
-  return dispatch(pleiepengerBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre)
+  return dispatch(pleiepengerBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
 const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (

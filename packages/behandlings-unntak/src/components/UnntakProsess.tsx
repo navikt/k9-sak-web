@@ -4,7 +4,6 @@ import { Dispatch } from 'redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import avsenderApplikasjon from "@fpsak-frontend/kodeverk/src/avsenderApplikasjon";
 import {
   FagsakInfo,
   Rettigheter,
@@ -17,6 +16,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
 import unntakBehandlingApi from '../data/unntakBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -40,17 +40,9 @@ interface OwnProps {
   dispatch: Dispatch;
 }
 
-const getForhandsvisCallback = (dispatch, fagsak, behandling) => data => {
-  const brevData = {
-    ...data,
-    behandlingUuid: behandling.uuid,
-    eksternReferanse: behandling.uuid,
-    ytelseType: fagsak.fagsakYtelseType,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsak.fagsakPerson.aktørId,
-    avsenderApplikasjon: avsenderApplikasjon.K9SAK
-  };
-  return dispatch(unntakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre)
+  return dispatch(unntakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
 const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (
