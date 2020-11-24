@@ -228,7 +228,7 @@ export class VedtakRevurderingFormImpl extends Component {
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
               previewCallback={previewAutomatiskBrev}
             />
-            {ytelseTypeKode === fagsakYtelseType.FRISINN && harTilgjengeligeVedtaksbrev && (
+            {harTilgjengeligeVedtaksbrev && (
               <PreviewLink previewCallback={previewAutomatiskBrev}>
                 <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
               </PreviewLink>
