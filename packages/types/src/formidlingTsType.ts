@@ -3,7 +3,7 @@ import Kodeverk from './kodeverkTsType';
 type ForhåndsvisRequest = Readonly<{
   behandlingUuid?: string,
   eksternReferanse: string,
-  ytelseType: string,
+  ytelseType: any,
   saksnummer: string,
   aktørId: string,
   avsenderApplikasjon: Kodeverk,
