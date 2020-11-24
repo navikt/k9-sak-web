@@ -15,7 +15,7 @@ const transformValues = (values: any, aksjonspunktCode: string) => ({
 
 const getBrevData = (tekst: string) => {
   return {
-    dokumentdata: { fritekst: tekst || ''},
+    dokumentdata: tekst && { fritekst: tekst },
     dokumentMal: dokumentMalType.UTLED
   };
 };
