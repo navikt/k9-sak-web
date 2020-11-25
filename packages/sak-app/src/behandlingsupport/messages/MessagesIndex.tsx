@@ -165,7 +165,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
       : {
           behandlingUuid,
           ytelseType: fagsakYtelseType,
-          fritekst: fritekst || ' ',
+          dokumentdata: fritekst && { fritekst },
           arsakskode: aarsakskode || null,
           mottaker,
           dokumentMal,
