@@ -50,8 +50,8 @@ const lagBeskrivelseMedBeløpRad = (tekstId, beløp) => {
   );
 };
 
-const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, løpendeBeløp) => {
-  const redusert = beløpÅRedusere * 0.8;
+const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, løpendeBeløp, dekningsgrad) => {
+  const redusert = beløpÅRedusere * dekningsgrad;
   return (
     <>
       <Row>
@@ -78,6 +78,12 @@ const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, l�
 
 const erBeløpSatt = beløp => beløp || beløp === 0;
 
+const finnDekningsgrad = bgPeriodeFom => {
+  const fomDato = moment(bgPeriodeFom);
+  const førsteDagMedRedusertDekning = moment('2020-11-01', 'YYYY-MM-DD');
+  return fomDato.isBefore(førsteDagMedRedusertDekning) ? 0.8 : 0.6;
+};
+
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {
   const andelerDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
   if (!andelerDetErSøktOm || andelerDetErSøktOm.length < 1) {
@@ -98,7 +104,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
     bgperiode,
     ytelsegrunnlag,
   );
-
+  const dekningsgrad = finnDekningsgrad(bgperiode.beregningsgrunnlagPeriodeFom);
   return (
     <>
       {erBeløpSatt(beregningsgrunnlagFL) &&
@@ -109,6 +115,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
           beregningsgrunnlagFL,
           'Beregningsgrunnlag.Søknad.LøpendeFL',
           løpendeInntektFL,
+          dekningsgrad,
         )}
       {erBeløpSatt(beregningsgrunnlagSN) &&
         lagBeskrivelseMedBeløpRad('Beregningsgrunnlag.Frisinn.BeregningsgrunnlagSN', beregningsgrunnlagSN)}
@@ -118,6 +125,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
           beregningsgrunnlagSN,
           'Beregningsgrunnlag.Søknad.LøpendeSN',
           løpendeInntektSN,
+          dekningsgrad,
         )}
       <Row>
         <Column xs="12" className={beregningStyles.noPaddingRight}>
