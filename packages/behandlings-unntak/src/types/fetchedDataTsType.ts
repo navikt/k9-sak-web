@@ -1,6 +1,5 @@
 import {
   Aksjonspunkt,
-  Beregningsgrunnlag,
   Personopplysninger,
   SimuleringResultat,
   Vilkar,
@@ -12,7 +11,6 @@ interface FetchedData {
   vilkar: Vilkar[];
   personopplysninger: Personopplysninger;
   beregningsresultatUtbetalt: BeregningsresultatUtbetalt;
-  beregningsgrunnlag: Beregningsgrunnlag;
   simuleringResultat: SimuleringResultat;
 }
 
