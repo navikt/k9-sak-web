@@ -9,6 +9,7 @@ import {
   Kodeverk,
   BeregningsresultatUtbetalt,
   InntektArbeidYtelse,
+  Arbeidsforhold,
   KodeverkMedNavn,
   Vilkar,
 } from '@k9-sak-web/types';
@@ -16,7 +17,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
-
 import { FormattedMessage } from 'react-intl';
 import PeriodeTabell from './PeriodeTabell';
 
@@ -30,7 +30,7 @@ interface OwnProps {
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   behandlingStatus: Kodeverk;
-  inntektArbeidYtelse: InntektArbeidYtelse;
+  arbeidsforhold: Arbeidsforhold[];
   vilkarForSykdomExists: boolean;
   vilkar: Vilkar[];
 }
@@ -44,7 +44,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
-  inntektArbeidYtelse,
+  arbeidsforhold,
   vilkar,
   ...formProps
 }) => {
@@ -73,7 +73,8 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           alleKodeverk={alleKodeverk}
-          inntektArbeidYtelse={inntektArbeidYtelse}
+          // @ts-ignore
+          arbeidsforhold={arbeidsforhold}
           vilkar={vilkar}
         />
         {formProps.error && <span>{formProps.error}</span>}
@@ -130,25 +131,35 @@ interface PureOwnProps {
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
   behandlingVersjon: number;
+  inntektArbeidYtelse: InntektArbeidYtelse;
   submitCallback: (...args: any[]) => any;
 }
 // @ts-ignore
-const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregningsresultat?.perioder], perioder => {
-  if (perioder) {
-    return {
-      perioder: perioder.map((periode: any) => ({
-        ...periode,
-        id: guid(),
-        openForm: false,
-        // updated: false,
-      })),
-    };
-  }
+const buildInitialValues = createSelector(
+  [
+    // @ts-ignore
+    (props: PureOwnProps) => props.beregningsresultat?.perioder,
+    (props: PureOwnProps) => props.inntektArbeidYtelse?.arbeidsforhold,
+  ],
+  (perioder, arbeidsforhold) => {
+    if (perioder) {
+      return {
+        arbeidsforhold,
+        perioder: perioder.map((periode: any) => ({
+          ...periode,
+          id: guid(),
+          openForm: false,
+          // updated: false,
+        })),
+      };
+    }
 
-  return {
-    perioder: [],
-  };
-});
+    return {
+      arbeidsforhold,
+      perioder: [],
+    };
+  },
+);
 
 export const transformValues = (values: any) => {
   return [
