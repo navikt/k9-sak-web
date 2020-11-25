@@ -36,6 +36,9 @@ export const UttakNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   readOnly,
   alleKodeverk,
   vilkar,
+  behandlingId,
+  behandlingVersjon,
+  nyeArbeidsforhold,
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
@@ -99,6 +102,9 @@ export const UttakNyPeriode: FC<OwnProps & InjectedFormProps> = ({
                     readOnly={readOnly}
                     alleKodeverk={alleKodeverk}
                     inntektArbeidYtelse={inntektArbeidYtelse}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    nyeArbeidsforhold={nyeArbeidsforhold}
                   />
                 </FlexColumn>
               </FlexRow>
@@ -204,6 +210,11 @@ const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
       tom: null,
     },
     nyPeriode: behandlingFormValueSelector('nyPeriodeForm', behandlingId, behandlingVersjon)(state, 'fom', 'tom'),
+    nyeArbeidsforhold: behandlingFormValueSelector(
+      'nyttArbeidsforholdForm',
+      behandlingId,
+      behandlingVersjon,
+    )(state, 'arbeidsforhold'),
     onSubmit,
   });
 };
