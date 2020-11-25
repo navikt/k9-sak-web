@@ -1,13 +1,15 @@
 import React, { useState, FC } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
-import { FlexColumn, FlexRow, PeriodFieldArray } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, InntektArbeidYtelse } from '@k9-sak-web/types';
+import { FlexColumn, FlexRow, PeriodFieldArray, Image } from '@fpsak-frontend/shared-components';
+import { KodeverkMedNavn, Arbeidsforhold } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { Knapp } from 'nav-frontend-knapper';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import NyttArbeidsforholdModal from './NyttArbeidsforholdModal';
+
+import styles from './periode.less';
 
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
@@ -43,26 +45,23 @@ interface OwnProps {
   readOnly: boolean;
   fields: FieldArrayFieldsProps<any>;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  inntektArbeidYtelse: InntektArbeidYtelse;
-  nyeArbeidsforhold?: {
-    navn: string;
-    orgnr: number;
-  };
+  arbeidsforhold: Arbeidsforhold[];
+  newArbeidsforholdCallback: (values: any) => void;
+  behandlingId: number;
+  behandlingVersjon: number;
 }
 
 export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
   fields,
   meta,
+  newArbeidsforholdCallback,
   alleKodeverk,
   readOnly,
-  inntektArbeidYtelse,
-  nyeArbeidsforhold,
+  arbeidsforhold,
   behandlingId,
   behandlingVersjon,
 }) => {
   const [isOpen, setOpen] = useState(false);
-  console.info(nyeArbeidsforhold);
-  const arbeidsforhold = inntektArbeidYtelse?.arbeidsforhold || [];
 
   return (
     <>
@@ -84,7 +83,7 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
                 format={value => value}
               />
             </FlexColumn>
-            <FlexColumn>
+            <FlexColumn className={styles.relative}>
               <SelectField
                 label="Arbeidsforhold"
                 bredde="xl"
@@ -92,6 +91,15 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
                 validate={[required]}
                 selectValues={mapArbeidsforhold(arbeidsforhold)}
               />
+              <div
+                onClick={() => setOpen(true)}
+                onKeyDown={() => setOpen(true)}
+                className={styles.addArbeidsforhold}
+                role="button"
+                tabIndex={0}
+              >
+                <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Nytt arbeidsforhold" />
+              </div>
             </FlexColumn>
             <FlexColumn>
               <SelectField
@@ -114,13 +122,14 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
         )}
       </PeriodFieldArray>
 
-      <Knapp htmlType="button" onClick={() => setOpen(true)} mini>
-        Nytt arbeidsforhold
-      </Knapp>
       {isOpen && (
         <NyttArbeidsforholdModal
           showModal={isOpen}
-          closeEvent={() => setOpen(false)}
+          newArbeidsforholdCallback={newArbeidsforholdCallback}
+          closeEvent={values => {
+            newArbeidsforholdCallback(values);
+            setOpen(false);
+          }}
           cancelEvent={() => setOpen(false)}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
