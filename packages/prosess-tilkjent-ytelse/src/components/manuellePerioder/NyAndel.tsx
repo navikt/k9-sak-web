@@ -56,12 +56,12 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
   alleKodeverk,
   readOnly,
   inntektArbeidYtelse,
-  // nyeArbeidsforhold,
+  nyeArbeidsforhold,
   behandlingId,
   behandlingVersjon,
 }) => {
   const [isOpen, setOpen] = useState(false);
-
+  console.info(nyeArbeidsforhold);
   const arbeidsforhold = inntektArbeidYtelse?.arbeidsforhold || [];
 
   return (
