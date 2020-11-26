@@ -100,7 +100,6 @@ export class VedtakRevurderingFormImpl extends Component {
       antallBarn,
       ytelseTypeKode,
       revurderingsAarsakString,
-      kanOverstyre,
       sprakkode,
       skalBrukeOverstyrendeFritekstBrev,
       brødtekst,
@@ -128,7 +127,6 @@ export class VedtakRevurderingFormImpl extends Component {
       behandlingresultat,
       readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps),
     );
-    const visOverstyringKnapp = kanOverstyre || readOnly;
     const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
     const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
     const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
@@ -144,14 +142,12 @@ export class VedtakRevurderingFormImpl extends Component {
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
               <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
             ) : (
-              visOverstyringKnapp && (
-                <VedtakOverstyrendeKnapp
-                  toggleCallback={this.onToggleOverstyring}
-                  readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
-                  keyName="skalBrukeOverstyrendeFritekstBrev"
-                  readOnlyHideEmpty={false}
-                />
-              )
+              <VedtakOverstyrendeKnapp
+                toggleCallback={this.onToggleOverstyring}
+                readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
+                keyName="skalBrukeOverstyrendeFritekstBrev"
+                readOnlyHideEmpty={false}
+              />
             )}
             <Row>
               <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>
