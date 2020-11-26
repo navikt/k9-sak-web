@@ -20,7 +20,7 @@ export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
 const getPreviewVedtakCallback = previewVedtakCallback => () =>
   previewVedtakCallback({
-    dokumentMal: dokumentMalType.UTLED_KLAGE,
+    dokumentMal: dokumentMalType.UTLED,
   });
 
 /**

@@ -7,6 +7,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, TIDENES_ENDE } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import dekningsgrad from '@fpsak-frontend/kodeverk/src/dekningsgrad';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import { finnOppgittInntektForAndelIPeriode } from './FrisinnUtils';
 
@@ -50,13 +51,14 @@ const lagBeskrivelseMedBeløpRad = (tekstId, beløp) => {
   );
 };
 
-const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, løpendeBeløp) => {
-  const redusert = beløpÅRedusere * 0.8;
+const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, løpendeBeløp, gjeldendeDekningsgrad) => {
+  const multiplikator = gjeldendeDekningsgrad === dekningsgrad.SEKSTI ? 0.6 : 0.8;
+  const redusert = beløpÅRedusere * multiplikator;
   return (
     <>
       <Row>
         <Column xs="10">
-          <FormattedMessage id={tekstIdRedusert} />
+          <FormattedMessage id={tekstIdRedusert} values={{ grad: gjeldendeDekningsgrad }} />
         </Column>
         <Column xs="2">
           <Normaltekst>{formatCurrencyNoKr(redusert)}</Normaltekst>
@@ -78,6 +80,12 @@ const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, l�
 
 const erBeløpSatt = beløp => beløp || beløp === 0;
 
+const finnDekningsgrad = bgPeriodeFom => {
+  const fomDato = moment(bgPeriodeFom);
+  const førsteDagMedRedusertDekning = moment('2020-11-01', 'YYYY-MM-DD');
+  return fomDato.isBefore(førsteDagMedRedusertDekning) ? dekningsgrad.ATTI : dekningsgrad.SEKSTI;
+};
+
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {
   const andelerDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
   if (!andelerDetErSøktOm || andelerDetErSøktOm.length < 1) {
@@ -98,7 +106,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
     bgperiode,
     ytelsegrunnlag,
   );
-
+  const gjeldendeDekningsgrad = finnDekningsgrad(bgperiode.beregningsgrunnlagPeriodeFom);
   return (
     <>
       {erBeløpSatt(beregningsgrunnlagFL) &&
@@ -109,6 +117,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
           beregningsgrunnlagFL,
           'Beregningsgrunnlag.Søknad.LøpendeFL',
           løpendeInntektFL,
+          gjeldendeDekningsgrad,
         )}
       {erBeløpSatt(beregningsgrunnlagSN) &&
         lagBeskrivelseMedBeløpRad('Beregningsgrunnlag.Frisinn.BeregningsgrunnlagSN', beregningsgrunnlagSN)}
@@ -118,6 +127,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
           beregningsgrunnlagSN,
           'Beregningsgrunnlag.Søknad.LøpendeSN',
           løpendeInntektSN,
+          gjeldendeDekningsgrad,
         )}
       <Row>
         <Column xs="12" className={beregningStyles.noPaddingRight}>
