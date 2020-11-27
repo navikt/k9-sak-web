@@ -44,6 +44,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -82,6 +84,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -122,6 +126,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -156,6 +162,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -211,6 +219,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -270,6 +280,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -329,6 +341,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -388,6 +402,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -448,6 +464,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
