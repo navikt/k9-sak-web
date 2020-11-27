@@ -5,9 +5,10 @@ import { FlexColumn, FlexRow, PeriodFieldArray, Image } from '@fpsak-frontend/sh
 import { KodeverkMedNavn, Arbeidsforhold } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { InputField, SelectField } from '@fpsak-frontend/form';
-import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
+import { hasValidDecimal, maxValue, minValue, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import NyttArbeidsforholdModal from './NyttArbeidsforholdModal';
+import { createVisningsnavnForAndel } from '../TilkjentYteleseUtils';
 
 import styles from './periode.less';
 
@@ -15,13 +16,22 @@ const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
 const maxValue3999 = maxValue(3999);
 
-const mapArbeidsforhold = (arbeidsForhold: any) =>
+const mapArbeidsforhold = (arbeidsForhold: any, getKodeverknavn) =>
   arbeidsForhold.map((andel: any, index) => {
-    const { arbeidsgiverIdentifikator, navn } = andel;
+    const { arbeidsforholdId, arbeidsgiverIdentifikator, navn, eksternArbeidsforholdId } = andel;
+    const nyAndel = {
+      aktivitetStatus: '',
+      arbeidsgiverNavn: navn,
+      arbeidsgiverOrgnr: arbeidsgiverIdentifikator,
+      arbeidsforholdId,
+      eksternArbeidsforholdId,
+    };
+
+    const label = createVisningsnavnForAndel(nyAndel, getKodeverknavn);
     const key = `${navn}${index}`;
     return (
-      <option value={`${arbeidsgiverIdentifikator}|${navn}`} key={key}>
-        {navn} {arbeidsgiverIdentifikator}
+      <option value={`${arbeidsgiverIdentifikator}|${navn}|${eksternArbeidsforholdId}|${arbeidsforholdId}`} key={key}>
+        {label}
       </option>
     );
   });
@@ -62,6 +72,7 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
   behandlingVersjon,
 }) => {
   const [isOpen, setOpen] = useState(false);
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
     <>
@@ -89,7 +100,7 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
                 bredde="xl"
                 name={`${periodeElementFieldId}.arbeidsgiver`}
                 validate={[required]}
-                selectValues={mapArbeidsforhold(arbeidsforhold)}
+                selectValues={mapArbeidsforhold(arbeidsforhold, getKodeverknavn)}
               />
               <div
                 onClick={() => setOpen(true)}
