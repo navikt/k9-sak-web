@@ -21,7 +21,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import dokumentMalType from "@fpsak-frontend/kodeverk/src/dokumentMalType";
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -40,15 +40,15 @@ const getPreviewManueltBrevCallback = (
   previewCallback,
 ) => e => {
   if (formProps.valid || formProps.pristine) {
-    const data = skalOverstyre ?
-      {
-        dokumentdata: { fritekstbrev: { brødtekst: brodtekst, overskrift } },
-        dokumentMal: dokumentMalType.FRITKS,
-      } :
-      {
-        dokumentdata: { fritekst: begrunnelse },
-        dokumentMal: dokumentMalType.UTLED,
-      }
+    const data = skalOverstyre
+      ? {
+          dokumentdata: { fritekstbrev: { brødtekst: brodtekst, overskrift } },
+          dokumentMal: dokumentMalType.FRITKS,
+        }
+      : {
+          dokumentdata: { fritekst: begrunnelse },
+          dokumentMal: dokumentMalType.UTLED,
+        };
 
     previewCallback(data);
   } else {
@@ -164,12 +164,16 @@ export class VedtakForm extends Component {
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
         >
-          <VedtakOverstyrendeKnapp
-            toggleCallback={this.onToggleOverstyring}
-            readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
-            keyName="skalBrukeOverstyrendeFritekstBrev"
-            readOnlyHideEmpty={false}
-          />
+          {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
+            <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
+          ) : (
+            <VedtakOverstyrendeKnapp
+              toggleCallback={this.onToggleOverstyring}
+              readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
+              keyName="skalBrukeOverstyrendeFritekstBrev"
+              readOnlyHideEmpty={false}
+            />
+          )}
 
           {isInnvilget(behandlingresultat.type.kode) && (
             <VedtakInnvilgetPanel
@@ -318,6 +322,9 @@ export const buildInitialValues = createSelector(
     skalBrukeOverstyrendeFritekstBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
       vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
+    skalUndertrykkeBrev:
+      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
+      vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
   }),
@@ -333,6 +340,7 @@ const transformValues = values =>
     begrunnelse: values.begrunnelse,
     fritekstBrev: values.brødtekst,
     skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+    skalUndertrykkeBrev: values.skalUndertrykkeBrev,
     overskrift: values.overskrift,
     isVedtakSubmission,
   }));
@@ -363,6 +371,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'begrunnelse',
       'aksjonspunktKoder',
       'skalBrukeOverstyrendeFritekstBrev',
+      'skalUndertrykkeBrev',
       'overskrift',
       'brødtekst',
     ),
