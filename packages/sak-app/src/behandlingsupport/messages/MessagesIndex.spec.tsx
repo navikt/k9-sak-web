@@ -44,6 +44,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -82,6 +84,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -98,10 +102,10 @@ describe('<MessagesIndex>', () => {
       )
       .find(Messages);
     const previewCallback = messages.prop('previewCallback') as (params: {}) => void;
-    previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
+    previewCallback({ dokumentMal: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);
-    expect(fetchPreviewFunction.getCall(0).args[2].fritekst).to.equal(' ');
+    expect(fetchPreviewFunction.getCall(0).args[2].dokumentdata).is.undefined;
   });
 
   it('skal resette fritekst ved lukking av modal', () => {
@@ -122,6 +126,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -156,6 +162,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -211,6 +219,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -270,6 +280,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -329,6 +341,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -388,6 +402,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}
@@ -448,6 +464,8 @@ describe('<MessagesIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
+        saksnummer={123}
+        aktørId="123"
         behandlingUuid="123"
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         revurderingVarslingArsak={[]}

@@ -13,6 +13,7 @@ import {
 import { Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
+import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
 import AnkeBehandlingModal from './AnkeBehandlingModal';
 import ankeBehandlingApi from '../data/ankeBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegAnkePanelDefinisjoner';
@@ -56,13 +57,9 @@ const saveAnkeText = (dispatch, behandling, aksjonspunkter) => aksjonspunktModel
   }
 };
 
-const previewCallback = (dispatch, fagsak, behandling) => data => {
-  const brevData = {
-    ...data,
-    behandlingUuid: behandling.uuid,
-    ytelseType: fagsak.fagsakYtelseType,
-  };
-  return dispatch(ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+const previewCallback = (dispatch, fagsak, behandling) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre)
+  return dispatch(ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
 const getLagringSideeffekter = (

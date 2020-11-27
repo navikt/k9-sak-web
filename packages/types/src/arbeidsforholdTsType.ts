@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-type Arbeidsforhold = Readonly<{
+export type Arbeidsforhold = Readonly<{
   id?: string;
   navn?: string;
   arbeidsgiverIdentifikator?: string;
@@ -10,7 +10,8 @@ type Arbeidsforhold = Readonly<{
   fomDato?: string;
   tomDato?: string;
   kilde: {
-    navn: string;
+    navn?: string;
+    kode: string;
   };
   mottattDatoInntektsmelding?: string;
   stillingsprosent?: number;

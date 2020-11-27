@@ -31,11 +31,13 @@ const behandling: Behandling = {
   id: 123,
   versjon: 1,
 };
-
+// @ts-ignore
 const inntektArbeidYtelse: InntektArbeidYtelse = {
-  // @ts-ignore
   arbeidsforhold: [
     {
+      kilde: {
+        kode: '-',
+      },
       navn: 'Bedrift AS',
       arbeidsgiverIdentifikator: '999',
     },

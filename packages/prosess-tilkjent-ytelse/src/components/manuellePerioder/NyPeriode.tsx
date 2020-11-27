@@ -8,7 +8,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, InntektArbeidYtelse, Vilkar } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Arbeidsforhold, Vilkar } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
@@ -19,23 +19,29 @@ type NyPeriodeType = {
 };
 
 interface OwnProps {
-  newPeriodeResetCallback: () => any;
+  newPeriodeResetCallback: (values: any) => any;
+  newArbeidsforholdCallback: (values: any) => void;
   andeler: any[];
   nyPeriode: NyPeriodeType;
   nyPeriodeDisabledDaysFom: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  inntektArbeidYtelse: InntektArbeidYtelse;
+  arbeidsforhold: Arbeidsforhold[];
   readOnly: boolean;
   vilkar: Vilkar[];
+  behandlingId: number;
+  behandlingVersjon: number;
 }
 
-export const UttakNyPeriode: FC<OwnProps & InjectedFormProps> = ({
+export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   newPeriodeResetCallback,
+  newArbeidsforholdCallback,
   nyPeriode,
-  inntektArbeidYtelse,
   readOnly,
   alleKodeverk,
   vilkar,
+  behandlingId,
+  behandlingVersjon,
+  arbeidsforhold,
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
@@ -98,7 +104,10 @@ export const UttakNyPeriode: FC<OwnProps & InjectedFormProps> = ({
                     component={NyAndel}
                     readOnly={readOnly}
                     alleKodeverk={alleKodeverk}
-                    inntektArbeidYtelse={inntektArbeidYtelse}
+                    arbeidsforhold={arbeidsforhold}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    newArbeidsforholdCallback={newArbeidsforholdCallback}
                   />
                 </FlexColumn>
               </FlexRow>
@@ -136,24 +145,34 @@ const transformValues = (values: any) => ({
       identifikator: arbeidsForhold ? arbeidsForhold[0] : null,
       identifikatorGUI: arbeidsForhold ? arbeidsForhold[0] : null,
       navn: arbeidsForhold ? arbeidsForhold[1] : null,
+      eksternArbeidsforholdId: arbeidsForhold ? arbeidsForhold[2] : null,
+      arbeidsforholdId: arbeidsForhold ? arbeidsForhold[3] : null,
     };
 
     return {
       utbetalingsgrad: andel.utbetalingsgrad,
       // DUMMY
-      aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+      aktivitetStatus: {
+        kode: 'AT',
+        kodeverk: 'AKTIVITET_STATUS',
+      },
       // INNTEKTSKATEGORI
-      inntektskategori: { kode: andel.inntektskategori },
+      inntektskategori: {
+        kode: andel.inntektskategori,
+        kodeverk: 'INNTEKTSKATEGORI',
+      },
       stillingsprosent: 0,
-      eksternArbeidsforholdId: null,
       refusjon: andel.refusjon,
       sisteUtbetalingsdato: null,
       tilSoker: null,
       // OPPTJENING_AKTIVITET_TYPE
       arbeidsforholdType: '-',
       arbeidsgiver: arbeidsgiverValues,
+      arbeidsgiverNavn: arbeidsgiverValues?.navn,
+      arbeidsgiverOrgnr: arbeidsgiverValues?.identifikator,
+      arbeidsforholdId: arbeidsgiverValues?.arbeidsforholdId,
+      eksternArbeidsforholdId: arbeidsgiverValues?.eksternArbeidsforholdId,
       aktørId: null,
-      arbeidsforholdId: null,
       uttak: [
         {
           periode: {
@@ -195,7 +214,6 @@ interface PureOwnProps {
 
 const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
   const { newPeriodeCallback, behandlingId, behandlingVersjon } = ownProps;
-
   const onSubmit = (values: any) => newPeriodeCallback(transformValues(values));
 
   return (state: any) => ({
@@ -213,5 +231,5 @@ export default connect(mapStateToPropsFactory)(
     form: 'nyPeriodeForm',
     validate: values => validateNyPeriodeForm(values),
     enableReinitialize: true,
-  })(UttakNyPeriode),
+  })(TilkjentYtelseNyPeriode),
 );

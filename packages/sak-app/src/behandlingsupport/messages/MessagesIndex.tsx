@@ -13,7 +13,7 @@ import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux
 
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
+import { getAktorid, getFagsakYtelseType, getSaksnummer } from '../../fagsak/fagsakSelectors';
 import {
   getBehandlingerUuidsMappedById,
   getBehandlingerTypesMappedById,
@@ -38,6 +38,8 @@ interface OwnProps {
   behandlingIdentifier?: BehandlingIdentifier;
   behandlingUuid: string;
   fagsakYtelseType: Kodeverk;
+  saksnummer: number;
+  aktørId?: string;
   selectedBehandlingVersjon?: number;
   selectedBehandlingSprak?: Kodeverk;
   recipients?: string[];
@@ -152,7 +154,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
   }
 
   previewCallback(mottaker, dokumentMal, fritekst, aarsakskode) {
-    const { behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode } = this.props;
+    const { behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode, saksnummer, aktørId } = this.props;
     const erTilbakekreving =
       BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
       BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
@@ -165,10 +167,12 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
       : {
           behandlingUuid,
           ytelseType: fagsakYtelseType,
-          fritekst: fritekst || ' ',
+          dokumentdata: fritekst && { fritekst },
           arsakskode: aarsakskode || null,
           mottaker,
           dokumentMal,
+          saksnummer,
+          aktørId,
         };
     fetchPreview(erTilbakekreving, false, data);
   }
@@ -258,6 +262,8 @@ const mapStateToProps = (state: any): OwnProps => ({
   revurderingVarslingArsak: getKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK)(state),
   behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
   behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId].kode,
+  saksnummer: getSaksnummer(state),
+  aktørId: getAktorid(state),
   fagsakYtelseType: getFagsakYtelseType(state),
 });
 

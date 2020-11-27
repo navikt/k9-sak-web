@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -15,17 +15,15 @@ const getBrevKode = (ankeVurdering) => {
     case ankeVurderingType.ANKE_OPPHEVE_OG_HJEMSENDE:
       return dokumentMalType.ANKE_BESLUTNING_OM_OPPHEVING;
     default:
-      return null;
+      return dokumentMalType.UTLED;
   }
 };
 
 const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => {
-  const data = {
-    fritekst: fritekstTilBrev || '',
-    mottaker: '',
+  return {
+    dokumentdata: fritekstTilBrev && {fritekst: fritekstTilBrev },
     dokumentMal: getBrevKode(ankeVurdering),
   };
-  return data;
 };
 
 const PreviewAnkeLink = ({
