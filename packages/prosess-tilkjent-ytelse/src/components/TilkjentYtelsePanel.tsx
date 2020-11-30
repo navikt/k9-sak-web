@@ -13,6 +13,7 @@ import {
   Personopplysninger,
   InntektArbeidYtelse,
   Soknad,
+  Vilkar,
 } from '@k9-sak-web/types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
@@ -54,6 +55,7 @@ interface PureOwnProps {
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
   inntektArbeidYtelse: InntektArbeidYtelse;
+  vilkar: Vilkar[];
 }
 
 interface MappedOwnProps {
@@ -71,6 +73,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
   inntektArbeidYtelse,
   readOnly,
   alleKodeverk,
+  vilkar,
 }) => {
   const opphoersdato = beregningresultat?.opphoersdato;
   return (
@@ -106,6 +109,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
+          vilkar={vilkar}
         />
       )}
 

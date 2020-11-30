@@ -18,9 +18,7 @@ const unntakData = [
   unntakBehandlingApi.VILKAR,
   unntakBehandlingApi.PERSONOPPLYSNINGER,
   unntakBehandlingApi.SOKNAD,
-  unntakBehandlingApi.INNTEKT_ARBEID_YTELSE,
   unntakBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
-  unntakBehandlingApi.BEREGNINGSGRUNNLAG,
   unntakBehandlingApi.SIMULERING_RESULTAT,
   unntakBehandlingApi.FORBRUKTE_DAGER,
 ];

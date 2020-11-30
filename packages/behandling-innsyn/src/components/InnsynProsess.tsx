@@ -12,10 +12,11 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
+import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
 
+import FetchedData from '../types/fetchedDataTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
@@ -32,13 +33,9 @@ interface OwnProps {
   featureToggles: {};
 }
 
-const previewCallback = (dispatch, fagsak, behandling) => data => {
-  const brevData = {
-    ...data,
-    behandlingUuid: behandling.uuid,
-    ytelseType: fagsak.fagsakYtelseType,
-  };
-  return dispatch(innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+const previewCallback = (dispatch, fagsak, behandling) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre)
+  return dispatch(innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
 const getLagringSideeffekter = (

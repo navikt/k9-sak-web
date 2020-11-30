@@ -39,7 +39,7 @@ const minLength3 = minLength(3);
 const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
     const data = {
-      fritekst: begrunnelse || ' ',
+      dokumentdata: begrunnelse && { fritekst: begrunnelse },
       mottaker: '',
       dokumentMal: 'INSSKR',
       gjelderVedtak: true,
