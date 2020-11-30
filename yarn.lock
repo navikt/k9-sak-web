@@ -11567,10 +11567,10 @@ nav-frontend-lenker-style@0.2.32:
   resolved "https://registry.yarnpkg.com/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.32.tgz#40aaf3e1d7dc3df5cd247f00c78fa91ccdf36b07"
   integrity sha512-+lI52E2jn0rYOe7+JbeLqWyWxgGTgFVkI5w70Sq93LUphk+sDuF+WNmrxdb8w8G8H7unq2x52HjX5u7QHwUbpA==
 
-nav-frontend-lenker@1.0.44:
-  version "1.0.44"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenker/-/nav-frontend-lenker-1.0.44.tgz#a0ba74340862813f46e0c87af35e1aa655d73974"
-  integrity sha512-o8RjOFCIO+SvQvyrtQDYNPNGcs5IbPoMfHPEPZne13cyohtH6EcTP3vn5cxCNcSIdslA5uhsGEyc1z+gSvRfIg==
+nav-frontend-lenker@1.0.53:
+  version "1.0.53"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lenker/-/nav-frontend-lenker-1.0.53.tgz#b1d4e5659bc2f7f12cad83312ce5d4c5f7e2a076"
+  integrity sha512-S3xlFOr9Jv9MPjw2U7y31IBwex8OtfZjpOiNumZA7kfSHdW19R0OlNkJfGVr5e9GMucsSqganfusgIgJQUfanA==
 
 nav-frontend-lesmerpanel-style@0.0.35:
   version "0.0.35"
