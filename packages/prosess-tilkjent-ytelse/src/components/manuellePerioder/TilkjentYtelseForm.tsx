@@ -52,6 +52,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
     <>
       {aksjonspunkter.length > 0 && (
         <>
+          <VerticalSpacer twentyPx />
           <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
             {[
               <FormattedMessage
@@ -141,7 +142,7 @@ const buildInitialValues = createSelector(
     (props: PureOwnProps) => props.beregningsresultat?.perioder,
     (props: PureOwnProps) => props.inntektArbeidYtelse?.arbeidsforhold,
   ],
-  (perioder, arbeidsforhold) => {
+  (perioder = [], arbeidsforhold = []) => {
     if (perioder) {
       return {
         arbeidsforhold,
@@ -156,7 +157,7 @@ const buildInitialValues = createSelector(
 
     return {
       arbeidsforhold,
-      perioder: [],
+      perioder,
     };
   },
 );

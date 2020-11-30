@@ -716,6 +716,7 @@ describe('<VedtakForm>', () => {
       brødtekst: undefined,
       overskrift: undefined,
       skalBrukeOverstyrendeFritekstBrev: true,
+      skalUndertrykkeBrev: false,
       isEngangsstonad: false,
       antallBarn: undefined,
     });
@@ -786,6 +787,7 @@ describe('<VedtakForm>', () => {
       antallBarn: 2,
       isEngangsstonad: true,
       skalBrukeOverstyrendeFritekstBrev: true,
+      skalUndertrykkeBrev: false,
       overskrift: 'Overskrift',
       brødtekst: 'Brødtekst',
     });

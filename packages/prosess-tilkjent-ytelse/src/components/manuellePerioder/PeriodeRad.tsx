@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Arbeidsforhold, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { FlexRow, FlexColumn, Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
@@ -26,6 +26,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   isAnyFormOpen: (...args: any[]) => any;
+  arbeidsforhold: Arbeidsforhold[];
 }
 
 const headerTextCodes = ['TilkjentYtelse.Periode', 'TilkjentYtelse.Andeler'];
@@ -38,6 +39,7 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   isNyPeriodeFormOpen,
   readOnly,
+  arbeidsforhold,
   isAnyFormOpen,
 }) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
@@ -78,6 +80,7 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                   name={`${fieldId}.andeler`}
                   // @ts-ignore
                   component={Andeler}
+                  arbeidsforhold={arbeidsforhold}
                   readOnly
                   alleKodeverk={alleKodeverk}
                 />

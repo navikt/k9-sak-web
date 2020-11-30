@@ -36,10 +36,10 @@ import styles from './innsynVedtakForm.less';
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
-const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
+const getPreviewCallback = (formProps, begrunnelse, previewCallback) => e => {
   if (formProps.valid || formProps.pristine) {
     const data = {
-      fritekst: begrunnelse || ' ',
+      dokumentdata: begrunnelse && { fritekst: begrunnelse },
       mottaker: '',
       dokumentMal: 'INSSKR',
       gjelderVedtak: true,
@@ -51,7 +51,7 @@ const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
   e.preventDefault();
 };
 
-const findResultTypeMessage = (resultat) => {
+const findResultTypeMessage = resultat => {
   if (resultat === innsynResultatType.AVVIST) {
     return 'InnsynVedtakForm.Avslatt';
   }
@@ -84,17 +84,23 @@ export const InnsynVedtakFormImpl = ({
   return (
     <FadingPanel>
       <form onSubmit={formProps.handleSubmit}>
-        <Undertittel><FormattedMessage id={readOnly ? 'InnsynVedtakForm.Vedtak' : 'InnsynVedtakForm.ForslagVedtak'} /></Undertittel>
+        <Undertittel>
+          <FormattedMessage id={readOnly ? 'InnsynVedtakForm.Vedtak' : 'InnsynVedtakForm.ForslagVedtak'} />
+        </Undertittel>
         <VerticalSpacer eightPx />
-        <Undertekst><FormattedMessage id="InnsynVedtakForm.Resultat" /></Undertekst>
+        <Undertekst>
+          <FormattedMessage id="InnsynVedtakForm.Resultat" />
+        </Undertekst>
         <Normaltekst>
           <FormattedMessage id={findResultTypeMessage(resultat)} />
         </Normaltekst>
         <VerticalSpacer eightPx />
-        <Undertekst><FormattedMessage id="InnsynVedtakForm.Vurdering" /></Undertekst>
+        <Undertekst>
+          <FormattedMessage id="InnsynVedtakForm.Vurdering" />
+        </Undertekst>
         <Normaltekst className={styles.wordwrap}>{decodeHtmlEntity(apBegrunnelse)}</Normaltekst>
         <VerticalSpacer twentyPx />
-        {(resultat !== innsynResultatType.INNVILGET) && (
+        {resultat !== innsynResultatType.INNVILGET && (
           <Row>
             <Column xs="8">
               <TextAreaField
@@ -103,18 +109,24 @@ export const InnsynVedtakFormImpl = ({
                 validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
                 maxLength={1500}
                 readOnly={readOnly}
-                badges={[{
-                  type: 'fokus',
-                  textId: getLanguageCodeFromSprakkode(sprakkode),
-                  title: 'Malform.Beskrivelse',
-                }]}
+                badges={[
+                  {
+                    type: 'fokus',
+                    textId: getLanguageCodeFromSprakkode(sprakkode),
+                    title: 'Malform.Beskrivelse',
+                  },
+                ]}
               />
             </Column>
           </Row>
         )}
         <VerticalSpacer twentyPx />
         {resultat !== innsynResultatType.AVVIST && (
-          <DocumentListVedtakInnsyn saksNr={saksNr} documents={documents.filter((document) => document.fikkInnsyn === true)} readOnly={readOnly} />
+          <DocumentListVedtakInnsyn
+            saksNr={saksNr}
+            documents={documents.filter(document => document.fikkInnsyn === true)}
+            readOnly={readOnly}
+          />
         )}
         <VerticalSpacer twentyPx />
         <Row>
@@ -136,14 +148,16 @@ export const InnsynVedtakFormImpl = ({
           <Column xs="4">
             <a
               onClick={previewBrev}
-              onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
+              onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
               className="lenke lenke--frittstaende"
               target="_blank"
               rel="noopener noreferrer"
               role="link"
               tabIndex="0"
             >
-              <FormattedMessage id={readOnly ? 'InnsynVedtakForm.VisVedtaksbrev' : 'InnsynVedtakForm.ForhåndsvisBrev'} />
+              <FormattedMessage
+                id={readOnly ? 'InnsynVedtakForm.VisVedtaksbrev' : 'InnsynVedtakForm.ForhåndsvisBrev'}
+              />
             </a>
           </Column>
         </Row>
@@ -151,7 +165,6 @@ export const InnsynVedtakFormImpl = ({
     </FadingPanel>
   );
 };
-
 
 InnsynVedtakFormImpl.propTypes = {
   saksNr: PropTypes.number.isRequired,
@@ -161,13 +174,15 @@ InnsynVedtakFormImpl.propTypes = {
   resultat: PropTypes.string.isRequired,
   begrunnelse: PropTypes.string,
   sprakkode: PropTypes.shape().isRequired,
-  documents: PropTypes.arrayOf(PropTypes.shape({
-    journalpostId: PropTypes.string.isRequired,
-    dokumentId: PropTypes.string.isRequired,
-    tittel: PropTypes.string.isRequired,
-    tidspunkt: PropTypes.string,
-    kommunikasjonsretning: PropTypes.string.isRequired,
-  })).isRequired,
+  documents: PropTypes.arrayOf(
+    PropTypes.shape({
+      journalpostId: PropTypes.string.isRequired,
+      dokumentId: PropTypes.string.isRequired,
+      tittel: PropTypes.string.isRequired,
+      tidspunkt: PropTypes.string,
+      kommunikasjonsretning: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   ...formPropTypes,
 };
 
@@ -177,48 +192,60 @@ InnsynVedtakFormImpl.defaultProps = {
 
 const buildInitialValues = (innsynMottattDato, aksjonspunkter) => ({
   mottattDato: innsynMottattDato,
-  begrunnelse: aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse,
+  begrunnelse: aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse,
 });
 
-const transformValues = (values) => ({
+const transformValues = values => ({
   kode: aksjonspunktCodes.FORESLA_VEDTAK,
   ...values,
 });
 
 // Samme dokument kan ligge på flere behandlinger under samme fagsak.
-const getFilteredReceivedDocuments = createSelector([(ownProps) => ownProps.alleDokumenter], (allDocuments) => {
-  const filteredDocuments = allDocuments.filter((doc) => doc.kommunikasjonsretning === kommunikasjonsretning.INN);
-  allDocuments.forEach((doc) => !filteredDocuments.some((fd) => fd.dokumentId === doc.dokumentId) && filteredDocuments.push(doc));
+const getFilteredReceivedDocuments = createSelector([ownProps => ownProps.alleDokumenter], allDocuments => {
+  const filteredDocuments = allDocuments.filter(doc => doc.kommunikasjonsretning === kommunikasjonsretning.INN);
+  allDocuments.forEach(
+    doc => !filteredDocuments.some(fd => fd.dokumentId === doc.dokumentId) && filteredDocuments.push(doc),
+  );
   return filteredDocuments;
 });
 
 const getDocumenterMedFikkInnsynVerdi = createSelector(
-  [getFilteredReceivedDocuments, (ownProps) => ownProps.innsynDokumenter],
-  (alleDokumenter, valgteDokumenter) => alleDokumenter
-    .filter((dokAlle) => valgteDokumenter.find((dokValgte) => dokValgte.dokumentId === dokAlle.dokumentId))
-    .map((dokAlle) => ({
-      ...dokAlle,
-      fikkInnsyn: valgteDokumenter.find((dokValgte) => dokValgte.dokumentId === dokAlle.dokumentId).fikkInnsyn,
-    })),
+  [getFilteredReceivedDocuments, ownProps => ownProps.innsynDokumenter],
+  (alleDokumenter, valgteDokumenter) =>
+    alleDokumenter
+      .filter(dokAlle => valgteDokumenter.find(dokValgte => dokValgte.dokumentId === dokAlle.dokumentId))
+      .map(dokAlle => ({
+        ...dokAlle,
+        fikkInnsyn: valgteDokumenter.find(dokValgte => dokValgte.dokumentId === dokAlle.dokumentId).fikkInnsyn,
+      })),
 );
 
 const formName = 'InnsynVedtakForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     documents: getDocumenterMedFikkInnsynVerdi(ownProps),
     initialValues: buildInitialValues(ownProps.innsynMottattDato, ownProps.aksjonspunkter),
-    apBegrunnelse: ownProps.aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
-    begrunnelse: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'begrunnelse'),
+    apBegrunnelse: ownProps.aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN)
+      .begrunnelse,
+    begrunnelse: behandlingFormValueSelector(
+      formName,
+      ownProps.behandlingId,
+      ownProps.behandlingVersjon,
+    )(state, 'begrunnelse'),
     resultat: ownProps.innsynResultatType.kode,
     onSubmit,
   });
 };
 
-const InnsynVedtakForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
-  form: formName,
-})(InnsynVedtakFormImpl)));
+const InnsynVedtakForm = connect(mapStateToPropsFactory)(
+  injectIntl(
+    behandlingForm({
+      form: formName,
+    })(InnsynVedtakFormImpl),
+  ),
+);
 
 InnsynVedtakForm.formName = formName;
 

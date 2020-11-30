@@ -8,42 +8,32 @@ import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 
 import styles from './previewAnkeLink.less';
 
-const getBrevKode = (ankeVurdering) => {
+const getBrevKode = ankeVurdering => {
   switch (ankeVurdering) {
     case ankeVurderingType.ANKE_OMGJOER:
       return dokumentMalType.ANKE_VEDTAK_OMGJORING;
     case ankeVurderingType.ANKE_OPPHEVE_OG_HJEMSENDE:
       return dokumentMalType.ANKE_BESLUTNING_OM_OPPHEVING;
     default:
-      return null;
+      return dokumentMalType.UTLED;
   }
 };
 
 const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => {
-  const data = {
-    fritekst: fritekstTilBrev || '',
-    mottaker: '',
+  return {
+    dokumentdata: fritekstTilBrev && { fritekst: fritekstTilBrev },
     dokumentMal: getBrevKode(ankeVurdering),
   };
-  return data;
 };
 
-const PreviewAnkeLink = ({
-  previewCallback,
-  fritekstTilBrev,
-  ankeVurdering,
-  aksjonspunktCode,
-  readOnly,
-}) => {
-  const previewMessage = (e) => {
+const PreviewAnkeLink = ({ previewCallback, fritekstTilBrev, ankeVurdering, aksjonspunktCode, readOnly }) => {
+  const previewMessage = e => {
     e.preventDefault();
     previewCallback(getBrevData(ankeVurdering, aksjonspunktCode, fritekstTilBrev));
   };
   if (readOnly) {
     return (
-      <span
-        className={classNames(styles.previewLinkDisabled)}
-      >
+      <span className={classNames(styles.previewLinkDisabled)}>
         <FormattedMessage id="PreviewAnkeLink.ForhandvisBrev" />
       </span>
     );
@@ -51,8 +41,10 @@ const PreviewAnkeLink = ({
   return (
     <a
       href=""
-      onClick={(e) => { previewMessage(e); }}
-      onKeyDown={(e) => (e.keyCode === 13 ? previewMessage(e) : null)}
+      onClick={e => {
+        previewMessage(e);
+      }}
+      onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
       className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
     >
       <FormattedMessage id="PreviewAnkeLink.ForhandvisBrev" />

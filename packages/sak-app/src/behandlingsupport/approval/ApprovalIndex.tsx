@@ -15,8 +15,8 @@ import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { getNavAnsatt } from '../../app/duck';
 import {
@@ -174,13 +174,17 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       saksnummer,
       behandlingTypeKode,
     } = this.props;
-    fetchPreview(erTilbakekreving, false, {
-      behandlingUuid,
-      ytelseType: fagsakYtelseType,
-      aktørId,
-      saksnummer,
-      dokumentMal: behandlingTypeKode === BehandlingType.KLAGE ? dokumentMalType.UTLED_KLAGE : dokumentMalType.UTLED,
-    });
+    const data = erTilbakekreving
+      ? { behandlingUuid, ytelseType: fagsakYtelseType, aktørId, saksnummer }
+      : {
+          eksternReferanse: behandlingUuid,
+          ytelseType: fagsakYtelseType,
+          aktørId,
+          saksnummer,
+          dokumentMal: dokumentMalType.UTLED,
+          avsenderApplikasjon: bestemAvsenderApp(behandlingTypeKode),
+        };
+    fetchPreview(erTilbakekreving, false, data);
   }
 
   async goToSearchPage() {

@@ -18,7 +18,7 @@ export const isMedholdIKlage = (klageVurderingResultatNFP, klageVurderingResulta
 
 const getPreviewCallback = (formProps, previewVedtakCallback) => e => {
   if (formProps.valid || formProps.pristine) {
-    previewVedtakCallback({ dokumentMal: dokumentMalType.UTLED_KLAGE });
+    previewVedtakCallback({ dokumentMal: dokumentMalType.UTLED });
   } else {
     formProps.submit();
   }

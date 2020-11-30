@@ -3,6 +3,11 @@ export const getAktivitet = (aktivitetStatus, getKodeverknavn) => {
   return aktivitetStatus === undefined ? '' : getKodeverknavn(aktivitetStatus);
 };
 
+export const getInntektskategori = (inntektkategori, getKodeverknavn) => {
+  // hvis valgtAndel ikke satt ennå return tom string.
+  return inntektkategori === undefined ? '' : getKodeverknavn(inntektkategori);
+};
+
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const createVisningsnavnForAndel = (andel, getKodeverknavn) => {
