@@ -140,15 +140,15 @@ const transformValues = (values: any) => ({
   // refusjon: values.refusjon,
   andeler: values.andeler.map(andel => {
     const arbeidsForhold = andel.arbeidsgiver ? andel.arbeidsgiver.split('|') : [];
-
     const arbeidsgiverValues = {
-      identifikator: arbeidsForhold ? arbeidsForhold[0] : null,
-      identifikatorGUI: arbeidsForhold ? arbeidsForhold[0] : null,
-      navn: arbeidsForhold ? arbeidsForhold[1] : null,
-      eksternArbeidsforholdId: arbeidsForhold ? arbeidsForhold[2] : null,
-      arbeidsforholdId: arbeidsForhold ? arbeidsForhold[3] : null,
+      identifikator: arbeidsForhold ? arbeidsForhold[0] : undefined,
+      identifikatorGUI: arbeidsForhold ? arbeidsForhold[0] : undefined,
+      navn: arbeidsForhold ? arbeidsForhold[1] : undefined,
+      eksternArbeidsforholdId:
+        arbeidsForhold && arbeidsForhold[2] !== 'null' && arbeidsForhold[2] !== 'undefined' ? arbeidsForhold[2] : '-',
+      arbeidsforholdId:
+        arbeidsForhold && arbeidsForhold[3] !== 'null' && arbeidsForhold[3] !== 'undefined' ? arbeidsForhold[3] : '-',
     };
-
     return {
       utbetalingsgrad: andel.utbetalingsgrad,
       // DUMMY
@@ -170,8 +170,9 @@ const transformValues = (values: any) => ({
       arbeidsgiver: arbeidsgiverValues,
       arbeidsgiverNavn: arbeidsgiverValues?.navn,
       arbeidsgiverOrgnr: arbeidsgiverValues?.identifikator,
-      arbeidsforholdId: arbeidsgiverValues?.arbeidsforholdId,
-      eksternArbeidsforholdId: arbeidsgiverValues?.eksternArbeidsforholdId,
+      arbeidsforholdId: arbeidsgiverValues.arbeidsforholdId !== '-' ? arbeidsgiverValues.arbeidsforholdId : null,
+      eksternArbeidsforholdId:
+        arbeidsgiverValues.eksternArbeidsforholdId !== '-' ? arbeidsgiverValues.eksternArbeidsforholdId : null,
       aktørId: null,
       uttak: [
         {

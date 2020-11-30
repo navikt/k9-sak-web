@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -8,7 +8,7 @@ import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 
 import styles from './previewAnkeLink.less';
 
-const getBrevKode = (ankeVurdering) => {
+const getBrevKode = ankeVurdering => {
   switch (ankeVurdering) {
     case ankeVurderingType.ANKE_OMGJOER:
       return dokumentMalType.ANKE_VEDTAK_OMGJORING;
@@ -21,27 +21,19 @@ const getBrevKode = (ankeVurdering) => {
 
 const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => {
   return {
-    dokumentdata: fritekstTilBrev && {fritekst: fritekstTilBrev},
+    dokumentdata: fritekstTilBrev && { fritekst: fritekstTilBrev },
     dokumentMal: getBrevKode(ankeVurdering),
   };
 };
 
-const PreviewAnkeLink = ({
-  previewCallback,
-  fritekstTilBrev,
-  ankeVurdering,
-  aksjonspunktCode,
-  readOnly,
-}) => {
-  const previewMessage = (e) => {
+const PreviewAnkeLink = ({ previewCallback, fritekstTilBrev, ankeVurdering, aksjonspunktCode, readOnly }) => {
+  const previewMessage = e => {
     e.preventDefault();
     previewCallback(getBrevData(ankeVurdering, aksjonspunktCode, fritekstTilBrev));
   };
   if (readOnly) {
     return (
-      <span
-        className={classNames(styles.previewLinkDisabled)}
-      >
+      <span className={classNames(styles.previewLinkDisabled)}>
         <FormattedMessage id="PreviewAnkeLink.ForhandvisBrev" />
       </span>
     );
@@ -49,8 +41,10 @@ const PreviewAnkeLink = ({
   return (
     <a
       href=""
-      onClick={(e) => { previewMessage(e); }}
-      onKeyDown={(e) => (e.keyCode === 13 ? previewMessage(e) : null)}
+      onClick={e => {
+        previewMessage(e);
+      }}
+      onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
       className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
     >
       <FormattedMessage id="PreviewAnkeLink.ForhandvisBrev" />
