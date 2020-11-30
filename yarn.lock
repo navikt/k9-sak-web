@@ -11530,14 +11530,12 @@ nav-frontend-ikonknapper@0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/nav-frontend-ikonknapper/-/nav-frontend-ikonknapper-0.0.10.tgz#8f304e0c11661b71eb5bc1a59cf33fe99e6588b0"
 
-nav-frontend-js-utils@1.0.9, nav-frontend-js-utils@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.9.tgz#3b177db985dd3b1e57911f3e38440d62ca82e51c"
-  integrity sha512-Kf2ksWM9cdEFesT1QS3X2c9ZLyQ4BsoHASBVzOgTU/2dd55jQmNtse0rJ43CGLEDguKPYUaIiaYfKdxIqU9SfQ==
-
-nav-frontend-js-utils@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.8.tgz#1c1ecec8d90b125157097b22b227ef0b53045432"
+nav-frontend-js-utils@1.0.15, nav-frontend-js-utils@^1.0.8, nav-frontend-js-utils@^1.0.9:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.15.tgz#d5dc090ad6194f595175048a2717615eba8aed53"
+  integrity sha512-ZVejqv71eVS7SSkIP4c5/kEloTq79Q0WrTDr+4tmP2tVv+c2rFYMYGhYkLozZ8yDF/6eM7yheutnYxtYsctayQ==
+  dependencies:
+    lodash.throttle "^4.1.1"
 
 nav-frontend-knapper-style@0.3.35, nav-frontend-knapper-style@^0.3.32:
   version "0.3.35"
