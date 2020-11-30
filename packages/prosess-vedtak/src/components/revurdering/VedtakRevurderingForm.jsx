@@ -222,13 +222,9 @@ export class VedtakRevurderingFormImpl extends Component {
               dokumentdata={dokumentdata}
               tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              previewCallback={previewAutomatiskBrev}
+              previewCallback={previewCallback}
+              redusertUtbetalingÅrsaker={readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)}
             />
-            {harTilgjengeligeVedtaksbrev && (
-              <PreviewLink previewCallback={previewAutomatiskBrev}>
-                <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-              </PreviewLink>
-            )}
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 begrunnelse={begrunnelse}

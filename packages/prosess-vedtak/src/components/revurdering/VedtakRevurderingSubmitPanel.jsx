@@ -9,9 +9,9 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
-import { ForhaandsvisningsKnapp } from '../VedtakForm';
 import styles from '../vedtakForm.less';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
+import {VedtakPreviewLink} from "../PreviewLink";
 
 const getPreviewCallback = (formProps, begrunnelse, previewCallback) => e => {
   if (formProps.valid || formProps.pristine) {
@@ -51,23 +51,6 @@ const getPreviewManueltBrevCallback = (
   e.preventDefault();
 };
 
-const harTilkjentYtelseEndretSeg = (revResultat, orgResultat) => {
-  if ((!revResultat && orgResultat) || (revResultat && !orgResultat)) {
-    return true;
-  }
-  if (!revResultat) {
-    return false;
-  }
-  return revResultat.beregnetTilkjentYtelse !== orgResultat.beregnetTilkjentYtelse;
-};
-
-const skalViseESBrev = (revResultat, orgResultat, erSendtVarsel) => {
-  if (harTilkjentYtelseEndretSeg(revResultat, orgResultat)) {
-    return true;
-  }
-  return erSendtVarsel;
-};
-
 const skalKunneForhåndsviseBrev = behandlingResultat => {
   if (!behandlingResultat) {
     return true;
@@ -87,15 +70,11 @@ export const getSubmitKnappTekst = createSelector([ownProps => ownProps.aksjonsp
 
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
-  beregningResultat,
   previewCallback,
   formProps,
-  haveSentVarsel,
-  originaltBeregningResultat,
   skalBrukeOverstyrendeFritekstBrev,
   ytelseTypeKode,
   readOnly,
-  erBehandlingEtterKlage,
   submitKnappTextId,
   begrunnelse,
   brodtekst,
@@ -138,20 +117,12 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           })}
         </Hovedknapp>
       )}
-      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD &&
-        skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) &&
-        skalBrukeOverstyrendeFritekstBrev && <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />}
-      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD &&
-        skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) &&
-        !skalBrukeOverstyrendeFritekstBrev &&
-        !erBehandlingEtterKlage && <ForhaandsvisningsKnapp previewFunction={previewBrev} />}
-      {ytelseTypeKode === fagsakYtelseType.PLEIEPENGER && skalBrukeOverstyrendeFritekstBrev && (
-        <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-      )}
-      {ytelseTypeKode === fagsakYtelseType.PLEIEPENGER &&
-        !skalBrukeOverstyrendeFritekstBrev &&
-        !erBehandlingEtterKlage &&
-        skalKunneForhåndsviseBrev(behandlingResultat) && <ForhaandsvisningsKnapp previewFunction={previewBrev} />}
+     {/* {skalBrukeOverstyrendeFritekstBrev
+      && <VedtakPreviewLink previewFunction={previewOverstyrtBrev} />}
+
+      {!skalBrukeOverstyrendeFritekstBrev
+      && skalKunneForhåndsviseBrev(behandlingResultat)
+      && <VedtakPreviewLink previewFunction={previewBrev} />} */}
     </div>
   );
 };

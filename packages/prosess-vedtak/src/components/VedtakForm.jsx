@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import { clearFields, formPropTypes } from 'redux-form';
-import { bindActionCreators } from 'redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import classNames from 'classnames';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Column, Row } from 'nav-frontend-grid';
+import {connect} from 'react-redux';
+import {createSelector} from 'reselect';
+import {clearFields, formPropTypes} from 'redux-form';
+import {bindActionCreators} from 'redux';
+import { injectIntl } from 'react-intl';
+import {Hovedknapp} from 'nav-frontend-knapper';
+import {Column, Row} from 'nav-frontend-grid';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import {kodeverkObjektPropType} from '@fpsak-frontend/prop-types';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import {isAvslag, isInnvilget} from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import {decodeHtmlEntity} from '@fpsak-frontend/utils';
+import {behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix} from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import {dokumentdatatype} from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
@@ -30,6 +28,7 @@ import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import BrevPanel from './brev/BrevPanel';
+import {VedtakPreviewLink} from "./PreviewLink";
 
 const getPreviewManueltBrevCallback = (
   formProps,
@@ -58,24 +57,6 @@ const getPreviewManueltBrevCallback = (
 };
 
 const isVedtakSubmission = true;
-
-export const ForhaandsvisningsKnapp = props => {
-  const { previewFunction } = props;
-  return (
-    <a
-      href=""
-      onClick={previewFunction}
-      onKeyDown={e => (e.keyCode === 13 ? previewFunction(e) : null)}
-      className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
-    >
-      <FormattedMessage id="VedtakForm.ForhandvisBrev" />
-    </a>
-  );
-};
-
-ForhaandsvisningsKnapp.propTypes = {
-  previewFunction: PropTypes.func.isRequired,
-};
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
@@ -148,10 +129,6 @@ export class VedtakForm extends Component {
 
     const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
     const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-    const skalViseLink =
-      (vedtakVarsel.avslagsarsak === null ||
-        (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)) &&
-      harTilgjengeligeVedtaksbrev;
     const skalSkjuleFattVedtakKnapp =
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
@@ -238,11 +215,11 @@ export class VedtakForm extends Component {
                     })}
                   </Hovedknapp>
                 )}
-                {skalBrukeOverstyrendeFritekstBrev && skalViseLink && (
-                  <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
+                {skalBrukeOverstyrendeFritekstBrev && harTilgjengeligeVedtaksbrev && (
+                  <VedtakPreviewLink previewFunction={previewOverstyrtBrev} />
                 )}
-                {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage && (
-                  <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
+                {!skalBrukeOverstyrendeFritekstBrev && harTilgjengeligeVedtaksbrev && !erBehandlingEtterKlage && (
+                  <VedtakPreviewLink previewFunction={previewDefaultBrev} />
                 )}
               </Column>
             </Row>

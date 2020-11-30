@@ -1,14 +1,16 @@
 import React from 'react';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
+import {AlertStripeInfo} from 'nav-frontend-alertstriper';
+import {connect} from 'react-redux';
+import {injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
-import { createSelector } from 'reselect';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import {createSelector} from 'reselect';
+import {dokumentdatatype} from '@k9-sak-web/konstanter';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import {formValueSelector, reduxForm} from 'redux-form';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
+import {VedtakPreviewLink} from "../PreviewLink";
 
 const BrevPanel = props => {
   const {
@@ -21,50 +23,61 @@ const BrevPanel = props => {
     skalBrukeOverstyrendeFritekstBrev,
     begrunnelse,
     previewCallback,
+    redusertUtbetalingÅrsaker,
+    brødtekst,
+    overskrift,
   } = props;
 
   const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
   const kanHaFritekstbrev = !isTilgjengeligeVedtaksbrevArray || tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
   const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
 
-  const getPreviewAutomatiskBrevCallback = fritekst => e => {
-    previewCallback({ dokumentdata: { fritekst }, dokumentMal: dokumentMalType.UTLED });
-    e.preventDefault();
+  const getPreviewAutomatiskBrevCallback = (fritekst) => (e) => {
+    previewCallback({
+      dokumentdata: {fritekst: fritekst || ' ', redusertUtbetalingÅrsaker},
+      dokumentMal: dokumentMalType.UTLED
+    });
+    e.preventDefault()
   };
+
+  const getManuellBrevCallback = () => (e) => {
+    previewCallback({
+      dokumentdata: {fritekstbrev: {brødtekst: brødtekst || ' ', overskrift: overskrift || ' '}},
+      dokumentMal: dokumentMalType.FRITKS
+    });
+    e.preventDefault()
+  };
+
   const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse);
-
-  const AutomatiskVedtaksbrev = () => (
-    <>
-      <InformasjonsbehovAutomatiskVedtaksbrev
-        intl={intl}
-        readOnly={readOnly}
-        sprakkode={sprakkode}
-        beregningErManueltFastsatt={beregningErManueltFastsatt}
-        begrunnelse={begrunnelse}
-        dokumentdata={dokumentdata}
-      />
-    </>
-  );
-
-  const Vedtaksbrev = () => (
-    <>
-      {!skalBrukeOverstyrendeFritekstBrev ? (
-        <AutomatiskVedtaksbrev />
-      ) : (
-        kanHaFritekstbrev && (
-          <FritekstBrevPanel readOnly={readOnly} sprakkode={sprakkode} previewBrev={previewAutomatiskBrev} />
-        )
-      )}
-    </>
-  );
+  const previewManuellBrev = getManuellBrevCallback();
 
   return (
     <div>
       {harTilgjengeligeVedtaksbrev ? (
-        <Vedtaksbrev />
+        <>
+          {!skalBrukeOverstyrendeFritekstBrev ?
+            <>
+              <InformasjonsbehovAutomatiskVedtaksbrev
+                intl={intl}
+                readOnly={readOnly}
+                sprakkode={sprakkode}
+                beregningErManueltFastsatt={beregningErManueltFastsatt}
+                begrunnelse={begrunnelse}
+                dokumentdata={dokumentdata}
+              />
+              <VedtakPreviewLink previewCallback={previewAutomatiskBrev}/>
+            </>
+            :
+            (kanHaFritekstbrev &&
+              <>
+                <FritekstBrevPanel readOnly={readOnly} sprakkode={sprakkode} previewBrev={previewAutomatiskBrev}/>
+                <VedtakPreviewLink previewCallback={previewManuellBrev}/>
+              </>)
+          }
+        </>
       ) : (
         <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
-          {intl.formatMessage({ id: 'VedtakForm.IkkeVedtaksbrev' })}
+          {intl.formatMessage({id: 'VedtakForm.IkkeVedtaksbrev'})}
         </AlertStripeInfo>
       )}
     </div>
@@ -81,11 +94,16 @@ BrevPanel.propTypes = {
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   beregningErManueltFastsatt: PropTypes.bool,
   previewCallback: PropTypes.func.isRequired,
+  redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),
+  brødtekst: PropTypes.string,
+  overskrift: PropTypes.string
 };
 
 BrevPanel.defaultProps = {
   tilgjengeligeVedtaksbrev: undefined,
   begrunnelse: null,
+  brødtekst: null,
+  overskrift: null
 };
 
 export const brevselector = createSelector(
@@ -96,8 +114,17 @@ export const brevselector = createSelector(
   }),
 );
 
-const mapStateToProps = (state, ownProps) => {
-  return { ...brevselector(ownProps) };
+const mapStateToPropsFactory = () => {
+  return (state, ownProps) => ({
+    ...brevselector(ownProps),
+    brødtekst: formValueSelector('brevPanel')(state, 'brødtekst'),
+    overskrift: formValueSelector('brevPanel')(state, 'overskrift'),
+  });
 };
 
-export default connect(mapStateToProps)(injectIntl(BrevPanel));
+export default connect(mapStateToPropsFactory)(
+  reduxForm({
+    form: 'brevPanel',
+  })(injectIntl(BrevPanel)
+  )
+);

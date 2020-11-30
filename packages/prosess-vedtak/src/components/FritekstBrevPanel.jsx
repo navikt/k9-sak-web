@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
@@ -9,12 +8,13 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
 import styles from './vedtakForm.less';
+import PreviewLink from "./PreviewLink";
 
 const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
 const minLength3 = minLength(3);
 
-const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode }) => (
+const   FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode }) => (
   <>
     <div className={styles.automatiskBrev}>
       <Row>
@@ -24,14 +24,9 @@ const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode }) => (
       </Row>
       <Row>
         <Column xs="6">
-          <a
-            href=""
-            onClick={previewBrev}
-            onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
-            className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-          >
+          <PreviewLink previewCallback={previewBrev}>
             <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-          </a>
+          </PreviewLink>
         </Column>
       </Row>
     </div>
