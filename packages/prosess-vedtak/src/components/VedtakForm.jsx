@@ -1,23 +1,23 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {createSelector} from 'reselect';
-import {clearFields, formPropTypes} from 'redux-form';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { clearFields, formPropTypes } from 'redux-form';
+import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
-import {Hovedknapp} from 'nav-frontend-knapper';
-import {Column, Row} from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Column, Row } from 'nav-frontend-grid';
 
-import {kodeverkObjektPropType} from '@fpsak-frontend/prop-types';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import {isAvslag, isInnvilget} from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import {decodeHtmlEntity} from '@fpsak-frontend/utils';
-import {behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix} from '@fpsak-frontend/form';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {dokumentdatatype} from '@k9-sak-web/konstanter';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
@@ -28,7 +28,7 @@ import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import BrevPanel from './brev/BrevPanel';
-import {VedtakPreviewLink} from "./PreviewLink";
+import { VedtakPreviewLink } from './PreviewLink';
 
 const getPreviewManueltBrevCallback = (
   formProps,
@@ -105,7 +105,6 @@ export class VedtakForm extends Component {
       simuleringResultat,
       vilkar,
       beregningErManueltFastsatt,
-      vedtakVarsel,
       tilgjengeligeVedtaksbrev,
       dokumentdata,
       ...formProps
@@ -253,7 +252,6 @@ VedtakForm.propTypes = {
   simuleringResultat: PropTypes.shape(),
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  vedtakVarsel: PropTypes.shape(),
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   dokumentdata: PropTypes.shape(),
   ...formPropTypes,

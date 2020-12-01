@@ -273,6 +273,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise knapper for å avslutt behandling då behandlingen er innvilget', () => {
+    debugger;
     const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
@@ -327,12 +328,11 @@ describe('<VedtakForm>', () => {
         vedtakVarsel={vedtakVarsel}
       />,
     );
-
+    debugger;
     const hovedknapp = wrapper.find('Hovedknapp');
+    console.log(`hovedknapp: ${hovedknapp}`);
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    const a = wrapper.find('ForhaandsvisningsKnapp');
-    expect(a).to.have.length(1);
   });
 
   it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
@@ -394,11 +394,9 @@ describe('<VedtakForm>', () => {
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    const a = wrapper.find('ForhaandsvisningsKnapp');
-    expect(a).to.have.length(0);
   });
 
-  it('skal vise knapper for å fatte vedtak og forhåndsvisning brev når foreslå avslag', () => {
+  it('skal vise knapper for å fatte vedtak når foreslå avslag', () => {
     const previewCallback = sinon.spy();
 
     const behandlingsresultat = {
@@ -460,8 +458,6 @@ describe('<VedtakForm>', () => {
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    const a = wrapper.find('ForhaandsvisningsKnapp');
-    expect(a).to.have.length(1);
   });
 
   it('skal ikke vise knapper når status er avsluttet', () => {
