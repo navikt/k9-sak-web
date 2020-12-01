@@ -5,7 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   FagsakInfo,
   Rettigheter,
@@ -15,7 +15,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { dokumentdatatype, featureToggle } from "@k9-sak-web/konstanter";
+import { dokumentdatatype, featureToggle } from '@k9-sak-web/konstanter';
 
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
@@ -96,7 +96,9 @@ const getLagringSideeffekter = (
     if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
     else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;
     else brevtype = vedtaksbrevtype.AUTOMATISK;
-    await dispatch(frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.VEDTAKSBREV_TYPE]: brevtype}));
+    await dispatch(
+      frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({ [dokumentdatatype.VEDTAKSBREV_TYPE]: brevtype }),
+    );
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)

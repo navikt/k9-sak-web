@@ -48,7 +48,7 @@ const Andeler: FC<OwnProps & WrappedComponentProps> = ({ fields, meta, alleKodev
           const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
 
           return (
-            <>
+            <tr>
               <TableColumn>
                 <Normaltekst>{label}</Normaltekst>
               </TableColumn>
@@ -61,7 +61,7 @@ const Andeler: FC<OwnProps & WrappedComponentProps> = ({ fields, meta, alleKodev
               <TableColumn>
                 <Normaltekst>{andel.utbetalingsgrad}</Normaltekst>
               </TableColumn>
-            </>
+            </tr>
           );
         })}
       </Table>

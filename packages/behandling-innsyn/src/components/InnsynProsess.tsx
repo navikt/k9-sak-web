@@ -12,7 +12,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 
-import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
 
@@ -34,7 +34,7 @@ interface OwnProps {
 }
 
 const previewCallback = (dispatch, fagsak, behandling) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, parametre)
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
   return dispatch(innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 

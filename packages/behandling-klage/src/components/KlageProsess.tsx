@@ -14,7 +14,7 @@ import { Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
-import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import KlageBehandlingModal from './KlageBehandlingModal';
 import klageBehandlingApi from '../data/klageBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegKlagePanelDefinisjoner';
@@ -59,7 +59,7 @@ const saveKlageText = (dispatch, behandling, aksjonspunkter) => aksjonspunktMode
 };
 
 const previewCallback = (dispatch, fagsak, behandling) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, parametre)
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
   return dispatch(klageBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
