@@ -800,11 +800,11 @@ describe('<ValidateAndelerUtils>', () => {
       fastsattBelop: '0',
       andelIArbeid: '',
     };
-    const inntektList = {
+    const inntektList = [{
       key: 'Selvstendig næringsgivende',
       beregningsgrunnlagPrAar: null,
       fastsattBelop: 0,
-    };
+    }];
     const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false);
     expect(fastsattError).to.equal(null);
   });
