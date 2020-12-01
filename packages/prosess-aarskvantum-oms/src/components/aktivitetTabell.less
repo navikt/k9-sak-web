@@ -1,3 +1,65 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+@import "nokkeltall/nokkeltall";
+
 .aktivitetTabell {
   margin-top: 1em;
+
+  td, th {
+    border: 0 !important;
+    padding: .5rem;
+    text-align: left;
+    position: relative;
+  }
+
+  th {
+    &:first-child {width: 30%}
+    &:nth-child(2) {width: 20%}
+    &:nth-child(3) {width: 30%}
+    &:nth-child(4) {width: 15%}
+    &:nth-child(5) {width: 5%}
+  }
+
+  tr {
+    cursor: default;
+  }
+
+  tbody, thead {
+    border-bottom: 1px solid @navGra40;
+    &:nth-child(even) {
+      background-color: #F7F7F7;
+    }
+  }
+}
+
+.koronaperiode {
+
+  border-bottom-color: @navOransjeLighten20 !important;
+
+  tr:last-child td:first-child:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 0 15px;
+    border-color: transparent transparent transparent @navOransjeLighten20;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.fanerad td {
+  padding: 0;
+}
+
+.fanewrapper {
+  margin: 0 .5rem;
+  padding: 1rem .5rem .5rem .5rem;
+  border-top: 1px solid @navGra40;
+}
+
+.innholdsrad td {
+  padding-top: 0;
+  padding-bottom: 1rem;
+  &:first-child {padding-left: 1rem}
 }

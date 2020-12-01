@@ -15,7 +15,7 @@ const cache = createIntlCache();
 export const årskvantumIntl = createIntl(
   {
     locale: 'nb-NO',
-    messages,
+    messages
   },
   cache,
 );

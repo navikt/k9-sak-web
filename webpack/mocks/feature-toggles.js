@@ -8,7 +8,7 @@ const toggles = {
     'k9sak.aktiver-klagebehandling': false,
     'k9sak.frontend.uttak.aksjonspunkt': false,
     'k9sak.aktiver-dokumentdata': false,
-    'k9sak.aktiver-unntaksbehandling': true,
+    'k9sak.aktiver-unntaksbehandling': false,
   },
 };
 if (process.env.FEATURE_TOGGLES) {
