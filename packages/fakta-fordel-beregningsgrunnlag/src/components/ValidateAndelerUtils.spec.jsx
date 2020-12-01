@@ -746,10 +746,10 @@ describe('<ValidateAndelerUtils>', () => {
       beregningsgrunnlagPrAar: null,
       fastsattBelop: 0,
     }];
-    const periodeDato = [{
+    const periodeDato = {
       fom: '2020-01-01',
       tom: null,
-    }];
+    };
     const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError[0].id).to.equal(kanIkkjeHaNullBeregningsgrunnlagError()[0].id);
   });
@@ -766,10 +766,10 @@ describe('<ValidateAndelerUtils>', () => {
       beregningsgrunnlagPrAar: null,
       fastsattBelop: 0,
     }];
-    const periodeDato = [{
+    const periodeDato = {
       fom: '2020-01-01',
       tom: null,
-    }];
+    };
     const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError[0].id).to.equal(kanIkkjeHaNullBeregningsgrunnlagError()[0].id);
   });
@@ -786,10 +786,10 @@ describe('<ValidateAndelerUtils>', () => {
       beregningsgrunnlagPrAar: null,
       fastsattBelop: 0,
     }];
-    const periodeDato = [{
+    const periodeDato = {
       fom: '2015-01-01',
       tom: null,
-    }];
+    };
     const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError).to.equal(null);
   });
@@ -821,10 +821,10 @@ describe('<ValidateAndelerUtils>', () => {
       beregningsgrunnlagPrAar: null,
       fastsattBelop: 0,
     }];
-    const periodeDato = [{
+    const periodeDato = {
       fom: '2020-01-01',
       tom: null,
-    }];
+    };
     const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError).to.equal(null);
   });
