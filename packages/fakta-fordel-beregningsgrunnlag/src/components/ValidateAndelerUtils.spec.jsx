@@ -894,7 +894,7 @@ describe('<ValidateAndelerUtils>', () => {
       andel: 'Selvstendig næringsgivende',
       fastsattBelop: '0',
       andelIArbeid: '0 - 50',
-      arbeidsperiodeTom: '9999-12-31',
+      arbeidsperiodeTom: '2020-12-01',
     };
     const inntektList = [
       {
@@ -903,12 +903,10 @@ describe('<ValidateAndelerUtils>', () => {
         fastsattBelop: 0,
       },
     ];
-    const periodeDato = [
-      {
-        fom: '2020-01-01',
-        tom: null,
-      },
-    ];
+    const periodeDato = {
+      fom: '2020-01-01',
+      tom: null,
+    };
     const fastsattError = validateFastsattBelop(andelValue, inntektList, () => false, undefined, periodeDato);
     expect(fastsattError[0].id).to.equal(kanIkkjeHaNullBeregningsgrunnlagError()[0].id);
   });
