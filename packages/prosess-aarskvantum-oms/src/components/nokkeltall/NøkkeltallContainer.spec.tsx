@@ -1,9 +1,9 @@
 import { Uttaksperiode } from '@k9-sak-web/types';
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from 'prosess-aarskvantum-oms/i18n/index';
-import NøkkeltallContainer from 'prosess-aarskvantum-oms/src/components/nokkeltall/NøkkeltallContainer';
-import ForbrukteDager from 'prosess-aarskvantum-oms/src/components/nokkeltall/ForbrukteDager';
+import { shallowWithIntl } from '../../../i18n';
+import NøkkeltallContainer from './NøkkeltallContainer';
+import ForbrukteDager from './ForbrukteDager';
 
 describe('<NøkkeltallContainer>', () => {
   describe('Forbrukte dager', () => {

@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import { mountWithIntl } from '../../../i18n';
 import Nøkkeltall from './Nøkkeltall';
-import styles from './nokkeltall.less';
 
 describe('<Nøkkeltall>', () => {
 
@@ -32,9 +31,7 @@ describe('<Nøkkeltall>', () => {
       />,
     );
 
-    const detaljer = wrapper.find(`.${styles.detaljer}`);
-    const expandedElement = wrapper.find('article');
-    expect(expandedElement).to.exist;
+    const detaljer = wrapper.find('div');
     expect(detaljer).to.have.length(2);
   });
 
@@ -63,12 +60,7 @@ describe('<Nøkkeltall>', () => {
       />,
     );
 
-    const detaljer = wrapper.find(`.${styles.detaljer}`);
-    const expandedElement = wrapper.find('[aria-expanded=true]');
-    const nonExpandedElement = wrapper.find('[aria-expanded=false]');
-
-    expect(expandedElement).to.have.length(0);
-    expect(nonExpandedElement).to.exist;
+    const detaljer = wrapper.find('div');
     expect(detaljer).to.have.length(0);
   });
 });
