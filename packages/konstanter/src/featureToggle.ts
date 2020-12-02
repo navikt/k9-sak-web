@@ -1,8 +1,8 @@
-function isTrue(str) {
-  return `${str}`.toLowerCase() === 'true';
+function isTrue(value: any): boolean {
+  return `${value}`.toLowerCase() === 'true';
 }
 
-const featureToggle = {
+const featureToggle: { [index: string]: boolean } = {
   UNNTAKSBEHANDLING: isTrue(process.env.UNNTAKSBEHANDLING),
   DOKUMENTDATA: isTrue(process.env.DOKUMENTDATA),
   VARSELTEKST: isTrue(process.env.VARSELTEKST),
