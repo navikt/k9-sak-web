@@ -13,6 +13,7 @@ import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
+import BrevPanel from '../brev/BrevPanel';
 
 const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   id: 1,
@@ -103,6 +104,7 @@ describe('<VedtakRevurderingForm>', () => {
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
   });
 
   it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll', () => {
@@ -153,6 +155,7 @@ describe('<VedtakRevurderingForm>', () => {
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
   });
 
   it('skal vise result ved ingen endring, hoved knappen', () => {
@@ -188,6 +191,7 @@ describe('<VedtakRevurderingForm>', () => {
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
   });
 
   it('skal vise result ved ingen endring, og submitpanel', () => {
@@ -224,6 +228,7 @@ describe('<VedtakRevurderingForm>', () => {
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
   });
 
   it('skal vise opphørspanel når behandlingsresultat er opphør', () => {
@@ -254,5 +259,33 @@ describe('<VedtakRevurderingForm>', () => {
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakOpphorRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
+  });
+
+  it('skal vise avkrysningsboks for roller uten overstyringstilgang', () => {
+    const previewCallback = sinon.spy();
+    const revurdering = createBehandlingOpphor();
+
+    const wrapper = shallow(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        behandlingStatusKode={revurdering.status.kode}
+        behandlingresultat={revurdering.behandlingsresultat}
+        aksjonspunkter={revurdering.aksjonspunkter}
+        antallBarn={1}
+        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        previewCallback={previewCallback}
+        haveSentVarsel
+        readOnly={false}
+        kanOverstyre={false}
+        ytelseTypeKode="ES"
+        isBehandlingReadOnly
+        resultatstruktur={resultatstruktur}
+        beregningErManueltFastsatt={false}
+      />,
+    );
+    const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
+    expect(overstyringsKnapp).to.have.length(1);
   });
 });
