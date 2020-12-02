@@ -138,7 +138,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
         noHover
         withoutTbody
       >
-        {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler }, index) => {
+        {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler, nøkkeltall }, index) => {
           const erValgt = valgtPeriodeIndex === index;
           const erKoronaperiode = useMemo(() => periodeErIKoronaperioden(periode), [periode]);
           const sorterteVilkår = useMemo(() => Object.entries(vurderteVilkår.vilkår).sort(arbeidsforholdSist), [
@@ -160,8 +160,11 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
 
               case 2: return <td colSpan={5}>
                 <NøkkeltallContainer
-                  totaltAntallDager={0}
-                  antallDagerArbeidsgiverDekker={0}
+                  totaltAntallDager={nøkkeltall.totaltAntallDager}
+                  antallDagerArbeidsgiverDekker={nøkkeltall.antallDagerArbeidsgiverDekker}
+                  antallDagerInfotrygd={nøkkeltall.antallDagerInfotrygd}
+                  antallKoronadager={nøkkeltall.antallKoronadager}
+                  forbrukteDager={nøkkeltall.antallForbrukteDager}
                   uttaksperioder={[]}
                   benyttetRammemelding
                 />
