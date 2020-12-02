@@ -58,7 +58,7 @@ class PanelDef extends ProsessStegPanelDef {
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggle.AKTIVER_DOKUMENTDATA) {
+      if (featureToggle.DOKUMENTDATA) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           omsorgspengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({

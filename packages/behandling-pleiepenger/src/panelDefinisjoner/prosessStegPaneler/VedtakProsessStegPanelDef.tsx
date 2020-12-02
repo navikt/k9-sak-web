@@ -48,7 +48,7 @@ class PanelDef extends ProsessStegPanelDef {
     ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggle.AKTIVER_DOKUMENTDATA && pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE) {
+      if (featureToggle.DOKUMENTDATA && pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({

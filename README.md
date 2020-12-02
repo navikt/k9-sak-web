@@ -27,10 +27,9 @@ https://medium.com/@jsilvax/a-workflow-guide-for-lerna-with-yarn-workspaces-60f9
 ## Mocks i dev-serveren
 Kan konfigureres via å sette opp en `.env`-fil i roten av prosjektet.
 ### Feature toggles
-Aktiveres ved å definiere FEATURE_TOGGLES i `.env`-fila i roten av prosjektet.
-Tar en kommaseparert liste med featuretoggles og skrur disse på
+Aktiveres ved å definiere en eller flere features i `.env`-fila i roten av prosjektet.
 ```
-FEATURE_TOGGLES=my.toggle,my.second.toggle
+UNNTAKSBEHANDLING=true
 ```
 
 ### Overstyr enkeltrute (webpack/mocks/fake-error.js)

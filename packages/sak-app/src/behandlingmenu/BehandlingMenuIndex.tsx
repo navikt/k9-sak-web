@@ -177,7 +177,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
 
   // FIX remove this when unntaksløype er lansert
-  if (featureToggle.AKTIVER_UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(bType.UNNTAK)) {
+  if (featureToggle.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(bType.UNNTAK)) {
     BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.concat(bType.UNNTAK);
   }
 

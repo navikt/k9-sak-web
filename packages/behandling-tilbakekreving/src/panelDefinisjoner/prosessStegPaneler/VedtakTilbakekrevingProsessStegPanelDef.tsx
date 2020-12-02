@@ -35,7 +35,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktKodeForeslaVedtak: aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK,
     isBehandlingHenlagt: behandling.behandlingHenlagt,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggle.AKTIVER_DOKUMENTDATA) {
+      if (featureToggle.DOKUMENTDATA) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           tilbakekrevingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({

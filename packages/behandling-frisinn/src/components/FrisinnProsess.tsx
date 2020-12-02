@@ -90,7 +90,7 @@ const getLagringSideeffekter = (
     toggleOppdatereFagsakContext(false);
   }
 
-  if (featureToggle.AKTIVER_DOKUMENTDATA && aksjonspunktModels[0].isVedtakSubmission) {
+  if (featureToggle.DOKUMENTDATA && aksjonspunktModels[0].isVedtakSubmission) {
     let brevtype;
     if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
     else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;

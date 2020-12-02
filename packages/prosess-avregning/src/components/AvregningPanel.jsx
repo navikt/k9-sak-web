@@ -343,7 +343,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       varseltekst: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'varseltekst'),
       initialValues: buildInitialValues(state, ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
-      featureVarseltekst: erFrisinn && featureToggle.SIMULER_OPPDRAG_VARSELTEKST,
+      featureVarseltekst: erFrisinn && featureToggle.VARSELTEKST,
       saksnummer: fagsak.saksnummer,
       hasOpenTilbakekrevingsbehandling,
       sprakkode,

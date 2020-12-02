@@ -3,7 +3,7 @@ import React from 'react';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { dokumentdatatype, prosessStegCodes, featureToggle } from '@k9-sak-web/konstanter';
+import { dokumentdatatype, featureToggle, prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
@@ -30,7 +30,7 @@ class PanelDef extends ProsessStegPanelDef {
       frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
       frisinnBehandlingApi.VEDTAK_VARSEL,
       frisinnBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
-    ].concat(featureToggle.AKTIVER_DOKUMENTDATA ? [frisinnBehandlingApi.DOKUMENTDATA_HENTE] : []);
+    ].concat(featureToggle.DOKUMENTDATA ? [frisinnBehandlingApi.DOKUMENTDATA_HENTE] : []);
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -46,7 +46,7 @@ class PanelDef extends ProsessStegPanelDef {
     ytelseTypeKode: fagsakYtelseType.FRISINN,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggle.AKTIVER_DOKUMENTDATA && frisinnBehandlingApi.DOKUMENTDATA_LAGRE) {
+      if (featureToggle.DOKUMENTDATA && frisinnBehandlingApi.DOKUMENTDATA_LAGRE) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({

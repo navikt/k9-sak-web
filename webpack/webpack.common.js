@@ -1,6 +1,5 @@
 'use strict';
-require('dotenv').config();
-const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 const config = {
@@ -18,13 +17,7 @@ const config = {
     'utf-8-validate': 'utf-8-validate',
   },
 
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        FEATURE_TOGGLES: JSON.stringify(process.env.FEATURE_TOGGLES),
-      },
-    }),
-  ],
+  plugins: [new Dotenv()],
 };
 
 module.exports = config;
