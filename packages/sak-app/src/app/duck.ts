@@ -26,11 +26,9 @@ export const fetchAllFeatureToggles = () => dispatch =>
 
 export const fetchAlleKodeverk = (featureToggles = {}) => dispatch => {
   dispatch(fpsakApi.KODEVERK.makeRestApiRequest()());
-  if (featureToggles[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]) {
-    dispatch(fpsakApi.KODEVERK_FPTILBAKE.makeRestApiRequest()()).catch(() =>
-      dispatch(setDisabledApplicationContext(ApplicationContextPath.FPTILBAKE)),
-    );
-  }
+  dispatch(fpsakApi.KODEVERK_FPTILBAKE.makeRestApiRequest()()).catch(() =>
+    dispatch(setDisabledApplicationContext(ApplicationContextPath.FPTILBAKE)),
+  );
   if (featureToggles[featureToggle.AKTIVER_KLAGEBEHANDLING]) {
     dispatch(fpsakApi.KODEVERK_KLAGE.makeRestApiRequest()()).catch(() =>
       dispatch(setDisabledApplicationContext(ApplicationContextPath.KLAGE)),
@@ -131,13 +129,10 @@ const isFinishedLoadingFpTilbakeData = createSelector(
 export const getEnabledApplicationContexts = createSelector(
   [getFeatureToggles, getDisabledApplicationContexts],
   (featureToggles, disabledApplicationContexts) => {
-    const erFpTilbakeFeatureEnabled = featureToggles
-      ? featureToggles[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]
-      : false;
     const erFpTilbakeDisabled = disabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE);
     const erKlagefeatureAktivert = featureToggles ? featureToggles[featureToggle.AKTIVER_KLAGEBEHANDLING] : false;
     const erKlageDeaktivert = disabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
-    if (erFpTilbakeFeatureEnabled && !erFpTilbakeDisabled) {
+    if (!erFpTilbakeDisabled) {
       return erKlagefeatureAktivert && !erKlageDeaktivert
         ? [ApplicationContextPath.FPSAK, ApplicationContextPath.FPTILBAKE, ApplicationContextPath.KLAGE]
         : [ApplicationContextPath.FPSAK, ApplicationContextPath.FPTILBAKE];
