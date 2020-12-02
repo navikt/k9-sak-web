@@ -1,5 +1,4 @@
 'use strict';
-const Dotenv = require('dotenv-webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
@@ -36,7 +35,7 @@ const config = {
       },
     ],
   },
-  plugins: [new Dotenv()],
+  plugins: [],
 };
 
 module.exports = merge(common, config);

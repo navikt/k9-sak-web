@@ -1,5 +1,4 @@
 'use strict';
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 const config = {
@@ -17,7 +16,7 @@ const config = {
     'utf-8-validate': 'utf-8-validate',
   },
 
-  plugins: [new Dotenv()],
+  plugins: [],
 };
 
 module.exports = config;
