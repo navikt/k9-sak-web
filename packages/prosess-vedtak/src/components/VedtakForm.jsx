@@ -19,7 +19,6 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -28,33 +27,6 @@ import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import BrevPanel from './brev/BrevPanel';
-import { VedtakPreviewLink } from './PreviewLink';
-
-const getPreviewManueltBrevCallback = (
-  formProps,
-  begrunnelse,
-  brodtekst,
-  overskrift,
-  skalOverstyre,
-  previewCallback,
-) => e => {
-  if (formProps.valid || formProps.pristine) {
-    const data = skalOverstyre
-      ? {
-          dokumentdata: { fritekstbrev: { brødtekst: brodtekst, overskrift } },
-          dokumentMal: dokumentMalType.FRITKS,
-        }
-      : {
-          dokumentdata: { fritekst: begrunnelse },
-          dokumentMal: dokumentMalType.UTLED,
-        };
-
-    previewCallback(data);
-  } else {
-    formProps.submit();
-  }
-  e.preventDefault();
-};
 
 const isVedtakSubmission = true;
 
@@ -90,12 +62,8 @@ export class VedtakForm extends Component {
       behandlingPaaVent,
       antallBarn,
       previewCallback,
-      begrunnelse,
-      brødtekst,
-      overskrift,
       aksjonspunktKoder,
       sprakkode,
-      erBehandlingEtterKlage,
       skalBrukeOverstyrendeFritekstBrev,
       initialValues,
       ytelseTypeKode,
@@ -109,25 +77,7 @@ export class VedtakForm extends Component {
       dokumentdata,
       ...formProps
     } = this.props;
-    const previewOverstyrtBrev = getPreviewManueltBrevCallback(
-      formProps,
-      begrunnelse,
-      brødtekst,
-      overskrift,
-      true,
-      previewCallback,
-    );
-    const previewDefaultBrev = getPreviewManueltBrevCallback(
-      formProps,
-      begrunnelse,
-      brødtekst,
-      overskrift,
-      false,
-      previewCallback,
-    );
 
-    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
-    const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
     const skalSkjuleFattVedtakKnapp =
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
@@ -214,12 +164,6 @@ export class VedtakForm extends Component {
                     })}
                   </Hovedknapp>
                 )}
-                {skalBrukeOverstyrendeFritekstBrev && harTilgjengeligeVedtaksbrev && (
-                  <VedtakPreviewLink previewFunction={previewOverstyrtBrev} />
-                )}
-                {!skalBrukeOverstyrendeFritekstBrev && harTilgjengeligeVedtaksbrev && !erBehandlingEtterKlage && (
-                  <VedtakPreviewLink previewFunction={previewDefaultBrev} />
-                )}
               </Column>
             </Row>
           )}
@@ -232,9 +176,6 @@ export class VedtakForm extends Component {
 VedtakForm.propTypes = {
   resultatstruktur: vedtakBeregningsresultatPropType,
   intl: PropTypes.shape().isRequired,
-  begrunnelse: PropTypes.string,
-  brødtekst: PropTypes.string,
-  overskrift: PropTypes.string,
   antallBarn: PropTypes.number,
   behandlingStatusKode: PropTypes.string.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -259,9 +200,6 @@ VedtakForm.propTypes = {
 
 VedtakForm.defaultProps = {
   antallBarn: undefined,
-  begrunnelse: undefined,
-  brødtekst: undefined,
-  overskrift: undefined,
   kanOverstyre: undefined,
   resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
@@ -343,12 +281,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'antallBarn',
-      'begrunnelse',
       'aksjonspunktKoder',
       'skalBrukeOverstyrendeFritekstBrev',
       'skalUndertrykkeBrev',
-      'overskrift',
-      'brødtekst',
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
     behandlingStatusKode: ownProps.behandlingStatus.kode,
