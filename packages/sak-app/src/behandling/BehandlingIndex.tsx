@@ -25,7 +25,7 @@ import {
   getKanRevurderingOpprettes,
   getSkalBehandlesAvInfotrygd,
 } from '../fagsak/fagsakSelectors';
-import { getNavAnsatt, getFeatureToggles } from '../app/duck';
+import { getNavAnsatt } from '../app/duck';
 import trackRouteParam from '../app/trackRouteParam';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
@@ -76,7 +76,6 @@ interface OwnProps {
   oppdaterBehandlingVersjon: (behandlingVersjon: number) => void;
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
-  featureToggles: {};
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   fagsak: FagsakInfo;
   fagsakBehandlingerInfo: BehandlingerInfo[];
@@ -157,7 +156,6 @@ export class BehandlingIndex extends Component<OwnProps> {
       behandlingTypeKode,
       location,
       oppdaterBehandlingVersjon,
-      featureToggles,
       kodeverk,
       fagsak,
       fagsakBehandlingerInfo,
@@ -174,7 +172,6 @@ export class BehandlingIndex extends Component<OwnProps> {
       rettigheter,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
-      featureToggles,
     };
 
     if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
@@ -350,7 +347,6 @@ const mapStateToProps = state => {
     behandlingTypeKode,
     behandlingVersjon: getTempBehandlingVersjon(state),
     location: state.router.location,
-    featureToggles: getFeatureToggles(state),
     kodeverk: getAlleKodeverkForBehandlingstype(behandlingTypeKode)(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],

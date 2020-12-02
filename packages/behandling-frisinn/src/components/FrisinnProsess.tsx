@@ -35,7 +35,7 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
+
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
@@ -70,7 +70,6 @@ const getLagringSideeffekter = (
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   dispatch,
-  featureToggles,
 ) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
     apModel =>
@@ -91,7 +90,7 @@ const getLagringSideeffekter = (
     toggleOppdatereFagsakContext(false);
   }
 
-  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
+  if (featureToggle.AKTIVER_DOKUMENTDATA && aksjonspunktModels[0].isVedtakSubmission) {
     let brevtype;
     if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
     else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;
@@ -126,7 +125,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
   hasFetchError,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  featureToggles,
+
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
@@ -147,7 +146,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
       [behandling.versjon],
     ),
     alleKodeverk,
-    featureToggles,
+
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
@@ -172,7 +171,6 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     dispatch,
-    featureToggles,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
@@ -224,7 +222,6 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={frisinnBehandlingApi}
           dispatch={dispatch}
-          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

@@ -90,7 +90,6 @@ describe('<KlageProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
-        featureToggles={{}}
       />,
     );
 
@@ -154,7 +153,6 @@ describe('<KlageProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
-        featureToggles={{}}
       />,
     );
 

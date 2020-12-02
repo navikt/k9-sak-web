@@ -24,7 +24,6 @@ interface OwnProps {
   opneSokeside: () => void;
   harApenRevurdering: boolean;
   hasFetchError: boolean;
-  featureToggles: {};
 }
 
 const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
@@ -43,7 +42,6 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
   opneSokeside,
   harApenRevurdering,
   hasFetchError,
-  featureToggles,
 }) => {
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
@@ -71,7 +69,6 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
         hasFetchError={hasFetchError}
         dispatch={dispatch}
         rettigheter={rettigheter}
-        featureToggles={featureToggles}
       />
       <TilbakekrevingFakta
         data={fetchedData}

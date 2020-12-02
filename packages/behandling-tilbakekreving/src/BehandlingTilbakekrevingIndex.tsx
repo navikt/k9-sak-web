@@ -35,7 +35,6 @@ interface OwnProps {
   opneSokeside: () => void;
   harApenRevurdering: boolean;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
-  featureToggles: {};
 }
 
 interface StateProps {
@@ -88,7 +87,6 @@ const BehandlingTilbakekrevingIndex: FunctionComponent<Props> = ({
   valgtFaktaSteg,
   harApenRevurdering,
   hasFetchError,
-  featureToggles,
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -152,7 +150,6 @@ const BehandlingTilbakekrevingIndex: FunctionComponent<Props> = ({
             opneSokeside={opneSokeside}
             harApenRevurdering={harApenRevurdering}
             hasFetchError={hasFetchError}
-            featureToggles={featureToggles}
           />
         </>
       )}

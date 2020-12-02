@@ -34,7 +34,6 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
@@ -119,7 +118,6 @@ const UnntakProsess: FunctionComponent<OwnProps> = ({
   hasFetchError,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  featureToggles,
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
@@ -136,7 +134,6 @@ const UnntakProsess: FunctionComponent<OwnProps> = ({
     ]),
     dispatchSubmitFailed: useCallback(formName => dispatch(setSubmitFailed(formName)), []),
     alleKodeverk,
-    featureToggles,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
@@ -213,7 +210,6 @@ const UnntakProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={unntakBehandlingApi}
           dispatch={dispatch}
-          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

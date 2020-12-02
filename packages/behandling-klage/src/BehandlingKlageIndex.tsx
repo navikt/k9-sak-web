@@ -36,7 +36,6 @@ interface OwnProps {
     opprettet: string;
     avsluttet?: string;
   }[];
-  featureToggles: {};
 }
 
 interface StateProps {
@@ -78,7 +77,6 @@ const BehandlingKlageIndex: FunctionComponent<Props> = ({
   opneSokeside,
   forrigeBehandling,
   alleBehandlinger,
-  featureToggles,
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -136,7 +134,6 @@ const BehandlingKlageIndex: FunctionComponent<Props> = ({
             hentBehandling={hentBehandling}
             opneSokeside={opneSokeside}
             alleBehandlinger={alleBehandlinger}
-            featureToggles={featureToggles}
           />
         </>
       )}

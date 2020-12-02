@@ -19,10 +19,6 @@ const options = {
     vtpLogin(app);
     sentryMock(app);
     fakeError(app);
-    if (process.argv.includes('--feature-toggles')) {
-      console.warn('Mocking feature toggles');
-      featureToggles(app);
-    }
   },
   proxy: {
     '/k9/formidling/dokumentdata/**': {

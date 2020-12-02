@@ -36,7 +36,6 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  featureToggles: {};
 }
 
 interface StateProps {
@@ -89,7 +88,6 @@ const BehandlingUnntakIndex: FunctionComponent<Props> = ({
   lagreRisikoklassifiseringAksjonspunkt,
   valgtFaktaSteg,
   hasFetchError,
-  featureToggles,
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -152,7 +150,6 @@ const BehandlingUnntakIndex: FunctionComponent<Props> = ({
             hentBehandling={hentBehandling}
             opneSokeside={opneSokeside}
             hasFetchError={hasFetchError}
-            featureToggles={featureToggles}
           />
         </>
       )}

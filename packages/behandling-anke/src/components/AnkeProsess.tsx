@@ -37,7 +37,6 @@ interface OwnProps {
     type: Kodeverk;
     avsluttet?: string;
   }[];
-  featureToggles: {};
 }
 
 const saveAnkeText = (dispatch, behandling, aksjonspunkter) => aksjonspunktModel => {
@@ -104,7 +103,6 @@ const AnkeProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   alleBehandlinger,
   dispatch,
-  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -188,7 +186,6 @@ const AnkeProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={ankeBehandlingApi}
           dispatch={dispatch}
-          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

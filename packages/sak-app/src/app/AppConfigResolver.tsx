@@ -7,9 +7,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import fpsakApi from '../data/fpsakApi';
 import {
   fetchAlleKodeverk as fetchAlleKodeverkAC,
-  getFeatureToggles,
   isFinishedLoadingData,
-  fetchAllFeatureToggles,
   isFinishedLoadingErrorPageData,
 } from './duck';
 
@@ -18,39 +16,32 @@ interface OwnProps {
   children: ReactNode;
   fetchNavAnsatt: () => void;
   fetchLanguageFile: () => void;
-  fetchAlleKodeverk: (featureToggles: {}) => void;
+  fetchAlleKodeverk: () => void;
   fetchShowDetailedErrorMessages: () => void;
-  fetchFeatureToggles: () => void;
-  featureToggles: {};
   appIsInErroneousState?: boolean;
   finishedLoadingErrorPageBlockers?: boolean;
 }
 
 class AppConfigResolver extends Component<OwnProps> {
-  static defaultProps = {
-    featureToggles: undefined,
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
     this.resolveAppConfig();
   }
 
-  componentDidUpdate(prevProps) {
-    const { fetchAlleKodeverk, featureToggles } = this.props;
+  componentDidMount() {
+    const { fetchAlleKodeverk } = this.props;
 
-    if (featureToggles !== prevProps.featureToggles) {
-      fetchAlleKodeverk(featureToggles);
-    }
+    fetchAlleKodeverk();
   }
 
   resolveAppConfig = () => {
-    const { fetchNavAnsatt, fetchLanguageFile, fetchShowDetailedErrorMessages, fetchFeatureToggles } = this.props;
+    const { fetchNavAnsatt, fetchLanguageFile, fetchShowDetailedErrorMessages } = this.props;
 
     fetchNavAnsatt();
     fetchLanguageFile();
     fetchShowDetailedErrorMessages();
-    fetchFeatureToggles();
   };
 
   render = () => {
@@ -67,7 +58,6 @@ class AppConfigResolver extends Component<OwnProps> {
 
 const mapStateToProps = state => ({
   finishedLoadingBlockers: isFinishedLoadingData(state),
-  featureToggles: getFeatureToggles(state),
   finishedLoadingErrorPageBlockers: isFinishedLoadingErrorPageData(state),
 });
 
@@ -78,7 +68,6 @@ const mapDispatchToProps = dispatch =>
       fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
       fetchShowDetailedErrorMessages: fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.makeRestApiRequest(),
       fetchAlleKodeverk: fetchAlleKodeverkAC,
-      fetchFeatureToggles: fetchAllFeatureToggles,
     },
     dispatch,
   );
