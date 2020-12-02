@@ -1,13 +1,13 @@
 {
-  "Unntak.Title": "Behandle Vilkår",
-  "Unntak.Innvilg": "Innvilget eller ingen endringer",
-  "Unntak.Avslå": "Avslå eller gjør endringer",
+  "Unntak.Title": "Vurder Vilkår",
+  "Unntak.Innvilg": "Innvilget eller endring",
+  "Unntak.Avslå": "Avslå eller ingen endring",
   "Unntak.TempSaveButton": "Lagre",
   "Unntak.TempSaveAndPreviewButton": "Lagre og forhåndsvis brev",
   "FritekstTextField.Fritekst": "Notat",
   "BehandleUnntakFormNfp.BegrunnelseForUnntak": "Begrunnelse",
   "PreviewUnntakLink.ForhandvisBrev": "Forhåndsvis brev",
-  "Unntak.AvklarAkjsonspunkt": "Avklar vilkår",
+  "Unntak.AvklarAkjsonspunkt": "Vurder vilkår",
 
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",
