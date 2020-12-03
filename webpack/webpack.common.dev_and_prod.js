@@ -163,7 +163,7 @@ const config = {
   },
 
   plugins: [
-    new Dotenv(),
+    new Dotenv({ systemvars: true }),
     new MiniCssExtractPlugin({
       filename: isDevelopment ? 'style.css' : 'style_[contenthash].css',
       ignoreOrder: true,
