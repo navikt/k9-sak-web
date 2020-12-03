@@ -58,8 +58,8 @@ spec:
 
    # Feature-flag
     - name: VARSELTEKST
-      value: "true"
+      value: true
     - name: DOKUMENTDATA
-      value: "true"
+      value: true
     - name: UNNTAKSBEHANDLING
-      value: "true"
+      value: true
