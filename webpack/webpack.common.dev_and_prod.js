@@ -19,6 +19,12 @@ const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 const PUBLIC_PATH = '';
 
+console.log(
+  `process.env.DOKUMENTDATA, type: "${typeof process.env.DOKUMENTDATA}", verdi: ${JSON.stringify(
+    process.env.DOKUMENTDATA,
+  )}`,
+);
+
 const config = {
   module: {
     rules: [
