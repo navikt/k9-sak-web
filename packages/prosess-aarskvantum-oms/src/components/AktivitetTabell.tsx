@@ -12,7 +12,6 @@ import {
 import { Table, TableRow } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
-import styled from 'styled-components';
 import NavFrontendChevron from 'nav-frontend-chevron';
 
 import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
@@ -58,33 +57,6 @@ const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => 
   return <FormattedMessage id="Uttaksplan.FulltFravær" values={{ dager }} />;
 };
 
-export const ExpandButton = styled.button`
-  cursor: pointer;
-  border: none;
-  background: inherit;
-  line-height: 17px;
-`;
-
-export const ExpandedContent = styled.div<{ fyllBorder?: boolean }>`
-  margin-top: 0.5em;
-  padding-top: 0.5em;
-  border-top: 1px solid #c6c2bf;
-  position: relative;
-
-  ${({ fyllBorder }) =>
-    fyllBorder && `
-    &:before {
-      content: '';
-      position: absolute;
-      border-top: 1px solid #c6c2bf;
-      width: 16px;
-      height: 1px;
-      top: -1px;
-      left: -16px;
-    }
-  `}
-`;
-
 const utfallErIngenUtbetaling = (delvisFravær: string) => {
   if (delvisFravær) {
     const { days, hours } = dagerOgTimer(delvisFravær);
@@ -106,7 +78,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   aktivitetsstatuser,
 }) => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
-  const [valgtPanel, velgPanel] = useState<number>();
+  const [valgteDetaljfaner, velgDetaljfaner] = useState<number[]>();
 
   const velgPeriode = (index: number) => {
     if (valgtPeriodeIndex === index) {
@@ -115,6 +87,9 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
       velgPeriodeIndex(index);
     }
   };
+
+  const velgDetaljfane = (faneindex: number) =>
+    velgDetaljfaner(Object.assign([], valgteDetaljfaner, {[valgtPeriodeIndex]: faneindex}));
 
   const arbeidsforholdType: string =
     aktivitetsstatuser.find(aktivitetsstatus => aktivitetsstatus.kode === arbeidsforholdtypeKode)?.navn ||
@@ -146,8 +121,8 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
           ]);
           const utfallIngenUtbetaling = utfallErIngenUtbetaling(delvisFravær);
 
-          const visVilkarHjemlerEllerNokkeltall = index => {
-            switch (index) {
+          const visVilkarHjemlerEllerNokkeltall = faneindex => {
+            switch (faneindex) {
 
               case 1:
                 return <td colSpan={5}>
@@ -212,14 +187,13 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               <td>
                 {formaterFravær(periode, delvisFravær)}
               </td>
-
               <td>
                 {`${utbetalingsgrad}%`}
               </td>
               <td>
-                <ExpandButton onClick={() => velgPeriode(index)} type="button">
+                <button className={styles.utvidelsesknapp} onClick={() => velgPeriode(index)} type="button">
                   <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
-                </ExpandButton>
+                </button>
               </td>
             </TableRow>
             {erValgt && <>
@@ -232,14 +206,15 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                         {label: <FormattedMessage id="Uttaksplan.Hjemler"/>},
                         {label: <FormattedMessage id="Uttaksplan.Nokkeltall"/>}
                       ]}
-                      onChange={(e, i) => velgPanel(i)}
+                      onChange={(e, i) => velgDetaljfane(i)}
                       kompakt
+                      defaultAktiv={valgteDetaljfaner?.[index]}
                     />
                   </div>
                 </td>
               </TableRow>
               <TableRow className={styles.innholdsrad} notFocusable>
-                {visVilkarHjemlerEllerNokkeltall(valgtPanel)}
+                {visVilkarHjemlerEllerNokkeltall(valgteDetaljfaner?.[index])}
               </TableRow>
             </>}
           </tbody>;

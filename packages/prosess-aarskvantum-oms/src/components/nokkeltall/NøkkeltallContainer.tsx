@@ -1,4 +1,3 @@
-import Hr from '@fpsak-frontend/shared-components/src/Hr';
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import {Uttaksperiode} from '@k9-sak-web/types';
 import * as React from 'react';
