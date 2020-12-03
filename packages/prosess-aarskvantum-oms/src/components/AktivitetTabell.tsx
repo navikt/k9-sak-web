@@ -1,3 +1,4 @@
+import Hjelpetekst from "nav-frontend-hjelpetekst";
 import Tabs from "nav-frontend-tabs";
 import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -173,6 +174,11 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
             }
           };
 
+          const faner = ["Uttaksplan.Vilkår", "Uttaksplan.Hjemler"];
+          if (nøkkeltall) {
+            faner.push("Uttaksplan.Nokkeltall");
+          }
+
           return <tbody key={periode} className={erKoronaperiode ? styles.koronaperiode : undefined}>
             <TableRow notFocusable>
               <td>
@@ -201,15 +207,18 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                 <td colSpan={5}>
                   <div className={styles.fanewrapper}>
                     <Tabs
-                      tabs={[
-                        {label: <FormattedMessage id="Uttaksplan.Vilkår"/>},
-                        {label: <FormattedMessage id="Uttaksplan.Hjemler"/>},
-                        {label: <FormattedMessage id="Uttaksplan.Nokkeltall"/>}
-                      ]}
+                      tabs={faner.map(id => ({label: <FormattedMessage id={id}/>}))}
                       onChange={(e, i) => velgDetaljfane(i)}
                       kompakt
                       defaultAktiv={valgteDetaljfaner?.[index]}
                     />
+                    {!nøkkeltall && <>
+                      {/* Nav-frontend-tabs støtter ikke deaktiverte faner */}
+                      <div className={styles.deaktivertFane}>
+                        <FormattedMessage id="Uttaksplan.Nokkeltall"/>
+                      </div>
+                      <Hjelpetekst><FormattedMessage id="Nøkkeltall.Deaktivert"/></Hjelpetekst>
+                    </>}
                   </div>
                 </td>
               </TableRow>
