@@ -1,5 +1,13 @@
 function isTrue(value: any): boolean {
-  return `${value}`.toLowerCase() === 'true';
+  let parsed = '';
+
+  try {
+    parsed = JSON.parse(value);
+  } catch (err) {
+    parsed = value;
+  }
+
+  return `${parsed}`.toLowerCase() === 'true';
 }
 
 const featureToggle: { [index: string]: boolean } = {
