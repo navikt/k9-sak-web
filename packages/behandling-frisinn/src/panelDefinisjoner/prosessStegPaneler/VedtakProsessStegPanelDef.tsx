@@ -1,4 +1,4 @@
-import redusertUtbetalingArsak from "@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak";
+import redusertUtbetalingArsak from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
 import React from 'react';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -24,31 +24,20 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = featureToggles => {
-    const endepunkterUtenDd = [
+  getEndepunkter = () =>
+    [
       frisinnBehandlingApi.TILBAKEKREVINGVALG,
       frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
       frisinnBehandlingApi.VEDTAK_VARSEL,
       frisinnBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
-    ];
-    const endepunkterMedDd = endepunkterUtenDd.concat([frisinnBehandlingApi.DOKUMENTDATA_HENTE]);
-    return featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] ? endepunkterMedDd : endepunkterUtenDd;
-  };
+    ].concat(featureToggle.DOKUMENTDATA ? [frisinnBehandlingApi.DOKUMENTDATA_HENTE] : []);
 
   getOverstyrVisningAvKomponent = () => true;
 
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
-  getData = ({
-    previewCallback,
-    rettigheter,
-    aksjonspunkter,
-    vilkar,
-    simuleringResultat,
-    beregningsgrunnlag,
-    featureToggles,
-  }) => ({
+  getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, beregningsgrunnlag }) => ({
     previewCallback,
     aksjonspunkter,
     vilkar,
@@ -57,11 +46,15 @@ class PanelDef extends ProsessStegPanelDef {
     ytelseTypeKode: fagsakYtelseType.FRISINN,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && frisinnBehandlingApi.DOKUMENTDATA_LAGRE) {
+      if (featureToggle.DOKUMENTDATA && frisinnBehandlingApi.DOKUMENTDATA_LAGRE) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
-        dispatch(frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({[dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker}));
+        dispatch(
+          frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({
+            [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
+          }),
+        );
       }
-    }
+    },
   });
 }
 

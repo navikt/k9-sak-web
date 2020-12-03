@@ -28,7 +28,6 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  featureToggles: {};
 }
 
 interface StateProps {
@@ -69,7 +68,6 @@ const BehandlingInnsynIndex: FunctionComponent<Props> = ({
   settPaVent,
   opneSokeside,
   forrigeBehandling,
-  featureToggles,
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -127,7 +125,6 @@ const BehandlingInnsynIndex: FunctionComponent<Props> = ({
             settPaVent={settPaVent}
             hentBehandling={hentBehandling}
             opneSokeside={opneSokeside}
-            featureToggles={featureToggles}
           />
         </>
       )}

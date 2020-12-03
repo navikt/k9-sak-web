@@ -29,13 +29,13 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [tilbakekrevingApi.VEDTAKSBREV];
 
-  getData = ({ behandling, beregningsresultat, fetchPreviewVedtaksbrev, featureToggles }) => ({
+  getData = ({ behandling, beregningsresultat, fetchPreviewVedtaksbrev }) => ({
     beregningsresultat,
     fetchPreviewVedtaksbrev,
     aksjonspunktKodeForeslaVedtak: aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK,
     isBehandlingHenlagt: behandling.behandlingHenlagt,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA]) {
+      if (featureToggle.DOKUMENTDATA) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           tilbakekrevingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({

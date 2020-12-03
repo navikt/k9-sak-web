@@ -5,7 +5,6 @@ const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.dev');
 const vtpLogin = require('./mocks/login');
 const sentryMock = require('./mocks/sentry');
-const featureToggles = require('./mocks/feature-toggles');
 const fakeError = require('./mocks/fake-error');
 if (process.argv.includes('--no-fix')) {
   console.warn("Setting eslint-loader option 'fix' to false");
@@ -19,10 +18,6 @@ const options = {
     vtpLogin(app);
     sentryMock(app);
     fakeError(app);
-    if (process.argv.includes('--feature-toggles')) {
-      console.warn('Mocking feature toggles');
-      featureToggles(app);
-    }
   },
   proxy: {
     '/k9/formidling/dokumentdata/**': {

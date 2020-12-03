@@ -22,7 +22,6 @@ interface OwnProps {
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
-  featureToggles: {};
 }
 
 interface FaktaPanelInfo {
@@ -44,7 +43,6 @@ const OmsorgspengerPaneler: FunctionComponent<OwnProps> = ({
   hentBehandling,
   opneSokeside,
   hasFetchError,
-  featureToggles,
 }) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
@@ -71,7 +69,6 @@ const OmsorgspengerPaneler: FunctionComponent<OwnProps> = ({
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
         hasFetchError={hasFetchError}
-        featureToggles={featureToggles}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
       />

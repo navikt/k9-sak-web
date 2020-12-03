@@ -55,7 +55,7 @@ import {
   getKanHenleggeBehandling,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
-import { getNavAnsatt, getFeatureToggles, getEnabledApplicationContexts } from '../app/duck';
+import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk } from '../kodeverk/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
@@ -114,7 +114,6 @@ interface StateProps {
   behandlendeEnhetNavn: string;
   kanHenlegge: boolean;
   rettigheter: Rettigheter;
-  featureToggles?: {};
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
 }
@@ -161,7 +160,6 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   pushLocation,
   rettigheter,
   aktorId,
-  featureToggles,
   gjeldendeVedtakBehandlendeEnhetId,
 }) => {
   if (
@@ -179,10 +177,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
 
   // FIX remove this when unntaksløype er lansert
-  if (
-    featureToggles?.[featureToggle.AKTIVER_UNNTAKSBEHANDLING] &&
-    !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(bType.UNNTAK)
-  ) {
+  if (featureToggle.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(bType.UNNTAK)) {
     BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.concat(bType.UNNTAK);
   }
 
@@ -388,7 +383,6 @@ const mapStateToProps = (state, ownProps): StateProps => {
     kanHenlegge: getKanHenleggeBehandling(state),
     rettigheter: getMenyRettigheter(state),
     aktorId: getAktorid(state),
-    featureToggles: getFeatureToggles(state),
     gjeldendeVedtakBehandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(state),
   };
 };

@@ -18,18 +18,12 @@ export const setDisabledApplicationContext = applicationContext => ({
   data: applicationContext,
 });
 
-/* Action creators */
-export const fetchAllFeatureToggles = () => dispatch =>
-  dispatch(
-    fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()({ toggles: Object.values(featureToggle).map(ft => ({ navn: ft })) }),
-  );
-
-export const fetchAlleKodeverk = (featureToggles = {}) => dispatch => {
+export const fetchAlleKodeverk = () => dispatch => {
   dispatch(fpsakApi.KODEVERK.makeRestApiRequest()());
   dispatch(fpsakApi.KODEVERK_FPTILBAKE.makeRestApiRequest()()).catch(() =>
     dispatch(setDisabledApplicationContext(ApplicationContextPath.FPTILBAKE)),
   );
-  if (featureToggles[featureToggle.AKTIVER_KLAGEBEHANDLING]) {
+  if (featureToggle.KLAGEBEHANDLING) {
     dispatch(fpsakApi.KODEVERK_KLAGE.makeRestApiRequest()()).catch(() =>
       dispatch(setDisabledApplicationContext(ApplicationContextPath.KLAGE)),
     );
@@ -87,10 +81,6 @@ export const getNavAnsatt = createSelector(
 );
 export const getNavAnsattName = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.navn);
 export const getFunksjonellTid = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.funksjonellTid);
-export const getFeatureToggles = createSelector(
-  [fpsakApi.FEATURE_TOGGLE.getRestApiData()],
-  (ftData: { featureToggles: {} }) => (ftData ? ftData.featureToggles : undefined),
-);
 export const getShowDetailedErrorMessages = createSelector(
   [fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiData()],
   (showDetailedErrorMessages = false) => showDetailedErrorMessages,
@@ -105,7 +95,6 @@ const isFinishedLoadingFpSakData = createSelector(
     fpsakApi.NAV_ANSATT.getRestApiFinished(),
     fpsakApi.LANGUAGE_FILE.getRestApiFinished(),
     fpsakApi.KODEVERK.getRestApiFinished(),
-    fpsakApi.FEATURE_TOGGLE.getRestApiFinished(),
     fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiFinished(),
   ],
   (...blockers) => blockers.every(finished => finished),
@@ -115,7 +104,6 @@ const sufficientDataForErrorPageLoaded = createSelector(
   [
     fpsakApi.NAV_ANSATT.getRestApiFinished(),
     fpsakApi.LANGUAGE_FILE.getRestApiFinished(),
-    fpsakApi.FEATURE_TOGGLE.getRestApiFinished(),
     fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiFinished(),
   ],
   (...blockers) => blockers.every(finished => finished),
@@ -127,10 +115,10 @@ const isFinishedLoadingFpTilbakeData = createSelector(
 );
 
 export const getEnabledApplicationContexts = createSelector(
-  [getFeatureToggles, getDisabledApplicationContexts],
-  (featureToggles, disabledApplicationContexts) => {
+  [getDisabledApplicationContexts],
+  disabledApplicationContexts => {
     const erFpTilbakeDisabled = disabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE);
-    const erKlagefeatureAktivert = featureToggles ? featureToggles[featureToggle.AKTIVER_KLAGEBEHANDLING] : false;
+    const erKlagefeatureAktivert = featureToggle.KLAGEBEHANDLING || false;
     const erKlageDeaktivert = disabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
     if (!erFpTilbakeDisabled) {
       return erKlagefeatureAktivert && !erKlageDeaktivert

@@ -38,7 +38,6 @@ interface OwnProps {
     type: Kodeverk;
     avsluttet?: string;
   }[];
-  featureToggles: {};
 }
 
 const saveKlageText = (dispatch, behandling, aksjonspunkter) => aksjonspunktModel => {
@@ -106,7 +105,6 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   alleBehandlinger,
   dispatch,
-  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -188,7 +186,6 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={klageBehandlingApi}
           dispatch={dispatch}
-          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

@@ -1,4 +1,5 @@
 'use strict';
+const Dotenv = require('dotenv-webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -162,6 +163,7 @@ const config = {
   },
 
   plugins: [
+    new Dotenv(),
     new MiniCssExtractPlugin({
       filename: isDevelopment ? 'style.css' : 'style_[contenthash].css',
       ignoreOrder: true,

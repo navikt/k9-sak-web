@@ -39,15 +39,7 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
-  getData = ({
-    previewCallback,
-    rettigheter,
-    aksjonspunkter,
-    vilkar,
-    simuleringResultat,
-    beregningsgrunnlag,
-    featureToggles,
-  }) => ({
+  getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, beregningsgrunnlag }) => ({
     previewCallback,
     aksjonspunkter,
     vilkar,
@@ -56,7 +48,7 @@ class PanelDef extends ProsessStegPanelDef {
     ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE) {
+      if (featureToggle.DOKUMENTDATA && pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({
