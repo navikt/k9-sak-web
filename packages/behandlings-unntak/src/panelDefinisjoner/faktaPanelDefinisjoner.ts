@@ -5,7 +5,6 @@ import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/Opptjeningsvilkaret
 import FordelBeregningPanelDef from './faktaPaneler/FordelBeregningPanelDef';
 import UttakFaktaPanelDef from './faktaPaneler/UttakFaktaPanelDef';
 import BarnFaktaPanelDef from './faktaPaneler/BarnFaktaPanelDef';
-import NøkkeltallFaktaPanelDef from './faktaPaneler/NøkkeltallFaktaPanelDef';
 import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
@@ -16,7 +15,6 @@ const faktaPanelDefinisjoner = [
   new UttakFaktaPanelDef(),
   new BarnFaktaPanelDef(),
   new FordelBeregningPanelDef(),
-  new NøkkeltallFaktaPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
 ];
 
