@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { DagerTimer } from './durationUtils';
-import Nøkkeltall from './Nøkkeltall';
+import Nokkeltall from './Nokkeltall';
 import AntallTimer from './AntallTimer';
 import styles from './nokkeltall.less';
 
@@ -21,7 +21,7 @@ const Restdager: React.FunctionComponent<RestdagerProps> = ({
   visDetaljer,
 }) => {
   return (
-    <Nøkkeltall
+    <Nokkeltall
       overskrift={{
         antallDager: tilgodeDagertimer.dager,
         antallTimer: <AntallTimer timer={tilgodeDagertimer.timer} />,

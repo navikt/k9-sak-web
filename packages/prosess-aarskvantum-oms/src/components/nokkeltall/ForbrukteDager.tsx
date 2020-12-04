@@ -2,7 +2,7 @@ import * as React from 'react';
 import {FormattedMessage} from 'react-intl';
 import AntallTimer from './AntallTimer';
 import {DagerTimer} from './durationUtils';
-import Nøkkeltall, {Nøkkeltalldetalj} from './Nøkkeltall';
+import Nokkeltall, {Nokkeltalldetalj} from './Nokkeltall';
 import styles from './nokkeltall.less';
 
 interface ForbrukteDagerProps {
@@ -20,8 +20,8 @@ const forbrukteDagerDetaljer = (
   forbruktDagerTimer: DagerTimer,
   smittevernDagerTimer?: DagerTimer,
   utbetaltForMangeDagerTimer?: DagerTimer,
-): Nøkkeltalldetalj[] => {
-  const detaljer: Nøkkeltalldetalj[] = [
+): Nokkeltalldetalj[] => {
+  const detaljer: Nokkeltalldetalj[] = [
     {
       antallDager: tidFraInfotrygd.dager,
       antallTimer: <AntallTimer timer={tidFraInfotrygd.timer} />,
@@ -83,7 +83,7 @@ const ForbrukteDager: React.FunctionComponent<ForbrukteDagerProps> = ({
   visDetaljer,
 }) => {
   return (
-    <Nøkkeltall
+    <Nokkeltall
       overskrift={{
         antallDager: navHarUtbetaltDagerTimer.dager,
         antallTimer: <AntallTimer timer={navHarUtbetaltDagerTimer.timer} />,

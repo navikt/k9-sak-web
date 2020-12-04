@@ -4,7 +4,7 @@ import * as React from 'react';
 import {FormattedMessage} from 'react-intl';
 import styles from './nokkeltall.less';
 
-export interface Nøkkeltalldetalj {
+export interface Nokkeltalldetalj {
   antallDager: number;
   antallTimer?: React.ReactNode;
   overskrifttekstId: string;
@@ -17,13 +17,13 @@ export interface NøkkeltallProps {
     antallTimer?: React.ReactNode;
     overskrifttekstId: string;
   };
-  detaljer: Nøkkeltalldetalj[];
+  detaljer: Nokkeltalldetalj[];
   viserDetaljer: boolean;
   visDetaljer: () => void;
   className?: string;
 }
 
-const Nøkkeltall: React.FunctionComponent<NøkkeltallProps> = ({
+const Nokkeltall: React.FunctionComponent<NøkkeltallProps> = ({
   overskrift,
   detaljer,
   viserDetaljer,
@@ -68,4 +68,4 @@ const Nøkkeltall: React.FunctionComponent<NøkkeltallProps> = ({
   );
 };
 
-export default Nøkkeltall;
+export default Nokkeltall;

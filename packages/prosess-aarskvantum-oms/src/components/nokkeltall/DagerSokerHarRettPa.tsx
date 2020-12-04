@@ -3,10 +3,10 @@ import {faktaPanelCodes} from '@k9-sak-web/konstanter';
 import * as React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link, useLocation} from 'react-router-dom';
-import Nøkkeltall from './Nøkkeltall';
+import Nokkeltall from './Nokkeltall';
 import styles from './nokkeltall.less';
 
-interface DagerSøkerHarRettPåProps {
+interface DagerSokerHarRettPaProps {
   dagerRettPå: number;
   antallOmsorgsdager: number;
   antallKoronadager: number;
@@ -16,7 +16,7 @@ interface DagerSøkerHarRettPåProps {
   viserDetaljer: boolean;
 }
 
-const DagerSøkerHarRettPå: React.FunctionComponent<DagerSøkerHarRettPåProps> = ({
+const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = ({
   dagerRettPå,
   antallOmsorgsdager,
   antallKoronadager,
@@ -60,7 +60,7 @@ const DagerSøkerHarRettPå: React.FunctionComponent<DagerSøkerHarRettPåProps>
   }
 
   return (
-    <Nøkkeltall
+    <Nokkeltall
       overskrift={{ antallDager: dagerRettPå, overskrifttekstId: 'Nøkkeltall.DagerSøkerHarRettPå' }}
       detaljer={detaljer}
       viserDetaljer={viserDetaljer}
@@ -70,4 +70,4 @@ const DagerSøkerHarRettPå: React.FunctionComponent<DagerSøkerHarRettPåProps>
   );
 };
 
-export default DagerSøkerHarRettPå;
+export default DagerSokerHarRettPa;

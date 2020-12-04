@@ -3,7 +3,7 @@ import {Uttaksperiode} from '@k9-sak-web/types';
 import * as React from 'react';
 import {periodeErIKoronaperioden} from '../utils';
 import DagerNavKanUtbetale from './DagerNavKanUtbetale';
-import DagerSøkerHarRettPå from './DagerSøkerHarRettPå';
+import DagerSokerHarRettPa from './DagerSokerHarRettPa';
 import {beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid} from './durationUtils';
 import ForbrukteDager from './ForbrukteDager';
 import styles from './nokkeltall.less';
@@ -16,7 +16,7 @@ export enum Nokkeltalltype {
   RESTDAGER
 }
 
-export type NøkkeltallContainerProps = Pick<
+export type NokkeltallContainerProps = Pick<
   ÅrskvantumForbrukteDager,
   | 'totaltAntallDager'
   | 'antallKoronadager'
@@ -39,7 +39,7 @@ const absoluttverdiDagerTimer = ({ dager, timer }: DagerTimer): DagerTimer => ({
   timer: Math.abs(timer),
 });
 
-const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> = ({
+const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = ({
   uttaksperioder,
   restTid,
   restdager,
@@ -78,7 +78,7 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
 
   return (
     <section className={styles.nokkeltall}>
-      <DagerSøkerHarRettPå
+      <DagerSokerHarRettPa
         dagerRettPå={dagerRettPå}
         antallOmsorgsdager={grunnrettsdager}
         antallKoronadager={antallKoronadager}
@@ -117,4 +117,4 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   );
 };
 
-export default NøkkeltallContainer;
+export default NokkeltallContainer;

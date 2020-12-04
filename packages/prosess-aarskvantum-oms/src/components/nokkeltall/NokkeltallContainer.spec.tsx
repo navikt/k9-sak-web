@@ -2,7 +2,7 @@ import { Uttaksperiode } from '@k9-sak-web/types';
 import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '../../../i18n';
-import NøkkeltallContainer from './NøkkeltallContainer';
+import NokkeltallContainer from './NokkeltallContainer';
 import ForbrukteDager from './ForbrukteDager';
 
 describe('<NøkkeltallContainer>', () => {
@@ -13,7 +13,7 @@ describe('<NøkkeltallContainer>', () => {
         periode,
       };
       const nøkkeltallContainer = shallowWithIntl(
-        <NøkkeltallContainer
+        <NokkeltallContainer
           totaltAntallDager={20}
           antallDagerArbeidsgiverDekker={3}
           forbrukteDager={4.4}

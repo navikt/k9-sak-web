@@ -1,14 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mountWithIntl } from '../../../i18n';
-import Nøkkeltall from './Nøkkeltall';
+import Nokkeltall from './Nokkeltall';
 
-describe('<Nøkkeltall>', () => {
+describe('<Nokkeltall>', () => {
 
   it('Viser detaljer dersom den er åpnet', () => {
 
     const wrapper = mountWithIntl(
-      <Nøkkeltall
+      <Nokkeltall
         viserDetaljer
         overskrift={{
           antallDager: 1,
@@ -37,7 +37,7 @@ describe('<Nøkkeltall>', () => {
 
   it('Viser ikke detaljer dersom den ikke er åpnet', () => {
     const wrapper = mountWithIntl(
-      <Nøkkeltall
+      <Nokkeltall
         viserDetaljer={false}
         overskrift={{
           antallDager: 1,

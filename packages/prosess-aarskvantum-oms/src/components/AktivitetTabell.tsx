@@ -12,7 +12,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './aktivitetTabell.less';
-import NøkkeltallContainer, {Nokkeltalltype} from "./nokkeltall/NøkkeltallContainer";
+import NøkkeltallContainer, {Nokkeltalltype} from "./nokkeltall/NokkeltallContainer";
 import Utfall from './Utfall';
 import {durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden} from './utils';
 
