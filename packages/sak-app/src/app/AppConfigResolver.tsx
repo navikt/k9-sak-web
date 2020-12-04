@@ -3,10 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { FeatureToggles } from '@k9-sak-web/types';
 
 import fpsakApi from '../data/fpsakApi';
 import {
   fetchAlleKodeverk as fetchAlleKodeverkAC,
+  fetchAllFeatureToggles,
+  getFeatureToggles,
   isFinishedLoadingData,
   isFinishedLoadingErrorPageData,
 } from './duck';
@@ -16,32 +19,39 @@ interface OwnProps {
   children: ReactNode;
   fetchNavAnsatt: () => void;
   fetchLanguageFile: () => void;
-  fetchAlleKodeverk: () => void;
+  fetchAlleKodeverk: (featureToggles: FeatureToggles) => void;
   fetchShowDetailedErrorMessages: () => void;
+  fetchFeatureToggles: () => void;
+  featureToggles: FeatureToggles;
   appIsInErroneousState?: boolean;
   finishedLoadingErrorPageBlockers?: boolean;
 }
 
 class AppConfigResolver extends Component<OwnProps> {
-  static defaultProps = {};
+  static defaultProps = {
+    featureToggles: undefined,
+  };
 
   constructor(props) {
     super(props);
     this.resolveAppConfig();
   }
 
-  componentDidMount() {
-    const { fetchAlleKodeverk } = this.props;
+  componentDidUpdate(prevProps) {
+    const { fetchAlleKodeverk, featureToggles } = this.props;
 
-    fetchAlleKodeverk();
+    if (featureToggles !== prevProps.featureToggles) {
+      fetchAlleKodeverk(featureToggles);
+    }
   }
 
   resolveAppConfig = () => {
-    const { fetchNavAnsatt, fetchLanguageFile, fetchShowDetailedErrorMessages } = this.props;
+    const { fetchNavAnsatt, fetchLanguageFile, fetchShowDetailedErrorMessages, fetchFeatureToggles } = this.props;
 
     fetchNavAnsatt();
     fetchLanguageFile();
     fetchShowDetailedErrorMessages();
+    fetchFeatureToggles();
   };
 
   render = () => {
@@ -58,6 +68,7 @@ class AppConfigResolver extends Component<OwnProps> {
 
 const mapStateToProps = state => ({
   finishedLoadingBlockers: isFinishedLoadingData(state),
+  featureToggles: getFeatureToggles(state),
   finishedLoadingErrorPageBlockers: isFinishedLoadingErrorPageData(state),
 });
 
@@ -68,6 +79,7 @@ const mapDispatchToProps = dispatch =>
       fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
       fetchShowDetailedErrorMessages: fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.makeRestApiRequest(),
       fetchAlleKodeverk: fetchAlleKodeverkAC,
+      fetchFeatureToggles: fetchAllFeatureToggles,
     },
     dispatch,
   );

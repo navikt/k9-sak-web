@@ -117,6 +117,7 @@ describe('<PleiepengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -189,6 +190,7 @@ describe('<PleiepengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -241,6 +243,7 @@ describe('<PleiepengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -297,6 +300,7 @@ describe('<PleiepengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -353,6 +357,7 @@ describe('<PleiepengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -383,6 +388,7 @@ describe('<PleiepengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -416,6 +422,7 @@ describe('<PleiepengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 
@@ -445,6 +452,7 @@ describe('<PleiepengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 

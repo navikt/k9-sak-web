@@ -11,7 +11,7 @@ import {
   ProsessStegContainer,
   Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
@@ -32,6 +32,7 @@ interface OwnProps {
   opneSokeside: () => void;
   dispatch: Dispatch;
   harApenRevurdering: boolean;
+  featureToggles: FeatureToggles;
 }
 
 const getForhandsvisCallback = dispatch => data =>
@@ -72,6 +73,7 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   harApenRevurdering,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -144,6 +146,7 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={tilbakekrevingApi}
           dispatch={dispatch}
+          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

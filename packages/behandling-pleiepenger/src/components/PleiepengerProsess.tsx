@@ -14,7 +14,7 @@ import {
   ProsessStegContainer,
   lagDokumentdata,
 } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
@@ -37,6 +37,7 @@ interface OwnProps {
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
+  featureToggles: FeatureToggles;
 }
 
 const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
@@ -121,6 +122,7 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -138,6 +140,7 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
       [behandling.versjon],
     ),
     alleKodeverk,
+    featureToggles,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
@@ -213,6 +216,7 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={pleiepengerBehandlingApi}
           dispatch={dispatch}
+          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

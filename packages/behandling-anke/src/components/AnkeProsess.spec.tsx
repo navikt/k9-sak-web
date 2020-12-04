@@ -95,6 +95,7 @@ describe('<AnkeProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -142,6 +143,7 @@ describe('<AnkeProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 

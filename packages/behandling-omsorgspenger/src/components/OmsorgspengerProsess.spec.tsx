@@ -117,6 +117,7 @@ describe('<OmsorgspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -181,6 +182,7 @@ describe('<OmsorgspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -233,6 +235,7 @@ describe('<OmsorgspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -289,6 +292,7 @@ describe('<OmsorgspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -345,6 +349,7 @@ describe('<OmsorgspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -375,6 +380,7 @@ describe('<OmsorgspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -408,6 +414,7 @@ describe('<OmsorgspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 
@@ -437,6 +444,7 @@ describe('<OmsorgspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 

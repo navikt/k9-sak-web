@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 import { DataFetcher, DataFetcherTriggers, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
 import FagsakInfo from '../types/fagsakInfoTsType';
@@ -27,6 +27,7 @@ interface OwnProps {
   ) => any;
   behandlingApi: { [name: string]: EndpointOperations };
   dispatch: Dispatch;
+  featureToggles?: FeatureToggles;
 }
 
 const ProsessStegPanel: FunctionComponent<OwnProps> = ({
@@ -39,6 +40,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   lagringSideeffekterCallback,
   behandlingApi,
   dispatch,
+  featureToggles,
 }) => {
   const erHenlagtOgVedtakStegValgt =
     behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.getUrlKode() === prosessStegCodes.VEDTAK;
@@ -77,7 +79,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
               <DataFetcher
                 key={valgtProsessSteg.getUrlKode()}
                 fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-                endpoints={delPaneler[0].getProsessStegDelPanelDef().getEndepunkter()}
+                endpoints={delPaneler[0].getProsessStegDelPanelDef().getEndepunkter(featureToggles)}
                 loadingPanel={<LoadingPanel />}
                 render={dataProps =>
                   delPaneler[0].getProsessStegDelPanelDef().getKomponent({

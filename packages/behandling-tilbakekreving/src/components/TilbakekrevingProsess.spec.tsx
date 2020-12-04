@@ -125,6 +125,7 @@ describe('<TilbakekrevingProsess>', () => {
         opneSokeside={sinon.spy()}
         harApenRevurdering={false}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -178,6 +179,7 @@ describe('<TilbakekrevingProsess>', () => {
         opneSokeside={sinon.spy()}
         harApenRevurdering={false}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 

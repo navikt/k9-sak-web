@@ -7,7 +7,7 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
-import { Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Kodeverk, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 
 import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
 import AnkePaneler from './components/AnkePaneler';
@@ -33,6 +33,7 @@ interface OwnProps {
     type: Kodeverk;
     avsluttet?: string;
   }[];
+  featureToggles: FeatureToggles;
 }
 
 interface StateProps {
@@ -74,6 +75,7 @@ const BehandlingAnkeIndex: FunctionComponent<Props> = ({
   opneSokeside,
   forrigeBehandling,
   alleBehandlinger,
+  featureToggles,
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -131,6 +133,7 @@ const BehandlingAnkeIndex: FunctionComponent<Props> = ({
             hentBehandling={hentBehandling}
             opneSokeside={opneSokeside}
             alleBehandlinger={alleBehandlinger}
+            featureToggles={featureToggles}
           />
         </>
       )}

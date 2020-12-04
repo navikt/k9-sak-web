@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import InnsynProsess from './InnsynProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -19,6 +19,7 @@ interface OwnProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
+  featureToggles: FeatureToggles;
 }
 
 const InnsynPaneler: FunctionComponent<OwnProps> = ({
@@ -33,6 +34,7 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
   settPaVent,
   hentBehandling,
   opneSokeside,
+  featureToggles,
 }) => {
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
@@ -57,6 +59,7 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
         dispatch={dispatch}
+        featureToggles={featureToggles}
       />
     </>
   );

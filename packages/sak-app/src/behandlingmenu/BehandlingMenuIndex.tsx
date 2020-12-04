@@ -7,7 +7,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
-import { Kodeverk, NavAnsatt } from '@k9-sak-web/types';
+import { Kodeverk, NavAnsatt, FeatureToggles } from '@k9-sak-web/types';
 import MenyEndreBehandlendeEnhetIndex, { skalViseIMeny, getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
 import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
 import MenyTaAvVentIndex, {
@@ -30,7 +30,6 @@ import MenyNyBehandlingIndex, {
   skalViseIMeny as skalViseNyBehandlingIMeny,
   getMenytekst as getNyBehandlingMenytekst,
 } from '@fpsak-frontend/sak-meny-ny-behandling';
-import { featureToggle } from '@k9-sak-web/konstanter';
 import {
   getAktorid,
   getSkalBehandlesAvInfotrygd,
@@ -55,7 +54,7 @@ import {
   getKanHenleggeBehandling,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
-import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
+import { getNavAnsatt, getFeatureToggles, getEnabledApplicationContexts } from '../app/duck';
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk } from '../kodeverk/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
@@ -114,6 +113,7 @@ interface StateProps {
   behandlendeEnhetNavn: string;
   kanHenlegge: boolean;
   rettigheter: Rettigheter;
+  featureToggles?: FeatureToggles;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
 }
@@ -159,6 +159,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   sjekkTilbakeRevurdKanOpprettes,
   pushLocation,
   rettigheter,
+  featureToggles,
   aktorId,
   gjeldendeVedtakBehandlendeEnhetId,
 }) => {
@@ -177,7 +178,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
 
   // FIX remove this when unntaksløype er lansert
-  if (featureToggle.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(bType.UNNTAK)) {
+  if (featureToggles?.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(bType.UNNTAK)) {
     BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.concat(bType.UNNTAK);
   }
 
@@ -382,6 +383,7 @@ const mapStateToProps = (state, ownProps): StateProps => {
     behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
     kanHenlegge: getKanHenleggeBehandling(state),
     rettigheter: getMenyRettigheter(state),
+    featureToggles: getFeatureToggles(state),
     aktorId: getAktorid(state),
     gjeldendeVedtakBehandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(state),
   };

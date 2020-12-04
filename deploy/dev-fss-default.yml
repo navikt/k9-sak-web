@@ -63,3 +63,5 @@ spec:
       value: "true"
     - name: UNNTAKSBEHANDLING
       value: "true"
+    - name: KLAGEBEHANDLING
+      value: "true"
