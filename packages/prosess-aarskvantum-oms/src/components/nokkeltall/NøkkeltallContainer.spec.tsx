@@ -22,6 +22,7 @@ describe('<NøkkeltallContainer>', () => {
           antallDagerInfotrygd={0}
           smitteverndager={smitteverndager}
           uttaksperioder={[uttaksperiode]}
+          visEllerSkjulNokkeltalldetaljer={() => undefined}
         />,
       );
 

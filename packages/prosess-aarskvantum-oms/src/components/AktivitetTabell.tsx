@@ -1,25 +1,20 @@
-import Hjelpetekst from "nav-frontend-hjelpetekst";
-import Tabs from "nav-frontend-tabs";
-import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import {
-  Arbeidsforhold,
-  KodeverkMedNavn,
-  Utfalltype,
-  VilkårEnum,
-  Uttaksperiode,
-  Vilkår,
-} from '@k9-sak-web/types';
-import { Table, TableRow } from '@fpsak-frontend/shared-components/index';
-import { FormattedMessage } from 'react-intl';
-import Panel from 'nav-frontend-paneler';
-import NavFrontendChevron from 'nav-frontend-chevron';
+import hide from "@fpsak-frontend/assets/images/hide.svg";
+import show from "@fpsak-frontend/assets/images/show.svg";
+import {Image, Table, TableRow} from '@fpsak-frontend/shared-components/index';
 
-import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
-import NøkkeltallContainer from "./nokkeltall/NøkkeltallContainer";
-import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
+import {calcDays, convertHoursToDays, utledArbeidsforholdNavn} from '@fpsak-frontend/utils';
+import {Arbeidsforhold, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum} from '@k9-sak-web/types';
+import NavFrontendChevron from 'nav-frontend-chevron';
+import Hjelpetekst from "nav-frontend-hjelpetekst";
+import Panel from 'nav-frontend-paneler';
+import Tabs from "nav-frontend-tabs";
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import styles from './aktivitetTabell.less';
+import NøkkeltallContainer, {Nokkeltalltype} from "./nokkeltall/NøkkeltallContainer";
 import Utfall from './Utfall';
+import {durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden} from './utils';
 
 interface AktivitetTabellProps {
   arbeidsforhold?: Arbeidsforhold;
@@ -80,6 +75,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
 }) => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const [valgteDetaljfaner, velgDetaljfaner] = useState<number[]>();
+  const [listeApneNokkeltall, endreListeApneNokkeltall] = useState<Nokkeltalltype[][]>();
 
   const velgPeriode = (index: number) => {
     if (valgtPeriodeIndex === index) {
@@ -92,6 +88,31 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   const velgDetaljfane = (faneindex: number) =>
     velgDetaljfaner(Object.assign([], valgteDetaljfaner, {[valgtPeriodeIndex]: faneindex}));
 
+  const apneNokkeltall = listeApneNokkeltall?.[valgtPeriodeIndex];
+
+  const viserAlleDetaljer = apneNokkeltall && Object.values(apneNokkeltall).length === 4;
+
+  const endreApneNokkeltall = (nyeApneNokkeltall: Nokkeltalltype[]) =>
+    endreListeApneNokkeltall(Object.assign([], listeApneNokkeltall, {[valgtPeriodeIndex]: nyeApneNokkeltall}));
+
+  const visEllerSkjulAlleNokkeltalldetaljer =
+    () => endreApneNokkeltall(viserAlleDetaljer ? [] : [
+      Nokkeltalltype.DAGER_SOKER_HAR_RETT_PA,
+      Nokkeltalltype.DAGER_NAV_KAN_UTBETALE,
+      Nokkeltalltype.FORBRUKTE_DAGER,
+      Nokkeltalltype.RESTDAGER
+    ]);
+
+  const visEllerSkjulNokkeltalldetaljer = (nokkeltalltype: Nokkeltalltype) => {
+    if (apneNokkeltall?.includes(nokkeltalltype)) {
+      endreApneNokkeltall(apneNokkeltall.filter(type => type !== nokkeltalltype));
+    } else {
+      endreApneNokkeltall(apneNokkeltall
+        ? apneNokkeltall.concat([nokkeltalltype])
+        : [nokkeltalltype]);
+    }
+  };
+
   const arbeidsforholdType: string =
     aktivitetsstatuser.find(aktivitetsstatus => aktivitetsstatus.kode === arbeidsforholdtypeKode)?.navn ||
     arbeidsforholdtypeKode;
@@ -99,6 +120,8 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   const beskrivelse = arbeidsforhold
     ? `${arbeidsforholdType}, ${utledArbeidsforholdNavn(arbeidsforhold)}`
     : arbeidsforholdType;
+
+  enum Fanenavn {VILKAR, HJEMMEL, NOKKELTALL}
 
   return (
     <Panel border className={styles.aktivitetTabell}>
@@ -125,7 +148,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
           const visVilkarHjemlerEllerNokkeltall = faneindex => {
             switch (faneindex) {
 
-              case 1:
+              case Fanenavn.HJEMMEL:
                 return <td colSpan={5}>
                   {hjemler.map(hjemmel => (
                     <div key={`${periode}--${hjemmel}`}>
@@ -134,17 +157,20 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                   ))}
                 </td>;
 
-              case 2: return <td colSpan={5}>
-                <NøkkeltallContainer
-                  totaltAntallDager={nøkkeltall.totaltAntallDager}
-                  antallDagerArbeidsgiverDekker={nøkkeltall.antallDagerArbeidsgiverDekker}
-                  antallDagerInfotrygd={nøkkeltall.antallDagerInfotrygd}
-                  antallKoronadager={nøkkeltall.antallKoronadager}
-                  forbrukteDager={nøkkeltall.antallForbrukteDager}
-                  uttaksperioder={[]}
-                  benyttetRammemelding
-                />
-              </td>;
+              case Fanenavn.NOKKELTALL:
+                return <td colSpan={5}>
+                  <NøkkeltallContainer
+                    totaltAntallDager={nøkkeltall.totaltAntallDager}
+                    antallDagerArbeidsgiverDekker={nøkkeltall.antallDagerArbeidsgiverDekker}
+                    antallDagerInfotrygd={nøkkeltall.antallDagerInfotrygd}
+                    antallKoronadager={nøkkeltall.antallKoronadager}
+                    forbrukteDager={nøkkeltall.antallForbrukteDager}
+                    uttaksperioder={[]}
+                    benyttetRammemelding
+                    apneNokkeltall={apneNokkeltall}
+                    visEllerSkjulNokkeltalldetaljer={visEllerSkjulNokkeltalldetaljer}
+                  />
+                </td>;
 
               default:
                 return <>
@@ -219,6 +245,16 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                       </div>
                       <Hjelpetekst><FormattedMessage id="Nøkkeltall.Deaktivert"/></Hjelpetekst>
                     </>}
+                    {valgteDetaljfaner?.[valgtPeriodeIndex] === Fanenavn.NOKKELTALL && (
+                      <button
+                        className={styles.knappForAlleUtregninger}
+                        onClick={visEllerSkjulAlleNokkeltalldetaljer}
+                        type="button"
+                      >
+                        <FormattedMessage id={viserAlleDetaljer ? 'Nøkkeltall.SkjulUtregninger' : 'Nøkkeltall.VisUtregninger'}/>
+                        <Image src={viserAlleDetaljer ? hide : show}/>
+                      </button>
+                    )}
                   </div>
                 </td>
               </TableRow>

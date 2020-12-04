@@ -9,6 +9,13 @@ import ForbrukteDager from './ForbrukteDager';
 import styles from './nokkeltall.less';
 import Restdager from './Restdager';
 
+export enum Nokkeltalltype {
+  DAGER_SOKER_HAR_RETT_PA,
+  DAGER_NAV_KAN_UTBETALE,
+  FORBRUKTE_DAGER,
+  RESTDAGER
+}
+
 export type NøkkeltallContainerProps = Pick<
   ÅrskvantumForbrukteDager,
   | 'totaltAntallDager'
@@ -23,6 +30,8 @@ export type NøkkeltallContainerProps = Pick<
 > & {
   uttaksperioder: Uttaksperiode[];
   benyttetRammemelding: boolean;
+  apneNokkeltall?: Nokkeltalltype[];
+  visEllerSkjulNokkeltalldetaljer: (nokkeltalltype: Nokkeltalltype) => void;
 };
 
 const absoluttverdiDagerTimer = ({ dager, timer }: DagerTimer): DagerTimer => ({
@@ -42,6 +51,8 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   smitteverndager,
   benyttetRammemelding,
   totaltAntallDager: grunnrettsdager,
+  apneNokkeltall,
+  visEllerSkjulNokkeltalldetaljer
 }) => {
 
   const erIKoronaperioden = React.useMemo(
@@ -65,11 +76,6 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
   const alleDagerErForbrukt = !!harSmitteverndager || utbetaltFlereDagerEnnRett;
   const forbruktDagerTimer = restTidErNegativt ? {dager: dagerNavKanUtbetale} : totaltForbruktDagerTimer;
 
-  const [viserDetaljerDagerRettPå, visDetaljerDagerRettPå] = React.useState<boolean>(false);
-  const [viserDetaljerDagerKanUtbetale, visDetaljerDagerKanUtbetale] = React.useState<boolean>(false);
-  const [viserDetaljerForbrukteDager, visDetaljerForbrukteDager] = React.useState<boolean>(false);
-  const [viserDetaljerRestdager, visDetaljerRestdager] = React.useState<boolean>(false);
-
   return (
     <section className={styles.nokkeltall}>
       <DagerSøkerHarRettPå
@@ -78,15 +84,15 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         antallKoronadager={antallKoronadager}
         erIKoronaperioden={erIKoronaperioden}
         benyttetRammemelding={benyttetRammemelding}
-        viserDetaljer={viserDetaljerDagerRettPå}
-        visDetaljer={() => visDetaljerDagerRettPå(current => !current)}
+        viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.DAGER_SOKER_HAR_RETT_PA)}
+        visDetaljer={() => visEllerSkjulNokkeltalldetaljer(Nokkeltalltype.DAGER_SOKER_HAR_RETT_PA)}
       />
       <DagerNavKanUtbetale
         dagerNavKanUtbetale={dagerNavKanUtbetale}
         dagerRettPå={dagerRettPå}
         antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
-        visDetaljer={() => visDetaljerDagerKanUtbetale(current => !current)}
-        viserDetaljer={viserDetaljerDagerKanUtbetale}
+        visDetaljer={() => visEllerSkjulNokkeltalldetaljer(Nokkeltalltype.DAGER_NAV_KAN_UTBETALE)}
+        viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.DAGER_NAV_KAN_UTBETALE)}
       />
       <ForbrukteDager
         navHarUtbetaltDagerTimer={navHarUtbetaltDagerTimer}
@@ -94,8 +100,8 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         forbrukteDagerTimer={forbruktDagerTimer}
         smittevernDagerTimer={smittevernDagerTimer}
         utbetaltForMangeDagerTimer={utbetaltFlereDagerEnnRett ? absoluttverdiDagerTimer(rest) : null}
-        viserDetaljer={viserDetaljerForbrukteDager}
-        visDetaljer={() => visDetaljerForbrukteDager(current => !current)}
+        viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.FORBRUKTE_DAGER)}
+        visDetaljer={() => visEllerSkjulNokkeltalldetaljer(Nokkeltalltype.FORBRUKTE_DAGER)}
       />
       <Restdager
         tilgodeDagertimer={{
@@ -104,8 +110,8 @@ const NøkkeltallContainer: React.FunctionComponent<NøkkeltallContainerProps> =
         }}
         dagerNavKanUtbetale={dagerNavKanUtbetale}
         navHarUtbetaltDagerTimer={navHarUtbetaltDagerTimer}
-        viserDetaljer={viserDetaljerRestdager}
-        visDetaljer={() => visDetaljerRestdager(current => !current)}
+        viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.RESTDAGER)}
+        visDetaljer={() => visEllerSkjulNokkeltalldetaljer(Nokkeltalltype.RESTDAGER)}
       />
     </section>
   );
