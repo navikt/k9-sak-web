@@ -2,18 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
 import arbeidsforholdAksjonspunkterPropType from './propTypes/arbeidsforholdAksjonspunkterPropType';
 import arbeidsforholdBehandlingPropType from './propTypes/arbeidsforholdBehandlingPropType';
-import arbeidsforholdInntektArbeidYtelsePropType from './propTypes/arbeidsforholdInntektArbeidYtelsePropType';
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const ArbeidsforholdFaktaIndex = ({
   behandling,
@@ -29,9 +32,11 @@ const ArbeidsforholdFaktaIndex = ({
     <ArbeidsforholdInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
+      arbeidsforhold={inntektArbeidYtelse}
       skalKunneLeggeTilNyeArbeidsforhold={inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={
+        inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding
+      }
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}
@@ -44,7 +49,7 @@ const ArbeidsforholdFaktaIndex = ({
 
 ArbeidsforholdFaktaIndex.propTypes = {
   behandling: arbeidsforholdBehandlingPropType.isRequired,
-  inntektArbeidYtelse: arbeidsforholdInntektArbeidYtelsePropType.isRequired,
+  inntektArbeidYtelse: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

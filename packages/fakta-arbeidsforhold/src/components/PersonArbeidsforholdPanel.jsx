@@ -91,21 +91,25 @@ export const erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM = arbeidsfor
   return isAllowed;
 };
 
-const addReplaceableArbeidsforhold = arbeidsforholdList =>
-  arbeidsforholdList.map(a1 => {
-    const matches = arbeidsforholdList.filter(
+const addReplaceableArbeidsforhold = arbeidsforholdList => {
+  debugger;
+  arbeidsforholdList.arbeidsforhold.map(a1 => {
+    const matches = arbeidsforholdList.arbeidsforhold.filter(
       a2 =>
-        a2.arbeidsgiverIdentifikator === a1.arbeidsgiverIdentifikator &&
-        a2.arbeidsforholdId &&
-        a1.arbeidsforholdId &&
-        a2.arbeidsforholdId !== a1.arbeidsforholdId,
+        a2.id === a1.id &&
+        a2.arbeidsgiver.arbeidsgiverOrgnr &&
+        a1.arbeidsgiver.arbeidsgiverOrgnr &&
+        a2.arbeidsgiver.arbeidsgiverOrgnr !== a1.arbeidsgiver.arbeidsgiverOrgnr,
     );
-    const hasSomeNewer = matches.some(m => moment(m.mottattDatoInntektsmelding).isAfter(a1.mottattDatoInntektsmelding));
+    const hasSomeNewer = matches.some(m =>
+      moment(m.inntektsmeldinger[0].mottattTidspunkt).isAfter(a1.inntektsmeldinger[0].mottattTidspunkt),
+    );
     return {
       ...a1,
       replaceOptions: hasSomeNewer ? [] : matches,
     };
   });
+};
 
 const utledAktivtArbeidsforholdHandling = (arbeidsforhold, arbeidsforholdHandlingField) => {
   if (

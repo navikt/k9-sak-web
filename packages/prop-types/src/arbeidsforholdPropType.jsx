@@ -19,34 +19,28 @@ export const arbeidsforholdBeregningProptype = PropTypes.shape({
 
 export const arbeidsforholdPropType = PropTypes.shape({
   id: PropTypes.string,
-  navn: PropTypes.string,
-  arbeidsgiverIdentifikator: PropTypes.string,
-  arbeidsgiverIdentifiktorGUI: PropTypes.string,
-  arbeidsforholdId: PropTypes.string,
-  fomDato: PropTypes.string,
-  tomDato: PropTypes.string,
+  arbeidsforhold: PropTypes.shape({
+    eksternArbeidsforholdId: PropTypes.string,
+    internArbeidsforholdId: PropTypes.string,
+  }),
+  arbeidsgiver: PropTypes.shape({
+    arbeidsgiverOrgnr: PropTypes.string,
+    arbeidsgiverAktørId: PropTypes.string,
+  }),
+  yrkestittel: PropTypes.string,
+  begrunnelse: PropTypes.string,
+  perioder: PropTypes.arrayOf(
+    PropTypes.shape({
+      fom: PropTypes.string,
+      tom: PropTypes.string,
+    }),
+  ),
+  handlingType: PropTypes.shape({
+    kode: PropTypes.string.isRequired,
+  }),
   kilde: PropTypes.shape({
     kode: PropTypes.string.isRequired,
   }),
-  mottattDatoInntektsmelding: PropTypes.string,
-  stillingsprosent: PropTypes.number,
-  brukArbeidsforholdet: PropTypes.bool,
-  fortsettBehandlingUtenInntektsmelding: PropTypes.bool,
-  erNyttArbeidsforhold: PropTypes.bool,
-  erSlettet: PropTypes.bool,
-  erstatterArbeidsforholdId: PropTypes.string,
-  harErsattetEttEllerFlere: PropTypes.bool,
-  ikkeRegistrertIAaRegister: PropTypes.bool,
-  tilVurdering: PropTypes.bool,
-  vurderOmSkalErstattes: PropTypes.bool,
-  erEndret: PropTypes.bool,
-  brukMedJustertPeriode: PropTypes.bool,
-  overstyrtTom: PropTypes.string,
-  lagtTilAvSaksbehandler: PropTypes.bool,
-  basertPaInntektsmelding: PropTypes.bool,
-  inntektMedTilBeregningsgrunnlag: PropTypes.bool,
-  skjaeringstidspunkt: PropTypes.string,
-  begrunnelse: PropTypes.string,
   permisjoner: PropTypes.arrayOf(
     PropTypes.shape({
       permisjonFom: PropTypes.string,
@@ -58,7 +52,22 @@ export const arbeidsforholdPropType = PropTypes.shape({
       }),
     }),
   ),
-  brukPermisjon: PropTypes.bool,
+  stillingsprosent: PropTypes.number,
+  aksjonspunktÅrsaker: PropTypes.arrayOf(
+    PropTypes.shape({
+      kode: PropTypes.string.isRequired,
+    }),
+  ),
+  inntektsmeldinger: PropTypes.arrayOf(
+    PropTypes.shape({
+      journalpostId: PropTypes.string,
+      mottattTidspunkt: PropTypes.string,
+      status: PropTypes.shape({
+        kode: PropTypes.string.isRequired,
+      }),
+      begrunnelse: PropTypes.string,
+    }),
+  ),
 });
 
 export default arbeidsforholdPropType;
