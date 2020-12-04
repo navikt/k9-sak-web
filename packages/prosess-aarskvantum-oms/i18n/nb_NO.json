@@ -86,6 +86,7 @@
   "Uttaksplan.Hjemmel.COVID19_4_1__2_OG_3": "Ftrl. § 25-16 og midl. forskrift § 4-1 2. og 3. ledd",
   "Uttaksplan.Hjemmel.COVID19_4_2": "Ftrl. § 25-16 og midl. forskrift § 4-1",
   "Uttaksplan.Nokkeltall": "Nøkkeltall denne perioden",
+  "Uttaksplan.Nokkeltall.Migrert": "Nøkkeltall",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
@@ -127,5 +128,6 @@
   "Nøkkeltall.TotaltForbrukte.DagerOgTimer.InfoText": "{dager} dager og {timer} timer forbrukt.",
   "Nøkkeltall.VisUtregning": "Vis utregning",
   "Nøkkeltall.SkjulUtregning": "Skjul utregning",
-  "Nøkkeltall.Deaktivert": "Denne perioden har ikke nøkkeltall fordi den kommer fra et gammelt system. Nøkkeltallene for alle periodene er samlet i den siste perioden."
+  "Nøkkeltall.Deaktivert": "Denne perioden har ikke nøkkeltall fordi den kommer fra et gammelt system. Nøkkeltallene for alle periodene er samlet i den siste perioden.",
+  "Nøkkeltall.ErMigrert": "Nøkkeltallene som vises her kommer fra et gammelt system og gjelder for alle periodene samlet."
 }

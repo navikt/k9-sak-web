@@ -1,6 +1,8 @@
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import {Uttaksperiode} from '@k9-sak-web/types';
+import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
 import * as React from 'react';
+import {FormattedMessage} from "react-intl";
 import {periodeErIKoronaperioden} from '../utils';
 import DagerNavKanUtbetale from './DagerNavKanUtbetale';
 import DagerSokerHarRettPa from './DagerSokerHarRettPa';
@@ -32,6 +34,7 @@ export type NokkeltallContainerProps = Pick<
   benyttetRammemelding: boolean;
   apneNokkeltall?: Nokkeltalltype[];
   visEllerSkjulNokkeltalldetaljer: (nokkeltalltype: Nokkeltalltype) => void;
+  migrertData: boolean;
 };
 
 const absoluttverdiDagerTimer = ({ dager, timer }: DagerTimer): DagerTimer => ({
@@ -52,7 +55,8 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
   benyttetRammemelding,
   totaltAntallDager: grunnrettsdager,
   apneNokkeltall,
-  visEllerSkjulNokkeltalldetaljer
+  visEllerSkjulNokkeltalldetaljer,
+  migrertData
 }) => {
 
   const erIKoronaperioden = React.useMemo(
@@ -78,6 +82,11 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
 
   return (
     <section className={styles.nokkeltall}>
+      {migrertData && (
+        <AlertStripeAdvarsel className={styles.varselOmMigrertData}>
+          <FormattedMessage id="Nøkkeltall.ErMigrert"/>
+        </AlertStripeAdvarsel>
+      )}
       <DagerSokerHarRettPa
         dagerRettPå={dagerRettPå}
         antallOmsorgsdager={grunnrettsdager}

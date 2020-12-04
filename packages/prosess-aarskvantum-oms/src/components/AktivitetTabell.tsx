@@ -169,6 +169,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                     benyttetRammemelding
                     apneNokkeltall={apneNokkeltall}
                     visEllerSkjulNokkeltalldetaljer={visEllerSkjulNokkeltalldetaljer}
+                    migrertData={nøkkeltall.migrertData}
                   />
                 </td>;
 
@@ -202,7 +203,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
 
           const faner = ["Uttaksplan.Vilkår", "Uttaksplan.Hjemler"];
           if (nøkkeltall) {
-            faner.push("Uttaksplan.Nokkeltall");
+            faner.push(nøkkeltall.migrertData ? "Uttaksplan.Nokkeltall.Migrert" : "Uttaksplan.Nokkeltall");
           }
 
           return <tbody key={periode} className={erKoronaperiode ? styles.koronaperiode : undefined}>
