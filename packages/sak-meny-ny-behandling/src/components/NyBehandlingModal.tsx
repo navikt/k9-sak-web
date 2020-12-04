@@ -164,6 +164,8 @@ const manuelleRevurderingsArsaker = [
   behandlingArsakType.ETTER_KLAGE,
 ];
 
+const unntakVurderingsArsaker = [behandlingArsakType.ANNET];
+
 const tilbakekrevingRevurderingArsaker = [
   behandlingArsakType.RE_FORELDELSE,
   behandlingArsakType.RE_VILKÅR,
@@ -186,9 +188,15 @@ export const getBehandlingAarsaker = createSelector(
         .filter(ar => ar);
     }
     // TODO lage en egen for UNNTAK når vi vet hvilke det skal være
-    if ([bType.REVURDERING, bType.UNNTAK].some(type => type === valgtBehandlingType)) {
+    if (valgtBehandlingType === bType.REVURDERING) {
       return alleRevurderingArsaker
         .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
+        .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
+    }
+
+    if (valgtBehandlingType === bType.UNNTAK) {
+      return alleRevurderingArsaker
+        .filter(bat => unntakVurderingsArsaker.indexOf(bat.kode) > -1)
         .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
     }
 

@@ -1,13 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Dispatch } from 'redux';
-
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FagsakInfo, Rettigheter, SideMenuWrapper, faktaHooks } from '@fpsak-frontend/behandling-felles';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-
 import unntakBehandlingApi from '../data/unntakBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';

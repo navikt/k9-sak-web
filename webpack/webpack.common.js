@@ -15,6 +15,8 @@ const config = {
     bufferutil: 'bufferutil',
     'utf-8-validate': 'utf-8-validate',
   },
+
+  plugins: [],
 };
 
 module.exports = config;

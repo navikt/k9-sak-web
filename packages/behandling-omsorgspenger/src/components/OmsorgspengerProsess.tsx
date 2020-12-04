@@ -16,7 +16,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
-import lagForhåndsvisRequest from "@fpsak-frontend/utils/src/formidlingUtils";
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import omsorgspengerBehandlingApi from '../data/omsorgspengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -41,7 +41,7 @@ interface OwnProps {
 }
 
 const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, parametre)
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
   return dispatch(omsorgspengerBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
@@ -140,7 +140,6 @@ const OmsorgspengerProsess: FunctionComponent<OwnProps> = ({
       [behandling.versjon],
     ),
     alleKodeverk,
-    featureToggles,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(

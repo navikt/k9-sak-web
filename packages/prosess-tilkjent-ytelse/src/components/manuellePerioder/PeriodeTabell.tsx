@@ -266,6 +266,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
           name="perioder"
           // @ts-ignore
           component={PeriodeRad}
+          arbeidsforhold={arbeidsforhold}
           openSlettPeriodeModalCallback={this.openSlettPeriodeModalCallback}
           updatePeriode={this.updatePeriode}
           editPeriode={this.editPeriode}

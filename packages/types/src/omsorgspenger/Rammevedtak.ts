@@ -32,3 +32,5 @@ export interface Rammevedtak {
   fødselsdato?: string;
   lengde?: string; // Duration (smittevernsdager)
 }
+
+export default Rammevedtak;

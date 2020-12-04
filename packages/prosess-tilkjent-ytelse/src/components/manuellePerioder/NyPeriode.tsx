@@ -140,29 +140,40 @@ const transformValues = (values: any) => ({
   // refusjon: values.refusjon,
   andeler: values.andeler.map(andel => {
     const arbeidsForhold = andel.arbeidsgiver ? andel.arbeidsgiver.split('|') : [];
-
     const arbeidsgiverValues = {
-      identifikator: arbeidsForhold ? arbeidsForhold[0] : null,
-      identifikatorGUI: arbeidsForhold ? arbeidsForhold[0] : null,
-      navn: arbeidsForhold ? arbeidsForhold[1] : null,
+      identifikator: arbeidsForhold ? arbeidsForhold[0] : undefined,
+      identifikatorGUI: arbeidsForhold ? arbeidsForhold[0] : undefined,
+      navn: arbeidsForhold ? arbeidsForhold[1] : undefined,
+      eksternArbeidsforholdId:
+        arbeidsForhold && arbeidsForhold[2] !== 'null' && arbeidsForhold[2] !== 'undefined' ? arbeidsForhold[2] : '-',
+      arbeidsforholdId:
+        arbeidsForhold && arbeidsForhold[3] !== 'null' && arbeidsForhold[3] !== 'undefined' ? arbeidsForhold[3] : '-',
     };
-
     return {
       utbetalingsgrad: andel.utbetalingsgrad,
       // DUMMY
-      aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+      aktivitetStatus: {
+        kode: 'AT',
+        kodeverk: 'AKTIVITET_STATUS',
+      },
       // INNTEKTSKATEGORI
-      inntektskategori: { kode: andel.inntektskategori },
+      inntektskategori: {
+        kode: andel.inntektskategori,
+        kodeverk: 'INNTEKTSKATEGORI',
+      },
       stillingsprosent: 0,
-      eksternArbeidsforholdId: null,
       refusjon: andel.refusjon,
       sisteUtbetalingsdato: null,
       tilSoker: null,
       // OPPTJENING_AKTIVITET_TYPE
       arbeidsforholdType: '-',
       arbeidsgiver: arbeidsgiverValues,
+      arbeidsgiverNavn: arbeidsgiverValues?.navn,
+      arbeidsgiverOrgnr: arbeidsgiverValues?.identifikator,
+      arbeidsforholdId: arbeidsgiverValues.arbeidsforholdId !== '-' ? arbeidsgiverValues.arbeidsforholdId : null,
+      eksternArbeidsforholdId:
+        arbeidsgiverValues.eksternArbeidsforholdId !== '-' ? arbeidsgiverValues.eksternArbeidsforholdId : null,
       aktørId: null,
-      arbeidsforholdId: null,
       uttak: [
         {
           periode: {

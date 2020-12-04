@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import dokumentMalType from "@fpsak-frontend/kodeverk/src/dokumentMalType";
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -28,7 +28,7 @@ const BrevPanel = props => {
   const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
 
   const getPreviewAutomatiskBrevCallback = fritekst => e => {
-    previewCallback({dokumentdata: { fritekst }, dokumentMal: dokumentMalType.UTLED});
+    previewCallback({ dokumentdata: { fritekst }, dokumentMal: dokumentMalType.UTLED });
     e.preventDefault();
   };
   const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse);

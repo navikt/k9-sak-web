@@ -1,8 +1,8 @@
 import {formatQueryString, parseQueryString} from '@fpsak-frontend/utils';
 import {faktaPanelCodes} from '@k9-sak-web/konstanter';
 import * as React from 'react';
-import {FormattedMessage} from 'react-intl';
-import {Link, useLocation} from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import { Link, useLocation } from 'react-router-dom';
 import Nokkeltall from './Nokkeltall';
 import styles from './nokkeltall.less';
 
@@ -55,7 +55,7 @@ const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = (
     detaljer.push({
       antallDager: antallKoronadager,
       overskrifttekstId: 'Nøkkeltall.Koronadager',
-      infotekstContent: <FormattedMessage id="Nøkkeltall.Koronadager.InfoText"/>,
+      infotekstContent: <FormattedMessage id="Nøkkeltall.Koronadager.InfoText" />,
     });
   }
 

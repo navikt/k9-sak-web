@@ -1,9 +1,9 @@
 import hide from "@fpsak-frontend/assets/images/hide.svg";
 import show from "@fpsak-frontend/assets/images/show.svg";
-import {Image, Table, TableRow} from '@fpsak-frontend/shared-components/index';
+import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
 
-import {calcDays, convertHoursToDays, utledArbeidsforholdNavn} from '@fpsak-frontend/utils';
-import {Arbeidsforhold, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum} from '@k9-sak-web/types';
+import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
+import { Arbeidsforhold, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum } from '@k9-sak-web/types';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from "nav-frontend-hjelpetekst";
 import Panel from 'nav-frontend-paneler';
@@ -12,9 +12,9 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './aktivitetTabell.less';
-import NøkkeltallContainer, {Nokkeltalltype} from "./nokkeltall/NokkeltallContainer";
+import NøkkeltallContainer, { Nokkeltalltype } from "./nokkeltall/NokkeltallContainer";
 import Utfall from './Utfall';
-import {durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden} from './utils';
+import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
 
 interface AktivitetTabellProps {
   arbeidsforhold?: Arbeidsforhold;

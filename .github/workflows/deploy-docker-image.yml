@@ -73,21 +73,22 @@ jobs:
               });
             });
 
-      - name: Opprett deployment issue
-        if: success()
-        uses: maxkomarychev/oction-create-issue@v0.7.1
-        id: createdeployissue
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: Deploy av ${{ env.TAG }}
-          labels: deployment
-          body: |
-            Kommenter med <b>/promote cluster namespace</b>, hvor <b>cluster</b> er et gyldig clusternavn og <b>namespace</b> et eksisterende namespace i det clusteret.
-            <table>
-            <tr><th>Cluster</th><th>Namespace</th></tr>
-            <tr><td>dev-fss</td><td>default</td></tr>
-            <tr><td>prod-fss</td><td>default</td></tr>
-            </table>
+      -  name: Opprett deployment issue
+         id: createdeployissue
+         if: success()
+         uses: actions/github-script@v3
+         with:
+           github-token: ${{secrets.GITHUB_TOKEN}}
+           script: |
+               github.issues.create( {
+                 owner: context.issue.owner,
+                 repo: context.issue.repo,
+                 labels: ['deployment'],
+                 body: 'Kommenter enten "/promote dev-fss default" eller "/promote prod-fss default"',
+                 title: 'Deploy av ${{ env.TAG }}'})
+               .then(response => {
+                       core.setOutput('number', response.data.number);
+                });
 
       - name: Trigger verdikjede test
         if: success()
