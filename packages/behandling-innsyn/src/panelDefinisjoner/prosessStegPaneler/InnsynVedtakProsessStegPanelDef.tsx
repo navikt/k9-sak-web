@@ -8,6 +8,7 @@ import redusertUtbetalingArsak from '@fpsak-frontend/prosess-vedtak/src/kodeverk
 import { dokumentdatatype, prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FeatureToggles } from '@k9-sak-web/types';
 import innsynBehandlingApi from '../../data/innsynBehandlingApi';
 
 const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
@@ -30,7 +31,8 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.FORESLA_VEDTAK];
 
-  getEndepunkter = featureToggles => (featureToggles.DOKUMENTDATA ? [innsynBehandlingApi.DOKUMENTDATA_HENTE] : []);
+  getEndepunkter = (featureToggles: FeatureToggles = {}) =>
+    featureToggles.DOKUMENTDATA ? [innsynBehandlingApi.DOKUMENTDATA_HENTE] : [];
 
   getData = ({ innsyn, alleDokumenter, fagsak, previewCallback, aksjonspunkter, featureToggles }) => ({
     innsyn,
@@ -39,7 +41,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     saksnummer: fagsak.saksnummer,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggles.DOKUMENTDATA) {
+      if (featureToggles?.DOKUMENTDATA) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           innsynBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({

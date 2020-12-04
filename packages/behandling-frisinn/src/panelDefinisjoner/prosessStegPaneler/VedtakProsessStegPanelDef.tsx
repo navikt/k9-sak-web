@@ -6,6 +6,7 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { dokumentdatatype, prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FeatureToggles } from '@k9-sak-web/types';
 
 import findStatusForVedtak from '../vedtakStatusUtlederFrisinn';
 import frisinnBehandlingApi from '../../data/frisinnBehandlingApi';
@@ -24,7 +25,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = featureToggles =>
+  getEndepunkter = (featureToggles: FeatureToggles = {}) =>
     [
       frisinnBehandlingApi.TILBAKEKREVINGVALG,
       frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
