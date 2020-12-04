@@ -118,7 +118,6 @@ describe('<OmsorgspengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
-        featureToggles={{}}
       />,
     );
 
@@ -184,7 +183,6 @@ describe('<OmsorgspengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
-        featureToggles={{}}
       />,
     );
 
@@ -238,7 +236,6 @@ describe('<OmsorgspengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
-        featureToggles={{}}
       />,
     );
 
@@ -292,7 +289,6 @@ describe('<OmsorgspengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
-        featureToggles={{}}
       />,
     );
 
@@ -346,7 +342,6 @@ describe('<OmsorgspengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
-        featureToggles={{}}
       />,
     );
 
@@ -376,7 +371,6 @@ describe('<OmsorgspengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
-        featureToggles={{}}
       />,
     );
 
@@ -407,7 +401,6 @@ describe('<OmsorgspengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
-        featureToggles={{}}
       />,
     );
 
@@ -438,7 +431,6 @@ describe('<OmsorgspengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
-        featureToggles={{}}
       />,
     );
 
