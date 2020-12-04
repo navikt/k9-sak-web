@@ -5,7 +5,7 @@ import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatTyp
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import redusertUtbetalingArsak from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
-import { dokumentdatatype, featureToggle, prosessStegCodes } from '@k9-sak-web/konstanter';
+import { dokumentdatatype, prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import innsynBehandlingApi from '../../data/innsynBehandlingApi';
@@ -30,16 +30,16 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.FORESLA_VEDTAK];
 
-  getEndepunkter = () => (featureToggle.DOKUMENTDATA ? [innsynBehandlingApi.DOKUMENTDATA_HENTE] : []);
+  getEndepunkter = featureToggles => (featureToggles.DOKUMENTDATA ? [innsynBehandlingApi.DOKUMENTDATA_HENTE] : []);
 
-  getData = ({ innsyn, alleDokumenter, fagsak, previewCallback, aksjonspunkter }) => ({
+  getData = ({ innsyn, alleDokumenter, fagsak, previewCallback, aksjonspunkter, featureToggles }) => ({
     innsyn,
     alleDokumenter,
     previewCallback,
     aksjonspunkter,
     saksnummer: fagsak.saksnummer,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggle.DOKUMENTDATA) {
+      if (featureToggles.DOKUMENTDATA) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           innsynBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({

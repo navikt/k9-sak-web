@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Kodeverk, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -27,6 +27,7 @@ interface OwnProps {
     opprettet: string;
     avsluttet?: string;
   }[];
+  featureToggles: FeatureToggles;
 }
 
 const KlagePaneler: FunctionComponent<OwnProps> = ({
@@ -42,6 +43,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   hentBehandling,
   opneSokeside,
   alleBehandlinger,
+  featureToggles,
 }) => {
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
@@ -67,6 +69,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
         alleBehandlinger={alleBehandlinger}
         dispatch={dispatch}
         alleKodeverk={kodeverk}
+        featureToggles={featureToggles}
       />
     </>
   );

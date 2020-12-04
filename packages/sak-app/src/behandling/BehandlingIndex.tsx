@@ -12,7 +12,7 @@ import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { FagsakPerson, KodeverkMedNavn, Kodeverk, NavAnsatt } from '@k9-sak-web/types';
+import { FagsakPerson, KodeverkMedNavn, Kodeverk, NavAnsatt, FeatureToggles } from '@k9-sak-web/types';
 
 import { getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta } from '../app/paths';
 import { getAlleKodeverkForBehandlingstype } from '../kodeverk/duck';
@@ -25,7 +25,7 @@ import {
   getKanRevurderingOpprettes,
   getSkalBehandlesAvInfotrygd,
 } from '../fagsak/fagsakSelectors';
-import { getNavAnsatt } from '../app/duck';
+import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import trackRouteParam from '../app/trackRouteParam';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
@@ -77,6 +77,7 @@ interface OwnProps {
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
+  featureToggles: FeatureToggles;
   fagsak: FagsakInfo;
   fagsakBehandlingerInfo: BehandlingerInfo[];
   behandlingLinks: Link[];
@@ -157,6 +158,7 @@ export class BehandlingIndex extends Component<OwnProps> {
       location,
       oppdaterBehandlingVersjon,
       kodeverk,
+      featureToggles,
       fagsak,
       fagsakBehandlingerInfo,
       rettigheter,
@@ -168,6 +170,7 @@ export class BehandlingIndex extends Component<OwnProps> {
       oppdaterBehandlingVersjon,
       behandlingEventHandler,
       kodeverk,
+      featureToggles,
       fagsak,
       rettigheter,
       valgtProsessSteg: location.query.punkt,
@@ -348,6 +351,7 @@ const mapStateToProps = state => {
     behandlingVersjon: getTempBehandlingVersjon(state),
     location: state.router.location,
     kodeverk: getAlleKodeverkForBehandlingstype(behandlingTypeKode)(state),
+    featureToggles: getFeatureToggles(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
     fagsak: getFagsakInfo(state),

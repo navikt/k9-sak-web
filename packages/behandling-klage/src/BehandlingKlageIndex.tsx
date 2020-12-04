@@ -5,7 +5,7 @@ import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Kodeverk, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
@@ -36,6 +36,7 @@ interface OwnProps {
     opprettet: string;
     avsluttet?: string;
   }[];
+  featureToggles: FeatureToggles;
 }
 
 interface StateProps {
@@ -77,6 +78,7 @@ const BehandlingKlageIndex: FunctionComponent<Props> = ({
   opneSokeside,
   forrigeBehandling,
   alleBehandlinger,
+  featureToggles,
 }) => {
   const forrigeVersjon = useRef<number>();
 
@@ -134,6 +136,7 @@ const BehandlingKlageIndex: FunctionComponent<Props> = ({
             hentBehandling={hentBehandling}
             opneSokeside={opneSokeside}
             alleBehandlinger={alleBehandlinger}
+            featureToggles={featureToggles}
           />
         </>
       )}

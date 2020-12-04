@@ -132,8 +132,8 @@ const endpoints = new RestApiConfigBuilder()
   /* /sprak */
   .withGet('/k9/web/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
 
-  /* /api/feature-toggle */
-  .withPost('/k9/sak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+  /* /k9/feature-toggle */
+  .withGet('/k9/feature-toggle/toggles.json', FpsakApiKeys.FEATURE_TOGGLE)
 
   /* Klage */
   .withGet('/k9/klage/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_KLAGE)

@@ -10,7 +10,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
@@ -30,6 +30,7 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
   dispatch: Dispatch;
+  featureToggles: FeatureToggles;
 }
 
 const previewCallback = (dispatch, fagsak, behandling) => parametre => {
@@ -69,6 +70,7 @@ const InnsynProsess: FunctionComponent<OwnProps> = ({
   oppdaterBehandlingVersjon,
   opneSokeside,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -131,6 +133,7 @@ const InnsynProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={innsynBehandlingApi}
           dispatch={dispatch}
+          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

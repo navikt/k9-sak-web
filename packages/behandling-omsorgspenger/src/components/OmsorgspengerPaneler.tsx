@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import OmsorgspengerProsess from './OmsorgspengerProsess';
 import OmsorgspengerFakta from './OmsorgspengerFakta';
@@ -22,6 +22,7 @@ interface OwnProps {
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
+  featureToggles: FeatureToggles;
 }
 
 interface FaktaPanelInfo {
@@ -43,6 +44,7 @@ const OmsorgspengerPaneler: FunctionComponent<OwnProps> = ({
   hentBehandling,
   opneSokeside,
   hasFetchError,
+  featureToggles,
 }) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
@@ -71,6 +73,7 @@ const OmsorgspengerPaneler: FunctionComponent<OwnProps> = ({
         hasFetchError={hasFetchError}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
+        featureToggles={featureToggles}
       />
       <OmsorgspengerFakta
         behandling={behandling}

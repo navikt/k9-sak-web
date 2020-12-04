@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
-import { NavAnsatt } from '@k9-sak-web/types';
-import { featureToggle } from '@k9-sak-web/konstanter';
+import { NavAnsatt, FeatureToggles } from '@k9-sak-web/types';
 
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import fpsakApi from '../data/fpsakApi';
@@ -18,12 +17,15 @@ export const setDisabledApplicationContext = applicationContext => ({
   data: applicationContext,
 });
 
-export const fetchAlleKodeverk = () => dispatch => {
+/* Action creators */
+export const fetchAllFeatureToggles = () => dispatch => dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()());
+
+export const fetchAlleKodeverk = (featureToggles?: FeatureToggles) => dispatch => {
   dispatch(fpsakApi.KODEVERK.makeRestApiRequest()());
   dispatch(fpsakApi.KODEVERK_FPTILBAKE.makeRestApiRequest()()).catch(() =>
     dispatch(setDisabledApplicationContext(ApplicationContextPath.FPTILBAKE)),
   );
-  if (featureToggle.KLAGEBEHANDLING) {
+  if (featureToggles?.KLAGEBEHANDLING) {
     dispatch(fpsakApi.KODEVERK_KLAGE.makeRestApiRequest()()).catch(() =>
       dispatch(setDisabledApplicationContext(ApplicationContextPath.KLAGE)),
     );
@@ -81,6 +83,16 @@ export const getNavAnsatt = createSelector(
 );
 export const getNavAnsattName = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.navn);
 export const getFunksjonellTid = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.funksjonellTid);
+export const getFeatureToggles = createSelector(
+  [fpsakApi.FEATURE_TOGGLE.getRestApiData()],
+  (featureToggles: Array<{ key: string; value: string }>): FeatureToggles =>
+    Array.isArray(featureToggles)
+      ? featureToggles.reduce((acc, curr) => {
+          acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
+          return acc;
+        }, {})
+      : {},
+);
 export const getShowDetailedErrorMessages = createSelector(
   [fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiData()],
   (showDetailedErrorMessages = false) => showDetailedErrorMessages,
@@ -115,10 +127,10 @@ const isFinishedLoadingFpTilbakeData = createSelector(
 );
 
 export const getEnabledApplicationContexts = createSelector(
-  [getDisabledApplicationContexts],
-  disabledApplicationContexts => {
+  [getFeatureToggles, getDisabledApplicationContexts],
+  (featureToggles, disabledApplicationContexts) => {
     const erFpTilbakeDisabled = disabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE);
-    const erKlagefeatureAktivert = featureToggle.KLAGEBEHANDLING || false;
+    const erKlagefeatureAktivert = featureToggles?.KLAGEBEHANDLING || false;
     const erKlageDeaktivert = disabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
     if (!erFpTilbakeDisabled) {
       return erKlagefeatureAktivert && !erKlageDeaktivert

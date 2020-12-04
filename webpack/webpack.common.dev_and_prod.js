@@ -1,5 +1,4 @@
 'use strict';
-const Dotenv = require('dotenv-webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -18,12 +17,6 @@ const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
 
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 const PUBLIC_PATH = '';
-
-console.log(
-  `process.env.DOKUMENTDATA, type: "${typeof process.env.DOKUMENTDATA}", verdi: ${JSON.stringify(
-    process.env.DOKUMENTDATA,
-  )}`,
-);
 
 const config = {
   module: {
@@ -169,7 +162,6 @@ const config = {
   },
 
   plugins: [
-    new Dotenv({ systemvars: true }),
     new MiniCssExtractPlugin({
       filename: isDevelopment ? 'style.css' : 'style_[contenthash].css',
       ignoreOrder: true,

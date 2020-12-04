@@ -15,9 +15,9 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { dokumentdatatype, featureToggle } from '@k9-sak-web/konstanter';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFrisinnPanelDefinisjoner';
 
@@ -38,6 +38,7 @@ interface OwnProps {
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
+  featureToggles: FeatureToggles;
 }
 
 const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
@@ -69,6 +70,7 @@ const getLagringSideeffekter = (
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   dispatch,
+  featureToggles,
 ) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
     apModel =>
@@ -89,7 +91,7 @@ const getLagringSideeffekter = (
     toggleOppdatereFagsakContext(false);
   }
 
-  if (featureToggle.DOKUMENTDATA && aksjonspunktModels[0].isVedtakSubmission) {
+  if (featureToggles.DOKUMENTDATA && aksjonspunktModels[0].isVedtakSubmission) {
     let brevtype;
     if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
     else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;
@@ -127,6 +129,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -144,6 +147,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
       [behandling.versjon],
     ),
     alleKodeverk,
+    featureToggles,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
@@ -168,6 +172,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     dispatch,
+    featureToggles,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
@@ -219,6 +224,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           behandlingApi={frisinnBehandlingApi}
           dispatch={dispatch}
+          featureToggles={featureToggles}
         />
       </ProsessStegContainer>
     </>

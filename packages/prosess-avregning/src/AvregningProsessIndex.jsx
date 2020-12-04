@@ -30,6 +30,7 @@ const AvregningProsessIndex = ({
   readOnlySubmitButton,
   isAksjonspunktOpen,
   previewFptilbakeCallback,
+  featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
     <AvregningPanel
@@ -46,6 +47,7 @@ const AvregningProsessIndex = ({
       apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
       isApOpen={isAksjonspunktOpen}
       previewCallback={previewFptilbakeCallback}
+      featureToggles={featureToggles}
     />
   </RawIntlProvider>
 );
@@ -61,6 +63,7 @@ AvregningProsessIndex.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  featureToggles: PropTypes.shape().isRequired,
 };
 
 AvregningProsessIndex.defaultProps = {
