@@ -118,6 +118,7 @@ describe('<PleiepengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -191,6 +192,7 @@ describe('<PleiepengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -244,6 +246,7 @@ describe('<PleiepengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -297,6 +300,7 @@ describe('<PleiepengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -350,6 +354,7 @@ describe('<PleiepengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -379,6 +384,7 @@ describe('<PleiepengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -409,6 +415,7 @@ describe('<PleiepengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 
@@ -439,6 +446,7 @@ describe('<PleiepengerProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 

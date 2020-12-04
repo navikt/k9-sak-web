@@ -31,6 +31,7 @@ export { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknad
 export { default as FagsakPerson } from './src/fagsakPersonTsType';
 export { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
 export { default as FagsakInfo } from './src/fagsakInfoTsType';
+export { default as FeatureToggles } from './src/featureTogglesTsType';
 export {
   BeregningsresultatUtbetalt,
   BeregningsresultatPeriode,

@@ -45,6 +45,7 @@ const AvregningProsessIndex = ({
       apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
       isApOpen={isAksjonspunktOpen}
       previewCallback={previewFptilbakeCallback}
+      featureToggles={featureToggles}
     />
   </RawIntlProvider>
 );

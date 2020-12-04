@@ -106,6 +106,7 @@ describe('<UnntakProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -163,6 +164,7 @@ describe('<UnntakProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -215,6 +217,7 @@ describe('<UnntakProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -271,6 +274,7 @@ describe('<UnntakProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -327,6 +331,7 @@ describe('<UnntakProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -359,6 +364,7 @@ describe('<UnntakProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -389,6 +395,7 @@ describe('<UnntakProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 

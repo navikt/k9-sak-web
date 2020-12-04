@@ -12,7 +12,7 @@ import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { FagsakPerson, KodeverkMedNavn, Kodeverk, NavAnsatt } from '@k9-sak-web/types';
+import { FagsakPerson, KodeverkMedNavn, Kodeverk, NavAnsatt, FeatureToggles } from '@k9-sak-web/types';
 
 import { getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta } from '../app/paths';
 import { getAlleKodeverkForBehandlingstype } from '../kodeverk/duck';
@@ -76,8 +76,8 @@ interface OwnProps {
   oppdaterBehandlingVersjon: (behandlingVersjon: number) => void;
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
-  featureToggles: {};
   kodeverk: { [key: string]: KodeverkMedNavn[] };
+  featureToggles: FeatureToggles;
   fagsak: FagsakInfo;
   fagsakBehandlingerInfo: BehandlingerInfo[];
   behandlingLinks: Link[];
@@ -157,8 +157,8 @@ export class BehandlingIndex extends Component<OwnProps> {
       behandlingTypeKode,
       location,
       oppdaterBehandlingVersjon,
-      featureToggles,
       kodeverk,
+      featureToggles,
       fagsak,
       fagsakBehandlingerInfo,
       rettigheter,
@@ -170,11 +170,11 @@ export class BehandlingIndex extends Component<OwnProps> {
       oppdaterBehandlingVersjon,
       behandlingEventHandler,
       kodeverk,
+      featureToggles,
       fagsak,
       rettigheter,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
-      featureToggles,
     };
 
     if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {

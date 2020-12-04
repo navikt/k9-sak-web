@@ -106,6 +106,7 @@ describe('<FrisinnProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -163,6 +164,7 @@ describe('<FrisinnProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -215,6 +217,7 @@ describe('<FrisinnProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -267,6 +270,7 @@ describe('<FrisinnProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -319,6 +323,7 @@ describe('<FrisinnProsess>', () => {
         featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -349,6 +354,7 @@ describe('<FrisinnProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -379,6 +385,7 @@ describe('<FrisinnProsess>', () => {
         featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 
