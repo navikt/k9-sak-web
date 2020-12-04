@@ -13,6 +13,10 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
+  {
+    key: 'KLAGEBEHANDLING',
+    value: process.env.KLAGEBEHANDLING,
+  },
 ];
 
 module.exports = function (app) {
