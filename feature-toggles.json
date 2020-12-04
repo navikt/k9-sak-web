@@ -10,5 +10,9 @@
   {
     "key":  "UNNTAKSBEHANDLING",
     "value": "${UNNTAKSBEHANDLING}"
+  },
+  {
+    "key":  "KLAGEBEHANDLING",
+    "value": "${KLAGEBEHANDLING}"
   }
 ]
