@@ -33,6 +33,8 @@ const isVedtakSubmission = true;
 const kanSendesTilGodkjenning = behandlingStatusKode =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
+const formName = 'VedtakForm';
+
 export class VedtakForm extends Component {
   constructor(props) {
     super(props);
@@ -75,6 +77,7 @@ export class VedtakForm extends Component {
       beregningErManueltFastsatt,
       tilgjengeligeVedtaksbrev,
       dokumentdata,
+      behandlingFormPrefix,
       ...formProps
     } = this.props;
 
@@ -142,6 +145,7 @@ export class VedtakForm extends Component {
             dokumentdata={dokumentdata}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             previewCallback={previewCallback}
+            parentFormNavn={`${behandlingFormPrefix}.VedtakForm`}
           />
           {kanSendesTilGodkjenning(behandlingStatusKode) && (
             <Row>
@@ -238,8 +242,8 @@ export const buildInitialValues = createSelector(
     skalUndertrykkeBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
       vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
-    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
-    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
+    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
+    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
   }),
 );
 
@@ -255,10 +259,9 @@ const transformValues = values =>
     skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
     skalUndertrykkeBrev: values.skalUndertrykkeBrev,
     overskrift: values.overskrift,
+    brødtekst: values.brødtekst,
     isVedtakSubmission,
   }));
-
-const formName = 'VedtakForm';
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
   [ownProps => ownProps.behandlingArsaker],

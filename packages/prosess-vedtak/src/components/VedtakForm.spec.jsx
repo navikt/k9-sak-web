@@ -761,7 +761,7 @@ describe('<VedtakForm>', () => {
     };
     const dokumentdata = {
       VEDTAKSBREV_TYPE: 'FRITEKST',
-      FRITEKST: {
+      FRITEKSTBREV: {
         overskrift: 'Overskrift',
         brødtekst: 'Brødtekst',
       },
@@ -822,7 +822,7 @@ describe('<VedtakForm>', () => {
 
   const dokumentdata = {
     VEDTAKSBREV_TYPE: 'FRITEKST',
-    FRITEKST: {
+    FRITEKSTBREV: {
       overskrift: 'Overskrift',
       brødtekst: 'Brødtekst',
     },

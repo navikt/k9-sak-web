@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { formValueSelector, reduxForm } from 'redux-form';
+import { formValueSelector } from 'redux-form';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -126,20 +127,18 @@ export const brevselector = createSelector(
   (sprakkode, vedtakVarsel, dokumentdata) => ({
     sprakkode,
     begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
+    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
+    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
   }),
 );
 
 const mapStateToPropsFactory = () => {
   return (state, ownProps) => ({
-    ...brevselector(ownProps),
-    brødtekst: formValueSelector('brevPanel')(state, 'brødtekst'),
-    overskrift: formValueSelector('brevPanel')(state, 'overskrift'),
-    begrunnelse: formValueSelector('brevPanel')(state, 'begrunnelse'),
+    initialValues: { ...brevselector(ownProps) },
+    begrunnelse: formValueSelector(ownProps.parentFormNavn)(state, 'begrunnelse'),
+    brødtekst: formValueSelector(ownProps.parentFormNavn)(state, 'brødtekst'),
+    overskrift: formValueSelector(ownProps.parentFormNavn)(state, 'overskrift'),
   });
 };
 
-export default connect(mapStateToPropsFactory)(
-  reduxForm({
-    form: 'brevPanel',
-  })(injectIntl(BrevPanel)),
-);
+export default connect(mapStateToPropsFactory)(injectIntl(BrevPanel));

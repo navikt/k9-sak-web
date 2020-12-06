@@ -8,7 +8,7 @@ function lagDokumentdata(aksjonspunktModell) {
   if (aksjonspunktModell.skalBrukeOverstyrendeFritekstBrev) {
     return {
       [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.FRITEKST,
-      [dokumentdatatype.FRITEKST]: {
+      [dokumentdatatype.FRITEKSTBREV]: {
         brødtekst: aksjonspunktModell.fritekstBrev,
         overskrift: aksjonspunktModell.overskrift,
       },

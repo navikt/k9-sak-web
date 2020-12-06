@@ -10,7 +10,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
   beregningErManueltFastsatt,
 }) => {
   const tilgjengeligeInformasjonsbehov = {
-    FRITEKST: 'VedtakForm.Fritekst',
+    FRITEKSTBREV: 'VedtakForm.Fritekst',
     MANUELT_BEREGNINGSGRUNNLAG: 'VedtakForm.Fritekst.Beregningsgrunnlag',
   };
 
