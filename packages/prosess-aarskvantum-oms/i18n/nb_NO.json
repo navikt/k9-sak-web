@@ -128,6 +128,6 @@
   "Nøkkeltall.TotaltForbrukte.DagerOgTimer.InfoText": "{dager} dager og {timer} timer forbrukt.",
   "Nøkkeltall.VisUtregning": "Vis utregning",
   "Nøkkeltall.SkjulUtregning": "Skjul utregning",
-  "Nøkkeltall.Deaktivert": "Denne perioden har ikke nøkkeltall fordi den kommer fra et gammelt system. Nøkkeltallene for alle periodene er samlet i den siste perioden.",
-  "Nøkkeltall.ErMigrert": "Nøkkeltallene som vises her kommer fra et gammelt system og gjelder for alle periodene samlet."
+  "Nøkkeltall.Deaktivert": "Nøkkeltallene for alle periodene er samlet i den siste perioden.",
+  "Nøkkeltall.ErMigrert": "Nøkkeltallene som vises her gjelder for alle periodene samlet."
 }

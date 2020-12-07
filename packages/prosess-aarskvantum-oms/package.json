@@ -22,6 +22,8 @@
     "nav-frontend-hjelpetekst-style": "^2.0.36",
     "nav-frontend-ikoner-assets": "^2.0.8",
     "nav-frontend-js-utils": "^1.0.15",
+    "nav-frontend-lenker": "^1.0.53",
+    "nav-frontend-lenker-style": "^0.2.39",
     "nav-frontend-paneler": "^2.0.10",
     "nav-frontend-popover": "^0.0.41",
     "nav-frontend-popover-style": "^0.0.13",

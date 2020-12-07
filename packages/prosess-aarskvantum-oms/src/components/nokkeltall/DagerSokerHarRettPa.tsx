@@ -1,8 +1,9 @@
 import {formatQueryString, parseQueryString} from '@fpsak-frontend/utils';
 import {faktaPanelCodes} from '@k9-sak-web/konstanter';
+import Lenke from 'nav-frontend-lenker';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Nokkeltall from './Nokkeltall';
 import styles from './nokkeltall.less';
 
@@ -43,7 +44,7 @@ const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = (
             &nbsp;
             <FormattedMessage
               id="Nøkkeltall.Rammemelding"
-              values={{a: (...lenketekst) => <Link to={`${pathname}${formatQueryString(faktapanelUttak)}`}>{lenketekst}</Link>}}
+              values={{a: (...lenketekst) => <Lenke href={`${pathname}${formatQueryString(faktapanelUttak)}`}>{lenketekst}</Lenke>}}
             />
           </>}
         </>
