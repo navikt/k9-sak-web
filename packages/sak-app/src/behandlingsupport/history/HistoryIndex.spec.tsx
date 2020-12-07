@@ -27,35 +27,6 @@ describe('<HistoryIndex>', () => {
     contextStubLocation.restore();
   });
 
-  it('skal vise historikk for kun fpsak', () => {
-    requestApi.mock(FpsakApiKeys.KODEVERK, {});
-    requestApi.mock(FpsakApiKeys.KODEVERK_FPTILBAKE, {});
-    requestApi.mock(FpsakApiKeys.FEATURE_TOGGLE, { featureToggles: {} });
-    requestApi.mock(FpsakApiKeys.HISTORY_FPSAK, [
-      {
-        opprettetTidspunkt: '2019-01-01',
-        historikkinnslagDeler: [],
-        type: {
-          kode: 'Test',
-        },
-      },
-    ]);
-    requestApi.mock(FpsakApiKeys.HISTORY_FPTILBAKE, [
-      {
-        opprettetTidspunkt: '2019-01-04',
-        historikkinnslagDeler: [],
-        type: {
-          kode: 'Test fptilbake',
-        },
-      },
-    ]);
-
-    const wrapper = shallow(<HistoryIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />);
-
-    const index = wrapper.find(HistorikkSakIndex);
-    expect(index).to.have.length(1);
-  });
-
   it('skal slå sammen og sortere historikk for fpsak og fptilbake', () => {
     requestApi.mock(FpsakApiKeys.KODEVERK, {});
     requestApi.mock(FpsakApiKeys.KODEVERK_FPTILBAKE, {});
