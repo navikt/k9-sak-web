@@ -46,9 +46,8 @@ export const ArbeidsforholdInfoPanelImpl = ({
   aksjonspunkter,
   readOnly,
   hasOpenAksjonspunkter,
-  skalKunneLeggeTilNyeArbeidsforhold,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding,
   alleMerknaderFraBeslutter,
+  arbeidsgivere,
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
@@ -64,22 +63,20 @@ export const ArbeidsforholdInfoPanelImpl = ({
           {[
             <FormattedMessage
               key="ArbeidsforholdInfoPanelAksjonspunkt"
-              id={
-                skalKunneLeggeTilNyeArbeidsforhold
-                  ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert'
-                  : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'
-              }
+              id="ArbeidsforholdInfoPanel.AvklarArbeidsforhold"
             />,
           ]}
         </AksjonspunktHelpTextTemp>
       )}
+      <h3>
+        <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />
+      </h3>
       <form onSubmit={formProps.handleSubmit}>
         <PersonArbeidsforholdPanel
           readOnly={readOnly}
+          arbeidsgivere={arbeidsgivere}
           hasAksjonspunkter={aksjonspunkter.length > 0}
           hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-          skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
-          skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
           alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}
@@ -101,11 +98,10 @@ export const ArbeidsforholdInfoPanelImpl = ({
 ArbeidsforholdInfoPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,

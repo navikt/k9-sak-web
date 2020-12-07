@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
@@ -38,7 +38,6 @@ const showNyttOrErstattPanel = (arbeidsforholdHandlingVerdi, vurderOmSkalErstatt
  * PersonArbeidsforholdDetailForm
  */
 export const PersonArbeidsforholdDetailForm = ({
-  cancelArbeidsforhold,
   isErstattArbeidsforhold,
   hasReceivedInntektsmelding,
   harErstattetEttEllerFlere,
@@ -47,80 +46,45 @@ export const PersonArbeidsforholdDetailForm = ({
   aktivtArbeidsforholdTillatUtenIM,
   arbeidsforhold,
   arbeidsforholdHandlingVerdi,
-  skalKunneLeggeTilNyeArbeidsforhold,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
   ...formProps
 }) => (
   <>
-    <Element>
-      <FormattedMessage id="PersonArbeidsforholdDetailForm.Header" />
-    </Element>
     <PermisjonPeriode arbeidsforhold={arbeidsforhold} />
     <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
     <VerticalSpacer eightPx />
-    {skalKunneLeggeTilNyeArbeidsforhold && (
-      <LeggTilArbeidsforholdFelter
-        readOnly={readOnly}
-        formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
-    )}
-    {skalKunneLageArbeidsforholdBasertPaInntektsmelding && (
-      <LeggTilArbeidsforholdFelter
-        readOnly={readOnly}
-        formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
-    )}
+    <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
     <Row>
-      <Column xs="5">
-        <VerticalSpacer twentyPx />
-        <ArbeidsforholdRadioknapper
-          readOnly={readOnly}
-          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-          hasReceivedInntektsmelding={hasReceivedInntektsmelding}
-          arbeidsforhold={arbeidsforhold}
-          skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
-          aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
-          arbeidsforholdHandlingVerdi={arbeidsforholdHandlingVerdi}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-        />
-        <VerticalSpacer twentyPx />
-        <ArbeidsforholdBegrunnelse
-          readOnly={readOnly}
-          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-        />
-        <VerticalSpacer sixteenPx />
-        {(formProps.initialValues.tilVurdering || formProps.initialValues.erEndret) && (
-          <FlexContainer fluid>
-            <FlexRow>
-              <FlexColumn>
-                <Hovedknapp
-                  mini
-                  spinner={false}
-                  onClick={formProps.handleSubmit}
-                  disabled={formProps.pristine || readOnly}
-                >
-                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-                </Hovedknapp>
-              </FlexColumn>
-              <FlexColumn>
-                <Knapp mini htmlType="button" onClick={cancelArbeidsforhold} disabled={readOnly}>
-                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Avbryt" />
-                </Knapp>
-              </FlexColumn>
-            </FlexRow>
-          </FlexContainer>
-        )}
-      </Column>
+      <VerticalSpacer twentyPx />
+      <ArbeidsforholdRadioknapper
+        formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+        hasReceivedInntektsmelding={hasReceivedInntektsmelding}
+        arbeidsforhold={arbeidsforhold}
+        aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandlingVerdi}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+      />
+      <VerticalSpacer twentyPx />
+      <ArbeidsforholdBegrunnelse
+        readOnly={readOnly}
+        formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+      />
+      <VerticalSpacer sixteenPx />
+      <FlexContainer fluid>
+        <FlexRow>
+          <FlexColumn>
+            <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+              <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
+            </Hovedknapp>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+
       <Column xs="6">
         {showNyttOrErstattPanel(arbeidsforholdHandlingVerdi, vurderOmSkalErstattes, harErstattetEttEllerFlere) && (
           <PersonNyttEllerErstattArbeidsforholdPanel
@@ -132,20 +96,17 @@ export const PersonArbeidsforholdDetailForm = ({
             behandlingVersjon={behandlingVersjon}
           />
         )}
-        {arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD &&
-          harErstattetEttEllerFlere &&
-          !skalKunneLageArbeidsforholdBasertPaInntektsmelding && (
-            <Normaltekst>
-              <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
-            </Normaltekst>
-          )}
+        {arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD && harErstattetEttEllerFlere && (
+          <Normaltekst>
+            <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
+          </Normaltekst>
+        )}
       </Column>
     </Row>
   </>
 );
 
 PersonArbeidsforholdDetailForm.propTypes = {
-  cancelArbeidsforhold: PropTypes.func.isRequired,
   isErstattArbeidsforhold: PropTypes.bool.isRequired,
   hasReceivedInntektsmelding: PropTypes.bool.isRequired,
   vurderOmSkalErstattes: PropTypes.bool.isRequired,
@@ -154,8 +115,6 @@ PersonArbeidsforholdDetailForm.propTypes = {
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   arbeidsforhold: arbeidsforholdPropType.isRequired,
   arbeidsforholdHandlingVerdi: PropTypes.string,
-  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,

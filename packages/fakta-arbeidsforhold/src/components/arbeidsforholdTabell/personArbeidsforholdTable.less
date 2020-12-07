@@ -1,5 +1,44 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
 .image {
   height: 20px;
   margin-left: 10px;
   width: 25px;
+}
+
+
+.visLukkAksjonspunkt {
+  width: max-content;
+  font-size: 16px;
+  color: @navBla;
+  text-decoration: underline;
+  border: 0;
+}
+
+.knappContainer {
+  display: inline-flex;
+  background: none;
+  border: none;
+  outline: none;
+  text-align: center;
+}
+
+.aksjonspunktColumn {
+  img {
+    margin-right: 10px;
+  }
+}
+
+.chevronOpp {
+  margin-top: 7px;
+  margin-left: 10px;
+  transform: rotate(180deg);
+  width: 16px;
+}
+
+.chevronNed {
+  margin-top: 7px;
+  margin-left: 10px;
+  transform: rotate(0deg);
+  width: 16px;
 }

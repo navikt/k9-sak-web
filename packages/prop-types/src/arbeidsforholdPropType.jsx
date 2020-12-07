@@ -70,4 +70,15 @@ export const arbeidsforholdPropType = PropTypes.shape({
   ),
 });
 
+export const arbeidsgiverPropType = PropTypes.shape({
+  referanse: PropTypes.string,
+  identifikator: PropTypes.string,
+  navn: PropTypes.string,
+  fødselsdato: PropTypes.string,
+});
+
+export const arbeidsgiverMapPropType = PropTypes.shape({
+  arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
+});
+
 export default arbeidsforholdPropType;

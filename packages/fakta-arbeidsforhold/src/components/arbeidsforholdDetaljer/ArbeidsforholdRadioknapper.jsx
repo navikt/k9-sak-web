@@ -167,12 +167,7 @@ const ArbeidsforholdRadioknapper = ({
           <Row>
             <Column xs="1" />
             <Column xs="11">
-              <RadioGroupField
-                name="aktivtArbeidsforholdHandlingField"
-                validate={[required]}
-                direction="vertical"
-                readOnly={readOnly}
-              >
+              <RadioGroupField name="aktivtArbeidsforholdHandlingField" validate={[required]} direction="vertical">
                 <RadioOption
                   label={{ id: 'PersonArbeidsforholdDetailForm.AvslaYtelseManglendeOpplysninger' }}
                   value={aktivtArbeidsforholdHandling.AVSLA_YTELSE}

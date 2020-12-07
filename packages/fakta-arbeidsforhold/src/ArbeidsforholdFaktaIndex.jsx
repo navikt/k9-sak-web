@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
+import { arbeidsgiverMapPropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
 import arbeidsforholdAksjonspunkterPropType from './propTypes/arbeidsforholdAksjonspunkterPropType';
 import arbeidsforholdBehandlingPropType from './propTypes/arbeidsforholdBehandlingPropType';
@@ -21,6 +22,7 @@ const intl = createIntl(
 const ArbeidsforholdFaktaIndex = ({
   behandling,
   inntektArbeidYtelse,
+  arbeidsgivere,
   alleKodeverk,
   alleMerknaderFraBeslutter,
   aksjonspunkter,
@@ -33,10 +35,7 @@ const ArbeidsforholdFaktaIndex = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       arbeidsforhold={inntektArbeidYtelse}
-      skalKunneLeggeTilNyeArbeidsforhold={inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={
-        inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding
-      }
+      arbeidsgivere={arbeidsgivere.arbeidsgivere}
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}
@@ -50,6 +49,7 @@ const ArbeidsforholdFaktaIndex = ({
 ArbeidsforholdFaktaIndex.propTypes = {
   behandling: arbeidsforholdBehandlingPropType.isRequired,
   inntektArbeidYtelse: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
+  arbeidsgivere: arbeidsgiverMapPropType.isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

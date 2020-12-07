@@ -1,43 +1,27 @@
 import Kodeverk from './kodeverkTsType';
+import ArbeidsforholdId from './arbeidsforholdIdTsType';
+import Arbeidsgiver from './arbeidsgiverTsType';
+import Periode from './periodeTsType';
+import Inntektsmelding from './inntektsmeldingTsType';
 
 type Arbeidsforhold = Readonly<{
   id?: string;
-  navn?: string;
-  arbeidsgiverIdentifikator?: string;
-  arbeidsgiverIdentifiktorGUI?: string;
-  arbeidsforholdId?: string;
-  eksternArbeidsforholdId?: string;
-  fomDato?: string;
-  tomDato?: string;
-  kilde: {
-    navn: string;
-  };
-  mottattDatoInntektsmelding?: string;
-  stillingsprosent?: number;
-  brukArbeidsforholdet?: boolean;
-  fortsettBehandlingUtenInntektsmelding?: boolean;
-  erNyttArbeidsforhold?: boolean;
-  erSlettet?: boolean;
-  erstatterArbeidsforholdId?: string;
-  harErsattetEttEllerFlere?: boolean;
-  ikkeRegistrertIAaRegister?: boolean;
-  tilVurdering?: boolean;
-  vurderOmSkalErstattes?: boolean;
-  erEndret?: boolean;
-  brukMedJustertPeriode?: boolean;
-  overstyrtTom?: string;
-  lagtTilAvSaksbehandler?: boolean;
-  basertPaInntektsmelding?: boolean;
-  inntektMedTilBeregningsgrunnlag?: boolean;
-  skjaeringstidspunkt?: string;
+  arbeidsforhold?: ArbeidsforholdId;
+  arbeidsgiver?: Arbeidsgiver;
+  yrkestittel?: string;
   begrunnelse?: string;
+  perioder: Periode[];
+  handlingType: Kodeverk;
+  kilde: Kodeverk;
   permisjoner?: {
     permisjonFom?: string;
     permisjonTom?: string;
     permisjonsprosent?: number;
     type?: Kodeverk;
   }[];
-  brukPermisjon?: boolean;
+  stillingsprosent?: number;
+  aksjonspunktÅrsaker: Kodeverk;
+  inntektsmeldinger: Inntektsmelding[];
 }>;
 
 export default Arbeidsforhold;

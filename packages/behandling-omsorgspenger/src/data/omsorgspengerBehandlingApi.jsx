@@ -52,6 +52,7 @@ export const OmsorgspengerBehandlingApiKeys = {
   TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
+  ARBEIDSGIVERE: 'ARBEIDSGIVERE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -71,7 +72,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('familiehendelse-original-behandling', OmsorgspengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel('soeker-medlemskap-v2', OmsorgspengerBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', OmsorgspengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
-  .withRel('iay/arbeidsforhold-v2', OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
+  .withRel('arbeidsforhold-v1', OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', OmsorgspengerBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', OmsorgspengerBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
@@ -86,6 +87,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('full-uttaksplan', OmsorgspengerBehandlingApiKeys.FULL_UTTAKSPLAN)
   .withRel('inntekt', OmsorgspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('tilgjengelige-vedtaksbrev', OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('arbeidsgivere', OmsorgspengerBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', OmsorgspengerBehandlingApiKeys.UPDATE_ON_HOLD)
