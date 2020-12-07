@@ -1,3 +1,4 @@
+import React, { FunctionComponent } from 'react';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import InputField from '@fpsak-frontend/form/src/InputField';
@@ -20,7 +21,6 @@ import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysni
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
-import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -109,7 +109,7 @@ interface StateProps {
   harSøktSomSSN: boolean;
 }
 
-const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & StateProps) => {
+const OppgittOpptjeningRevurderingForm: FunctionComponent<Props & InjectedFormProps & StateProps> = props => {
   const [activeTab, setActiveTab] = React.useState(0);
   const [formIsEditable, setFormIsEditable] = React.useState(false);
   const intl = useIntl();
@@ -480,6 +480,7 @@ const connectedComponent = connect(
 )(
   behandlingForm({
     form: oppgittOpptjeningRevurderingFormName,
+    // @ts-ignore
   })(OppgittOpptjeningRevurderingForm),
 );
 

@@ -28,42 +28,43 @@ interface OwnProps {
   ytelseType: Kodeverk;
   saksnummer: string;
   behandlingId?: number;
-  behandlingUuid?: string;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
   lagNyBehandling: (isTilbakekreving, data) => void;
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
   revurderingArsaker: KodeverkMedNavn[];
-  behandlingerSomKanOpprettes: { [behandlingstype: string]: boolean };
+  opprettNyForstegangsBehandlingEnabled: boolean;
+  opprettRevurderingEnabled: boolean;
+  kanTilbakekrevingOpprettes: {
+    kanBehandlingOpprettes: boolean;
+    kanRevurderingOpprettes: boolean;
+  };
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingId: number }) => void;
   lukkModal: () => void;
-  aktorId?: string;
-  gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
 const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   ytelseType,
   saksnummer,
   behandlingId,
-  behandlingUuid,
   behandlingVersjon,
   behandlingType,
   lagNyBehandling,
   behandlingstyper,
   tilbakekrevingRevurderingArsaker,
   revurderingArsaker,
-  behandlingerSomKanOpprettes,
+  opprettNyForstegangsBehandlingEnabled,
+  opprettRevurderingEnabled,
+  kanTilbakekrevingOpprettes,
   uuidForSistLukkede,
   erTilbakekrevingAktivert,
   sjekkOmTilbakekrevingKanOpprettes,
   sjekkOmTilbakekrevingRevurderingKanOpprettes,
   lukkModal,
-  aktorId,
-  gjeldendeVedtakBehandlendeEnhetId,
 }) => {
   const submit = useCallback(
     formValues => {
@@ -88,19 +89,18 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         saksnummer={saksnummer}
         cancelEvent={lukkModal}
         submitCallback={submit}
+        hasEnabledCreateNewBehandling={opprettNyForstegangsBehandlingEnabled}
+        hasEnabledCreateRevurdering={opprettRevurderingEnabled}
         behandlingstyper={behandlingstyper}
-        behandlingerSomKanOpprettes={behandlingerSomKanOpprettes}
         tilbakekrevingRevurderingArsaker={tilbakekrevingRevurderingArsaker}
         revurderingArsaker={revurderingArsaker}
+        kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
         behandlingType={behandlingType}
         behandlingId={behandlingId}
-        behandlingUuid={behandlingUuid}
         uuidForSistLukkede={uuidForSistLukkede}
         erTilbakekrevingAktivert={erTilbakekrevingAktivert}
         sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
         sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
-        aktorId={aktorId}
-        gjeldendeVedtakBehandlendeEnhetId={gjeldendeVedtakBehandlendeEnhetId}
       />
     </RawIntlProvider>
   );

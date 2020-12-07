@@ -22,6 +22,7 @@ export const AnkeBehandlingApiKeys = {
   SAVE_ANKE_VURDERING: 'SAVE_ANKE_VURDERING',
   SAVE_REOPEN_ANKE_VURDERING: 'SAVE_REOPEN_ANKE_VURDERING',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
+  DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -57,6 +58,7 @@ const endpoints = new RestApiConfigBuilder()
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
   .withRel('dokumentdata-lagre', AnkeBehandlingApiKeys.DOKUMENTDATA_LAGRE)
+  .withRel('dokumentdata-hente', AnkeBehandlingApiKeys.DOKUMENTDATA_HENTE)
   .build();
 
 const reducerName = 'dataContextAnkeBehandling';

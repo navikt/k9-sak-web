@@ -18,7 +18,7 @@ import BeslutterModalIndex from './BeslutterModalIndex';
 
 describe('<ApprovalIndex>', () => {
   const fagsak = {
-    saksnummer: 1,
+    saksnummer: '123',
     sakstype: {
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: '',
@@ -155,7 +155,7 @@ describe('<ApprovalIndex>', () => {
     expect(reqData).to.have.length(1);
     expect(reqData[0].params).is.eql({
       behandlingId: 1234,
-      saksnummer: 1,
+      saksnummer: '123',
       behandlingVersjon: 123,
       bekreftedeAksjonspunktDtoer: [
         {

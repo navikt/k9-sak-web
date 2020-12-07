@@ -6,12 +6,10 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { featureToggle } from '@k9-sak-web/konstanter';
 import { NavAnsatt, Kodeverk, KodeverkMedNavn, Fagsak } from '@k9-sak-web/types';
 import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-
 import useHistory from '../../app/useHistory';
 import useLocation from '../../app/useLocation';
 import BehandlingAppKontekst from '../../behandling/behandlingAppKontekstTsType';
@@ -151,11 +149,6 @@ export const ApprovalIndex: FunctionComponent<OwnProps> = ({
     FpsakApiKeys.KODEVERK_FPTILBAKE,
   );
 
-  const { featureToggles } = restApiHooks.useGlobalStateRestApiData<{ featureToggles: { [key: string]: boolean } }>(
-    FpsakApiKeys.FEATURE_TOGGLE,
-  );
-  const disableGodkjennKnapp = erTilbakekreving ? !featureToggles[featureToggle.BESLUTT_TILBAKEKREVING] : false;
-
   const { data: totrinnsKlageVurdering, state: totrinnsKlageVurderingState } = restApiHooks.useRestApi<
     TotrinnsKlageVurdering
   >(FpsakApiKeys.TOTRINNS_KLAGE_VURDERING, undefined, {
@@ -217,7 +210,7 @@ export const ApprovalIndex: FunctionComponent<OwnProps> = ({
         alleKodeverk={erTilbakekreving ? alleFpTilbakeKodeverk : alleFpSakKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         erBehandlingEtterKlage={erBehandlingEtterKlage}
-        disableGodkjennKnapp={disableGodkjennKnapp}
+        // disableGodkjennKnapp={disableGodkjennKnapp}
         erTilbakekreving={erTilbakekreving}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
       />

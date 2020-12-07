@@ -6,9 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import { TextAreaField } from '@fpsak-frontend/form';
-import {
-  getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils';
+import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
 import styles from './vedtakForm.less';
 
@@ -16,11 +14,7 @@ const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
 const minLength3 = minLength(3);
 
-const FritekstBrevPanelImpl = ({
-  previewBrev,
-  readOnly,
-  sprakkode,
-}) => (
+const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode }) => (
   <>
     <div className={styles.automatiskBrev}>
       <Row>
@@ -33,7 +27,7 @@ const FritekstBrevPanelImpl = ({
           <a
             href=""
             onClick={previewBrev}
-            onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
+            onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
             className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
           >
             <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
@@ -58,11 +52,13 @@ const FritekstBrevPanelImpl = ({
           rows={1}
           readOnly={readOnly}
           className={styles.smallTextArea}
-          badges={[{
-            type: 'fokus',
-            textId: getLanguageCodeFromSprakkode(sprakkode),
-            title: 'Malform.Beskrivelse',
-          }]}
+          badges={[
+            {
+              type: 'fokus',
+              textId: getLanguageCodeFromSprakkode(sprakkode),
+              title: 'Malform.Beskrivelse',
+            },
+          ]}
         />
       </Column>
     </Row>
@@ -86,8 +82,7 @@ FritekstBrevPanelImpl.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
 };
 
-FritekstBrevPanelImpl.defaultProps = {
-};
+FritekstBrevPanelImpl.defaultProps = {};
 
 const FritekstBrevPanel = injectIntl(FritekstBrevPanelImpl);
 export default FritekstBrevPanel;

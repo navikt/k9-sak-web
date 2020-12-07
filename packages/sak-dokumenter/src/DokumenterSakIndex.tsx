@@ -18,7 +18,7 @@ const intl = createIntl(
 
 interface OwnProps {
   documents: Dokument[];
-  selectDocumentCallback: (e: Event, id: number, dokument: Dokument) => void;
+  selectDocumentCallback: (e: React.SyntheticEvent, id: number, dokument: Dokument) => void;
   behandlingId?: number;
 }
 

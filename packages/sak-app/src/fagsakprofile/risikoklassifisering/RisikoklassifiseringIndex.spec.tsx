@@ -23,7 +23,7 @@ const lagRisikoklassifisering = kode => ({
 });
 
 const fagsak = {
-  saksnummer: 123456,
+  saksnummer: '123456',
 };
 
 const behandling = {

@@ -1,14 +1,13 @@
 import React, { Suspense, FunctionComponent, useEffect, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router';
-
 import { useRestApiErrorDispatcher } from '@fpsak-frontend/rest-api-hooks';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { replaceNorwegianCharacters, parseQueryString } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { KodeverkMedNavn, NavAnsatt, Fagsak } from '@k9-sak-web/types';
+import { Fagsak, KodeverkMedNavn, NavAnsatt } from '@k9-sak-web/types';
 
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingAppKontekst from './behandlingAppKontekstTsType';
@@ -25,6 +24,7 @@ const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
 const BehandlingFrisinnIndex = React.lazy(() => import('@fpsak-frontend/behandling-frisinn'));
+const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
 
 const erTilbakekreving = behandlingTypeKode =>
   behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
@@ -146,12 +146,28 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     return <LoadingPanel />;
   }
 
+  if (behandlingTypeKode === BehandlingType.UNNTAK) {
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <BehandlingUnntakIndex
+            featureToggles={featureToggles}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={query.fakta}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
+      </Suspense>
+    );
+  }
+
   if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
           <BehandlingInnsynIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            featureToggles={featureToggles}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -175,6 +191,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
           <BehandlingKlageIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             alleBehandlinger={fagsakBehandlingerInfo}
+            featureToggles={featureToggles}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -189,6 +206,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
           <BehandlingAnkeIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             alleBehandlinger={fagsakBehandlingerInfo}
+            featureToggles={featureToggles}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -201,6 +219,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
           <BehandlingTilbakekrevingIndex
+            featureToggles={featureToggles}
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             harApenRevurdering={fagsakBehandlingerInfo.some(
               b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,

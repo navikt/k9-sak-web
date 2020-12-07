@@ -280,6 +280,7 @@
   "HistorikkEndretFelt.Faresignaler": "Resultat",
   "HistorikkEndretFelt.MilitærEllerSiviltjeneste": "Har søker militær- eller siviltjeneste i opptjeningsperioden",
   "HistorikkEndretFelt.NyRefusjonsfrist": "Utvidelse av frist for fremsatt refusjonskrav for {value}",
+  "HistorikkEndretFelt.Valg": "Valg",
   "HistorikkEndretFelt.Oppholdsrett.Omsorgsovertakelsesdato": "Dato for omsorgsovertakelse",
   "HistorikkEndretFelt.Oppholdsrett.ApplicationInformation": "Omsorgsvilkåret",
   "HistorikkEndretFelt.AdoptererAlene": "Adopterer alene",

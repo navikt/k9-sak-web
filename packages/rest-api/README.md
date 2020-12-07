@@ -1,6 +1,6 @@
 Håndterer rest-kall mot backend via Axios.
 
-Eksempel: 
+Eksempel:
 ```javascript
 import { createRequestApi, RequestConfig } from '@fpsak-frontend/rest-api';
 
@@ -12,7 +12,7 @@ const requestConfigs: [
 const requestApi = createRequestApi(contextPath, requestConfigs);
 
 //Utfør kall (responsen vil være et Promise med data på formatet {payload: responsdata})
-const params = {saksnummer: 1};
+const params = {saksnummer: '123};
 const payload = requestApi.getRequestRunner('FAGSAK_SOK').startProcess(params);
 ```
 
@@ -38,7 +38,7 @@ Konfigurering av ekstra parametere for et request: (Med og uten bruk av builder.
 For en oversikt over parametere, se "defaultConfig" i RequestConfig-klassen.
 
 
-Ofte er det ønskelig at applikasjonen skal reagere på diverse eventer i en rest-kall prosess. Eksempler på eventer er start, slutt, timeout og feil. 
+Ofte er det ønskelig at applikasjonen skal reagere på diverse eventer i en rest-kall prosess. Eksempler på eventer er start, slutt, timeout og feil.
 Til dette brukes NotificationMapper-klassen. Se EventType for de ulike eventen som kan håndteres av denne.
 Eksempel:
 ```javascript

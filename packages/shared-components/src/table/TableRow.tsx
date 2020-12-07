@@ -1,15 +1,20 @@
 import React, { ReactNode, FunctionComponent } from 'react';
 import classnames from 'classnames/bind';
-
 import styles from './tableRow.less';
 
 const classNames = classnames.bind(styles);
 
-const createMouseDownHandler = (onMouseDown, id, model) => e => onMouseDown && onMouseDown(e, id, model);
+const createMouseDownHandler = (
+  onMouseDown: (e: React.MouseEvent, id: number | string, model: any) => void,
+  id?: number | string,
+  model?: any,
+) => (e: React.MouseEvent): void => onMouseDown && onMouseDown(e, id, model);
 
-const findNearestRow = element => (element.tagName === 'TR' ? element : findNearestRow(element.parentElement));
+const findNearestRow = (element: EventTarget) =>
+  // @ts-ignore Fiks
+  element.tagName === 'TR' ? element : findNearestRow(element.parentElement);
 
-const setFocus = (e, isNext) => {
+const setFocus = (e: React.KeyboardEvent, isNext: boolean): void => {
   const row = findNearestRow(e.target);
   const otherRow = isNext ? row.nextSibling : row.previousSibling;
   const element = otherRow || row;
@@ -20,11 +25,16 @@ const setFocus = (e, isNext) => {
   }
 };
 
-const createKeyHandler = (onKeyDown, id, model) => e => {
+const createKeyHandler = (
+  onKeyDown: (e: React.KeyboardEvent, id: number | string, model: any) => void,
+  id?: number | string,
+  model?: any,
+) => (e: React.KeyboardEvent): void => {
   if (e.key === 'ArrowDown') {
     setFocus(e, true);
   } else if (e.key === 'ArrowUp') {
     setFocus(e, false);
+    // @ts-ignore fiks
   } else if (onKeyDown && e.target.tagName !== 'TD' && (e.key === 'Enter' || e.key === ' ')) {
     onKeyDown(e, id, model);
     e.preventDefault();
@@ -33,10 +43,10 @@ const createKeyHandler = (onKeyDown, id, model) => e => {
 
 interface OwnProps {
   id?: number | string;
-  model?: {};
+  model?: any;
   isHeader?: boolean;
-  onMouseDown?: (e: Event, id: number, model: any) => void;
-  onKeyDown?: (e: Event, id: number, model: any) => void;
+  onMouseDown?: (e: React.MouseEvent, id: number | string, model: any) => void;
+  onKeyDown?: (e: React.KeyboardEvent, id: number | string, model: any) => void;
   children: ReactNode | ReactNode[];
   noHover?: boolean;
   isSelected?: boolean;

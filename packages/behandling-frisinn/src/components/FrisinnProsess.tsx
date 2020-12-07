@@ -3,7 +3,9 @@ import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   FagsakInfo,
   Rettigheter,
@@ -13,12 +15,13 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFrisinnPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
 
+import FetchedData from '../types/fetchedDataTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
@@ -32,21 +35,15 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
+  featureToggles: FeatureToggles;
 }
 
-const getForhandsvisCallback = (dispatch, fagsak, behandling) => data => {
-  const brevData = {
-    ...data,
-    behandlingUuid: behandling.uuid,
-    ytelseType: fagsak.fagsakYtelseType,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsak.fagsakPerson.aktørId,
-  };
-  return dispatch(frisinnBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
+  return dispatch(frisinnBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
 const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (
@@ -72,7 +69,9 @@ const getLagringSideeffekter = (
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
-) => aksjonspunktModels => {
+  dispatch,
+  featureToggles,
+) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
     apModel =>
       (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
@@ -90,6 +89,16 @@ const getLagringSideeffekter = (
 
   if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
     toggleOppdatereFagsakContext(false);
+  }
+
+  if (featureToggles?.DOKUMENTDATA && aksjonspunktModels[0].isVedtakSubmission) {
+    let brevtype;
+    if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
+    else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;
+    else brevtype = vedtaksbrevtype.AUTOMATISK;
+    await dispatch(
+      frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({ [dokumentdatatype.VEDTAKSBREV_TYPE]: brevtype }),
+    );
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -117,10 +126,10 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
   hasFetchError,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  featureToggles,
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -162,6 +171,8 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
+    dispatch,
+    featureToggles,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
@@ -177,7 +188,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     () =>
       valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
         ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionFP',
+        : 'FatterVedtakStatusModal.ModalDescriptionFRISINN',
     [behandling.versjon],
   );
 

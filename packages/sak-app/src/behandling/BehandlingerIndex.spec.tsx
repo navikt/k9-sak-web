@@ -12,7 +12,7 @@ import BehandlingAppKontekst from './behandlingAppKontekstTsType';
 describe('BehandlingerIndex', () => {
   it('skal rendre komponent korrekt', () => {
     const fagsak = {
-      saksnummer: 123,
+      saksnummer: '123',
     };
     const alleBehandlinger = [
       {

@@ -263,6 +263,7 @@ const MedisinskVilkarForm = connect(mapStateToProps)(
   behandlingForm({
     form: formName,
     enableReinitialize: true,
+    // @ts-ignore
   })(injectIntl(MedisinskVilkarFormImpl)),
 );
 

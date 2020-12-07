@@ -29,6 +29,7 @@ const velgHistorikkMal = histType => {
     case historikkinnslagType.BEH_MAN_GJEN:
     case historikkinnslagType.BEH_STARTET:
     case historikkinnslagType.BEH_STARTET_PAA_NYTT:
+    case historikkinnslagType.BEH_STARTET_FORFRA:
     case historikkinnslagType.VEDLEGG_MOTTATT:
     case historikkinnslagType.BREV_SENT:
     case historikkinnslagType.BREV_BESTILT:
@@ -80,8 +81,9 @@ const velgHistorikkMal = histType => {
     case historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING:
       return HistorikkMalType9;
     case historikkinnslagType.OVST_UTTAK:
-    case historikkinnslagType.FASTSATT_UTTAK:
       return HistorikkMalType10;
+    case historikkinnslagType.FASTSATT_UTTAK:
+      return HistorikkMalType5;
     case historikkinnslagType.FAKTA_OM_FEILUTBETALING:
       return HistorikkMalTypeFeilutbetaling;
     case historikkinnslagType.FORELDELSE:

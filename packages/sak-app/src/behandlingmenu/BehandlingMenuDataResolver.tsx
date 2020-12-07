@@ -49,20 +49,7 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps> = ({
     },
   );
 
-  const { data: menyhandlingRettigheter, state } = restApiHooks.useRestApi<{ harSoknad: boolean }>(
-    FpsakApiKeys.MENYHANDLING_RETTIGHETER,
-    undefined,
-    {
-      updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !behandlingId,
-      keepData: true,
-    },
-  );
-
-  if (
-    (skalHenteVergeMenyvalg && stateVerge === RestApiState.LOADING) ||
-    (behandlingId && state === RestApiState.LOADING)
-  ) {
+  if (skalHenteVergeMenyvalg && stateVerge === RestApiState.LOADING) {
     return <LoadingPanel />;
   }
 
@@ -90,7 +77,6 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps> = ({
       opprettVerge={opprettVergeFn}
       pushLocation={history.push}
       location={location}
-      menyhandlingRettigheter={menyhandlingRettigheter}
       oppfriskBehandlinger={oppfriskBehandlinger}
     />
   );

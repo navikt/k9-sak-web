@@ -4,8 +4,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
-
-import pleiepengerBehandlingApi from '../../data/pleiepengerBehandlingApi';
 import MedisinskVilkår from '../../components/MedisinskVilkår';
 
 class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
@@ -15,7 +13,7 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
-  getEndepunkter = () => [pleiepengerBehandlingApi.SYKDOM];
+  getEndepunkter = () => [];
 
   getKomponent = props => <MedisinskVilkår {...props} />;
 

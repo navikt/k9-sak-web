@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { featureToggle } from '@k9-sak-web/konstanter';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
 import * as useLocation from '../../app/useLocation';
@@ -60,11 +59,7 @@ describe('<HistoryIndex>', () => {
   it('skal slå sammen og sortere historikk for fpsak og fptilbake', () => {
     requestApi.mock(FpsakApiKeys.KODEVERK, {});
     requestApi.mock(FpsakApiKeys.KODEVERK_FPTILBAKE, {});
-    requestApi.mock(FpsakApiKeys.FEATURE_TOGGLE, {
-      featureToggles: {
-        [featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]: true,
-      },
-    });
+
     requestApi.mock(FpsakApiKeys.HISTORY_FPSAK, [
       {
         opprettetTidspunkt: '2019-01-01',

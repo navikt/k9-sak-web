@@ -21,6 +21,7 @@ interface InputFieldProps {
   isEdited?: boolean;
   renderReadOnlyValue?: (value: any) => any;
   parse?: (value: string) => string | number;
+  format?: (value: string) => string | number;
 }
 
 const InputField = ({

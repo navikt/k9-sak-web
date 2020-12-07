@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useCallback, useMemo, useEffect, useRef } from 'react';
 import { Location } from 'history';
 import moment from 'moment';
-
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
-import { NavAnsatt, Fagsak } from '@k9-sak-web/types';
+import { Fagsak, NavAnsatt, FeatureToggles } from '@k9-sak-web/types';
 import MenyEndreBehandlendeEnhetIndex, { skalViseIMeny, getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
 import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
 import MenyTaAvVentIndex, {
@@ -29,13 +29,13 @@ import MenyNyBehandlingIndex, {
   skalViseIMeny as skalViseNyBehandlingIMeny,
   getMenytekst as getNyBehandlingMenytekst,
 } from '@fpsak-frontend/sak-meny-ny-behandling';
-
 import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import useVisForhandsvisningAvMelding from '../data/useVisForhandsvisningAvMelding';
 import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import ApplicationContextPath from '../app/ApplicationContextPath';
+
 import { allMenuAccessRights } from './accessMenu';
 import {
   nyBehandlendeEnhet,
@@ -47,8 +47,7 @@ import {
 import MenyKodeverk from './MenyKodeverk';
 import Rettigheter from './rettigheterTsType';
 
-const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
-  BehandlingType.FORSTEGANGSSOKNAD,
+let BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.KLAGE,
   BehandlingType.REVURDERING,
   BehandlingType.DOKUMENTINNSYN,
@@ -83,13 +82,13 @@ interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   saksnummer: string;
+  featureToggles?: FeatureToggles;
   behandlingId?: number;
   behandlingVersion?: number;
   fjernVerge: () => void;
   opprettVerge: () => void;
   pushLocation: (location: Location | string) => void;
   location: Location;
-  menyhandlingRettigheter?: { harSoknad: boolean };
   oppfriskBehandlinger: () => void;
 }
 
@@ -98,12 +97,12 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   alleBehandlinger = EMPTY_ARRAY,
   saksnummer,
   behandlingId,
+  featureToggles,
   behandlingVersion,
   fjernVerge,
   opprettVerge,
   pushLocation,
   location,
-  menyhandlingRettigheter,
   oppfriskBehandlinger,
 }) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
@@ -138,8 +137,6 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
         fagsak.skalBehandlesAvInfotrygd,
         fagsak.sakstype,
         behandling?.status,
-        menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false,
-        behandling?.erAktivPapirsoknad,
         behandling?.type,
       ),
     [behandlingId, behandlingVersion],
@@ -196,18 +193,23 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   const erPaVent = behandling ? behandling.behandlingPaaVent : false;
   const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
 
-  const test = menyKodeverk.getKodeverkForBehandlingstyper(
-    BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES,
-    kodeverkTyper.BEHANDLING_TYPE,
-  );
+  // FIX remove this when unntaksløype er lansert
+  if (featureToggles?.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(BehandlingType.UNNTAK)) {
+    BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.concat(BehandlingType.UNNTAK);
+  }
 
-  console.log(test);
+  const erTilbakekreving =
+    behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
+    behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
+
+  const erFrisinn = fagsakYtelseType.FRISINN === fagsak.sakstype.kode;
 
   return (
     <MenySakIndex
       data={[
         new MenyData(
-          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess),
+          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getTaAvVentMenytekst(),
         ).medModal(lukkModal => (
           <MenyTaAvVentIndex
@@ -217,8 +219,10 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             lukkModal={lukkModal}
           />
         )),
+        // https://github.com/navikt/k9-sak-web/compare/Sett-behandling-på-vent
         new MenyData(
-          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess),
+          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getSettPaVentMenytekst(),
         ).medModal(lukkModal => (
           <MenySettPaVentIndex
@@ -227,10 +231,6 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             settBehandlingPaVent={setBehandlingOnHold}
             ventearsaker={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.VENT_AARSAK)}
             lukkModal={lukkModal}
-            erTilbakekreving={
-              behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
-              behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
-            }
           />
         )),
         new MenyData(
@@ -251,7 +251,8 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
           />
         )),
         new MenyData(
-          skalViseIMeny(behandlingId, behandlendeEnheter, erKoet, rettigheter.byttBehandlendeEnhetAccess),
+          skalViseIMeny(behandlingId, behandlendeEnheter, erKoet, rettigheter.byttBehandlendeEnhetAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getMenytekst(),
         ).medModal(lukkModal => (
           <MenyEndreBehandlendeEnhetIndex
@@ -265,7 +266,8 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
           />
         )),
         new MenyData(
-          skalViseApneForEndringerIMeny(behandlingId, erPaVent, erKoet, rettigheter.opneBehandlingForEndringerAccess),
+          skalViseApneForEndringerIMeny(behandlingId, erPaVent, erKoet, rettigheter.opneBehandlingForEndringerAccess) &&
+            (!erFrisinn || erTilbakekreving),
           getApneForEndringerMenytekst(),
         ).medModal(lukkModal => (
           <MenyApneForEndringerIndex
@@ -316,6 +318,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             lukkModal={lukkModal}
           />
         )),
+
         new MenyData(
           !erPaVent && (!!opprettVerge || !!fjernVerge),
           getVergeMenytekst(!!opprettVerge),

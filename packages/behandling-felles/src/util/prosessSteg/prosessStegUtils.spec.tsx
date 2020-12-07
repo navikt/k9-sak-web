@@ -300,7 +300,7 @@ describe('<prosessStegUtils>', () => {
     ]);
   });
 
-  it('skal lagre aksjonspunkt', () => {
+  it('skal lagre aksjonspunkt', async () => {
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
     const api: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
@@ -327,7 +327,7 @@ describe('<prosessStegUtils>', () => {
       },
     ];
 
-    callback(aksjonspunktModeller);
+    await callback(aksjonspunktModeller);
 
     const requestKall = makeRestApiRequest.getCalls();
     expect(requestKall).to.have.length(1);
@@ -345,7 +345,7 @@ describe('<prosessStegUtils>', () => {
     });
   });
 
-  it('skal lagre overstyrt aksjonspunkt', () => {
+  it('skal lagre overstyrt aksjonspunkt', async () => {
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
     const api: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
@@ -373,7 +373,7 @@ describe('<prosessStegUtils>', () => {
       },
     ];
 
-    callback(aksjonspunktModeller);
+    await callback(aksjonspunktModeller);
 
     const requestKall = makeRestApiRequest.getCalls();
     expect(requestKall).to.have.length(1);

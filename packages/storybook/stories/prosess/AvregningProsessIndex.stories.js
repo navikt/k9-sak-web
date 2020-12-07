@@ -10,7 +10,7 @@ import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import withReduxProvider from '../../decorators/withRedux';
 
 const fagsak = {
-  saksnummer: 123,
+  saksnummer: '123',
   fagsakYtelseType: {
     kode: fagsakYtelseType.FORELDREPENGER,
   },

@@ -6,7 +6,6 @@ import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakTyp
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import MenyNyBehandlingIndex from '@fpsak-frontend/sak-meny-ny-behandling';
-
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -59,7 +58,7 @@ export const visMenyForÅLageNyBehandling = () => (
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: 'YTELSE_TYPE',
     }}
-    saksnummer={123}
+    saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
     behandlingType={{
@@ -81,7 +80,6 @@ export const visMenyForÅLageNyBehandling = () => (
         navn: 'Fødsel',
       },
     ]}
-    opprettNyForstegangsBehandlingEnabled
     opprettRevurderingEnabled
     kanTilbakekrevingOpprettes={{
       kanBehandlingOpprettes: false,
@@ -100,7 +98,7 @@ export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: 'YTELSE_TYPE',
     }}
-    saksnummer={123}
+    saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
     behandlingType={{
@@ -133,7 +131,6 @@ export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
         navn: 'Fødsel',
       },
     ]}
-    opprettNyForstegangsBehandlingEnabled
     opprettRevurderingEnabled
     kanTilbakekrevingOpprettes={{
       kanBehandlingOpprettes: true,

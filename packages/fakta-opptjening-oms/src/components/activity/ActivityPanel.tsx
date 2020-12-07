@@ -230,7 +230,10 @@ export const ActivityPanel = ({
             isEdited={initialValues.erEndret}
           >
             <RadioOption value label={{ id: 'ActivityPanel.Godkjent' }} />
-            <RadioOption value={false} label={<FormattedMessage id="ActivityPanel.IkkeGodkjent" />} />
+            <RadioOption
+              value={false}
+              label={<FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />}
+            />
           </RadioGroupField>
         )}
       </>

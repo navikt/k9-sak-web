@@ -15,6 +15,7 @@ export const FpsakApiKeys = {
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
   NEW_BEHANDLING_FPSAK: 'NEW_BEHANDLING_FPSAK',
+  NEW_BEHANDLING_UNNTAK: 'NEW_BEHANDLING_UNNTAK',
   NEW_BEHANDLING_FPTILBAKE: 'NEW_BEHANDLING_FPTILBAKE',
   NEW_BEHANDLING_KLAGE: 'NEW_BEHANDLING_KLAGE',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
@@ -127,12 +128,15 @@ const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   /* /sprak */
   .withGet('/k9/web/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
 
-  /* /api/feature-toggle */
-  .withPost('/k9/sak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+  /* /k9/feature-toggle */
+  .withGet('/k9/feature-toggle/toggles.json', FpsakApiKeys.FEATURE_TOGGLE)
 
   /* Klage */
   .withGet('/k9/klage/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_KLAGE)
   .withAsyncPut('/k9/klage/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_KLAGE)
+
+  /* Unntak */
+  .withAsyncPut('/k9/sak/api/behandlinger/unntak', FpsakApiKeys.NEW_BEHANDLING_UNNTAK)
 
   .build();
 

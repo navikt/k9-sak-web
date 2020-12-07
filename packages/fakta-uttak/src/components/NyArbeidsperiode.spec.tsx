@@ -1,19 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import sinon from 'sinon';
-import { createBrowserHistory } from 'history';
 import configureStore from '@fpsak-frontend/sak-app/src/configureStore';
 import { expect } from 'chai';
 import { mountWithIntl } from '../../i18n';
 import NyArbeidsperiode from './NyArbeidsperiode';
 
-const history = createBrowserHistory({
-  basename: '/k9/web/',
-});
-
 describe('<NyArbeidsperiode>', () => {
   it('setter og oppdaterer formverdier', async () => {
-    const store = configureStore(history);
+    const store = configureStore();
     const oppdaterPerioderSpy = sinon.spy();
     const avbrytSpy = sinon.spy();
     const wrapper = mountWithIntl(

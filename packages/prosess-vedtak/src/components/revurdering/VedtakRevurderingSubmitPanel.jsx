@@ -7,17 +7,17 @@ import { connect } from 'react-redux';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
-
 import styles from '../vedtakForm.less';
-import redusertUtbetalingArsak from "../../kodeverk/redusertUtbetalingArsak";
+import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
 const getPreviewCallback = (formProps, begrunnelse, previewCallback) => e => {
   if (formProps.valid || formProps.pristine) {
     previewCallback({
-      gjelderVedtak: true,
-      fritekst: begrunnelse,
+      dokumentdata: { fritekst: begrunnelse },
+      dokumentMal: dokumentMalType.UTLED,
     });
   } else {
     formProps.submit();
@@ -34,12 +34,16 @@ const getPreviewManueltBrevCallback = (
   previewCallback,
 ) => e => {
   if (formProps.valid || formProps.pristine) {
-    const data = {
-      fritekst: skalOverstyre ? brodtekst : begrunnelse,
-      dokumentMal: skalOverstyre ? 'FRITKS' : undefined,
-      tittel: overskrift,
-      gjelderVedtak: true,
-    };
+    const data = skalOverstyre
+      ? {
+          dokumentdata: { fritekstbrev: { brødtekst: brodtekst, overskrift } },
+          dokumentMal: dokumentMalType.FRITKS,
+        }
+      : {
+          dokumentdata: { fritekst: begrunnelse },
+          dokumentMal: dokumentMalType.UTLED,
+        };
+
     previewCallback(data);
   } else {
     formProps.submit();
@@ -98,7 +102,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   overskrift,
   behandlingResultat,
   harRedusertUtbetaling,
-  visFeilmeldingFordiArsakerMangler
+  visFeilmeldingFordiArsakerMangler,
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewCallback);
   const previewOverstyrtBrev = getPreviewManueltBrevCallback(
@@ -127,9 +131,10 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           spinner={formProps.submitting}
         >
           {intl.formatMessage({
-            id: skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.FRISINN
-              ? 'VedtakForm.TilGodkjenning'
-              : submitKnappTextId,
+            id:
+              skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.FRISINN
+                ? 'VedtakForm.TilGodkjenning'
+                : submitKnappTextId,
           })}
         </Hovedknapp>
       )}

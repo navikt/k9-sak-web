@@ -50,7 +50,7 @@ describe('<FagsakList>', () => {
   };
 
   const fagsak = {
-    saksnummer: 12345,
+    saksnummer: '12345',
     sakstype: {
       kode: 'ES',
       kodeverk: FAGSAK_YTELSE_KODEVERK,
@@ -81,7 +81,7 @@ describe('<FagsakList>', () => {
       <FagsakList
         fagsaker={[fagsak]}
         selectFagsakCallback={clickFunction}
-        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
+        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
       />,
     );
 
@@ -102,7 +102,7 @@ describe('<FagsakList>', () => {
 
   it('skal sortere søkeresultat der avsluttede skal vises sist, mens sist endrede skal vises først', () => {
     const fagsak2 = {
-      saksnummer: 23456,
+      saksnummer: '23456',
       sakstype: {
         kode: 'ES',
         kodeverk: FAGSAK_YTELSE_KODEVERK,
@@ -118,7 +118,7 @@ describe('<FagsakList>', () => {
       dekningsgrad: 100,
     };
     const fagsak3 = {
-      saksnummer: 34567,
+      saksnummer: '34567',
       sakstype: {
         kode: 'ES',
         kodeverk: FAGSAK_YTELSE_KODEVERK,
@@ -139,7 +139,7 @@ describe('<FagsakList>', () => {
       <FagsakList
         fagsaker={fagsaker as Fagsak[]}
         selectFagsakCallback={() => true}
-        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
+        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
       />,
     );
 
@@ -171,7 +171,7 @@ describe('<FagsakList>', () => {
 
   it('skal vise DateLabel i tabell kun om barn er født', () => {
     const fagsak4 = {
-      saksnummer: 23456,
+      saksnummer: '12345',
       sakstype: {
         kode: 'ES',
         kodeverk: FAGSAK_YTELSE_KODEVERK,
@@ -192,7 +192,7 @@ describe('<FagsakList>', () => {
       <FagsakList
         fagsaker={[fagsak, fagsak4 as Fagsak]}
         selectFagsakCallback={clickFunction}
-        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
+        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
       />,
     );
 

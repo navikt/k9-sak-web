@@ -48,6 +48,8 @@ const VedtakPanels = ({
   resultatstrukturOriginalBehandling,
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
+  lagreArsakerTilRedusertUtbetaling,
+  dokumentdata,
 }) => {
   const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(
     beregningsgrunnlag,
@@ -88,6 +90,8 @@ const VedtakPanels = ({
         vedtakVarsel={vedtakVarsel}
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        lagreArsakerTilRedusertUtbetaling={lagreArsakerTilRedusertUtbetaling}
+        dokumentdata={dokumentdata}
       />
     );
   }
@@ -115,6 +119,7 @@ const VedtakPanels = ({
       beregningErManueltFastsatt={beregningErManueltFastsatt}
       vedtakVarsel={vedtakVarsel}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+      dokumentdata={dokumentdata}
     />
   );
 };
@@ -145,6 +150,8 @@ VedtakPanels.propTypes = {
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  lagreArsakerTilRedusertUtbetaling: PropTypes.func,
+  dokumentdata: PropTypes.shape(),
 };
 
 VedtakPanels.defaultProps = {

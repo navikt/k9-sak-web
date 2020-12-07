@@ -48,7 +48,8 @@ export abstract class ProsessStegPanelDef {
   /**
    * Data som komponent er avhengig av må defineres her slik at det kan hentes fra server
    */
-  public getEndepunkter = (): EndpointOperations[] => [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public getEndepunkter = (featureToggles?: any): EndpointOperations[] => [];
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected getOverstyrVisningAvKomponent = (_data: any): boolean => false;

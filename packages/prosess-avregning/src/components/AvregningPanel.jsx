@@ -9,7 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { featureToggle } from '@k9-sak-web/konstanter';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import {
   RadioGroupField,
   RadioOption,
@@ -339,9 +339,10 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       behandlingVersjon,
       tilbakekrevingvalg,
       simuleringResultat,
-      featureToggles,
       fagsak,
+      featureToggles,
     } = ownProps;
+    const erFrisinn = fagsakYtelseType.FRISINN === fagsak.fagsakYtelseType?.kode;
     const hasOpenTilbakekrevingsbehandling =
       tilbakekrevingvalg !== undefined &&
       tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
@@ -349,7 +350,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       varseltekst: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'varseltekst'),
       initialValues: buildInitialValues(state, ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
-      featureVarseltekst: featureToggles[featureToggle.SIMULER_VARSELTEKST],
+      featureVarseltekst: erFrisinn && featureToggles?.VARSELTEKST,
       saksnummer: fagsak.saksnummer,
       hasOpenTilbakekrevingsbehandling,
       sprakkode,

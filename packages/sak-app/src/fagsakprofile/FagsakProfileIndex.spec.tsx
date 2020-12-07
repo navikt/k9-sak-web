@@ -25,7 +25,7 @@ describe('<FagsakProfileIndex>', () => {
   };
 
   const fagsak = {
-    saksnummer: 123,
+    saksnummer: '123',
     sakstype: {
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: 'FAGSAK_YTELSE',

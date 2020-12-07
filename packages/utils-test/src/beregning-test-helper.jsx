@@ -1,14 +1,13 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ApiStateBuilder } from './data-test-helper';
 
-
 const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
 
 const fagsak = {
   antallBarn: 1,
   barnFodt: true,
   kanRevurderingOpprettes: false,
-  saksnummer: 1,
+  saksnummer: '123',
   sakstype: {
     kode: 'FP',
     navn: 'Foreldrepenger',
@@ -26,7 +25,6 @@ const behandlingFormName = 'behandling_1000051_v1';
 
 export const getBehandlingFormName = () => behandlingFormName;
 
-
 const kodeverk = {};
 kodeverk[kodeverkTyper.AKTIVITET_STATUS] = [
   { kode: 'AT', navn: 'Arbeidstaker', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
@@ -34,9 +32,21 @@ kodeverk[kodeverkTyper.AKTIVITET_STATUS] = [
   { kode: 'TY', navn: 'Tilstøtende ytelse', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
   { kode: 'SN', navn: 'Selvstendig næringsdrivende', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
   { kode: 'AT_FL', navn: 'Kombinert arbeidstaker og frilanser', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
-  { kode: 'AT_SN', navn: 'Kombinert arbeidstaker og selvstendig næringsdrivende', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
-  { kode: 'FL_SN', navn: 'Kombinert frilanser og selvstendig næringsdrivende', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
-  { kode: 'AT_FL_SN', navn: 'Kombinert arbeidstaker, frilanser og selvstendig næringsdrivende', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
+  {
+    kode: 'AT_SN',
+    navn: 'Kombinert arbeidstaker og selvstendig næringsdrivende',
+    kodeverk: kodeverkTyper.AKTIVITET_STATUS,
+  },
+  {
+    kode: 'FL_SN',
+    navn: 'Kombinert frilanser og selvstendig næringsdrivende',
+    kodeverk: kodeverkTyper.AKTIVITET_STATUS,
+  },
+  {
+    kode: 'AT_FL_SN',
+    navn: 'Kombinert arbeidstaker, frilanser og selvstendig næringsdrivende',
+    kodeverk: kodeverkTyper.AKTIVITET_STATUS,
+  },
   { kode: 'DP', navn: 'Dagpenger', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
   { kode: 'AAP', navn: 'Arbeidsavklaringspenger', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
   { kode: 'MS', navn: 'Militær eller sivil', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
@@ -49,8 +59,13 @@ kodeverk[kodeverkTyper.INNTEKTSKATEGORI] = [
   { kode: 'FRILANSER', navn: 'Frilanser', kodeverk: kodeverkTyper.INNTEKTSKATEGORI },
 ];
 
-
-export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, beregningsgrunnlag, formName = 'test', values = {}, initial = {}) => {
+export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (
+  aksjonspunkter,
+  beregningsgrunnlag,
+  formName = 'test',
+  values = {},
+  initial = {},
+) => {
   const data = {
     id: 1000051,
     versjon: 1,
@@ -68,7 +83,7 @@ export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, be
     default: {
       ...dataState.default,
       fagsak: {
-        selectedSaksnummer: 1,
+        selectedSaksnummer: '123',
       },
       forstegangOgRevurderingBehandling: {
         behandlingId: 1000051,

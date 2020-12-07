@@ -1,7 +1,6 @@
 # k9-sak-frontend
 Monorepo for Frontend kode for k9-sak.
 
-
 [![](https://github.com/navikt/k9-sak-web/workflows/Deploy%20Docker%20image/badge.svg)](https://github.com/navikt/k9-sak-web/actions?query=workflow%3A%22Deploy+Docker+image%22)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-sak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_k9-sak-frontend)
@@ -27,11 +26,10 @@ https://medium.com/@jsilvax/a-workflow-guide-for-lerna-with-yarn-workspaces-60f9
 
 ## Mocks i dev-serveren
 Kan konfigureres via å sette opp en `.env`-fil i roten av prosjektet.
-### Feature toggles (webpack/mocks/feature-toggles.js)
-Aktiveres med flagget `--feature-toggles` til `yarn dev`.
-Tar en kommaseparert liste med featuretoggles og skrur disse på
+### Feature toggles
+Aktiveres ved å definiere en eller flere features i `.env`-fila i roten av prosjektet.
 ```
-FEATURE_TOGGLES=my.toggle,my.second.toggle
+UNNTAKSBEHANDLING=true
 ```
 
 ### Overstyr enkeltrute (webpack/mocks/fake-error.js)
@@ -49,4 +47,4 @@ FAKE_ERROR_BODY={"error":"dette fikk galt"}
 This project uses Streamline Icons. If you use k9-sak-web in your project please adhere to the Streamline Icons license agreement found here: https://streamlineicons.com/ux/extended-license.html
 
 ### For NAV-ansatte
-Interne henvendelser kan sendes via Slack i kanalen **##k9sak-frontend-tech**.
+Interne henvendelser kan sendes via Slack i kanalen **#k9sak-frontend-tech**.

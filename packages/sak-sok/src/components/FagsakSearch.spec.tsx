@@ -10,7 +10,7 @@ import PersonInfo from './person/PersonInfo';
 
 describe('<FagsakSearch>', () => {
   const fagsak = {
-    saksnummer: 12345,
+    saksnummer: '12345',
     sakstype: {
       kode: 'TEST',
       kodeverk: '',

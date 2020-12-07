@@ -19,7 +19,7 @@ describe('<MessagesIndex>', () => {
   const recipients = ['Søker'];
 
   const fagsak = {
-    saksnummer: 123456,
+    saksnummer: '123456',
   };
 
   const alleBehandlinger = [

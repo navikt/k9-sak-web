@@ -26,7 +26,7 @@ jobs:
         id: yarn-cache
         run: |
           echo "::set-output name=dir::$(yarn cache dir)"
-          echo "::set-env name=TAG::$(date +"%Y%m%d%H%M%S")-$(echo $GITHUB_SHA | cut -c1-7)"
+          echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -40,11 +40,12 @@ jobs:
         run: yarn build
       - name: Sette Docker-navn og -tag
         run: |
-          echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
+          echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE_BASE:$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
       - name: Bygg og laste opp docker-image
         run: |
           docker pull nginx:1.17.8-alpine
-          docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
+          docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest --label "version=${TAG}" .
           echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
           docker push ${IMAGE_BASE}:latest
           docker push ${IMAGE}
@@ -71,23 +72,24 @@ jobs:
                 });
               });
             });
-
-      - name: Opprett deployment issue
-        if: success()
-        uses: maxkomarychev/oction-create-issue@v0.7.1
-        id: createdeployissue
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: Deploy av ${{ env.TAG }}
-          labels: deployment
-          body: |
-            Kommenter med <b>/promote cluster namespace</b>, hvor <b>cluster</b> er et gyldig clusternavn og <b>namespace</b> et eksisterende namespace i det clusteret.
-            <table>
-            <tr><th>Cluster</th><th>Namespace</th></tr>
-            <tr><td>dev-fss</td><td>default</td></tr>
-            <tr><td>prod-fss</td><td>default</td></tr>
-            </table>
-
+            
+      -  name: Opprett deployment issue
+         id: createdeployissue
+         if: success()
+         uses: actions/github-script@v3
+         with:
+           github-token: ${{secrets.GITHUB_TOKEN}}
+           script: |
+               github.issues.create( {
+                 owner: context.issue.owner,
+                 repo: context.issue.repo,
+                 labels: ['deployment'],
+                 body: 'Kommenter enten "/promote dev-fss default" eller "/promote prod-fss default"',
+                 title: 'Deploy av ${{ env.TAG }}'})
+               .then(response => {
+                       core.setOutput('number', response.data.number);
+                });
+                
       - name: Trigger verdikjede test
         if: success()
         shell: bash

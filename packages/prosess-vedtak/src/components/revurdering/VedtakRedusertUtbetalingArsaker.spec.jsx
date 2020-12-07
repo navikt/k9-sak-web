@@ -1,19 +1,19 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { intlMock } from "@fpsak-frontend/utils-test/src/intl-enzyme-test-helper";
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
 describe('VedtakRedusertUtbetalingArsaker', () => {
-
   const vedtakRedusertUtbetalingArsaker = (
     readOnly = false,
     values = new Map(),
     vedtakVarsel = {},
-    erSendtInnUtenArsaker = false
+    erSendtInnUtenArsaker = false,
+    merkedeArsaker = undefined,
   ) => {
-    const attributter = { intl: intlMock, vedtakVarsel, readOnly, values, erSendtInnUtenArsaker };
+    const attributter = { intl: intlMock, vedtakVarsel, readOnly, values, erSendtInnUtenArsaker, merkedeArsaker };
     return shallow(<VedtakRedusertUtbetalingArsaker {...attributter} />);
   };
 
@@ -46,12 +46,22 @@ describe('VedtakRedusertUtbetalingArsaker', () => {
       .forEach(checkboxField => expect(checkboxField.prop('checked')).to.be.equal(expectedCheckedValue(checkboxField)));
   });
 
-  it('Krysser av i riktige bokser ved lesemodus', () => {
+  it('Krysser av i riktige bokser ved lesemodus når dokumentdata ikke er hentet', () => {
     const checkedUtbetalingsarsak = Object.values(redusertUtbetalingArsak)[0];
     const vedtakVarsel = { redusertUtbetalingÅrsaker: [checkedUtbetalingsarsak] };
     const readOnly = true;
     const expectedCheckedValue = checkboxField => checkboxField.key() === checkedUtbetalingsarsak;
     vedtakRedusertUtbetalingArsaker(readOnly, undefined, vedtakVarsel)
+      .children()
+      .forEach(checkboxField => expect(checkboxField.prop('checked')).to.be.equal(expectedCheckedValue(checkboxField)));
+  });
+
+  it('Krysser av i riktige bokser ved lesemodus når dokumentdata er hentet', () => {
+    const checkedUtbetalingsarsak = Object.values(redusertUtbetalingArsak)[0];
+    const merkedeArsaker = [checkedUtbetalingsarsak];
+    const readOnly = true;
+    const expectedCheckedValue = checkboxField => checkboxField.key() === checkedUtbetalingsarsak;
+    vedtakRedusertUtbetalingArsaker(readOnly, undefined, undefined, undefined, merkedeArsaker)
       .children()
       .forEach(checkboxField => expect(checkboxField.prop('checked')).to.be.equal(expectedCheckedValue(checkboxField)));
   });

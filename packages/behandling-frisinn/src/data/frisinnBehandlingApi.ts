@@ -35,6 +35,7 @@ export const FrisinnBehandlingApiKeys = {
   OPPGITT_OPPTJENING: 'OPPGITT_OPPTJENING',
   TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
+  DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -84,6 +85,7 @@ const endpoints = new RestApiConfigBuilder()
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE)
   .withRel('dokumentdata-lagre', FrisinnBehandlingApiKeys.DOKUMENTDATA_LAGRE)
+  .withRel('dokumentdata-hente', FrisinnBehandlingApiKeys.DOKUMENTDATA_HENTE)
 
   .build();
 

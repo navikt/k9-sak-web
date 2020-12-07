@@ -18,7 +18,7 @@ const PERSONSTATUS_TYPE_KODEVERK = 'PERSONSTATUS_TYPE';
 
 const fagsaker = [
   {
-    saksnummer: 1,
+    saksnummer: '123',
     sakstype: {
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: FAGSAK_YTELSE_KODEVERK,

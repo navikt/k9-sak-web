@@ -23,7 +23,7 @@
     "nav-frontend-knapper-style": "0.3.35",
     "nav-frontend-paneler": "^2.0.10",
     "nav-frontend-popover": "^0.0.29",
-    "nav-frontend-popover-style": "^0.0.5",
+    "nav-frontend-popover-style": "^0.0.8",
     "nav-frontend-typografi": "2.0.26",
     "nav-frontend-typografi-style": "1.0.22",
     "react": "^16.13.1",

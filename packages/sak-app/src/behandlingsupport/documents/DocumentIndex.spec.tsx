@@ -35,7 +35,7 @@ describe('<DocumentIndex>', () => {
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(FpsakApiKeys.ALL_DOCUMENTS, documents);
 
-    const wrapper = shallow(<DocumentIndex behandlingId={1} behandlingVersjon={2} saksnummer={123} />);
+    const wrapper = shallow(<DocumentIndex behandlingId={1} behandlingVersjon={2} saksnummer="123" />);
 
     const index = wrapper.find(DokumenterSakIndex);
     expect(index).to.have.length(1);

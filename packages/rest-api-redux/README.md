@@ -1,4 +1,4 @@
-Dette er et Redux-overbygg over rest-api'et. Overbygget vil automatisk sette opp en del i Redux state for hvert endepunkt. 
+Dette er et Redux-overbygg over rest-api'et. Overbygget vil automatisk sette opp en del i Redux state for hvert endepunkt.
 
 Eksempel på oppsett av endepunkter:
 ```javascript
@@ -23,7 +23,7 @@ const fpsakApi = reduxRestApi.getEndpointApi();
 I eksempelet over blir kun ett endepunkt satt opp. En kan da utføre kall mot endepunktet 'FAGSAK_SOK' på denne måten:
 ```javascript
 //I komponent
-søkFagsak({saksnummer: 1});
+søkFagsak({saksnummer: '123'});
 
 //Argument til Redux connect
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -46,24 +46,24 @@ For en oversikt over alle mulige operasjoner på endepunktene, se EndpointOperat
 
 
 
-Konkret steg-for-steg rutine for å legge til endepunkt: 
+Konkret steg-for-steg rutine for å legge til endepunkt:
 
 1. Legg til ny nøkkel i "FpsakApiKeys" i fila fpsakApi.jsx.
-2. Legg til ny url i "endpoints" i fila fpsakApi.jsx med nøkkel fra punkt 1. Definer kallet som GET, POST eller 
+2. Legg til ny url i "endpoints" i fila fpsakApi.jsx med nøkkel fra punkt 1. Definer kallet som GET, POST eller
 PUT. For long-polling bruk async-versjonen av desse. (withPost => withAsyncPost)
-3. Utfør kallet. Dette blir i vår applikasjon oftast implementert i duck.jsx evt. i ein toppnivå-komponent 
+3. Utfør kallet. Dette blir i vår applikasjon oftast implementert i duck.jsx evt. i ein toppnivå-komponent
 (*Index.jsx).
 4. Les status/resultat fra applikasjons-state.
 
 
-Implementasjon av punkt 1 og 2 vil føra til at det automatisk bli laga ein "plass" i applikasjonslageret for denne 
+Implementasjon av punkt 1 og 2 vil føra til at det automatisk bli laga ein "plass" i applikasjonslageret for denne
 url'en. Her kan ein finna status for kallet. Er kallet starta? Kva slags data er returnert? Har kallet feila? Er kallet ferdig?
 
 Sjølve applikasjonslageret er ein Redux store. Redux fungerar kort fortalt på denne måten:
 
-actionCreators blir brukt for å starta ei handling. Denne sender i sin tur ut ein eller fleire actions (med eller utan 
-data) som blir håndtert av ein reducer som oppdaterar state. Ein kan så lese resultatet fra state, noko me ofte gjer via 
-ein selector. (Dette er ein funksjon med innebygd caching av resultatet. Det er kun når input endrar seg at resultat 
+actionCreators blir brukt for å starta ei handling. Denne sender i sin tur ut ein eller fleire actions (med eller utan
+data) som blir håndtert av ein reducer som oppdaterar state. Ein kan så lese resultatet fra state, noko me ofte gjer via
+ein selector. (Dette er ein funksjon med innebygd caching av resultatet. Det er kun når input endrar seg at resultat
 blir kalkulert på nytt.)
 
 
@@ -95,5 +95,5 @@ dispatch(actionCreator(params));
     const erFerdig = fpsakApi.BEHANDLING.getRestApiFinished();
     ```
 
-I nettlesar-konsollet blir alle Redux-actions logga. Den delen av state'en som er avsatt til rest-kalla finn ein under 
+I nettlesar-konsollet blir alle Redux-actions logga. Den delen av state'en som er avsatt til rest-kalla finn ein under
 "default/dataContext".

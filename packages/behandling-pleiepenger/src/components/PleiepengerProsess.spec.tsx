@@ -115,9 +115,9 @@ describe('<PleiepengerProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -188,9 +188,9 @@ describe('<PleiepengerProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -205,7 +205,7 @@ describe('<PleiepengerProsess>', () => {
     expect(opppdaterKall[0].args[1]).to.eql('default');
   });
 
-  it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', () => {
+  it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
@@ -241,9 +241,9 @@ describe('<PleiepengerProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -251,7 +251,11 @@ describe('<PleiepengerProsess>', () => {
     expect(modal.prop('visModal')).is.false;
 
     const panel = wrapper.find(ProsessStegPanel);
-    panel.prop('lagringSideeffekterCallback')([{ kode: aksjonspunktCodes.FORESLA_VEDTAK, isVedtakSubmission: true }])();
+    (
+      await panel.prop('lagringSideeffekterCallback')([
+        { kode: aksjonspunktCodes.FORESLA_VEDTAK, isVedtakSubmission: true },
+      ])
+    )();
 
     const oppdatertModal = wrapper.find(FatterVedtakStatusModal);
     expect(oppdatertModal.prop('visModal')).is.true;
@@ -262,7 +266,7 @@ describe('<PleiepengerProsess>', () => {
     expect(opppdaterKall).to.have.length(1);
   });
 
-  it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', () => {
+  it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.FATTER_VEDTAK, kodeverk: 'test' },
@@ -294,9 +298,9 @@ describe('<PleiepengerProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -304,7 +308,11 @@ describe('<PleiepengerProsess>', () => {
     expect(modal.prop('visModal')).is.false;
 
     const panel = wrapper.find(ProsessStegPanel);
-    panel.prop('lagringSideeffekterCallback')([{ kode: aksjonspunktCodes.FATTER_VEDTAK, isVedtakSubmission: true }])();
+    (
+      await panel.prop('lagringSideeffekterCallback')([
+        { kode: aksjonspunktCodes.FATTER_VEDTAK, isVedtakSubmission: true },
+      ])
+    )();
 
     const oppdatertModal = wrapper.find(IverksetterVedtakStatusModal);
     expect(oppdatertModal.prop('visModal')).is.true;
@@ -315,7 +323,7 @@ describe('<PleiepengerProsess>', () => {
     expect(opppdaterKall).to.have.length(1);
   });
 
-  it('skal gå til søkeside når en har revurderingsaksjonspunkt', () => {
+  it('skal gå til søkeside når en har revurderingsaksjonspunkt', async () => {
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, kodeverk: 'test' },
@@ -347,22 +355,24 @@ describe('<PleiepengerProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    panel.prop('lagringSideeffekterCallback')([
-      { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, sendVarsel: true },
-    ])();
+    (
+      await panel.prop('lagringSideeffekterCallback')([
+        { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, sendVarsel: true },
+      ])
+    )();
 
     const opppdaterKall = opneSokeside.getCalls();
     expect(opppdaterKall).to.have.length(1);
   });
 
-  it('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
+  it('skal gå til neste panel i prosess etter løst aksjonspunkt', async () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <PleiepengerProsess
@@ -376,14 +386,18 @@ describe('<PleiepengerProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    panel.prop('lagringSideeffekterCallback')([{ kode: aksjonspunktCodes.SVANGERSKAPSVILKARET, sendVarsel: true }])();
+    (
+      await panel.prop('lagringSideeffekterCallback')([
+        { kode: aksjonspunktCodes.SVANGERSKAPSVILKARET, sendVarsel: true },
+      ])
+    )();
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).to.have.length(1);
@@ -406,9 +420,9 @@ describe('<PleiepengerProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 
@@ -436,9 +450,9 @@ describe('<PleiepengerProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 
