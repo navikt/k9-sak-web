@@ -41,11 +41,6 @@ export const BrevPanel = props => {
     behandlingResultat,
   } = props;
 
-  const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
-  const kanHaFritekstbrev = !isTilgjengeligeVedtaksbrevArray || tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
-  const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-  const skalKunneForhåndsviseAutomatiskBrev = kanResultatForhåndsvises(behandlingResultat);
-
   const getPreviewAutomatiskBrevCallback = fritekst => e => {
     previewCallback({
       dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
@@ -62,34 +57,44 @@ export const BrevPanel = props => {
     e.preventDefault();
   };
 
-  const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse);
-  const previewManuellBrev = getManuellBrevCallback();
+  const harTilgjengeligeVedtaksbrev = !Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length;
+  const kanHaAutomatiskVedtaksbrev =
+    harTilgjengeligeVedtaksbrev && tilgjengeligeVedtaksbrev.some(vb => vb === 'AUTOMATISK');
+  const kanHaFritekstbrev = harTilgjengeligeVedtaksbrev && tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
+
+  const fritekstbrev = kanHaFritekstbrev && (
+    <>
+      <FritekstBrevPanel
+        readOnly={readOnly}
+        sprakkode={sprakkode}
+        previewBrev={getPreviewAutomatiskBrevCallback(begrunnelse)}
+      />
+      <VedtakPreviewLink previewCallback={getManuellBrevCallback()} />
+    </>
+  );
+
+  const automatiskbrev = kanHaAutomatiskVedtaksbrev && (
+    <>
+      <InformasjonsbehovAutomatiskVedtaksbrev
+        intl={intl}
+        readOnly={readOnly}
+        sprakkode={sprakkode}
+        beregningErManueltFastsatt={beregningErManueltFastsatt}
+        begrunnelse={begrunnelse}
+        dokumentdata={dokumentdata}
+      />
+      {kanResultatForhåndsvises(behandlingResultat) && (
+        <VedtakPreviewLink previewCallback={getPreviewAutomatiskBrevCallback(begrunnelse)} />
+      )}
+    </>
+  );
+
+  const brevpanel = skalBrukeOverstyrendeFritekstBrev ? fritekstbrev : automatiskbrev;
 
   return (
     <div>
       {harTilgjengeligeVedtaksbrev ? (
-        <>
-          {!skalBrukeOverstyrendeFritekstBrev ? (
-            <>
-              <InformasjonsbehovAutomatiskVedtaksbrev
-                intl={intl}
-                readOnly={readOnly}
-                sprakkode={sprakkode}
-                beregningErManueltFastsatt={beregningErManueltFastsatt}
-                begrunnelse={begrunnelse}
-                dokumentdata={dokumentdata}
-              />
-              {skalKunneForhåndsviseAutomatiskBrev && <VedtakPreviewLink previewCallback={previewAutomatiskBrev} />}
-            </>
-          ) : (
-            kanHaFritekstbrev && (
-              <>
-                <FritekstBrevPanel readOnly={readOnly} sprakkode={sprakkode} previewBrev={previewAutomatiskBrev} />
-                <VedtakPreviewLink previewCallback={previewManuellBrev} />
-              </>
-            )
-          )}
-        </>
+        brevpanel
       ) : (
         <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
           {intl.formatMessage({ id: 'VedtakForm.IkkeVedtaksbrev' })}
