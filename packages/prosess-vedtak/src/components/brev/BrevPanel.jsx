@@ -129,8 +129,8 @@ BrevPanel.defaultProps = {
 };
 
 export const brevselector = createSelector(
-  [ownProps => ownProps.sprakkode, ownProps => ownProps.vedtakVarsel, ownProps => ownProps.dokumentdata],
-  (sprakkode, vedtakVarsel, dokumentdata) => ({
+  [ownProps => ownProps.sprakkode, ownProps => ownProps.dokumentdata],
+  (sprakkode, dokumentdata) => ({
     sprakkode,
     begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),

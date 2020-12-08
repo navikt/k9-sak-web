@@ -273,7 +273,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise knapper for å avslutt behandling då behandlingen er innvilget', () => {
-    debugger;
     const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
@@ -328,9 +327,7 @@ describe('<VedtakForm>', () => {
         vedtakVarsel={vedtakVarsel}
       />,
     );
-    debugger;
     const hovedknapp = wrapper.find('Hovedknapp');
-    console.log(`hovedknapp: ${hovedknapp}`);
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
   });
@@ -709,8 +706,6 @@ describe('<VedtakForm>', () => {
     expect(model).to.eql({
       aksjonspunktKoder: ['5018', '5033'],
       sprakkode,
-      brødtekst: undefined,
-      overskrift: undefined,
       skalBrukeOverstyrendeFritekstBrev: true,
       skalUndertrykkeBrev: false,
       isEngangsstonad: false,
@@ -756,8 +751,6 @@ describe('<VedtakForm>', () => {
       },
       avslagsarsak: null,
       avslagsarsakFritekst: null,
-      overskrift: 'Overskrift',
-      fritekstbrev: 'Brødtekst',
     };
     const dokumentdata = {
       VEDTAKSBREV_TYPE: 'FRITEKST',
@@ -784,8 +777,6 @@ describe('<VedtakForm>', () => {
       isEngangsstonad: true,
       skalBrukeOverstyrendeFritekstBrev: true,
       skalUndertrykkeBrev: false,
-      overskrift: 'Overskrift',
-      brødtekst: 'Brødtekst',
     });
   });
 
