@@ -8,28 +8,30 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
 import styles from './vedtakForm.less';
-import PreviewLink from "./PreviewLink";
+import PreviewLink from './PreviewLink';
 
 const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
 const minLength3 = minLength(3);
 
-const   FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode }) => (
+const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode, harAutomatiskVedtaksbrev }) => (
   <>
-    <div className={styles.automatiskBrev}>
-      <Row>
-        <Column xs="12">
-          <FormattedMessage id="VedtakForm.AutomatiskBrev" />
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="6">
-          <PreviewLink previewCallback={previewBrev}>
-            <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-          </PreviewLink>
-        </Column>
-      </Row>
-    </div>
+    {!readOnly && harAutomatiskVedtaksbrev && (
+      <div className={styles.automatiskBrev}>
+        <Row>
+          <Column xs="12">
+            <FormattedMessage id="VedtakForm.AutomatiskBrev" />
+          </Column>
+        </Row>
+        <Row>
+          <Column xs="6">
+            <PreviewLink previewCallback={previewBrev}>
+              <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
+            </PreviewLink>
+          </Column>
+        </Row>
+      </div>
+    )}
     <Row>
       <Column xs="12">
         <Undertittel>
@@ -75,6 +77,7 @@ FritekstBrevPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   previewBrev: PropTypes.func.isRequired,
   sprakkode: PropTypes.shape().isRequired,
+  harAutomatiskVedtaksbrev: PropTypes.bool.isRequired,
 };
 
 FritekstBrevPanelImpl.defaultProps = {};
