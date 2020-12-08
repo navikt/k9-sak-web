@@ -166,6 +166,9 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                     antallDagerInfotrygd={nøkkeltall.antallDagerInfotrygd}
                     antallKoronadager={nøkkeltall.antallKoronadager}
                     forbrukteDager={nøkkeltall.antallForbrukteDager}
+                    forbruktTid={nøkkeltall.forbruktTid}
+                    restTid={nøkkeltall.restTid}
+                    smitteverndager={nøkkeltall.smittevernTid}
                     uttaksperioder={[]}
                     benyttetRammemelding
                     apneNokkeltall={apneNokkeltall}

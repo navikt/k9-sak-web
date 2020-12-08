@@ -45,6 +45,9 @@ export interface Nøkkeltall {
   antallDagerArbeidsgiverDekker: number;
   antallDagerInfotrygd: number;
   antallForbrukteDager: number;
+  restTid: string; // Duration
+  forbruktTid: string; // Duration
+  smittevernTid: string; // Duration
   migrertData: boolean;
 }
 
