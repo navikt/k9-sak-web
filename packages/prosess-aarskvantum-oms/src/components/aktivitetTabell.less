@@ -4,106 +4,97 @@
 .aktivitetTabell {
   margin-top: 1em;
 
-  td, th {
+  td,
+  th {
     border: 0 !important;
-    padding: .5rem;
-    text-align: left;
+    padding: 0.5rem;
     position: relative;
+    text-align: left;
   }
 
   th {
-    &:first-child {width: 30%}
-    &:nth-child(2) {width: 20%}
-    &:nth-child(3) {width: 30%}
-    &:nth-child(4) {width: 15%}
-    &:nth-child(5) {width: 5%}
+    &:first-child { width: 30%; }
+    &:nth-child(2) { width: 20%; }
+    &:nth-child(3) { width: 30%; }
+    &:nth-child(4) { width: 15%; }
+    &:nth-child(5) { width: 5%; }
   }
 
-  tr {
-    cursor: default;
-  }
+  tr { cursor: default; }
 
-  tbody, thead {
+  tbody,
+  thead {
     border-bottom: 1px solid @navGra40;
-    &:nth-child(even) {
-      background-color: #F7F7F7;
-    }
+    &:nth-child(even) { background-color: #f7f7f7; }
   }
 }
 
 .koronaperiode {
-
   border-bottom-color: @navOransjeLighten20 !important;
 
   tr:last-child td:first-child:before {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
+    border-color: transparent transparent transparent @navOransjeLighten20;
     border-style: solid;
     border-width: 15px 0 0 15px;
-    border-color: transparent transparent transparent @navOransjeLighten20;
     bottom: 0;
+    content: '';
+    height: 0;
     left: 0;
+    position: absolute;
+    width: 0;
   }
 }
 
-.fanerad td {
-  padding: 0;
-}
+.fanerad td { padding: 0; }
 
 .fanewrapper {
-  margin: 0 .5rem;
-  padding: 1rem .5rem .5rem .5rem;
   border-top: 1px solid @navGra40;
   display: flex;
+  margin: 0 0.5rem;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
 }
 
 .innholdsrad td {
-  padding-top: 0;
   padding-bottom: 1rem;
-  &:first-child {padding-left: 1rem}
-  &:last-child {padding-right: 1rem}
+  padding-top: 0;
+  &:first-child { padding-left: 1rem; }
+  &:last-child { padding-right: 1rem; }
 }
 
 .utvidelsesknapp {
-  cursor: pointer;
-  border: none;
   background: inherit;
+  border: none;
+  cursor: pointer;
   line-height: 17px;
 }
 
 .deaktivertFane {
-  margin: 2px;
+  color: @navGra60;
+  margin: 2px 0.5rem 2px 2px;
   text-decoration: underline;
   text-decoration-color: @navGra20;
-  color: @navGra60;
-  margin-right: .5rem;
 }
 
 .knappForAlleUtregninger {
-
-  color: @navBla;
-  text-decoration: underline;
-  padding: 0.2em;
-  font-size: 0.9em;
-  border: none;
   background-color: inherit;
+  border: none;
+  color: @navBla;
+  font-size: 0.9em;
   margin-left: auto;
+  padding: 0.2em;
+  text-decoration: underline;
 
   &:hover {
     cursor: pointer;
     text-decoration: none;
   }
 
-  &:focus {
-    outline: 2px solid #0067c5;
-  }
+  &:focus { outline: 2px solid @navBla; }
 
   img {
-    margin-left: 0.5em;
     height: 24px;
-    width: 24px;
+    margin-left: 0.5em;
     pointer-events: none;
+    width: 24px;
   }
 }
