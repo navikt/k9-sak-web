@@ -6,7 +6,6 @@
 
   td,
   th {
-    border: 0 !important;
     padding: 0.5rem;
     position: relative;
     text-align: left;
@@ -20,29 +19,29 @@
     &:nth-child(5) { width: 5%; }
   }
 
+  tbody tr:first-child td { border-top-width: 0; }
+
   tr { cursor: default; }
 
   tbody,
   thead {
-    border-bottom: 1px solid @navGra40;
+    border-bottom: 1px solid;
+    &:not(.koronaperiode) { border-bottom-color: @navGra40; }
+    &.koronaperiode { border-bottom-color: @navOransjeLighten20; }
     &:nth-child(even) { background-color: #f7f7f7; }
   }
 }
 
-.koronaperiode {
-  border-bottom-color: @navOransjeLighten20 !important;
-
-  tr:last-child td:first-child:before {
-    border-color: transparent transparent transparent @navOransjeLighten20;
-    border-style: solid;
-    border-width: 15px 0 0 15px;
-    bottom: 0;
-    content: '';
-    height: 0;
-    left: 0;
-    position: absolute;
-    width: 0;
-  }
+.koronaperiode tr:last-child td:first-child:before {
+  border-color: transparent transparent transparent @navOransjeLighten20;
+  border-style: solid;
+  border-width: 15px 0 0 15px;
+  bottom: 0;
+  content: '';
+  height: 0;
+  left: 0;
+  position: absolute;
+  width: 0;
 }
 
 .fanerad td { padding: 0; }
