@@ -5,7 +5,7 @@ import { shallowWithIntl } from '../../../i18n';
 import NokkeltallContainer from './NokkeltallContainer';
 import ForbrukteDager from './ForbrukteDager';
 
-describe('<NøkkeltallContainer>', () => {
+describe('<NokkeltallContainer>', () => {
   describe('Forbrukte dager', () => {
     const forbrukteDagerPropsForRestTidOgPeriode = (restTid: string, periode: string, smitteverndager?: string) => {
       // @ts-ignore
@@ -23,6 +23,7 @@ describe('<NøkkeltallContainer>', () => {
           smitteverndager={smitteverndager}
           uttaksperioder={[uttaksperiode]}
           visEllerSkjulNokkeltalldetaljer={() => undefined}
+          migrertData={false}
         />,
       );
 
