@@ -11,6 +11,7 @@ import Tabs from "nav-frontend-tabs";
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import classNames from "classnames";
 import styles from './aktivitetTabell.less';
 import NøkkeltallContainer, { Nokkeltalltype } from "./nokkeltall/NokkeltallContainer";
 import Utfall from './Utfall';
@@ -259,7 +260,10 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                   </div>
                 </td>
               </TableRow>
-              <TableRow className={styles.innholdsrad} notFocusable>
+              <TableRow
+                className={classNames(styles.innholdsrad, !valgteDetaljfaner?.[index] && styles.vilkar)}
+                notFocusable
+              >
                 {visVilkarHjemlerEllerNokkeltall(valgteDetaljfaner?.[index])}
               </TableRow>
             </>}
