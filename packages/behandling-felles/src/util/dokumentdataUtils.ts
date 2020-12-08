@@ -9,8 +9,8 @@ function lagDokumentdata(aksjonspunktModell) {
     return {
       [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.FRITEKST,
       [dokumentdatatype.FRITEKSTBREV]: {
-        brødtekst: aksjonspunktModell.fritekstBrev,
-        overskrift: aksjonspunktModell.overskrift,
+        brødtekst: aksjonspunktModell.fritekstbrev.brødtekst,
+        overskrift: aksjonspunktModell.fritekstbrev.overskrift,
       },
     };
   }

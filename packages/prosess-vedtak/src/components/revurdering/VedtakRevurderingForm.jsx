@@ -13,7 +13,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
@@ -63,7 +63,7 @@ export class VedtakRevurderingFormImpl extends Component {
       skalBrukeOverstyrendeFritekstBrev: !skalBrukeOverstyrendeFritekstBrev,
     });
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
-    clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
+    clearFormFields(`${behandlingFormPrefix}.${VEDTAK_REVURDERING_FORM_NAME}`, false, false, ...fields);
   }
 
   render() {
@@ -98,6 +98,7 @@ export class VedtakRevurderingFormImpl extends Component {
       bgPeriodeMedAvslagsårsak,
       tilgjengeligeVedtaksbrev,
       dokumentdata,
+      behandlingFormPrefix,
       ...formProps
     } = this.props;
     const { erSendtInnUtenArsaker } = this.state;
@@ -200,6 +201,7 @@ export class VedtakRevurderingFormImpl extends Component {
               redusertUtbetalingÅrsaker={
                 readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)
               }
+              parentFormNavn={`${behandlingFormPrefix}.${VEDTAK_REVURDERING_FORM_NAME}`}
             />
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
@@ -315,8 +317,6 @@ const buildInitialValues = createSelector(
       skalUndertrykkeBrev:
         dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
         vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
-      overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
-      brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
     };
   },
 );
@@ -326,10 +326,9 @@ const transformValues = values =>
     const transformedValues = {
       kode: apCode,
       begrunnelse: values.begrunnelse,
-      fritekstBrev: values.brødtekst,
+      fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
       skalUndertrykkeBrev: values.skalUndertrykkeBrev,
-      overskrift: values.overskrift,
       isVedtakSubmission,
     };
     if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {

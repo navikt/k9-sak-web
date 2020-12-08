@@ -13,7 +13,6 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -140,9 +139,9 @@ export class VedtakForm extends Component {
             readOnly={readOnly}
             sprakkode={sprakkode}
             ytelseTypeKode={ytelseTypeKode}
+            dokumentdata={dokumentdata}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             beregningErManueltFastsatt={beregningErManueltFastsatt}
-            dokumentdata={dokumentdata}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             previewCallback={previewCallback}
             parentFormNavn={`${behandlingFormPrefix}.VedtakForm`}
@@ -242,8 +241,6 @@ export const buildInitialValues = createSelector(
     skalUndertrykkeBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
       vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
-    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
-    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
   }),
 );
 
@@ -255,11 +252,9 @@ const transformValues = values =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     begrunnelse: values.begrunnelse,
-    fritekstBrev: values.brødtekst,
+    fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
     skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
     skalUndertrykkeBrev: values.skalUndertrykkeBrev,
-    overskrift: values.overskrift,
-    brødtekst: values.brødtekst,
     isVedtakSubmission,
   }));
 
