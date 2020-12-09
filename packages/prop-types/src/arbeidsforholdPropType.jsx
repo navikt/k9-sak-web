@@ -56,6 +56,7 @@ export const arbeidsforholdPropType = PropTypes.shape({
   aksjonspunktÅrsaker: PropTypes.arrayOf(
     PropTypes.shape({
       kode: PropTypes.string.isRequired,
+      kodeverk: PropTypes.string,
     }),
   ),
   inntektsmeldinger: PropTypes.arrayOf(

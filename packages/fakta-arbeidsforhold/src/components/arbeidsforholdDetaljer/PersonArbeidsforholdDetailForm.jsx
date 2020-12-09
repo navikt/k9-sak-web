@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import PersonAksjonspunktText from './PersonAksjonspunktText';
-import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
+import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
+import { Normaltekst } from 'nav-frontend-typografi';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 import PermisjonPeriode from './PermisjonPeriode';
-import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
+
+import styles from './personArbeidsforholdDetailForm.less';
 
 // ----------------------------------------------------------------------------------
 // VARIABLES
@@ -26,10 +26,6 @@ export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm
 // ----------------------------------------------------------------------------------
 // METHODS
 // ----------------------------------------------------------------------------------
-const showNyttOrErstattPanel = (arbeidsforholdHandlingVerdi, vurderOmSkalErstattes, harErstattetEttEllerFlere) =>
-  arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD &&
-  vurderOmSkalErstattes &&
-  !harErstattetEttEllerFlere;
 
 // ----------------------------------------------------------------------------------
 // Component: PersonArbeidsforholdDetailForm
@@ -38,11 +34,8 @@ const showNyttOrErstattPanel = (arbeidsforholdHandlingVerdi, vurderOmSkalErstatt
  * PersonArbeidsforholdDetailForm
  */
 export const PersonArbeidsforholdDetailForm = ({
-  isErstattArbeidsforhold,
   hasReceivedInntektsmelding,
-  harErstattetEttEllerFlere,
   readOnly,
-  vurderOmSkalErstattes,
   aktivtArbeidsforholdTillatUtenIM,
   arbeidsforhold,
   arbeidsforholdHandlingVerdi,
@@ -51,11 +44,14 @@ export const PersonArbeidsforholdDetailForm = ({
   alleKodeverk,
   ...formProps
 }) => (
-  <>
+  <div className={styles.container}>
     <PermisjonPeriode arbeidsforhold={arbeidsforhold} />
-    <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
     <VerticalSpacer eightPx />
-    <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
+    <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
+    <VerticalSpacer eightPx />
+    <Normaltekst>
+      <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
+    </Normaltekst>
     <Row>
       <VerticalSpacer twentyPx />
       <ArbeidsforholdRadioknapper
@@ -84,33 +80,12 @@ export const PersonArbeidsforholdDetailForm = ({
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
-
-      <Column xs="6">
-        {showNyttOrErstattPanel(arbeidsforholdHandlingVerdi, vurderOmSkalErstattes, harErstattetEttEllerFlere) && (
-          <PersonNyttEllerErstattArbeidsforholdPanel
-            readOnly={readOnly}
-            isErstattArbeidsforhold={isErstattArbeidsforhold}
-            arbeidsforholdList={formProps.initialValues.replaceOptions}
-            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-        )}
-        {arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD && harErstattetEttEllerFlere && (
-          <Normaltekst>
-            <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
-          </Normaltekst>
-        )}
-      </Column>
     </Row>
-  </>
+  </div>
 );
 
 PersonArbeidsforholdDetailForm.propTypes = {
-  isErstattArbeidsforhold: PropTypes.bool.isRequired,
   hasReceivedInntektsmelding: PropTypes.bool.isRequired,
-  vurderOmSkalErstattes: PropTypes.bool.isRequired,
-  harErstattetEttEllerFlere: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   arbeidsforhold: arbeidsforholdPropType.isRequired,
@@ -121,7 +96,6 @@ PersonArbeidsforholdDetailForm.propTypes = {
 };
 
 PersonArbeidsforholdDetailForm.defaultProps = {
-  harErstattetEttEllerFlere: false,
   arbeidsforholdHandlingVerdi: undefined,
 };
 

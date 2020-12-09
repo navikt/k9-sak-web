@@ -8,7 +8,9 @@ import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
+import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';
+import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
 
 const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   const kodeverknavn = getKodeverknavn(permisjon.type);
@@ -22,18 +24,13 @@ const utledPermisjonValues = (permisjon, getKodeverknavn) => {
 };
 
 const harPermisjonOgIkkeMottattIM = arbeidsforhold =>
-  arbeidsforhold.permisjoner &&
-  arbeidsforhold.permisjoner.length === 1 &&
-  (arbeidsforhold.mottattDatoInntektsmelding === undefined || arbeidsforhold.mottattDatoInntektsmelding === null);
+  arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length === 1 && !arbeidsforhold.inntektsmeldinger;
 
 const harPermisjonOgMottattIM = arbeidsforhold =>
-  arbeidsforhold.permisjoner &&
-  arbeidsforhold.permisjoner.length === 1 &&
-  arbeidsforhold.mottattDatoInntektsmelding !== undefined &&
-  arbeidsforhold.mottattDatoInntektsmelding !== null;
+  arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length === 1 && arbeidsforhold.inntektsmeldinger;
 
 const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
-  if (!arbeidsforhold || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret)) {
+  if (!arbeidsforhold || arbeidsforhold.aksjonspunktÅrsaker.length === 0) {
     return undefined;
   }
   if (harPermisjonOgIkkeMottattIM(arbeidsforhold)) {
@@ -57,13 +54,13 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1) {
     return <FormattedMessage key="permisjoner" id="PersonAksjonspunktText.SokerHarFlerePermisjoner" />;
   }
-  if (arbeidsforhold.kilde.kode === arbeidsforholdKilder.INNTEKTSMELDING) {
+  if (arbeidsforhold.kilde.includes(arbeidsforholdKilder.INNTEKTSMELDING)) {
     return <FormattedMessage key="basertPaInntektsmelding" id="PersonAksjonspunktText.BasertPaInntektsmelding" />;
   }
-  if (arbeidsforhold.lagtTilAvSaksbehandler) {
+  if (arbeidsforhold.handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER) {
     return <FormattedMessage key="lagtTilAvSaksbehandler" id="PersonAksjonspunktText.LeggTilArbeidsforhold" />;
   }
-  if (!arbeidsforhold.mottattDatoInntektsmelding) {
+  if (!arbeidsforhold.inntektsmeldinger) {
     return (
       <FormattedMessage
         key="mottattDatoInntektsmelding"
@@ -72,13 +69,7 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
       />
     );
   }
-  if (arbeidsforhold.replaceOptions.length > 0) {
-    return <FormattedMessage key="replaceOptions" id="PersonAksjonspunktText.AvklarErstatteTidligere" />;
-  }
-  if (arbeidsforhold.harErstattetEttEllerFlere) {
-    return <FormattedMessage key="harErstattetEttEllerFlere" id="PersonAksjonspunktText.AvklarErstatteAlle" />;
-  }
-  if (arbeidsforhold.ikkeRegistrertIAaRegister) {
+  if (arbeidsforhold.aksjonspunktÅrsaker.includes(aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD)) {
     return <FormattedMessage key="ikkeRegistrertIAaRegister" id="PersonAksjonspunktText.AvklarIkkeRegistrertIAa" />;
   }
   return undefined;
@@ -92,7 +83,7 @@ export const PersonAksjonspunktTextImpl = ({ arbeidsforhold, alleKodeverk }) => 
   return (
     <>
       <VerticalSpacer eightPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={arbeidsforhold.tilVurdering}>{[msg]}</AksjonspunktHelpText>
+      <AksjonspunktHelpText isAksjonspunktOpen>{[msg]}</AksjonspunktHelpText>
     </>
   );
 };

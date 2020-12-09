@@ -3,7 +3,6 @@ import { expect } from 'chai';
 
 import { RadioOption } from '@fpsak-frontend/form';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
-import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
 import shallowWithIntl from '../../../i18n';
 
 const arbeidsforhold = {

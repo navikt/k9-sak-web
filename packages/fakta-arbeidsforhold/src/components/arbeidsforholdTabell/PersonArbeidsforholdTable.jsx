@@ -8,12 +8,12 @@ import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
+import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
 import styles from './personArbeidsforholdTable.less';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
-import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
-import aktivtArbeidsforholdHandling from '../../kodeverk/aktivtArbeidsforholdHandling';
 
 const headerColumnContent = [
   <FormattedMessage key={1} id="PersonArbeidsforholdTable.Arbeidsforhold" values={{ br: <br /> }} />,
@@ -33,28 +33,16 @@ export const utledNøkkel = arbeidsforhold => {
 
 const updateArbeidsforhold = values => {
   const { selectedArbeidsforhold } = this.state;
-  const { arbeidsforhold, skalKunneLageArbeidsforholdBasertPaInntektsmelding } = this.props;
-
-  const brukMedJustertPeriode = values.arbeidsforholdHandlingField === arbeidsforholdHandling.OVERSTYR_TOM;
-
-  const brukArbeidsforholdet = values.arbeidsforholdHandlingField !== arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD;
+  const { arbeidsforhold } = this.props;
 
   let fortsettBehandlingUtenInntektsmelding;
-  if (values.mottattDatoInntektsmelding === undefined || values.mottattDatoInntektsmelding === null) {
+  if (values.inntektsmeldinger === undefined || !values.inntektsmeldinger) {
     fortsettBehandlingUtenInntektsmelding =
-      (values.arbeidsforholdHandlingField === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD &&
-        values.aktivtArbeidsforholdHandlingField !== aktivtArbeidsforholdHandling.AVSLA_YTELSE) ||
-      values.arbeidsforholdHandlingField === arbeidsforholdHandling.OVERSTYR_TOM ||
-      values.arbeidsforholdHandlingField === arbeidsforholdHandling.SOKER_ER_I_PERMISJON;
+      values.arbeidsforholdHandlingField === arbeidsforholdHandlingType.BRUK_UTEN_INNTEKTSMELDING;
   }
 
-  const brukPermisjon =
-    values.permisjoner && values.permisjoner.length > 0
-      ? values.arbeidsforholdHandlingField === arbeidsforholdHandling.SOKER_ER_I_PERMISJON
-      : undefined;
-
   const inntektMedTilBeregningsgrunnlag =
-    values.aktivtArbeidsforholdHandlingField === aktivtArbeidsforholdHandling.INNTEKT_IKKE_MED_I_BG ? false : undefined;
+    values.aktivtArbeidsforholdHandlingField === arbeidsforholdHandlingType.INNTEKT_IKKE_MED_I_BG ? false : undefined;
 
   const newValues = {
     ...values,
@@ -97,7 +85,7 @@ const updateArbeidsforhold = values => {
     }),
   );
 
-  const unresolvedArbeidsforhold = getUnresolvedArbeidsforhold(removeDeleted(other));
+  const unresolvedArbeidsforhold = removeDeleted(other);
   this.setSelectedArbeidsforhold(undefined, undefined, unresolvedArbeidsforhold);
 };
 
@@ -148,7 +136,7 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
                 onMouseDown={selectArbeidsforholdCallback}
                 onKeyDown={selectArbeidsforholdCallback}
                 isSelected={a.id === selectedId}
-                isApLeftBorder={a.tilVurdering}
+                isApLeftBorder={a.aksjonspunktÅrsaker.length > 0}
               >
                 <TableColumn>
                   <Normaltekst>{decodeHtmlEntity(navn)}</Normaltekst>
@@ -219,7 +207,7 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
                 </TableColumn>
               </TableRow>
               {visAksjonspunktInfo(a) && (
-                <TableRow>
+                <FlexRow className={styles.aktivRad}>
                   <PersonArbeidsforholdDetailForm
                     key={selectedArbeidsforhold.id}
                     arbeidsforhold={selectedArbeidsforhold}
@@ -234,7 +222,7 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
                     behandlingVersjon={2}
                     alleKodeverk={alleKodeverk}
                   />{' '}
-                </TableRow>
+                </FlexRow>
               )}
             </>
           );
