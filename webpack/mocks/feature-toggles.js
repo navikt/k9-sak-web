@@ -17,6 +17,10 @@ const featureToggles = [
     key: 'KLAGEBEHANDLING',
     value: process.env.KLAGEBEHANDLING,
   },
+  {
+    key: 'TILBAKE',
+    value: process.env.TILBAKE,
+  },
 ];
 
 module.exports = function (app) {
