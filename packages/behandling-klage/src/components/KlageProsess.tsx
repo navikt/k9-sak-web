@@ -10,7 +10,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
@@ -38,7 +38,7 @@ interface OwnProps {
     type: Kodeverk;
     avsluttet?: string;
   }[];
-  featureToggles: {};
+  featureToggles: FeatureToggles;
 }
 
 const saveKlageText = (dispatch, behandling, aksjonspunkter) => aksjonspunktModel => {

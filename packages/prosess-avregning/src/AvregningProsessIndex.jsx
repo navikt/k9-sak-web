@@ -11,10 +11,13 @@ import avregningSimuleringResultatPropType from './propTypes/avregningSimulering
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const AvregningProsessIndex = ({
   fagsak,
@@ -38,13 +41,13 @@ const AvregningProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       simuleringResultat={simuleringResultat}
       tilbakekrevingvalg={tilbakekrevingvalg}
-      featureToggles={featureToggles}
       submitCallback={submitCallback}
       readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+      apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
       isApOpen={isAksjonspunktOpen}
       previewCallback={previewFptilbakeCallback}
+      featureToggles={featureToggles}
     />
   </RawIntlProvider>
 );

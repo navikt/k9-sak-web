@@ -1,0 +1,18 @@
+[
+  {
+    "key":  "VARSELTEKST",
+    "value": "${VARSELTEKST}"
+   },
+  {
+    "key":  "DOKUMENTDATA",
+    "value": "${DOKUMENTDATA}"
+  },
+  {
+    "key":  "UNNTAKSBEHANDLING",
+    "value": "${UNNTAKSBEHANDLING}"
+  },
+  {
+    "key":  "KLAGEBEHANDLING",
+    "value": "${KLAGEBEHANDLING}"
+  }
+]

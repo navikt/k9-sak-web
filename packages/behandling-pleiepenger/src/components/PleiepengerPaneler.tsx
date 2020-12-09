@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Rettigheter, FagsakInfo, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import PleiepengerProsess from './PleiepengerProsess';
 import PleiepengerFakta from './PleiepengerFakta';
@@ -22,7 +22,7 @@ interface OwnProps {
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
-  featureToggles: {};
+  featureToggles: FeatureToggles;
 }
 
 interface FaktaPanelInfo {
@@ -71,9 +71,9 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
         hasFetchError={hasFetchError}
-        featureToggles={featureToggles}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
+        featureToggles={featureToggles}
       />
       <PleiepengerFakta
         behandling={behandling}

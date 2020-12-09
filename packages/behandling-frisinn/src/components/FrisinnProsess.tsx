@@ -15,9 +15,9 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { dokumentdatatype, featureToggle } from '@k9-sak-web/konstanter';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFrisinnPanelDefinisjoner';
 
@@ -35,10 +35,10 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
+  featureToggles: FeatureToggles;
 }
 
 const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
@@ -91,7 +91,7 @@ const getLagringSideeffekter = (
     toggleOppdatereFagsakContext(false);
   }
 
-  if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && aksjonspunktModels[0].isVedtakSubmission) {
+  if (featureToggles?.DOKUMENTDATA && aksjonspunktModels[0].isVedtakSubmission) {
     let brevtype;
     if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
     else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;
@@ -126,10 +126,10 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
   hasFetchError,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  featureToggles,
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,

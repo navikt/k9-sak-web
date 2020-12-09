@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 import { DataFetcher, DataFetcherTriggers, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
 import FagsakInfo from '../types/fagsakInfoTsType';
@@ -27,7 +27,7 @@ interface OwnProps {
   ) => any;
   behandlingApi: { [name: string]: EndpointOperations };
   dispatch: Dispatch;
-  featureToggles?: {};
+  featureToggles?: FeatureToggles;
 }
 
 const ProsessStegPanel: FunctionComponent<OwnProps> = ({

@@ -26,11 +26,10 @@ https://medium.com/@jsilvax/a-workflow-guide-for-lerna-with-yarn-workspaces-60f9
 
 ## Mocks i dev-serveren
 Kan konfigureres via å sette opp en `.env`-fil i roten av prosjektet.
-### Feature toggles (webpack/mocks/feature-toggles.js)
-Aktiveres med flagget `--feature-toggles` til `yarn dev`.
-Tar en kommaseparert liste med featuretoggles og skrur disse på
+### Feature toggles
+Aktiveres ved å definiere en eller flere features i `.env`-fila i roten av prosjektet.
 ```
-FEATURE_TOGGLES=my.toggle,my.second.toggle
+UNNTAKSBEHANDLING=true
 ```
 
 ### Overstyr enkeltrute (webpack/mocks/fake-error.js)
@@ -48,4 +47,4 @@ FAKE_ERROR_BODY={"error":"dette fikk galt"}
 This project uses Streamline Icons. If you use k9-sak-web in your project please adhere to the Streamline Icons license agreement found here: https://streamlineicons.com/ux/extended-license.html
 
 ### For NAV-ansatte
-Interne henvendelser kan sendes via Slack i kanalen **##k9sak-frontend-tech**.
+Interne henvendelser kan sendes via Slack i kanalen **#k9sak-frontend-tech**.

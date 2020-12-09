@@ -12,6 +12,8 @@ _shutdown_() {
   wait "$pid"
 }
 trap _shutdown_ SIGTERM
+[ -d /usr/share/nginx/html/k9/feature-toggle ] && echo "Feature toggle-directory finnes fra før, tilbakestiller" && rm -r /usr/share/nginx/html/k9/feature-toggle/* || mkdir -p  /usr/share/nginx/html/k9/feature-toggle
+envsubst < /etc/nginx/conf.d/feature-toggles.json > /usr/share/nginx/html/k9/feature-toggle/toggles.json
 
 export APP_HOSTNAME="${HOSTNAME:-localhost}"
 export APP_PORT="${APP_PORT:-443}"
@@ -20,7 +22,11 @@ export APP_VERSION="${APP_VERSION:-localhost}"
 
 envsubst '$APP_URL $APP_PORT $APP_HOSTNAME $APP_NAME $APP_VERSION $APP_PATH_PREFIX $APP_URL_K9FORMIDLING $APP_URL_K9FORMIDLING_DD $APP_URL_K9OPPDRAG $APP_URL_KLAGE $APP_URL_K9TILBAKE $APP_DIAGNOSEKODER $MEDISINSK_VILKAR_FRONTEND_URL' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/default.conf
 
+echo "### Nginx conf ###"
 cat /etc/nginx/conf.d/default.conf
+echo
+echo "### Feature toggles ###"
+cat /usr/share/nginx/html/k9/feature-toggle/toggles.json
 
 nginx -g "daemon off;" &
 pid=$!

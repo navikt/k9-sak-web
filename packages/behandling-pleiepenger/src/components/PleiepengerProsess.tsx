@@ -14,7 +14,7 @@ import {
   ProsessStegContainer,
   lagDokumentdata,
 } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
@@ -34,10 +34,10 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
+  featureToggles: FeatureToggles;
 }
 
 const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
@@ -119,10 +119,10 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
   hasFetchError,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  featureToggles,
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,

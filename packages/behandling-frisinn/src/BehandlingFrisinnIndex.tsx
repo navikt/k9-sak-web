@@ -7,7 +7,7 @@ import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 
 import frisinnBehandlingApi, { reduxRestApi, FrisinnBehandlingApiKeys } from './data/frisinnBehandlingApi';
 import FrisinnPaneler from './components/FrisinnPaneler';
@@ -35,7 +35,7 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  featureToggles: {};
+  featureToggles: FeatureToggles;
 }
 
 interface StateProps {
