@@ -14,5 +14,9 @@
   {
     "key":  "KLAGEBEHANDLING",
     "value": "${KLAGEBEHANDLING}"
+  },
+    {
+    "key":  "TILBAKE",
+    "value": "${TILBAKE}"
   }
 ]
