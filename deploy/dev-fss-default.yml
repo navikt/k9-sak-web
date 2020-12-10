@@ -65,3 +65,5 @@ spec:
       value: "true"
     - name: KLAGEBEHANDLING
       value: "true"
+    - name: TILBAKE
+      value: "true"
