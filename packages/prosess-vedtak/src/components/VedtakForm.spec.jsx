@@ -706,6 +706,9 @@ describe('<VedtakForm>', () => {
     expect(model).to.eql({
       aksjonspunktKoder: ['5018', '5033'],
       sprakkode,
+      brødtekst: undefined,
+      overskrift: undefined,
+      begrunnelse: undefined,
       skalBrukeOverstyrendeFritekstBrev: true,
       skalUndertrykkeBrev: false,
       isEngangsstonad: false,
@@ -751,6 +754,8 @@ describe('<VedtakForm>', () => {
       },
       avslagsarsak: null,
       avslagsarsakFritekst: null,
+      overskrift: 'Overskrift',
+      fritekstbrev: 'Brødtekst',
     };
     const dokumentdata = {
       VEDTAKSBREV_TYPE: 'FRITEKST',
@@ -777,6 +782,9 @@ describe('<VedtakForm>', () => {
       isEngangsstonad: true,
       skalBrukeOverstyrendeFritekstBrev: true,
       skalUndertrykkeBrev: false,
+      overskrift: 'Overskrift',
+      brødtekst: 'Brødtekst',
+      begrunnelse: undefined,
     });
   });
 

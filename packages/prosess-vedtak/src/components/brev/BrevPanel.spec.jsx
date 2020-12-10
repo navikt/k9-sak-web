@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme/build';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { BrevPanel, brevselector } from './BrevPanel';
+import { BrevPanel } from './BrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
@@ -78,29 +78,5 @@ describe('<BrevPanel>', () => {
     expect(wrapper.find(VedtakPreviewLink)).to.have.length(0);
     expect(wrapper.find(FritekstBrevPanel)).to.have.length(0);
     expect(wrapper.find(AlertStripeInfo)).to.have.length(1);
-  });
-
-  it('skal sette opp initialvalues', () => {
-    const sprakkode = {
-      kode: 'NO',
-    };
-
-    const dokumentdata = {
-      VEDTAKSBREV_TYPE: 'FRITEKST',
-      FRITEKSTBREV: {
-        overskrift: 'Overskrift',
-        brødtekst: 'Brødtekst',
-      },
-      BEREGNINGSGRUNNLAG_FRITEKST: 'Begrunnelse',
-    };
-
-    const model = brevselector.resultFunc(sprakkode, dokumentdata);
-
-    expect(model).to.eql({
-      begrunnelse: 'Begrunnelse',
-      sprakkode,
-      overskrift: 'Overskrift',
-      brødtekst: 'Brødtekst',
-    });
   });
 });
