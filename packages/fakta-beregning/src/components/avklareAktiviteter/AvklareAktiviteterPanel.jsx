@@ -167,6 +167,7 @@ AvklareAktiviteterPanelImpl.propTypes = {
   erBgOverstyrt: PropTypes.bool.isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,

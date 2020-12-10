@@ -4,19 +4,22 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
-export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk) => {
-  if (!aktivitet.arbeidsgiverNavn) {
+export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+  const arbeidsgiverNavn =
+    arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId]
+      ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId].navn
+      : '';
+
+  if (!arbeidsgiverNavn) {
     return aktivitet.arbeidsforholdType
       ? getKodeverknavnFn(alleKodeverk, kodeverkTyper)(aktivitet.arbeidsforholdType)
       : '';
   }
-  return aktivitet.arbeidsgiverId
-    ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(
-        aktivitet.eksternArbeidsforholdId,
-      )}`
-    : aktivitet.arbeidsgiverNavn;
-};
 
+  return aktivitet.arbeidsgiverId
+    ? `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+    : arbeidsgiverNavn;
+};
 export const sortArbeidsforholdList = arbeidsforhold => {
   const copy = arbeidsforhold.slice(0);
   copy.sort((a, b) => new Date(a.arbeidsforhold.startdato) - new Date(b.arbeidsforhold.startdato));

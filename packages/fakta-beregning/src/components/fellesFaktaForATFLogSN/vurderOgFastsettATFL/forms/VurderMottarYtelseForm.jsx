@@ -26,17 +26,26 @@ const andreFrilansTilfeller = [
 
 export const mottarYtelseForArbeidMsg = () => 'BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid';
 
-const utledArbeidsforholdUtenIMRadioTekst = (arbeidsforhold, alleKodeverk) => (
+const utledArbeidsforholdUtenIMRadioTekst = (arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId) => (
   <FormattedMessage
     id={mottarYtelseForArbeidMsg()}
-    values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold, alleKodeverk) }}
+    values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId) }}
   />
 );
 
-const mottarYtelseArbeidsforholdRadio = (andel, readOnly, isAksjonspunktClosed, alleKodeverk, fieldArrayID) => (
+const mottarYtelseArbeidsforholdRadio = (
+  andel,
+  readOnly,
+  isAksjonspunktClosed,
+  alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
+  fieldArrayID,
+) => (
   <div key={utledArbeidsforholdFieldName(andel)}>
     <div>
-      <Normaltekst>{utledArbeidsforholdUtenIMRadioTekst(andel.arbeidsforhold, alleKodeverk)}</Normaltekst>
+      <Normaltekst>
+        {utledArbeidsforholdUtenIMRadioTekst(andel.arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId)}
+      </Normaltekst>
     </div>
     <VerticalSpacer eightPx />
     <RadioGroupField
@@ -74,6 +83,7 @@ export const VurderMottarYtelseFormImpl = ({
   arbeidsforholdUtenIM,
   tilfeller,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   fieldArrayID,
 }) => (
   <div>
@@ -96,7 +106,14 @@ export const VurderMottarYtelseFormImpl = ({
       </div>
     )}
     {arbeidsforholdUtenIM.map(andel =>
-      mottarYtelseArbeidsforholdRadio(andel, readOnly, isAksjonspunktClosed, alleKodeverk, fieldArrayID),
+      mottarYtelseArbeidsforholdRadio(
+        andel,
+        readOnly,
+        isAksjonspunktClosed,
+        alleKodeverk,
+        arbeidsgiverOpplysningerPerId,
+        fieldArrayID,
+      ),
     )}
   </div>
 );
@@ -108,6 +125,7 @@ VurderMottarYtelseFormImpl.propTypes = {
   arbeidsforholdUtenIM: PropTypes.arrayOf(PropTypes.object).isRequired,
   erFrilans: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 

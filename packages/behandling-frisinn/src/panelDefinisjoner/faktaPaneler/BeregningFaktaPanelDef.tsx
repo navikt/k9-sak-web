@@ -10,6 +10,8 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'BeregningInfoPanel.Title';
 
+  getEndepunkter = () => [frisinnBehandlingApi.ARBEIDSGIVERE];
+
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN];
 
   getKomponent = props => <BeregningFaktaIndex {...props} />;
