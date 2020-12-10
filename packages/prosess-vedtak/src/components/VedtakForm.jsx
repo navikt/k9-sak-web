@@ -18,6 +18,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -76,7 +77,9 @@ export class VedtakForm extends Component {
       beregningErManueltFastsatt,
       tilgjengeligeVedtaksbrev,
       dokumentdata,
-      behandlingFormPrefix,
+      brødtekst,
+      overskrift,
+      begrunnelse,
       ...formProps
     } = this.props;
 
@@ -144,7 +147,9 @@ export class VedtakForm extends Component {
             beregningErManueltFastsatt={beregningErManueltFastsatt}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             previewCallback={previewCallback}
-            parentFormNavn={`${behandlingFormPrefix}.VedtakForm`}
+            brødtekst={brødtekst}
+            overskrift={overskrift}
+            begrunnelse={begrunnelse}
           />
           {kanSendesTilGodkjenning(behandlingStatusKode) && (
             <Row>
@@ -241,6 +246,9 @@ export const buildInitialValues = createSelector(
     skalUndertrykkeBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
       vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
+    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
+    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+    begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
   }),
 );
 
@@ -282,6 +290,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'aksjonspunktKoder',
       'skalBrukeOverstyrendeFritekstBrev',
       'skalUndertrykkeBrev',
+      'brødtekst',
+      'overskrift',
+      'begrunnelse',
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
     behandlingStatusKode: ownProps.behandlingStatus.kode,

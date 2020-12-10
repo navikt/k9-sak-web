@@ -1,13 +1,8 @@
 import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { createSelector } from 'reselect';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { formValueSelector } from 'redux-form';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -30,7 +25,6 @@ export const BrevPanel = props => {
     readOnly,
     sprakkode,
     beregningErManueltFastsatt,
-    dokumentdata,
     tilgjengeligeVedtaksbrev,
     skalBrukeOverstyrendeFritekstBrev,
     begrunnelse,
@@ -82,7 +76,6 @@ export const BrevPanel = props => {
         sprakkode={sprakkode}
         beregningErManueltFastsatt={beregningErManueltFastsatt}
         begrunnelse={begrunnelse}
-        dokumentdata={dokumentdata}
       />
       {kanResultatForhåndsvises(behandlingResultat) && (
         <VedtakPreviewLink previewCallback={getPreviewAutomatiskBrevCallback(begrunnelse)} />
@@ -109,7 +102,6 @@ BrevPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  dokumentdata: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
@@ -128,23 +120,4 @@ BrevPanel.defaultProps = {
   overskrift: null,
 };
 
-export const brevselector = createSelector(
-  [ownProps => ownProps.sprakkode, ownProps => ownProps.dokumentdata],
-  (sprakkode, dokumentdata) => ({
-    sprakkode,
-    begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
-    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
-    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
-  }),
-);
-
-const mapStateToPropsFactory = () => {
-  return (state, ownProps) => ({
-    initialValues: { ...brevselector(ownProps) },
-    begrunnelse: formValueSelector(ownProps.parentFormNavn)(state, 'begrunnelse'),
-    brødtekst: formValueSelector(ownProps.parentFormNavn)(state, 'brødtekst'),
-    overskrift: formValueSelector(ownProps.parentFormNavn)(state, 'overskrift'),
-  });
-};
-
-export default connect(mapStateToPropsFactory)(injectIntl(BrevPanel));
+export default injectIntl(BrevPanel);
