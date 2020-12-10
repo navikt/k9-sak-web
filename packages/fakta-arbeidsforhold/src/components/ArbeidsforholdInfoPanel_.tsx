@@ -1,17 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { InjectedFormProps } from 'redux-form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
+import { Aksjonspunkt, Arbeidsforhold, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
-import arbeidsforholdAksjonspunkterPropType from '../propTypes/arbeidsforholdAksjonspunkterPropType';
 import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
+import CustomArbeidsforhold from '../typer/CustomArbeidsforholdTsType';
 
 // ----------------------------------------------------------------------------
 // VARIABLES
@@ -23,7 +24,7 @@ const formName = 'ArbeidsforholdInfoPanel';
 // METHODS
 // ----------------------------------------------------------------------------
 
-export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
+export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = (arbeidsforhold: Arbeidsforhold[]): Arbeidsforhold[] =>
   arbeidsforhold.map(a => {
     if (a.lagtTilAvSaksbehandler === true) {
       return {
@@ -34,15 +35,38 @@ export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
     return a;
   });
 
-const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
+const harAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]) =>
   aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+
+// interface ArbeidsforholdInfoPanelProps {
+//   behandlingId: number;
+//   behandlingVersjon: number;
+//   readOnly: boolean;
+//   submitCallback: (props: SubmitCallback[]) => void;
+// }
+
+interface OwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  aksjonspunkter: Aksjonspunkt[];
+  arbeidsforhold: Arbeidsforhold[];
+  readOnly: boolean;
+  hasOpenAksjonspunkter: boolean;
+  skalKunneLeggeTilNyeArbeidsforhold: boolean;
+  skalKunneLageArbeidsforholdBasertPaInntektsmelding: boolean;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+}
+
+type Props = OwnProps & InjectedFormProps;
 
 /**
  * ArbeidsforholdInfoPanelImpl:
  * Ansvarlig for å rendre aksjonspunktteksten, arbeidsforholdene, og
  * bekreft & fortsett knappen
  * */
-export const ArbeidsforholdInfoPanelImpl = ({
+export const ArbeidsforholdInfoPanelImpl: FunctionComponent<Props> = ({
   aksjonspunkter,
   readOnly,
   hasOpenAksjonspunkter,
@@ -100,26 +124,18 @@ export const ArbeidsforholdInfoPanelImpl = ({
   );
 };
 
-ArbeidsforholdInfoPanelImpl.propTypes = {
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool,
-  }).isRequired,
+type FormValues = {
+  arbeidsforhold: CustomArbeidsforhold[];
 };
 
-const buildInitialValues = createSelector([ownProps => ownProps.arbeidsforhold], arbeidsforhold => ({
-  ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
-}));
+const buildInitialValues = createSelector(
+  [(ownProps: OwnProps) => ownProps.arbeidsforhold, (ownProps: OwnProps) => ownProps.arbeidsgiverOpplysningerPerId],
+  (arbeidsforhold, arbeidsgiverOpplysningerPerId): FormValues => ({
+    ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold, arbeidsgiverOpplysningerPerId),
+  }),
+);
 
-const transformValues = values => {
+const transformValues = (values: FormValues): any => {
   const arbeidsforhold = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(values.arbeidsforhold);
   return {
     arbeidsforhold: arbeidsforhold.map(a =>

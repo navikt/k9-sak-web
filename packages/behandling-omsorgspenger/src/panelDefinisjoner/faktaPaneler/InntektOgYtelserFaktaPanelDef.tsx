@@ -13,7 +13,7 @@ class InntektOgYtelserFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.INNTEKT_OG_YTELSER];
+  getEndepunkter = () => [omsorgspengerBehandlingApi.INNTEKT_OG_YTELSER, omsorgspengerBehandlingApi.ARBEIDSGIVERE];
 
   getKomponent = props => <InntektOgYtelser {...props} />;
 

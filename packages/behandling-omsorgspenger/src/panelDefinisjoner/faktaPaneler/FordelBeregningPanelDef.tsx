@@ -10,9 +10,9 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'FordelBeregningsgrunnlag.Title';
 
-  getAksjonspunktKoder = () => [
-    aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
-  ];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG];
+
+  getEndepunkter = () => [omsorgspengerBehandlingApi.ARBEIDSGIVERE];
 
   getKomponent = props => <FordelBeregningIndex {...props} />;
 

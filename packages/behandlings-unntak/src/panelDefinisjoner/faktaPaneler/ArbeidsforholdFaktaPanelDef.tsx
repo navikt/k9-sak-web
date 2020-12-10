@@ -14,7 +14,7 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
-  getEndepunkter = () => [unntakBehandlingApi.INNTEKT_ARBEID_YTELSE];
+  getEndepunkter = () => [unntakBehandlingApi.INNTEKT_ARBEID_YTELSE, unntakBehandlingApi.ARBEIDSGIVERE];
 
   getKomponent = props => <ArbeidsforholdFaktaIndex {...props} />;
 

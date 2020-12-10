@@ -5,6 +5,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
 
+import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+
 class BeregningFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.BEREGNING;
 
@@ -16,6 +18,8 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
     aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
     aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
   ];
+
+  getEndepunkter = () => [omsorgspengerBehandlingApi.ARBEIDSGIVERE];
 
   getKomponent = props => <BeregningFaktaIndex {...props} />;
 
