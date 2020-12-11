@@ -4,6 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme/build';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BrevPanel } from './BrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -26,6 +27,7 @@ describe('<BrevPanel>', () => {
         brødtekst={null}
         overskrift={null}
         behandlingResultat={null}
+        formProps={reduxFormPropsMock}
       />,
     );
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(1);
@@ -49,6 +51,7 @@ describe('<BrevPanel>', () => {
         brødtekst={null}
         overskrift={null}
         behandlingResultat={null}
+        formProps={reduxFormPropsMock}
       />,
     );
     expect(wrapper.find(FritekstBrevPanel)).to.have.length(1);
@@ -72,6 +75,7 @@ describe('<BrevPanel>', () => {
         brødtekst={null}
         overskrift={null}
         behandlingResultat={null}
+        formProps={reduxFormPropsMock}
       />,
     );
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(0);

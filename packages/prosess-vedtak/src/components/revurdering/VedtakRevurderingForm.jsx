@@ -195,6 +195,7 @@ export class VedtakRevurderingFormImpl extends Component {
               tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
               previewCallback={previewCallback}
+              formProps={formProps}
               redusertUtbetalingÅrsaker={
                 readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)
               }

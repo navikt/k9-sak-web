@@ -147,6 +147,7 @@ export class VedtakForm extends Component {
             beregningErManueltFastsatt={beregningErManueltFastsatt}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             previewCallback={previewCallback}
+            formProps={formProps}
             brødtekst={brødtekst}
             overskrift={overskrift}
             begrunnelse={begrunnelse}

@@ -19,6 +19,43 @@ const kanResultatForhåndsvises = behandlingResultat => {
   return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
 };
 
+const getManuellBrevCallback = ({ brødtekst, overskrift, formProps, previewCallback }) => e => {
+  if (formProps.valid || formProps.pristine) {
+    previewCallback({
+      dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
+      dokumentMal: dokumentMalType.FRITKS,
+    });
+  } else {
+    formProps.submit();
+  }
+  e.preventDefault();
+};
+
+const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker }) => {
+  return {
+    dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
+    dokumentMal: dokumentMalType.UTLED,
+  };
+};
+
+const getPreviewAutomatiskBrevCallbackUtenValidering = ({
+  fritekst,
+  redusertUtbetalingÅrsaker,
+  previewCallback,
+}) => e => {
+  previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker }));
+  e.preventDefault();
+};
+
+const getPreviewAutomatiskBrevCallback = ({ fritekst, redusertUtbetalingÅrsaker, formProps, previewCallback }) => e => {
+  if (formProps.valid || formProps.pristine) {
+    previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker }));
+  } else {
+    formProps.submit();
+  }
+  e.preventDefault();
+};
+
 export const BrevPanel = props => {
   const {
     intl,
@@ -33,23 +70,27 @@ export const BrevPanel = props => {
     brødtekst,
     overskrift,
     behandlingResultat,
+    formProps,
   } = props;
 
-  const getPreviewAutomatiskBrevCallback = fritekst => e => {
-    previewCallback({
-      dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
-      dokumentMal: dokumentMalType.UTLED,
-    });
-    e.preventDefault();
-  };
+  const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
+    fritekst: begrunnelse,
+    redusertUtbetalingÅrsaker,
+    formProps,
+    previewCallback,
+  });
+  const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
+    fritekst: begrunnelse,
+    redusertUtbetalingÅrsaker,
+    previewCallback,
+  });
 
-  const getManuellBrevCallback = () => e => {
-    previewCallback({
-      dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
-      dokumentMal: dokumentMalType.FRITKS,
-    });
-    e.preventDefault();
-  };
+  const manuellBrevCallback = getManuellBrevCallback({
+    brødtekst,
+    overskrift,
+    formProps,
+    previewCallback,
+  });
 
   const harTilgjengeligeVedtaksbrev = !Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length;
   const kanHaAutomatiskVedtaksbrev =
@@ -61,10 +102,10 @@ export const BrevPanel = props => {
       <FritekstBrevPanel
         readOnly={readOnly}
         sprakkode={sprakkode}
-        previewBrev={getPreviewAutomatiskBrevCallback(begrunnelse)}
+        previewBrev={automatiskBrevUtenValideringCallback}
         harAutomatiskVedtaksbrev={kanHaAutomatiskVedtaksbrev}
       />
-      <VedtakPreviewLink previewCallback={getManuellBrevCallback()} />
+      <VedtakPreviewLink previewCallback={manuellBrevCallback} />
     </>
   );
 
@@ -77,9 +118,7 @@ export const BrevPanel = props => {
         beregningErManueltFastsatt={beregningErManueltFastsatt}
         begrunnelse={begrunnelse}
       />
-      {kanResultatForhåndsvises(behandlingResultat) && (
-        <VedtakPreviewLink previewCallback={getPreviewAutomatiskBrevCallback(begrunnelse)} />
-      )}
+      {kanResultatForhåndsvises(behandlingResultat) && <VedtakPreviewLink previewCallback={automatiskBrevCallback} />}
     </>
   );
 
@@ -111,6 +150,7 @@ BrevPanel.propTypes = {
   brødtekst: PropTypes.string,
   overskrift: PropTypes.string,
   behandlingResultat: PropTypes.shape(),
+  formProps: PropTypes.shape().isRequired,
 };
 
 BrevPanel.defaultProps = {
