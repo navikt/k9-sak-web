@@ -54,7 +54,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
   ...formProps
 }) => {
   const { host } = window.location;
-  const shouldDisableSubmitButton = (!hasOpenAksjonspunkter && formProps.pristine) || host !== 'app-q1.adeo.no';
+  const shouldDisableSubmitButton = (aksjonspunkter.length === 0 && formProps.pristine) || host !== 'app-q1.adeo.no';
 
   return (
     <>
@@ -76,7 +76,6 @@ export const ArbeidsforholdInfoPanelImpl = ({
           readOnly={readOnly}
           arbeidsgivere={arbeidsgivere}
           hasAksjonspunkter={aksjonspunkter.length > 0}
-          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
           alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}

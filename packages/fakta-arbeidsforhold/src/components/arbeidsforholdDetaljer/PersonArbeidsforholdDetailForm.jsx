@@ -34,11 +34,7 @@ export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm
  * PersonArbeidsforholdDetailForm
  */
 export const PersonArbeidsforholdDetailForm = ({
-  hasReceivedInntektsmelding,
-  readOnly,
-  aktivtArbeidsforholdTillatUtenIM,
   arbeidsforhold,
-  arbeidsforholdHandlingVerdi,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
@@ -56,16 +52,13 @@ export const PersonArbeidsforholdDetailForm = ({
       <VerticalSpacer twentyPx />
       <ArbeidsforholdRadioknapper
         formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-        hasReceivedInntektsmelding={hasReceivedInntektsmelding}
         arbeidsforhold={arbeidsforhold}
-        aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
-        arbeidsforholdHandlingVerdi={arbeidsforholdHandlingVerdi}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
       />
       <VerticalSpacer twentyPx />
       <ArbeidsforholdBegrunnelse
-        readOnly={readOnly}
+        readOnly={false}
         formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
@@ -85,48 +78,19 @@ export const PersonArbeidsforholdDetailForm = ({
 );
 
 PersonArbeidsforholdDetailForm.propTypes = {
-  hasReceivedInntektsmelding: PropTypes.bool.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   arbeidsforhold: arbeidsforholdPropType.isRequired,
-  arbeidsforholdHandlingVerdi: PropTypes.string,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
-PersonArbeidsforholdDetailForm.defaultProps = {
-  arbeidsforholdHandlingVerdi: undefined,
-};
-
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.updateArbeidsforhold(values);
   return (state, ownProps) => {
-    const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon } = ownProps;
+    const { arbeidsforhold, behandlingId, behandlingVersjon } = ownProps;
     return {
       initialValues: arbeidsforhold,
-      readOnly: readOnly || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret),
-      hasReceivedInntektsmelding: !!behandlingFormValueSelector(
-        PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
-        behandlingId,
-        behandlingVersjon,
-      )(state, 'mottattDatoInntektsmelding'),
-      vurderOmSkalErstattes: !!behandlingFormValueSelector(
-        PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
-        behandlingId,
-        behandlingVersjon,
-      )(state, 'vurderOmSkalErstattes'),
-      harErstattetEttEllerFlere: behandlingFormValueSelector(
-        PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
-        behandlingId,
-        behandlingVersjon,
-      )(state, 'harErstattetEttEllerFlere'),
-      isErstattArbeidsforhold:
-        behandlingFormValueSelector(
-          PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
-          behandlingId,
-          behandlingVersjon,
-        )(state, 'erNyttArbeidsforhold') === false,
+      readOnly: arbeidsforhold.aksjonspunktÅrsaker.length === 0,
       arbeidsforholdHandlingVerdi: behandlingFormValueSelector(
         PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
         behandlingId,

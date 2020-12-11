@@ -8,7 +8,6 @@ import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
@@ -31,70 +30,16 @@ export const utledNøkkel = arbeidsforhold => {
   return `${arbeidsforhold.eksternArbeidsforholdId}${arbeidsforhold.arbeidsforholdId}${arbeidsforhold.arbeidsgiverIdentifiktorGUI}`;
 };
 
-const updateArbeidsforhold = values => {
-  const { selectedArbeidsforhold } = this.state;
-  const { arbeidsforhold } = this.props;
-
-  let fortsettBehandlingUtenInntektsmelding;
-  if (values.inntektsmeldinger === undefined || !values.inntektsmeldinger) {
-    fortsettBehandlingUtenInntektsmelding =
-      values.arbeidsforholdHandlingField === arbeidsforholdHandlingType.BRUK_UTEN_INNTEKTSMELDING;
-  }
-
-  const inntektMedTilBeregningsgrunnlag =
-    values.aktivtArbeidsforholdHandlingField === arbeidsforholdHandlingType.INNTEKT_IKKE_MED_I_BG ? false : undefined;
-
-  const newValues = {
-    ...values,
-    brukMedJustertPeriode,
-    brukArbeidsforholdet,
-    fortsettBehandlingUtenInntektsmelding,
-    inntektMedTilBeregningsgrunnlag,
-    brukPermisjon,
-    basertPaInntektsmelding: skalKunneLageArbeidsforholdBasertPaInntektsmelding,
-  };
-
-  const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
-
-  let other = arbeidsforhold.filter(o => o.id !== cleanedValues.id);
-  const oldState = arbeidsforhold.find(a => a.id === cleanedValues.id);
-  let { fomDato } = cleanedValues;
-  if (
-    oldState !== undefined &&
-    oldState !== null &&
-    cleanedValues.erstatterArbeidsforholdId !== oldState.erstatterArbeidsforholdId
-  ) {
-    if (oldState.erstatterArbeidsforholdId) {
-      other = other.map(o => (o.id === oldState.erstatterArbeidsforholdId ? { ...o, erSlettet: false } : o));
-    }
-    if (cleanedValues.erstatterArbeidsforholdId) {
-      other = other.map(o => (o.id === cleanedValues.erstatterArbeidsforholdId ? { ...o, erSlettet: true } : o));
-    }
-    fomDato = findFomDato(
-      cleanedValues,
-      arbeidsforhold.find(a => a.id === cleanedValues.erstatterArbeidsforholdId),
-    );
-  }
-
-  this.setFormField(
-    'arbeidsforhold',
-    other.concat({
-      ...cleanedValues,
-      fomDato,
-      erEndret: true,
-    }),
-  );
-
-  const unresolvedArbeidsforhold = removeDeleted(other);
-  this.setSelectedArbeidsforhold(undefined, undefined, unresolvedArbeidsforhold);
-};
-
-const cancelArbeidsforhold = () => {
-  this.setState({ selectedArbeidsforhold: undefined });
-  this.initializeActivityForm({});
-};
-
-const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbeidsforholdCallback, alleKodeverk }) => {
+const PersonArbeidsforholdTable = ({
+  alleArbeidsforhold,
+  selectedId,
+  selectArbeidsforholdCallback,
+  alleKodeverk,
+  behandlingId,
+  behandlingVersjon,
+  updateArbeidsforhold,
+  cancelArbeidsforhold,
+}) => {
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
   const intl = useIntl();
 
@@ -216,12 +161,10 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
                     updateArbeidsforhold={updateArbeidsforhold}
                     cancelArbeidsforhold={cancelArbeidsforhold}
                     aktivtArbeidsforholdTillatUtenIM
-                    skalKunneLeggeTilNyeArbeidsforhold
-                    skalKunneLageArbeidsforholdBasertPaInntektsmelding
-                    behandlingId={857547954}
-                    behandlingVersjon={2}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
                     alleKodeverk={alleKodeverk}
-                  />{' '}
+                  />
                 </FlexRow>
               )}
             </>
@@ -236,6 +179,10 @@ PersonArbeidsforholdTable.propTypes = {
   selectedId: PropTypes.string,
   selectArbeidsforholdCallback: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  updateArbeidsforhold: PropTypes.func.isRequired,
+  cancelArbeidsforhold: PropTypes.func.isRequired,
 };
 
 PersonArbeidsforholdTable.defaultProps = {

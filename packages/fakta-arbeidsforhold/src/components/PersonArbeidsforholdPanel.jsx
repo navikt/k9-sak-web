@@ -26,8 +26,6 @@ import styles from './personArbeidsforholdPanel.less';
 // Methods
 // -------------------------------------------------------------------------------------------------------------
 
-const removeDeleted = arbeidsforhold => arbeidsforhold.filter(a => !a.erSlettet);
-
 const cleanUpArbeidsforhold = (newValues, originalValues) => {
   if (!newValues.brukArbeidsforholdet) {
     return {
@@ -150,9 +148,12 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   updateArbeidsforhold(values) {
     const { selectedArbeidsforhold } = this.state;
     const { arbeidsforhold } = this.props;
+
     const brukArbeidsforholdet = values.arbeidsforholdHandlingField === arbeidsforholdHandlingType.BRUK;
+
     const fortsettBehandlingUtenInntektsmelding =
       values.arbeidsforholdHandlingField === arbeidsforholdHandlingType.BRUK_UTEN_INNTEKTSMELDING;
+
     const inntektMedTilBeregningsgrunnlag =
       values.aktivtArbeidsforholdHandlingField === arbeidsforholdHandlingType.INNTEKT_IKKE_MED_I_BG ? false : undefined;
 
@@ -194,8 +195,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       }),
     );
 
-    const unresolvedArbeidsforhold = getUnresolvedArbeidsforhold(removeDeleted(other));
-    this.setSelectedArbeidsforhold(undefined, undefined, unresolvedArbeidsforhold);
+    this.setSelectedArbeidsforhold(undefined, undefined, other);
   }
 
   cancelArbeidsforhold() {
@@ -240,7 +240,15 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   }
 
   render() {
-    const { intl, arbeidsgivere, arbeidsforhold, alleMerknaderFraBeslutter, alleKodeverk } = this.props;
+    const {
+      intl,
+      arbeidsgivere,
+      arbeidsforhold,
+      alleMerknaderFraBeslutter,
+      alleKodeverk,
+      behandlingId,
+      behandlingVersjon,
+    } = this.props;
 
     const { selectedArbeidsforhold, selectedArbeidsgiver } = this.state;
     const unikeArbeidsgivere = [...new Set(arbeidsforhold.map(af => af.arbeidsgiver.arbeidsgiverOrgnr))];
@@ -293,6 +301,10 @@ export class PersonArbeidsforholdPanelImpl extends Component {
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
                     hasArbeidsforholdAksjonspunkt={harAksjonspunkter}
                     alleKodeverk={alleKodeverk}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    updateArbeidsforhold={this.updateArbeidsforhold}
+                    cancelArbeidsforhold={this.cancelArbeidsforhold}
                   />
                 )}
               </>
@@ -316,6 +328,8 @@ PersonArbeidsforholdPanelImpl.propTypes = {
     notAccepted: PropTypes.bool,
   }).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 const FORM_NAVN = 'ArbeidsforholdInfoPanel';
 const mapStateToProps = (state, ownProps) => {
