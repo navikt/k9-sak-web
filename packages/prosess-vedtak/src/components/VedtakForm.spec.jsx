@@ -852,6 +852,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -885,6 +886,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -918,6 +920,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');

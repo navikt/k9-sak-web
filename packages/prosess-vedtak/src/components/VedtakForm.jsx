@@ -19,6 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { kanHaFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -98,12 +99,14 @@ export class VedtakForm extends Component {
           {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
             <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
           ) : (
-            <VedtakOverstyrendeKnapp
-              toggleCallback={this.onToggleOverstyring}
-              readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
-              keyName="skalBrukeOverstyrendeFritekstBrev"
-              readOnlyHideEmpty={false}
-            />
+            kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+              <VedtakOverstyrendeKnapp
+                toggleCallback={this.onToggleOverstyring}
+                readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
+                keyName="skalBrukeOverstyrendeFritekstBrev"
+                readOnlyHideEmpty={false}
+              />
+            )
           )}
 
           {isInnvilget(behandlingresultat.type.kode) && (
