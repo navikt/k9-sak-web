@@ -41,7 +41,7 @@ class FagsakSearchIndex extends Component<OwnProps> {
 
   componentDidUpdate() {
     const { searchResultReceived, fagsaker } = this.props;
-    if (searchResultReceived && fagsaker.length === 1) {
+    if (searchResultReceived && fagsaker && fagsaker.length === 1) {
       this.goToFagsak(fagsaker[0].saksnummer);
     }
   }
