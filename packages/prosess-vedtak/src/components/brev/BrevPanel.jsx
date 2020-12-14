@@ -92,7 +92,8 @@ export const BrevPanel = props => {
     previewCallback,
   });
 
-  const harTilgjengeligeVedtaksbrev = !Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length;
+  const harTilgjengeligeVedtaksbrev =
+    tilgjengeligeVedtaksbrev && Array.isArray(tilgjengeligeVedtaksbrev) && tilgjengeligeVedtaksbrev.length > 0;
   const kanHaAutomatiskVedtaksbrev =
     harTilgjengeligeVedtaksbrev && tilgjengeligeVedtaksbrev.some(vb => vb === 'AUTOMATISK');
   const kanHaFritekstbrev = harTilgjengeligeVedtaksbrev && tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
