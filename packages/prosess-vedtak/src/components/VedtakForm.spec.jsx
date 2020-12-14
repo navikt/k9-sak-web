@@ -327,12 +327,9 @@ describe('<VedtakForm>', () => {
         vedtakVarsel={vedtakVarsel}
       />,
     );
-
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    const a = wrapper.find('ForhaandsvisningsKnapp');
-    expect(a).to.have.length(1);
   });
 
   it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
@@ -394,11 +391,9 @@ describe('<VedtakForm>', () => {
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    const a = wrapper.find('ForhaandsvisningsKnapp');
-    expect(a).to.have.length(0);
   });
 
-  it('skal vise knapper for å fatte vedtak og forhåndsvisning brev når foreslå avslag', () => {
+  it('skal vise knapper for å fatte vedtak når foreslå avslag', () => {
     const previewCallback = sinon.spy();
 
     const behandlingsresultat = {
@@ -460,8 +455,6 @@ describe('<VedtakForm>', () => {
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    const a = wrapper.find('ForhaandsvisningsKnapp');
-    expect(a).to.have.length(1);
   });
 
   it('skal ikke vise knapper når status er avsluttet', () => {
@@ -715,6 +708,7 @@ describe('<VedtakForm>', () => {
       sprakkode,
       brødtekst: undefined,
       overskrift: undefined,
+      begrunnelse: undefined,
       skalBrukeOverstyrendeFritekstBrev: true,
       skalUndertrykkeBrev: false,
       isEngangsstonad: false,
@@ -765,7 +759,7 @@ describe('<VedtakForm>', () => {
     };
     const dokumentdata = {
       VEDTAKSBREV_TYPE: 'FRITEKST',
-      FRITEKST: {
+      FRITEKSTBREV: {
         overskrift: 'Overskrift',
         brødtekst: 'Brødtekst',
       },
@@ -790,6 +784,7 @@ describe('<VedtakForm>', () => {
       skalUndertrykkeBrev: false,
       overskrift: 'Overskrift',
       brødtekst: 'Brødtekst',
+      begrunnelse: undefined,
     });
   });
 
@@ -826,7 +821,7 @@ describe('<VedtakForm>', () => {
 
   const dokumentdata = {
     VEDTAKSBREV_TYPE: 'FRITEKST',
-    FRITEKST: {
+    FRITEKSTBREV: {
       overskrift: 'Overskrift',
       brødtekst: 'Brødtekst',
     },

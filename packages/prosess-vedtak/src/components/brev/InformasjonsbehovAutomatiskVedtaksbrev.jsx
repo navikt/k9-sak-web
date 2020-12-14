@@ -10,7 +10,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
   beregningErManueltFastsatt,
 }) => {
   const tilgjengeligeInformasjonsbehov = {
-    FRITEKST: 'VedtakForm.Fritekst',
+    FRITEKSTBREV: 'VedtakForm.Fritekst',
     MANUELT_BEREGNINGSGRUNNLAG: 'VedtakForm.Fritekst.Beregningsgrunnlag',
   };
 
@@ -40,7 +40,7 @@ InformasjonsbehovAutomatiskVedtaksbrev.propTypes = {
   intl: PropTypes.shape().isRequired,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  begrunnelse: PropTypes.bool,
+  begrunnelse: PropTypes.string,
   beregningErManueltFastsatt: PropTypes.bool,
 };
 
