@@ -13,7 +13,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
-import PermisjonPeriode from './PermisjonPeriode';
 
 import styles from './personArbeidsforholdDetailForm.less';
 
@@ -41,7 +40,6 @@ export const PersonArbeidsforholdDetailForm = ({
   ...formProps
 }) => (
   <div className={styles.container}>
-    <PermisjonPeriode arbeidsforhold={arbeidsforhold} />
     <VerticalSpacer eightPx />
     <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
     <VerticalSpacer eightPx />

@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import {
-  DDMMYYYY_DATE_FORMAT, hasValidDate, hasValidInteger, maxValue, minValue, required,
+  DDMMYYYY_DATE_FORMAT,
+  hasValidDate,
+  hasValidInteger,
+  maxValue,
+  minValue,
+  required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
@@ -15,9 +20,9 @@ import styles from './leggTilArbeidsforholdFelter.less';
 // ----------------------------------------------------------------------------------
 // Methods
 // ----------------------------------------------------------------------------------
-const sluttdatoErrorMsg = (dato) => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }]);
-const startdatoErrorMsg = (dato) => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeOrEqual' }, { dato }]);
-const formatDate = (dato) => moment(dato).format(DDMMYYYY_DATE_FORMAT);
+const sluttdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }];
+const startdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeOrEqual' }, { dato }];
+const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 
 // ----------------------------------------------------------------------------------
 // Component : LeggTilArbeidsforholdFelter
@@ -26,15 +31,10 @@ const formatDate = (dato) => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 /**
  * Component: LeggTilArbeidsforholdFelter
  */
-const LeggTilArbeidsforholdFelter = ({
-  readOnly,
-  formName,
-  behandlingId,
-  behandlingVersjon,
-}) => (
+const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandlingVersjon }) => (
   <BehandlingFormFieldCleaner
     formName={formName}
-    fieldNames={['arbeidsgiverNavn', 'startdato', 'sluttdato', 'stillingsprosent']}
+    fieldNames={['arbeidsgiverNavn', 'startdato', 'sluttdato', 'stillingsprosent', 'yrkestittel']}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
   >
@@ -45,7 +45,7 @@ const LeggTilArbeidsforholdFelter = ({
             name="navn"
             label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsgiverNavn' }}
             validate={[required]}
-            bredde="XXL"
+            bredde="XL"
             readOnly={readOnly}
           />
         </FlexColumn>
@@ -72,10 +72,21 @@ const LeggTilArbeidsforholdFelter = ({
             validate={[required, minValue(0), maxValue(100), hasValidInteger]}
             readOnly={readOnly}
             bredde="S"
-            parse={(value) => {
+            parse={value => {
               const parsedValue = parseInt(value, 10);
               return Number.isNaN(parsedValue) ? value : parsedValue;
             }}
+          />
+        </FlexColumn>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn className={styles.navnColumn}>
+          <InputField
+            name="yrkestittel"
+            label={{ id: 'PersonArbeidsforholdDetailForm.Yrkestittel' }}
+            validate={[required]}
+            bredde="L"
+            readOnly={readOnly}
           />
         </FlexColumn>
       </FlexRow>
@@ -90,15 +101,15 @@ LeggTilArbeidsforholdFelter.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
 };
 
-LeggTilArbeidsforholdFelter.validate = (values) => {
+LeggTilArbeidsforholdFelter.validate = values => {
   if (values === undefined || values === null) {
     return null;
   }
   if (values.fomDato && values.tomDato && moment(values.fomDato).isAfter(moment(values.tomDato))) {
-    return ({
+    return {
       tomDato: sluttdatoErrorMsg(formatDate(values.fomDato)),
       fomDato: startdatoErrorMsg(formatDate(values.tomDato)),
-    });
+    };
   }
   return null;
 };

@@ -65,11 +65,8 @@ describe('<PleiepengerFakta>', () => {
     },
   ];
   const vilkar = [];
-  const inntektArbeidYtelse = {
-    skalKunneLeggeTilNyeArbeidsforhold: true,
-    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
-    relatertTilgrensendeYtelserForAnnenForelder: [],
-  };
+  const inntektArbeidYtelse = [];
+  const arbeidsgivere = {};
 
   const soker = {
     navn: 'Espen Utvikler',
@@ -228,7 +225,7 @@ describe('<PleiepengerFakta>', () => {
     expect(dataFetcher.prop('fetchingTriggers').triggers.behandlingVersion).is.eql(behandling.versjon);
 
     const arbeidsforholdPanel = dataFetcher
-      .renderProp('render')({ inntektArbeidYtelse })
+      .renderProp('render')({ inntektArbeidYtelse, arbeidsgivere })
       .find(ArbeidsforholdFaktaIndex);
     // eslint-disable-next-line
     expect(arbeidsforholdPanel.prop('readOnly')).is.false;

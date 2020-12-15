@@ -6,19 +6,11 @@ import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
+import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
+import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
 
 const isKildeAaRegisteret = arbeidsforhold =>
   arbeidsforhold.kilde && arbeidsforhold.kilde.includes(arbeidsforholdKilder.AAREGISTERET);
-
-const utledAktivtArbeidsforholdLabel = arbeidsforhold => {
-  if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0) {
-    return 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon';
-  }
-  if (arbeidsforhold.kilde.kode === arbeidsforholdKilder.INNTEKTSMELDING) {
-    return 'PersonArbeidsforholdDetailForm.OppdaterArbeidsforhold';
-  }
-  return 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt';
-};
 
 /**
  * Component: ArbeidsforholdRadioknapper
@@ -27,17 +19,22 @@ const utledAktivtArbeidsforholdLabel = arbeidsforhold => {
  */
 const ArbeidsforholdRadioknapper = ({ arbeidsforhold, behandlingId, behandlingVersjon, formName }) => (
   <RadioGroupField name="arbeidsforholdHandlingField" validate={[required]} direction="vertical">
-    <RadioOption label={{ id: utledAktivtArbeidsforholdLabel(arbeidsforhold) }} value="aktivtArbeidsforhold">
-      <LeggTilArbeidsforholdFelter
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        formName={formName}
-        readOnly={false}
-      />
+    <RadioOption
+      label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt' }}
+      value={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+    >
+      <BehandlingFormFieldCleaner formName={formName} fieldNames={['aktivtArbeidsforholdHandlingField']}>
+        <LeggTilArbeidsforholdFelter
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          formName={formName}
+          readOnly={false}
+        />
+      </BehandlingFormFieldCleaner>
     </RadioOption>
     <RadioOption
       label={{ id: 'PersonArbeidsforholdDetailForm.FjernArbeidsforholdet' }}
-      value="fjern"
+      value={arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD}
       disabled={
         isKildeAaRegisteret(arbeidsforhold) ||
         arbeidsforhold.handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER

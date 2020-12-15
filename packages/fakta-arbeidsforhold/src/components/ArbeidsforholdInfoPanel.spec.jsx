@@ -32,6 +32,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
     const wrapper = shallow(
       <ArbeidsforholdInfoPanelImpl
         aksjonspunkter={[ap5080]}
+        arbeidsgivere={{ arbeidsgivere: {} }}
         openInfoPanels={['arbeidsforhold']}
         toggleInfoPanelCallback={toggleCallback}
         readOnly={false}
@@ -51,29 +52,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
     expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
     expect(wrapper.find(BekreftOgForsettKnapp)).has.length(1);
   });
-  it('Skal vise komponenten korrekt med aksjonspunkt hvor man kan legge til nye arbeidsforhold', () => {
-    const wrapper = shallow(
-      <ArbeidsforholdInfoPanelImpl
-        aksjonspunkter={[ap5080]}
-        openInfoPanels={['arbeidsforhold']}
-        toggleInfoPanelCallback={toggleCallback}
-        readOnly={false}
-        hasOpenAksjonspunkter
-        skalKunneLeggeTilNyeArbeidsforhold
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={{}}
-        alleMerknaderFraBeslutter={{}}
-        {...reduxFormPropsMock}
-      />,
-    );
-    const apMsg = wrapper.find('FormattedMessage');
-    expect(apMsg).has.length(1);
-    expect(apMsg.props().id).has.eql('ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert');
-    expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
-    expect(wrapper.find(BekreftOgForsettKnapp)).has.length(1);
-  });
+
   it('Skal vise komponenten korrekt uten aksjonspunkt hvor man kan legge til nye arbeidsforhold', () => {
     const wrapper = shallow(
       <ArbeidsforholdInfoPanelImpl
@@ -81,9 +60,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         openInfoPanels={['arbeidsforhold']}
         toggleInfoPanelCallback={toggleCallback}
         readOnly={false}
-        hasOpenAksjonspunkter={false}
-        skalKunneLeggeTilNyeArbeidsforhold
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding
+        arbeidsgivere={{ arbeidsgivere: {} }}
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}

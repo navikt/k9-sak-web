@@ -45,7 +45,6 @@ const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
 export const ArbeidsforholdInfoPanelImpl = ({
   aksjonspunkter,
   readOnly,
-  hasOpenAksjonspunkter,
   alleMerknaderFraBeslutter,
   arbeidsgivere,
   alleKodeverk,
@@ -100,7 +99,6 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
   arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,

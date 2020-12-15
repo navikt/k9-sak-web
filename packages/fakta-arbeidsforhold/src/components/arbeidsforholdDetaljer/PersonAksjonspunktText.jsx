@@ -8,9 +8,7 @@ import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';
-import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
 
 const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   const kodeverknavn = getKodeverknavn(permisjon.type);
@@ -24,13 +22,18 @@ const utledPermisjonValues = (permisjon, getKodeverknavn) => {
 };
 
 const harPermisjonOgIkkeMottattIM = arbeidsforhold =>
-  arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length === 1 && !arbeidsforhold.inntektsmeldinger;
+  arbeidsforhold.permisjoner &&
+  arbeidsforhold.permisjoner.length === 1 &&
+  (arbeidsforhold.mottattDatoInntektsmelding === undefined || arbeidsforhold.mottattDatoInntektsmelding === null);
 
 const harPermisjonOgMottattIM = arbeidsforhold =>
-  arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length === 1 && arbeidsforhold.inntektsmeldinger;
+  arbeidsforhold.permisjoner &&
+  arbeidsforhold.permisjoner.length === 1 &&
+  arbeidsforhold.mottattDatoInntektsmelding !== undefined &&
+  arbeidsforhold.mottattDatoInntektsmelding !== null;
 
 const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
-  if (!arbeidsforhold || arbeidsforhold.aksjonspunktÅrsaker.length === 0) {
+  if (!arbeidsforhold || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret)) {
     return undefined;
   }
   if (harPermisjonOgIkkeMottattIM(arbeidsforhold)) {
@@ -54,13 +57,13 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1) {
     return <FormattedMessage key="permisjoner" id="PersonAksjonspunktText.SokerHarFlerePermisjoner" />;
   }
-  if (arbeidsforhold.kilde.includes(arbeidsforholdKilder.INNTEKTSMELDING)) {
+  if (arbeidsforhold.kilde.kode === arbeidsforholdKilder.INNTEKTSMELDING) {
     return <FormattedMessage key="basertPaInntektsmelding" id="PersonAksjonspunktText.BasertPaInntektsmelding" />;
   }
-  if (arbeidsforhold.handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER) {
+  if (arbeidsforhold.lagtTilAvSaksbehandler) {
     return <FormattedMessage key="lagtTilAvSaksbehandler" id="PersonAksjonspunktText.LeggTilArbeidsforhold" />;
   }
-  if (!arbeidsforhold.inntektsmeldinger) {
+  if (!arbeidsforhold.mottattDatoInntektsmelding) {
     return (
       <FormattedMessage
         key="mottattDatoInntektsmelding"
@@ -69,7 +72,13 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
       />
     );
   }
-  if (arbeidsforhold.aksjonspunktÅrsaker.includes(aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD)) {
+  if (arbeidsforhold.replaceOptions.length > 0) {
+    return <FormattedMessage key="replaceOptions" id="PersonAksjonspunktText.AvklarErstatteTidligere" />;
+  }
+  if (arbeidsforhold.harErstattetEttEllerFlere) {
+    return <FormattedMessage key="harErstattetEttEllerFlere" id="PersonAksjonspunktText.AvklarErstatteAlle" />;
+  }
+  if (arbeidsforhold.ikkeRegistrertIAaRegister) {
     return <FormattedMessage key="ikkeRegistrertIAaRegister" id="PersonAksjonspunktText.AvklarIkkeRegistrertIAa" />;
   }
   return undefined;
@@ -83,18 +92,15 @@ export const PersonAksjonspunktTextImpl = ({ arbeidsforhold, alleKodeverk }) => 
   return (
     <>
       <VerticalSpacer eightPx />
-      <AksjonspunktHelpText isAksjonspunktOpen>{[msg]}</AksjonspunktHelpText>
+      <AksjonspunktHelpText isAksjonspunktOpen={arbeidsforhold.tilVurdering}>{[msg]}</AksjonspunktHelpText>
     </>
   );
 };
-
 PersonAksjonspunktTextImpl.propTypes = {
   arbeidsforhold: arbeidsforholdPropType,
   alleKodeverk: PropTypes.shape().isRequired,
 };
-
 PersonAksjonspunktTextImpl.defaultProps = {
   arbeidsforhold: undefined,
 };
-
 export default PersonAksjonspunktTextImpl;

@@ -11,16 +11,17 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer, FaktaGruppe, TableColumn, Image, FlexRow } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
-import { arbeidsgiverPropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
+import { arbeidsforholdV2PropType, arbeidsgiverPropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
 import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
 import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 
 import styles from './personArbeidsforholdPanel.less';
+import aktivtArbeidsforholdHandling from '../kodeverk/aktivtArbeidsforholdHandling';
+import arbeidsforholdHandling from '../kodeverk/arbeidsforholdHandling';
 
 // -------------------------------------------------------------------------------------------------------------
 // Methods
@@ -320,7 +321,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 PersonArbeidsforholdPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   arbeidsgivere: PropTypes.arrayOf(arbeidsgiverPropType).isRequired,
-  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
+  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
