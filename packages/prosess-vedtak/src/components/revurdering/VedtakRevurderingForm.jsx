@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
@@ -17,9 +17,9 @@ import { decodeHtmlEntity, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { kanHaFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -32,30 +32,10 @@ import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import BrevPanel from '../brev/BrevPanel';
-import PreviewLink from '../PreviewLink';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
 const isVedtakSubmission = true;
-
-const getPreviewBrevCallback = (previewCallback, behandlingresultat, redusertUtbetalingÅrsaker) => e => {
-  const dokumentMal = () => {
-    if (isInnvilget(behandlingresultat.type.kode)) {
-      return dokumentMalType.INNVILGELSE;
-    }
-    if (isAvslag(behandlingresultat.type.kode)) {
-      return dokumentMalType.AVSLAG;
-    }
-    return dokumentMalType.UTLED;
-  };
-
-  const data = {
-    dokumentdata: { redusertUtbetalingÅrsaker },
-    dokumentMal: dokumentMal(),
-  };
-  previewCallback(data);
-  e.preventDefault();
-};
 
 const transformRedusertUtbetalingÅrsaker = formProps =>
   Object.values(redusertUtbetalingArsak).filter(name =>
@@ -84,7 +64,7 @@ export class VedtakRevurderingFormImpl extends Component {
       skalBrukeOverstyrendeFritekstBrev: !skalBrukeOverstyrendeFritekstBrev,
     });
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
-    clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
+    clearFormFields(`${behandlingFormPrefix}.${VEDTAK_REVURDERING_FORM_NAME}`, false, false, ...fields);
   }
 
   render() {
@@ -100,7 +80,6 @@ export class VedtakRevurderingFormImpl extends Component {
       antallBarn,
       ytelseTypeKode,
       revurderingsAarsakString,
-      kanOverstyre,
       sprakkode,
       skalBrukeOverstyrendeFritekstBrev,
       brødtekst,
@@ -111,9 +90,7 @@ export class VedtakRevurderingFormImpl extends Component {
       tilbakekrevingvalg,
       simuleringResultat,
       vilkar,
-      sendVarselOmRevurdering,
       resultatstrukturOriginalBehandling,
-      behandlingArsaker,
       medlemskapFom,
       beregningErManueltFastsatt,
       vedtakVarsel,
@@ -123,15 +100,9 @@ export class VedtakRevurderingFormImpl extends Component {
       ...formProps
     } = this.props;
     const { erSendtInnUtenArsaker } = this.state;
-    const previewAutomatiskBrev = getPreviewBrevCallback(
-      previewCallback,
-      behandlingresultat,
-      readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps),
-    );
-    const visOverstyringKnapp = kanOverstyre || readOnly;
+
     const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
-    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
-    const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
+
     return (
       <>
         <VedtakAksjonspunktPanel
@@ -144,7 +115,7 @@ export class VedtakRevurderingFormImpl extends Component {
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
               <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
             ) : (
-              visOverstyringKnapp && (
+              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
                 <VedtakOverstyrendeKnapp
                   toggleCallback={this.onToggleOverstyring}
                   readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
@@ -226,29 +197,21 @@ export class VedtakRevurderingFormImpl extends Component {
               dokumentdata={dokumentdata}
               tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              previewCallback={previewAutomatiskBrev}
+              previewCallback={previewCallback}
+              formProps={formProps}
+              redusertUtbetalingÅrsaker={
+                readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)
+              }
+              brødtekst={brødtekst}
+              overskrift={overskrift}
+              begrunnelse={begrunnelse}
             />
-            {harTilgjengeligeVedtaksbrev && (
-              <PreviewLink previewCallback={previewAutomatiskBrev}>
-                <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-              </PreviewLink>
-            )}
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
-                begrunnelse={begrunnelse}
-                brodtekst={brødtekst}
-                overskrift={overskrift}
-                previewCallback={previewCallback}
                 formProps={formProps}
-                readOnly={readOnly}
-                ytelseTypeKode={ytelseTypeKode}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-                beregningResultat={resultatstruktur}
-                haveSentVarsel={sendVarselOmRevurdering}
-                aksjonspunkter={aksjonspunkter}
-                originaltBeregningResultat={resultatstrukturOriginalBehandling}
-                behandlingArsaker={behandlingArsaker}
-                behandlingResultat={behandlingresultat}
+                ytelseTypeKode={ytelseTypeKode}
+                readOnly={readOnly}
                 harRedusertUtbetaling={harRedusertUtbetaling}
                 visFeilmeldingFordiArsakerMangler={() => this.setState({ erSendtInnUtenArsaker: true })}
               />
@@ -348,8 +311,9 @@ const buildInitialValues = createSelector(
       skalUndertrykkeBrev:
         dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
         vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
-      overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
-      brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
+      overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
+      brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+      begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
     };
   },
 );
@@ -359,10 +323,9 @@ const transformValues = values =>
     const transformedValues = {
       kode: apCode,
       begrunnelse: values.begrunnelse,
-      fritekstBrev: values.brødtekst,
+      fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
       skalUndertrykkeBrev: values.skalUndertrykkeBrev,
-      overskrift: values.overskrift,
       isVedtakSubmission,
     };
     if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
@@ -407,12 +370,12 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     ...behandlingFormValueSelector(VEDTAK_REVURDERING_FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'antallBarn',
-      'begrunnelse',
       'aksjonspunktKoder',
       'skalBrukeOverstyrendeFritekstBrev',
       'skalUndertrykkeBrev',
-      'overskrift',
       'brødtekst',
+      'overskrift',
+      'begrunnelse',
       ...Object.values(redusertUtbetalingArsak),
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
