@@ -3,6 +3,11 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import {
+  finnesTilgjengeligeVedtaksbrev,
+  kanHaAutomatiskVedtaksbrev,
+  kanHaFritekstbrev,
+} from '@fpsak-frontend/utils/src/formidlingUtils';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -92,24 +97,22 @@ export const BrevPanel = props => {
     previewCallback,
   });
 
-  const harTilgjengeligeVedtaksbrev = !Array.isArray(tilgjengeligeVedtaksbrev) || !!tilgjengeligeVedtaksbrev.length;
-  const kanHaAutomatiskVedtaksbrev =
-    harTilgjengeligeVedtaksbrev && tilgjengeligeVedtaksbrev.some(vb => vb === 'AUTOMATISK');
-  const kanHaFritekstbrev = harTilgjengeligeVedtaksbrev && tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
+  const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
+  const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
 
-  const fritekstbrev = kanHaFritekstbrev && (
+  const fritekstbrev = harFritekstbrev && (
     <>
       <FritekstBrevPanel
         readOnly={readOnly}
         sprakkode={sprakkode}
         previewBrev={automatiskBrevUtenValideringCallback}
-        harAutomatiskVedtaksbrev={kanHaAutomatiskVedtaksbrev}
+        harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
       />
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />
     </>
   );
 
-  const automatiskbrev = kanHaAutomatiskVedtaksbrev && (
+  const automatiskbrev = harAutomatiskVedtaksbrev && (
     <>
       <InformasjonsbehovAutomatiskVedtaksbrev
         intl={intl}
@@ -126,7 +129,7 @@ export const BrevPanel = props => {
 
   return (
     <div>
-      {harTilgjengeligeVedtaksbrev ? (
+      {finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev) ? (
         brevpanel
       ) : (
         <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
