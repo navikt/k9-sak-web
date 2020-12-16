@@ -1,3 +1,9 @@
-const joinNonNullStrings = (strings: any[]): string => strings.filter(s => !!s).join('');
+export const joinNonNullStrings = (strings: any[]): string => strings.filter(s => !!s).join('');
 
-export default joinNonNullStrings;
+export function safeJSONParse(str) {
+  try {
+    return JSON.parse(str);
+  } catch {
+    return '';
+  }
+}

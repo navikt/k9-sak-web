@@ -21,6 +21,7 @@ const intl = createIntl(
 
 const hasHenleggBehandlingEnabledForTilbakekreving = (behandlingType, kanHenlegge) => {
   if (
+    behandlingType &&
     (behandlingType.kode === BehandlingType.TILBAKEKREVING ||
       behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) &&
     !kanHenlegge

@@ -20,6 +20,7 @@ describe('<FormkravKlageFormKa>', () => {
         behandlingVersjon={1}
         alleKodeverk={{}}
         avsluttedeBehandlinger={[]}
+        klageparter={[]}
         {...reduxFormPropsMock}
       />,
     );

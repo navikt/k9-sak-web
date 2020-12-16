@@ -248,8 +248,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     behandlingArsakTyper: getBehandlingAarsaker(state, ownProps),
     valgtBehandlingTypeKode: formValueSelector(formName)(state, 'behandlingType'),
     erTilbakekreving:
-      ownProps.behandlingType.kode === bType.TILBAKEKREVING ||
-      ownProps.behandlingType.kode === bType.TILBAKEKREVING_REVURDERING,
+      ownProps.behandlingType &&
+      (ownProps.behandlingType.kode === bType.TILBAKEKREVING ||
+        ownProps.behandlingType.kode === bType.TILBAKEKREVING_REVURDERING),
   });
 };
 

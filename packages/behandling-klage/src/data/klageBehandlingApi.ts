@@ -22,6 +22,8 @@ export const KlageBehandlingApiKeys = {
   SAVE_REOPEN_KLAGE_VURDERING: 'SAVE_REOPEN_KLAGE_VURDERING',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
+  PARTER_MED_KLAGERETT: 'PARTER_MED_KLAGERETT',
+  VALGT_PART_MED_KLAGERETT: 'VALGT_PART_MED_KLAGERETT',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -30,6 +32,8 @@ const endpoints = new RestApiConfigBuilder()
   // behandlingsdata
   .withRel('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
+  .withRel('parter-klagerett', KlageBehandlingApiKeys.PARTER_MED_KLAGERETT)
+  .withRel('valgt-part', KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT)
 
   // operasjoner
   .withPost('/k9/klage/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
@@ -51,6 +55,8 @@ const endpoints = new RestApiConfigBuilder()
       saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
     },
   )
+  // .withGet('/k9/klage/api/behandlinger/parter/med-klagerett', KlageBehandlingApiKeys.PARTER_MED_KLAGERETT)
+  // .withGet('/k9/klage/api/behandlinger/parter/med-kagerett/valgt', KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT)
 
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)

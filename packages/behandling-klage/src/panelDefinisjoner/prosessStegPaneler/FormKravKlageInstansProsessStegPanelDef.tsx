@@ -13,9 +13,11 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ alleBehandlinger, klageVurdering }) => ({
+  getData = ({ alleBehandlinger, klageVurdering, parterMedKlagerett, parterMedKlagerettValgt }) => ({
     avsluttedeBehandlinger: alleBehandlinger.filter(b => b.status.kode === behandlingStatus.AVSLUTTET),
     klageVurdering,
+    klageparter: parterMedKlagerett,
+    valgtKlagepart: parterMedKlagerettValgt,
   });
 }
 
