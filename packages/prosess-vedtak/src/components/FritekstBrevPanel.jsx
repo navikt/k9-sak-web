@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
@@ -9,32 +8,30 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
 import styles from './vedtakForm.less';
+import PreviewLink from './PreviewLink';
 
 const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
 const minLength3 = minLength(3);
 
-const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode }) => (
+const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode, harAutomatiskVedtaksbrev }) => (
   <>
-    <div className={styles.automatiskBrev}>
-      <Row>
-        <Column xs="12">
-          <FormattedMessage id="VedtakForm.AutomatiskBrev" />
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="6">
-          <a
-            href=""
-            onClick={previewBrev}
-            onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
-            className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-          >
-            <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-          </a>
-        </Column>
-      </Row>
-    </div>
+    {!readOnly && harAutomatiskVedtaksbrev && (
+      <div className={styles.automatiskBrev}>
+        <Row>
+          <Column xs="12">
+            <FormattedMessage id="VedtakForm.AutomatiskBrev" />
+          </Column>
+        </Row>
+        <Row>
+          <Column xs="6">
+            <PreviewLink previewCallback={previewBrev}>
+              <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
+            </PreviewLink>
+          </Column>
+        </Row>
+      </div>
+    )}
     <Row>
       <Column xs="12">
         <Undertittel>
@@ -80,6 +77,7 @@ FritekstBrevPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   previewBrev: PropTypes.func.isRequired,
   sprakkode: PropTypes.shape().isRequired,
+  harAutomatiskVedtaksbrev: PropTypes.bool.isRequired,
 };
 
 FritekstBrevPanelImpl.defaultProps = {};

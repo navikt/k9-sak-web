@@ -1,39 +1,118 @@
 import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { createSelector } from 'reselect';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import {
+  finnesTilgjengeligeVedtaksbrev,
+  kanHaAutomatiskVedtaksbrev,
+  kanHaFritekstbrev,
+} from '@fpsak-frontend/utils/src/formidlingUtils';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
+import { VedtakPreviewLink } from '../PreviewLink';
 
-const BrevPanel = props => {
+const kanResultatForhåndsvises = behandlingResultat => {
+  if (!behandlingResultat) {
+    return true;
+  }
+  const { type } = behandlingResultat;
+  if (!type) {
+    return true;
+  }
+  return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
+};
+
+const getManuellBrevCallback = ({ brødtekst, overskrift, formProps, previewCallback }) => e => {
+  if (formProps.valid || formProps.pristine) {
+    previewCallback({
+      dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
+      dokumentMal: dokumentMalType.FRITKS,
+    });
+  } else {
+    formProps.submit();
+  }
+  e.preventDefault();
+};
+
+const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker }) => {
+  return {
+    dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
+    dokumentMal: dokumentMalType.UTLED,
+  };
+};
+
+const getPreviewAutomatiskBrevCallbackUtenValidering = ({
+  fritekst,
+  redusertUtbetalingÅrsaker,
+  previewCallback,
+}) => e => {
+  previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker }));
+  e.preventDefault();
+};
+
+const getPreviewAutomatiskBrevCallback = ({ fritekst, redusertUtbetalingÅrsaker, formProps, previewCallback }) => e => {
+  if (formProps.valid || formProps.pristine) {
+    previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker }));
+  } else {
+    formProps.submit();
+  }
+  e.preventDefault();
+};
+
+export const BrevPanel = props => {
   const {
     intl,
     readOnly,
     sprakkode,
     beregningErManueltFastsatt,
-    dokumentdata,
     tilgjengeligeVedtaksbrev,
     skalBrukeOverstyrendeFritekstBrev,
     begrunnelse,
     previewCallback,
+    redusertUtbetalingÅrsaker,
+    brødtekst,
+    overskrift,
+    behandlingResultat,
+    formProps,
   } = props;
 
-  const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
-  const kanHaFritekstbrev = !isTilgjengeligeVedtaksbrevArray || tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
-  const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
+  const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
+    fritekst: begrunnelse,
+    redusertUtbetalingÅrsaker,
+    formProps,
+    previewCallback,
+  });
+  const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
+    fritekst: begrunnelse,
+    redusertUtbetalingÅrsaker,
+    previewCallback,
+  });
 
-  const getPreviewAutomatiskBrevCallback = fritekst => e => {
-    previewCallback({ dokumentdata: { fritekst }, dokumentMal: dokumentMalType.UTLED });
-    e.preventDefault();
-  };
-  const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse);
+  const manuellBrevCallback = getManuellBrevCallback({
+    brødtekst,
+    overskrift,
+    formProps,
+    previewCallback,
+  });
 
-  const AutomatiskVedtaksbrev = () => (
+  const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
+  const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
+
+  const fritekstbrev = harFritekstbrev && (
+    <>
+      <FritekstBrevPanel
+        readOnly={readOnly}
+        sprakkode={sprakkode}
+        previewBrev={automatiskBrevUtenValideringCallback}
+        harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
+      />
+      <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+    </>
+  );
+
+  const automatiskbrev = harAutomatiskVedtaksbrev && (
     <>
       <InformasjonsbehovAutomatiskVedtaksbrev
         intl={intl}
@@ -41,27 +120,17 @@ const BrevPanel = props => {
         sprakkode={sprakkode}
         beregningErManueltFastsatt={beregningErManueltFastsatt}
         begrunnelse={begrunnelse}
-        dokumentdata={dokumentdata}
       />
+      {kanResultatForhåndsvises(behandlingResultat) && <VedtakPreviewLink previewCallback={automatiskBrevCallback} />}
     </>
   );
 
-  const Vedtaksbrev = () => (
-    <>
-      {!skalBrukeOverstyrendeFritekstBrev ? (
-        <AutomatiskVedtaksbrev />
-      ) : (
-        kanHaFritekstbrev && (
-          <FritekstBrevPanel readOnly={readOnly} sprakkode={sprakkode} previewBrev={previewAutomatiskBrev} />
-        )
-      )}
-    </>
-  );
+  const brevpanel = skalBrukeOverstyrendeFritekstBrev ? fritekstbrev : automatiskbrev;
 
   return (
     <div>
-      {harTilgjengeligeVedtaksbrev ? (
-        <Vedtaksbrev />
+      {finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev) ? (
+        brevpanel
       ) : (
         <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
           {intl.formatMessage({ id: 'VedtakForm.IkkeVedtaksbrev' })}
@@ -75,29 +144,23 @@ BrevPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  dokumentdata: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   beregningErManueltFastsatt: PropTypes.bool,
   previewCallback: PropTypes.func.isRequired,
+  redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),
+  brødtekst: PropTypes.string,
+  overskrift: PropTypes.string,
+  behandlingResultat: PropTypes.shape(),
+  formProps: PropTypes.shape().isRequired,
 };
 
 BrevPanel.defaultProps = {
   tilgjengeligeVedtaksbrev: undefined,
   begrunnelse: null,
+  brødtekst: null,
+  overskrift: null,
 };
 
-export const brevselector = createSelector(
-  [ownProps => ownProps.sprakkode, ownProps => ownProps.vedtakVarsel, ownProps => ownProps.dokumentdata],
-  (sprakkode, vedtakVarsel, dokumentdata) => ({
-    sprakkode,
-    begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
-  }),
-);
-
-const mapStateToProps = (state, ownProps) => {
-  return { ...brevselector(ownProps) };
-};
-
-export default connect(mapStateToProps)(injectIntl(BrevPanel));
+export default injectIntl(BrevPanel);
