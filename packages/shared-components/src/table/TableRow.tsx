@@ -81,7 +81,7 @@ const TableRow: FunctionComponent<OwnProps> = ({
     })}
     onMouseDown={createMouseDownHandler(onMouseDown, id, model)}
     onKeyDown={createKeyHandler(onKeyDown, id, model)}
-    tabIndex={notFocusable ? undefined : 0}
+    tabIndex={notFocusable ? -1 : 0}
   >
     {children}
   </tr>
