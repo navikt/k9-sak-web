@@ -1,8 +1,16 @@
 const arbeidsforholdKilder = {
-  AAREGISTERET: 'AA-Registeret',
-  INNTEKTSKOMPONENTEN: 'A-Inntekt',
-  INNTEKTSMELDING: 'Inntektsmelding',
-  SAKSBEHANDLER: 'Saksbehandler',
+  AAREGISTERET: {
+    kode: 'AA-Registeret',
+  },
+  INNTEKTSKOMPONENTEN: {
+    kode: 'A-Inntekt',
+  },
+  INNTEKTSMELDING: {
+    kode: 'Inntektsmelding',
+  },
+  SAKSBEHANDLER: {
+    kode: 'Saksbehandler',
+  },
 };
 
 export default arbeidsforholdKilder;

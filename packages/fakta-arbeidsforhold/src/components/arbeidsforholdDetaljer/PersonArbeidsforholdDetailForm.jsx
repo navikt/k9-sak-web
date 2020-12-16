@@ -5,11 +5,11 @@ import { formPropTypes } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
 import { Normaltekst } from 'nav-frontend-typografi';
+import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
@@ -76,19 +76,23 @@ export const PersonArbeidsforholdDetailForm = ({
 );
 
 PersonArbeidsforholdDetailForm.propTypes = {
-  arbeidsforhold: arbeidsforholdPropType.isRequired,
+  arbeidsforhold: arbeidsforholdV2PropType.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  skjulArbeidsforhold: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.updateArbeidsforhold(values);
   return (state, ownProps) => {
-    const { arbeidsforhold, behandlingId, behandlingVersjon } = ownProps;
+    const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
+    const onSubmit = values => {
+      initialOwnProps.updateArbeidsforhold(values);
+      skjulArbeidsforhold();
+    };
     return {
       initialValues: arbeidsforhold,
-      readOnly: arbeidsforhold.aksjonspunktÅrsaker.length === 0,
+      readOnly: readOnly || arbeidsforhold.aksjonspunktÅrsaker.length === 0,
       arbeidsforholdHandlingVerdi: behandlingFormValueSelector(
         PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
         behandlingId,

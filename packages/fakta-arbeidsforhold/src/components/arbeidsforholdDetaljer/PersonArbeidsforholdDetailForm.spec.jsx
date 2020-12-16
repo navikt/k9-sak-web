@@ -8,7 +8,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { PersonArbeidsforholdDetailForm } from './PersonArbeidsforholdDetailForm';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import shallowWithIntl from '../../../i18n';
-import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
 
 describe('<PersonArbeidsforholdDetailForm>', () => {
   const arbeidsforhold = {
@@ -54,19 +53,13 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       <PersonArbeidsforholdDetailForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        cancelArbeidsforhold={sinon.spy()}
-        isErstattArbeidsforhold
-        hasReceivedInntektsmelding
-        harErstattetEttEllerFlere
+        skjulArbeidsforhold={sinon.spy()}
         readOnly={false}
         vurderOmSkalErstattes={false}
         aktivtArbeidsforholdTillatUtenIM={false}
         arbeidsforhold={arbeidsforhold}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
         initialValues={{
           begrunnelse: '',
-          replaceOptions: [],
         }}
         behandlingId={1}
         behandlingVersjon={1}
@@ -81,20 +74,11 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       <PersonArbeidsforholdDetailForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        cancelArbeidsforhold={sinon.spy()}
-        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
-        isErstattArbeidsforhold
-        hasReceivedInntektsmelding={false}
-        harErstattetEttEllerFlere
+        skjulArbeidsforhold={sinon.spy()}
         readOnly={false}
-        vurderOmSkalErstattes={false}
-        aktivtArbeidsforholdTillatUtenIM={false}
         arbeidsforhold={arbeidsforhold}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
         initialValues={{
           begrunnelse: '',
-          replaceOptions: [],
         }}
         behandlingId={1}
         behandlingVersjon={1}

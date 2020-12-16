@@ -20,8 +20,6 @@ import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforho
 import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 
 import styles from './personArbeidsforholdPanel.less';
-import aktivtArbeidsforholdHandling from '../kodeverk/aktivtArbeidsforholdHandling';
-import arbeidsforholdHandling from '../kodeverk/arbeidsforholdHandling';
 
 // -------------------------------------------------------------------------------------------------------------
 // Methods
@@ -150,19 +148,27 @@ export class PersonArbeidsforholdPanelImpl extends Component {
     const { selectedArbeidsforhold } = this.state;
     const { arbeidsforhold } = this.props;
 
-    const brukArbeidsforholdet = values.arbeidsforholdHandlingField === arbeidsforholdHandlingType.BRUK;
+    const handlingType = values.arbeidsforholdHandlingField;
+    const perioder = [
+      {
+        fom: values.fomDato,
+        tom: values.tomDato,
+      },
+    ];
 
-    const fortsettBehandlingUtenInntektsmelding =
-      values.arbeidsforholdHandlingField === arbeidsforholdHandlingType.BRUK_UTEN_INNTEKTSMELDING;
+    if (handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER) {
+      if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER.kode)) {
+        values.kilde.push(arbeidsforholdKilder.SAKSBEHANDLER);
+      }
+    }
 
-    const inntektMedTilBeregningsgrunnlag =
-      values.aktivtArbeidsforholdHandlingField === arbeidsforholdHandlingType.INNTEKT_IKKE_MED_I_BG ? false : undefined;
+    const arbeidsgiverNavn = values.navn;
 
     const newValues = {
       ...values,
-      brukArbeidsforholdet,
-      fortsettBehandlingUtenInntektsmelding,
-      inntektMedTilBeregningsgrunnlag,
+      handlingType,
+      arbeidsgiverNavn,
+      perioder,
     };
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
@@ -196,7 +202,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       }),
     );
 
-    this.setSelectedArbeidsforhold(undefined, undefined, other);
+    this.setSelectedArbeidsforhold(undefined, undefined, selectedArbeidsforhold);
   }
 
   cancelArbeidsforhold() {
@@ -207,34 +213,36 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   leggTilArbeidsforhold() {
     const lagtTilArbeidsforhold = {
       id: `${new Date().getTime()}_${Math.floor(Math.random() * 1000000000)}`,
-      navn: undefined,
-      arbeidsgiverIdentifikator: undefined,
-      arbeidsgiverIdentifiktorGUI: undefined,
-      arbeidsforholdId: undefined,
-      fomDato: undefined,
-      tomDato: undefined,
+      arbeidsgiverNavn: undefined,
+      arbeidsgiver: {
+        arbeidsgiverOrgnr: undefined,
+        arbeidsgiverAktørId: undefined,
+      },
       kilde: {
         kode: arbeidsforholdKilder.SAKSBEHANDLER,
       },
-      mottattDatoInntektsmelding: undefined,
+      arbeidsforhold: {
+        internArbeidsforholdId: undefined,
+        eksternArbeidsforholdId: undefined,
+      },
+      yrkestittel: undefined,
       begrunnelse: undefined,
+      perioder: [
+        {
+          fom: undefined,
+          tom: undefined,
+        },
+      ],
+      handlingType: undefined,
+      permisjoner: [
+        {
+          permisjonFom: undefined,
+          permisjonTom: undefined,
+        },
+      ],
       stillingsprosent: undefined,
-      brukArbeidsforholdet: true,
-      fortsettBehandlingUtenInntektsmelding: undefined,
-      erNyttArbeidsforhold: undefined,
-      erSlettet: undefined,
-      erstatterArbeidsforholdId: undefined,
-      harErsattetEttEllerFlere: undefined,
-      ikkeRegistrertIAaRegister: undefined,
-      tilVurdering: true,
-      vurderOmSkalErstattes: undefined,
-      erEndret: undefined,
-      overstyrtTom: undefined,
-      brukMedJustertPeriode: false,
-      lagtTilAvSaksbehandler: true,
-      inntektMedTilBeregningsgrunnlag: true,
-      arbeidsforholdHandlingField: arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD,
-      aktivtArbeidsforholdHandlingField: aktivtArbeidsforholdHandling.BENYTT_A_INNTEKT_I_BG,
+      aksjonspunktÅrsaker: [],
+      inntektsmeldinger: [],
     };
     this.setState({ selectedArbeidsforhold: lagtTilArbeidsforhold });
     this.initializeActivityForm(lagtTilArbeidsforhold);

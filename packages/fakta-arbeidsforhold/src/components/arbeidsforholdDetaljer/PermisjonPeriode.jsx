@@ -4,9 +4,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
 
-import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
-
 import styles from './permisjonPeriode.less';
+import { arbeidsforholdV2PropType } from '../../../../prop-types/src/arbeidsforholdPropType';
 
 const utledPeriodeLabelKey = (id, index) => id + index;
 
@@ -42,7 +41,7 @@ const PermisjonPeriode = ({ arbeidsforhold }) => (
 );
 
 PermisjonPeriode.propTypes = {
-  arbeidsforhold: arbeidsforholdPropType.isRequired,
+  arbeidsforhold: arbeidsforholdV2PropType.isRequired,
 };
 
 export default PermisjonPeriode;

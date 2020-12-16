@@ -267,7 +267,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       />,
     );
     const tableRow = wrapper.find(TableRow).at(1);
-    expect(tableRow.props().model.navn).to.eql('Lærer(99999999999)');
+    expect(tableRow.props().model.yrkestittel).to.eql('Vaktmester');
   });
 
   it('skal vise tom dato', () => {

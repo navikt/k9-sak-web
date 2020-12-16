@@ -11,8 +11,8 @@ type ArbeidsforholdV2 = Readonly<{
   yrkestittel?: string;
   begrunnelse?: string;
   perioder: Periode[];
-  handlingType: string;
-  kilde: string[];
+  handlingType: Kodeverk;
+  kilde: Kodeverk[];
   permisjoner?: {
     permisjonFom?: string;
     permisjonTom?: string;

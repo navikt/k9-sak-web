@@ -41,17 +41,10 @@ const PersonArbeidsforholdTable = ({
   behandlingId,
   behandlingVersjon,
   updateArbeidsforhold,
-  cancelArbeidsforhold,
 }) => {
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
+  const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(false);
   const intl = useIntl();
-
-  const visAksjonspunktInfo = arbeidsforhold => {
-    if (selectedArbeidsforhold === undefined) {
-      return false;
-    }
-    return arbeidsforhold.id === selectedArbeidsforhold.id && arbeidsforhold.aksjonspunktÅrsaker.length > 0;
-  };
 
   const visPermisjon = arbeidsforhold => {
     if (selectedArbeidsforhold === undefined) {
@@ -66,10 +59,17 @@ const PersonArbeidsforholdTable = ({
 
   const setValgtArbeidsforhold = arbeidsforhold => {
     if (selectedArbeidsforhold === undefined) {
+      setVisAksjonspunktInfo(true);
       setSelectedArbeidsforhold(arbeidsforhold);
     }
-    if (arbeidsforhold.id === selectedArbeidsforhold.id) {
+    if (arbeidsforhold.id === selectedArbeidsforhold.id && !visAksjonspunktInfo) {
       setSelectedArbeidsforhold(undefined);
+      setVisAksjonspunktInfo(true);
+    }
+
+    if (arbeidsforhold.id === selectedArbeidsforhold.id && visAksjonspunktInfo) {
+      setSelectedArbeidsforhold(undefined);
+      setVisAksjonspunktInfo(false);
     }
   };
 
@@ -86,7 +86,7 @@ const PersonArbeidsforholdTable = ({
               ? `${parseFloat(a.stillingsprosent).toFixed(2)} %`
               : '';
           const navn = utledArbeidsforholdYrkestittel(a);
-          const kilde = a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(',') : a.kilde[0].kode;
+          const kilde = a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode;
           return (
             <>
               <TableRow
@@ -103,8 +103,8 @@ const PersonArbeidsforholdTable = ({
                 <TableColumn>
                   <Normaltekst>
                     <PeriodLabel
-                      dateStringFom={a.perioder ? a.perioder[0].fom : {}}
-                      dateStringTom={a.perioder ? a.perioder[0].tom : {}}
+                      dateStringFom={a.perioder && a.perioder.length > 0 ? a.perioder[0].fom : {}}
+                      dateStringTom={a.perioder && a.perioder.length > 0 ? a.perioder[0].tom : {}}
                     />
                   </Normaltekst>
                 </TableColumn>
@@ -131,7 +131,7 @@ const PersonArbeidsforholdTable = ({
                       />
                       <Normaltekst className={styles.visLukkAksjonspunkt}>
                         {intl.formatMessage(
-                          selectedArbeidsforhold === a
+                          selectedArbeidsforhold === a && visAksjonspunktInfo
                             ? {
                                 id: 'PersonArbeidsforholdTable.LukkAksjospunkt',
                               }
@@ -142,7 +142,7 @@ const PersonArbeidsforholdTable = ({
                       </Normaltekst>
                       <Image
                         className={
-                          selectedArbeidsforhold && selectedArbeidsforhold.id === a.id
+                          selectedArbeidsforhold && selectedArbeidsforhold.id === a.id && visAksjonspunktInfo
                             ? styles.chevronOpp
                             : styles.chevronNed
                         }
@@ -157,7 +157,7 @@ const PersonArbeidsforholdTable = ({
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
                       <Normaltekst className={styles.visLukkAksjonspunkt}>
                         {intl.formatMessage(
-                          selectedArbeidsforhold === a
+                          selectedArbeidsforhold === a && visAksjonspunktInfo
                             ? {
                                 id: 'PersonArbeidsforholdTable.LukkPermisjon',
                               }
@@ -181,7 +181,6 @@ const PersonArbeidsforholdTable = ({
                 <TableColumn>
                   {a.handlingType === arbeidsforholdHandlingType.BRUK && a.aksjonspunktÅrsaker.length === 0 && (
                     <Image
-                      className={styles.image}
                       src={erIBrukImageUrl}
                       alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
                       tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
@@ -191,14 +190,14 @@ const PersonArbeidsforholdTable = ({
                   )}
                 </TableColumn>
               </TableRow>
-              {visAksjonspunktInfo(a) && (
+              {selectedArbeidsforhold && selectedArbeidsforhold.id === a.id && visAksjonspunktInfo && (
                 <PersonArbeidsforholdDetailForm
                   key={a.id}
                   arbeidsforhold={selectedArbeidsforhold}
                   hasAksjonspunkter
                   hasOpenAksjonspunkter
                   updateArbeidsforhold={updateArbeidsforhold}
-                  cancelArbeidsforhold={cancelArbeidsforhold}
+                  skjulArbeidsforhold={() => setVisAksjonspunktInfo(false)}
                   aktivtArbeidsforholdTillatUtenIM
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
@@ -225,7 +224,6 @@ PersonArbeidsforholdTable.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   updateArbeidsforhold: PropTypes.func.isRequired,
-  cancelArbeidsforhold: PropTypes.func.isRequired,
 };
 
 PersonArbeidsforholdTable.defaultProps = {

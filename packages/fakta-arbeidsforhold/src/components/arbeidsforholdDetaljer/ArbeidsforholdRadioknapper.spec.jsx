@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import shallowWithIntl from '../../../i18n';
-import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
 const arbeidsforhold = {
@@ -24,7 +23,11 @@ const arbeidsforhold = {
     },
   ],
   handlingType: 'UDEFINERT',
-  kilde: ['AAREGISTERET'],
+  kilde: [
+    {
+      kode: 'AAREGISTERET',
+    },
+  ],
   permisjoner: [
     {
       permisjonFom: '2020-12-14',
@@ -43,21 +46,20 @@ const arbeidsforhold = {
   ],
 };
 
-it('Skal vise RadioOption for fjerning av arbeidsforhold når arbeidsforhold ikke fra AA-reg', () => {
+it('Skal vise RadioOption for fortsettelse av behandling av arbeidsforhold når arbeidsforhold ikke fra AA-reg', () => {
   const wrapper = shallowWithIntl(
     <ArbeidsforholdRadioknapper
       readOnly={false}
       formName=""
-      hasReceivedInntektsmelding={false}
       arbeidsforhold={{
         ...arbeidsforhold,
-        kilde: {
-          kodeverk: 'INNTEKT',
-          kode: 'noen-annet',
-        },
+        kilde: [
+          {
+            kodeverk: 'INNTEKT',
+            kode: 'Inntektsmelding',
+          },
+        ],
       }}
-      aktivtArbeidsforholdTillatUtenIM
-      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD}
       behandlingId={1}
       behandlingVersjon={1}
     />,
@@ -66,7 +68,7 @@ it('Skal vise RadioOption for fjerning av arbeidsforhold når arbeidsforhold ikk
   expect(radioOptions).has.length(2);
   expect(radioOptions.get(0).props.label.id).to.eql('PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt');
   expect(radioOptions.get(0).props.disabled).to.eql(false);
-  expect(radioOptions.get(1).props.label.id).to.eql('PersonArbeidsforholdDetailForm.FjernArbeidsforholdet');
+  expect(radioOptions.get(1).props.label.id).to.eql('PersonArbeidsforholdDetailForm.FortsettBehandling');
   expect(radioOptions.get(1).props.disabled).to.eql(false);
   expect(wrapper.find("[name='overstyrtTom']")).has.length(0);
 });
@@ -76,11 +78,9 @@ it('skal kun vise to RadioOptions når arbeidsforholdhandling er undefined', () 
     <ArbeidsforholdRadioknapper
       readOnly={false}
       formName=""
-      hasReceivedInntektsmelding={false}
       arbeidsforhold={{
         ...arbeidsforhold,
       }}
-      aktivtArbeidsforholdTillatUtenIM
       arbeidsforholdHandlingVerdi={undefined}
       behandlingId={1}
       behandlingVersjon={1}
@@ -90,7 +90,7 @@ it('skal kun vise to RadioOptions når arbeidsforholdhandling er undefined', () 
   expect(radioOptions).has.length(2);
   expect(radioOptions.get(0).props.label.id).to.eql('PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt');
   expect(radioOptions.get(0).props.disabled).to.eql(false);
-  expect(radioOptions.get(1).props.label.id).to.eql('PersonArbeidsforholdDetailForm.FjernArbeidsforholdet');
+  expect(radioOptions.get(1).props.label.id).to.eql('PersonArbeidsforholdDetailForm.FortsettBehandling');
   expect(radioOptions.get(1).props.disabled).to.eql(true);
 });
 
@@ -104,7 +104,6 @@ it('skal vise LeggTilArbeidsforholdFelter når man velger å opprette arbeidsfor
         ...arbeidsforhold,
       }}
       aktivtArbeidsforholdTillatUtenIM
-      arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
       behandlingId={1}
       behandlingVersjon={1}
     />,

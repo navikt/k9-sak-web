@@ -33,7 +33,7 @@
   "PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt": "Ja",
   "PersonArbeidsforholdDetailForm.OppdaterArbeidsforhold": "Oppdater arbeidsforholdet basert på inntektsmeldig med følgene opplysninger.",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon": "Søker er ikke i permisjon. Arbeidsforholdet er aktivt og skal benyttes i behandlingen.",
-  "PersonArbeidsforholdDetailForm.FjernArbeidsforholdet": "Nei, marker arbeidsforhold som ikke aktuelt",
+  "PersonArbeidsforholdDetailForm.FortsettBehandling": "Nei, fortsett behandling",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdetErIkkeAktivt": "Arbeidsforholdet er ikke aktivt. Inntektsmelding er ikke nødvendig.",
   "PersonArbeidsforholdDetailForm.ArbeidsforholdetAktivTomDato": "Arbeidsforhold aktivt tom. dato",
   "PersonArbeidsforholdDetailForm.DateNotAfterOrEqual": "Dato kan ikke være før startdato {dato}",

@@ -47,6 +47,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
   readOnly,
   alleMerknaderFraBeslutter,
   arbeidsgivere,
+  hasOpenAksjonspunkter,
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
@@ -99,6 +100,7 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
   arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
+  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
@@ -115,6 +117,10 @@ const transformValues = values => {
     arbeidsforhold: arbeidsforhold.map(a =>
       omit(
         a,
+
+        'navn',
+        'fomDato',
+        'tomDato',
         'erEndret',
         'replaceOptions',
         'originalFomDato',

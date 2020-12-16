@@ -79,8 +79,14 @@ export const arbeidsforholdV2PropType = PropTypes.shape({
       tom: PropTypes.string,
     }),
   ),
-  handlingType: PropTypes.string,
-  kilde: PropTypes.arrayOf(PropTypes.string),
+  handlingType: {
+    kode: PropTypes.string,
+    kodeverk: PropTypes.string,
+  },
+  kilde: PropTypes.arrayOf({
+    kode: PropTypes.string,
+    kodeverk: PropTypes.string,
+  }),
   permisjoner: PropTypes.arrayOf(
     PropTypes.shape({
       permisjonFom: PropTypes.string,

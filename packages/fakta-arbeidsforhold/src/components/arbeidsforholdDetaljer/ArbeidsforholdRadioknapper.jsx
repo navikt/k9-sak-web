@@ -2,12 +2,12 @@ import React from 'react';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import PropTypes from 'prop-types';
-import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
-import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
 
 const isKildeAaRegisteret = arbeidsforhold =>
   arbeidsforhold.kilde && arbeidsforhold.kilde.includes(arbeidsforholdKilder.AAREGISTERET);
@@ -21,7 +21,7 @@ const ArbeidsforholdRadioknapper = ({ arbeidsforhold, behandlingId, behandlingVe
   <RadioGroupField name="arbeidsforholdHandlingField" validate={[required]} direction="vertical">
     <RadioOption
       label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt' }}
-      value={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+      value={arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER}
     >
       <BehandlingFormFieldCleaner formName={formName} fieldNames={['aktivtArbeidsforholdHandlingField']}>
         <LeggTilArbeidsforholdFelter
@@ -32,19 +32,17 @@ const ArbeidsforholdRadioknapper = ({ arbeidsforhold, behandlingId, behandlingVe
         />
       </BehandlingFormFieldCleaner>
     </RadioOption>
+    <VerticalSpacer eightPx />
     <RadioOption
-      label={{ id: 'PersonArbeidsforholdDetailForm.FjernArbeidsforholdet' }}
-      value={arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD}
-      disabled={
-        isKildeAaRegisteret(arbeidsforhold) ||
-        arbeidsforhold.handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER
-      }
+      label={{ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' }}
+      value={arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING}
+      disabled={isKildeAaRegisteret(arbeidsforhold)}
     />
   </RadioGroupField>
 );
 
 ArbeidsforholdRadioknapper.propTypes = {
-  arbeidsforhold: arbeidsforholdPropType.isRequired,
+  arbeidsforhold: arbeidsforholdV2PropType.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   formName: PropTypes.string.isRequired,

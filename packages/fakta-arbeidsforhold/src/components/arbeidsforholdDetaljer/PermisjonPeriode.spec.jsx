@@ -44,7 +44,7 @@ describe('<PermisjonPeriode>', () => {
     );
     const msg = wrapper.find('FormattedMessage');
     expect(msg).to.have.length(2);
-    expect(msg.get(0).props().id).to.eql('PersonArbeidsforholdDetailForm.Permisjon');
+    expect(msg.get(0).props.id).to.eql('PersonArbeidsforholdDetailForm.Permisjon');
     const periode = wrapper.find('PeriodLabel');
     expect(periode).to.have.length(1);
     expect(periode.props().dateStringFom).to.eql('2018-10-10');
@@ -73,7 +73,7 @@ describe('<PermisjonPeriode>', () => {
     );
     const msg = wrapper.find('FormattedMessage');
     expect(msg).to.have.length(4);
-    expect(msg.get(0).prop('id')).to.eql('PersonArbeidsforholdDetailForm.Permisjoner');
+    expect(msg.get(0).props.id).to.eql('PersonArbeidsforholdDetailForm.Permisjon');
     const perioder = wrapper.find('PeriodLabel');
     expect(perioder.get(0).props.dateStringFom).to.eql('2015-01-01');
     expect(perioder.get(0).props.dateStringTom).to.eql('');
