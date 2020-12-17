@@ -4,6 +4,7 @@ FROM nginx:1.17.8-alpine
 RUN apk add --no-cache bash
 
 ADD proxy.nginx /etc/nginx/conf.d/app.conf.template
+ADD feature-toggles.json /etc/nginx/conf.d/feature-toggles.json
 
 ENV APP_DIR="/app" \
   APP_PATH_PREFIX="/k9/sak" \

@@ -204,11 +204,16 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
   },
-  FAKTA_OM_AARSKVANTUM: {
-    kode: 'FAKTA_OM_AARSKVANTUM',
+  FAKTA_OM_ÅRSKVANTUM: {
+    kode: 'FAKTA_OM_ÅRSKVANTUM',
     faktaNavn: faktaPanelCodes.NØKKELTALL,
-    punktNavn: prosessStegCodes.UTTAK
-  }
+    punktNavn: prosessStegCodes.UTTAK,
+  },
+  PUNKT_FOR_MAN_VILKÅRSVURDERING: {
+    kode: 'PUNKT_FOR_MAN_VILKÅRSVURDERING',
+    faktaNavn: '',
+    punktNavn: prosessStegCodes.UNNTAK,
+  },
 };
 
 export default skjermlenkeCodes;

@@ -3,13 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { FeatureToggles } from '@k9-sak-web/types';
 
 import fpsakApi from '../data/fpsakApi';
 import {
   fetchAlleKodeverk as fetchAlleKodeverkAC,
+  fetchAllFeatureToggles,
   getFeatureToggles,
   isFinishedLoadingData,
-  fetchAllFeatureToggles,
   isFinishedLoadingErrorPageData,
 } from './duck';
 
@@ -18,10 +19,10 @@ interface OwnProps {
   children: ReactNode;
   fetchNavAnsatt: () => void;
   fetchLanguageFile: () => void;
-  fetchAlleKodeverk: (featureToggles: {}) => void;
+  fetchAlleKodeverk: (featureToggles: FeatureToggles) => void;
   fetchShowDetailedErrorMessages: () => void;
   fetchFeatureToggles: () => void;
-  featureToggles: {};
+  featureToggles: FeatureToggles;
   appIsInErroneousState?: boolean;
   finishedLoadingErrorPageBlockers?: boolean;
 }

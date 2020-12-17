@@ -14,8 +14,9 @@ import {
   ProsessStegContainer,
   lagDokumentdata,
 } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -33,21 +34,15 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
+  featureToggles: FeatureToggles;
 }
 
-const getForhandsvisCallback = (dispatch, fagsak, behandling) => data => {
-  const brevData = {
-    ...data,
-    behandlingUuid: behandling.uuid,
-    ytelseType: fagsak.fagsakYtelseType,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsak.fagsakPerson.aktørId,
-  };
-  return dispatch(pleiepengerBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
+  return dispatch(pleiepengerBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
 const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (
@@ -124,10 +119,10 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
   hasFetchError,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  featureToggles,
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,

@@ -18,8 +18,8 @@ const AvviksopplysningerAT = ({
   const sammenligningsGrunnlagAT = sammenligningsgrunnlagPrStatus
     ? sammenligningsgrunnlagPrStatus.find(
         status =>
-          status.sammenligningsgrunnlagType.kode === sammenligningType.AT ||
-          status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
+          (status.sammenligningsgrunnlagType && status.sammenligningsgrunnlagType.kode === sammenligningType.AT) ||
+          (status.sammenligningsgrunnlagType && status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN),
       )
     : undefined;
   if (!sammenligningsGrunnlagAT) {

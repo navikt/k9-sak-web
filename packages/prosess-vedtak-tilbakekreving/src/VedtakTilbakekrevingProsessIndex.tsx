@@ -47,7 +47,7 @@ const VedtakTilbakekrevingProsessIndex: FunctionComponent<OwnProps> = ({
     behandling.førsteÅrsak && erTilbakekrevingÅrsakKlage(behandling.førsteÅrsak.behandlingArsakType);
   const erRevurderingTilbakekrevingFeilBeløpBortfalt =
     behandling.førsteÅrsak &&
-    behandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT === behandling.førsteÅrsak.behandlingArsakType.kode;
+    behandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT === behandling.førsteÅrsak?.behandlingArsakType?.kode;
   return (
     <RawIntlProvider value={intl}>
       <TilbakekrevingVedtak
@@ -56,7 +56,7 @@ const VedtakTilbakekrevingProsessIndex: FunctionComponent<OwnProps> = ({
         behandlingVersjon={behandling.versjon}
         perioder={beregningsresultat.beregningResultatPerioder}
         resultat={beregningsresultat.vedtakResultatType}
-        avsnittsliste={vedtaksbrev.avsnittsliste}
+        avsnittsliste={vedtaksbrev?.avsnittsliste}
         submitCallback={submitCallback}
         readOnly={isReadOnly}
         alleKodeverk={alleKodeverk}

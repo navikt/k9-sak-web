@@ -6,6 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import unntakBehandlingApi from '../../data/unntakBehandlingApi';
 
 const harIngenAndeler = perioder => {
   const alleAndeler = perioder.flatMap(({ andeler }) => {
@@ -33,6 +34,8 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
+  getEndepunkter = () => [unntakBehandlingApi.INNTEKT_ARBEID_YTELSE];
+
   getOverstyrtStatus = ({ beregningsresultatUtbetaling }) => {
     const manglerBeregningsresultatUtbetaling =
       !beregningsresultatUtbetaling ||
@@ -48,12 +51,11 @@ class PanelDef extends ProsessStegPanelDef {
     return vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ vilkar, fagsak, beregningsresultatUtbetaling, inntektArbeidYtelse, personopplysninger }) => {
+  getData = ({ vilkar, fagsak, beregningsresultatUtbetaling, personopplysninger }) => {
     return {
       vilkar,
       fagsak,
       personopplysninger,
-      inntektArbeidYtelse,
       beregningsresultat: beregningsresultatUtbetaling,
     };
   };
