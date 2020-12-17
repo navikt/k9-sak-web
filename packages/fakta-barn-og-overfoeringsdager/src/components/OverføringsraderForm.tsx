@@ -42,11 +42,9 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: Overføringsrade
   });
 };
 
-const OverføringsraderForm: FunctionComponent<OverføringsraderFormProps> = connect(mapStateToPropsFactory)(
+export default connect(mapStateToPropsFactory)(
   // @ts-ignore
   behandlingForm({
     enableReinitialize: true,
   })(OverføringsraderFormImpl),
 );
-
-export default OverføringsraderForm;
