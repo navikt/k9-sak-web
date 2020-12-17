@@ -16,15 +16,7 @@ import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 
 import styles from './personArbeidsforholdDetailForm.less';
 
-// ----------------------------------------------------------------------------------
-// VARIABLES
-// ----------------------------------------------------------------------------------
-
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
-
-// ----------------------------------------------------------------------------------
-// METHODS
-// ----------------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------------
 // Component: PersonArbeidsforholdDetailForm

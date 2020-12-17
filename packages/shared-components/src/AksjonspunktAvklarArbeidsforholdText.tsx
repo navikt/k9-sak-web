@@ -9,6 +9,7 @@ import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
 import Image from './Image';
 
 import styles from './aksjonspunktAvklarArbeidsforholdText.less';
+import VerticalSpacer from './VerticalSpacer';
 
 interface OwnProps {
   children: string[] | ReactNode[];
@@ -47,6 +48,7 @@ const AksjonspunktAvklarArbeidsforholdText: FunctionComponent<OwnProps & Wrapped
           </Normaltekst>
         </FlexRow>
         <div className={styles.hl} />
+        <VerticalSpacer sixteenPx />
         <FlexRow>
           <Normaltekst className={styles.helptext}>
             <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
