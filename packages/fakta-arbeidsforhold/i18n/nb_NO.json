@@ -70,6 +70,7 @@
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "HelpText.FinnesIkkeIRegisteret": "Arbeidsforholdet {yrkestittel} finnes ikke i AA-Registeret.",
   "HelpText.TaKontakt": "Ta kontakt med arbeidsgiver og gi beskjed om at de skal rapportere arbeidsforholdet i A-ordningen.",
+  "HelpText.DersomIkkeKanRapporteres": "Dersom arbeidsgiver ikke kan rapportere arbeidsforholdet i A-ordningen:",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",

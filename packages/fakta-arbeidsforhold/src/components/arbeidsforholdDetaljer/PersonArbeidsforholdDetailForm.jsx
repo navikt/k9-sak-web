@@ -43,7 +43,7 @@ export const PersonArbeidsforholdDetailForm = ({
     <VerticalSpacer eightPx />
     <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
     <VerticalSpacer eightPx />
-    <Normaltekst>
+    <Normaltekst className={styles.spørsmål}>
       <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
     </Normaltekst>
     <Row>

@@ -4,7 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
-import Arbeidsforhold from '@k9-sak-web/types/src/arbeidsforholdTsType';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
 import Image from './Image';
 
@@ -14,7 +14,7 @@ interface OwnProps {
   children: string[] | ReactNode[];
   isAksjonspunktOpen: boolean;
   marginBottom?: boolean;
-  arbeidsforhold: Arbeidsforhold;
+  arbeidsforhold: ArbeidsforholdV2;
 }
 
 const AksjonspunktAvklarArbeidsforholdText: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -47,6 +47,11 @@ const AksjonspunktAvklarArbeidsforholdText: FunctionComponent<OwnProps & Wrapped
           </Normaltekst>
         </FlexRow>
         <div className={styles.hl} />
+        <FlexRow>
+          <Normaltekst className={styles.helptext}>
+            <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
+          </Normaltekst>
+        </FlexRow>
       </FlexContainer>
     </div>
   );
