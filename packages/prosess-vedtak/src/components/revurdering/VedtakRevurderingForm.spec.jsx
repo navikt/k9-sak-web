@@ -283,6 +283,7 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
       />,
     );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
