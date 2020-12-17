@@ -8,5 +8,6 @@
   "FaktaBarn.Død": "Barnet døde den {dødsdato}",
   "FaktaBarn.UtenlandskBarn": "Barnet bor i utlandet",
   "FaktaBarn.Fosterbarn": "Barnet er fosterbarn",
-  "FaktaBarn.IngenBarn": "Det er ikke registrert noen barn på søkeren"
+  "FaktaBarn.IngenBarn": "Det er ikke registrert noen barn på søkeren",
+  "FaktaBarn.Fødselsinfo": "<b>Født:</b> {dato} <i>({alder} år)</i>"
 }
