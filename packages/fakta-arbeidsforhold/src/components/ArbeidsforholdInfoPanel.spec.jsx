@@ -50,7 +50,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
     );
     const apMsg = wrapper.find('FormattedMessage');
     expect(apMsg).has.length(2);
-    expect(apMsg.props().id).has.eql('ArbeidsforholdInfoPanel.AvklarArbeidsforhold');
+    expect(apMsg.get(0).props().id).has.eql('ArbeidsforholdInfoPanel.AvklarArbeidsforhold');
     expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
     expect(wrapper.find(BekreftOgForsettKnapp)).has.length(1);
   });
