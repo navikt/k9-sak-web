@@ -58,7 +58,7 @@ export const SlettPeriodeModalImpl: FC<OwnProps & WrappedComponentProps & Inject
         <FlexRow>
           <FlexColumn className={styles.right}>
             <VerticalSpacer eightPx />
-            <Hovedknapp mini className={styles.button} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+            <Hovedknapp mini className={styles.button} onClick={formProps.handleSubmit}>
               {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
             </Hovedknapp>
             <Knapp

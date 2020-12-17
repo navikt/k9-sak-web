@@ -55,3 +55,15 @@ spec:
       value: "http://diagnosekode-api"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"
+
+   # Feature-flag
+    - name: VARSELTEKST
+      value: "true"
+    - name: DOKUMENTDATA
+      value: "true"
+    - name: UNNTAKSBEHANDLING
+      value: "true"
+    - name: KLAGEBEHANDLING
+      value: "true"
+    - name: TILBAKE
+      value: "true"

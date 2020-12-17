@@ -329,6 +329,9 @@ export default connect(
 )(
   behandlingForm({
     form: 'OppholdInntektOgPerioderForm',
-    enableReinitialize: true,
+    // Fiks for https://jira.adeo.no/browse/TSF-998 kopiert fra fp-frontend
+    // ref: https://github.com/navikt/fp-frontend
+    // /commit/6a17a716da87e38fbb6a678757eaeea69dcd30ac#diff-fa5cf1a3780389bacd27f386442774846ee8b01b664337d8cf9bafa8dec243bd
+    // enableReinitialize: true,
   })(injectIntl(OppholdInntektOgPerioderForm)),
 );

@@ -5,7 +5,7 @@ import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
@@ -18,9 +18,7 @@ const unntakData = [
   unntakBehandlingApi.VILKAR,
   unntakBehandlingApi.PERSONOPPLYSNINGER,
   unntakBehandlingApi.SOKNAD,
-  unntakBehandlingApi.INNTEKT_ARBEID_YTELSE,
   unntakBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
-  unntakBehandlingApi.BEREGNINGSGRUNNLAG,
   unntakBehandlingApi.SIMULERING_RESULTAT,
   unntakBehandlingApi.FORBRUKTE_DAGER,
 ];
@@ -38,7 +36,7 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  featureToggles: {};
+  featureToggles: FeatureToggles;
 }
 
 interface StateProps {

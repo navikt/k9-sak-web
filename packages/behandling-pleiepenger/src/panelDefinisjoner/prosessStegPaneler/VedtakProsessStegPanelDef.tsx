@@ -3,7 +3,7 @@ import React from 'react';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import redusertUtbetalingArsak from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
-import { dokumentdatatype, featureToggle, prosessStegCodes } from '@k9-sak-web/konstanter';
+import { dokumentdatatype, prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
@@ -56,7 +56,7 @@ class PanelDef extends ProsessStegPanelDef {
     ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggles?.[featureToggle.AKTIVER_DOKUMENTDATA] && pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE) {
+      if (featureToggles?.DOKUMENTDATA && pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE) {
         const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
         dispatch(
           pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({

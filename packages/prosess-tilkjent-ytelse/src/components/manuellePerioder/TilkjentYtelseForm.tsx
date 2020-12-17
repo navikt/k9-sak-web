@@ -2,19 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { InjectedFormProps } from 'redux-form';
 import {
   Aksjonspunkt,
   Kodeverk,
   BeregningsresultatUtbetalt,
   InntektArbeidYtelse,
+  Arbeidsforhold,
   KodeverkMedNavn,
+  Vilkar,
 } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
-
 import { FormattedMessage } from 'react-intl';
 import PeriodeTabell from './PeriodeTabell';
 
@@ -28,8 +30,9 @@ interface OwnProps {
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   behandlingStatus: Kodeverk;
-  inntektArbeidYtelse: InntektArbeidYtelse;
+  arbeidsforhold: Arbeidsforhold[];
   vilkarForSykdomExists: boolean;
+  vilkar: Vilkar[];
 }
 
 const FORM_NAME = 'TilkjentYtelseForm';
@@ -41,13 +44,15 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
-  inntektArbeidYtelse,
+  arbeidsforhold,
+  vilkar,
   ...formProps
 }) => {
   return (
     <>
       {aksjonspunkter.length > 0 && (
         <>
+          <VerticalSpacer twentyPx />
           <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
             {[
               <FormattedMessage
@@ -69,7 +74,9 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           alleKodeverk={alleKodeverk}
-          inntektArbeidYtelse={inntektArbeidYtelse}
+          // @ts-ignore
+          arbeidsforhold={arbeidsforhold}
+          vilkar={vilkar}
         />
         {formProps.error && <span>{formProps.error}</span>}
       </form>
@@ -85,30 +92,75 @@ TilkjentYtelseForm.defaultProps = {
   readOnly: true,
 };
 
+export const sjekkOverlappendePerioder = (index: number, nestePeriode: any, forrigePeriode: any) =>
+  index !== 0 && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
+
+const validateForm = (values: any) => {
+  // NOSONAR må ha disse sjekkene
+  const errors = {};
+  if (!values.perioder) {
+    return errors;
+  }
+
+  if (values.perioder.length === 0) {
+    return {
+      perioder: {
+        _error: <FormattedMessage id="TilkjentYtelse.IngenPerioder" />,
+      },
+    };
+  }
+
+  values.perioder.forEach((periode: any, index: number) => {
+    const forrigePeriode = values.perioder[index - 1];
+    const nestePeriode = periode;
+
+    if (sjekkOverlappendePerioder(index, nestePeriode, forrigePeriode)) {
+      return {
+        perioder: {
+          _error: <FormattedMessage id="TilkjentYtelse.OverlappendePerioder" />,
+        },
+      };
+    }
+    return {};
+  });
+
+  return errors;
+};
+
 interface PureOwnProps {
   beregningsresultat: BeregningsresultatUtbetalt[];
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
   behandlingVersjon: number;
+  inntektArbeidYtelse: InntektArbeidYtelse;
   submitCallback: (...args: any[]) => any;
 }
 // @ts-ignore
-const buildInitialValues = createSelector([(props: PureOwnProps) => props.beregningsresultat?.perioder], perioder => {
-  if (perioder) {
-    return {
-      perioder: perioder.map((periode: any) => ({
-        ...periode,
-        id: guid(),
-        openForm: false,
-        // updated: false,
-      })),
-    };
-  }
+const buildInitialValues = createSelector(
+  [
+    // @ts-ignore
+    (props: PureOwnProps) => props.beregningsresultat?.perioder,
+    (props: PureOwnProps) => props.inntektArbeidYtelse?.arbeidsforhold,
+  ],
+  (perioder = [], arbeidsforhold = []) => {
+    if (perioder) {
+      return {
+        arbeidsforhold,
+        perioder: perioder.map((periode: any) => ({
+          ...periode,
+          id: guid(),
+          openForm: false,
+          // updated: false,
+        })),
+      };
+    }
 
-  return {
-    perioder: [],
-  };
-});
+    return {
+      arbeidsforhold,
+      perioder,
+    };
+  },
+);
 
 export const transformValues = (values: any) => {
   return [
@@ -131,16 +183,14 @@ const mapStateToPropsFactory = (_initialState: any, props: PureOwnProps) => {
   const initialValues = buildInitialValues(props);
   const { behandlingId, behandlingVersjon } = props;
 
-  // const validate = (values: any) => validateUttakForm(values, props.aksjonspunkter);
-  // const warn = (values: any) => warningsUttakForm(values);
+  const validate = (values: any) => validateForm(values);
 
   return (_state, ownProps) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     return {
       initialValues,
       behandlingFormPrefix,
-      // validate,
-      // warn,
+      validate,
       onSubmit: lagSubmitFn(ownProps),
     };
   };

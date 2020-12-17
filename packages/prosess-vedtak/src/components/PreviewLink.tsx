@@ -1,5 +1,6 @@
+import {FormattedMessage} from "react-intl";
 import classNames from 'classnames';
-import React, { ReactNode } from 'react';
+import React, {ReactNode} from 'react';
 import styles from './vedtakForm.less';
 
 interface PreviewLinkProps {
@@ -17,5 +18,10 @@ const PreviewLink = ({ previewCallback, children }: PreviewLinkProps) => (
     {children}
   </a>
 );
+
+export const VedtakPreviewLink = ({previewCallback}) =>
+  (<PreviewLink previewCallback={previewCallback}>
+    <FormattedMessage id="VedtakForm.ForhandvisBrev"/>
+  </PreviewLink>);
 
 export default PreviewLink;

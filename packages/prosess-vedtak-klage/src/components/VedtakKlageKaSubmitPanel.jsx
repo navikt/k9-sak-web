@@ -10,16 +10,18 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import styles from './vedtakKlageSubmitPanel.less';
 
-const medholdIKlage = (klageVurderingResultat) => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE);
+const medholdIKlage = klageVurderingResultat =>
+  klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE;
 
-export const isMedholdIKlage = (
-  klageVurderingResultatNFP, klageVurderingResultatNK,
-) => medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
+export const isMedholdIKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) =>
+  medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
 
 const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
   switch (klageVurdering) {
     case klageVurderingType.STADFESTE_YTELSESVEDTAK:
-      return klageVurdertAvKa ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
+      return klageVurdertAvKa
+        ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK
+        : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
     case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
       return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
@@ -33,14 +35,11 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
   }
 };
 
-const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
+const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => e => {
   const klageVurdertAvNK = klageResultat.klageVurdertAv === 'KA';
   const data = {
-    fritekst: begrunnelse || '',
-    mottaker: '',
+    dokumentdata: begrunnelse && { fritekst: begrunnelse },
     dokumentMal: getBrevKode(klageResultat.klageVurdering, klageVurdertAvNK),
-    klageVurdertAv: klageResultat.klageVurdertAv,
-    erOpphevetKlage: klageResultat.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
   };
   if (formProps.valid || formProps.pristine) {
     previewVedtakCallback(data);
@@ -64,20 +63,18 @@ export const VedtakKlageKaSubmitPanelImpl = ({
   return (
     <Row>
       <Column xs="8">
-        {!readOnly
-        && (
-        <Hovedknapp
-          mini
-          className={styles.mainButton}
-          onClick={formProps.handleSubmit}
-          disabled={behandlingPaaVent || formProps.submitting || klageResultat.godkjentAvMedunderskriver}
-          spinner={formProps.submitting}
-        >
-          {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenningKa' })}
-        </Hovedknapp>
+        {!readOnly && (
+          <Hovedknapp
+            mini
+            className={styles.mainButton}
+            onClick={formProps.handleSubmit}
+            disabled={behandlingPaaVent || formProps.submitting || klageResultat.godkjentAvMedunderskriver}
+            spinner={formProps.submitting}
+          >
+            {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenningKa' })}
+          </Hovedknapp>
         )}
-        {!readOnly
-        && (
+        {!readOnly && (
           <Hovedknapp
             mini
             className={styles.mainButton}
@@ -91,7 +88,7 @@ export const VedtakKlageKaSubmitPanelImpl = ({
         <a
           href=""
           onClick={previewBrev}
-          onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
+          onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
           className={classNames('lenke lenke--frittstaende')}
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />

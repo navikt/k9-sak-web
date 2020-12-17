@@ -41,7 +41,7 @@ const TilbakekrevingVedtakPeriodeTabell: FunctionComponent<OwnProps> = ({ period
           <Normaltekst>{getKodeverknavn(periode.vurdering)}</Normaltekst>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{periode.andelAvBeløp ? `${periode.andelAvBeløp}%` : ''}</Normaltekst>
+          <Normaltekst>{periode.andelAvBeløp !== undefined && periode.andelAvBeløp !== null ? `${periode.andelAvBeløp}%` : ''}</Normaltekst>
         </TableColumn>
         <TableColumn>
           <Normaltekst>{periode.renterProsent ? `${periode.renterProsent}%` : ''}</Normaltekst>

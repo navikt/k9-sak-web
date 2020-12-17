@@ -13,7 +13,7 @@ import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
-
+import BrevPanel from '../brev/BrevPanel';
 
 const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   id: 1,
@@ -32,10 +32,13 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
       kode: behandlingResultatType,
       navn: 'test',
     },
-    avslagsarsak: behandlingResultatType === BehandlingResultatType.AVSLATT ? {
-      kode: '1019',
-      navn: 'Manglende dokumentasjon',
-    } : null,
+    avslagsarsak:
+      behandlingResultatType === BehandlingResultatType.AVSLATT
+        ? {
+            kode: '1019',
+            navn: 'Manglende dokumentasjon',
+          }
+        : null,
     avslagsarsakFritekst: null,
   },
   status: {
@@ -55,7 +58,6 @@ const resultatstruktur = {
 
 const createBehandlingAvslag = () => createBehandling(BehandlingResultatType.AVSLATT);
 const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPPHOR);
-
 
 describe('<VedtakRevurderingForm>', () => {
   it('skal vise result ved avslag, og submitpanel', () => {
@@ -81,28 +83,31 @@ describe('<VedtakRevurderingForm>', () => {
       erAktivt: true,
     });
 
-    const wrapper = shallow(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      behandlingStatusKode={revurdering.status.kode}
-      behandlingresultat={revurdering.behandlingsresultat}
-      aksjonspunkter={revurdering.aksjonspunkter}
-      previewCallback={previewCallback}
-      readOnly={false}
-      ytelseTypeKode="ES"
-      isBehandlingReadOnly={false}
-      resultatstruktur={resultatstruktur}
-      beregningErManueltFastsatt={false}
-    />);
+    const wrapper = shallow(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        behandlingStatusKode={revurdering.status.kode}
+        behandlingresultat={revurdering.behandlingsresultat}
+        aksjonspunkter={revurdering.aksjonspunkter}
+        previewCallback={previewCallback}
+        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        readOnly={false}
+        ytelseTypeKode="ES"
+        isBehandlingReadOnly={false}
+        resultatstruktur={resultatstruktur}
+        beregningErManueltFastsatt={false}
+      />,
+    );
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
   });
 
-
-  it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll og link for å forhåndsvise brev', () => {
+  it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
 
@@ -127,29 +132,33 @@ describe('<VedtakRevurderingForm>', () => {
       erAktivt: true,
     });
 
-    const wrapper = shallow(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={1}
-      behandlingStatusKode={revurdering.status.kode}
-      behandlingresultat={revurdering.behandlingsresultat}
-      aksjonspunkter={revurdering.aksjonspunkter}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
-      readOnly={false}
-      ytelseTypeKode="ES"
-      isBehandlingReadOnly
-      resultatstruktur={resultatstruktur}
-      beregningErManueltFastsatt={false}
-    />);
+    const wrapper = shallow(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={1}
+        behandlingStatusKode={revurdering.status.kode}
+        behandlingresultat={revurdering.behandlingsresultat}
+        aksjonspunkter={revurdering.aksjonspunkter}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
+        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        readOnly={false}
+        ytelseTypeKode="ES"
+        isBehandlingReadOnly
+        resultatstruktur={resultatstruktur}
+        beregningErManueltFastsatt={false}
+      />,
+    );
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
   });
 
-  it('skal vise result ved ingen endring, hoved knappen og ikke vise link for forhandsvise brev', () => {
+  it('skal vise result ved ingen endring, hoved knappen', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
@@ -160,27 +169,30 @@ describe('<VedtakRevurderingForm>', () => {
       },
     };
 
-    const wrapper = shallow(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={1}
-      behandlingStatusKode={revurdering.status.kode}
-      behandlingresultat={revurdering.behandlingsresultat}
-      aksjonspunkter={revurdering.aksjonspunkter}
-      previewCallback={previewCallback}
-      readOnly={false}
-      ytelseTypeKode="ES"
-      isBehandlingReadOnly
-      resultatstruktur={resultatstruktur}
-      beregningErManueltFastsatt={false}
-    />);
+    const wrapper = shallow(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        antallBarn={1}
+        behandlingStatusKode={revurdering.status.kode}
+        behandlingresultat={revurdering.behandlingsresultat}
+        aksjonspunkter={revurdering.aksjonspunkter}
+        previewCallback={previewCallback}
+        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        readOnly={false}
+        ytelseTypeKode="ES"
+        isBehandlingReadOnly
+        resultatstruktur={resultatstruktur}
+        beregningErManueltFastsatt={false}
+      />,
+    );
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
   });
-
 
   it('skal vise result ved ingen endring, og submitpanel', () => {
     const previewCallback = sinon.spy();
@@ -193,53 +205,88 @@ describe('<VedtakRevurderingForm>', () => {
       },
     };
 
-    const wrapper = shallow(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      behandlingStatusKode={revurdering.status.kode}
-      behandlingresultat={revurdering.behandlingsresultat}
-      aksjonspunkter={revurdering.aksjonspunkter}
-      antallBarn={1}
-      previewCallback={previewCallback}
-      haveSentVarsel
-      readOnly={false}
-      ytelseTypeKode="ES"
-      isBehandlingReadOnly
-      resultatstruktur={resultatstruktur}
-      beregningErManueltFastsatt={false}
-    />);
+    const wrapper = shallow(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        behandlingStatusKode={revurdering.status.kode}
+        behandlingresultat={revurdering.behandlingsresultat}
+        aksjonspunkter={revurdering.aksjonspunkter}
+        antallBarn={1}
+        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        previewCallback={previewCallback}
+        haveSentVarsel
+        readOnly={false}
+        ytelseTypeKode="ES"
+        isBehandlingReadOnly
+        resultatstruktur={resultatstruktur}
+        beregningErManueltFastsatt={false}
+      />,
+    );
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
   });
-
 
   it('skal vise opphørspanel når behandlingsresultat er opphør', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingOpphor();
 
-    const wrapper = shallow(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      behandlingStatusKode={revurdering.status.kode}
-      behandlingresultat={revurdering.behandlingsresultat}
-      aksjonspunkter={revurdering.aksjonspunkter}
-      antallBarn={1}
-      previewCallback={previewCallback}
-      haveSentVarsel
-      readOnly={false}
-      ytelseTypeKode="ES"
-      isBehandlingReadOnly
-      resultatstruktur={resultatstruktur}
-      beregningErManueltFastsatt={false}
-    />);
+    const wrapper = shallow(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        behandlingStatusKode={revurdering.status.kode}
+        behandlingresultat={revurdering.behandlingsresultat}
+        aksjonspunkter={revurdering.aksjonspunkter}
+        antallBarn={1}
+        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        previewCallback={previewCallback}
+        haveSentVarsel
+        readOnly={false}
+        ytelseTypeKode="ES"
+        isBehandlingReadOnly
+        resultatstruktur={resultatstruktur}
+        beregningErManueltFastsatt={false}
+      />,
+    );
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
     expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakOpphorRevurderingPanel)).to.have.length(1);
     expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
+    expect(wrapper.find(BrevPanel)).to.have.length(1);
+  });
+
+  it('skal vise avkrysningsboks for roller uten overstyringstilgang', () => {
+    const previewCallback = sinon.spy();
+    const revurdering = createBehandlingOpphor();
+
+    const wrapper = shallow(
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        behandlingStatusKode={revurdering.status.kode}
+        behandlingresultat={revurdering.behandlingsresultat}
+        aksjonspunkter={revurdering.aksjonspunkter}
+        antallBarn={1}
+        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        previewCallback={previewCallback}
+        haveSentVarsel
+        readOnly={false}
+        kanOverstyre={false}
+        ytelseTypeKode="ES"
+        isBehandlingReadOnly
+        resultatstruktur={resultatstruktur}
+        beregningErManueltFastsatt={false}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
+      />,
+    );
+    const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
+    expect(overstyringsKnapp).to.have.length(1);
   });
 });

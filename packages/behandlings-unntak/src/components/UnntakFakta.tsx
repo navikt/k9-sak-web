@@ -1,13 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Dispatch } from 'redux';
-
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FagsakInfo, Rettigheter, SideMenuWrapper, faktaHooks } from '@fpsak-frontend/behandling-felles';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-
 import unntakBehandlingApi from '../data/unntakBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -18,7 +16,6 @@ const overstyringApCodes = [
   ac.OVERSTYR_AVKLAR_STARTDATO,
   ac.MANUELL_AVKLAR_FAKTA_UTTAK,
   ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-  ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
 ];
 
 interface OwnProps {
@@ -49,14 +46,13 @@ const UnntakFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setApentFaktaPanel,
   dispatch,
 }) => {
-  const { aksjonspunkter, vilkar, personopplysninger, beregningsgrunnlag } = data;
+  const { aksjonspunkter, vilkar, personopplysninger } = data;
 
   const dataTilUtledingAvFpPaneler = {
     fagsak,
     behandling,
     vilkar,
     personopplysninger,
-    beregningsgrunnlag,
     hasFetchError,
   };
 

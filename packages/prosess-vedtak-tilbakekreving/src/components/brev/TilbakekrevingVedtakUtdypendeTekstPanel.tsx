@@ -59,10 +59,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel: FunctionComponent<OwnProps
               alt={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst' })}
             />
             <Undertekst className={styles.imageText}>
-              <FormattedMessage
-                className={styles.text}
-                id="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst"
-              />
+              <FormattedMessage id="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst" />
             </Undertekst>
           </div>
         </>

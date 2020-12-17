@@ -103,9 +103,9 @@ describe('<UnntakProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -160,9 +160,9 @@ describe('<UnntakProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -212,9 +212,9 @@ describe('<UnntakProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -268,9 +268,9 @@ describe('<UnntakProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -324,9 +324,9 @@ describe('<UnntakProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -356,9 +356,9 @@ describe('<UnntakProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -386,9 +386,9 @@ describe('<UnntakProsess>', () => {
         hasFetchError={false}
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        featureToggles={{}}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Kodeverk, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -27,7 +27,7 @@ interface OwnProps {
     opprettet: string;
     avsluttet?: string;
   }[];
-  featureToggles: {};
+  featureToggles: FeatureToggles;
 }
 
 const KlagePaneler: FunctionComponent<OwnProps> = ({

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FagsakInfo, BehandlingPaVent, SettPaVentParams, Rettigheter } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Kodeverk, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 
 import AnkeProsess from './AnkeProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -24,7 +24,7 @@ interface OwnProps {
     type: Kodeverk;
     avsluttet?: string;
   }[];
-  featureToggles: {};
+  featureToggles: FeatureToggles;
 }
 
 const AnkePaneler: FunctionComponent<OwnProps> = ({

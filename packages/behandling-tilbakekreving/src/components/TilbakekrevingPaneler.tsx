@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FagsakInfo, BehandlingPaVent, SettPaVentParams, Rettigheter } from '@fpsak-frontend/behandling-felles';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
 
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
@@ -24,7 +24,7 @@ interface OwnProps {
   opneSokeside: () => void;
   harApenRevurdering: boolean;
   hasFetchError: boolean;
-  featureToggles: {};
+  featureToggles: FeatureToggles;
 }
 
 const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({

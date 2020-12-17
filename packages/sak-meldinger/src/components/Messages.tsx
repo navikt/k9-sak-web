@@ -25,11 +25,24 @@ import styles from './messages.less';
 const maxLength4000 = maxLength(4000);
 const minLength3 = minLength(3);
 
-const getFritekstMessage = brevmalkode =>
+export type FormValues = {
+  mottaker: string;
+  brevmalkode: string;
+  fritekst: string;
+  arsakskode?: string;
+};
+
+export type Template = {
+  kode: string;
+  navn: string;
+  tilgjengelig: boolean;
+};
+
+const getFritekstMessage = (brevmalkode?: string): string =>
   brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst';
 
 // TODO (TOR) Bør erstattast av ein markør fra backend
-const showFritekst = (brevmalkode, arsakskode) =>
+const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
   brevmalkode === dokumentMalType.INNHENT_DOK ||
   brevmalkode === dokumentMalType.KORRIGVARS ||
   brevmalkode === dokumentMalType.FRITKS ||
@@ -39,11 +52,7 @@ const showFritekst = (brevmalkode, arsakskode) =>
 interface OwnProps {
   previewCallback: (mottaker: string, brevmalkode: string, fritekst: string, arsakskode: string) => void;
   recipients: string[];
-  templates: {
-    kode: string;
-    navn: string;
-    tilgjengelig: boolean;
-  }[];
+  templates: Template[];
   causes: KodeverkMedNavn[];
   handleSubmit: () => void;
   sprakKode?: Kodeverk;
@@ -61,9 +70,9 @@ interface OwnProps {
  */
 export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
   intl,
-  recipients,
-  templates,
-  causes,
+  recipients = [],
+  templates = [],
+  causes = [],
   previewCallback,
   handleSubmit,
   sprakKode,
@@ -89,7 +98,6 @@ export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & 
   };
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
-
   return (
     <form onSubmit={handleSubmit}>
       <SelectField
@@ -97,7 +105,7 @@ export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & 
         label={intl.formatMessage({ id: 'Messages.Recipient' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
-        selectValues={recipients.map(recipient => (
+        selectValues={(recipients || []).map(recipient => (
           <option key={recipient} value={recipient}>
             {recipient}
           </option>
@@ -110,7 +118,7 @@ export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & 
         label={intl.formatMessage({ id: 'Messages.Template' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
-        selectValues={templates.map(template => (
+        selectValues={(templates || []).map(template => (
           <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>
             {template.navn}
           </option>
@@ -152,7 +160,7 @@ export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & 
         <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
           {intl.formatMessage({ id: 'Messages.Submit' })}
         </Hovedknapp>
-        {!!templates.length && (
+        {(templates || []).length > 0 && (
           <a
             href=""
             onClick={previewMessage}

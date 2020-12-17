@@ -4,23 +4,22 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import classNames from 'classnames';
+import { injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { kanHaFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -30,51 +29,12 @@ import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import BrevPanel from './brev/BrevPanel';
 
-const getPreviewManueltBrevCallback = (
-  formProps,
-  begrunnelse,
-  brodtekst,
-  overskrift,
-  skalOverstyre,
-  previewCallback,
-) => e => {
-  if (formProps.valid || formProps.pristine) {
-    const data = {
-      fritekst: skalOverstyre ? brodtekst : begrunnelse,
-      dokumentMal: skalOverstyre ? 'FRITKS' : 'UTLED',
-      tittel: overskrift,
-      gjelderVedtak: true,
-    };
-
-    previewCallback(data);
-  } else {
-    formProps.submit();
-  }
-  e.preventDefault();
-};
-
 const isVedtakSubmission = true;
-
-export const ForhaandsvisningsKnapp = props => {
-  const { previewFunction } = props;
-  return (
-    <a
-      href=""
-      onClick={previewFunction}
-      onKeyDown={e => (e.keyCode === 13 ? previewFunction(e) : null)}
-      className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
-    >
-      <FormattedMessage id="VedtakForm.ForhandvisBrev" />
-    </a>
-  );
-};
-
-ForhaandsvisningsKnapp.propTypes = {
-  previewFunction: PropTypes.func.isRequired,
-};
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
+
+const formName = 'VedtakForm';
 
 export class VedtakForm extends Component {
   constructor(props) {
@@ -105,12 +65,8 @@ export class VedtakForm extends Component {
       behandlingPaaVent,
       antallBarn,
       previewCallback,
-      begrunnelse,
-      brødtekst,
-      overskrift,
       aksjonspunktKoder,
       sprakkode,
-      erBehandlingEtterKlage,
       skalBrukeOverstyrendeFritekstBrev,
       initialValues,
       ytelseTypeKode,
@@ -120,34 +76,14 @@ export class VedtakForm extends Component {
       simuleringResultat,
       vilkar,
       beregningErManueltFastsatt,
-      vedtakVarsel,
       tilgjengeligeVedtaksbrev,
       dokumentdata,
+      brødtekst,
+      overskrift,
+      begrunnelse,
       ...formProps
     } = this.props;
-    const previewOverstyrtBrev = getPreviewManueltBrevCallback(
-      formProps,
-      begrunnelse,
-      brødtekst,
-      overskrift,
-      true,
-      previewCallback,
-    );
-    const previewDefaultBrev = getPreviewManueltBrevCallback(
-      formProps,
-      begrunnelse,
-      brødtekst,
-      overskrift,
-      false,
-      previewCallback,
-    );
 
-    const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
-    const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
-    const skalViseLink =
-      (vedtakVarsel.avslagsarsak === null ||
-        (vedtakVarsel.avslagsarsak && vedtakVarsel.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER)) &&
-      harTilgjengeligeVedtaksbrev;
     const skalSkjuleFattVedtakKnapp =
       aksjonspunktKoder &&
       aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
@@ -160,12 +96,18 @@ export class VedtakForm extends Component {
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
         >
-          <VedtakOverstyrendeKnapp
-            toggleCallback={this.onToggleOverstyring}
-            readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
-            keyName="skalBrukeOverstyrendeFritekstBrev"
-            readOnlyHideEmpty={false}
-          />
+          {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
+            <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
+          ) : (
+            kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+              <VedtakOverstyrendeKnapp
+                toggleCallback={this.onToggleOverstyring}
+                readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
+                keyName="skalBrukeOverstyrendeFritekstBrev"
+                readOnlyHideEmpty={false}
+              />
+            )
+          )}
 
           {isInnvilget(behandlingresultat.type.kode) && (
             <VedtakInnvilgetPanel
@@ -203,11 +145,15 @@ export class VedtakForm extends Component {
             readOnly={readOnly}
             sprakkode={sprakkode}
             ytelseTypeKode={ytelseTypeKode}
+            dokumentdata={dokumentdata}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             beregningErManueltFastsatt={beregningErManueltFastsatt}
-            dokumentdata={dokumentdata}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             previewCallback={previewCallback}
+            formProps={formProps}
+            brødtekst={brødtekst}
+            overskrift={overskrift}
+            begrunnelse={begrunnelse}
           />
           {kanSendesTilGodkjenning(behandlingStatusKode) && (
             <Row>
@@ -230,12 +176,6 @@ export class VedtakForm extends Component {
                     })}
                   </Hovedknapp>
                 )}
-                {skalBrukeOverstyrendeFritekstBrev && skalViseLink && (
-                  <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-                )}
-                {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage && (
-                  <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
-                )}
               </Column>
             </Row>
           )}
@@ -248,9 +188,6 @@ export class VedtakForm extends Component {
 VedtakForm.propTypes = {
   resultatstruktur: vedtakBeregningsresultatPropType,
   intl: PropTypes.shape().isRequired,
-  begrunnelse: PropTypes.string,
-  brødtekst: PropTypes.string,
-  overskrift: PropTypes.string,
   antallBarn: PropTypes.number,
   behandlingStatusKode: PropTypes.string.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -268,7 +205,6 @@ VedtakForm.propTypes = {
   simuleringResultat: PropTypes.shape(),
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  vedtakVarsel: PropTypes.shape(),
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
   dokumentdata: PropTypes.shape(),
   ...formPropTypes,
@@ -276,9 +212,6 @@ VedtakForm.propTypes = {
 
 VedtakForm.defaultProps = {
   antallBarn: undefined,
-  begrunnelse: undefined,
-  brødtekst: undefined,
-  overskrift: undefined,
   kanOverstyre: undefined,
   resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
@@ -314,8 +247,12 @@ export const buildInitialValues = createSelector(
     skalBrukeOverstyrendeFritekstBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
       vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
-    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.overskrift),
-    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKST]?.brødtekst),
+    skalUndertrykkeBrev:
+      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
+      vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
+    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
+    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+    begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
   }),
 );
 
@@ -327,13 +264,11 @@ const transformValues = values =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     begrunnelse: values.begrunnelse,
-    fritekstBrev: values.brødtekst,
+    fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
     skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-    overskrift: values.overskrift,
+    skalUndertrykkeBrev: values.skalUndertrykkeBrev,
     isVedtakSubmission,
   }));
-
-const formName = 'VedtakForm';
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
   [ownProps => ownProps.behandlingArsaker],
@@ -356,11 +291,12 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'antallBarn',
-      'begrunnelse',
       'aksjonspunktKoder',
       'skalBrukeOverstyrendeFritekstBrev',
-      'overskrift',
+      'skalUndertrykkeBrev',
       'brødtekst',
+      'overskrift',
+      'begrunnelse',
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
     behandlingStatusKode: ownProps.behandlingStatus.kode,

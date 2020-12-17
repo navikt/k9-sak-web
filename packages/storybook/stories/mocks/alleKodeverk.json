@@ -156,6 +156,11 @@
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
     },
     {
+      "kode": "BEH_STARTET_FORFRA",
+      "navn": "Behandling startet forfra",
+      "kodeverk": "HISTORIKKINNSLAG_TYPE"
+    },
+    {
       "kode": "ANKEBEH_STARTET",
       "navn": "Anke mottatt",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
