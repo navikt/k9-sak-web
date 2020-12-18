@@ -22,6 +22,7 @@ export const KlageBehandlingApiKeys = {
   SAVE_REOPEN_KLAGE_VURDERING: 'SAVE_REOPEN_KLAGE_VURDERING',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
+  ARBEIDSGIVERE: 'ARBEIDSGIVERE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -30,6 +31,7 @@ const endpoints = new RestApiConfigBuilder()
   // behandlingsdata
   .withRel('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
+  .withRel('arbeidsgivere', KlageBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withPost('/k9/klage/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)

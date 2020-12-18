@@ -46,14 +46,13 @@ const UnntakFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setApentFaktaPanel,
   dispatch,
 }) => {
-  const { aksjonspunkter, vilkar, personopplysninger } = data;
+  const { aksjonspunkter, ...rest } = data;
 
   const dataTilUtledingAvFpPaneler = {
     fagsak,
     behandling,
-    vilkar,
-    personopplysninger,
     hasFetchError,
+    ...rest,
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(

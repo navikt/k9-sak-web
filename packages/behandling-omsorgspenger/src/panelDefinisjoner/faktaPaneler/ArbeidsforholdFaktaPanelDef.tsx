@@ -14,13 +14,16 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE, omsorgspengerBehandlingApi.ARBEIDSGIVERE];
+  getEndepunkter = () => [omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE];
 
   getKomponent = props => <ArbeidsforholdFaktaIndex {...props} />;
 
   getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
-  getData = ({ personopplysninger }) => ({ personopplysninger });
+  getData = ({ personopplysninger, arbeidsgivere }) => ({
+    personopplysninger,
+    arbeidsgivere,
+  });
 }
 
 export default ArbeidsforholdFaktaPanelDef;

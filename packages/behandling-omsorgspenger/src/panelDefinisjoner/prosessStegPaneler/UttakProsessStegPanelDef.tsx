@@ -28,10 +28,11 @@ class PanelDef extends ProsessStegPanelDef {
     return allePerioderAvslått ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ forbrukteDager, aksjonspunkterForSteg }) => ({
+  getData = ({ forbrukteDager, aksjonspunkterForSteg, arbeidsgivere }) => ({
     årskvantum: forbrukteDager,
     aksjonspunkterForSteg,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
+    arbeidsgivere,
   });
 }
 

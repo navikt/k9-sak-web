@@ -12,14 +12,13 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.ARBEIDSGIVERE];
-
   getKomponent = props => <FordelBeregningIndex {...props} />;
 
   getOverstyrVisningAvKomponent = () => false;
 
-  getData = ({ beregningsgrunnlag }) => ({
+  getData = ({ beregningsgrunnlag, arbeidsgivere }) => ({
     beregningsgrunnlag,
+    arbeidsgivere,
   });
 }
 

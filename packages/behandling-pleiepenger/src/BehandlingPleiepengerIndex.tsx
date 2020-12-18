@@ -21,6 +21,7 @@ const pleiepengerData = [
   pleiepengerBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
   pleiepengerBehandlingApi.BEREGNINGSGRUNNLAG,
   pleiepengerBehandlingApi.SIMULERING_RESULTAT,
+  pleiepengerBehandlingApi.ARBEIDSGIVERE,
 ];
 
 interface OwnProps {

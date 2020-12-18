@@ -22,6 +22,7 @@ export const InnsynBehandlingApiKeys = {
   INNSYN_DOKUMENTER: 'INNSYN_DOKUMENTER',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
+  ARBEIDSGIVERE: 'ARBEIDSGIVERE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -32,6 +33,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('vilkar-v3', InnsynBehandlingApiKeys.VILKAR)
   .withRel('innsyn', InnsynBehandlingApiKeys.INNSYN)
   .withRel('dokumenter', InnsynBehandlingApiKeys.INNSYN_DOKUMENTER)
+  .withRel('arbeidsgivere', InnsynBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
