@@ -159,7 +159,7 @@ FordelingFormImpl.propTypes = {
   ...formPropTypes,
 };
 
-const kreverManuellBehandling = bg => {
+const kreverManuellBehandlingFn = bg => {
   const fordeling = bg.faktaOmFordeling;
   if (fordeling) {
     const fordelBg = fordeling.fordelBeregningsgrunnlag;
@@ -172,7 +172,7 @@ const kreverManuellBehandling = bg => {
 
 const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, vilkårsperioder) => {
   return fieldArrayList
-    .filter((currentFormValues, index) => kreverManuellBehandling(alleBeregningsgrunnlag[index]))
+    .filter((currentFormValues, index) => kreverManuellBehandlingFn(alleBeregningsgrunnlag[index]))
     .map((currentFormValues, index) => {
       const bg = alleBeregningsgrunnlag[index];
       const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;

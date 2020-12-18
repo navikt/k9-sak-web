@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { visningsdato } from '@fpsak-frontend/utils';
@@ -26,6 +27,7 @@ const PanelHeader = styled.span`
   h4 {
     font-weight: 600;
     margin: 0 1em 0 0;
+    flex-grow: 1;
   }
 `;
 
@@ -33,8 +35,8 @@ const PanelContent = styled.div`
   padding: 0.5em 1em;
 `;
 
-const Fnr = styled.span`
-  font-style: italic;
+const Fodselsinfo = styled.div`
+  flex-grow: 1;
 `;
 
 const BarnInfo: FunctionComponent<BarnInfoProps> = ({ barnet, barnnummer }) => {
@@ -45,7 +47,17 @@ const BarnInfo: FunctionComponent<BarnInfoProps> = ({ barnet, barnnummer }) => {
         <h4>
           <FormattedMessage id="FaktaBarn.BarnNummer" values={{ index: barnnummer }} />
         </h4>
-        <Fnr>{personIdent.length === 11 ? personIdent : visningsdato(fødselsdato)}</Fnr>
+        <Fodselsinfo>
+          <FormattedMessage
+            id="FaktaBarn.Fødselsinfo"
+            values={{
+              b: chunks => <b>{chunks}</b>,
+              i: chunks => <i>{chunks}</i>,
+              dato: visningsdato(fødselsdato),
+              alder: moment().diff(fødselsdato, 'years'),
+            }}
+          />
+        </Fodselsinfo>
       </PanelHeader>
       <PanelContent>
         <Normaltekst>
