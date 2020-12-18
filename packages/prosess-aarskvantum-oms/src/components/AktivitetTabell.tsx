@@ -3,7 +3,7 @@ import show from "@fpsak-frontend/assets/images/show.svg";
 import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
 
 import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
-import { Arbeidsforhold, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum } from '@k9-sak-web/types';
+import { Arbeidsforhold, FeatureToggles, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum } from '@k9-sak-web/types';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from "nav-frontend-hjelpetekst";
 import Panel from 'nav-frontend-paneler';
@@ -22,6 +22,7 @@ interface AktivitetTabellProps {
   arbeidsforholdtypeKode: string;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
+  featureToggles: FeatureToggles;
 }
 
 const periodevisning = (periode: string): string => {
@@ -73,6 +74,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   arbeidsforholdtypeKode,
   uttaksperioder,
   aktivitetsstatuser,
+  featureToggles,
 }) => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const [valgteDetaljfaner, velgDetaljfaner] = useState<number[]>();
@@ -206,7 +208,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
           };
 
           const faner = ["Uttaksplan.Vilkår", "Uttaksplan.Hjemler"];
-          if (nøkkeltall) {
+          if (nøkkeltall && featureToggles?.PERIODISERTE_NOKKELTALL) {
             faner.push(nøkkeltall.migrertData ? "Uttaksplan.Nokkeltall.Migrert" : "Uttaksplan.Nokkeltall");
           }
 
@@ -243,7 +245,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                       kompakt
                       defaultAktiv={valgteDetaljfaner?.[index]}
                     />
-                    {!nøkkeltall && <>
+                    {!nøkkeltall && featureToggles?.PERIODISERTE_NOKKELTALL && <>
                       {/* Nav-frontend-tabs støtter ikke deaktiverte faner */}
                       <div className={styles.deaktivertFane}>
                         <FormattedMessage id="Uttaksplan.Nokkeltall"/>
