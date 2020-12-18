@@ -56,17 +56,22 @@ const fieldLabel = (index, labelId) => {
   return '';
 };
 
-const arbeidsgiverSelectValues = (arbeidsforholdList, getKodeverknavn) =>
+const arbeidsgiverSelectValues = (arbeidsforholdList, getKodeverknavn, arbeidsgiverOpplysningerPerId) =>
   arbeidsforholdList.map(arbeidsforhold => (
     <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
-      {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn)}
+      {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
     </option>
   ));
 
-const arbeidsgiverSelectValuesForKunYtelse = (arbeidsforholdList, intl, getKodeverknavn) => {
+const arbeidsgiverSelectValuesForKunYtelse = (
+  arbeidsforholdList,
+  intl,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
+) => {
   const nedtrekksvalgListe = arbeidsforholdList.map(arbeidsforhold => (
     <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
-      {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn)}
+      {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
     </option>
   ));
   nedtrekksvalgListe.push(
@@ -382,13 +387,14 @@ export const RenderFordelBGFieldArrayImpl = ({
   harKunYtelse,
   erRevurdering,
   getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const sumFordelingForrigeBehandling = summerFordelingForrigeBehandlingFraFields(fields);
   const sumFordeling = summerFordeling(fields);
   const sumBeregningsgrunnlagPrAar = summerBeregningsgrunnlagPrAar(fields);
   const selectVals = harKunYtelse
-    ? arbeidsgiverSelectValuesForKunYtelse(arbeidsforholdList, intl, getKodeverknavn)
-    : arbeidsgiverSelectValues(arbeidsforholdList, getKodeverknavn);
+    ? arbeidsgiverSelectValuesForKunYtelse(arbeidsforholdList, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId)
+    : arbeidsgiverSelectValues(arbeidsforholdList, getKodeverknavn, arbeidsgiverOpplysningerPerId);
   const tablerows = createAndelerTableRows(
     fields,
     isAksjonspunktClosed,
@@ -448,6 +454,7 @@ RenderFordelBGFieldArrayImpl.propTypes = {
   harKunYtelse: PropTypes.bool.isRequired,
   erRevurdering: PropTypes.bool.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 const RenderFordelBGFieldArray = injectIntl(RenderFordelBGFieldArrayImpl);
@@ -457,6 +464,7 @@ RenderFordelBGFieldArray.validate = (
   sumIPeriode,
   skalValidereMotBeregningsgrunnlagPrAar,
   getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
   grunnbeløp,
   periodeDato,
 ) => {
@@ -486,7 +494,11 @@ RenderFordelBGFieldArray.validate = (
   if (totalRefusjonError) {
     return { _error: <FormattedMessage id={totalRefusjonError[0].id} values={totalRefusjonError[1]} /> };
   }
-  const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(values, getKodeverknavn);
+  const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(
+    values,
+    getKodeverknavn,
+    arbeidsgiverOpplysningerPerId,
+  );
   if (refusjonPrArbeidsforholdError) {
     return {
       _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} />,

@@ -108,13 +108,17 @@ export const skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding = arbeidsgiver =>
   { arbeidsgiver },
 ];
 
-export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn) => {
+export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   const arbeidsforholdRefusjonsinfo = finnArbeidsforholdRefusjonsinfoListe(andelList);
   const arbeidsforholdMedForHogRefusjon = arbeidsforholdRefusjonsinfo.filter(
     refusjonsInfo => refusjonsInfo.totalRefusjon > refusjonsInfo.refusjonskravFraInntektsmelding,
   );
   if (arbeidsforholdMedForHogRefusjon.length > 0) {
-    const arbeidsgiverString = createVisningsnavnForAktivitet(arbeidsforholdMedForHogRefusjon[0], getKodeverknavn);
+    const arbeidsgiverString = createVisningsnavnForAktivitet(
+      arbeidsforholdMedForHogRefusjon[0],
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     return skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverString);
   }
   return null;
