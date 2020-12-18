@@ -22,16 +22,19 @@ jobs:
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 12.x
-      - name: Get yarn cache
-        id: yarn-cache
+      - name: Get yarn cache directory path and set timestamp
+        id: yarn-cache-dir-path
         run: |
           echo "::set-output name=dir::$(yarn cache dir)"
           echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
       - name: Cache node modules
         uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
       - name: Tester, typescript-sjekk og linting
@@ -73,22 +76,22 @@ jobs:
               });
             });
 
-      -  name: Opprett deployment issue
-         id: createdeployissue
-         if: success()
-         uses: actions/github-script@v3
-         with:
-           github-token: ${{secrets.GITHUB_TOKEN}}
-           script: |
-               github.issues.create( {
-                 owner: context.issue.owner,
-                 repo: context.issue.repo,
-                 labels: ['deployment'],
-                 body: 'Kommenter enten "/promote dev-fss default" eller "/promote prod-fss default"',
-                 title: 'Deploy av ${{ env.TAG }}'})
-               .then(response => {
-                       core.setOutput('number', response.data.number);
-                });
+      - name: Opprett deployment issue
+        id: createdeployissue
+        if: success()
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.create( {
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              labels: ['deployment'],
+              body: 'Kommenter enten "/promote dev-fss default" eller "/promote prod-fss default"',
+              title: 'Deploy av ${{ env.TAG }}'})
+            .then(response => {
+                    core.setOutput('number', response.data.number);
+             });
 
       - name: Trigger verdikjede test
         if: success()
