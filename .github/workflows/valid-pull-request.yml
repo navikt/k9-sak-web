@@ -11,14 +11,17 @@ jobs:
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 12.x
-      - name: Get yarn cache
-        id: yarn-cache
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Cache node modules
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
       - name: Tester, typescript-sjekk og linting
