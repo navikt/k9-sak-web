@@ -67,3 +67,5 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
+    - name: PERIODISERING_NOKKELTALL
+      value: "false"
