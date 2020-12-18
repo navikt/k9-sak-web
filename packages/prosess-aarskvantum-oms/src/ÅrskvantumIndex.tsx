@@ -42,6 +42,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   submitCallback,
   aksjonspunkterForSteg = [],
   inntektArbeidYtelse,
+  arbeidsgivere,
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
@@ -65,6 +66,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiv={sisteUttaksplan?.aktiv}
         // @ts-ignore
         arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
       />
     </RawIntlProvider>
   );

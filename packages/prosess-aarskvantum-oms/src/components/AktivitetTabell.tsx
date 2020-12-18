@@ -1,13 +1,6 @@
 import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import {
-  Arbeidsforhold,
-  KodeverkMedNavn,
-  Utfalltype,
-  VilkårEnum,
-  Uttaksperiode,
-  Vilkår,
-} from '@k9-sak-web/types';
+import { Arbeidsforhold, KodeverkMedNavn, Utfalltype, VilkårEnum, Uttaksperiode, Vilkår } from '@k9-sak-web/types';
 import { Table, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
@@ -43,7 +36,7 @@ const dagerOgTimer = (duration?: string) => {
     return convertHoursToDays(timer);
   }
   return { days: 0, hours: 0 };
-}
+};
 
 const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => {
   if (delvisFravær) {
@@ -98,13 +91,14 @@ const utfallErIngenUtbetaling = (delvisFravær: string) => {
     }
   }
   return false;
-}
+};
 
 const arbeidsforholdSist = (_, [vilkår_2]: [Vilkår, Utfalltype]): number =>
   vilkår_2 === VilkårEnum.ARBEIDSFORHOLD ? -1 : 0;
 
 const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   arbeidsforhold,
+  arbeidsgiverOpplysningerPerId,
   arbeidsforholdtypeKode,
   uttaksperioder,
   aktivitetsstatuser,
@@ -124,7 +118,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
     arbeidsforholdtypeKode;
 
   const beskrivelse = arbeidsforhold
-    ? `${arbeidsforholdType}, ${utledArbeidsforholdNavn(arbeidsforhold)}`
+    ? `${arbeidsforholdType}, ${utledArbeidsforholdNavn(arbeidsforhold, arbeidsgiverOpplysningerPerId)}`
     : arbeidsforholdType;
 
   return (
@@ -200,12 +194,9 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                 {erValgt && (
                   <ExpandedContent fyllBorder>
                     <Vilkårsutfall>
-                      {sorterteVilkår.map(([key, vilkårsutfall]) =>
-                        <Utfall
-                          utfall={vilkårsutfall}
-                          key={`${periode}--${key}.${vilkårsutfall}`}
-                        />
-                      )}
+                      {sorterteVilkår.map(([key, vilkårsutfall]) => (
+                        <Utfall utfall={vilkårsutfall} key={`${periode}--${key}.${vilkårsutfall}`} />
+                      ))}
                     </Vilkårsutfall>
                   </ExpandedContent>
                 )}

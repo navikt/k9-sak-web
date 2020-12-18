@@ -4,7 +4,7 @@ import Tabs from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { KodeverkMedNavn, Arbeidsforhold } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Arbeidsforhold, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import BorderedContainer from './BorderedContainer';
@@ -24,6 +24,7 @@ const mapAktiviteterTilTabell = (
   aktiviteter: Aktivitet[],
   aktivitetsstatuser: KodeverkMedNavn[],
   alleArbeidsforhold: Arbeidsforhold[],
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
   if (!aktiviteter.length) {
     return <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />;
@@ -40,6 +41,7 @@ const mapAktiviteterTilTabell = (
     return (
       <AktivitetTabell
         arbeidsforhold={gjeldendeArbeidsforhold}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         arbeidsforholdtypeKode={arbeidsforhold.type}
         uttaksperioder={uttaksperioder}
         aktivitetsstatuser={aktivitetsstatuser}
@@ -55,6 +57,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   aktivitetsstatuser = [],
   aktiv,
   arbeidsforhold,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
   return (
@@ -80,8 +83,20 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
         ]}
         onChange={(e, valgtIndex) => setValgtTabIndex(valgtIndex)}
       />
-      {valgtTabIndex === 0 && mapAktiviteterTilTabell(aktiviteterBehandling, aktivitetsstatuser, arbeidsforhold)}
-      {valgtTabIndex === 1 && mapAktiviteterTilTabell(aktiviteterHittilIÅr, aktivitetsstatuser, arbeidsforhold)}
+      {valgtTabIndex === 0 &&
+        mapAktiviteterTilTabell(
+          aktiviteterBehandling,
+          aktivitetsstatuser,
+          arbeidsforhold,
+          arbeidsgiverOpplysningerPerId,
+        )}
+      {valgtTabIndex === 1 &&
+        mapAktiviteterTilTabell(
+          aktiviteterHittilIÅr,
+          aktivitetsstatuser,
+          arbeidsforhold,
+          arbeidsgiverOpplysningerPerId,
+        )}
     </BorderedContainer>
   );
 };
