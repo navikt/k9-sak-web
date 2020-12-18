@@ -204,8 +204,8 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
   },
-  FAKTA_OM_AARSKVANTUM: {
-    kode: 'FAKTA_OM_AARSKVANTUM',
+  FAKTA_OM_ÅRSKVANTUM: {
+    kode: 'FAKTA_OM_ÅRSKVANTUM',
     faktaNavn: faktaPanelCodes.NØKKELTALL,
     punktNavn: prosessStegCodes.UTTAK,
   },

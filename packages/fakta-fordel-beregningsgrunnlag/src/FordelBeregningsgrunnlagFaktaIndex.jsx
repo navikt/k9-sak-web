@@ -33,7 +33,7 @@ const lagLabel = (bg, vilkårsperioder) => {
   return `${moment(stpOpptjening).format(DDMMYYYY_DATE_FORMAT)}`;
 };
 
-const kreverManuellBehandling = bg => {
+const kreverManuellBehandlingFn = bg => {
   const fordeling = bg.faktaOmFordeling;
   if (fordeling) {
     const fordelBg = fordeling.fordelBeregningsgrunnlag;
@@ -62,6 +62,8 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
     ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
     : beregningsgrunnlag;
 
+  const kreverManuellBehandling = kreverManuellBehandlingFn(aktivtBeregningsrunnlag);
+
   const vilkårsperioder = behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR;
 
   return (
@@ -71,7 +73,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
           tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
             aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
             label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
-            className: kreverManuellBehandling(currentBeregningsgrunnlag) ? 'harAksjonspunkt' : '',
+            className: kreverManuellBehandlingFn(currentBeregningsgrunnlag) ? 'harAksjonspunkt' : '',
           }))}
           onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
         />
@@ -89,7 +91,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
           beregningsgrunnlag={aktivtBeregningsrunnlag}
           hasOpenAksjonspunkter={harApneAksjonspunkter}
           submittable={submittable}
-          kreverManuellBehandling={kreverManuellBehandling(aktivtBeregningsrunnlag)}
+          kreverManuellBehandling={kreverManuellBehandling}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           vilkårsperioder={vilkårsperioder}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
