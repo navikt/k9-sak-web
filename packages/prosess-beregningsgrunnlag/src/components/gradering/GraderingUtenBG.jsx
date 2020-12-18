@@ -28,28 +28,35 @@ const formName = 'graderingUtenBGForm';
 const begrunnelseFieldName = 'begrunnelse';
 const radioFieldName = 'graderingUtenBGSettPaaVent';
 
-const bestemVisning = (andel, getKodeverknavn) => {
+const bestemVisning = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   if (andel.arbeidsforhold && andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER) {
-    return createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn);
+    return createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId);
   }
   const navn = getKodeverknavn(andel.aktivitetStatus);
   return andel.aktivitetStatus && navn ? navn.toLowerCase() : '';
 };
 
-const lagArbeidsgiverString = (andelerMedGraderingUtenBG, getKodeverknavn) => {
+const lagArbeidsgiverString = (andelerMedGraderingUtenBG, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   if (!andelerMedGraderingUtenBG || andelerMedGraderingUtenBG.length < 1) {
     return '';
   }
   if (andelerMedGraderingUtenBG.length === 1) {
-    return bestemVisning(andelerMedGraderingUtenBG[0], getKodeverknavn);
+    return bestemVisning(andelerMedGraderingUtenBG[0], getKodeverknavn, arbeidsgiverOpplysningerPerId);
   }
-  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map(andel => bestemVisning(andel, getKodeverknavn));
+  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map(andel =>
+    bestemVisning(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+  );
   const sisteNavn = arbeidsgiverVisningsnavn.splice(andelerMedGraderingUtenBG.length - 1);
   const tekst = arbeidsgiverVisningsnavn.join(', ');
   return `${tekst} og ${sisteNavn}`;
 };
 
-const lagAksjonspunktViser = (aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn) => {
+const lagAksjonspunktViser = (
+  aksjonspunktTekstId,
+  andelerMedGraderingUtenBG,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
+) => {
   if (aksjonspunktTekstId === undefined || aksjonspunktTekstId === null) {
     return undefined;
   }
@@ -58,7 +65,13 @@ const lagAksjonspunktViser = (aksjonspunktTekstId, andelerMedGraderingUtenBG, ge
       <FormattedMessage
         key="GradringAksjonspunktHP"
         id={aksjonspunktTekstId}
-        values={{ arbeidsforholdTekst: lagArbeidsgiverString(andelerMedGraderingUtenBG, getKodeverknavn) }}
+        values={{
+          arbeidsforholdTekst: lagArbeidsgiverString(
+            andelerMedGraderingUtenBG,
+            getKodeverknavn,
+            arbeidsgiverOpplysningerPerId,
+          ),
+        }}
       />
     </AksjonspunktHelpTextHTML>
   );
@@ -69,6 +82,7 @@ export const GraderingUtenBG2 = ({
   readOnly,
   aksjonspunkter,
   getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
   fieldArrayID,
 }) => {
   const aksjonspunkt = aksjonspunkter
@@ -87,7 +101,12 @@ export const GraderingUtenBG2 = ({
       <AvsnittSkiller luftOver luftUnder dividerParagraf />
 
       <>
-        {lagAksjonspunktViser(aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn)}
+        {lagAksjonspunktViser(
+          aksjonspunktTekstId,
+          andelerMedGraderingUtenBG,
+          getKodeverknavn,
+          arbeidsgiverOpplysningerPerId,
+        )}
         <VerticalSpacer sixteenPx />
       </>
       <Element>
@@ -132,6 +151,7 @@ GraderingUtenBG2.propTypes = {
   andelerMedGraderingUtenBG: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 export const transformValues = values => {

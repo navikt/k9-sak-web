@@ -76,17 +76,23 @@ const findArbeidstakerAndeler = periode =>
     andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
   );
 
-const createArbeidsforholdMapKey = arbeidsforhold =>
-  `${arbeidsforhold.arbeidsgiverNavn}${arbeidsforhold.arbeidsforholdId}`;
+const createArbeidsforholdMapKey = (arbeidsforhold, arbeidsgiverOpplysningerPerId) =>
+  `${
+    arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
+      ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
+      : ''
+  }${arbeidsforhold.arbeidsforholdId}`;
 
 // Finner beregnetPrAar for alle andeler, basert på data fra den første perioden
-const createBeregnetInntektForAlleAndeler = perioder => {
+const createBeregnetInntektForAlleAndeler = (perioder, arbeidsgiverOpplysningerPerId) => {
   const mapMedInnteker = {};
   const arbeidstakerAndeler = perioder[0].beregningsgrunnlagPrStatusOgAndel.filter(
     andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
   );
   arbeidstakerAndeler.forEach(andel => {
-    mapMedInnteker[createArbeidsforholdMapKey(andel.arbeidsforhold)] = formatCurrencyNoKr(andel.beregnetPrAar);
+    mapMedInnteker[
+      createArbeidsforholdMapKey(andel.arbeidsforhold, arbeidsgiverOpplysningerPerId)
+    ] = formatCurrencyNoKr(andel.beregnetPrAar);
   });
   return mapMedInnteker;
 };
@@ -102,14 +108,18 @@ const createMapValueObject = () => ({
 // Initialiserer arbeidsforholdet mappet med data som skal vises uansett hva slags data vi har.
 // Dette innebærer at første kolonne i raden skal inneholde andelsnavn og andre kolonne skal inneholde beregnetPrAar.
 // Vi antar at alle andeler ligger i alle perioder, henter derfor kun ut andeler fra den første perioden.
-const initializeMap = (perioder, getKodeverknavn) => {
-  const inntektMap = createBeregnetInntektForAlleAndeler(perioder);
+const initializeMap = (perioder, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+  const inntektMap = createBeregnetInntektForAlleAndeler(perioder, arbeidsgiverOpplysningerPerId);
   const alleAndeler = findArbeidstakerAndeler(perioder[0]);
   const mapMedAndeler = {};
   alleAndeler.forEach(andel => {
-    const andelMapNavn = createArbeidsforholdMapKey(andel.arbeidsforhold);
+    const andelMapNavn = createArbeidsforholdMapKey(andel.arbeidsforhold, arbeidsgiverOpplysningerPerId);
     const mapValueMedAndelNavn = createMapValueObject();
-    mapValueMedAndelNavn.tabellInnhold = createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn);
+    mapValueMedAndelNavn.tabellInnhold = createVisningsnavnForAktivitet(
+      andel.arbeidsforhold,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     mapValueMedAndelNavn.erTidsbegrenset =
       andel.erTidsbegrensetArbeidsforhold !== undefined ? andel.erTidsbegrensetArbeidsforhold : false;
 
@@ -123,18 +133,26 @@ const initializeMap = (perioder, getKodeverknavn) => {
 };
 
 export const createTableData = createSelector(
-  [(state, ownProps) => ownProps.allePerioder, (state, ownProps) => ownProps.alleKodeverk],
-  (allePerioder, alleKodeverk) => {
+  [
+    (state, ownProps) => ownProps.allePerioder,
+    (state, ownProps) => ownProps.alleKodeverk,
+    (state, ownProps) => ownProps.arbeidsgiverOpplysningerPerId,
+  ],
+  (allePerioder, alleKodeverk, arbeidsgiverOpplysningerPerId) => {
     // Vi er ikke interessert i perioder som oppstår grunnet naturalytelse
     const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(allePerioder);
     const kopiAvPerioder = relevantePerioder.slice(0);
-    const arbeidsforholdPeriodeMap = initializeMap(kopiAvPerioder, getKodeverknavnFn(alleKodeverk, kodeverkTyper));
+    const arbeidsforholdPeriodeMap = initializeMap(
+      kopiAvPerioder,
+      getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+      arbeidsgiverOpplysningerPerId,
+    );
     // Etter å ha initialiser mappet med faste bokser kan vi fjerne første element fra lista, da
     // denne ikke skal være en av de redigerbare feltene i tabellen, og det er disse vi skal lage nå
     kopiAvPerioder.forEach(periode => {
       const arbeidstakerAndeler = findArbeidstakerAndeler(periode);
       arbeidstakerAndeler.forEach(andel => {
-        const mapKey = createArbeidsforholdMapKey(andel.arbeidsforhold);
+        const mapKey = createArbeidsforholdMapKey(andel.arbeidsforhold, arbeidsgiverOpplysningerPerId);
         const mapValue = arbeidsforholdPeriodeMap[mapKey];
         const newMapValue = createMapValueObject();
         newMapValue.tabellInnhold =
