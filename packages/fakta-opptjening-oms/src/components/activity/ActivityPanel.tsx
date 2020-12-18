@@ -26,7 +26,7 @@ import {
   required,
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
-import { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
@@ -107,6 +107,7 @@ export const activityPanelNameFormName = 'ActivityPanelForm';
 interface ActivityPanelProps {
   activity: Partial<OpptjeningAktivitet>;
   alleKodeverk: AlleKodeverk;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   alleMerknaderFraBeslutter: any;
   behandlingId: number;
   behandlingVersjon: number;
@@ -152,6 +153,7 @@ export const ActivityPanel = ({
   alleMerknaderFraBeslutter,
   handleSubmit,
   pristine,
+  arbeidsgiverOpplysningerPerId,
 }: ActivityPanelProps & WrappedComponentProps & StateProps & InjectedFormProps) => (
   <FaktaGruppe
     className={styles.panel}
@@ -218,6 +220,7 @@ export const ActivityPanel = ({
       readOnly={readOnly}
       isManuallyAdded={initialValues.erManueltOpprettet}
       selectedActivityType={selectedActivityType}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
     {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>

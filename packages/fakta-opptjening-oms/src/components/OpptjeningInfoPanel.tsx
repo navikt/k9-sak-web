@@ -1,7 +1,14 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, FastsattOpptjening, Opptjening, SubmitCallback, UtlandDokStatus } from '@k9-sak-web/types';
+import {
+  Aksjonspunkt,
+  FastsattOpptjening,
+  Opptjening,
+  SubmitCallback,
+  UtlandDokStatus,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
@@ -22,6 +29,7 @@ interface OpptjeningInfoPanelProps {
   alleMerknaderFraBeslutter: any;
   utlandDokStatus: UtlandDokStatus;
   alleKodeverk: AlleKodeverk;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   submitCallback: (props: SubmitCallback[]) => void;
   readOnly: boolean;
   harApneAksjonspunkter: boolean;
@@ -50,6 +58,7 @@ export const OpptjeningInfoPanel = ({
   dokStatus,
   alleMerknaderFraBeslutter,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   submitting,
   dirty,
   handleSubmit,
@@ -68,6 +77,7 @@ export const OpptjeningInfoPanel = ({
       isDirty={dirty}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
   </form>
 );
