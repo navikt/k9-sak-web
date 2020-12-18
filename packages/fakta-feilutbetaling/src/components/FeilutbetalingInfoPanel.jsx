@@ -63,8 +63,8 @@ export class FeilutbetalingInfoPanelImpl extends Component {
       for (let i = 0; i < perioder.length; i += 1) {
         if (i !== elementId) {
           const { årsak: periodeÅrsak } = perioder[i];
-          const fields = [`perioder.${i}.${periodeÅrsak}`];
-          clearFormFields(`${behandlingFormPrefix}.${formName}`, false, false, ...fields);
+          const periodeÅrsaker = [`perioder.${i}.${periodeÅrsak}`];
+          clearFormFields(`${behandlingFormPrefix}.${formName}`, false, false, ...periodeÅrsaker);
           changeValue(`perioder.${i}.årsak`, nyÅrsak, true, false);
         }
       }
