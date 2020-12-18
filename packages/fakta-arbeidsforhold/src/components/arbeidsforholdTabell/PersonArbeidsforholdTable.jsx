@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity /* , utledArbeidsforholdNavn */ } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -19,21 +19,6 @@ const headerColumnContent = [
   // <></>,
 ];
 
-const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
-
-const utledNavn = (arbeidsforhold, arbeidsgiverOpplysningerPerId) => {
-  const arbeidsgiverOpplysninger = arbeidsgiverOpplysningerPerId
-    ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdentifikator]
-    : null;
-  const navn = arbeidsforhold.navn ? arbeidsforhold.navn : arbeidsgiverOpplysninger?.navn;
-  if (arbeidsforhold.lagtTilAvSaksbehandler) {
-    return navn;
-  }
-  return arbeidsforhold.arbeidsforholdId
-    ? `${navn}(${arbeidsgiverOpplysninger.identifikator})${getEndCharFromId(arbeidsforhold.eksternArbeidsforholdId)}`
-    : `${navn}(${arbeidsgiverOpplysninger.identifikator})`;
-};
-
 export const utledNøkkel = (arbeidsforhold, arbeidsgiverOpplysningerPerId) => {
   const arbeidsgiverOpplysninger = arbeidsgiverOpplysningerPerId
     ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdentifikator]
@@ -43,7 +28,7 @@ export const utledNøkkel = (arbeidsforhold, arbeidsgiverOpplysningerPerId) => {
       ? arbeidsforhold.navn
       : (arbeidsgiverOpplysninger && arbeidsgiverOpplysninger.navn) || '';
   }
-  return `${arbeidsforhold.eksternArbeidsforholdId}${arbeidsforhold.arbeidsforholdId}${arbeidsgiverOpplysninger.identifikator}`;
+  return `${arbeidsforhold.eksternArbeidsforholdId}${arbeidsforhold.arbeidsforholdId}${arbeidsforhold.arbeidsgiverIdentifiktorGUI}`;
 };
 
 const PersonArbeidsforholdTable = ({
@@ -64,8 +49,7 @@ const PersonArbeidsforholdTable = ({
             a.stillingsprosent !== undefined && a.stillingsprosent !== null
               ? `${parseFloat(a.stillingsprosent).toFixed(2)} %`
               : '';
-          // const navn = utledArbeidsforholdNavn(a);
-          const navn = utledNavn(a, arbeidsgiverOpplysningerPerId);
+          const navn = utledArbeidsforholdNavn(a, arbeidsgiverOpplysningerPerId);
           return (
             <TableRow
               key={utledNøkkel(a, arbeidsgiverOpplysningerPerId)}
