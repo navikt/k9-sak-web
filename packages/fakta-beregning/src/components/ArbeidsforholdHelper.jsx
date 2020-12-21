@@ -4,11 +4,13 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
-export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
-  const arbeidsgiverNavn =
-    arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId]
-      ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId].navn
-      : '';
+export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk, arbeidsgiverOpplysningerPerId) => {
+  const arbeidsgiverOpplysninger =
+    arbeidsgiverOpplysningerPerId && aktivitet.arbeidsgiverId
+      ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId]
+      : {};
+
+  const arbeidsgiverNavn = arbeidsgiverOpplysninger.navn;
 
   if (!arbeidsgiverNavn) {
     return aktivitet.arbeidsforholdType
@@ -20,6 +22,7 @@ export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn, arbei
     ? `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
     : arbeidsgiverNavn;
 };
+
 export const sortArbeidsforholdList = arbeidsforhold => {
   const copy = arbeidsforhold.slice(0);
   copy.sort((a, b) => new Date(a.arbeidsforhold.startdato) - new Date(b.arbeidsforhold.startdato));
@@ -48,6 +51,7 @@ export const getUniqueListOfArbeidsforholdFields = fields => {
   }
   fields.forEach((id, index) => {
     const field = fields.get(index);
+
     if (field.arbeidsgiverNavn !== null && !arbeidsforholdEksistererIListen(field, arbeidsgiverList)) {
       const arbeidsforholdObject = {
         andelsnr: field.andelsnr,
