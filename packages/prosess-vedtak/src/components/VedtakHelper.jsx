@@ -73,6 +73,7 @@ export const hasIkkeOppfyltSoknadsfristvilkar = vilkar =>
   vilkar.some(
     v =>
       v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET &&
+      Array.isArray(v.perioder) &&
       v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
   );
 

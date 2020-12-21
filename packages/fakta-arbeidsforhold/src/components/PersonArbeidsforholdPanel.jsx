@@ -54,27 +54,6 @@ const getUnresolvedArbeidsforhold = arbeidsforholdList => arbeidsforholdList.fin
 const hasArbeidsforholdAksjonspunkt = arbeidsforhold =>
   arbeidsforhold && (arbeidsforhold.tilVurdering || arbeidsforhold.erEndret);
 
-// export const sortArbeidsforhold = arbeidsforhold =>
-//   arbeidsforhold.sort((a1, a2) => {
-//     const i = a1.navn.localeCompare(a2.navn);
-//     if (i !== 0) {
-//       return i;
-//     }
-
-//     if (a1.mottattDatoInntektsmelding && a2.mottattDatoInntektsmelding) {
-//       return moment(a2.mottattDatoInntektsmelding, ISO_DATE_FORMAT).diff(
-//         moment(a1.mottattDatoInntektsmelding, ISO_DATE_FORMAT),
-//       );
-//     }
-//     if (a1.mottattDatoInntektsmelding) {
-//       return -1;
-//     }
-//     if (a2.mottattDatoInntektsmelding) {
-//       return 1;
-//     }
-//     return a1.id.localeCompare(a2.id);
-//   });
-
 export const sortArbeidsforhold = (arbeidsforhold, arbeidsgiverOpplysningerPerId) =>
   arbeidsforhold.sort((a1, a2) => {
     const arbeidsgiverOpplysningerA1 = arbeidsgiverOpplysningerPerId[a1.arbeidsgiverIdentifikator];
@@ -192,22 +171,6 @@ const finnOverstyrtTom = arbeidsforhold => {
   }
   return arbeidsforhold.brukMedJustertPeriode ? arbeidsforhold.tomDato : undefined;
 };
-
-// const leggTilValuesForRendering = arbeidsforholdList =>
-//   arbeidsforholdList.map(arbeidsforhold => {
-//     const arbeidsforholdHandlingField = utledArbeidsforholdHandling(arbeidsforhold);
-//     const aktivtArbeidsforholdHandlingField = utledAktivtArbeidsforholdHandling(
-//       arbeidsforhold,
-//       arbeidsforholdHandlingField,
-//     );
-//     return {
-//       ...arbeidsforhold,
-//       originalFomDato: arbeidsforhold.fomDato,
-//       overstyrtTom: finnOverstyrtTom(arbeidsforhold), // TODO : Fjern dette når back-end er på plass
-//       arbeidsforholdHandlingField,
-//       aktivtArbeidsforholdHandlingField,
-//     };
-//   });
 
 const leggTilValuesForRendering = (arbeidsforholdList, arbeidsgiverOpplysningerPerId) =>
   arbeidsforholdList.map(arbeidsforhold => {

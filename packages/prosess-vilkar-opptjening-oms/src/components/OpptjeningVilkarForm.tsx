@@ -40,7 +40,7 @@ const OpptjeningVilkarForm = ({
   vilkårIndex,
   opptjeninger,
 }: OpptjeningVilkarFormProps) => {
-  if (aksjonspunkter.length > 0) {
+  if (Array.isArray(aksjonspunkter) && aksjonspunkter.length > 0) {
     return (
       <OpptjeningVilkarAksjonspunktPanel
         submitCallback={submitCallback}
@@ -61,11 +61,11 @@ const OpptjeningVilkarForm = ({
   }
   return (
     <OpptjeningVilkarView
-      months={fastsattOpptjening.opptjeningperiode.måneder}
-      days={fastsattOpptjening.opptjeningperiode.dager}
-      fastsattOpptjeningActivities={fastsattOpptjening.fastsattOpptjeningAktivitetList}
-      opptjeningFomDate={fastsattOpptjening.opptjeningFom}
-      opptjeningTomDate={fastsattOpptjening.opptjeningTom}
+      months={fastsattOpptjening?.opptjeningperiode.måneder}
+      days={fastsattOpptjening?.opptjeningperiode.dager}
+      fastsattOpptjeningActivities={fastsattOpptjening?.fastsattOpptjeningAktivitetList}
+      opptjeningFomDate={fastsattOpptjening?.opptjeningFom}
+      opptjeningTomDate={fastsattOpptjening?.opptjeningTom}
     />
   );
 };

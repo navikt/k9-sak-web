@@ -134,7 +134,7 @@ export const transformValues = values => {
 export const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.vurderTilbaketrekkAP, (state, ownProps) => ownProps.beregningsresultat],
   (ap, tilkjentYtelse) => {
-    const tidligereValgt = tilkjentYtelse.skalHindreTilbaketrekk;
+    const tidligereValgt = tilkjentYtelse?.skalHindreTilbaketrekk;
     if (tidligereValgt === undefined || tidligereValgt === null || !ap || !ap.begrunnelse) {
       return undefined;
     }

@@ -43,10 +43,13 @@ const OpptjeningVilkarProsessIndex = ({
   readOnlySubmitButton,
 }: OpptjeningVilkarProsessIndexProps) => {
   const [activeTab, setActiveTab] = React.useState(0);
-  const activeOpptjeningObject = opptjening.opptjeninger[activeTab];
+  const activeOpptjeningObject =
+    Array.isArray(opptjening.opptjeninger) && opptjening.opptjeninger.length
+      ? opptjening.opptjeninger[activeTab]
+      : null;
   const { behandlingsresultat } = behandling;
   const vilkårsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
-  const skalBrukeSidemeny = opptjening.opptjeninger.length > 1;
+  const skalBrukeSidemeny = Array.isArray(opptjening.opptjeninger) && opptjening.opptjeninger.length > 1;
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
@@ -74,7 +77,7 @@ const OpptjeningVilkarProsessIndex = ({
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
             vilkårsresultat={vilkårsresultat ? vilkårsresultat[activeTab] : null}
-            fastsattOpptjening={activeOpptjeningObject.fastsattOpptjening}
+            fastsattOpptjening={activeOpptjeningObject?.fastsattOpptjening}
             status={status}
             lovReferanse={lovReferanse}
             aksjonspunkter={aksjonspunkter}

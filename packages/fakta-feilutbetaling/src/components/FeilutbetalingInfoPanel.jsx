@@ -317,27 +317,29 @@ const buildInitialValues = createSelector([ownProps => ownProps.feilutbetalingFa
   const { perioder, begrunnelse } = feilutbetalingFakta;
   return {
     begrunnelse: decodeHtmlEntity(begrunnelse),
-    perioder: perioder
-      .sort((a, b) => moment(a.fom) - moment(b.fom))
-      .map(p => {
-        const { fom, tom, feilutbetalingÅrsakDto } = p;
+    perioder: Array.isArray(perioder)
+      ? perioder
+          .sort((a, b) => moment(a.fom) - moment(b.fom))
+          .map(p => {
+            const { fom, tom, feilutbetalingÅrsakDto } = p;
 
-        const period = { fom, tom };
+            const period = { fom, tom };
 
-        if (!feilutbetalingÅrsakDto) {
-          return period;
-        }
+            if (!feilutbetalingÅrsakDto) {
+              return period;
+            }
 
-        const { hendelseType, hendelseUndertype } = feilutbetalingÅrsakDto;
+            const { hendelseType, hendelseUndertype } = feilutbetalingÅrsakDto;
 
-        return {
-          ...period,
-          årsak: hendelseType.kode,
-          [hendelseType.kode]: {
-            underÅrsak: hendelseUndertype ? hendelseUndertype.kode : null,
-          },
-        };
-      }),
+            return {
+              ...period,
+              årsak: hendelseType.kode,
+              [hendelseType.kode]: {
+                underÅrsak: hendelseUndertype ? hendelseUndertype.kode : null,
+              },
+            };
+          })
+      : [],
   };
 });
 
@@ -345,15 +347,17 @@ const getSortedFeilutbetalingArsaker = createSelector(
   [ownProps => ownProps.feilutbetalingAarsak],
   feilutbetalingArsaker => {
     const { hendelseTyper } = feilutbetalingArsaker;
-    return hendelseTyper.sort((ht1, ht2) => {
-      const hendelseType1 = ht1.hendelseType.navn;
-      const hendelseType2 = ht2.hendelseType.navn;
-      const hendelseType1ErParagraf = hendelseType1.startsWith('§');
-      const hendelseType2ErParagraf = hendelseType2.startsWith('§');
-      const ht1v = hendelseType1ErParagraf ? hendelseType1.replace(/\D/g, '') : hendelseType1;
-      const ht2v = hendelseType2ErParagraf ? hendelseType2.replace(/\D/g, '') : hendelseType2;
-      return hendelseType1ErParagraf && hendelseType2ErParagraf ? ht1v - ht2v : ht1v.localeCompare(ht2v);
-    });
+    return Array.isArray(hendelseTyper)
+      ? hendelseTyper.sort((ht1, ht2) => {
+          const hendelseType1 = ht1.hendelseType.navn;
+          const hendelseType2 = ht2.hendelseType.navn;
+          const hendelseType1ErParagraf = hendelseType1.startsWith('§');
+          const hendelseType2ErParagraf = hendelseType2.startsWith('§');
+          const ht1v = hendelseType1ErParagraf ? hendelseType1.replace(/\D/g, '') : hendelseType1;
+          const ht2v = hendelseType2ErParagraf ? hendelseType2.replace(/\D/g, '') : hendelseType2;
+          return hendelseType1ErParagraf && hendelseType2ErParagraf ? ht1v - ht2v : ht1v.localeCompare(ht2v);
+        })
+      : [];
   },
 );
 

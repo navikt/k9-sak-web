@@ -98,12 +98,12 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             toggleOverstyring={toggleOverstyring}
           />
           <VilkarresultatMedOverstyringForm
-            key={`${activePeriode.periode.fom}-${activePeriode.periode.tom}`}
+            key={`${activePeriode.periode?.fom}-${activePeriode.periode?.tom}`}
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
             behandlingType={behandling.type}
             behandlingsresultat={behandling.behandlingsresultat}
-            medlemskapFom={medlemskap.fom}
+            medlemskapFom={medlemskap?.fom}
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}

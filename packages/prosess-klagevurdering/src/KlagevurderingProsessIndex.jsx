@@ -32,34 +32,36 @@ const KlagevurderingProsessIndex = ({
   aksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
-    {aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK) && (
-      <BehandleKlageFormKa
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        sprakkode={behandling.sprakkode}
-        klageVurdering={klageVurdering}
-        saveKlage={saveKlage}
-        submitCallback={submitCallback}
-        readOnly={isReadOnly}
-        previewCallback={previewCallback}
-        readOnlySubmitButton={readOnlySubmitButton}
-        alleKodeverk={alleKodeverk}
-      />
-    )}
-    {aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP) && (
-      <BehandleKlageFormNfp
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        sprakkode={behandling.sprakkode}
-        klageVurdering={klageVurdering}
-        saveKlage={saveKlage}
-        submitCallback={submitCallback}
-        readOnly={isReadOnly}
-        previewCallback={previewCallback}
-        readOnlySubmitButton={readOnlySubmitButton}
-        alleKodeverk={alleKodeverk}
-      />
-    )}
+    {Array.isArray(aksjonspunkter) &&
+      aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK) && (
+        <BehandleKlageFormKa
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          sprakkode={behandling.sprakkode}
+          klageVurdering={klageVurdering}
+          saveKlage={saveKlage}
+          submitCallback={submitCallback}
+          readOnly={isReadOnly}
+          previewCallback={previewCallback}
+          readOnlySubmitButton={readOnlySubmitButton}
+          alleKodeverk={alleKodeverk}
+        />
+      )}
+    {Array.isArray(aksjonspunkter) &&
+      aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP) && (
+        <BehandleKlageFormNfp
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          sprakkode={behandling.sprakkode}
+          klageVurdering={klageVurdering}
+          saveKlage={saveKlage}
+          submitCallback={submitCallback}
+          readOnly={isReadOnly}
+          previewCallback={previewCallback}
+          readOnlySubmitButton={readOnlySubmitButton}
+          alleKodeverk={alleKodeverk}
+        />
+      )}
   </RawIntlProvider>
 );
 
