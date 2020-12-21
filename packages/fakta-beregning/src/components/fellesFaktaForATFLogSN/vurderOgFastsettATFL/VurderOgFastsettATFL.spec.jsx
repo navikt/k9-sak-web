@@ -189,6 +189,7 @@ describe('<VurderOgFastsettATFL>', () => {
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
         aksjonspunkter={[]}
         erOverstyrer={false}
         beregningsgrunnlag={beregningsgrunnlag}

@@ -13,10 +13,10 @@ import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const createArbeidsforholdKey = (arbeidsforhold, arbeidsgiverOpplysningerPerId) =>
   `${
-    arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
+    arbeidsgiverOpplysningerPerId && arbeidsforhold && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
       ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId].navn
       : ''
-  }${arbeidsforhold.arbeidsforholdId}`;
+  }${arbeidsforhold ? arbeidsforhold.arbeidsforholdId : ''}`;
 
 const findArbeidsforholdMedFrafaltYtelse = periode =>
   periode.beregningsgrunnlagPrStatusOgAndel.filter(

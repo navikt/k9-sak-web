@@ -468,7 +468,13 @@ RenderFordelBGFieldArray.validate = (
   grunnbeløp,
   periodeDato,
 ) => {
-  const fieldErrors = validateAndeler(values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, periodeDato);
+  const fieldErrors = validateAndeler(
+    values,
+    skalValidereMotBeregningsgrunnlagPrAar,
+    getKodeverknavn,
+    arbeidsgiverOpplysningerPerId,
+    periodeDato,
+  );
   if (fieldErrors != null) {
     return fieldErrors;
   }

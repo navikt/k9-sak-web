@@ -24,6 +24,7 @@ const andeler = [
     },
   },
 ];
+
 const alleKodeverk = {
   [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [
     {
@@ -45,6 +46,21 @@ const alleKodeverk = {
   ],
 };
 
+const arbeidsgiverOpplysningerPerId = {
+  123456789: {
+    identifikator: '123456789',
+    referanse: '123456789',
+    navn: 'arbeidsgiver 1',
+    fødselsdato: null,
+  },
+  987654321: {
+    identifikator: '987654321',
+    referanse: '987654321',
+    navn: 'arbeidsgiver 2',
+    fødselsdato: null,
+  },
+};
+
 describe('<TidsbegrensetArbeidsforholdForm>', () => {
   it('skal teste at korrekt antall radioknapper vises', () => {
     const wrapper = shallowWithIntl(
@@ -53,6 +69,7 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
         andelsliste={andeler}
         isAksjonspunktClosed={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
       />,
     );
@@ -66,6 +83,7 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
         andelsliste={andeler}
         isAksjonspunktClosed={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
       />,
     );

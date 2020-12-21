@@ -46,16 +46,23 @@ const getArbeidsgiverText = (
     return `${initialValues.privatpersonNavn} (${fodselsdato})`;
   }
 
+  if (initialValues.privatpersonNavn) {
+    return initialValues.privatpersonNavn;
+  }
+
+  const arbeidsgiverId = initialValues.oppdragsgiverOrg || initialValues.arbeidsgiverIdentifikator;
+
   const arbeidsgiverOpplysninger =
-    arbeidsgiverOpplysningerPerId && initialValues.arbeidsgiverIdentifikator
-      ? arbeidsgiverOpplysningerPerId[initialValues.arbeidsgiverIdentifikator]
-      : null;
+    arbeidsgiverOpplysningerPerId && arbeidsgiverId ? arbeidsgiverOpplysningerPerId[arbeidsgiverId] : null;
 
   if (arbeidsgiverOpplysninger) {
-    return initialValues.oppdragsgiverOrg
-      ? `${arbeidsgiverOpplysninger.navn} (${initialValues.oppdragsgiverOrg})`
-      : arbeidsgiverOpplysninger.navn;
+    return `${arbeidsgiverOpplysninger.navn} (${arbeidsgiverId})`;
   }
+
+  if (initialValues.arbeidsgiver && typeof initialValues.arbeidsgiver === 'string') {
+    return initialValues.arbeidsgiver;
+  }
+
   return '-';
 };
 
@@ -69,6 +76,7 @@ interface ActivityDataSubPanelProps {
   readOnly: boolean;
   isManuallyAdded: boolean;
   selectedActivityType: Kodeverk;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 /**

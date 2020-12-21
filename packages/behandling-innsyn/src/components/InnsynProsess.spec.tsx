@@ -101,6 +101,7 @@ describe('<InnsynProsess>', () => {
           vilkar,
           innsyn,
           innsynDokumenter,
+          arbeidsgivere: { arbeidsgivere: {} },
         }}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -145,6 +146,7 @@ describe('<InnsynProsess>', () => {
           vilkar,
           innsyn,
           innsynDokumenter,
+          arbeidsgivere: { arbeidsgivere: {} },
         }}
         fagsak={fagsak}
         behandling={behandling as Behandling}

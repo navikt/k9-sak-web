@@ -4,7 +4,7 @@ import {
   OpptjeningBehandling,
   SubmitCallback,
   UtlandDokStatus,
-  ArbeidsgiverOpplysningerWrapper,
+  ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import React from 'react';
@@ -29,7 +29,7 @@ interface OpptjeningFaktaIndexProps {
   alleMerknaderFraBeslutter: any;
   utlandDokStatus: UtlandDokStatus;
   alleKodeverk: AlleKodeverk;
-  arbeidsgivere: ArbeidsgiverOpplysningerWrapper;
+  arbeidsgivere: { arbeidsgivere: ArbeidsgiverOpplysningerPerId };
   submitCallback: (props: SubmitCallback[]) => void;
   readOnly: boolean;
   harApneAksjonspunkter: boolean;

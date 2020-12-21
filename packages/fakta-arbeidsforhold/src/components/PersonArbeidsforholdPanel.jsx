@@ -56,10 +56,16 @@ const hasArbeidsforholdAksjonspunkt = arbeidsforhold =>
 
 export const sortArbeidsforhold = (arbeidsforhold, arbeidsgiverOpplysningerPerId) =>
   arbeidsforhold.sort((a1, a2) => {
-    const arbeidsgiverOpplysningerA1 = arbeidsgiverOpplysningerPerId[a1.arbeidsgiverIdentifikator];
-    const arbeidsgiverOpplysningerA2 = arbeidsgiverOpplysningerPerId[a2.arbeidsgiverIdentifikator];
-    if (arbeidsgiverOpplysningerA1 && arbeidsgiverOpplysningerA2) {
-      const i = arbeidsgiverOpplysningerA1.navn.localeCompare(arbeidsgiverOpplysningerA2.navn);
+    const a1Navn =
+      arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[a1.arbeidsgiverIdentifikator]
+        ? arbeidsgiverOpplysningerPerId[a1.arbeidsgiverIdentifikator].navn
+        : '';
+    const a2Navn =
+      arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[a2.arbeidsgiverIdentifikator]
+        ? arbeidsgiverOpplysningerPerId[a2.arbeidsgiverIdentifikator].navn
+        : '';
+    if (a1Navn && a2Navn) {
+      const i = a1Navn.localeCompare(a2Navn);
       if (i !== 0) {
         return i;
       }

@@ -10,7 +10,7 @@ export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk, arbeidsg
       ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId]
       : {};
 
-  const arbeidsgiverNavn = arbeidsgiverOpplysninger.navn;
+  const arbeidsgiverNavn = arbeidsgiverOpplysninger?.navn;
 
   if (!arbeidsgiverNavn) {
     return aktivitet.arbeidsforholdType

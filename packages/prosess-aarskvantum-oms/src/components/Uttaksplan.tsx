@@ -18,6 +18,7 @@ interface UttaksplanProps {
   aktiv: boolean;
   aktivitetsstatuser: KodeverkMedNavn[];
   arbeidsforhold: Arbeidsforhold[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 const mapAktiviteterTilTabell = (

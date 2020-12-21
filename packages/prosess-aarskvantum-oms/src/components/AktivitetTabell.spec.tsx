@@ -50,6 +50,7 @@ describe('<AktivitetTabell />', () => {
         arbeidsforholdtypeKode="AT"
         arbeidsforhold={arbeidsforhold}
         aktivitetsstatuser={[]}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
     const kolonner = wrapper.find(StyledColumn);
@@ -75,6 +76,7 @@ describe('<AktivitetTabell />', () => {
         arbeidsforhold={arbeidsforhold}
         arbeidsforholdtypeKode="AT"
         aktivitetsstatuser={[]}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 

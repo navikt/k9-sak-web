@@ -1,6 +1,14 @@
 import React, { FunctionComponent, useState, ReactNode, useMemo } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Arbeidsforhold, KodeverkMedNavn, Utfalltype, VilkårEnum, Uttaksperiode, Vilkår } from '@k9-sak-web/types';
+import {
+  Arbeidsforhold,
+  ArbeidsgiverOpplysningerPerId,
+  KodeverkMedNavn,
+  Utfalltype,
+  VilkårEnum,
+  Uttaksperiode,
+  Vilkår,
+} from '@k9-sak-web/types';
 import { Table, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
@@ -15,6 +23,7 @@ import Utfall from './Utfall';
 
 interface AktivitetTabellProps {
   arbeidsforhold?: Arbeidsforhold;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   arbeidsforholdtypeKode: string;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];

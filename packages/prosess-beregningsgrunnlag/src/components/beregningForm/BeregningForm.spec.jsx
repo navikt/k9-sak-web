@@ -192,6 +192,7 @@ describe('<BeregningForm>', () => {
         readOnlySubmitButton
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         vilkaarBG={getBGVilkar(mockVilkar)}
         {...reduxFormPropsMock}
       />,
@@ -213,6 +214,7 @@ describe('<BeregningForm>', () => {
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton
@@ -232,6 +234,7 @@ describe('<BeregningForm>', () => {
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton
@@ -252,6 +255,7 @@ describe('<BeregningForm>', () => {
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton
@@ -277,6 +281,7 @@ describe('<BeregningForm>', () => {
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton
@@ -306,6 +311,7 @@ describe('<BeregningForm>', () => {
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton
@@ -328,6 +334,7 @@ describe('<BeregningForm>', () => {
         beregningsgrunnlag={bg}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton

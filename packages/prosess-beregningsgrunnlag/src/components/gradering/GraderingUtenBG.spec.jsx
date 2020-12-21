@@ -55,6 +55,21 @@ const flAndel = {
   andelsnr: 4,
 };
 
+const arbeidsgiverOpplysningerPerId = {
+  123: {
+    identifikator: '123',
+    referanse: '123',
+    navn: 'arbeidsgiver',
+    fødselsdato: null,
+  },
+  456: {
+    identifikator: '456',
+    referanse: '456',
+    navn: 'arbeidsgiver',
+    fødselsdato: null,
+  },
+};
+
 const getKodeverknavn = kodeverk => {
   if (kodeverk.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE) {
     return 'Selvstendig næringsdrivende';
@@ -77,6 +92,7 @@ describe('<GraderingUtenBG>', () => {
         andelerMedGraderingUtenBG={[atAndelEn, atAndelTo]}
         aksjonspunkter={[mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')]}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         submitCallback={sinon.spy()}
         behandlingId={1}
         behandlingVersjon={1}
@@ -106,6 +122,7 @@ describe('<GraderingUtenBG>', () => {
         submitCallback={sinon.spy()}
         aksjonspunkter={[mockAksjonspunktMedKodeOgStatus('5050', 'OPPR')]}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         behandlingId={1}
         behandlingVersjon={1}
         fieldArrayID="dummyId"

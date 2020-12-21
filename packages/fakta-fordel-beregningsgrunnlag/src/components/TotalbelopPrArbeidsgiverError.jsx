@@ -6,14 +6,20 @@ import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
 
 export const AAP_ARBEIDSGIVER_KEY = 'AAP_ARBEIDSGIVER_GRUNNLAG';
 
-const finnArbeidsgiverNavn = (andel, identifikator, getKodeverknavn) => {
+const finnArbeidsgiverNavn = (andel, identifikator, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   if (identifikator === AAP_ARBEIDSGIVER_KEY && !andel.arbeidsgiverId) {
     return null;
   }
-  return createVisningsnavnForAktivitet(andel, getKodeverknavn);
+  return createVisningsnavnForAktivitet(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
 };
 
-const leggTilGrunnlagvalidering = (totalInntektArbeidsforholdList, andel, identifikator, getKodeverknavn) => {
+const leggTilGrunnlagvalidering = (
+  totalInntektArbeidsforholdList,
+  andel,
+  identifikator,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
+) => {
   const newList = totalInntektArbeidsforholdList.slice();
   const idx = totalInntektArbeidsforholdList.findIndex(({ key }) => key === identifikator);
   if (idx !== -1) {
@@ -21,32 +27,57 @@ const leggTilGrunnlagvalidering = (totalInntektArbeidsforholdList, andel, identi
     newGrunnlag.fastsattBelop += removeSpacesFromNumber(andel.fastsattBelop || '0');
     newGrunnlag.beregningsgrunnlagPrAar += removeSpacesFromNumber(andel.beregningsgrunnlagPrAar || '0');
     if (!newGrunnlag.arbeidsgiverNavn) {
-      newGrunnlag.arbeidsgiverNavn = finnArbeidsgiverNavn(andel, identifikator, getKodeverknavn);
+      newGrunnlag.arbeidsgiverNavn = finnArbeidsgiverNavn(
+        andel,
+        identifikator,
+        getKodeverknavn,
+        arbeidsgiverOpplysningerPerId,
+      );
     }
     newList[idx] = newGrunnlag;
   } else {
     newList.push({
       key: identifikator,
       fastsattBelop: removeSpacesFromNumber(andel.fastsattBelop || '0'),
-      beregningsgrunnlagPrAar: andel.beregningsgrunnlagPrAar || andel.beregningsgrunnlagPrAar === 0
-        ? removeSpacesFromNumber(andel.beregningsgrunnlagPrAar) : null,
-      arbeidsgiverNavn: finnArbeidsgiverNavn(andel, identifikator, getKodeverknavn),
+      beregningsgrunnlagPrAar:
+        andel.beregningsgrunnlagPrAar || andel.beregningsgrunnlagPrAar === 0
+          ? removeSpacesFromNumber(andel.beregningsgrunnlagPrAar)
+          : null,
+      arbeidsgiverNavn: finnArbeidsgiverNavn(andel, identifikator, getKodeverknavn, arbeidsgiverOpplysningerPerId),
     });
   }
   return newList;
 };
 
-export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotBeregningsgunnlagPrAar, skalValidereMellomAAPOgArbeidsgiver, getKodeverknavn) => {
+export const lagTotalInntektArbeidsforholdList = (
+  values,
+  skalValidereMotBeregningsgunnlagPrAar,
+  skalValidereMellomAAPOgArbeidsgiver,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
+) => {
   let totalInntektArbeidsforholdList = [];
   if (values) {
-    values.forEach((andel) => {
+    values.forEach(andel => {
       if (skalValidereMotBeregningsgunnlagPrAar(andel) || skalValidereMellomAAPOgArbeidsgiver(andel)) {
         if (skalValidereMellomAAPOgArbeidsgiver(andel)) {
-          totalInntektArbeidsforholdList = leggTilGrunnlagvalidering(totalInntektArbeidsforholdList, andel, AAP_ARBEIDSGIVER_KEY, getKodeverknavn);
+          totalInntektArbeidsforholdList = leggTilGrunnlagvalidering(
+            totalInntektArbeidsforholdList,
+            andel,
+            AAP_ARBEIDSGIVER_KEY,
+            getKodeverknavn,
+            arbeidsgiverOpplysningerPerId,
+          );
         }
         if (!andel.nyttArbeidsforhold) {
-          const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
-          totalInntektArbeidsforholdList = leggTilGrunnlagvalidering(totalInntektArbeidsforholdList, andel, navn, getKodeverknavn);
+          const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
+          totalInntektArbeidsforholdList = leggTilGrunnlagvalidering(
+            totalInntektArbeidsforholdList,
+            andel,
+            navn,
+            getKodeverknavn,
+            arbeidsgiverOpplysningerPerId,
+          );
         }
       }
     });
@@ -54,7 +85,7 @@ export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotBeregni
   return totalInntektArbeidsforholdList;
 };
 
-const aapOgRefusjonValidering = (value) => (
+const aapOgRefusjonValidering = value => (
   <div key={value.key}>
     <FormattedMessage
       id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
@@ -63,7 +94,7 @@ const aapOgRefusjonValidering = (value) => (
   </div>
 );
 
-const arbeidsforholdValidering = (value) => (
+const arbeidsforholdValidering = value => (
   <div key={value.key}>
     <FormattedMessage
       id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
@@ -72,20 +103,20 @@ const arbeidsforholdValidering = (value) => (
   </div>
 );
 
-
 /**
  *  TotalbelopPrArbeidsgiverError
  *
  * Presentasjonskomponent: Viser error for fastsatt totalbeløp for arbeidsgivere
  */
-const TotalbelopPrArbeidsgiverError = ({
-  totalInntektPrArbeidsforhold,
-}) => {
-  const valideringList = totalInntektPrArbeidsforhold.filter(({ fastsattBelop, beregningsgrunnlagPrAar }) => fastsattBelop > beregningsgrunnlagPrAar);
+const TotalbelopPrArbeidsgiverError = ({ totalInntektPrArbeidsforhold }) => {
+  const valideringList = totalInntektPrArbeidsforhold.filter(
+    ({ fastsattBelop, beregningsgrunnlagPrAar }) => fastsattBelop > beregningsgrunnlagPrAar,
+  );
   return (
     <div>
-      {valideringList.map((v) => (v.key === AAP_ARBEIDSGIVER_KEY
-        ? aapOgRefusjonValidering(v) : arbeidsforholdValidering(v)))}
+      {valideringList.map(v =>
+        v.key === AAP_ARBEIDSGIVER_KEY ? aapOgRefusjonValidering(v) : arbeidsforholdValidering(v),
+      )}
     </div>
   );
 };

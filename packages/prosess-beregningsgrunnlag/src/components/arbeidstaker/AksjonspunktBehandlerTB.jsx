@@ -78,10 +78,10 @@ const findArbeidstakerAndeler = periode =>
 
 const createArbeidsforholdMapKey = (arbeidsforhold, arbeidsgiverOpplysningerPerId) =>
   `${
-    arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
-      ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
+    arbeidsgiverOpplysningerPerId && arbeidsforhold && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
+      ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId].navn
       : ''
-  }${arbeidsforhold.arbeidsforholdId}`;
+  }${arbeidsforhold ? arbeidsforhold.arbeidsforholdId : ''}`;
 
 // Finner beregnetPrAar for alle andeler, basert på data fra den første perioden
 const createBeregnetInntektForAlleAndeler = (perioder, arbeidsgiverOpplysningerPerId) => {

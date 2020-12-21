@@ -11,6 +11,7 @@ export type Arbeidsforhold = Readonly<{
   id?: string;
   // arbeidsgiverReferanse: string;
   navn?: string;
+  arbeidsgiverId?: string;
   arbeidsgiverIdentifikator?: string;
   arbeidsgiverIdentifiktorGUI?: string;
   arbeidsforholdId?: string;

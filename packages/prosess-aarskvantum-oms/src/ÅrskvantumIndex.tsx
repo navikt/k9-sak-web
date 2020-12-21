@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import InntektArbeidYtelse from '@k9-sak-web/types/src/inntektArbeidYtelseTsType';
@@ -31,6 +31,7 @@ interface ÅrsakvantumIndexProps {
   submitCallback: (values: any[]) => void;
   aksjonspunkterForSteg?: Aksjonspunkt[];
   inntektArbeidYtelse: InntektArbeidYtelse;
+  arbeidsgivere: { arbeidsgivere: ArbeidsgiverOpplysningerPerId };
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
