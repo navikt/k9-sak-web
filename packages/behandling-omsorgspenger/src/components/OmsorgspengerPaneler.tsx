@@ -87,6 +87,7 @@ const OmsorgspengerPaneler: FunctionComponent<OwnProps> = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         setApentFaktaPanel={setApentFaktaPanel}
         dispatch={dispatch}
+        featureToggles={featureToggles}
       />
     </>
   );
