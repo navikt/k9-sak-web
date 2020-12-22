@@ -8,9 +8,9 @@ import { minLength, maxLength, required, hasValidText, hasValidValue } from '@fp
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
-import styled from 'styled-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-web/types';
+import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
 
 interface AksjonspunktFormImplProps {
@@ -30,19 +30,6 @@ const valgValues = {
   reBehandling: 'reBehandling',
   fortsett: 'fortsett',
 };
-
-const GråBakgrunn = styled.div`
-  padding: 1em;
-  background-color: #e9e7e7;
-  margin-bottom: 1em;
-`;
-
-const SpaceBetween = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 1em;
-`;
 
 const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilkår) =>
   Object.entries(vurderteVilkår).some(
@@ -85,7 +72,7 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
         {isAksjonspunktOpen && (
           <>
             <VerticalSpacer sixteenPx />
-            <SpaceBetween>
+            <div className={styles.spaceBetween}>
               <CheckboxField
                 // @ts-ignore Fiks
                 validate={[hasValidValue(true)]}
@@ -99,7 +86,7 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
               <Hovedknapp onClick={handleSubmit} htmlType="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
               </Hovedknapp>
-            </SpaceBetween>
+            </div>
           </>
         )}
       </>
@@ -134,11 +121,11 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
         readOnly={!isAksjonspunktOpen}
       />
       {isAksjonspunktOpen && (
-        <SpaceBetween>
+        <div className={styles.spaceBetween}>
           <Hovedknapp onClick={handleSubmit} htmlType="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
           </Hovedknapp>
-        </SpaceBetween>
+        </div>
       )}
     </>
   );
@@ -151,9 +138,9 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <GråBakgrunn>
+      <div className={styles.graBoks}>
         <FormContent handleSubmit={handleSubmit} aktiviteter={aktiviteter} isAksjonspunktOpen={isAksjonspunktOpen} />
-      </GråBakgrunn>
+      </div>
     </form>
   );
 };
