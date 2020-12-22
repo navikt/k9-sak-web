@@ -33,8 +33,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-intl": "^5.8.0",
-    "styled-components": "^5.2.0"
+    "react-intl": "^5.8.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
