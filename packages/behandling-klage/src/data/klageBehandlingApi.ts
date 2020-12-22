@@ -55,8 +55,6 @@ const endpoints = new RestApiConfigBuilder()
       saveResponseIn: KlageBehandlingApiKeys.BEHANDLING_KLAGE,
     },
   )
-  // .withGet('/k9/klage/api/behandlinger/parter/med-klagerett', KlageBehandlingApiKeys.PARTER_MED_KLAGERETT)
-  // .withGet('/k9/klage/api/behandlinger/parter/med-kagerett/valgt', KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT)
 
   /* K9FORMIDLING */
   .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
