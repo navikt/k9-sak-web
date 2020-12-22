@@ -69,7 +69,7 @@ describe('<FormkravKlageForm>', () => {
             },
           ],
         }}
-        klageparter={[]}
+        parterMedKlagerett={[]}
       />,
     );
     const vedtakSelect = wrapper.find('SelectField');

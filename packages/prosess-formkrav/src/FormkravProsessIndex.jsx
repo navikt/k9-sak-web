@@ -30,8 +30,8 @@ const FormkravProsessIndex = ({
   isReadOnly,
   readOnlySubmitButton,
   alleKodeverk,
-  klageparter,
-  valgtKlagepart,
+  parterMedKlagerett,
+  valgtPartMedKlagerett,
 }) => (
   <RawIntlProvider value={intl}>
     {aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP) && (
@@ -44,8 +44,8 @@ const FormkravProsessIndex = ({
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
         avsluttedeBehandlinger={avsluttedeBehandlinger}
-        klageparter={klageparter}
-        valgtKlagepart={valgtKlagepart}
+        parterMedKlagerett={parterMedKlagerett}
+        valgtPartMedKlagerett={valgtPartMedKlagerett}
       />
     )}
     {aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA) && (
@@ -58,8 +58,8 @@ const FormkravProsessIndex = ({
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
         avsluttedeBehandlinger={avsluttedeBehandlinger}
-        klageparter={klageparter}
-        valgtKlagepart={valgtKlagepart}
+        parterMedKlagerett={parterMedKlagerett}
+        valgtPartMedKlagerett={valgtPartMedKlagerett}
       />
     )}
   </RawIntlProvider>
@@ -74,8 +74,8 @@ FormkravProsessIndex.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  klageparter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  valgtKlagepart: PropTypes.shape(),
+  parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  valgtPartMedKlagerett: PropTypes.shape(),
 };
 
 FormkravProsessIndex.defaultProps = {

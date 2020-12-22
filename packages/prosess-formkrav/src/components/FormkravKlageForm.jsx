@@ -63,7 +63,7 @@ export const FormkravKlageForm = ({
   intl,
   formProps,
   alleKodeverk,
-  klageparter,
+  parterMedKlagerett,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
@@ -80,18 +80,18 @@ export const FormkravKlageForm = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="6">
-          {Array.isArray(klageparter) && klageparter.length ? (
+          {Array.isArray(parterMedKlagerett) && parterMedKlagerett.length ? (
             <>
               <SelectField
                 readOnly={readOnly}
-                name="valgtKlagepart"
-                selectValues={klageparter.map(part => (
+                name="valgtPartMedKlagerett"
+                selectValues={parterMedKlagerett.map(part => (
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
                     {part.identifikasjon.id}
                   </option>
                 ))}
                 className={readOnly ? styles.selectReadOnly : null}
-                label={intl.formatMessage({ id: 'Klage.Formkrav.velgKlagepart' })}
+                label={intl.formatMessage({ id: 'Klage.Formkrav.velgPartMedKlagerett' })}
                 validate={[required]}
                 bredde="xl"
               />
@@ -184,7 +184,7 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  klageparter: PropTypes.arrayOf(PropTypes.shape()),
+  parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 FormkravKlageForm.defaultProps = {

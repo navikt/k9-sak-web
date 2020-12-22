@@ -24,7 +24,7 @@ export const FormkravKlageFormNfpImpl = ({
   readOnlySubmitButton,
   alleKodeverk,
   avsluttedeBehandlinger,
-  klageparter,
+  parterMedKlagerett,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -37,7 +37,7 @@ export const FormkravKlageFormNfpImpl = ({
       formProps={formProps}
       alleKodeverk={alleKodeverk}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
-      klageparter={klageparter}
+      parterMedKlagerett={parterMedKlagerett}
     />
   </form>
 );
@@ -87,7 +87,7 @@ const transformValues = (values, avsluttedeBehandlinger) => ({
   vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
-  valgtKlagepart: safeJSONParse(values.valgtKlagepart),
+  valgtPartMedKlagerett: safeJSONParse(values.valgtPartMedKlagerett),
 });
 
 const formName = 'FormkravKlageFormNfp';
@@ -96,9 +96,9 @@ const buildInitialValues = createSelector(
   [
     ownProps => ownProps.klageVurdering,
     ownProps => ownProps.avsluttedeBehandlinger,
-    ownProps => ownProps.valgtKlagepart,
+    ownProps => ownProps.valgtPartMedKlagerett,
   ],
-  (klageVurdering, valgtKlagepart, avsluttedeBehandlinger) => {
+  (klageVurdering, avsluttedeBehandlinger, valgtPartMedKlagerett) => {
     const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
     return {
       vedtak: klageFormkavResultatNfp ? getPaklagdVedtak(klageFormkavResultatNfp, avsluttedeBehandlinger) : null,
@@ -107,7 +107,7 @@ const buildInitialValues = createSelector(
       erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
       erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
       erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
-      valgtKlagepart: JSON.stringify(valgtKlagepart),
+      valgtPartMedKlagerett: JSON.stringify(valgtPartMedKlagerett),
     };
   },
 );
@@ -116,7 +116,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values =>
     initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
   return (state, ownProps) => ({
-    klageparter: ownProps.klageparter,
+    parterMedKlagerett: ownProps.parterMedKlagerett,
     initialValues: buildInitialValues(ownProps),
     readOnly: ownProps.readOnly,
     onSubmit,
