@@ -1,4 +1,4 @@
-import React, { ReactElement, FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactElement, ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 
@@ -62,9 +62,21 @@ const Table: FunctionComponent<OwnProps> = ({
   withoutTbody = false,
   notFocusableHeader = false
 }) => {
-  const content = Array.isArray(children)
-    ? React.Children.map(children, child => React.cloneElement(child, { noHover }))
-    : React.cloneElement(children, { noHover });
+
+  const performFunctionOnChildren = (
+    childOrChildren: ReactElement | ReactElement[],
+    func: (child: ReactElement) => ReactElement
+  ) => Array.isArray(childOrChildren) ? React.Children.map(childOrChildren, func) : func(childOrChildren);
+
+  const tableRowsWithNoHoverProp = childrenOfTbody => performFunctionOnChildren(
+    childrenOfTbody,
+    (row: ReactNode) => React.isValidElement(row) && React.cloneElement(row, { noHover })
+  );
+
+  const content = withoutTbody
+    ? performFunctionOnChildren(children, tbody => <tbody {...tbody.props}>{tableRowsWithNoHoverProp(tbody.props.children)}</tbody>)
+    : tableRowsWithNoHoverProp(children);
+
   return <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
     <thead>
       <TableRow isHeader noHover={noHover} notFocusable={notFocusableHeader}>
