@@ -139,6 +139,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
         </>}
         noHover
         withoutTbody
+        notFocusableHeader
       >
         {uttaksperioder.map(({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler, nøkkeltall }, index) => {
           const erValgt = valgtPeriodeIndex === index;
