@@ -36,5 +36,19 @@ export interface Uttaksperiode {
     vilkår: VurderteVilkår;
   };
   hjemler: string[];
+  nøkkeltall?: Nøkkeltall;
 }
+
+export interface Nøkkeltall {
+  totaltAntallDager: number;
+  antallKoronadager: number;
+  antallDagerArbeidsgiverDekker: number;
+  antallDagerInfotrygd: number;
+  antallForbrukteDager: number;
+  restTid: string; // Duration
+  forbruktTid: string; // Duration
+  smittevernTid: string; // Duration
+  migrertData: boolean;
+}
+
 export default Uttaksperiode;

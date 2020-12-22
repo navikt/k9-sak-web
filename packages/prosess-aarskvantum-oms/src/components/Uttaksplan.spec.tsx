@@ -68,6 +68,7 @@ describe('Uttaksplan', () => {
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={{}}
         aktiv
+        featureToggles={{}}
       />,
     );
 

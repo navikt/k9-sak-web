@@ -1,3 +1,4 @@
+import { TableRow } from '@fpsak-frontend/shared-components';
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
@@ -6,9 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import { Arbeidsforhold, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import Aktivitet from '../dto/Aktivitet';
-import AktivitetTabell, { ExpandButton, ExpandedContent } from './AktivitetTabell';
-
-import StyledColumn from './StyledColumn';
+import AktivitetTabell from './AktivitetTabell';
 import Utfall from './Utfall';
 
 describe('<AktivitetTabell />', () => {
@@ -51,9 +50,10 @@ describe('<AktivitetTabell />', () => {
         arbeidsforhold={arbeidsforhold}
         aktivitetsstatuser={[]}
         arbeidsgiverOpplysningerPerId={{}}
+        featureToggles={{}}
       />,
     );
-    const kolonner = wrapper.find(StyledColumn);
+    const kolonner = wrapper.find('td');
 
     expect(kolonner).to.have.length(5);
 
@@ -77,17 +77,18 @@ describe('<AktivitetTabell />', () => {
         arbeidsforholdtypeKode="AT"
         aktivitetsstatuser={[]}
         arbeidsgiverOpplysningerPerId={{}}
+        featureToggles={{}}
       />,
     );
 
-    expect(wrapper.find(ExpandedContent)).to.have.length(0);
-    wrapper.find(ExpandButton).simulate('click');
+    expect(wrapper.find(TableRow)).to.have.length(aktivitet.uttaksperioder.length);
+    wrapper.find('button').simulate('click');
 
-    const expandedContent = wrapper.find(ExpandedContent);
+    const expandedContent = wrapper.find(TableRow);
 
-    expect(expandedContent).to.have.length(5);
+    expect(expandedContent).to.have.length(aktivitet.uttaksperioder.length * 3);
 
-    const vilkår = expandedContent.first().find(Normaltekst);
+    const vilkår = expandedContent.at(2).find(Normaltekst);
 
     expect(vilkår).to.have.length(3);
     expect(vilkår.last().find(FormattedMessage).prop('id')).to.equal('Uttaksplan.Vilkår.ARBEIDSFORHOLD_AVSLÅTT');

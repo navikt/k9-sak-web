@@ -1,9 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
-import { Behandling, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import {
+  Behandling,
+  KodeverkMedNavn,
+  ArbeidsgiverOpplysningerPerId,
+  Aksjonspunkt,
+  FeatureToggles,
+  InntektArbeidYtelse,
+} from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
-import InntektArbeidYtelse from '@k9-sak-web/types/src/inntektArbeidYtelseTsType';
+
 import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import Uttaksplan from './components/Uttaksplan';
@@ -32,6 +38,7 @@ interface ÅrsakvantumIndexProps {
   aksjonspunkterForSteg?: Aksjonspunkt[];
   inntektArbeidYtelse: InntektArbeidYtelse;
   arbeidsgivere: { arbeidsgivere: ArbeidsgiverOpplysningerPerId };
+  featureToggles: FeatureToggles;
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
@@ -44,6 +51,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   aksjonspunkterForSteg = [],
   inntektArbeidYtelse,
   arbeidsgivere,
+  featureToggles,
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
@@ -68,6 +76,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         // @ts-ignore
         arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+        featureToggles={featureToggles}
       />
     </RawIntlProvider>
   );

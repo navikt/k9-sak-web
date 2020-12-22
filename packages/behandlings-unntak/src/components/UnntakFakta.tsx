@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FagsakInfo, Rettigheter, SideMenuWrapper, faktaHooks } from '@fpsak-frontend/behandling-felles';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { Behandling, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import unntakBehandlingApi from '../data/unntakBehandlingApi';
@@ -30,6 +30,7 @@ interface OwnProps {
   valgtProsessSteg?: string;
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
   dispatch: Dispatch;
+  featureToggles: FeatureToggles;
 }
 
 const UnntakFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -45,6 +46,7 @@ const UnntakFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   hasFetchError,
   setApentFaktaPanel,
   dispatch,
+  featureToggles,
 }) => {
   const { aksjonspunkter, ...rest } = data;
 
@@ -56,7 +58,7 @@ const UnntakFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
-    faktaPanelDefinisjoner,
+    faktaPanelDefinisjoner(featureToggles),
     dataTilUtledingAvFpPaneler,
     behandling,
     rettigheter,
