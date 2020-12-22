@@ -45,6 +45,7 @@ interface OwnProps {
   isSolidBottomBorder?: boolean;
   isApLeftBorder?: boolean;
   className?: string;
+  notFocusable?: boolean;
 }
 
 /**
@@ -66,6 +67,7 @@ const TableRow: FunctionComponent<OwnProps> = ({
   isSolidBottomBorder = false,
   isApLeftBorder = false,
   className,
+  notFocusable = false
 }) => (
   <tr
     className={classNames(className, {
@@ -79,7 +81,7 @@ const TableRow: FunctionComponent<OwnProps> = ({
     })}
     onMouseDown={createMouseDownHandler(onMouseDown, id, model)}
     onKeyDown={createKeyHandler(onKeyDown, id, model)}
-    tabIndex={0}
+    tabIndex={notFocusable ? null : 0}
   >
     {children}
   </tr>

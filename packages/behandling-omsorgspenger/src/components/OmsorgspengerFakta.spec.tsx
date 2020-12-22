@@ -143,6 +143,7 @@ describe('<OmsorgspengerFakta>', () => {
         hasFetchError={false}
         setApentFaktaPanel={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -181,6 +182,7 @@ describe('<OmsorgspengerFakta>', () => {
         hasFetchError={false}
         setApentFaktaPanel={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -215,6 +217,7 @@ describe('<OmsorgspengerFakta>', () => {
         hasFetchError={false}
         setApentFaktaPanel={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 

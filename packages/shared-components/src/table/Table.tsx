@@ -42,6 +42,8 @@ interface OwnProps {
   noHover?: boolean;
   stripet?: boolean;
   suppliedHeaders?: ReactElement;
+  withoutTbody?: boolean; // Denne må settes til true når man vil gruppere rader i flere tbody-tagger
+  notFocusableHeader?: boolean;
 }
 
 /**
@@ -57,19 +59,20 @@ const Table: FunctionComponent<OwnProps> = ({
   children,
   stripet = false,
   suppliedHeaders,
-}) => (
-  <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
+  withoutTbody = false,
+  notFocusableHeader = false
+}) => {
+  const content = Array.isArray(children)
+    ? React.Children.map(children, child => React.cloneElement(child, { noHover }))
+    : React.cloneElement(children, { noHover });
+  return <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
     <thead>
-      <TableRow isHeader noHover={noHover}>
+      <TableRow isHeader noHover={noHover} notFocusable={notFocusableHeader}>
         {headers(headerTextCodes, headerColumnContent, suppliedHeaders)}
       </TableRow>
     </thead>
-    <tbody>
-      {Array.isArray(children)
-        ? React.Children.map(children, child => React.cloneElement(child, { noHover }))
-        : React.cloneElement(children, { noHover })}
-    </tbody>
+    {withoutTbody ? content : <tbody>{content}</tbody>}
   </table>
-);
+};
 
 export default Table;
