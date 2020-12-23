@@ -37,7 +37,7 @@
     "@navikt/nap-autocomplete": "^1.0.2",
     "@navikt/nap-expandable-panel": "1.0.1",
     "@sentry/browser": "^5.29.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.8.1",
     "dotenv": "^8.2.0",
     "history": "^4.9.0",
