@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 import { minLength, maxLength, required, hasValidText } from '@fpsak-frontend/utils';
 import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/form';
+
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
+import aktivtArbeidsforholdHandling from '../../kodeverk/aktivtArbeidsforholdHandling';
 
 /**
  * ArbeidsforholdBegrunnelse er ansvarlig for å vise begrunnelsesfeltet.
@@ -37,7 +39,6 @@ export const ArbeidsforholdBegrunnelse = ({
     </BehandlingFormFieldCleaner>
   </>
 );
-
 ArbeidsforholdBegrunnelse.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   formName: PropTypes.string.isRequired,
@@ -47,13 +48,17 @@ ArbeidsforholdBegrunnelse.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
 };
-
 const mapStateToProps = (state, initialProps) => {
   const { formName, behandlingId, behandlingVersjon } = initialProps;
+  const aktivtArbeidsforholdHandlingValue = behandlingFormValueSelector(
+    formName,
+    behandlingId,
+    behandlingVersjon,
+  )(state, 'aktivtArbeidsforholdHandlingField');
   return {
     isDirty: isBehandlingFormDirty(formName, behandlingId, behandlingVersjon)(state),
     harBegrunnelse: !!behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'begrunnelse'),
+    skalAvslaaYtelse: aktivtArbeidsforholdHandlingValue === aktivtArbeidsforholdHandling.AVSLA_YTELSE,
   };
 };
-
 export default connect(mapStateToProps)(ArbeidsforholdBegrunnelse);

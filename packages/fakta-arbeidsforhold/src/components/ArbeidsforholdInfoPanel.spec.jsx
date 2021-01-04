@@ -7,11 +7,8 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
 
-import {
-  ArbeidsforholdInfoPanelImpl,
-  fjernIdFraArbeidsforholdLagtTilAvSaksbehandler,
-} from './ArbeidsforholdInfoPanelV2';
-import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanelV2';
+import { ArbeidsforholdInfoPanelImpl, fjernIdFraArbeidsforholdLagtTilAvSaksbehandler } from './ArbeidsforholdInfoPanel';
+import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
 
 const ap5080 = {
@@ -30,14 +27,11 @@ const ap5080 = {
 
 const toggleCallback = sinon.spy();
 
-const arbeidsgivere = new Map();
-
 describe('<ArbeidsforholdInfoPanel>', () => {
   it('Skal vise komponenten korrekt med aksjonspunkt hvor man ikke kan legge til nye arbeidsforhold', () => {
     const wrapper = shallow(
       <ArbeidsforholdInfoPanelImpl
         aksjonspunkter={[ap5080]}
-        arbeidsgivere={arbeidsgivere}
         openInfoPanels={['arbeidsforhold']}
         toggleInfoPanelCallback={toggleCallback}
         readOnly={false}
@@ -52,21 +46,44 @@ describe('<ArbeidsforholdInfoPanel>', () => {
       />,
     );
     const apMsg = wrapper.find('FormattedMessage');
-    expect(apMsg).has.length(2);
-    expect(apMsg.get(0).props().id).has.eql('ArbeidsforholdInfoPanel.AvklarArbeidsforhold');
+    expect(apMsg).has.length(1);
+    expect(apMsg.props().id).has.eql('ArbeidsforholdInfoPanel.AvklarArbeidsforhold');
     expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
     expect(wrapper.find(BekreftOgForsettKnapp)).has.length(1);
   });
-
+  it('Skal vise komponenten korrekt med aksjonspunkt hvor man kan legge til nye arbeidsforhold', () => {
+    const wrapper = shallow(
+      <ArbeidsforholdInfoPanelImpl
+        aksjonspunkter={[ap5080]}
+        openInfoPanels={['arbeidsforhold']}
+        toggleInfoPanelCallback={toggleCallback}
+        readOnly={false}
+        hasOpenAksjonspunkter
+        skalKunneLeggeTilNyeArbeidsforhold
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
+        {...reduxFormPropsMock}
+      />,
+    );
+    const apMsg = wrapper.find('FormattedMessage');
+    expect(apMsg).has.length(1);
+    expect(apMsg.props().id).has.eql('ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert');
+    expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
+    expect(wrapper.find(BekreftOgForsettKnapp)).has.length(1);
+  });
   it('Skal vise komponenten korrekt uten aksjonspunkt hvor man kan legge til nye arbeidsforhold', () => {
     const wrapper = shallow(
       <ArbeidsforholdInfoPanelImpl
         aksjonspunkter={[]}
-        hasOpenAksjonspunkter={false}
         openInfoPanels={['arbeidsforhold']}
         toggleInfoPanelCallback={toggleCallback}
         readOnly={false}
-        arbeidsgivere={arbeidsgivere}
+        hasOpenAksjonspunkter={false}
+        skalKunneLeggeTilNyeArbeidsforhold
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
@@ -78,7 +95,6 @@ describe('<ArbeidsforholdInfoPanel>', () => {
     expect(wrapper.find(BekreftOgForsettKnapp)).has.length(0);
     expect(wrapper.find(AksjonspunktHelpText)).has.length(0);
   });
-
   it('skal fjerne ID fra arbeidsforhold som er lagt til av saksbehandler, men ikke fra andre', () => {
     const arbeidsforhold = [
       {

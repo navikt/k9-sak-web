@@ -16,8 +16,8 @@ import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import { arbeidsforholdV2PropType, arbeidsgiverPropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
-import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
-import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
+import PersonArbeidsforholdTableV2 from './arbeidsforholdTabell/PersonArbeidsforholdTableV2';
+import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2 } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailFormV2';
 
 import styles from './personArbeidsforholdPanel.less';
 
@@ -94,7 +94,7 @@ export const harAksjonspunkter = arbeidsforhold => {
  * som har samme navn i GUI og PropTypen blir fylt inn 'automatisk', mens andre variabler som
  * ikke er med i PropTypen må håndteres f.eks. i UpdateArbeidsforhold metoden.
  */
-export class PersonArbeidsforholdPanelImpl extends Component {
+export class PersonArbeidsforholdPanelImplV2 extends Component {
   constructor() {
     super();
     this.state = {
@@ -289,10 +289,10 @@ export class PersonArbeidsforholdPanelImpl extends Component {
                         {intl.formatMessage(
                           selectedArbeidsgiver === a
                             ? {
-                                id: 'PersonArbeidsforholdPanelV2.LukkArbeidsforhold',
+                                id: 'PersonArbeidsforholdPanel.LukkArbeidsforhold',
                               }
                             : {
-                                id: 'PersonArbeidsforholdPanelV2.VisArbeidsforhold',
+                                id: 'PersonArbeidsforholdPanel.VisArbeidsforhold',
                               },
                         )}
                       </Normaltekst>
@@ -305,7 +305,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
                   </TableColumn>
                 </FlexRow>
                 {selectedArbeidsgiver === a && (
-                  <PersonArbeidsforholdTable
+                  <PersonArbeidsforholdTableV2
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
                     hasArbeidsforholdAksjonspunkt={harAksjonspunkter}
@@ -326,7 +326,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
   }
 }
 
-PersonArbeidsforholdPanelImpl.propTypes = {
+PersonArbeidsforholdPanelImplV2.propTypes = {
   intl: PropTypes.shape().isRequired,
   arbeidsgivere: PropTypes.arrayOf(arbeidsgiverPropType).isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType).isRequired,
@@ -367,13 +367,13 @@ const mapDispatchToProps = dispatch => ({
 const PersonArbeidsforholdPanelV2 = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(injectIntl(PersonArbeidsforholdPanelImpl));
+)(injectIntl(PersonArbeidsforholdPanelImplV2));
 PersonArbeidsforholdPanelV2.buildInitialValues = arbeidsforhold => ({
   arbeidsforhold,
 });
 PersonArbeidsforholdPanelV2.isReadOnly = (state, behandlingId, behandlingVersjon) => {
   const isDetailFormOpen = !!behandlingFormValueSelector(
-    PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
+    PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2,
     behandlingId,
     behandlingVersjon,
   )(state, 'navn');

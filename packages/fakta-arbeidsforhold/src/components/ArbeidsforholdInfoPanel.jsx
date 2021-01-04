@@ -11,7 +11,7 @@ import { omit } from '@fpsak-frontend/utils';
 
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
 import arbeidsforholdAksjonspunkterPropType from '../propTypes/arbeidsforholdAksjonspunkterPropType';
-import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanelV2';
+import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 
 // ----------------------------------------------------------------------------
 // VARIABLES

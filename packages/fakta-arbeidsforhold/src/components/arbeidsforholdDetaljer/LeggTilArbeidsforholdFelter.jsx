@@ -20,8 +20,8 @@ import styles from './leggTilArbeidsforholdFelter.less';
 // ----------------------------------------------------------------------------------
 // Methods
 // ----------------------------------------------------------------------------------
-const sluttdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }];
-const startdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeOrEqual' }, { dato }];
+const sluttdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailFormV2.DateNotAfterOrEqual' }, { dato }];
+const startdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailFormV2.DateNotBeforeOrEqual' }, { dato }];
 const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 
 // ----------------------------------------------------------------------------------

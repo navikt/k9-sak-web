@@ -5,61 +5,50 @@ import sinon from 'sinon';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
 import { PersonArbeidsforholdDetailForm } from './PersonArbeidsforholdDetailForm';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
+import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
 import shallowWithIntl from '../../../i18n';
 
 describe('<PersonArbeidsforholdDetailForm>', () => {
   const arbeidsforhold = {
     id: '1',
-    arbeidsgiver: {
-      arbeidsgiverOrgnr: '98000167',
-      arbeidsgiverAktørId: 'aktørId',
+    arbeidsforholdId: '1231-2345',
+    navn: 'Svendsen Eksos',
+    arbeidsgiverIdentifikator: '1234567',
+    arbeidsgiverIdentifiktorGUI: '1234567',
+    fomDato: '2018-01-01',
+    tomDato: '2018-10-10',
+    kilde: {
+      kode: 'INNTEKT',
+      navn: '',
     },
-    arbeidsforhold: {
-      internArbeidsforholdId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      eksternArbeidsforholdId: '9056806408',
-    },
-    yrkestittel: 'Vaktmester',
-    begrunnelse: null,
-    perioder: [
-      {
-        fom: '2020-02-14',
-        tom: '2020-12-14',
-      },
-    ],
-    handlingType: 'UDEFINERT',
-    kilde: ['AAREGISTERET'],
-    permisjoner: [
-      {
-        permisjonFom: '2020-12-14',
-        permisjonTom: '2020-12-14',
-      },
-    ],
-    stillingsprosent: 40,
-    aksjonspunktÅrsaker: ['MANGLENDE_INNTEKTSMELDING'],
-    inntektsmeldinger: [
-      {
-        journalpostId: '98548088',
-        mottattTidspunkt: '2020-12-14T14:04:49.348Z',
-        status: 'GYLDIG',
-        begrunnelse: 'null',
-      },
-    ],
+    mottattDatoInntektsmelding: undefined,
+    brukArbeidsforholdet: true,
+    erNyttArbeidsforhold: undefined,
+    erstatterArbeidsforholdId: undefined,
+    tilVurdering: true,
   };
-
   it('skal ikke vise tekstfelt for begrunnelse når form ikke er dirty og begrunnelse ikke har verdi', () => {
     const wrapper = shallowWithIntl(
       <PersonArbeidsforholdDetailForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        skjulArbeidsforhold={sinon.spy()}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding
+        harErstattetEttEllerFlere
         readOnly={false}
         vurderOmSkalErstattes={false}
         aktivtArbeidsforholdTillatUtenIM={false}
         arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
         initialValues={{
           begrunnelse: '',
+          replaceOptions: [],
         }}
         behandlingId={1}
         behandlingVersjon={1}
@@ -68,17 +57,220 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
     );
     expect(wrapper.find(TextAreaField)).has.length(0);
   });
+  it('skal vise panel for å velge nytt eller erstatte når behandling er i bruk og en har gamle arbeidsforhold for samme org', () => {
+    const wrapper = shallowWithIntl(
+      <PersonArbeidsforholdDetailForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding
+        harErstattetEttEllerFlere={false}
+        readOnly={false}
+        vurderOmSkalErstattes
+        aktivtArbeidsforholdTillatUtenIM={false}
+        arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        initialValues={{
+          begrunnelse: '',
+          replaceOptions: [{ id: 2 }],
+        }}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+      />,
+    );
+    const panel = wrapper.find(PersonNyttEllerErstattArbeidsforholdPanel);
+    expect(panel).to.be.length(1);
+  });
+  it('skal ikke vise panel for å velge nytt eller erstatte når behandling ikke er i bruk', () => {
+    const wrapper = shallowWithIntl(
+      <PersonArbeidsforholdDetailForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding
+        harErstattetEttEllerFlere
+        readOnly={false}
+        vurderOmSkalErstattes={false}
+        aktivtArbeidsforholdTillatUtenIM={false}
+        arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        initialValues={{
+          begrunnelse: '',
+          replaceOptions: [{ id: 2 }],
+        }}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+      />,
+    );
+    const panel = wrapper.find(PersonNyttEllerErstattArbeidsforholdPanel);
+    expect(panel).to.be.length(0);
+  });
+  it('skal ikke vise panel for å velge nytt eller erstatte når behandling ikke har gamle arbeidsforhold for samme org', () => {
+    const wrapper = shallowWithIntl(
+      <PersonArbeidsforholdDetailForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding
+        harErstattetEttEllerFlere
+        readOnly={false}
+        vurderOmSkalErstattes={false}
+        aktivtArbeidsforholdTillatUtenIM={false}
+        arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        initialValues={{
+          begrunnelse: '',
+          replaceOptions: [],
+        }}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+      />,
+    );
+    const panel = wrapper.find(PersonNyttEllerErstattArbeidsforholdPanel);
+    expect(panel).to.be.length(0);
+  });
+  it('skal vise tekst for å erstatte alle tidligere arbeidsforhold når behandling er i bruk og flagget harErstattetEttEllerFlere er satt', () => {
+    const wrapper = shallowWithIntl(
+      <PersonArbeidsforholdDetailForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding
+        harErstattetEttEllerFlere
+        readOnly={false}
+        vurderOmSkalErstattes={false}
+        aktivtArbeidsforholdTillatUtenIM={false}
+        arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        initialValues={{
+          begrunnelse: '',
+          replaceOptions: [],
+        }}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+      />,
+    );
 
+    expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(1);
+  });
+  it('skal ikke vise tekst for å erstatte alle tidligere arbeidsforhold når behandling ikke er i bruk', () => {
+    const wrapper = shallowWithIntl(
+      <PersonArbeidsforholdDetailForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding
+        harErstattetEttEllerFlere
+        readOnly={false}
+        vurderOmSkalErstattes={false}
+        aktivtArbeidsforholdTillatUtenIM={false}
+        arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        initialValues={{
+          begrunnelse: '',
+          replaceOptions: [],
+        }}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+      />,
+    );
+
+    expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(0);
+  });
+  it('skal ikke vise tekst for å erstatte alle tidligere arbeidsforhold når flagget harErstattetEttEllerFlere ikke er satt', () => {
+    const wrapper = shallowWithIntl(
+      <PersonArbeidsforholdDetailForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding
+        harErstattetEttEllerFlere={false}
+        readOnly={false}
+        vurderOmSkalErstattes={false}
+        aktivtArbeidsforholdTillatUtenIM={false}
+        arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        initialValues={{
+          begrunnelse: '',
+          replaceOptions: [],
+        }}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+      />,
+    );
+    expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(0);
+  });
+  it('skal vise LeggTilArbeidsforholdFelter ', () => {
+    const wrapper = shallowWithIntl(
+      <PersonArbeidsforholdDetailForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding={false}
+        harErstattetEttEllerFlere
+        readOnly={false}
+        vurderOmSkalErstattes={false}
+        aktivtArbeidsforholdTillatUtenIM={false}
+        arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        initialValues={{
+          begrunnelse: '',
+          replaceOptions: [],
+        }}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+      />,
+    );
+    const radiogroup = wrapper.find(LeggTilArbeidsforholdFelter);
+    expect(radiogroup).has.length(1);
+  });
   it('skal ikke vise LeggTilArbeidsforholdFelter ', () => {
     const wrapper = shallowWithIntl(
       <PersonArbeidsforholdDetailForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        skjulArbeidsforhold={sinon.spy()}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding={false}
+        harErstattetEttEllerFlere
         readOnly={false}
+        vurderOmSkalErstattes={false}
+        aktivtArbeidsforholdTillatUtenIM={false}
         arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
         initialValues={{
           begrunnelse: '',
+          replaceOptions: [],
         }}
         behandlingId={1}
         behandlingVersjon={1}
@@ -87,5 +279,33 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
     );
     const radiogroup = wrapper.find(LeggTilArbeidsforholdFelter);
     expect(radiogroup).has.length(0);
+  });
+  it('skal ikke vise tekst for å erstatte alle tidligere arbeidsforhold eller NyttEllerErstattPanel når handlingen er undefined', () => {
+    const wrapper = shallowWithIntl(
+      <PersonArbeidsforholdDetailForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        cancelArbeidsforhold={sinon.spy()}
+        arbeidsforholdHandlingVerdi={undefined}
+        isErstattArbeidsforhold
+        hasReceivedInntektsmelding={false}
+        harErstattetEttEllerFlere
+        readOnly={false}
+        vurderOmSkalErstattes={false}
+        aktivtArbeidsforholdTillatUtenIM
+        arbeidsforhold={arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        initialValues={{
+          begrunnelse: '',
+          replaceOptions: [],
+        }}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+      />,
+    );
+    expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(0);
+    expect(wrapper.find(PersonNyttEllerErstattArbeidsforholdPanel)).has.length(0);
   });
 });

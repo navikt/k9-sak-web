@@ -11,13 +11,13 @@ import { omit } from '@fpsak-frontend/utils';
 
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
 import arbeidsforholdAksjonspunkterPropType from '../propTypes/arbeidsforholdAksjonspunkterPropType';
-import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanelV2';
+import PersonArbeidsforholdPanelV2 from './PersonArbeidsforholdPanelV2';
 
 // ----------------------------------------------------------------------------
 // VARIABLES
 // ----------------------------------------------------------------------------
 
-const formName = 'ArbeidsforholdInfoPanel';
+const formName = 'ArbeidsforholdInfoPanelV2';
 
 // ----------------------------------------------------------------------------
 // METHODS
@@ -42,7 +42,7 @@ const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
  * Ansvarlig for å rendre aksjonspunktteksten, arbeidsforholdene, og
  * bekreft & fortsett knappen
  * */
-export const ArbeidsforholdInfoPanelImpl = ({
+export const ArbeidsforholdInfoPanelImplV2 = ({
   aksjonspunkter,
   readOnly,
   alleMerknaderFraBeslutter,
@@ -72,7 +72,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
         <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />
       </h3>
       <form onSubmit={formProps.handleSubmit}>
-        <PersonArbeidsforholdPanel
+        <PersonArbeidsforholdPanelV2
           readOnly={readOnly}
           arbeidsgivere={arbeidsgivere}
           hasAksjonspunkter={aksjonspunkter.length > 0}
@@ -94,7 +94,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
   );
 };
 
-ArbeidsforholdInfoPanelImpl.propTypes = {
+ArbeidsforholdInfoPanelImplV2.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
@@ -139,4 +139,4 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     onSubmit,
   });
 };
-export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));
+export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImplV2));
