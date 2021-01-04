@@ -14,7 +14,7 @@ import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattA
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
-import PermisjonerInfo from './PermisjonerInfo';
+import PermisjonPeriode from './PermisjonPeriode';
 import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
 
 // ----------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ export const PersonArbeidsforholdDetailForm = ({
     <Element>
       <FormattedMessage id="PersonArbeidsforholdDetailForm.Header" />
     </Element>
-    <PermisjonerInfo arbeidsforhold={arbeidsforhold} />
+    <PermisjonPeriode arbeidsforhold={arbeidsforhold} />
     <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
     <VerticalSpacer eightPx />
     {skalKunneLeggeTilNyeArbeidsforhold && (

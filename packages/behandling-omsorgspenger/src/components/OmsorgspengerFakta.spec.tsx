@@ -65,7 +65,7 @@ describe('<OmsorgspengerFakta>', () => {
     },
   ];
   const vilkar = [];
-  const inntektArbeidYtelse = [];
+  const inntektArbeidYtelse = {};
   const arbeidsgivere = new Map();
 
   const soker = {
