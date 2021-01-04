@@ -23,7 +23,6 @@ export const AnkeBehandlingApiKeys = {
   SAVE_REOPEN_ANKE_VURDERING: 'SAVE_REOPEN_ANKE_VURDERING',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
-  ARBEIDSGIVERE: 'ARBEIDSGIVERE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -33,7 +32,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', AnkeBehandlingApiKeys.VILKAR)
   .withRel('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
-  .withRel('arbeidsgivere', AnkeBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
