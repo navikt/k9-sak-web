@@ -67,6 +67,7 @@ describe('Uttaksplan', () => {
         aktiviteterHittilIÅr={[]}
         arbeidsforhold={arbeidsforhold}
         aktiv
+        featureToggles={{}}
       />,
     );
 
