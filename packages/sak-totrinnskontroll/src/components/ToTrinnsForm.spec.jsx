@@ -5,7 +5,6 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FormattedMessage } from 'react-intl';
 import { ToTrinnsFormImpl } from './ToTrinnsForm';
 import ApprovalField from './ApprovalField';
 import getAksjonspunktText from './ApprovalTextUtils';
@@ -139,51 +138,6 @@ describe('<ToTrinnsForm>', () => {
 
     const form = wrapper.find('form');
     expect(form).to.have.length(0);
-  });
-
-  it('skal rendre form om approvals i formstate er lik lengde som approvals frå resttjeneste', () => {
-    const formState = [
-      {
-        contextCode: 'test',
-        aksjonspunkter: [],
-      },
-    ];
-
-    const totrinnskontrollContext = [
-      {
-        contextCode: 'test',
-        skjermlenkeId: 'Behandlingspunkt.Fodselsvilkaret',
-        skjermlenke: 'testLocation',
-        aksjonspunkter: [],
-      },
-    ];
-
-    const behandling = getBehandling();
-
-    const isForeldrepenger = true;
-
-    const wrapper = shallowWithIntl(
-      <ToTrinnsFormImpl
-        {...reduxFormPropsMock}
-        totrinnskontrollContext={totrinnskontrollContext}
-        formState={formState}
-        location={{ pathname: 'test' }}
-        forhandsvisVedtaksbrev={sinon.spy()}
-        behandling={behandling}
-        getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
-        readOnly={false}
-        intl={intlMock}
-      />,
-    );
-
-    const form = wrapper.find('form');
-    expect(form).to.have.length(1);
-
-    const button = wrapper.find('button');
-    expect(button).to.have.length(1);
-
-    const mes = button.find(FormattedMessage);
-    expect(mes.prop('id')).equal('ToTrinnsForm.ForhandvisBrev');
   });
 
   it('skal rendre form om approvals i formstate er lik lengde som approvals frå resttjeneste', () => {

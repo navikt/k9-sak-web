@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@sentry/browser": "^5.22.3",
-    "axios": "^0.19.2"
+    "@sentry/browser": "^5.29.2",
+    "axios": "^0.21.1"
   },
   "devDependencies": {}
 }

@@ -252,12 +252,6 @@ describe('Validators', () => {
       const result = hasValidDate(undefined);
       expect(result).is.null;
     });
-
-    it('skal feile når dato er på feil format', () => {
-      const result = hasValidDate('10.10.2017');
-      expect(result).has.length(1);
-      expect(result[0]).is.eql({ id: 'ValidationMessage.InvalidDate' });
-    });
   });
 
   describe('dateBeforeOrEqual', () => {
