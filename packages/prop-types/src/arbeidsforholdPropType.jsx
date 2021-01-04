@@ -118,7 +118,7 @@ export const arbeidsgiverPropType = PropTypes.shape({
 });
 
 export const arbeidsgiverMapPropType = PropTypes.shape({
-  arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
+  arbeidsgivere: PropTypes.instanceOf(Map),
 });
 
 export default arbeidsforholdPropType;
