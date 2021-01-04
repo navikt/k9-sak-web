@@ -118,8 +118,8 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
     ];
 
     if (handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER) {
-      if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER.kode)) {
-        values.kilde.push(arbeidsforholdKilder.SAKSBEHANDLER);
+      if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {
+        values.kilde.push({ kode: arbeidsforholdKilder.SAKSBEHANDLER });
       }
     }
 

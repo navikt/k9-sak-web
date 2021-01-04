@@ -65,7 +65,11 @@ describe('<OmsorgspengerFakta>', () => {
     },
   ];
   const vilkar = [];
-  const inntektArbeidYtelse = {};
+  const inntektArbeidYtelse = {
+    skalKunneLeggeTilNyeArbeidsforhold: true,
+    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
+    relatertTilgrensendeYtelserForAnnenForelder: [],
+  };
   const arbeidsgivere = new Map();
 
   const soker = {
