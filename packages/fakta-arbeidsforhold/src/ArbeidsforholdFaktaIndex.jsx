@@ -6,7 +6,7 @@ import {
   arbeidsforholdV2PropType,
   arbeidsgiverMapPropType,
 } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
-import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
+import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanelV2';
 import arbeidsforholdAksjonspunkterPropType from './propTypes/arbeidsforholdAksjonspunkterPropType';
 import arbeidsforholdBehandlingPropType from './propTypes/arbeidsforholdBehandlingPropType';
 import messages from '../i18n/nb_NO.json';

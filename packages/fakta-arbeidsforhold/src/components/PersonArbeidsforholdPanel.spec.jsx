@@ -9,7 +9,7 @@ import PersonArbeidsforholdDetailForm from './arbeidsforholdDetaljer/PersonArbei
 import PersonArbeidsforholdPanel, {
   erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM,
   PersonArbeidsforholdPanelImpl,
-} from './PersonArbeidsforholdPanel';
+} from './PersonArbeidsforholdPanelV2';
 import arbeidsforholdHandling from '../kodeverk/arbeidsforholdHandling';
 import aktivtArbeidsforholdHandling from '../kodeverk/aktivtArbeidsforholdHandling';
 

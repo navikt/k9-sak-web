@@ -21,6 +21,10 @@ const featureToggles = [
     key: 'TILBAKE',
     value: process.env.TILBAKE,
   },
+  {
+    key: 'PERIODISERTE_NOKKELTALL',
+    value: process.env.PERIODISERTE_NOKKELTALL,
+  },
 ];
 
 module.exports = function (app) {

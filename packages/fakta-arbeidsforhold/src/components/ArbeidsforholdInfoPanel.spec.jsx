@@ -7,8 +7,11 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
 
-import { ArbeidsforholdInfoPanelImpl, fjernIdFraArbeidsforholdLagtTilAvSaksbehandler } from './ArbeidsforholdInfoPanel';
-import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
+import {
+  ArbeidsforholdInfoPanelImpl,
+  fjernIdFraArbeidsforholdLagtTilAvSaksbehandler,
+} from './ArbeidsforholdInfoPanelV2';
+import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanelV2';
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
 
 const ap5080 = {

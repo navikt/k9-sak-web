@@ -1,4 +1,4 @@
-import React, { ReactElement, FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactElement, ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 
@@ -42,6 +42,8 @@ interface OwnProps {
   noHover?: boolean;
   stripet?: boolean;
   suppliedHeaders?: ReactElement;
+  withoutTbody?: boolean; // Denne må settes til true når man vil gruppere rader i flere tbody-tagger
+  notFocusableHeader?: boolean;
 }
 
 /**
@@ -57,19 +59,36 @@ const Table: FunctionComponent<OwnProps> = ({
   children,
   stripet = false,
   suppliedHeaders,
-}) => (
-  <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
-    <thead>
-      <TableRow isHeader noHover={noHover}>
-        {headers(headerTextCodes, headerColumnContent, suppliedHeaders)}
-      </TableRow>
-    </thead>
-    <tbody>
-      {Array.isArray(children)
-        ? React.Children.map(children, child => React.cloneElement(child, { noHover }))
-        : React.cloneElement(children, { noHover })}
-    </tbody>
-  </table>
-);
+  withoutTbody = false,
+  notFocusableHeader = false,
+}) => {
+  const performFunctionOnChildren = (
+    childOrChildren: ReactElement | ReactElement[],
+    func: (child: ReactElement) => ReactElement,
+  ) => (Array.isArray(childOrChildren) ? React.Children.map(childOrChildren, func) : func(childOrChildren));
+
+  const tableRowsWithNoHoverProp = childrenOfTbody =>
+    performFunctionOnChildren(
+      childrenOfTbody,
+      (row: ReactNode) => React.isValidElement(row) && React.cloneElement(row, { noHover }),
+    );
+
+  const content = withoutTbody
+    ? performFunctionOnChildren(children, tbody => (
+        <tbody {...tbody.props}>{tableRowsWithNoHoverProp(tbody.props.children)}</tbody>
+      ))
+    : tableRowsWithNoHoverProp(children);
+
+  return (
+    <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
+      <thead>
+        <TableRow isHeader noHover={noHover} notFocusable={notFocusableHeader}>
+          {headers(headerTextCodes, headerColumnContent, suppliedHeaders)}
+        </TableRow>
+      </thead>
+      {withoutTbody ? content : <tbody>{content}</tbody>}
+    </table>
+  );
+};
 
 export default Table;
