@@ -19,7 +19,7 @@ const PermisjonerInfo = ({ arbeidsforhold }) => (
             <VerticalSpacer sixteenPx />
             <div className={styles.container} key={utledPeriodeLabelKey(arbeidsforhold.id, index)}>
               <Normaltekst>
-                <FormattedMessage id="PersonArbeidsforholdDetailForm.Permisjon" />
+                <FormattedMessage id="PersonArbeidsforholdDetailForm.PermisjonPeriode" />
               </Normaltekst>
               <div className={styles.type}>
                 <PeriodLabel

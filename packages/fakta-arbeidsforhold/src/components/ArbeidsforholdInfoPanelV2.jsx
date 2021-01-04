@@ -9,6 +9,7 @@ import { behandlingForm } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 
+import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
 import arbeidsforholdAksjonspunkterPropType from '../propTypes/arbeidsforholdAksjonspunkterPropType';
 import PersonArbeidsforholdPanelV2 from './PersonArbeidsforholdPanelV2';
@@ -46,6 +47,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
   aksjonspunkter,
   readOnly,
   alleMerknaderFraBeslutter,
+  arbeidsforhold,
   arbeidsgivere,
   hasOpenAksjonspunkter,
   alleKodeverk,
@@ -74,6 +76,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
       <form onSubmit={formProps.handleSubmit}>
         <PersonArbeidsforholdPanelV2
           readOnly={readOnly}
+          arbeidsforhold={arbeidsforhold}
           arbeidsgivere={arbeidsgivere}
           hasAksjonspunkter={aksjonspunkter.length > 0}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -87,6 +90,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
             isSubmitting={formProps.submitting}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
+            isBekreftButtonReadOnly={false}
           />
         )}
       </form>
@@ -98,6 +102,7 @@ ArbeidsforholdInfoPanelImplV2.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
+  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
@@ -108,7 +113,7 @@ ArbeidsforholdInfoPanelImplV2.propTypes = {
 };
 
 const buildInitialValues = createSelector([ownProps => ownProps.arbeidsforhold], arbeidsforhold => ({
-  ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
+  ...PersonArbeidsforholdPanelV2.buildInitialValues(arbeidsforhold),
 }));
 
 const transformValues = values => {

@@ -5,9 +5,7 @@ import { change as reduxFormChange, initialize as reduxFormInitialize } from 're
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer, FaktaGruppe, TableColumn, Image, FlexRow } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -45,43 +43,6 @@ const cleanUpArbeidsforhold = (newValues, originalValues) => {
 
 const findFomDato = (arbeidsforhold, replacedArbeidsforhold) =>
   arbeidsforhold.erstatterArbeidsforholdId ? replacedArbeidsforhold.fomDato : arbeidsforhold.originalFomDato;
-
-export const sortArbeidsforhold = arbeidsforhold =>
-  arbeidsforhold.sort((a1, a2) => {
-    const i = a1.navn.localeCompare(a2.navn);
-    if (i !== 0) {
-      return i;
-    }
-
-    if (a1.mottattDatoInntektsmelding && a2.mottattDatoInntektsmelding) {
-      return moment(a2.mottattDatoInntektsmelding, ISO_DATE_FORMAT).diff(
-        moment(a1.mottattDatoInntektsmelding, ISO_DATE_FORMAT),
-      );
-    }
-    if (a1.mottattDatoInntektsmelding) {
-      return -1;
-    }
-    if (a2.mottattDatoInntektsmelding) {
-      return 1;
-    }
-    return a1.id.localeCompare(a2.id);
-  });
-
-export const erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM = arbeidsforhold => {
-  let isAllowed = true;
-  const arbeidsforholdUtenInntektsmeldingTilVurdering = arbeidsforhold.filter(
-    a => (a.tilVurdering || a.erEndret) && !a.mottattDatoInntektsmelding,
-  );
-  arbeidsforholdUtenInntektsmeldingTilVurdering.forEach(a => {
-    const arbeidsforholdFraSammeArbeidsgiverMedInntekstmelding = arbeidsforhold.filter(
-      b => a.id !== b.id && a.arbeidsgiverIdentifikator === b.arbeidsgiverIdentifikator && b.mottattDatoInntektsmelding,
-    );
-    if (arbeidsforholdFraSammeArbeidsgiverMedInntekstmelding.length > 0) {
-      isAllowed = false;
-    }
-  });
-  return isAllowed;
-};
 
 export const harAksjonspunkter = arbeidsforhold => {
   return arbeidsforhold.filter(af => af.aksjonspunktÅrsaker.length > 0).length > 0;
@@ -133,14 +94,14 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
 
   setFormField(fieldName, fieldValue) {
     const { behandlingFormPrefix, reduxFormChange: formChange } = this.props;
-    formChange(`${behandlingFormPrefix}.${'ArbeidsforholdInfoPanel'}`, fieldName, fieldValue);
+    formChange(`${behandlingFormPrefix}.${'ArbeidsforholdInfoPanelV2'}`, fieldName, fieldValue);
   }
 
   initializeActivityForm(arbeidsforhold) {
     const { selectedArbeidsforhold } = this.state;
     if (selectedArbeidsforhold !== arbeidsforhold) {
       const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
-      formInitialize(`${behandlingFormPrefix}.${PERSON_ARBEIDSFORHOLD_DETAIL_FORM}`, arbeidsforhold);
+      formInitialize(`${behandlingFormPrefix}.${PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}`, arbeidsforhold);
     }
   }
 
@@ -340,19 +301,17 @@ PersonArbeidsforholdPanelImplV2.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
 };
-const FORM_NAVN = 'ArbeidsforholdInfoPanel';
+const FORM_NAVN = 'ArbeidsforholdInfoPanelV2';
 const mapStateToProps = (state, ownProps) => {
   const arbeidsforhold = behandlingFormValueSelector(
     FORM_NAVN,
     ownProps.behandlingId,
     ownProps.behandlingVersjon,
   )(state, 'arbeidsforhold');
-  const sorterteArbeidsforhold = sortArbeidsforhold(arbeidsforhold);
   return {
-    arbeidsforhold: sorterteArbeidsforhold,
+    arbeidsforhold,
     arbeidsgivere: ownProps.arbeidsgivere,
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
-    aktivtArbeidsforholdTillatUtenIM: erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM(sorterteArbeidsforhold),
   };
 };
 const mapDispatchToProps = dispatch => ({
@@ -381,10 +340,10 @@ PersonArbeidsforholdPanelV2.isReadOnly = (state, behandlingId, behandlingVersjon
     return true;
   }
   const arbeidsforhold = behandlingFormValueSelector(
-    'ArbeidsforholdInfoPanel',
+    'ArbeidsforholdInfoPanelV2',
     behandlingId,
     behandlingVersjon,
   )(state, 'arbeidsforhold');
   return !arbeidsforhold;
 };
-export default injectIntl(PersonArbeidsforholdPanelV2);
+export default PersonArbeidsforholdPanelV2;

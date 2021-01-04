@@ -34,7 +34,7 @@ const ArbeidsforholdRadioknapperV2 = ({ arbeidsforhold, behandlingId, behandling
     </RadioOption>
     <VerticalSpacer eightPx />
     <RadioOption
-      label={{ id: 'PersonArbeidsforholdDetailFormV2.FortsettBehandling' }}
+      label={{ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' }}
       value={arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING}
       disabled={isKildeAaRegisteret(arbeidsforhold)}
     />

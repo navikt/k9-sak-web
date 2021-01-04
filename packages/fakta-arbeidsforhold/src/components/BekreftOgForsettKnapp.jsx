@@ -6,7 +6,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanelV2';
+import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 
 /**
  * BekreftOgForsettKnapp:
