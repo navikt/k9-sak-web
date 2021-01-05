@@ -1,48 +1,39 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { Kodeverk, KodeverkMedNavn, Fagsak, FagsakPerson } from '@k9-sak-web/types';
-
-import { getAlleFpSakKodeverk } from '../../kodeverk/duck';
-import { pathToFagsak } from '../../app/paths';
-import { getBehandlingSprak } from '../../behandling/duck';
+import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 
 import styles from './aktoerGrid.less';
 
 interface OwnProps {
-  data: {
+  aktorInfo: {
     fagsaker: Fagsak[];
     person: FagsakPerson;
   };
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode?: Kodeverk;
+  finnPathToFagsak: (saksnummer: number) => string;
 }
 
-export const AktoerGrid: FunctionComponent<OwnProps> = ({ data, alleKodeverk, sprakkode }) => {
+const AktoerGrid: FunctionComponent<OwnProps> = ({ aktorInfo, alleKodeverk, finnPathToFagsak }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const vFagsak =
+    aktorInfo.fagsaker.length > 0 ? aktorInfo.fagsaker[0] : { relasjonsRolleType: { kode: relasjonsRolleType.MOR } };
+
   return (
     <>
-      <VisittkortSakIndex
-        alleKodeverk={alleKodeverk}
-        sprakkode={sprakkode}
-        fagsak={
-          {
-            person: data.person,
-          } as Fagsak
-        }
-      />
+      <VisittkortSakIndex alleKodeverk={alleKodeverk} fagsak={vFagsak as Fagsak} fagsakPerson={aktorInfo.person} />
       <div className={styles.list}>
-        {data.fagsaker.length ? (
-          data.fagsaker.map(fagsak => (
+        {aktorInfo.fagsaker.length ? (
+          aktorInfo.fagsaker.map(fagsak => (
             <Lenkepanel
               linkCreator={props => (
-                <Link to={pathToFagsak(fagsak.saksnummer)} className={props.className}>
+                <Link to={finnPathToFagsak(fagsak.saksnummer)} className={props.className}>
                   {props.children}
                 </Link>
               )}
@@ -63,9 +54,4 @@ export const AktoerGrid: FunctionComponent<OwnProps> = ({ data, alleKodeverk, sp
   );
 };
 
-const mapStateToProps = state => ({
-  alleKodeverk: getAlleFpSakKodeverk(state),
-  sprakkode: getBehandlingSprak(state),
-});
-
-export default connect(mapStateToProps)(AktoerGrid);
+export default AktoerGrid;

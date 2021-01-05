@@ -1,46 +1,45 @@
 import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
 
-import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
-import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
-import { Fagsak, FagsakPerson } from '@k9-sak-web/types';
+import { Aktor, KodeverkMedNavn } from '@k9-sak-web/types';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import AktorSakIndex from '@k9-sak-web/sak-aktor';
 
-import { getSelectedAktoer, getSelectedAktoerId } from './aktoerSelectors';
-import { setSelectedAktoerId } from './duck';
-import AktoerGrid from './components/AktoerGrid';
-import AktoerResolver from './AktoerResolver';
-import trackRouteParam from '../app/trackRouteParam';
-
-interface OwnProps {
-  aktoerId: number;
-  requestPendingMessage?: string;
-  selectedAktoer?: {
-    fagsaker: Fagsak[];
-    person: FagsakPerson;
-  };
-}
+import useTrackRouteParam from '../app/useTrackRouteParam';
+import { restApiHooks, FpsakApiKeys } from '../data/k9sakApi';
+import { pathToFagsak } from '../app/paths';
 
 /**
  * AktoerIndex
  */
-export const AktoerIndex: FunctionComponent<OwnProps> = ({ aktoerId, requestPendingMessage, selectedAktoer }) => (
-  <>
-    <AktoerResolver>
-      <>{selectedAktoer.person ? <AktoerGrid data={selectedAktoer} /> : `Ugyldig aktoerId: ${aktoerId}`}</>
-    </AktoerResolver>
-    {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
-  </>
-);
+const AktoerIndex: FunctionComponent = () => {
+  const { selected: selectedAktoerId } = useTrackRouteParam<string>({
+    paramName: 'aktoerId',
+    parse: aktoerIdFromUrl => Number.parseInt(aktoerIdFromUrl, 10),
+  });
 
-const mapStateToProps = state => ({
-  aktoerId: getSelectedAktoerId(state),
-  requestPendingMessage: getRequestPollingMessage(state),
-  selectedAktoer: getSelectedAktoer(state),
-});
+  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
+    FpsakApiKeys.KODEVERK,
+  );
 
-export default trackRouteParam({
-  paramName: 'aktoerId',
-  parse: aktoerIdFromUrl => Number.parseInt(aktoerIdFromUrl, 10),
-  storeParam: setSelectedAktoerId,
-  getParamFromStore: getSelectedAktoerId,
-})(connect(mapStateToProps)(requireProps(['aktoerId'])(AktoerIndex)));
+  const { data, state } = restApiHooks.useRestApi<Aktor>(
+    FpsakApiKeys.AKTOER_INFO,
+    { aktoerId: selectedAktoerId },
+    { keepData: true, suspendRequest: !selectedAktoerId, updateTriggers: [selectedAktoerId] },
+  );
+
+  if (state === RestApiState.NOT_STARTED || state === RestApiState.LOADING) {
+    return <LoadingPanel />;
+  }
+
+  return (
+    <AktorSakIndex
+      valgtAktorId={selectedAktoerId}
+      aktorInfo={data}
+      alleKodeverk={alleKodeverk}
+      finnPathToFagsak={pathToFagsak}
+    />
+  );
+};
+
+export default AktoerIndex;

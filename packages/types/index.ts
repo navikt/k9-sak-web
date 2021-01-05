@@ -46,3 +46,4 @@ export {
   VurderteVilkår,
   VilkårEnum,
 } from './src/omsorgspenger/Uttaksperiode';
+export { default as Aktor } from './src/aktorTsType';
