@@ -3,7 +3,7 @@ import { withKnobs, object, number, boolean } from '@storybook/addon-knobs';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
+import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
 import { Behandling } from '@k9-sak-web/types';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';

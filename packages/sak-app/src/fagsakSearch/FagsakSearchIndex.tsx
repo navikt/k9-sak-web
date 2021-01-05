@@ -1,28 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { createSelector } from 'reselect';
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { errorOfType, ErrorTypes, getErrorResponseData } from '@fpsak-frontend/rest-api-old';
+import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import { pathToFagsak } from '../app/paths';
-import fpsakApi from '../data/fpsakApi';
-import { getAlleFpSakKodeverk } from '../kodeverk/duck';
+import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 
-interface OwnProps {
-  fagsaker?: Fagsak[];
-  push: (string) => void;
-  searchFagsaker: () => void;
-  searchResultReceived?: boolean;
-  searchStarted?: boolean;
-  searchResultAccessDenied?: {
-    feilmelding: string;
-  };
-  resetFagsakSearch: () => void;
-  alleKodeverk?: { [key: string]: KodeverkMedNavn[] };
-}
+const EMPTY_ARRAY = [];
 
 /**
  * FagsakSearchIndex
@@ -30,77 +17,47 @@ interface OwnProps {
  * Container komponent. Har ansvar for å vise søkeskjermbildet og å håndtere fagsaksøket
  * mot server og lagringen av resultatet i klientens state.
  */
-class FagsakSearchIndex extends Component<OwnProps> {
-  static defaultProps = {
-    fagsaker: [],
-    searchStarted: false,
-    searchResultAccessDenied: null,
-    searchResultReceived: false,
+const FagsakSearchIndex: FunctionComponent = () => {
+  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
+    K9sakApiKeys.KODEVERK,
+  );
+
+  const history = useHistory();
+  const goToFagsak = saksnummer => {
+    history.push(pathToFagsak(saksnummer));
   };
 
-  componentDidUpdate() {
-    const { searchResultReceived, fagsaker } = this.props;
-    if (searchResultReceived && fagsaker && fagsaker.length === 1) {
-      this.goToFagsak(fagsaker[0].saksnummer);
+  const {
+    startRequest: searchFagsaker,
+    data: fagsaker = EMPTY_ARRAY,
+    state: sokeStatus,
+    error,
+  } = restApiHooks.useRestApiRunner<Fagsak[]>(K9sakApiKeys.SEARCH_FAGSAK);
+
+  const searchResultAccessDenied = useMemo(
+    () => (errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL) ? getErrorResponseData(error) : undefined),
+    [error],
+  );
+
+  const sokFerdig = sokeStatus === RestApiState.SUCCESS;
+
+  useEffect(() => {
+    if (sokFerdig && fagsaker.length === 1) {
+      goToFagsak(fagsaker[0].saksnummer);
     }
-  }
+  }, [sokFerdig, fagsaker]);
 
-  componentWillUnmount() {
-    const { resetFagsakSearch: resetSearch } = this.props;
-    resetSearch();
-  }
+  return (
+    <FagsakSokSakIndex
+      fagsaker={fagsaker}
+      searchFagsakCallback={searchFagsaker}
+      searchResultReceived={sokFerdig}
+      selectFagsakCallback={(e, saksnummer) => goToFagsak(saksnummer)}
+      searchStarted={sokeStatus === RestApiState.LOADING}
+      searchResultAccessDenied={searchResultAccessDenied}
+      alleKodeverk={alleKodeverk}
+    />
+  );
+};
 
-  goToFagsak = saksnummer => {
-    const { push: pushLocation } = this.props;
-    pushLocation(pathToFagsak(saksnummer));
-  };
-
-  render() {
-    const {
-      fagsaker,
-      searchFagsaker: search,
-      searchResultReceived,
-      searchStarted,
-      searchResultAccessDenied,
-      alleKodeverk,
-    } = this.props;
-    return (
-      <FagsakSokSakIndex
-        fagsaker={fagsaker}
-        searchFagsakCallback={search}
-        searchResultReceived={searchResultReceived}
-        selectFagsakCallback={(e, saksnummer) => this.goToFagsak(saksnummer)}
-        searchStarted={searchStarted}
-        searchResultAccessDenied={searchResultAccessDenied}
-        alleKodeverk={alleKodeverk}
-      />
-    );
-  }
-}
-
-export const getSearchFagsakerAccessDenied = createSelector([fpsakApi.SEARCH_FAGSAK.getRestApiError()], error => {
-  if (errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL)) {
-    return getErrorResponseData(error);
-  }
-  return undefined;
-});
-
-const mapStateToProps = state => ({
-  searchResultReceived: fpsakApi.SEARCH_FAGSAK.getRestApiFinished()(state),
-  fagsaker: fpsakApi.SEARCH_FAGSAK.getRestApiData()(state),
-  searchStarted: fpsakApi.SEARCH_FAGSAK.getRestApiStarted()(state),
-  searchResultAccessDenied: getSearchFagsakerAccessDenied(state),
-  alleKodeverk: getAlleFpSakKodeverk(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(
-    {
-      searchFagsaker: fpsakApi.SEARCH_FAGSAK.makeRestApiRequest(),
-      resetFagsakSearch: fpsakApi.SEARCH_FAGSAK.resetRestApi(),
-    },
-    dispatch,
-  ),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FagsakSearchIndex);
+export default FagsakSearchIndex;

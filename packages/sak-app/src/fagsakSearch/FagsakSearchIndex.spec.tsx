@@ -1,13 +1,20 @@
 import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import { Fagsak } from '@k9-sak-web/types';
-import { ErrorTypes } from '@fpsak-frontend/rest-api-old';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
-import FagsakSearchIndex, { getSearchFagsakerAccessDenied } from './FagsakSearchIndex';
+import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
+import FagsakSearchIndex from './FagsakSearchIndex';
+
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
 
 describe('<FagsakSearchIndex>', () => {
   const fagsak: Partial<Fagsak> = {
@@ -22,17 +29,6 @@ describe('<FagsakSearchIndex>', () => {
     },
     barnFodt: '10.10.2017',
     antallBarn: 1,
-    person: {
-      navn: 'Espen',
-      alder: 38,
-      personnummer: '123456789',
-      erKvinne: true,
-      erDod: false,
-      personstatusType: {
-        kode: 'TEst',
-        kodeverk: 'test',
-      },
-    },
     opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
     dekningsgrad: 100,
   };
@@ -42,124 +38,33 @@ describe('<FagsakSearchIndex>', () => {
   };
   const fagsaker = [fagsak, fagsak2];
 
-  it('skal sette opp søkeskjermbilde for fagsaker', () => {
-    const wrapper = shallow(
-      <FagsakSearchIndex.WrappedComponent
-        fagsaker={fagsaker as Fagsak[]}
-        push={sinon.spy()}
-        searchFagsaker={sinon.spy()}
-        searchResultReceived={false}
-        searchStarted
-        resetFagsakSearch={sinon.spy()}
-        alleKodeverk={{}}
-      />,
-    );
+  it('skal søke opp fagsaker', () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, {});
+    requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);
+
+    const wrapper = shallow(<FagsakSearchIndex />);
 
     const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
-    expect(fagsakSearchIndex).to.have.length(1);
-    expect(fagsakSearchIndex.prop('fagsaker')).to.eql(fagsaker);
+    expect(fagsakSearchIndex).toHaveLength(1);
+
+    expect(fagsakSearchIndex.prop('fagsaker')).toEqual([]);
+
+    const sok = fagsakSearchIndex.prop('searchFagsakCallback');
+    sok();
+
+    expect(wrapper.find(FagsakSokSakIndex).prop('fagsaker')).toEqual(fagsaker);
   });
 
   it('skal gå til valgt fagsak', () => {
-    const pushCallback = sinon.spy();
-    const wrapper = shallow(
-      <FagsakSearchIndex.WrappedComponent
-        fagsaker={fagsaker as Fagsak[]}
-        push={pushCallback}
-        searchFagsaker={sinon.spy()}
-        searchResultReceived={false}
-        searchStarted
-        resetFagsakSearch={sinon.spy()}
-        alleKodeverk={{}}
-      />,
-    );
+    requestApi.mock(K9sakApiKeys.KODEVERK, {});
+    requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);
+
+    const wrapper = shallow(<FagsakSearchIndex />);
 
     const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
     const velgFagsak = fagsakSearchIndex.prop('selectFagsakCallback') as (event: any, saksnummer: number) => undefined;
     velgFagsak('', fagsak.saksnummer);
 
-    expect(pushCallback.calledOnce).to.be.true;
-    const { args } = pushCallback.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql(`/fagsak/${fagsak.saksnummer}/`);
-  });
-
-  it('skal gå direkte til fagsak når søkeresultatet returnerer kun en fagsak', () => {
-    const pushCallback = sinon.spy();
-    const wrapper = shallow(
-      <FagsakSearchIndex.WrappedComponent
-        push={pushCallback}
-        searchFagsaker={sinon.spy()}
-        searchResultReceived={false}
-        searchStarted
-        resetFagsakSearch={sinon.spy()}
-        alleKodeverk={{}}
-      />,
-    );
-
-    wrapper.setProps({
-      fagsaker: [fagsak],
-      searchResultReceived: true,
-      searchStarted: false,
-    });
-    wrapper.update();
-
-    expect(pushCallback.calledOnce).to.be.true;
-    const { args } = pushCallback.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql(`/fagsak/${fagsak.saksnummer}/`);
-  });
-
-  it('skal ikke gå direkte til fagsak når søkeresultatet returnerer flere fagsaker', () => {
-    const pushCallback = sinon.spy();
-    const wrapper = shallow(
-      <FagsakSearchIndex.WrappedComponent
-        push={pushCallback}
-        searchFagsaker={sinon.spy()}
-        searchResultReceived={false}
-        searchStarted
-        resetFagsakSearch={sinon.spy()}
-        alleKodeverk={{}}
-      />,
-    );
-
-    wrapper.setProps({
-      fagsaker,
-      searchResultReceived: true,
-      searchStarted: false,
-    });
-    wrapper.update();
-
-    expect(pushCallback.calledOnce).to.be.false;
-  });
-
-  describe('getSearchFagsakerAccessDenied', () => {
-    it('skal hente response-data når feilen er at en mangler tilgang', () => {
-      const error = {
-        response: {
-          data: {
-            type: ErrorTypes.MANGLER_TILGANG_FEIL,
-          },
-        },
-      };
-
-      const res = getSearchFagsakerAccessDenied.resultFunc(error);
-
-      expect(res).is.eql(error.response.data);
-    });
-
-    it('skal ikke hente response-data når feilen er noe annet enn mangler tilgang', () => {
-      const error = {
-        response: {
-          data: {
-            type: ErrorTypes.TOMT_RESULTAT_FEIL,
-          },
-        },
-      };
-
-      const res = getSearchFagsakerAccessDenied.resultFunc(error);
-
-      expect(res).is.undefined;
-    });
+    expect(mockHistoryPush).toHaveBeenCalledWith(`/fagsak/${fagsak.saksnummer}/`);
   });
 });

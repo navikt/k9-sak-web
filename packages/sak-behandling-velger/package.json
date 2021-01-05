@@ -1,5 +1,5 @@
 {
-  "name": "@fpsak-frontend/sak-behandling-velger",
+  "name": "@k9-sak-web/sak-behandling-velger",
   "version": "1.0.0",
   "module": "index.jsx",
   "license": "MIT",

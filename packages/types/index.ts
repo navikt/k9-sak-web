@@ -47,3 +47,4 @@ export {
   VilkårEnum,
 } from './src/omsorgspenger/Uttaksperiode';
 export { default as Aktor } from './src/aktorTsType';
+export { default as BehandlingAppKontekst } from './src/behandlingAppKontekstTsType';

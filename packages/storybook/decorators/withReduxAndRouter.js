@@ -1,22 +1,22 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import configureStore from '@fpsak-frontend/sak-app/src/configureStore';
+import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 
 const history = createBrowserHistory({
   basename: '/k9/web/',
 });
 
 const withReduxAndRouterProvider = Story => {
-  const store = configureStore(history);
+  const store = configureStore();
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>
+      <Router history={history}>
         <Story />
-      </ConnectedRouter>
+      </Router>
     </Provider>
   );
 };

@@ -6,7 +6,7 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import AktorSakIndex from '@k9-sak-web/sak-aktor';
 
 import useTrackRouteParam from '../app/useTrackRouteParam';
-import { restApiHooks, FpsakApiKeys } from '../data/k9sakApi';
+import { restApiHooks, K9sakApiKeys } from '../data/k9sakApi';
 import { pathToFagsak } from '../app/paths';
 
 /**
@@ -19,11 +19,11 @@ const AktoerIndex: FunctionComponent = () => {
   });
 
   const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
-    FpsakApiKeys.KODEVERK,
+    K9sakApiKeys.KODEVERK,
   );
 
   const { data, state } = restApiHooks.useRestApi<Aktor>(
-    FpsakApiKeys.AKTOER_INFO,
+    K9sakApiKeys.AKTOER_INFO,
     { aktoerId: selectedAktoerId },
     { keepData: true, suspendRequest: !selectedAktoerId, updateTriggers: [selectedAktoerId] },
   );
