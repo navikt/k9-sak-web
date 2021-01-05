@@ -12,7 +12,6 @@ export { default as Personopplysninger } from './src/personopplysningerTsType';
 export { default as SimuleringResultat } from './src/simuleringResultatTsType';
 export { default as Soknad } from './src/soknadTsType';
 export { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsType';
-export { default as UttakStonadskontoer } from './src/uttakStonadskontoerTsType';
 export { default as Vilkar } from './src/vilkarTsType';
 export { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
 export { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';

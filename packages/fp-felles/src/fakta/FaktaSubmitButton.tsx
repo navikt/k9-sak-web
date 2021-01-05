@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -28,36 +28,6 @@ const isDisabled = (
   return !isDirty;
 };
 
-/**
- * FaktaSubmitButton
- */
-export const FaktaSubmitButton = ({
-  isReadOnly,
-  isSubmittable,
-  isSubmitting,
-  isDirty,
-  hasEmptyRequiredFields,
-  hasOpenAksjonspunkter,
-  buttonTextId = 'SubmitButton.ConfirmInformation',
-  onClick,
-  dataId,
-}: FaktaSubmitButtonProps) => (
-  <>
-    {!isReadOnly && (
-      <Hovedknapp
-        mini
-        spinner={isSubmitting}
-        disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter)}
-        onClick={onClick || ariaCheck}
-        htmlType={onClick ? 'button' : 'submit'}
-        data-id={dataId}
-      >
-        <FormattedMessage id={buttonTextId} />
-      </Hovedknapp>
-    )}
-  </>
-);
-
 interface FaktaSubmitButtonProps {
   buttonTextId?: string;
   isReadOnly: boolean;
@@ -74,6 +44,36 @@ interface FaktaSubmitButtonProps {
   doNotCheckForRequiredFields?: boolean;
   dataId?: string;
 }
+
+/**
+ * FaktaSubmitButton
+ */
+export const FaktaSubmitButton: FunctionComponent<FaktaSubmitButtonProps> = ({
+  isReadOnly,
+  isSubmittable,
+  isSubmitting,
+  isDirty,
+  hasEmptyRequiredFields,
+  hasOpenAksjonspunkter,
+  buttonTextId = 'SubmitButton.ConfirmInformation',
+  onClick,
+  dataId,
+}) => (
+  <>
+    {!isReadOnly && (
+      <Hovedknapp
+        mini
+        spinner={isSubmitting}
+        disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter)}
+        onClick={onClick || ariaCheck}
+        htmlType={onClick ? 'button' : 'submit'}
+        data-id={dataId}
+      >
+        <FormattedMessage id={buttonTextId} />
+      </Hovedknapp>
+    )}
+  </>
+);
 
 const mapStateToProps = (state, ownProps: FaktaSubmitButtonProps) => {
   const { behandlingId, behandlingVersjon } = ownProps;

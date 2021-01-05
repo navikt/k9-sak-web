@@ -1,7 +1,7 @@
 import Kodeverk from './kodeverkTsType';
 
 type Soknad = Readonly<{
-  fodselsdatoer: {};
+  fodselsdatoer?: Record<number, string>;
   termindato?: string;
   antallBarn: number;
   utstedtdato?: string;

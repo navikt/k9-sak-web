@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 
@@ -8,17 +8,27 @@ import styles from './faktaBegrunnelseTextField.less';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
+interface FaktaBegrunnelseTextFieldProps {
+  isReadOnly: boolean;
+  isSubmittable: boolean;
+  isDirty: boolean;
+  hasBegrunnelse: boolean;
+  labelCode?: string;
+  hasVurderingText?: boolean;
+  name?: string;
+}
+
 /**
  * FaktaBegrunnelseTextField
  */
-const FaktaBegrunnelseTextField = ({
+const FaktaBegrunnelseTextField: FunctionComponent<FaktaBegrunnelseTextFieldProps> = ({
   isReadOnly,
   isSubmittable,
   hasBegrunnelse,
   labelCode = 'FaktaBegrunnelseTextField.BegrunnEndringene',
   hasVurderingText,
   name = 'begrunnelse',
-}: FaktaBegrunnelseTextFieldProps) => (
+}) => (
   <>
     {(isSubmittable || hasBegrunnelse) && (
       <div className={styles.begrunnelseTextField}>
@@ -34,16 +44,6 @@ const FaktaBegrunnelseTextField = ({
     )}
   </>
 );
-
-interface FaktaBegrunnelseTextFieldProps {
-  isReadOnly: boolean;
-  isSubmittable: boolean;
-  isDirty: boolean;
-  hasBegrunnelse: boolean;
-  labelCode?: string;
-  hasVurderingText?: boolean;
-  name?: string;
-}
 
 const getBegrunnelse = (aksjonspunkt: Aksjonspunkt[] | Aksjonspunkt) => {
   if (aksjonspunkt && Array.isArray(aksjonspunkt) && aksjonspunkt.length > 0) {

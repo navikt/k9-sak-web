@@ -51,7 +51,6 @@ const renderNavField = WrappedNavFieldComponent => {
   };
 
   FieldComponent.defaultProps = {
-    label: undefined,
     readOnly: false,
     readOnlyHideEmpty: false,
     isEdited: false,

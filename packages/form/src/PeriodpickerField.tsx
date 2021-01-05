@@ -27,7 +27,7 @@ interface PeriodpickerFieldProps {
   };
 }
 
-const formatError = (intl: IntlShape, otherProps: object, names: string[]) => {
+const formatError = (intl: IntlShape, otherProps: any, names: string[]) => {
   const getField1 = haystack(otherProps, names[0]);
   const meta1 = getField1.meta;
 
@@ -92,6 +92,7 @@ const renderPeriodpicker = (hideLabel?: boolean) =>
         names,
         isEdited,
       };
+      // @ts-ignore TODO Fiks
       return <Periodpicker {...fieldProps} {...otherProps} hideLabel={hideLabel} />;
     },
   );

@@ -6,7 +6,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
-import React, { SetStateAction } from 'react';
+import React, { FunctionComponent, SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import styles from './vilkarresultatMedOverstyringForm.less';
@@ -46,7 +46,7 @@ interface VilkarresultatMedOverstyringHeaderProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
 }
 
-const VilkarresultatMedOverstyringHeader = ({
+const VilkarresultatMedOverstyringHeader: FunctionComponent<VilkarresultatMedOverstyringHeaderProps> = ({
   panelTittelKode,
   erOverstyrt,
   overstyringApKode,
@@ -56,7 +56,7 @@ const VilkarresultatMedOverstyringHeader = ({
   kanOverstyreAccess,
   aksjonspunktCodes,
   toggleOverstyring,
-}: VilkarresultatMedOverstyringHeaderProps) => {
+}) => {
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };

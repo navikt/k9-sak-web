@@ -17,7 +17,7 @@ import { Aksjonspunkt, Kodeverk, SubmitCallback } from '@k9-sak-web/types';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React, { SetStateAction, useEffect } from 'react';
+import React, { FunctionComponent, SetStateAction, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -72,7 +72,9 @@ interface StateProps {
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const VilkarresultatMedOverstyringForm = ({
+export const VilkarresultatMedOverstyringForm: FunctionComponent<
+  VilkarresultatMedOverstyringFormProps & StateProps & InjectedFormProps
+> = ({
   erOverstyrt,
   isReadOnly,
   overstyringApKode,
@@ -91,7 +93,7 @@ export const VilkarresultatMedOverstyringForm = ({
   pristine,
   periodeFom,
   periodeTom,
-}: VilkarresultatMedOverstyringFormProps & StateProps & InjectedFormProps) => {
+}) => {
   const toggleAv = () => {
     reset();
     toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));

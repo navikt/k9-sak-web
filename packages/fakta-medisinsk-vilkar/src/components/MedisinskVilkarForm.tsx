@@ -10,7 +10,7 @@ import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/Medi
 import moment from 'moment';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Element, Systemtittel } from 'nav-frontend-typografi';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, FunctionComponent } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -56,7 +56,9 @@ const getHelpTexts = aksjonspunkter => {
 
 const formName = 'MedisinskVilkarForm';
 
-export const MedisinskVilkarFormImpl = ({
+export const MedisinskVilkarFormImpl: FunctionComponent<
+  MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps
+> = ({
   behandlingId,
   behandlingVersjon,
   handleSubmit,
@@ -67,7 +69,7 @@ export const MedisinskVilkarFormImpl = ({
   sykdom,
   aksjonspunkter,
   intl,
-}: MedisinskVilkarFormProps & StateProps & InjectedFormProps & WrappedComponentProps) => {
+}) => {
   const [showVilkaarsvurdering, setShowVilkaarsvurdering] = useState(false);
   const { periodeTilVurdering, legeerklæringer } = sykdom;
   const diagnosekode = legeerklæringer && legeerklæringer[0] ? legeerklæringer[0].diagnosekode : '';

@@ -7,7 +7,7 @@ import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-import React, { FormEvent } from 'react';
+import React, { FormEvent, FunctionComponent } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { TimelineItem } from './OpptjeningTimeLineLight';
 import styles from './timeLineData.less';
@@ -45,7 +45,7 @@ interface TimeLineDataProps {
   selectPrevPeriod: (event: FormEvent) => void;
 }
 
-const TimeLineData = ({ selectedPeriod, selectNextPeriod, selectPrevPeriod }) => {
+const TimeLineData: FunctionComponent<TimeLineDataProps> = ({ selectedPeriod, selectNextPeriod, selectPrevPeriod }) => {
   const intl = useIntl();
   return (
     <div>

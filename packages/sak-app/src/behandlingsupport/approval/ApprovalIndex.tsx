@@ -65,10 +65,10 @@ const vedtaksbrevdata = [fpsakApi.TILGJENGELIGE_VEDTAKSBREV];
 const ingenData = [];
 
 interface OwnProps {
-  totrinnskontrollSkjermlenkeContext?: {}[];
-  totrinnskontrollReadOnlySkjermlenkeContext?: {}[];
-  approve: (params: {}) => Promise<any>;
-  previewMessage: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
+  totrinnskontrollSkjermlenkeContext?: any[];
+  totrinnskontrollReadOnlySkjermlenkeContext?: any[];
+  approve: (params: any) => Promise<any>;
+  previewMessage: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   behandlingIdentifier: BehandlingIdentifier;
   selectedBehandlingVersjon?: number;
   ansvarligSaksbehandler?: string;
@@ -78,7 +78,7 @@ interface OwnProps {
   resetApproval: () => void;
   location: RouteProps['location'];
   navAnsatt: NavAnsatt;
-  skjemalenkeTyper: {}[];
+  skjemalenkeTyper: any[];
   erTilbakekreving: boolean;
   behandlingUuid: string;
   fagsakYtelseType: Kodeverk;
@@ -86,7 +86,7 @@ interface OwnProps {
   erBehandlingEtterKlage?: boolean;
   isForeldrepenger: boolean;
   erGodkjenningFerdig?: boolean;
-  behandlingsresultat?: {};
+  behandlingsresultat?: any;
   behandlingId?: number;
   behandlingTypeKode?: string;
   aktørId: string;
@@ -239,8 +239,8 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
           totrinnsKlageVurdering?: {
             klageVurdering?: string;
             klageVurderingOmgjoer?: string;
-            klageVurderingResultatNFP?: {};
-            klageVurderingResultatNK?: {};
+            klageVurderingResultatNFP?: any;
+            klageVurderingResultatNK?: any;
           };
           tilgjengeligeVedtaksbrev: string[];
         }) => (

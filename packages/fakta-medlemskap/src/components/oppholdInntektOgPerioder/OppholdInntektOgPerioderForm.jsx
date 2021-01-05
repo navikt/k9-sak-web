@@ -85,6 +85,7 @@ export class OppholdInntektOgPerioderForm extends Component {
     this.periodeResetCallback = this.periodeResetCallback.bind(this);
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { initialValues } = this.props;
     const defaultPeriode = initialValues.perioder ? initialValues.perioder[0] : {};

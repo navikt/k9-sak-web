@@ -61,11 +61,11 @@ interface OwnProps {
     url: string;
   }[];
   systemTittel: string;
-  queryStrings: {};
+  queryStrings: any;
   navAnsattName: string;
   removeErrorMessage: () => void;
   showDetailedErrorMessages?: boolean;
-  errorMessages?: {}[];
+  errorMessages?: any[];
   setSiteHeight: (height: number) => void;
   getPathToFplos: () => void;
 }
