@@ -10,6 +10,7 @@ import Uttaksperiode from './components/types/Uttaksperiode';
 import UttaksperiodeDto from './components/dto/UttaksperiodeDto';
 import InnvilgetÅrsakType from './components/dto/InnvilgetÅrsakType';
 import AvslåttÅrsakType from './components/dto/AvslåttÅrsakType';
+import Årsak from './components/types/Årsak';
 
 const cache = createIntlCache();
 
