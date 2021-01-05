@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
 import { FlexColumn, FlexRow, Tooltip } from '@fpsak-frontend/shared-components';
@@ -11,7 +10,7 @@ import region from '@fpsak-frontend/kodeverk/src/region';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl from '../../i18n/index';
 
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 
@@ -76,13 +75,13 @@ describe('<VisittkortDetaljerPopup>', () => {
       />,
     );
 
-    expect(wrapper.find(EtikettInfo)).has.length(4);
+    expect(wrapper.find(EtikettInfo)).toHaveLength(4);
     const tooltips = wrapper.find(Tooltip);
-    expect(tooltips).has.length(4);
-    expect(tooltips.at(0).prop('content')).is.eql('Statsborgerskap');
-    expect(tooltips.at(1).prop('content')).is.eql('Personstatus');
-    expect(tooltips.at(2).prop('content')).is.eql('Sivilstand');
-    expect(tooltips.at(3).prop('content')).is.eql('Foretrukket språk');
+    expect(tooltips).toHaveLength(4);
+    expect(tooltips.at(0).prop('content')).toEqual('Statsborgerskap');
+    expect(tooltips.at(1).prop('content')).toEqual('Personstatus');
+    expect(tooltips.at(2).prop('content')).toEqual('Sivilstand');
+    expect(tooltips.at(3).prop('content')).toEqual('Foretrukket språk');
   });
 
   it('skal vise adresser', () => {
@@ -96,8 +95,8 @@ describe('<VisittkortDetaljerPopup>', () => {
     );
 
     const rader = wrapper.find(FlexRow);
-    expect(rader).has.length(5);
+    expect(rader).toHaveLength(5);
     const kolonne2ForRad2 = rader.at(1).find(FlexColumn).at(1);
-    expect(kolonne2ForRad2.childAt(0).childAt(0).text()).is.eql('Oslo,');
+    expect(kolonne2ForRad2.childAt(0).childAt(0).text()).toEqual('Oslo,');
   });
 });

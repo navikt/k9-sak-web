@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 
 import FagsakGrid from './FagsakGrid';
 
@@ -15,9 +14,9 @@ describe('<FagsakGrid>', () => {
       />,
     );
 
-    expect(wrapper.find('#behandlingContent')).to.have.length(1);
-    expect(wrapper.find('#profileContent')).to.have.length(1);
-    expect(wrapper.find('#supportContent')).to.have.length(1);
-    expect(wrapper.find('#visittkort')).to.have.length(2);
+    expect(wrapper.find('#behandlingContent')).toHaveLength(1);
+    expect(wrapper.find('#profileContent')).toHaveLength(1);
+    expect(wrapper.find('#supportContent')).toHaveLength(1);
+    expect(wrapper.find('#visittkort')).toHaveLength(2);
   });
 });

@@ -1,6 +1,6 @@
 enum ApplicationContextPath {
-  FPSAK = 'FPSAK',
-  FPTILBAKE = 'FPTILBAKE',
+  K9SAK = 'K9SAK',
+  TILBAKE = 'TILBAKE',
   KLAGE = 'KLAGE',
 }
 

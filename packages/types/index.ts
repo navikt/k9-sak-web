@@ -9,7 +9,7 @@ export { default as InntektArbeidYtelse } from './src/inntektArbeidYtelseTsType'
 export { default as Kodeverk } from './src/kodeverkTsType';
 export { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
 export { default as NavAnsatt } from './src/navAnsattTsType';
-export { default as Personopplysninger } from './src/personopplysningerTsType';
+export { default as Personopplysninger, PersonopplysningAdresse } from './src/personopplysningerTsType';
 export { default as SimuleringResultat } from './src/simuleringResultatTsType';
 export { default as Soknad } from './src/soknadTsType';
 export { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsType';

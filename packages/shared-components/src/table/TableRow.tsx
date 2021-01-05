@@ -35,8 +35,8 @@ interface OwnProps {
   id?: number | string;
   model?: any;
   isHeader?: boolean;
-  onMouseDown?: (e: Event, id: number, model: any) => void;
-  onKeyDown?: (e: Event, id: number, model: any) => void;
+  onMouseDown?: (e: Event, id: number | string, model: any) => void;
+  onKeyDown?: (e: Event, id: number | string, model: any) => void;
   children: ReactNode | ReactNode[];
   noHover?: boolean;
   isSelected?: boolean;

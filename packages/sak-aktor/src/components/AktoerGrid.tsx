@@ -7,7 +7,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 
 import styles from './aktoerGrid.less';
 
@@ -17,17 +16,15 @@ interface OwnProps {
     person: FagsakPerson;
   };
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  finnPathToFagsak: (saksnummer: number) => string;
+  finnPathToFagsak: (saksnummer: string) => string;
 }
 
 const AktoerGrid: FunctionComponent<OwnProps> = ({ aktorInfo, alleKodeverk, finnPathToFagsak }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  const vFagsak =
-    aktorInfo.fagsaker.length > 0 ? aktorInfo.fagsaker[0] : { relasjonsRolleType: { kode: relasjonsRolleType.MOR } };
 
   return (
     <>
-      <VisittkortSakIndex alleKodeverk={alleKodeverk} fagsak={vFagsak as Fagsak} fagsakPerson={aktorInfo.person} />
+      <VisittkortSakIndex alleKodeverk={alleKodeverk} fagsakPerson={aktorInfo.person} />
       <div className={styles.list}>
         {aktorInfo.fagsaker.length ? (
           aktorInfo.fagsaker.map(fagsak => (

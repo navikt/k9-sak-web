@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -11,7 +10,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Tooltip } from '@fpsak-frontend/shared-components';
 
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl from '../../i18n/index';
 import VisittkortLabels from './VisittkortLabels';
 
 describe('<VisittkortLabels>', () => {
@@ -71,7 +70,7 @@ describe('<VisittkortLabels>', () => {
       <VisittkortLabels.WrappedComponent intl={intlMock} personopplysninger={personopplysningerSoker} />,
     );
 
-    expect(wrapper.find(EtikettInfo)).has.length(0);
+    expect(wrapper.find(EtikettInfo)).toHaveLength(0);
   });
 
   it('skal vise etikett for dødsdato', () => {
@@ -85,10 +84,10 @@ describe('<VisittkortLabels>', () => {
       />,
     );
 
-    expect(wrapper.find(EtikettInfo)).has.length(1);
+    expect(wrapper.find(EtikettInfo)).toHaveLength(1);
     const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).has.length(1);
-    expect(tooltip.prop('content')).is.eql('Personen er død');
+    expect(tooltip).toHaveLength(1);
+    expect(tooltip.prop('content')).toEqual('Personen er død');
   });
 
   it('skal vise etikett for kode 6', () => {
@@ -97,15 +96,18 @@ describe('<VisittkortLabels>', () => {
         intl={intlMock}
         personopplysninger={{
           ...personopplysningerSoker,
-          diskresjonskode: diskresjonskodeType.KODE6,
+          diskresjonskode: {
+            kode: diskresjonskodeType.KODE6,
+            kodeverk: '',
+          },
         }}
       />,
     );
 
-    expect(wrapper.find(EtikettAdvarsel)).has.length(1);
+    expect(wrapper.find(EtikettAdvarsel)).toHaveLength(1);
     const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).has.length(1);
-    expect(tooltip.prop('content')).is.eql('Personen har diskresjonsmerking kode 6');
+    expect(tooltip).toHaveLength(1);
+    expect(tooltip.prop('content')).toEqual('Personen har diskresjonsmerking kode 6');
   });
 
   it('skal vise etikett for kode 7', () => {
@@ -114,15 +116,18 @@ describe('<VisittkortLabels>', () => {
         intl={intlMock}
         personopplysninger={{
           ...personopplysningerSoker,
-          diskresjonskode: diskresjonskodeType.KODE7,
+          diskresjonskode: {
+            kode: diskresjonskodeType.KODE7,
+            kodeverk: '',
+          },
         }}
       />,
     );
 
-    expect(wrapper.find(EtikettFokus)).has.length(1);
+    expect(wrapper.find(EtikettFokus)).toHaveLength(1);
     const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).has.length(1);
-    expect(tooltip.prop('content')).is.eql('Personen har diskresjonsmerking kode 7');
+    expect(tooltip).toHaveLength(1);
+    expect(tooltip.prop('content')).toEqual('Personen har diskresjonsmerking kode 7');
   });
 
   it('skal vise etikett for verge', () => {
@@ -136,10 +141,10 @@ describe('<VisittkortLabels>', () => {
       />,
     );
 
-    expect(wrapper.find(EtikettInfo)).has.length(1);
+    expect(wrapper.find(EtikettInfo)).toHaveLength(1);
     const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).has.length(1);
-    expect(tooltip.prop('content')).is.eql('Personen har verge');
+    expect(tooltip).toHaveLength(1);
+    expect(tooltip.prop('content')).toEqual('Personen har verge');
   });
 
   it('skal vise etikett for søker under 18', () => {
@@ -153,9 +158,9 @@ describe('<VisittkortLabels>', () => {
       />,
     );
 
-    expect(wrapper.find(EtikettInfo)).has.length(1);
+    expect(wrapper.find(EtikettInfo)).toHaveLength(1);
     const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).has.length(1);
-    expect(tooltip.prop('content')).is.eql('Personen er under 18 år');
+    expect(tooltip).toHaveLength(1);
+    expect(tooltip.prop('content')).toEqual('Personen er under 18 år');
   });
 });

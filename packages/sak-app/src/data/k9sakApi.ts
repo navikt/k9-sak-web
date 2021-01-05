@@ -30,8 +30,6 @@ export enum K9sakApiKeys {
   NEW_BEHANDLING_UNNTAK = 'NEW_BEHANDLING_UNNTAK',
   NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
   NEW_BEHANDLING_KLAGE = 'NEW_BEHANDLING_KLAGE',
-  BEHANDLING_FAMILIE_HENDELSE = 'BEHANDLING_FAMILIE_HENDELSE',
-  ANNEN_PART_BEHANDLING = 'ANNEN_PART_BEHANDLING',
   HISTORY_K9SAK = 'HISTORY_K9SAK',
   HISTORY_TILBAKE = 'HISTORY_TILBAKE',
   HISTORY_KLAGE = 'HISTORY_KLAGE',
@@ -85,13 +83,11 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sak-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_K9SAK)
   .withRel('tilbake-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_TILBAKE)
   .withRel('klage-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_KLAGE)
-  .withRel('sak-annen-part-behandling', K9sakApiKeys.ANNEN_PART_BEHANDLING)
   .withRel('tilbake-kan-opprette-behandling', K9sakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
   .withRel('tilbake-kan-opprette-revurdering', K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
 
   // Behandling
   .withRel('soeker-personopplysninger', K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
-  .withRel('familiehendelse-v2', K9sakApiKeys.BEHANDLING_FAMILIE_HENDELSE)
   .withRel('kontrollresultat', K9sakApiKeys.KONTROLLRESULTAT)
   .withRel('risikoklassifisering-aksjonspunkt', K9sakApiKeys.RISIKO_AKSJONSPUNKT)
   .withRel('klage-vurdering', K9sakApiKeys.TOTRINNS_KLAGE_VURDERING)

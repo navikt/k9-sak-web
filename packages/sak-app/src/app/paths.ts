@@ -1,4 +1,5 @@
 import { RouteProps } from 'react-router';
+import { Location } from 'history';
 
 import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
@@ -59,3 +60,10 @@ export const createLocationForSkjermlenke = (behandlingLocation, skjermlenkeCode
   const skjermlenke = skjermlenkeCodes[skjermlenkeCode] || { punktNavn: 'default', faktaNavn: 'default' };
   return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
 };
+
+// Kan gå inn på url som ser sånn ut "http://localhost:9000/k9/web/fagsak/", men
+// da vil ein automatisk redirecte til http://localhost:9000/k9/web/fagsak/behandling/*"
+export const erUrlUnderBehandling = (location: Location): boolean => !location.pathname.includes('behandling/');
+
+export const erBehandlingValgt = (location: Location): boolean =>
+  location.pathname.includes('behandling') && !location.pathname.endsWith('behandling/');
