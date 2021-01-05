@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import { Fagsak } from '@k9-sak-web/types';
-import { ErrorTypes } from '@fpsak-frontend/rest-api';
+import { ErrorTypes } from '@fpsak-frontend/rest-api-old';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import FagsakSearchIndex, { getSearchFagsakerAccessDenied } from './FagsakSearchIndex';

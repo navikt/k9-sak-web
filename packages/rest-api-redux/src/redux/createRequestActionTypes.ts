@@ -1,4 +1,4 @@
-import { RequestRunner } from '@fpsak-frontend/rest-api';
+import { RequestRunner } from '@fpsak-frontend/rest-api-old';
 import { ActionTypes } from './ActionTypesTsType';
 
 /**

@@ -1,6 +1,6 @@
-import { createRequestApi, RequestConfig } from '@fpsak-frontend/rest-api';
-import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
-import { HttpClientApi } from '@fpsak-frontend/rest-api/src/HttpClientApiTsType';
+import { createRequestApi, RequestConfig } from '@fpsak-frontend/rest-api-old';
+import { Link } from '@fpsak-frontend/rest-api-old/src/requestApi/LinkTsType';
+import { HttpClientApi } from '@fpsak-frontend/rest-api-old/src/HttpClientApiTsType';
 
 import EndpointOperations from './redux/EndpointOperations';
 import ReduxApiCreator from './redux/ReduxApiCreator';

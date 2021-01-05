@@ -1,4 +1,3 @@
-import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
@@ -8,15 +7,14 @@ import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const logger = isDevelopment ? require('redux-logger') : null;
 
-const combineAllReducers = (routerReducer, reduxFormReducer, applicationReducers) =>
+const combineAllReducers = (reduxFormReducer, applicationReducers) =>
   combineReducers({
     default: combineReducers(applicationReducers),
-    router: routerReducer,
     form: reduxFormReducer,
   });
 
-const configureStore = browserHistory => {
-  const middleware = [thunkMiddleware, routerMiddleware(browserHistory)];
+const configureStore = () => {
+  const middleware = [thunkMiddleware];
   let enhancer;
   if (isDevelopment) {
     middleware.push(logger.createLogger());
@@ -28,8 +26,7 @@ const configureStore = browserHistory => {
     enhancer = compose(applyMiddleware(...middleware));
   }
 
-  const routerReducer = connectRouter(browserHistory);
-  const allReducers = combineAllReducers(routerReducer, formReducer, reducerRegistry.getReducers());
+  const allReducers = combineAllReducers(formReducer, reducerRegistry.getReducers());
 
   const initialState = {};
 
@@ -37,7 +34,7 @@ const configureStore = browserHistory => {
 
   // Replace the store's reducer whenever a new reducer is registered.
   reducerRegistry.setChangeListener(reducers => {
-    const newReducers = combineAllReducers(routerReducer, formReducer, reducers);
+    const newReducers = combineAllReducers(formReducer, reducers);
     store.replaceReducer(newReducers);
   });
 

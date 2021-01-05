@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { getAxiosHttpClientApi, RequestApi, RequestConfig } from '@fpsak-frontend/rest-api';
+import { getAxiosHttpClientApi, RequestApi, RequestConfig } from '@fpsak-frontend/rest-api-old';
 
 import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';

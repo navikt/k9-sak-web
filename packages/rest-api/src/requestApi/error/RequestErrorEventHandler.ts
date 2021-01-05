@@ -1,13 +1,14 @@
 import EventType from '../eventType';
-import { ErrorType } from './errorTsType';
+import ErrorType from './errorTsType';
 import { isHandledError } from './ErrorTypes';
 import TimeoutError from './TimeoutError';
+import { ErrorResponse } from '../ResponseTsType';
 
-type NotificationEmitter = (eventType: keyof typeof EventType, data?: any, isPollingRequest?: boolean) => void
+type NotificationEmitter = (eventType: keyof typeof EventType, data?: any, isPollingRequest?: boolean) => void;
 
-const isString = (value) => typeof value === 'string';
+const isString = (value: any): boolean => typeof value === 'string';
 
-const isOfTypeBlob = (error) => error && error.config && error.config.responseType === 'blob';
+const isOfTypeBlob = (error: ErrorType): boolean => error && error.config && error.config.responseType === 'blob';
 
 const blobParser = (blob: any): Promise<string> => {
   const fileReader = new FileReader();
@@ -32,17 +33,28 @@ const blobParser = (blob: any): Promise<string> => {
   });
 };
 
-class RequestErrorEventHandler {
-  notify: NotificationEmitter
+interface FormatedError {
+  data?: string | ErrorResponse;
+  type?: string;
+  status?: number;
+  isForbidden?: boolean;
+  isUnauthorized?: boolean;
+  is418?: boolean;
+  isGatewayTimeoutOrNotFound?: boolean;
+  location?: string;
+}
 
-  isPollingRequest: boolean
+class RequestErrorEventHandler {
+  notify: NotificationEmitter;
+
+  isPollingRequest: boolean;
 
   constructor(notificationEmitter: NotificationEmitter, isPollingRequest: boolean) {
     this.notify = notificationEmitter;
     this.isPollingRequest = isPollingRequest;
   }
 
-  handleError = async (error: ErrorType | TimeoutError) => {
+  handleError = async (error: ErrorType | TimeoutError): Promise<string> => {
     if (error instanceof TimeoutError) {
       this.notify(EventType.POLLING_TIMEOUT, { location: error.location });
       return;
@@ -58,11 +70,15 @@ class RequestErrorEventHandler {
     }
 
     if (formattedError.isGatewayTimeoutOrNotFound) {
-      this.notify(EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND, { location: formattedError.location }, this.isPollingRequest);
+      this.notify(
+        EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND,
+        { location: formattedError.location },
+        this.isPollingRequest,
+      );
     } else if (formattedError.isUnauthorized) {
       this.notify(EventType.REQUEST_UNAUTHORIZED, { message: error.message }, this.isPollingRequest);
     } else if (formattedError.isForbidden) {
-      this.notify(EventType.REQUEST_FORBIDDEN, { message: error.message });
+      this.notify(EventType.REQUEST_FORBIDDEN, formattedError.data ? formattedError.data : { message: error.message });
     } else if (formattedError.is418) {
       this.notify(EventType.POLLING_HALTED_OR_DELAYED, formattedError.data);
     } else if (!error.response && error.message) {
@@ -72,11 +88,13 @@ class RequestErrorEventHandler {
     }
   };
 
-  getFormattedData = (data: string | Record<string, any>) => (isString(data) ? { message: data } : data);
+  getFormattedData = (data: string | Record<string, any>): string | Record<string, any> =>
+    isString(data) ? { message: data } : data;
 
-  findErrorData = (response: {data?: any; status?: number; statusText?: string}) => (response.data ? response.data : response.statusText);
+  findErrorData = (response: { data?: any; status?: number; statusText?: string }): string | ErrorResponse =>
+    response.data ? response.data : response.statusText;
 
-  formatError = (error: ErrorType) => {
+  formatError = (error: ErrorType): FormatedError => {
     const response = error && error.response ? error.response : undefined;
     return {
       data: response ? this.findErrorData(response) : undefined,

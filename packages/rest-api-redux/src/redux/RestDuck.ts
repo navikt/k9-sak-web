@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { RequestRunner } from '@fpsak-frontend/rest-api';
+import { RequestRunner } from '@fpsak-frontend/rest-api-old';
 
 import ReduxEvents from './ReduxEvents';
 import createRequestReducer from './createRequestReducer';
@@ -43,7 +43,12 @@ class RestDuck {
     reducer?: any;
   };
 
-  constructor(requestRunner: RequestRunner, getApiContext: (state: any) => any, reduxEvents: ReduxEvents, resultKeyActionCreators) {
+  constructor(
+    requestRunner: RequestRunner,
+    getApiContext: (state: any) => any,
+    reduxEvents: ReduxEvents,
+    resultKeyActionCreators,
+  ) {
     this.requestRunner = requestRunner;
     this.name = requestRunner.getName();
     this.getApiContext = getApiContext;
@@ -61,7 +66,12 @@ class RestDuck {
 
   get actionCreators() {
     if (!this.$$duck.actionCreators) {
-      this.$$duck.actionCreators = createRequestActionCreators(this.requestRunner, this.actionTypes, this.reduxEvents, this.resultKeyActionCreators);
+      this.$$duck.actionCreators = createRequestActionCreators(
+        this.requestRunner,
+        this.actionTypes,
+        this.reduxEvents,
+        this.resultKeyActionCreators,
+      );
     }
     return this.$$duck.actionCreators;
   }
@@ -74,7 +84,7 @@ class RestDuck {
   }
 
   get stateSelector(): any {
-    return createSelector([this.getApiContext], (restApiContext) => restApiContext[this.name]);
+    return createSelector([this.getApiContext], restApiContext => restApiContext[this.name]);
   }
 }
 

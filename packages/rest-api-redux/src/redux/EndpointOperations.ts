@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { RequestConfig } from '@fpsak-frontend/rest-api';
+import { RequestConfig } from '@fpsak-frontend/rest-api-old';
 import { State } from './createRequestReducer';
 
 import ReduxApiCreator from './ReduxApiCreator';
@@ -35,9 +35,11 @@ class EndpointOperations {
 
   getRestApiMeta = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.meta);
 
-  getRestApiCacheParams = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.cacheParams);
+  getRestApiCacheParams = (): any =>
+    createSelector([this.getRestApiState()], (apiState: State) => apiState.cacheParams);
 
-  getRestApiPreviousData = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.previousData);
+  getRestApiPreviousData = (): any =>
+    createSelector([this.getRestApiState()], (apiState: State) => apiState.previousData);
 
   getRestApiError = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.error);
 
@@ -45,7 +47,8 @@ class EndpointOperations {
 
   getRestApiFinished = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.finished);
 
-  getRestApiPollingTimeout = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.pollingTimeout);
+  getRestApiPollingTimeout = (): any =>
+    createSelector([this.getRestApiState()], (apiState: State) => apiState.pollingTimeout);
 }
 
 export default EndpointOperations;

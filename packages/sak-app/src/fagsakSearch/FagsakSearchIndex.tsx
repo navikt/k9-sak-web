@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 
-import { errorOfType, ErrorTypes, getErrorResponseData } from '@fpsak-frontend/rest-api';
+import { errorOfType, ErrorTypes, getErrorResponseData } from '@fpsak-frontend/rest-api-old';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
@@ -97,7 +96,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(
     {
-      push,
       searchFagsaker: fpsakApi.SEARCH_FAGSAK.makeRestApiRequest(),
       resetFagsakSearch: fpsakApi.SEARCH_FAGSAK.resetRestApi(),
     },

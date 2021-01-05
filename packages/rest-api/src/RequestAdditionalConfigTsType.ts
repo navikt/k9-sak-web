@@ -1,4 +1,6 @@
-export type RequestAdditionalConfig = Readonly<{
+type RequestAdditionalConfig = Readonly<{
   maxPollingLimit?: number;
-  saveResponseIn?: string;
+  isResponseBlob?: boolean;
 }>;
+
+export default RequestAdditionalConfig;

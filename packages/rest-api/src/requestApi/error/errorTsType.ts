@@ -1,6 +1,4 @@
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type ErrorType = Readonly<{
+type ErrorType = Readonly<{
   response?: {
     data?: any;
     statusText?: string;
@@ -12,4 +10,6 @@ export type ErrorType = Readonly<{
   config?: {
     responseType: string;
   };
-}>
+}>;
+
+export default ErrorType;

@@ -1,4 +1,4 @@
-import { RequestConfig } from '@fpsak-frontend/rest-api';
+import { RequestConfig } from '@fpsak-frontend/rest-api-old';
 import ReduxRestApi from './ReduxRestApi';
 import ReduxEvents from './redux/ReduxEvents';
 
@@ -19,14 +19,14 @@ class ReduxRestApiBuilder {
   withContextPath = (contextPath: string) => {
     this.contextPath = contextPath;
     return this;
-  }
+  };
 
   withReduxEvents = (reduxEvents: ReduxEvents) => {
     this.reduxEvents = reduxEvents;
     return this;
-  }
+  };
 
-  build = () => new ReduxRestApi(this.config, this.reducerName, this.contextPath, this.reduxEvents)
+  build = () => new ReduxRestApi(this.config, this.reducerName, this.contextPath, this.reduxEvents);
 }
 
 export default ReduxRestApiBuilder;

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { RequestConfig } from '@fpsak-frontend/rest-api';
+import { RequestConfig } from '@fpsak-frontend/rest-api-old';
 import ReduxEvents from './redux/ReduxEvents';
 import ReduxRestApi from './ReduxRestApi';
 

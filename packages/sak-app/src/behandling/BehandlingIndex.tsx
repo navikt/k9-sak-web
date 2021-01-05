@@ -2,10 +2,9 @@ import React, { Component, Suspense } from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { push } from 'connected-react-router';
 import { RouteProps } from 'react-router';
 
-import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
+import { Link } from '@fpsak-frontend/rest-api-old/src/requestApi/LinkTsType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
@@ -366,7 +365,6 @@ const mapDispatchToProps = dispatch =>
       resetBehandlingContext: resetBehandlingContextActionCreator,
       setBehandlingIdOgVersjon: setSelectedBehandlingIdOgVersjon,
       visFeilmelding: errorHandler.getErrorActionCreator(),
-      push,
     },
     dispatch,
   );

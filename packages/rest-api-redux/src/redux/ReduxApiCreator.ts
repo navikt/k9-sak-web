@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { RequestApi } from '@fpsak-frontend/rest-api';
+import { RequestApi } from '@fpsak-frontend/rest-api-old';
 
 import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
