@@ -8,7 +8,7 @@ import TidslinjeRad from './types/TidslinjeRad';
 
 describe('<Tidslinje>', () => {
   it('konverterer props til Timeline config', () => {
-    const rader: TidslinjeRad<{}>[] = [
+    const rader: TidslinjeRad<unknown>[] = [
       {
         ikon: {
           src: null,

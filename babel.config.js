@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const { NODE_ENV, BABEL_ENV } = process.env;
 
-module.exports = function(api) {
+module.exports = function (api) {
   // eslint-disable-next-line no-unused-expressions
   api ? api.cache(true) : null;
   const presets = [
@@ -9,7 +9,7 @@ module.exports = function(api) {
     [
       '@babel/preset-env',
       {
-        modules: false,
+        targets: { node: 'current', esmodules: true },
       },
     ],
     '@babel/preset-typescript',

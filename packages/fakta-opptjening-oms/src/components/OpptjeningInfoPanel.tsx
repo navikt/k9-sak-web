@@ -12,7 +12,7 @@ import {
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -48,7 +48,7 @@ interface StateProps {
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Opptjeningsvilkåret.
  */
 
-export const OpptjeningInfoPanel = ({
+export const OpptjeningInfoPanel: FunctionComponent<OpptjeningInfoPanelProps & InjectedFormProps & StateProps> = ({
   harApneAksjonspunkter,
   readOnly,
   aksjonspunkt,
@@ -62,7 +62,7 @@ export const OpptjeningInfoPanel = ({
   submitting,
   dirty,
   handleSubmit,
-}: OpptjeningInfoPanelProps & InjectedFormProps & StateProps) => (
+}) => (
   <form onSubmit={handleSubmit}>
     <OpptjeningFaktaForm
       behandlingId={behandlingId}

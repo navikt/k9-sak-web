@@ -20,7 +20,7 @@ const locationMock = {
 describe('BehandlingMenu-reducer', () => {
   let mockAxios;
 
-  before(() => {
+  beforeAll(() => {
     // @ts-ignore
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
@@ -29,7 +29,7 @@ describe('BehandlingMenu-reducer', () => {
     mockAxios.reset();
   });
 
-  after(() => {
+  afterAll(() => {
     mockAxios.restore();
   });
 

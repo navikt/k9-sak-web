@@ -19,13 +19,6 @@ const hasLocationAndStatusDelayedOrHalted = responseData =>
 type Notify = (eventType: keyof typeof EventType, data?: any, isPolling?: boolean) => void;
 type NotificationEmitter = (eventType: keyof typeof EventType, data?: any) => void;
 
-interface ResponseDataLink {
-  href: string;
-  type: string;
-  requestPayload: any;
-  rel: string;
-}
-
 /**
  * RequestProcess
  *

@@ -1,6 +1,7 @@
 import Utfalltype from '../dto/Utfall';
 import InnvilgetÅrsakType from '../dto/InnvilgetÅrsakType';
 import AvslåttÅrsakType from '../dto/AvslåttÅrsakType';
+import Årsak from './Årsak';
 
 interface Uttaksperiode {
   fom: string;

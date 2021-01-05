@@ -24,7 +24,7 @@ interface SelectFieldArrayProps {
   meta?: FieldArrayMetaProps;
   titleTextCode?: string;
   textCode?: string;
-  emptySelectTemplate: EmptySelectTemplate;
+  emptySelectTemplate?: EmptySelectTemplate;
   shouldShowAddButton?: boolean;
   createAddButtonInsteadOfImageLink?: boolean;
 }

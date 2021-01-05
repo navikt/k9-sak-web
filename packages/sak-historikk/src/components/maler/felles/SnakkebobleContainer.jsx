@@ -38,7 +38,6 @@ const SnakkebobleContainer = ({ dato, rolle, rolleNavn, kjoennKode, opprettetAv,
     topp={`${formatDate(dato)} // ${rolleNavn} ${opprettetAv || ''}`}
     pilHoyre={pilHøyre(rolle)}
     ikonClass={snakkebobleIkonCls(rolle, kjoennKode)}
-    panelClass="nhjklxzsnjklnjkl"
   >
     {children}
   </Snakkeboble>

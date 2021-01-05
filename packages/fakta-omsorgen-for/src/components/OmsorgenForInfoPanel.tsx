@@ -8,7 +8,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, Personopplysninger, SubmitCallback, OmsorgenFor } from '@k9-sak-web/types';
 import moment from 'moment';
-import React, { useCallback } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -80,7 +80,7 @@ interface OmsorgenForInfoPanelImplProps {
   submittable: boolean;
 }
 
-const OmsorgenForInfoPanelImpl = (props: OmsorgenForInfoPanelImplProps & InjectedFormProps) => {
+const OmsorgenForInfoPanelImpl: FunctionComponent<OmsorgenForInfoPanelImplProps & InjectedFormProps> = props => {
   const {
     aksjonspunkter,
     personopplysninger,

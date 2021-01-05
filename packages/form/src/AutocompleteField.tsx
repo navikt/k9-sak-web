@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { Field, WrappedFieldInputProps } from 'redux-form';
 // eslint-disable-next-line import/no-named-default
@@ -27,7 +27,7 @@ interface AutocompleteProps {
   dataId?: string;
 }
 
-const Autocomplete = ({
+const Autocomplete: FunctionComponent<AutocompleteFieldProps & AutocompleteProps> = ({
   id,
   ariaLabel,
   label,
@@ -38,7 +38,7 @@ const Autocomplete = ({
   inputValue,
   input: { onChange },
   dataId,
-}: AutocompleteFieldProps & AutocompleteProps) => {
+}) => {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label htmlFor={id} className={styles.autocompleteLabel} data-id={dataId}>

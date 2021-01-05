@@ -17,41 +17,42 @@ const standardItems = (opptjeningFomDate, opptjeningTomDate) => {
   const items = [
     {
       id: 1000,
-      start: moment(opptjeningFomDate)
-        .startOf('month'),
-      end: moment(opptjeningFomDate)
-        .startOf('month'),
+      start: moment(opptjeningFomDate).startOf('month'),
+      end: moment(opptjeningFomDate).startOf('month'),
       content: '',
       group: 1,
       className: styles.hiddenpast,
-
-    }, {
+    },
+    {
       id: 1001,
-      start: moment(opptjeningTomDate)
-        .endOf('month'),
-      end: moment(opptjeningTomDate)
-        .endOf('month'),
+      start: moment(opptjeningTomDate).endOf('month'),
+      end: moment(opptjeningTomDate).endOf('month'),
       content: '',
       group: 1,
       className: styles.hiddenpast,
-
     },
   ];
   return items;
 };
 
-const classNameGenerator = (klasseKode) => {
-  if (klasseKode === opptjeningAktivitetKlassifisering.BEKREFTET_AVVIST || klasseKode === opptjeningAktivitetKlassifisering.ANTATT_AVVIST) {
+const classNameGenerator = klasseKode => {
+  if (
+    klasseKode === opptjeningAktivitetKlassifisering.BEKREFTET_AVVIST ||
+    klasseKode === opptjeningAktivitetKlassifisering.ANTATT_AVVIST
+  ) {
     return 'avvistPeriode';
   }
-  if (klasseKode === opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT || klasseKode === opptjeningAktivitetKlassifisering.ANTATT_GODKJENT) {
+  if (
+    klasseKode === opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT ||
+    klasseKode === opptjeningAktivitetKlassifisering.ANTATT_GODKJENT
+  ) {
     return 'godkjentPeriode';
   }
   return 'mellomliggendePeriode';
 };
 
 const createItems = (opptjeningPeriods, opptjeningFomDate, opptjeningTomDate) => {
-  const items = opptjeningPeriods.map((ap) => ({
+  const items = opptjeningPeriods.map(ap => ({
     id: ap.id,
     start: moment(ap.fom),
     end: moment(ap.tom),
@@ -96,6 +97,7 @@ class OpptjeningTimeLineLight extends Component {
     this.timelineRef = React.createRef();
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { opptjeningPeriods, opptjeningFomDate, opptjeningTomDate } = this.props;
     const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom) - new Date(b.fom));
@@ -114,7 +116,7 @@ class OpptjeningTimeLineLight extends Component {
 
   selectHandler(eventProps) {
     const { items } = this.state;
-    const selectedItem = items.find((item) => item.id === eventProps.items[0]);
+    const selectedItem = items.find(item => item.id === eventProps.items[0]);
     if (selectedItem) {
       this.setState({
         selectedPeriod: selectedItem,
@@ -138,11 +140,10 @@ class OpptjeningTimeLineLight extends Component {
     }
   }
 
-
   selectNextPeriod(event) {
     const { selectedPeriod, items } = this.state;
     event.preventDefault();
-    const newIndex = items.findIndex((oa) => oa.id === selectedPeriod.id) + 1;
+    const newIndex = items.findIndex(oa => oa.id === selectedPeriod.id) + 1;
     if (newIndex < items.length - 2) {
       this.setState({
         selectedPeriod: items[newIndex],
@@ -153,7 +154,7 @@ class OpptjeningTimeLineLight extends Component {
   selectPrevPeriod(event) {
     const { selectedPeriod, items } = this.state;
     event.preventDefault();
-    const newIndex = items.findIndex((oa) => oa.id === selectedPeriod.id) - 1;
+    const newIndex = items.findIndex(oa => oa.id === selectedPeriod.id) - 1;
     if (newIndex >= 0) {
       this.setState({
         selectedPeriod: items[newIndex],
@@ -170,10 +171,8 @@ class OpptjeningTimeLineLight extends Component {
           <Row>
             <Column xs="12">
               <DateContainer
-                opptjeningFomDate={moment(opptjeningFomDate, ISO_DATE_FORMAT)
-                  .format(DDMMYYYY_DATE_FORMAT)}
-                opptjeningTomDate={moment(opptjeningTomDate, ISO_DATE_FORMAT)
-                  .format(DDMMYYYY_DATE_FORMAT)}
+                opptjeningFomDate={moment(opptjeningFomDate, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
+                opptjeningTomDate={moment(opptjeningTomDate, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT)}
               />
               <div className={styles.timelineContainer}>
                 <div className={styles.timeLineWrapper}>
@@ -187,11 +186,8 @@ class OpptjeningTimeLineLight extends Component {
                       selection={[selectedPeriod ? selectedPeriod.id : undefined]}
                     />
                   </div>
-                  <TimeLineNavigation
-                    openPeriodInfo={this.openPeriodInfo}
-                  />
-                  {selectedPeriod
-                  && (
+                  <TimeLineNavigation openPeriodInfo={this.openPeriodInfo} />
+                  {selectedPeriod && (
                     <TimeLineData
                       selectedPeriod={selectedPeriod}
                       selectNextPeriod={this.selectNextPeriod}

@@ -7,7 +7,7 @@ import renderNavField from './renderNavField';
 
 interface SelectFieldProps {
   name: string;
-  selectValues: object[];
+  selectValues: any[];
   label: LabelType;
   validate?: (
     | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
@@ -19,7 +19,7 @@ interface SelectFieldProps {
   hideValueOnDisable?: boolean;
   bredde?: string;
   disabled?: boolean;
-  onChange?: (elmt: ReactNode, value: object) => void;
+  onChange?: (elmt: ReactNode, value: any) => void;
 }
 
 /* eslint-disable-next-line react/prop-types */

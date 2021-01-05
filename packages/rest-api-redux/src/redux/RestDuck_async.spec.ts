@@ -38,7 +38,7 @@ describe('RestDuck (async)', () => {
 
   const httpClientApi = getAxiosHttpClientApi();
 
-  before(() => {
+  beforeAll(() => {
     sandbox = sinon.createSandbox();
     mockAxios = new MockAdapter(httpClientApi.axiosInstance);
   });
@@ -47,7 +47,7 @@ describe('RestDuck (async)', () => {
     mockAxios.reset();
   });
 
-  after(() => {
+  afterAll(() => {
     sandbox.restore();
     mockAxios.restore();
   });

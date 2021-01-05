@@ -264,7 +264,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
   });
 
-  it('  skal rulle tilbake markering av nytt arbeidsforhold når det ikke lenger skal brukes', () => {
+  it('skal rulle tilbake markering av nytt arbeidsforhold når det ikke lenger skal brukes', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
       erNyttArbeidsforhold: true,

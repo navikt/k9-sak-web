@@ -118,6 +118,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     };
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
@@ -138,7 +139,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     formChange(`${behandlingFormPrefix}.${formName}`, fieldName, fieldValue);
   }
 
-  initializeActivityForm(opptjeningActivity: OpptjeningAktivitet | {}) {
+  initializeActivityForm(opptjeningActivity: OpptjeningAktivitet | any) {
     const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
     formInitialize(`${behandlingFormPrefix}.${activityPanelName}`, opptjeningActivity);
   }

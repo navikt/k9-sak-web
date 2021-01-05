@@ -140,8 +140,10 @@ describe('<prosessStegHooks>', () => {
         apentFaktaPanelInfo,
       ),
     );
+    // @ts-ignore
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
       ...wrapper.find('div').prop('data-values'),
+      // @ts-ignore
     }).reduce((acc, value) => [...acc, value], []);
 
     expect(prosessStegPaneler).has.length(1);

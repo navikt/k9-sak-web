@@ -1,4 +1,5 @@
 **/node_modules/
+/jest_cache/
 /.idea
 /bin/
 /.tmp/
@@ -28,3 +29,4 @@ tmp/
 .scannerwork
 node_modules_bak
 .yarn/
+.eslintcache

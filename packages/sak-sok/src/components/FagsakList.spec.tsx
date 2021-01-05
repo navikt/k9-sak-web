@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { Table } from '@fpsak-frontend/shared-components';
+import { Table, TableRow, DateLabel } from '@fpsak-frontend/shared-components';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import FagsakList from './FagsakList';
@@ -196,17 +196,10 @@ describe('<FagsakList>', () => {
       />,
     );
 
-    const table = wrapper.find(Table);
-    const tableRows = table.children();
-    expect(tableRows).to.have.length(2);
+    const tableRows = wrapper.find(TableRow);
+    expect(tableRows).has.length(2);
 
-    tableRows.forEach(tableRow => {
-      // @ts-ignore
-      if (tableRow.key() === fagsak4.saksnummer) {
-        expect(tableRow.last().childAt(0).text()).is.eql('<DateLabel />');
-      } else {
-        expect(tableRow.last().childAt(0)).is.empty;
-      }
-    });
+    expect(tableRows.first().find(DateLabel).prop('dateString')).is.eql('2019-02-18T13:49:18.645');
+    expect(tableRows.last().find(DateLabel)).has.length(0);
   });
 });

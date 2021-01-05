@@ -15,7 +15,7 @@ describe('<BehandlingSupportIndex>', () => {
     hash: 'test',
   };
 
-  xit('skal vise godkjennings-panelet', () => {
+  it.skip('skal vise godkjennings-panelet', () => {
     const wrapper = shallow(
       <BehandlingSupportIndex
         activeSupportPanel={supportTabs.APPROVAL}

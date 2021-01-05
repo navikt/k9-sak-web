@@ -63,6 +63,7 @@ describe('access', () => {
         (validFagsakStatuser.includes(fagsakStatus) || erKlage) && validBehandlingStatuser.includes(behandlingStatus);
       const behandlingstype = erKlage ? klage : behandlingstypeSomIkkeErKlage;
 
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('skrivetilgang', expected, fagsakStatus, behandlingStatus, behandlingstype), () => {
         const access = writeAccess(behandlingstype)(
           saksbehandlerAnsatt,
@@ -137,6 +138,7 @@ describe('access', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(
+        // eslint-disable-next-line jest/valid-title
         getTestName('tilgang til å overstyre', expected, fagsakStatus, behandlingStatus, behandlingstypeSomIkkeErKlage),
         () => {
           const access = kanOverstyreAccess(

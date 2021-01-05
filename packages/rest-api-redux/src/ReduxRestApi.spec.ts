@@ -19,7 +19,7 @@ describe('ReduxRestApi', () => {
     });
   });
 
-  it('skal bruke samme konfig som en annen request', () => {
+  it('skal bruke samme konfig som en annen request temp', () => {
     const configs = [new RequestConfig('BEHANDLING', '/api/behandling'), new RequestConfig('FAGSAK', '/api/fagsak')];
 
     const requestConfig = new ReduxRestApi(configs, 'reducerName', 'fpsak', new ReduxEvents());

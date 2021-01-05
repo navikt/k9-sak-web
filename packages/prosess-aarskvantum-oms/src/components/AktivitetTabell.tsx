@@ -75,8 +75,8 @@ const utfallErIngenUtbetaling = (delvisFravær: string) => {
   return false;
 };
 
-const arbeidsforholdSist = (_, [vilkår_2]: [Vilkår, Utfalltype]): number =>
-  vilkår_2 === VilkårEnum.ARBEIDSFORHOLD ? -1 : 0;
+const arbeidsforholdSist = (_, [vilkår2]: [Vilkår, Utfalltype]): number =>
+  vilkår2 === VilkårEnum.ARBEIDSFORHOLD ? -1 : 0;
 
 const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   arbeidsforhold,

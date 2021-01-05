@@ -24,10 +24,10 @@ const intl = createIntl(
 
 interface OpptjeningFaktaIndexProps {
   behandling: OpptjeningBehandling;
-  opptjening: Opptjening;
+  opptjening?: Opptjening;
   aksjonspunkter: Aksjonspunkt[];
   alleMerknaderFraBeslutter: any;
-  utlandDokStatus: UtlandDokStatus;
+  utlandDokStatus?: UtlandDokStatus;
   alleKodeverk: AlleKodeverk;
   arbeidsgivere: { arbeidsgivere: ArbeidsgiverOpplysningerPerId };
   submitCallback: (props: SubmitCallback[]) => void;

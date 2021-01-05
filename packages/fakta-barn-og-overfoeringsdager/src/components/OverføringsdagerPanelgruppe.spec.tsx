@@ -6,7 +6,7 @@ import { OverføringsretningEnum } from '../types/Overføring';
 import OverføringsdagerPanel from './OverføringsdagerPanel';
 
 describe('<OverføringsdagerPanelgruppe>', () => {
-  it('Rendrer 3 OverføringsdagerPaneler med ', () => {
+  it('Rendrer 3 OverføringsdagerPaneler med', () => {
     const wrapper = shallowWithIntl(
       <OverføringsdagerPanelgruppe
         retning={OverføringsretningEnum.UT}

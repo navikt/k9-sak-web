@@ -14,97 +14,112 @@ import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
 import AktsomhetFormPanel from './AktsomhetFormPanel';
 
 describe('<AktsomhetFormPanel>', () => {
-  const sarligGrunnTyper = [{
-    kode: SarligGrunn.GRAD_AV_UAKTSOMHET,
-    navn: 'grad av uaktsomhet',
-    kodeverk: '',
-  }, {
-    kode: SarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL,
-    navn: 'navs feil',
-    kodeverk: '',
-  }];
-  const aktsomhetTyper = [{
-    kode: Aktsomhet.GROVT_UAKTSOM,
-    navn: 'grovt',
-    kodeverk: '',
-  }, {
-    kode: Aktsomhet.SIMPEL_UAKTSOM,
-    navn: 'simpel',
-    kodeverk: '',
-  }, {
-    kode: Aktsomhet.FORSETT,
-    navn: 'forsett',
-    kodeverk: '',
-  }];
+  const sarligGrunnTyper = [
+    {
+      kode: SarligGrunn.GRAD_AV_UAKTSOMHET,
+      navn: 'grad av uaktsomhet',
+      kodeverk: '',
+    },
+    {
+      kode: SarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL,
+      navn: 'navs feil',
+      kodeverk: '',
+    },
+  ];
+  const aktsomhetTyper = [
+    {
+      kode: Aktsomhet.GROVT_UAKTSOM,
+      navn: 'grovt',
+      kodeverk: '',
+    },
+    {
+      kode: Aktsomhet.SIMPEL_UAKTSOM,
+      navn: 'simpel',
+      kodeverk: '',
+    },
+    {
+      kode: Aktsomhet.FORSETT,
+      navn: 'forsett',
+      kodeverk: '',
+    },
+  ];
 
   it('skal vise radioknapp for hver aksomhetstype', () => {
-    const wrapper = shallow(<AktsomhetFormPanel
-      readOnly={false}
-      resetFields={sinon.spy()}
-      handletUaktsomhetGrad={undefined}
-      harGrunnerTilReduksjon
-      erSerligGrunnAnnetValgt={false}
-      aktsomhetTyper={aktsomhetTyper}
-      sarligGrunnTyper={sarligGrunnTyper}
-      antallYtelser={2}
-      feilutbetalingBelop={100}
-      erTotalBelopUnder4Rettsgebyr={false}
-    />);
+    const wrapper = shallow(
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={undefined}
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
+    );
 
     expect(wrapper.find(RadioOption)).to.have.length(3);
     expect(wrapper.find(AktsomhetGradFormPanel)).to.have.length(0);
   });
 
   it('skal vise panel for aktsomhet når dette er valgt', () => {
-    const wrapper = shallow(<AktsomhetFormPanel
-      readOnly={false}
-      resetFields={sinon.spy()}
-      handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
-      harGrunnerTilReduksjon
-      erSerligGrunnAnnetValgt={false}
-      aktsomhetTyper={aktsomhetTyper}
-      sarligGrunnTyper={sarligGrunnTyper}
-      antallYtelser={2}
-      feilutbetalingBelop={100}
-      erTotalBelopUnder4Rettsgebyr={false}
-    />);
+    const wrapper = shallow(
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
+    );
 
     expect(wrapper.find(RadioOption)).to.have.length(3);
     expect(wrapper.find(AktsomhetGradFormPanel)).to.have.length(1);
   });
 
   it('skal ikke vise panel for aktsomhet når dette ikke er valgt', () => {
-    const wrapper = shallow(<AktsomhetFormPanel
-      readOnly={false}
-      resetFields={sinon.spy()}
-      handletUaktsomhetGrad={undefined}
-      harGrunnerTilReduksjon
-      erSerligGrunnAnnetValgt={false}
-      aktsomhetTyper={aktsomhetTyper}
-      sarligGrunnTyper={sarligGrunnTyper}
-      antallYtelser={2}
-      feilutbetalingBelop={100}
-      erTotalBelopUnder4Rettsgebyr={false}
-    />);
+    const wrapper = shallow(
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={undefined}
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
+    );
 
     expect(wrapper.find(RadioOption)).to.have.length(3);
     expect(wrapper.find(AktsomhetGradFormPanel)).to.have.length(0);
   });
 
   it('skal vise riktig labels når valg resultattype ikke er Forsto/Burde forstått', () => {
-    const wrapper = shallow(<AktsomhetFormPanel
-      readOnly={false}
-      resetFields={sinon.spy()}
-      handletUaktsomhetGrad={undefined}
-      erValgtResultatTypeForstoBurdeForstaatt={false}
-      harGrunnerTilReduksjon
-      erSerligGrunnAnnetValgt={false}
-      aktsomhetTyper={aktsomhetTyper}
-      sarligGrunnTyper={sarligGrunnTyper}
-      antallYtelser={2}
-      feilutbetalingBelop={100}
-      erTotalBelopUnder4Rettsgebyr={false}
-    />);
+    const wrapper = shallow(
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={undefined}
+        erValgtResultatTypeForstoBurdeForstaatt={false}
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
+    );
 
     expect(wrapper.find(RadioOption)).to.have.length(3);
     expect(wrapper.find(RadioOption).find({ value: 'SIMPEL_UAKTSOM' }).prop('label')).to.equal('simpel');
@@ -113,19 +128,21 @@ describe('<AktsomhetFormPanel>', () => {
   });
 
   it('skal vise riktig labels når valg resultattype er Forsto/Burde forstått', () => {
-    const wrapper = shallow(<AktsomhetFormPanel
-      readOnly={false}
-      resetFields={sinon.spy()}
-      handletUaktsomhetGrad={undefined}
-      erValgtResultatTypeForstoBurdeForstaatt
-      harGrunnerTilReduksjon
-      erSerligGrunnAnnetValgt={false}
-      aktsomhetTyper={aktsomhetTyper}
-      sarligGrunnTyper={sarligGrunnTyper}
-      antallYtelser={2}
-      feilutbetalingBelop={100}
-      erTotalBelopUnder4Rettsgebyr={false}
-    />);
+    const wrapper = shallow(
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={undefined}
+        erValgtResultatTypeForstoBurdeForstaatt
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
+    );
 
     const radioOptions = wrapper.find(RadioOption);
     expect(radioOptions).to.have.length(3);
@@ -153,7 +170,7 @@ describe('<AktsomhetFormPanel>', () => {
     });
   });
 
-  it('skal lage form-initialvalues fra struktur når en har aktsomhetsgrad FORSETT', () => {
+  it('skal lage form-initialvalues fra struktur når en har aktsomhetsgrad GROVT_UAKTSOM', () => {
     const vilkarResultatInfo = {
       aktsomhet: { kode: Aktsomhet.GROVT_UAKTSOM, kodeverk: '' },
       aktsomhetInfo: {

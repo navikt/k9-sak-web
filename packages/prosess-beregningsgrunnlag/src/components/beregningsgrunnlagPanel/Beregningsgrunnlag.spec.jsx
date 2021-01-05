@@ -443,7 +443,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING]).to.equal('');
     expect(values.ATFLVurdering).to.equal('');
   });
-  it('Skal teste at transformValues gir forventet resultat  ', () => {
+  it('Skal teste at transformValues gir forventet resultat', () => {
     const values = {
       ATFLVurdering: 'aaa',
       inntektFrilanser: 100,
@@ -454,7 +454,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(transformedValues.fastsatteTidsbegrensedePerioder).to.lengthOf(0);
     expect(transformedValues.frilansInntekt).to.equal(100);
   });
-  it('Skal teste at transformValues gir forventet resultat med inntekt undefined ', () => {
+  it('Skal teste at transformValues gir forventet resultat med inntekt undefined', () => {
     const values = {
       ATFLVurdering: 'aaa',
       inntektFrilanser: null,
