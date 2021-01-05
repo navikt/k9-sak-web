@@ -8509,7 +8509,7 @@ glob-base@^0.3.0:
     glob-parent "^2.0.0"
     is-glob "^2.0.0"
 
-glob-parent@5.1.0, glob-parent@^5.0.0:
+glob-parent@5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.0.tgz#5f4c1d1e748d30cd73ad2944b3577a81b081e8c2"
   dependencies:
@@ -8530,7 +8530,7 @@ glob-parent@^3.1.0:
     is-glob "^3.1.0"
     path-dirname "^1.0.0"
 
-glob-parent@^5.1.0, glob-parent@~5.1.0:
+glob-parent@^5.0.0, glob-parent@^5.1.0, glob-parent@~5.1.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.1.tgz#b6c1ef417c4e5663ea498f1c45afac6916bbc229"
   integrity sha512-FnI+VGOpnlGHWZxthPGR+QhR78fuiK0sNLkHQv+bL9fQi57lNNdquIbna/WrfROrolq8GK5Ek6BiMwqL/voRYQ==
@@ -11560,10 +11560,10 @@ mocha@^7.1.2:
     yargs-parser "13.1.2"
     yargs-unparser "1.6.0"
 
-mochapack@^1.1.15:
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/mochapack/-/mochapack-1.1.15.tgz#426c793b871ed006c781172da2b15f612f11f2dc"
-  integrity sha512-/gOsgJk3CWlNiOdef7hrNhp37VpatB9IiWzSCxS2p8pG21R7NAKJBBsU5T0eUWT9oz1NQhyubXdQgh51U7oVZA==
+mochapack@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/mochapack/-/mochapack-2.0.6.tgz#79bee97a3d300c890816ce6cf374c5fb5053dec0"
+  integrity sha512-6ijz1pJlSnzuy0PXEZKhO2QRrZ1RSI8ZEQ2Rk9jvGAm7dyXXrYcyd8hMmrBXSJSLnZqRuKV0e1SAYQJxYSlfEg==
   dependencies:
     "@babel/runtime-corejs2" "^7.0.0"
     chalk "^2.4.2"
@@ -15446,14 +15446,7 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@^0.5.13:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.16.tgz#0ae069e7fe3ba7538c64c98515e35339eac5a042"
-  dependencies:
-    buffer-from "^1.0.0"
-    source-map "^0.6.0"
-
-source-map-support@^0.5.16, source-map-support@~0.5.12, source-map-support@~0.5.19:
+source-map-support@^0.5.13, source-map-support@^0.5.16, source-map-support@~0.5.12, source-map-support@~0.5.19:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
   integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
