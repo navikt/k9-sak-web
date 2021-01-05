@@ -8,12 +8,12 @@ export enum LinkCategory {
   BEHANDLING = 'BEHANDLING',
 }
 
-export enum FpsakApiKeys {
+export enum K9sakApiKeys {
   INIT_FETCH = 'INIT_FETCH',
-  INIT_FETCH_FPTILBAKE = 'INIT_FETCH_FPTILBAKE',
+  INIT_FETCH_TILBAKE = 'INIT_FETCH_TILBAKE',
   INIT_FETCH_KLAGE = 'INIT_FETCH_KLAGE',
   KODEVERK = 'KODEVERK',
-  KODEVERK_FPTILBAKE = 'KODEVERK_FPTILBAKE',
+  KODEVERK_TILBAKE = 'KODEVERK_TILBAKE',
   KODEVERK_KLAGE = 'KODEVERK_KLAGE',
   LANGUAGE_FILE = 'LANGUAGE_FILE',
   NAV_ANSATT = 'NAV_ANSATT',
@@ -22,18 +22,18 @@ export enum FpsakApiKeys {
   SEARCH_FAGSAK = 'SEARCH_FAGSAK',
   FETCH_FAGSAK = 'FETCH_FAGSAK',
   SAK_BRUKER = 'SAK_BRUKER',
-  BEHANDLINGER_FPSAK = 'BEHANDLINGER_FPSAK',
-  BEHANDLINGER_FPTILBAKE = 'BEHANDLINGER_FPTILBAKE',
+  BEHANDLINGER_K9SAK = 'BEHANDLINGER_K9SAK',
+  BEHANDLINGER_TILBAKE = 'BEHANDLINGER_TILBAKE',
   BEHANDLINGER_KLAGE = 'BEHANDLINGER_KLAGE',
   BEHANDLING_PERSONOPPLYSNINGER = 'BEHANDLING_PERSONOPPLYSNINGER',
-  NEW_BEHANDLING_FPSAK = 'NEW_BEHANDLING_FPSAK',
+  NEW_BEHANDLING_K9SAK = 'NEW_BEHANDLING_K9SAK',
   NEW_BEHANDLING_UNNTAK = 'NEW_BEHANDLING_UNNTAK',
-  NEW_BEHANDLING_FPTILBAKE = 'NEW_BEHANDLING_FPTILBAKE',
+  NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
   NEW_BEHANDLING_KLAGE = 'NEW_BEHANDLING_KLAGE',
   BEHANDLING_FAMILIE_HENDELSE = 'BEHANDLING_FAMILIE_HENDELSE',
   ANNEN_PART_BEHANDLING = 'ANNEN_PART_BEHANDLING',
-  HISTORY_FPSAK = 'HISTORY_FPSAK',
-  HISTORY_FPTILBAKE = 'HISTORY_FPTILBAKE',
+  HISTORY_K9SAK = 'HISTORY_K9SAK',
+  HISTORY_TILBAKE = 'HISTORY_TILBAKE',
   HISTORY_KLAGE = 'HISTORY_KLAGE',
   KONTROLLRESULTAT = 'KONTROLLRESULTAT',
   RISIKO_AKSJONSPUNKT = 'RISIKO_AKSJONSPUNKT',
@@ -48,7 +48,7 @@ export enum FpsakApiKeys {
   BREVMALER = 'BREVMALER',
   SUBMIT_MESSAGE = 'SUBMIT_MESSAGE',
   SAK_RETTIGHETER = 'SAK_RETTIGHETER',
-  SAK_RETTIGHETER_FPTILBAKE = 'SAK_RETTIGHETER_FPTILBAKE',
+  SAK_RETTIGHETER_TILBAKE = 'SAK_RETTIGHETER_TILBAKE',
   BEHANDLING_RETTIGHETER = 'BEHANDLING_RETTIGHETER',
   KAN_TILBAKEKREVING_OPPRETTES = 'KAN_TILBAKEKREVING_OPPRETTES',
   KAN_TILBAKEKREVING_REVURDERING_OPPRETTES = 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
@@ -59,72 +59,72 @@ export enum FpsakApiKeys {
 }
 
 const endpoints = new RestApiConfigBuilder()
-  .withGet('/k9/sak/api/init-fetch', FpsakApiKeys.INIT_FETCH)
-  .withGet('/k9/tilbake/api/init-fetch', FpsakApiKeys.INIT_FETCH_FPTILBAKE)
-  .withGet('/k9/klage/api/init-fetch', FpsakApiKeys.INIT_FETCH_KLAGE)
+  .withGet('/k9/sak/api/init-fetch', K9sakApiKeys.INIT_FETCH)
+  .withGet('/k9/tilbake/api/init-fetch', K9sakApiKeys.INIT_FETCH_TILBAKE)
+  .withGet('/k9/klage/api/init-fetch', K9sakApiKeys.INIT_FETCH_KLAGE)
 
   // Generelle
-  .withRel('nav-ansatt', FpsakApiKeys.NAV_ANSATT)
-  .withRel('kodeverk', FpsakApiKeys.KODEVERK)
-  .withRel('tilbake-kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
-  .withRel('klage-kodeverk', FpsakApiKeys.KODEVERK_KLAGE)
-  .withRel('behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
+  .withRel('nav-ansatt', K9sakApiKeys.NAV_ANSATT)
+  .withRel('kodeverk', K9sakApiKeys.KODEVERK)
+  .withRel('tilbake-kodeverk', K9sakApiKeys.KODEVERK_TILBAKE)
+  .withRel('klage-kodeverk', K9sakApiKeys.KODEVERK_KLAGE)
+  .withRel('behandlende-enheter', K9sakApiKeys.BEHANDLENDE_ENHETER)
 
   // Feature toggles
-  .withRel('feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+  .withRel('feature-toggle', K9sakApiKeys.FEATURE_TOGGLE)
 
   // Fagsak
-  .withRel('fagsak', FpsakApiKeys.FETCH_FAGSAK)
-  .withRel('sak-bruker', FpsakApiKeys.SAK_BRUKER)
-  .withRel('sak-rettigheter', FpsakApiKeys.SAK_RETTIGHETER)
-  .withRel('tilbake-sak-rettigheter', FpsakApiKeys.SAK_RETTIGHETER_FPTILBAKE)
-  .withRel('sak-historikk', FpsakApiKeys.HISTORY_FPSAK)
-  .withRel('tilbake-historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
-  .withRel('klage-historikk', FpsakApiKeys.HISTORY_KLAGE)
-  .withRel('sak-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
-  .withRel('sak-alle-behandlinger', FpsakApiKeys.BEHANDLINGER_FPSAK)
-  .withRel('tilbake-alle-behandlinger', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
-  .withRel('klage-alle-behandlinger', FpsakApiKeys.BEHANDLINGER_KLAGE)
-  .withRel('sak-annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
-  .withRel('tilbake-kan-opprette-behandling', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
-  .withRel('tilbake-kan-opprette-revurdering', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
+  .withRel('fagsak', K9sakApiKeys.FETCH_FAGSAK)
+  .withRel('sak-bruker', K9sakApiKeys.SAK_BRUKER)
+  .withRel('sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER)
+  .withRel('tilbake-sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER_TILBAKE)
+  .withRel('sak-historikk', K9sakApiKeys.HISTORY_K9SAK)
+  .withRel('tilbake-historikk', K9sakApiKeys.HISTORY_TILBAKE)
+  .withRel('klage-historikk', K9sakApiKeys.HISTORY_KLAGE)
+  .withRel('sak-dokumentliste', K9sakApiKeys.ALL_DOCUMENTS)
+  .withRel('sak-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_K9SAK)
+  .withRel('tilbake-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_TILBAKE)
+  .withRel('klage-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_KLAGE)
+  .withRel('sak-annen-part-behandling', K9sakApiKeys.ANNEN_PART_BEHANDLING)
+  .withRel('tilbake-kan-opprette-behandling', K9sakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
+  .withRel('tilbake-kan-opprette-revurdering', K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
 
   // Behandling
-  .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
-  .withRel('familiehendelse-v2', FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE)
-  .withRel('kontrollresultat', FpsakApiKeys.KONTROLLRESULTAT)
-  .withRel('risikoklassifisering-aksjonspunkt', FpsakApiKeys.RISIKO_AKSJONSPUNKT)
-  .withRel('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
-  .withRel('totrinnskontroll-arsaker', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
-  .withRel('totrinnskontroll-arsaker-readOnly', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)
-  .withRel('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
-  .withRel('bekreft-totrinnsaksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
-  .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
-  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
-  .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
-  .withRel('behandling-rettigheter', FpsakApiKeys.BEHANDLING_RETTIGHETER)
-  .withRel('tilgjengelige-vedtaksbrev', FpsakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('soeker-personopplysninger', K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
+  .withRel('familiehendelse-v2', K9sakApiKeys.BEHANDLING_FAMILIE_HENDELSE)
+  .withRel('kontrollresultat', K9sakApiKeys.KONTROLLRESULTAT)
+  .withRel('risikoklassifisering-aksjonspunkt', K9sakApiKeys.RISIKO_AKSJONSPUNKT)
+  .withRel('klage-vurdering', K9sakApiKeys.TOTRINNS_KLAGE_VURDERING)
+  .withRel('totrinnskontroll-arsaker', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
+  .withRel('totrinnskontroll-arsaker-readOnly', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)
+  .withRel('har-samme-resultat', K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
+  .withRel('bekreft-totrinnsaksjonspunkt', K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
+  .withRel('har-apent-kontroller-revurdering-aksjonspunkt', K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
+  .withRel('brev-maler', K9sakApiKeys.BREVMALER)
+  .withRel('brev-bestill', K9sakApiKeys.SUBMIT_MESSAGE)
+  .withRel('behandling-rettigheter', K9sakApiKeys.BEHANDLING_RETTIGHETER)
+  .withRel('tilgjengelige-vedtaksbrev', K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
 
-  .withPost('/k9/tilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
+  .withPost('/k9/tilbake/api/brev/forhandsvis', K9sakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
   .withPost(
     '/k9/tilbake/api/dokument/forhandsvis-henleggelsesbrev',
-    FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
+    K9sakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
     { isResponseBlob: true },
   )
-  .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
-  .withAsyncPut('/k9/sak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK)
-  .withAsyncPut('/k9/sak/api/behandlinger/unntak', FpsakApiKeys.NEW_BEHANDLING_UNNTAK)
-  .withAsyncPut('/k9/klage/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_KLAGE)
-  .withGet('/k9/sak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
+  .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', K9sakApiKeys.NEW_BEHANDLING_TILBAKE)
+  .withAsyncPut('/k9/sak/api/behandlinger', K9sakApiKeys.NEW_BEHANDLING_K9SAK)
+  .withAsyncPut('/k9/sak/api/behandlinger/unntak', K9sakApiKeys.NEW_BEHANDLING_UNNTAK)
+  .withAsyncPut('/k9/klage/api/behandlinger', K9sakApiKeys.NEW_BEHANDLING_KLAGE)
+  .withGet('/k9/sak/api/aktoer-info', K9sakApiKeys.AKTOER_INFO)
 
-  // FpFormidling
-  .withPost('/k9/formidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING, { isResponseBlob: true })
+  // Formidling
+  .withPost('/k9/formidling/api/brev/forhaandsvis', K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING, { isResponseBlob: true })
 
   // Språkfil (ligg på klient - Skal fjernast - Det som ligg i denne skal flyttes til spesifikke pakker)
-  .withGet('/k9/web/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
+  .withGet('/k9/web/sprak/nb_NO.json', K9sakApiKeys.LANGUAGE_FILE)
 
   // Kun brukt for søk på localhost
-  .withPost('/k9/sak/api/fagsak/sok', FpsakApiKeys.SEARCH_FAGSAK)
+  .withPost('/k9/sak/api/fagsak/sok', K9sakApiKeys.SEARCH_FAGSAK)
 
   .build();
 
