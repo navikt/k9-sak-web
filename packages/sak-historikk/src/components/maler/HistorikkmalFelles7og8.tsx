@@ -82,6 +82,7 @@ const HistorikkMalFelles7og8: React.FunctionComponent<HistorikkmalFelles7og8Prop
             dokumentLinks.map(dokumentLenke => (
               <HistorikkDokumentLenke
                 key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+                // @ts-ignore Fiks
                 dokumentLenke={dokumentLenke}
                 saksNr={saksNr}
               />

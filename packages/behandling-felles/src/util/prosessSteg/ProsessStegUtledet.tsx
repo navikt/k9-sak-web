@@ -74,7 +74,7 @@ export class ProsessStegPanelUtledet {
 
   vilkar: Vilkar[];
 
-  panelData: {};
+  panelData: any;
 
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
 
@@ -88,7 +88,7 @@ export class ProsessStegPanelUtledet {
     isReadOnlyCheck: (aksjonspunkterForPanel: Aksjonspunkt[], vilkarForPanel: Vilkar[]) => boolean,
     aksjonspunkter: Aksjonspunkt[],
     vilkar: Vilkar[],
-    panelData: {},
+    panelData: any,
     toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void,
     kanOverstyreAccess: { isEnabled: boolean; employeeHasAccess: boolean },
     overstyrteAksjonspunktKoder: string[],

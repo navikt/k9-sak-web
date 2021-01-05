@@ -14,7 +14,7 @@ interface OwnProps {
   showDetailedErrorMessages: boolean;
   errorMessages: {
     message: string;
-    additionalInfo?: {};
+    additionalInfo?: any;
   }[];
   removeErrorMessage: () => void;
 }

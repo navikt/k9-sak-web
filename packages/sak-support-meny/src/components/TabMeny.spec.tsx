@@ -30,7 +30,7 @@ describe('<TabMeny>', () => {
     expect(kolonne).has.length(2);
 
     const knapp1 = kolonne.first().find('button');
-    expect(knapp1.prop('className')).is.eql('active');
+    expect(knapp1.prop('className')).is.eql('button active');
     expect(knapp1.prop('data-tooltip')).is.eql('Historikk');
     expect(knapp1.prop('disabled')).is.false;
 
@@ -40,7 +40,7 @@ describe('<TabMeny>', () => {
     expect(svgPlaceholder1.prop('alt')).is.eql('Historikk');
 
     const knapp2 = kolonne.last().find('button');
-    expect(knapp2.prop('className')).is.eql('');
+    expect(knapp2.prop('className')).is.eql('button');
     expect(knapp2.prop('data-tooltip')).is.eql('Send melding');
     expect(knapp2.prop('disabled')).is.true;
 

@@ -59,7 +59,7 @@ interface ActivityDataSubPanelProps {
   initialValues: Partial<OpptjeningAktivitet>;
   readOnly: boolean;
   isManuallyAdded: boolean;
-  selectedActivityType: Kodeverk;
+  selectedActivityType?: Kodeverk;
 }
 
 /**

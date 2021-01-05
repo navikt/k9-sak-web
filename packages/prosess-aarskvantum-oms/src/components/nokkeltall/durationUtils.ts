@@ -27,11 +27,11 @@ export const beregnDagerTimer = (dagerTimer: string): DagerTimer => {
   };
 };
 
-export const sumTid = (dagerTimer_1: DagerTimer, dagerTimer_2: DagerTimer): DagerTimer => {
-  const sumTimer = (dagerTimer_2.timer || 0) + (dagerTimer_1.timer || 0);
+export const sumTid = (dagerTimer1: DagerTimer, dagerTimer2: DagerTimer): DagerTimer => {
+  const sumTimer = (dagerTimer2.timer || 0) + (dagerTimer1.timer || 0);
 
   return {
-    dager: dagerTimer_2.dager + dagerTimer_1.dager + Math.floor(sumTimer / 7.5),
+    dager: dagerTimer2.dager + dagerTimer1.dager + Math.floor(sumTimer / 7.5),
     timer: formaterTimerDesimal(sumTimer % 7.5),
   };
 };

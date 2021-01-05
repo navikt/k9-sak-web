@@ -52,19 +52,12 @@ export class VarselOmRevurderingFormImpl extends React.Component {
     this.state = { showSettPaVentModal: false };
   }
 
-  previewMessage(e, previewCallback) {
-    const { valid, pristine, fritekst, submit } = this.props;
-    if (valid || pristine) {
-      const data = {
-        mottaker: '',
-        dokumentMal: 'REVURD',
-        dokumentdata: fritekst && { fritekst },
-      };
-      previewCallback(data);
-    } else {
-      submit();
+  handleSubmitFromModal() {
+    const { valid, handleSubmit } = this.props;
+    handleSubmit();
+    if (valid) {
+      this.hideSettPaVentModal();
     }
-    e.preventDefault();
   }
 
   bekreftOgFortsettClicked() {
@@ -82,12 +75,19 @@ export class VarselOmRevurderingFormImpl extends React.Component {
     }
   }
 
-  handleSubmitFromModal() {
-    const { valid, handleSubmit } = this.props;
-    handleSubmit();
-    if (valid) {
-      this.hideSettPaVentModal();
+  previewMessage(e, previewCallback) {
+    const { valid, pristine, fritekst, submit } = this.props;
+    if (valid || pristine) {
+      const data = {
+        mottaker: '',
+        dokumentMal: 'REVURD',
+        dokumentdata: fritekst && { fritekst },
+      };
+      previewCallback(data);
+    } else {
+      submit();
     }
+    e.preventDefault();
   }
 
   hideSettPaVentModal() {

@@ -100,6 +100,6 @@ describe('<AvregningTable>', () => {
 
     const normaltekst = wrapper.find('Normaltekst');
     expect(normaltekst).to.have.length(1);
-    expect(normaltekst.html()).to.equal('<p class="typo-normal">Statoil (1234567)</p>');
+    expect(normaltekst.html()).to.equal('<p class="typo-normal tableTitle">Statoil (1234567)</p>');
   });
 });

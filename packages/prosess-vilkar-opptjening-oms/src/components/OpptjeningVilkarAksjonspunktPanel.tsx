@@ -9,7 +9,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, FastsattOpptjening, Opptjening, SubmitCallback, Vilkårresultat } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
-import React, { useMemo } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -51,7 +51,9 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
-export const OpptjeningVilkarAksjonspunktPanelImpl = ({
+export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
+  OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps
+> = ({
   behandlingId,
   behandlingVersjon,
   erVilkarOk,
@@ -67,7 +69,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   vilkårIndex,
   opptjeninger,
   vilkarFields,
-}: OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps) => {
+}) => {
   const formProps = useMemo(
     () => ({
       handleSubmit,

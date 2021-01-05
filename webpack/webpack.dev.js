@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const { merge } = require('webpack-merge');
-const commonDevAndProd = require('./webpack.common.dev_and_prod.js');
+const commonDevAndProd = require('./webpack.common');
 
 const ROOT_DIR = path.resolve(__dirname, '../public/client');
 const PACKAGES_DIR = path.join(__dirname, '../packages');

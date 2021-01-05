@@ -10,13 +10,6 @@ export default {
   decorators: [withKnobs],
 };
 
-interface HenleggParams {
-  behandlingVersjon: number;
-  behandlingId: number;
-  årsakKode: string;
-  begrunnelse: string;
-}
-
 export const visMenyForÅLeggeTilVerge = () => (
   <MenyVergeIndex opprettVerge={action('button-click')} lukkModal={action('button-click')} />
 );

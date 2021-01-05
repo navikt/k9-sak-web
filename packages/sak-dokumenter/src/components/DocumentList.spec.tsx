@@ -47,11 +47,11 @@ describe('<DocumentList>', () => {
 
     const tableColumnsRow1 = tableRows.first().find(TableColumn);
     expect(tableColumnsRow1.children()).to.have.length(3);
-    expect(tableColumnsRow1.at(1).html()).to.eql('<td class="">Terminbekreftelse</td>');
+    expect(tableColumnsRow1.at(1).html()).to.eql('<td class="columnStyle">Terminbekreftelse</td>');
 
     const tableColumnsRow2 = tableRows.last().find(TableColumn);
     expect(tableColumnsRow2.children()).to.have.length(3);
-    expect(tableColumnsRow2.at(1).html()).to.eql('<td class="">Førstegangssøknad</td>');
+    expect(tableColumnsRow2.at(1).html()).to.eql('<td class="columnStyle">Førstegangssøknad</td>');
   });
 
   it('skal vise korrekt tekst om ikke tidspunkt finnes', () => {

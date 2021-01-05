@@ -33,23 +33,26 @@ interface Action {
   meta?: {
     options: {
       keepData: boolean;
-      cacheParams: {};
+      cacheParams: any;
     };
   };
   payload?: any;
 }
 
 /**
-   * createRequestReducer
-   *
-   * Hjelpefunksjon som lager en reducer for et AJAX-kall.
-   * Reduceren endrer state for actionene med navn definert av
-   *   actionTypes.requestStarted
-   *   actionTypes.requestFinished
-   *   actionTypes.requestError
-   */
-const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state: State = initialState,
-  action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
+ * createRequestReducer
+ *
+ * Hjelpefunksjon som lager en reducer for et AJAX-kall.
+ * Reduceren endrer state for actionene med navn definert av
+ *   actionTypes.requestStarted
+ *   actionTypes.requestFinished
+ *   actionTypes.requestError
+ */
+const createRequestReducer = (actionTypes: ActionTypes, name: string) => (
+  state: State = initialState,
+  action: Action = { type: '' },
+) => {
+  // NOSONAR Switch brukes som standard i reducers
   if (!action.type.includes(`@@REST/${name}`)) {
     return state;
   }

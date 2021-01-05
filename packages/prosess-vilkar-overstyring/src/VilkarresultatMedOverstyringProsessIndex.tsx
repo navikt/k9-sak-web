@@ -23,7 +23,7 @@ const intl = createIntl(
 
 interface VilkarresultatMedOverstyringProsessIndexProps {
   behandling: Behandling;
-  medlemskap: {
+  medlemskap?: {
     fom: string;
   };
   aksjonspunkter: Aksjonspunkt[];
@@ -34,7 +34,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   avslagsarsaker: Kodeverk[];
-  lovReferanse: string;
+  lovReferanse?: string;
   erOverstyrt: boolean;
   panelTittelKode: string;
   overstyringApKode: string;

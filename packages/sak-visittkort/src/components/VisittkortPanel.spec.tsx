@@ -103,54 +103,6 @@ describe('<VisittkortPanel>', () => {
     barn: [],
   };
 
-  // const personopplysningerAnnenPart = {
-  //   navBrukerKjonn: {
-  //     kode: navBrukerKjonn.MANN,
-  //     kodeverk: 'NAV_BRUKER_KJONN',
-  //   },
-  //   statsborgerskap: {
-  //     kode: 'NORSK',
-  //     kodeverk: 'STATSBORGERSKAP',
-  //   },
-  //   avklartPersonstatus: {
-  //     orginalPersonstatus: {
-  //       kode: personstatusType.BOSATT,
-  //       kodeverk: 'PERSONSTATUS_TYPE',
-  //     },
-  //     overstyrtPersonstatus: {
-  //       kode: personstatusType.BOSATT,
-  //       kodeverk: 'PERSONSTATUS_TYPE',
-  //     },
-  //   },
-  //   personstatus: {
-  //     kode: personstatusType.BOSATT,
-  //     kodeverk: 'PERSONSTATUS_TYPE',
-  //   },
-  //   diskresjonskode: {
-  //     kode: diskresjonskodeType.KLIENT_ADRESSE,
-  //     kodeverk: 'DISKRESJONSKODE_TYPE',
-  //   },
-  //   sivilstand: {
-  //     kode: sivilstandType.SAMBOER,
-  //     kodeverk: 'SIVILSTAND_TYPE',
-  //   },
-  //   aktoerId: '23rwerfwegwerg',
-  //   navn: 'Tusse Trolls Gasse Avle Sønvis Eggert Offer Tønne Sjønning',
-  //   adresser: [{
-  //     adresseType: {
-  //       kode: opplysningAdresseType.BOSTEDSADRESSE,
-  //       kodeverk: 'ADRESSE_TYPE',
-  //     },
-  //     adresselinje1: 'Oslo',
-  //   }],
-  //   fnr: '1234567',
-  //   region: {
-  //     kode: region.NORDEN,
-  //     kodeverk: 'REGION',
-  //   },
-  //   barn: [],
-  // };
-
   it('skal vise enkelt visittkort når en ikke har personopplysninger', () => {
     const wrapper = shallowWithIntl(
       <VisittkortPanel.WrappedComponent
@@ -208,54 +160,4 @@ describe('<VisittkortPanel>', () => {
     expect(visittkort.prop('fodselsnummer')).is.eql(personopplysningerSoker.fnr);
     expect(visittkort.prop('gender')).is.eql(Gender.female);
   });
-
-  // it('skal vise visittkort for annen part', () => {
-  //   const wrapper = shallowWithIntl(<VisittkortPanel.WrappedComponent
-  //     intl={intlMock}
-  //     fagsak={fagsak}
-  //     personopplysninger={{
-  //       ...personopplysningerSoker,
-  //       annenPart: personopplysningerAnnenPart,
-  //     }}
-  //     familieHendelse={familieHendelse}
-  //     lenkeTilAnnenPart="testlenke"
-  //     alleKodeverk={{}}
-  //     sprakkode={{ kode: 'NN' }}
-  //   />);
-
-  //   expect(wrapper.find(FlexContainer)).has.length(1);
-  //   const visittkort = wrapper.find(PersonCard);
-  //   expect(visittkort).has.length(2);
-  //   expect(visittkort.first().prop('name')).is.eql(personopplysningerSoker.navn);
-  //   expect(visittkort.first().prop('fodselsnummer')).is.eql(personopplysningerSoker.fnr);
-  //   expect(visittkort.first().prop('gender')).is.eql(Gender.female);
-
-  //   expect(visittkort.last().prop('name')).is.eql(personopplysningerAnnenPart.navn);
-  //   expect(visittkort.last().prop('fodselsnummer')).is.eql(personopplysningerAnnenPart.fnr);
-  //   expect(visittkort.last().prop('gender')).is.eql(Gender.male);
-  // });
-
-  // it('skal vise visittkort for ukjent søker når annen part mangler aktør-id', () => {
-  //   const wrapper = shallowWithIntl(<VisittkortPanel.WrappedComponent
-  //     intl={intlMock}
-  //     fagsak={fagsak}
-  //     personopplysninger={{
-  //       ...personopplysningerSoker,
-  //       annenPart: {
-  //         ...personopplysningerAnnenPart,
-  //         aktoerId: undefined,
-  //       },
-  //     }}
-  //     familieHendelse={familieHendelse}
-  //     lenkeTilAnnenPart="testlenke"
-  //     alleKodeverk={{}}
-  //     sprakkode={{ kode: 'NN' }}
-  //   />);
-
-  //   expect(wrapper.find(FlexContainer)).has.length(1);
-  //   expect(wrapper.find(PersonCard)).has.length(1);
-  //   const tomtVisittkort = wrapper.find(EmptyPersonCard);
-  //   expect(tomtVisittkort).has.length(1);
-  //   expect(tomtVisittkort.prop('namePlaceholder')).is.eql('Ukjent navn, mangler norsk id-nr');
-  // });
 });

@@ -1,6 +1,6 @@
 interface Label {
   id: string;
-  args: object;
+  args: any;
 }
 
 type LabelType = React.ReactNode | Label;

@@ -73,6 +73,7 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til henlegge behandling', expected, fagsakStatus, behandlingStatus), () => {
         const access = henleggBehandlingAccess(
           saksbehandlerAnsatt,
@@ -123,6 +124,7 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å sette behandling på vent', expected, fagsakStatus, behandlingStatus), () => {
         const access = settBehandlingPaVentAccess(
           saksbehandlerAnsatt,
@@ -173,6 +175,7 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å sette behandling på vent', expected, fagsakStatus, behandlingStatus), () => {
         const access = settBehandlingPaVentAccess(
           saksbehandlerAnsatt,
@@ -223,6 +226,7 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å sette behandling på vent', expected, fagsakStatus, behandlingStatus), () => {
         const access = settBehandlingPaVentAccess(
           saksbehandlerAnsatt,
@@ -269,6 +273,7 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å bytte behandlende enhet', expected, fagsakStatus, behandlingStatus), () => {
         const access = byttBehandlendeEnhetAccess(
           saksbehandlerAnsatt,
@@ -345,6 +350,7 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å opprette revurdering', expected, fagsakStatus, behandlingStatus), () => {
         const access = opprettRevurderingAccess(
           saksbehandlerAnsatt,
@@ -418,6 +424,7 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å opprette revurdering', expected, fagsakStatus, behandlingStatus), () => {
         const access = opprettRevurderingAccess(
           saksbehandlerAnsatt,
@@ -466,6 +473,7 @@ describe('accessMenu', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
       it(
+        // eslint-disable-next-line jest/valid-title
         getTestName('tilgang til å opprette ny førstegangsbehandling', expected, fagsakStatus, behandlingStatus),
         () => {
           const access = opprettNyForstegangsBehandlingAccess(
@@ -514,6 +522,7 @@ describe('accessMenu', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å gjenoppta behandling', expected, fagsakStatus, behandlingStatus), () => {
         const access = gjenopptaBehandlingAccess(
           saksbehandlerAnsatt,
@@ -572,6 +581,7 @@ describe('accessMenu', () => {
         kodeverk: 'BEHANDLING_TYPE',
       };
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å åpne behandling for endringer', expected, fagsakStatus, behandlingStatus), () => {
         const access = opneBehandlingForEndringerAccess(
           behandlingType,

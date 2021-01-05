@@ -99,11 +99,6 @@ export interface TimelineItem {
   data: FastsattOpptjeningAktivitet;
 }
 
-interface OpptjeningTimeLineLightState {
-  items?: TimelineItem[];
-  selectedPeriod?: TimelineItem;
-}
-
 const OpptjeningTimeLineLight = React.memo(
   ({ opptjeningPeriods, opptjeningFomDate, opptjeningTomDate }: OpptjeningTimeLineLightProps) => {
     const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime());

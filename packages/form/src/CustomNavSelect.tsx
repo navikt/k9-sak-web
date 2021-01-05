@@ -29,6 +29,12 @@ class CustomNavSelect extends Component<CustomNavSelectProps> {
     this.checkCorrespondingOptionForValue();
   }
 
+  handleSelectRef(selectRef?: any) {
+    if (selectRef) {
+      this.selectElement = selectRef;
+    }
+  }
+
   getOptionValues(): React.ReactNode[] {
     const {
       props: { selectValues },
@@ -51,12 +57,6 @@ class CustomNavSelect extends Component<CustomNavSelectProps> {
     if (!getOptionValues().includes(value) && value !== '') {
       // eslint-disable-next-line no-console
       console.warn(`No corresponding option found for value '${value}'`); // NOSONAR Viser ikke sensitiv info
-    }
-  }
-
-  handleSelectRef(selectRef?: any) {
-    if (selectRef) {
-      this.selectElement = selectRef;
     }
   }
 
