@@ -87,7 +87,7 @@ const transformValues = (values, avsluttedeBehandlinger) => ({
   vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
-  valgtPartMedKlagerett: safeJSONParse(values.valgtPartMedKlagerett),
+  valgtKlagePart: safeJSONParse(values.valgtPartMedKlagerett),
 });
 
 const formName = 'FormkravKlageFormNfp';
