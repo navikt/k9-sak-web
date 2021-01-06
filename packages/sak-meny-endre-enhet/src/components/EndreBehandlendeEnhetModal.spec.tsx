@@ -1,13 +1,12 @@
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { EndreBehandlendeEnhetModal } from './EndreBehandlendeEnhetModal';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl from '../../i18n/index';
 
 describe('<ChangeBehandlendeEnhetModal>', () => {
   const behandlendeEnheter = [
@@ -34,14 +33,14 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     );
 
     const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(1);
-    expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('closeButton')).is.false;
-    expect(modal.prop('contentLabel')).to.eql('Endre behandlende enhet');
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('isOpen')).toBe(true);
+    expect(modal.prop('closeButton')).toBe(false);
+    expect(modal.prop('contentLabel')).toEqual('Endre behandlende enhet');
 
     const button = wrapper.find('Hovedknapp');
-    expect(button).to.have.length(1);
-    expect(button.prop('disabled')).is.false;
+    expect(button).toHaveLength(1);
+    expect(button.prop('disabled')).toBe(false);
   });
 
   it('skal vise nedtrekksliste med behandlende enheter', () => {
@@ -60,10 +59,10 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     );
 
     const selectField = wrapper.find('SelectField');
-    expect(selectField).to.have.length(1);
-    expect(selectField.prop('placeholder')).is.eql('002 Oslo');
+    expect(selectField).toHaveLength(1);
+    expect(selectField.prop('placeholder')).toEqual('002 Oslo');
     const values = selectField.prop('selectValues');
-    expect(values[0].props.value).is.eql('0');
+    expect(values[0].props.value).toEqual('0');
   });
 
   it('skal disable knapp for lagring når ny behandlende enhet og begrunnnelse ikke er valgt', () => {
@@ -80,7 +79,7 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     );
 
     const button = wrapper.find('Hovedknapp');
-    expect(button.prop('disabled')).is.true;
+    expect(button.prop('disabled')).toBe(true);
   });
 
   it('skal bruke submit-callback når en trykker ok', () => {
@@ -105,7 +104,7 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
         return undefined;
       },
     });
-    expect(submitEventCallback.called).is.true;
+    expect(submitEventCallback.called).toBe(true);
   });
 
   it('skal avbryte redigering ved trykk på avbryt-knapp', () => {
@@ -125,10 +124,10 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     );
 
     const avbrytKnapp = wrapper.find('Knapp');
-    expect(avbrytKnapp).to.have.length(1);
-    expect(avbrytKnapp.prop('mini')).is.true;
+    expect(avbrytKnapp).toHaveLength(1);
+    expect(avbrytKnapp.prop('mini')).toBe(true);
 
     avbrytKnapp.simulate('click');
-    expect(cancelEventCallback.called).is.true;
+    expect(cancelEventCallback.called).toBe(true);
   });
 });

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosEtag from './axiosEtag';
 
 import initRestMethods from './initRestMethods';
 
@@ -7,7 +7,7 @@ import initRestMethods from './initRestMethods';
  * Oppretter nytt http-klient api basert på Axios.
  */
 const getAxiosHttpClientApi = () => {
-  const axiosInstance = axios.create();
+  const axiosInstance = axiosEtag();
 
   // TODO (TOR) sentry bør ikkje vera ein avhengighet til pakka "rest-api". Konfigurer dette utanfor
   axiosInstance.interceptors.request.use((c): any => {

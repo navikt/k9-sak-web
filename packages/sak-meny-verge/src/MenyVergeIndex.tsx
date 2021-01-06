@@ -15,7 +15,7 @@ const intl = createIntl(
   cache,
 );
 
-export const getMenytekst = (erOpprettVerge: boolean) =>
+export const getMenytekst = (erOpprettVerge: boolean): string =>
   intl.formatMessage({
     id: erOpprettVerge ? 'MenyVergeIndex.OpprettVerge' : 'MenyVergeIndex.FjernVerge',
   });
@@ -36,7 +36,9 @@ const MenyVergeIndex: FunctionComponent<OwnProps> = ({ fjernVerge, opprettVerge,
   return (
     <RawIntlProvider value={intl}>
       <OkAvbrytModal
-        textCode={opprettVerge ? 'MenyVergeIndex.OpprettVergeSporsmal' : 'MenyVergeIndex.FjernVergeSporsmal'}
+        text={intl.formatMessage({
+          id: opprettVerge ? 'MenyVergeIndex.OpprettVergeSporsmal' : 'MenyVergeIndex.FjernVergeSporsmal',
+        })}
         showModal
         submit={submit}
         cancel={lukkModal}

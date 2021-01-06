@@ -16,7 +16,7 @@ export const openBehandlingForChanges = (params: any) => behandlingEventHandler.
 export const opprettVerge = (
   location: Location,
   push,
-  saksnummer: number,
+  saksnummer: string,
   behandlingId: number,
   versjon: number,
 ) => () =>
@@ -34,7 +34,7 @@ export const opprettVerge = (
       ),
     );
 
-export const fjernVerge = (location: Location, push, saksnummer: number, behandlingId: number, versjon: number) => () =>
+export const fjernVerge = (location: Location, push, saksnummer: string, behandlingId: number, versjon: number) => () =>
   behandlingEventHandler
     .fjernVerge({
       behandlingId,

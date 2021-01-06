@@ -1,107 +1,134 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import MenySakIndex from '@fpsak-frontend/sak-meny';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
+import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
-import MenyKodeverk from './MenyKodeverk';
+import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 
-const rettigheter = {
-  settBehandlingPaVentAccess: {
-    employeeHasAccess: true,
-    isEnabled: true,
-  },
-  henleggBehandlingAccess: {
-    employeeHasAccess: true,
-    isEnabled: true,
-  },
-  byttBehandlendeEnhetAccess: {
-    employeeHasAccess: true,
-    isEnabled: true,
-  },
-  opprettRevurderingAccess: {
-    employeeHasAccess: true,
-    isEnabled: true,
-  },
-  opprettNyForstegangsBehandlingAccess: {
-    employeeHasAccess: true,
-    isEnabled: true,
-  },
-  gjenopptaBehandlingAccess: {
-    employeeHasAccess: true,
-    isEnabled: true,
-  },
-  opneBehandlingForEndringerAccess: {
-    employeeHasAccess: true,
-    isEnabled: true,
-  },
-  ikkeVisOpprettNyBehandling: {
-    employeeHasAccess: false,
-    isEnabled: false,
-  },
+const navAnsatt = {
+  brukernavn: 'Test',
+  kanBehandleKode6: false,
+  kanBehandleKode7: false,
+  kanBehandleKodeEgenAnsatt: false,
+  kanBeslutte: true,
+  kanOverstyre: false,
+  kanSaksbehandle: true,
+  kanVeilede: false,
+  navn: 'Test',
 };
+
+const fagsak = {
+  saksnummer: '123',
+  sakstype: {
+    kode: fagsakYtelseType.FORELDREPENGER,
+    kodeverk: 'BEHANDLING_TYPE',
+  },
+  status: {
+    kode: fagsakStatus.UNDER_BEHANDLING,
+    kodeverk: '',
+  },
+  skalBehandlesAvInfotrygd: false,
+};
+
+const alleBehandlinger = [
+  {
+    id: 1,
+    versjon: 2,
+    uuid: '423223',
+    behandlingKoet: false,
+    behandlingPaaVent: false,
+    kanHenleggeBehandling: true,
+    type: {
+      kode: behandlingType.REVURDERING,
+      kodeverk: 'BEHANDLING_TYPE',
+    },
+    status: {
+      kode: behandlingStatus.BEHANDLING_UTREDES,
+      kodeverk: 'BEHANDLING_STATUS',
+    },
+    behandlendeEnhetId: '2323',
+    behandlendeEnhetNavn: 'NAV Viken',
+    erAktivPapirsoknad: false,
+  },
+];
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
+  useLocation: () => ({
+    pathname: 'test',
+    search: 'test',
+    state: {},
+    hash: 'test',
+  }),
+}));
 
 describe('BehandlingMenuIndex', () => {
   it('skal vise meny der alle menyhandlinger er synlige', () => {
+    requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
+    requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, []);
+    requestApi.mock(K9sakApiKeys.KODEVERK, {});
+    requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_OPPRETTES, false);
+    requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES, false);
+
+    const sakRettigheter = {
+      sakSkalTilInfotrygd: false,
+      behandlingTypeKanOpprettes: [],
+    };
+
+    const behandlingRettigheter = {
+      behandlingFraBeslutter: false,
+      behandlingKanSendeMelding: true,
+      behandlingTilGodkjenning: false,
+      behandlingKanBytteEnhet: true,
+      behandlingKanHenlegges: true,
+      behandlingKanGjenopptas: false,
+      behandlingKanOpnesForEndringer: true,
+      behandlingKanSettesPaVent: true,
+      vergeBehandlingsmeny: VergeBehandlingmenyValg.OPPRETT,
+    };
+
     const wrapper = shallow(
       <BehandlingMenuIndex
-        saksnummer="123"
+        fagsak={fagsak as Fagsak}
+        alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
-        behandlingVersion={2}
-        uuid="423223"
-        erKoet={false}
-        erPaVent={false}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: 'BEHANDLING_TYPE',
-        }}
-        kanHenlegge
-        kanVeilede={false}
-        ytelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: 'BEHANDLING_TYPE',
-        }}
-        opprettVerge={sinon.spy()}
-        fjernVerge={sinon.spy()}
-        behandlendeEnheter={[]}
-        behandlendeEnhetId="2323"
-        behandlendeEnhetNavn="NAV Viken"
-        menyKodeverk={new MenyKodeverk(behandlingType.FORSTEGANGSSOKNAD)}
-        previewHenleggBehandling={sinon.spy()}
-        lagNyBehandling={sinon.spy()}
-        kanTilbakekrevingOpprettes={{
-          kanBehandlingOpprettes: false,
-          kanRevurderingOpprettes: false,
-        }}
-        erTilbakekrevingAktivert={false}
-        sjekkTilbakeKanOpprettes={sinon.spy()}
-        sjekkTilbakeRevurdKanOpprettes={sinon.spy()}
-        pushLocation={sinon.spy()}
-        rettigheter={rettigheter}
+        behandlingVersjon={2}
+        oppfriskBehandlinger={sinon.spy()}
+        behandlingRettigheter={behandlingRettigheter}
+        sakRettigheter={sakRettigheter}
       />,
     );
 
     const meny = wrapper.find(MenySakIndex);
-    expect(meny).to.have.length(1);
+    expect(meny).toHaveLength(1);
     const data = meny.prop('data');
-    expect(data).to.have.length(7);
-    expect(data[0].erSynlig).is.false;
-    expect(data[0].tekst).is.eql('Fortsett behandlingen');
-    expect(data[1].erSynlig).is.true;
-    expect(data[1].tekst).is.eql('Sett behandlingen på vent');
-    expect(data[2].erSynlig).is.true;
-    expect(data[2].tekst).is.eql('Henlegg behandlingen og avslutt');
-    expect(data[3].erSynlig).is.true;
-    expect(data[3].tekst).is.eql('Endre behandlende enhet');
-    expect(data[4].erSynlig).is.true;
-    expect(data[4].tekst).is.eql('Åpne behandling for endringer');
-    expect(data[5].erSynlig).is.true;
-    expect(data[5].tekst).is.eql('Opprett ny behandling');
-    expect(data[6].erSynlig).is.true;
-    expect(data[6].tekst).is.eql('Opprett verge/fullmektig');
+    expect(data).toHaveLength(7);
+    expect(data[0].erSynlig).toBe(false);
+    expect(data[0].tekst).toEqual('Fortsett behandlingen');
+    expect(data[1].erSynlig).toBe(true);
+    expect(data[1].tekst).toEqual('Sett behandlingen på vent');
+    expect(data[2].erSynlig).toBe(true);
+    expect(data[2].tekst).toEqual('Henlegg behandlingen og avslutt');
+    expect(data[3].erSynlig).toBe(true);
+    expect(data[3].tekst).toEqual('Endre behandlende enhet');
+    expect(data[4].erSynlig).toBe(true);
+    expect(data[4].tekst).toEqual('Åpne behandling for endringer');
+    expect(data[5].erSynlig).toBe(true);
+    expect(data[5].tekst).toEqual('Opprett ny behandling');
+    expect(data[6].erSynlig).toBe(true);
+    expect(data[6].tekst).toEqual('Opprett verge/fullmektig');
   });
 });

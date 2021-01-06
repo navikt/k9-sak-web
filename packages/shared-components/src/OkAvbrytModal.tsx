@@ -12,7 +12,8 @@ import VerticalSpacer from './VerticalSpacer';
 import styles from './okAvbrytModal.less';
 
 interface OwnProps {
-  textCode: string;
+  textCode?: string;
+  text?: string;
   okButtonTextCode?: string;
   showModal: boolean;
   submit: () => void;
@@ -26,6 +27,7 @@ interface OwnProps {
  */
 const OkAvbrytModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   textCode,
+  text,
   okButtonTextCode = 'OkAvbrytModal.Ok',
   showModal,
   cancel,
@@ -36,13 +38,11 @@ const OkAvbrytModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     className={styles.modal}
     isOpen={showModal}
     closeButton
-    contentLabel={intl.formatMessage({ id: textCode })}
+    contentLabel={text || intl.formatMessage({ id: textCode })}
     onRequestClose={cancel}
     shouldCloseOnOverlayClick={false}
   >
-    <Normaltekst>
-      <FormattedMessage id={textCode} />
-    </Normaltekst>
+    <Normaltekst>{text || <FormattedMessage id={textCode} />}</Normaltekst>
     <VerticalSpacer fourtyPx />
     <FlexContainer>
       <FlexRow>

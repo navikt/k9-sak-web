@@ -1,403 +1,290 @@
-import React, { FunctionComponent, useCallback } from 'react';
-import { createSelector } from 'reselect';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import React, { FunctionComponent, useCallback, useMemo, useEffect, useRef } from 'react';
+import moment from 'moment';
+import { useHistory, useLocation } from 'react-router-dom';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
-import { Kodeverk, NavAnsatt, FeatureToggles } from '@k9-sak-web/types';
-import MenyEndreBehandlendeEnhetIndex, { skalViseIMeny, getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
+import MenyEndreBehandlendeEnhetIndex, { getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
 import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
-import MenyTaAvVentIndex, {
-  skalViseIMeny as skalViseTaAvVentIMeny,
-  getMenytekst as getTaAvVentMenytekst,
-} from '@fpsak-frontend/sak-meny-ta-av-vent';
-import MenySettPaVentIndex, {
-  skalViseIMeny as skalViseSettPaVentIMeny,
-  getMenytekst as getSettPaVentMenytekst,
-} from '@fpsak-frontend/sak-meny-sett-pa-vent';
-import MenyHenleggIndex, {
-  skalViseIMeny as skalViseHenleggIMeny,
-  getMenytekst as getHenleggMenytekst,
-} from '@fpsak-frontend/sak-meny-henlegg';
+import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
+import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
+import MenyHenleggIndex, { getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
 import MenyApneForEndringerIndex, {
-  skalViseIMeny as skalViseApneForEndringerIMeny,
   getMenytekst as getApneForEndringerMenytekst,
 } from '@fpsak-frontend/sak-meny-apne-for-endringer';
 import MenyNyBehandlingIndex, {
-  skalViseIMeny as skalViseNyBehandlingIMeny,
   getMenytekst as getNyBehandlingMenytekst,
 } from '@fpsak-frontend/sak-meny-ny-behandling';
-import {
-  getAktorid,
-  getSkalBehandlesAvInfotrygd,
-  getKanRevurderingOpprettes,
-  getSelectedFagsakStatus,
-  getFagsakYtelseType,
-} from '../fagsak/fagsakSelectors';
-import {
-  getBehandlendeEnhetIdOfGjeldendeVedtak,
-  getBehandlingerUuidsMappedById,
-  getUuidForSisteLukkedeForsteEllerRevurd,
-} from '../behandling/selectors/behandlingerSelectors';
+import { NavAnsatt, Fagsak, BehandlingAppKontekst, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import {
-  previewMessage,
-  erBehandlingPaVent,
-  erBehandlingKoet,
-  getBehandlingBehandlendeEnhetId,
-  getBehandlingBehandlendeEnhetNavn,
-  getBehandlingType,
-  getBehandlingStatus,
-  getKanHenleggeBehandling,
-} from '../behandling/duck';
-import fpsakApi from '../data/fpsakApi';
-import { getNavAnsatt, getFeatureToggles, getEnabledApplicationContexts } from '../app/duck';
-import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk } from '../kodeverk/duck';
-import ApplicationContextPath from '../behandling/ApplicationContextPath';
-import { allMenuAccessRights } from './accessMenu';
-import {
+  fjernVerge,
+  opprettVerge,
   nyBehandlendeEnhet,
   resumeBehandling,
   shelveBehandling,
-  createNewBehandling,
   setBehandlingOnHold,
   openBehandlingForChanges,
-  sjekkOmTilbakekrevingKanOpprettes,
-  sjekkOmTilbakekrevingRevurderingKanOpprettes,
-} from './duck';
+} from './behandlingMenuOperations';
+import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
+import useVisForhandsvisningAvMelding from '../data/useVisForhandsvisningAvMelding';
+import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
+import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
+import ApplicationContextPath from '../app/ApplicationContextPath';
 import MenyKodeverk from './MenyKodeverk';
-import Rettigheter from './rettigheterTsType';
+import BehandlingRettigheter, { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
+import SakRettigheter from '../fagsak/sakRettigheterTsType';
 
-let BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
-  bType.FORSTEGANGSSOKNAD,
-  bType.KLAGE,
-  bType.REVURDERING,
-  bType.DOKUMENTINNSYN,
-  bType.ANKE,
-  bType.TILBAKEKREVING,
-  bType.TILBAKEKREVING_REVURDERING,
+const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
+  BehandlingType.FORSTEGANGSSOKNAD,
+  BehandlingType.KLAGE,
+  BehandlingType.REVURDERING,
+  BehandlingType.DOKUMENTINNSYN,
+  BehandlingType.ANKE,
+  BehandlingType.TILBAKEKREVING,
+  BehandlingType.TILBAKEKREVING_REVURDERING,
 ];
 
+const findNewBehandlingId = (alleBehandlinger: BehandlingAppKontekst[]): number => {
+  alleBehandlinger.sort((b1, b2) => moment(b2.opprettet).diff(moment(b1.opprettet)));
+  return alleBehandlinger[0].id;
+};
+
+const getUuidForSisteLukkedeForsteEllerRevurd = (behandlinger: BehandlingAppKontekst[] = []): string => {
+  const behandling = behandlinger.find(
+    b =>
+      b.gjeldendeVedtak &&
+      b.status.kode === BehandlingStatus.AVSLUTTET &&
+      (b.type.kode === BehandlingType.FORSTEGANGSSOKNAD || b.type.kode === BehandlingType.REVURDERING),
+  );
+  return behandling ? behandling.uuid : undefined;
+};
+
+const EMPTY_ARRAY = [];
+
+type BehandlendeEnheter = {
+  enhetId: string;
+  enhetNavn: string;
+}[];
+
 interface OwnProps {
-  saksnummer: string;
+  fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
   behandlingId?: number;
-  behandlingVersion?: number;
-  behandlingType: Kodeverk;
-  ytelseType: Kodeverk;
-  fjernVerge: () => void;
-  opprettVerge: () => void;
-  erTilbakekrevingAktivert: boolean;
-  pushLocation: (location: string) => void;
-  behandlendeEnheter: {
-    enhetId: string;
-    enhetNavn: string;
-  }[];
+  behandlingVersjon?: number;
+  behandlingRettigheter: BehandlingRettigheter;
+  sakRettigheter: SakRettigheter;
+  oppfriskBehandlinger: () => void;
 }
 
-interface StateProps {
-  kanVeilede: boolean;
-  kanTilbakekrevingOpprettes: {
-    kanBehandlingOpprettes: boolean;
-    kanRevurderingOpprettes: boolean;
-  };
-  erTilbakekrevingAktivert: boolean;
-  uuid?: string;
-  uuidForSistLukkede?: string;
-  menyKodeverk: MenyKodeverk;
-  erKoet: boolean;
-  erPaVent: boolean;
-  behandlendeEnhetId: string;
-  behandlendeEnhetNavn: string;
-  kanHenlegge: boolean;
-  rettigheter: Rettigheter;
-  featureToggles?: FeatureToggles;
-  aktorId?: string;
-  gjeldendeVedtakBehandlendeEnhetId?: string;
-}
-
-interface DispatchProps {
-  previewHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
-  lagNyBehandling: (
-    saksnummer: string,
-    behandlingId: number,
-    behandlingVersion: number,
-    isTilbakekreving: boolean,
-    params: any,
-  ) => void;
-  sjekkTilbakeKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkTilbakeRevurdKanOpprettes: (params: { uuid: string }) => void;
-}
-
-type Props = OwnProps & StateProps & DispatchProps;
-
-export const BehandlingMenuIndex: FunctionComponent<Props> = ({
-  saksnummer,
+export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
+  fagsak,
+  alleBehandlinger = EMPTY_ARRAY,
   behandlingId,
-  behandlingVersion,
-  uuid,
-  erKoet,
-  erPaVent,
-  behandlingType,
-  kanHenlegge,
-  kanVeilede,
-  ytelseType,
-  fjernVerge,
-  opprettVerge,
-  behandlendeEnheter,
-  behandlendeEnhetId,
-  behandlendeEnhetNavn,
-  menyKodeverk,
-  previewHenleggBehandling,
-  lagNyBehandling,
-  kanTilbakekrevingOpprettes,
-  uuidForSistLukkede,
-  erTilbakekrevingAktivert,
-  sjekkTilbakeKanOpprettes,
-  sjekkTilbakeRevurdKanOpprettes,
-  pushLocation,
-  rettigheter,
-  featureToggles,
-  aktorId,
-  gjeldendeVedtakBehandlendeEnhetId,
+  behandlingVersjon,
+  sakRettigheter,
+  behandlingRettigheter,
+  oppfriskBehandlinger,
 }) => {
-  if (
-    (!rettigheter.settBehandlingPaVentAccess.employeeHasAccess &&
-      !rettigheter.henleggBehandlingAccess.employeeHasAccess &&
-      !rettigheter.byttBehandlendeEnhetAccess.employeeHasAccess &&
-      !rettigheter.opprettRevurderingAccess.employeeHasAccess &&
-      !rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess &&
-      !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess) ||
-    kanVeilede
-  ) {
-    return null;
-  }
+  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
+
+  const { push: pushLocation } = useHistory();
+  const location = useLocation();
+
+  const ref = useRef<number>();
+  useEffect(() => {
+    // Når antallet har endret seg er det laget en ny behandling og denne må da velges
+    if (ref.current > 0) {
+      const pathname = pathToBehandling(fagsak.saksnummer, findNewBehandlingId(alleBehandlinger));
+      pushLocation(getLocationWithDefaultProsessStegAndFakta({ ...location, pathname }));
+    }
+
+    ref.current = alleBehandlinger.length;
+  }, [alleBehandlinger.length]);
+
+  const {
+    startRequest: sjekkTilbakeKanOpprettes,
+    data: kanBehandlingOpprettes = false,
+  } = restApiHooks.useRestApiRunner<boolean>(K9sakApiKeys.KAN_TILBAKEKREVING_OPPRETTES);
+  const {
+    startRequest: sjekkTilbakeRevurdKanOpprettes,
+    data: kanRevurderingOpprettes = false,
+  } = restApiHooks.useRestApiRunner<boolean>(K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES);
+
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
+  const behandlendeEnheter = restApiHooks.useGlobalStateRestApiData<BehandlendeEnheter>(
+    K9sakApiKeys.BEHANDLENDE_ENHETER,
+  );
+
+  const erTilbakekrevingAktivert = useGetEnabledApplikasjonContext().includes(ApplicationContextPath.TILBAKE);
+
+  const alleK9SakKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    K9sakApiKeys.KODEVERK,
+  );
+  const alleTilbakeKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    K9sakApiKeys.KODEVERK_TILBAKE,
+  );
+  const alleKlageKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    K9sakApiKeys.KODEVERK_KLAGE,
+  );
+  const menyKodeverk = new MenyKodeverk(behandling?.type)
+    .medK9SakKodeverk(alleK9SakKodeverk)
+    .medTilbakeKodeverk(alleTilbakeKodeverk)
+    .medKlageKodeverk(alleKlageKodeverk);
 
   const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
 
-  // FIX remove this when unntaksløype er lansert
-  if (featureToggles?.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(bType.UNNTAK)) {
-    BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.concat(bType.UNNTAK);
+  const { startRequest: lagNyBehandlingK9Sak } = restApiHooks.useRestApiRunner<boolean>(
+    K9sakApiKeys.NEW_BEHANDLING_K9SAK,
+  );
+  const { startRequest: lagNyBehandlingTilbake } = restApiHooks.useRestApiRunner<boolean>(
+    K9sakApiKeys.NEW_BEHANDLING_TILBAKE,
+  );
+  const { startRequest: lagNyBehandlingKlage } = restApiHooks.useRestApiRunner<boolean>(
+    K9sakApiKeys.NEW_BEHANDLING_KLAGE,
+  );
+  const { startRequest: lagNyBehandlingUnntak } = restApiHooks.useRestApiRunner<boolean>(
+    K9sakApiKeys.NEW_BEHANDLING_UNNTAK,
+  );
+  const lagNyBehandling = useCallback((behandlingTypeKode: string, params: any) => {
+    let lagNy = lagNyBehandlingK9Sak;
+    if (behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || BehandlingType.TILBAKEKREVING) {
+      lagNy = lagNyBehandlingTilbake;
+    }
+    if (behandlingTypeKode === BehandlingType.KLAGE) {
+      lagNy = lagNyBehandlingKlage;
+    }
+    if (behandlingTypeKode === BehandlingType.UNNTAK) {
+      lagNy = lagNyBehandlingUnntak;
+    }
+    lagNy(params).then(() => oppfriskBehandlinger());
+  }, []);
+
+  const uuidForSistLukkede = useMemo(() => getUuidForSisteLukkedeForsteEllerRevurd(alleBehandlinger), [
+    alleBehandlinger,
+  ]);
+  const previewHenleggBehandling = useVisForhandsvisningAvMelding(behandling?.type);
+
+  if (navAnsatt.kanVeilede) {
+    return null;
   }
 
-  const erTilbakekreving =
-    behandlingType &&
-    (bType.TILBAKEKREVING === behandlingType.kode || bType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
-  const erFrisinn = fagsakYtelseType.FRISINN === ytelseType.kode;
+  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
+  const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
 
+  const vergeMenyvalg = behandlingRettigheter?.vergeBehandlingsmeny;
+  const fjernVergeFn =
+    vergeMenyvalg === VergeBehandlingmenyValg.FJERN
+      ? fjernVerge(location, pushLocation, fagsak.saksnummer, behandlingId, behandlingVersjon)
+      : undefined;
+  const opprettVergeFn =
+    vergeMenyvalg === VergeBehandlingmenyValg.OPPRETT
+      ? opprettVerge(location, pushLocation, fagsak.saksnummer, behandlingId, behandlingVersjon)
+      : undefined;
   return (
     <MenySakIndex
       data={[
-        new MenyData(
-          skalViseTaAvVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.gjenopptaBehandlingAccess) &&
-            (!erFrisinn || erTilbakekreving),
-          getTaAvVentMenytekst(),
-        ).medModal(lukkModal => (
+        new MenyData(behandlingRettigheter?.behandlingKanGjenopptas, getTaAvVentMenytekst()).medModal(lukkModal => (
           <MenyTaAvVentIndex
             behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersion}
+            behandlingVersjon={behandlingVersjon}
             taBehandlingAvVent={resumeBehandling}
             lukkModal={lukkModal}
           />
         )),
-        // https://github.com/navikt/k9-sak-web/compare/Sett-behandling-på-vent
-        new MenyData(
-          skalViseSettPaVentIMeny(behandlingId, erPaVent, erKoet, rettigheter.settBehandlingPaVentAccess) &&
-            (!erFrisinn || erTilbakekreving),
-          getSettPaVentMenytekst(),
-        ).medModal(lukkModal => (
+        new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, getSettPaVentMenytekst()).medModal(lukkModal => (
           <MenySettPaVentIndex
             behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersion}
+            behandlingVersjon={behandlingVersjon}
             settBehandlingPaVent={setBehandlingOnHold}
             ventearsaker={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.VENT_AARSAK)}
             lukkModal={lukkModal}
+            erTilbakekreving={
+              behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
+              behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
+            }
           />
         )),
-        new MenyData(
-          skalViseHenleggIMeny(behandlingId, behandlingType, kanHenlegge, rettigheter.henleggBehandlingAccess),
-          getHenleggMenytekst(),
-        ).medModal(lukkModal => (
+        new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
           <MenyHenleggIndex
             behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersion}
+            behandlingVersjon={behandlingVersjon}
             forhandsvisHenleggBehandling={previewHenleggBehandling}
             henleggBehandling={shelveBehandling}
-            ytelseType={ytelseType}
-            behandlingType={behandlingType}
-            behandlingUuid={uuid}
+            ytelseType={fagsak.sakstype}
+            behandlingType={behandling?.type}
+            behandlingUuid={behandling?.uuid}
             behandlingResultatTyper={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE)}
             lukkModal={lukkModal}
             gaaTilSokeside={gaaTilSokeside}
           />
         )),
-        new MenyData(
-          skalViseIMeny(behandlingId, behandlendeEnheter, erKoet, rettigheter.byttBehandlendeEnhetAccess) &&
-            (!erFrisinn || erTilbakekreving),
-          getMenytekst(),
-        ).medModal(lukkModal => (
+        new MenyData(behandlingRettigheter?.behandlingKanBytteEnhet, getMenytekst()).medModal(lukkModal => (
           <MenyEndreBehandlendeEnhetIndex
             behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersion}
-            behandlendeEnhetId={behandlendeEnhetId}
-            behandlendeEnhetNavn={behandlendeEnhetNavn}
+            behandlingVersjon={behandlingVersjon}
+            behandlendeEnhetId={behandling?.behandlendeEnhetId}
+            behandlendeEnhetNavn={behandling?.behandlendeEnhetNavn}
             nyBehandlendeEnhet={nyBehandlendeEnhet}
             behandlendeEnheter={behandlendeEnheter}
             lukkModal={lukkModal}
           />
         )),
         new MenyData(
-          skalViseApneForEndringerIMeny(behandlingId, erPaVent, erKoet, rettigheter.opneBehandlingForEndringerAccess) &&
-            (!erFrisinn || erTilbakekreving),
+          behandlingRettigheter?.behandlingKanOpnesForEndringer,
           getApneForEndringerMenytekst(),
         ).medModal(lukkModal => (
           <MenyApneForEndringerIndex
             behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersion}
+            behandlingVersjon={behandlingVersjon}
             apneBehandlingForEndringer={openBehandlingForChanges}
             lukkModal={lukkModal}
           />
         )),
+        new MenyData(!sakRettigheter.sakSkalTilInfotrygd, getNyBehandlingMenytekst()).medModal(lukkModal => (
+          <MenyNyBehandlingIndex
+            saksnummer={fagsak.saksnummer}
+            behandlingId={behandlingId}
+            behandlingUuid={behandling?.uuid}
+            behandlingVersjon={behandlingVersjon}
+            behandlingType={behandling?.type}
+            uuidForSistLukkede={uuidForSistLukkede}
+            behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes}
+            kanTilbakekrevingOpprettes={{
+              kanBehandlingOpprettes,
+              kanRevurderingOpprettes,
+            }}
+            erTilbakekrevingAktivert={erTilbakekrevingAktivert}
+            behandlingstyper={menyKodeverk.getKodeverkForBehandlingstyper(
+              BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES,
+              kodeverkTyper.BEHANDLING_TYPE,
+            )}
+            tilbakekrevingRevurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
+              BehandlingType.TILBAKEKREVING_REVURDERING,
+              kodeverkTyper.BEHANDLING_AARSAK,
+            )}
+            revurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
+              BehandlingType.REVURDERING,
+              kodeverkTyper.BEHANDLING_AARSAK,
+            )}
+            ytelseType={fagsak.sakstype}
+            lagNyBehandling={lagNyBehandling}
+            sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
+            sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
+            lukkModal={lukkModal}
+          />
+        )),
         new MenyData(
-          skalViseNyBehandlingIMeny(erKoet, rettigheter.ikkeVisOpprettNyBehandling),
-          getNyBehandlingMenytekst(),
-        ).medModal(lukkModal => {
-          const behandlingstyper = menyKodeverk.getKodeverkForBehandlingstyper(
-            BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES,
-            kodeverkTyper.BEHANDLING_TYPE,
-          );
-          const { opprettNyForstegangsBehandlingAccess, opprettRevurderingAccess } = rettigheter;
-          const behandlingerSomKanOpprettes = {
-            [bType.FORSTEGANGSSOKNAD]:
-              opprettNyForstegangsBehandlingAccess.employeeHasAccess &&
-              !!opprettNyForstegangsBehandlingAccess.isEnabled,
-            [bType.REVURDERING]: opprettRevurderingAccess.employeeHasAccess && opprettRevurderingAccess.isEnabled,
-            [bType.TILBAKEKREVING]: erFrisinn && kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
-            [bType.TILBAKEKREVING_REVURDERING]: erFrisinn && kanTilbakekrevingOpprettes.kanRevurderingOpprettes,
-            [bType.KLAGE]: !!gjeldendeVedtakBehandlendeEnhetId,
-          };
-          return (
-            <MenyNyBehandlingIndex
-              saksnummer={saksnummer}
-              behandlingId={behandlingId}
-              behandlingUuid={uuid}
-              behandlingVersjon={behandlingVersion}
-              behandlingType={behandlingType}
-              uuidForSistLukkede={uuidForSistLukkede}
-              behandlingerSomKanOpprettes={behandlingerSomKanOpprettes}
-              erTilbakekrevingAktivert={erTilbakekrevingAktivert}
-              behandlingstyper={behandlingstyper}
-              tilbakekrevingRevurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
-                bType.TILBAKEKREVING_REVURDERING,
-                kodeverkTyper.BEHANDLING_AARSAK,
-              )}
-              revurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
-                bType.REVURDERING,
-                kodeverkTyper.BEHANDLING_AARSAK,
-              )}
-              ytelseType={ytelseType}
-              lagNyBehandling={lagNyBehandling}
-              sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
-              sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
-              lukkModal={lukkModal}
-              aktorId={aktorId}
-              gjeldendeVedtakBehandlendeEnhetId={gjeldendeVedtakBehandlendeEnhetId}
-            />
-          );
-        }),
-        new MenyData(
-          (!!opprettVerge || !!fjernVerge) && (!erFrisinn || erTilbakekreving),
-          getVergeMenytekst(!!opprettVerge),
+          !erPaVent && (!!opprettVergeFn || !!fjernVergeFn),
+          getVergeMenytekst(!!opprettVergeFn),
         ).medModal(lukkModal => (
-          <MenyVergeIndex fjernVerge={fjernVerge} opprettVerge={opprettVerge} lukkModal={lukkModal} />
+          <MenyVergeIndex fjernVerge={fjernVergeFn} opprettVerge={opprettVergeFn} lukkModal={lukkModal} />
         )),
       ]}
     />
   );
 };
 
-const getMenyKodeverk = createSelector(
-  [getBehandlingType, getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk, getAlleKlagekodeverk],
-  (behandlingType, alleFpSakKodeverk, alleFpTilbakeKodeverk, alleKlagekodeverk) =>
-    new MenyKodeverk(behandlingType)
-      .medFpSakKodeverk(alleFpSakKodeverk)
-      .medFpTilbakeKodeverk(alleFpTilbakeKodeverk)
-      .medKlagekodeverk(alleKlagekodeverk),
-);
-
-const getTilbakekrevingOpprettes = createSelector(
-  [
-    state => fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
-    state => fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.getRestApiData()(state),
-  ],
-  (kanBehandlingOpprettes = false, kanRevurderingOpprettes = false) => ({
-    kanBehandlingOpprettes,
-    kanRevurderingOpprettes,
-  }),
-);
-
-// TODO (TOR) Flytt rettigheter til server
-const getMenyRettigheter = createSelector(
-  [
-    getNavAnsatt,
-    getSelectedFagsakStatus,
-    getKanRevurderingOpprettes,
-    getSkalBehandlesAvInfotrygd,
-    getFagsakYtelseType,
-    getBehandlingStatus,
-    getBehandlingType,
-  ],
-  (
-    navAnsatt: NavAnsatt,
-    fagsakStatus,
-    kanRevurderingOpprettes,
-    skalBehandlesAvInfotrygd,
-    sakstype,
-    behandlingStatus,
-    behandlingType,
-  ) =>
-    allMenuAccessRights(
-      navAnsatt,
-      fagsakStatus,
-      kanRevurderingOpprettes,
-      skalBehandlesAvInfotrygd,
-      sakstype,
-      behandlingStatus,
-      behandlingType,
-    ),
-);
-
-const mapStateToProps = (state, ownProps): StateProps => {
-  return {
-    kanVeilede: getNavAnsatt(state).kanVeilede,
-    kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
-    erTilbakekrevingAktivert: getEnabledApplicationContexts(state).includes(ApplicationContextPath.FPTILBAKE),
-    uuid: ownProps.behandlingId ? getBehandlingerUuidsMappedById(state)[ownProps.behandlingId] : undefined,
-    uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
-    menyKodeverk: getMenyKodeverk(state),
-    erKoet: erBehandlingKoet(state),
-    erPaVent: erBehandlingPaVent(state),
-    behandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
-    behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
-    kanHenlegge: getKanHenleggeBehandling(state),
-    rettigheter: getMenyRettigheter(state),
-    featureToggles: getFeatureToggles(state),
-    aktorId: getAktorid(state),
-    gjeldendeVedtakBehandlendeEnhetId: getBehandlendeEnhetIdOfGjeldendeVedtak(state),
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch, { location, pushLocation }): DispatchProps =>
-  bindActionCreators(
-    {
-      previewHenleggBehandling: previewMessage,
-      lagNyBehandling: createNewBehandling(location, pushLocation),
-      sjekkTilbakeKanOpprettes: sjekkOmTilbakekrevingKanOpprettes,
-      sjekkTilbakeRevurdKanOpprettes: sjekkOmTilbakekrevingRevurderingKanOpprettes,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuIndex);
+export default BehandlingMenuIndex;

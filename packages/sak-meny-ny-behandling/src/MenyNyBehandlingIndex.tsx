@@ -4,7 +4,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import NyBehandlingModal from './components/NyBehandlingModal';
+import NyBehandlingModal, { BehandlingOppretting, FormValues } from './components/NyBehandlingModal';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -20,9 +20,7 @@ const intl = createIntl(
   cache,
 );
 
-export const skalViseIMeny = (erKoet, ikkeVisOpprettNyBehandling) => !erKoet && !ikkeVisOpprettNyBehandling.isEnabled;
-
-export const getMenytekst = () => intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyForstegangsbehandling' });
+export const getMenytekst = (): string => intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyForstegangsbehandling' });
 
 interface OwnProps {
   ytelseType: Kodeverk;
@@ -31,18 +29,20 @@ interface OwnProps {
   behandlingUuid?: string;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
-  lagNyBehandling: (saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data) => void;
+  lagNyBehandling: (behandlingTypeKode: string, data: any) => void;
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
   revurderingArsaker: KodeverkMedNavn[];
-  behandlingerSomKanOpprettes: { [behandlingstype: string]: boolean };
+  behandlingOppretting: BehandlingOppretting[];
+  kanTilbakekrevingOpprettes: {
+    kanBehandlingOpprettes: boolean;
+    kanRevurderingOpprettes: boolean;
+  };
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
   lukkModal: () => void;
-  aktorId?: string;
-  gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
 const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
@@ -56,26 +56,25 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   behandlingstyper,
   tilbakekrevingRevurderingArsaker,
   revurderingArsaker,
-  behandlingerSomKanOpprettes,
+  behandlingOppretting,
+  kanTilbakekrevingOpprettes,
   uuidForSistLukkede,
   erTilbakekrevingAktivert,
   sjekkOmTilbakekrevingKanOpprettes,
   sjekkOmTilbakekrevingRevurderingKanOpprettes,
   lukkModal,
-  aktorId,
-  gjeldendeVedtakBehandlendeEnhetId,
 }) => {
   const submit = useCallback(
-    formValues => {
+    (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
-      const data = {
+      const params = {
         saksnummer: saksnummer.toString(),
         ...tilbakekrevingBehandlingId,
         ...formValues,
       };
 
-      lagNyBehandling(saksnummer, behandlingId, behandlingVersjon, formValues.behandlingType, data);
+      lagNyBehandling(formValues.behandlingType, params);
 
       lukkModal();
     },
@@ -88,10 +87,11 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         saksnummer={saksnummer}
         cancelEvent={lukkModal}
         submitCallback={submit}
+        behandlingOppretting={behandlingOppretting}
         behandlingstyper={behandlingstyper}
-        behandlingerSomKanOpprettes={behandlingerSomKanOpprettes}
         tilbakekrevingRevurderingArsaker={tilbakekrevingRevurderingArsaker}
         revurderingArsaker={revurderingArsaker}
+        kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
         behandlingType={behandlingType}
         behandlingId={behandlingId}
         behandlingUuid={behandlingUuid}
@@ -99,8 +99,6 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         erTilbakekrevingAktivert={erTilbakekrevingAktivert}
         sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
         sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
-        aktorId={aktorId}
-        gjeldendeVedtakBehandlendeEnhetId={gjeldendeVedtakBehandlendeEnhetId}
       />
     </RawIntlProvider>
   );

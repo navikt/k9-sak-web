@@ -2,8 +2,7 @@ import React, { FunctionComponent, useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-
-import SettBehandlingPaVentModal from './components/SettBehandlingPaVentModal';
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -17,14 +16,7 @@ const intl = createIntl(
   cache,
 );
 
-export const skalViseIMeny = (behandlingId, erPaVent, erKoet, settBehandlingPaVentAccess) =>
-  !!behandlingId &&
-  !erPaVent &&
-  !erKoet &&
-  settBehandlingPaVentAccess.employeeHasAccess &&
-  settBehandlingPaVentAccess.isEnabled;
-
-export const getMenytekst = () => intl.formatMessage({ id: 'MenySettPaVentIndex.BehandlingOnHold' });
+export const getMenytekst = (): string => intl.formatMessage({ id: 'MenySettPaVentIndex.BehandlingOnHold' });
 
 interface OwnProps {
   behandlingId?: number;
@@ -37,6 +29,7 @@ interface OwnProps {
   }) => void;
   ventearsaker: KodeverkMedNavn[];
   lukkModal: () => void;
+  erTilbakekreving: boolean;
 }
 
 const MenySettPaVentIndex: FunctionComponent<OwnProps> = ({
@@ -45,6 +38,7 @@ const MenySettPaVentIndex: FunctionComponent<OwnProps> = ({
   settBehandlingPaVent,
   ventearsaker,
   lukkModal,
+  erTilbakekreving,
 }) => {
   const submit = useCallback(
     formValues => {
@@ -63,7 +57,14 @@ const MenySettPaVentIndex: FunctionComponent<OwnProps> = ({
 
   return (
     <RawIntlProvider value={intl}>
-      <SettBehandlingPaVentModal showModal onSubmit={submit} cancelEvent={lukkModal} ventearsaker={ventearsaker} />
+      <SettPaVentModalIndex
+        showModal
+        submitCallback={submit}
+        cancelEvent={lukkModal}
+        ventearsaker={ventearsaker}
+        erTilbakekreving={erTilbakekreving}
+        hasManualPaVent
+      />
     </RawIntlProvider>
   );
 };
