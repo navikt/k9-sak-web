@@ -77,8 +77,6 @@
   "SvangerskapVilkarForm.FyllerVilkår": "Kontroller at søker fyller vilkårene i § 14-4 første eller andre ledd og tredje ledd, første punktum",
   "AdopsjonVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
 
-  "NoSelectedBehandling.ZeroBehandlinger": "Ingen behandlinger er opprettet",
-
   "IverksetterVedtakStatusModal.Beskrivelse": "Vedtak er innvilget. Du kommer nå til forsiden.",
   "IverksetterVedtakStatusModal.VedtakAvslatt": "Vedtak er avslått.",
   "IverksetterVedtakStatusModal.VedtakInnvilet": "Vedtaket ble fattet og blir nå iverksatt",
@@ -101,7 +99,6 @@
   "ConfirmInformationVilkarReadOnly.ConditionNotMet": "Vilkåret er ikke oppfylt",
 
   "Fagsak.NoFagsakWithReferenceNr": "Det finnes ingen sak med saksnummer: {saksnummer}",
-  "FagsakGrid.PleaseSelectBehandling": "Velg behandling",
   "BehandlingErPaVentModal.ModalDescription": "Behandlingen er satt på vent",
   "BehandlingErPaVentModal.PaVent": "På vent",
   "BehandlingErPaVentModal.SattPaVent": "Behandlingen er satt på vent med frist {frist}",

@@ -1,27 +1,43 @@
 import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { IngenBehandlingValgtPanel } from '@k9-sak-web/sak-infosider';
+
 import { behandlingPath } from '../app/paths';
-import NoSelectedBehandling from './components/NoSelectedBehandling';
 import BehandlingIndex from './BehandlingIndex';
-import { getNumBehandlinger } from './selectors/behandlingerSelectors';
 
 interface OwnProps {
-  numBehandlinger: number;
+  fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
+  setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
+  setRequestPendingMessage: (message: string) => void;
 }
 
-export const BehandlingerIndex: FunctionComponent<OwnProps> = ({ numBehandlinger }) => (
+export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
+  fagsak,
+  alleBehandlinger,
+  setBehandlingIdOgVersjon,
+  setRequestPendingMessage,
+}) => (
   <Switch>
-    <Route strict path={behandlingPath} component={BehandlingIndex} />
+    <Route
+      strict
+      path={behandlingPath}
+      render={props => (
+        <BehandlingIndex
+          {...props}
+          fagsak={fagsak}
+          alleBehandlinger={alleBehandlinger}
+          setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
+          setRequestPendingMessage={setRequestPendingMessage}
+        />
+      )}
+    />
     <Route>
-      <NoSelectedBehandling numBehandlinger={numBehandlinger} />
+      <IngenBehandlingValgtPanel numBehandlinger={alleBehandlinger.length} />
     </Route>
   </Switch>
 );
 
-const mapStateToProps = state => ({
-  numBehandlinger: getNumBehandlinger(state),
-});
-
-export default connect(mapStateToProps)(BehandlingerIndex);
+export default BehandlingerIndex;
