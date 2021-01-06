@@ -48,3 +48,18 @@ export {
 } from './src/omsorgspenger/Uttaksperiode';
 export { default as Aktor } from './src/aktorTsType';
 export { default as BehandlingAppKontekst } from './src/behandlingAppKontekstTsType';
+export {
+  default as Historikkinnslag,
+  HistorikkInnslagDokumentLink,
+  HistorikkinnslagDel,
+  HistorikkinnslagEndretFelt,
+  HistorikkInnslagOpplysning,
+  HistorikkInnslagAksjonspunkt,
+} from './src/historikkinnslagTsType';
+export { default as KlageVurdering, KlageVurderingResultat } from './src/klageVurderingTsType';
+export {
+  default as TotrinnskontrollAksjonspunkt,
+  TotrinnskontrollArbeidsforhold,
+  OpptjeningAktiviteter,
+} from './src/totrinnskontrollAksjonspunktTsType';
+export { default as TotrinnskontrollSkjermlenkeContext } from './src/totrinnskontrollSkjermlenkeContextTsType';

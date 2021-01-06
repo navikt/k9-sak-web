@@ -38,6 +38,7 @@
     "packages/form",
     "packages/konstanter",
     "packages/omsorgen-for-oms",
+    "packages/modal-sett-pa-vent",
     "packages/prosess-tilbakekreving",
     "packages/prosess-uttak",
     "packages/prosess-vedtak",
