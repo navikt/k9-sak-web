@@ -21,7 +21,7 @@ interface OwnProps {
   valgtAktorId: string;
   aktorInfo?: Aktor;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  finnPathToFagsak: (saksnummer: number) => string;
+  finnPathToFagsak: (saksnummer: string) => string;
 }
 
 const AktorSakIndex: FunctionComponent<OwnProps> = ({ valgtAktorId, aktorInfo, alleKodeverk, finnPathToFagsak }) => (

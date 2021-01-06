@@ -8,14 +8,16 @@ import Modal from 'nav-frontend-modal';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 
+import Feilmelding from './feilmeldingTsType';
+
 import styles from './errorMessageDetailsModal.less';
 
-const capitalizeFirstLetters = key => key.charAt(0).toUpperCase() + key.substr(1);
+const capitalizeFirstLetters = (key: string): string => key.charAt(0).toUpperCase() + key.substr(1);
 
 interface OwnProps {
   showModal: boolean;
   closeModalFn: () => void;
-  errorDetails: any;
+  errorDetails: Feilmelding['additionalInfo'];
 }
 
 /**

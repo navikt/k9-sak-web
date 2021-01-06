@@ -20,12 +20,12 @@ interface OwnProps {
   fagsaker?: Fagsak[];
   searchFagsakCallback: () => void;
   searchResultReceived: boolean;
-  selectFagsakCallback: (e: Event, saksnummer: string) => void;
+  selectFagsakCallback: (e: React.SyntheticEvent, saksnummer: number) => void;
   searchStarted?: boolean;
   searchResultAccessDenied?: {
     feilmelding: string;
   };
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
 }
 
 /*

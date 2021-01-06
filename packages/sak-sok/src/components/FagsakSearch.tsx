@@ -7,7 +7,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import SearchForm from './SearchForm';
 import FagsakList from './FagsakList';
-import PersonInfo from './person/PersonInfo';
 
 import styles from './fagsakSearch.less';
 
@@ -15,12 +14,12 @@ interface OwnProps {
   fagsaker: Fagsak[];
   searchFagsakCallback: () => void;
   searchResultReceived: boolean;
-  selectFagsakCallback: (e: Event, saksnummer: string) => void;
+  selectFagsakCallback: (e: React.SyntheticEvent, saksnummer: number) => void;
   searchStarted: boolean;
   searchResultAccessDenied?: {
     feilmelding: string;
   };
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
 }
 
 /**
@@ -51,8 +50,6 @@ const FagsakSearch: FunctionComponent<OwnProps> = ({
         <FormattedMessage id="FagsakSearch.ZeroSearchResults" />
       </Normaltekst>
     )}
-
-    {fagsaker.length > 1 && fagsaker[0].person && <PersonInfo person={fagsaker[0].person} />}
 
     <VerticalSpacer eightPx />
 

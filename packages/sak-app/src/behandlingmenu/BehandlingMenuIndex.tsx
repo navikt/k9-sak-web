@@ -64,7 +64,7 @@ const getUuidForSisteLukkedeForsteEllerRevurd = (behandlinger: BehandlingAppKont
 
 const EMPTY_ARRAY = [];
 
-type BehandlendeEnheter = {
+export type BehandlendeEnheter = {
   enhetId: string;
   enhetNavn: string;
 }[];
@@ -77,6 +77,7 @@ interface OwnProps {
   behandlingRettigheter: BehandlingRettigheter;
   sakRettigheter: SakRettigheter;
   oppfriskBehandlinger: () => void;
+  behandlendeEnheter: BehandlendeEnheter;
 }
 
 export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
@@ -87,6 +88,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   sakRettigheter,
   behandlingRettigheter,
   oppfriskBehandlinger,
+  behandlendeEnheter,
 }) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
@@ -114,9 +116,6 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   } = restApiHooks.useRestApiRunner<boolean>(K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES);
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-  const behandlendeEnheter = restApiHooks.useGlobalStateRestApiData<BehandlendeEnheter>(
-    K9sakApiKeys.BEHANDLENDE_ENHETER,
-  );
 
   const erTilbakekrevingAktivert = useGetEnabledApplikasjonContext().includes(ApplicationContextPath.TILBAKE);
 

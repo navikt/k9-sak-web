@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import React, { FunctionComponent, useState, useMemo, useCallback, useEffect, useRef, RefObject } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import BoxedListWithLinks from '@navikt/boxed-list-with-links';
 import Header from '@navikt/nap-header';
@@ -6,7 +6,12 @@ import Popover from '@navikt/nap-popover';
 import SystemButton from '@navikt/nap-system-button';
 import UserPanel from '@navikt/nap-user-panel';
 
+import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
+import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
+import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
+
 import ErrorMessagePanel from './ErrorMessagePanel';
+import Feilmelding from './feilmeldingTsType';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -22,7 +27,10 @@ const intl = createIntl(
   cache,
 );
 
-const useOutsideClickEvent = (erLenkepanelApent, setLenkePanelApent) => {
+const useOutsideClickEvent = (
+  erLenkepanelApent: boolean,
+  setLenkePanelApent: (erApent: boolean) => void,
+): RefObject<HTMLDivElement> => {
   const wrapperRef = useRef(null);
   const handleClickOutside = useCallback(
     event => {
@@ -56,16 +64,9 @@ const getHeaderTitleHref = getPathToFplos => {
 };
 
 interface OwnProps {
-  iconLinks: {
-    text: string;
-    url: string;
-  }[];
-  systemTittel: string;
-  queryStrings: any;
-  navAnsattName: string;
+  navAnsattName?: string;
   removeErrorMessage: () => void;
-  showDetailedErrorMessages?: boolean;
-  errorMessages?: any[];
+  errorMessages?: Feilmelding[];
   setSiteHeight: (height: number) => void;
   getPathToFplos: () => void;
 }
@@ -78,12 +79,8 @@ interface OwnProps {
  * I tillegg vil den vise potensielle feilmeldinger i ErrorMessagePanel.
  */
 const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
-  iconLinks,
-  systemTittel,
-  navAnsattName,
+  navAnsattName = '',
   removeErrorMessage,
-  queryStrings,
-  showDetailedErrorMessages = false,
   errorMessages = [],
   setSiteHeight,
   getPathToFplos,
@@ -95,6 +92,22 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
   useEffect(() => {
     setSiteHeight(fixedHeaderRef.current.clientHeight);
   }, [errorMessages.length]);
+
+  const iconLinks = useMemo(
+    () => [
+      {
+        url: RETTSKILDE_URL,
+        icon: rettskildeneIkonUrl,
+        text: intl.formatMessage({ id: 'HeaderWithErrorPanel.Rettskilde' }),
+      },
+      {
+        url: SYSTEMRUTINE_URL,
+        icon: systemrutineIkonUrl,
+        text: intl.formatMessage({ id: 'HeaderWithErrorPanel.Systemrutine' }),
+      },
+    ],
+    [],
+  );
 
   const lenkerFormatertForBoxedList = useMemo(
     () =>
@@ -134,7 +147,10 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
     <header ref={fixedHeaderRef} className={styles.container}>
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
-          <Header title={systemTittel} titleHref={getHeaderTitleHref(getPathToFplos)}>
+          <Header
+            title={intl.formatMessage({ id: 'HeaderWithErrorPanel.Ytelse' })}
+            titleHref={getHeaderTitleHref(getPathToFplos)}
+          >
             <Popover
               popperIsVisible={erLenkepanelApent}
               renderArrowElement
@@ -151,12 +167,7 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
             <UserPanel name={navAnsattName} />
           </Header>
         </div>
-        <ErrorMessagePanel
-          queryStrings={queryStrings}
-          removeErrorMessage={removeErrorMessage}
-          showDetailedErrorMessages={showDetailedErrorMessages}
-          errorMessages={errorMessages}
-        />
+        <ErrorMessagePanel removeErrorMessage={removeErrorMessage} errorMessages={errorMessages} />
       </RawIntlProvider>
     </header>
   );

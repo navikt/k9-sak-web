@@ -9,7 +9,7 @@ import { KodeverkMedNavn, Fagsak, Aksjonspunkt, Risikoklassifisering, Behandling
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
-import BehandlingMenuIndex from '../behandlingmenu/BehandlingMenuIndex';
+import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 import { K9sakApiKeys, restApiHooks, requestApi } from '../data/k9sakApi';
 import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
@@ -74,6 +74,10 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
     },
   );
 
+  const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(K9sakApiKeys.BEHANDLENDE_ENHETER, {
+    ytelseType: fagsak.sakstype.kode,
+  });
+
   useEffect(() => {
     setShowAll(!behandlingId);
   }, [behandlingId]);
@@ -104,7 +108,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
           fagsakStatus={fagsakStatusMedNavn}
           dekningsgrad={fagsak.dekningsgrad}
           renderBehandlingMeny={() => {
-            if (!fagsakRettigheter) {
+            if (!fagsakRettigheter || !behandlendeEnheter) {
               return <LoadingPanel />;
             }
             return (
@@ -116,6 +120,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
                 oppfriskBehandlinger={oppfriskBehandlinger}
                 behandlingRettigheter={behandlingRettigheter}
                 sakRettigheter={fagsakRettigheter}
+                behandlendeEnheter={behandlendeEnheter}
               />
             );
           }}

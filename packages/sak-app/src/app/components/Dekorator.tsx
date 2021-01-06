@@ -1,17 +1,27 @@
 import React, { FunctionComponent, useMemo } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
-import EventType from '@fpsak-frontend/rest-api-old/src/requestApi/eventType';
-import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
-import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
-import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
-import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
+import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
+import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { NavAnsatt } from '@k9-sak-web/types';
 
+import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
+import ErrorFormatter from '../feilhandtering/ErrorFormatter';
+import ErrorMessage from '../feilhandtering/ErrorMessage';
 import { getPathToFplos } from '../paths';
 
-const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
-  const resolvedErrorMessages = [];
+type QueryStrings = {
+  errorcode?: string;
+  errormessage?: string;
+};
+
+const lagFeilmeldinger = (
+  intl: IntlShape,
+  errorMessages: ErrorMessage[],
+  queryStrings: QueryStrings,
+): Feilmelding[] => {
+  const resolvedErrorMessages: Feilmelding[] = [];
   if (queryStrings.errorcode) {
     resolvedErrorMessages.push({ message: intl.formatMessage({ id: queryStrings.errorcode }) });
   }
@@ -34,66 +44,37 @@ const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
   return resolvedErrorMessages;
 };
 
+const EMPTY_ARRAY = [];
+
 interface OwnProps {
-  queryStrings: {
-    errorcode?: string;
-    errormessage?: string;
-  };
-  navAnsattName: string;
-  removeErrorMessage: () => void;
-  showDetailedErrorMessages?: boolean;
+  queryStrings: QueryStrings;
   hideErrorMessages?: boolean;
-  errorMessages?: {
-    type: EventType;
-    code?: string;
-    params?: {
-      errorDetails?: string;
-    };
-    text?: string;
-  }[];
   setSiteHeight: (headerHeight: number) => void;
 }
 
 const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
-  errorMessages = [],
-  navAnsattName,
   queryStrings,
   setSiteHeight,
-  removeErrorMessage: removeErrorMsg,
-  showDetailedErrorMessages = false,
   hideErrorMessages = false,
 }) => {
-  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, errorMessages, queryStrings), [
-    errorMessages,
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
+
+  const errorMessages = useRestApiError() || EMPTY_ARRAY;
+  const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessages, undefined), [errorMessages]);
+
+  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, formaterteFeilmeldinger, queryStrings), [
+    formaterteFeilmeldinger,
     queryStrings,
   ]);
 
-  const iconLinks = useMemo(
-    () => [
-      {
-        url: RETTSKILDE_URL,
-        icon: rettskildeneIkonUrl,
-        text: intl.formatMessage({ id: 'Header.Rettskilde' }),
-      },
-      {
-        url: SYSTEMRUTINE_URL,
-        icon: systemrutineIkonUrl,
-        text: intl.formatMessage({ id: 'Header.Systemrutine' }),
-      },
-    ],
-    [],
-  );
+  const { removeErrorMessages } = useRestApiErrorDispatcher();
 
   return (
     <HeaderWithErrorPanel
-      systemTittel={intl.formatMessage({ id: 'Header.Ytelse' })}
-      iconLinks={iconLinks}
-      queryStrings={queryStrings}
-      navAnsattName={navAnsattName}
-      removeErrorMessage={removeErrorMsg}
-      showDetailedErrorMessages={showDetailedErrorMessages}
-      errorMessages={hideErrorMessages ? [] : resolvedErrorMessages}
+      navAnsattName={navAnsatt?.navn}
+      removeErrorMessage={removeErrorMessages}
+      errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
       getPathToFplos={getPathToFplos}
     />

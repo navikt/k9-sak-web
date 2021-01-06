@@ -24,9 +24,17 @@ const formName = 'avklarFaresignalerForm';
 export const begrunnelseFieldName = 'begrunnelse';
 export const radioFieldName = 'avklarFaresignalerRadio';
 
-interface OwnProps {
+export type VuderFaresignalerAp = {
+  kode: string;
+  harInnvirketBehandlingen: boolean;
+  begrunnelse: string;
+};
+
+interface PureOwnProps {
   aksjonspunkt?: Aksjonspunkt;
   readOnly: boolean;
+  risikoklassifisering: Risikoklassifisering;
+  submitCallback: (verdier: VuderFaresignalerAp) => Promise<any>;
 }
 
 /**
@@ -34,7 +42,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Statisk visning av panel som tilsier ingen faresignaler funnet i behandlingen.
  */
-export const AvklarFaresignalerForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
+export const AvklarFaresignalerForm: FunctionComponent<PureOwnProps & InjectedFormProps> = ({
   readOnly,
   aksjonspunkt,
   ...formProps
@@ -91,13 +99,8 @@ export const AvklarFaresignalerForm: FunctionComponent<OwnProps & InjectedFormPr
   </FlexContainer>
 );
 
-interface Props {
-  risikoklassifisering: Risikoklassifisering;
-  aksjonspunkt?: Aksjonspunkt;
-}
-
 export const buildInitialValues = createSelector(
-  [(ownProps: Props) => ownProps.risikoklassifisering, ownProps => ownProps.aksjonspunkt],
+  [(ownProps: PureOwnProps) => ownProps.risikoklassifisering, (ownProps: PureOwnProps) => ownProps.aksjonspunkt],
   (risikoklassifisering, aksjonspunkt) => {
     if (aksjonspunkt && aksjonspunkt.begrunnelse && risikoklassifisering && risikoklassifisering.faresignalVurdering) {
       return {
@@ -109,13 +112,13 @@ export const buildInitialValues = createSelector(
   },
 );
 
-const transformValues = values => ({
+const transformValues = (values): VuderFaresignalerAp => ({
   kode: aksjonspunktCodes.VURDER_FARESIGNALER,
   harInnvirketBehandlingen: values[radioFieldName],
   begrunnelse: values[begrunnelseFieldName],
 });
 
-const mapStateToPropsFactory = (_initialState, ownProps) => {
+const mapStateToPropsFactory = (_initialState, ownProps: PureOwnProps) => {
   const onSubmit = values => ownProps.submitCallback(transformValues(values));
   const initialValues = buildInitialValues(ownProps);
   return () => ({
