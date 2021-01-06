@@ -27,7 +27,7 @@ describe('<MargMarkering>', () => {
 
     const div = wrapper.find('div');
     expect(div).has.length(1);
-    expect(div.prop('className')).is.undefined;
+    expect(div.prop('className')).is.eql('prosesspunkt');
   });
 
   it('skal rendre rendre children med gul marg når det finnes åpne og løsbare aksjonspunkter', () => {
@@ -37,18 +37,20 @@ describe('<MargMarkering>', () => {
           kode: behandlingStatus.BEHANDLING_UTREDES,
           kodeverk: 'BEHANDLING_STATUS',
         }}
-        aksjonspunkter={[{
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-            kodeverk: 'AKSJONSPUNKT_STATUS',
+        aksjonspunkter={[
+          {
+            status: {
+              kode: aksjonspunktStatus.OPPRETTET,
+              kodeverk: 'AKSJONSPUNKT_STATUS',
+            },
+            definisjon: {
+              kode: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
+              kodeverk: 'AKSJONSPUNKT_KODE',
+            },
+            kanLoses: true,
+            erAktivt: true,
           },
-          definisjon: {
-            kode: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
-            kodeverk: 'AKSJONSPUNKT_KODE',
-          },
-          kanLoses: true,
-          erAktivt: true,
-        }]}
+        ]}
         isReadOnly={false}
       >
         {elmt}
@@ -68,20 +70,22 @@ describe('<MargMarkering>', () => {
           kode: behandlingStatus.BEHANDLING_UTREDES,
           kodeverk: 'BEHANDLING_STATUS',
         }}
-        aksjonspunkter={[{
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-            kodeverk: 'AKSJONSPUNKT_STATUS',
+        aksjonspunkter={[
+          {
+            status: {
+              kode: aksjonspunktStatus.OPPRETTET,
+              kodeverk: 'AKSJONSPUNKT_STATUS',
+            },
+            definisjon: {
+              kode: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
+              kodeverk: 'AKSJONSPUNKT_KODE',
+            },
+            kanLoses: true,
+            erAktivt: true,
+            toTrinnsBehandling: true,
+            toTrinnsBehandlingGodkjent: false,
           },
-          definisjon: {
-            kode: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
-            kodeverk: 'AKSJONSPUNKT_KODE',
-          },
-          kanLoses: true,
-          erAktivt: true,
-          toTrinnsBehandling: true,
-          toTrinnsBehandlingGodkjent: false,
-        }]}
+        ]}
         isReadOnly={false}
       >
         {elmt}

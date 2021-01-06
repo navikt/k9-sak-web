@@ -19,7 +19,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
     behandlingResultatType: behandlingResultatType.INNVILG,
   };
 
-  xit('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
+  it.skip('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
     const wrapper = shallowWithIntl(
       <BehandleUnntakFormImpl
         readOnly={false}
@@ -41,7 +41,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
     fritekst: '123',
   };
 
-  xit('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
+  it.skip('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
     const wrapper = shallowWithIntl(
       <BehandleUnntakFormImpl
         readOnly={false}
@@ -63,7 +63,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
     behandlingResultatType: behandlingResultatType.AVSLÅ,
   };
 
-  xit('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
+  it.skip('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
     const wrapper = shallowWithIntl(
       <BehandleUnntakFormImpl
         readOnly={false}

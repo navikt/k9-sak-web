@@ -34,7 +34,7 @@ describe('<PersonInfo>', () => {
     expect(normaltekst.childAt(0).text()).to.eql('12345678910');
   });
 
-  it('skal vise annen title når søker er mann ', () => {
+  it('skal vise annen title når søker er mann', () => {
     const person = {
       navn: 'Espen',
       alder: 40,

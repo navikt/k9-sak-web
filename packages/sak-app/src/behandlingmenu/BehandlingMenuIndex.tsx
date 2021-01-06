@@ -119,13 +119,13 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  previewHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
+  previewHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   lagNyBehandling: (
     saksnummer: string,
     behandlingId: number,
     behandlingVersion: number,
     isTilbakekreving: boolean,
-    params: {},
+    params: any,
   ) => void;
   sjekkTilbakeKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
   sjekkTilbakeRevurdKanOpprettes: (params: { uuid: string }) => void;

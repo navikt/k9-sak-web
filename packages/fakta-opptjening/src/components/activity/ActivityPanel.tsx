@@ -33,7 +33,7 @@ import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React, { MouseEvent, KeyboardEvent } from 'react';
+import React, { MouseEvent, KeyboardEvent, FunctionComponent } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -134,7 +134,9 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser informasjon om valgt aktivitet
  */
-export const ActivityPanel = ({
+export const ActivityPanel: FunctionComponent<
+  ActivityPanelProps & WrappedComponentProps & StateProps & InjectedFormProps
+> = ({
   intl,
   initialValues,
   readOnly,
@@ -152,7 +154,7 @@ export const ActivityPanel = ({
   alleMerknaderFraBeslutter,
   handleSubmit,
   pristine,
-}: ActivityPanelProps & WrappedComponentProps & StateProps & InjectedFormProps) => (
+}) => (
   <FaktaGruppe
     className={styles.panel}
     merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}

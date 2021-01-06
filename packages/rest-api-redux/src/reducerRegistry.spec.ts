@@ -6,7 +6,7 @@ describe('ReducerRegistry', () => {
   const reducer1 = 'Dette er en reducer';
   const reducer2 = 'Dette er en ny reducer';
 
-  before(() => {
+  beforeAll(() => {
     reducerRegistry.clear();
   });
 

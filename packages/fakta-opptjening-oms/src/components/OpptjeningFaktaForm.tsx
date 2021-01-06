@@ -169,7 +169,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     return numberOfNotEvaluated === 0;
   };
 
-  initializeActivityForm(opptjeningActivity: OpptjeningAktivitet | {}) {
+  initializeActivityForm(opptjeningActivity: OpptjeningAktivitet | any) {
     const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
     formInitialize(`${behandlingFormPrefix}.${activityPanelNameFormName}`, opptjeningActivity);
   }

@@ -101,7 +101,7 @@ describe('<MessagesIndex>', () => {
         true,
       )
       .find(Messages);
-    const previewCallback = messages.prop('previewCallback') as (params: {}) => void;
+    const previewCallback = messages.prop('previewCallback') as (params: any) => void;
     previewCallback({ dokumentMal: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);
@@ -186,7 +186,7 @@ describe('<MessagesIndex>', () => {
         true,
       )
       .find(Messages);
-    const submitCallback = messages.prop('submitCallback') as (params: {}) => void;
+    const submitCallback = messages.prop('submitCallback') as (params: any) => void;
     submitCallback(message);
 
     expect(submitMessageCallback).to.have.property('callCount', 1);

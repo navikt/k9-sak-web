@@ -12,7 +12,7 @@ const mockStore = configureMockStore(middlewares);
 describe('Behandling-reducer', () => {
   let mockAxios;
 
-  before(() => {
+  beforeAll(() => {
     // @ts-ignore
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
@@ -21,7 +21,7 @@ describe('Behandling-reducer', () => {
     mockAxios.reset();
   });
 
-  after(() => {
+  afterAll(() => {
     mockAxios.restore();
   });
 

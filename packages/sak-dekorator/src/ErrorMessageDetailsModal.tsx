@@ -15,7 +15,7 @@ const capitalizeFirstLetters = key => key.charAt(0).toUpperCase() + key.substr(1
 interface OwnProps {
   showModal: boolean;
   closeModalFn: () => void;
-  errorDetails: {};
+  errorDetails: any;
 }
 
 /**
