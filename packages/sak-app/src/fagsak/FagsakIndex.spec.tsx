@@ -76,6 +76,6 @@ describe('<FagsakIndex>', () => {
     const fagsakProfileIndex = grid.prop('profileAndNavigationContent');
 
     // @ts-ignore
-    expect(fagsakProfileIndex.props.alleBehandlinger).toEqual([behandling, behandling3, behandling2]);
+    expect(fagsakProfileIndex.props.alleBehandlinger).toEqual([behandling, behandling2, behandling3]);
   });
 });

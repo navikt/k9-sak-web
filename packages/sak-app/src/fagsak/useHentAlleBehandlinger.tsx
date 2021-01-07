@@ -41,7 +41,7 @@ const useHentAlleBehandlinger = (
   );
 
   const { data: behandlingerKlage, state: behandlingerKlageState } = restApiHooks.useRestApi<BehandlingAppKontekst[]>(
-    K9sakApiKeys.BEHANDLINGER_TILBAKE,
+    K9sakApiKeys.BEHANDLINGER_KLAGE,
     { saksnummer },
     {
       updateTriggers: [saksnummer, behandlingId, behandlingVersjon, oppfriskIndikator],
