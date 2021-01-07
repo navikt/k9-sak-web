@@ -79,8 +79,4 @@ TextAreaField.defaultProps = {
   readOnly: false,
 };
 
-TextAreaWithBadge.defaultProps = {
-  badges: null,
-};
-
 export default TextAreaField;

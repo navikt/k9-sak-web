@@ -42,7 +42,7 @@ const getSakstypeId = vurdering => {
 interface OwnProps {
   readOnly: boolean;
   dirty: boolean;
-  handleSubmit: (data: {}) => void;
+  handleSubmit: (data: any) => void;
   reset: () => void;
   utlandSakstype?: string;
 }

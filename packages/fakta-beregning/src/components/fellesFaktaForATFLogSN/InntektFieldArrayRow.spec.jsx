@@ -61,6 +61,15 @@ const andelField = {
   aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
 };
 
+const arbeidsgiverOpplysningerPerId = {
+  233647823: {
+    identifikator: '233647823',
+    referanse: '233647823',
+    navn: 'Sopra Steria AS',
+    fødselsdato: null,
+  },
+};
+
 const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);
 
 const faktaOmBeregning = {
@@ -77,6 +86,7 @@ const ownProps = {
   behandlingId,
   behandlingVersjon,
   beregningsgrunnlag,
+  arbeidsgiverOpplysningerPerId,
   fields,
   index: 0,
   isAksjonspunktClosed: false,

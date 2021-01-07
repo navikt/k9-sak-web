@@ -63,7 +63,7 @@ AvregningProsessIndex.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  featureToggles: PropTypes.shape().isRequired,
+  featureToggles: PropTypes.shape(),
 };
 
 AvregningProsessIndex.defaultProps = {

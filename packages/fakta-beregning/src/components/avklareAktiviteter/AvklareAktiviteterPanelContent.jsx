@@ -20,7 +20,13 @@ const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = aksjonspunk
 const findAksjonspunktMedBegrunnelse = (aksjonspunkter, kode) =>
   aksjonspunkter.filter(ap => ap.definisjon.kode === kode && ap.begrunnelse !== null)[0];
 
-const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk, aktivtBeregningsgrunnlagIndex) => {
+const buildInitialValues = (
+  aksjonspunkter,
+  avklarAktiviteter,
+  alleKodeverk,
+  aktivtBeregningsgrunnlagIndex,
+  arbeidsgiverOpplysningerPerId,
+) => {
   const harAvklarAksjonspunkt = hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
   const erOverstyrt = hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
   let initialValues = {};
@@ -30,6 +36,7 @@ const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk, akt
       alleKodeverk,
       erOverstyrt,
       harAvklarAksjonspunkt,
+      arbeidsgiverOpplysningerPerId,
     );
   }
   const overstyrAksjonspunktMedBegrunnelse = findAksjonspunktMedBegrunnelse(
@@ -59,6 +66,7 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
     (beregningsgrunnlag, ownProps) => ownProps.alleKodeverk,
     (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
+    (beregningsgrunnlag, ownProps) => ownProps.arbeidsgiverOpplysningerPerId,
   ],
   buildInitialValues,
 );
@@ -95,6 +103,7 @@ const AvklareAktiviteterPanelContent = props => {
     beregningsgrunnlag,
     initializeAktiviteter,
     submitEnabled,
+    arbeidsgiverOpplysningerPerId,
     ...formProps
   } = props;
   const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag);
@@ -164,6 +173,7 @@ const AvklareAktiviteterPanelContent = props => {
                     values={formValues}
                     harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
                     fieldArrayID={`${field}`}
+                    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                   />
                 )}
                 <VerticalSpacer twentyPx />

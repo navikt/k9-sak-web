@@ -49,9 +49,14 @@ const lagPeriodeStreng = perioder => {
   return byggListeSomStreng(listeMedPeriodeStrenger);
 };
 
-export const createFordelArbeidsforholdString = (listOfArbeidsforhold, mTextCase, getKodeverknavn) => {
+export const createFordelArbeidsforholdString = (
+  listOfArbeidsforhold,
+  mTextCase,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
+) => {
   const listOfStrings = listOfArbeidsforhold.map(arbeidsforhold => {
-    const navnOgOrgnr = createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn);
+    const navnOgOrgnr = createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId);
     if (mTextCase === textCase.GRADERING) {
       return (
         navnOgOrgnr +
@@ -80,6 +85,7 @@ const createGraderingOrRefusjonString = (
   refusjonArbeidsforhold,
   permisjonMedGraderingEllerRefusjon,
   getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
 ) => {
   const text = [];
   if (permisjonMedGraderingEllerRefusjon.length > 0) {
@@ -87,6 +93,7 @@ const createGraderingOrRefusjonString = (
       permisjonMedGraderingEllerRefusjon,
       textCase.PERMISJON,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     text.push(
       <FormattedMessage
@@ -104,6 +111,7 @@ const createGraderingOrRefusjonString = (
       graderingArbeidsforhold,
       textCase.GRADERING,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     text.push(
       <FormattedMessage
@@ -118,6 +126,7 @@ const createGraderingOrRefusjonString = (
       refusjonArbeidsforhold,
       textCase.REFUSJON,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     text.push(
       <FormattedMessage
@@ -143,7 +152,7 @@ const harGraderingEllerRefusjon = perioderMedGraderingEllerRefusjon =>
   perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true) ||
   perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true);
 
-const lagHelpTextsFordelBG = (endredeArbeidsforhold, getKodeverknavn) => {
+const lagHelpTextsFordelBG = (endredeArbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   const gradering = endredeArbeidsforhold.filter(({ perioderMedGraderingEllerRefusjon }) =>
     perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true),
   );
@@ -158,6 +167,7 @@ const lagHelpTextsFordelBG = (endredeArbeidsforhold, getKodeverknavn) => {
     refusjon,
     permisjonMedGraderingEllerRefusjon,
     getKodeverknavn,
+    arbeidsgiverOpplysningerPerId,
   );
   if (helpTexts.length === 2) {
     return [
@@ -172,12 +182,21 @@ const lagHelpTextsFordelBG = (endredeArbeidsforhold, getKodeverknavn) => {
 };
 
 export const getHelpTextsFordelBG = createSelector(
-  [ownProps => ownProps.beregningsgrunnlag, ownProps => ownProps.alleKodeverk, ownProps => ownProps.aksjonspunkter],
-  (beregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
+  [
+    ownProps => ownProps.beregningsgrunnlag,
+    ownProps => ownProps.alleKodeverk,
+    ownProps => ownProps.arbeidsgiverOpplysningerPerId,
+    ownProps => ownProps.aksjonspunkter,
+  ],
+  (beregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, aksjonspunkter) => {
     const fordelBG = beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag;
     const endredeArbeidsforhold = fordelBG ? fordelBG.arbeidsforholdTilFordeling : [];
     return hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
-      ? lagHelpTextsFordelBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper))
+      ? lagHelpTextsFordelBG(
+          endredeArbeidsforhold,
+          getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+          arbeidsgiverOpplysningerPerId,
+        )
       : [];
   },
 );

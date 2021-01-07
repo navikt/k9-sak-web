@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import {
-  arbeidsforholdV2PropType,
-  arbeidsgiverMapPropType,
-} from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
+import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
 import ArbeidsforholdInfoPanelV2 from './components/ArbeidsforholdInfoPanelV2';
 import arbeidsforholdAksjonspunkterPropType from './propTypes/arbeidsforholdAksjonspunkterPropType';
@@ -51,6 +48,7 @@ const ArbeidsforholdFaktaIndex = ({
         hasOpenAksjonspunkter={harApneAksjonspunkter}
         submitCallback={submitCallback}
         readOnly={readOnly}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
       />
     )}
     {arbeidsforhold && arbeidsgivere && (
@@ -58,7 +56,7 @@ const ArbeidsforholdFaktaIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         arbeidsforhold={arbeidsforhold}
-        arbeidsgivere={arbeidsgivere.arbeidsgivere}
+        arbeidsgivere={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
         alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         aksjonspunkter={aksjonspunkter}
@@ -74,7 +72,6 @@ ArbeidsforholdFaktaIndex.propTypes = {
   behandling: arbeidsforholdBehandlingPropType.isRequired,
   inntektArbeidYtelse: arbeidsforholdInntektArbeidYtelsePropType.isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
-  arbeidsgivere: arbeidsgiverMapPropType,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,
@@ -83,6 +80,7 @@ ArbeidsforholdFaktaIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
+  arbeidsgivere: PropTypes.shape().isRequired,
 };
 
 export default ArbeidsforholdFaktaIndex;

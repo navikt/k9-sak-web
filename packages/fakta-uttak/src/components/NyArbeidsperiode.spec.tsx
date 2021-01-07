@@ -8,7 +8,7 @@ import { mountWithIntl } from '../../i18n';
 import NyArbeidsperiode from './NyArbeidsperiode';
 
 const history = createBrowserHistory({
-  basename: '/k9/web/',
+  basename: '/',
 });
 
 describe('<NyArbeidsperiode>', () => {

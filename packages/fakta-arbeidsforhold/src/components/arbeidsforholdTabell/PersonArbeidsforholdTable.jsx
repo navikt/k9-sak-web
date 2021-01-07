@@ -18,13 +18,25 @@ const headerColumnContent = [
   <FormattedMessage key={5} id="PersonArbeidsforholdTable.MottattDato" values={{ br: <br /> }} />,
   <></>,
 ];
-export const utledNøkkel = arbeidsforhold => {
+
+export const utledNøkkel = (arbeidsforhold, arbeidsgiverOpplysningerPerId) => {
+  const arbeidsgiverOpplysninger = arbeidsgiverOpplysningerPerId
+    ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdentifikator]
+    : null;
   if (arbeidsforhold.lagtTilAvSaksbehandler) {
-    return arbeidsforhold.navn;
+    return arbeidsforhold.navn
+      ? arbeidsforhold.navn
+      : (arbeidsgiverOpplysninger && arbeidsgiverOpplysninger.navn) || '';
   }
   return `${arbeidsforhold.eksternArbeidsforholdId}${arbeidsforhold.arbeidsforholdId}${arbeidsforhold.arbeidsgiverIdentifiktorGUI}`;
 };
-const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbeidsforholdCallback }) => {
+
+const PersonArbeidsforholdTable = ({
+  alleArbeidsforhold,
+  selectedId,
+  arbeidsgiverOpplysningerPerId,
+  selectArbeidsforholdCallback,
+}) => {
   if (alleArbeidsforhold.length === 0) {
     return <IngenArbeidsforholdRegistrert headerColumnContent={headerColumnContent} />;
   }
@@ -37,10 +49,10 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
             a.stillingsprosent !== undefined && a.stillingsprosent !== null
               ? `${parseFloat(a.stillingsprosent).toFixed(2)} %`
               : '';
-          const navn = utledArbeidsforholdNavn(a);
+          const navn = utledArbeidsforholdNavn(a, arbeidsgiverOpplysningerPerId);
           return (
             <TableRow
-              key={utledNøkkel(a)}
+              key={utledNøkkel(a, arbeidsgiverOpplysningerPerId)}
               model={a}
               onMouseDown={selectArbeidsforholdCallback}
               onKeyDown={selectArbeidsforholdCallback}
@@ -90,6 +102,7 @@ const PersonArbeidsforholdTable = ({ alleArbeidsforhold, selectedId, selectArbei
 PersonArbeidsforholdTable.propTypes = {
   alleArbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
   selectedId: PropTypes.string,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   selectArbeidsforholdCallback: PropTypes.func.isRequired,
 };
 

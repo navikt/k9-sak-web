@@ -9,7 +9,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, FastsattOpptjening, Opptjening, SubmitCallback, Vilkårresultat } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
-import React, { useMemo } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -51,7 +51,9 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
-export const OpptjeningVilkarAksjonspunktPanelImpl = ({
+export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
+  OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps
+> = ({
   behandlingId,
   behandlingVersjon,
   erVilkarOk,
@@ -67,7 +69,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   vilkårIndex,
   opptjeninger,
   vilkarFields,
-}: OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps) => {
+}) => {
   const formProps = useMemo(
     () => ({
       handleSubmit,
@@ -77,7 +79,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   );
 
   const isFormComplete = () => {
-    const isAllTabsCreated = opptjeninger.length === vilkarFields?.length;
+    const isAllTabsCreated = Array.isArray(opptjeninger) && opptjeninger.length === vilkarFields?.length;
     return isAllTabsCreated
       ? !vilkarFields.some(vilkarField => !vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined)
       : false;
@@ -124,7 +126,7 @@ export const buildInitialValues = createSelector(
     ownProps => ownProps.status,
   ],
   (vilkårsresultat, aksjonspunkter, status) => ({
-    ...VilkarResultPicker.buildInitialValues(vilkårsresultat.avslagsårsak.kode, aksjonspunkter, status),
+    ...VilkarResultPicker.buildInitialValues(vilkårsresultat?.avslagsårsak?.kode, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
@@ -136,10 +138,12 @@ interface Values {
 const transformValues = (values: Values, aksjonspunkter: Aksjonspunkt[], opptjeninger: Opptjening[]) => ({
   vilkårPerioder: values.vilkarFields.map((vilkarField, index) => ({
     ...vilkarField,
-    opptjeningFom: opptjeninger[index].fastsattOpptjening.opptjeningFom,
-    opptjeningTom: opptjeninger[index].fastsattOpptjening.opptjeningTom,
+    opptjeningFom:
+      Array.isArray(opptjeninger) && opptjeninger[index] && opptjeninger[index].fastsattOpptjening.opptjeningFom,
+    opptjeningTom:
+      Array.isArray(opptjeninger) && opptjeninger[index] && opptjeninger[index].fastsattOpptjening.opptjeningTom,
   })),
-  ...{ kode: aksjonspunkter[0].definisjon.kode },
+  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon.kode : null },
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {

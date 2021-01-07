@@ -19,7 +19,7 @@ export const isNewBehandlingResult = (beregningResultat, originaltBeregningResul
 };
 
 export const isNewAmount = (beregningResultat, originaltBeregningResultat) => {
-  if (beregningResultat === null) {
+  if (typeof beregningsResultat === 'undefined' || beregningResultat === null) {
     return false;
   }
   return beregningResultat.antallBarn !== originaltBeregningResultat.antallBarn;

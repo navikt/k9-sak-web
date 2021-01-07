@@ -307,10 +307,10 @@ const buildInitialValues = createSelector(
       aksjonspunktKoder,
       skalBrukeOverstyrendeFritekstBrev:
         dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
-        vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
+        vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
       skalUndertrykkeBrev:
         dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
-        vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
+        vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
       begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
@@ -355,8 +355,11 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback(transformValues(values));
-  const aksjonspunktKoder = initialOwnProps.aksjonspunkter.map(ap => ap.definisjon.kode);
-  const behandlingArsaker = initialOwnProps.behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType);
+  const aksjonspunktKoder =
+    initialOwnProps.aksjonspunkter && initialOwnProps.aksjonspunkter.map(ap => ap.definisjon.kode);
+  const behandlingArsaker =
+    initialOwnProps.behandlingArsaker &&
+    initialOwnProps.behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType);
   const revurderingsAarsakString = createAarsakString(
     behandlingArsaker,
     getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper),

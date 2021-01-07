@@ -9,7 +9,7 @@ import LabelType from './LabelType';
 
 interface DatepickerFieldProps {
   name: string;
-  label: LabelType;
+  label?: LabelType;
   readOnly?: boolean;
   format?: (value: string) => string;
   parse?: (value: string) => string;

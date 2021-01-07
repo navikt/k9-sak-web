@@ -29,11 +29,13 @@ const finnAndelerSomSkalVisesAT = andeler => {
     .filter(andel => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
 
-const createRows = (relevanteAndelerAT, getKodeverknavn, readOnly, fieldArrayID) => {
+const createRows = (relevanteAndelerAT, getKodeverknavn, arbeidsgiverOpplysningerPerId, readOnly, fieldArrayID) => {
   const rows = relevanteAndelerAT.map((andel, index) => (
     <Row key={`index${index + 1}`} className={styles.verticalAlignMiddle}>
       <Column xs="7">
-        <Normaltekst>{createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}</Normaltekst>
+        <Normaltekst>
+          {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
+        </Normaltekst>
       </Column>
       <Column xs="5">
         <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
@@ -51,16 +53,23 @@ const createRows = (relevanteAndelerAT, getKodeverknavn, readOnly, fieldArrayID)
 
   return rows;
 };
-const AksjonspunktBehandlerAT = ({ readOnly, alleAndelerIForstePeriode, alleKodeverk, fieldArrayID }) => {
+const AksjonspunktBehandlerAT = ({
+  readOnly,
+  alleAndelerIForstePeriode,
+  alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
+  fieldArrayID,
+}) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const relevanteAndelerAT = finnAndelerSomSkalVisesAT(alleAndelerIForstePeriode);
-  return <>{createRows(relevanteAndelerAT, getKodeverknavn, readOnly, fieldArrayID)}</>;
+  return <>{createRows(relevanteAndelerAT, getKodeverknavn, arbeidsgiverOpplysningerPerId, readOnly, fieldArrayID)}</>;
 };
 
 AksjonspunktBehandlerAT.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 

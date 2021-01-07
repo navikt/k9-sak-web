@@ -50,7 +50,7 @@ interface Props {
   harApneAksjonspunkter: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
   oppgittOpptjening: OpplysningerFraSøknaden;
-  validate: (arg1: any, arg2: any) => object;
+  validate: (arg1: any, arg2: any) => any;
 }
 
 const transformValues = (
@@ -61,6 +61,7 @@ const transformValues = (
     formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019] ||
     formValues[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020];
   const skalOppgiNæringsinntektFørSøknadsperioden = formValues[SøknadFormValue.SØKNADSPERIODER].some(
+    // eslint-disable-next-line camelcase
     ({ selvstendigNaeringsdrivende_startdatoForSoknaden }) => !!selvstendigNaeringsdrivende_startdatoForSoknaden,
   );
   const { søknadsperioder } = formValues;
@@ -109,7 +110,7 @@ interface StateProps {
   harSøktSomSSN: boolean;
 }
 
-const OppgittOpptjeningRevurderingForm = (props: Props & InjectedFormProps & StateProps) => {
+const OppgittOpptjeningRevurderingForm: React.FunctionComponent<Props & InjectedFormProps & StateProps> = props => {
   const [activeTab, setActiveTab] = React.useState(0);
   const [formIsEditable, setFormIsEditable] = React.useState(false);
   const intl = useIntl();

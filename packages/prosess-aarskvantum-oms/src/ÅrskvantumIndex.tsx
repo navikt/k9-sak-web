@@ -1,6 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
-import { Behandling, KodeverkMedNavn, Aksjonspunkt, FeatureToggles, InntektArbeidYtelse } from '@k9-sak-web/types';
+import {
+  Behandling,
+  KodeverkMedNavn,
+  ArbeidsgiverOpplysningerPerId,
+  Aksjonspunkt,
+  FeatureToggles,
+  InntektArbeidYtelse,
+} from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import messages from '../i18n/nb_NO.json';
@@ -30,6 +37,7 @@ interface ÅrsakvantumIndexProps {
   submitCallback: (values: any[]) => void;
   aksjonspunkterForSteg?: Aksjonspunkt[];
   inntektArbeidYtelse: InntektArbeidYtelse;
+  arbeidsgivere: { arbeidsgivere: ArbeidsgiverOpplysningerPerId };
   featureToggles: FeatureToggles;
 }
 
@@ -42,6 +50,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   submitCallback,
   aksjonspunkterForSteg = [],
   inntektArbeidYtelse,
+  arbeidsgivere,
   featureToggles,
 }) => {
   const { sisteUttaksplan } = årskvantum;
@@ -66,6 +75,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiv={sisteUttaksplan?.aktiv}
         // @ts-ignore
         arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
         featureToggles={featureToggles}
       />
     </RawIntlProvider>

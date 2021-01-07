@@ -18,14 +18,17 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = (featureToggles: FeatureToggles = {}) =>
     featureToggles.ARBEIDSFORHOLD_V2
-      ? [omsorgspengerBehandlingApi.ARBEIDSGIVERE, omsorgspengerBehandlingApi.ARBEIDSFORHOLD]
+      ? [omsorgspengerBehandlingApi.ARBEIDSFORHOLD]
       : [omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE];
 
   getKomponent = props => <ArbeidsforholdFaktaIndex {...props} />;
 
   getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
-  getData = ({ personopplysninger }) => ({ personopplysninger });
+  getData = ({ personopplysninger, arbeidsgivere }) => ({
+    personopplysninger,
+    arbeidsgivere,
+  });
 }
 
 export default ArbeidsforholdFaktaPanelDef;

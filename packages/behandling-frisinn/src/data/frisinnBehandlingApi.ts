@@ -36,6 +36,7 @@ export const FrisinnBehandlingApiKeys = {
   TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
+  ARBEIDSGIVERE: 'ARBEIDSGIVERE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -57,6 +58,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-kontroller-fakta-perioder', FrisinnBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('vedtak-varsel', FrisinnBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('tilgjengelige-vedtaksbrev', FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('arbeidsgivere', FrisinnBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', FrisinnBehandlingApiKeys.UPDATE_ON_HOLD)

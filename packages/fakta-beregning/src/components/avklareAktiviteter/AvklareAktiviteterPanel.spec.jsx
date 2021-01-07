@@ -108,6 +108,27 @@ const aktivitetAAP = {
 
 const aktiviteter = [aktivitet1, aktivitet2, aktivitet3, aktivitetAAP];
 
+const arbeidsgiverOpplysningerPerId = {
+  384723894723: {
+    identifikator: '384723894723',
+    referanse: '384723894723',
+    navn: 'Arbeidsgiveren',
+    fødselsdato: null,
+  },
+  334534623342: {
+    identifikator: '334534623342',
+    referanse: '334534623342',
+    navn: 'Arbeidsgiveren2',
+    fødselsdato: null,
+  },
+  '1960-01-01': {
+    identifikator: '1960-01-01',
+    referanse: '1960-01-01',
+    navn: 'Arbeidsgiveren3',
+    fødselsdato: null,
+  },
+};
+
 const id1 = '3847238947232019-01-01';
 const id2 = '334534623342efj8343f34f2019-01-01';
 const id3 = '1960-01-01efj8343f34f2019-01-01';
@@ -145,6 +166,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         aktivtBeregningsgrunnlagIndex={0}
         beregningsgrunnlag={beregningsgrunnlag}
@@ -180,6 +202,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -223,6 +246,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -272,6 +296,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fields={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
@@ -319,6 +344,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
         {...behandlingProps}
@@ -362,6 +388,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
         {...behandlingProps}
@@ -406,6 +433,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
         {...behandlingProps}
@@ -449,6 +477,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
         {...behandlingProps}
@@ -492,6 +521,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         erBgOverstyrt={false}
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fields={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}

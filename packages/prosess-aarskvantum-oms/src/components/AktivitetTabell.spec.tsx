@@ -49,6 +49,7 @@ describe('<AktivitetTabell />', () => {
         arbeidsforholdtypeKode="AT"
         arbeidsforhold={arbeidsforhold}
         aktivitetsstatuser={[]}
+        arbeidsgiverOpplysningerPerId={{}}
         featureToggles={{}}
       />,
     );
@@ -75,6 +76,7 @@ describe('<AktivitetTabell />', () => {
         arbeidsforhold={arbeidsforhold}
         arbeidsforholdtypeKode="AT"
         aktivitetsstatuser={[]}
+        arbeidsgiverOpplysningerPerId={{}}
         featureToggles={{}}
       />,
     );

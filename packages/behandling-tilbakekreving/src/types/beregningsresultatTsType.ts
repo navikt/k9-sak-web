@@ -1,7 +1,7 @@
 import { Kodeverk } from '@k9-sak-web/types';
 
 type Beregningsresultat = Readonly<{
-  beregningResultatPerioder: {}[];
+  beregningResultatPerioder: any[];
   vedtakResultatType: Kodeverk;
 }>;
 

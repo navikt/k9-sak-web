@@ -8,10 +8,7 @@ module.exports = {
         ignore: ['after-comment'],
       },
     ],
-    'order/order': [
-      'custom-properties',
-      'declarations',
-    ],
+    'order/order': ['custom-properties', 'declarations'],
     'order/properties-alphabetical-order': true,
     'max-line-length': 160,
     'at-rule-name-case': 'lower',
@@ -116,7 +113,7 @@ module.exports = {
     'value-list-comma-space-after': 'always-single-line',
     'value-list-comma-space-before': 'never',
     'value-list-max-empty-lines': 0,
-    'unit-whitelist': [
+    'unit-allowed-list': [
       'em',
       'ex',
       'rem', // Font-relative lengths

@@ -10,16 +10,15 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'FordelBeregningsgrunnlag.Title';
 
-  getAksjonspunktKoder = () => [
-    aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
-  ];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG];
 
   getKomponent = props => <FordelBeregningIndex {...props} />;
 
   getOverstyrVisningAvKomponent = () => false;
 
-  getData = ({ beregningsgrunnlag }) => ({
+  getData = ({ beregningsgrunnlag, arbeidsgivere }) => ({
     beregningsgrunnlag,
+    arbeidsgivere,
   });
 }
 

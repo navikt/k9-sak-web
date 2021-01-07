@@ -117,8 +117,4 @@ export const arbeidsgiverPropType = PropTypes.shape({
   fødselsdato: PropTypes.string,
 });
 
-export const arbeidsgiverMapPropType = PropTypes.shape({
-  arbeidsgivere: PropTypes.instanceOf(Map),
-});
-
 export default arbeidsforholdPropType;

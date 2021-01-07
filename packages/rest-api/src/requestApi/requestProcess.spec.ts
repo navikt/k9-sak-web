@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import asyncPollingStatus from './asyncPollingStatus';
@@ -75,14 +74,11 @@ describe('RequestProcess', () => {
 
     const result = await process.run(params);
 
-    expect(result).to.eql({ payload: 'data' });
-    // eslint-disable-next-line no-unused-expressions
-    expect(notificationHelper.requestStartedCallback.calledOnce).to.true;
-    // eslint-disable-next-line no-unused-expressions
-    expect(notificationHelper.requestFinishedCallback.calledOnce).to.true;
-    expect(notificationHelper.requestFinishedCallback.getCalls()[0].args[0]).is.eql('data');
-    // eslint-disable-next-line no-unused-expressions
-    expect(notificationHelper.requestErrorCallback.called).to.false;
+    expect(result).toStrictEqual({ payload: 'data' });
+    expect(notificationHelper.requestStartedCallback.calledOnce).toBe(true);
+    expect(notificationHelper.requestFinishedCallback.calledOnce).toBe(true);
+    expect(notificationHelper.requestFinishedCallback.getCalls()[0].args[0]).toBe('data');
+    expect(notificationHelper.requestErrorCallback.called).toBe(false);
   });
 
   it('skal utføre long-polling request som når maks polling-forsøk', async () => {
@@ -94,31 +90,35 @@ describe('RequestProcess', () => {
       },
     };
 
-    const allGetResults = [{
-      ...response,
-      data: {
-        status: asyncPollingStatus.PENDING,
-        message: 'Polling continues',
-        pollIntervalMillis: 0,
+    const allGetResults = [
+      {
+        ...response,
+        data: {
+          status: asyncPollingStatus.PENDING,
+          message: 'Polling continues',
+          pollIntervalMillis: 0,
+        },
       },
-    }, {
-      ...response,
-      data: {
-        status: asyncPollingStatus.PENDING,
-        message: 'Polling continues',
-        pollIntervalMillis: 0,
+      {
+        ...response,
+        data: {
+          status: asyncPollingStatus.PENDING,
+          message: 'Polling continues',
+          pollIntervalMillis: 0,
+        },
       },
-    }];
+    ];
 
     const httpClientMock = {
       ...httpClientGeneralMock,
-      getAsync: () => Promise.resolve({
-        ...response,
-        status: HTTP_ACCEPTED,
-        headers: {
-          location: 'http://polling.url',
-        },
-      }),
+      getAsync: () =>
+        Promise.resolve({
+          ...response,
+          status: HTTP_ACCEPTED,
+          headers: {
+            location: 'http://polling.url',
+          },
+        }),
       get: () => Promise.resolve(allGetResults.shift()),
     };
 
@@ -135,23 +135,15 @@ describe('RequestProcess', () => {
     const notificationHelper = new NotificationHelper();
     process.setNotificationEmitter(notificationHelper.mapper.getNotificationEmitter());
 
-    try {
-      await process.run(params);
-    } catch (error) {
-      expect(error.message).to.eql('Maximum polling attempts exceeded');
-      // eslint-disable-next-line no-unused-expressions
-      expect(notificationHelper.requestStartedCallback.calledOnce).to.true;
-      // eslint-disable-next-line no-unused-expressions
-      expect(notificationHelper.statusRequestStartedCallback.calledOnce).to.true;
-      // eslint-disable-next-line no-unused-expressions
-      expect(notificationHelper.statusRequestFinishedCallback.calledOnce).to.true;
-      // eslint-disable-next-line no-unused-expressions
-      expect(notificationHelper.updatePollingMessageCallback.calledOnce).to.true;
-      expect(notificationHelper.updatePollingMessageCallback.getCalls()[0].args[0]).is.eql('Polling continues');
-      // eslint-disable-next-line no-unused-expressions
-      expect(notificationHelper.addPollingTimeoutEventHandler.calledOnce).to.true;
-      expect(notificationHelper.addPollingTimeoutEventHandler.getCalls()[0].args[0]).is.eql({ location: 'http://polling.url' });
-    }
+    await expect(process.run(params)).rejects.toMatchObject({
+      message: 'Maximum polling attempts exceeded',
+    });
+
+    expect(notificationHelper.requestStartedCallback.calledOnce).toBe(true);
+    expect(notificationHelper.statusRequestStartedCallback.calledOnce).toBe(true);
+    expect(notificationHelper.statusRequestFinishedCallback.calledOnce).toBe(true);
+    expect(notificationHelper.updatePollingMessageCallback.calledOnce).toBe(true);
+    expect(notificationHelper.updatePollingMessageCallback.getCalls()[0].args[0]).toBe('Polling continues');
   });
 
   it('skal utføre long-polling request som en så avbryter manuelt', async () => {
@@ -165,21 +157,23 @@ describe('RequestProcess', () => {
 
     const httpClientMock = {
       ...httpClientGeneralMock,
-      getAsync: () => Promise.resolve({
-        ...response,
-        status: HTTP_ACCEPTED,
-        headers: {
-          location: 'test',
-        },
-      }),
-      get: () => Promise.resolve({
-        ...response,
-        data: {
-          status: asyncPollingStatus.PENDING,
-          message: 'Polling continues',
-          pollIntervalMillis: 0,
-        },
-      }),
+      getAsync: () =>
+        Promise.resolve({
+          ...response,
+          status: HTTP_ACCEPTED,
+          headers: {
+            location: 'test',
+          },
+        }),
+      get: () =>
+        Promise.resolve({
+          ...response,
+          data: {
+            status: asyncPollingStatus.PENDING,
+            message: 'Polling continues',
+            pollIntervalMillis: 0,
+          },
+        }),
     };
 
     const params = {
@@ -189,12 +183,15 @@ describe('RequestProcess', () => {
     const process = new RequestProcess(httpClientMock, httpClientMock.getAsync, 'behandling', defaultConfig);
     const mapper = new NotificationMapper();
     // Etter en runde med polling vil en stoppe prosessen via event
-    mapper.addUpdatePollingMessageEventHandler(() => { process.cancel(); return Promise.resolve(''); });
+    mapper.addUpdatePollingMessageEventHandler(() => {
+      process.cancel();
+      return Promise.resolve('');
+    });
     process.setNotificationEmitter(mapper.getNotificationEmitter());
 
     const resResponse = await process.run(params);
 
-    expect(resResponse).to.eql({ payload: 'INTERNAL_CANCELLATION' });
+    expect(resResponse).toStrictEqual({ payload: 'INTERNAL_CANCELLATION' });
   });
 
   it('skal hente data med nullverdi', async () => {
@@ -220,8 +217,8 @@ describe('RequestProcess', () => {
 
     const result = await process.run(params);
 
-    expect(result).is.eql({ payload: undefined });
+    expect(result).toStrictEqual({ payload: undefined });
     // eslint-disable-next-line no-unused-expressions
-    expect(notificationHelper.requestFinishedCallback.getCalls()[0].args[0]).is.null;
+    expect(notificationHelper.requestFinishedCallback.getCalls()[0].args[0]).toBe(null);
   });
 });

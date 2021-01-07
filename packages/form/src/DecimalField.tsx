@@ -36,6 +36,7 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
     blurHandler({ input: { onBlur, ...input }, ...props }) {
       const { normalizeOnBlur, component: Comp } = this.props;
       return (
+        // @ts-ignore TODO Fiks
         <Comp
           {...props}
           // @ts-ignore TODO Fiks

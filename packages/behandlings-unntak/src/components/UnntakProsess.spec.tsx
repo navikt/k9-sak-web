@@ -90,7 +90,7 @@ describe('<UnntakProsess>', () => {
     vilkar,
   };
 
-  xit('skal vise alle aktuelle prosessSteg i meny', () => {
+  it.skip('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallow(
       <UnntakProsess
         data={fetchedData as FetchedData}
@@ -146,7 +146,7 @@ describe('<UnntakProsess>', () => {
     ]);
   });
 
-  xit('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
+  it.skip('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <UnntakProsess
@@ -341,7 +341,7 @@ describe('<UnntakProsess>', () => {
     expect(opppdaterKall).to.have.length(1);
   });
 
-  xit('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
+  it.skip('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
 
     const wrapper = shallow(
@@ -372,7 +372,7 @@ describe('<UnntakProsess>', () => {
     expect(opppdaterKall[0].args[1]).to.eql('default');
   });
 
-  xit('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
+  it.skip('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
     const dispatch = sinon.spy();
     const wrapper = shallow(
       <UnntakProsess

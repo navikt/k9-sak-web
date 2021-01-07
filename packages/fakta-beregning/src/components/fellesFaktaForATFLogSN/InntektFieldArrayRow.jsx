@@ -12,7 +12,6 @@ import styles from './inntektFieldArray.less';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import { getSkalRedigereInntekt, getSkalRedigereInntektskategori } from './BgFordelingUtils';
 
-
 export const getHeaderTextCodes = (skalVisePeriode, skalViseRefusjon) => {
   const headerCodes = [];
   headerCodes.push('BeregningInfoPanel.FordelingBG.Andel');
@@ -28,12 +27,12 @@ export const getHeaderTextCodes = (skalVisePeriode, skalViseRefusjon) => {
   return headerCodes;
 };
 
-const inntektskategoriSelectValues = (kategorier) => kategorier.map((ik) => (
-  <option value={ik.kode} key={ik.kode}>
-    {ik.navn}
-  </option>
-));
-
+const inntektskategoriSelectValues = kategorier =>
+  kategorier.map(ik => (
+    <option value={ik.kode} key={ik.kode}>
+      {ik.navn}
+    </option>
+  ));
 
 /**
  *  InntektFieldArrayAndelRow
@@ -55,6 +54,7 @@ export const AndelRowImpl = ({
   isAksjonspunktClosed,
   removeAndel,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const field = fields.get(index);
   field.skalRedigereInntekt = skalRedigereInntekt;
@@ -67,53 +67,40 @@ export const AndelRowImpl = ({
           name={`${andelElementFieldId}.andel`}
           readOnly={readOnly}
           alleKodeverk={alleKodeverk}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
       </TableColumn>
-      {skalVisePeriode
-      && (
-      <TableColumn>
-        <PeriodpickerField
-          names={[`${andelElementFieldId}.arbeidsperiodeFom`, `${andelElementFieldId}.arbeidsperiodeTom`]}
-          readOnly
-          defaultValue={null}
-          renderIfMissingDateOnReadOnly
-        />
-      </TableColumn>
+      {skalVisePeriode && (
+        <TableColumn>
+          <PeriodpickerField
+            names={[`${andelElementFieldId}.arbeidsperiodeFom`, `${andelElementFieldId}.arbeidsperiodeTom`]}
+            readOnly
+            defaultValue={null}
+            renderIfMissingDateOnReadOnly
+          />
+        </TableColumn>
       )}
-      {skalRedigereInntekt
-    && (
-    <TableColumn className={styles.rightAlignInput}>
-      <InputField
-        name={`${andelElementFieldId}.fastsattBelop`}
-        bredde="M"
-        parse={parseCurrencyInput}
-        readOnly={readOnly}
-        isEdited={isAksjonspunktClosed}
-      />
-    </TableColumn>
-    )}
-      {!skalRedigereInntekt
-    && (
-    <TableColumn className={styles.rightAlign}>
-      <InputField
-        name={`${andelElementFieldId}.belopReadOnly`}
-        bredde="M"
-        parse={parseCurrencyInput}
-        readOnly
-      />
-    </TableColumn>
-    )}
-      {skalViseRefusjon
-          && (
-          <TableColumn className={styles.rightAlign}>
-            <InputField
-              name={`${andelElementFieldId}.refusjonskrav`}
-              bredde="XS"
-              readOnly
-              parse={parseCurrencyInput}
-            />
-          </TableColumn>
-          )}
+      {skalRedigereInntekt && (
+        <TableColumn className={styles.rightAlignInput}>
+          <InputField
+            name={`${andelElementFieldId}.fastsattBelop`}
+            bredde="M"
+            parse={parseCurrencyInput}
+            readOnly={readOnly}
+            isEdited={isAksjonspunktClosed}
+          />
+        </TableColumn>
+      )}
+      {!skalRedigereInntekt && (
+        <TableColumn className={styles.rightAlign}>
+          <InputField name={`${andelElementFieldId}.belopReadOnly`} bredde="M" parse={parseCurrencyInput} readOnly />
+        </TableColumn>
+      )}
+      {skalViseRefusjon && (
+        <TableColumn className={styles.rightAlign}>
+          <InputField name={`${andelElementFieldId}.refusjonskrav`} bredde="XS" readOnly parse={parseCurrencyInput} />
+        </TableColumn>
+      )}
       <TableColumn className={styles.rightAlign}>
         <SelectField
           label=""
@@ -126,15 +113,14 @@ export const AndelRowImpl = ({
         />
       </TableColumn>
       <TableColumn>
-        {skalViseSletteknapp
-    && (
-      <button
-        className={styles.buttonRemove}
-        type="button"
-        onClick={() => removeAndel()}
-        title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.FjernAndel' })}
-      />
-    )}
+        {skalViseSletteknapp && (
+          <button
+            className={styles.buttonRemove}
+            type="button"
+            onClick={() => removeAndel()}
+            title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.FjernAndel' })}
+          />
+        )}
       </TableColumn>
     </TableRow>
   );
@@ -155,11 +141,12 @@ AndelRowImpl.propTypes = {
   removeAndel: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 export const getInntektskategorierAlfabetiskSortert = createSelector(
-  [(ownProps) => ownProps.alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI]],
-  (kodeverkListe) => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
+  [ownProps => ownProps.alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI]],
+  kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
 );
 
 export const mapStateToProps = (state, ownProps) => {
@@ -172,6 +159,5 @@ export const mapStateToProps = (state, ownProps) => {
     inntektskategoriKoder: getInntektskategorierAlfabetiskSortert(ownProps),
   };
 };
-
 
 export const AndelRow = connect(mapStateToProps)(injectIntl(AndelRowImpl));

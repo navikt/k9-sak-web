@@ -79,18 +79,22 @@ const månedsinntekt = årsinntekt => {
   return årsinntekt / 12;
 };
 
-const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) => {
+const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, arbeidsgiverOpplysningerPerId, userIdent) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = månedsinntekt(beregnetAarsinntekt);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment
-      key={`ArbInntektWrapper${createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}${index + 1}`}
+      key={`ArbInntektWrapper${createVisningsnavnForAktivitet(
+        andel.arbeidsforhold,
+        getKodeverknavn,
+        arbeidsgiverOpplysningerPerId,
+      )}${index + 1}`}
     >
       <Row key={`index${index + 1}`}>
         <Column xs="7" key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
-            {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}
+            {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
           </Normaltekst>
         </Column>
 
@@ -174,7 +178,12 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) =
  * Presentasjonskomponent. Viser beregningsgrunnlagstabellen for arbeidstakere.
  * Vises også hvis status er en kombinasjonsstatus som inkluderer arbeidstaker.
  */
-export const GrunnlagForAarsinntektPanelATImpl = ({ alleAndeler, allePerioder, getKodeverknavn }) => {
+export const GrunnlagForAarsinntektPanelATImpl = ({
+  alleAndeler,
+  allePerioder,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
+}) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   if (!relevanteAndeler || relevanteAndeler.length === 0) return null;
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
@@ -204,9 +213,9 @@ export const GrunnlagForAarsinntektPanelATImpl = ({ alleAndeler, allePerioder, g
         </Column>
         <Column className={beregningStyles.colLink} xs="1" />
       </Row>
-      {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn, userIdent)}
+      {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn, arbeidsgiverOpplysningerPerId, userIdent)}
 
-      <NaturalytelsePanel2 allePerioder={allePerioder} />
+      <NaturalytelsePanel2 allePerioder={allePerioder} arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId} />
     </>
   );
 };
@@ -215,6 +224,7 @@ GrunnlagForAarsinntektPanelATImpl.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   getKodeverknavn: PropTypes.func.isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 GrunnlagForAarsinntektPanelATImpl.defaultProps = {

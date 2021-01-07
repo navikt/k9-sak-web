@@ -1,14 +1,21 @@
 import { expect } from 'chai';
 import { AAP_ARBEIDSGIVER_KEY, lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
-
-const getKodeverknavn = (kodeverk) => {
+const getKodeverknavn = kodeverk => {
   if (kodeverk.kode === 'AAP') {
     return 'Arbeidsavklaringspenger';
   }
   return '';
 };
 
+const arbeidsgiverOpplysningerPerId = {
+  33334444234123: {
+    identifikator: '33334444234123',
+    referanse: '33334444234123',
+    navn: 'Sopra Steria',
+    fødselsdato: null,
+  },
+};
 
 describe('<TotalbelopPrArbeidsgiverError>', () => {
   it('skal lage liste for to arbeidsforhold for samme arbeidsgiver', () => {
@@ -29,14 +36,19 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
         inntektskategori: 'ARBEIDSTAKER',
       },
     ];
-    const fellesGrunnlag = lagTotalInntektArbeidsforholdList(andeler, () => true, () => false, getKodeverknavn);
+    const fellesGrunnlag = lagTotalInntektArbeidsforholdList(
+      andeler,
+      () => true,
+      () => false,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(fellesGrunnlag.length).to.equal(1);
     expect(fellesGrunnlag[0].fastsattBelop).to.equal(30000);
     expect(fellesGrunnlag[0].beregningsgrunnlagPrAar).to.equal(20000);
     expect(fellesGrunnlag[0].arbeidsgiverNavn).to.equal('Sopra Steria (33334444234123)');
     expect(fellesGrunnlag[0].key).to.equal('Sopra Steria (33334444234123)');
   });
-
 
   it('skal lage liste for AAP og arbeidsgiver som søker refusjon som overstiger beregningsgrunnlag', () => {
     const andeler = [
@@ -55,7 +67,13 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
         inntektskategori: 'ARBEIDSTAKER',
       },
     ];
-    const fellesGrunnlag = lagTotalInntektArbeidsforholdList(andeler, () => false, () => true, getKodeverknavn);
+    const fellesGrunnlag = lagTotalInntektArbeidsforholdList(
+      andeler,
+      () => false,
+      () => true,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(fellesGrunnlag.length).to.equal(3);
     expect(fellesGrunnlag[0].fastsattBelop).to.equal(30000);
     expect(fellesGrunnlag[0].beregningsgrunnlagPrAar).to.equal(50000);
@@ -93,7 +111,13 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
         nyttArbeidsforhold: true,
       },
     ];
-    const fellesGrunnlag = lagTotalInntektArbeidsforholdList(andeler, () => true, () => false, getKodeverknavn);
+    const fellesGrunnlag = lagTotalInntektArbeidsforholdList(
+      andeler,
+      () => true,
+      () => false,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(fellesGrunnlag.length).to.equal(0);
   });
 });

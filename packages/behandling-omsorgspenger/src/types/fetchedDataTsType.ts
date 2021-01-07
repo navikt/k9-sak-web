@@ -1,6 +1,7 @@
 import {
   Aksjonspunkt,
   Beregningsgrunnlag,
+  ArbeidsgiverOpplysningerPerId,
   Personopplysninger,
   SimuleringResultat,
   Soknad,
@@ -18,6 +19,9 @@ interface FetchedData {
   beregningsgrunnlag: Beregningsgrunnlag;
   simuleringResultat: SimuleringResultat;
   forbrukteDager: ÅrskvantumForbrukteDager;
+  arbeidsgivere: {
+    arbeidsgivere: ArbeidsgiverOpplysningerPerId;
+  };
 }
 
 export default FetchedData;

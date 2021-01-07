@@ -123,6 +123,7 @@ describe('accessSupport', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected =
         validFagsakStatuserKlage.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å godkjenne klage', expected, fagsakStatus, behandlingStatus), () => {
         const access = godkjenningsFaneAccess(
           saksbehandlerOgBeslutterAnsatt,
@@ -138,6 +139,7 @@ describe('accessSupport', () => {
 
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+      // eslint-disable-next-line jest/valid-title
       it(getTestName('tilgang til å overstyre', expected, fagsakStatus, behandlingStatus), () => {
         const access = godkjenningsFaneAccess(
           saksbehandlerOgBeslutterAnsatt,
@@ -187,6 +189,7 @@ describe('accessSupport', () => {
       forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
         const expected =
           validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+        // eslint-disable-next-line jest/valid-title
         it(getTestName('tilgang til å sende melding', expected, fagsakStatus, behandlingStatus), () => {
           const access = sendMeldingAccess(
             saksbehandlerAnsatt,
@@ -224,6 +227,7 @@ describe('accessSupport', () => {
       forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
         const expected =
           validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
+        // eslint-disable-next-line jest/valid-title
         it(getTestName('tilgang til å sende melding', expected, fagsakStatus, behandlingStatus), () => {
           const access = sendMeldingAccess(
             saksbehandlerOgBeslutterAnsatt,

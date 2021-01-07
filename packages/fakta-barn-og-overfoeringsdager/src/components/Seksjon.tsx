@@ -11,7 +11,7 @@ interface SeksjonProps {
   imgSrc: string;
   title: {
     id: string;
-    values?: object;
+    values?: any;
   };
   bakgrunn: 'grå' | 'hvit';
 }

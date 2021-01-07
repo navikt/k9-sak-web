@@ -59,6 +59,7 @@ const ownProps = {
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId: {},
   isAksjonspunktClosed: false,
 };
 
@@ -151,6 +152,7 @@ describe('<InntektFieldArray>', () => {
         meta={{}}
         readOnly={false}
         beregningsgrunnlag={bg}
+        arbeidsgiverOpplysningerPerId={{}}
         {...ownProps}
         {...props}
       />,
@@ -181,6 +183,7 @@ describe('<InntektFieldArray>', () => {
         readOnly={false}
         skalFastsetteSN={false}
         beregningsgrunnlag={bg}
+        arbeidsgiverOpplysningerPerId={{}}
         {...ownProps}
         {...props}
       />,
@@ -210,6 +213,7 @@ describe('<InntektFieldArray>', () => {
         meta={{}}
         readOnly={false}
         beregningsgrunnlag={bg}
+        arbeidsgiverOpplysningerPerId={{}}
         {...props}
         {...ownProps}
         skalFastsetteSN
@@ -248,6 +252,7 @@ describe('<InntektFieldArray>', () => {
         meta={{}}
         readOnly={false}
         beregningsgrunnlag={newbg}
+        arbeidsgiverOpplysningerPerId={{}}
         {...ownProps}
         {...newprops}
       />,

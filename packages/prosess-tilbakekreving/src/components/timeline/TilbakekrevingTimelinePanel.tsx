@@ -7,7 +7,7 @@ interface OwnProps {
   perioder: TidslinjePeriode[];
   valgtPeriode?: TidslinjePeriode;
   setPeriode: (periode: TidslinjePeriode) => void;
-  toggleDetaljevindu: (event: MouseEvent) => void
+  toggleDetaljevindu: (event: MouseEvent) => void;
   kjonn: string;
   hjelpetekstKomponent: React.ReactNode;
 }
@@ -26,13 +26,10 @@ class TilbakekrevingTimelinePanel extends Component<OwnProps, OwnState> {
     };
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps: OwnProps) {
-    const {
-      valgtPeriode: vPeriode,
-    } = nextProps;
-    const {
-      valgtPeriode,
-    } = this.state;
+    const { valgtPeriode: vPeriode } = nextProps;
+    const { valgtPeriode } = this.state;
 
     if (vPeriode !== valgtPeriode) {
       this.setState((state: any) => ({ ...state, valgtPeriode: vPeriode }));
@@ -47,18 +44,11 @@ class TilbakekrevingTimelinePanel extends Component<OwnProps, OwnState> {
       this.setState({ valgtPeriode });
     }
     eventProps.event.preventDefault();
-  }
+  };
 
   render() {
-    const {
-      perioder,
-      toggleDetaljevindu,
-      hjelpetekstKomponent,
-      kjonn,
-    } = this.props;
-    const {
-      valgtPeriode,
-    } = this.state;
+    const { perioder, toggleDetaljevindu, hjelpetekstKomponent, kjonn } = this.props;
+    const { valgtPeriode } = this.state;
 
     return (
       <TilbakekrevingTimeline

@@ -46,10 +46,13 @@ const lagTableRow = (
   erOverstyrt,
   harAksjonspunkt,
   fieldArrayID,
+  arbeidsgiverOpplysningerPerId,
 ) => (
   <TableRow key={lagAktivitetFieldId(aktivitet)}>
     <TableColumn>
-      <Normaltekst>{createVisningsnavnForAktivitet(aktivitet, alleKodeverk)}</Normaltekst>
+      <Normaltekst>
+        {createVisningsnavnForAktivitet(aktivitet, alleKodeverk, arbeidsgiverOpplysningerPerId)}
+      </Normaltekst>
     </TableColumn>
     <TableColumn>
       <Normaltekst>
@@ -135,6 +138,7 @@ export const VurderAktiviteterTabell = ({
   erOverstyrt,
   harAksjonspunkt,
   fieldArrayID,
+  arbeidsgiverOpplysningerPerId,
 }) => (
   <>
     <Element>{finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}</Element>
@@ -148,6 +152,7 @@ export const VurderAktiviteterTabell = ({
           erOverstyrt,
           harAksjonspunkt,
           fieldArrayID,
+          arbeidsgiverOpplysningerPerId,
         ),
       )}
     </Table>
@@ -163,6 +168,7 @@ VurderAktiviteterTabell.propTypes = {
   erOverstyrt: PropTypes.bool.isRequired,
   harAksjonspunkt: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 VurderAktiviteterTabell.validate = (values, aktiviteter) => {
@@ -214,14 +220,20 @@ const skalBrukesPretufylling = (aktivitet, erOverstyrt, harAksjonspunkt) => {
   return aktivitet.skalBrukes === true || aktivitet.skalBrukes === null || aktivitet.skalBrukes === undefined;
 };
 
-const mapToInitialValues = (aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt) => ({
-  beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet, alleKodeverk),
+const mapToInitialValues = (aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt, arbeidsgiverOpplysningerPerId) => ({
+  beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet, alleKodeverk, arbeidsgiverOpplysningerPerId),
   fom: aktivitet.fom,
   tom: aktivitet.tom,
   skalBrukes: skalBrukesPretufylling(aktivitet, erOverstyrt, harAksjonspunkt),
 });
 
-VurderAktiviteterTabell.buildInitialValues = (aktiviteter, alleKodeverk, erOverstyrt, harAksjonspunkt) => {
+VurderAktiviteterTabell.buildInitialValues = (
+  aktiviteter,
+  alleKodeverk,
+  erOverstyrt,
+  harAksjonspunkt,
+  arbeidsgiverOpplysningerPerId,
+) => {
   if (!aktiviteter) {
     return {};
   }
@@ -232,6 +244,7 @@ VurderAktiviteterTabell.buildInitialValues = (aktiviteter, alleKodeverk, erOvers
       alleKodeverk,
       erOverstyrt,
       harAksjonspunkt,
+      arbeidsgiverOpplysningerPerId,
     );
   });
   return initialValues;

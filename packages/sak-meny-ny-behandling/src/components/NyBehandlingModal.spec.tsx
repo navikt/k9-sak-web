@@ -258,7 +258,7 @@ describe('<CreateNewBehandlingModal>', () => {
     expect(res).to.deep.include.members([behandlingArsakerFpTilbake[3], behandlingArsakerFpTilbake[2]]);
   });
 
-  xit('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype REVURDERING', () => {
+  it.skip('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype REVURDERING', () => {
     const ytelseType = {
       kode: fagsakYtelseType.REVURDERING,
     };

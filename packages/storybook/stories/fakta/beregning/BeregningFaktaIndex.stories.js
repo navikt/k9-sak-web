@@ -20,10 +20,10 @@ import {
   behandling as behandlingFlerePerioder,
 } from './scenario/ForSentRefusjonskravFlereBG';
 
-
 import withReduxProvider from '../../../decorators/withRedux';
 
 import alleKodeverk from '../../mocks/alleKodeverk.json';
+import arbeidsgivere from '../../mocks/arbeidsgivere.json';
 
 const skjæringstidspunkt = '2020-01-01';
 
@@ -33,15 +33,15 @@ const behandling = {
   behandlingsresultat: {
     vilkårResultat: {
       BEREGNINGSGRUNNLAGVILKÅR: [
-        { periode: {
-          fom: skjæringstidspunkt,
-        }
-        }
-      ]
-    }
-  }
+        {
+          periode: {
+            fom: skjæringstidspunkt,
+          },
+        },
+      ],
+    },
+  },
 };
-
 
 const {
   VURDER_MOTTAR_YTELSE,
@@ -204,6 +204,7 @@ export const ForSentRefusjonskravOgFlerePerioder = () => (
     aksjonspunkter={apFlerePerioder}
     erOverstyrer
     alleKodeverk={alleKodeverk}
+    arbeidsgivere={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}
@@ -213,7 +214,6 @@ export const ForSentRefusjonskravOgFlerePerioder = () => (
     submittable={boolean('submittable', true)}
   />
 );
-
 
 export const ArbeidOgDagpenger = () => (
   <BeregningFaktaIndex
@@ -225,6 +225,7 @@ export const ArbeidOgDagpenger = () => (
     aksjonspunkter={aksjonspunktArbeidOgDagpenger}
     erOverstyrer
     alleKodeverk={alleKodeverk}
+    arbeidsgivere={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}
@@ -271,6 +272,7 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -358,6 +360,7 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -395,8 +398,8 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     vurderMottarYtelse,
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
-    }
+      skjæringstidspunkt,
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
 
@@ -419,6 +422,7 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -452,8 +456,8 @@ export const DagpengerOgArbeidstakerMedVurderingAvBesteberegning = () => {
     vurderBesteberegning,
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
-    }
+      skjæringstidspunkt,
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
 
@@ -476,6 +480,7 @@ export const DagpengerOgArbeidstakerMedVurderingAvBesteberegning = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -509,8 +514,8 @@ export const KunArbeidstakerMedVurderingAvBesteberegning = () => {
     vurderBesteberegning,
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
-    }
+      skjæringstidspunkt,
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -532,6 +537,7 @@ export const KunArbeidstakerMedVurderingAvBesteberegning = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -567,9 +573,9 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
     refusjonskravSomKommerForSentListe,
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
-    }
-   };
+      skjæringstidspunkt,
+    },
+  };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
 
   return (
@@ -591,6 +597,7 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -629,8 +636,8 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
     vurderMottarYtelse,
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
-    }
+      skjæringstidspunkt,
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -652,6 +659,7 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -675,8 +683,8 @@ export const VurderingAvMilitær = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_MILITÆR_SIVILTJENESTE]),
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
-    }
+      skjæringstidspunkt,
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -698,6 +706,7 @@ export const VurderingAvMilitær = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -741,8 +750,8 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
     vurderMottarYtelse,
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
-    }
+      skjæringstidspunkt,
+    },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
   return (
@@ -764,6 +773,7 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -789,7 +799,7 @@ export const KunTidsbegrensetArbeidsforhold = () => {
     kortvarigeArbeidsforhold: [arbeidstakerBeregningsgrunnlagAndel],
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
+      skjæringstidspunkt,
     },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
@@ -812,6 +822,7 @@ export const KunTidsbegrensetArbeidsforhold = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -836,7 +847,7 @@ export const VurderingAvEtterlønnSluttpakke = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_ETTERLONN_SLUTTPAKKE]),
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
+      skjæringstidspunkt,
     },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
@@ -859,6 +870,7 @@ export const VurderingAvEtterlønnSluttpakke = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -887,7 +899,7 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
     andelerForFaktaOmBeregning,
     kunYtelse,
     avklarAktiviteter: {
-      skjæringstidspunkt
+      skjæringstidspunkt,
     },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
@@ -910,6 +922,7 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -933,7 +946,7 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
     faktaOmBeregningTilfeller: mapTilKodeliste([VURDER_SN_NY_I_ARBEIDSLIVET]),
     andelerForFaktaOmBeregning,
     avklarAktiviteter: {
-      skjæringstidspunkt
+      skjæringstidspunkt,
     },
   };
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
@@ -956,6 +969,7 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -1168,6 +1182,7 @@ export const KombinasjonstestForFaktapanel = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -1240,6 +1255,7 @@ export const OverstyringAvInntekt = () => {
       ]}
       erOverstyrer
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -1291,6 +1307,7 @@ export const VurderKunYtelseBesteberegning = () => {
       ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}

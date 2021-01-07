@@ -54,6 +54,21 @@ const arbeidsforholdList = [
   },
 ];
 
+const arbeidsgiverOpplysningerPerId = {
+  12338: {
+    identifikator: '12338',
+    referanse: '12338',
+    navn: 'Hansens bil og brems AS',
+    fødselsdato: null,
+  },
+  14235235235: {
+    identifikator: '14235235235',
+    referanse: '14235235235',
+    navn: 'Test',
+    fødselsdato: null,
+  },
+};
+
 describe('<RenderFordelBGFieldArray>', () => {
   it('skal ha selectvalues med Ytelse når kun ytelse', () => {
     const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId})...${siste4SifferIArbeidsforholdId}`;
@@ -71,6 +86,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -99,6 +115,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -151,6 +168,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -200,6 +218,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -263,6 +282,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -290,6 +310,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors).to.equal(null);
   });
@@ -313,29 +334,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
-    );
-    expect(errors).to.equal(null);
-  });
-
-  it('skal returnerer ingen errors for ingen refusjonskrav når skalKunneEndreRefusjon er false', () => {
-    const values = [];
-    const andel1 = {
-      refusjonskrav: '0',
-      fastsattBelop: '100 000',
-      belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: false,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: 10000,
-    };
-    values.push(andel1);
-    const errors = RenderFordelBGFieldArray.validate(
-      values,
-      100000,
-      skalValidereMotBeregningsgrunnlagPrAar,
-      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors).to.equal(null);
   });
@@ -359,30 +358,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
-    );
-    expect(errors[0].refusjonskrav).to.have.length(1);
-    expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
-  });
-
-  it('skal returnerer errors for ingen refusjonskrav når skalKunneEndreRefusjon er true', () => {
-    const values = [];
-    const andel1 = {
-      refusjonskrav: '',
-      fastsattBelop: '100 000',
-      belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: null,
-    };
-    values.push(andel1);
-    const errors = RenderFordelBGFieldArray.validate(
-      values,
-      100000,
-      skalValidereMotBeregningsgrunnlagPrAar,
-      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors[0].refusjonskrav).to.have.length(1);
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
@@ -417,6 +393,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
@@ -444,6 +421,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
@@ -471,6 +449,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors[0].fastsattBelop).to.have.length(1);
     expect(errors[0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
@@ -495,6 +474,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors[0].inntektskategori).to.have.length(1);
     expect(errors[0].inntektskategori[0].id).to.equal(isRequiredMessage()[0].id);
@@ -520,6 +500,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors[0].andel).to.have.length(1);
     expect(errors[0].andel[0].id).to.equal(isRequiredMessage()[0].id);
@@ -545,6 +526,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors).to.equal(null);
   });
@@ -558,7 +540,7 @@ describe('<RenderFordelBGFieldArray>', () => {
 
   it('lagBelopKolonne skal ikkje gi readOnly beløp om andel ikke skal redigere inntekt og det er readOnly', () => {
     const belopKolonne = lagBelopKolonne('test', true, true, false);
-    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.className).to.equal('rightAlignInput');
     expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
     expect(belopKolonne.props.children.props.isEdited).to.equal(false);
     expect(belopKolonne.props.children.props.readOnly).to.equal(true);
@@ -566,7 +548,7 @@ describe('<RenderFordelBGFieldArray>', () => {
 
   it('lagBelopKolonne skal ikkje gi readOnly beløp om andel skal redigere inntekt i uten readOnly', () => {
     const belopKolonne = lagBelopKolonne('test', false, false, false);
-    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.className).to.equal('rightAlignInput');
     expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
     expect(belopKolonne.props.children.props.isEdited).to.equal(false);
     expect(belopKolonne.props.children.props.readOnly).to.equal(false);
@@ -574,7 +556,7 @@ describe('<RenderFordelBGFieldArray>', () => {
 
   it('lagBelopKolonne skal gi fastsattBeløp med isEdited true om andel skal redigere inntekt i readOnly med aksjonspunkt lukket', () => {
     const belopKolonne = lagBelopKolonne('test', true, false, true);
-    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.className).to.equal('rightAlignInput');
     expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
     expect(belopKolonne.props.children.props.isEdited).to.equal(true);
     expect(belopKolonne.props.children.props.readOnly).to.equal(true);
@@ -582,7 +564,7 @@ describe('<RenderFordelBGFieldArray>', () => {
 
   it('lagBelopKolonne skal gi fastsattBeløp versjon med isEdited false om andel ikkje skal redigere inntekt i readOnly med aksjonspunkt lukket', () => {
     const belopKolonne = lagBelopKolonne('test', true, true, true);
-    expect(belopKolonne.props.className).to.equal(undefined);
+    expect(belopKolonne.props.className).to.equal('rightAlignInput');
     expect(belopKolonne.props.children.props.name).to.equal('test.fastsattBelop');
     expect(belopKolonne.props.children.props.isEdited).to.equal(false);
     expect(belopKolonne.props.children.props.readOnly).to.equal(true);

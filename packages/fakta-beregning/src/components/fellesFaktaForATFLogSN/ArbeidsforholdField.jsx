@@ -28,14 +28,21 @@ const fieldLabel = (index, labelId) => {
   return '';
 };
 
-const arbeidsgiverSelectValues = (arbeidsforholdList, alleKodeverk) =>
+const arbeidsgiverSelectValues = (arbeidsforholdList, alleKodeverk, arbeidsgiverOpplysningerPerId) =>
   arbeidsforholdList.map(arbeidsforhold => (
     <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
-      {createVisningsnavnForAktivitet(arbeidsforhold, alleKodeverk)}
+      {createVisningsnavnForAktivitet(arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId)}
     </option>
   ));
 
-export const ArbeidsforholdFieldImpl = ({ fields, index, name, readOnly, alleKodeverk }) => {
+export const ArbeidsforholdFieldImpl = ({
+  fields,
+  index,
+  name,
+  readOnly,
+  alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
+}) => {
   const arbeidsforholdList = getUniqueListOfArbeidsforholdFields(fields);
   return (
     <>
@@ -45,7 +52,7 @@ export const ArbeidsforholdFieldImpl = ({ fields, index, name, readOnly, alleKod
           name={name}
           bredde="l"
           label={fieldLabel(index, 'BeregningInfoPanel.FordelingBG.Andel')}
-          selectValues={arbeidsgiverSelectValues(arbeidsforholdList, alleKodeverk)}
+          selectValues={arbeidsgiverSelectValues(arbeidsforholdList, alleKodeverk, arbeidsgiverOpplysningerPerId)}
           readOnly={readOnly}
           onChange={event => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
         />
@@ -60,6 +67,7 @@ ArbeidsforholdFieldImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 export default ArbeidsforholdFieldImpl;

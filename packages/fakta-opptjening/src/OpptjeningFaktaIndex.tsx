@@ -1,4 +1,11 @@
-import { Aksjonspunkt, Opptjening, OpptjeningBehandling, SubmitCallback, UtlandDokStatus } from '@k9-sak-web/types';
+import {
+  Aksjonspunkt,
+  Opptjening,
+  OpptjeningBehandling,
+  SubmitCallback,
+  UtlandDokStatus,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
@@ -17,11 +24,12 @@ const intl = createIntl(
 
 interface OpptjeningFaktaIndexProps {
   behandling: OpptjeningBehandling;
-  opptjening: Opptjening;
+  opptjening?: Opptjening;
   aksjonspunkter: Aksjonspunkt[];
   alleMerknaderFraBeslutter: any;
-  utlandDokStatus: UtlandDokStatus;
+  utlandDokStatus?: UtlandDokStatus;
   alleKodeverk: AlleKodeverk;
+  arbeidsgivere: { arbeidsgivere: ArbeidsgiverOpplysningerPerId };
   submitCallback: (props: SubmitCallback[]) => void;
   readOnly: boolean;
   harApneAksjonspunkter: boolean;
@@ -35,6 +43,7 @@ const OpptjeningFaktaIndex = ({
   utlandDokStatus,
   alleMerknaderFraBeslutter,
   alleKodeverk,
+  arbeidsgivere,
   harApneAksjonspunkter,
   submittable,
   submitCallback,
@@ -52,6 +61,7 @@ const OpptjeningFaktaIndex = ({
       readOnly={readOnly}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
       harApneAksjonspunkter={harApneAksjonspunkter}
       submittable={submittable}
     />

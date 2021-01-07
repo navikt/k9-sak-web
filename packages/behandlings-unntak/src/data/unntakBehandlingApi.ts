@@ -51,6 +51,7 @@ export const UnntakBehandlingApiKeys = {
   TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
+  ARBEIDSGIVERE: 'ARBEIDSGIVERE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -83,6 +84,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('full-uttaksplan', UnntakBehandlingApiKeys.FULL_UTTAKSPLAN)
   .withRel('inntekt', UnntakBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('tilgjengelige-vedtaksbrev', UnntakBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('arbeidsgivere', UnntakBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', UnntakBehandlingApiKeys.UPDATE_ON_HOLD)

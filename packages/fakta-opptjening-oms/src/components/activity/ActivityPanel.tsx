@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, MouseEvent } from 'react';
+import React, { FunctionComponent, KeyboardEvent, MouseEvent } from 'react';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -26,7 +26,7 @@ import {
   required,
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
-import { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
@@ -107,6 +107,7 @@ export const activityPanelNameFormName = 'ActivityPanelForm';
 interface ActivityPanelProps {
   activity: Partial<OpptjeningAktivitet>;
   alleKodeverk: AlleKodeverk;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   alleMerknaderFraBeslutter: any;
   behandlingId: number;
   behandlingVersjon: number;
@@ -134,7 +135,9 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser informasjon om valgt aktivitet
  */
-export const ActivityPanel = ({
+export const ActivityPanel: FunctionComponent<
+  ActivityPanelProps & WrappedComponentProps & StateProps & InjectedFormProps
+> = ({
   intl,
   initialValues,
   readOnly,
@@ -152,7 +155,8 @@ export const ActivityPanel = ({
   alleMerknaderFraBeslutter,
   handleSubmit,
   pristine,
-}: ActivityPanelProps & WrappedComponentProps & StateProps & InjectedFormProps) => (
+  arbeidsgiverOpplysningerPerId,
+}) => (
   <FaktaGruppe
     className={styles.panel}
     merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}
@@ -218,6 +222,7 @@ export const ActivityPanel = ({
       readOnly={readOnly}
       isManuallyAdded={initialValues.erManueltOpprettet}
       selectedActivityType={selectedActivityType}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
     {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>

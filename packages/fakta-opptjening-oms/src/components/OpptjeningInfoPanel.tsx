@@ -1,11 +1,18 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, FastsattOpptjening, Opptjening, SubmitCallback, UtlandDokStatus } from '@k9-sak-web/types';
+import {
+  Aksjonspunkt,
+  FastsattOpptjening,
+  Opptjening,
+  SubmitCallback,
+  UtlandDokStatus,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -22,6 +29,7 @@ interface OpptjeningInfoPanelProps {
   alleMerknaderFraBeslutter: any;
   utlandDokStatus: UtlandDokStatus;
   alleKodeverk: AlleKodeverk;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   submitCallback: (props: SubmitCallback[]) => void;
   readOnly: boolean;
   harApneAksjonspunkter: boolean;
@@ -40,7 +48,7 @@ interface StateProps {
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Opptjeningsvilkåret.
  */
 
-export const OpptjeningInfoPanel = ({
+export const OpptjeningInfoPanel: FunctionComponent<OpptjeningInfoPanelProps & InjectedFormProps & StateProps> = ({
   harApneAksjonspunkter,
   readOnly,
   aksjonspunkt,
@@ -50,10 +58,11 @@ export const OpptjeningInfoPanel = ({
   dokStatus,
   alleMerknaderFraBeslutter,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   submitting,
   dirty,
   handleSubmit,
-}: OpptjeningInfoPanelProps & InjectedFormProps & StateProps) => (
+}) => (
   <form onSubmit={handleSubmit}>
     <OpptjeningFaktaForm
       behandlingId={behandlingId}
@@ -68,6 +77,7 @@ export const OpptjeningInfoPanel = ({
       isDirty={dirty}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
   </form>
 );

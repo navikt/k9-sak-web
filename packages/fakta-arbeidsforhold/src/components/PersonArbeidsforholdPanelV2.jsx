@@ -70,6 +70,7 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
     this.leggTilArbeidsforhold = this.leggTilArbeidsforhold.bind(this);
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { arbeidsforhold } = this.props;
     const selected = arbeidsforhold || undefined;

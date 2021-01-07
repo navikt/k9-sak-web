@@ -49,9 +49,9 @@ interface OwnProps {
 }
 
 interface DispatchProps {
-  fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
-  submitMessage: (data: {}) => Promise<any>;
-  setBehandlingOnHold: (params: {}) => void;
+  fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
+  submitMessage: (data: any) => Promise<any>;
+  setBehandlingOnHold: (params: any) => void;
   push: (param: string) => void;
   resetSubmitMessage: () => void;
 }
@@ -93,6 +93,19 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
     this.state = { showSettPaVentModal: false, showMessagesModal: false, submitCounter: undefined };
   }
 
+  handleSubmitFromModal(formValues) {
+    const { behandlingIdentifier, selectedBehandlingVersjon, setBehandlingOnHold: setOnHold } = this.props;
+    const values = {
+      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingVersjon: selectedBehandlingVersjon,
+      frist: formValues.frist,
+      ventearsak: formValues.ventearsak,
+    };
+    setOnHold(values);
+    this.hideSettPaVentModal();
+    this.goToSearchPage();
+  }
+
   submitCallback(values) {
     const { behandlingIdentifier, submitMessage, behandlingUuid, behandlingTypeKode } = this.props;
     const { submitCounter } = this.state;
@@ -129,19 +142,6 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
           submitCounter: submitCounter ? submitCounter + 1 : 1,
         }),
       );
-  }
-
-  handleSubmitFromModal(formValues) {
-    const { behandlingIdentifier, selectedBehandlingVersjon, setBehandlingOnHold: setOnHold } = this.props;
-    const values = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      behandlingVersjon: selectedBehandlingVersjon,
-      frist: formValues.frist,
-      ventearsak: formValues.ventearsak,
-    };
-    setOnHold(values);
-    this.hideSettPaVentModal();
-    this.goToSearchPage();
   }
 
   hideSettPaVentModal() {

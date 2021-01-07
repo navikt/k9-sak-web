@@ -25,6 +25,7 @@ const omsorgspengerData = [
   omsorgspengerBehandlingApi.BEREGNINGSGRUNNLAG,
   omsorgspengerBehandlingApi.SIMULERING_RESULTAT,
   omsorgspengerBehandlingApi.FORBRUKTE_DAGER,
+  omsorgspengerBehandlingApi.ARBEIDSGIVERE,
 ];
 
 interface OwnProps {
@@ -36,7 +37,7 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
-    setHandler: (events: { [key: string]: (params: {}) => Promise<any> }) => void;
+    setHandler: (events: { [key: string]: (params: any) => Promise<any> }) => void;
     clear: () => void;
   };
   opneSokeside: () => void;
@@ -51,14 +52,14 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  nyBehandlendeEnhet: (params: {}) => Promise<void>;
-  settBehandlingPaVent: (params: {}) => Promise<void>;
-  taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
-  henleggBehandling: (params: {}) => Promise<void>;
-  opneBehandlingForEndringer: (params: {}) => Promise<any>;
-  opprettVerge: (params: {}) => Promise<any>;
-  fjernVerge: (params: {}) => Promise<any>;
-  lagreRisikoklassifiseringAksjonspunkt: (params: {}) => Promise<any>;
+  nyBehandlendeEnhet: (params: any) => Promise<void>;
+  settBehandlingPaVent: (params: any) => Promise<void>;
+  taBehandlingAvVent: (params: any, { keepData: boolean }) => Promise<void>;
+  henleggBehandling: (params: any) => Promise<void>;
+  opneBehandlingForEndringer: (params: any) => Promise<any>;
+  opprettVerge: (params: any) => Promise<any>;
+  fjernVerge: (params: any) => Promise<any>;
+  lagreRisikoklassifiseringAksjonspunkt: (params: any) => Promise<any>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;

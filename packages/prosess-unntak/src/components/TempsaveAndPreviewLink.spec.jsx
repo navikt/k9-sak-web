@@ -12,7 +12,7 @@ describe('<TempSaveAndPreviewLink>', () => {
     begrunnelse: '',
   };
 
-  xit('Skal rendre komponent korrekt', () => {
+  it.skip('Skal rendre komponent korrekt', () => {
     const wrapper = shallow(
       <TempSaveAndPreviewLink
         formValues={formValuesWithEmptyStrings}
