@@ -4,17 +4,23 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
-export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk) => {
-  if (!aktivitet.arbeidsgiverNavn) {
+export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk, arbeidsgiverOpplysningerPerId) => {
+  const arbeidsgiverOpplysninger =
+    arbeidsgiverOpplysningerPerId && aktivitet.arbeidsgiverId
+      ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId]
+      : {};
+
+  const arbeidsgiverNavn = arbeidsgiverOpplysninger?.navn;
+
+  if (!arbeidsgiverNavn) {
     return aktivitet.arbeidsforholdType
       ? getKodeverknavnFn(alleKodeverk, kodeverkTyper)(aktivitet.arbeidsforholdType)
       : '';
   }
+
   return aktivitet.arbeidsgiverId
-    ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(
-        aktivitet.eksternArbeidsforholdId,
-      )}`
-    : aktivitet.arbeidsgiverNavn;
+    ? `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+    : arbeidsgiverNavn;
 };
 
 export const sortArbeidsforholdList = arbeidsforhold => {
@@ -45,6 +51,7 @@ export const getUniqueListOfArbeidsforholdFields = fields => {
   }
   fields.forEach((id, index) => {
     const field = fields.get(index);
+
     if (field.arbeidsgiverNavn !== null && !arbeidsforholdEksistererIListen(field, arbeidsgiverList)) {
       const arbeidsforholdObject = {
         andelsnr: field.andelsnr,

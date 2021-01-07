@@ -168,6 +168,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -190,6 +191,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -212,6 +214,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -235,6 +238,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -259,6 +263,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -283,6 +288,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -308,6 +314,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -334,6 +341,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -358,6 +366,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -386,6 +395,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}
@@ -408,6 +418,7 @@ describe('<Beregningsgrunnlag>', () => {
         readOnlySubmitButton
         gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
         behandlingVersjon={1}
         formName={formName}

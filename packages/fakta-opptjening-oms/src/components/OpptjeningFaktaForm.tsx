@@ -10,7 +10,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Opptjening } from '@k9-sak-web/types';
+import { Opptjening, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
@@ -73,6 +73,7 @@ interface OpptjeningFaktaFormImplProps {
   behandlingVersjon: number;
   alleMerknaderFraBeslutter: any;
   alleKodeverk: AlleKodeverk;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
   harApneAksjonspunkter: boolean;
   dokStatus: string;
@@ -281,6 +282,7 @@ export class OpptjeningFaktaFormImpl extends Component<
       behandlingVersjon,
       alleMerknaderFraBeslutter,
       alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
     } = this.props;
     if (!opptjeningList || opptjeningList.length === 0) {
       return <Normaltekst>Fant ingen opptjeningsaktiviteter</Normaltekst>;
@@ -369,6 +371,7 @@ export class OpptjeningFaktaFormImpl extends Component<
                 hasAksjonspunkt={hasAksjonspunkt}
                 alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
                 alleKodeverk={alleKodeverk}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               />
               <VerticalSpacer twentyPx />
             </>

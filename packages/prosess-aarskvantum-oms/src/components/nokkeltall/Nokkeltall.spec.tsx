@@ -4,9 +4,7 @@ import { mountWithIntl } from '../../../i18n';
 import Nokkeltall from './Nokkeltall';
 
 describe('<Nokkeltall>', () => {
-
   it('Viser detaljer dersom den er åpnet', () => {
-
     const wrapper = mountWithIntl(
       <Nokkeltall
         viserDetaljer

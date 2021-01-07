@@ -29,6 +29,7 @@ const BeregningsgrunnlagProsessIndex = ({
   isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
+  arbeidsgivere,
   fagsak,
 }) => (
   <RawIntlProvider value={intl}>
@@ -44,6 +45,7 @@ const BeregningsgrunnlagProsessIndex = ({
         isApOpen={isAksjonspunktOpen}
         vilkar={vilkar}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
       />
@@ -61,6 +63,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgivere: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape().isRequired,
 };
 

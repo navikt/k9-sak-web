@@ -28,11 +28,11 @@ const getSokerinfo = (personopplysninger: Personopplysninger, omsorgenFor: Omsor
     forhold: [
       {
         forholdstekst: 'SokerinfoTable.SokerErUnderSyttiAar',
-        erOppfylt: moment(moment()).diff(personopplysninger.fodselsdato, 'years') < 70,
+        erOppfylt: moment(moment()).diff(personopplysninger?.fodselsdato, 'years') < 70,
       },
       {
         forholdstekst: 'SokerinfoTable.BarnetErUnderAttenAar',
-        erOppfylt: moment(moment()).diff(personopplysninger.barnSoktFor[0].fodselsdato, 'years') < 18,
+        erOppfylt: moment(moment()).diff(personopplysninger?.barnSoktFor[0].fodselsdato, 'years') < 18,
       },
     ],
   };
@@ -42,15 +42,15 @@ const getSokerinfo = (personopplysninger: Personopplysninger, omsorgenFor: Omsor
     forhold: [
       {
         forholdstekst: 'SokerinfoTable.OmsorgenFor',
-        erOppfylt: omsorgenFor.harOmsorgenFor,
+        erOppfylt: omsorgenFor?.harOmsorgenFor,
       },
       {
         forholdstekst: 'SokerinfoTable.MorEllerFar',
-        erOppfylt: omsorgenFor.morEllerFar,
+        erOppfylt: omsorgenFor?.morEllerFar,
       },
       {
         forholdstekst: 'SokerinfoTable.SammeBosted',
-        erOppfylt: omsorgenFor.sammeBosted,
+        erOppfylt: omsorgenFor?.sammeBosted,
       },
     ],
   };

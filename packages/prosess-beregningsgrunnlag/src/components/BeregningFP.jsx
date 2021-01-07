@@ -107,6 +107,7 @@ export const BeregningFP = props => {
     readOnlySubmitButton,
     vilkar,
     alleKodeverk,
+    arbeidsgiverOpplysningerPerId,
     handleSubmit,
     // eslint-disable-next-line
     initialValues,
@@ -163,6 +164,7 @@ export const BeregningFP = props => {
               readOnly,
               vilkaarBG,
               alleKodeverk,
+              arbeidsgiverOpplysningerPerId,
             }}
           />
           {sokerHarGraderingPaaAndelUtenBG && (
@@ -179,6 +181,7 @@ export const BeregningFP = props => {
                 aksjonspunkter,
                 aktivtBeregningsgrunnlag,
                 alleKodeverk,
+                arbeidsgiverOpplysningerPerId,
               }}
             />
           )}
@@ -210,6 +213,7 @@ BeregningFP.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
   vilkar: PropTypes.arrayOf(beregningsgrunnlagVilkarPropType).isRequired,
   behandling: beregningsgrunnlagBehandlingPropType,

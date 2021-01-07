@@ -18,6 +18,10 @@ class InntektOgYtelserFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <InntektOgYtelser {...props} />;
 
   getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
+
+  getData = ({ arbeidsgivere }) => ({
+    arbeidsgivere,
+  });
 }
 
 export default InntektOgYtelserFaktaPanelDef;

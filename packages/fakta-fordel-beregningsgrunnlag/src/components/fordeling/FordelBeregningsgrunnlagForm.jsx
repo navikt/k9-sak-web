@@ -64,14 +64,16 @@ const sjekkOmPeriodeSkalLeggesTil = bgPerioder => (aggregatedPeriodList, periode
 export const slaaSammenPerioder = (perioder, bgPerioder) =>
   perioder.reduce(sjekkOmPeriodeSkalLeggesTil(bgPerioder), []);
 
-  const getFordelPerioder = (beregningsgrunnlag) => {
-    if (beregningsgrunnlag && beregningsgrunnlag.faktaOmFordeling
-      && beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag) {
-      return beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder || [];
-    }
-    return [];
-  };
-  
+const getFordelPerioder = beregningsgrunnlag => {
+  if (
+    beregningsgrunnlag &&
+    beregningsgrunnlag.faktaOmFordeling &&
+    beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag
+  ) {
+    return beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder || [];
+  }
+  return [];
+};
 
 /**
  * FordelBeregningsgrunnlagForm
@@ -104,32 +106,36 @@ export class FordelBeregningsgrunnlagForm extends Component {
       isAksjonspunktClosed,
       beregningsgrunnlag,
       alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
       behandlingType,
       grunnlagFieldId,
     } = this.props;
     const { openPanels } = this.state;
     return (
       <BorderBox className={styles.lessPadding}>
-        {slaaSammenPerioder(getFordelPerioder(beregningsgrunnlag), beregningsgrunnlag.beregningsgrunnlagPeriode).map((periode, index) => (
-          <React.Fragment key={grunnlagFieldId + fordelBGFieldArrayNamePrefix + periode.fom}>
-            <VerticalSpacer eightPx />
-            <FordelBeregningsgrunnlagPeriodePanel
-              readOnly={readOnly}
-              fordelBGFieldArrayName={`${grunnlagFieldId}.${getFieldNameKey(index)}`}
-              fom={periode.fom}
-              tom={periode.tom}
-              open={openPanels ? openPanels.filter(panel => panel === periode.fom).length > 0 : false}
-              harPeriodeAarsakGraderingEllerRefusjon={periode.harPeriodeAarsakGraderingEllerRefusjon}
-              isAksjonspunktClosed={isAksjonspunktClosed}
-              showPanel={this.showPanel}
-              beregningsgrunnlag={beregningsgrunnlag}
-              alleKodeverk={alleKodeverk}
-              behandlingType={behandlingType}
-              grunnlagFieldId={grunnlagFieldId}
-            />
-            <VerticalSpacer eightPx />
-          </React.Fragment>
-        ))}
+        {slaaSammenPerioder(getFordelPerioder(beregningsgrunnlag), beregningsgrunnlag.beregningsgrunnlagPeriode).map(
+          (periode, index) => (
+            <React.Fragment key={grunnlagFieldId + fordelBGFieldArrayNamePrefix + periode.fom}>
+              <VerticalSpacer eightPx />
+              <FordelBeregningsgrunnlagPeriodePanel
+                readOnly={readOnly}
+                fordelBGFieldArrayName={`${grunnlagFieldId}.${getFieldNameKey(index)}`}
+                fom={periode.fom}
+                tom={periode.tom}
+                open={openPanels ? openPanels.filter(panel => panel === periode.fom).length > 0 : false}
+                harPeriodeAarsakGraderingEllerRefusjon={periode.harPeriodeAarsakGraderingEllerRefusjon}
+                isAksjonspunktClosed={isAksjonspunktClosed}
+                showPanel={this.showPanel}
+                beregningsgrunnlag={beregningsgrunnlag}
+                alleKodeverk={alleKodeverk}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                behandlingType={behandlingType}
+                grunnlagFieldId={grunnlagFieldId}
+              />
+              <VerticalSpacer eightPx />
+            </React.Fragment>
+          ),
+        )}
       </BorderBox>
     );
   }
@@ -140,6 +146,7 @@ FordelBeregningsgrunnlagForm.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
   grunnlagFieldId: PropTypes.string.isRequired,
 };
@@ -149,7 +156,12 @@ export const finnSumIPeriode = (bgPerioder, fom) => {
   return periode.bruttoPrAar;
 };
 
-FordelBeregningsgrunnlagForm.validate = (values, beregningsgrunnlag, getKodeverknavn) => {
+FordelBeregningsgrunnlagForm.validate = (
+  values,
+  beregningsgrunnlag,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
+) => {
   const errors = {};
   const fordelBGPerioder = getFordelPerioder(beregningsgrunnlag);
   if (fordelBGPerioder && fordelBGPerioder.length > 0) {
@@ -166,6 +178,7 @@ FordelBeregningsgrunnlagForm.validate = (values, beregningsgrunnlag, getKodeverk
         sumIPeriode,
         skalValidereMotBeregningsgrunnlagPrAar,
         getKodeverknavn,
+        arbeidsgiverOpplysningerPerId,
         grunnbeløp,
         periodeDato,
       );
@@ -177,7 +190,7 @@ FordelBeregningsgrunnlagForm.validate = (values, beregningsgrunnlag, getKodeverk
 const finnRiktigBgPeriode = (periode, bgPerioder) =>
   bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === periode.fom);
 
-FordelBeregningsgrunnlagForm.buildInitialValues = (bg, getKodeverknavn) => {
+FordelBeregningsgrunnlagForm.buildInitialValues = (bg, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   const initialValues = {};
   const fordelBGPerioder = getFordelPerioder(bg);
   if (!fordelBGPerioder) {
@@ -193,6 +206,7 @@ FordelBeregningsgrunnlagForm.buildInitialValues = (bg, getKodeverknavn) => {
       bg.skjaeringstidspunktBeregning,
       harKunYtelse,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
   });
   return initialValues;

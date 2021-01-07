@@ -51,17 +51,13 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   dispatch,
   featureToggles,
 }) => {
-  const { aksjonspunkter, soknad, vilkar, personopplysninger, beregningsgrunnlag, forbrukteDager } = data;
+  const { aksjonspunkter, ...rest } = data;
 
   const dataTilUtledingAvFpPaneler = {
     fagsak,
     behandling,
-    soknad,
-    vilkar,
-    personopplysninger,
-    beregningsgrunnlag,
     hasFetchError,
-    forbrukteDager,
+    ...rest,
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(

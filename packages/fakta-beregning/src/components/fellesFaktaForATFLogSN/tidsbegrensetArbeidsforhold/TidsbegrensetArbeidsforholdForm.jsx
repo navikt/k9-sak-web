@@ -29,16 +29,23 @@ export const TidsbegrensetArbeidsforholdFormImpl = ({
   andelsliste,
   isAksjonspunktClosed,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   fieldArrayID,
 }) => (
   <div>
     {andelsliste.map(andel => (
-      <div key={`fastsettTidsbegrensedeForhold_${createVisningsnavnForAktivitet(andel.arbeidsforhold, alleKodeverk)}`}>
+      <div
+        key={`fastsettTidsbegrensedeForhold_${createVisningsnavnForAktivitet(
+          andel.arbeidsforhold,
+          alleKodeverk,
+          arbeidsgiverOpplysningerPerId,
+        )}`}
+      >
         <Normaltekst>
           <FormattedMessage
             id={kortvarigStringId}
             values={{
-              navn: createVisningsnavnForAktivitet(andel.arbeidsforhold, alleKodeverk),
+              navn: createVisningsnavnForAktivitet(andel.arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId),
               fom: moment(andel.arbeidsforhold.startdato).format(DDMMYYYY_DATE_FORMAT),
               tom: moment(andel.arbeidsforhold.opphoersdato).format(DDMMYYYY_DATE_FORMAT),
             }}
@@ -64,6 +71,7 @@ TidsbegrensetArbeidsforholdFormImpl.propTypes = {
   andelsliste: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 

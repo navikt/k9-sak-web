@@ -29,6 +29,21 @@ const beregningsgrunnlag = {
   ],
 };
 
+const arbeidsgiverOpplysningerPerId = {
+  3284788923: {
+    identifikator: '3284788923',
+    referanse: '3284788923',
+    navn: 'Virksomheten',
+    fødselsdato: null,
+  },
+  843597943435: {
+    identifikator: '843597943435',
+    referanse: '843597943435',
+    navn: 'Virksomheten2',
+    fødselsdato: null,
+  },
+};
+
 const arbeidsforhold = {
   arbeidsgiverNavn: 'Virksomheten',
   arbeidsgiverId: '3284788923',
@@ -171,6 +186,7 @@ describe('<VurderMottarYtelseForm>', () => {
         erFrilans
         arbeidsforholdUtenIM={[]}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
     const flRadio = wrapper.find(RadioGroupField);
@@ -191,6 +207,7 @@ describe('<VurderMottarYtelseForm>', () => {
         erFrilans
         arbeidsforholdUtenIM={[]}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
     const flRadio = wrapper.find(RadioGroupField);
@@ -211,6 +228,7 @@ describe('<VurderMottarYtelseForm>', () => {
         erFrilans={false}
         arbeidsforholdUtenIM={arbeidstakerAndelerUtenIM}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
     const atRadio = wrapper.find(RadioGroupField);

@@ -13,6 +13,21 @@ import PersonArbeidsforholdPanel, {
   sortArbeidsforhold,
 } from './PersonArbeidsforholdPanel';
 
+const arbeidsgiverOpplysningerPerId = {
+  1234567: {
+    identifikator: '1234567',
+    referanse: '1234567',
+    navn: 'Svendsen Eksos',
+    fødselsdato: null,
+  },
+  2345678: {
+    identifikator: '2345678',
+    referanse: '2345678',
+    navn: 'Nav',
+    fødselsdato: null,
+  },
+};
+
 describe('<PersonArbeidsforholdPanel>', () => {
   const arbeidsforhold = {
     id: '1',
@@ -64,6 +79,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -93,6 +109,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -118,6 +135,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -144,6 +162,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -174,6 +193,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -203,6 +223,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -227,6 +248,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -264,6 +286,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -325,6 +348,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -384,12 +408,13 @@ describe('<PersonArbeidsforholdPanel>', () => {
     };
     const arbeidsforhold5 = {
       ...arbeidsforhold,
+      arbeidsgiverIdentifikator: '2345678',
       navn: 'Nav',
       mottattDatoInntektsmelding: '2018-01-01',
     };
 
     const arbeidsforholdListe = [arbeidsforhold, arbeidsforhold2, arbeidsforhold3, arbeidsforhold4, arbeidsforhold5];
-    const sorterteArbeidsforhol = sortArbeidsforhold(arbeidsforholdListe);
+    const sorterteArbeidsforhol = sortArbeidsforhold(arbeidsforholdListe, arbeidsgiverOpplysningerPerId);
 
     expect(sorterteArbeidsforhol).is.eql([
       arbeidsforhold5,
@@ -418,7 +443,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       brukArbeidsforholdet: true,
     };
 
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold, oldArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold, oldArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
 
     expect(initialValues).is.eql({
       arbeidsforhold: [
@@ -546,6 +574,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -597,6 +626,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -648,6 +678,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -699,6 +730,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -750,6 +782,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -801,6 +834,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -827,6 +861,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -853,6 +888,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -908,6 +944,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -969,6 +1006,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleMerknaderFraBeslutter={{}}
       />,
     );
@@ -1011,7 +1049,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       tilVurdering: false,
       erEndret: false,
     };
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold, oldArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold, oldArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).is.eql({
       arbeidsforhold: [
         {
@@ -1039,7 +1080,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ...arbeidsforhold,
       brukMedJustertPeriode: true,
     };
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).is.eql({
       arbeidsforhold: [
         {
@@ -1067,7 +1111,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ],
       brukPermisjon: true,
     };
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).is.eql({
       arbeidsforhold: [
         {
@@ -1087,7 +1134,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ...arbeidsforhold,
       brukArbeidsforholdet: false,
     };
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).is.eql({
       arbeidsforhold: [
         {
@@ -1108,7 +1158,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       brukMedJustertPeriode: false,
       fortsettBehandlingUtenInntektsmelding: false,
     };
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).is.eql({
       arbeidsforhold: [
         {
@@ -1129,7 +1182,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       brukMedJustertPeriode: false,
       inntektMedTilBeregningsgrunnlag: false,
     };
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).is.eql({
       arbeidsforhold: [
         {
@@ -1150,7 +1206,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       brukMedJustertPeriode: false,
       fortsettBehandlingUtenInntektsmelding: true,
     };
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).is.eql({
       arbeidsforhold: [
         {
@@ -1179,7 +1238,10 @@ describe('<PersonArbeidsforholdPanel>', () => {
       ],
       fortsettBehandlingUtenInntektsmelding: true,
     };
-    const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);
+    const initialValues = PersonArbeidsforholdPanel.buildInitialValues(
+      [newArbeidsforhold],
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).is.eql({
       arbeidsforhold: [
         {

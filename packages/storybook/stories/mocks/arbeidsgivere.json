@@ -1,0 +1,94 @@
+{
+  "arbeidsgivere": {
+    "12345678": {
+      "referanse": "12345678",
+      "identifikator": "12345678",
+      "navn": "A.Bedriften",
+      "fødselsdato": null
+    },
+    "12345679": {
+      "referanse": "12345679",
+      "identifikator": "12345679",
+      "navn": "A.Bedriften2",
+      "fødselsdato": null
+    },
+    "12345671": {
+      "referanse": "12345671",
+      "identifikator": "12345671",
+      "navn": "A.Bedriften3",
+      "fødselsdato": null
+    },
+    "795349533": {
+      "referanse": "795349533",
+      "identifikator": "795349533",
+      "navn": "A.Bedriften4",
+      "fødselsdato": null
+    },
+    "910909088": {
+      "referanse": "910909088",
+      "identifikator": "910909088",
+      "navn": "A.BEDRIFT AS",
+      "fødselsdato": null
+    },
+    "9109090881": {
+      "referanse": "9109090881",
+      "identifikator": "9109090881",
+      "navn": "a.BEDRIFT AS 1",
+      "fødselsdato": null
+    },
+    "9109090882": {
+      "referanse": "9109090882",
+      "identifikator": "9109090882",
+      "navn": "a.BEDRIFT AS 2",
+      "fødselsdato": null
+    },
+    "9109090883": {
+      "referanse": "9109090883",
+      "identifikator": "9109090883",
+      "navn": "a.BEDRIFT AS 3",
+      "fødselsdato": null
+    },
+    "11212": {
+      "referanse": "11212",
+      "identifikator": "11212",
+      "navn": "A.BEDRIFT AS",
+      "fødselsdato": null
+    },
+    "999999999": {
+      "referanse": "999999999",
+      "identifikator": "999999999",
+      "navn": "A.BEDRIFT AS",
+      "fødselsdato": null
+    },
+    "973861778": {
+      "referanse": "973861778",
+      "identifikator": "973861778",
+      "navn": "A.EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET",
+      "fødselsdato": null
+    },
+    "987654321": {
+      "referanse": "987654321",
+      "identifikator": "987654321",
+      "navn": "A.Andeby bank",
+      "fødselsdato": null
+    },
+    "9478541223": {
+      "referanse": "9478541223",
+      "identifikator": "9478541223",
+      "navn": "A.Gardslien transport og Gardiner AS",
+      "fødselsdato": null
+    },
+    "9478541255": {
+      "referanse": "9478541255",
+      "identifikator": "9478541255",
+      "navn": "A.Aldersheimen Omsorg",
+      "fødselsdato": null
+    },
+    "93178545": {
+      "referanse": "93178545",
+      "identifikator": "93178545",
+      "navn": "A.Svaneby sykehjem",
+      "fødselsdato": null
+    }
+  }
+}

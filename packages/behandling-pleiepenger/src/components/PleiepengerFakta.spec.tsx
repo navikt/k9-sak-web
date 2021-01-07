@@ -127,6 +127,9 @@ describe('<PleiepengerFakta>', () => {
       aksjonspunkter,
       vilkar,
       personopplysninger: soker,
+      arbeidsgivere: {
+        arbeidsgivere: {},
+      },
     };
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
@@ -171,6 +174,9 @@ describe('<PleiepengerFakta>', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
+      arbeidsgivere: {
+        arbeidsgivere: {},
+      },
     };
 
     const wrapper = shallowWithIntl(
@@ -206,6 +212,9 @@ describe('<PleiepengerFakta>', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
+      arbeidsgivere: {
+        arbeidsgivere: {},
+      },
     };
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent

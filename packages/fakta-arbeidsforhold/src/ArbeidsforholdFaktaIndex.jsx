@@ -10,10 +10,13 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const ArbeidsforholdFaktaIndex = ({
   behandling,
@@ -24,6 +27,7 @@ const ArbeidsforholdFaktaIndex = ({
   harApneAksjonspunkter,
   submitCallback,
   readOnly,
+  arbeidsgivere,
 }) => (
   <RawIntlProvider value={intl}>
     <ArbeidsforholdInfoPanel
@@ -31,13 +35,16 @@ const ArbeidsforholdFaktaIndex = ({
       behandlingVersjon={behandling.versjon}
       arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={
+        inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding
+      }
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}
       hasOpenAksjonspunkter={harApneAksjonspunkter}
       submitCallback={submitCallback}
       readOnly={readOnly}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
     />
   </RawIntlProvider>
 );
@@ -53,6 +60,7 @@ ArbeidsforholdFaktaIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
+  arbeidsgivere: PropTypes.shape().isRequired,
 };
 
 export default ArbeidsforholdFaktaIndex;

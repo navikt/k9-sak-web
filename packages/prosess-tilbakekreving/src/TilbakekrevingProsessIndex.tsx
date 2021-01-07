@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Aksjonspunkt, Behandling, KodeverkMedNavn } from "@k9-sak-web/types";
+import { Aksjonspunkt, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import TilbakekrevingForm from './components/TilbakekrevingForm';
-import FeilutbetalingPerioderWrapper from "./types/feilutbetalingPerioderTsType";
-import DetaljerteFeilutbetalingsperioder from "./types/detaljerteFeilutbetalingsperioderTsType";
-import VilkarsVurdertePerioderWrapper from "./types/vilkarsVurdertePerioderTsType";
+import FeilutbetalingPerioderWrapper from './types/feilutbetalingPerioderTsType';
+import DetaljerteFeilutbetalingsperioder from './types/detaljerteFeilutbetalingsperioderTsType';
+import VilkarsVurdertePerioderWrapper from './types/vilkarsVurdertePerioderTsType';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -25,12 +25,12 @@ interface OwnProps {
   vilkarvurderingsperioder: DetaljerteFeilutbetalingsperioder;
   vilkarvurdering: VilkarsVurdertePerioderWrapper;
   navBrukerKjonn: string;
-  alleMerknaderFraBeslutter: { [key: string] : { notAccepted?: boolean }};
+  alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
   beregnBelop: (data: any) => Promise<any>;
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
   isReadOnly: boolean;
   readOnlySubmitButton: boolean;
-  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   aksjonspunkter: Aksjonspunkt[];
 }
 
@@ -59,7 +59,7 @@ const TilbakekrevingProsessIndex: FunctionComponent<OwnProps> = ({
       submitCallback={submitCallback}
       readOnly={isReadOnly}
       // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
-      apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+      apCodes={Array.isArray(aksjonspunkter) && aksjonspunkter.map(a => a.definisjon.kode)}
       readOnlySubmitButton={readOnlySubmitButton}
       navBrukerKjonn={navBrukerKjonn}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}

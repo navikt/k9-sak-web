@@ -21,6 +21,7 @@ const unntakData = [
   unntakBehandlingApi.BEREGNINGSRESULTAT_UTBETALING,
   unntakBehandlingApi.SIMULERING_RESULTAT,
   unntakBehandlingApi.FORBRUKTE_DAGER,
+  unntakBehandlingApi.ARBEIDSGIVERE,
 ];
 
 interface OwnProps {

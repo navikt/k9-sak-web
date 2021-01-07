@@ -88,6 +88,7 @@ const finnInntektstabell = (
   beregningsgrunnlag,
   isAksjonspunktClosed,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   fieldArrayID,
 ) => (
   <FieldArray
@@ -99,6 +100,7 @@ const finnInntektstabell = (
     behandlingVersjon={behandlingVersjon}
     beregningsgrunnlag={beregningsgrunnlag}
     alleKodeverk={alleKodeverk}
+    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     isAksjonspunktClosed={isAksjonspunktClosed}
   />
 );
@@ -127,6 +129,7 @@ const VurderOgFastsettATFL = ({
   behandlingVersjon,
   aksjonspunkter,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   erOverstyrer,
   fieldArrayID,
 }) => (
@@ -140,6 +143,7 @@ const VurderOgFastsettATFL = ({
         beregningsgrunnlag,
         isAksjonspunktClosed,
         alleKodeverk,
+        arbeidsgiverOpplysningerPerId,
         fieldArrayID,
       )}
       skalViseTabell={skalViseTabell}
@@ -365,6 +369,7 @@ VurderOgFastsettATFL.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,

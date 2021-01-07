@@ -246,10 +246,10 @@ export const buildInitialValues = createSelector(
     aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
-      vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
+      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
     skalUndertrykkeBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
-      vedtakVarsel.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
+      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
     begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],

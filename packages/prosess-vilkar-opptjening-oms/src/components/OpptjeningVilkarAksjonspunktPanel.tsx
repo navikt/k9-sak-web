@@ -79,7 +79,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
   );
 
   const isFormComplete = () => {
-    const isAllTabsCreated = opptjeninger.length === vilkarFields?.length;
+    const isAllTabsCreated = Array.isArray(opptjeninger) && opptjeninger.length === vilkarFields?.length;
     return isAllTabsCreated
       ? !vilkarFields.some(vilkarField => !vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined)
       : false;
@@ -126,7 +126,7 @@ export const buildInitialValues = createSelector(
     ownProps => ownProps.status,
   ],
   (vilkårsresultat, aksjonspunkter, status) => ({
-    ...VilkarResultPicker.buildInitialValues(vilkårsresultat.avslagsårsak.kode, aksjonspunkter, status),
+    ...VilkarResultPicker.buildInitialValues(vilkårsresultat?.avslagsårsak?.kode, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
@@ -138,10 +138,12 @@ interface Values {
 const transformValues = (values: Values, aksjonspunkter: Aksjonspunkt[], opptjeninger: Opptjening[]) => ({
   vilkårPerioder: values.vilkarFields.map((vilkarField, index) => ({
     ...vilkarField,
-    opptjeningFom: opptjeninger[index].fastsattOpptjening.opptjeningFom,
-    opptjeningTom: opptjeninger[index].fastsattOpptjening.opptjeningTom,
+    opptjeningFom:
+      Array.isArray(opptjeninger) && opptjeninger[index] && opptjeninger[index].fastsattOpptjening.opptjeningFom,
+    opptjeningTom:
+      Array.isArray(opptjeninger) && opptjeninger[index] && opptjeninger[index].fastsattOpptjening.opptjeningTom,
   })),
-  ...{ kode: aksjonspunkter[0].definisjon.kode },
+  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon.kode : null },
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {

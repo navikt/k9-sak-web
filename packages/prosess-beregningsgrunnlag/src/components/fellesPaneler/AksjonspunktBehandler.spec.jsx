@@ -56,6 +56,7 @@ describe('<AksjonspunktBehandler>', () => {
         readOnlySubmitButton
         allePerioder={allePerioder}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         tidsBegrensetInntekt={false}
         fieldArrayID="dummyId"
@@ -93,6 +94,7 @@ describe('<AksjonspunktBehandler>', () => {
         readOnlySubmitButton
         allePerioder={allePerioder}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         tidsBegrensetInntekt={false}
         intl={intlMock}
@@ -130,6 +132,7 @@ describe('<AksjonspunktBehandler>', () => {
         readOnlySubmitButton
         allePerioder={allePerioder}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         tidsBegrensetInntekt={false}
         intl={intlMock}
@@ -167,6 +170,7 @@ describe('<AksjonspunktBehandler>', () => {
         readOnlySubmitButton
         allePerioder={allePerioder}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         tidsBegrensetInntekt
         intl={intlMock}
@@ -217,6 +221,7 @@ describe('<AksjonspunktBehandler>', () => {
         readOnlySubmitButton
         allePerioder={perioderMedSNAndel}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
         tidsBegrensetInntekt={false}
         erNyArbLivet

@@ -9,13 +9,13 @@ const alleKodeverk = {
   test: 'test',
 };
 
-const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, skalFastsetteGrunnlag) => ({
+const mockAndel = (arbeidsgiverNavn, arbeidsgiverId, overstyrtPrAar, beregnetPrAar, skalFastsetteGrunnlag) => ({
   aktivitetStatus: {
     kode: aktivitetStatus.ARBEIDSTAKER,
   },
   arbeidsforhold: {
     arbeidsgiverNavn,
-    arbeidsgiverId: '123',
+    arbeidsgiverId,
     arbeidsforholdId: '123',
     eksternArbeidsforholdId: '345678',
     startdato: '2018-10-09',
@@ -24,14 +24,34 @@ const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, skalFastsett
   overstyrtPrAar,
   skalFastsetteGrunnlag,
 });
+
+const arbeidsgiverOpplysningerPerId = {
+  123: {
+    identifikator: '123',
+    referanse: '123',
+    navn: 'Arbeidsgiver 1',
+    fødselsdato: null,
+  },
+  456: {
+    identifikator: '456',
+    referanse: '456',
+    navn: 'Arbeidsgiver 2',
+    fødselsdato: null,
+  },
+};
+
 describe('<AksjonspunktBehandlerAT>', () => {
   it('Skal teste tabellen får korrekte rader readonly=false', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, true), mockAndel('Arbeidsgiver 2', 100, 200000, true)];
+    const andeler = [
+      mockAndel('Arbeidsgiver 1', '123', 100, 200000, true),
+      mockAndel('Arbeidsgiver 2', '456', 100, 200000, true),
+    ];
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandlerAT
         readOnly={false}
         alleAndelerIForstePeriode={andeler}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
       />,
     );
@@ -40,7 +60,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     andeler.forEach((andel, index) => {
       const arbeidsgiverNavn = rows.at(index).find('Normaltekst');
       expect(arbeidsgiverNavn.at(0).childAt(0).text()).to.equal(
-        `${andel.arbeidsforhold.arbeidsgiverNavn} (123)...5678`,
+        `${andel.arbeidsforhold.arbeidsgiverNavn} (${andel.arbeidsforhold.arbeidsgiverId})...5678`,
       );
       const inputField = rows.first().find('InputField');
       expect(inputField).to.have.length(1);
@@ -49,12 +69,16 @@ describe('<AksjonspunktBehandlerAT>', () => {
   });
 
   it('Skal teste tabellen får korrekte rader readonly=true', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, true), mockAndel('Arbeidsgiver 2', 100, 200000, true)];
+    const andeler = [
+      mockAndel('Arbeidsgiver 1', '123', 100, 200000, true),
+      mockAndel('Arbeidsgiver 2', '456', 100, 200000, true),
+    ];
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandlerAT
         readOnly
         alleAndelerIForstePeriode={andeler}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
       />,
     );
@@ -63,7 +87,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     andeler.forEach((andel, index) => {
       const arbeidsgiverNavn = rows.at(index).find('Normaltekst');
       expect(arbeidsgiverNavn.at(0).childAt(0).text()).to.equal(
-        `${andel.arbeidsforhold.arbeidsgiverNavn} (123)...5678`,
+        `${andel.arbeidsforhold.arbeidsgiverNavn} (${andel.arbeidsforhold.arbeidsgiverId})...5678`,
       );
       const inputField = rows.first().find('InputField');
       expect(inputField).to.have.length(1);
@@ -72,7 +96,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
   });
 
   it('Skal teste transformValues metode', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, true)];
+    const andeler = [mockAndel('Arbeidsgiver 1', '123', 100, 200000, true)];
     const relevanteStatuser = {
       isArbeidstaker: true,
       isFrilanser: false,
@@ -99,7 +123,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     expect(transformedValues).is.deep.equal(expectedInitialValues);
   });
   it('Skal teste transformValuesATFlhver for seg metode', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, true)];
+    const andeler = [mockAndel('Arbeidsgiver 1', '123', 100, 200000, true)];
     const values = {
       ATFLVurdering: 'Vurdering',
       begrunnDekningsgradEndring: '',

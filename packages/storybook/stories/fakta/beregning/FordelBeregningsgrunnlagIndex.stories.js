@@ -10,6 +10,7 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import withReduxProvider from '../../../decorators/withRedux';
 
 import alleKodeverk from '../../mocks/alleKodeverk.json';
+import arbeidsgivere from '../../mocks/arbeidsgivere.json';
 
 export default {
   title: 'fakta/fakta-fordel-beregningsgrunnlag',
@@ -17,8 +18,7 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-const lagBehandling = (perioder) => (
-  {
+const lagBehandling = perioder => ({
   id: 1,
   versjon: 1,
   type: {
@@ -29,11 +29,11 @@ const lagBehandling = (perioder) => (
       BEREGNINGSGRUNNLAGVILKÅR: perioder.map(p => ({
         periode: {
           ...p,
-        }
-      }))
-}}
-}
-);
+        },
+      })),
+    },
+  },
+});
 
 const merknaderFraBeslutter = {
   notAccepted: false,
@@ -156,6 +156,7 @@ const lagBG = (perioder, faktaOmFordeling) => {
           arbeidsforhold: {
             arbeidsgiverNavn: 'BEDRIFT AS',
             arbeidsgiverId: '910909088',
+            arbeidsgiverIdentifikator: '910909088',
             startdato: '2018-10-09',
             opphoersdato: null,
             arbeidsforholdId: '2a3c0f5c-3d70-447a-b0d7-cd242d5155bb',
@@ -326,8 +327,9 @@ export const aapOgRefusjon = () => {
   const bg = lagBG([førsteBGPeriode, andreBGPperiode], faktaOmFordeling);
   return (
     <FordelBeregningsgrunnlagFaktaIndex
-      behandling={lagBehandling([{fom: '2019-09-16'}])}
+      behandling={lagBehandling([{ fom: '2019-09-16' }])}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -367,8 +369,9 @@ export const kanEndreRefusjonskrav = () => {
   const bg = lagBG([førsteBGPeriode, andreBGPperiode], faktaOmFordeling);
   return (
     <FordelBeregningsgrunnlagFaktaIndex
-      behandling={lagBehandling([{fom: '2019-09-16'}])}
+      behandling={lagBehandling([{ fom: '2019-09-16' }])}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -429,8 +432,9 @@ export const skalSlåSammenNaturalytelseperioder = () => {
   const bg = lagBG([førsteBGPeriode, andreBGPperiode, tredjeBGPeriode], faktaOmFordeling);
   return (
     <FordelBeregningsgrunnlagFaktaIndex
-      behandling={lagBehandling([{fom: '2019-09-16'}])}
+      behandling={lagBehandling([{ fom: '2019-09-16' }])}
       alleKodeverk={alleKodeverk}
+      arbeidsgivere={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}

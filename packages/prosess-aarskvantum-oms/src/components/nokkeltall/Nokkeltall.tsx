@@ -1,7 +1,7 @@
-import classNames from "classnames";
+import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import * as React from 'react';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styles from './nokkeltall.less';
 
 export interface Nokkeltalldetalj {
@@ -28,7 +28,7 @@ const Nokkeltall: React.FunctionComponent<NøkkeltallProps> = ({
   detaljer,
   viserDetaljer,
   visDetaljer,
-  className
+  className,
 }) => {
   return (
     <article className={classNames(viserDetaljer && styles.viserDetaljer, className)}>

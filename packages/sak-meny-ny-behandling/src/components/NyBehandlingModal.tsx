@@ -218,7 +218,7 @@ export const getEnabledBehandlingstyper = createSelector(
   [getBehandlingTyper, ownProps => ownProps.behandlingerSomKanOpprettes],
   (behandlingstyper, behandlingerSomKanOpprettes) =>
     behandlingstyper.filter(b =>
-      Object.prototype.hasOwnProperty.call(behandlingerSomKanOpprettes, b.kode)
+      Object.prototype.hasOwnProperty.call(behandlingerSomKanOpprettes || {}, b.kode)
         ? !!behandlingerSomKanOpprettes[b.kode]
         : true,
     ),

@@ -7,6 +7,21 @@ import PersonArbeidsforholdTable, { utledNøkkel } from './PersonArbeidsforholdT
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import { mountWithIntl } from '../../../i18n';
 
+const arbeidsgiverOpplysningerPerId = {
+  1234567: {
+    identifikator: '1234567',
+    referanse: '1234567',
+    navn: 'Svendsen Eksos',
+    fødselsdato: null,
+  },
+  223455667: {
+    identifikator: '223455667',
+    referanse: '223455667',
+    navn: 'Nilsen Eksos',
+    fødselsdato: null,
+  },
+};
+
 describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
     id: '1',
@@ -62,6 +77,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[arbeidsforhold, arbeidsforhold2]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={arbeidsforhold.id}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -91,6 +107,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[arbeidsforhold]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={arbeidsforhold.id}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -112,6 +129,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[newArbeidsforhold]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={newArbeidsforhold.id}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -127,6 +145,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[arbeidsforhold]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={arbeidsforhold.id}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -147,6 +166,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[newArbeidsforhold]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={newArbeidsforhold.id}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -162,6 +182,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={undefined}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -179,6 +200,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[endretArbeidsforhold]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={undefined}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -196,6 +218,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[endretArbeidsforhold]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={undefined}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -212,6 +235,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[endretArbeidsforhold]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={undefined}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -227,6 +251,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
         alleArbeidsforhold={[endretArbeidsforhold]}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         selectedId={undefined}
         selectArbeidsforholdCallback={sinon.spy()}
         fagsystemer={fagsystemer}
@@ -244,8 +269,8 @@ describe('<PersonArbeidsforholdTable>', () => {
     arbfor2.arbeidsforholdId = null;
     arbfor2.eksternArbeidsforholdId = null;
 
-    const nøkkel1 = utledNøkkel(arbfor1);
-    const nøkkel2 = utledNøkkel(arbfor2);
+    const nøkkel1 = utledNøkkel(arbfor1, arbeidsgiverOpplysningerPerId);
+    const nøkkel2 = utledNøkkel(arbfor2, arbeidsgiverOpplysningerPerId);
     expect(nøkkel1).to.not.eql(nøkkel2);
   });
 });

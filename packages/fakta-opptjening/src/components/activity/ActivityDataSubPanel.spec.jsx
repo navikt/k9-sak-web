@@ -18,13 +18,25 @@ describe('<ActivityDataSubPanel>', () => {
     privatpersonFødselsdato: '1992-11-10',
   };
 
+  const arbeidsgiverOpplysningerPerId = {
+    123456789: {
+      identifikator: '123456789',
+      referanse: '123456789',
+      navn: 'Svensen Eksos',
+      fødselsdato: null,
+    },
+  };
+
   it('skal vise arbeidsgiver, org-nr og stillingsandel for type Arbeid', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity1}
-      readOnly={false}
-      isManuallyAdded={false}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'arbeid' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        readOnly={false}
+        isManuallyAdded={false}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'arbeid' }}
+      />,
+    );
 
     const arbeidsgiverLabel = wrapper.find(FormattedMessage);
     expect(arbeidsgiverLabel).to.have.length(1);
@@ -43,12 +55,14 @@ describe('<ActivityDataSubPanel>', () => {
   });
 
   it('skal vise "-" når arbeidsgiver ikke er oppgitt', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={{}}
-      readOnly={false}
-      isManuallyAdded={false}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'arbeid' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={{}}
+        readOnly={false}
+        isManuallyAdded={false}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'arbeid' }}
+      />,
+    );
 
     const arbeidsgiverLabel = wrapper.find(FormattedMessage);
     expect(arbeidsgiverLabel).to.have.length(1);
@@ -67,12 +81,15 @@ describe('<ActivityDataSubPanel>', () => {
   });
 
   it('skal ikke vise label Oppdragsgiver for type Frilans', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity1}
-      readOnly={false}
-      isManuallyAdded={false}
-      selectedActivityType={{ kode: OAType.FRILANS, navn: 'FRILANS' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        readOnly={false}
+        isManuallyAdded={false}
+        selectedActivityType={{ kode: OAType.FRILANS, navn: 'FRILANS' }}
+      />,
+    );
 
     const arbeidsgiverLabel = wrapper.find(FormattedMessage);
     expect(arbeidsgiverLabel).to.have.length(0);
@@ -82,12 +99,15 @@ describe('<ActivityDataSubPanel>', () => {
   });
 
   it('skal vise ikke vise stillingsandel for type Næring', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity1}
-      readOnly={false}
-      isManuallyAdded={false}
-      selectedActivityType={{ kode: OAType.NARING, navn: 'NARING' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        readOnly={false}
+        isManuallyAdded={false}
+        selectedActivityType={{ kode: OAType.NARING, navn: 'NARING' }}
+      />,
+    );
 
     const arbeidsgiverLabel = wrapper.find(FormattedMessage);
     expect(arbeidsgiverLabel).to.have.length(1);
@@ -98,12 +118,15 @@ describe('<ActivityDataSubPanel>', () => {
   });
 
   it('skal ikke vise noen felter for type Vartpenger', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity1}
-      readOnly={false}
-      isManuallyAdded={false}
-      selectedActivityType={{ kode: OAType.VARTPENGER, navn: 'VARTPENGER' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        readOnly={false}
+        isManuallyAdded={false}
+        selectedActivityType={{ kode: OAType.VARTPENGER, navn: 'VARTPENGER' }}
+      />,
+    );
 
     expect(wrapper.find(FormattedMessage)).to.have.length(0);
     expect(wrapper.find(InputField)).to.have.length(0);
@@ -111,12 +134,15 @@ describe('<ActivityDataSubPanel>', () => {
   });
 
   it('skal vise inputfelt for organisasjonsnr når saksbehandler manuelt har lagt til aktivitet Arbeid', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity1}
-      readOnly={false}
-      isManuallyAdded
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        readOnly={false}
+        isManuallyAdded
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+      />,
+    );
 
     expect(wrapper.find(FormattedMessage)).to.have.length(0);
     const inputFields = wrapper.find(InputField);
@@ -130,12 +156,15 @@ describe('<ActivityDataSubPanel>', () => {
   });
 
   it('skal vise inputfelt som readOnly', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity1}
-      readOnly
-      isManuallyAdded
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        readOnly
+        isManuallyAdded
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+      />,
+    );
 
     expect(wrapper.find(FormattedMessage)).to.have.length(0);
     const inputFields = wrapper.find(InputField);
@@ -147,34 +176,42 @@ describe('<ActivityDataSubPanel>', () => {
     expect(decimalField.prop('readOnly')).is.true;
   });
   it('skal vise arbeidsgiver som privatperson', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity2}
-      readOnly={false}
-      isManuallyAdded={false}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={activity2}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        readOnly={false}
+        isManuallyAdded={false}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+      />,
+    );
     const tekst = wrapper.find(Normaltekst);
     expect(tekst).to.have.length(1);
     expect(tekst.props().children).to.equal('Tom Hansen (10.11.1992)');
   });
   it('skal vise org når ikke privatperson', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={activity1}
-      readOnly={false}
-      isManuallyAdded={false}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        readOnly={false}
+        isManuallyAdded={false}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+      />,
+    );
     const tekst = wrapper.find(Normaltekst);
     expect(tekst).to.have.length(1);
     expect(tekst.props().children).to.equal('Svensen Eksos (123456789)');
   });
   it('skal vise - som arbeidsgiver når ikke arbeidsgiver eller privatperson', () => {
-    const wrapper = shallow(<ActivityDataSubPanel
-      initialValues={{}}
-      readOnly={false}
-      isManuallyAdded={false}
-      selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
-    />);
+    const wrapper = shallow(
+      <ActivityDataSubPanel
+        initialValues={{}}
+        readOnly={false}
+        isManuallyAdded={false}
+        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+      />,
+    );
     const tekst = wrapper.find(Normaltekst);
     expect(tekst).to.have.length(1);
     expect(tekst.props().children).to.equal('-');

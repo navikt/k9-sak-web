@@ -49,16 +49,13 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setApentFaktaPanel,
   dispatch,
 }) => {
-  const { aksjonspunkter, soknad, vilkar, personopplysninger, beregningsgrunnlag } = data;
+  const { aksjonspunkter, ...rest } = data;
 
   const dataTilUtledingAvFpPaneler = {
     fagsak,
     behandling,
-    soknad,
-    vilkar,
-    personopplysninger,
-    beregningsgrunnlag,
     hasFetchError,
+    ...rest,
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
