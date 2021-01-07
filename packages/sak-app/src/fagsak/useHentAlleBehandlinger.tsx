@@ -58,7 +58,7 @@ const useHentAlleBehandlinger = (
     !!behandlingerTilbake ||
     (behandlingerTilbakeState !== RestApiState.NOT_STARTED && behandlingerTilbakeState !== RestApiState.LOADING);
   const harHentetKlage =
-    !behandlingerKlageState ||
+    !skalHenteFraKlage ||
     !!behandlingerKlage ||
     (behandlingerKlageState !== RestApiState.NOT_STARTED && behandlingerKlageState !== RestApiState.LOADING);
 
