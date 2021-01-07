@@ -18,7 +18,7 @@ describe('<UtlandPanel>', () => {
     expect(wrapper.find(Image)).to.have.length(1);
     expect(wrapper.find(RadioGroupField)).to.have.length(0);
 
-    wrapper.find(Image).prop('onClick')();
+    wrapper.find(Image).prop('onClick')({} as any);
 
     expect(wrapper.find(Image)).to.have.length(0);
     expect(wrapper.find(RadioGroupField)).to.have.length(1);

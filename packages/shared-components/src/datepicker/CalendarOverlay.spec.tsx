@@ -118,7 +118,7 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    wrapper.find('div').prop('onKeyDown')({ keyCode: 27 } as React.KeyboardEvent<any>);
+    wrapper.find('div').prop('onKeyDown')({ keyCode: 27 } as any);
 
     expect(onCloseCallback.called).toBe(true);
   });
@@ -137,7 +137,7 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    wrapper.find('div').prop('onKeyDown')({ keyCode: 20 } as React.KeyboardEvent<any>);
+    wrapper.find('div').prop('onKeyDown')({ keyCode: 20 } as any);
 
     expect(onCloseCallback.called).toBe(false);
   });
