@@ -181,7 +181,7 @@ const FagsakIndex: FunctionComponent = () => {
               personopplysninger={behandlingPersonopplysninger}
               alleKodeverk={alleKodeverk}
               sprakkode={behandling?.sprakkode}
-              fagsakPerson={fagsakPerson}
+              fagsakPerson={fagsakPerson || fagsak.person}
               harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
             />
           );

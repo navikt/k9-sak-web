@@ -36,7 +36,7 @@ describe('<MenyNyBehandlingIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
         }}
-        saksnummer={123}
+        saksnummer="123"
         behandlingId={3}
         behandlingVersjon={1}
         behandlingType={{

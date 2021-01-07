@@ -22,10 +22,10 @@ const AppConfigResolver: FunctionComponent<OwnProps> = ({ children }) => {
     requestApi.setAddErrorMessageHandler(addErrorMessage);
   }, []);
 
-  const [harHentetFerdigInitLenker, harFpsakInitKallFeilet] = useHentInitLenker();
+  const [harHentetFerdigInitLenker, harK9sakInitKallFeilet] = useHentInitLenker();
 
   const options = {
-    suspendRequest: harFpsakInitKallFeilet || !harHentetFerdigInitLenker,
+    suspendRequest: harK9sakInitKallFeilet || !harHentetFerdigInitLenker,
     updateTriggers: [harHentetFerdigInitLenker],
   };
 
@@ -46,7 +46,7 @@ const AppConfigResolver: FunctionComponent<OwnProps> = ({ children }) => {
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
 
-  const harFeilet = harFpsakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
+  const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 
   const erFerdig =
     harHentetFerdigInitLenker &&

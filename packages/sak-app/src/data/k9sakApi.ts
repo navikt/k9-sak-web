@@ -69,7 +69,8 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('behandlende-enheter', K9sakApiKeys.BEHANDLENDE_ENHETER)
 
   // Feature toggles
-  .withRel('feature-toggle', K9sakApiKeys.FEATURE_TOGGLE)
+  // .withRel('feature-toggle', K9sakApiKeys.FEATURE_TOGGLE)
+  .withGet('/k9/feature-toggle/toggles.json', K9sakApiKeys.FEATURE_TOGGLE)
 
   // Fagsak
   .withRel('fagsak', K9sakApiKeys.FETCH_FAGSAK)

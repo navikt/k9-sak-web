@@ -6,7 +6,7 @@ import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Kodeverk } from '@k9-sak-web/types';
 
-import styles from './snakkeboble.less';
+import styles from './snakkebobleContainer.less';
 
 const cx = classNames.bind(styles);
 
@@ -56,7 +56,7 @@ const SnakkebobleContainer: FunctionComponent<OwnProps> = ({
     className={`snakkeboble__kompakt ${snakkeboblePanelCls(aktoer)}`}
     topp={`${formatDate(dato)} // ${rolleNavn} ${opprettetAv || ''}`}
     pilHoyre={pilHøyre(aktoer)}
-    ikonClass={snakkebobleIkonCls(aktoer, kjoenn.kode)}
+    ikonClass={snakkebobleIkonCls(aktoer, kjoenn?.kode)}
   >
     {children}
   </Snakkeboble>

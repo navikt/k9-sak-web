@@ -3,30 +3,25 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 
+import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+
 import SnakkebobleContainer from './SnakkebobleContainer';
 
 // TODO: AA - refactor to before()? Har provat men fungerer ikke så bra
 describe('SnakkebobleContainer', () => {
   it('skal vise opp boble med korrekt class', () => {
-    const tekst = 'Min tekst';
     const opprettetTidspunkt = '2017-12-10';
-    const aktoer = { kode: 'SBH', navn: 'Saksbehandler' };
-    const kjoenn = 'Kvinne';
-    const type = { kode: 'VEDTAK', navn: 'Vedtak fattet' };
-    const dokumentLinks = [];
-    const location = { pathname: 'myPath' };
+    const aktoer = { kode: HistorikkAktor.SAKSBEHANDLER, navn: 'Saksbehandler', kodeverk: '' };
+    const kjoenn = { kode: navBrukerKjonn.KVINNE, kodeverk: '' };
 
     const wrapper = shallow(
       <SnakkebobleContainer
-        key={opprettetTidspunkt}
-        tekst={tekst}
-        rolle={aktoer.kode}
-        rolleNavn={aktoer.navn}
+        aktoer={aktoer}
+        rolleNavn="Saksbehandler"
         dato={opprettetTidspunkt}
-        kjoennKode={kjoenn}
-        histType={type}
-        dokumentLinks={dokumentLinks}
-        location={location}
+        kjoenn={kjoenn}
+        opprettetAv="test"
       >
         <div />
       </SnakkebobleContainer>,
@@ -39,25 +34,17 @@ describe('SnakkebobleContainer', () => {
   });
 
   it('skal innehalla korrekt type, id og tidpunkt', () => {
-    const tekst = 'Min tekst';
     const opprettetTidspunkt = '2017-12-10';
-    const aktoer = { kode: 'SBH', navn: 'Saksbehandler' };
-    const kjoenn = 'Kvinne';
-    const type = { kode: 'VEDTAK', navn: 'Vedtak fattet' };
-    const dokumentLinks = [];
-    const location = { pathname: 'myPath' };
+    const aktoer = { kode: HistorikkAktor.SAKSBEHANDLER, kodeverk: '' };
+    const kjoenn = { kode: navBrukerKjonn.KVINNE, kodeverk: '' };
 
     const wrapper = shallow(
       <SnakkebobleContainer
-        key={opprettetTidspunkt}
-        tekst={tekst}
-        rolle={aktoer.kode}
-        rolleNavn={aktoer.navn}
+        aktoer={aktoer}
+        rolleNavn="Saksbehandler"
         dato={opprettetTidspunkt}
-        kjoennKode={kjoenn}
-        histType={type}
-        dokumentLinks={dokumentLinks}
-        location={location}
+        kjoenn={kjoenn}
+        opprettetAv="test"
       >
         <div />
       </SnakkebobleContainer>,

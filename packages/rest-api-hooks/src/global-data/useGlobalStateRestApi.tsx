@@ -47,7 +47,7 @@ const getUseGlobalStateRestApi = (requestApi: AbstractRequestApi) =>
     const dispatch = useContext(RestApiDispatchContext);
 
     useEffect(() => {
-      if (requestApi.hasPath(key) && !options.suspendRequest) {
+      if (!options.suspendRequest && requestApi.hasPath(key)) {
         dispatch({ type: 'remove', key });
 
         setData({

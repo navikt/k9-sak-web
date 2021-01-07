@@ -57,7 +57,7 @@ describe('<FagsakList>', () => {
     kanRevurderingOpprettes: false,
     skalBehandlesAvInfotrygd: false,
     dekningsgrad: 100,
-  };
+  } as Fagsak;
 
   const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status', 'FagsakList.BarnFodt'];
 

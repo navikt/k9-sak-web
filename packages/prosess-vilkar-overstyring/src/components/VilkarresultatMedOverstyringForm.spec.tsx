@@ -17,17 +17,12 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         isReadOnly
         overstyringApKode="5011"
         avslagsarsaker={[
-          { kode: 'test1', navn: 'test' },
-          { kode: 'test2', navn: 'test' },
+          { kode: 'test1', kodeverk: 'test' },
+          { kode: 'test2', kodeverk: 'test' },
         ]}
         lovReferanse="§23"
         hasAksjonspunkt
-        behandlingspunkt="foedsel"
         overrideReadOnly={false}
-        kanOverstyreAccess={{
-          isEnabled: true,
-        }}
-        aksjonspunktCodes={[]}
         toggleOverstyring={() => undefined}
         erMedlemskapsPanel={false}
         panelTittelKode="Fødsel"

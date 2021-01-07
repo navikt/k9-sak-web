@@ -109,6 +109,12 @@ describe('BehandlingMenuIndex', () => {
         oppfriskBehandlinger={sinon.spy()}
         behandlingRettigheter={behandlingRettigheter}
         sakRettigheter={sakRettigheter}
+        behandlendeEnheter={[
+          {
+            enhetId: 'TEST',
+            enhetNavn: 'TEST',
+          },
+        ]}
       />,
     );
 

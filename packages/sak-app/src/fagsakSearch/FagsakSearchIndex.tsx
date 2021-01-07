@@ -23,7 +23,7 @@ const FagsakSearchIndex: FunctionComponent = () => {
   );
 
   const history = useHistory();
-  const goToFagsak = saksnummer => {
+  const goToFagsak = (saksnummer: string) => {
     history.push(pathToFagsak(saksnummer));
   };
 
@@ -52,7 +52,7 @@ const FagsakSearchIndex: FunctionComponent = () => {
       fagsaker={fagsaker}
       searchFagsakCallback={searchFagsaker}
       searchResultReceived={sokFerdig}
-      selectFagsakCallback={(e, saksnummer) => goToFagsak(saksnummer)}
+      selectFagsakCallback={(e, saksnummer: string) => goToFagsak(saksnummer)}
       searchStarted={sokeStatus === RestApiState.LOADING}
       searchResultAccessDenied={searchResultAccessDenied}
       alleKodeverk={alleKodeverk}
