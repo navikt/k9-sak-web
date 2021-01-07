@@ -1,4 +1,4 @@
-import { Aksjonspunkt, Vilkar, Dokument, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkar, Dokument } from '@k9-sak-web/types';
 
 import Innsyn from './innsynTsType';
 
@@ -7,9 +7,6 @@ interface FetchedData {
   vilkar: Vilkar[];
   innsyn: Innsyn;
   innsynDokumenter: Dokument[];
-  arbeidsgivere: {
-    arbeidsgivere: ArbeidsgiverOpplysningerPerId;
-  };
 }
 
 export default FetchedData;
