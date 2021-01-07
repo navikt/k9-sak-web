@@ -76,10 +76,12 @@ jest.mock('react-router-dom', () => ({
 describe('BehandlingMenuIndex', () => {
   it('skal vise meny der alle menyhandlinger er synlige', () => {
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, []);
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_OPPRETTES, false);
     requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES, false);
 

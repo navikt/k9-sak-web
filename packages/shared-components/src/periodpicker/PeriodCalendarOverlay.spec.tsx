@@ -107,7 +107,6 @@ describe('<PeriodCalendarOverlay>', () => {
       />,
     );
 
-    // @ts-ignore Fiks
     wrapper.find('div').prop('onKeyDown')({ keyCode: 27 } as React.KeyboardEvent);
 
     expect(onCloseCallback.called).toBe(true);
@@ -127,7 +126,6 @@ describe('<PeriodCalendarOverlay>', () => {
       />,
     );
 
-    // @ts-ignore Fiks
     wrapper.find('div').prop('onKeyDown')({ keyCode: 20 } as React.KeyboardEvent);
 
     expect(onCloseCallback.called).toBe(false);

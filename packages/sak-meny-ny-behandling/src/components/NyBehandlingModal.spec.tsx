@@ -477,6 +477,11 @@ describe('<NyBehandlingModal>', () => {
         navn: '',
         kodeverk: 'BEHANDLING_TYPE',
       },
+      {
+        kode: behandlingType.KLAGE,
+        navn: '',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
     ];
 
     const behandlingOppretting = [
@@ -506,7 +511,7 @@ describe('<NyBehandlingModal>', () => {
       kanTilbakekrevingOpprettes,
     );
 
-    expect(res).toEqual([behandlingstyper[1], behandlingstyper[2], behandlingstyper[3]]);
+    expect(res).toEqual([behandlingstyper[1], behandlingstyper[4], behandlingstyper[2], behandlingstyper[3]]);
   });
 
   it('skal filtrere bort tilbakekreving-revurdering når denne ikke kan lages', () => {

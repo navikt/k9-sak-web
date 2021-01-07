@@ -65,8 +65,10 @@ describe('<FagsakProfileIndex>', () => {
   it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(K9sakApiKeys.RISIKO_AKSJONSPUNKT, {});
     requestApi.mock(K9sakApiKeys.KONTROLLRESULTAT, {});
+    requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, {});
 
     const wrapper = shallow(
       <FagsakProfileIndex
@@ -89,8 +91,10 @@ describe('<FagsakProfileIndex>', () => {
   it('skal ikke vise alle behandlinger når behandling er valgt', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(K9sakApiKeys.RISIKO_AKSJONSPUNKT, {});
     requestApi.mock(K9sakApiKeys.KONTROLLRESULTAT, {});
+    requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, {});
 
     const wrapper = shallow(
       <FagsakProfileIndex

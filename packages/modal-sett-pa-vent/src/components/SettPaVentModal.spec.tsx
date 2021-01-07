@@ -197,7 +197,7 @@ describe('<SettPaVentModal>', () => {
 
     expect(wrapper.find(SelectField).prop('readOnly')).toBe(true);
     const label = wrapper.find(Normaltekst);
-    expect(label).toHaveLength(2);
+    expect(label).toHaveLength(1);
     expect(label.first().childAt(0).prop('id')).toEqual('SettPaVentModal.SettesPaVent');
     expect(label.at(1).childAt(0).prop('id')).toEqual('SettPaVentModal.UtløptFrist');
     expect(label.at(1).childAt(2).prop('id')).toEqual('SettPaVentModal.HenleggeSaken');

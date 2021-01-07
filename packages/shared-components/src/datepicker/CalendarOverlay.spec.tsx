@@ -118,7 +118,6 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    // @ts-ignore fiks
     wrapper.find('div').prop('onKeyDown')({ keyCode: 27 } as React.KeyboardEvent<any>);
 
     expect(onCloseCallback.called).toBe(true);
@@ -138,7 +137,6 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    // @ts-ignore fiks
     wrapper.find('div').prop('onKeyDown')({ keyCode: 20 } as React.KeyboardEvent<any>);
 
     expect(onCloseCallback.called).toBe(false);

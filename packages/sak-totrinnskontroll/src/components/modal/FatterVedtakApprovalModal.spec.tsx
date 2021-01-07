@@ -33,7 +33,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).toHaveLength(1);
     expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('contentLabel')).toEqual('Returneres til saksbehandler for iverksettelse');
+    expect(modal.prop('contentLabel')).toEqual('Klagen returneres til saksbehandler for iverksettelse.');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).toHaveLength(1);
@@ -60,7 +60,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     expect(modal).toHaveLength(1);
     expect(modal.prop('isOpen')).toBe(true);
     expect(modal.prop('contentLabel')).toEqual(
-      'Engangsstønad er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+      'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
     );
 
     const button = wrapper.find(Hovedknapp);
@@ -88,7 +88,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     expect(modal).toHaveLength(1);
     expect(modal.prop('isOpen')).toBe(true);
     expect(modal.prop('contentLabel')).toEqual(
-      'Foreldrepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+      'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
     );
 
     const button = wrapper.find(Hovedknapp);

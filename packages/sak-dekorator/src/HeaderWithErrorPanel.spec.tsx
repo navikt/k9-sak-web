@@ -15,6 +15,6 @@ describe('<HeaderWithErrorPanel>', () => {
       />,
     );
     const header = wrapper.find(Header);
-    expect(header.prop('title')).toBe('Svangerskap, fødsel og adopsjon');
+    expect(header.prop('title')).toBe('Pleiepenger, omsorgspenger og frisinn');
   });
 });

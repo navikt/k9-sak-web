@@ -29,6 +29,9 @@ describe('<FagsakIndex>', () => {
   const behandling2 = {
     id: 2,
   };
+  const behandling3 = {
+    id: 3,
+  };
 
   let contextStub;
   beforeEach(() => {
@@ -47,7 +50,7 @@ describe('<FagsakIndex>', () => {
     contextStub.restore();
   });
 
-  it('skal hente alle behandlinger fra fpsak og fptilbake', () => {
+  it('skal hente alle behandlinger fra k9sak, tilbake og klage', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.FETCH_FAGSAK, fagsak);
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
@@ -58,9 +61,12 @@ describe('<FagsakIndex>', () => {
       behandlingTypeKanOpprettes: [],
     });
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(K9sakApiKeys.BEHANDLINGER_K9SAK, [behandling]);
     requestApi.mock(K9sakApiKeys.BEHANDLINGER_TILBAKE, [behandling2]);
+    requestApi.mock(K9sakApiKeys.BEHANDLINGER_KLAGE, [behandling3]);
 
     const wrapper = shallow(<FagsakIndex />);
 
@@ -70,6 +76,6 @@ describe('<FagsakIndex>', () => {
     const fagsakProfileIndex = grid.prop('profileAndNavigationContent');
 
     // @ts-ignore
-    expect(fagsakProfileIndex.props.alleBehandlinger).toEqual([behandling, behandling2]);
+    expect(fagsakProfileIndex.props.alleBehandlinger).toEqual([behandling, behandling3, behandling2]);
   });
 });

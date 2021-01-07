@@ -42,7 +42,7 @@ const getInfoTextCode = (
     return 'FatterVedtakApprovalModal.UendretUtfall';
   }
   // HVIS AVSLÅTT
-  if (behandlingsresultat.type.kode === behandlingResultatType.AVSLATT) {
+  if (behandlingsresultat?.type.kode === behandlingResultatType.AVSLATT) {
     if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetPleiepenger';
     }

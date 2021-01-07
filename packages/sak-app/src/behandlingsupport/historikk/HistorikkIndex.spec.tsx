@@ -17,10 +17,12 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('<HistorikkIndex>', () => {
-  it('skal slå sammen og sortere historikk for fpsak og fptilbake', () => {
+  it('skal slå sammen og sortere historikk for k9sak, tilbake og klage', () => {
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
+    requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(K9sakApiKeys.HISTORY_K9SAK, [
       {
         opprettetTidspunkt: '2019-01-01',
@@ -46,11 +48,20 @@ describe('<HistorikkIndex>', () => {
         },
       },
     ]);
+    requestApi.mock(K9sakApiKeys.HISTORY_KLAGE, [
+      {
+        opprettetTidspunkt: '2018-01-04',
+        historikkinnslagDeler: [],
+        type: {
+          kode: 'Test fptilbake',
+        },
+      },
+    ]);
 
     const wrapper = shallow(<HistorikkIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />);
 
     const index = wrapper.find(HistorikkSakIndex);
-    expect(index).toHaveLength(3);
+    expect(index).toHaveLength(4);
     expect((index.at(0).prop('historikkinnslag') as { opprettetTidspunkt: string }).opprettetTidspunkt).toEqual(
       '2019-01-06',
     );
@@ -59,6 +70,9 @@ describe('<HistorikkIndex>', () => {
     );
     expect((index.at(2).prop('historikkinnslag') as { opprettetTidspunkt: string }).opprettetTidspunkt).toEqual(
       '2019-01-01',
+    );
+    expect((index.at(3).prop('historikkinnslag') as { opprettetTidspunkt: string }).opprettetTidspunkt).toEqual(
+      '2018-01-04',
     );
   });
 });

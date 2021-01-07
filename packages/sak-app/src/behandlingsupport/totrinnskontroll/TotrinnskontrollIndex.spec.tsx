@@ -107,6 +107,7 @@ describe('<TotrinnskontrollIndex>', () => {
   it('skal vise modal når beslutter godkjenner', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, kodeverk);
+    requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, kodeverk);
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(K9sakApiKeys.TOTRINNS_KLAGE_VURDERING, {});
     requestApi.mock(K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
@@ -144,7 +145,7 @@ describe('<TotrinnskontrollIndex>', () => {
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({
       behandlingId: 1234,
-      saksnummer: 1,
+      saksnummer: '1',
       behandlingVersjon: 123,
       bekreftedeAksjonspunktDtoer: [
         {
