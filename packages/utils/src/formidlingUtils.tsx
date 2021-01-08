@@ -17,15 +17,13 @@ export const kanHaFritekstbrev = (tilgjengeligeVedtaksbrev: Array<string>) =>
   finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev) && tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
 
 const lagForhåndsvisRequest = (behandling: Behandling, fagsak: FagsakInfo, data: any): ForhåndsvisRequest => {
-  const { dokumentMal, dokumentdata } = data;
   return {
     eksternReferanse: behandling.uuid,
     ytelseType: fagsak.fagsakYtelseType,
     saksnummer: fagsak.saksnummer,
     aktørId: fagsak.fagsakPerson.aktørId,
     avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-    dokumentMal,
-    dokumentdata,
+    ...data,
   };
 };
 

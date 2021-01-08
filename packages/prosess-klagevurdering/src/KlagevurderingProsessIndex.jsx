@@ -27,7 +27,6 @@ const KlagevurderingProsessIndex = ({
   saveKlage,
   submitCallback,
   isReadOnly,
-  valgtPartMedKlagerett,
   previewCallback,
   readOnlySubmitButton,
   aksjonspunkter,
@@ -42,7 +41,6 @@ const KlagevurderingProsessIndex = ({
         saveKlage={saveKlage}
         submitCallback={submitCallback}
         readOnly={isReadOnly}
-        valgtPartMedKlagerett={valgtPartMedKlagerett}
         previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
@@ -57,7 +55,6 @@ const KlagevurderingProsessIndex = ({
         saveKlage={saveKlage}
         submitCallback={submitCallback}
         readOnly={isReadOnly}
-        valgtPartMedKlagerett={valgtPartMedKlagerett}
         previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
@@ -73,7 +70,6 @@ KlagevurderingProsessIndex.propTypes = {
   saveKlage: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
-  valgtPartMedKlagerett: PropTypes.shape(),
   previewCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,

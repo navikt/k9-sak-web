@@ -18,10 +18,9 @@ import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
-const getPreviewVedtakCallback = (previewVedtakCallback, valgtPartMedKlagerett) => () =>
+const getPreviewVedtakCallback = previewVedtakCallback => () =>
   previewVedtakCallback({
     dokumentMal: dokumentMalType.UTLED,
-    overstyrtMottaker: valgtPartMedKlagerett,
   });
 
 /**
@@ -33,7 +32,6 @@ export const VedtakKlageFormImpl = ({
   intl,
   readOnly,
   omgjortAarsak,
-  valgtPartMedKlagerett,
   previewVedtakCallback,
   isAvvist,
   isOmgjort,
@@ -84,7 +82,7 @@ export const VedtakKlageFormImpl = ({
           <VedtakKlageKaSubmitPanel
             begrunnelse={fritekstTilBrev}
             klageResultat={klageresultat}
-            previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback, valgtPartMedKlagerett)}
+            previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
             formProps={formProps}
             readOnly={readOnly}
             behandlingPaaVent={behandlingPaaVent}
@@ -94,7 +92,7 @@ export const VedtakKlageFormImpl = ({
           <VedtakKlageSubmitPanel
             begrunnelse={fritekstTilBrev}
             klageResultat={klageresultat}
-            previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback, valgtPartMedKlagerett)}
+            previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
             formProps={formProps}
             readOnly={readOnly}
             behandlingPaaVent={behandlingPaaVent}
@@ -112,7 +110,6 @@ VedtakKlageFormImpl.propTypes = {
   isOpphevOgHjemsend: PropTypes.bool.isRequired,
   behandlingsResultatTekst: PropTypes.string.isRequired,
   klageVurdering: PropTypes.shape().isRequired,
-  valgtPartMedKlagerett: PropTypes.shape(),
   previewVedtakCallback: PropTypes.func.isRequired,
   avvistArsaker: PropTypes.arrayOf(PropTypes.object),
   omgjortAarsak: PropTypes.string,

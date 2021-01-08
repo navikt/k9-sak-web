@@ -23,7 +23,6 @@ const VedtakKlageProsessIndex = ({
   klageVurdering,
   aksjonspunkter,
   submitCallback,
-  valgtPartMedKlagerett,
   previewVedtakCallback,
   isReadOnly,
   alleKodeverk,
@@ -37,7 +36,6 @@ const VedtakKlageProsessIndex = ({
       klageVurdering={klageVurdering}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
-      valgtPartMedKlagerett={valgtPartMedKlagerett}
       previewVedtakCallback={previewVedtakCallback}
       readOnly={isReadOnly}
       alleKodeverk={alleKodeverk}
@@ -52,7 +50,6 @@ VedtakKlageProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
-  valgtPartMedKlagerett: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
 
