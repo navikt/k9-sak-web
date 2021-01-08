@@ -8,7 +8,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styles from './tempsaveAndPreviewKlageLink.less';
 
-const transformValues = (values: any, aksjonspunktCode: string) => ({
+interface KlagePart {
+  identifikasjon: {
+    id: string;
+    type: string;
+  };
+  rolleType: string;
+}
+
+const transformValues = (values: any, valgtPartMedKlagerett: KlagePart, aksjonspunktCode: string) => ({
   klageMedholdArsak:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
     values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK
@@ -22,10 +30,11 @@ const transformValues = (values: any, aksjonspunktCode: string) => ({
   kode: aksjonspunktCode,
 });
 
-const getBrevData = (tekst: string) => {
+const getBrevData = (tekst: string, valgtPartMedKlagerett: KlagePart) => {
   return {
     dokumentdata: tekst && { fritekst: tekst },
     dokumentMal: dokumentMalType.UTLED,
+    overstyrtMottaker: valgtPartMedKlagerett,
   };
 };
 
@@ -49,7 +58,7 @@ const useForhaandsvise = (
   const [skalForhaandsvise, setSkalForhaandsvise] = useState(false);
   useEffect(() => {
     if (!readOnly && hasFinishedSaveKlage && skalForhaandsvise) {
-      previewCallback(getBrevData(formValues.fritekstTilBrev));
+      previewCallback(getBrevData(formValues.fritekstTilBrev, valgtPartMedKlagerett));
       setSkalForhaandsvise(false);
       resetSaveKlage();
     }
@@ -63,6 +72,7 @@ export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   saveKlage,
   aksjonspunktCode,
   readOnly,
+  valgtPartMedKlagerett,
   previewCallback,
   hasFinishedSaveKlage,
   resetSaveKlage,
@@ -76,7 +86,7 @@ export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   );
 
   const tempSave = event => {
-    saveKlage(transformValues(formValues, aksjonspunktCode));
+    saveKlage(transformValues(formValues, valgtPartMedKlagerett, aksjonspunktCode));
     setSkalForhaandsvise(true);
     event.preventDefault();
   };
