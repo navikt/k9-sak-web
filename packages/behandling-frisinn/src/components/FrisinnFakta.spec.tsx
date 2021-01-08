@@ -11,7 +11,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -21,16 +21,16 @@ import FetchedData from '../types/fetchedDataTsType';
 describe('<FrisinnFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
+  const fagsakPerson = {
+    alder: 30,
+    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    erDod: false,
+    erKvinne: true,
+    navn: 'Espen Utvikler',
+    personnummer: '12345',
   };
   const behandling = {
     id: 1,
@@ -115,6 +115,14 @@ describe('<FrisinnFakta>', () => {
     barn: [],
   };
 
+  const arbeidsgiverOpplysningerPerId = {
+    123: {
+      erPrivatPerson: false,
+      identifikator: 'testId',
+      navn: 'testNavn',
+    },
+  };
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
@@ -127,6 +135,7 @@ describe('<FrisinnFakta>', () => {
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
@@ -134,7 +143,8 @@ describe('<FrisinnFakta>', () => {
         valgtProsessSteg="default"
         hasFetchError={false}
         setApentFaktaPanel={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -166,6 +176,7 @@ describe('<FrisinnFakta>', () => {
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
@@ -173,7 +184,8 @@ describe('<FrisinnFakta>', () => {
         valgtProsessSteg="default"
         hasFetchError={false}
         setApentFaktaPanel={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 

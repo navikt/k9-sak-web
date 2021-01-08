@@ -5,7 +5,7 @@ import {
   BeregningsresultatUtbetalt,
   Aksjonspunkt,
   KodeverkMedNavn,
-  FagsakInfo,
+  Fagsak,
   Vilkar,
 } from '@k9-sak-web/types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
@@ -17,7 +17,7 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   behandling: Behandling;
   beregningsresultat: BeregningsresultatUtbetalt;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
   aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
   submitCallback: () => void;

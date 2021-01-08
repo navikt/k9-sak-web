@@ -23,7 +23,7 @@ const BehandlingInnsynIndex = React.lazy(() => import('@k9-sak-web/behandling-in
 const BehandlingKlageIndex = React.lazy(() => import('@k9-sak-web/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@k9-sak-web/behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@k9-sak-web/behandling-anke'));
-const BehandlingFrisinnIndex = React.lazy(() => import('@fpsak-frontend/behandling-frisinn'));
+const BehandlingFrisinnIndex = React.lazy(() => import('@k9-sak-web/behandling-frisinn'));
 const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
 
 const erTilbakekreving = (behandlingTypeKode: string): boolean =>

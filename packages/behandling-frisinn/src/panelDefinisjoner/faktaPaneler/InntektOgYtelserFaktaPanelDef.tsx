@@ -4,7 +4,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import InntektOgYtelser from '@fpsak-frontend/fakta-inntekt-og-ytelser';
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
 
-import frisinnBehandlingApi from '../../data/frisinnBehandlingApi';
+import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 
 class InntektOgYtelserFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKT_OG_YTELSER;
@@ -13,7 +13,7 @@ class InntektOgYtelserFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [];
 
-  getEndepunkter = () => [frisinnBehandlingApi.INNTEKT_OG_YTELSER];
+  getEndepunkter = () => [FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER];
 
   getKomponent = props => <InntektOgYtelser {...props} />;
 

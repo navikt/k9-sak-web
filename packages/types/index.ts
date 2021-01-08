@@ -1,6 +1,5 @@
 export { default as Aksjonspunkt } from './src/aksjonspunktTsType';
 export { default as Arbeidsforhold } from './src/arbeidsforholdTsType';
-export { default as ArbeidsgiverOpplysningerPerId } from './src/arbeidsgiverOpplysningerTsType';
 export { default as Behandling } from './src/behandlingTsType';
 export { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsType';
 export { default as BeregningsresultatFp } from './src/beregningsresultatFpTsType';
@@ -71,3 +70,8 @@ export {
   default as BeregningsresultatTilbakekreving,
   BeregningResultatPeriode,
 } from './src/beregningsresultatTilbakekrevingTsType';
+export {
+  default as ArbeidsgiverOpplysningerPerId,
+  ArbeidsgiverOpplysningerWrapper,
+  ArbeidsgiverOpplysninger,
+} from './src/arbeidsgiverOpplysningerTsType';
