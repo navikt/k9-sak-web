@@ -130,6 +130,11 @@ class RequestRunner {
       this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
       return responseData ? { payload: responseData } : { payload: undefined };
     } catch (error) {
+      const { response } = error;
+      if (response && response.status === 401 && response.headers && response.headers.location) {
+        const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.href = `${response.headers.location}?redirectTo=${currentPath}`;
+      }
       new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;
     }

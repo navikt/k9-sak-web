@@ -11,10 +11,13 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VarselOmRevurderingProsessIndex = ({
   behandling,
@@ -25,7 +28,6 @@ const VarselOmRevurderingProsessIndex = ({
   aksjonspunkter,
   submitCallback,
   previewCallback,
-  dispatchSubmitFailed,
   isReadOnly,
   alleKodeverk,
 }) => (
@@ -43,7 +45,6 @@ const VarselOmRevurderingProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       previewCallback={previewCallback}
-      dispatchSubmitFailed={dispatchSubmitFailed}
       readOnly={isReadOnly}
       alleKodeverk={alleKodeverk}
     />
@@ -59,7 +60,6 @@ VarselOmRevurderingProsessIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(revurderingAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
-  dispatchSubmitFailed: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };

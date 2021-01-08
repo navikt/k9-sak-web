@@ -4,6 +4,8 @@ import { requestAnkeApi } from '@k9-sak-web/behandling-anke/src/data/ankeBehandl
 import { requestInnsynApi } from '@k9-sak-web/behandling-innsyn/src/data/innsynBehandlingApi';
 import { requestKlageApi } from '@k9-sak-web/behandling-klage/src/data/klageBehandlingApi';
 import { requestTilbakekrevingApi } from '@k9-sak-web/behandling-tilbakekreving/src/data/tilbakekrevingBehandlingApi';
+import { requestUnntakApi } from '@k9-sak-web/behandling-unntak/src/data/unntakBehandlingApi';
+import { requestFrisinnApi } from '@k9-sak-web/behandling-frisinn/src/data/frisinnBehandlingApi';
 
 /* beforeAll(() => {
   // Denne trengs for snapshot-testing
@@ -16,6 +18,8 @@ afterEach(() => {
   requestInnsynApi.clearAllMockData();
   requestKlageApi.clearAllMockData();
   requestTilbakekrevingApi.clearAllMockData();
+  requestUnntakApi.clearAllMockData();
+  requestFrisinnApi.clearAllMockData();
 
   // Denne trengs for snapshot-testing
   // ReactDOM.createPortal.mockClear();
