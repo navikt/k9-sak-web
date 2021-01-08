@@ -4,7 +4,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import InntektOgYtelser from '@fpsak-frontend/fakta-inntekt-og-ytelser';
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
 
-import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class InntektOgYtelserFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKT_OG_YTELSER;
@@ -13,14 +13,14 @@ class InntektOgYtelserFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.INNTEKT_OG_YTELSER];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.INNTEKT_OG_YTELSER];
 
   getKomponent = props => <InntektOgYtelser {...props} />;
 
   getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
-  getData = ({ arbeidsgivere }) => ({
-    arbeidsgivere,
+  getData = ({ arbeidsgiverOpplysningerPerId }) => ({
+    arbeidsgivere: arbeidsgiverOpplysningerPerId,
   });
 }
 

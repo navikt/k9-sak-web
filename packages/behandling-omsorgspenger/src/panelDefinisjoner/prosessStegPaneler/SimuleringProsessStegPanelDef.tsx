@@ -6,14 +6,14 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
-import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <AvregningProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_FEILUTBETALING];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.TILBAKEKREVINGVALG];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG];
 
   getOverstyrVisningAvKomponent = () => true;
 

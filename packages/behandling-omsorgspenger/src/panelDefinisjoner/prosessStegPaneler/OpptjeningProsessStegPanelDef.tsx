@@ -6,7 +6,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
-import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <OpptjeningVilkarProsessIndex {...props} />;
@@ -15,7 +15,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getVilkarKoder = () => [vilkarType.OPPTJENINGSVILKARET];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.OPPTJENING];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.OPPTJENING];
 
   getData = ({ vilkarForSteg }) => ({
     lovReferanse: vilkarForSteg[0].lovReferanse,

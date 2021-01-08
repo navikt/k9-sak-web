@@ -1,12 +1,11 @@
 {
-  "name": "@fpsak-frontend/behandling-omsorgspenger",
+  "name": "@k9-sak-web/behandling-omsorgspenger",
   "version": "1.0.0",
   "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
     "@fpsak-frontend/behandling-felles": "1.0.0",
-    "@fpsak-frontend/error-api-redux": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",
     "@fpsak-frontend/fakta-tilleggsopplysninger": "1.0.0",
@@ -22,9 +21,10 @@
     "@fpsak-frontend/prosess-vilkar-omsorg": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-overstyring": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt": "1.0.0",
-    "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
+    "@k9-sak-web/rest-api": "1.0.0",
+    "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "react": "^16.14.0",
     "react-intl": "^5.10.11",
@@ -35,7 +35,6 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.18.2",
-    "chai": "^4.2.0",
     "enzyme": "^3.11.0",
     "redux-mock-store": "^1.5.4",
     "sinon": "^9.0.3"

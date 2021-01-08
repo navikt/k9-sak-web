@@ -7,7 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <ÅrskvantumIndex {...props} />;
@@ -16,7 +16,10 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.FULL_UTTAKSPLAN, omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE];
+  getEndepunkter = () => [
+    OmsorgspengerBehandlingApiKeys.FULL_UTTAKSPLAN,
+    OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE,
+  ];
 
   getOverstyrtStatus = ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
     if (!forbrukteDager || !forbrukteDager.sisteUttaksplan) {
@@ -28,11 +31,11 @@ class PanelDef extends ProsessStegPanelDef {
     return allePerioderAvslått ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ forbrukteDager, aksjonspunkterForSteg, arbeidsgivere }) => ({
+  getData = ({ forbrukteDager, aksjonspunkterForSteg, arbeidsgiverOpplysningerPerId }) => ({
     årskvantum: forbrukteDager,
     aksjonspunkterForSteg,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
-    arbeidsgivere,
+    arbeidsgivere: arbeidsgiverOpplysningerPerId,
   });
 }
 

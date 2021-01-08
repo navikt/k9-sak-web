@@ -7,7 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
 
-import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 const erAllePerioderOppfylt = vilkarsperioder =>
   vilkarsperioder.every(periode => periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT);
@@ -23,7 +23,7 @@ class OpptjeningsvilkaretFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.OPPTJENING];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.OPPTJENING];
 
   getKomponent = props => <OpptjeningFaktaIndex {...props} />;
 
