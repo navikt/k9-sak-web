@@ -1,10 +1,8 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { Dispatch } from 'redux';
 
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -12,8 +10,8 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { DataFetcher, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
@@ -26,17 +24,9 @@ import { ProsessStegUtledet, ProsessStegPanelUtledet } from '../util/prosessSteg
 describe('<ProsessStegPanel>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
-  };
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
   const behandling = {
     id: 1,
     versjon: 1,
@@ -130,14 +120,14 @@ describe('<ProsessStegPanel>', () => {
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
-        behandlingApi={{}}
-        dispatch={sinon.spy()}
+        lagreAksjonspunkter={sinon.spy()}
+        useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
 
-    expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(1);
-    expect(wrapper.find(MargMarkering)).to.have.length(0);
-    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).to.have.length(0);
+    expect(wrapper.find(BehandlingHenlagtPanel)).toHaveLength(1);
+    expect(wrapper.find(MargMarkering)).toHaveLength(0);
+    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).toHaveLength(0);
   });
 
   it('skal vise panel for steg ikke behandlet når steget ikke er behandlet og saken ikke er henlagt', () => {
@@ -168,14 +158,14 @@ describe('<ProsessStegPanel>', () => {
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
-        behandlingApi={{}}
-        dispatch={sinon.spy()}
+        lagreAksjonspunkter={sinon.spy()}
+        useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
 
-    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).to.have.length(1);
-    expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
-    expect(wrapper.find(MargMarkering)).to.have.length(0);
+    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).toHaveLength(1);
+    expect(wrapper.find(BehandlingHenlagtPanel)).toHaveLength(0);
+    expect(wrapper.find(MargMarkering)).toHaveLength(0);
   });
 
   it('skal vise panel for inngangsvilkår når det er data for flere panel', () => {
@@ -226,17 +216,17 @@ describe('<ProsessStegPanel>', () => {
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
-        behandlingApi={{}}
-        dispatch={sinon.spy()}
+        lagreAksjonspunkter={sinon.spy()}
+        useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
 
-    expect(wrapper.find(MargMarkering)).to.have.length(1);
-    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).to.have.length(0);
-    expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
+    expect(wrapper.find(MargMarkering)).toHaveLength(1);
+    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).toHaveLength(0);
+    expect(wrapper.find(BehandlingHenlagtPanel)).toHaveLength(0);
 
-    expect(wrapper.find(InngangsvilkarPanel)).to.have.length(1);
-    expect(wrapper.find(DataFetcher)).to.have.length(0);
+    expect(wrapper.find(InngangsvilkarPanel)).toHaveLength(1);
+    expect(wrapper.find('DataFetcher')).toHaveLength(0);
   });
 
   it('skal vise kun vise ett panel', () => {
@@ -272,20 +262,25 @@ describe('<ProsessStegPanel>', () => {
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
-        behandlingApi={{}}
-        dispatch={sinon.spy()}
+        lagreAksjonspunkter={sinon.spy()}
+        useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
 
-    expect(wrapper.find(MargMarkering)).to.have.length(1);
-    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).to.have.length(0);
-    expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
+    expect(wrapper.find(MargMarkering)).toHaveLength(1);
+    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).toHaveLength(0);
+    expect(wrapper.find(BehandlingHenlagtPanel)).toHaveLength(0);
 
-    expect(wrapper.find(DataFetcher)).to.have.length(1);
-    expect(wrapper.find(InngangsvilkarPanel)).to.have.length(0);
+    const komponent = wrapper.find('div');
+    expect(komponent).toHaveLength(1);
+    expect(komponent.prop('status')).toEqual(vilkarUtfallType.IKKE_VURDERT);
+    expect(komponent.prop('isReadOnly')).toBe(false);
+    expect(komponent.prop('readOnlySubmitButton')).toBe(false);
+    expect(komponent.prop('isAksjonspunktOpen')).toBe(true);
+    expect(wrapper.find(InngangsvilkarPanel)).toHaveLength(0);
   });
 
-  it('skal lagre aksjonspunkt', async () => {
+  it('skal lagre aksjonspunkt', () => {
     const fodselAksjonspunkter = [
       {
         ...aksjonspunkter[0],
@@ -326,13 +321,8 @@ describe('<ProsessStegPanel>', () => {
     ]);
 
     const lagringSideeffekterCallback = sinon.spy();
-    const makeRestApiRequest = sinon.spy();
-    const behandlingApi: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
-      SAVE_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-    };
-    const dispatch = () => Promise.resolve();
+    const makeRestApiRequest = sinon.stub();
+    makeRestApiRequest.returns(Promise.resolve());
 
     const wrapper = shallow(
       <ProsessStegPanel
@@ -342,8 +332,8 @@ describe('<ProsessStegPanel>', () => {
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={lagringSideeffekterCallback}
-        behandlingApi={behandlingApi as { [name: string]: EndpointOperations }}
-        dispatch={dispatch as Dispatch}
+        lagreAksjonspunkter={makeRestApiRequest}
+        useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
 
@@ -356,12 +346,12 @@ describe('<ProsessStegPanel>', () => {
     ];
     panel.prop('submitCallback')(aksjonspunktModels);
 
-    expect(await lagringSideeffekterCallback.getCalls()).to.have.length(1);
+    expect(lagringSideeffekterCallback.getCalls()).toHaveLength(1);
 
     const requestKall = makeRestApiRequest.getCalls();
-    expect(requestKall).to.have.length(1);
-    expect(requestKall[0].args).to.have.length(1);
-    expect(requestKall[0].args[0]).to.eql({
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,

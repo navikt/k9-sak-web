@@ -45,6 +45,7 @@ export const BehandleKlageFormKaImpl = ({
   formValues,
   intl,
   alleKodeverk,
+  lagreKlageVurdering,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -89,6 +90,7 @@ export const BehandleKlageFormKaImpl = ({
                   valgtPartMedKlagerett={valgtPartMedKlagerett}
                   aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
                   previewCallback={previewCallback}
+                  lagreKlageVurdering={lagreKlageVurdering}
                 />
               )}
           </Column>
@@ -109,6 +111,7 @@ export const BehandleKlageFormKaImpl = ({
 BehandleKlageFormKaImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   saveKlage: PropTypes.func.isRequired,
+  lagreKlageVurdering: PropTypes.func.isRequired,
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,

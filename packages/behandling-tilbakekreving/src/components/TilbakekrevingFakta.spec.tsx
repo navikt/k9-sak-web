@@ -1,36 +1,28 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@fpsak-frontend/behandling-felles';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
+import { requestTilbakekrevingApi, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
 
 describe('<TilbakekrevingFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
-  };
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
+
   const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
@@ -62,15 +54,17 @@ describe('<TilbakekrevingFakta>', () => {
     },
   ];
   const perioderForeldelse = {
-    perioder: {
-      fom: '2019-01-01',
-      tom: '2019-04-01',
-      belop: 1212,
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.FORELDET,
-        kodeverk: 'FORELDRE_VURDERING_TYPE',
+    perioder: [
+      {
+        fom: '2019-01-01',
+        tom: '2019-04-01',
+        belop: 1212,
+        foreldelseVurderingType: {
+          kode: foreldelseVurderingType.FORELDET,
+          kodeverk: 'FORELDRE_VURDERING_TYPE',
+        },
       },
-    },
+    ],
   };
   const beregningsresultat = {
     beregningResultatPerioder: [],
@@ -99,13 +93,19 @@ describe('<TilbakekrevingFakta>', () => {
         },
         konsekvenserForYtelsen: [],
       },
-      behandlingÅrsaker: {
-        behandlingArsakType: [],
-      },
+      behandlingÅrsaker: [
+        {
+          behandlingArsakType: {
+            kode: 'test',
+            kodeverk: 'test',
+          },
+        },
+      ],
     },
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     const wrapper = shallowWithIntl(
       <TilbakekrevingFakta.WrappedComponent
         intl={intlMock}
@@ -122,12 +122,12 @@ describe('<TilbakekrevingFakta>', () => {
         fpsakKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         hasFetchError={false}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
       />,
     );
 
     const panel = wrapper.find(SideMenuWrapper);
-    expect(panel.prop('paneler')).is.eql([
+    expect(panel.prop('paneler')).toEqual([
       {
         erAktiv: true,
         harAksjonspunkt: true,
@@ -137,6 +137,7 @@ describe('<TilbakekrevingFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
       <TilbakekrevingFakta.WrappedComponent
@@ -154,7 +155,7 @@ describe('<TilbakekrevingFakta>', () => {
         fpsakKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         hasFetchError={false}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
       />,
     );
 
@@ -163,10 +164,10 @@ describe('<TilbakekrevingFakta>', () => {
     panel.prop('onClick')(0);
 
     const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(calls).to.have.length(1);
+    expect(calls).toHaveLength(1);
     const { args } = calls[0];
-    expect(args).to.have.length(2);
-    expect(args[0]).to.eql('default');
-    expect(args[1]).to.eql('feilutbetaling');
+    expect(args).toHaveLength(2);
+    expect(args[0]).toEqual('default');
+    expect(args[1]).toEqual('feilutbetaling');
   });
 });

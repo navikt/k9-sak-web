@@ -1,4 +1,4 @@
-import { Behandling, FagsakInfo } from '@k9-sak-web/types';
+import { Behandling, FagsakInfo, Fagsak } from '@k9-sak-web/types';
 import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
@@ -24,6 +24,19 @@ const lagForhåndsvisRequest = (behandling: Behandling, fagsak: FagsakInfo, data
     aktørId: fagsak.fagsakPerson.aktørId,
     avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
     ...data,
+  };
+};
+
+export const lagForhåndsvisRequestNew = (behandling: Behandling, fagsak: Fagsak, data: any): ForhåndsvisRequest => {
+  const { dokumentMal, dokumentdata } = data;
+  return {
+    eksternReferanse: behandling.uuid,
+    ytelseType: fagsak.sakstype,
+    saksnummer: fagsak.saksnummer,
+    aktørId: fagsak.person.aktørId,
+    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    dokumentMal,
+    dokumentdata,
   };
 };
 

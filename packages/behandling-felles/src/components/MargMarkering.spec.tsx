@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -26,8 +25,8 @@ describe('<MargMarkering>', () => {
     );
 
     const div = wrapper.find('div');
-    expect(div).has.length(1);
-    expect(div.prop('className')).is.eql('prosesspunkt');
+    expect(div).toHaveLength(1);
+    expect(div.prop('className')).toEqual('prosesspunkt');
   });
 
   it('skal rendre rendre children med gul marg når det finnes åpne og løsbare aksjonspunkter', () => {
@@ -57,10 +56,10 @@ describe('<MargMarkering>', () => {
       </MargMarkering>,
     );
 
-    expect(wrapper.find('span')).has.length(1);
+    expect(wrapper.find('span')).toHaveLength(1);
     const div = wrapper.find('div');
-    expect(div).has.length(1);
-    expect(div.prop('className')).is.eql('prosesspunkt visAksjonspunkt');
+    expect(div).toHaveLength(1);
+    expect(div.prop('className')).toEqual('prosesspunkt visAksjonspunkt');
   });
 
   it('skal rendre rendre children med rød marg når et aksjonspunkt er sendt tilbake fra beslutter', () => {
@@ -92,9 +91,9 @@ describe('<MargMarkering>', () => {
       </MargMarkering>,
     );
 
-    expect(wrapper.find('span')).has.length(1);
+    expect(wrapper.find('span')).toHaveLength(1);
     const div = wrapper.find('div');
-    expect(div).has.length(1);
-    expect(div.prop('className')).is.eql('prosesspunkt ikkeAkseptertAvBeslutter visAksjonspunkt');
+    expect(div).toHaveLength(1);
+    expect(div.prop('className')).toEqual('prosesspunkt ikkeAkseptertAvBeslutter visAksjonspunkt');
   });
 });

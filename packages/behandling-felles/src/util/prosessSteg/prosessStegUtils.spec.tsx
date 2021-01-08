@@ -1,9 +1,6 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
-import { Dispatch } from 'redux';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -13,9 +10,8 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
 import { ProsessStegUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
 import {
@@ -29,17 +25,9 @@ import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 describe('<prosessStegUtils>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
-  };
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
   const behandling = {
     id: 1,
     versjon: 2,
@@ -169,27 +157,27 @@ describe('<prosessStegUtils>', () => {
       hasFetchError,
     );
 
-    expect(prosessStegPaneler).to.have.length(1);
+    expect(prosessStegPaneler).toHaveLength(1);
     const panel = prosessStegPaneler[0];
-    expect(panel.getUrlKode()).to.eql('opplysningsplikt');
-    expect(panel.getTekstKode()).to.eql('Behandlingspunkt.Opplysningsplikt');
-    expect(panel.getErReadOnly()).is.true;
-    expect(panel.getErAksjonspunktOpen()).is.true;
-    expect(panel.getAksjonspunkter()).to.eql(aksjonspunkter);
-    expect(panel.getErStegBehandlet()).is.true;
-    expect(panel.getStatus()).to.eql(vilkarUtfallType.IKKE_VURDERT);
+    expect(panel.getUrlKode()).toEqual('opplysningsplikt');
+    expect(panel.getTekstKode()).toEqual('Behandlingspunkt.Opplysningsplikt');
+    expect(panel.getErReadOnly()).toBe(true);
+    expect(panel.getErAksjonspunktOpen()).toBe(true);
+    expect(panel.getAksjonspunkter()).toEqual(aksjonspunkter);
+    expect(panel.getErStegBehandlet()).toBe(true);
+    expect(panel.getStatus()).toEqual(vilkarUtfallType.IKKE_VURDERT);
 
-    expect(panel.getDelPaneler()).to.have.length(1);
+    expect(panel.getDelPaneler()).toHaveLength(1);
     const delPanel = panel.getDelPaneler()[0];
-    expect(delPanel.getAksjonspunktHjelpetekster()).to.eql(['SokersOpplysningspliktForm.UtfyllendeOpplysninger']);
-    expect(delPanel.getAksjonspunkterForPanel()).to.eql(aksjonspunkter);
-    expect(delPanel.getErAksjonspunktOpen()).is.true;
-    expect(delPanel.getErReadOnly()).is.true;
-    expect(delPanel.getStatus()).to.eql(vilkarUtfallType.IKKE_VURDERT);
-    expect(delPanel.getProsessStegDelPanelDef().getEndepunkter()).to.eql([]);
-    expect(delPanel.getProsessStegDelPanelDef().getKomponent).to.eql(panelDef.getKomponent);
+    expect(delPanel.getAksjonspunktHjelpetekster()).toEqual(['SokersOpplysningspliktForm.UtfyllendeOpplysninger']);
+    expect(delPanel.getAksjonspunkterForPanel()).toEqual(aksjonspunkter);
+    expect(delPanel.getErAksjonspunktOpen()).toBe(true);
+    expect(delPanel.getErReadOnly()).toBe(true);
+    expect(delPanel.getStatus()).toEqual(vilkarUtfallType.IKKE_VURDERT);
+    expect(delPanel.getProsessStegDelPanelDef().getEndepunkter()).toEqual([]);
+    expect(delPanel.getProsessStegDelPanelDef().getKomponent).toEqual(panelDef.getKomponent);
 
-    expect(delPanel.getKomponentData()).to.eql({
+    expect(delPanel.getKomponentData()).toEqual({
       aksjonspunkter,
       isAksjonspunktOpen: true,
       isReadOnly: true,
@@ -225,7 +213,7 @@ describe('<prosessStegUtils>', () => {
       apentFaktaPanelInfo,
     );
 
-    expect(valgtPanel).to.eql(utledetPanel);
+    expect(valgtPanel).toEqual(utledetPanel);
   });
 
   it('skal vise ikke vise prosess-steg panel når ingen er spesifikt valgt og en har åpent fakta-aksjonspunkt', () => {
@@ -234,7 +222,7 @@ describe('<prosessStegUtils>', () => {
 
     const valgtPanel = finnValgtPanel([utledetTestPanel], erBehandlingHenlagt, 'default', apentFaktaPanelInfo);
 
-    expect(valgtPanel).is.undefined;
+    expect(valgtPanel).toBeUndefined();
   });
 
   it('skal vise panel som har åpent aksjonspunkt', () => {
@@ -261,7 +249,7 @@ describe('<prosessStegUtils>', () => {
       apentFaktaPanelInfo,
     );
 
-    expect(valgtPanel).is.eql(utledetPanel);
+    expect(valgtPanel).toEqual(utledetPanel);
   });
 
   it('skal formatere paneler for prosessmeny', () => {
@@ -280,14 +268,13 @@ describe('<prosessStegUtils>', () => {
     const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
     const formatertePaneler = formaterPanelerForProsessmeny([utledetTestPanel, utledetPanel], 'opplysningsplikt');
-    expect(formatertePaneler).to.eql([
+    expect(formatertePaneler).toEqual([
       {
         isActive: false,
         isDisabled: false,
         isFinished: false,
         labelId: 'Behandlingspunkt.Test',
         type: 'default',
-        usePartialStatus: false,
       },
       {
         isActive: true,
@@ -295,31 +282,21 @@ describe('<prosessStegUtils>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.Opplysningsplikt',
         type: 'warning',
-        usePartialStatus: false,
       },
     ]);
   });
 
-  it('skal lagre aksjonspunkt', async () => {
-    const dispatch = () => Promise.resolve();
-    const makeRestApiRequest = sinon.spy();
-    const api: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
-      SAVE_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-      SAVE_OVERSTYRT_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-    };
+  it('skal lagre aksjonspunkt', () => {
+    const lagreAksjonspunkter = sinon.stub();
+    lagreAksjonspunkter.returns(Promise.resolve());
     const lagringSideEffectsCallback = sinon.spy();
 
     const callback = getBekreftAksjonspunktCallback(
-      dispatch as Dispatch,
       lagringSideEffectsCallback,
       fagsak,
       behandling as Behandling,
       aksjonspunkter,
-      api as { [name: string]: EndpointOperations },
+      lagreAksjonspunkter,
     );
     const aksjonspunktModeller = [
       {
@@ -327,12 +304,12 @@ describe('<prosessStegUtils>', () => {
       },
     ];
 
-    await callback(aksjonspunktModeller);
+    callback(aksjonspunktModeller);
 
-    const requestKall = makeRestApiRequest.getCalls();
-    expect(requestKall).to.have.length(1);
-    expect(requestKall[0].args).to.have.length(1);
-    expect(requestKall[0].args[0]).to.eql({
+    const requestKall = lagreAksjonspunkter.getCalls();
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
@@ -345,26 +322,19 @@ describe('<prosessStegUtils>', () => {
     });
   });
 
-  it('skal lagre overstyrt aksjonspunkt', async () => {
-    const dispatch = () => Promise.resolve();
-    const makeRestApiRequest = sinon.spy();
-    const api: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
-      SAVE_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-      SAVE_OVERSTYRT_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-    };
+  it('skal lagre overstyrt aksjonspunkt', () => {
+    const lagreAksjonspunkter = sinon.spy();
+    const lagreOverstyrteAksjonspunkter = sinon.stub();
+    lagreOverstyrteAksjonspunkter.returns(Promise.resolve());
     const lagringSideEffectsCallback = sinon.spy();
 
     const callback = getBekreftAksjonspunktCallback(
-      dispatch as Dispatch,
       lagringSideEffectsCallback,
       fagsak,
       behandling as Behandling,
       aksjonspunkter,
-      api as { [name: string]: EndpointOperations },
+      lagreAksjonspunkter,
+      lagreOverstyrteAksjonspunkter,
     );
 
     const aksjonspunktModeller = [
@@ -373,12 +343,12 @@ describe('<prosessStegUtils>', () => {
       },
     ];
 
-    await callback(aksjonspunktModeller);
+    callback(aksjonspunktModeller);
 
-    const requestKall = makeRestApiRequest.getCalls();
-    expect(requestKall).to.have.length(1);
-    expect(requestKall[0].args).to.have.length(1);
-    expect(requestKall[0].args[0]).to.eql({
+    const requestKall = lagreOverstyrteAksjonspunkter.getCalls();
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,

@@ -63,3 +63,11 @@ export {
   OpptjeningAktiviteter,
 } from './src/totrinnskontrollAksjonspunktTsType';
 export { default as TotrinnskontrollSkjermlenkeContext } from './src/totrinnskontrollSkjermlenkeContextTsType';
+export { default as AnkeVurdering } from './src/ankeVurderingTsType';
+export { default as Innsyn, InnsynDokument, InnsynVedtaksdokument } from './src/innsynTsType';
+export { default as FeilutbetalingFakta } from './src/feilutbetalingFaktaTsType';
+export { default as FeilutbetalingPerioderWrapper, FeilutbetalingPeriode } from './src/feilutbetalingPerioderTsType';
+export {
+  default as BeregningsresultatTilbakekreving,
+  BeregningResultatPeriode,
+} from './src/beregningsresultatTilbakekrevingTsType';

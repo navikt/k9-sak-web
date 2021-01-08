@@ -3,9 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import klageApi from '@fpsak-frontend/behandling-klage/src/data/klageBehandlingApi';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import styles from './tempsaveAndPreviewKlageLink.less';
 
 const transformValues = (values: any, aksjonspunktCode: string) => ({
@@ -31,7 +28,7 @@ const getBrevData = (tekst: string) => {
 
 interface OwnProps {
   formValues: any;
-  saveKlage: (params: any) => void;
+  lagreKlageVurdering: (params: any) => void;
   aksjonspunktCode: string;
   readOnly: boolean;
   previewCallback: (brevData: any) => void;
@@ -60,7 +57,7 @@ const useForhaandsvise = (
 
 export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   formValues,
-  saveKlage,
+  lagreKlageVurdering,
   aksjonspunktCode,
   readOnly,
   previewCallback,
@@ -76,7 +73,7 @@ export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   );
 
   const tempSave = event => {
-    saveKlage(transformValues(formValues, aksjonspunktCode));
+    lagreKlageVurdering(transformValues(formValues, aksjonspunktCode));
     setSkalForhaandsvise(true);
     event.preventDefault();
   };
@@ -97,12 +94,4 @@ export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   );
 };
 
-const mapStateToProps = state => ({
-  hasFinishedSaveKlage: !!klageApi.SAVE_KLAGE_VURDERING.getRestApiFinished()(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({ resetSaveKlage: klageApi.SAVE_KLAGE_VURDERING.resetRestApi() }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TempSaveAndPreviewKlageLink);
+export default TempSaveAndPreviewKlageLink;

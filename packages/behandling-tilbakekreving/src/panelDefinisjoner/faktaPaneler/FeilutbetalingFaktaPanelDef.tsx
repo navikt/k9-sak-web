@@ -5,7 +5,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
 
-import tilbakekrevingBehandlingApi from '../../data/tilbakekrevingBehandlingApi';
+import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 
 class FeilutbetalingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.FEILUTBETALING;
@@ -16,7 +16,7 @@ class FeilutbetalingFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <FeilutbetalingFaktaIndex {...props} />;
 
-  getEndepunkter = () => [tilbakekrevingBehandlingApi.FEILUTBETALING_AARSAK];
+  getEndepunkter = () => [TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK];
 
   getOverstyrVisningAvKomponent = ({ feilutbetalingFakta }) => !!feilutbetalingFakta;
 

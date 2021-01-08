@@ -1,27 +1,33 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
-import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  FagsakInfo,
   Rettigheter,
   prosessStegHooks,
   IverksetterVedtakStatusModal,
   ProsessStegPanel,
   ProsessStegContainer,
+  useSetBehandlingVedEndring,
 } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
+import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
+import { lagForhåndsvisRequestNew } from '@fpsak-frontend/utils/src/formidlingUtils';
 
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
-import innsynBehandlingApi from '../data/innsynBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
-
+import { restApiInnsynHooks, InnsynBehandlingApiKeys } from '../data/innsynBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
+const forhandsvis = data => {
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(data);
+  } else if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
+
 interface OwnProps {
   data: FetchedData;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -29,13 +35,13 @@ interface OwnProps {
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
-  dispatch: Dispatch;
+  setBehandling: (behandling: Behandling) => void;
   featureToggles: FeatureToggles;
 }
 
-const previewCallback = (dispatch, fagsak, behandling) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
-  return dispatch(innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
+const previewCallback = (forhandsvisMelding, fagsak: Fagsak, behandling: Behandling) => parametre => {
+  const request = lagForhåndsvisRequestNew(behandling, fagsak, parametre);
+  return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 
 const getLagringSideeffekter = (
@@ -69,7 +75,7 @@ const InnsynProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   opneSokeside,
-  dispatch,
+  setBehandling,
   featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
@@ -77,10 +83,19 @@ const InnsynProsess: FunctionComponent<OwnProps> = ({
     oppdaterBehandlingVersjon,
   );
 
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiInnsynHooks.useRestApiRunner<Behandling>(
+    InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
+  const { startRequest: forhandsvisMelding } = restApiInnsynHooks.useRestApiRunner(
+    InnsynBehandlingApiKeys.PREVIEW_MESSAGE,
+  );
+
+  useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
+
   const dataTilUtledingAvFpPaneler = {
     alleDokumenter: data.innsynDokumenter,
     innsyn: data.innsyn,
-    previewCallback: useCallback(previewCallback(dispatch, fagsak, behandling), [behandling.versjon]),
+    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, behandling), [behandling.versjon]),
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
@@ -131,8 +146,8 @@ const InnsynProsess: FunctionComponent<OwnProps> = ({
           behandling={behandling}
           alleKodeverk={alleKodeverk}
           lagringSideeffekterCallback={lagringSideeffekterCallback}
-          behandlingApi={innsynBehandlingApi}
-          dispatch={dispatch}
+          lagreAksjonspunkter={lagreAksjonspunkter}
+          useMultipleRestApi={restApiInnsynHooks.useMultipleRestApi}
           featureToggles={featureToggles}
         />
       </ProsessStegContainer>

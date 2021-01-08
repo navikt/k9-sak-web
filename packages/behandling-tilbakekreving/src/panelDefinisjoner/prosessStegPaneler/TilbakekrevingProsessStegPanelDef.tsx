@@ -6,7 +6,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
-import tilbakekrevingApi from '../../data/tilbakekrevingBehandlingApi';
+import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <TilbakekrevingProsessIndex {...props} />;
@@ -15,12 +15,15 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING];
 
-  getEndepunkter = () => [tilbakekrevingApi.VILKARVURDERINGSPERIODER, tilbakekrevingApi.VILKARVURDERING];
+  getEndepunkter = () => [
+    TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER,
+    TilbakekrevingBehandlingApiKeys.VILKARVURDERING,
+  ];
 
-  getData = ({ behandling, aksjonspunkterForSteg, perioderForeldelse, fagsak, beregnBelop }) => ({
+  getData = ({ behandling, aksjonspunkterForSteg, perioderForeldelse, fagsakPerson, beregnBelop }) => ({
     perioderForeldelse,
     beregnBelop,
-    navBrukerKjonn: fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
+    navBrukerKjonn: fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
     alleMerknaderFraBeslutter: getAlleMerknaderFraBeslutter(behandling, aksjonspunkterForSteg),
   });
 }

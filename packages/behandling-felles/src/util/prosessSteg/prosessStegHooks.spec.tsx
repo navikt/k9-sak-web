@@ -1,20 +1,16 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import { Dispatch } from 'redux';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
@@ -29,17 +25,9 @@ const testHook = callback => shallow(<HookWrapper callback={callback} />);
 describe('<prosessStegHooks>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
-  };
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
   const behandling = {
     id: 1,
     versjon: 2,
@@ -146,17 +134,16 @@ describe('<prosessStegHooks>', () => {
       // @ts-ignore
     }).reduce((acc, value) => [...acc, value], []);
 
-    expect(prosessStegPaneler).has.length(1);
+    expect(prosessStegPaneler).toHaveLength(1);
     const panel = prosessStegPaneler[0];
-    expect(valgtPanel).to.eql(panel);
-    expect(formaterteProsessStegPaneler).to.eql([
+    expect(valgtPanel).toEqual(panel);
+    expect(formaterteProsessStegPaneler).toEqual([
       {
         isActive: true,
         isDisabled: false,
         isFinished: false,
         labelId: 'Behandlingspunkt.Opplysningsplikt',
         type: StepType.warning,
-        usePartialStatus: false,
       },
     ]);
   });
@@ -196,10 +183,10 @@ describe('<prosessStegHooks>', () => {
     prosessStegVelger(0);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('opplysningsplikt');
-    expect(opppdaterKall[0].args[1]).to.eql('default');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('opplysningsplikt');
+    expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 
   it('skal skjule prosess-steg når en velger steg som allerede vises', () => {
@@ -237,13 +224,13 @@ describe('<prosessStegHooks>', () => {
     prosessStegVelger(0);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.undefined;
-    expect(opppdaterKall[0].args[1]).to.eql('default');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toBeUndefined();
+    expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 
-  it('skal bekrefte aksjonspunkt', async () => {
+  it('skal bekrefte aksjonspunkt', () => {
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
@@ -260,33 +247,28 @@ describe('<prosessStegHooks>', () => {
     );
     const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
-    const dispatch = () => Promise.resolve();
-    const makeRestApiRequest = sinon.spy();
+    const lagreAksjonspunkter = sinon.stub();
+    lagreAksjonspunkter.returns(Promise.resolve());
     const lagringSideEffectsCallback = () => () => {};
-    const behandlingApi: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
-      SAVE_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-    };
 
     const wrapper = testHook(() =>
       prosessStegHooks.useBekreftAksjonspunkt(
         fagsak,
         behandling as Behandling,
-        behandlingApi as { [name: string]: EndpointOperations },
         lagringSideEffectsCallback,
-        dispatch as Dispatch,
+        lagreAksjonspunkter,
+        undefined,
         utledetPanel,
       ),
     );
     const bekreftAksjonspunkt = wrapper.find('div').prop('data-values') as (number) => void;
 
-    await bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
+    bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
 
-    const requestKall = makeRestApiRequest.getCalls();
-    expect(requestKall).to.have.length(1);
-    expect(requestKall[0].args).to.have.length(1);
-    expect(requestKall[0].args[0]).to.eql({
+    const requestKall = lagreAksjonspunkter.getCalls();
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,

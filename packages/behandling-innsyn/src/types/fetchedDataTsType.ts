@@ -1,6 +1,4 @@
-import { Aksjonspunkt, Vilkar, Dokument } from '@k9-sak-web/types';
-
-import Innsyn from './innsynTsType';
+import { Aksjonspunkt, Vilkar, Dokument, Innsyn } from '@k9-sak-web/types';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];

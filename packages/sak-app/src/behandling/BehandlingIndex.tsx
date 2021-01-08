@@ -19,10 +19,10 @@ import ErrorBoundary from '../app/ErrorBoundary';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-omsorgspenger'));
-const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
-const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
-const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
-const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
+const BehandlingInnsynIndex = React.lazy(() => import('@k9-sak-web/behandling-innsyn'));
+const BehandlingKlageIndex = React.lazy(() => import('@k9-sak-web/behandling-klage'));
+const BehandlingTilbakekrevingIndex = React.lazy(() => import('@k9-sak-web/behandling-tilbakekreving'));
+const BehandlingAnkeIndex = React.lazy(() => import('@k9-sak-web/behandling-anke'));
 const BehandlingFrisinnIndex = React.lazy(() => import('@fpsak-frontend/behandling-frisinn'));
 const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
 

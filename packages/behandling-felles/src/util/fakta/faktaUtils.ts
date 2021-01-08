@@ -1,9 +1,7 @@
-import { Dispatch } from 'redux';
+import { IntlShape } from 'react-intl';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { Behandling, Aksjonspunkt } from '@k9-sak-web/types';
+import { Behandling, Aksjonspunkt, Fagsak } from '@k9-sak-web/types';
 
-import FagsakInfo from '../../types/fagsakInfoTsType';
 import Rettigheter from '../../types/rettigheterTsType';
 import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
@@ -38,7 +36,7 @@ export const finnValgtPanel = (faktaPaneler: FaktaPanelUtledet[], valgtFaktaPane
 };
 
 export const formaterPanelerForSidemeny = (
-  intl,
+  intl: IntlShape,
   faktaPaneler: FaktaPanelUtledet[],
   valgtFaktaPanelKode: string,
 ): FaktaPanelMenyRad[] =>
@@ -49,12 +47,12 @@ export const formaterPanelerForSidemeny = (
   }));
 
 export const getBekreftAksjonspunktCallback = (
-  dispatch: Dispatch,
-  fagsak: FagsakInfo,
+  fagsak: Fagsak,
   behandling: Behandling,
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void,
   overstyringApCodes: string[],
-  api: { [name: string]: EndpointOperations },
+  lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
+  lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
 ) => aksjonspunkter => {
   const model = aksjonspunkter.map(ap => ({
     '@type': ap.kode,
@@ -68,24 +66,20 @@ export const getBekreftAksjonspunktCallback = (
   };
 
   if (model && overstyringApCodes.includes(model[0].kode)) {
-    return dispatch(
-      api.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(
-        {
-          ...params,
-          overstyrteAksjonspunktDtoer: model,
-        },
-        { keepData: true },
-      ),
+    return lagreOverstyrteAksjonspunkter(
+      {
+        ...params,
+        overstyrteAksjonspunktDtoer: model,
+      },
+      true,
     ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
   }
 
-  return dispatch(
-    api.SAVE_AKSJONSPUNKT.makeRestApiRequest()(
-      {
-        ...params,
-        bekreftedeAksjonspunktDtoer: model,
-      },
-      { keepData: true },
-    ),
+  return lagreAksjonspunkter(
+    {
+      ...params,
+      bekreftedeAksjonspunktDtoer: model,
+    },
+    true,
   ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
 };

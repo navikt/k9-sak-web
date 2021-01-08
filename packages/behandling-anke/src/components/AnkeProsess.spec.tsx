@@ -1,18 +1,15 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import AnkeProsess from './AnkeProsess';
@@ -20,17 +17,9 @@ import AnkeProsess from './AnkeProsess';
 describe('<AnkeProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
-  };
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
   const behandling = {
     id: 1,
     versjon: 2,
@@ -63,19 +52,9 @@ describe('<AnkeProsess>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.ADOPSJONSVILKARET, kodeverk: 'test' },
       overstyrbar: true,
-      perioder: [
-        {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          merknadParametere: {
-            antattGodkjentArbeid: 'P0D',
-            antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
-          },
-          periode: { fom: '2020-03-16', tom: '2020-03-19' },
-        },
-      ],
-    },
+    } as Vilkar,
   ];
   const ankeVurdering = {
     ankeVurderingResultat: undefined,
@@ -94,20 +73,18 @@ describe('<AnkeProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
-        featureToggles={{}}
+        setBehandling={sinon.spy()}
       />,
     );
 
     const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
+    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
       {
         isActive: false,
         isDisabled: false,
         isFinished: false,
         labelId: 'Behandlingspunkt.Ankebehandling',
         type: 'default',
-        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -115,7 +92,6 @@ describe('<AnkeProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.AnkeResultat',
         type: 'default',
-        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -123,7 +99,6 @@ describe('<AnkeProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.AnkeMerknader',
         type: 'default',
-        usePartialStatus: false,
       },
     ]);
   });
@@ -142,8 +117,7 @@ describe('<AnkeProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
-        featureToggles={{}}
+        setBehandling={sinon.spy()}
       />,
     );
 
@@ -152,8 +126,8 @@ describe('<AnkeProsess>', () => {
     meny.prop('velgProsessStegPanelCallback')(2);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('ankemerknader');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('ankemerknader');
   });
 });

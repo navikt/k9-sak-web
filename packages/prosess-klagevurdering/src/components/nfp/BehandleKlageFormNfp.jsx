@@ -45,6 +45,7 @@ export const BehandleKlageFormNfpImpl = ({
   formValues,
   intl,
   alleKodeverk,
+  lagreKlageVurdering,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -90,6 +91,7 @@ export const BehandleKlageFormNfpImpl = ({
                   valgtPartMedKlagerett={valgtPartMedKlagerett}
                   aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
                   previewCallback={previewCallback}
+                  lagreKlageVurdering={lagreKlageVurdering}
                 />
               )}
           </Column>
@@ -110,6 +112,7 @@ export const BehandleKlageFormNfpImpl = ({
 BehandleKlageFormNfpImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   saveKlage: PropTypes.func.isRequired,
+  lagreKlageVurdering: PropTypes.func.isRequired,
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,

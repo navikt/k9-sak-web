@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import SideMenu from '@navikt/nap-side-menu';
 
@@ -28,9 +27,9 @@ describe('<SideMenuWrapper>', () => {
     );
 
     const meny = wrapper.find(SideMenu);
-    expect(meny).to.have.length(1);
-    expect(meny.prop('heading')).to.eql('Saksopplysninger');
-    expect(meny.prop('links')).to.eql([
+    expect(meny).toHaveLength(1);
+    expect(meny.prop('heading')).toEqual('Fakta om');
+    expect(meny.prop('links')).toEqual([
       {
         label: 'test',
         active: true,
@@ -59,7 +58,7 @@ describe('<SideMenuWrapper>', () => {
     );
 
     const meny = wrapper.find(SideMenu);
-    expect(meny.prop('links')).to.eql([
+    expect(meny.prop('links')).toEqual([
       {
         label: 'test',
         active: true,

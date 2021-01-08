@@ -1,10 +1,8 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
-import { Dispatch } from 'redux';
+import { IntlShape } from 'react-intl';
 
-import { Behandling } from '@k9-sak-web/types';
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -13,7 +11,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
@@ -29,17 +26,9 @@ import {
 describe('<faktaUtils>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
-  };
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
   const behandling = {
     id: 1,
     versjon: 2,
@@ -108,10 +97,10 @@ describe('<faktaUtils>', () => {
       aksjonspunkter,
     );
 
-    expect(faktaPaneler).to.have.length(1);
-    expect(faktaPaneler[0].getPanelDef()).to.eql(panelDef);
-    expect(faktaPaneler[0].getHarApneAksjonspunkter()).is.true;
-    expect(faktaPaneler[0].getKomponentData(rettigheter, ekstraPanelData, false)).to.eql({
+    expect(faktaPaneler).toHaveLength(1);
+    expect(faktaPaneler[0].getPanelDef()).toEqual(panelDef);
+    expect(faktaPaneler[0].getHarApneAksjonspunkter()).toBe(true);
+    expect(faktaPaneler[0].getKomponentData(rettigheter, ekstraPanelData, false)).toEqual({
       aksjonspunkter: [aksjonspunkter[0]],
       readOnly: false,
       submittable: true,
@@ -145,7 +134,7 @@ describe('<faktaUtils>', () => {
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.getUrlKode()).to.eql(paneler[1].getUrlKode());
+    expect(valgtPanel.getUrlKode()).toEqual(paneler[1].getUrlKode());
   });
 
   it('skal finne ut at valgt faktapanel er første panel når det ikke finnes åpne aksjonspunkter', () => {
@@ -157,7 +146,7 @@ describe('<faktaUtils>', () => {
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.getUrlKode()).to.eql(paneler[0].getUrlKode());
+    expect(valgtPanel.getUrlKode()).toEqual(paneler[0].getUrlKode());
   });
 
   it('skal finne faktapanel som er satt i URL', () => {
@@ -169,7 +158,7 @@ describe('<faktaUtils>', () => {
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.getUrlKode()).to.eql(paneler[1].getUrlKode());
+    expect(valgtPanel.getUrlKode()).toEqual(paneler[1].getUrlKode());
   });
 
   it('skal formatere paneler for sidemeny', () => {
@@ -189,12 +178,12 @@ describe('<faktaUtils>', () => {
     ];
     const intl = {
       formatMessage: o => o.id,
-    };
+    } as IntlShape;
     const valgtFaktaPanelKode = paneler[0].getUrlKode();
 
     const formatertePaneler = formaterPanelerForSidemeny(intl, paneler, valgtFaktaPanelKode);
 
-    expect(formatertePaneler).to.eql([
+    expect(formatertePaneler).toEqual([
       {
         tekst: paneler[0].getTekstKode(),
         erAktiv: true,
@@ -209,23 +198,18 @@ describe('<faktaUtils>', () => {
   });
 
   it('skal lagre aksjonspunkt', async () => {
-    const dispatch = () => Promise.resolve();
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const makeRestApiRequest = sinon.spy();
+    const lagreAksjonspunkter = sinon.stub();
+    lagreAksjonspunkter.returns(Promise.resolve());
+
     const overstyringApCodes = [];
-    const api: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
-      SAVE_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-    };
 
     const callback = getBekreftAksjonspunktCallback(
-      dispatch as Dispatch,
       fagsak,
       behandling as Behandling,
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
-      api as { [name: string]: EndpointOperations },
+      lagreAksjonspunkter,
     );
 
     const aksjonspunkter = [
@@ -236,10 +220,10 @@ describe('<faktaUtils>', () => {
 
     await callback(aksjonspunkter);
 
-    const requestKall = makeRestApiRequest.getCalls();
-    expect(requestKall).to.have.length(1);
-    expect(requestKall[0].args).to.have.length(1);
-    expect(requestKall[0].args[0]).to.eql({
+    const requestKall = lagreAksjonspunkter.getCalls();
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
@@ -252,30 +236,26 @@ describe('<faktaUtils>', () => {
     });
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql(DEFAULT_FAKTA_KODE);
-    expect(opppdaterKall[0].args[0]).to.eql(DEFAULT_PROSESS_STEG_KODE);
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
 
   it('skal lagre overstyrt aksjonspunkt', async () => {
-    const dispatch = () => Promise.resolve();
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const makeRestApiRequest = sinon.spy();
+    const lagreAksjonspunkter = sinon.spy();
+    const lagreOverstyrteAksjonspunkter = sinon.stub();
+    lagreOverstyrteAksjonspunkter.returns(Promise.resolve());
     const overstyringApCodes = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
-    const api: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
-      SAVE_OVERSTYRT_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-    };
 
     const callback = getBekreftAksjonspunktCallback(
-      dispatch as Dispatch,
       fagsak,
       behandling as Behandling,
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
-      api as { [name: string]: EndpointOperations },
+      lagreAksjonspunkter,
+      lagreOverstyrteAksjonspunkter,
     );
 
     const aksjonspunkter = [
@@ -286,10 +266,10 @@ describe('<faktaUtils>', () => {
 
     await callback(aksjonspunkter);
 
-    const requestKall = makeRestApiRequest.getCalls();
-    expect(requestKall).to.have.length(1);
-    expect(requestKall[0].args).to.have.length(1);
-    expect(requestKall[0].args[0]).to.eql({
+    const requestKall = lagreOverstyrteAksjonspunkter.getCalls();
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
@@ -302,9 +282,9 @@ describe('<faktaUtils>', () => {
     });
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql(DEFAULT_FAKTA_KODE);
-    expect(opppdaterKall[0].args[0]).to.eql(DEFAULT_PROSESS_STEG_KODE);
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
 });

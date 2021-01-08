@@ -1,9 +1,8 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -12,8 +11,6 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import InnsynProsess from './InnsynProsess';
@@ -21,17 +18,9 @@ import InnsynProsess from './InnsynProsess';
 describe('<InnsynProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
-  };
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
   const behandling = {
     id: 1,
     versjon: 2,
@@ -64,19 +53,9 @@ describe('<InnsynProsess>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.ADOPSJONSVILKARET, kodeverk: 'test' },
       overstyrbar: true,
-      perioder: [
-        {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          merknadParametere: {
-            antattGodkjentArbeid: 'P0D',
-            antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
-          },
-          periode: { fom: '2020-03-16', tom: '2020-03-19' },
-        },
-      ],
-    },
+    } as Vilkar,
   ];
   const innsyn = {
     dokumenter: [],
@@ -85,11 +64,13 @@ describe('<InnsynProsess>', () => {
       kode: innsynResultatType.INNVILGET,
       kodeverk: 'INNSYN_RESULTAT_TYPE',
     },
-    vedtaksdokumentasjon: {
-      dokumentId: '1',
-      tittel: 'test',
-      opprettetDato: '2020.01.01',
-    },
+    vedtaksdokumentasjon: [
+      {
+        dokumentId: '1',
+        tittel: 'test',
+        opprettetDato: '2020.01.01',
+      },
+    ],
   };
   const innsynDokumenter = [];
 
@@ -110,20 +91,19 @@ describe('<InnsynProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
         featureToggles={{}}
       />,
     );
 
     const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
+    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
       {
         isActive: false,
         isDisabled: false,
         isFinished: false,
         labelId: 'Behandlingspunkt.Innsyn',
         type: 'default',
-        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -131,7 +111,6 @@ describe('<InnsynProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.Vedtak',
         type: 'default',
-        usePartialStatus: false,
       },
     ]);
   });
@@ -154,7 +133,7 @@ describe('<InnsynProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
         featureToggles={{}}
       />,
     );
@@ -164,8 +143,8 @@ describe('<InnsynProsess>', () => {
     meny.prop('velgProsessStegPanelCallback')(1);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('vedtak');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('vedtak');
   });
 });
