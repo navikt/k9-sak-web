@@ -12,7 +12,7 @@ import {
   ProsessStegContainer,
   lagDokumentdata,
   useSetBehandlingVedEndring,
-} from '@fpsak-frontend/behandling-felles';
+} from '@k9-sak-web/behandling-felles';
 import {
   KodeverkMedNavn,
   Behandling,

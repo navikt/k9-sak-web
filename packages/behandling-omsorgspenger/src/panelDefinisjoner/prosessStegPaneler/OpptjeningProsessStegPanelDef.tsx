@@ -4,7 +4,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 

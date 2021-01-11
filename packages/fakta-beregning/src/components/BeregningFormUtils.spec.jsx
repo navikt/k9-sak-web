@@ -1,12 +1,13 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
-import { formNameVurderFaktaBeregning, getFormInitialValuesForBeregning, getFormValuesForBeregning } from './BeregningFormUtils';
+import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from './beregning-test-helper';
+import {
+  formNameVurderFaktaBeregning,
+  getFormInitialValuesForBeregning,
+  getFormValuesForBeregning,
+} from './BeregningFormUtils';
 
-const {
-  VURDER_FAKTA_FOR_ATFL_SN,
-  AVKLAR_AKTIVITETER,
-} = aksjonspunktCodes;
+const { VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER } = aksjonspunktCodes;
 const fellesAksjonspunkt = { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } };
 const avklarAktiviteterAksjonspunkt = { definisjon: { kode: AVKLAR_AKTIVITETER } };
 const aksjonspunkter = [fellesAksjonspunkt, avklarAktiviteterAksjonspunkt];
@@ -26,7 +27,12 @@ describe('<BeregningFormUtils>', () => {
     const values = {
       test: 'test',
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, {}, formNameVurderFaktaBeregning, values);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
+      aksjonspunkter,
+      {},
+      formNameVurderFaktaBeregning,
+      values,
+    );
     const formValues = getFormValuesForBeregning(state, behandlingProps);
     expect(formValues.test).to.equal('test');
   });
@@ -35,7 +41,13 @@ describe('<BeregningFormUtils>', () => {
     const values = {
       test: 'test',
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, {}, formNameVurderFaktaBeregning, {}, values);
+    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
+      aksjonspunkter,
+      {},
+      formNameVurderFaktaBeregning,
+      {},
+      values,
+    );
     const formValues = getFormInitialValuesForBeregning(state, behandlingProps);
     expect(formValues.test).to.equal('test');
   });

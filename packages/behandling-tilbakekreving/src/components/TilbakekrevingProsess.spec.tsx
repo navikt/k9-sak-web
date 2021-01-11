@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import { Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';

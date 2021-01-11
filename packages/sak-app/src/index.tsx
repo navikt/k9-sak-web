@@ -5,8 +5,6 @@ import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
-import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
-import errorHandler from '@fpsak-frontend/error-api-redux';
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 
 import AppIndex from './app/AppIndex';
@@ -51,8 +49,6 @@ const history = createBrowserHistory({
   basename: '/k9/web/',
 });
 const store = configureStore();
-
-reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
 
 const renderFunc = Component => {
   const app = document.getElementById('app');

@@ -3,7 +3,7 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import VedtakResultatType from '../../kodeverk/vedtakResultatType';

@@ -1,6 +1,6 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { UnntakBehandlingApiKeys } from '../../../data/unntakBehandlingApi';
 

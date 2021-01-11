@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@fpsak-frontend/behandling-felles';
+import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   Behandling,
   KodeverkMedNavn,

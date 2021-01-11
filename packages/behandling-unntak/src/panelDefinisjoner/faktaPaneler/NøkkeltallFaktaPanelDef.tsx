@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import NøkkeltallIndex from '@k9-sak-web/fakta-nokkeltall-oms';
 
 class NøkkeltallFaktaPanelDef extends FaktaPanelDef {

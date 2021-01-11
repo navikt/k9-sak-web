@@ -1,16 +1,15 @@
 import React, { FunctionComponent } from 'react';
-import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { FagsakInfo, Rettigheter, SideMenuWrapper, faktaHooks } from '@fpsak-frontend/behandling-felles';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
-import { KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { KodeverkMedNavn, Behandling, ArbeidsgiverOpplysningerPerId, FagsakPerson, Fagsak } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
-import pleiepengerBehandlingApi from '../data/pleiepengerBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import { restApiPleiepengerHooks, PleiepengerBehandlingApiKeys } from '../data/pleiepengerBehandlingApi';
 
 const overstyringApCodes = [
   ac.OVERSTYR_AVKLAR_STARTDATO,
@@ -23,7 +22,8 @@ const overstyringApCodes = [
 
 interface OwnProps {
   data: FetchedData;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -32,7 +32,8 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   valgtProsessSteg?: string;
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
-  dispatch: Dispatch;
+  setBehandling: (behandling: Behandling) => void;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -40,6 +41,7 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   data,
   behandling,
   fagsak,
+  fagsakPerson,
   rettigheter,
   alleKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -47,20 +49,35 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   valgtProsessSteg,
   hasFetchError,
   setApentFaktaPanel,
-  dispatch,
+  setBehandling,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const { aksjonspunkter, ...rest } = data;
 
-  const dataTilUtledingAvFpPaneler = {
+  const {
+    startRequest: lagreAksjonspunkter,
+    data: apBehandlingRes,
+  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
+
+  const {
+    startRequest: lagreOverstyrteAksjonspunkter,
+    data: apOverstyrtBehandlingRes,
+  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
+
+  const dataTilUtledingAvPleiepengerPaneler = {
     fagsak,
+    fagsakPerson,
     behandling,
     hasFetchError,
+    arbeidsgiverOpplysningerPerId,
     ...rest,
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
     faktaPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler,
+    dataTilUtledingAvPleiepengerPaneler,
     behandling,
     rettigheter,
     aksjonspunkter,
@@ -77,30 +94,37 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     oppdaterProsessStegOgFaktaPanelIUrl,
     valgtProsessSteg,
     overstyringApCodes,
-    pleiepengerBehandlingApi,
-    dispatch,
+    lagreAksjonspunkter,
+    lagreOverstyrteAksjonspunkter,
   );
 
+  const endepunkter = valgtPanel
+    ? valgtPanel
+        .getPanelDef()
+        .getEndepunkter()
+        .map(e => ({ key: e }))
+    : [];
+  // TODO FetchedData er feil type her
+  const { data: faktaData, state } = restApiPleiepengerHooks.useMultipleRestApi<FetchedData>(endepunkter, {
+    updateTriggers: [behandling.versjon, valgtPanel],
+    suspendRequest: !valgtPanel,
+    isCachingOn: true,
+  });
+
   if (sidemenyPaneler.length > 0) {
+    const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
-        {valgtPanel && (
-          <DataFetcher
-            key={valgtPanel.getUrlKode()}
-            fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-            endpoints={valgtPanel.getPanelDef().getEndepunkter()}
-            loadingPanel={<LoadingPanel />}
-            render={dataProps =>
-              valgtPanel.getPanelDef().getKomponent({
-                ...dataProps,
-                behandling,
-                alleKodeverk,
-                submitCallback: bekreftAksjonspunktCallback,
-                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
-              })
-            }
-          />
-        )}
+        {valgtPanel && isLoading && <LoadingPanel />}
+        {valgtPanel &&
+          !isLoading &&
+          valgtPanel.getPanelDef().getKomponent({
+            ...faktaData,
+            behandling,
+            alleKodeverk,
+            submitCallback: bekreftAksjonspunktCallback,
+            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
+          })}
       </SideMenuWrapper>
     );
   }

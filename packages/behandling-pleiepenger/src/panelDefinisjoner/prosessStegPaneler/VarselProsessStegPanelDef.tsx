@@ -3,9 +3,9 @@ import React from 'react';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
-import pleiepengerBehandlingApi from '../../data/pleiepengerBehandlingApi';
+import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VarselOmRevurderingProsessIndex {...props} />;
@@ -16,14 +16,13 @@ class PanelDef extends ProsessStegPanelDef {
   ];
 
   getEndepunkter = () => [
-    pleiepengerBehandlingApi.FAMILIEHENDELSE,
-    pleiepengerBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING,
-    pleiepengerBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING,
+    PleiepengerBehandlingApiKeys.FAMILIEHENDELSE,
+    PleiepengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING,
+    PleiepengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING,
   ];
 
-  getData = ({ previewCallback, dispatchSubmitFailed, soknad }) => ({
+  getData = ({ previewCallback, soknad }) => ({
     previewCallback,
-    dispatchSubmitFailed,
     soknad,
   });
 }

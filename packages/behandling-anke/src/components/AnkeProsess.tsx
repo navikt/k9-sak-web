@@ -8,7 +8,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
   useSetBehandlingVedEndring,
-} from '@fpsak-frontend/behandling-felles';
+} from '@k9-sak-web/behandling-felles';
 import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 

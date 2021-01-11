@@ -2,7 +2,7 @@ import React from 'react';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import findStatusForVedtak from '../vedtakStatusUtleder';
 import { UnntakBehandlingApiKeys } from '../../data/unntakBehandlingApi';

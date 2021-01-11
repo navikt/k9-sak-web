@@ -14,7 +14,7 @@ const cancellable = (axiosInstance: AxiosInstance, config: AxiosRequestConfig): 
 };
 
 const defaultHeaders = {
-  'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+  'Cache-Control': 'no-store, no-cache, max-age=0',
   Pragma: 'no-cache',
   Expires: 0,
 };

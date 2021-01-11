@@ -3,14 +3,14 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ProsessStegPanel,
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
   ProsessStegContainer,
-} from '@fpsak-frontend/behandling-felles';
+} from '@k9-sak-web/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -28,16 +28,17 @@ import PleiepengerProsess from './PleiepengerProsess';
 describe('<PleiepengerProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
+
+  const fagsakPerson = {
+    alder: 30,
+    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    erDod: false,
+    erKvinne: true,
+    navn: 'Espen Utvikler',
+    personnummer: '12345',
   };
   const behandling = {
     id: 1,
@@ -96,6 +97,14 @@ describe('<PleiepengerProsess>', () => {
     },
   };
 
+  const arbeidsgiverOpplysningerPerId = {
+    123: {
+      erPrivatPerson: false,
+      identifikator: 'testId',
+      navn: 'testNavn',
+    },
+  };
+
   const fetchedData: Partial<FetchedData> = {
     aksjonspunkter,
     vilkar,
@@ -107,6 +116,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -116,7 +126,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -180,6 +191,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -189,7 +201,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -231,6 +244,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={customFetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={vedtakBehandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
@@ -242,7 +256,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -288,6 +303,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={customFetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
@@ -299,7 +315,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -345,6 +362,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={customFetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
@@ -356,7 +374,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -378,6 +397,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -387,7 +407,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -412,6 +433,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -421,7 +443,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={dispatch}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -442,6 +465,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -451,7 +475,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={dispatch}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );

@@ -3,7 +3,7 @@ import sinon from 'sinon';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { SideMenuWrapper } from '@fpsak-frontend/behandling-felles';
+import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';

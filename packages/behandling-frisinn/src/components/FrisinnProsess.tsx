@@ -13,7 +13,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
   useSetBehandlingVedEndring,
-} from '@fpsak-frontend/behandling-felles';
+} from '@k9-sak-web/behandling-felles';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 import {

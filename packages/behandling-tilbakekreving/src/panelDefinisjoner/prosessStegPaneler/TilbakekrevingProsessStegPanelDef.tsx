@@ -3,7 +3,7 @@ import React from 'react';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';

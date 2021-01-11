@@ -4,7 +4,7 @@ import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/d
 import { UtfallEnum } from '@k9-sak-web/types';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';

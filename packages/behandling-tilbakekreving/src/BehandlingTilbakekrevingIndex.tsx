@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
 
-import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@fpsak-frontend/behandling-felles';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';

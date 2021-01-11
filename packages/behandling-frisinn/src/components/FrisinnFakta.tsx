@@ -1,12 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
-import {
-  Rettigheter,
-  SideMenuWrapper,
-  faktaHooks,
-  useSetBehandlingVedEndring,
-} from '@fpsak-frontend/behandling-felles';
+import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

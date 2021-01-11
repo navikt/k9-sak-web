@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/behandling-felles": "1.0.0",
+    "@k9-sak-web/behandling-felles": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",
     "@fpsak-frontend/fakta-tilleggsopplysninger": "1.0.0",

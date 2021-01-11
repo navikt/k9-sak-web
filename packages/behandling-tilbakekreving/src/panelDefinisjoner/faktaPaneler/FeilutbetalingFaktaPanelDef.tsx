@@ -3,7 +3,7 @@ import React from 'react';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
-import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 

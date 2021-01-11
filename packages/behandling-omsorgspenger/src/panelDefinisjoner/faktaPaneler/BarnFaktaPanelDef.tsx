@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
 

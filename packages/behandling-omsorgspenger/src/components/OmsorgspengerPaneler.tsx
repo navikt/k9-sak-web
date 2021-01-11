@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 
-import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
+import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
   KodeverkMedNavn,
   Behandling,

@@ -5,7 +5,7 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <ForeldelseProsessIndex {...props} />;

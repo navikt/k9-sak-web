@@ -2,7 +2,7 @@ import React from 'react';
 
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
-import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { UnntakBehandlingApiKeys } from '../../data/unntakBehandlingApi';

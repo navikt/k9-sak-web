@@ -8,7 +8,7 @@ import {
   ProsessStegPanel,
   ProsessStegContainer,
   useSetBehandlingVedEndring,
-} from '@fpsak-frontend/behandling-felles';
+} from '@k9-sak-web/behandling-felles';
 import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 import { lagForhåndsvisRequestNew } from '@fpsak-frontend/utils/src/formidlingUtils';
 

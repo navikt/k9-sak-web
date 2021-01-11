@@ -3,7 +3,7 @@ import React from 'react';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { UnntakBehandlingApiKeys } from '../../data/unntakBehandlingApi';
 

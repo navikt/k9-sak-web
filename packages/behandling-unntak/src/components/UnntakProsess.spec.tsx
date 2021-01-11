@@ -10,7 +10,7 @@ import {
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
   ProsessStegContainer,
-} from '@fpsak-frontend/behandling-felles';
+} from '@k9-sak-web/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';

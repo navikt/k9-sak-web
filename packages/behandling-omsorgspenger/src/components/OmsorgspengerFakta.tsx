@@ -1,12 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import {
-  Rettigheter,
-  SideMenuWrapper,
-  faktaHooks,
-  useSetBehandlingVedEndring,
-} from '@fpsak-frontend/behandling-felles';
+import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,

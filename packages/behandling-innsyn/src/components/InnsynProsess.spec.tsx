@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
-import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';

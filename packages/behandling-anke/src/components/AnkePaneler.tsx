@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@fpsak-frontend/behandling-felles';
+import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import AnkeProsess from './AnkeProsess';
