@@ -154,9 +154,10 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
       {erStatusFatterVedtak && (
         <TotrinnskontrollBeslutterForm
           behandling={behandling}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
           readOnly={readOnly}
-          // @ts-ignore Fiks
           onSubmit={submitHandler}
           forhandsvisVedtaksbrev={forhandsvisVedtaksbrev}
           erForeldrepengerFagsak={fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER}
