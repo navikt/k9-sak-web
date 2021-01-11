@@ -21,13 +21,13 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => [
-    unntakBehandlingApi.TILBAKEKREVINGVALG,
-    unntakBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-    unntakBehandlingApi.VEDTAK_VARSEL,
-    unntakBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
-    unntakBehandlingApi.DOKUMENTDATA_HENTE,
-  ];
+  getEndepunkter = (featureToggles: FeatureToggles = {}) =>
+    [
+      unntakBehandlingApi.TILBAKEKREVINGVALG,
+      unntakBehandlingApi.SEND_VARSEL_OM_REVURDERING,
+      unntakBehandlingApi.VEDTAK_VARSEL,
+      unntakBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
+    ].concat(featureToggles.DOKUMENTDATA ? [unntakBehandlingApi.DOKUMENTDATA_HENTE] : []);
 
   getOverstyrVisningAvKomponent = () => true;
 

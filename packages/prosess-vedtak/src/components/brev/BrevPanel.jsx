@@ -79,21 +79,6 @@ export const BrevPanel = props => {
     formProps,
   } = props;
 
-  // const tilgjengeligeVedtaksbrev = {
-  //   vedtaksbrev: ['AUTOMATISK', 'FRITEKST'],
-  //   begrunnelse: null,
-  //   alternativeMottakere: [
-  //     {
-  //       id: '00000000000',
-  //       idType: 'AKTØRID',
-  //     },
-  //     {
-  //       id: '979312059',
-  //       idType: 'ORGNR',
-  //     },
-  //   ],
-  // };
-
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
