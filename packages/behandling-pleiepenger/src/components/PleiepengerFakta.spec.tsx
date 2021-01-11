@@ -17,6 +17,7 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import ForeldrepengerFakta from './PleiepengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
+import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
@@ -124,6 +125,7 @@ describe('<PleiepengerFakta>', () => {
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -149,7 +151,7 @@ describe('<PleiepengerFakta>', () => {
     );
 
     const panel = wrapper.find(SideMenuWrapper);
-    expect(panel.prop('paneler')).toBe([
+    expect(panel.prop('paneler')).toEqual([
       {
         erAktiv: true,
         harAksjonspunkt: true,
@@ -170,6 +172,7 @@ describe('<PleiepengerFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
@@ -208,6 +211,7 @@ describe('<PleiepengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,

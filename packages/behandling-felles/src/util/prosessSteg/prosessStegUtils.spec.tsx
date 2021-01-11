@@ -275,6 +275,7 @@ describe('<prosessStegUtils>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.Test',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: true,
@@ -282,6 +283,7 @@ describe('<prosessStegUtils>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.Opplysningsplikt',
         type: 'warning',
+        usePartialStatus: false,
       },
     ]);
   });

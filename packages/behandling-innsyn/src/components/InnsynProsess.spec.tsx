@@ -116,6 +116,7 @@ describe('<InnsynProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.Innsyn',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -123,6 +124,7 @@ describe('<InnsynProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.Vedtak',
         type: 'default',
+        usePartialStatus: false,
       },
     ]);
   });

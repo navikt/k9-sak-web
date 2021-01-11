@@ -16,6 +16,7 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import FrisinnFakta from './FrisinnFakta';
 import FetchedData from '../types/fetchedDataTsType';
+import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBehandlingApi';
 
 describe('<FrisinnFakta>', () => {
   const fagsak = {
@@ -123,6 +124,7 @@ describe('<FrisinnFakta>', () => {
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
+    requestFrisinnApi.mock(FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER, undefined);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -163,6 +165,7 @@ describe('<FrisinnFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
+    requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, undefined);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,

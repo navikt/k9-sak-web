@@ -52,8 +52,7 @@ const TilkjentYtelseProsessIndex: FC<OwnProps> = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       beregningsresultat={beregningsresultat}
-      // @ts-ignore
-      fagsakYtelseTypeKode={fagsak.fagsakYtelseType.kode}
+      fagsakYtelseTypeKode={fagsak.sakstype.kode}
       vilkar={vilkar}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}

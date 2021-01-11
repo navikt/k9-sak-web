@@ -144,6 +144,7 @@ describe('<prosessStegHooks>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.Opplysningsplikt',
         type: StepType.warning,
+        usePartialStatus: false,
       },
     ]);
   });

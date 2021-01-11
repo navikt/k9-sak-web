@@ -23,7 +23,7 @@ describe('<FatterVedtakStatusModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).toHaveLength(1);
     expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('contentLabel')).toEqual('Klagen er ferdigbehandlet');
+    expect(modal.prop('contentLabel')).toEqual('Klagen er ferdigbehandlet.');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).toHaveLength(1);

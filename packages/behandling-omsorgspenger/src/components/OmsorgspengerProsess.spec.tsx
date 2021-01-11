@@ -224,6 +224,8 @@ describe('<OmsorgspengerProsess>', () => {
       status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
     };
 
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
+
     const opneSokeside = sinon.spy();
 
     const customFetchedData: Partial<FetchedData> = {
@@ -284,6 +286,8 @@ describe('<OmsorgspengerProsess>', () => {
     ];
 
     const opneSokeside = sinon.spy();
+
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
 
     const customFetchedData: Partial<FetchedData> = {
       aksjonspunkter: vedtakAksjonspunkter,
@@ -451,8 +455,12 @@ describe('<OmsorgspengerProsess>', () => {
     const requestData = requestOmsorgApi.getRequestMockData(OmsorgspengerBehandlingApiKeys.PREVIEW_MESSAGE);
     expect(requestData).toHaveLength(1);
     expect(requestData[0].params).toEqual({
-      param: 'test',
-      behandlingUuid: 'uuid-test',
+      aktørId: undefined,
+      avsenderApplikasjon: 'K9SAK',
+      dokumentMal: undefined,
+      dokumentdata: undefined,
+      eksternReferanse: undefined,
+      saksnummer: '123456',
       ytelseType: fagsak.sakstype,
     });
   });

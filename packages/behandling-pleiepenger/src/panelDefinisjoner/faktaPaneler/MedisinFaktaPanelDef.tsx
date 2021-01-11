@@ -5,6 +5,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar/src/MedisinskVilkarIndex';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { Fagsak } from '@k9-sak-web/types';
 
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
@@ -19,7 +20,8 @@ class MedisinFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <MedisinskVilkarIndex {...props} />;
 
-  getOverstyrVisningAvKomponent = ({ fagsak }) => fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER;
+  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
+    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
 }
 
 export default MedisinFaktaPanelDef;

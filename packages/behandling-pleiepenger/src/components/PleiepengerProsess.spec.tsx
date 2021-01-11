@@ -232,6 +232,8 @@ describe('<PleiepengerProsess>', () => {
       status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
     };
 
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
+
     const opneSokeside = sinon.spy();
 
     const customFetchedData: Partial<FetchedData> = {
@@ -290,6 +292,8 @@ describe('<PleiepengerProsess>', () => {
         erAktivt: true,
       },
     ];
+
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
 
     const opneSokeside = sinon.spy();
 
@@ -459,8 +463,12 @@ describe('<PleiepengerProsess>', () => {
     const requestData = requestPleiepengerApi.getRequestMockData(PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE);
     expect(requestData).toHaveLength(1);
     expect(requestData[0].params).toEqual({
-      param: 'test',
-      behandlingUuid: 'uuid-test',
+      aktørId: undefined,
+      avsenderApplikasjon: 'K9SAK',
+      dokumentMal: undefined,
+      dokumentdata: undefined,
+      eksternReferanse: undefined,
+      saksnummer: '123456',
       ytelseType: fagsak.sakstype,
     });
   });
@@ -500,7 +508,7 @@ describe('<PleiepengerProsess>', () => {
     );
     expect(requestData).toHaveLength(1);
     expect(requestData[0].params).toEqual({
-      behandlingUuid: 'uuid-test',
+      behandlingUuid: undefined,
       brevmalkode: undefined,
       fagsakYtelseType: fagsak.sakstype,
       mottaker: {

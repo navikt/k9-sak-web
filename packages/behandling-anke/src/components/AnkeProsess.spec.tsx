@@ -97,6 +97,7 @@ describe('<AnkeProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.Ankebehandling',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -104,6 +105,7 @@ describe('<AnkeProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.AnkeResultat',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -111,6 +113,7 @@ describe('<AnkeProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.AnkeMerknader',
         type: 'default',
+        usePartialStatus: false,
       },
     ]);
   });

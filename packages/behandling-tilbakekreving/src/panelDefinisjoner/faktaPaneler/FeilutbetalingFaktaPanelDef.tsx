@@ -4,6 +4,7 @@ import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjon
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { Fagsak, FeilutbetalingFakta } from '@k9-sak-web/types';
 
 import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 
@@ -20,9 +21,17 @@ class FeilutbetalingFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ feilutbetalingFakta }) => !!feilutbetalingFakta;
 
-  getData = ({ feilutbetalingFakta, fagsak, fpsakKodeverk }) => ({
+  getData = ({
     feilutbetalingFakta,
-    fagsakYtelseTypeKode: fagsak.fagsakYtelseType.kode,
+    fagsak,
+    fpsakKodeverk,
+  }: {
+    feilutbetalingFakta: FeilutbetalingFakta;
+    fagsak: Fagsak;
+    fpsakKodeverk: any;
+  }) => ({
+    feilutbetalingFakta,
+    fagsakYtelseTypeKode: fagsak.sakstype.kode,
     fpsakKodeverk,
   });
 }

@@ -5,6 +5,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { Fagsak, Personopplysninger } from '@k9-sak-web/types';
 
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
@@ -19,8 +20,13 @@ class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <OmsorgenForFaktaIndex {...props} />;
 
-  getOverstyrVisningAvKomponent = ({ fagsak, personopplysninger }) =>
-    personopplysninger && fagsak.fagsakYtelseType.kode === fagsakYtelseType.PLEIEPENGER;
+  getOverstyrVisningAvKomponent = ({
+    fagsak,
+    personopplysninger,
+  }: {
+    fagsak: Fagsak;
+    personopplysninger: Personopplysninger;
+  }) => personopplysninger && fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
 
   getData = ({ personopplysninger }) => ({ personopplysninger });
 }

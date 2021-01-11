@@ -103,6 +103,7 @@ describe('<KlageProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.FormkravKlageNFP',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -110,6 +111,7 @@ describe('<KlageProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.CheckKlageNFP',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -117,6 +119,7 @@ describe('<KlageProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.FormkravKlageKA',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -124,6 +127,7 @@ describe('<KlageProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.CheckKlageNK',
         type: 'default',
+        usePartialStatus: false,
       },
       {
         isActive: false,
@@ -131,6 +135,7 @@ describe('<KlageProsess>', () => {
         isFinished: false,
         labelId: 'Behandlingspunkt.ResultatKlage',
         type: 'default',
+        usePartialStatus: false,
       },
     ]);
   });

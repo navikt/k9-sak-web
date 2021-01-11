@@ -429,8 +429,12 @@ describe('<FrisinnProsess>', () => {
     const requestData = requestFrisinnApi.getRequestMockData(FrisinnBehandlingApiKeys.PREVIEW_MESSAGE);
     expect(requestData).toHaveLength(1);
     expect(requestData[0].params).toEqual({
-      param: 'test',
-      behandlingUuid: 'uuid-test',
+      aktørId: undefined,
+      avsenderApplikasjon: 'K9SAK',
+      dokumentMal: undefined,
+      dokumentdata: undefined,
+      eksternReferanse: undefined,
+      saksnummer: '123456',
       ytelseType: fagsak.sakstype,
     });
   });

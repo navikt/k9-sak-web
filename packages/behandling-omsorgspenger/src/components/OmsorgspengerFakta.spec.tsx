@@ -17,6 +17,7 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import OmsorgspengerFakta from './OmsorgspengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
+import { OmsorgspengerBehandlingApiKeys, requestOmsorgApi } from '../data/omsorgspengerBehandlingApi';
 
 describe('<OmsorgspengerFakta>', () => {
   const fagsak = {
@@ -129,6 +130,7 @@ describe('<OmsorgspengerFakta>', () => {
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -171,6 +173,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
@@ -210,6 +213,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
