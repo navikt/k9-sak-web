@@ -77,6 +77,7 @@ const getFaktaPanels = (
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
   erOverstyrer,
   fieldArrayID,
@@ -142,6 +143,7 @@ const getFaktaPanels = (
     behandlingId,
     behandlingVersjon,
     alleKodeverk,
+    arbeidsgiverOpplysningerPerId,
     fieldArrayID,
   );
   faktaPanels.push(
@@ -156,6 +158,7 @@ const getFaktaPanels = (
         faktaOmBeregning={faktaOmBeregning}
         beregningsgrunnlag={beregningsgrunnlag}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         erOverstyrer={erOverstyrer}
         aksjonspunkter={aksjonspunkter}
         fieldArrayID={fieldArrayID}
@@ -179,6 +182,7 @@ export const FaktaForATFLOgSNPanelImpl = ({
   behandlingVersjon,
   beregningsgrunnlag,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
   erOverstyrer,
   fieldArrayID,
@@ -193,6 +197,7 @@ export const FaktaForATFLOgSNPanelImpl = ({
       behandlingId,
       behandlingVersjon,
       alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
       aksjonspunkter,
       erOverstyrer,
       fieldArrayID,
@@ -209,6 +214,7 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,

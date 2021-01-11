@@ -10,7 +10,7 @@ import styles from './aktivitetTabell.less';
 type UtfallProps = {
   utfall: Utfalltype;
   textId?: string;
-}
+};
 
 const utfallSymbolMap = {
   [UtfallEnum.INNVILGET]: innvilget,
@@ -18,7 +18,7 @@ const utfallSymbolMap = {
   [UtfallEnum.UAVKLART]: advarsel,
 };
 
-const Utfall: React.FunctionComponent<UtfallProps> = ({ utfall, textId}) => (
+const Utfall: React.FunctionComponent<UtfallProps> = ({ utfall, textId }) => (
   <div>
     <span className={styles.utfallsikon}>
       <Image src={utfallSymbolMap[utfall]} />

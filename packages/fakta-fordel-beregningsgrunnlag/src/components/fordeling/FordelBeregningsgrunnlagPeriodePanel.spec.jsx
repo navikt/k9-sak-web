@@ -32,9 +32,32 @@ const arbeidsforholdEtterStp = {
   opphoersdato: '2019-01-01',
 };
 
-const lagArbeidstakerAndelEtterStp = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
-  refusjonskravFraInntektsmeldingPrAar, andelIArbeid) => ({
+const arbeidsgiverOpplysningerPerId = {
+  3284788923: {
+    identifikator: '3284788923',
+    referanse: '3284788923',
+    navn: 'Virksomheten',
+    fødselsdato: null,
+  },
+  32847889234234233: {
+    identifikator: '32847889234234233',
+    referanse: '32847889234234233',
+    navn: 'Virksomheten 2',
+    fødselsdato: null,
+  },
+};
+
+const lagArbeidstakerAndelEtterStp = (
+  andelsnr,
+  lagtTilAvSaksbehandler,
+  fordelingForrigeBehandlingPrAar,
+  beregnetPrAar,
+  fastsattForrigePrAar,
+  refusjonskravPrAar,
+  belopFraInntektsmeldingPrAar,
+  refusjonskravFraInntektsmeldingPrAar,
+  andelIArbeid,
+) => ({
   arbeidsforhold: arbeidsforholdEtterStp,
   aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
   inntektskategori: { kode: 'ARBEIDSTAKER' },
@@ -50,7 +73,7 @@ const lagArbeidstakerAndelEtterStp = (andelsnr, lagtTilAvSaksbehandler, fordelin
   nyttArbeidsforhold: true,
 });
 
-const getKodeverknavn = (kodeverk) => {
+const getKodeverknavn = kodeverk => {
   if (kodeverk.kode === aktivitetStatuser.ARBEIDSTAKER) {
     return 'Arbeidstaker';
   }
@@ -63,9 +86,17 @@ const getKodeverknavn = (kodeverk) => {
   return '';
 };
 
-const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
-  refusjonskravFraInntektsmeldingPrAar, andelIArbeid) => ({
+const lagArbeidstakerAndel = (
+  andelsnr,
+  lagtTilAvSaksbehandler,
+  fordelingForrigeBehandlingPrAar,
+  beregnetPrAar,
+  fastsattForrigePrAar,
+  refusjonskravPrAar,
+  belopFraInntektsmeldingPrAar,
+  refusjonskravFraInntektsmeldingPrAar,
+  andelIArbeid,
+) => ({
   arbeidsforhold,
   aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
   inntektskategori: { kode: 'ARBEIDSTAKER' },
@@ -80,8 +111,14 @@ const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrige
   refusjonskravFraInntektsmeldingPrAar,
 });
 
-const lagSNAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, andelIArbeid) => ({
+const lagSNAndel = (
+  andelsnr,
+  lagtTilAvSaksbehandler,
+  fordelingForrigeBehandlingPrAar,
+  beregnetPrAar,
+  fastsattForrigePrAar,
+  andelIArbeid,
+) => ({
   arbeidsforhold,
   aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
   inntektskategori: { kode: 'SN' },
@@ -96,9 +133,14 @@ const lagSNAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
   refusjonskravFraInntektsmeldingPrAar: null,
 });
 
-
-const lagFLAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, andelIArbeid) => ({
+const lagFLAndel = (
+  andelsnr,
+  lagtTilAvSaksbehandler,
+  fordelingForrigeBehandlingPrAar,
+  beregnetPrAar,
+  fastsattForrigePrAar,
+  andelIArbeid,
+) => ({
   aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser' },
   inntektskategori: { kode: 'SN' },
   andelIArbeid,
@@ -126,7 +168,8 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
         lagSNAndel(6, false, null, 10000, 10000, [0]),
         lagArbeidstakerAndel(7, false, null, 1000, null, null, null, null, [0]),
         lagFLAndel(8, false, null, null, null, [0]),
-        lagFLAndel(9, false, null, 0, null, [0])],
+        lagFLAndel(9, false, null, 0, null, [0]),
+      ],
     };
 
     const bgPeriode = {
@@ -201,13 +244,22 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
       ],
     };
 
-    const initialValues = FordelBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, bgPeriode, stpBeregning, false, getKodeverknavn);
+    const initialValues = FordelBeregningsgrunnlagPeriodePanel.buildInitialValues(
+      periode,
+      bgPeriode,
+      stpBeregning,
+      false,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues).to.have.length(9);
-    const arbeidstakerAndelerBeforeStp = initialValues.filter(({ arbeidsperiodeFom }) => arbeidsperiodeFom !== ''
-    && moment(arbeidsperiodeFom).isBefore(moment(stpBeregning)))
+    const arbeidstakerAndelerBeforeStp = initialValues
+      .filter(
+        ({ arbeidsperiodeFom }) => arbeidsperiodeFom !== '' && moment(arbeidsperiodeFom).isBefore(moment(stpBeregning)),
+      )
       .filter(({ aktivitetStatus }) => aktivitetStatus === 'AT');
     expect(arbeidstakerAndelerBeforeStp).to.have.length(5);
-    arbeidstakerAndelerBeforeStp.forEach((initialValue) => {
+    arbeidstakerAndelerBeforeStp.forEach(initialValue => {
       expect(initialValue.andel).to.equal('Virksomheten (3284788923)...2345');
       expect(initialValue.aktivitetStatus).to.equal('AT');
       expect(initialValue.nyAndel).to.equal(false);

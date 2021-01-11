@@ -115,6 +115,7 @@ describe('<BeregningFP>', () => {
         vilkar={vilkar}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
@@ -141,6 +142,7 @@ describe('<BeregningFP>', () => {
         vilkar={vilkar}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
@@ -161,6 +163,7 @@ describe('<BeregningFP>', () => {
         readOnly={false}
         submitCallback={sinon.spy}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, null)}
         vilkar={vilkar}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -187,6 +190,7 @@ describe('<BeregningFP>', () => {
         aksjonspunkter={graderingAP}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         readOnlySubmitButton
         intl={intlMock}
         handleSubmit={() => {}}
@@ -207,6 +211,7 @@ describe('<BeregningFP>', () => {
         aksjonspunkter={gjeldendeAksjonspunkter}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
         readOnlySubmitButton
         intl={intlMock}
         handleSubmit={() => {}}

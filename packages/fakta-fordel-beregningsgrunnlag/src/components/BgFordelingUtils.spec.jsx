@@ -23,7 +23,16 @@ const arbeidstakerIkkeFastsatt = {
   inntektskategori: { kode: 'ARBEIDSTAKER' },
 };
 
-const getKodeverknavn = (kodeverk) => {
+const arbeidsgiverOpplysningerPerId = {
+  3284788923: {
+    identifikator: '3284788923',
+    referanse: '3284788923',
+    navn: 'Virksomheten',
+    fødselsdato: null,
+  },
+};
+
+const getKodeverknavn = kodeverk => {
   if (kodeverk.kode === aktivitetStatuser.ARBEIDSTAKER) {
     return 'Arbeidstaker';
   }
@@ -70,7 +79,12 @@ describe('<BgFordelingUtils>', () => {
       inntektskategori: { kode: 'ARBEIDSTAKER' },
     };
 
-    const andelsInfo = setGenerellAndelsinfo(andelValueFromState, false, getKodeverknavn);
+    const andelsInfo = setGenerellAndelsinfo(
+      andelValueFromState,
+      false,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(andelsInfo.andel).to.equal('Virksomheten (3284788923)...5678');
     expect(andelsInfo.aktivitetStatus).to.equal('AT');
     expect(andelsInfo.andelsnr).to.equal(3);
@@ -86,7 +100,12 @@ describe('<BgFordelingUtils>', () => {
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
     };
-    const andelsInfo = setGenerellAndelsinfo(andelValueFromState, false, getKodeverknavn);
+    const andelsInfo = setGenerellAndelsinfo(
+      andelValueFromState,
+      false,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(andelsInfo.andel).to.equal('Selvstendig næringsdrivende');
     expect(andelsInfo.aktivitetStatus).to.equal('SN');
     expect(andelsInfo.andelsnr).to.equal(2);
@@ -143,9 +162,7 @@ describe('<BgFordelingUtils>', () => {
     const bg = {
       beregningsgrunnlagPeriode: [
         {
-          beregningsgrunnlagPrStatusOgAndel: [
-            { aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER } },
-          ],
+          beregningsgrunnlagPrStatusOgAndel: [{ aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER } }],
         },
       ],
     };
@@ -162,16 +179,13 @@ describe('<BgFordelingUtils>', () => {
     const bg = {
       beregningsgrunnlagPeriode: [
         {
-          beregningsgrunnlagPrStatusOgAndel: [
-            { aktivitetStatus: { kode: aktivitetStatuser.FRILANSER } },
-          ],
+          beregningsgrunnlagPrStatusOgAndel: [{ aktivitetStatus: { kode: aktivitetStatuser.FRILANSER } }],
         },
       ],
     };
     const skalValidereMotBg = skalValidereMotBeregningsgrunnlag(bg)(andelFieldValue);
     expect(skalValidereMotBg).to.equal(false);
   });
-
 
   it('skal mappe fastsattBeløp til beløp om andel har periodeårsak', () => {
     const andel = {

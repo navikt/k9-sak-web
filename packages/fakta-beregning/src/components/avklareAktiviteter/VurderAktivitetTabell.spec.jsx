@@ -58,6 +58,33 @@ const aktivitetVentelonnVartpenger = {
   skalBrukes: null,
 };
 
+const arbeidsgiverOpplysningerPerId = {
+  384723894723: {
+    identifikator: '384723894723',
+    referanse: '384723894723',
+    navn: 'Arbeidsgiveren',
+    fødselsdato: null,
+  },
+  334534623342: {
+    identifikator: '334534623342',
+    referanse: '334534623342',
+    navn: 'Arbeidsgiveren2',
+    fødselsdato: null,
+  },
+  324234234234: {
+    identifikator: '324234234234',
+    referanse: '324234234234',
+    navn: 'Arbeidsgiveren3',
+    fødselsdato: null,
+  },
+  '1960-01-01': {
+    identifikator: '1960-01-01',
+    referanse: '1960-01-01',
+    navn: 'Arbeidsgiveren3',
+    fødselsdato: null,
+  },
+};
+
 const aktiviteter = [aktivitet1, aktivitet2, aktivitet3, aktivitetAAP];
 
 const alleKodeverk = {
@@ -94,6 +121,7 @@ describe('<VurderAktiviteterTabell>', () => {
         aktiviteter={aktiviteter}
         skjaeringstidspunkt="2019-02-01"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         erOverstyrt={false}
         harAksjonspunkt
         fieldArrayID="dummyId"
@@ -142,6 +170,7 @@ describe('<VurderAktiviteterTabell>', () => {
         aktiviteter={utenAAP}
         skjaeringstidspunkt="2019-02-01"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         erOverstyrt={false}
         harAksjonspunkt
         fieldArrayID="dummyId"
@@ -173,6 +202,7 @@ describe('<VurderAktiviteterTabell>', () => {
         aktiviteter={aktiviteter}
         skjaeringstidspunkt="2019-02-01"
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         erOverstyrt={false}
         harAksjonspunkt
         fieldArrayID="dummyId"
@@ -243,7 +273,13 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal bygge initial values', () => {
-    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, alleKodeverk, false, true);
+    const initialValues = VurderAktiviteterTabell.buildInitialValues(
+      aktiviteter,
+      alleKodeverk,
+      false,
+      true,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
     expect(initialValues[id1].fom).to.equal('2019-01-01');
     expect(initialValues[id1].tom).to.equal(null);
@@ -266,7 +302,13 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal bygge initial values for overstyrer', () => {
-    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, alleKodeverk, false, false);
+    const initialValues = VurderAktiviteterTabell.buildInitialValues(
+      aktiviteter,
+      alleKodeverk,
+      false,
+      false,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
     expect(initialValues[id1].fom).to.equal('2019-01-01');
     expect(initialValues[id1].tom).to.equal(null);

@@ -6,19 +6,18 @@ import FordelingForm from './FordelingForm';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 import vilkårPeriodePropType from '../propTypes/vilkårPeriodePropType';
 
-const {
-  FORDEL_BEREGNINGSGRUNNLAG,
-} = aksjonspunktCodes;
+const { FORDEL_BEREGNINGSGRUNNLAG } = aksjonspunktCodes;
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
-const harIkkeFordelInfo = (bg) => {
+const harIkkeFordelInfo = bg => {
   if (!bg) {
     return true;
   }
   return bg.faktaOmFordeling ? !bg.faktaOmFordeling.fordelBeregningsgrunnlag : true;
 };
-const getFordelAksjonspunkt = (aksjonspunkter) => (aksjonspunkter ? aksjonspunkter.find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined);
+const getFordelAksjonspunkt = aksjonspunkter =>
+  aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined;
 
 /**
  * FordelBeregningsgrunnlagPanel
@@ -52,6 +51,7 @@ export class FordelBeregningsgrunnlagPanel extends Component {
         behandlingId,
         behandlingVersjon,
         alleKodeverk,
+        arbeidsgiverOpplysningerPerId,
         alleMerknaderFraBeslutter,
         behandlingType,
         submittable,
@@ -60,33 +60,32 @@ export class FordelBeregningsgrunnlagPanel extends Component {
         alleBeregningsgrunnlag,
         vilkårsperioder,
       },
-      state: {
-        submitEnabled,
-      },
+      state: { submitEnabled },
     } = this;
-    
+
     const fordelAP = getFordelAksjonspunkt(aksjonspunkter);
     if (harIkkeFordelInfo(beregningsgrunnlag) || !fordelAP) {
       return null;
     }
     return (
       <FordelingForm
-      submitEnabled={submitEnabled}
-      submittable={submittable}
-      readOnly={readOnly}
-      submitCallback={submitCallback}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-      beregningsgrunnlag={beregningsgrunnlag}
-      behandlingType={behandlingType}
-      aksjonspunkter={aksjonspunkter}
-      kreverManuellBehandling={kreverManuellBehandling}
-      aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
-      alleBeregningsgrunnlag={alleBeregningsgrunnlag}
-      vilkårsperioder={vilkårsperioder}
-    />
+        submitEnabled={submitEnabled}
+        submittable={submittable}
+        readOnly={readOnly}
+        submitCallback={submitCallback}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        beregningsgrunnlag={beregningsgrunnlag}
+        behandlingType={behandlingType}
+        aksjonspunkter={aksjonspunkter}
+        kreverManuellBehandling={kreverManuellBehandling}
+        aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
+        alleBeregningsgrunnlag={alleBeregningsgrunnlag}
+        vilkårsperioder={vilkårsperioder}
+      />
     );
   }
 }
@@ -100,6 +99,7 @@ FordelBeregningsgrunnlagPanel.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

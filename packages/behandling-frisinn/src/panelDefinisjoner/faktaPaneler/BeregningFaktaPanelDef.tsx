@@ -16,9 +16,10 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ beregningsgrunnlag }) => !!beregningsgrunnlag;
 
-  getData = ({ beregningsgrunnlag }) => ({
+  getData = ({ beregningsgrunnlag, arbeidsgivere }) => ({
     erOverstyrer: false,
     beregningsgrunnlag,
+    arbeidsgivere,
   });
 }
 

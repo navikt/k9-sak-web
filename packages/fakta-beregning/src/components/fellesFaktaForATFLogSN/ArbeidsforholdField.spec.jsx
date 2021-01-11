@@ -8,7 +8,6 @@ import { InputField, SelectField } from '@fpsak-frontend/form';
 import { getUniqueListOfArbeidsforholdFields } from '../ArbeidsforholdHelper';
 import { ArbeidsforholdFieldImpl } from './ArbeidsforholdField';
 
-
 const arbeidsforhold1 = {
   arbeidsgiverNavn: 'Sopra Steria AS',
   arbeidsgiverId: '233647823',
@@ -29,50 +28,69 @@ const andelField = {
   ...arbeidsforhold1,
 };
 
+const arbeidsgiverOpplysningerPerId = {
+  233647823: {
+    identifikator: '233647823',
+    referanse: '233647823',
+    navn: 'Sopra Steria AS',
+    fødselsdato: null,
+  },
+};
+
 const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);
 
 const alleKodeverk = {
-  [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [{
-    kode: opptjeningAktivitetType.ARBEID,
-    navn: 'Arbeid',
-  }, {
-    kode: opptjeningAktivitetType.FRILANS,
-    navn: 'Frilans',
-  }, {
-    kode: opptjeningAktivitetType.DAGPENGER,
-    navn: 'Dagpenger',
-  }, {
-    kode: opptjeningAktivitetType.NARING,
-    navn: 'Næring',
-  }],
+  [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [
+    {
+      kode: opptjeningAktivitetType.ARBEID,
+      navn: 'Arbeid',
+    },
+    {
+      kode: opptjeningAktivitetType.FRILANS,
+      navn: 'Frilans',
+    },
+    {
+      kode: opptjeningAktivitetType.DAGPENGER,
+      navn: 'Dagpenger',
+    },
+    {
+      kode: opptjeningAktivitetType.NARING,
+      navn: 'Næring',
+    },
+  ],
 };
 
 describe('<ArbeidsforholdField>', () => {
   it('skal render ArbeidsforholdField med input for eksisterende andel', () => {
-    const wrapper = shallow(<ArbeidsforholdFieldImpl
-      fields={fields}
-      arbeidsforholdList={getUniqueListOfArbeidsforholdFields(fields)}
-      readOnly={false}
-      name="andel"
-      index={0}
-      alleKodeverk={alleKodeverk}
-    />);
+    const wrapper = shallow(
+      <ArbeidsforholdFieldImpl
+        fields={fields}
+        arbeidsforholdList={getUniqueListOfArbeidsforholdFields(fields)}
+        readOnly={false}
+        name="andel"
+        index={0}
+        alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      />,
+    );
     expect(wrapper.find(InputField).length).to.eql(1);
   });
-
 
   it('skal render ArbeidsforholdField med selectField', () => {
     const copyAndel = { ...andelField, skalKunneEndreAktivitet: true };
     const fields2 = new MockFieldsWithContent('fieldArrayName', [copyAndel]);
 
-    const wrapper = shallow(<ArbeidsforholdFieldImpl
-      fields={fields2}
-      arbeidsforholdList={getUniqueListOfArbeidsforholdFields(fields)}
-      readOnly={false}
-      name="andel"
-      index={0}
-      alleKodeverk={alleKodeverk}
-    />);
+    const wrapper = shallow(
+      <ArbeidsforholdFieldImpl
+        fields={fields2}
+        arbeidsforholdList={getUniqueListOfArbeidsforholdFields(fields)}
+        readOnly={false}
+        name="andel"
+        index={0}
+        alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      />,
+    );
     const select = wrapper.find(SelectField);
     expect(select.length).to.eql(1);
     const { selectValues } = select.first().props();

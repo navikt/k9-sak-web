@@ -164,7 +164,7 @@ const beregningsgrunnlagPerioder = [
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
           arbeidsgiverNavn: 'arbeidsgiver',
-          arbeidsgiverId: '123',
+          arbeidsgiverId: '456',
           arbeidsforholdId: '456',
           eksternArbeidsforholdId: '567890',
         },
@@ -200,7 +200,7 @@ const beregningsgrunnlagPerioder = [
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
           arbeidsgiverNavn: 'arbeidsgiver',
-          arbeidsgiverId: '123',
+          arbeidsgiverId: '456',
           arbeidsforholdId: '456',
           eksternArbeidsforholdId: '567890',
         },
@@ -209,6 +209,22 @@ const beregningsgrunnlagPerioder = [
     ],
   },
 ];
+
+const arbeidsgiverOpplysningerPerId = {
+  123: {
+    identifikator: '123',
+    referanse: '123',
+    navn: 'arbeidsgiver',
+    fødselsdato: null,
+  },
+  456: {
+    identifikator: '456',
+    referanse: '456',
+    navn: 'arbeidsgiver',
+    fødselsdato: null,
+  },
+};
+
 const keyForPeriodeOgAndel = (periodeNr, andelNr) =>
   createInputFieldKey(
     beregningsgrunnlagPerioder[periodeNr].beregningsgrunnlagPrStatusOgAndel[andelNr],
@@ -217,6 +233,7 @@ const keyForPeriodeOgAndel = (periodeNr, andelNr) =>
 const alleKodeverk = {
   test: 'test',
 };
+
 describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
   it('Skal teste tabellen får korrekte rader', () => {
     const wrapper = shallowWithIntl(
@@ -225,6 +242,7 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
         tableData={mockTableData}
         isAksjonspunktClosed={false}
         bruttoPrPeriodeList={mockbruttoPerodeList}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
       />,
     );
@@ -325,7 +343,12 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
           ],
         },
       };
-      const selectorData = createTableData.resultFunc(beregningsgrunnlagPerioder, alleKodeverk, aksjonspunkter);
+      const selectorData = createTableData.resultFunc(
+        beregningsgrunnlagPerioder,
+        alleKodeverk,
+        arbeidsgiverOpplysningerPerId,
+        aksjonspunkter,
+      );
       expect(selectorData).to.deep.equal(expectedResultObjectWhenWeHaveAksjonspunkt);
     },
   );

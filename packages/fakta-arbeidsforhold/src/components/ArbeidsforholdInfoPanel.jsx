@@ -52,6 +52,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
+  arbeidsgiverOpplysningerPerId,
   ...formProps
 }) => {
   const { host } = window.location;
@@ -84,6 +85,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
           alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
         {harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
           <BekreftOgForsettKnapp
@@ -107,6 +109,7 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
   skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

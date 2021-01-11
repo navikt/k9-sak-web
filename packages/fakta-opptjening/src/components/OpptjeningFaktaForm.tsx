@@ -1,5 +1,6 @@
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import {
   AksjonspunktHelpTextTemp,
   DateLabel,
@@ -46,12 +47,14 @@ const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
 const findSkjaringstidspunkt = (date: string) => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
 
 const sortByFomDate = opptjeningPeriods =>
-  opptjeningPeriods.sort((o1, o2) => {
-    const isSame = moment(o2.opptjeningFom, ISO_DATE_FORMAT).isSame(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
-    return isSame
-      ? o1.id < o2.id
-      : moment(o2.opptjeningFom, ISO_DATE_FORMAT).isBefore(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
-  });
+  opptjeningPeriods
+    ? opptjeningPeriods.sort((o1, o2) => {
+        const isSame = moment(o2.opptjeningFom, ISO_DATE_FORMAT).isSame(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
+        return isSame
+          ? o1.id < o2.id
+          : moment(o2.opptjeningFom, ISO_DATE_FORMAT).isBefore(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
+      })
+    : [];
 
 const DOKUMENTASJON_VIL_BLI_INNHENTET = 'DOKUMENTASJON_VIL_BLI_INNHENTET';
 
@@ -62,6 +65,7 @@ interface OpptjeningFaktaFormImplProps {
   opptjeningTomDato: string;
   alleMerknaderFraBeslutter: any;
   alleKodeverk: AlleKodeverk;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
   harApneAksjonspunkter: boolean;
   dokStatus: string;
@@ -246,6 +250,7 @@ export class OpptjeningFaktaFormImpl extends Component<
       behandlingVersjon,
       alleMerknaderFraBeslutter,
       alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
     } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     return (
@@ -307,6 +312,7 @@ export class OpptjeningFaktaFormImpl extends Component<
               hasAksjonspunkt={hasAksjonspunkt}
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
               alleKodeverk={alleKodeverk}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             />
             <VerticalSpacer twentyPx />
           </>

@@ -54,6 +54,21 @@ const arbeidsforholdList = [
   },
 ];
 
+const arbeidsgiverOpplysningerPerId = {
+  12338: {
+    identifikator: '12338',
+    referanse: '12338',
+    navn: 'Hansens bil og brems AS',
+    fødselsdato: null,
+  },
+  14235235235: {
+    identifikator: '14235235235',
+    referanse: '14235235235',
+    navn: 'Test',
+    fødselsdato: null,
+  },
+};
+
 describe('<RenderFordelBGFieldArray>', () => {
   it('skal ha selectvalues med Ytelse når kun ytelse', () => {
     const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId})...${siste4SifferIArbeidsforholdId}`;
@@ -71,6 +86,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -99,6 +115,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -151,6 +168,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -200,6 +218,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -263,6 +282,7 @@ describe('<RenderFordelBGFieldArray>', () => {
         erRevurdering={false}
         skjaeringstidspunktBeregning={skjaeringstidspunktBeregning}
         getKodeverknavn={getKodeverknavn}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
 
@@ -290,6 +310,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors).to.equal(null);
   });
@@ -313,6 +334,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors).to.equal(null);
   });
@@ -336,6 +358,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors[0].refusjonskrav).to.have.length(1);
     expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
@@ -370,6 +393,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
@@ -397,6 +421,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
@@ -424,6 +449,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors[0].fastsattBelop).to.have.length(1);
     expect(errors[0].fastsattBelop[0].id).to.equal(isRequiredMessage()[0].id);
@@ -448,6 +474,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors[0].inntektskategori).to.have.length(1);
     expect(errors[0].inntektskategori[0].id).to.equal(isRequiredMessage()[0].id);
@@ -473,6 +500,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors[0].andel).to.have.length(1);
     expect(errors[0].andel[0].id).to.equal(isRequiredMessage()[0].id);
@@ -498,6 +526,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       100000,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
     expect(errors).to.equal(null);
   });

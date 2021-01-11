@@ -54,7 +54,7 @@ const BarnInfo: FunctionComponent<BarnInfoProps> = ({ barnet, barnnummer }) => {
               b: chunks => <b>{chunks}</b>,
               i: chunks => <i>{chunks}</i>,
               dato: visningsdato(fødselsdato),
-              alder: moment().diff(fødselsdato, 'years')
+              alder: moment().diff(fødselsdato, 'years'),
             }}
           />
         </Fodselsinfo>

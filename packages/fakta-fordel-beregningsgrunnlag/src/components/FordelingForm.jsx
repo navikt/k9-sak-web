@@ -38,6 +38,7 @@ const renderFordeling = ({
   behandlingVersjon,
   beregningsgrunnlag,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   behandlingType,
   aksjonspunkter,
   kreverManuellBehandling,
@@ -53,6 +54,7 @@ const renderFordeling = ({
               <FordelingHelpText
                 isAksjonspunktClosed={isAksjonspunktClosed}
                 alleKodeverk={alleKodeverk}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 aksjonspunkter={aksjonspunkter}
                 beregningsgrunnlag={beregningsgrunnlag}
               />
@@ -64,6 +66,7 @@ const renderFordeling = ({
             isAksjonspunktClosed={isAksjonspunktClosed}
             beregningsgrunnlag={beregningsgrunnlag}
             alleKodeverk={alleKodeverk}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             behandlingType={behandlingType}
             grunnlagFieldId={field}
           />
@@ -107,6 +110,7 @@ const FordelingFormImpl = ({
   behandlingVersjon,
   beregningsgrunnlag,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   behandlingType,
   aksjonspunkter,
   kreverManuellBehandling,
@@ -123,6 +127,7 @@ const FordelingFormImpl = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       beregningsgrunnlag={beregningsgrunnlag}
       behandlingType={behandlingType}
       aksjonspunkter={aksjonspunkter}
@@ -146,6 +151,7 @@ FordelingFormImpl.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType).isRequired,
   kreverManuellBehandling: PropTypes.bool.isRequired,
@@ -202,8 +208,13 @@ export const transformValuesFordelBeregning = createSelector(
 );
 
 export const buildInitialValuesFordelBeregning = createSelector(
-  [ownProps => ownProps.alleBeregningsgrunnlag, ownProps => ownProps.alleKodeverk, ownProps => ownProps.aksjonspunkter],
-  (alleBeregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
+  [
+    ownProps => ownProps.alleBeregningsgrunnlag,
+    ownProps => ownProps.alleKodeverk,
+    ownProps => ownProps.arbeidsgiverOpplysningerPerId,
+    ownProps => ownProps.aksjonspunkter,
+  ],
+  (alleBeregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, aksjonspunkter) => {
     if (!hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {};
     }
@@ -213,21 +224,31 @@ export const buildInitialValuesFordelBeregning = createSelector(
         BEGRUNNELSE_FORDELING_NAME,
       ),
       [fieldArrayName]: alleBeregningsgrunnlag.map(bg =>
-        FordelBeregningsgrunnlagForm.buildInitialValues(bg, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+        FordelBeregningsgrunnlagForm.buildInitialValues(
+          bg,
+          getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+          arbeidsgiverOpplysningerPerId,
+        ),
       ),
     };
   },
 );
 
 export const getValidationFordelBeregning = createSelector(
-  [ownProps => ownProps.beregningsgrunnlag, ownProps => ownProps.alleKodeverk, ownProps => ownProps.aksjonspunkter],
-  (beregningsgrunnlag, alleKodeverk, aksjonspunkter) => values => {
+  [
+    ownProps => ownProps.beregningsgrunnlag,
+    ownProps => ownProps.alleKodeverk,
+    ownProps => ownProps.arbeidsgiverOpplysningerPerId,
+    ownProps => ownProps.aksjonspunkter,
+  ],
+  (beregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, aksjonspunkter) => values => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {
         ...FordelBeregningsgrunnlagForm.validate(
           values,
           beregningsgrunnlag,
           getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+          arbeidsgiverOpplysningerPerId,
         ),
       };
     }

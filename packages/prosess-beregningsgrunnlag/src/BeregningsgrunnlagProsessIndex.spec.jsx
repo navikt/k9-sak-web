@@ -95,6 +95,7 @@ describe('<BeregningsgrunnlagProsessIndex>', () => {
         isAksjonspunktOpen={false}
         vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
         alleKodeverk={alleKodeverk}
+        arbeidsgivere={{ arbeidsgivere: {} }}
         fagsak={{}}
       />,
     );

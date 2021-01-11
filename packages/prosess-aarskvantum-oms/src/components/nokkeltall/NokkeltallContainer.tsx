@@ -1,12 +1,12 @@
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
-import {Uttaksperiode} from '@k9-sak-web/types';
-import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
+import { Uttaksperiode } from '@k9-sak-web/types';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import * as React from 'react';
-import {FormattedMessage} from "react-intl";
-import {periodeErIKoronaperioden} from '../utils';
+import { FormattedMessage } from 'react-intl';
+import { periodeErIKoronaperioden } from '../utils';
 import DagerNavKanUtbetale from './DagerNavKanUtbetale';
 import DagerSokerHarRettPa from './DagerSokerHarRettPa';
-import {beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid} from './durationUtils';
+import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
 import ForbrukteDager from './ForbrukteDager';
 import styles from './nokkeltall.less';
 import Restdager from './Restdager';
@@ -15,7 +15,7 @@ export enum Nokkeltalltype {
   DAGER_SOKER_HAR_RETT_PA,
   DAGER_NAV_KAN_UTBETALE,
   FORBRUKTE_DAGER,
-  RESTDAGER
+  RESTDAGER,
 }
 
 export type NokkeltallContainerProps = Pick<
@@ -56,11 +56,10 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
   totaltAntallDager: grunnrettsdager,
   apneNokkeltall,
   visEllerSkjulNokkeltalldetaljer,
-  migrertData
+  migrertData,
 }) => {
-
   const erIKoronaperioden = React.useMemo(
-    () => uttaksperioder.some(({periode}) => periodeErIKoronaperioden(periode)),
+    () => uttaksperioder.some(({ periode }) => periodeErIKoronaperioden(periode)),
     [uttaksperioder],
   );
 
@@ -78,13 +77,13 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
   const dagerRettPå = grunnrettsdager + antallKoronadager;
   const dagerNavKanUtbetale = dagerRettPå - antallDagerArbeidsgiverDekker;
   const alleDagerErForbrukt = !!harSmitteverndager || utbetaltFlereDagerEnnRett;
-  const forbruktDagerTimer = restTidErNegativt ? {dager: dagerNavKanUtbetale} : totaltForbruktDagerTimer;
+  const forbruktDagerTimer = restTidErNegativt ? { dager: dagerNavKanUtbetale } : totaltForbruktDagerTimer;
 
   return (
     <section className={styles.nokkeltall}>
       {migrertData && (
         <AlertStripeAdvarsel className={styles.varselOmMigrertData}>
-          <FormattedMessage id="Nøkkeltall.ErMigrert"/>
+          <FormattedMessage id="Nøkkeltall.ErMigrert" />
         </AlertStripeAdvarsel>
       )}
       <DagerSokerHarRettPa

@@ -1,10 +1,10 @@
 import hide from '@fpsak-frontend/assets/images/hide.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
-
 import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import {
   Arbeidsforhold,
+  ArbeidsgiverOpplysningerPerId,
   FeatureToggles,
   KodeverkMedNavn,
   Utfalltype,
@@ -27,6 +27,7 @@ import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoron
 
 interface AktivitetTabellProps {
   arbeidsforhold?: Arbeidsforhold;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   arbeidsforholdtypeKode: string;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
@@ -79,6 +80,7 @@ const arbeidsforholdSist = (_, [vilkår2]: [Vilkår, Utfalltype]): number =>
 
 const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   arbeidsforhold,
+  arbeidsgiverOpplysningerPerId,
   arbeidsforholdtypeKode,
   uttaksperioder,
   aktivitetsstatuser,
@@ -131,7 +133,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
     arbeidsforholdtypeKode;
 
   const beskrivelse = arbeidsforhold
-    ? `${arbeidsforholdType}, ${utledArbeidsforholdNavn(arbeidsforhold)}`
+    ? `${arbeidsforholdType}, ${utledArbeidsforholdNavn(arbeidsforhold, arbeidsgiverOpplysningerPerId)}`
     : arbeidsforholdType;
 
   enum Fanenavn {

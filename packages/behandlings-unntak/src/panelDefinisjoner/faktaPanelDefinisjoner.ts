@@ -1,4 +1,4 @@
-import FeatureToggles from "@k9-sak-web/types/src/featureTogglesTsType";
+import FeatureToggles from '@k9-sak-web/types/src/featureTogglesTsType';
 import ArbeidsforholdFaktaPanelDef from './faktaPaneler/ArbeidsforholdFaktaPanelDef';
 import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
 import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/MedlemskapsvilkaretFaktaPanelDef';
@@ -10,7 +10,6 @@ import NøkkeltallFaktaPanelDef from './faktaPaneler/NøkkeltallFaktaPanelDef';
 import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
 
 const faktaPanelDefinisjoner = (featureToggles: FeatureToggles) => {
-
   const paneler = [
     new ArbeidsforholdFaktaPanelDef(),
     new VergeFaktaPanelDef(),

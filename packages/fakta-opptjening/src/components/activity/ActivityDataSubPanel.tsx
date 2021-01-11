@@ -9,7 +9,7 @@ import {
   minValue,
   required,
 } from '@fpsak-frontend/utils';
-import { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
@@ -37,16 +37,32 @@ const maxValue200 = maxValue(200);
 const getOppdragsgiverMessageId = (selectedActivityType: Kodeverk) =>
   isOfType(selectedActivityType, OAType.FRILANS) ? 'ActivityPanel.Oppdragsgiver' : 'ActivityPanel.Arbeidsgiver';
 
-const getArbeidsgiverText = (initialValues: Partial<OpptjeningAktivitet>) => {
+const getArbeidsgiverText = (
+  initialValues: Partial<OpptjeningAktivitet>,
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+) => {
   if (initialValues.privatpersonNavn && initialValues.privatpersonFødselsdato) {
     const fodselsdato = formatDate(initialValues.privatpersonFødselsdato);
     return `${initialValues.privatpersonNavn} (${fodselsdato})`;
   }
-  if (initialValues.arbeidsgiver) {
-    return initialValues.oppdragsgiverOrg
-      ? `${initialValues.arbeidsgiver} (${initialValues.oppdragsgiverOrg})`
-      : initialValues.arbeidsgiver;
+
+  if (initialValues.privatpersonNavn) {
+    return initialValues.privatpersonNavn;
   }
+
+  const arbeidsgiverId = initialValues.oppdragsgiverOrg || initialValues.arbeidsgiverIdentifikator;
+
+  const arbeidsgiverOpplysninger =
+    arbeidsgiverOpplysningerPerId && arbeidsgiverId ? arbeidsgiverOpplysningerPerId[arbeidsgiverId] : null;
+
+  if (arbeidsgiverOpplysninger) {
+    return `${arbeidsgiverOpplysninger.navn} (${arbeidsgiverId})`;
+  }
+
+  if (initialValues.arbeidsgiver && typeof initialValues.arbeidsgiver === 'string') {
+    return initialValues.arbeidsgiver;
+  }
+
   return '-';
 };
 
@@ -60,6 +76,7 @@ interface ActivityDataSubPanelProps {
   readOnly: boolean;
   isManuallyAdded: boolean;
   selectedActivityType?: Kodeverk;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 /**
@@ -72,6 +89,7 @@ const ActivityDataSubPanel = ({
   readOnly,
   isManuallyAdded,
   selectedActivityType,
+  arbeidsgiverOpplysningerPerId,
 }: ActivityDataSubPanelProps) => (
   <>
     {isOfType(selectedActivityType, ...[OAType.ARBEID, OAType.NARING, ...ytelseTypes]) && (
@@ -83,7 +101,7 @@ const ActivityDataSubPanel = ({
                 <FormattedMessage id={getOppdragsgiverMessageId(selectedActivityType)} />
               </Undertekst>
               <div className={styles.arbeidsgiver}>
-                <Normaltekst>{getArbeidsgiverText(initialValues)}</Normaltekst>
+                <Normaltekst>{getArbeidsgiverText(initialValues, arbeidsgiverOpplysningerPerId)}</Normaltekst>
               </div>
             </>
           )}

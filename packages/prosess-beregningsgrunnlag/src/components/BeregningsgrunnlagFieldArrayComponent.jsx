@@ -12,6 +12,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
   submitCallback,
   readOnlySubmitButton,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   behandling,
   readOnly,
   vilkaarBG,
@@ -38,6 +39,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
         submitCallback={submitCallback}
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         behandling={behandling}
         vilkaarBG={vilkaarBG}
         initialValues={initialValues[index]}

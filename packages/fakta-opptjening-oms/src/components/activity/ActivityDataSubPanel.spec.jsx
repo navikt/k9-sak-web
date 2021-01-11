@@ -18,10 +18,20 @@ describe('<ActivityDataSubPanel>', () => {
     privatpersonFødselsdato: '1992-11-10',
   };
 
+  const arbeidsgiverOpplysningerPerId = {
+    123456789: {
+      identifikator: '123456789',
+      referanse: '123456789',
+      navn: 'Svensen Eksos',
+      fødselsdato: null,
+    },
+  };
+
   it('skal vise arbeidsgiver, org-nr og stillingsandel for type Arbeid', () => {
     const wrapper = shallow(
       <ActivityDataSubPanel
         initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
         selectedActivityType={{ kode: OAType.ARBEID, navn: 'arbeid' }}
@@ -74,6 +84,7 @@ describe('<ActivityDataSubPanel>', () => {
     const wrapper = shallow(
       <ActivityDataSubPanel
         initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
         selectedActivityType={{ kode: OAType.FRILANS, navn: 'FRILANS' }}
@@ -91,6 +102,7 @@ describe('<ActivityDataSubPanel>', () => {
     const wrapper = shallow(
       <ActivityDataSubPanel
         initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
         selectedActivityType={{ kode: OAType.NARING, navn: 'NARING' }}
@@ -109,6 +121,7 @@ describe('<ActivityDataSubPanel>', () => {
     const wrapper = shallow(
       <ActivityDataSubPanel
         initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
         selectedActivityType={{ kode: OAType.VARTPENGER, navn: 'VARTPENGER' }}
@@ -124,6 +137,7 @@ describe('<ActivityDataSubPanel>', () => {
     const wrapper = shallow(
       <ActivityDataSubPanel
         initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded
         selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
@@ -145,6 +159,7 @@ describe('<ActivityDataSubPanel>', () => {
     const wrapper = shallow(
       <ActivityDataSubPanel
         initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly
         isManuallyAdded
         selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
@@ -164,6 +179,7 @@ describe('<ActivityDataSubPanel>', () => {
     const wrapper = shallow(
       <ActivityDataSubPanel
         initialValues={activity2}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
         selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
@@ -177,6 +193,7 @@ describe('<ActivityDataSubPanel>', () => {
     const wrapper = shallow(
       <ActivityDataSubPanel
         initialValues={activity1}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
         selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}

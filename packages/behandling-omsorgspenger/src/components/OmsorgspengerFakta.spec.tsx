@@ -127,6 +127,9 @@ describe('<OmsorgspengerFakta>', () => {
       aksjonspunkter,
       vilkar,
       personopplysninger: soker,
+      arbeidsgivere: {
+        arbeidsgivere: {},
+      },
     };
 
     const wrapper = shallowWithIntl(
@@ -167,7 +170,11 @@ describe('<OmsorgspengerFakta>', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
+      arbeidsgivere: {
+        arbeidsgivere: {},
+      },
     };
+
     const wrapper = shallowWithIntl(
       <OmsorgspengerFakta.WrappedComponent
         intl={intlMock}
@@ -202,7 +209,11 @@ describe('<OmsorgspengerFakta>', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
+      arbeidsgivere: {
+        arbeidsgivere: {},
+      },
     };
+
     const wrapper = shallowWithIntl(
       <OmsorgspengerFakta.WrappedComponent
         intl={intlMock}

@@ -20,6 +20,7 @@ const frisinnData = [
   frisinnBehandlingApi.BEREGNINGSRESULTAT_UTBETALT,
   frisinnBehandlingApi.BEREGNINGSGRUNNLAG,
   frisinnBehandlingApi.SIMULERING_RESULTAT,
+  frisinnBehandlingApi.ARBEIDSGIVERE,
 ];
 
 interface OwnProps {

@@ -60,31 +60,35 @@ const Table: FunctionComponent<OwnProps> = ({
   stripet = false,
   suppliedHeaders,
   withoutTbody = false,
-  notFocusableHeader = false
+  notFocusableHeader = false,
 }) => {
-
   const performFunctionOnChildren = (
     childOrChildren: ReactElement | ReactElement[],
-    func: (child: ReactElement) => ReactElement
-  ) => Array.isArray(childOrChildren) ? React.Children.map(childOrChildren, func) : func(childOrChildren);
+    func: (child: ReactElement) => ReactElement,
+  ) => (Array.isArray(childOrChildren) ? React.Children.map(childOrChildren, func) : func(childOrChildren));
 
-  const tableRowsWithNoHoverProp = childrenOfTbody => performFunctionOnChildren(
-    childrenOfTbody,
-    (row: ReactNode) => React.isValidElement(row) && React.cloneElement(row, { noHover })
-  );
+  const tableRowsWithNoHoverProp = childrenOfTbody =>
+    performFunctionOnChildren(
+      childrenOfTbody,
+      (row: ReactNode) => React.isValidElement(row) && React.cloneElement(row, { noHover }),
+    );
 
   const content = withoutTbody
-    ? performFunctionOnChildren(children, tbody => <tbody {...tbody.props}>{tableRowsWithNoHoverProp(tbody.props.children)}</tbody>)
+    ? performFunctionOnChildren(children, tbody => (
+        <tbody {...tbody.props}>{tableRowsWithNoHoverProp(tbody.props.children)}</tbody>
+      ))
     : tableRowsWithNoHoverProp(children);
 
-  return <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
-    <thead>
-      <TableRow isHeader noHover={noHover} notFocusable={notFocusableHeader}>
-        {headers(headerTextCodes, headerColumnContent, suppliedHeaders)}
-      </TableRow>
-    </thead>
-    {withoutTbody ? content : <tbody>{content}</tbody>}
-  </table>
+  return (
+    <table className={classNames('table', { [classNameTable]: classNameTable, noHover, stripet })}>
+      <thead>
+        <TableRow isHeader noHover={noHover} notFocusable={notFocusableHeader}>
+          {headers(headerTextCodes, headerColumnContent, suppliedHeaders)}
+        </TableRow>
+      </thead>
+      {withoutTbody ? content : <tbody>{content}</tbody>}
+    </table>
+  );
 };
 
 export default Table;

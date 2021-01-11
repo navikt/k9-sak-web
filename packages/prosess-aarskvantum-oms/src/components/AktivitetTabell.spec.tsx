@@ -1,4 +1,4 @@
-import {TableRow} from "@fpsak-frontend/shared-components";
+import { TableRow } from '@fpsak-frontend/shared-components';
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
@@ -49,6 +49,7 @@ describe('<AktivitetTabell />', () => {
         arbeidsforholdtypeKode="AT"
         arbeidsforhold={arbeidsforhold}
         aktivitetsstatuser={[]}
+        arbeidsgiverOpplysningerPerId={{}}
         featureToggles={{}}
       />,
     );
@@ -75,6 +76,7 @@ describe('<AktivitetTabell />', () => {
         arbeidsforhold={arbeidsforhold}
         arbeidsforholdtypeKode="AT"
         aktivitetsstatuser={[]}
+        arbeidsgiverOpplysningerPerId={{}}
         featureToggles={{}}
       />,
     );
@@ -84,7 +86,7 @@ describe('<AktivitetTabell />', () => {
 
     const expandedContent = wrapper.find(TableRow);
 
-    expect(expandedContent).to.have.length(aktivitet.uttaksperioder.length*3);
+    expect(expandedContent).to.have.length(aktivitet.uttaksperioder.length * 3);
 
     const vilkår = expandedContent.at(2).find(Normaltekst);
 

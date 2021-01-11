@@ -108,13 +108,17 @@ export const skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding = arbeidsgiver =>
   { arbeidsgiver },
 ];
 
-export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn) => {
+export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   const arbeidsforholdRefusjonsinfo = finnArbeidsforholdRefusjonsinfoListe(andelList);
   const arbeidsforholdMedForHogRefusjon = arbeidsforholdRefusjonsinfo.filter(
     refusjonsInfo => refusjonsInfo.totalRefusjon > refusjonsInfo.refusjonskravFraInntektsmelding,
   );
   if (arbeidsforholdMedForHogRefusjon.length > 0) {
-    const arbeidsgiverString = createVisningsnavnForAktivitet(arbeidsforholdMedForHogRefusjon[0], getKodeverknavn);
+    const arbeidsgiverString = createVisningsnavnForAktivitet(
+      arbeidsforholdMedForHogRefusjon[0],
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     return skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverString);
   }
   return null;
@@ -209,9 +213,11 @@ export const validateAgainstBeregningsgrunnlag = (
   totalInntektArbeidsforholdList,
   skalValidereMotBeregningsgrunnlagPrAar,
   getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
 ) => {
   const arbeidsforholdBelopValues = totalInntektArbeidsforholdList.find(
-    ({ key }) => key === createVisningsnavnForAktivitet(andelFieldValues, getKodeverknavn),
+    ({ key }) =>
+      key === createVisningsnavnForAktivitet(andelFieldValues, getKodeverknavn, arbeidsgiverOpplysningerPerId),
   );
   if (arbeidsforholdBelopValues) {
     const arbeidsforholdTotalFastsatt = arbeidsforholdBelopValues.fastsattBelop;
@@ -230,6 +236,7 @@ export const validateFastsattBelop = (
   totalInntektArbeidsforholdList,
   skalValidereMotBeregningsgrunnlagPrAar,
   getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
   periodeDato,
 ) => {
   let fastsattBelopError = required(andelFieldValues.fastsattBelop);
@@ -239,6 +246,7 @@ export const validateFastsattBelop = (
       totalInntektArbeidsforholdList,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
     );
   }
   if (!fastsattBelopError) {
@@ -255,6 +263,7 @@ export const validateAndelFields = (
   totalInntektArbeidsforholdList,
   skalValidereMotBeregningsgrunnlagPrAar,
   getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
   periodeDato,
 ) => {
   const { refusjonskrav, skalKunneEndreRefusjon, andel, inntektskategori } = andelFieldValues;
@@ -265,6 +274,7 @@ export const validateAndelFields = (
     totalInntektArbeidsforholdList,
     skalValidereMotBeregningsgrunnlagPrAar,
     getKodeverknavn,
+    arbeidsgiverOpplysningerPerId,
     periodeDato,
   );
   fieldErrors.andel = required(andel);
@@ -272,7 +282,13 @@ export const validateAndelFields = (
   return hasFieldErrors(fieldErrors) ? fieldErrors : null;
 };
 
-export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, periodeDato) => {
+export const validateAndeler = (
+  values,
+  skalValidereMotBeregningsgrunnlagPrAar,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId,
+  periodeDato,
+) => {
   if (!values) {
     return null;
   }
@@ -283,6 +299,7 @@ export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, 
     skalValidereMotBeregningsgrunnlagPrAar,
     skalValidereMellomAAPOgArbeidsgiver,
     getKodeverknavn,
+    arbeidsgiverOpplysningerPerId,
   );
   const arrayErrors = values.map(andelFieldValues => {
     if (!andelFieldValues.harPeriodeAarsakGraderingEllerRefusjon) {
@@ -293,6 +310,7 @@ export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, 
       totalInntektPrArbeidsforhold,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
       periodeDato,
     );
   });

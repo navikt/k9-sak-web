@@ -6,7 +6,7 @@ const andelUtenNavn = {
     kode: 'A',
   },
   arbeidsforholdId: '123',
-  arbeidsgiverId: '321',
+  arbeidsgiverId: '111',
   eksternArbeidsforholdId: '09876',
 };
 
@@ -28,21 +28,42 @@ const andelMedAlt = {
   eksternArbeidsforholdId: '56789',
 };
 
-const getKodeverknavn = (kodeverk) => (kodeverk.kode === 'A' ? 'Arbeidstaker' : '');
+const arbeidsgiverOpplysningerPerId = {
+  321: {
+    identifikator: '321',
+    referanse: '321',
+    navn: 'Andeby bank',
+    fødselsdato: null,
+  },
+};
+
+const getKodeverknavn = kodeverk => (kodeverk.kode === 'A' ? 'Arbeidstaker' : '');
 
 describe('visningsnavnHelper', () => {
-  it('skal lage visningsnavn når vi mangler navn på bedrift', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelUtenNavn, getKodeverknavn);
+  it('skal lage visningsnavn når vi mangler data for arbeidsgivere', () => {
+    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(
+      andelUtenNavn,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(arbeidsgiverNavnOrgnr).to.equal('Arbeidstaker');
   });
 
   it('skal lage visningsnavn når vi mangler arbeidsforholdId', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelUtenArbeidsforholdId, getKodeverknavn);
+    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(
+      andelUtenArbeidsforholdId,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (321)');
   });
 
   it('skal lage visningsnavn når vi ikke mangler noe', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelMedAlt, getKodeverknavn);
+    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(
+      andelMedAlt,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (321)...6789');
   });
 });

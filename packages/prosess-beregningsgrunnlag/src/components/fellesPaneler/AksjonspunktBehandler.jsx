@@ -78,6 +78,7 @@ const AksjonspunktBehandler = ({
   readOnlySubmitButton,
   allePerioder,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   relevanteStatuser,
   tidsBegrensetInntekt,
   fieldArrayID,
@@ -132,6 +133,7 @@ const AksjonspunktBehandler = ({
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               alleKodeverk={alleKodeverk}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               aksjonspunkter={aksjonspunkter}
               fieldArrayID={fieldArrayID}
             />
@@ -142,6 +144,7 @@ const AksjonspunktBehandler = ({
               allePerioder={allePerioder}
               alleAndelerIForstePeriode={alleAndelerIForstePeriode}
               alleKodeverk={alleKodeverk}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               fieldArrayID={fieldArrayID}
             />
           )}
@@ -220,6 +223,7 @@ AksjonspunktBehandler.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   formName: PropTypes.string.isRequired,

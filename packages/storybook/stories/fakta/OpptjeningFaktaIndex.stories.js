@@ -10,6 +10,7 @@ import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
+import arbeidsgivere from '../mocks/arbeidsgivere.json';
 
 const behandling = {
   id: 1,
@@ -26,51 +27,54 @@ const opptjeningNårEnHarAksjonspunkt = {
     },
     fastsattOpptjeningAktivitetList: [],
   },
-  opptjeningAktivitetList: [{
-    aktivitetType: {
-      kode: opptjeningAktivitetType.NARING,
+  opptjeningAktivitetList: [
+    {
+      aktivitetType: {
+        kode: opptjeningAktivitetType.NARING,
+      },
+      originalFom: null,
+      originalTom: null,
+      opptjeningFom: '1995-09-14',
+      opptjeningTom: '9999-12-31',
+      arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
+      arbeidsgiverNavn: null,
+      oppdragsgiverOrg: '973861778',
+      arbeidsgiverIdentifikator: '973861778',
+      privatpersonNavn: null,
+      privatpersonFødselsdato: null,
+      arbeidsforholdRef: null,
+      stillingsandel: 100,
+      naringRegistreringsdato: '1995-09-14',
+      erManueltOpprettet: false,
+      erGodkjent: null,
+      erEndret: false,
+      begrunnelse: null,
+      erPeriodeEndret: false,
     },
-    originalFom: null,
-    originalTom: null,
-    opptjeningFom: '1995-09-14',
-    opptjeningTom: '9999-12-31',
-    arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
-    arbeidsgiverNavn: null,
-    oppdragsgiverOrg: '973861778',
-    arbeidsgiverIdentifikator: '973861778',
-    privatpersonNavn: null,
-    privatpersonFødselsdato: null,
-    arbeidsforholdRef: null,
-    stillingsandel: 100,
-    naringRegistreringsdato: '1995-09-14',
-    erManueltOpprettet: false,
-    erGodkjent: null,
-    erEndret: false,
-    begrunnelse: null,
-    erPeriodeEndret: false,
-  }, {
-    aktivitetType: {
-      kode: opptjeningAktivitetType.ARBEID,
+    {
+      aktivitetType: {
+        kode: opptjeningAktivitetType.ARBEID,
+      },
+      originalFom: null,
+      originalTom: null,
+      opptjeningFom: '2018-01-01',
+      opptjeningTom: '2018-11-01',
+      arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
+      arbeidsgiverNavn: null,
+      oppdragsgiverOrg: '973861778',
+      arbeidsgiverIdentifikator: '973861778',
+      privatpersonNavn: null,
+      privatpersonFødselsdato: null,
+      arbeidsforholdRef: 'e5ec2632-0e31-4c8f-8190-d942053f847b',
+      stillingsandel: 100,
+      naringRegistreringsdato: '1995-09-14',
+      erManueltOpprettet: false,
+      erGodkjent: true,
+      erEndret: false,
+      begrunnelse: null,
+      erPeriodeEndret: false,
     },
-    originalFom: null,
-    originalTom: null,
-    opptjeningFom: '2018-01-01',
-    opptjeningTom: '2018-11-01',
-    arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
-    arbeidsgiverNavn: null,
-    oppdragsgiverOrg: '973861778',
-    arbeidsgiverIdentifikator: '973861778',
-    privatpersonNavn: null,
-    privatpersonFødselsdato: null,
-    arbeidsforholdRef: 'e5ec2632-0e31-4c8f-8190-d942053f847b',
-    stillingsandel: 100,
-    naringRegistreringsdato: '1995-09-14',
-    erManueltOpprettet: false,
-    erGodkjent: true,
-    erEndret: false,
-    begrunnelse: null,
-    erPeriodeEndret: false,
-  }],
+  ],
 };
 
 const opptjeningUtenAksjonspunkt = {
@@ -82,39 +86,42 @@ const opptjeningUtenAksjonspunkt = {
       månder: 10,
     },
   },
-  opptjeningAktivitetList: [{
-    opptjeningFom: '2017-01-01',
-    opptjeningTom: '9999-12-31',
-    aktivitetType: {
-      kode: opptjeningAktivitetType.ARBEID,
+  opptjeningAktivitetList: [
+    {
+      opptjeningFom: '2017-01-01',
+      opptjeningTom: '9999-12-31',
+      aktivitetType: {
+        kode: opptjeningAktivitetType.ARBEID,
+      },
+      arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
+      arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
+      arbeidsgiverIdentifikator: '973861778',
+      erEndret: false,
+      erGodkjent: true,
+      erManueltOpprettet: false,
+      erPeriodeEndret: false,
+      aringRegistreringsdato: '1995-09-14',
+      oppdragsgiverOrg: '973861778',
+      stillingsandel: 50,
     },
-    arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
-    arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
-    arbeidsgiverIdentifikator: '973861778',
-    erEndret: false,
-    erGodkjent: true,
-    erManueltOpprettet: false,
-    erPeriodeEndret: false,
-    aringRegistreringsdato: '1995-09-14',
-    oppdragsgiverOrg: '973861778',
-    stillingsandel: 50,
-  }, {
-    opptjeningFom: '2017-01-01',
-    opptjeningTom: '9999-12-31',
-    aktivitetType: {
-      kode: opptjeningAktivitetType.DAGPENGER,
+    {
+      opptjeningFom: '2017-01-01',
+      opptjeningTom: '9999-12-31',
+      aktivitetType: {
+        kode: opptjeningAktivitetType.DAGPENGER,
+      },
+      arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
+      arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
+      arbeidsgiverIdentifikator: '973861778',
+      erEndret: false,
+      erGodkjent: true,
+      erManueltOpprettet: false,
+      erPeriodeEndret: false,
+      aringRegistreringsdato: '1995-09-14',
+      oppdragsgiverOrg: '973861778',
+      stillingsandel: 50,
     },
-    arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
-    arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
-    arbeidsgiverIdentifikator: '973861778',
-    erEndret: false,
-    erGodkjent: true,
-    erManueltOpprettet: false,
-    erPeriodeEndret: false,
-    aringRegistreringsdato: '1995-09-14',
-    oppdragsgiverOrg: '973861778',
-    stillingsandel: 50,
-  }],
+  ],
 };
 
 const merknaderFraBeslutter = {
@@ -131,18 +138,21 @@ export const visAksjonspunktForOpptjeningsvilkåret = () => (
   <OpptjeningFaktaIndex
     behandling={behandling}
     opptjening={object('opptjening', opptjeningNårEnHarAksjonspunkt)}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     alleKodeverk={alleKodeverk}
+    arbeidsgivere={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}
@@ -159,6 +169,7 @@ export const visPanelUtenAksjonpunkt = () => (
     opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
+    arbeidsgivere={arbeidsgivere}
     alleMerknaderFraBeslutter={{}}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}

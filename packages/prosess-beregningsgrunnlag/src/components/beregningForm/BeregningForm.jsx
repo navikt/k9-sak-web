@@ -296,6 +296,7 @@ export const BeregningFormImpl = ({
   readOnlySubmitButton,
   behandling,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   vilkaarBG,
   fieldArrayID,
 }) => {
@@ -350,6 +351,7 @@ export const BeregningFormImpl = ({
                 behandlingId={behandling.id}
                 behandlingVersjon={behandling.versjon}
                 alleKodeverk={alleKodeverk}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 sammenligningsGrunnlagInntekter={beregningsgrunnlag.sammenligningsgrunnlagInntekter}
                 skjeringstidspunktDato={skjaeringstidspunktBeregning}
               />
@@ -384,6 +386,7 @@ export const BeregningFormImpl = ({
                 behandlingId={behandling.id}
                 behandlingVersjon={behandling.versjon}
                 alleKodeverk={alleKodeverk}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 aksjonspunkter={gjeldendeAksjonspunkter}
                 relevanteStatuser={relevanteStatuser}
                 tidsBegrensetInntekt={tidsBegrensetInntekt}
@@ -426,6 +429,7 @@ BeregningFormImpl.propTypes = {
   behandling: beregningsgrunnlagBehandlingPropType,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   vilkaarBG: PropTypes.shape().isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };

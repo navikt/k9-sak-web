@@ -10,6 +10,7 @@ import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
+import arbeidsgivere from '../mocks/arbeidsgivere.json';
 
 const behandling = {
   id: 1,
@@ -159,6 +160,7 @@ export const visAksjonspunktForOpptjeningsvilkåret = () => (
       },
     ]}
     alleKodeverk={alleKodeverk}
+    arbeidsgivere={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}
@@ -175,6 +177,7 @@ export const visPanelUtenAksjonpunkt = () => (
     opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
+    arbeidsgivere={arbeidsgivere}
     alleMerknaderFraBeslutter={{}}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}

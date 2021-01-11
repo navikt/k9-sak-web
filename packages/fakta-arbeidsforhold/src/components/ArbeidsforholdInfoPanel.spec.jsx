@@ -41,6 +41,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
         alleMerknaderFraBeslutter={{}}
         {...reduxFormPropsMock}
       />,
@@ -64,6 +65,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
         alleMerknaderFraBeslutter={{}}
         {...reduxFormPropsMock}
       />,
@@ -87,6 +89,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
         alleMerknaderFraBeslutter={{}}
         {...reduxFormPropsMock}
       />,

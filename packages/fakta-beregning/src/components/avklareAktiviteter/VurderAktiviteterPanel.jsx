@@ -36,6 +36,7 @@ export const VurderAktiviteterPanel = ({
   harAksjonspunkt,
   alleKodeverk,
   fieldArrayID,
+  arbeidsgiverOpplysningerPerId,
 }) =>
   finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values).map(aktivitetMap => (
     <VurderAktiviteterTabell
@@ -48,6 +49,7 @@ export const VurderAktiviteterPanel = ({
       harAksjonspunkt={harAksjonspunkt}
       alleKodeverk={alleKodeverk}
       fieldArrayID={fieldArrayID}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
   ));
 
@@ -64,6 +66,7 @@ VurderAktiviteterPanel.propTypes = {
   ).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   fieldArrayID: PropTypes.string.isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 VurderAktiviteterPanel.validate = (values, aktiviteterTomDatoMapping) => {
@@ -116,7 +119,13 @@ VurderAktiviteterPanel.hasValueChangedFromInitial = (aktiviteterTomDatoMapping, 
   );
 };
 
-VurderAktiviteterPanel.buildInitialValues = (aktiviteterTomDatoMapping, alleKodeverk, erOverstyrt, harAksjonspunkt) => {
+VurderAktiviteterPanel.buildInitialValues = (
+  aktiviteterTomDatoMapping,
+  alleKodeverk,
+  erOverstyrt,
+  harAksjonspunkt,
+  arbeidsgiverOpplysningerPerId,
+) => {
   if (!aktiviteterTomDatoMapping || aktiviteterTomDatoMapping.length === 0) {
     return {};
   }
@@ -124,7 +133,13 @@ VurderAktiviteterPanel.buildInitialValues = (aktiviteterTomDatoMapping, alleKode
   aktiviteterTomDatoMapping.forEach(liste => {
     initialValues = {
       ...initialValues,
-      ...VurderAktiviteterTabell.buildInitialValues(liste.aktiviteter, alleKodeverk, erOverstyrt, harAksjonspunkt),
+      ...VurderAktiviteterTabell.buildInitialValues(
+        liste.aktiviteter,
+        alleKodeverk,
+        erOverstyrt,
+        harAksjonspunkt,
+        arbeidsgiverOpplysningerPerId,
+      ),
     };
   });
   return initialValues;
