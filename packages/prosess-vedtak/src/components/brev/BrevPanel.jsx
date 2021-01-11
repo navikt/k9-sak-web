@@ -7,6 +7,7 @@ import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
+  harAlternativeMottakere,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
@@ -78,6 +79,21 @@ export const BrevPanel = props => {
     formProps,
   } = props;
 
+  // const tilgjengeligeVedtaksbrev = {
+  //   vedtaksbrev: ['AUTOMATISK', 'FRITEKST'],
+  //   begrunnelse: null,
+  //   alternativeMottakere: [
+  //     {
+  //       id: '00000000000',
+  //       idType: 'AKTØRID',
+  //     },
+  //     {
+  //       id: '979312059',
+  //       idType: 'ORGNR',
+  //     },
+  //   ],
+  // };
+
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
@@ -106,6 +122,8 @@ export const BrevPanel = props => {
         readOnly={readOnly}
         sprakkode={sprakkode}
         previewBrev={automatiskBrevUtenValideringCallback}
+        harAlternativeMottakere={harAlternativeMottakere(tilgjengeligeVedtaksbrev)}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
         harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
       />
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />

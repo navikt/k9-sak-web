@@ -18,7 +18,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import { kanHaFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
@@ -264,7 +264,11 @@ const transformValues = values =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     begrunnelse: values.begrunnelse,
-    fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
+    fritekstbrev: {
+      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+      brødtekst: values.brødtekst,
+      overskrift: values.overskrift,
+    },
     skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
     skalUndertrykkeBrev: values.skalUndertrykkeBrev,
     isVedtakSubmission,

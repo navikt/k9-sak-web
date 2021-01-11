@@ -27,6 +27,7 @@
   "VedtakForm.ArsakTilAvslag": "Årsak til avslag",
   "VedtakForm.Fritekst": "Fritekst i brev til søker",
   "VedtakForm.Fritekst.Beregningsgrunnlag": "Fritekst i brev til søker som handler om fastsettelse av beregningsgrunnlaget",
+  "VedtakForm.Fritekst.OverstyrtMottaker": "Velg mottaker",
   "VedtakForm.VurderAnnenYtelse": "Vurder om den åpne oppgaven «Vurder konsekvens for ytelse» påvirker behandlingen",
   "VedtakForm.VurderDokument": "Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen",
   "VedtakForm.HelpText0": "Beregningsgrunnlaget er endret til ugunst for bruker i revurderingen. ",
