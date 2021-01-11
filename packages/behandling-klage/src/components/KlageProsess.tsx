@@ -58,8 +58,11 @@ const saveKlageText = (dispatch, behandling, aksjonspunkter) => aksjonspunktMode
   }
 };
 
-const previewCallback = (dispatch, fagsak, behandling) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
+const previewCallback = (dispatch, fagsak, behandling, valgtPartMedKlagerett) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, {
+    ...parametre,
+    overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
+  });
   return dispatch(klageBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
 };
 
@@ -113,12 +116,17 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
     oppdaterBehandlingVersjon,
   );
 
+  const { valgtPartMedKlagerett, ...rest } = data;
+
   const dataTilUtledingAvFpPaneler = {
     alleBehandlinger,
     klageVurdering: data.klageVurdering,
     saveKlageText: useCallback(saveKlageText(dispatch, behandling, data.aksjonspunkter), [behandling.versjon]),
-    previewCallback: useCallback(previewCallback(dispatch, fagsak, behandling), [behandling.versjon]),
-    ...data,
+    previewCallback: useCallback(previewCallback(dispatch, fagsak, behandling, valgtPartMedKlagerett), [
+      behandling.versjon,
+    ]),
+    valgtPartMedKlagerett,
+    ...rest,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
     prosessStegPanelDefinisjoner,

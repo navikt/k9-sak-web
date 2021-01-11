@@ -108,4 +108,4 @@ export {
 export { default as MicroFrontend } from './src/micro-frontends/MicroFrontend';
 
 export { getKodeverknavnFn } from './src/kodeverkUtils';
-export { default as joinNonNullStrings } from './src/stringUtils';
+export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';

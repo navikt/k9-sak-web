@@ -38,6 +38,7 @@ export const BehandleKlageFormKaImpl = ({
   readOnly,
   handleSubmit,
   saveKlage,
+  valgtPartMedKlagerett,
   previewCallback,
   readOnlySubmitButton,
   sprakkode,
@@ -85,6 +86,7 @@ export const BehandleKlageFormKaImpl = ({
                   formValues={formValues}
                   saveKlage={saveKlage}
                   readOnly={readOnly}
+                  valgtPartMedKlagerett={valgtPartMedKlagerett}
                   aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
                   previewCallback={previewCallback}
                 />

@@ -10,13 +10,12 @@ import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderi
 
 import styles from './klageVurderingRadioOptionsNfp.less';
 
-export const KlageVurderingRadioOptionsNfp = ({
-  readOnly,
-  medholdReasons,
-  klageVurdering,
-  intl,
-}) => {
-  const medholdOptions = medholdReasons.map((mo) => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
+export const KlageVurderingRadioOptionsNfp = ({ readOnly, medholdReasons, klageVurdering, intl }) => {
+  const medholdOptions = medholdReasons.map(mo => (
+    <option key={mo.kode} value={mo.kode}>
+      {mo.navn}
+    </option>
+  ));
   return (
     <div>
       <>
@@ -27,11 +26,13 @@ export const KlageVurderingRadioOptionsNfp = ({
           className={readOnly ? styles.selectReadOnly : null}
         >
           <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
-          <RadioOption value={klageVurderingType.STADFESTE_YTELSESVEDTAK} label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }} />
+          <RadioOption
+            value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
+            label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }}
+          />
         </RadioGroupField>
       </>
-      {(klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE)
-      && (
+      {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
         <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
           <SelectField
             readOnly={readOnly}
@@ -42,7 +43,7 @@ export const KlageVurderingRadioOptionsNfp = ({
             validate={[required]}
             bredde="xl"
           />
-          <VerticalSpacer sixPx />
+          <VerticalSpacer sixteenPx />
           <RadioGroupField
             name="klageVurderingOmgjoer"
             validate={[required]}
@@ -50,14 +51,22 @@ export const KlageVurderingRadioOptionsNfp = ({
             className={readOnly ? styles.selectReadOnly : null}
             direction="vertical"
           >
-            <RadioOption value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE} label={{ id: 'Klage.Behandle.Omgjort' }} />
-            <RadioOption value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE} label={{ id: 'Klage.Behandle.Ugunst' }} />
-            <RadioOption value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE} label={{ id: 'Klage.Behandle.DelvisOmgjort' }} />
+            <RadioOption
+              value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.Omgjort' }}
+            />
+            <RadioOption
+              value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.Ugunst' }}
+            />
+            <RadioOption
+              value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.DelvisOmgjort' }}
+            />
           </RadioGroupField>
         </ArrowBox>
       )}
-      {(klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK)
-      && (
+      {klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK && (
         <ArrowBox>
           <SelectField
             readOnly={readOnly}
@@ -75,10 +84,12 @@ export const KlageVurderingRadioOptionsNfp = ({
 };
 KlageVurderingRadioOptionsNfp.propTypes = {
   readOnly: PropTypes.bool,
-  medholdReasons: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string,
-    navn: PropTypes.string,
-  })).isRequired,
+  medholdReasons: PropTypes.arrayOf(
+    PropTypes.shape({
+      kode: PropTypes.string,
+      navn: PropTypes.string,
+    }),
+  ).isRequired,
   klageVurdering: PropTypes.string,
   intl: PropTypes.shape().isRequired,
 };
