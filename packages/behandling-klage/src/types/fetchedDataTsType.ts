@@ -6,6 +6,7 @@ import KlagePart from './klagePartTsType';
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];
   klageVurdering: KlageVurdering;
+  parterMedKlagerett?: KlagePart[];
   valgtPartMedKlagerett?: KlagePart;
 }
 
