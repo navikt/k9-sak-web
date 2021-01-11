@@ -59,9 +59,10 @@ interface OwnProps {
 const getForhandsvisCallback = (
   forhandsvisMelding: (data: any) => Promise<any>,
   fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
   behandling: Behandling,
 ) => (data: any) => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, data);
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, data);
   return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 
@@ -179,7 +180,9 @@ const OmsorgspengerProsess: FunctionComponent<OwnProps> = ({
 
   const dataTilUtledingAvFpPaneler = {
     fagsakPerson,
-    previewCallback: useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, behandling), [behandling.versjon]),
+    previewCallback: useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
+      behandling.versjon,
+    ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisTilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
       [behandling.versjon],

@@ -28,7 +28,7 @@ describe('<SideMenuWrapper>', () => {
 
     const meny = wrapper.find(SideMenu);
     expect(meny).toHaveLength(1);
-    expect(meny.prop('heading')).toEqual('Fakta om');
+    expect(meny.prop('heading')).toEqual('Saksopplysninger');
     expect(meny.prop('links')).toEqual([
       {
         label: 'test',

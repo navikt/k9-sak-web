@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState, useCallback, useMemo } from 'react';
 
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
+import { Behandling, Fagsak, KodeverkMedNavn, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
@@ -19,6 +19,7 @@ const getInnsynData = saksnummer => [
 interface OwnProps {
   behandlingId: number;
   fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -39,6 +40,7 @@ const BehandlingInnsynIndex: FunctionComponent<OwnProps> = ({
   oppdaterBehandlingVersjon,
   kodeverk,
   fagsak,
+  fagsakPerson,
   rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtProsessSteg,
@@ -121,6 +123,7 @@ const BehandlingInnsynIndex: FunctionComponent<OwnProps> = ({
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         kodeverk={kodeverk}
         rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}

@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
@@ -30,14 +28,14 @@ describe('historikkUtils', () => {
       intlMock,
       getKodeverknavnFn(noenKodeverk, kodeverkTyper),
     );
-    expect(historikkResultatNavn).to.equal(noenKodeverk.HistorikkResultatType[0].navn);
+    expect(historikkResultatNavn).toEqual(noenKodeverk.HistorikkResultatType[0].navn);
 
     const vedtakResultatNavn = findResultatText(
       noenKodeverk.VedtakResultatType[0].kode,
       intlMock,
       getKodeverknavnFn(noenKodeverk, kodeverkTyper),
     );
-    expect(vedtakResultatNavn).to.equal(noenKodeverk.VedtakResultatType[0].navn);
+    expect(vedtakResultatNavn).toEqual(noenKodeverk.VedtakResultatType[0].navn);
   });
 
   it('findResultatText har fallback for tilbekekrevingskoder', () => {
@@ -46,6 +44,6 @@ describe('historikkUtils', () => {
       intlMock,
       getKodeverknavnFn(noenKodeverk, kodeverkTyper),
     );
-    expect(historikkResultatNavn).to.equal('HistorikkResultat.FullTilbakebetaling');
+    expect(historikkResultatNavn).toEqual('HistorikkResultat.FullTilbakebetaling');
   });
 });

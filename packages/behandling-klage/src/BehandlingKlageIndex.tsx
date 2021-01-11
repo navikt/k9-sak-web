@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
 
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
@@ -19,6 +19,7 @@ const klageData = [
 interface OwnProps {
   behandlingId: number;
   fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -46,6 +47,7 @@ const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
   oppdaterBehandlingVersjon,
   kodeverk,
   fagsak,
+  fagsakPerson,
   rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtProsessSteg,
@@ -127,6 +129,7 @@ const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         kodeverk={kodeverk}
         rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}

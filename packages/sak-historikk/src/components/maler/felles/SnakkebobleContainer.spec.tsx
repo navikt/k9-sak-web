@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
@@ -28,7 +27,7 @@ describe('SnakkebobleContainer', () => {
     );
 
     const snakkebobla = wrapper.find(Snakkeboble);
-    expect(snakkebobla.prop('className')).to.be.equal(
+    expect(snakkebobla.prop('className')).toEqual(
       'snakkeboble__kompakt snakkeboble__panel snakkeboble-panel snakkeboble__saksbehandler snakkeboble__bruker',
     );
   });
@@ -51,6 +50,6 @@ describe('SnakkebobleContainer', () => {
     );
 
     const snakkebobla = wrapper.find(Snakkeboble);
-    expect(snakkebobla.prop('topp')).to.contain('10.12.2017 -  // Saksbehandler');
+    expect(snakkebobla.prop('topp')).toContain('10.12.2017 -  // Saksbehandler');
   });
 });

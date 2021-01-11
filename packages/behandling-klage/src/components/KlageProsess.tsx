@@ -9,7 +9,7 @@ import {
   ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling, FagsakPerson } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
@@ -25,6 +25,7 @@ import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -70,8 +71,14 @@ const saveKlageText = (
   }
 };
 
-const previewCallback = (forhandsvisMelding, fagsak: Fagsak, behandling: Behandling, valgtPartMedKlagerett: KlagePart) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, {
+const previewCallback = (
+  forhandsvisMelding,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  behandling: Behandling,
+  valgtPartMedKlagerett: KlagePart
+) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
     ...parametre,
     overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
   });
@@ -112,6 +119,7 @@ const getLagringSideeffekter = (
 const KlageProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
+  fagsakPerson,
   behandling,
   alleKodeverk,
   rettigheter,
@@ -149,7 +157,7 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
       saveKlageText(lagreKlageVurdering, lagreReapneKlageVurdering, behandling, data.aksjonspunkter),
       [behandling.versjon],
     ),
-    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, behandling, data.valgtPartMedKlagerett), [behandling.versjon]),
+    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling, data.valgtPartMedKlagerett), [behandling.versjon]),
     lagreKlageVurdering,
     ...data,
   };

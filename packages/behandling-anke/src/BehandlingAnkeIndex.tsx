@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState, useCallback } from 'reac
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import AnkePaneler from './components/AnkePaneler';
@@ -18,6 +18,7 @@ const ankeData = [
 interface OwnProps {
   behandlingId: number;
   fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   rettigheter: Rettigheter;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -42,6 +43,7 @@ const BehandlingAnkeIndex: FunctionComponent<OwnProps> = ({
   oppdaterBehandlingVersjon,
   kodeverk,
   fagsak,
+  fagsakPerson,
   rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtProsessSteg,
@@ -123,6 +125,7 @@ const BehandlingAnkeIndex: FunctionComponent<OwnProps> = ({
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         rettigheter={rettigheter}
         alleKodeverk={kodeverk}
         valgtProsessSteg={valgtProsessSteg}

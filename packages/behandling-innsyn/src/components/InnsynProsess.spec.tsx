@@ -6,6 +6,7 @@ import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -21,6 +22,16 @@ describe('<InnsynProsess>', () => {
     sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
   } as Fagsak;
+
+  const fagsakPerson = {
+    alder: 30,
+    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    erDod: false,
+    erKvinne: true,
+    navn: 'Espen Utvikler',
+    personnummer: '12345',
+  };
+
   const behandling = {
     id: 1,
     versjon: 2,
@@ -84,6 +95,7 @@ describe('<InnsynProsess>', () => {
           innsynDokumenter,
         }}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -126,6 +138,7 @@ describe('<InnsynProsess>', () => {
           innsynDokumenter,
         }}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}

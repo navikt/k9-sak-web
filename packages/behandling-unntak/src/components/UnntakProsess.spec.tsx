@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
@@ -23,6 +22,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import FetchedData from '../types/fetchedDataTsType';
 import UnntakProsess from './UnntakProsess';
+import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 
 describe('<UnntakProsess>', () => {
   const fagsak = {
@@ -121,7 +121,7 @@ describe('<UnntakProsess>', () => {
     );
 
     const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
+    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
       {
         isActive: false,
         isDisabled: false,
@@ -184,10 +184,10 @@ describe('<UnntakProsess>', () => {
     meny.prop('velgProsessStegPanelCallback')(3);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('vedtak');
-    expect(opppdaterKall[0].args[1]).to.eql('default');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('vedtak');
+    expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
@@ -203,6 +203,8 @@ describe('<UnntakProsess>', () => {
       ...behandling,
       status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
     };
+
+    requestUnntakApi.mock(UnntakBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
 
     const opneSokeside = sinon.spy();
 
@@ -234,7 +236,7 @@ describe('<UnntakProsess>', () => {
     );
 
     const modal = wrapper.find(FatterVedtakStatusModal);
-    expect(modal.prop('visModal')).is.false;
+    expect(modal.prop('visModal')).toBe(false);
 
     const panel = wrapper.find(ProsessStegPanel);
     (
@@ -244,12 +246,12 @@ describe('<UnntakProsess>', () => {
     )();
 
     const oppdatertModal = wrapper.find(FatterVedtakStatusModal);
-    expect(oppdatertModal.prop('visModal')).is.true;
+    expect(oppdatertModal.prop('visModal')).toBe(true);
 
     oppdatertModal.prop('lukkModal')();
 
     const opppdaterKall = opneSokeside.getCalls();
-    expect(opppdaterKall).to.have.length(1);
+    expect(opppdaterKall).toHaveLength(1);
   });
 
   it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
@@ -261,6 +263,8 @@ describe('<UnntakProsess>', () => {
         erAktivt: true,
       },
     ];
+
+    requestUnntakApi.mock(UnntakBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
 
     const opneSokeside = sinon.spy();
 
@@ -292,7 +296,7 @@ describe('<UnntakProsess>', () => {
     );
 
     const modal = wrapper.find(IverksetterVedtakStatusModal);
-    expect(modal.prop('visModal')).is.false;
+    expect(modal.prop('visModal')).toBe(false);
 
     const panel = wrapper.find(ProsessStegPanel);
     (
@@ -302,12 +306,12 @@ describe('<UnntakProsess>', () => {
     )();
 
     const oppdatertModal = wrapper.find(IverksetterVedtakStatusModal);
-    expect(oppdatertModal.prop('visModal')).is.true;
+    expect(oppdatertModal.prop('visModal')).toBe(true);
 
     oppdatertModal.prop('lukkModal')();
 
     const opppdaterKall = opneSokeside.getCalls();
-    expect(opppdaterKall).to.have.length(1);
+    expect(opppdaterKall).toHaveLength(1);
   });
 
   it('skal gå til søkeside når en har revurderingsaksjonspunkt', async () => {
@@ -357,7 +361,7 @@ describe('<UnntakProsess>', () => {
     )();
 
     const opppdaterKall = opneSokeside.getCalls();
-    expect(opppdaterKall).to.have.length(1);
+    expect(opppdaterKall).toHaveLength(1);
   });
 
   it.skip('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
@@ -387,10 +391,10 @@ describe('<UnntakProsess>', () => {
     panel.prop('lagringSideeffekterCallback')([{ kode: aksjonspunktCodes.SVANGERSKAPSVILKARET, sendVarsel: true }])();
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('default');
-    expect(opppdaterKall[0].args[1]).to.eql('default');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('default');
+    expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 
   it.skip('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
@@ -416,12 +420,12 @@ describe('<UnntakProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('vedtak');
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).toEqual('vedtak');
     const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData().previewCallback;
-    expect(forhandsvisCallback).is.not.null;
+    expect(forhandsvisCallback).not.toBeNull();
 
     forhandsvisCallback({ param: 'test' });
 
-    expect(dispatch.getCalls()).to.have.length(1);
+    expect(dispatch.getCalls()).toHaveLength(1);
   });
 });

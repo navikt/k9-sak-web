@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   fetchedData: FetchedData;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
@@ -31,6 +32,7 @@ interface OwnProps {
 
 const KlagePaneler: FunctionComponent<OwnProps> = ({
   fagsak,
+  fagsakPerson,
   behandling,
   fetchedData,
   kodeverk,
@@ -55,6 +57,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
     <KlageProsess
       data={fetchedData}
       fagsak={fagsak}
+      fagsakPerson={fagsakPerson}
       behandling={behandling}
       rettigheter={rettigheter}
       valgtProsessSteg={valgtProsessSteg}

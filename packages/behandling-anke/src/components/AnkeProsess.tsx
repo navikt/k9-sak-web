@@ -9,7 +9,7 @@ import {
   ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
+import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling, FagsakPerson } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
@@ -31,6 +31,7 @@ const forhandsvis = data => {
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -68,8 +69,13 @@ const saveAnkeText = (
   }
 };
 
-const previewCallback = (forhandsvisMelding, fagsak: Fagsak, behandling: Behandling) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
+const previewCallback = (
+  forhandsvisMelding,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  behandling: Behandling,
+) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
   return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 
@@ -106,6 +112,7 @@ const getLagringSideeffekter = (
 const AnkeProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
+  fagsakPerson,
   behandling,
   alleKodeverk,
   rettigheter,
@@ -140,7 +147,9 @@ const AnkeProsess: FunctionComponent<OwnProps> = ({
     saveAnke: useCallback(saveAnkeText(lagreAnkeVurdering, lagreReapneAnkeVurdering, behandling, data.aksjonspunkter), [
       behandling.versjon,
     ]),
-    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, behandling), [behandling.versjon]),
+    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
+      behandling.versjon,
+    ]),
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(

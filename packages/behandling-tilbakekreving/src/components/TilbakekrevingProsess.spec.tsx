@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
@@ -138,7 +137,7 @@ describe('<TilbakekrevingProsess>', () => {
     );
 
     const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
+    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
       {
         isActive: false,
         isDisabled: false,
@@ -196,9 +195,9 @@ describe('<TilbakekrevingProsess>', () => {
     meny.prop('velgProsessStegPanelCallback')(0);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('foreldelse');
-    expect(opppdaterKall[0].args[1]).to.eql('default');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('foreldelse');
+    expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 });

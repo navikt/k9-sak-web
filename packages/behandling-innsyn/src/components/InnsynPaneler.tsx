@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
+import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
 
 import InnsynProsess from './InnsynProsess';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   fetchedData: FetchedData;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
@@ -24,6 +25,7 @@ interface OwnProps {
 
 const InnsynPaneler: FunctionComponent<OwnProps> = ({
   fagsak,
+  fagsakPerson,
   behandling,
   fetchedData,
   kodeverk,
@@ -47,6 +49,7 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
     />
     <InnsynProsess
       fagsak={fagsak}
+      fagsakPerson={fagsakPerson}
       behandling={behandling}
       data={fetchedData}
       alleKodeverk={kodeverk}
