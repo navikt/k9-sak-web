@@ -24,13 +24,15 @@ export type OpptjeningAktiviteter = Readonly<{
   privatpersonFødselsdato?: string;
 }>;
 
+export type TotrinnsBeregningDto = Readonly<{
+  faktaOmBeregningTilfeller: Kodeverk[];
+  fastsattVarigEndringNaering: boolean;
+  skjæringstidspunkt: string;
+}>;
+
 type TotrinnskontrollAksjonspunkt = Readonly<{
   aksjonspunktKode: string;
   opptjeningAktiviteter?: OpptjeningAktiviteter[];
-  beregningDto?: {
-    fastsattVarigEndringNaering: boolean;
-    faktaOmBeregningTilfeller: Kodeverk[];
-  };
   besluttersBegrunnelse?: string;
   totrinnskontrollGodkjent?: boolean;
   vurderPaNyttArsaker?: Kodeverk[];
@@ -44,6 +46,8 @@ type TotrinnskontrollAksjonspunkt = Readonly<{
     erEndret: boolean;
   }[];
   arbeidforholdDtos?: TotrinnskontrollArbeidsforhold[];
+  beregningDtoer?: TotrinnsBeregningDto[];
+  beregningDto?: TotrinnsBeregningDto;
 }>;
 
 export default TotrinnskontrollAksjonspunkt;

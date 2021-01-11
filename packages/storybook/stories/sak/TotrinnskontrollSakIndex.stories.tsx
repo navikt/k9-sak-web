@@ -2,8 +2,11 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
+import { Behandling, KlageVurdering } from '@k9-sak-web/types';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
@@ -24,7 +27,7 @@ const data = [
         totrinnskontrollGodkjent: null,
         vurderPaNyttArsaker: [],
         uttakPerioder: [],
-        arbeidsforholdDtos: [],
+        arbeidforholdDtos: [],
       },
     ],
   },
@@ -39,32 +42,48 @@ const dataReadOnly = [
         opptjeningAktiviteter: [],
         beregningDto: {
           fastsattVarigEndringNaering: false,
-          faktaOmBeregningTilfeller: null,
+          faktaOmBeregningTilfeller: [null],
         },
         besluttersBegrunnelse: 'asdfa',
         totrinnskontrollGodkjent: false,
         vurderPaNyttArsaker: [
           {
             kode: 'FEIL_REGEL',
-            navn: 'Feil regelforståelse',
+            kodeverk: '',
           },
           {
             kode: 'FEIL_FAKTA',
-            navn: 'Feil fakta',
+            kodeverk: '',
           },
         ],
         uttakPerioder: [],
-        arbeidsforholdDtos: [],
+        arbeidforholdDtos: [],
       },
     ],
   },
 ];
 
-const skjemalenkeTyper = [
-  {
-    kode: 'FORMKRAV_KLAGE_NFP',
+const location = {
+  pathname: '',
+  search: '',
+  state: {},
+  hash: '',
+};
+
+const behandling = {
+  id: 1,
+  versjon: 2,
+  status: {
+    kode: behandlingStatus.FATTER_VEDTAK,
+    kodeverk: '',
   },
-];
+  type: {
+    kode: behandlingType.FORSTEGANGSSOKNAD,
+    kodeverk: '',
+  },
+  behandlingArsaker: [],
+  toTrinnsBehandling: true,
+} as Behandling;
 
 export default {
   title: 'sak/sak-totrinnskontroll',
@@ -82,28 +101,28 @@ export const visTotrinnskontrollForBeslutter = () => (
     }}
   >
     <TotrinnskontrollSakIndex
-      behandlingId={1}
-      behandlingVersjon={2}
+      behandling={behandling}
       totrinnskontrollSkjermlenkeContext={data}
-      totrinnskontrollReadOnlySkjermlenkeContext={[]}
-      behandlingStatus={{
-        kode: behandlingStatus.FATTER_VEDTAK,
-      }}
-      location={{}}
+      location={location}
       readOnly={boolean('readOnly', false)}
       onSubmit={action('button-click')}
       forhandsvisVedtaksbrev={action('button-click')}
-      toTrinnsBehandling
-      skjemalenkeTyper={skjemalenkeTyper}
-      isForeldrepengerFagsak
-      behandlingKlageVurdering={{
-        klageVurderingResultatNFP: {
-          klageVurdering: 'STADFESTE_YTELSESVEDTAK',
-        },
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: '',
       }}
-      alleKodeverk={alleKodeverk}
-      erBehandlingEtterKlage
-      createLocationForSkjermlenke={() => 'url'}
+      behandlingKlageVurdering={
+        {
+          klageVurderingResultatNFP: {
+            klageVurdering: {
+              kode: 'STADFESTE_YTELSESVEDTAK',
+              kodeverk: '',
+            },
+          },
+        } as KlageVurdering
+      }
+      alleKodeverk={alleKodeverk as any}
+      createLocationForSkjermlenke={() => location}
     />
   </div>
 );
@@ -118,28 +137,34 @@ export const visTotrinnskontrollForSaksbehandler = () => (
     }}
   >
     <TotrinnskontrollSakIndex
-      behandlingId={1}
-      behandlingVersjon={2}
-      totrinnskontrollSkjermlenkeContext={[]}
-      totrinnskontrollReadOnlySkjermlenkeContext={dataReadOnly}
-      behandlingStatus={{
-        kode: behandlingStatus.BEHANDLING_UTREDES,
+      behandling={{
+        ...behandling,
+        status: {
+          kode: behandlingStatus.BEHANDLING_UTREDES,
+          kodeverk: '',
+        },
       }}
-      location={{}}
+      totrinnskontrollSkjermlenkeContext={dataReadOnly}
+      location={location}
       readOnly
       onSubmit={action('button-click')}
       forhandsvisVedtaksbrev={action('button-click')}
-      toTrinnsBehandling
-      skjemalenkeTyper={skjemalenkeTyper}
-      isForeldrepengerFagsak
-      behandlingKlageVurdering={{
-        klageVurderingResultatNFP: {
-          klageVurdering: 'STADFESTE_YTELSESVEDTAK',
-        },
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: '',
       }}
-      alleKodeverk={alleKodeverk}
-      erBehandlingEtterKlage
-      createLocationForSkjermlenke={() => 'url'}
+      behandlingKlageVurdering={
+        {
+          klageVurderingResultatNFP: {
+            klageVurdering: {
+              kode: 'STADFESTE_YTELSESVEDTAK',
+              kodeverk: '',
+            },
+          },
+        } as KlageVurdering
+      }
+      alleKodeverk={alleKodeverk as any}
+      createLocationForSkjermlenke={() => location}
     />
   </div>
 );

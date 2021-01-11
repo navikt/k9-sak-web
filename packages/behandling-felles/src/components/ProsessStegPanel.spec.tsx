@@ -27,6 +27,7 @@ describe('<ProsessStegPanel>', () => {
     sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
   } as Fagsak;
+
   const behandling = {
     id: 1,
     versjon: 1,

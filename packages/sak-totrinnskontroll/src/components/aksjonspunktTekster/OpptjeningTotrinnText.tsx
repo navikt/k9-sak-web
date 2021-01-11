@@ -1,8 +1,8 @@
-import React from 'react';
+import { OpptjeningAktiviteter } from '@k9-sak-web/types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types';
 
-const mapAktivitetTextEndring = (arbeidsgiverNavn, orgnr, aktivitetType) => {
+const mapAktivitetTextEndring = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
     return (
       <FormattedMessage
@@ -19,7 +19,7 @@ const mapAktivitetTextEndring = (arbeidsgiverNavn, orgnr, aktivitetType) => {
   return <FormattedMessage id="ToTrinnsForm.Opptjening.EndringAktivitet" values={{ a: aktivitetType }} />;
 };
 
-const mapAktivitetTextUnderkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => {
+const mapAktivitetTextUnderkjenning = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
     return (
       <FormattedMessage
@@ -28,7 +28,7 @@ const mapAktivitetTextUnderkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) =
           a: aktivitetType,
           bb: arbeidsgiverNavn,
           c: orgnr,
-          b: chunks => <b>{chunks}</b>,
+          b: (chunks: any) => <b>{chunks}</b>,
         }}
       />
     );
@@ -37,19 +37,19 @@ const mapAktivitetTextUnderkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) =
     return (
       <FormattedMessage
         id="ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn"
-        values={{ a: aktivitetType, bb: orgnr, b: chunks => <b>{chunks}</b> }}
+        values={{ a: aktivitetType, bb: orgnr, b: (chunks: any) => <b>{chunks}</b> }}
       />
     );
   }
   return (
     <FormattedMessage
       id="ToTrinnsForm.Opptjening.UnderkjenningAktivitet"
-      values={{ a: aktivitetType, b: chunks => <b>{chunks}</b> }}
+      values={{ a: aktivitetType, b: (chunks: any) => <b>{chunks}</b> }}
     />
   );
 };
 
-const mapAktivitetTextGodkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => {
+const mapAktivitetTextGodkjenning = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
     return (
       <FormattedMessage
@@ -69,35 +69,35 @@ const mapAktivitetTextGodkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => 
   return <FormattedMessage id="ToTrinnsForm.Opptjening.GodkjenningAktivitet" values={{ a: aktivitetType }} />;
 };
 
+interface OwnProps {
+  aktivitet: OpptjeningAktiviteter;
+}
+
 /*
  * OpptjeningTotrinnText
  *
 
  */
-export const OpptjeningTotrinnText = ({ aktivitet }) => {
+export const OpptjeningTotrinnText: FunctionComponent<OwnProps> = ({ aktivitet }) => {
   if (aktivitet.erEndring) {
     return mapAktivitetTextEndring(
+      aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
       aktivitet.arbeidsgiverNavn,
       aktivitet.orgnr,
-      aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
     );
   }
   if (aktivitet.godkjent) {
     return mapAktivitetTextGodkjenning(
+      aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
       aktivitet.arbeidsgiverNavn,
       aktivitet.orgnr,
-      aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
     );
   }
   return mapAktivitetTextUnderkjenning(
+    aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
     aktivitet.arbeidsgiverNavn,
     aktivitet.orgnr,
-    aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
   );
-};
-
-OpptjeningTotrinnText.propTypes = {
-  aktivitet: PropTypes.shape(),
 };
 
 export default OpptjeningTotrinnText;

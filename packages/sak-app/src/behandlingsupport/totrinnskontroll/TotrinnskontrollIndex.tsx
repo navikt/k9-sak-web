@@ -103,6 +103,16 @@ const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
     },
   );
 
+  const { data: tilgjengeligeVedtaksbrev, state: tilgjengeligeVedtaksbrevState } = restApiHooks.useRestApi<string[]>(
+    K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    undefined,
+    {
+      keepData: true,
+      updateTriggers: [behandlingId, behandlingVersjon],
+      suspendRequest: !requestApi.hasPath(K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV),
+    },
+  );
+
   const { startRequest: godkjennTotrinnsaksjonspunkter } = restApiHooks.useRestApiRunner(
     K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT,
   );
@@ -132,7 +142,7 @@ const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
     return null;
   }
 
-  if (totrinnsKlageVurderingState === RestApiState.LOADING) {
+  if (totrinnsKlageVurderingState === RestApiState.LOADING || tilgjengeligeVedtaksbrevState === RestApiState.LOADING) {
     return <LoadingPanel />;
   }
 
@@ -149,6 +159,7 @@ const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
         alleKodeverk={alleKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       />
       {visBeslutterModal && (
         <BeslutterModalIndex

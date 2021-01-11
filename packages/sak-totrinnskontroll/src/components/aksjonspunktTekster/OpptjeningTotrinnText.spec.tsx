@@ -1,9 +1,10 @@
 import React from 'react';
-import { expect } from 'chai';
-import OpptjeningTotrinnText from './OpptjeningTotrinnText';
-import shallowWithIntl from '../../i18n';
+import { OpptjeningAktiviteter } from '@k9-sak-web/types';
 
-const lagOpptjeningAktivitetArbeidMedNavn = resultat => ({
+import OpptjeningTotrinnText from './OpptjeningTotrinnText';
+import shallowWithIntl from '../../../i18n/index';
+
+const lagOpptjeningAktivitetArbeidMedNavn = (resultat: string): OpptjeningAktiviteter => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Arbeid',
   arbeidsgiverNavn: 'Andersen Transport AS',
@@ -11,7 +12,7 @@ const lagOpptjeningAktivitetArbeidMedNavn = resultat => ({
   godkjent: resultat === 'GODKJENT',
 });
 
-const lagOpptjeningAktivitetArbeidUtenNavn = resultat => ({
+const lagOpptjeningAktivitetArbeidUtenNavn = (resultat: string): OpptjeningAktiviteter => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Arbeid',
   arbeidsgiverNavn: null,
@@ -19,7 +20,7 @@ const lagOpptjeningAktivitetArbeidUtenNavn = resultat => ({
   godkjent: resultat === 'GODKJENT',
 });
 
-const lagOpptjeningAktivitet = resultat => ({
+const lagOpptjeningAktivitet = (resultat: string): OpptjeningAktiviteter => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Aktivitet',
   arbeidsgiverNavn: null,
@@ -33,8 +34,8 @@ describe('<OpptjeningTotrinnnText>', () => {
       <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('ENDRING')} />,
     );
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.EndringArbeidMedNavn');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.EndringArbeidMedNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med endring av arbeid uten navn', () => {
@@ -42,15 +43,15 @@ describe('<OpptjeningTotrinnnText>', () => {
       <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('ENDRING')} />,
     );
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.EndringArbeidUtenNavn');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.EndringArbeidUtenNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med endring av aktivitet', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('ENDRING')} />);
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.EndringAktivitet');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.EndringAktivitet');
   });
 
   it('skal vise korrekt tekst for opptjening med godkjenning av arbeid med navn', () => {
@@ -58,8 +59,8 @@ describe('<OpptjeningTotrinnnText>', () => {
       <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('GODKJENT')} />,
     );
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.GodkjenningArbeidMedNavn');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.GodkjenningArbeidMedNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med godkjenning av arbeid uten navn', () => {
@@ -67,15 +68,15 @@ describe('<OpptjeningTotrinnnText>', () => {
       <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('GODKJENT')} />,
     );
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.GodkjenningArbeidUtenNavn');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.GodkjenningArbeidUtenNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med godkjenning av aktivitet', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('GODKJENT')} />);
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.GodkjenningAktivitet');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.GodkjenningAktivitet');
   });
 
   it('skal vise korrekt tekst for opptjening med underkjenning av arbeid med navn', () => {
@@ -83,8 +84,8 @@ describe('<OpptjeningTotrinnnText>', () => {
       <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('UNDERKJENNING')} />,
     );
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningArbeidMedNavn');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.UnderkjenningArbeidMedNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med underkjenning av arbeid uten navn', () => {
@@ -92,14 +93,14 @@ describe('<OpptjeningTotrinnnText>', () => {
       <OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('UNDERKJENNING')} />,
     );
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn');
   });
 
   it('skal vise korrekt tekst for opptjening med underkjenning av aktivitet', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('UNDERKJENNING')} />);
     const normaltekstFields = wrapper.find('FormattedMessage');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningAktivitet');
+    expect(normaltekstFields).toHaveLength(1);
+    expect(normaltekstFields.at(0).prop('id')).toEqual('ToTrinnsForm.Opptjening.UnderkjenningAktivitet');
   });
 });

@@ -64,6 +64,11 @@ describe('<PleiepengerFakta>', () => {
     },
   ];
   const vilkar = [];
+  const inntektArbeidYtelse = {
+    skalKunneLeggeTilNyeArbeidsforhold: true,
+    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
+    relatertTilgrensendeYtelserForAnnenForelder: [],
+  };
 
   const soker = {
     navn: 'Espen Utvikler',
@@ -125,12 +130,13 @@ describe('<PleiepengerFakta>', () => {
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
-    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, inntektArbeidYtelse);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
       personopplysninger: soker,
     };
+
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
@@ -172,7 +178,7 @@ describe('<PleiepengerFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
-    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, inntektArbeidYtelse);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
@@ -211,7 +217,7 @@ describe('<PleiepengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
-    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, inntektArbeidYtelse);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,

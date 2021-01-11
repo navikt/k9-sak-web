@@ -111,6 +111,7 @@ describe('<TotrinnskontrollIndex>', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(K9sakApiKeys.TOTRINNS_KLAGE_VURDERING, {});
     requestApi.mock(K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
+    requestApi.mock(K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV, {});
 
     const totrinnskontrollAksjonspunkter = [
       getTotrinnsaksjonspunkterFoedsel(),

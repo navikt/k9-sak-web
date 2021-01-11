@@ -59,6 +59,7 @@ export {
   default as TotrinnskontrollAksjonspunkt,
   TotrinnskontrollArbeidsforhold,
   OpptjeningAktiviteter,
+  TotrinnsBeregningDto,
 } from './src/totrinnskontrollAksjonspunktTsType';
 export { default as TotrinnskontrollSkjermlenkeContext } from './src/totrinnskontrollSkjermlenkeContextTsType';
 export { default as AnkeVurdering } from './src/ankeVurderingTsType';

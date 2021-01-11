@@ -167,6 +167,7 @@ describe('<TilbakekrevingProsess>', () => {
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+
     const wrapper = shallow(
       <TilbakekrevingProsess
         data={{
