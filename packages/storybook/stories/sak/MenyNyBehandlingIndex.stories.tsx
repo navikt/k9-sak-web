@@ -53,13 +53,30 @@ const behandlingstyper = [
   },
 ];
 
+const behandlingOppretting = [
+  {
+    behandlingType: {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+      kodeverk: '',
+    },
+    kanOppretteBehandling: true,
+  },
+  {
+    behandlingType: {
+      kode: behandlingType.REVURDERING,
+      kodeverk: '',
+    },
+    kanOppretteBehandling: true,
+  },
+];
+
 export const visMenyForÅLageNyBehandling = () => (
   <MenyNyBehandlingIndex
     ytelseType={{
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: 'YTELSE_TYPE',
     }}
-    saksnummer={123}
+    saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
     behandlingType={{
@@ -81,8 +98,7 @@ export const visMenyForÅLageNyBehandling = () => (
         navn: 'Fødsel',
       },
     ]}
-    opprettNyForstegangsBehandlingEnabled
-    opprettRevurderingEnabled
+    behandlingOppretting={behandlingOppretting}
     kanTilbakekrevingOpprettes={{
       kanBehandlingOpprettes: false,
       kanRevurderingOpprettes: false,
@@ -100,7 +116,7 @@ export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: 'YTELSE_TYPE',
     }}
-    saksnummer={123}
+    saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
     behandlingType={{
@@ -133,8 +149,7 @@ export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
         navn: 'Fødsel',
       },
     ]}
-    opprettNyForstegangsBehandlingEnabled
-    opprettRevurderingEnabled
+    behandlingOppretting={behandlingOppretting}
     kanTilbakekrevingOpprettes={{
       kanBehandlingOpprettes: true,
       kanRevurderingOpprettes: true,

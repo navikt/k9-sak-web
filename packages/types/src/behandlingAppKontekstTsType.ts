@@ -20,7 +20,6 @@ type BehandlingAppKontekst = Readonly<{
   }[];
   opprettet: string;
   avsluttet?: string;
-  erAktivPapirsoknad: boolean;
   gjeldendeVedtak: boolean;
   sprakkode: Kodeverk;
   behandlendeEnhetId: string;

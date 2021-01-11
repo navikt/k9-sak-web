@@ -21,7 +21,7 @@ import {
   FagsakPerson,
   Fagsak,
 } from '@k9-sak-web/types';
-import { lagForhåndsvisRequestNew } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import { restApiUnntakHooks, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPanelDefinisjoner';
@@ -61,7 +61,7 @@ const getForhandsvisCallback = (
   fagsak: Fagsak,
   behandling: Behandling,
 ) => (parametre: any) => {
-  const request = lagForhåndsvisRequestNew(behandling, fagsak, parametre);
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
   return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 

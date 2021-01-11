@@ -22,7 +22,6 @@ describe('<BehandlingPickerItem>', () => {
     opprettet: '15.10.2017',
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',
-    erAktivPapirsoknad: false,
     links: [
       {
         href: '/fpsak/test',

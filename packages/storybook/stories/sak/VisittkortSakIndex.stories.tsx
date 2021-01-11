@@ -6,10 +6,7 @@ import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeTyp
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import region from '@fpsak-frontend/kodeverk/src/region';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -20,38 +17,16 @@ export default {
   decorators: [withKnobs],
 };
 
-const fagsak = {
-  saksnummer: 123456,
-  sakstype: {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: 'SAKSTYPE',
+const fagsakPerson = {
+  erDod: false,
+  navn: 'Espen Utvikler',
+  alder: 41,
+  personnummer: '1234567',
+  erKvinne: false,
+  personstatusType: {
+    kode: personstatusType.BOSATT,
+    kodeverk: 'PERSONSTATUS_TYPE',
   },
-  relasjonsRolleType: {
-    kode: relasjonsRolleType.MOR,
-    kodeverk: 'RELASJONS_ROLLE_TYPE',
-  },
-  status: {
-    kode: fagsakStatus.LOPENDE,
-    kodeverk: 'STATUS',
-  },
-  barnFodt: '20120-01-01',
-  person: {
-    erDod: false,
-    navn: 'Espen Utvikler',
-    alder: 41,
-    personnummer: '1234567',
-    erKvinne: false,
-    personstatusType: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
-  },
-  opprettet: '20120-01-01',
-  endret: '20120-01-01',
-  antallBarn: 1,
-  kanRevurderingOpprettes: false,
-  skalBehandlesAvInfotrygd: false,
-  dekningsgrad: 100,
 };
 
 const personopplysningerSoker = {
@@ -156,7 +131,7 @@ const personopplysningerAnnenPart = {
 
 export const visVisittkortNårEnHarBegrensetMedInformasjon = () => (
   <VisittkortSakIndex
-    fagsak={fagsak}
+    fagsakPerson={fagsakPerson}
     alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
@@ -164,7 +139,7 @@ export const visVisittkortNårEnHarBegrensetMedInformasjon = () => (
 
 export const visVisittkortNårEnHarPersonopplysninger = () => (
   <VisittkortSakIndex
-    fagsak={fagsak}
+    fagsakPerson={fagsakPerson}
     personopplysninger={personopplysningerSoker}
     alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
@@ -173,7 +148,7 @@ export const visVisittkortNårEnHarPersonopplysninger = () => (
 
 export const visVisittkortNårEnHarPersonopplysningerForBeggeParter = () => (
   <VisittkortSakIndex
-    fagsak={fagsak}
+    fagsakPerson={fagsakPerson}
     personopplysninger={{
       ...personopplysningerSoker,
       annenPart: personopplysningerAnnenPart,
@@ -185,7 +160,7 @@ export const visVisittkortNårEnHarPersonopplysningerForBeggeParter = () => (
 
 export const visVisittkortForAnnenPartDerAktørIdErUkjent = () => (
   <VisittkortSakIndex
-    fagsak={fagsak}
+    fagsakPerson={fagsakPerson}
     personopplysninger={{
       ...personopplysningerSoker,
       annenPart: {

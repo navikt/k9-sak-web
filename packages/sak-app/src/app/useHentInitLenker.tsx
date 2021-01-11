@@ -44,7 +44,6 @@ const useHentInitLenker = (): boolean[] => {
       initFetchLinksK9Sak.sakLinks.concat(initFetchLinksTilbake.sakLinks).concat(initFetchLinksKlage.sakLinks),
       LinkCategory.FAGSAK,
     );
-    // requestApi.setLinks(initFetchLinksK9Sak.toggleLinks, LinkCategory.FEATURE_TOGGLE);
   }
 
   return [harHentetFerdigInitLenker, harK9sakInitKallFeilet];

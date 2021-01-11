@@ -13,7 +13,7 @@ import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
-import { lagForhåndsvisRequestNew } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import KlageBehandlingModal from './KlageBehandlingModal';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegKlagePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -71,7 +71,7 @@ const saveKlageText = (
 };
 
 const previewCallback = (forhandsvisMelding, fagsak: Fagsak, behandling: Behandling, valgtPartMedKlagerett: KlagePart) => parametre => {
-  const request = lagForhåndsvisRequestNew(behandling, fagsak, {
+  const request = lagForhåndsvisRequest(behandling, fagsak, {
     ...parametre,
     overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
   });

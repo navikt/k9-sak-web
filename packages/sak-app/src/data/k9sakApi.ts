@@ -1,6 +1,8 @@
 import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
+// NB! ALDRI BRUK DETTE UTENFOR PAKKEN 'SAK-APP'
+
 export enum LinkCategory {
   INIT_DATA = 'INIT_DATA',
   FEATURE_TOGGLE = 'FEATURE_TOGGLE',
@@ -69,7 +71,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('behandlende-enheter', K9sakApiKeys.BEHANDLENDE_ENHETER)
 
   // Feature toggles
-  // .withRel('feature-toggle', K9sakApiKeys.FEATURE_TOGGLE)
   .withGet('/k9/feature-toggle/toggles.json', K9sakApiKeys.FEATURE_TOGGLE)
 
   // Fagsak

@@ -22,7 +22,7 @@ import {
 } from '@k9-sak-web/types';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
-import { lagForhåndsvisRequestNew } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import { restApiOmsorgHooks, OmsorgspengerBehandlingApiKeys } from '../data/omsorgspengerBehandlingApi';
@@ -61,7 +61,7 @@ const getForhandsvisCallback = (
   fagsak: Fagsak,
   behandling: Behandling,
 ) => (data: any) => {
-  const request = lagForhåndsvisRequestNew(behandling, fagsak, data);
+  const request = lagForhåndsvisRequest(behandling, fagsak, data);
   return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 

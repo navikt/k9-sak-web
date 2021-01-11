@@ -3,14 +3,17 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { DateLabel } from '@fpsak-frontend/shared-components';
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages: {
-    'OkAvbrytModal.Ok': 'Ok',
-    'OkAvbrytModal.Avbryt': 'Avbryt',
-    'Test.Test': 'Dette er ein test',
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages: {
+      'OkAvbrytModal.Ok': 'Ok',
+      'OkAvbrytModal.Avbryt': 'Avbryt',
+      'Test.Test': 'Dette er ein test',
+    },
   },
-}, createIntlCache());
+  createIntlCache(),
+);
 
 export default {
   title: 'sharedComponents/DateLabel',
@@ -19,8 +22,6 @@ export default {
 
 export const visFormatertDato = () => (
   <RawIntlProvider value={intl}>
-    <DateLabel
-      dateString="2017-10-02"
-    />
+    <DateLabel dateString="2017-10-02" />
   </RawIntlProvider>
 );

@@ -3,12 +3,15 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages: {
-    'DataFetchPendingModal.LosningenJobberMedBehandlingen': 'Løsningen jobber med behandlingen...',
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages: {
+      'DataFetchPendingModal.LosningenJobberMedBehandlingen': 'Løsningen jobber med behandlingen...',
+    },
   },
-}, createIntlCache());
+  createIntlCache(),
+);
 
 export default {
   title: 'sharedComponents/DataFetchPendingModal',

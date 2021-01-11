@@ -12,7 +12,7 @@ import {
 import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import { lagForhåndsvisRequestNew } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import AnkeBehandlingModal from './AnkeBehandlingModal';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegAnkePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -69,7 +69,7 @@ const saveAnkeText = (
 };
 
 const previewCallback = (forhandsvisMelding, fagsak: Fagsak, behandling: Behandling) => parametre => {
-  const request = lagForhåndsvisRequestNew(behandling, fagsak, parametre);
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
   return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 

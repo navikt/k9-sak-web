@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { withKnobs, object, number, boolean } from '@storybook/addon-knobs';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Kodeverk } from '@k9-sak-web/types';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
@@ -25,6 +26,10 @@ const behandlinger = [
       kode: behandlingStatus.AVSLUTTET,
       kodeverk: BEHANDLING_STATUS_KODEVERK,
     },
+    sprakkode: {
+      kode: 'NB',
+      kodeverk: '',
+    },
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     endret: '2017-08-03T00:54:25.455',
@@ -34,6 +39,9 @@ const behandlinger = [
     gjeldendeVedtak: false,
     behandlingPaaVent: false,
     behandlingHenlagt: false,
+    behandlingKoet: false,
+    toTrinnsBehandling: false,
+    behandlingArsaker: [],
     behandlingsresultat: {
       type: {
         kode: 'AVSLÅTT',
@@ -52,6 +60,10 @@ const behandlinger = [
       kode: behandlingStatus.OPPRETTET,
       kodeverk: BEHANDLING_STATUS_KODEVERK,
     },
+    sprakkode: {
+      kode: 'NB',
+      kodeverk: '',
+    },
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     endret: '2017-08-03T00:54:25.455',
@@ -61,6 +73,9 @@ const behandlinger = [
     gjeldendeVedtak: true,
     behandlingPaaVent: false,
     behandlingHenlagt: false,
+    behandlingKoet: false,
+    toTrinnsBehandling: false,
+    behandlingArsaker: [],
     behandlingsresultat: {
       type: {
         kode: 'INNVILGET',
@@ -79,6 +94,10 @@ const behandlinger = [
       kode: behandlingStatus.OPPRETTET,
       kodeverk: BEHANDLING_STATUS_KODEVERK,
     },
+    sprakkode: {
+      kode: 'NB',
+      kodeverk: '',
+    },
     opprettet: '2017-08-02T00:54:25.455',
     behandlendeEnhetId: '4812',
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
@@ -86,6 +105,9 @@ const behandlinger = [
     gjeldendeVedtak: false,
     behandlingPaaVent: false,
     behandlingHenlagt: false,
+    behandlingKoet: false,
+    toTrinnsBehandling: false,
+    behandlingArsaker: [],
   },
   {
     id: 4,
@@ -98,6 +120,10 @@ const behandlinger = [
       kode: behandlingStatus.AVSLUTTET,
       kodeverk: BEHANDLING_STATUS_KODEVERK,
     },
+    sprakkode: {
+      kode: 'NB',
+      kodeverk: '',
+    },
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     endret: '2017-08-03T00:54:25.455',
@@ -107,6 +133,9 @@ const behandlinger = [
     gjeldendeVedtak: false,
     behandlingPaaVent: false,
     behandlingHenlagt: false,
+    behandlingKoet: false,
+    toTrinnsBehandling: false,
+    behandlingArsaker: [],
     behandlingsresultat: {
       type: {
         kode: 'HENLAGT_SØKNAD_TRUKKET',
@@ -115,6 +144,19 @@ const behandlinger = [
     },
   },
 ];
+
+const locationMock = {
+  pathname: 'test',
+  search: 'test',
+  state: {},
+  hash: 'test',
+};
+
+const getKodeverkFn = (kodeverk: Kodeverk) => {
+  const kodeverkType = kodeverkTyper[kodeverk.kodeverk];
+  const kodeverkForType = alleKodeverk[kodeverkType];
+  return kodeverkForType.find(k => k.kode === kodeverk.kode);
+};
 
 export default {
   title: 'sak/sak-behandling-velger',
@@ -128,12 +170,12 @@ export const visPanelForValgAvBehandlinger = () => {
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
         behandlinger={object('behandlinger', behandlinger as Behandling[])}
-        getBehandlingLocation={() => 'test'}
+        getBehandlingLocation={() => locationMock}
         noExistingBehandlinger={boolean('noExistingBehandlinger', false)}
         behandlingId={number('behandlingId', 1)}
         showAll={visAlle}
         toggleShowAll={() => toggleVisAlle(!visAlle)}
-        alleKodeverk={alleKodeverk as any}
+        getKodeverkFn={getKodeverkFn}
       />
     </div>
   );

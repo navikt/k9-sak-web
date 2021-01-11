@@ -21,7 +21,7 @@ import {
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
-import { lagForhåndsvisRequestNew } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
@@ -61,7 +61,7 @@ const getForhandsvisCallback = (
   fagsak: Fagsak,
   behandling: Behandling,
 ) => (parametre: any) => {
-  const request = lagForhåndsvisRequestNew(behandling, fagsak, parametre);
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
   return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 

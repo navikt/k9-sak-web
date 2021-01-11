@@ -4,7 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { lagForhåndsvisRequestNew } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   Rettigheter,
   prosessStegHooks,
@@ -62,7 +62,7 @@ const getForhandsvisCallback = (
   fagsak: Fagsak,
   behandling: Behandling,
 ) => (parametre: any) => {
-  const request = lagForhåndsvisRequestNew(behandling, fagsak, parametre);
+  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
   return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 

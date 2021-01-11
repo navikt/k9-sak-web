@@ -8,7 +8,14 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { replaceNorwegianCharacters, parseQueryString } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { KodeverkMedNavn, NavAnsatt, Fagsak, BehandlingAppKontekst, FeatureToggles } from '@k9-sak-web/types';
+import {
+  KodeverkMedNavn,
+  NavAnsatt,
+  Fagsak,
+  BehandlingAppKontekst,
+  FeatureToggles,
+  FagsakPerson,
+} from '@k9-sak-web/types';
 
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
@@ -102,7 +109,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
 
   const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(K9sakApiKeys.KODEVERK);
 
-  // const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
+  const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
   const featureToggles = restApiHooks.useGlobalStateRestApiData<FeatureToggles>(K9sakApiKeys.FEATURE_TOGGLE);
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
@@ -119,17 +126,6 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   }, []);
   const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(history), [history]);
 
-  // TODO (TOR) Denne skal fjernast. Sender så fagsak og fagsakPerson med ned
-  const fagsakInfo = useMemo(
-    () => ({
-      saksnummer: fagsak.saksnummer,
-      fagsakYtelseType: fagsak.sakstype,
-      fagsakPerson: fagsak.person,
-      fagsakStatus: fagsak.status,
-    }),
-    [fagsak],
-  );
-
   const { location } = history;
   const query = parseQueryString(location.search);
 
@@ -139,7 +135,8 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
     kodeverk,
-    fagsak: fagsakInfo,
+    fagsak,
+    fagsakPerson,
     rettigheter,
     featureToggles,
     opneSokeside,

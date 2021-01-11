@@ -56,7 +56,6 @@ const alleBehandlinger = [
     },
     behandlendeEnhetId: '2323',
     behandlendeEnhetNavn: 'NAV Viken',
-    erAktivPapirsoknad: false,
   },
 ];
 

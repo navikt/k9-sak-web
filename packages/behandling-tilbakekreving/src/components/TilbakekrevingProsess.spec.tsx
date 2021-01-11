@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -20,16 +20,17 @@ import vedtakResultatType from '../kodeverk/vedtakResultatType';
 describe('<TilbakekrevingProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
+
+  const fagsakPerson = {
+    alder: 30,
+    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    erDod: false,
+    erKvinne: true,
+    navn: 'Espen Utvikler',
+    personnummer: '12345',
   };
   const behandling: Partial<Behandling> = {
     id: 1,
@@ -62,16 +63,18 @@ describe('<TilbakekrevingProsess>', () => {
     },
   ];
   const perioderForeldelse = {
-    perioder: {
-      fom: '2019-01-01',
-      tom: '2019-04-01',
-      belop: 1212,
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.FORELDET,
-        kodeverk: 'FORELDRE_VURDERING_TYPE',
+    perioder: [
+      {
+        fom: '2019-01-01',
+        tom: '2019-04-01',
+        belop: 1212,
+        foreldelseVurderingType: {
+          kode: foreldelseVurderingType.FORELDET,
+          kodeverk: 'FORELDRE_VURDERING_TYPE',
+        },
       },
-    },
-  };
+    ],
+  } as FeilutbetalingPerioderWrapper;
   const beregningsresultat = {
     beregningResultatPerioder: [],
     vedtakResultatType: {
@@ -99,9 +102,14 @@ describe('<TilbakekrevingProsess>', () => {
         },
         konsekvenserForYtelsen: [],
       },
-      behandlingÅrsaker: {
-        behandlingArsakType: [],
-      },
+      behandlingÅrsaker: [
+        {
+          behandlingArsakType: {
+            kode: '',
+            kodeverk: '',
+          },
+        },
+      ],
     },
   };
 
@@ -115,6 +123,7 @@ describe('<TilbakekrevingProsess>', () => {
           feilutbetalingFakta,
         }}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -124,8 +133,7 @@ describe('<TilbakekrevingProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         harApenRevurdering={false}
-        dispatch={sinon.spy()}
-        featureToggles={{}}
+        setBehandling={sinon.spy()}
       />,
     );
 
@@ -169,6 +177,7 @@ describe('<TilbakekrevingProsess>', () => {
           feilutbetalingFakta,
         }}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -178,8 +187,7 @@ describe('<TilbakekrevingProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         harApenRevurdering={false}
-        dispatch={sinon.spy()}
-        featureToggles={{}}
+        setBehandling={sinon.spy()}
       />,
     );
 
