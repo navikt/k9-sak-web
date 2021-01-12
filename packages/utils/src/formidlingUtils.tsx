@@ -3,7 +3,7 @@ import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjo
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 
-export function bestemAvsenderApp(type: string) {
+export function bestemAvsenderApp(type: string): string {
   return type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK;
 }
 

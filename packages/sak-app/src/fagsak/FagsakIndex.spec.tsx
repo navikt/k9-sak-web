@@ -60,6 +60,9 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(K9sakApiKeys.SAK_RETTIGHETER_TILBAKE, {
       behandlingTypeKanOpprettes: [],
     });
+    requestApi.mock(K9sakApiKeys.SAK_RETTIGHETER_KLAGE, {
+      behandlingTypeKanOpprettes: [],
+    });
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});

@@ -52,7 +52,7 @@ export default {
 };
 
 export const visYtelserForHovedsøker = () => (
-  <YtelserFaktaIndex inntektArbeidYtelse={inntektArbeidYtelse} alleKodeverk={alleKodeverk} />
+  <YtelserFaktaIndex inntektArbeidYtelse={inntektArbeidYtelse} alleKodeverk={alleKodeverk as any} />
 );
 
 export const visYtelserForHovedsøkerOgAnnenPart = () => (
@@ -73,6 +73,6 @@ export const visYtelserForHovedsøkerOgAnnenPart = () => (
         },
       ],
     }}
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
   />
 );

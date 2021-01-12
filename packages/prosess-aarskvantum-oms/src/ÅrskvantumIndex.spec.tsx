@@ -26,22 +26,31 @@ const årskvantum: ÅrskvantumForbrukteDager = {
   barna: [],
 };
 
-// @ts-ignore
-const behandling: Behandling = {
+const behandling = {
   id: 123,
   versjon: 1,
-};
-// @ts-ignore
-const inntektArbeidYtelse: InntektArbeidYtelse = {
+} as Behandling;
+
+const inntektArbeidYtelse = {
   arbeidsforhold: [
     {
+      arbeidsgiverReferanse: '12345678',
       kilde: {
         kode: '-',
       },
-      navn: 'Bedrift AS',
-      arbeidsgiverIdentifikator: '999',
     },
   ],
+} as InntektArbeidYtelse;
+
+const arbeidsgivere = {
+  arbeidsgivere: {
+    12345678: {
+      erPrivatPerson: false,
+      referanse: '999',
+      identifikator: '999',
+      navn: 'Bedrift AS',
+    },
+  },
 };
 
 describe('<ÅrskvantumIndex>', () => {
@@ -69,7 +78,7 @@ describe('<ÅrskvantumIndex>', () => {
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
         inntektArbeidYtelse={inntektArbeidYtelse}
-        arbeidsgivere={{ arbeidsgivere: {} }}
+        arbeidsgivere={arbeidsgivere}
         featureToggles={{}}
       />,
     );
@@ -88,7 +97,7 @@ describe('<ÅrskvantumIndex>', () => {
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
         inntektArbeidYtelse={inntektArbeidYtelse}
-        arbeidsgivere={{ arbeidsgivere: {} }}
+        arbeidsgivere={arbeidsgivere}
         featureToggles={{}}
       />,
     );

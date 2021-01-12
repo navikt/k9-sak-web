@@ -22,6 +22,7 @@ const data = [
         beregningDto: {
           fastsattVarigEndringNaering: false,
           faktaOmBeregningTilfeller: null,
+          skjæringstidspunkt: '2020-01-01',
         },
         besluttersBegrunnelse: null,
         totrinnskontrollGodkjent: null,
@@ -43,6 +44,7 @@ const dataReadOnly = [
         beregningDto: {
           fastsattVarigEndringNaering: false,
           faktaOmBeregningTilfeller: [null],
+          skjæringstidspunkt: '2020-01-01',
         },
         besluttersBegrunnelse: 'asdfa',
         totrinnskontrollGodkjent: false,
