@@ -3,6 +3,7 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FeatureToggles } from '@k9-sak-web/types';
 
 import findStatusForVedtak from '../vedtakStatusUtleder';
 import unntakBehandlingApi from '../../data/unntakBehandlingApi';
