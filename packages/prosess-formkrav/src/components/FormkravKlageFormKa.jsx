@@ -73,8 +73,8 @@ const formName = 'FormkravKlageFormKa';
 const buildInitialValues = createSelector(
   [
     ownProps => ownProps.klageVurdering,
-    ownProps => ownProps.valgtPartMedKlagerett,
     ownProps => ownProps.avsluttedeBehandlinger,
+    ownProps => ownProps.valgtPartMedKlagerett,
   ],
   (klageVurdering, avsluttedeBehandlinger, valgtPartMedKlagerett) => {
     const klageFormkavResultatKa = klageVurdering ? klageVurdering.klageFormkravResultatKA : null;

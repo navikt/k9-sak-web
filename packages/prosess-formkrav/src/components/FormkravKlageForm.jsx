@@ -149,6 +149,7 @@ export const FormkravKlageForm = ({
           </Row>
         </Column>
       </Row>
+      <VerticalSpacer sixteenPx />
       <div className={styles.confirmVilkarForm}>
         <BehandlingspunktSubmitButton
           formName={formProps.form}
