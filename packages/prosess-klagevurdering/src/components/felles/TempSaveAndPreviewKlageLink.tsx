@@ -30,7 +30,7 @@ const getBrevData = (tekst: string) => {
 
 interface OwnProps {
   formValues: any;
-  lagreKlageVurdering: (params: any) => Promise<any>;
+  saveKlage: (params: any) => Promise<any>;
   aksjonspunktCode: string;
   readOnly: boolean;
   previewCallback: (brevData: any) => void;
@@ -40,13 +40,13 @@ interface OwnProps {
 
 export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   formValues,
-  lagreKlageVurdering,
+  saveKlage,
   aksjonspunktCode,
   readOnly,
   previewCallback,
 }) => {
   const tempSave = event => {
-    lagreKlageVurdering(transformValues(formValues, aksjonspunktCode)).then(() =>
+    saveKlage(transformValues(formValues, aksjonspunktCode)).then(() =>
       previewCallback(getBrevData(formValues.fritekstTilBrev)),
     );
     event.preventDefault();

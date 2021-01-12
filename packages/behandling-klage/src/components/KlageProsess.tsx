@@ -65,10 +65,9 @@ const saveKlageText = (
     .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
   if (getForeslaVedtakAp.length === 1) {
-    lagreReapneKlageVurdering(data);
-  } else {
-    lagreKlageVurdering(data);
+    return lagreReapneKlageVurdering(data);
   }
+  return lagreKlageVurdering(data);
 };
 
 const previewCallback = (
@@ -158,7 +157,6 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
       [behandling.versjon],
     ),
     previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling, data.valgtPartMedKlagerett), [behandling.versjon]),
-    lagreKlageVurdering,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(

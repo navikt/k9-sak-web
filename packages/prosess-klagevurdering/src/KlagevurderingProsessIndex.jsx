@@ -30,7 +30,6 @@ const KlagevurderingProsessIndex = ({
   previewCallback,
   readOnlySubmitButton,
   aksjonspunkter,
-  lagreKlageVurdering,
 }) => (
   <RawIntlProvider value={intl}>
     {Array.isArray(aksjonspunkter) &&
@@ -46,7 +45,6 @@ const KlagevurderingProsessIndex = ({
           previewCallback={previewCallback}
           readOnlySubmitButton={readOnlySubmitButton}
           alleKodeverk={alleKodeverk}
-          lagreKlageVurdering={lagreKlageVurdering}
         />
       )}
     {Array.isArray(aksjonspunkter) &&
@@ -62,7 +60,6 @@ const KlagevurderingProsessIndex = ({
           previewCallback={previewCallback}
           readOnlySubmitButton={readOnlySubmitButton}
           alleKodeverk={alleKodeverk}
-          lagreKlageVurdering={lagreKlageVurdering}
         />
       )}
   </RawIntlProvider>
@@ -73,7 +70,6 @@ KlagevurderingProsessIndex.propTypes = {
   klageVurdering: klageVurderingPropType.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   saveKlage: PropTypes.func.isRequired,
-  lagreKlageVurdering: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
