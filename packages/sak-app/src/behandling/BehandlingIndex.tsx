@@ -108,6 +108,9 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   ]);
 
   const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(K9sakApiKeys.KODEVERK);
+  const klageKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
+    K9sakApiKeys.KODEVERK_KLAGE,
+  );
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
   const featureToggles = restApiHooks.useGlobalStateRestApiData<FeatureToggles>(K9sakApiKeys.FEATURE_TOGGLE);
@@ -129,12 +132,14 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   const { location } = history;
   const query = parseQueryString(location.search);
 
+  const behandlingTypeKode = behandling?.type ? behandling.type.kode : undefined;
+
   const defaultProps = {
     key: behandlingId,
     behandlingId,
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
-    kodeverk,
+    kodeverk: behandlingTypeKode === BehandlingType.KLAGE ? klageKodeverk : kodeverk,
     fagsak,
     fagsakPerson,
     rettigheter,
@@ -143,7 +148,6 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     setRequestPendingMessage,
     valgtProsessSteg: query.punkt,
   };
-  const behandlingTypeKode = behandling?.type ? behandling.type.kode : undefined;
 
   const fagsakBehandlingerInfo = useMemo(
     () =>

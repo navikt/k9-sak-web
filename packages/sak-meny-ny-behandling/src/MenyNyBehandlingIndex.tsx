@@ -43,6 +43,8 @@ interface OwnProps {
   sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
   lukkModal: () => void;
+  aktorId?: string;
+  gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
 const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
@@ -63,6 +65,8 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   sjekkOmTilbakekrevingKanOpprettes,
   sjekkOmTilbakekrevingRevurderingKanOpprettes,
   lukkModal,
+  aktorId,
+  gjeldendeVedtakBehandlendeEnhetId,
 }) => {
   const submit = useCallback(
     (formValues: FormValues) => {
@@ -99,6 +103,8 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         erTilbakekrevingAktivert={erTilbakekrevingAktivert}
         sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
         sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
+        aktorId={aktorId}
+        gjeldendeVedtakBehandlendeEnhetId={gjeldendeVedtakBehandlendeEnhetId}
       />
     </RawIntlProvider>
   );

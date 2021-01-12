@@ -17,7 +17,14 @@ import MenyApneForEndringerIndex, {
 import MenyNyBehandlingIndex, {
   getMenytekst as getNyBehandlingMenytekst,
 } from '@fpsak-frontend/sak-meny-ny-behandling';
-import { NavAnsatt, Fagsak, BehandlingAppKontekst, KodeverkMedNavn } from '@k9-sak-web/types';
+import {
+  NavAnsatt,
+  Fagsak,
+  BehandlingAppKontekst,
+  KodeverkMedNavn,
+  FeatureToggles,
+  FagsakPerson,
+} from '@k9-sak-web/types';
 
 import {
   fjernVerge,
@@ -147,6 +154,15 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   const { startRequest: lagNyBehandlingUnntak } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_UNNTAK,
   );
+
+  // FIX remove this when unntaksløype er lansert
+  const featureToggles = restApiHooks.useGlobalStateRestApiData<FeatureToggles>(K9sakApiKeys.FEATURE_TOGGLE);
+  if (featureToggles?.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(BehandlingType.UNNTAK)) {
+    BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.push(BehandlingType.UNNTAK);
+  }
+
+  const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
+
   const lagNyBehandling = useCallback((behandlingTypeKode: string, params: any) => {
     let lagNy = lagNyBehandlingK9Sak;
     if (behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || BehandlingType.TILBAKEKREVING) {
@@ -273,6 +289,8 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
             sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
             lukkModal={lukkModal}
+            aktorId={fagsakPerson.aktørId}
+            gjeldendeVedtakBehandlendeEnhetId={alleBehandlinger.find(b => b.gjeldendeVedtak)?.behandlendeEnhetId}
           />
         )),
         new MenyData(

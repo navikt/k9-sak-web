@@ -60,16 +60,16 @@ const useHentFagsakRettigheter = (
     (sakRettigheterStateKlage !== RestApiState.NOT_STARTED && sakRettigheterStateKlage !== RestApiState.LOADING);
 
   const sakRettigheter = useMemo(() => {
-    if (sakRettigheterK9Sak && sakRettigheterTilbake && harHentetKlage) {
+    if (sakRettigheterK9Sak && (sakRettigheterTilbake || sakRettigheterKlage)) {
       return {
         sakSkalTilInfotrygd: sakRettigheterK9Sak.sakSkalTilInfotrygd,
         behandlingTypeKanOpprettes: sakRettigheterK9Sak.behandlingTypeKanOpprettes
-          .concat(sakRettigheterTilbake.behandlingTypeKanOpprettes)
-          .concat(sakRettigheterKlage.behandlingTypeKanOpprettes),
+          .concat(sakRettigheterTilbake?.behandlingTypeKanOpprettes || [])
+          .concat(sakRettigheterKlage?.behandlingTypeKanOpprettes || []),
       };
     }
     return sakRettigheterK9Sak;
-  }, [sakRettigheterK9Sak, sakRettigheterTilbake, harHentetKlage]);
+  }, [sakRettigheterK9Sak, sakRettigheterTilbake, sakRettigheterKlage]);
 
   return [sakRettigheter, harHentetK9Sak && harHentetTilbake && harHentetKlage];
 };

@@ -67,6 +67,8 @@ interface PureOwnProps {
   erTilbakekrevingAktivert: boolean;
   sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
+  aktorId?: string;
+  gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
 interface MappedOwnProps {
@@ -264,26 +266,21 @@ export const getEnabledBehandlingstyper = createSelector(
       kanBehandlingOpprettes: false,
       kanRevurderingOpprettes: false,
     },
-  ) =>
-    behandlingstyper
-      .filter(b => (b.kode === bType.TILBAKEKREVING ? kanTilbakekrevingOpprettes.kanBehandlingOpprettes : true))
-      .filter(b =>
-        b.kode === bType.TILBAKEKREVING_REVURDERING ? kanTilbakekrevingOpprettes.kanRevurderingOpprettes : true,
-      )
-      .filter(b =>
-        b.kode === bType.FORSTEGANGSSOKNAD
-          ? kanOppretteBehandlingstype(behandlingOppretting, bType.FORSTEGANGSSOKNAD)
-          : true,
-      )
-      .filter(b =>
-        b.kode === bType.REVURDERING ? kanOppretteBehandlingstype(behandlingOppretting, bType.REVURDERING) : true,
-      )
-      .filter(b =>
-        b.kode === bType.REVURDERING ? kanOppretteBehandlingstype(behandlingOppretting, bType.KLAGE) : true,
-      ),
+  ) => {
+    const behandlingstyperSomErValgbare = behandlingstyper.filter(type =>
+      kanOppretteBehandlingstype(behandlingOppretting, type.kode),
+    );
+    if (kanTilbakekrevingOpprettes.kanBehandlingOpprettes) {
+      behandlingstyperSomErValgbare.push(bType.TILBAKEKREVING);
+    }
+    if (kanTilbakekrevingOpprettes.kanRevurderingOpprettes) {
+      behandlingstyperSomErValgbare.push(bType.TILBAKEKREVING_REVURDERING);
+    }
+    return behandlingstyperSomErValgbare;
+  },
 );
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+const mapStateToPropsFactory = (initialState, initialOwnProps: PureOwnProps) => {
   const onSubmit = values => {
     const klageOnlyValues =
       values?.behandlingType === bType.KLAGE
@@ -291,7 +288,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
             aktørId: initialOwnProps.aktorId,
             behandlendeEnhetId: initialOwnProps.gjeldendeVedtakBehandlendeEnhetId,
           }
-        : undefined;
+        : {};
     initialOwnProps.submitCallback({
       ...values,
       eksternUuid: initialOwnProps.uuidForSistLukkede,
