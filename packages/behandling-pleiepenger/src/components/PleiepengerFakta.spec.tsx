@@ -22,7 +22,7 @@ import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/ple
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    sakstype: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
   } as Fagsak;
   const fagsakPerson = {
@@ -173,12 +173,17 @@ describe('<PleiepengerFakta>', () => {
         harAksjonspunkt: false,
         tekst: 'Sykdom',
       },
-      { tekst: 'Uttak', erAktiv: false, harAksjonspunkt: false },
+      {
+        tekst: 'Uttak',
+        erAktiv: false,
+        harAksjonspunkt: false,
+      },
     ]);
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
     requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, inntektArbeidYtelse);
+
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,

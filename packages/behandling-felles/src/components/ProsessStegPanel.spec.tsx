@@ -62,6 +62,7 @@ describe('<ProsessStegPanel>', () => {
   const kanOverstyreAccess = { isEnabled: false, employeeHasAccess: false };
 
   const isReadOnlyCheck = () => false;
+
   const toggleOverstyring = () => undefined;
 
   const lagPanelDef = (id, aksjonspunktKoder, aksjonspunktTekstKoder) => {
@@ -281,7 +282,7 @@ describe('<ProsessStegPanel>', () => {
     expect(wrapper.find(InngangsvilkarPanel)).toHaveLength(0);
   });
 
-  it('skal lagre aksjonspunkt', () => {
+  it('skal lagre aksjonspunkt', async () => {
     const fodselAksjonspunkter = [
       {
         ...aksjonspunkter[0],
@@ -347,7 +348,7 @@ describe('<ProsessStegPanel>', () => {
     ];
     panel.prop('submitCallback')(aksjonspunktModels);
 
-    expect(lagringSideeffekterCallback.getCalls()).toHaveLength(1);
+    expect(await lagringSideeffekterCallback.getCalls()).toHaveLength(1);
 
     const requestKall = makeRestApiRequest.getCalls();
     expect(requestKall).toHaveLength(1);

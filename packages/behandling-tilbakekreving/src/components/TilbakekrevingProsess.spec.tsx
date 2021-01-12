@@ -2,6 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -81,6 +82,7 @@ describe('<TilbakekrevingProsess>', () => {
       kodeverk: 'VEDTAK_RESULTAT_TYPE',
     },
   };
+
   const feilutbetalingFakta = {
     behandlingFakta: {
       aktuellFeilUtbetaltBeløp: 122,
@@ -114,7 +116,8 @@ describe('<TilbakekrevingProsess>', () => {
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallow(
-      <TilbakekrevingProsess
+      <TilbakekrevingProsess.WrappedComponent
+        intl={intlMock}
         data={{
           aksjonspunkter,
           perioderForeldelse,
@@ -169,7 +172,8 @@ describe('<TilbakekrevingProsess>', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
 
     const wrapper = shallow(
-      <TilbakekrevingProsess
+      <TilbakekrevingProsess.WrappedComponent
+        intl={intlMock}
         data={{
           aksjonspunkter,
           perioderForeldelse,

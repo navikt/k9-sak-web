@@ -289,7 +289,7 @@ describe('<prosessStegUtils>', () => {
     ]);
   });
 
-  it('skal lagre aksjonspunkt', () => {
+  it('skal lagre aksjonspunkt', async () => {
     const lagreAksjonspunkter = sinon.stub();
     lagreAksjonspunkter.returns(Promise.resolve());
     const lagringSideEffectsCallback = sinon.spy();
@@ -301,13 +301,14 @@ describe('<prosessStegUtils>', () => {
       aksjonspunkter,
       lagreAksjonspunkter,
     );
+
     const aksjonspunktModeller = [
       {
         kode: aksjonspunkter[0].definisjon.kode,
       },
     ];
 
-    callback(aksjonspunktModeller);
+    await callback(aksjonspunktModeller);
 
     const requestKall = lagreAksjonspunkter.getCalls();
     expect(requestKall).toHaveLength(1);
@@ -325,7 +326,7 @@ describe('<prosessStegUtils>', () => {
     });
   });
 
-  it('skal lagre overstyrt aksjonspunkt', () => {
+  it('skal lagre overstyrt aksjonspunkt', async () => {
     const lagreAksjonspunkter = sinon.spy();
     const lagreOverstyrteAksjonspunkter = sinon.stub();
     lagreOverstyrteAksjonspunkter.returns(Promise.resolve());
@@ -346,7 +347,7 @@ describe('<prosessStegUtils>', () => {
       },
     ];
 
-    callback(aksjonspunktModeller);
+    await callback(aksjonspunktModeller);
 
     const requestKall = lagreOverstyrteAksjonspunkter.getCalls();
     expect(requestKall).toHaveLength(1);
