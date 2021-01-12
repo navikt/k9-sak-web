@@ -49,6 +49,7 @@ export enum K9sakApiKeys {
   SUBMIT_MESSAGE = 'SUBMIT_MESSAGE',
   SAK_RETTIGHETER = 'SAK_RETTIGHETER',
   SAK_RETTIGHETER_TILBAKE = 'SAK_RETTIGHETER_TILBAKE',
+  SAK_RETTIGHETER_KLAGE = 'SAK_RETTIGHETER_KLAGE',
   BEHANDLING_RETTIGHETER = 'BEHANDLING_RETTIGHETER',
   KAN_TILBAKEKREVING_OPPRETTES = 'KAN_TILBAKEKREVING_OPPRETTES',
   KAN_TILBAKEKREVING_REVURDERING_OPPRETTES = 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
@@ -78,6 +79,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sak-bruker', K9sakApiKeys.SAK_BRUKER)
   .withRel('sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER)
   .withRel('tilbake-sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER_TILBAKE)
+  .withRel('klage-sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER_KLAGE)
   .withRel('sak-historikk', K9sakApiKeys.HISTORY_K9SAK)
   .withRel('tilbake-historikk', K9sakApiKeys.HISTORY_TILBAKE)
   .withRel('klage-historikk', K9sakApiKeys.HISTORY_KLAGE)

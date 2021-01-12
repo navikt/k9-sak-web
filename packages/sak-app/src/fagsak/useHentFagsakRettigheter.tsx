@@ -38,7 +38,7 @@ const useHentFagsakRettigheter = (
   );
 
   const { data: sakRettigheterKlage, state: sakRettigheterStateKlage } = restApiHooks.useRestApi<SakRettigheter>(
-    K9sakApiKeys.SAK_RETTIGHETER_TILBAKE,
+    K9sakApiKeys.SAK_RETTIGHETER_KLAGE,
     { saksnummer },
     {
       updateTriggers: [saksnummer, behandlingId, behandlingVersjon],
