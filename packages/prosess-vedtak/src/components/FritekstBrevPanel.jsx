@@ -15,15 +15,7 @@ const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
 const minLength3 = minLength(3);
 
-const FritekstBrevPanelImpl = ({
-  intl,
-  previewBrev,
-  readOnly,
-  sprakkode,
-  harAlternativeMottakere,
-  tilgjengeligeVedtaksbrev,
-  harAutomatiskVedtaksbrev,
-}) => (
+const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode, harAutomatiskVedtaksbrev }) => (
   <>
     {!readOnly && harAutomatiskVedtaksbrev && (
       <div className={styles.automatiskBrev}>
@@ -103,12 +95,9 @@ const FritekstBrevPanelImpl = ({
 );
 
 FritekstBrevPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   previewBrev: PropTypes.func.isRequired,
   sprakkode: PropTypes.shape().isRequired,
-  harAlternativeMottakere: PropTypes.bool.isRequired,
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.array, PropTypes.shape()]).isRequired,
   harAutomatiskVedtaksbrev: PropTypes.bool.isRequired,
 };
 

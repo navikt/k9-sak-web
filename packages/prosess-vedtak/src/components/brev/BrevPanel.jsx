@@ -7,8 +7,13 @@ import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
-  harAlternativeMottakere,
+  kanOverstyreMottakere,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { Column, Row } from 'nav-frontend-grid';
+import { SelectField } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
+
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -67,6 +72,7 @@ export const BrevPanel = props => {
     intl,
     readOnly,
     sprakkode,
+    arbeidsgiverOpplysningerPerId,
     beregningErManueltFastsatt,
     tilgjengeligeVedtaksbrev,
     skalBrukeOverstyrendeFritekstBrev,
@@ -100,6 +106,7 @@ export const BrevPanel = props => {
 
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
   const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
+  const harAlternativeMottakere = kanOverstyreMottakere(tilgjengeligeVedtaksbrev);
 
   const fritekstbrev = harFritekstbrev && (
     <>
@@ -107,7 +114,6 @@ export const BrevPanel = props => {
         readOnly={readOnly}
         sprakkode={sprakkode}
         previewBrev={automatiskBrevUtenValideringCallback}
-        harAlternativeMottakere={harAlternativeMottakere(tilgjengeligeVedtaksbrev)}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
         harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
       />
@@ -132,6 +138,30 @@ export const BrevPanel = props => {
 
   return (
     <div>
+      {harAlternativeMottakere && (
+        <Row>
+          <Column xs="12">
+            <SelectField
+              readOnly={readOnly}
+              name="overstyrtMottaker"
+              selectValues={tilgjengeligeVedtaksbrev.alternativeMottakere.map(mottaker => (
+                <option value={JSON.stringify(mottaker)} key={mottaker.id}>
+                  {arbeidsgiverOpplysningerPerId &&
+                  arbeidsgiverOpplysningerPerId[mottaker.id] &&
+                  arbeidsgiverOpplysningerPerId[mottaker.id].navn
+                    ? `${arbeidsgiverOpplysningerPerId[mottaker.id].navn} (${mottaker.id})`
+                    : mottaker.id}
+                </option>
+              ))}
+              className={readOnly ? styles.selectReadOnly : null}
+              label={intl.formatMessage({ id: 'VedtakForm.Fritekst.OverstyrtMottaker' })}
+              validate={[required]}
+              bredde="xl"
+            />
+            <VerticalSpacer sixteenPx />
+          </Column>
+        </Row>
+      )}
       {finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev) ? (
         brevpanel
       ) : (
@@ -148,7 +178,7 @@ BrevPanel.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]).isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   beregningErManueltFastsatt: PropTypes.bool,
   previewCallback: PropTypes.func.isRequired,
@@ -156,11 +186,11 @@ BrevPanel.propTypes = {
   brødtekst: PropTypes.string,
   overskrift: PropTypes.string,
   behandlingResultat: PropTypes.shape(),
+  arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formProps: PropTypes.shape().isRequired,
 };
 
 BrevPanel.defaultProps = {
-  tilgjengeligeVedtaksbrev: undefined,
   begrunnelse: null,
   brødtekst: null,
   overskrift: null,

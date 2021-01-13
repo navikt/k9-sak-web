@@ -46,7 +46,7 @@ export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: Array<string> | Tilg
   return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).some(vb => vb === 'FRITEKST');
 }
 
-export function harAlternativeMottakere(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {
+export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {
   return (
     typeof tilgjengeligeVedtaksbrev === 'object' &&
     !Array.isArray(tilgjengeligeVedtaksbrev) &&

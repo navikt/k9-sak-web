@@ -42,6 +42,7 @@ const VedtakPanels = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   vilkar,
   beregningsgrunnlag,
   resultatstrukturOriginalBehandling,
@@ -113,6 +114,7 @@ const VedtakPanels = ({
       ytelseTypeKode={ytelseTypeKode}
       kanOverstyre={employeeHasAccess}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       vilkar={vilkar}
       beregningErManueltFastsatt={beregningErManueltFastsatt}
       vedtakVarsel={vedtakVarsel}
@@ -138,6 +140,7 @@ VedtakPanels.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
   readOnly: PropTypes.bool.isRequired,

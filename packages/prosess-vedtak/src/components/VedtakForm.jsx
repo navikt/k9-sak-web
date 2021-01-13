@@ -72,6 +72,7 @@ export class VedtakForm extends Component {
       ytelseTypeKode,
       resultatstruktur,
       alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
       tilbakekrevingvalg,
       simuleringResultat,
       vilkar,
@@ -145,6 +146,7 @@ export class VedtakForm extends Component {
             readOnly={readOnly}
             sprakkode={sprakkode}
             ytelseTypeKode={ytelseTypeKode}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             dokumentdata={dokumentdata}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             beregningErManueltFastsatt={beregningErManueltFastsatt}
@@ -201,6 +203,7 @@ VedtakForm.propTypes = {
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
@@ -264,8 +267,8 @@ const transformValues = values =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     begrunnelse: values.begrunnelse,
+    overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
     fritekstbrev: {
-      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
       brødtekst: values.brødtekst,
       overskrift: values.overskrift,
     },
