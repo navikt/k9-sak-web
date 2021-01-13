@@ -213,7 +213,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
-    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, undefined);
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, inntektArbeidYtelse);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,

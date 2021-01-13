@@ -49,7 +49,7 @@ describe('<TotrinnskontrollIndex>', () => {
       },
       toTrinnsBehandling: true,
       ansvarligSaksbehandler: 'Espen Utvikler',
-      behandlingArsaker: [],
+      behandlingÅrsaker: [],
     },
   ];
 

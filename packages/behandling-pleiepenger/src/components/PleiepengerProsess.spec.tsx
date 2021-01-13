@@ -465,9 +465,8 @@ describe('<PleiepengerProsess>', () => {
     expect(requestData[0].params).toEqual({
       aktørId: undefined,
       avsenderApplikasjon: 'K9SAK',
-      dokumentMal: undefined,
-      dokumentdata: undefined,
       eksternReferanse: undefined,
+      param: 'test',
       saksnummer: '123456',
       ytelseType: fagsak.sakstype,
     });
