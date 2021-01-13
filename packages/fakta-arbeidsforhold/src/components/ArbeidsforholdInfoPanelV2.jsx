@@ -9,15 +9,16 @@ import { behandlingForm } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 
+import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
 import arbeidsforholdAksjonspunkterPropType from '../propTypes/arbeidsforholdAksjonspunkterPropType';
-import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
+import PersonArbeidsforholdPanelV2 from './PersonArbeidsforholdPanelV2';
 
 // ----------------------------------------------------------------------------
 // VARIABLES
 // ----------------------------------------------------------------------------
 
-const formName = 'ArbeidsforholdInfoPanel';
+const formName = 'ArbeidsforholdInfoPanelV2';
 
 // ----------------------------------------------------------------------------
 // METHODS
@@ -42,21 +43,20 @@ const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
  * Ansvarlig for å rendre aksjonspunktteksten, arbeidsforholdene, og
  * bekreft & fortsett knappen
  * */
-export const ArbeidsforholdInfoPanelImpl = ({
+export const ArbeidsforholdInfoPanelImplV2 = ({
   aksjonspunkter,
   readOnly,
-  hasOpenAksjonspunkter,
-  skalKunneLeggeTilNyeArbeidsforhold,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding,
   alleMerknaderFraBeslutter,
+  arbeidsforhold,
+  arbeidsgivere,
+  hasOpenAksjonspunkter,
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
-  arbeidsgiverOpplysningerPerId,
   ...formProps
 }) => {
   const { host } = window.location;
-  const shouldDisableSubmitButton = (!hasOpenAksjonspunkter && formProps.pristine) || host !== 'app-q1.adeo.no';
+  const shouldDisableSubmitButton = (aksjonspunkter.length === 0 && formProps.pristine) || host !== 'app-q1.adeo.no';
 
   return (
     <>
@@ -65,27 +65,24 @@ export const ArbeidsforholdInfoPanelImpl = ({
           {[
             <FormattedMessage
               key="ArbeidsforholdInfoPanelAksjonspunkt"
-              id={
-                skalKunneLeggeTilNyeArbeidsforhold
-                  ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert'
-                  : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'
-              }
+              id="ArbeidsforholdInfoPanel.AvklarArbeidsforhold"
             />,
           ]}
         </AksjonspunktHelpTextTemp>
       )}
+      <h3>
+        <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />
+      </h3>
       <form onSubmit={formProps.handleSubmit}>
-        <PersonArbeidsforholdPanel
+        <PersonArbeidsforholdPanelV2
           readOnly={readOnly}
+          arbeidsforhold={arbeidsforhold}
+          arbeidsgivere={arbeidsgivere}
           hasAksjonspunkter={aksjonspunkter.length > 0}
-          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-          skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
-          skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
           alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
         {harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
           <BekreftOgForsettKnapp
@@ -93,35 +90,42 @@ export const ArbeidsforholdInfoPanelImpl = ({
             isSubmitting={formProps.submitting}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
+            isBekreftButtonReadOnly={false}
           />
         )}
       </form>
     </>
   );
 };
-ArbeidsforholdInfoPanelImpl.propTypes = {
+
+ArbeidsforholdInfoPanelImplV2.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
+  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,
 };
+
 const buildInitialValues = createSelector([ownProps => ownProps.arbeidsforhold], arbeidsforhold => ({
-  ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
+  ...PersonArbeidsforholdPanelV2.buildInitialValues(arbeidsforhold),
 }));
+
 const transformValues = values => {
   const arbeidsforhold = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(values.arbeidsforhold);
   return {
     arbeidsforhold: arbeidsforhold.map(a =>
       omit(
         a,
+
+        'navn',
+        'fomDato',
+        'tomDato',
         'erEndret',
         'replaceOptions',
         'originalFomDato',
@@ -132,6 +136,7 @@ const transformValues = values => {
     kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
   };
 };
+
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
@@ -139,4 +144,4 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     onSubmit,
   });
 };
-export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));
+export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImplV2));

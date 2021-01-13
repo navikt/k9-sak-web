@@ -2,9 +2,11 @@ import React from 'react';
 
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
+
 import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FeatureToggles } from '@k9-sak-web/types';
 import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
 
 class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
@@ -14,7 +16,10 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE];
+  getEndepunkter = (featureToggles: FeatureToggles = {}) =>
+    featureToggles.ARBEIDSFORHOLD_V2
+      ? [omsorgspengerBehandlingApi.ARBEIDSFORHOLD]
+      : [omsorgspengerBehandlingApi.INNTEKT_ARBEID_YTELSE];
 
   getKomponent = props => <ArbeidsforholdFaktaIndex {...props} />;
 
