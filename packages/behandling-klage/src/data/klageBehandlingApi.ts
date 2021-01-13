@@ -24,6 +24,7 @@ export const KlageBehandlingApiKeys = {
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
   PARTER_MED_KLAGERETT: 'PARTER_MED_KLAGERETT',
   VALGT_PART_MED_KLAGERETT: 'VALGT_PART_MED_KLAGERETT',
+  ARBEIDSGIVERE: 'ARBEIDSGIVERE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -34,6 +35,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
   .withRel('parter-klagerett', KlageBehandlingApiKeys.PARTER_MED_KLAGERETT)
   .withRel('valgt-part', KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT)
+  .withRel('arbeidsgivere', KlageBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withPost('/k9/klage/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)

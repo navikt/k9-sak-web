@@ -64,6 +64,7 @@ export const FormkravKlageForm = ({
   formProps,
   alleKodeverk,
   parterMedKlagerett,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
@@ -87,7 +88,11 @@ export const FormkravKlageForm = ({
                 name="valgtPartMedKlagerett"
                 selectValues={parterMedKlagerett.map(part => (
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
-                    {part.identifikasjon.id}
+                    {arbeidsgiverOpplysningerPerId &&
+                    arbeidsgiverOpplysningerPerId[part.identifikasjon.id] &&
+                    arbeidsgiverOpplysningerPerId[part.identifikasjon.id].navn
+                      ? `${arbeidsgiverOpplysningerPerId[part.identifikasjon.id].navn} (${part.identifikasjon.id})`
+                      : part.identifikasjon.id}
                   </option>
                 ))}
                 className={readOnly ? styles.selectReadOnly : null}
@@ -185,7 +190,8 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
+  parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 FormkravKlageForm.defaultProps = {

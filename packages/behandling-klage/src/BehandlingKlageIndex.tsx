@@ -18,6 +18,7 @@ const klageData = [
   klageApi.KLAGE_VURDERING,
   klageApi.PARTER_MED_KLAGERETT,
   klageApi.VALGT_PART_MED_KLAGERETT,
+  klageApi.ARBEIDSGIVERE,
 ];
 
 interface OwnProps {

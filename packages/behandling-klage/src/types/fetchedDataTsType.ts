@@ -1,4 +1,4 @@
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 import KlageVurdering from './klageVurderingTsType';
 import KlagePart from './klagePartTsType';
@@ -8,6 +8,9 @@ interface FetchedData {
   klageVurdering: KlageVurdering;
   parterMedKlagerett?: KlagePart[];
   valgtPartMedKlagerett?: KlagePart;
+  arbeidsgivere: {
+    arbeidsgivere: ArbeidsgiverOpplysningerPerId;
+  };
 }
 
 export default FetchedData;
