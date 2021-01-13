@@ -143,7 +143,6 @@ export const PersonArbeidsforholdDetailForm = ({
     </Row>
   </>
 );
-
 PersonArbeidsforholdDetailForm.propTypes = {
   cancelArbeidsforhold: PropTypes.func.isRequired,
   isErstattArbeidsforhold: PropTypes.bool.isRequired,
@@ -160,12 +159,10 @@ PersonArbeidsforholdDetailForm.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
-
 PersonArbeidsforholdDetailForm.defaultProps = {
   harErstattetEttEllerFlere: false,
   arbeidsforholdHandlingVerdi: undefined,
 };
-
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.updateArbeidsforhold(values);
   return (state, ownProps) => {
@@ -203,11 +200,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     };
   };
 };
-
 const validateForm = values => ({
   ...LeggTilArbeidsforholdFelter.validate(values),
 });
-
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM,

@@ -22,5 +22,9 @@
   {
     "key": "PERIODISERTE_NOKKELTALL",
     "value": "${PERIODISERTE_NOKKELTALL}"
+  },
+  {
+    "key": "ARBEIDSFORHOLD_V2",
+    "value": "${ARBEIDSFORHOLD_V2}"
   }
 ]

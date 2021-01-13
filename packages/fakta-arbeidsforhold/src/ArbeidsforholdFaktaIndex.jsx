@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
+import ArbeidsforholdInfoPanelV2 from './components/ArbeidsforholdInfoPanelV2';
 import arbeidsforholdAksjonspunkterPropType from './propTypes/arbeidsforholdAksjonspunkterPropType';
 import arbeidsforholdBehandlingPropType from './propTypes/arbeidsforholdBehandlingPropType';
-import arbeidsforholdInntektArbeidYtelsePropType from './propTypes/arbeidsforholdInntektArbeidYtelsePropType';
 import messages from '../i18n/nb_NO.json';
+import arbeidsforholdInntektArbeidYtelsePropType from './propTypes/arbeidsforholdInntektArbeidYtelsePropType';
 
 const cache = createIntlCache();
 
@@ -21,37 +23,55 @@ const intl = createIntl(
 const ArbeidsforholdFaktaIndex = ({
   behandling,
   inntektArbeidYtelse,
+  arbeidsforhold,
+  arbeidsgivere,
   alleKodeverk,
   alleMerknaderFraBeslutter,
   aksjonspunkter,
   harApneAksjonspunkter,
   submitCallback,
   readOnly,
-  arbeidsgivere,
 }) => (
   <RawIntlProvider value={intl}>
-    <ArbeidsforholdInfoPanel
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
-      skalKunneLeggeTilNyeArbeidsforhold={inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={
-        inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding
-      }
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-      aksjonspunkter={aksjonspunkter}
-      hasOpenAksjonspunkter={harApneAksjonspunkter}
-      submitCallback={submitCallback}
-      readOnly={readOnly}
-      arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
-    />
+    {inntektArbeidYtelse && (
+      <ArbeidsforholdInfoPanel
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
+        skalKunneLeggeTilNyeArbeidsforhold={inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={
+          inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding
+        }
+        alleKodeverk={alleKodeverk}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        aksjonspunkter={aksjonspunkter}
+        hasOpenAksjonspunkter={harApneAksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+      />
+    )}
+    {arbeidsforhold && arbeidsgivere && (
+      <ArbeidsforholdInfoPanelV2
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        arbeidsforhold={arbeidsforhold}
+        arbeidsgivere={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+        alleKodeverk={alleKodeverk}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        aksjonspunkter={aksjonspunkter}
+        hasOpenAksjonspunkter={harApneAksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+      />
+    )}
   </RawIntlProvider>
 );
 
 ArbeidsforholdFaktaIndex.propTypes = {
   behandling: arbeidsforholdBehandlingPropType.isRequired,
   inntektArbeidYtelse: arbeidsforholdInntektArbeidYtelsePropType.isRequired,
+  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

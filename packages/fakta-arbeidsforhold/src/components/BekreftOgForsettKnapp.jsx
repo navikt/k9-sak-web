@@ -12,18 +12,10 @@ import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
  * BekreftOgForsettKnapp:
  * Ansvarlig for å rendre bekreft og fortsett knappen, samt disable den hvis nødvendig
  */
-export const BekreftOgForsettKnapp = ({
-  readOnly,
-  isBekreftButtonReadOnly,
-  isSubmitting,
-}) => (
+export const BekreftOgForsettKnapp = ({ readOnly, isBekreftButtonReadOnly, isSubmitting }) => (
   <>
     <VerticalSpacer twentyPx />
-    <Hovedknapp
-      mini
-      spinner={isSubmitting}
-      disabled={readOnly || isBekreftButtonReadOnly || isSubmitting}
-    >
+    <Hovedknapp mini spinner={isSubmitting} disabled={readOnly || isBekreftButtonReadOnly || isSubmitting}>
       <FormattedMessage id="FullPersonInfo.Confirm" />
     </Hovedknapp>
   </>
@@ -36,7 +28,11 @@ BekreftOgForsettKnapp.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  isBekreftButtonReadOnly: PersonArbeidsforholdPanel.isReadOnly(state, ownProps.behandlingId, ownProps.behandlingVersjon),
+  isBekreftButtonReadOnly: PersonArbeidsforholdPanel.isReadOnly(
+    state,
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  ),
 });
 
 export default connect(mapStateToProps)(BekreftOgForsettKnapp);

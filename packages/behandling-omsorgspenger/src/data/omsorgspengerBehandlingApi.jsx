@@ -52,6 +52,7 @@ export const OmsorgspengerBehandlingApiKeys = {
   TILGJENGELIGE_VEDTAKSBREV: 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
+  ARBEIDSFORHOLD: 'ARBEIDSFORHOLD',
   ARBEIDSGIVERE: 'ARBEIDSGIVERE',
 };
 
@@ -73,6 +74,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soeker-medlemskap-v2', OmsorgspengerBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', OmsorgspengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
+  .withRel('arbeidsforhold-v1', OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD)
   .withRel('soeker-verge', OmsorgspengerBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', OmsorgspengerBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)

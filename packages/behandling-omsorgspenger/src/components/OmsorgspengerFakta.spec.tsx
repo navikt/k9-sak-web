@@ -70,6 +70,7 @@ describe('<OmsorgspengerFakta>', () => {
     skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
     relatertTilgrensendeYtelserForAnnenForelder: [],
   };
+  const arbeidsgivere = new Map();
 
   const soker = {
     navn: 'Espen Utvikler',
@@ -236,7 +237,7 @@ describe('<OmsorgspengerFakta>', () => {
     expect(dataFetcher.prop('fetchingTriggers').triggers.behandlingVersion).is.eql(behandling.versjon);
 
     const arbeidsforholdPanel = dataFetcher
-      .renderProp('render')({ inntektArbeidYtelse })
+      .renderProp('render')({ inntektArbeidYtelse, arbeidsgivere })
       .find(ArbeidsforholdFaktaIndex);
     // eslint-disable-next-line
     expect(arbeidsforholdPanel.prop('readOnly')).is.false;
