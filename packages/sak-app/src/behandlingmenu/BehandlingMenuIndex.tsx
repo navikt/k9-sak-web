@@ -165,7 +165,10 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
 
   const lagNyBehandling = useCallback((behandlingTypeKode: string, params: any) => {
     let lagNy = lagNyBehandlingK9Sak;
-    if (behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || BehandlingType.TILBAKEKREVING) {
+    if (
+      behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING ||
+      behandlingTypeKode === BehandlingType.TILBAKEKREVING
+    ) {
       lagNy = lagNyBehandlingTilbake;
     }
     if (behandlingTypeKode === BehandlingType.KLAGE) {
