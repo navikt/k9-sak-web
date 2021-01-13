@@ -499,6 +499,13 @@ describe('<NyBehandlingModal>', () => {
         },
         kanOppretteBehandling: true,
       },
+      {
+        behandlingType: {
+          kode: behandlingType.KLAGE,
+          kodeverk: '',
+        },
+        kanOppretteBehandling: true,
+      },
     ];
     const kanTilbakekrevingOpprettes = {
       kanBehandlingOpprettes: false,
@@ -511,7 +518,7 @@ describe('<NyBehandlingModal>', () => {
       kanTilbakekrevingOpprettes,
     );
 
-    expect(res).toEqual([behandlingstyper[1], behandlingstyper[2], behandlingstyper[4]]);
+    expect(res).toEqual([behandlingstyper[2], behandlingstyper[3], behandlingstyper[4], behandlingstyper[1]]);
   });
 
   it('skal filtrere bort tilbakekreving-revurdering når denne ikke kan lages', () => {
@@ -558,6 +565,13 @@ describe('<NyBehandlingModal>', () => {
         },
         kanOppretteBehandling: true,
       },
+      {
+        behandlingType: {
+          kode: behandlingType.KLAGE,
+          kodeverk: '',
+        },
+        kanOppretteBehandling: true,
+      },
     ];
     const kanTilbakekrevingOpprettes = {
       kanBehandlingOpprettes: true,
@@ -570,7 +584,7 @@ describe('<NyBehandlingModal>', () => {
       kanTilbakekrevingOpprettes,
     );
 
-    expect(res).toEqual([behandlingstyper[0], behandlingstyper[2], behandlingstyper[4]]);
+    expect(res).toEqual([behandlingstyper[2], behandlingstyper[3], behandlingstyper[4], behandlingstyper[0]]);
   });
 
   it('skal filtrere bort førstegangsbehandling når denne ikke kan lages', () => {
@@ -617,6 +631,13 @@ describe('<NyBehandlingModal>', () => {
         },
         kanOppretteBehandling: true,
       },
+      {
+        behandlingType: {
+          kode: behandlingType.KLAGE,
+          kodeverk: '',
+        },
+        kanOppretteBehandling: true,
+      },
     ];
     const kanTilbakekrevingOpprettes = {
       kanBehandlingOpprettes: true,
@@ -629,7 +650,7 @@ describe('<NyBehandlingModal>', () => {
       kanTilbakekrevingOpprettes,
     );
 
-    expect(res).toEqual([behandlingstyper[0], behandlingstyper[1], behandlingstyper[4]]);
+    expect(res).toEqual([behandlingstyper[3], behandlingstyper[4], behandlingstyper[0], behandlingstyper[1]]);
   });
 
   it('skal filtrere bort revurdering når denne ikke kan lages', () => {
@@ -671,6 +692,13 @@ describe('<NyBehandlingModal>', () => {
         },
         kanOppretteBehandling: false,
       },
+      {
+        behandlingType: {
+          kode: behandlingType.KLAGE,
+          kodeverk: '',
+        },
+        kanOppretteBehandling: true,
+      },
     ];
 
     const kanTilbakekrevingOpprettes = {
@@ -684,6 +712,6 @@ describe('<NyBehandlingModal>', () => {
       kanTilbakekrevingOpprettes,
     );
 
-    expect(res).toEqual([behandlingstyper[0], behandlingstyper[1], behandlingstyper[2]]);
+    expect(res).toEqual([behandlingstyper[2], behandlingstyper[0], behandlingstyper[1]]);
   });
 });

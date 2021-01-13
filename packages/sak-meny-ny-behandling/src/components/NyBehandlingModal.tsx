@@ -271,10 +271,10 @@ export const getEnabledBehandlingstyper = createSelector(
       kanOppretteBehandlingstype(behandlingOppretting, type.kode),
     );
     if (kanTilbakekrevingOpprettes.kanBehandlingOpprettes) {
-      behandlingstyperSomErValgbare.push(bType.TILBAKEKREVING);
+      behandlingstyperSomErValgbare.push(behandlingstyper.find(type => type.kode === bType.TILBAKEKREVING));
     }
     if (kanTilbakekrevingOpprettes.kanRevurderingOpprettes) {
-      behandlingstyperSomErValgbare.push(bType.TILBAKEKREVING_REVURDERING);
+      behandlingstyperSomErValgbare.push(behandlingstyper.find(type => type.kode === bType.TILBAKEKREVING_REVURDERING));
     }
     return behandlingstyperSomErValgbare;
   },

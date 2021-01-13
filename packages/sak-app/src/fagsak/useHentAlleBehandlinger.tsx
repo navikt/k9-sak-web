@@ -64,7 +64,7 @@ const useHentAlleBehandlinger = (
 
   const alleBehandlinger = useMemo(
     () => [...(behandlingerK9Sak || []), ...(behandlingerTilbake || []), ...(behandlingerKlage || [])],
-    [behandlingerK9Sak, behandlingerTilbake, harHentetKlage],
+    [behandlingerK9Sak, behandlingerTilbake, behandlingerKlage],
   );
 
   return [alleBehandlinger, harHentetK9Sak && harHentetTilbake && harHentetKlage];
