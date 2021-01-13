@@ -69,6 +69,7 @@ describe('<FormkravKlageForm>', () => {
             },
           ],
         }}
+        arbeidsgiverOpplysningerPerId={{}}
         parterMedKlagerett={[]}
       />,
     );
