@@ -61,7 +61,7 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
   const errorMessages = useRestApiError() || EMPTY_ARRAY;
-  const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessages, undefined), [errorMessages]);
+  const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessages), [errorMessages]);
 
   const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, formaterteFeilmeldinger, queryStrings), [
     formaterteFeilmeldinger,

@@ -163,18 +163,15 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
 
-  const lagNyBehandling = useCallback((behandlingTypeKode: string, params: any) => {
+  const lagNyBehandling = useCallback((bTypeKode: string, params: any) => {
     let lagNy = lagNyBehandlingK9Sak;
-    if (
-      behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING ||
-      behandlingTypeKode === BehandlingType.TILBAKEKREVING
-    ) {
+    if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
       lagNy = lagNyBehandlingTilbake;
     }
-    if (behandlingTypeKode === BehandlingType.KLAGE) {
+    if (bTypeKode === BehandlingType.KLAGE) {
       lagNy = lagNyBehandlingKlage;
     }
-    if (behandlingTypeKode === BehandlingType.UNNTAK) {
+    if (bTypeKode === BehandlingType.UNNTAK) {
       lagNy = lagNyBehandlingUnntak;
     }
     lagNy(params).then(() => oppfriskBehandlinger());

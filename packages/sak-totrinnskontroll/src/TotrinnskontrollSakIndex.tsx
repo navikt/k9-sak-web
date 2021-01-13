@@ -117,7 +117,7 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
   const erBehandlingEtterKlage = useMemo(
     () =>
       behandling
-        ? behandling.behandlingArsaker
+        ? behandling.behandlingÅrsaker
             .map(({ behandlingArsakType }) => behandlingArsakType)
             .some(
               (bt: Kodeverk) =>

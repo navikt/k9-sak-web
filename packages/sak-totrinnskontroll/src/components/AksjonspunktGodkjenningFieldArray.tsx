@@ -87,16 +87,21 @@ export const AksjonspunktGodkjenningFieldArray: FunctionComponent<OwnProps> = ({
       );
 
       return (
-        <>
+        <React.Fragment key={skjermlenkeTypeKodeverk.navn}>
           <NavLink to={lagLenke(context.skjermlenkeType)} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
             {skjermlenkeTypeKodeverk.navn}
           </NavLink>
           <div className={styles.approvalItemContainer}>
-            {aksjonspunktText.map((formattedMessage, i) => (
-              <div key={aksjonspunktKode.concat('_'.concat(i.toString()))} className={styles.aksjonspunktTextContainer}>
-                <Normaltekst>{formattedMessage}</Normaltekst>
-              </div>
-            ))}
+            {aksjonspunktText
+              .filter(text => !!text)
+              .map((formattedMessage, i) => (
+                <div
+                  key={aksjonspunktKode.concat('_'.concat(i.toString()))}
+                  className={styles.aksjonspunktTextContainer}
+                >
+                  <Normaltekst>{formattedMessage}</Normaltekst>
+                </div>
+              ))}
             <NavFieldGroup>
               <RadioGroupField name={`${id}.totrinnskontrollGodkjent`} bredde="M" readOnly={readOnly}>
                 <RadioOption label={{ id: 'ApprovalField.Godkjent' }} value />
@@ -155,7 +160,7 @@ export const AksjonspunktGodkjenningFieldArray: FunctionComponent<OwnProps> = ({
               )}
             </NavFieldGroup>
           </div>
-        </>
+        </React.Fragment>
       );
     })}
   </>

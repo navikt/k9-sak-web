@@ -26,7 +26,7 @@ type BehandlingAppKontekst = Readonly<{
   behandlendeEnhetNavn: string;
   behandlingKoet: boolean;
   toTrinnsBehandling: boolean;
-  behandlingArsaker: {
+  behandlingÅrsaker: {
     behandlingArsakType: Kodeverk;
     manueltOpprettet: boolean;
     erAutomatiskRevurdering: boolean;

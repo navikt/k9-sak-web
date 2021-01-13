@@ -7,7 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-modal-pa-vent';
+import shallowWithIntl from '../../i18n/index';
 
 import { SettPaVentModal } from './SettPaVentModal';
 
