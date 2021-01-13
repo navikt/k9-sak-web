@@ -156,7 +156,17 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   );
 
   // FIX remove this when unntaksløype er lansert
-  const featureToggles = restApiHooks.useGlobalStateRestApiData<FeatureToggles>(K9sakApiKeys.FEATURE_TOGGLE);
+  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
+    K9sakApiKeys.FEATURE_TOGGLE,
+  );
+  const featureToggles = useMemo<FeatureToggles>(
+    () =>
+      featureTogglesData.reduce((acc, curr) => {
+        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
+        return acc;
+      }, {}),
+    [featureTogglesData],
+  );
   if (featureToggles?.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(BehandlingType.UNNTAK)) {
     BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.push(BehandlingType.UNNTAK);
   }

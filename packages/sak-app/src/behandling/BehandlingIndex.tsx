@@ -113,7 +113,17 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   );
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
-  const featureToggles = restApiHooks.useGlobalStateRestApiData<FeatureToggles>(K9sakApiKeys.FEATURE_TOGGLE);
+  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
+    K9sakApiKeys.FEATURE_TOGGLE,
+  );
+  const featureToggles = useMemo<FeatureToggles>(
+    () =>
+      featureTogglesData.reduce((acc, curr) => {
+        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
+        return acc;
+      }, {}),
+    [featureTogglesData],
+  );
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(() => getAccessRights(navAnsatt, fagsak.status, behandling?.status, behandling?.type), [
