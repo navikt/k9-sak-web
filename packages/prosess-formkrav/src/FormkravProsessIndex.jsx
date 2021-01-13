@@ -30,6 +30,8 @@ const FormkravProsessIndex = ({
   isReadOnly,
   readOnlySubmitButton,
   alleKodeverk,
+  parterMedKlagerett,
+  valgtPartMedKlagerett,
 }) => (
   <RawIntlProvider value={intl}>
     {Array.isArray(aksjonspunkter) &&
@@ -43,6 +45,8 @@ const FormkravProsessIndex = ({
           readOnlySubmitButton={readOnlySubmitButton}
           alleKodeverk={alleKodeverk}
           avsluttedeBehandlinger={avsluttedeBehandlinger}
+          parterMedKlagerett={parterMedKlagerett}
+          valgtPartMedKlagerett={valgtPartMedKlagerett}
         />
       )}
     {Array.isArray(aksjonspunkter) &&
@@ -56,6 +60,8 @@ const FormkravProsessIndex = ({
           readOnlySubmitButton={readOnlySubmitButton}
           alleKodeverk={alleKodeverk}
           avsluttedeBehandlinger={avsluttedeBehandlinger}
+          parterMedKlagerett={parterMedKlagerett}
+          valgtPartMedKlagerett={valgtPartMedKlagerett}
         />
       )}
   </RawIntlProvider>
@@ -70,6 +76,8 @@ FormkravProsessIndex.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  valgtPartMedKlagerett: PropTypes.shape(),
 };
 
 FormkravProsessIndex.defaultProps = {

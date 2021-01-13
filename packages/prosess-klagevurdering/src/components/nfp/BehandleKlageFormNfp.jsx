@@ -37,6 +37,7 @@ export const BehandleKlageFormNfpImpl = ({
   behandlingVersjon,
   readOnly,
   handleSubmit,
+  valgtPartMedKlagerett,
   previewCallback,
   saveKlage,
   readOnlySubmitButton,
@@ -86,6 +87,7 @@ export const BehandleKlageFormNfpImpl = ({
                   formValues={formValues}
                   saveKlage={saveKlage}
                   readOnly={readOnly}
+                  valgtPartMedKlagerett={valgtPartMedKlagerett}
                   aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
                   previewCallback={previewCallback}
                 />

@@ -24,7 +24,9 @@ import styles from './formkravKlageForm.less';
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 
 export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) => {
-  const behandlingid = avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.id;
+  const behandlingid =
+    Array.isArray(avsluttedeBehandlinger) &&
+    avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.id;
   return behandlingid ? `${behandlingid}` : IKKE_PAKLAGD_VEDTAK;
 };
 
@@ -61,6 +63,7 @@ export const FormkravKlageForm = ({
   intl,
   formProps,
   alleKodeverk,
+  parterMedKlagerett,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
@@ -77,6 +80,24 @@ export const FormkravKlageForm = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="6">
+          {Array.isArray(parterMedKlagerett) && parterMedKlagerett.length ? (
+            <>
+              <SelectField
+                readOnly={readOnly}
+                name="valgtPartMedKlagerett"
+                selectValues={parterMedKlagerett.map(part => (
+                  <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
+                    {part.identifikasjon.id}
+                  </option>
+                ))}
+                className={readOnly ? styles.selectReadOnly : null}
+                label={intl.formatMessage({ id: 'Klage.Formkrav.velgPartMedKlagerett' })}
+                validate={[required]}
+                bredde="xl"
+              />
+              <VerticalSpacer sixteenPx />
+            </>
+          ) : null}
           <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
         </Column>
         <Column xs="6">
@@ -128,6 +149,7 @@ export const FormkravKlageForm = ({
           </Row>
         </Column>
       </Row>
+      <VerticalSpacer sixteenPx />
       <div className={styles.confirmVilkarForm}>
         <BehandlingspunktSubmitButton
           formName={formProps.form}
@@ -163,6 +185,7 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 FormkravKlageForm.defaultProps = {
