@@ -21,6 +21,7 @@ describe('<FormkravKlageFormKa>', () => {
         alleKodeverk={{}}
         avsluttedeBehandlinger={[]}
         parterMedKlagerett={[]}
+        arbeidsgiverOpplysningerPerId={{}}
         {...reduxFormPropsMock}
       />,
     );
