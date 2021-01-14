@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-
 /**
  * Definerer en mal for fakta-paneler. Alle fakta-paneler må ha en url-kode, en tekst-kode og en komponent.
  */
@@ -30,7 +28,7 @@ abstract class FaktaPanelDef {
   /**
    * Data som komponent er avhengig av må defineres her slik at det kan hentes fra server
    */
-  public getEndepunkter = (): EndpointOperations[] => [];
+  public getEndepunkter = (): string[] => [];
 
   /**
    * For å avgjøre om komponent skal vises brukes denne i @see skalVisePanel

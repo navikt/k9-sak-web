@@ -1,13 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
+import { Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
 
-import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
-import { RisikoklassifiseringIndexImpl } from './RisikoklassifiseringIndex';
+import * as useTrackRouteParam from '../../app/useTrackRouteParam';
+import RisikoklassifiseringIndex from './RisikoklassifiseringIndex';
+import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
 
 const lagRisikoklassifisering = kode => ({
   kontrollresultat: {
@@ -18,27 +19,61 @@ const lagRisikoklassifisering = kode => ({
   iayFaresignaler: undefined,
 });
 
-const locationMock = {
-  pathname: 'test',
-  search: 'test',
-  state: {},
-  hash: 'test',
+const fagsak = {
+  saksnummer: '123456',
 };
 
+const behandling = {
+  id: 1,
+};
+
+const location = {
+  hash: '23',
+  pathname: '/test/',
+  state: {},
+  search: '',
+};
+
+const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
+  useLocation: () => ({
+    hash: '23',
+    pathname: '/test/',
+    state: {},
+    search: '',
+  }),
+}));
+
 describe('<RisikoklassifiseringIndex>', () => {
+  let contextStub;
+
+  beforeEach(() => {
+    contextStub = sinon.stub(useTrackRouteParam, 'default').callsFake(() => ({
+      selected: true,
+      location,
+    }));
+  });
+
+  afterEach(() => {
+    contextStub.restore();
+  });
+
   it('skal rendere komponent', () => {
+    requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
     const wrapper = shallow(
-      <RisikoklassifiseringIndexImpl
-        resolveAksjonspunkter={sinon.spy()}
-        push={sinon.spy()}
-        location={locationMock}
-        readOnly={false}
+      <RisikoklassifiseringIndex
+        fagsak={fagsak as Fagsak}
+        alleBehandlinger={[behandling] as BehandlingAppKontekst[]}
         kontrollresultat={lagRisikoklassifisering(kontrollresultatKode.HOY)}
-        isPanelOpen={false}
-        behandlingIdentifier={new BehandlingIdentifier(1, 1)}
         behandlingVersjon={1}
+        behandlingId={1}
       />,
     );
-    expect(wrapper.find(RisikoklassifiseringSakIndex)).has.length(1);
+    expect(wrapper.find(RisikoklassifiseringSakIndex)).toHaveLength(1);
   });
 });

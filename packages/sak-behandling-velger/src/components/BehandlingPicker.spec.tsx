@@ -1,10 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 
-import { Behandling } from '@k9-sak-web/types';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
 
 import BehandlingPickerItem from './BehandlingPickerItem';
 import BehandlingPicker, { sortBehandlinger } from './BehandlingPicker';
@@ -23,7 +22,6 @@ describe('<BehandlingPicker>', () => {
     opprettet: '15.10.2017',
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',
-    erAktivPapirsoknad: false,
     links: [
       {
         href: '/fpsak/test',
@@ -34,21 +32,28 @@ describe('<BehandlingPicker>', () => {
     gjeldendeVedtak: false,
   };
 
+  const locationMock = {
+    pathname: 'test',
+    search: 'test',
+    state: {},
+    hash: 'test',
+  };
+
   it('skal vise forklarende tekst når det ikke finnes behandlinger', () => {
     const wrapper = shallow(
       <BehandlingPicker
         noExistingBehandlinger
         behandlinger={[]}
-        getBehandlingLocation={() => 'url'}
+        getBehandlingLocation={() => locationMock}
         showAll={false}
         toggleShowAll={sinon.spy()}
-        alleKodeverk={{}}
+        getKodeverkFn={sinon.spy()}
       />,
     );
 
     const message = wrapper.find(FormattedMessage);
-    expect(message).has.length(1);
-    expect(message.prop('id')).is.eql('BehandlingList.ZeroBehandlinger');
+    expect(message).toHaveLength(1);
+    expect(message.prop('id')).toEqual('BehandlingList.ZeroBehandlinger');
   });
 
   it('skal vise alle behandlinger sortert med sist opprettet først i listen', () => {
@@ -72,19 +77,19 @@ describe('<BehandlingPicker>', () => {
     const wrapper = shallow(
       <BehandlingPicker
         noExistingBehandlinger={false}
-        behandlinger={behandlinger as Behandling[]}
-        getBehandlingLocation={() => 'url'}
+        behandlinger={behandlinger as BehandlingAppKontekst[]}
+        getBehandlingLocation={() => locationMock}
         showAll
         toggleShowAll={sinon.spy()}
-        alleKodeverk={{}}
+        getKodeverkFn={sinon.spy()}
       />,
     );
 
     const item = wrapper.find(BehandlingPickerItem);
-    expect(item).has.length(3);
-    expect(item.first().prop('behandling').id).is.eql(2);
-    expect(item.at(1).prop('behandling').id).is.eql(1);
-    expect(item.last().prop('behandling').id).is.eql(3);
+    expect(item).toHaveLength(3);
+    expect(item.first().prop('behandling').id).toEqual(2);
+    expect(item.at(1).prop('behandling').id).toEqual(1);
+    expect(item.last().prop('behandling').id).toEqual(3);
   });
 
   it('skal vise alle behandlinger sortert med valgt behandling først i listen', () => {
@@ -108,20 +113,20 @@ describe('<BehandlingPicker>', () => {
     const wrapper = shallow(
       <BehandlingPicker
         noExistingBehandlinger={false}
-        behandlinger={behandlinger as Behandling[]}
+        behandlinger={behandlinger as BehandlingAppKontekst[]}
         behandlingId={2}
-        getBehandlingLocation={() => 'url'}
+        getBehandlingLocation={() => locationMock}
         showAll
         toggleShowAll={sinon.spy()}
-        alleKodeverk={{}}
+        getKodeverkFn={sinon.spy()}
       />,
     );
 
     const item = wrapper.find(BehandlingPickerItem);
-    expect(item).has.length(3);
-    expect(item.first().prop('behandling').id).is.eql(2);
-    expect(item.at(1).prop('behandling').id).is.eql(1);
-    expect(item.last().prop('behandling').id).is.eql(3);
+    expect(item).toHaveLength(3);
+    expect(item.first().prop('behandling').id).toEqual(2);
+    expect(item.at(1).prop('behandling').id).toEqual(1);
+    expect(item.last().prop('behandling').id).toEqual(3);
   });
 
   it('skal sortere behandlingene gitt avsluttet og opprettet datoer', () => {
@@ -140,11 +145,11 @@ describe('<BehandlingPicker>', () => {
       {
         opprettet: '2019-08-13T13:32:57',
       },
-    ];
+    ] as BehandlingAppKontekst[];
 
     const sorterteBehandlinger = sortBehandlinger(behandlinger);
 
-    expect(sorterteBehandlinger).is.eql([
+    expect(sorterteBehandlinger).toEqual([
       {
         opprettet: '2019-08-14T13:32:57',
       },

@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import Panel from 'nav-frontend-paneler';
 
 import { DateLabel } from '@fpsak-frontend/shared-components';
@@ -21,8 +20,8 @@ describe('<BehandlingPickerItemContent>', () => {
       />,
     );
 
-    expect(wrapper.find(Panel)).has.length(1);
-    expect(wrapper.find(DateLabel)).has.length(1);
+    expect(wrapper.find(Panel)).toHaveLength(1);
+    expect(wrapper.find(DateLabel)).toHaveLength(1);
   });
 
   it('skal vise avsluttet dato når denne finnes', () => {
@@ -40,9 +39,9 @@ describe('<BehandlingPickerItemContent>', () => {
     );
 
     const labels = wrapper.find(DateLabel);
-    expect(labels).has.length(2);
-    expect(labels.first().prop('dateString')).to.eql('2018-01-01');
-    expect(labels.last().prop('dateString')).to.eql('2018-05-01');
+    expect(labels).toHaveLength(2);
+    expect(labels.first().prop('dateString')).toEqual('2018-01-01');
+    expect(labels.last().prop('dateString')).toEqual('2018-05-01');
   });
 
   it('skal vise årsak for revurdering', () => {
@@ -69,6 +68,6 @@ describe('<BehandlingPickerItemContent>', () => {
     );
 
     const formattedMessages = wrapper.find('FormattedMessage');
-    expect(formattedMessages.first().prop('id')).to.eql('Behandlingspunkt.Årsak.Annet');
+    expect(formattedMessages.first().prop('id')).toEqual('Behandlingspunkt.Årsak.Annet');
   });
 });

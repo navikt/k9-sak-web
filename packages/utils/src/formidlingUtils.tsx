@@ -1,9 +1,9 @@
-import { Behandling, FagsakInfo } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 
-export function bestemAvsenderApp(type: string) {
+export function bestemAvsenderApp(type: string): string {
   return type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK;
 }
 
@@ -16,12 +16,17 @@ export const kanHaAutomatiskVedtaksbrev = (tilgjengeligeVedtaksbrev: Array<strin
 export const kanHaFritekstbrev = (tilgjengeligeVedtaksbrev: Array<string>) =>
   finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev) && tilgjengeligeVedtaksbrev.some(vb => vb === 'FRITEKST');
 
-const lagForhåndsvisRequest = (behandling: Behandling, fagsak: FagsakInfo, data: any): ForhåndsvisRequest => {
+export const lagForhåndsvisRequest = (
+  behandling: Behandling,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  data: any,
+): ForhåndsvisRequest => {
   return {
     eksternReferanse: behandling.uuid,
-    ytelseType: fagsak.fagsakYtelseType,
+    ytelseType: fagsak.sakstype,
     saksnummer: fagsak.saksnummer,
-    aktørId: fagsak.fagsakPerson.aktørId,
+    aktørId: fagsakPerson.aktørId,
     avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
     ...data,
   };

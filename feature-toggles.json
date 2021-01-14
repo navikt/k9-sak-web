@@ -12,14 +12,6 @@
     "value": "${UNNTAKSBEHANDLING}"
   },
   {
-    "key":  "KLAGEBEHANDLING",
-    "value": "${KLAGEBEHANDLING}"
-  },
-  {
-    "key":  "TILBAKE",
-    "value": "${TILBAKE}"
-  },
-  {
     "key": "PERIODISERTE_NOKKELTALL",
     "value": "${PERIODISERTE_NOKKELTALL}"
   },

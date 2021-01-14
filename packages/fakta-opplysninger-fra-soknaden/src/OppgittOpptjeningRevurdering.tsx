@@ -2,7 +2,6 @@ import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import * as React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
-import { InjectedFormProps } from 'redux-form';
 import messages from '../i18n/nb_NO.json';
 import OppgittOpptjeningRevurderingForm from './OppgittOpptjeningRevurderingForm';
 
@@ -27,7 +26,7 @@ interface Props {
   oppgittOpptjening: OpplysningerFraSøknaden;
 }
 
-const OppgittOpptjeningRevurdering = (props: Props & InjectedFormProps) => {
+const OppgittOpptjeningRevurdering = (props: Props) => {
   const {
     behandling: { id, versjon },
     kanEndrePåSøknadsopplysninger,

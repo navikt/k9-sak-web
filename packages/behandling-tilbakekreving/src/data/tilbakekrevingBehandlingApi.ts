@@ -1,37 +1,31 @@
-import {
-  ReduxEvents,
-  ReduxRestApiBuilder,
-  RestApiConfigBuilder,
-  reducerRegistry,
-  setRequestPollingMessage,
-} from '@fpsak-frontend/rest-api-redux';
-import errorHandler from '@fpsak-frontend/error-api-redux';
+import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
+import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
-export const TilbakekrevingBehandlingApiKeys = {
-  BEHANDLING_TILBAKE: 'BEHANDLING_TILBAKE',
-  AKSJONSPUNKTER: 'AKSJONSPUNKTER',
-  VEDTAKSBREV: 'VEDTAKSBREV',
-  BEREGNINGSRESULTAT: 'BEREGNINGSRESULTAT',
-  FEILUTBETALING_FAKTA: 'FEILUTBETALING_FAKTA',
-  FEILUTBETALING_AARSAK: 'FEILUTBETALING_AARSAK',
-  PERIODER_FORELDELSE: 'PERIODER_FORELDELSE',
-  VILKARVURDERINGSPERIODER: 'VILKARVURDERINGSPERIODER',
-  VILKARVURDERING: 'VILKARVURDERING',
-  BEHANDLING_NY_BEHANDLENDE_ENHET: 'BEHANDLING_NY_BEHANDLENDE_ENHET',
-  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
-  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
-  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
-  UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
-  SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
-  BEREGNE_BELØP: 'BEREGNE_BELØP',
-  TILBAKE_KODEVERK: 'TILBAKE_KODEVERK',
-  PREVIEW_VEDTAKSBREV: 'PREVIEW_VEDTAKSBREV',
-  VERGE: 'VERGE',
-  VERGE_OPPRETT: 'VERGE_OPPRETT',
-  VERGE_FJERN: 'VERGE_FJERN',
-  DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
-  DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
-};
+// NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
+
+export enum TilbakekrevingBehandlingApiKeys {
+  BEHANDLING_TILBAKE = 'BEHANDLING_TILBAKE',
+  AKSJONSPUNKTER = 'AKSJONSPUNKTER',
+  VEDTAKSBREV = 'VEDTAKSBREV',
+  BEREGNINGSRESULTAT = 'BEREGNINGSRESULTAT',
+  FEILUTBETALING_FAKTA = 'FEILUTBETALING_FAKTA',
+  FEILUTBETALING_AARSAK = 'FEILUTBETALING_AARSAK',
+  PERIODER_FORELDELSE = 'PERIODER_FORELDELSE',
+  VILKARVURDERINGSPERIODER = 'VILKARVURDERINGSPERIODER',
+  VILKARVURDERING = 'VILKARVURDERING',
+  BEHANDLING_NY_BEHANDLENDE_ENHET = 'BEHANDLING_NY_BEHANDLENDE_ENHET',
+  HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
+  RESUME_BEHANDLING = 'RESUME_BEHANDLING',
+  BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
+  UPDATE_ON_HOLD = 'UPDATE_ON_HOLD',
+  SAVE_AKSJONSPUNKT = 'SAVE_AKSJONSPUNKT',
+  BEREGNE_BELØP = 'BEREGNE_BELØP',
+  TILBAKE_KODEVERK = 'TILBAKE_KODEVERK',
+  PREVIEW_VEDTAKSBREV = 'PREVIEW_VEDTAKSBREV',
+  VERGE = 'VERGE',
+  VERGE_OPPRETT = 'VERGE_OPPRETT',
+  VERGE_FJERN = 'VERGE_FJERN',
+}
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/tilbake/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE)
@@ -52,42 +46,20 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('beregne-feilutbetalt-belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
   .withRel('bytt-behandlende-enhet', TilbakekrevingBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withRel('henlegg-behandling', TilbakekrevingBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withRel('gjenoppta-behandling', TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING, {
-    saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE,
-  })
+  .withRel('gjenoppta-behandling', TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING)
   .withRel('sett-behandling-pa-vent', TilbakekrevingBehandlingApiKeys.BEHANDLING_ON_HOLD)
   .withRel('endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withRel('lagre-aksjonspunkter', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE,
-  })
-  .withRel('opprett-verge', TilbakekrevingBehandlingApiKeys.VERGE_OPPRETT, {
-    saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE,
-  })
-  .withRel('fjern-verge', TilbakekrevingBehandlingApiKeys.VERGE_FJERN, {
-    saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE,
-  })
-  .withRel('dokumentdata-lagre', TilbakekrevingBehandlingApiKeys.DOKUMENTDATA_LAGRE)
-  .withRel('dokumentdata-hente', TilbakekrevingBehandlingApiKeys.DOKUMENTDATA_HENTE)
+  .withRel('lagre-aksjonspunkter', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT)
+  .withRel('opprett-verge', TilbakekrevingBehandlingApiKeys.VERGE_OPPRETT)
+  .withRel('fjern-verge', TilbakekrevingBehandlingApiKeys.VERGE_FJERN)
 
   /* FPFORMIDLING */
-  .withPostAndOpenBlob(
-    '/k9/tilbake/api/dokument/forhandsvis-vedtaksbrev',
-    TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV,
-  )
+  .withPost('/k9/tilbake/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV, {
+    isResponseBlob: true,
+  })
 
   .build();
 
-const reducerName = 'dataContextTilbakekrevingBehandling';
+export const requestTilbakekrevingApi = createRequestApi(endpoints);
 
-export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withReduxEvents(
-    new ReduxEvents()
-      .withErrorActionCreator(errorHandler.getErrorActionCreator())
-      .withPollingMessageActionCreator(setRequestPollingMessage),
-  )
-  .build();
-
-reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
-
-const tilbakekrevingBehandlingApi = reduxRestApi.getEndpointApi();
-export default tilbakekrevingBehandlingApi;
+export const restApiTilbakekrevingHooks = RestApiHooks.initHooks(requestTilbakekrevingApi);

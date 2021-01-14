@@ -1,51 +1,52 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 class MenyKodeverk {
-  $$behandlingType;
+  $$behandlingType: Kodeverk;
 
-  $$fpSakKodeverk;
+  $$k9SakKodeverk: { [key: string]: KodeverkMedNavn[] };
 
-  $$fpTilbakeKodeverk;
+  $$tilbakeKodeverk: { [key: string]: KodeverkMedNavn[] };
 
-  $$klagekodeverk;
+  $$klagekodeverk: { [key: string]: KodeverkMedNavn[] };
 
-  constructor(behandlingType) {
+  constructor(behandlingType: Kodeverk) {
     this.$$behandlingType = behandlingType;
   }
 
-  medFpSakKodeverk(fpSakKodeverk) {
-    this.$$fpSakKodeverk = fpSakKodeverk;
+  medK9SakKodeverk(k9SakKodeverk: { [key: string]: KodeverkMedNavn[] }): this {
+    this.$$k9SakKodeverk = k9SakKodeverk;
     return this;
   }
 
-  medFpTilbakeKodeverk(fpTilbakeKodeverk) {
-    this.$$fpTilbakeKodeverk = fpTilbakeKodeverk;
+  medTilbakeKodeverk(tilbakeKodeverk: { [key: string]: KodeverkMedNavn[] } = {}): this {
+    this.$$tilbakeKodeverk = tilbakeKodeverk;
     return this;
   }
 
-  medKlagekodeverk(klagekodeverk) {
+  medKlageKodeverk(klagekodeverk: { [key: string]: KodeverkMedNavn[] } = {}): this {
     this.$$klagekodeverk = klagekodeverk;
     return this;
   }
 
-  getKodeverkForBehandlingstype(behandlingTypeKode, kodeverkType) {
+  getKodeverkForBehandlingstype(behandlingTypeKode: string, kodeverkType: string): KodeverkMedNavn[] {
     if (
       behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
       behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
     ) {
-      return this.$$fpTilbakeKodeverk[kodeverkType];
+      return this.$$tilbakeKodeverk[kodeverkType];
     }
     if (behandlingTypeKode === BehandlingType.KLAGE) {
       return this.$$klagekodeverk[kodeverkType];
     }
-    return this.$$fpSakKodeverk[kodeverkType];
+    return this.$$k9SakKodeverk[kodeverkType];
   }
 
-  getKodeverkForValgtBehandling(kodeverkType) {
+  getKodeverkForValgtBehandling(kodeverkType: string): KodeverkMedNavn[] {
     return this.getKodeverkForBehandlingstype(this.$$behandlingType.kode, kodeverkType);
   }
 
-  getKodeverkForBehandlingstyper(behandlingTypeKoder, kodeverkType) {
+  getKodeverkForBehandlingstyper(behandlingTypeKoder: string[], kodeverkType: string): KodeverkMedNavn[] {
     return behandlingTypeKoder.reduce((acc, btk) => {
       const alleKodeverkForKodeverkType = this.getKodeverkForBehandlingstype(btk, kodeverkType);
       return alleKodeverkForKodeverkType && alleKodeverkForKodeverkType.some(k => k.kode === btk)

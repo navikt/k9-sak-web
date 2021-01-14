@@ -96,7 +96,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           vilkårsperioder={vilkårsperioder}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
-          arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+          arbeidsgiverOpplysningerPerId={arbeidsgivere}
         />
       </div>
     </RawIntlProvider>

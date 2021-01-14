@@ -48,7 +48,7 @@ const ArbeidsforholdFaktaIndex = ({
         hasOpenAksjonspunkter={harApneAksjonspunkter}
         submitCallback={submitCallback}
         readOnly={readOnly}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere}
       />
     )}
     {arbeidsforhold && arbeidsgivere && (
@@ -56,7 +56,7 @@ const ArbeidsforholdFaktaIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         arbeidsforhold={arbeidsforhold}
-        arbeidsgivere={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere}
         alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         aksjonspunkter={aksjonspunkter}

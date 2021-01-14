@@ -9,7 +9,7 @@ export type ArbeidsforholdPermisjon = Readonly<{
 
 export type Arbeidsforhold = Readonly<{
   id?: string;
-  // arbeidsgiverReferanse: string;
+  arbeidsgiverReferanse: string;
   navn?: string;
   arbeidsgiverId?: string;
   arbeidsgiverIdentifikator?: string;

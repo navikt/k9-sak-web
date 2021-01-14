@@ -1,95 +1,144 @@
-import RequestProcess from './RequestProcess';
-import NotificationMapper from './NotificationMapper';
-import RestApiRequestContext from './RestApiRequestContext';
-import RequestConfig, { RequestType } from '../RequestConfig';
-import { HttpClientApi } from '../HttpClientApiTsType';
-import { Link } from './LinkTsType';
+import EventType from './eventType';
+import AsyncPollingStatus from './asyncPollingStatus';
+import HttpClientApi from '../HttpClientApiTsType';
+import { Response } from './ResponseTsType';
+import RequestAdditionalConfig from '../RequestAdditionalConfigTsType';
+import TimeoutError from './error/TimeoutError';
+import RequestErrorEventHandler from './error/RequestErrorEventHandler';
 
-const getMethod = (httpClientApi: HttpClientApi, restMethod: string) => {
-  if (restMethod === RequestType.GET) {
-    return httpClientApi.get;
-  }
-  if (restMethod === RequestType.GET_ASYNC) {
-    return httpClientApi.getAsync;
-  }
-  if (restMethod === RequestType.POST) {
-    return httpClientApi.post;
-  }
-  if (restMethod === RequestType.POST_ASYNC) {
-    return httpClientApi.postAsync;
-  }
-  if (restMethod === RequestType.PUT) {
-    return httpClientApi.put;
-  }
-  if (restMethod === RequestType.PUT_ASYNC) {
-    return httpClientApi.putAsync;
-  }
-  return httpClientApi.postAndOpenBlob;
-};
+const HTTP_ACCEPTED = 202;
+const MAX_POLLING_ATTEMPTS = 150;
+export const REQUEST_POLLING_CANCELLED = 'INTERNAL_CANCELLATION';
+
+const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+const hasLocationAndStatusDelayedOrHalted = (responseData): boolean =>
+  responseData.location &&
+  (responseData.status === AsyncPollingStatus.DELAYED || responseData.status === AsyncPollingStatus.HALTED);
+
+type Notify = (eventType: keyof typeof EventType, data?: any, isPolling?: boolean) => void;
+type NotificationEmitter = (eventType: keyof typeof EventType, data?: any) => void;
 
 /**
  * RequestRunner
  *
- * Denne klassen håndterer kall mot en spesifikk URL.
+ * Denne klassen utfører et spesifikt kall mot en URL. Håndterer også "long-polling".
  *
- * Ved start av nytt kall blir eventuelt pågåande kall stoppet først (kan skje ved long-polling). En kan eventuelt
- * stoppe et kall manuelt ved å bruke metoden @see stopProcess.
+ * En starter prosess med run og avbryter med cancel.
  */
 class RequestRunner {
   httpClientApi: HttpClientApi;
 
-  context: RestApiRequestContext
+  restMethod: (url: string, params: any, responseType?: string) => Promise<Response>;
 
-  process: RequestProcess;
+  path: string;
 
-  constructor(httpClientApi: HttpClientApi, context: RestApiRequestContext) {
+  config: RequestAdditionalConfig;
+
+  maxPollingLimit: number = MAX_POLLING_ATTEMPTS;
+
+  notify: Notify = () => undefined;
+
+  isCancelled = false;
+
+  isPollingRequest = false;
+
+  constructor(
+    httpClientApi: HttpClientApi,
+    restMethod: (url: string, params: any, responseType?: string) => Promise<Response>,
+    path: string,
+    config: RequestAdditionalConfig,
+  ) {
     this.httpClientApi = httpClientApi;
-    this.context = context;
+    this.restMethod = restMethod;
+    this.path = path;
+    this.config = config;
+    this.maxPollingLimit = config.maxPollingLimit || this.maxPollingLimit;
   }
 
-  getConfig = () => this.context.getConfig();
+  setNotificationEmitter = (notificationEmitter: NotificationEmitter): void => {
+    this.notify = notificationEmitter;
+  };
 
-  getName = (): string => this.getConfig().name
-
-  getRestMethod = () => getMethod(this.httpClientApi, this.getConfig().restMethod)
-
-  getPath = (): string => {
-    const contextPath = this.context.getContextPath() ? `/${this.context.getContextPath()}` : '';
-    return this.getConfig().path ? `${this.context.getHostname()}${contextPath}${this.getConfig().path}` : undefined;
-  }
-
-  getRestMethodName = (): string => this.getConfig().restMethod
-
-  stopProcess = () => {
-    if (this.process) {
-      this.process.cancel();
-    }
-  }
-
-  startProcess = (params: any, notificationMapper?: NotificationMapper) => {
-    this.stopProcess();
-
-    this.process = new RequestProcess(this.httpClientApi, this.getRestMethod(), this.getPath(), this.getConfig().config);
-    if (notificationMapper) {
-      this.process.setNotificationEmitter(notificationMapper.getNotificationEmitter());
+  execLongPolling = async (location: string, pollingInterval = 0, pollingCounter = 0): Promise<Response> => {
+    if (pollingCounter === this.maxPollingLimit) {
+      throw new TimeoutError(location);
     }
 
-    return this.process.run(params || this.getConfig().requestPayload);
-  }
+    await wait(pollingInterval);
 
-  injectLink = (link: Link) => {
-    const contextConfig = this.context.getConfig();
-    const newConfig = new RequestConfig(contextConfig.name, link.href, contextConfig.config);
-    newConfig.withRestMethod(link.type).withRel(link.rel).withRequestPayload(link.requestPayload);
-    this.context = new RestApiRequestContext(this.context.getContextPath(), newConfig);
-  }
+    if (this.isCancelled) {
+      return null;
+    }
 
-  resetLink = (rel: string) => {
-    const contextConfig = this.context.getConfig();
-    const newConfig = new RequestConfig(contextConfig.name, undefined, contextConfig.config);
-    newConfig.withRel(rel);
-    this.context = new RestApiRequestContext(this.context.getContextPath(), newConfig);
-  }
+    this.notify(EventType.STATUS_REQUEST_STARTED);
+    const statusOrResultResponse = await this.httpClientApi.get(location);
+    this.notify(EventType.STATUS_REQUEST_FINISHED);
+
+    if (!('data' in statusOrResultResponse)) {
+      return statusOrResultResponse;
+    }
+    const responseData = statusOrResultResponse.data;
+    if (responseData && responseData.status === AsyncPollingStatus.PENDING) {
+      const { pollIntervalMillis, message } = responseData;
+      this.notify(EventType.UPDATE_POLLING_MESSAGE, message);
+      return this.execLongPolling(location, pollIntervalMillis, pollingCounter + 1);
+    }
+
+    return statusOrResultResponse;
+  };
+
+  execute = async (
+    path: string,
+    restMethod: (pathArg: string, params?: any) => Promise<Response>,
+    params: any,
+  ): Promise<Response> => {
+    let response = await restMethod(path, params);
+    if ('status' in response && response.status === HTTP_ACCEPTED) {
+      this.isPollingRequest = true;
+      try {
+        response = await this.execLongPolling(response.headers.location);
+      } catch (error) {
+        const responseData = error.response ? error.response.data : undefined;
+        if (responseData && hasLocationAndStatusDelayedOrHalted(responseData)) {
+          response = await this.httpClientApi.get(responseData.location);
+          if ('data' in response) {
+            this.notify(EventType.POLLING_HALTED_OR_DELAYED, response.data.taskStatus);
+          }
+        } else {
+          throw error;
+        }
+      }
+    }
+    return response;
+  };
+
+  cancel = (): void => {
+    this.isCancelled = true;
+  };
+
+  start = async (params: any): Promise<{ payload: any }> => {
+    this.notify(EventType.REQUEST_STARTED);
+
+    try {
+      const response = await this.execute(this.path, this.restMethod, params);
+      if (this.isCancelled) {
+        return { payload: REQUEST_POLLING_CANCELLED };
+      }
+
+      const responseData = 'data' in response ? response.data : undefined;
+      this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
+      return responseData ? { payload: responseData } : { payload: undefined };
+    } catch (error) {
+      const { response } = error;
+      if (response && response.status === 401 && response.headers && response.headers.location) {
+        const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.href = `${response.headers.location}?redirectTo=${currentPath}`;
+      }
+      new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
+      throw error;
+    }
+  };
 }
 
 export default RequestRunner;

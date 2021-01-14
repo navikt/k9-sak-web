@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { NotFoundPage } from '@fpsak-frontend/sak-feilsider';
+import { NotFoundPage } from '@k9-sak-web/sak-infosider';
 
 import { aktoerPath, fagsakPath } from '../paths';
 import FagsakIndex from '../../fagsak/FagsakIndex';

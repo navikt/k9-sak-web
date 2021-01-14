@@ -7,8 +7,8 @@ class MenyData {
 
   modal: (lukkModal: () => void) => ReactNode;
 
-  constructor(erSynlig, tekst) {
-    this.erSynlig = erSynlig;
+  constructor(erSynlig: boolean | undefined, tekst) {
+    this.erSynlig = !!erSynlig;
     this.tekst = tekst;
   }
 

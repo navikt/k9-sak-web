@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { Aksjonspunkt, Vilkar, Behandling } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
@@ -49,13 +48,13 @@ export abstract class ProsessStegPanelDef {
    * Data som komponent er avhengig av må defineres her slik at det kan hentes fra server
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public getEndepunkter = (featureToggles?: any): EndpointOperations[] => [];
+  public getEndepunkter = (featureToggles?: any): string[] => [];
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected getOverstyrVisningAvKomponent = (_data: any): boolean => false;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public getOverstyrtStatus = (_data: any): boolean => undefined;
+  public getOverstyrtStatus = (_data: any): string => undefined;
 
   /**
    * Data som skal sendes med til komponent. Dette er data som frontend allerede har tilgang til (Trenger ikke hente på nytt)

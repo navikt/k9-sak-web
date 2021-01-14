@@ -1,34 +1,35 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
-import { Behandling } from '@k9-sak-web/types';
+import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
+import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 import KlageProsess from './KlageProsess';
 
 describe('<KlageProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
+
+  const fagsakPerson = {
+    alder: 30,
+    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    erDod: false,
+    erKvinne: true,
+    navn: 'Espen Utvikler',
+    personnummer: '12345',
   };
+
   const behandling = {
     id: 1,
     versjon: 2,
@@ -74,13 +75,14 @@ describe('<KlageProsess>', () => {
     klageFormkravResultatNFP: {
       avvistArsaker: [],
     },
-  };
+  } as KlageVurdering;
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallow(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         alleBehandlinger={[]}
@@ -89,13 +91,12 @@ describe('<KlageProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
-        featureToggles={{}}
+        setBehandling={sinon.spy()}
       />,
     );
 
     const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
+    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
       {
         isActive: false,
         isDisabled: false,
@@ -145,6 +146,7 @@ describe('<KlageProsess>', () => {
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         alleBehandlinger={[]}
@@ -153,8 +155,7 @@ describe('<KlageProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
-        featureToggles={{}}
+        setBehandling={sinon.spy()}
       />,
     );
 
@@ -163,8 +164,8 @@ describe('<KlageProsess>', () => {
     meny.prop('velgProsessStegPanelCallback')(2);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('formkrav_klage_nav_klageinstans');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('formkrav_klage_nav_klageinstans');
   });
 });

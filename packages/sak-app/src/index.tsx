@@ -1,12 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
-import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
-import errorHandler from '@fpsak-frontend/error-api-redux';
+import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
@@ -49,9 +48,7 @@ init({
 const history = createBrowserHistory({
   basename: '/k9/web/',
 });
-const store = configureStore(history);
-
-reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
+const store = configureStore();
 
 const renderFunc = Component => {
   const app = document.getElementById('app');
@@ -60,9 +57,13 @@ const renderFunc = Component => {
   }
   render(
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Component />
-      </ConnectedRouter>
+      <Router history={history}>
+        <RestApiProvider>
+          <RestApiErrorProvider>
+            <Component />
+          </RestApiErrorProvider>
+        </RestApiProvider>
+      </Router>
     </Provider>,
     app,
   );

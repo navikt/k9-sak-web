@@ -120,7 +120,6 @@ export const VilkarresultatMedOverstyringForm: FunctionComponent<
             customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
             customVilkarOppfyltText={customVilkarOppfyltText}
             erMedlemskapsPanel={erMedlemskapsPanel}
-            hasAksjonspunkt={hasAksjonspunkt}
             avslagsarsaker={avslagsarsaker}
           />
           <VerticalSpacer sixteenPx />
@@ -221,6 +220,7 @@ const getCustomVilkarTextForIkkeOppfylt = createSelector(
 
 const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => ({
   kode: overstyringApKode,
+  // @ts-ignore Fiks
   ...VilkarResultPicker.transformValues(values),
   ...VilkarresultatMedBegrunnelse.transformValues(values),
   periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,

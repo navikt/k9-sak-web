@@ -3,9 +3,9 @@ import React from 'react';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
-import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
-import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.MEDLEMSKAPSVILKARET;
@@ -21,14 +21,14 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
     aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO,
   ];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.MEDLEMSKAP];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.MEDLEMSKAP];
 
   getKomponent = props => <MedlemskapFaktaIndex {...props} />;
 
   getOverstyrVisningAvKomponent = ({ personopplysninger, soknad }) => personopplysninger && soknad;
 
-  getData = ({ fagsak, soknad, personopplysninger }) => ({
-    fagsakPerson: fagsak.fagsakPerson,
+  getData = ({ fagsakPerson, soknad, personopplysninger }) => ({
+    fagsakPerson,
     soknad,
     personopplysninger,
   });

@@ -15,14 +15,7 @@ const intl = createIntl(
   cache,
 );
 
-export const skalViseIMeny = (behandlingId, erPaVent, erKoet, gjenopptaBehandlingAccess) => {
-  if (!behandlingId || erKoet || !gjenopptaBehandlingAccess.employeeHasAccess) {
-    return false;
-  }
-  return erPaVent;
-};
-
-export const getMenytekst = () => intl.formatMessage({ id: 'MenyTaAvVentIndex.ResumeBehandling' });
+export const getMenytekst = (): string => intl.formatMessage({ id: 'MenyTaAvVentIndex.ResumeBehandling' });
 
 interface OwnProps {
   behandlingId?: number;
@@ -48,7 +41,12 @@ const MenyTaAvVentIndex: FunctionComponent<OwnProps> = ({
 
   return (
     <RawIntlProvider value={intl}>
-      <OkAvbrytModal textCode="MenyTaAvVentIndex.TaAvVent" showModal submit={submit} cancel={lukkModal} />
+      <OkAvbrytModal
+        text={intl.formatMessage({ id: 'MenyTaAvVentIndex.TaAvVent' })}
+        showModal
+        submit={submit}
+        cancel={lukkModal}
+      />
     </RawIntlProvider>
   );
 };

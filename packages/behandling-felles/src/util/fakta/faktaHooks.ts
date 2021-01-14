@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { Dispatch } from 'redux';
+import { IntlShape } from 'react-intl';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { Behandling, Aksjonspunkt } from '@k9-sak-web/types';
+import { Behandling, Aksjonspunkt, Fagsak } from '@k9-sak-web/types';
 
 import {
   utledFaktaPaneler,
@@ -10,7 +9,6 @@ import {
   formaterPanelerForSidemeny,
   getBekreftAksjonspunktCallback,
 } from './faktaUtils';
-import FagsakInfo from '../../types/fagsakInfoTsType';
 import Rettigheter from '../../types/rettigheterTsType';
 import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
 import FaktaPanelDef from './FaktaPanelDef';
@@ -23,7 +21,7 @@ const useFaktaPaneler = (
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
   valgtFaktaPanelKode: string,
-  intl,
+  intl: IntlShape,
 ): [FaktaPanelUtledet[], FaktaPanelUtledet, FaktaPanelMenyRad[]] => {
   const faktaPaneler = useMemo(
     () => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, behandling, rettigheter, aksjonspunkter),
@@ -61,27 +59,27 @@ const useFaktaAksjonspunktNotifikator = (
 
 const useCallbacks = (
   faktaPaneler: FaktaPanelUtledet[],
-  fagsak: FagsakInfo,
+  fagsak: Fagsak,
   behandling: Behandling,
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void,
   valgtProsessSteg: string,
   overstyringApCodes: string[],
-  behandlingApi: { [name: string]: EndpointOperations },
-  dispatch: Dispatch,
+  lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
+  lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
 ) => {
   const velgFaktaPanelCallback = useCallback(
-    (index: number): void => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].getUrlKode()),
+    index => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].getUrlKode()),
     [behandling.versjon, valgtProsessSteg],
   );
 
   const bekreftAksjonspunktCallback = useCallback(
     getBekreftAksjonspunktCallback(
-      dispatch,
       fagsak,
       behandling,
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
-      behandlingApi,
+      lagreAksjonspunkter,
+      lagreOverstyrteAksjonspunkter,
     ),
     [behandling.versjon],
   );

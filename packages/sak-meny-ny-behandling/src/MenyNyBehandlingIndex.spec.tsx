@@ -1,11 +1,10 @@
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import shallowWithIntl from '../i18n';
+import shallowWithIntl from '../i18n/index';
 import NyBehandlingModal from './components/NyBehandlingModal';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 
@@ -13,6 +12,23 @@ describe('<MenyNyBehandlingIndex>', () => {
   it('skal vise modal og så henlegge behandling', () => {
     const lagNyBehandlingCallback = sinon.stub().resolves();
     const lukkModalCallback = sinon.spy();
+
+    const behandlingOppretting = [
+      {
+        behandlingType: {
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        },
+        kanOppretteBehandling: true,
+      },
+      {
+        behandlingType: {
+          kode: behandlingType.REVURDERING,
+          kodeverk: '',
+        },
+        kanOppretteBehandling: true,
+      },
+    ];
 
     const wrapper = shallowWithIntl(
       <MenyNyBehandlingIndex
@@ -28,36 +44,45 @@ describe('<MenyNyBehandlingIndex>', () => {
           kodeverk: 'BEHANDLING_TYPE',
         }}
         lagNyBehandling={lagNyBehandlingCallback}
+        behandlingOppretting={behandlingOppretting}
         behandlingstyper={[]}
         tilbakekrevingRevurderingArsaker={[]}
         revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: false,
+          kanRevurderingOpprettes: false,
+        }}
         uuidForSistLukkede="2323"
         erTilbakekrevingAktivert
         sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
         sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
         lukkModal={lukkModalCallback}
-        behandlingerSomKanOpprettes={{}}
       />,
     );
 
     const modal = wrapper.find(NyBehandlingModal);
-    expect(modal).to.have.length(1);
+    expect(modal).toHaveLength(1);
     modal.prop('submitCallback')({
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
+      fagsakYtelseType: {
+        kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: '',
+      },
     });
 
     const kall = lagNyBehandlingCallback.getCalls();
-    expect(kall).to.have.length(1);
-    expect(kall[0].args).to.have.length(5);
-    expect(kall[0].args[0]).to.eql('123');
-    expect(kall[0].args[1]).to.eql(3);
-    expect(kall[0].args[2]).to.eql(1);
-    expect(kall[0].args[3]).to.eql(behandlingType.FORSTEGANGSSOKNAD);
-    expect(kall[0].args[4]).to.eql({
+    expect(kall).toHaveLength(1);
+    expect(kall[0].args).toHaveLength(2);
+    expect(kall[0].args[0]).toBe('BT-002');
+    expect(kall[0].args[1]).toEqual({
       saksnummer: '123',
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
+      fagsakYtelseType: {
+        kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: '',
+      },
     });
 
-    expect(lukkModalCallback.getCalls()).to.have.length(1);
+    expect(lukkModalCallback.getCalls()).toHaveLength(1);
   });
 });
