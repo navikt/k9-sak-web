@@ -2,7 +2,6 @@ import React, { FunctionComponent, useCallback, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import HenleggBehandlingModal from './components/HenleggBehandlingModal';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
@@ -19,25 +18,7 @@ const intl = createIntl(
   cache,
 );
 
-const hasHenleggBehandlingEnabledForTilbakekreving = (behandlingType, kanHenlegge) => {
-  if (
-    behandlingType &&
-    (behandlingType.kode === BehandlingType.TILBAKEKREVING ||
-      behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) &&
-    !kanHenlegge
-  ) {
-    return false;
-  }
-  return true;
-};
-
-export const skalViseIMeny = (behandlingId, behandlingType, kanHenlegge, henleggBehandlingAccess) =>
-  behandlingId &&
-  henleggBehandlingAccess.employeeHasAccess &&
-  henleggBehandlingAccess.isEnabled &&
-  hasHenleggBehandlingEnabledForTilbakekreving(behandlingType, kanHenlegge);
-
-export const getMenytekst = () => intl.formatMessage({ id: 'MenyHenleggIndex.HenleggBehandling' });
+export const getMenytekst = (): string => intl.formatMessage({ id: 'MenyHenleggIndex.HenleggBehandling' });
 
 interface OwnProps {
   behandlingId?: number;
@@ -48,7 +29,7 @@ interface OwnProps {
     årsakKode: string;
     begrunnelse: string;
   }) => Promise<any>;
-  forhandsvisHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
+  forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
   ytelseType: Kodeverk;
   behandlingType: Kodeverk;
   behandlingUuid: string;
@@ -91,7 +72,7 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
     <RawIntlProvider value={intl}>
       {!erHenlagt && (
         <HenleggBehandlingModal
-          showModal
+          // @ts-ignore Fiks denne
           onSubmit={submit}
           cancelEvent={lukkModal}
           previewHenleggBehandling={forhandsvisHenleggBehandling}

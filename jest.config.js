@@ -12,7 +12,10 @@ module.exports = {
       },
       roots: ['<rootDir>/packages/'],
       setupFiles: ['<rootDir>/setup/setup.js'],
-      setupFilesAfterEnv: ['<rootDir>/packages/utils-test/src/setup-test-env.ts'],
+      setupFilesAfterEnv: [
+        '<rootDir>/packages/utils-test/src/setup-test-env.ts',
+        '<rootDir>/packages/utils-test/src/setup-test-env-hooks.ts',
+      ],
       testMatch: ['**/?(*.)+(spec).+(js|jsx|ts|tsx)'],
       testPathIgnorePatterns: ['/node_modules/', '/dist/'],
       transform: {

@@ -1,35 +1,28 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
-import { FormattedMessage } from 'react-intl';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
+import shallowWithIntl from '../i18n/index';
 import Image from './Image';
 
 import AdvarselModal from './AdvarselModal';
 
 describe('<AdvarselModal>', () => {
   it('skal rendre modal', () => {
-    const wrapper = shallowWithIntl(
-      <AdvarselModal.WrappedComponent
-        intl={intlMock}
-        textCode="AdvarselModal.OpenBehandling"
-        showModal
-        submit={sinon.spy()}
-      />,
-    );
+    const wrapper = shallowWithIntl(<AdvarselModal bodyText="Åpne behandling" showModal submit={sinon.spy()} />);
 
     const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(1);
-    expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('AdvarselModal.OpenBehandling');
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('isOpen')).toBe(true);
+    expect(modal.prop('contentLabel')).toEqual('Åpne behandling');
 
     const image = wrapper.find(Image);
-    expect(image).to.have.length(1);
-    expect(image.prop('alt')).to.have.length.above(3);
+    expect(image).toHaveLength(1);
+    expect(image.prop('alt').length).toBeGreaterThan(3);
 
-    const message = wrapper.find(FormattedMessage);
-    expect(message).to.have.length(1);
-    expect(message.prop('id')).is.eql('AdvarselModal.OpenBehandling');
+    const knapp = wrapper.find(Hovedknapp);
+    expect(knapp).toHaveLength(1);
+    expect(knapp.childAt(0).text()).toEqual('OK');
   });
 });

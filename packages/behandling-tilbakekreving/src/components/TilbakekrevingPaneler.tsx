@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { FagsakInfo, BehandlingPaVent, SettPaVentParams, Rettigheter } from '@fpsak-frontend/behandling-felles';
-import { Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
+import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
+import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
@@ -10,7 +9,8 @@ import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fetchedData: FetchedData;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   fpsakKodeverk: { [key: string]: KodeverkMedNavn[] };
@@ -20,16 +20,17 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   harApenRevurdering: boolean;
   hasFetchError: boolean;
-  featureToggles: FeatureToggles;
+  setBehandling: (behandling: Behandling) => void;
 }
 
 const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
   fetchedData,
   fagsak,
+  fagsakPerson,
   behandling,
   kodeverk,
   fpsakKodeverk,
@@ -43,50 +44,45 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
   opneSokeside,
   harApenRevurdering,
   hasFetchError,
-  featureToggles,
-}) => {
-  // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <BehandlingPaVent
-        behandling={behandling}
-        aksjonspunkter={fetchedData.aksjonspunkter}
-        kodeverk={kodeverk}
-        settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
-        erTilbakekreving
-      />
-      <TilbakekrevingProsess
-        data={fetchedData}
-        fagsak={fagsak}
-        behandling={behandling}
-        alleKodeverk={kodeverk}
-        valgtProsessSteg={valgtProsessSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        opneSokeside={opneSokeside}
-        harApenRevurdering={harApenRevurdering}
-        hasFetchError={hasFetchError}
-        dispatch={dispatch}
-        rettigheter={rettigheter}
-        featureToggles={featureToggles}
-      />
-      <TilbakekrevingFakta
-        data={fetchedData}
-        fagsak={fagsak}
-        behandling={behandling}
-        rettigheter={rettigheter}
-        alleKodeverk={kodeverk}
-        fpsakKodeverk={fpsakKodeverk}
-        valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        hasFetchError={hasFetchError}
-        dispatch={dispatch}
-      />
-    </>
-  );
-};
+  setBehandling,
+}) => (
+  <>
+    <BehandlingPaVent
+      behandling={behandling}
+      aksjonspunkter={fetchedData.aksjonspunkter}
+      kodeverk={kodeverk}
+      settPaVent={settPaVent}
+      hentBehandling={hentBehandling}
+      erTilbakekreving
+    />
+    <TilbakekrevingProsess
+      data={fetchedData}
+      fagsak={fagsak}
+      fagsakPerson={fagsakPerson}
+      behandling={behandling}
+      alleKodeverk={kodeverk}
+      valgtProsessSteg={valgtProsessSteg}
+      oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+      opneSokeside={opneSokeside}
+      harApenRevurdering={harApenRevurdering}
+      hasFetchError={hasFetchError}
+      rettigheter={rettigheter}
+      setBehandling={setBehandling}
+    />
+    <TilbakekrevingFakta
+      data={fetchedData}
+      fagsak={fagsak}
+      behandling={behandling}
+      rettigheter={rettigheter}
+      alleKodeverk={kodeverk}
+      fpsakKodeverk={fpsakKodeverk}
+      valgtFaktaSteg={valgtFaktaSteg}
+      oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      hasFetchError={hasFetchError}
+      setBehandling={setBehandling}
+    />
+  </>
+);
 
 export default TilbakekrevingPaneler;

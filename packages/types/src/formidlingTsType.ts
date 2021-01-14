@@ -5,7 +5,7 @@ type ForhåndsvisRequest = Readonly<{
   ytelseType: any;
   saksnummer: string;
   aktørId: string;
-  avsenderApplikasjon: Kodeverk;
+  avsenderApplikasjon: string;
   dokumentMal: Kodeverk;
   dokumentdata?: any;
 }>;

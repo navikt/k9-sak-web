@@ -3,16 +3,16 @@ import React from 'react';
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
-import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <CheckPersonStatusIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_PERSONSTATUS];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.MEDLEMSKAP];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.MEDLEMSKAP];
 
   getData = ({ personopplysninger }) => ({
     personopplysninger,

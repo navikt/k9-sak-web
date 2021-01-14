@@ -1,8 +1,14 @@
 import React, { FunctionComponent, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
+import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import {
+  Fagsak,
+  KodeverkMedNavn,
+  Behandling,
+  FeatureToggles,
+  ArbeidsgiverOpplysningerPerId,
+  FagsakPerson,
+} from '@k9-sak-web/types';
 
 import FrisinnProsess from './FrisinnProsess';
 import FrisinnFakta from './FrisinnFakta';
@@ -10,18 +16,21 @@ import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fetchedData: FetchedData;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
-  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
+  setBehandling: (behandling: Behandling) => void;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
 }
 
@@ -33,6 +42,7 @@ interface FaktaPanelInfo {
 const FrisinnPaneler: FunctionComponent<OwnProps> = ({
   fetchedData,
   fagsak,
+  fagsakPerson,
   behandling,
   alleKodeverk,
   rettigheter,
@@ -45,10 +55,10 @@ const FrisinnPaneler: FunctionComponent<OwnProps> = ({
   opneSokeside,
   hasFetchError,
   featureToggles,
+  setBehandling,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
-  // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -62,6 +72,7 @@ const FrisinnPaneler: FunctionComponent<OwnProps> = ({
       <FrisinnProsess
         data={fetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
         rettigheter={rettigheter}
@@ -73,12 +84,14 @@ const FrisinnPaneler: FunctionComponent<OwnProps> = ({
         hasFetchError={hasFetchError}
         featureToggles={featureToggles}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
-        dispatch={dispatch}
+        setBehandling={setBehandling}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
       <FrisinnFakta
         behandling={behandling}
         data={fetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         alleKodeverk={alleKodeverk}
         rettigheter={rettigheter}
         hasFetchError={hasFetchError}
@@ -86,7 +99,8 @@ const FrisinnPaneler: FunctionComponent<OwnProps> = ({
         valgtProsessSteg={valgtProsessSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         setApentFaktaPanel={setApentFaktaPanel}
-        dispatch={dispatch}
+        setBehandling={setBehandling}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     </>
   );

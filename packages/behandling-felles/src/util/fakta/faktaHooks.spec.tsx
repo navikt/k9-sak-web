@@ -1,20 +1,17 @@
 import React from 'react';
-import { expect } from 'chai';
+import { IntlShape } from 'react-intl';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { Dispatch } from 'redux';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 import FaktaPanelDef from './FaktaPanelDef';
 import faktaHooks from './faktaHooks';
@@ -28,17 +25,9 @@ const testHook = callback => shallow(<HookWrapper callback={callback} />);
 describe('<faktaHooks>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
-  };
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
   const behandling = {
     id: 1,
     versjon: 2,
@@ -91,7 +80,7 @@ describe('<faktaHooks>', () => {
       },
     ];
     const valgtFaktaSteg = 'default';
-    const intl = { formatMessage: data => data.id };
+    const intl = { formatMessage: data => data.id } as IntlShape;
 
     const wrapper = testHook(() =>
       faktaHooks.useFaktaPaneler(
@@ -109,9 +98,9 @@ describe('<faktaHooks>', () => {
       [],
     );
 
-    expect(faktaPaneler[0].getPanelDef()).to.eql(panelDef);
-    expect(faktaPaneler[0].getHarApneAksjonspunkter()).is.true;
-    expect(faktaPaneler[0].getKomponentData(rettigheter, ekstraPanelData, false)).to.eql({
+    expect(faktaPaneler[0].getPanelDef()).toEqual(panelDef);
+    expect(faktaPaneler[0].getHarApneAksjonspunkter()).toBe(true);
+    expect(faktaPaneler[0].getKomponentData(rettigheter, ekstraPanelData, false)).toEqual({
       aksjonspunkter: [aksjonspunkter[0]],
       readOnly: false,
       submittable: true,
@@ -123,8 +112,8 @@ describe('<faktaHooks>', () => {
       inntektArbeidYtelse: ekstraPanelData.inntektArbeidYtelse,
     });
 
-    expect(valgtPanel.getUrlKode()).to.eql(faktaPaneler[0].getUrlKode());
-    expect(formaterteFaktaPaneler).to.eql([
+    expect(valgtPanel.getUrlKode()).toEqual(faktaPaneler[0].getUrlKode());
+    expect(formaterteFaktaPaneler).toEqual([
       {
         erAktiv: true,
         harAksjonspunkt: true,
@@ -147,16 +136,11 @@ describe('<faktaHooks>', () => {
 
     const panelUtledet = new FaktaPanelUtledet(panelDef, aksjonspunkter, behandling);
 
-    const dispatch = () => Promise.resolve();
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const makeRestApiRequest = sinon.spy();
+    const lagreAksjonspunkter = sinon.stub();
+    lagreAksjonspunkter.returns(Promise.resolve());
     const overstyringApCodes = [];
     const valgtProsessSteg = 'default';
-    const behandlingApi: Partial<{ [name: string]: Partial<EndpointOperations> }> = {
-      SAVE_AKSJONSPUNKT: {
-        makeRestApiRequest: () => data => makeRestApiRequest(data),
-      },
-    };
 
     const wrapper = testHook(() =>
       faktaHooks.useCallbacks(
@@ -166,8 +150,7 @@ describe('<faktaHooks>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl,
         valgtProsessSteg,
         overstyringApCodes,
-        behandlingApi as { [name: string]: EndpointOperations },
-        dispatch as Dispatch,
+        lagreAksjonspunkter,
       ),
     );
     const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = Object.values(wrapper.find('div').props()).reduce(
@@ -178,10 +161,10 @@ describe('<faktaHooks>', () => {
     velgFaktaPanelCallback(0);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql(DEFAULT_FAKTA_KODE);
-    expect(opppdaterKall[0].args[1]).to.eql('arbeidsforhold');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0].args[1]).toEqual('arbeidsforhold');
 
     const aksjonspunkterSomSkalLagres = [
       {
@@ -190,10 +173,10 @@ describe('<faktaHooks>', () => {
     ];
     bekreftAksjonspunktCallback(aksjonspunkterSomSkalLagres);
 
-    const requestKall = makeRestApiRequest.getCalls();
-    expect(requestKall).to.have.length(1);
-    expect(requestKall[0].args).to.have.length(1);
-    expect(requestKall[0].args[0]).to.eql({
+    const requestKall = lagreAksjonspunkter.getCalls();
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,

@@ -156,7 +156,6 @@ describe('<TilbakekrevingVedtakForm>', () => {
             underavsnittsliste: [
               {
                 fritekstTillatt: false,
-                fritekstPåkrevet: true,
               },
             ],
           },

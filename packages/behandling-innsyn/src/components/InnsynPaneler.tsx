@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
+import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
 
 import InnsynProsess from './InnsynProsess';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   fetchedData: FetchedData;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
@@ -17,13 +17,15 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  hentBehandling: (params: { behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
+  setBehandling: (behandling: Behandling) => void;
   featureToggles: FeatureToggles;
 }
 
 const InnsynPaneler: FunctionComponent<OwnProps> = ({
   fagsak,
+  fagsakPerson,
   behandling,
   fetchedData,
   kodeverk,
@@ -34,35 +36,32 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
   settPaVent,
   hentBehandling,
   opneSokeside,
+  setBehandling,
   featureToggles,
-}) => {
-  // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <BehandlingPaVent
-        behandling={behandling}
-        aksjonspunkter={fetchedData.aksjonspunkter}
-        kodeverk={kodeverk}
-        settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
-      />
-      <InnsynProsess
-        fagsak={fagsak}
-        behandling={behandling}
-        data={fetchedData}
-        alleKodeverk={kodeverk}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        opneSokeside={opneSokeside}
-        dispatch={dispatch}
-        featureToggles={featureToggles}
-      />
-    </>
-  );
-};
+}) => (
+  <>
+    <BehandlingPaVent
+      behandling={behandling}
+      aksjonspunkter={fetchedData.aksjonspunkter}
+      kodeverk={kodeverk}
+      settPaVent={settPaVent}
+      hentBehandling={hentBehandling}
+    />
+    <InnsynProsess
+      fagsak={fagsak}
+      fagsakPerson={fagsakPerson}
+      behandling={behandling}
+      data={fetchedData}
+      alleKodeverk={kodeverk}
+      rettigheter={rettigheter}
+      valgtProsessSteg={valgtProsessSteg}
+      oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+      opneSokeside={opneSokeside}
+      setBehandling={setBehandling}
+      featureToggles={featureToggles}
+    />
+  </>
+);
 
 export default InnsynPaneler;

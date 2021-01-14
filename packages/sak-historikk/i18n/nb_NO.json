@@ -13,6 +13,10 @@
   "Historikk.ikkeGodkjent": "må vurderes på nytt",
   "Historikk.godkjentKomplett": "Er godkjent",
   "Historikk.ikkeGodkjentKomplett": "Må vurderes på nytt",
+  "Historikk.FinnerIngenMal": "Kan ikke finne mal for dette historikkinnslaget",
+
+  "BubbleText.LukkeTekstfelt": "Lukke tekstfelt",
+  "BubbleText.ApneTekstfelt": "Åpne tekstfelt",
 
   "Historikk.Utgått": "{tag} (utgått)",
   "Historikk.Template.5.ChangedFromTo": "<b>{fieldName}</b> endret fra {fromValue} til <b>{toValue}</b>",

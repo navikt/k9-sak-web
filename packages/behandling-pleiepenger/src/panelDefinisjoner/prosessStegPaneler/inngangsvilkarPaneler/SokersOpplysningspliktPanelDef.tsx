@@ -4,7 +4,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
-import { ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 class SokersOpplysningspliktPanelDef extends ProsessStegPanelDef {
   getId = () => 'SOKERS_OPPLYSNINGSPLIKT';

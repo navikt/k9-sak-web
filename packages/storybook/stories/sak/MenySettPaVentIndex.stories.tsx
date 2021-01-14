@@ -31,5 +31,6 @@ export const visMenyForÅSetteBehandlingPåVent = () => (
       },
     ]}
     lukkModal={action('button-click')}
+    erTilbakekreving={false}
   />
 );

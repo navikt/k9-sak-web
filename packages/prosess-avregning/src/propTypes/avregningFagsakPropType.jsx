@@ -4,7 +4,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const avregningFagsakPropType = PropTypes.shape({
   saksnummer: PropTypes.string.isRequired,
-  fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  sakstype: kodeverkObjektPropType.isRequired,
 });
 
 export default avregningFagsakPropType;

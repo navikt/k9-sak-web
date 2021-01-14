@@ -1,27 +1,36 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
-import { Dispatch } from 'redux';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo,
   prosessStegHooks,
   FatterVedtakStatusModal,
   ProsessStegPanel,
   ProsessStegContainer,
   Rettigheter,
-} from '@fpsak-frontend/behandling-felles';
-import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
+import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 
-import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
+import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
+const forhandsvis = data => {
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(data);
+  } else if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
+
 interface OwnProps {
   data: FetchedData;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -30,15 +39,9 @@ interface OwnProps {
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
-  dispatch: Dispatch;
   harApenRevurdering: boolean;
-  featureToggles: FeatureToggles;
+  setBehandling: (behandling: Behandling) => void;
 }
-
-const getForhandsvisCallback = dispatch => data =>
-  dispatch(tilbakekrevingApi.PREVIEW_VEDTAKSBREV.makeRestApiRequest()(data));
-
-const getBeregnBelopCallback = dispatch => data => dispatch(tilbakekrevingApi.BEREGNE_BELØP.makeRestApiRequest()(data));
 
 const getLagringSideeffekter = (
   toggleFatterVedtakModal,
@@ -60,9 +63,10 @@ const getLagringSideeffekter = (
   };
 };
 
-const TilbakekrevingProsess: FunctionComponent<OwnProps> = ({
+const TilbakekrevingProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   data,
   fagsak,
+  fagsakPerson,
   behandling,
   alleKodeverk,
   rettigheter,
@@ -72,17 +76,36 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   harApenRevurdering,
-  dispatch,
-  featureToggles,
+  setBehandling,
+  intl,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
     oppdaterBehandlingVersjon,
   );
 
+  const {
+    startRequest: lagreAksjonspunkter,
+    data: apBehandlingRes,
+  } = restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
+
+  const { startRequest: beregnBelop } = restApiTilbakekrevingHooks.useRestApiRunner(
+    TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP,
+  );
+  const { startRequest: forhandsvisVedtaksbrev } = restApiTilbakekrevingHooks.useRestApiRunner(
+    TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV,
+  );
+
+  const fetchPreviewVedtaksbrev = useCallback(
+    param => forhandsvisVedtaksbrev(param).then(response => forhandsvis(response)),
+    [],
+  );
+
   const dataTilUtledingAvTilbakekrevingPaneler = {
-    beregnBelop: useCallback(getBeregnBelopCallback(dispatch), [behandling.versjon]),
-    fetchPreviewVedtaksbrev: useCallback(getForhandsvisCallback(dispatch), [behandling.versjon]),
+    fagsakPerson,
+    beregnBelop,
+    fetchPreviewVedtaksbrev,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
@@ -119,8 +142,8 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps> = ({
     <>
       {visApenRevurderingModal && (
         <AdvarselModal
-          headerTextCode="BehandlingTilbakekrevingIndex.ApenRevurderingHeader"
-          textCode="BehandlingTilbakekrevingIndex.ApenRevurdering"
+          headerText={intl.formatMessage({ id: 'BehandlingTilbakekrevingIndex.ApenRevurderingHeader' })}
+          bodyText={intl.formatMessage({ id: 'BehandlingTilbakekrevingIndex.ApenRevurdering' })}
           showModal
           submit={lukkApenRevurderingModal}
         />
@@ -144,13 +167,12 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps> = ({
           alleKodeverk={alleKodeverk}
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           lagringSideeffekterCallback={lagringSideeffekterCallback}
-          behandlingApi={tilbakekrevingApi}
-          dispatch={dispatch}
-          featureToggles={featureToggles}
+          lagreAksjonspunkter={lagreAksjonspunkter}
+          useMultipleRestApi={restApiTilbakekrevingHooks.useMultipleRestApi}
         />
       </ProsessStegContainer>
     </>
   );
 };
 
-export default TilbakekrevingProsess;
+export default injectIntl(TilbakekrevingProsess);

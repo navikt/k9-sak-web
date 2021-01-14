@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
@@ -27,27 +26,27 @@ describe('<TabMeny>', () => {
     const wrapper = shallow(<TabMeny tabs={tabs} onClick={() => undefined} />);
 
     const kolonne = wrapper.find(FlexColumn);
-    expect(kolonne).has.length(2);
+    expect(kolonne).toHaveLength(2);
 
     const knapp1 = kolonne.first().find('button');
-    expect(knapp1.prop('className')).is.eql('button active');
-    expect(knapp1.prop('data-tooltip')).is.eql('Historikk');
-    expect(knapp1.prop('disabled')).is.false;
+    expect(knapp1.prop('className')).toEqual('button active');
+    expect(knapp1.prop('data-tooltip')).toEqual('Historikk');
+    expect(knapp1.prop('disabled')).toBe(false);
 
     const svgPlaceholder1 = knapp1.find('div');
-    expect(svgPlaceholder1.prop('isActive')).is.true;
-    expect(svgPlaceholder1.prop('isDisabled')).is.false;
-    expect(svgPlaceholder1.prop('alt')).is.eql('Historikk');
+    expect(svgPlaceholder1.prop('isActive')).toBe(true);
+    expect(svgPlaceholder1.prop('isDisabled')).toBe(false);
+    expect(svgPlaceholder1.prop('alt')).toEqual('Historikk');
 
     const knapp2 = kolonne.last().find('button');
-    expect(knapp2.prop('className')).is.eql('button');
-    expect(knapp2.prop('data-tooltip')).is.eql('Send melding');
-    expect(knapp2.prop('disabled')).is.true;
+    expect(knapp2.prop('className')).toEqual('button');
+    expect(knapp2.prop('data-tooltip')).toEqual('Send melding');
+    expect(knapp2.prop('disabled')).toBe(true);
 
     const svgPlaceholder2 = knapp2.find('div');
-    expect(svgPlaceholder2.prop('isActive')).is.false;
-    expect(svgPlaceholder2.prop('isDisabled')).is.true;
-    expect(svgPlaceholder2.prop('alt')).is.eql('Send melding');
+    expect(svgPlaceholder2.prop('isActive')).toBe(false);
+    expect(svgPlaceholder2.prop('isDisabled')).toBe(true);
+    expect(svgPlaceholder2.prop('alt')).toEqual('Send melding');
   });
 
   it('skal velge Send melding ved trykk på knapp', () => {
@@ -76,9 +75,9 @@ describe('<TabMeny>', () => {
     const knappFn = knapp.prop('onClick') as () => void;
     knappFn();
 
-    expect(onClick.getCalls()).has.length(1);
+    expect(onClick.getCalls()).toHaveLength(1);
     const { args } = onClick.getCalls()[0];
-    expect(args).has.length(1);
-    expect(args[0]).is.eql(1);
+    expect(args).toHaveLength(1);
+    expect(args[0]).toEqual(1);
   });
 });

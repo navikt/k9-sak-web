@@ -9,9 +9,9 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import SarligGrunn from '../kodeverk/sarligGrunn';
 import Aktsomhet from '../kodeverk/aktsomhet';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
-import {CustomVilkarsVurdertePeriode, TilbakekrevingPeriodeFormImpl} from './TilbakekrevingPeriodeForm';
+import { CustomVilkarsVurdertePeriode, TilbakekrevingPeriodeFormImpl } from './TilbakekrevingPeriodeForm';
 import vilkarResultat from '../kodeverk/vilkarResultat';
-import DataForPeriode from "../types/dataForPeriodeTsType";
+import DataForPeriode from '../types/dataForPeriodeTsType';
 
 describe('<TilbakekrevingPeriodeForm>', () => {
   const sarligGrunnTyper = [
@@ -51,7 +51,6 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     } as DataForPeriode;
     const wrapper = shallow(
       <TilbakekrevingPeriodeFormImpl
-        periode={periode}
         data={periode}
         behandlingFormPrefix="behandling_V1"
         skjulPeriode={() => undefined}

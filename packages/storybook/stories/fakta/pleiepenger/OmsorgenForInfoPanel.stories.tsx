@@ -1,17 +1,15 @@
 import * as React from 'react';
+import { action } from '@storybook/addon-actions';
+
 import OmsorgenForFaktaIndex from '@fpsak-frontend/fakta-omsorgen-for/src/OmsorgenForFaktaIndex';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { Behandling, OmsorgenFor, Personopplysninger } from '@k9-sak-web/types';
+
 import withReduxProvider from '../../../decorators/withRedux';
 
 const behandling = {
   id: 1,
   versjon: 1,
-};
-
-const toggle = (openInfoPanels, togglePanel) => value => {
-  const exists = openInfoPanels.some(op => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
+} as Behandling;
 
 export default {
   title: 'fakta/pleiepenger/fakta-omsorgen-for',
@@ -20,15 +18,16 @@ export default {
 };
 
 export const visFaktaOmAlderOgOmsorg = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.OMSORGEN_FOR]);
   return (
     <OmsorgenForFaktaIndex
       behandling={behandling}
+      personopplysninger={{} as Personopplysninger}
+      omsorgenFor={{} as OmsorgenFor}
+      submitCallback={action('button-click')}
+      harApneAksjonspunkter
+      submittable
       aksjonspunkter={[]}
-      openInfoPanels={openInfoPanels}
       readOnly
-      shouldOpenDefaultInfoPanels
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
     />
   );
 };

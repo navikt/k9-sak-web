@@ -1,29 +1,23 @@
-import {
-  ReduxEvents,
-  ReduxRestApiBuilder,
-  RestApiConfigBuilder,
-  reducerRegistry,
-  setRequestPollingMessage,
-} from '@fpsak-frontend/rest-api-redux';
-import errorHandler from '@fpsak-frontend/error-api-redux';
+import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
+import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
-export const AnkeBehandlingApiKeys = {
-  BEHANDLING_ANKE: 'BEHANDLING_ANKE',
-  AKSJONSPUNKTER: 'AKSJONSPUNKTER',
-  VILKAR: 'VILKAR',
-  ANKE_VURDERING: 'ANKE_VURDERING',
-  BEHANDLING_NY_BEHANDLENDE_ENHET: 'BEHANDLING_NY_BEHANDLENDE_ENHET',
-  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
-  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
-  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
-  UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
-  SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
-  PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  SAVE_ANKE_VURDERING: 'SAVE_ANKE_VURDERING',
-  SAVE_REOPEN_ANKE_VURDERING: 'SAVE_REOPEN_ANKE_VURDERING',
-  DOKUMENTDATA_LAGRE: 'DOKUMENTDATA_LAGRE',
-  DOKUMENTDATA_HENTE: 'DOKUMENTDATA_HENTE',
-};
+// NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
+
+export enum AnkeBehandlingApiKeys {
+  BEHANDLING_ANKE = 'BEHANDLING_ANKE',
+  AKSJONSPUNKTER = 'AKSJONSPUNKTER',
+  VILKAR = 'VILKAR',
+  ANKE_VURDERING = 'ANKE_VURDERING',
+  BEHANDLING_NY_BEHANDLENDE_ENHET = 'BEHANDLING_NY_BEHANDLENDE_ENHET',
+  HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
+  RESUME_BEHANDLING = 'RESUME_BEHANDLING',
+  BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
+  UPDATE_ON_HOLD = 'UPDATE_ON_HOLD',
+  SAVE_AKSJONSPUNKT = 'SAVE_AKSJONSPUNKT',
+  PREVIEW_MESSAGE = 'PREVIEW_MESSAGE',
+  SAVE_ANKE_VURDERING = 'SAVE_ANKE_VURDERING',
+  SAVE_REOPEN_ANKE_VURDERING = 'SAVE_REOPEN_ANKE_VURDERING',
+}
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/sak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE)
@@ -34,44 +28,23 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
   // operasjoner
+  // TODO Flytt alle endepunkter under til backend på same måte som i fp-frontend
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', AnkeBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', AnkeBehandlingApiKeys.RESUME_BEHANDLING, {
-    saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
-  })
+  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', AnkeBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', AnkeBehandlingApiKeys.BEHANDLING_ON_HOLD)
-
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
-  })
-
+  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT)
   .withAsyncPost('/k9/sak/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
   .withAsyncPost(
     '/k9/sak/api/behandling/anke/mellomlagre-gjennapne-anke',
     AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING,
-    {
-      saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
-    },
   )
 
   /* K9FORMIDLING */
-  .withPostAndOpenBlob('/k9/formidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withRel('dokumentdata-lagre', AnkeBehandlingApiKeys.DOKUMENTDATA_LAGRE)
-  .withRel('dokumentdata-hente', AnkeBehandlingApiKeys.DOKUMENTDATA_HENTE)
+  .withPost('/k9/formidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
   .build();
 
-const reducerName = 'dataContextAnkeBehandling';
+export const requestAnkeApi = createRequestApi(endpoints);
 
-export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withReduxEvents(
-    new ReduxEvents()
-      .withErrorActionCreator(errorHandler.getErrorActionCreator())
-      .withPollingMessageActionCreator(setRequestPollingMessage),
-  )
-  .build();
-
-reducerRegistry.register(reducerName, reduxRestApi.getDataReducer());
-
-const ankeBehandlingApi = reduxRestApi.getEndpointApi();
-export default ankeBehandlingApi;
+export const restApiAnkeHooks = RestApiHooks.initHooks(requestAnkeApi);

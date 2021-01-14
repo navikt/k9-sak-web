@@ -4,16 +4,16 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
-import frisinnBehandlingApi from '../../data/frisinnBehandlingApi';
+import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <AvregningProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_FEILUTBETALING];
 
-  getEndepunkter = () => [frisinnBehandlingApi.TILBAKEKREVINGVALG];
+  getEndepunkter = () => [FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG];
 
   getOverstyrVisningAvKomponent = () => true;
 

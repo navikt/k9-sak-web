@@ -1,26 +1,30 @@
-import OppgittOpptjeningRevurdering from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
-import { action } from '@storybook/addon-actions';
 import * as React from 'react';
+import { action } from '@storybook/addon-actions';
+
+import OppgittOpptjeningRevurdering from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
+import { Behandling, OpplysningerFraSøknaden } from '@k9-sak-web/types';
+
 import withReduxProvider from '../../decorators/withRedux';
 
 const behandling = {
   id: 1,
   versjon: 1,
-};
+} as Behandling;
 
-const aksjonspunkter = [ {
-  definisjon: {
-    kode: '8004',
-    kodeverk: 'AKSJONSPUNKT_DEFINISJON'
+const aksjonspunkter = [
+  {
+    definisjon: {
+      kode: '8004',
+      kodeverk: 'AKSJONSPUNKT_DEFINISJON',
+    },
+    begrunnelse: 'Dette akjsonspunktet har blitt løst tidligere',
+    status: {
+      kode: 'OPPR',
+      kodeverk: 'AKSJONSPUNKT_STATUS',
+    },
+    kanLoses: true,
+    erAktivt: true,
   },
-  begrunnelse: "Dette akjsonspunktet har blitt løst tidligere",
-  status: {
-    kode: 'OPPR',
-    kodeverk: 'AKSJONSPUNKT_STATUS'
-  },
-  kanLoses: true,
-  erAktivt: true,
-}
 ];
 
 const opplysningerFraSøknaden = {
@@ -95,7 +99,7 @@ const opplysningerFraSøknaden = {
       søkerSN: true,
     },
   ],
-};
+} as OpplysningerFraSøknaden;
 
 export default {
   title: 'fakta/fakta-opplysninger-fra-søknaden',

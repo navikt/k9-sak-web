@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
@@ -8,8 +7,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Behandling } from '@k9-sak-web/types';
-
-import BehandlingPaVentModal from './BehandlingPaVentModal';
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import BehandlingPaVent from './BehandlingPaVent';
 
@@ -43,7 +41,7 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    expect(wrapper.find(BehandlingPaVentModal)).to.have.length(0);
+    expect(wrapper.find(SettPaVentModalIndex)).toHaveLength(0);
   });
 
   it('skal vise modal når behandling er på vent', () => {
@@ -62,9 +60,9 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    const modal = wrapper.find(BehandlingPaVentModal);
-    expect(modal).to.have.length(1);
-    expect(modal.prop('hasManualPaVent')).to.false;
+    const modal = wrapper.find(SettPaVentModalIndex);
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('hasManualPaVent')).toBe(false);
   });
 
   it('skal vise modal og så skjule den ved trykk på knapp', () => {
@@ -83,12 +81,12 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    const modal = wrapper.find(BehandlingPaVentModal);
-    expect(modal).to.have.length(1);
+    const modal = wrapper.find(SettPaVentModalIndex);
+    expect(modal).toHaveLength(1);
 
     modal.prop('cancelEvent')();
 
-    expect(wrapper.find(BehandlingPaVentModal)).to.have.length(0);
+    expect(wrapper.find(SettPaVentModalIndex)).toHaveLength(0);
   });
 
   it('skal markeres som automatisk satt på vent når en har åpent aksjonspunkt for auto-manuelt satt på vent', () => {
@@ -120,9 +118,9 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    const modal = wrapper.find(BehandlingPaVentModal);
-    expect(modal).to.have.length(1);
-    expect(modal.prop('hasManualPaVent')).to.true;
+    const modal = wrapper.find(SettPaVentModalIndex);
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('hasManualPaVent')).toBe(true);
   });
 
   it('skal oppdatere på-vent-informasjon og så hente behandling på nytt', async () => {
@@ -145,27 +143,25 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    const modal = wrapper.find(BehandlingPaVentModal);
+    const modal = wrapper.find(SettPaVentModalIndex);
 
-    await modal.prop('onSubmit')({ dato: '10.10.2019' });
+    await modal.prop('submitCallback')({ dato: '10.10.2019' });
 
     const calls = settPaVentCallback.getCalls();
-    expect(calls).to.have.length(1);
-    expect(calls[0].args).to.have.length(1);
-    expect(calls[0].args[0]).to.eql({
+    expect(calls).toHaveLength(1);
+    expect(calls[0].args).toHaveLength(1);
+    expect(calls[0].args[0]).toEqual({
       behandlingId: 1,
       behandlingVersjon: 1,
       dato: '10.10.2019',
     });
 
     const calls2 = hentBehandlingCallback.getCalls();
-    expect(calls2).to.have.length(1);
-    expect(calls2[0].args).to.have.length(2);
-    expect(calls2[0].args[0]).to.eql({
+    expect(calls2).toHaveLength(1);
+    expect(calls2[0].args).toHaveLength(2);
+    expect(calls2[0].args[0]).toEqual({
       behandlingId: 1,
     });
-    expect(calls2[0].args[1]).to.eql({
-      keepData: false,
-    });
+    expect(calls2[0].args[1]).toBe(false);
   });
 });

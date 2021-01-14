@@ -8,7 +8,7 @@ import { ReactComponent as TilBeslutterSvg } from '@fpsak-frontend/assets/images
 import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
 
 import TabMeny from './components/TabMeny';
-import supportTabs from './supportTabs';
+import SupportTabs from './supportTabs';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -22,7 +22,7 @@ const intl = createIntl(
   cache,
 );
 
-const getStyle = (isActive, isDisabled) => {
+const getStyle = (isActive: boolean, isDisabled: boolean) => {
   if (isDisabled) {
     return { fill: '#c6c2bf' };
   }
@@ -30,29 +30,29 @@ const getStyle = (isActive, isDisabled) => {
 };
 
 const TABS = {
-  [supportTabs.APPROVAL]: {
+  [SupportTabs.TIL_BESLUTTER]: {
     getSvg: (isActive, isDisabled, props) => <TilBeslutterSvg {...props} style={getStyle(isActive, isDisabled)} />,
     tooltipTextCode: 'SupportMenySakIndex.Godkjenning',
   },
-  [supportTabs.RETURNED]: {
+  [SupportTabs.FRA_BESLUTTER]: {
     getSvg: (isActive, isDisabled, props) => <FraBeslutterSvg {...props} style={getStyle(isActive, isDisabled)} />,
     tooltipTextCode: 'SupportMenySakIndex.FraBeslutter',
   },
-  [supportTabs.HISTORY]: {
+  [SupportTabs.HISTORIKK]: {
     getSvg: (isActive, isDisabled, props) => <HistorikkSvg {...props} style={getStyle(isActive, isDisabled)} />,
     tooltipTextCode: 'SupportMenySakIndex.Historikk',
   },
-  [supportTabs.MESSAGES]: {
+  [SupportTabs.MELDINGER]: {
     getSvg: (isActive, isDisabled, props) => <SendMeldingSvg {...props} style={getStyle(isActive, isDisabled)} />,
     tooltipTextCode: 'SupportMenySakIndex.Melding',
   },
-  [supportTabs.DOCUMENTS]: {
+  [SupportTabs.DOKUMENTER]: {
     getSvg: (isActive, isDisabled, props) => <DokumenterSvg {...props} style={getStyle(isActive, isDisabled)} />,
     tooltipTextCode: 'SupportMenySakIndex.Dokumenter',
   },
 };
 
-const lagTabs = (tilgjengeligeTabs, valgbareTabs, valgtIndex) =>
+const lagTabs = (tilgjengeligeTabs: string[], valgbareTabs: string[], valgtIndex?: number) =>
   Object.keys(TABS)
     .filter(key => tilgjengeligeTabs.includes(key))
     .map((key, index) => ({

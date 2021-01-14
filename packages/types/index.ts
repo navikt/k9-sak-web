@@ -1,6 +1,5 @@
 export { default as Aksjonspunkt } from './src/aksjonspunktTsType';
 export { default as Arbeidsforhold } from './src/arbeidsforholdTsType';
-export { default as ArbeidsgiverOpplysningerPerId } from './src/arbeidsgiverOpplysningerTsType';
 export { default as Behandling } from './src/behandlingTsType';
 export { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsType';
 export { default as BeregningsresultatFp } from './src/beregningsresultatFpTsType';
@@ -9,7 +8,7 @@ export { default as InntektArbeidYtelse } from './src/inntektArbeidYtelseTsType'
 export { default as Kodeverk } from './src/kodeverkTsType';
 export { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
 export { default as NavAnsatt } from './src/navAnsattTsType';
-export { default as Personopplysninger } from './src/personopplysningerTsType';
+export { default as Personopplysninger, PersonopplysningAdresse } from './src/personopplysningerTsType';
 export { default as SimuleringResultat } from './src/simuleringResultatTsType';
 export { default as Soknad } from './src/soknadTsType';
 export { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsType';
@@ -30,7 +29,6 @@ export { default as Rammevedtak } from './src/omsorgspenger/Rammevedtak';
 export { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknaden';
 export { default as FagsakPerson } from './src/fagsakPersonTsType';
 export { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
-export { default as FagsakInfo } from './src/fagsakInfoTsType';
 export { default as FeatureToggles } from './src/featureTogglesTsType';
 export {
   BeregningsresultatUtbetalt,
@@ -46,3 +44,34 @@ export {
   VurderteVilkår,
   VilkårEnum,
 } from './src/omsorgspenger/Uttaksperiode';
+export { default as Aktor } from './src/aktorTsType';
+export { default as BehandlingAppKontekst } from './src/behandlingAppKontekstTsType';
+export {
+  default as Historikkinnslag,
+  HistorikkInnslagDokumentLink,
+  HistorikkinnslagDel,
+  HistorikkinnslagEndretFelt,
+  HistorikkInnslagOpplysning,
+  HistorikkInnslagAksjonspunkt,
+} from './src/historikkinnslagTsType';
+export { default as KlageVurdering, KlageVurderingResultat } from './src/klageVurderingTsType';
+export {
+  default as TotrinnskontrollAksjonspunkt,
+  TotrinnskontrollArbeidsforhold,
+  OpptjeningAktiviteter,
+  TotrinnsBeregningDto,
+} from './src/totrinnskontrollAksjonspunktTsType';
+export { default as TotrinnskontrollSkjermlenkeContext } from './src/totrinnskontrollSkjermlenkeContextTsType';
+export { default as AnkeVurdering } from './src/ankeVurderingTsType';
+export { default as Innsyn, InnsynDokument, InnsynVedtaksdokument } from './src/innsynTsType';
+export { default as FeilutbetalingFakta } from './src/feilutbetalingFaktaTsType';
+export { default as FeilutbetalingPerioderWrapper, FeilutbetalingPeriode } from './src/feilutbetalingPerioderTsType';
+export {
+  default as BeregningsresultatTilbakekreving,
+  BeregningResultatPeriode,
+} from './src/beregningsresultatTilbakekrevingTsType';
+export {
+  default as ArbeidsgiverOpplysningerPerId,
+  ArbeidsgiverOpplysningerWrapper,
+  ArbeidsgiverOpplysninger,
+} from './src/arbeidsgiverOpplysningerTsType';

@@ -14,14 +14,6 @@ const featureToggles = [
     value: process.env.UNNTAKSBEHANDLING,
   },
   {
-    key: 'KLAGEBEHANDLING',
-    value: process.env.KLAGEBEHANDLING,
-  },
-  {
-    key: 'TILBAKE',
-    value: process.env.TILBAKE,
-  },
-  {
     key: 'PERIODISERTE_NOKKELTALL',
     value: process.env.PERIODISERTE_NOKKELTALL,
   },

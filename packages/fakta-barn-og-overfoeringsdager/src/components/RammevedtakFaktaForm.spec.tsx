@@ -19,7 +19,13 @@ describe('<RammevedtakFaktaFormImpl>', () => {
 
   it('rendrer barn, overføringer og midlertidig aleneansvar-seksjoner', () => {
     const wrapper = shallowWithIntl(
-      <RammevedtakFaktaFormImpl {...reduxFormPropsMock} formValues={formValues} rammevedtak={[]} />,
+      <RammevedtakFaktaFormImpl
+        {...reduxFormPropsMock}
+        formValues={formValues}
+        rammevedtak={[]}
+        behandlingId={1}
+        behandlingVersjon={2}
+      />,
     );
 
     expect(wrapper.find(Seksjon)).to.have.length(3);

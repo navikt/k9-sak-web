@@ -1,0 +1,12 @@
+{
+  "name": "@k9-sak-web/rest-api-hooks",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "^16.14.0",
+    "@k9-sak-web/rest-api": "1.0.0"
+  },
+  "devDependencies": {}
+}

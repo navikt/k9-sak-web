@@ -2,9 +2,9 @@ import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
-import { ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
-import pleiepengerBehandlingApi from '../../../data/pleiepengerBehandlingApi';
+import { PleiepengerBehandlingApiKeys } from '../../../data/pleiepengerBehandlingApi';
 
 class VurderSoknadsfristPanelDef extends ProsessStegPanelDef {
   getId = () => 'VURDER_SOKNADSFRIST';
@@ -15,7 +15,7 @@ class VurderSoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER];
 
-  getEndepunkter = () => [pleiepengerBehandlingApi.UTTAK_PERIODE_GRENSE];
+  getEndepunkter = () => [PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE];
 
   getData = ({ soknad }) => ({ soknad });
 }

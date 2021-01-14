@@ -129,31 +129,37 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
   barna: [],
 });
 
-// @ts-ignore
-const behandling: Behandling = {
+const behandling = {
   id: 1,
   versjon: 1,
-};
+} as Behandling;
 
-// @ts-ignore
-const aksjonspunkterForSteg: Aksjonspunkt[] = [{}];
+const aksjonspunkterForSteg = [{}] as Aksjonspunkt[];
 
-const inntektArbeidYtelseMedNavn: InntektArbeidYtelse = {
-  // @ts-ignore
+const inntektArbeidYtelseMedNavn = {
   arbeidsforhold: [
     {
-      navn: 'Bedrift AS',
-      arbeidsgiverIdentifiktorGUI: orgNr1,
+      arbeidsgiverReferanse: '12345678',
       eksternArbeidsforholdId: arbForhId1,
       arbeidsforholdId: arbForhId1,
     },
     {
-      navn: 'Bedrift AS',
-      arbeidsgiverIdentifiktorGUI: orgNr1,
+      arbeidsgiverReferanse: '12345678',
       eksternArbeidsforholdId: arbForhId2,
       arbeidsforholdId: arbForhId2,
     },
   ],
+} as InntektArbeidYtelse;
+
+const arbeidsgivere = {
+  arbeidsgivere: {
+    12345678: {
+      erPrivatPerson: false,
+      referanse: '12345678',
+      identifikator: orgNr1,
+      navn: 'Bedrift AS',
+    },
+  },
 };
 
 export const aksjonspunktUidentifiserteRammevedtak = () => (
@@ -162,52 +168,59 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
       ...årskvantumMedPerioder([innvilgetPeriode, uavklartPeriode(VilkårEnum.UIDENTIFISERT_RAMMEVEDTAK)]),
       rammevedtak: [uidentifisertRammevedtak],
     }}
-    // @ts-ignore
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     behandling={behandling}
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgivere={arbeidsgivere}
+    featureToggles={{}}
   />
 );
 
 export const behandletAksjonspunkt = () => (
   <ÅrskvantumIndex
     årskvantum={årskvantumMedPerioder([innvilgetPeriode, innvilgetPeriode, nullFravær])}
-    // @ts-ignore
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     behandling={behandling}
     isAksjonspunktOpen={false}
     submitCallback={action('bekreft')}
-    // @ts-ignore
-    aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }]}
+    aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }] as Aksjonspunkt[]}
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgivere={arbeidsgivere}
+    featureToggles={{}}
   />
 );
 
 export const aksjonspunktAvslåttePerioder = () => (
   <ÅrskvantumIndex
     årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
-    // @ts-ignore
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     behandling={behandling}
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgivere={arbeidsgivere}
+    featureToggles={{}}
   />
 );
 
 export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
   <ÅrskvantumIndex
     årskvantum={årskvantumMedPerioder([uavklartPeriode(VilkårEnum.NOK_DAGER), avslåttPeriode])}
-    // @ts-ignore
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     behandling={behandling}
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgivere={arbeidsgivere}
+    featureToggles={{}}
   />
 );

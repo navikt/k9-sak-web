@@ -1,5 +1,6 @@
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import OpplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
+import { PersonopplysningAdresse } from '@k9-sak-web/types';
 
 // TODO (TOR) Flytt ut av util-folder (lag selector)
 
@@ -9,17 +10,19 @@ import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
  * Utils klasse med diverse støttefunksjoner til person komponentene
  */
 
-const emptyIfnull = text => (text == null ? '' : text);
+const emptyIfnull = (text?: string): string => (text == null ? '' : text);
 
-const constructAddress = (adresse = '', postnummer = '', poststed = '', land = '') =>
+const constructAddress = (adresse = '', postnummer = '', poststed = '', land = ''): string =>
   `${emptyIfnull(adresse)}, ${emptyIfnull(postnummer)} ${emptyIfnull(poststed)} ${emptyIfnull(land)}`;
 
-const getAddresses = (addresses = []) =>
-  addresses.reduce((acc, address) => {
-    if (address.adresseType.kode === opplysningAdresseType.UKJENT) {
+export type Adresser = { [key in OpplysningAdresseType]?: string };
+
+const getAddresses = (addresses: PersonopplysningAdresse[] = []): Adresser =>
+  addresses.reduce<Adresser>((acc, address) => {
+    if (!address.adresseType || address.adresseType.kode === OpplysningAdresseType.UKJENT) {
       return {
         ...acc,
-        [opplysningAdresseType.BOSTEDSADRESSE]: 'UKJENT',
+        [OpplysningAdresseType.BOSTEDSADRESSE]: 'UKJENT',
       };
     }
 

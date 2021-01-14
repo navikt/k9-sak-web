@@ -1,5 +1,5 @@
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProsessStegDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
 
 import SokersOpplysningspliktPanelDef from './inngangsvilkarPaneler/SokersOpplysningspliktPanelDef';
 import VurderSoknadsfristPanelDef from './inngangsvilkarPaneler/VurderSoknadsfristPanelDef';

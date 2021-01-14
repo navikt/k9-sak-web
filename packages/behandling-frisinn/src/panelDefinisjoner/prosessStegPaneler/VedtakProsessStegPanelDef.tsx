@@ -1,15 +1,14 @@
-import redusertUtbetalingArsak from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
 import React from 'react';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { dokumentdatatype, prosessStegCodes } from '@k9-sak-web/konstanter';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { FeatureToggles } from '@k9-sak-web/types';
 
 import findStatusForVedtak from '../vedtakStatusUtlederFrisinn';
-import frisinnBehandlingApi from '../../data/frisinnBehandlingApi';
+import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakProsessIndex {...props} />;
@@ -27,11 +26,11 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = (featureToggles: FeatureToggles = {}) =>
     [
-      frisinnBehandlingApi.TILBAKEKREVINGVALG,
-      frisinnBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-      frisinnBehandlingApi.VEDTAK_VARSEL,
-      frisinnBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
-    ].concat(featureToggles.DOKUMENTDATA ? [frisinnBehandlingApi.DOKUMENTDATA_HENTE] : []);
+      FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG,
+      FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+      FrisinnBehandlingApiKeys.VEDTAK_VARSEL,
+      FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    ].concat(featureToggles.DOKUMENTDATA ? [FrisinnBehandlingApiKeys.DOKUMENTDATA_HENTE] : []);
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -45,7 +44,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    featureToggles,
+    lagreArsakerTilRedusertUtbetaling,
   }) => ({
     previewCallback,
     aksjonspunkter,
@@ -54,16 +53,7 @@ class PanelDef extends ProsessStegPanelDef {
     beregningsgrunnlag,
     ytelseTypeKode: fagsakYtelseType.FRISINN,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-    lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggles?.DOKUMENTDATA && frisinnBehandlingApi.DOKUMENTDATA_LAGRE) {
-        const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
-        dispatch(
-          frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({
-            [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
-          }),
-        );
-      }
-    },
+    lagreArsakerTilRedusertUtbetaling,
   });
 }
 

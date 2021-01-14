@@ -2,7 +2,7 @@ import React from 'react';
 
 import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/dto/testdata';
 
 class PanelDef extends ProsessStegPanelDef {

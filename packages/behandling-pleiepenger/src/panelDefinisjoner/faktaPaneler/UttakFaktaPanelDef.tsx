@@ -2,7 +2,7 @@ import React from 'react';
 
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak/src/UttakFaktaIndex';
-import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 class UttakFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.UTTAK;
