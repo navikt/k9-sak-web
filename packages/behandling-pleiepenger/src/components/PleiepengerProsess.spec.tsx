@@ -64,7 +64,7 @@ describe('<PleiepengerProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
+      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
       status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
       kanLoses: true,
       erAktivt: true,
@@ -92,7 +92,7 @@ describe('<PleiepengerProsess>', () => {
     },
     antallBarn: 1,
     soknadType: {
-      kode: soknadType.FODSERL,
+      kode: soknadType.FODSEL,
       kodeverk: 'test',
     },
   };

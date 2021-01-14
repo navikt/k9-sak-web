@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 
@@ -12,12 +11,6 @@ const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefK
   const harApSomErOverstyringAp = apKoder.some(apCode => aksjonspunktDefKoderForSteg.includes(apCode));
   return harIngenApOgMulighetTilOverstyring || harApSomErOverstyringAp;
 };
-
-const avslagsarsakerES = ['1002', '1003', '1032'];
-const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) =>
-  vilkarTypeKode === vilkarType.FODSELSVILKARET_MOR
-    ? avslagsarsaker[vilkarTypeKode].filter(arsak => !avslagsarsakerES.includes(arsak.kode))
-    : avslagsarsaker[vilkarTypeKode];
 
 class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
   overtyrtPanel: ProsessStegPanelDef;
@@ -52,7 +45,7 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
     kanOverstyreAccess,
     toggleOverstyring,
   }): any => ({
-    avslagsarsaker: filtrerAvslagsarsaker(alleKodeverk[kodeverkTyper.AVSLAGSARSAK], vilkarForSteg[0].vilkarType.kode),
+    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
     erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
     overstyringApKode: this.getAksjonspunktKoder()[0],
     panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,

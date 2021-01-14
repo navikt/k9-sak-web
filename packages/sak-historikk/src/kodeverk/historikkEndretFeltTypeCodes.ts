@@ -144,10 +144,6 @@ const historikkEndretFeltTypeCodes = {
     kode: 'NYTT_REFUSJONSKRAV',
     feltId: 'HistorikkEndretFelt.NyttRefusjonskrav',
   },
-  OMSORGSOVERTAKELSESDATO: {
-    kode: 'OMSORGSOVERTAKELSESDATO',
-    feltId: 'Historikk.Omsorgsovertakelsesdato',
-  },
   OMSORGSVILKAR: {
     kode: 'OMSORGSVILKAR',
     feltId: 'HistorikkEndretFelt.ApplicationInformation',
@@ -187,10 +183,6 @@ const historikkEndretFeltTypeCodes = {
   SOKNADSFRIST: {
     kode: 'SOKNADSFRIST',
     feltId: 'HistorikkEndretFelt.ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
-  },
-  SOKNADSFRISTVILKARET: {
-    kode: 'SOKNADSFRISTVILKARET',
-    feltId: 'HistorikkEndretFelt.Soknadsfristvilkaret',
   },
   STARTDATO_FRA_SOKNAD: {
     kode: 'STARTDATO_FRA_SOKNAD',

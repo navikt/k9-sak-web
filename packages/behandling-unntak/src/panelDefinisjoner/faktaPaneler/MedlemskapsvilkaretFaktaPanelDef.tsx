@@ -18,7 +18,6 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
     aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
     aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
-    aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO,
   ];
 
   getEndepunkter = () => [UnntakBehandlingApiKeys.MEDLEMSKAP];
