@@ -17,7 +17,7 @@ describe('safeJSONParse', () => {
 
     const result = safeJSONParse(str);
 
-    expect(result).to.equal('');
+    expect(result).is.null;
   });
 
   it('safeJSONParse returnerer JSON parsed data hvis argumentet er valid JSON', () => {
