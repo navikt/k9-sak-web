@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { TextAreaField, SelectField } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { TextAreaField } from '@fpsak-frontend/form';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
 import styles from './vedtakForm.less';
@@ -40,26 +39,6 @@ const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode, harAutomatisk
         </Undertittel>
       </Column>
     </Row>
-    {harAlternativeMottakere && (
-      <Row>
-        <Column xs="12">
-          <SelectField
-            readOnly={readOnly}
-            name="overstyrtMottaker"
-            selectValues={tilgjengeligeVedtaksbrev.alternativeMottakere.map(mottaker => (
-              <option value={JSON.stringify(mottaker)} key={mottaker.id}>
-                {mottaker.id}
-              </option>
-            ))}
-            className={readOnly ? styles.selectReadOnly : null}
-            label={intl.formatMessage({ id: 'VedtakForm.Fritekst.OverstyrtMottaker' })}
-            validate={[required]}
-            bredde="xl"
-          />
-          <VerticalSpacer sixteenPx />
-        </Column>
-      </Row>
-    )}
     <Row>
       <Column xs="12">
         <TextAreaField
