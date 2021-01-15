@@ -7,6 +7,7 @@ import kontrollresultatKode from './kodeverk/kontrollresultatKode';
 import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
+import { VuderFaresignalerAp } from './components/AvklarFaresignalerForm';
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
@@ -19,7 +20,7 @@ const intl = createIntl(
   cache,
 );
 
-const harResultatkode = (risikoklassifisering, resultatkode) => {
+const harResultatkode = (resultatkode: string, risikoklassifisering?: Risikoklassifisering): boolean => {
   if (!risikoklassifisering || !risikoklassifisering.kontrollresultat) {
     return false;
   }
@@ -33,7 +34,7 @@ interface OwnProps {
   risikoklassifisering?: Risikoklassifisering;
   isPanelOpen: boolean;
   readOnly: boolean;
-  submitAksjonspunkt: (aksjonspunkt: Aksjonspunkt) => void;
+  submitAksjonspunkt: (verdier: VuderFaresignalerAp) => Promise<any>;
   toggleRiskPanel: () => void;
 }
 
@@ -54,8 +55,8 @@ const RisikoklassifiseringSakIndex: FunctionComponent<OwnProps> = ({
   submitAksjonspunkt,
   toggleRiskPanel,
 }) => {
-  const harIkkeHoyRisikoklassifisering = harResultatkode(risikoklassifisering, kontrollresultatKode.IKKE_HOY);
-  const harHoyRisikoklassifisering = harResultatkode(risikoklassifisering, kontrollresultatKode.HOY);
+  const harIkkeHoyRisikoklassifisering = harResultatkode(kontrollresultatKode.IKKE_HOY, risikoklassifisering);
+  const harHoyRisikoklassifisering = harResultatkode(kontrollresultatKode.HOY, risikoklassifisering);
   return (
     <RawIntlProvider value={intl}>
       {harIkkeHoyRisikoklassifisering && <IngenRisikoPanel />}

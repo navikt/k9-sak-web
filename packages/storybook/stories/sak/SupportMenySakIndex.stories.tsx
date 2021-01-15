@@ -1,7 +1,7 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 
-import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
+import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
 
 export default {
   title: 'sak/sak-support-meny',
@@ -13,8 +13,8 @@ export const visMenyUtenBeslutterGodkjenningOgTilbakesending = () => {
   const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (
     <SupportMenySakIndex
-      tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
-      valgbareTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
+      tilgjengeligeTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
+      valgbareTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
     />
@@ -25,8 +25,13 @@ export const visMenyMedBeslutterGodkjenning = () => {
   const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (
     <SupportMenySakIndex
-      tilgjengeligeTabs={[supportTabs.APPROVAL, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
-      valgbareTabs={[supportTabs.APPROVAL, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
+      tilgjengeligeTabs={[
+        SupportTabs.TIL_BESLUTTER,
+        SupportTabs.HISTORIKK,
+        SupportTabs.MELDINGER,
+        SupportTabs.DOKUMENTER,
+      ]}
+      valgbareTabs={[SupportTabs.TIL_BESLUTTER, SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
     />
@@ -37,8 +42,13 @@ export const visMenyEtterTilbakesendingFraBeslutter = () => {
   const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (
     <SupportMenySakIndex
-      tilgjengeligeTabs={[supportTabs.RETURNED, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
-      valgbareTabs={[supportTabs.RETURNED, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
+      tilgjengeligeTabs={[
+        SupportTabs.FRA_BESLUTTER,
+        SupportTabs.HISTORIKK,
+        SupportTabs.MELDINGER,
+        SupportTabs.DOKUMENTER,
+      ]}
+      valgbareTabs={[SupportTabs.FRA_BESLUTTER, SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
     />
@@ -49,8 +59,8 @@ export const visSendMeldingSomIkkeValgbar = () => {
   const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (
     <SupportMenySakIndex
-      tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
-      valgbareTabs={[supportTabs.HISTORY, supportTabs.DOCUMENTS]}
+      tilgjengeligeTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
+      valgbareTabs={[SupportTabs.HISTORIKK, SupportTabs.DOKUMENTER]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
     />

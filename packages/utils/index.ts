@@ -31,8 +31,12 @@ export {
   ACCEPTED_DATE_INPUT_FORMATS,
 } from './src/formats';
 export { default as guid } from './src/guid';
-export { default as utledArbeidsforholdNavn } from './src/arbeidsforholdUtils';
-export { replaceNorwegianCharacters, getLanguageCodeFromSprakkode } from './src/languageUtils';
+export { utledArbeidsforholdNavn } from './src/arbeidsforholdUtils';
+export {
+  replaceNorwegianCharacters,
+  getLanguageCodeFromSprakkode,
+  getLanguageFromSprakkode,
+} from './src/languageUtils';
 export {
   notNull,
   isObjectEmpty,
@@ -109,3 +113,4 @@ export { default as MicroFrontend } from './src/micro-frontends/MicroFrontend';
 
 export { getKodeverknavnFn } from './src/kodeverkUtils';
 export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';
+export type { Adresser } from './src/getAddresses';

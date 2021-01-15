@@ -9,15 +9,15 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import styles from './fagsakList.less';
 
 const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status', 'FagsakList.BarnFodt'];
-const lagFagsakSortObj = fagsak => ({
+const lagFagsakSortObj = (fagsak: Fagsak) => ({
   avsluttet: fagsak.status.kode === fagsakStatus.AVSLUTTET,
   endret: fagsak.endret ? fagsak.endret : fagsak.opprettet,
 });
 
 interface OwnProps {
   fagsaker: Fagsak[];
-  selectFagsakCallback: (e: Event, saksnummer: number) => void;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  selectFagsakCallback: (e: React.SyntheticEvent, saksnummer: string) => void;
+  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
 }
 
 /**

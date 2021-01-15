@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
+import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   fetchedData: FetchedData;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
@@ -17,7 +17,7 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  hentBehandling: (params: { behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   alleBehandlinger: {
     id: number;
@@ -27,11 +27,12 @@ interface OwnProps {
     opprettet: string;
     avsluttet?: string;
   }[];
-  featureToggles: FeatureToggles;
+  setBehandling: (behandling: Behandling) => void;
 }
 
 const KlagePaneler: FunctionComponent<OwnProps> = ({
   fagsak,
+  fagsakPerson,
   behandling,
   fetchedData,
   kodeverk,
@@ -43,36 +44,31 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   hentBehandling,
   opneSokeside,
   alleBehandlinger,
-  featureToggles,
-}) => {
-  // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <BehandlingPaVent
-        behandling={behandling}
-        aksjonspunkter={fetchedData.aksjonspunkter}
-        kodeverk={kodeverk}
-        settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
-      />
-      <KlageProsess
-        data={fetchedData}
-        fagsak={fagsak}
-        behandling={behandling}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        opneSokeside={opneSokeside}
-        alleBehandlinger={alleBehandlinger}
-        dispatch={dispatch}
-        alleKodeverk={kodeverk}
-        featureToggles={featureToggles}
-      />
-    </>
-  );
-};
+  setBehandling,
+}) => (
+  <>
+    <BehandlingPaVent
+      behandling={behandling}
+      aksjonspunkter={fetchedData.aksjonspunkter}
+      kodeverk={kodeverk}
+      settPaVent={settPaVent}
+      hentBehandling={hentBehandling}
+    />
+    <KlageProsess
+      data={fetchedData}
+      fagsak={fagsak}
+      fagsakPerson={fagsakPerson}
+      behandling={behandling}
+      rettigheter={rettigheter}
+      valgtProsessSteg={valgtProsessSteg}
+      oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+      opneSokeside={opneSokeside}
+      alleBehandlinger={alleBehandlinger}
+      alleKodeverk={kodeverk}
+      setBehandling={setBehandling}
+    />
+  </>
+);
 
 export default KlagePaneler;

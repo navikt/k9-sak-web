@@ -99,7 +99,6 @@ export const ArbeidsforholdInfoPanelImpl = ({
     </>
   );
 };
-
 ArbeidsforholdInfoPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -114,11 +113,9 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
     notAccepted: PropTypes.bool,
   }).isRequired,
 };
-
 const buildInitialValues = createSelector([ownProps => ownProps.arbeidsforhold], arbeidsforhold => ({
   ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
 }));
-
 const transformValues = values => {
   const arbeidsforhold = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(values.arbeidsforhold);
   return {
@@ -135,7 +132,6 @@ const transformValues = values => {
     kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
   };
 };
-
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({

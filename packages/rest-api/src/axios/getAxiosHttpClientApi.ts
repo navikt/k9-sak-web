@@ -1,4 +1,3 @@
-import axios from 'axios';
 import axiosEtag from './axiosEtag';
 
 import initRestMethods from './initRestMethods';
@@ -9,12 +8,6 @@ import initRestMethods from './initRestMethods';
  */
 const getAxiosHttpClientApi = () => {
   const axiosInstance = axiosEtag();
-
-  // @ts-ignore
-  axiosInstance.CancelToken = axios.CancelToken;
-
-  // @ts-ignore
-  axiosInstance.isCancel = axios.isCancel;
 
   // TODO (TOR) sentry bør ikkje vera ein avhengighet til pakka "rest-api". Konfigurer dette utanfor
   axiosInstance.interceptors.request.use((c): any => {
@@ -31,7 +24,6 @@ const getAxiosHttpClientApi = () => {
     put: restMethods.put,
     getBlob: restMethods.getBlob,
     postBlob: restMethods.postBlob,
-    postAndOpenBlob: restMethods.postAndOpenBlob,
     getAsync: restMethods.getAsync,
     postAsync: restMethods.postAsync,
     putAsync: restMethods.putAsync,

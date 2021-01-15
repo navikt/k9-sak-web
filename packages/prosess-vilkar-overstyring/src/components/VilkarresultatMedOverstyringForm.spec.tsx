@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';
@@ -17,21 +18,31 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         isReadOnly
         overstyringApKode="5011"
         avslagsarsaker={[
-          { kode: 'test1', navn: 'test' },
-          { kode: 'test2', navn: 'test' },
+          { kode: 'test1', kodeverk: 'test' },
+          { kode: 'test2', kodeverk: 'test' },
         ]}
         lovReferanse="§23"
         hasAksjonspunkt
-        behandlingspunkt="foedsel"
         overrideReadOnly={false}
-        kanOverstyreAccess={{
-          isEnabled: true,
-        }}
-        aksjonspunktCodes={[]}
         toggleOverstyring={() => undefined}
         erMedlemskapsPanel={false}
-        panelTittelKode="Fødsel"
         erOverstyrt
+        aksjonspunkter={[]}
+        behandlingsresultat={{
+          type: { kode: 'test', kodeverk: 'test' },
+        }}
+        behandlingId={1}
+        behandlingVersjon={2}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        medlemskapFom="10.10.2010"
+        status=""
+        submitCallback={() => undefined}
+        isSolvable
+        periodeFom="2019-01-01"
+        periodeTom="2020-01-01"
       />,
     );
 

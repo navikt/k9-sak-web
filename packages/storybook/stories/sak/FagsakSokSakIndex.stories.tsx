@@ -18,7 +18,7 @@ const PERSONSTATUS_TYPE_KODEVERK = 'PERSONSTATUS_TYPE';
 
 const fagsaker = [
   {
-    saksnummer: 1,
+    saksnummer: '1',
     sakstype: {
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: FAGSAK_YTELSE_KODEVERK,
@@ -45,7 +45,7 @@ const fagsaker = [
     opprettet: '2017-08-02T00:54:25.455',
   },
   {
-    saksnummer: 2,
+    saksnummer: '2',
     sakstype: {
       kode: fagsakYtelseType.ENGANGSSTONAD,
       kodeverk: FAGSAK_YTELSE_KODEVERK,

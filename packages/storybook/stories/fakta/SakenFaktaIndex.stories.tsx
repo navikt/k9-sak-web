@@ -6,8 +6,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
+import { Behandling } from '@k9-sak-web/types';
 import SakenFaktaIndex from '@fpsak-frontend/fakta-saken/src/SakenFaktaIndex';
+
 import withReduxProvider from '../../decorators/withRedux';
 
 const behandling = {
@@ -24,7 +25,7 @@ const behandling = {
   behandlingPaaVent: false,
   behandlingHenlagt: false,
   links: [],
-};
+} as Behandling;
 
 export default {
   title: 'fakta/fakta-saken',

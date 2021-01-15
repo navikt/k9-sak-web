@@ -68,4 +68,6 @@ spec:
     - name: TILBAKE
       value: "true"
     - name: PERIODISERTE_NOKKELTALL
+      value: "true"
+    - name: ARBEIDSFORHOLD_V2
       value: "false"

@@ -2,13 +2,12 @@ import React from 'react';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import redusertUtbetalingArsak from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
-import { dokumentdatatype, prosessStegCodes } from '@k9-sak-web/konstanter';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import findStatusForVedtak from '../vedtakStatusUtlederPleiepenger';
-import pleiepengerBehandlingApi from '../../data/pleiepengerBehandlingApi';
+import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakProsessIndex {...props} />;
@@ -26,11 +25,11 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => {
     return [
-      pleiepengerBehandlingApi.TILBAKEKREVINGVALG,
-      pleiepengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-      pleiepengerBehandlingApi.MEDLEMSKAP,
-      pleiepengerBehandlingApi.VEDTAK_VARSEL,
-      pleiepengerBehandlingApi.DOKUMENTDATA_HENTE,
+      PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG,
+      PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+      PleiepengerBehandlingApiKeys.MEDLEMSKAP,
+      PleiepengerBehandlingApiKeys.VEDTAK_VARSEL,
+      PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
     ];
   };
 
@@ -46,7 +45,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    featureToggles,
+    lagreArsakerTilRedusertUtbetaling,
   }) => ({
     previewCallback,
     aksjonspunkter,
@@ -55,16 +54,7 @@ class PanelDef extends ProsessStegPanelDef {
     beregningsgrunnlag,
     ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-    lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggles?.DOKUMENTDATA && pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE) {
-        const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
-        dispatch(
-          pleiepengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({
-            [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
-          }),
-        );
-      }
-    },
+    lagreArsakerTilRedusertUtbetaling,
   });
 }
 

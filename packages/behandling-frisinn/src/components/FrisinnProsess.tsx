@@ -1,32 +1,47 @@
 import React, { FunctionComponent, useState, useCallback, useMemo } from 'react';
-import { setSubmitFailed } from 'redux-form';
-import { Dispatch } from 'redux';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
-  FagsakInfo,
   Rettigheter,
   prosessStegHooks,
   IverksetterVedtakStatusModal,
   FatterVedtakStatusModal,
   ProsessStegPanel,
   ProsessStegContainer,
-} from '@fpsak-frontend/behandling-felles';
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
-import { KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
-import frisinnBehandlingApi from '../data/frisinnBehandlingApi';
+import {
+  KodeverkMedNavn,
+  Behandling,
+  FeatureToggles,
+  Fagsak,
+  ArbeidsgiverOpplysningerPerId,
+  FagsakPerson,
+} from '@k9-sak-web/types';
+import { restApiFrisinnHooks, FrisinnBehandlingApiKeys } from '../data/frisinnBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFrisinnPanelDefinisjoner';
-
 import FetchedData from '../types/fetchedDataTsType';
+
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
+
+const forhandsvis = (data: any) => {
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(data);
+  } else if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
 
 interface OwnProps {
   data: FetchedData;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -37,30 +52,35 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
-  dispatch: Dispatch;
+  setBehandling: (behandling: Behandling) => void;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
 }
 
-const getForhandsvisCallback = (dispatch, fagsak, behandling) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
-  return dispatch(frisinnBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
+const getForhandsvisCallback = (
+  forhandsvisMelding: (data: any) => Promise<any>,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  behandling: Behandling,
+) => (parametre: any) => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
+  return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 
-const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (
-  mottaker,
-  brevmalkode,
-  fritekst,
-  saksnummer,
-) => {
+const getForhandsvisFptilbakeCallback = (
+  forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>,
+  fagsak: Fagsak,
+  behandling: Behandling,
+) => (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
   const data = {
     behandlingUuid: behandling.uuid,
-    fagsakYtelseType: fagsak.fagsakYtelseType,
+    fagsakYtelseType: fagsak.sakstype,
     varseltekst: fritekst || '',
     mottaker,
     brevmalkode,
     saksnummer,
   };
-  return dispatch(frisinnBehandlingApi.PREVIEW_TILBAKEKREVING_MESSAGE.makeRestApiRequest()(data));
+  return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
 };
 
 const getLagringSideeffekter = (
@@ -69,7 +89,7 @@ const getLagringSideeffekter = (
   toggleOppdatereFagsakContext,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
-  dispatch,
+  lagreDokumentdata,
   featureToggles,
 ) => async aksjonspunktModels => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
@@ -96,9 +116,7 @@ const getLagringSideeffekter = (
     if (aksjonspunktModels[0].skalUndertrykkeBrev) brevtype = vedtaksbrevtype.INGEN;
     else if (aksjonspunktModels[0].skalBrukeOverstyrendeFritekstBrev) brevtype = vedtaksbrevtype.FRITEKST;
     else brevtype = vedtaksbrevtype.AUTOMATISK;
-    await dispatch(
-      frisinnBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({ [dokumentdatatype.VEDTAKSBREV_TYPE]: brevtype }),
-    );
+    await lagreDokumentdata({ [dokumentdatatype.VEDTAKSBREV_TYPE]: brevtype });
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
@@ -118,6 +136,7 @@ const getLagringSideeffekter = (
 const FrisinnProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
+  fagsakPerson,
   behandling,
   alleKodeverk,
   rettigheter,
@@ -128,7 +147,8 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   apentFaktaPanelInfo,
-  dispatch,
+  setBehandling,
+  arbeidsgiverOpplysningerPerId,
   featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
@@ -136,18 +156,47 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     oppdaterBehandlingVersjon,
   );
 
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
+    FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
+  const {
+    startRequest: lagreOverstyrteAksjonspunkter,
+    data: apOverstyrtBehandlingRes,
+  } = restApiFrisinnHooks.useRestApiRunner<Behandling>(FrisinnBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  const { startRequest: forhandsvisMelding } = restApiFrisinnHooks.useRestApiRunner(
+    FrisinnBehandlingApiKeys.PREVIEW_MESSAGE,
+  );
+  const { startRequest: forhandsvisTilbakekrevingMelding } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
+    FrisinnBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+  );
+  const { startRequest: lagreDokumentdata } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
+    FrisinnBehandlingApiKeys.DOKUMENTDATA_LAGRE,
+  );
+
+  const lagreArsakerTilRedusertUtbetaling = arsaker => {
+    if (featureToggles?.DOKUMENTDATA) {
+      lagreDokumentdata({
+        [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
+      });
+    }
+  };
+
+  useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
+  useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
+
   const dataTilUtledingAvFpPaneler = {
-    previewCallback: useCallback(getForhandsvisCallback(dispatch, fagsak, behandling), [behandling.versjon]),
-    previewFptilbakeCallback: useCallback(getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), [
+    previewCallback: useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
       behandling.versjon,
     ]),
-    dispatchSubmitFailed: useCallback(formName => dispatch(setSubmitFailed(formName)), []),
-    tempUpdateStonadskontoer: useCallback(
-      params => dispatch(frisinnBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params)),
+    previewFptilbakeCallback: useCallback(
+      getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
       [behandling.versjon],
     ),
+    fagsakPerson,
     alleKodeverk,
+    arbeidsgiverOpplysningerPerId,
     featureToggles,
+    lagreArsakerTilRedusertUtbetaling,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
@@ -171,7 +220,7 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
-    dispatch,
+    lagreDokumentdata,
     featureToggles,
   );
 
@@ -222,8 +271,9 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
           apentFaktaPanelInfo={apentFaktaPanelInfo}
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           lagringSideeffekterCallback={lagringSideeffekterCallback}
-          behandlingApi={frisinnBehandlingApi}
-          dispatch={dispatch}
+          lagreAksjonspunkter={lagreAksjonspunkter}
+          lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
+          useMultipleRestApi={restApiFrisinnHooks.useMultipleRestApi}
           featureToggles={featureToggles}
         />
       </ProsessStegContainer>

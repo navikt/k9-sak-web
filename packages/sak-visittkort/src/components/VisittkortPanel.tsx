@@ -1,16 +1,19 @@
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { Fagsak, Kodeverk, Personopplysninger, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Gender, PersonCard } from '@navikt/nap-person-card';
 import React, { FunctionComponent } from 'react';
-import { injectIntl, WrappedComponentProps, FormattedMessage } from 'react-intl';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
+import { PersonCard, Gender } from '@navikt/nap-person-card';
+
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson } from '@k9-sak-web/types';
+
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
+
 import styles from './visittkortPanel.less';
 
-const utledKjonn = kjonn => {
+const utledKjonn = (kjonn: Kodeverk): Gender => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {
     return Gender.female;
   }
@@ -18,42 +21,38 @@ const utledKjonn = kjonn => {
 };
 
 interface OwnProps {
-  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode: Kodeverk;
+  sprakkode?: Kodeverk;
   personopplysninger?: Personopplysninger;
-  harTilbakekrevingVerge: boolean;
+  harTilbakekrevingVerge?: boolean;
 }
 
-const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  // intl,
-  fagsak,
+const VisittkortPanel: FunctionComponent<OwnProps> = ({
+  fagsakPerson,
   personopplysninger,
-  // lenkeTilAnnenPart,
   alleKodeverk,
   sprakkode,
   harTilbakekrevingVerge,
 }) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
-    const { person } = fagsak;
     return (
       <div className={styles.container}>
         <PersonCard
-          name={person.navn}
-          fodselsnummer={person.personnummer}
-          gender={person.erKvinne ? Gender.female : Gender.male}
+          name={fagsakPerson.navn}
+          fodselsnummer={fagsakPerson.personnummer}
+          gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
         />
       </div>
     );
   }
   if (harTilbakekrevingVerge) {
-    const { person } = fagsak;
     return (
       <div className={styles.container}>
         <PersonCard
-          name={person.navn}
-          fodselsnummer={person.personnummer}
-          gender={person.erKvinne ? Gender.female : Gender.male}
+          name={fagsakPerson.navn}
+          fodselsnummer={fagsakPerson.personnummer}
+          gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
           renderLabelContent={(): JSX.Element => (
             <VisittkortLabels personopplysninger={personopplysninger} harTilbakekrevingVerge={harTilbakekrevingVerge} />
           )}
@@ -61,7 +60,6 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       </div>
     );
   }
-  // const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
 
   const soker = personopplysninger;
   const annenPart = personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
@@ -76,12 +74,10 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               name={soker.navn}
               fodselsnummer={soker.fnr}
               gender={utledKjonn(soker.navBrukerKjonn)}
-              // url={lenkeTilAnnenPart}
               renderMenuContent={(): JSX.Element => (
                 <VisittkortDetaljerPopup personopplysninger={soker} alleKodeverk={alleKodeverk} sprakkode={sprakkode} />
               )}
               renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={soker} />}
-              // isActive={erMor}
             />
           </FlexColumn>
           {annenPart && annenPart.aktoerId && (
@@ -121,15 +117,10 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               ))}
             </div>
           )}
-          {/* {annenPart && !annenPart.aktoerId && (
-            <FlexColumn>
-              <EmptyPersonCard namePlaceholder={intl.formatMessage({ id: 'VisittkortPanel.Ukjent' })} />
-            </FlexColumn>
-          )} */}
         </FlexRow>
       </FlexContainer>
     </div>
   );
 };
 
-export default injectIntl(VisittkortPanel);
+export default VisittkortPanel;

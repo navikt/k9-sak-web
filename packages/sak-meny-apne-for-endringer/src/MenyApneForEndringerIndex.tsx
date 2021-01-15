@@ -15,13 +15,6 @@ const intl = createIntl(
   cache,
 );
 
-export const skalViseIMeny = (behandlingId, erPaVent, erKoet, opneBehandlingForEndringerAccess) =>
-  !!behandlingId &&
-  opneBehandlingForEndringerAccess.employeeHasAccess &&
-  opneBehandlingForEndringerAccess.isEnabled &&
-  !erKoet &&
-  !erPaVent;
-
 export const getMenytekst = () => intl.formatMessage({ id: 'MenyApneForEndringerIndex.ReopenBehandling' });
 
 interface OwnProps {
@@ -49,7 +42,12 @@ const MenyApneForEndringerIndex: FunctionComponent<OwnProps> = ({
 
   return (
     <RawIntlProvider value={intl}>
-      <OkAvbrytModal textCode="MenyApneForEndringerIndex.OpenBehandling" showModal submit={submit} cancel={lukkModal} />
+      <OkAvbrytModal
+        text={intl.formatMessage({ id: 'MenyApneForEndringerIndex.OpenBehandling' })}
+        showModal
+        submit={submit}
+        cancel={lukkModal}
+      />
     </RawIntlProvider>
   );
 };

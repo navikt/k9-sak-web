@@ -37,7 +37,7 @@ interface ÅrsakvantumIndexProps {
   submitCallback: (values: any[]) => void;
   aksjonspunkterForSteg?: Aksjonspunkt[];
   inntektArbeidYtelse: InntektArbeidYtelse;
-  arbeidsgivere: { arbeidsgivere: ArbeidsgiverOpplysningerPerId };
+  arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
 }
 
@@ -75,7 +75,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiv={sisteUttaksplan?.aktiv}
         // @ts-ignore
         arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere}
         featureToggles={featureToggles}
       />
     </RawIntlProvider>

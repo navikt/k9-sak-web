@@ -1,16 +1,34 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
+import sinon from 'sinon';
 
-import NoSelectedBehandling from './components/NoSelectedBehandling';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { IngenBehandlingValgtPanel } from '@k9-sak-web/sak-infosider';
+
 import { BehandlingerIndex } from './BehandlingerIndex';
 
 describe('BehandlingerIndex', () => {
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallow(<BehandlingerIndex numBehandlinger={1} />);
+    const fagsak = {
+      saksnummer: '123',
+    };
+    const alleBehandlinger = [
+      {
+        id: 1,
+      },
+    ];
 
-    const noBehandling = wrapper.find(NoSelectedBehandling);
-    expect(noBehandling).to.have.length(1);
-    expect(noBehandling.prop('numBehandlinger')).to.eql(1);
+    const wrapper = shallow(
+      <BehandlingerIndex
+        fagsak={fagsak as Fagsak}
+        alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+        setBehandlingIdOgVersjon={sinon.spy()}
+        setRequestPendingMessage={sinon.spy()}
+      />,
+    );
+
+    const noBehandling = wrapper.find(IngenBehandlingValgtPanel);
+    expect(noBehandling).toHaveLength(1);
+    expect(noBehandling.prop('numBehandlinger')).toEqual(1);
   });
 });

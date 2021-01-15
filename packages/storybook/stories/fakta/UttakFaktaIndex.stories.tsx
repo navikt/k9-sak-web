@@ -12,7 +12,7 @@ export default {
   decorators: [withReduxProvider],
 };
 
-const behandling: Behandling = {
+const behandling = {
   id: 1,
   versjon: 1,
   status: {
@@ -26,7 +26,7 @@ const behandling: Behandling = {
   behandlingPaaVent: false,
   behandlingHenlagt: false,
   links: [],
-};
+} as Behandling;
 
 const arbeid: ArbeidDto[] = [
   {

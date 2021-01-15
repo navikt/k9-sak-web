@@ -1,14 +1,11 @@
 import { SetStateAction } from 'react';
-import { Dispatch } from 'redux';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { Behandling, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { Behandling, Aksjonspunkt, Vilkar, Fagsak } from '@k9-sak-web/types';
 
 import readOnlyUtils from '../readOnlyUtils';
-import FagsakInfo from '../../types/fagsakInfoTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -79,10 +76,7 @@ export const finnValgtPanel = (
   return prosessStegPaneler.find(i => i.getUrlKode() === valgtProsessStegPanelKode);
 };
 
-const finnProsessmenyType = (
-  status: vilkarUtfallType.OPPFYLT | vilkarUtfallType.IKKE_OPPFYLT | vilkarUtfallType.IKKE_VURDERT,
-  harApentAksjonspunkt: boolean,
-): StepType => {
+const finnProsessmenyType = (status: string, harApentAksjonspunkt: boolean): StepType => {
   if (harApentAksjonspunkt) {
     return StepType.warning;
   }
@@ -112,12 +106,12 @@ export const formaterPanelerForProsessmeny = (
   });
 
 export const getBekreftAksjonspunktCallback = (
-  dispatch: Dispatch,
   lagringSideEffectsCallback: (aksjonspunktModeller: any) => () => void,
-  fagsak: FagsakInfo,
+  fagsak: Fagsak,
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],
-  api: { [name: string]: EndpointOperations },
+  lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
+  lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
 ) => async aksjonspunktModels => {
   const models = aksjonspunktModels.map(ap => ({
     '@type': ap.kode,
@@ -132,7 +126,7 @@ export const getBekreftAksjonspunktCallback = (
 
   const etterLagringCallback = await lagringSideEffectsCallback(aksjonspunktModels);
 
-  if (api.SAVE_OVERSTYRT_AKSJONSPUNKT) {
+  if (lagreOverstyrteAksjonspunkter) {
     const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
       aksjonspunktModels.some(apModel => apModel.kode === ap.definisjon.kode),
     );
@@ -143,25 +137,21 @@ export const getBekreftAksjonspunktCallback = (
     );
 
     if (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter) {
-      return dispatch(
-        api.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(
-          {
-            ...params,
-            overstyrteAksjonspunktDtoer: models,
-          },
-          { keepData: true },
-        ),
+      return lagreOverstyrteAksjonspunkter(
+        {
+          ...params,
+          overstyrteAksjonspunktDtoer: models,
+        },
+        true,
       ).then(etterLagringCallback);
     }
   }
 
-  return dispatch(
-    api.SAVE_AKSJONSPUNKT.makeRestApiRequest()(
-      {
-        ...params,
-        bekreftedeAksjonspunktDtoer: models,
-      },
-      { keepData: true },
-    ),
+  return lagreAksjonspunkter(
+    {
+      ...params,
+      bekreftedeAksjonspunktDtoer: models,
+    },
+    true,
   ).then(etterLagringCallback);
 };

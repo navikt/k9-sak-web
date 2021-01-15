@@ -13,15 +13,18 @@ import { InputField } from '@fpsak-frontend/form';
 
 import styles from './searchForm.less';
 
-const isButtonDisabled = (searchStringObject, searchStartedObject) =>
-  !!(searchStartedObject.searchStarted || searchStringObject.searchString.length < 1);
+const isButtonDisabled = (searchStarted: boolean, searchString?: string): boolean =>
+  !!(searchStarted || searchString.length < 1);
 
-interface OwnProps {
-  searchString?: string;
+interface PureOwnProps {
   searchStarted: boolean;
   searchResultAccessDenied?: {
     feilmelding: string;
   };
+}
+
+interface MappedOwnProps {
+  searchString?: string;
 }
 
 /**
@@ -29,13 +32,9 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Definerer søkefelt og tilhørende søkeknapp.
  */
-export const SearchForm: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
-  intl,
-  searchString = '',
-  searchStarted,
-  searchResultAccessDenied,
-  ...formProps
-}) => (
+export const SearchForm: FunctionComponent<
+  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
+> = ({ intl, searchString = '', searchStarted, searchResultAccessDenied, ...formProps }) => (
   <form className={styles.container} onSubmit={formProps.handleSubmit}>
     <Undertittel>{intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}</Undertittel>
     <VerticalSpacer eightPx />
@@ -53,7 +52,7 @@ export const SearchForm: FunctionComponent<OwnProps & WrappedComponentProps & In
           mini
           className={styles.button}
           spinner={searchStarted}
-          disabled={isButtonDisabled({ searchString }, { searchStarted })}
+          disabled={isButtonDisabled(searchStarted, searchString)}
         >
           <FormattedMessage id="Search.Search" />
         </Hovedknapp>
@@ -76,7 +75,7 @@ const validate = values => {
   return errors;
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state): MappedOwnProps => ({
   searchString: formValueSelector('SearchForm')(state, 'searchString'),
 });
 
