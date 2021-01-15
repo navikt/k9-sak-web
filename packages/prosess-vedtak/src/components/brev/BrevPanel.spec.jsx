@@ -28,6 +28,7 @@ describe('<BrevPanel>', () => {
         brødtekst={null}
         overskrift={null}
         behandlingResultat={null}
+        overstyrtMottaker={null}
         formProps={reduxFormPropsMock}
       />,
     );
@@ -52,6 +53,7 @@ describe('<BrevPanel>', () => {
         brødtekst={null}
         overskrift={null}
         behandlingResultat={null}
+        overstyrtMottaker={null}
         formProps={reduxFormPropsMock}
       />,
     );
@@ -76,6 +78,7 @@ describe('<BrevPanel>', () => {
         brødtekst={null}
         overskrift={null}
         behandlingResultat={null}
+        overstyrtMottaker={null}
         formProps={reduxFormPropsMock}
       />,
     );
@@ -114,6 +117,7 @@ describe('<BrevPanel>', () => {
         brødtekst={null}
         overskrift={null}
         behandlingResultat={null}
+        overstyrtMottaker={null}
         formProps={reduxFormPropsMock}
       />,
     );
