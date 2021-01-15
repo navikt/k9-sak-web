@@ -12,7 +12,7 @@ import {
 import { Column, Row } from 'nav-frontend-grid';
 import { SelectField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+import { safeJSONParse, required } from '@fpsak-frontend/utils';
 
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
@@ -30,11 +30,12 @@ const kanResultatForhåndsvises = behandlingResultat => {
   return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
 };
 
-const getManuellBrevCallback = ({ brødtekst, overskrift, formProps, previewCallback }) => e => {
+const getManuellBrevCallback = ({ brødtekst, overskrift, overstyrtMottaker, formProps, previewCallback }) => e => {
   if (formProps.valid || formProps.pristine) {
     previewCallback({
       dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
       dokumentMal: dokumentMalType.FRITKS,
+      ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
     });
   } else {
     formProps.submit();
@@ -42,25 +43,33 @@ const getManuellBrevCallback = ({ brødtekst, overskrift, formProps, previewCall
   e.preventDefault();
 };
 
-const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker }) => {
+const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }) => {
   return {
     dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
     dokumentMal: dokumentMalType.UTLED,
+    ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
   };
 };
 
 const getPreviewAutomatiskBrevCallbackUtenValidering = ({
   fritekst,
   redusertUtbetalingÅrsaker,
+  overstyrtMottaker,
   previewCallback,
 }) => e => {
-  previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker }));
+  previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }));
   e.preventDefault();
 };
 
-const getPreviewAutomatiskBrevCallback = ({ fritekst, redusertUtbetalingÅrsaker, formProps, previewCallback }) => e => {
+const getPreviewAutomatiskBrevCallback = ({
+  fritekst,
+  redusertUtbetalingÅrsaker,
+  overstyrtMottaker,
+  formProps,
+  previewCallback,
+}) => e => {
   if (formProps.valid || formProps.pristine) {
-    previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker }));
+    previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }));
   } else {
     formProps.submit();
   }
@@ -82,24 +91,28 @@ export const BrevPanel = props => {
     brødtekst,
     overskrift,
     behandlingResultat,
+    overstyrtMottaker,
     formProps,
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
+    overstyrtMottaker,
     formProps,
     previewCallback,
   });
   const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
+    overstyrtMottaker,
     previewCallback,
   });
 
   const manuellBrevCallback = getManuellBrevCallback({
     brødtekst,
     overskrift,
+    overstyrtMottaker,
     formProps,
     previewCallback,
   });
@@ -185,6 +198,7 @@ BrevPanel.propTypes = {
   redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),
   brødtekst: PropTypes.string,
   overskrift: PropTypes.string,
+  overstyrtMottaker: PropTypes.string,
   behandlingResultat: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formProps: PropTypes.shape().isRequired,

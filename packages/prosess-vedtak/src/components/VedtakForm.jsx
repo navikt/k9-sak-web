@@ -82,6 +82,7 @@ export class VedtakForm extends Component {
       brødtekst,
       overskrift,
       begrunnelse,
+      overstyrtMottaker,
       ...formProps
     } = this.props;
 
@@ -156,6 +157,7 @@ export class VedtakForm extends Component {
             brødtekst={brødtekst}
             overskrift={overskrift}
             begrunnelse={begrunnelse}
+            overstyrtMottaker={overstyrtMottaker}
           />
           {kanSendesTilGodkjenning(behandlingStatusKode) && (
             <Row>
@@ -255,6 +257,7 @@ export const buildInitialValues = createSelector(
       vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+    overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
     begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
   }),
 );
@@ -304,6 +307,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'brødtekst',
       'overskrift',
       'begrunnelse',
+      'overstyrtMottaker',
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
     behandlingStatusKode: ownProps.behandlingStatus.kode,
