@@ -6,19 +6,21 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
 import shallowWithIntl from '../../../i18n';
 
-const lagAksjonspunktTilbaketrekk = begrunnelse => ({
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-  },
-  status: {
-    kode: 'OPPR',
-  },
-  begrunnelse,
-});
+const lagAksjonspunktTilbaketrekk = begrunnelse =>
+  ({
+    definisjon: {
+      kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
+    },
+    status: {
+      kode: 'OPPR',
+    },
+    begrunnelse,
+  } as Aksjonspunkt);
 
 describe('<Tilbaketrekkpanel>', () => {
   it('skal teste at komponent vises korrekt', () => {
@@ -39,7 +41,7 @@ describe('<Tilbaketrekkpanel>', () => {
     expect(radioOption).to.have.length(2);
     const textfield = wrapper.find(TextAreaField);
     expect(textfield).to.have.length(1);
-    const button = wrapper.find(BehandlingspunktSubmitButton);
+    const button = wrapper.find(ProsessStegSubmitButton);
     expect(button).to.have.length(1);
     const element = wrapper.find(Element);
     expect(element).to.have.length(1);

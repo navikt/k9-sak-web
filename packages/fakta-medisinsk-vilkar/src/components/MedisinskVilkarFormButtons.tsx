@@ -1,7 +1,9 @@
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import React, { FunctionComponent } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
-import React from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+
+import { FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
 interface MedisinskVilkarFormButtonsProps {
   behandlingId: number;
@@ -12,26 +14,26 @@ interface MedisinskVilkarFormButtonsProps {
   submittable: boolean;
 }
 
-const MedisinskVilkarFormButtons = ({
+const MedisinskVilkarFormButtons: FunctionComponent<MedisinskVilkarFormButtonsProps & WrappedComponentProps> = ({
+  intl,
   behandlingId,
   behandlingVersjon,
   form,
   harApneAksjonspunkter,
   readOnly,
   submittable,
-}: MedisinskVilkarFormButtonsProps) => (
+}) => (
   <FlexContainer>
     <FlexRow>
       <FlexColumn>
         <FaktaSubmitButton
-          buttonTextId="SubmitButton.ConfirmInformation"
+          buttonText={intl.formatMessage({ id: 'SubmitButton.ConfirmInformation' })}
           formName={form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           isSubmittable={submittable}
           isReadOnly={readOnly} // TODO: Mangler && overstyringDisabled
           hasOpenAksjonspunkter={harApneAksjonspunkter}
-          dataId="medisinskVilkarSubmitButton"
         />
       </FlexColumn>
       <FlexColumn>
@@ -52,4 +54,4 @@ const MedisinskVilkarFormButtons = ({
   </FlexContainer>
 );
 
-export default MedisinskVilkarFormButtons;
+export default injectIntl(MedisinskVilkarFormButtons);

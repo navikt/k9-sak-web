@@ -22,7 +22,7 @@ import {
 } from '@fpsak-frontend/form';
 import { dateBeforeOrEqualToToday, DDMMYYYY_DATE_FORMAT, hasValidDate, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 
 import styles from './vurderSoknadsfristPleiepengerForm.less';
 
@@ -108,7 +108,7 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
     </Row>
     <form className={styles.marginTop} onSubmit={formProps.handleSubmit}>
       <div>
-        <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+        <ProsessStegBegrunnelseTextField readOnly={readOnly} />
         <VerticalSpacer sixteenPx />
         <div>
           <RadioGroupField
@@ -139,7 +139,7 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
           </Row>
         )}
         <VerticalSpacer twentyPx />
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}

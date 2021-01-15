@@ -10,7 +10,7 @@ export { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
 export { default as NavAnsatt } from './src/navAnsattTsType';
 export { default as Personopplysninger, PersonopplysningAdresse } from './src/personopplysningerTsType';
 export { default as SimuleringResultat } from './src/simuleringResultatTsType';
-export { default as Soknad } from './src/soknadTsType';
+export { default as Soknad, ManglendeVedleggSoknad } from './src/soknadTsType';
 export { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsType';
 export { default as Vilkar } from './src/vilkarTsType';
 export { default as Ytelsefordeling } from './src/ytelsefordelingTsType';

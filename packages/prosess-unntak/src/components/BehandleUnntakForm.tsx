@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import {
   behandlingForm,
@@ -68,7 +68,7 @@ export const BehandleUnntakFormImpl = ({
       </RadioGroupField>
 
       <FlexColumn>
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}

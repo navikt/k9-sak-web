@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -64,8 +64,6 @@ export const OppholdInntektOgPeriodeForm = ({
     <VerticalSpacer twentyPx />
     {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (
       <FaktaBegrunnelseTextField
-        id={valgtPeriode.id}
-        isDirty={formProps.dirty}
         isReadOnly={readOnly}
         isSubmittable={submittable}
         hasBegrunnelse={!!initialValues.begrunnelse}

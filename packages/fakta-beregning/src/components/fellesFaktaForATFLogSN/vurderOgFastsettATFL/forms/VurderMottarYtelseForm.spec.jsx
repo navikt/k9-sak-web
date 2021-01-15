@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { RadioGroupField } from '@fpsak-frontend/form';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import VurderMottarYtelseForm, {
   frilansMedAndreFrilanstilfeller,
@@ -12,6 +11,7 @@ import VurderMottarYtelseForm, {
   mottarYtelseForArbeidMsg,
   VurderMottarYtelseFormImpl,
 } from './VurderMottarYtelseForm';
+import { createVisningsnavnForAktivitet } from '../../../ArbeidsforholdHelper';
 import { finnFrilansFieldName, utledArbeidsforholdFieldName } from './VurderMottarYtelseUtils';
 
 const requiredMessageId = isRequiredMessage()[0].id;
@@ -240,9 +240,13 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(formattedMsg).to.have.length(3);
     formattedMsg.forEach((msg, index) => {
       expect(msg.prop('id')).to.equal(mottarYtelseForArbeidMsg());
-      expect(msg.prop('values').arbeid).to.equal(
-        createVisningsnavnForAktivitet(arbeidstakerAndelerUtenIM[index].arbeidsforhold, alleKodeverk),
-      );
+      expect(msg.prop('values')).to.equal({
+        arbeid: createVisningsnavnForAktivitet(
+          arbeidstakerAndelerUtenIM[index].arbeidsforhold,
+          alleKodeverk,
+          arbeidsgiverOpplysningerPerId,
+        ),
+      });
     });
   });
 

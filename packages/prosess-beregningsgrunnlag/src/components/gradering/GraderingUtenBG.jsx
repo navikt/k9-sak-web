@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 
 import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, minLength, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
@@ -17,7 +16,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
-
+import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
 import styles from './graderingUtenBG.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
@@ -30,7 +29,11 @@ const radioFieldName = 'graderingUtenBGSettPaaVent';
 
 const bestemVisning = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   if (andel.arbeidsforhold && andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER) {
-    return createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId);
+    const arbeidsforholdInfo = arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent];
+    if (!arbeidsforholdInfo) {
+      return andel.arbeidsforhold.arbeidsforholdType ? getKodeverknavn(andel.arbeidsforhold.arbeidsforholdType) : '';
+    }
+    return createVisningsnavnForAktivitet(arbeidsforholdInfo, andel.arbeidsforhold.eksternArbeidsforholdId);
   }
   const navn = getKodeverknavn(andel.aktivitetStatus);
   return andel.aktivitetStatus && navn ? navn.toLowerCase() : '';

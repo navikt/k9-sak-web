@@ -4,7 +4,7 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
 import GrunnlagForAarsinntektPanelAT, {
   GrunnlagForAarsinntektPanelATImpl as UnwrappedForm,
 } from './GrunnlagForAarsinntektPanelAT';
@@ -103,8 +103,9 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
     let rowNrFlex = 1;
     andeler.forEach(andel => {
       const teksterAndel = rows.at(rowNr).find('Normaltekst');
+      const arbeidsgiverInfo = arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent];
       expect(teksterAndel.at(0).childAt(0).text()).to.equal(
-        createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+        createVisningsnavnForAktivitet(arbeidsgiverInfo, andel.arbeidsforhold.eksternArbeidsforholdId),
       );
       expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
       expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
