@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 
 import { TextAreaField } from '@fpsak-frontend/form';
-import {
-  decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine,
-} from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine } from '@fpsak-frontend/utils';
 
 import styles from './vilkarBegrunnelse.less';
 
@@ -17,11 +15,7 @@ const maxLength1500 = maxLength(1500);
  *
  * Presentasjonskomponent. Lar den NAV-ansatte skrive inn en begrunnelse før overstyring av vilkår eller beregning.
  */
-const VilkarBegrunnelseImpl = ({
-  intl,
-  isReadOnly,
-  begrunnelseLabel,
-}) => (
+const VilkarBegrunnelseImpl = ({ intl, isReadOnly, begrunnelseLabel }) => (
   <TextAreaField
     name="begrunnelse"
     label={intl.formatMessage({ id: begrunnelseLabel })}
@@ -45,11 +39,11 @@ VilkarBegrunnelseImpl.defaultProps = {
 
 const VilkarBegrunnelse = injectIntl(VilkarBegrunnelseImpl);
 
-VilkarBegrunnelse.buildInitialValues = (aksjonspunkt) => ({
+VilkarBegrunnelse.buildInitialValues = aksjonspunkt => ({
   begrunnelse: decodeHtmlEntity(aksjonspunkt && aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : ''),
 });
 
-VilkarBegrunnelse.transformValues = (values) => ({
+VilkarBegrunnelse.transformValues = values => ({
   begrunnelse: values.begrunnelse,
 });
 

@@ -1,8 +1,9 @@
-import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
+import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
 import React from 'react';
 import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
+import VilkarBegrunnelse from './VilkarBegrunnelse';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;

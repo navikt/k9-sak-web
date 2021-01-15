@@ -1,6 +1,6 @@
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { OverstyrBekreftKnappPanel, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
+import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.less';
 

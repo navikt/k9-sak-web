@@ -25,7 +25,7 @@ export { default as FastsattOpptjening } from './src/opptjening/fastsattOpptjeni
 export { default as FastsattOpptjeningAktivitet } from './src/opptjening/fastsattOpptjeningAktivitet';
 export { default as UtlandDokStatus } from './src/opptjening/utlandDokStatus';
 export { default as Vilkårresultat } from './src/opptjening/vilkårresultat';
-export { default as Rammevedtak } from './src/omsorgspenger/Rammevedtak';
+export type { default as Rammevedtak } from './src/omsorgspenger/Rammevedtak';
 export { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknaden';
 export { default as FagsakPerson } from './src/fagsakPersonTsType';
 export { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
@@ -36,14 +36,8 @@ export {
   BeregningsresultatPeriodeAndel,
 } from './src/beregningsresultatUtbetaltTsType';
 
-export {
-  Uttaksperiode,
-  UtfallEnum,
-  Utfalltype,
-  Vilkår,
-  VurderteVilkår,
-  VilkårEnum,
-} from './src/omsorgspenger/Uttaksperiode';
+export type { Uttaksperiode, Utfalltype, Vilkår, VurderteVilkår } from './src/omsorgspenger/Uttaksperiode';
+export { UtfallEnum, VilkårEnum } from './src/omsorgspenger/Uttaksperiode';
 export { default as Aktor } from './src/aktorTsType';
 export { default as BehandlingAppKontekst } from './src/behandlingAppKontekstTsType';
 export {

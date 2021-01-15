@@ -228,7 +228,7 @@ describe('<VurderMottarYtelseForm>', () => {
         erFrilans={false}
         arbeidsforholdUtenIM={arbeidstakerAndelerUtenIM}
         alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
     const atRadio = wrapper.find(RadioGroupField);
@@ -240,7 +240,7 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(formattedMsg).to.have.length(3);
     formattedMsg.forEach((msg, index) => {
       expect(msg.prop('id')).to.equal(mottarYtelseForArbeidMsg());
-      expect(msg.prop('values')).to.equal({
+      expect(msg.prop('values')).to.eql({
         arbeid: createVisningsnavnForAktivitet(
           arbeidstakerAndelerUtenIM[index].arbeidsforhold,
           alleKodeverk,

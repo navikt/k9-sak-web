@@ -3,20 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-const OverstyrBekreftKnappPanel = ({
-  submitting,
-  pristine,
-  overrideReadOnly,
-}) => {
+const OverstyrBekreftKnappPanel = ({ submitting, pristine, overrideReadOnly }) => {
   if (overrideReadOnly) {
     return null;
   }
   return (
-    <Hovedknapp
-      mini
-      spinner={submitting}
-      disabled={submitting || pristine}
-    >
+    <Hovedknapp mini spinner={submitting} disabled={submitting || pristine}>
       <FormattedMessage id="OverstyrBekreftKnappPanel.ConfirmInformation" />
     </Hovedknapp>
   );

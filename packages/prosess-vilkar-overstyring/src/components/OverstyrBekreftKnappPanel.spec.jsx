@@ -6,11 +6,7 @@ import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 
 describe('<OverstyrBekreftKnappPanel>', () => {
   it('skal rendre submit-knapp når en ikke er i readonly-modus', () => {
-    const wrapper = shallow(<OverstyrBekreftKnappPanel
-      submitting={false}
-      pristine={false}
-      overrideReadOnly={false}
-    />);
+    const wrapper = shallow(<OverstyrBekreftKnappPanel submitting={false} pristine={false} overrideReadOnly={false} />);
 
     const button = wrapper.find('Hovedknapp');
     expect(button).to.have.length(1);
@@ -19,11 +15,7 @@ describe('<OverstyrBekreftKnappPanel>', () => {
   });
 
   it('skal ikke vise submit-knapp når en er i readonly-modus', () => {
-    const wrapper = shallow(<OverstyrBekreftKnappPanel
-      submitting={false}
-      pristine={false}
-      overrideReadOnly
-    />);
+    const wrapper = shallow(<OverstyrBekreftKnappPanel submitting={false} pristine={false} overrideReadOnly />);
 
     const button = wrapper.find('Hovedknapp');
     expect(button).to.have.length(0);
