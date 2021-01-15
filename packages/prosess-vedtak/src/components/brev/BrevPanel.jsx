@@ -127,7 +127,6 @@ export const BrevPanel = props => {
         readOnly={readOnly}
         sprakkode={sprakkode}
         previewBrev={automatiskBrevUtenValideringCallback}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
         harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
       />
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />
