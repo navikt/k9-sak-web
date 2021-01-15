@@ -349,6 +349,7 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
         arbeidsgiverOpplysningerPerId,
         aksjonspunkter,
       );
+
       expect(selectorData).to.deep.equal(expectedResultObjectWhenWeHaveAksjonspunkt);
     },
   );

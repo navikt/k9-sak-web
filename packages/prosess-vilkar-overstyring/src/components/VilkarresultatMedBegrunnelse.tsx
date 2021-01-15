@@ -1,6 +1,6 @@
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Kodeverk } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import React from 'react';
 import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
@@ -9,7 +9,7 @@ interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
-  avslagsarsaker: Kodeverk[];
+  avslagsarsaker: KodeverkMedNavn[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;

@@ -6,7 +6,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Table, TableRow } from '@fpsak-frontend/shared-components';
 import {
@@ -24,10 +24,9 @@ describe('<SokersOpplysningspliktForm>', () => {
       {
         dokumentType: {
           kode: dokumentTypeId.INNTEKTSMELDING,
-          navn: 'Inntektsmelding',
+          kodeverk: '',
         },
         arbeidsgiver: {
-          navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
           organisasjonsnummer: '973861778',
         },
         brukerHarSagtAtIkkeKommer: false,
@@ -35,20 +34,22 @@ describe('<SokersOpplysningspliktForm>', () => {
       {
         dokumentType: {
           kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
-          navn: 'terminbekreftelse',
+          kodeverk: '',
         },
         arbeidsgiver: null,
         brukerHarSagtAtIkkeKommer: null,
       },
-    ];
+    ] as ManglendeVedleggSoknad[];
     const dokumentTypeIds = [
       {
         kode: dokumentTypeId.INNTEKTSMELDING,
         navn: 'Inntektsmelding',
+        kodeverk: '',
       },
       {
         kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
         navn: 'terminbekreftelse',
+        kodeverk: '',
       },
     ];
 
@@ -65,11 +66,15 @@ describe('<SokersOpplysningspliktForm>', () => {
         manglendeVedlegg={manglendeVedlegg}
         dokumentTypeIds={dokumentTypeIds}
         inntektsmeldingerSomIkkeKommer={undefined}
-        reduxFormChange={() => undefined}
-        behandlingFormPrefix="form"
         getKodeverknavn={getKodeverknavn}
         behandlingId={1}
         behandlingVersjon={1}
+        soknad={{} as Soknad}
+        aksjonspunkter={[]}
+        status="test"
+        submitCallback={() => undefined}
+        alleKodeverk={{}}
+        originalErVilkarOk
       />,
     );
 
@@ -99,18 +104,22 @@ describe('<SokersOpplysningspliktForm>', () => {
         intl={intlMock}
         readOnly={false}
         readOnlySubmitButton={false}
-        behandlingsresultat={{}}
+        behandlingsresultat={{} as Behandling['behandlingsresultat']}
         hasSoknad
         erVilkarOk={undefined}
         hasAksjonspunkt
         manglendeVedlegg={manglendeVedlegg}
         dokumentTypeIds={dokumentTypeIds}
         inntektsmeldingerSomIkkeKommer={undefined}
-        reduxFormChange={() => undefined}
-        behandlingFormPrefix="form"
         getKodeverknavn={getKodeverknavn}
         behandlingId={1}
         behandlingVersjon={1}
+        soknad={{} as Soknad}
+        aksjonspunkter={[]}
+        status="test"
+        submitCallback={() => undefined}
+        alleKodeverk={{}}
+        originalErVilkarOk
       />,
     );
 
@@ -134,16 +143,15 @@ describe('<SokersOpplysningspliktForm>', () => {
             kodeverk: '',
           },
           arbeidsgiver: {
-            navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
             organisasjonsnummer: '973861778',
           },
           brukerHarSagtAtIkkeKommer: false,
         },
-      ];
+      ] as ManglendeVedleggSoknad[];
 
       const smv = getSortedManglendeVedlegg.resultFunc({
         manglendeVedlegg,
-      });
+      } as Soknad);
 
       expect(smv).to.eql([manglendeVedlegg[1], manglendeVedlegg[0]]);
     });
@@ -153,15 +161,14 @@ describe('<SokersOpplysningspliktForm>', () => {
         {
           dokumentType: {
             kode: dokumentTypeId.INNTEKTSMELDING,
-            navn: 'Inntektsmelding',
+            kodeverk: '',
           },
           arbeidsgiver: {
-            navn: 'STATOIL ASAAVD STATOIL SOKKELVIRKSOMHET',
             organisasjonsnummer: '973861778',
           },
           brukerHarSagtAtIkkeKommer: false,
         },
-      ];
+      ] as ManglendeVedleggSoknad[];
       const aksjonspunkter = [];
 
       const intitialValues = buildInitialValues.resultFunc(

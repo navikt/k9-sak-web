@@ -32,6 +32,7 @@ interface OwnProps {
   readOnly: boolean;
   isDirty?: boolean;
   children: ReactNode | ReactNode[];
+  isPeriodisertFormComplete?: boolean;
 }
 
 /*

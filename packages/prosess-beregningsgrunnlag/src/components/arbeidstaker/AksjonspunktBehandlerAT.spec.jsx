@@ -84,6 +84,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     );
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(andeler.length);
+
     andeler.forEach((andel, index) => {
       const arbeidsgiverNavn = rows.at(index).find('Normaltekst');
       expect(arbeidsgiverNavn.at(0).childAt(0).text()).to.equal(

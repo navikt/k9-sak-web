@@ -86,7 +86,6 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
     <VilkarResultPicker
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
-      hasAksjonspunkt
       customVilkarOppfyltText={<FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />}
       customVilkarIkkeOppfyltText={
         <FormattedMessage
@@ -108,6 +107,7 @@ export const buildInitialValues = createSelector(
   ],
   (behandlingsresultat, aksjonspunkter, status) => ({
     // TODO (Hallvard) bytte fra behandlingsresultat til riktig vilkår (vilkårsresultat.avslagsårsak.kode)
+    // @ts-ignore Fiks
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),

@@ -1,5 +1,5 @@
 import { dateFormat } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Behandling, Kodeverk, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
 import React, { SetStateAction } from 'react';
@@ -33,7 +33,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  avslagsarsaker: Kodeverk[];
+  avslagsarsaker: KodeverkMedNavn[];
   lovReferanse?: string;
   erOverstyrt: boolean;
   panelTittelKode: string;

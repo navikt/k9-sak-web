@@ -2,7 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ProsessStegPanel,
@@ -89,13 +89,13 @@ describe('<PleiepengerProsess>', () => {
   const soknad = {
     fodselsdatoer: {
       0: '2019-01-01',
-    },
+    } as Record<number, string>,
     antallBarn: 1,
     soknadType: {
       kode: soknadType.FODSEL,
       kodeverk: 'test',
     },
-  };
+  } as Soknad;
 
   const arbeidsgiverOpplysningerPerId = {
     123: {

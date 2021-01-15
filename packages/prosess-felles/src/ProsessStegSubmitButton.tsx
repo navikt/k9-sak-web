@@ -39,7 +39,7 @@ interface PureOwnProps {
     formName: string,
     behandlingId: number,
     behandlingVersjon: number,
-    message: string,
+    message: any,
   ) => (state: any) => boolean;
   isReadOnly: boolean;
   isSubmittable: boolean;

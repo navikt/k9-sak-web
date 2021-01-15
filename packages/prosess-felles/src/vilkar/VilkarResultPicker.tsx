@@ -43,7 +43,7 @@ interface StaticFunctions {
         avslagskode: string;
         avslagDato: string;
       };
-  validate?: (erVilkarOk: boolean, avslagCode: string) => { avslagCode?: string };
+  validate?: (erVilkarOk: boolean, avslagCode: string) => { avslagCode?: any };
 }
 
 /**
@@ -122,7 +122,7 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
   );
 };
 
-VilkarResultPicker.validate = (erVilkarOk: boolean, avslagCode: string) => {
+VilkarResultPicker.validate = (erVilkarOk: boolean, avslagCode: string): { avslagCode?: any } => {
   if (erVilkarOk === false && !avslagCode) {
     return {
       avslagCode: isRequiredMessage(),

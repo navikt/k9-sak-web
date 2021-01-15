@@ -96,6 +96,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
         bruttoFastsattInntekt={0}
       />,
     );
+
     const rows = wrapper.find('Row');
     const rowsFlex = wrapper.find('FlexRow');
     expect(rows).to.have.length(3);
