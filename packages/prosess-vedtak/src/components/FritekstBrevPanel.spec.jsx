@@ -21,7 +21,6 @@ describe('<FritekstBrevPanel>', () => {
         readOnly
         sprakkode={sprakkode}
         harAutomatiskVedtaksbrev
-        tilgjengeligeVedtaksbrev={[]}
       />,
     );
 
@@ -40,7 +39,6 @@ describe('<FritekstBrevPanel>', () => {
         readOnly={false}
         sprakkode={sprakkode}
         harAutomatiskVedtaksbrev
-        tilgjengeligeVedtaksbrev={[]}
       />,
     );
 
