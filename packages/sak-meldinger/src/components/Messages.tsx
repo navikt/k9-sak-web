@@ -49,13 +49,20 @@ const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
   brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING ||
   (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET);
 
-interface OwnProps {
+interface PureOwnProps {
+  submitCallback: (values: FormValues) => void;
+  behandlingId: number;
+  behandlingVersjon: number;
   previewCallback: (mottaker: string, brevmalkode: string, fritekst: string, arsakskode: string) => void;
   recipients: string[];
   templates: Template[];
-  causes: KodeverkMedNavn[];
-  handleSubmit: () => void;
   sprakKode?: Kodeverk;
+  revurderingVarslingArsak: KodeverkMedNavn[];
+  isKontrollerRevurderingApOpen?: boolean;
+}
+
+interface MappedOwnProps {
+  causes: KodeverkMedNavn[];
   mottaker?: string;
   brevmalkode?: string;
   fritekst?: string;
@@ -68,7 +75,9 @@ interface OwnProps {
  * Presentasjonskomponent. Gir mulighet for å forhåndsvise og sende brev. Mottaker og brevtype velges fra predefinerte lister,
  * og fritekst som skal flettes inn i brevet skrives inn i et eget felt.
  */
-export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const MessagesImpl: FunctionComponent<
+  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
+> = ({
   intl,
   recipients = [],
   templates = [],
@@ -177,7 +186,11 @@ export const MessagesImpl: FunctionComponent<OwnProps & WrappedComponentProps & 
 
 const formName = 'Messages';
 
-const buildInitalValues = (isKontrollerRevurderingApOpen, recipients, templates) => {
+const buildInitalValues = (
+  recipients: string[],
+  templates: Template[],
+  isKontrollerRevurderingApOpen?: boolean,
+): FormValues => {
   const initialValues = {
     mottaker: recipients[0] ? recipients[0] : null,
     brevmalkode: templates && templates[0] ? templates[0].kode : null,
@@ -196,14 +209,13 @@ const transformValues = values => {
   }
   return newValues;
 };
-const getfilteredCauses = createSelector(
-  [(ownProps: { revurderingVarslingArsak: KodeverkMedNavn[] }) => ownProps.revurderingVarslingArsak],
-  causes => causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
+const getfilteredCauses = createSelector([(ownProps: PureOwnProps) => ownProps.revurderingVarslingArsak], causes =>
+  causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
 );
 
-const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values));
-  return (state, ownProps) => ({
+const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) => {
+  const onSubmit = (values: FormValues) => initialOwnProps.submitCallback(transformValues(values));
+  return (state, ownProps: PureOwnProps): MappedOwnProps => ({
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'mottaker',
@@ -212,7 +224,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
       'arsakskode',
     ),
     causes: getfilteredCauses(ownProps),
-    initialValues: buildInitalValues(ownProps.isKontrollerRevurderingApOpen, ownProps.recipients, ownProps.templates),
+    initialValues: buildInitalValues(ownProps.recipients, ownProps.templates, ownProps.isKontrollerRevurderingApOpen),
     onSubmit,
   });
 };

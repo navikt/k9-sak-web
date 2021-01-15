@@ -69,6 +69,7 @@ describe('<FormkravKlageForm>', () => {
             },
           ],
         }}
+        parterMedKlagerett={[]}
       />,
     );
     const vedtakSelect = wrapper.find('SelectField');

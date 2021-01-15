@@ -4,9 +4,9 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
-import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
-import frisinnBehandlingApi from '../../data/frisinnBehandlingApi';
+import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 
 class OpplysningerFraSoknadFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.OPPLYSNINGER_FRA_SØKNADEN;
@@ -15,7 +15,7 @@ class OpplysningerFraSoknadFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING];
 
-  getEndepunkter = () => [frisinnBehandlingApi.OPPGITT_OPPTJENING];
+  getEndepunkter = () => [FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING];
 
   getKomponent = props => <OpplysningerFraSoknadenIndex {...props} />;
 

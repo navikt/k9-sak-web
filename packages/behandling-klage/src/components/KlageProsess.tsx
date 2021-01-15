@@ -1,30 +1,31 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
-import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  FagsakInfo,
   Rettigheter,
   prosessStegHooks,
   FatterVedtakStatusModal,
   ProsessStegPanel,
   ProsessStegContainer,
-} from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
+import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling, FagsakPerson } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import KlageBehandlingModal from './KlageBehandlingModal';
-import klageBehandlingApi from '../data/klageBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegKlagePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import { restApiKlageHooks, KlageBehandlingApiKeys } from '../data/klageBehandlingApi';
+import KlagePart from '../types/klagePartTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
   data: FetchedData;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -32,16 +33,28 @@ interface OwnProps {
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
-  dispatch: Dispatch;
   alleBehandlinger: {
     id: number;
     type: Kodeverk;
     avsluttet?: string;
   }[];
-  featureToggles: FeatureToggles;
+  setBehandling: (behandling: Behandling) => void;
 }
 
-const saveKlageText = (dispatch, behandling, aksjonspunkter) => aksjonspunktModel => {
+const forhandsvis = data => {
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(data);
+  } else if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
+
+const saveKlageText = (
+  lagreKlageVurdering,
+  lagreReapneKlageVurdering,
+  behandling,
+  aksjonspunkter,
+) => aksjonspunktModel => {
   const data = {
     behandlingId: behandling.id,
     ...aksjonspunktModel,
@@ -52,15 +65,23 @@ const saveKlageText = (dispatch, behandling, aksjonspunkter) => aksjonspunktMode
     .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
   if (getForeslaVedtakAp.length === 1) {
-    dispatch(klageBehandlingApi.SAVE_REOPEN_KLAGE_VURDERING.makeRestApiRequest()(data));
-  } else {
-    dispatch(klageBehandlingApi.SAVE_KLAGE_VURDERING.makeRestApiRequest()(data));
+    return lagreReapneKlageVurdering(data);
   }
+  return lagreKlageVurdering(data);
 };
 
-const previewCallback = (dispatch, fagsak, behandling) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, parametre);
-  return dispatch(klageBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(request));
+const previewCallback = (
+  forhandsvisMelding,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  behandling: Behandling,
+  valgtPartMedKlagerett: KlagePart
+) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
+    ...parametre,
+    overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
+  });
+  return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 
 const getLagringSideeffekter = (
@@ -97,6 +118,7 @@ const getLagringSideeffekter = (
 const KlageProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
+  fagsakPerson,
   behandling,
   alleKodeverk,
   rettigheter,
@@ -105,19 +127,36 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   alleBehandlinger,
-  dispatch,
-  featureToggles,
+  setBehandling,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
     oppdaterBehandlingVersjon,
   );
 
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiKlageHooks.useRestApiRunner<Behandling>(
+    KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
+  const { startRequest: forhandsvisMelding } = restApiKlageHooks.useRestApiRunner(
+    KlageBehandlingApiKeys.PREVIEW_MESSAGE,
+  );
+  const { startRequest: lagreKlageVurdering } = restApiKlageHooks.useRestApiRunner(
+    KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING,
+  );
+  const { startRequest: lagreReapneKlageVurdering } = restApiKlageHooks.useRestApiRunner(
+    KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING,
+  );
+
+  useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
+
   const dataTilUtledingAvFpPaneler = {
     alleBehandlinger,
     klageVurdering: data.klageVurdering,
-    saveKlageText: useCallback(saveKlageText(dispatch, behandling, data.aksjonspunkter), [behandling.versjon]),
-    previewCallback: useCallback(previewCallback(dispatch, fagsak, behandling), [behandling.versjon]),
+    saveKlageText: useCallback(
+      saveKlageText(lagreKlageVurdering, lagreReapneKlageVurdering, behandling, data.aksjonspunkter),
+      [behandling.versjon],
+    ),
+    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling, data.valgtPartMedKlagerett), [behandling.versjon]),
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
@@ -186,9 +225,8 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
           behandling={behandling}
           alleKodeverk={alleKodeverk}
           lagringSideeffekterCallback={lagringSideeffekterCallback}
-          behandlingApi={klageBehandlingApi}
-          dispatch={dispatch}
-          featureToggles={featureToggles}
+          lagreAksjonspunkter={lagreAksjonspunkter}
+          useMultipleRestApi={restApiKlageHooks.useMultipleRestApi}
         />
       </ProsessStegContainer>
     </>

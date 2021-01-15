@@ -1,10 +1,13 @@
 import React, { ReactNode, Component, ChangeEvent } from 'react';
 import moment from 'moment';
-import { Input } from 'nav-frontend-skjema';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import classnames from 'classnames/bind';
+import { Input } from 'nav-frontend-skjema';
+
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+
 import CalendarOverlay from './CalendarOverlay';
 import CalendarToggleButton from './CalendarToggleButton';
+
 import styles from './datepicker.less';
 
 const classNames = classnames.bind(styles);
@@ -20,18 +23,16 @@ interface OwnProps {
   initialMonth?: Date;
   numberOfMonths?: number;
   disabledDays?: Date | Date[];
-  dataId?: string;
 }
 
 interface StateProps {
   showCalendar?: boolean;
   inputOffsetTop?: number;
   inputOffsetWidth?: number;
-  isVisible?: boolean;
 }
 
 class Datepicker extends Component<OwnProps, StateProps> {
-  buttonRef: HTMLDivElement;
+  buttonRef: HTMLButtonElement;
 
   inputRef: HTMLDivElement;
 
@@ -44,10 +45,9 @@ class Datepicker extends Component<OwnProps, StateProps> {
     initialMonth: new Date(),
     numberOfMonths: 1,
     disabledDays: {},
-    dataId: '',
   };
 
-  constructor(props) {
+  constructor(props: OwnProps) {
     super(props);
     this.state = { showCalendar: false };
     this.handleInputRef = this.handleInputRef.bind(this);
@@ -59,33 +59,26 @@ class Datepicker extends Component<OwnProps, StateProps> {
     this.handleDayChange = this.handleDayChange.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.isVisible && this.inputRef?.offsetParent) {
-      this.handleUpdatedRefs();
-    }
-  }
-
-  handleButtonRef(buttonRef) {
+  handleButtonRef(buttonRef: HTMLButtonElement): void {
     if (buttonRef) {
       this.buttonRef = buttonRef;
       this.handleUpdatedRefs();
     }
   }
 
-  handleInputRef(inputRef) {
+  handleInputRef(inputRef: HTMLDivElement): void {
     if (inputRef) {
       this.inputRef = inputRef;
       this.handleUpdatedRefs();
     }
   }
 
-  handleUpdatedRefs() {
+  handleUpdatedRefs(): void {
     const { inputRef, buttonRef } = this;
     if (inputRef) {
       this.setState({
         inputOffsetTop: inputRef.offsetTop,
         inputOffsetWidth: inputRef.offsetWidth,
-        isVisible: !!inputRef.offsetParent,
       });
       if (buttonRef) {
         inputRef.style.paddingRight = `${buttonRef.offsetWidth}px`;
@@ -93,7 +86,7 @@ class Datepicker extends Component<OwnProps, StateProps> {
     }
   }
 
-  handleDayChange(selectedDay) {
+  handleDayChange(selectedDay: Date): void {
     if (selectedDay) {
       const parsed = moment(selectedDay);
       if (parsed.isValid()) {
@@ -105,16 +98,16 @@ class Datepicker extends Component<OwnProps, StateProps> {
     }
   }
 
-  toggleShowCalendar() {
+  toggleShowCalendar(): void {
     const { showCalendar } = this.state;
     this.setState({ showCalendar: !showCalendar });
   }
 
-  hideCalendar() {
+  hideCalendar(): void {
     this.setState({ showCalendar: false });
   }
 
-  elementIsCalendarButton(element) {
+  elementIsCalendarButton(element: EventTarget): boolean {
     return element === this.buttonRef;
   }
 
@@ -130,7 +123,6 @@ class Datepicker extends Component<OwnProps, StateProps> {
       disabledDays,
       initialMonth,
       numberOfMonths,
-      dataId,
     } = this.props;
     const { inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
 
@@ -149,7 +141,6 @@ class Datepicker extends Component<OwnProps, StateProps> {
             value={value || ''}
             feil={feil}
             disabled={disabled}
-            data-id={dataId}
           />
           <CalendarToggleButton
             inputOffsetTop={inputOffsetTop}

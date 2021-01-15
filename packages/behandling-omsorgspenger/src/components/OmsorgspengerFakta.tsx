@@ -1,14 +1,20 @@
 import React, { FunctionComponent } from 'react';
-import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { FagsakInfo, Rettigheter, SideMenuWrapper, faktaHooks } from '@fpsak-frontend/behandling-felles';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
-import { Behandling, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
-import omsorgspengerBehandlingApi from '../data/omsorgspengerBehandlingApi';
+import { restApiOmsorgHooks, OmsorgspengerBehandlingApiKeys } from '../data/omsorgspengerBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
@@ -23,7 +29,8 @@ const overstyringApCodes = [
 
 interface OwnProps {
   data: FetchedData;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -32,7 +39,8 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   valgtProsessSteg?: string;
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
-  dispatch: Dispatch;
+  setBehandling: (behandling: Behandling) => void;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
 }
 
@@ -41,6 +49,7 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   data,
   behandling,
   fagsak,
+  fagsakPerson,
   rettigheter,
   alleKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -48,21 +57,35 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   valgtProsessSteg,
   hasFetchError,
   setApentFaktaPanel,
-  dispatch,
+  setBehandling,
+  arbeidsgiverOpplysningerPerId,
   featureToggles,
 }) => {
   const { aksjonspunkter, ...rest } = data;
 
-  const dataTilUtledingAvFpPaneler = {
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiOmsorgHooks.useRestApiRunner<Behandling>(
+    OmsorgspengerBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
+  useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
+
+  const {
+    startRequest: lagreOverstyrteAksjonspunkter,
+    data: apOverstyrtBehandlingRes,
+  } = restApiOmsorgHooks.useRestApiRunner<Behandling>(OmsorgspengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
+
+  const dataTilUtledingAvOmsorgPaneler = {
     fagsak,
+    fagsakPerson,
     behandling,
     hasFetchError,
+    arbeidsgiverOpplysningerPerId,
     ...rest,
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
     faktaPanelDefinisjoner(featureToggles),
-    dataTilUtledingAvFpPaneler,
+    dataTilUtledingAvOmsorgPaneler,
     behandling,
     rettigheter,
     aksjonspunkter,
@@ -79,30 +102,36 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
     oppdaterProsessStegOgFaktaPanelIUrl,
     valgtProsessSteg,
     overstyringApCodes,
-    omsorgspengerBehandlingApi,
-    dispatch,
+    lagreAksjonspunkter,
+    lagreOverstyrteAksjonspunkter,
   );
 
+  const endepunkter = valgtPanel
+    ? valgtPanel
+        .getPanelDef()
+        .getEndepunkter()
+        .map(e => ({ key: e }))
+    : [];
+  const { data: faktaData, state } = restApiOmsorgHooks.useMultipleRestApi<FetchedData>(endepunkter, {
+    updateTriggers: [behandling.versjon, valgtPanel],
+    suspendRequest: !valgtPanel,
+    isCachingOn: true,
+  });
+
   if (sidemenyPaneler.length > 0) {
+    const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
-        {valgtPanel && (
-          <DataFetcher
-            key={valgtPanel.getUrlKode()}
-            fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-            endpoints={valgtPanel.getPanelDef().getEndepunkter()}
-            loadingPanel={<LoadingPanel />}
-            render={dataProps =>
-              valgtPanel.getPanelDef().getKomponent({
-                ...dataProps,
-                behandling,
-                alleKodeverk,
-                submitCallback: bekreftAksjonspunktCallback,
-                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
-              })
-            }
-          />
-        )}
+        {valgtPanel && isLoading && <LoadingPanel />}
+        {valgtPanel &&
+          !isLoading &&
+          valgtPanel.getPanelDef().getKomponent({
+            ...faktaData,
+            behandling,
+            alleKodeverk,
+            submitCallback: bekreftAksjonspunktCallback,
+            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOmsorgPaneler, hasFetchError),
+          })}
       </SideMenuWrapper>
     );
   }

@@ -11,7 +11,7 @@ const vedtakBehandlingPropType = PropTypes.shape({
   behandlingsresultat: PropTypes.shape(),
   behandlingPaaVent: PropTypes.bool.isRequired,
   behandlingHenlagt: PropTypes.bool.isRequired,
-  behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  behandlingÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 });
 
 export default vedtakBehandlingPropType;

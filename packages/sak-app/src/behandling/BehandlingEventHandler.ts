@@ -4,11 +4,11 @@
 class BehandlingEventHandler {
   handler?: { [key: string]: (params: any) => Promise<any> };
 
-  setHandler = handler => {
+  setHandler = (handler: { [key: string]: (params: any) => Promise<any> }): void => {
     this.handler = handler;
   };
 
-  clear = () => {
+  clear = (): void => {
     this.handler = undefined;
   };
 

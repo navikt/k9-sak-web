@@ -1,10 +1,7 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { Dispatch } from 'redux';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { Behandling, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { Behandling, Aksjonspunkt, Vilkar, Fagsak } from '@k9-sak-web/types';
 
-import FagsakInfo from '../../types/fagsakInfoTsType';
 import Rettigheter from '../../types/rettigheterTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import {
@@ -19,7 +16,7 @@ import { ProsessStegUtledet } from './ProsessStegUtledet';
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDef[],
   panelData: any,
-  fagsak: FagsakInfo,
+  fagsak: Fagsak,
   rettigheter: Rettigheter,
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],
@@ -99,22 +96,22 @@ const useProsessStegVelger = (
   );
 
 const useBekreftAksjonspunkt = (
-  fagsak: FagsakInfo,
+  fagsak: Fagsak,
   behandling: Behandling,
-  behandlingApi: { [name: string]: EndpointOperations },
   lagringSideEffectsCallback: (aksjonspunktModeller: any) => () => void,
-  dispatch: Dispatch,
+  lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
+  lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   valgtPanel?: ProsessStegUtledet,
 ) =>
   useCallback(
     aksjonspunktModels =>
       getBekreftAksjonspunktCallback(
-        dispatch,
         lagringSideEffectsCallback,
         fagsak,
         behandling,
         valgtPanel ? valgtPanel.getAksjonspunkter() : [],
-        behandlingApi,
+        lagreAksjonspunkter,
+        lagreOverstyrteAksjonspunkter,
       )(aksjonspunktModels),
     [behandling.versjon, valgtPanel],
   );

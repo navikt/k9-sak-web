@@ -1,8 +1,12 @@
+import React from 'react';
+import { expect } from 'chai';
+import sinon from 'sinon';
+
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { expect } from 'chai';
-import React from 'react';
-import sinon from 'sinon';
+import { Sykdom } from '@k9-sak-web/types';
+import { Periode } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
+
 import shallowWithIntl from '../../i18n';
 import DiagnosekodeSelector from './DiagnosekodeSelector';
 import KontinuerligTilsynOgPleie from './KontinuerligTilsynOgPleie';
@@ -36,14 +40,15 @@ describe('<MedisinskVilkarForm>', () => {
         behandlingVersjon={1}
         readOnly={false}
         submitCallback={sinon.spy()}
-        hasOpenAksjonspunkter
         submittable
         intl={intlMock}
         harDiagnose
-        erInnlagt
-        toOmsorgspersoner
-        sykdom={{ periodeTilVurdering: {} }}
+        sykdom={{ periodeTilVurdering: { fom: '2019-01-01', tom: '2020-01-01' } } as Sykdom}
         aksjonspunkter={aksjonspunkter}
+        harApneAksjonspunkter={false}
+        harBehovForKontinuerligTilsynOgPleie={false}
+        innleggelsesperiode={{} as Periode}
+        perioderMedKontinuerligTilsynOgPleie={{}}
       />,
     );
     expect(wrapper.find(KontinuerligTilsynOgPleie)).has.length(1);

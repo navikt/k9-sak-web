@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/form';
+import { safeJSONParse } from '@fpsak-frontend/utils';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FormkravKlageForm, { getPaklagdVedtak, IKKE_PAKLAGD_VEDTAK } from './FormkravKlageForm';
@@ -23,6 +24,7 @@ export const FormkravKlageFormNfpImpl = ({
   readOnlySubmitButton,
   alleKodeverk,
   avsluttedeBehandlinger,
+  parterMedKlagerett,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -35,6 +37,7 @@ export const FormkravKlageFormNfpImpl = ({
       formProps={formProps}
       alleKodeverk={alleKodeverk}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
+      parterMedKlagerett={parterMedKlagerett}
     />
   </form>
 );
@@ -84,13 +87,18 @@ const transformValues = (values, avsluttedeBehandlinger) => ({
   vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
+  valgtKlagePart: safeJSONParse(values.valgtPartMedKlagerett),
 });
 
 const formName = 'FormkravKlageFormNfp';
 
 const buildInitialValues = createSelector(
-  [ownProps => ownProps.klageVurdering, ownProps => ownProps.avsluttedeBehandlinger],
-  (klageVurdering, avsluttedeBehandlinger) => {
+  [
+    ownProps => ownProps.klageVurdering,
+    ownProps => ownProps.avsluttedeBehandlinger,
+    ownProps => ownProps.valgtPartMedKlagerett,
+  ],
+  (klageVurdering, avsluttedeBehandlinger, valgtPartMedKlagerett) => {
     const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
     return {
       vedtak: klageFormkavResultatNfp ? getPaklagdVedtak(klageFormkavResultatNfp, avsluttedeBehandlinger) : null,
@@ -99,6 +107,7 @@ const buildInitialValues = createSelector(
       erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
       erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
       erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
+      valgtPartMedKlagerett: JSON.stringify(valgtPartMedKlagerett),
     };
   },
 );
@@ -107,6 +116,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values =>
     initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
   return (state, ownProps) => ({
+    parterMedKlagerett: ownProps.parterMedKlagerett,
     initialValues: buildInitialValues(ownProps),
     readOnly: ownProps.readOnly,
     onSubmit,

@@ -1,6 +1,6 @@
 # fpsak
 
 ```
-yarn add @fpsak-frontend/sak-app
+yarn add @k9-sak-web/sak-app
 ```
 

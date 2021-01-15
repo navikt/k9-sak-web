@@ -1,1 +1,1 @@
-export { default, skalViseIMeny, getMenytekst } from './src/MenyApneForEndringerIndex';
+export { default, getMenytekst } from './src/MenyApneForEndringerIndex';

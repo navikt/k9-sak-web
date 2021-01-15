@@ -1,7 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
+
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import shallowWithIntl from '../../i18n';
 import { oppdaterPerioderFor, transformValues, UttakFaktaFormImpl } from './UttakFaktaForm';
 import UttakFormKolonne from './UttakFormKolonne';
@@ -47,17 +49,17 @@ describe('<UttakFaktaForm>', () => {
       ],
     },
   ];
-  it('oppdaterer arbeidsgivere basert på ny periodeinput', async () => {
-    const formChanges = [];
+  it('oppdaterer arbeidsgivere basert på ny periodeinput', () => {
     const wrapper = shallowWithIntl(
       <UttakFaktaFormImpl
         {...reduxFormPropsMock}
+        intl={intlMock}
         arbeid={arbeid}
         behandlingId={1}
         behandlingVersjon={1}
         submitCallback={() => undefined}
         resetForm={() => undefined}
-        reduxFormChange={(formName, formPropName, newVal) => formChanges.push({ formPropName, newVal })}
+        reduxFormChange={() => undefined}
       />,
     );
 

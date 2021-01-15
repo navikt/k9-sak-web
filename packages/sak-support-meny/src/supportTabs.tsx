@@ -1,9 +1,9 @@
-const supportTabs = {
-  APPROVAL: 'godkjenning',
-  RETURNED: 'frabeslutter',
-  HISTORY: 'historikk',
-  MESSAGES: 'sendmelding',
-  DOCUMENTS: 'dokumenter',
-};
+enum SupportTabs {
+  TIL_BESLUTTER = 'TIL_BESLUTTER',
+  FRA_BESLUTTER = 'FRA_BESLUTTER',
+  HISTORIKK = 'HISTORIKK',
+  MELDINGER = 'MELDINGER',
+  DOKUMENTER = 'DOKUMENTER',
+}
 
-export default supportTabs;
+export default SupportTabs;

@@ -1,17 +1,16 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
-import shallowWithIntl from '../i18n';
+import shallowWithIntl from '../i18n/index';
 
 describe('<ErrorMessageDetailsModal>', () => {
   it('skal vise feildetaljer', () => {
     const errorDetails = {
       feilmelding: 'Dette er feil',
-      stacktrace: 'test',
+      url: 'test',
     };
     const wrapper = shallowWithIntl(
       <ErrorMessageDetailsModal.WrappedComponent
@@ -23,13 +22,13 @@ describe('<ErrorMessageDetailsModal>', () => {
     );
 
     const undertekst = wrapper.find(Undertekst);
-    expect(undertekst).to.have.length(2);
-    expect(undertekst.first().childAt(0).text()).is.eql('Feilmelding:');
-    expect(undertekst.last().childAt(0).text()).is.eql('Stacktrace:');
+    expect(undertekst).toHaveLength(2);
+    expect(undertekst.first().childAt(0).text()).toEqual('Feilmelding:');
+    expect(undertekst.last().childAt(0).text()).toEqual('Url:');
 
     const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).to.have.length(2);
-    expect(normaltekst.first().childAt(0).text()).is.eql('Dette er feil');
-    expect(normaltekst.last().childAt(0).text()).is.eql('test');
+    expect(normaltekst).toHaveLength(2);
+    expect(normaltekst.first().childAt(0).text()).toEqual('Dette er feil');
+    expect(normaltekst.last().childAt(0).text()).toEqual('test');
   });
 });

@@ -16,8 +16,8 @@ export { default as FaktaPanelDef } from './src/util/fakta/FaktaPanelDef';
 export { default as prosessStegHooks } from './src/util/prosessSteg/prosessStegHooks';
 export { ProsessStegDef, ProsessStegPanelDef } from './src/util/prosessSteg/ProsessStegDef';
 export { default as ProsessStegOverstyringPanelDef } from './src/util/prosessSteg/ProsessStegOverstyringPanelDef';
+export { default as useSetBehandlingVedEndring } from './src/util/useSetBehandlingVedEndring';
 
-export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
 export { default as Rettigheter } from './src/types/rettigheterTsType';
 export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';
 

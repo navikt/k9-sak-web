@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Kodeverk, Personopplysninger, Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson } from '@k9-sak-web/types';
 
 import VisittkortPanel from './components/VisittkortPanel';
 import messages from '../i18n/nb_NO.json';
@@ -17,24 +17,24 @@ const intl = createIntl(
 );
 
 interface OwnProps {
-  fagsak: Fagsak;
-  sprakkode: Kodeverk;
+  fagsakPerson: FagsakPerson;
+  sprakkode?: Kodeverk;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
 }
 
 const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
-  fagsak,
-  personopplysninger,
-  alleKodeverk,
+  fagsakPerson,
   sprakkode,
-  harTilbakekrevingVerge = false,
+  alleKodeverk,
+  personopplysninger,
+  harTilbakekrevingVerge,
 }) => (
   <RawIntlProvider value={intl}>
     <VisittkortPanel
       personopplysninger={personopplysninger}
-      fagsak={fagsak}
+      fagsakPerson={fagsakPerson}
       alleKodeverk={alleKodeverk}
       sprakkode={sprakkode}
       harTilbakekrevingVerge={harTilbakekrevingVerge}

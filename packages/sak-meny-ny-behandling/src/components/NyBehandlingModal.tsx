@@ -1,8 +1,8 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { useEffect, FunctionComponent, ReactElement } from 'react';
 import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -18,7 +18,11 @@ import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
 
 import styles from './nyBehandlingModal.less';
 
-const createOptions = (bt, enabledBehandlingstyper, intl) => {
+const createOptions = (
+  bt: KodeverkMedNavn,
+  enabledBehandlingstyper: KodeverkMedNavn[],
+  intl: IntlShape,
+): ReactElement => {
   // TODO Burde retta opp navn for behandlingstype i DB
   const navn =
     bt.kode === bType.REVURDERING ? intl.formatMessage({ id: 'MenyNyBehandlingIndex.OpprettRevurdering' }) : bt.navn;
@@ -27,19 +31,52 @@ const createOptions = (bt, enabledBehandlingstyper, intl) => {
   return <option key={bt.kode} value={bt.kode} disabled={!isEnabled}>{` ${navn} `}</option>;
 };
 
-interface OwnProps {
+export type BehandlingOppretting = Readonly<{
+  behandlingType: Kodeverk;
+  kanOppretteBehandling: boolean;
+}>;
+
+export type FormValues = {
+  behandlingType: string;
+  nyBehandlingEtterKlage?: string;
+  behandlingArsakType?: string;
+};
+
+interface PureOwnProps {
+  ytelseType: Kodeverk;
+  saksnummer: number;
   cancelEvent: () => void;
-  behandlingTyper: KodeverkMedNavn[];
-  valgtBehandlingTypeKode?: string;
-  behandlingArsakTyper: KodeverkMedNavn[];
-  enabledBehandlingstyper: KodeverkMedNavn[];
-  behandlingerSomKanOpprettes: { [behandlingstype: string]: boolean };
+  submitCallback: (
+    data: {
+      eksternUuid?: string;
+      fagsakYtelseType: Kodeverk;
+    } & FormValues,
+  ) => void;
+  behandlingOppretting: BehandlingOppretting[];
+  behandlingstyper: KodeverkMedNavn[];
+  tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
+  revurderingArsaker: KodeverkMedNavn[];
+  kanTilbakekrevingOpprettes: {
+    kanBehandlingOpprettes: boolean;
+    kanRevurderingOpprettes: boolean;
+  };
+  behandlingType?: Kodeverk;
+  behandlingId?: number;
   behandlingUuid?: string;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
-  uuid?: string;
-  saksnummer: string;
+  uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
+  aktorId?: string;
+  gjeldendeVedtakBehandlendeEnhetId?: string;
+}
+
+interface MappedOwnProps {
+  behandlingTyper: KodeverkMedNavn[];
+  enabledBehandlingstyper: KodeverkMedNavn[];
+  uuid?: string;
+  behandlingArsakTyper: KodeverkMedNavn[];
+  valgtBehandlingTypeKode: string;
   erTilbakekreving: boolean;
 }
 
@@ -49,7 +86,9 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises etter at en saksbehandler har valgt opprett ny 1.gangsbehandling i behandlingsmenyen.
  * Ved å trykke på ok skal ny behandling(1.gangsbehandling) av sak opprettes.
  */
-export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const NyBehandlingModal: FunctionComponent<
+  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
+> = ({
   handleSubmit,
   cancelEvent,
   intl,
@@ -176,12 +215,11 @@ const tilbakekrevingRevurderingArsaker = [
 
 export const getBehandlingAarsaker = createSelector(
   [
-    (_state, ownProps) => ownProps.ytelseType,
-    (_state, ownProps) => ownProps.revurderingArsaker,
-    (_state, ownProps) => ownProps.tilbakekrevingRevurderingArsaker,
+    (_state, ownProps: PureOwnProps) => ownProps.revurderingArsaker,
+    (_state, ownProps: PureOwnProps) => ownProps.tilbakekrevingRevurderingArsaker,
     state => formValueSelector(formName)(state, 'behandlingType'),
   ],
-  (ytelseType, alleRevurderingArsaker, alleTilbakekrevingRevurderingArsaker, valgtBehandlingType) => {
+  (alleRevurderingArsaker, alleTilbakekrevingRevurderingArsaker, valgtBehandlingType) => {
     if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
       return tilbakekrevingRevurderingArsaker
         .map(ar => alleTilbakekrevingRevurderingArsaker.find(el => el.kode === ar))
@@ -204,27 +242,45 @@ export const getBehandlingAarsaker = createSelector(
   },
 );
 
-interface Props {
-  behandlingstyper: KodeverkMedNavn[];
-  behandlingerSomKanOpprettes: { [behandlingstype: string]: boolean };
-  behandlingType: Kodeverk;
-}
-
-export const getBehandlingTyper = createSelector([(ownProps: Props) => ownProps.behandlingstyper], behandlingstyper =>
-  behandlingstyper.sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)),
+export const getBehandlingTyper = createSelector(
+  [(ownProps: PureOwnProps) => ownProps.behandlingstyper],
+  behandlingstyper => behandlingstyper.sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)),
 );
+
+const kanOppretteBehandlingstype = (
+  behandlingOppretting: BehandlingOppretting[],
+  behandlingTypeKode: string,
+): boolean =>
+  behandlingOppretting.some(bo => bo.behandlingType.kode === behandlingTypeKode && bo.kanOppretteBehandling);
 
 export const getEnabledBehandlingstyper = createSelector(
-  [getBehandlingTyper, ownProps => ownProps.behandlingerSomKanOpprettes],
-  (behandlingstyper, behandlingerSomKanOpprettes) =>
-    behandlingstyper.filter(b =>
-      Object.prototype.hasOwnProperty.call(behandlingerSomKanOpprettes || {}, b.kode)
-        ? !!behandlingerSomKanOpprettes[b.kode]
-        : true,
-    ),
+  [
+    getBehandlingTyper,
+    (ownProps: PureOwnProps) => ownProps.behandlingOppretting,
+    (ownProps: PureOwnProps) => ownProps.kanTilbakekrevingOpprettes,
+  ],
+  (
+    behandlingstyper,
+    behandlingOppretting,
+    kanTilbakekrevingOpprettes = {
+      kanBehandlingOpprettes: false,
+      kanRevurderingOpprettes: false,
+    },
+  ) => {
+    const behandlingstyperSomErValgbare = behandlingstyper.filter(type =>
+      kanOppretteBehandlingstype(behandlingOppretting, type.kode),
+    );
+    if (kanTilbakekrevingOpprettes.kanBehandlingOpprettes) {
+      behandlingstyperSomErValgbare.push(behandlingstyper.find(type => type.kode === bType.TILBAKEKREVING));
+    }
+    if (kanTilbakekrevingOpprettes.kanRevurderingOpprettes) {
+      behandlingstyperSomErValgbare.push(behandlingstyper.find(type => type.kode === bType.TILBAKEKREVING_REVURDERING));
+    }
+    return behandlingstyperSomErValgbare;
+  },
 );
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+const mapStateToPropsFactory = (initialState, initialOwnProps: PureOwnProps) => {
   const onSubmit = values => {
     const klageOnlyValues =
       values?.behandlingType === bType.KLAGE
@@ -232,7 +288,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
             aktørId: initialOwnProps.aktorId,
             behandlendeEnhetId: initialOwnProps.gjeldendeVedtakBehandlendeEnhetId,
           }
-        : undefined;
+        : {};
     initialOwnProps.submitCallback({
       ...values,
       eksternUuid: initialOwnProps.uuidForSistLukkede,
@@ -248,8 +304,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     behandlingArsakTyper: getBehandlingAarsaker(state, ownProps),
     valgtBehandlingTypeKode: formValueSelector(formName)(state, 'behandlingType'),
     erTilbakekreving:
-      ownProps.behandlingType.kode === bType.TILBAKEKREVING ||
-      ownProps.behandlingType.kode === bType.TILBAKEKREVING_REVURDERING,
+      ownProps.behandlingType &&
+      (ownProps.behandlingType.kode === bType.TILBAKEKREVING ||
+        ownProps.behandlingType.kode === bType.TILBAKEKREVING_REVURDERING),
   });
 };
 

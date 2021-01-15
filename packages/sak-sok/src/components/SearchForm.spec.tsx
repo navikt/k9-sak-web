@@ -1,12 +1,11 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { SearchForm } from './SearchForm';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl from '../../i18n/index';
 
 describe('<Search>', () => {
   it('skal ha et søkefelt og en søkeknapp', () => {
@@ -14,8 +13,8 @@ describe('<Search>', () => {
       <SearchForm intl={intlMock} searchString="" searchStarted {...reduxFormPropsMock} />,
     );
 
-    expect(wrapper.find('InputField')).to.have.length(1);
-    expect(wrapper.find('Hovedknapp')).to.have.length(1);
+    expect(wrapper.find('InputField')).toHaveLength(1);
+    expect(wrapper.find('Hovedknapp')).toHaveLength(1);
   });
 
   it('skal utføre søk når en trykker på søkeknapp', () => {
@@ -32,6 +31,6 @@ describe('<Search>', () => {
       },
     });
 
-    expect(onButtonClick).to.have.property('callCount', 1);
+    expect(onButtonClick).toHaveProperty('callCount', 1);
   });
 });

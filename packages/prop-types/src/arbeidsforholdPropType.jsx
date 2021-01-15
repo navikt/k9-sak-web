@@ -61,4 +61,60 @@ export const arbeidsforholdPropType = PropTypes.shape({
   brukPermisjon: PropTypes.bool,
 });
 
+export const arbeidsforholdV2PropType = PropTypes.shape({
+  id: PropTypes.string,
+  arbeidsforhold: PropTypes.shape({
+    eksternArbeidsforholdId: PropTypes.string,
+    internArbeidsforholdId: PropTypes.string,
+  }),
+  arbeidsgiver: PropTypes.shape({
+    arbeidsgiverOrgnr: PropTypes.string,
+    arbeidsgiverAktørId: PropTypes.string,
+  }),
+  yrkestittel: PropTypes.string,
+  begrunnelse: PropTypes.string,
+  perioder: PropTypes.arrayOf(
+    PropTypes.shape({
+      fom: PropTypes.string,
+      tom: PropTypes.string,
+    }),
+  ),
+  handlingType: {
+    kode: PropTypes.string,
+    kodeverk: PropTypes.string,
+  },
+  kilde: PropTypes.arrayOf({
+    kode: PropTypes.string,
+    kodeverk: PropTypes.string,
+  }),
+  permisjoner: PropTypes.arrayOf(
+    PropTypes.shape({
+      permisjonFom: PropTypes.string,
+      permisjonTom: PropTypes.string,
+      permisjonsprosent: PropTypes.number,
+      type: PropTypes.shape({
+        kode: PropTypes.string,
+        kodeverk: PropTypes.string,
+      }),
+    }),
+  ),
+  stillingsprosent: PropTypes.number,
+  aksjonspunktÅrsaker: PropTypes.arrayOf(PropTypes.string),
+  inntektsmeldinger: PropTypes.arrayOf(
+    PropTypes.shape({
+      journalpostId: PropTypes.string,
+      mottattTidspunkt: PropTypes.string,
+      status: PropTypes.string,
+      begrunnelse: PropTypes.string,
+    }),
+  ),
+});
+
+export const arbeidsgiverPropType = PropTypes.shape({
+  referanse: PropTypes.string,
+  identifikator: PropTypes.string,
+  navn: PropTypes.string,
+  fødselsdato: PropTypes.string,
+});
+
 export default arbeidsforholdPropType;

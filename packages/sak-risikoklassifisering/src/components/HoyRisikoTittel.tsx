@@ -6,6 +6,7 @@ import { Risikoklassifisering, Aksjonspunkt } from '@k9-sak-web/types';
 
 import HoyRisikoPanel from './HoyRisikoPanel';
 import TittelMedDivider from './TittelMedDivider';
+import { VuderFaresignalerAp } from './AvklarFaresignalerForm';
 
 import styles from './hoyRisikoTittel.less';
 
@@ -13,7 +14,7 @@ interface OwnProps {
   risikoklassifisering: Risikoklassifisering;
   aksjonspunkt?: Aksjonspunkt;
   readOnly: boolean;
-  submitCallback: (aksjonspunkt: Aksjonspunkt) => void;
+  submitCallback: (verdier: VuderFaresignalerAp) => Promise<any>;
   isRiskPanelOpen: boolean;
   toggleRiskPanel: () => void;
   behandlingId: number;

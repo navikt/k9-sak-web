@@ -1,10 +1,11 @@
 import React, { useState, useMemo, useCallback, FunctionComponent, useEffect } from 'react';
 
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { Behandling, Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-import BehandlingPaVentModal from './BehandlingPaVentModal';
+
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
@@ -12,7 +13,7 @@ interface BehandlingPaVentProps {
   aksjonspunkter: Aksjonspunkt[];
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   erTilbakekreving?: boolean;
 }
 
@@ -37,7 +38,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
         ...formData,
         behandlingId: behandling.id,
         behandlingVersjon: behandling.versjon,
-      }).then(() => hentBehandling({ behandlingId: behandling.id }, { keepData: false })),
+      }).then(() => hentBehandling({ behandlingId: behandling.id }, false)),
     [behandling.versjon],
   );
 
@@ -54,14 +55,15 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
   }
 
   return (
-    <BehandlingPaVentModal
-      onSubmit={oppdaterPaVentData}
+    <SettPaVentModalIndex
+      submitCallback={oppdaterPaVentData}
       cancelEvent={skjulModal}
       frist={behandling.fristBehandlingPaaVent}
       ventearsak={behandling.venteArsakKode}
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
       erTilbakekreving={erTilbakekreving}
+      showModal
     />
   );
 };

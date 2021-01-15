@@ -96,14 +96,11 @@ export const PersonAksjonspunktTextImpl = ({ arbeidsforhold, alleKodeverk }) => 
     </>
   );
 };
-
 PersonAksjonspunktTextImpl.propTypes = {
   arbeidsforhold: arbeidsforholdPropType,
   alleKodeverk: PropTypes.shape().isRequired,
 };
-
 PersonAksjonspunktTextImpl.defaultProps = {
   arbeidsforhold: undefined,
 };
-
 export default PersonAksjonspunktTextImpl;

@@ -95,7 +95,7 @@ const BeregningFaktaIndex = ({
           beregningsgrunnlag={aktivtBeregningsrunnlag}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [aktivtBeregningsrunnlag]}
-          arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+          arbeidsgiverOpplysningerPerId={arbeidsgivere}
         />
         <VerticalSpacer thirtyTwoPx />
         <VurderFaktaBeregningPanel
@@ -111,7 +111,7 @@ const BeregningFaktaIndex = ({
           erOverstyrer={erOverstyrer}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
-          arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+          arbeidsgiverOpplysningerPerId={arbeidsgivere}
         />
       </div>
     </RawIntlProvider>

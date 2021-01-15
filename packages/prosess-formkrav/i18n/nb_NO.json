@@ -13,6 +13,7 @@
   "Klage.Formkrav.SelectVedtakPlaceholder": "Velg vedtak",
   "Klage.Formkrav.Ja": "Ja",
   "Klage.Formkrav.Nei": "Nei",
+  "Klage.Formkrav.velgPartMedKlagerett": "Velg klagepart",
 
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",

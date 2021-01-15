@@ -2,13 +2,12 @@ import React from 'react';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import redusertUtbetalingArsak from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
-import { dokumentdatatype, prosessStegCodes } from '@k9-sak-web/konstanter';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import findStatusForVedtak from '../vedtakStatusUtlederOmsorgspenger';
-import omsorgspengerBehandlingApi from '../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakProsessIndex {...props} />;
@@ -26,12 +25,12 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => {
     return [
-      omsorgspengerBehandlingApi.TILBAKEKREVINGVALG,
-      omsorgspengerBehandlingApi.SEND_VARSEL_OM_REVURDERING,
-      omsorgspengerBehandlingApi.MEDLEMSKAP,
-      omsorgspengerBehandlingApi.VEDTAK_VARSEL,
-      omsorgspengerBehandlingApi.TILGJENGELIGE_VEDTAKSBREV,
-      omsorgspengerBehandlingApi.DOKUMENTDATA_HENTE,
+      OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG,
+      OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+      OmsorgspengerBehandlingApiKeys.MEDLEMSKAP,
+      OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL,
+      OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+      OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
     ];
   };
 
@@ -48,7 +47,7 @@ class PanelDef extends ProsessStegPanelDef {
     simuleringResultat,
     beregningsgrunnlag,
     forbrukteDager,
-    featureToggles,
+    lagreArsakerTilRedusertUtbetaling,
   }) => ({
     previewCallback,
     aksjonspunkter,
@@ -58,16 +57,7 @@ class PanelDef extends ProsessStegPanelDef {
     ytelseTypeKode: fagsakYtelseType.OMSORGSPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
-    lagreArsakerTilRedusertUtbetaling: (values, dispatch) => {
-      if (featureToggles?.DOKUMENTDATA) {
-        const arsaker = Object.values(redusertUtbetalingArsak).filter(a => values[a]);
-        dispatch(
-          omsorgspengerBehandlingApi.DOKUMENTDATA_LAGRE.makeRestApiRequest()({
-            [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
-          }),
-        );
-      }
-    },
+    lagreArsakerTilRedusertUtbetaling,
   });
 }
 

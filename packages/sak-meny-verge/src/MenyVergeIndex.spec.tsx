@@ -1,10 +1,9 @@
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
 
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
 
-import shallowWithIntl from '../i18n';
+import shallowWithIntl from '../i18n/index';
 import MenyVergeIndex from './MenyVergeIndex';
 
 describe('<MenyVergeIndex>', () => {
@@ -17,16 +16,16 @@ describe('<MenyVergeIndex>', () => {
     );
 
     const modal = wrapper.find(OkAvbrytModal);
-    expect(modal).to.have.length(1);
-    expect(modal.prop('textCode')).is.eql('MenyVergeIndex.OpprettVergeSporsmal');
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('text')).toEqual('Opprett verge/fullmektig?');
 
     modal.prop('submit')();
 
     const kall = opprettVergeCallback.getCalls();
-    expect(kall).to.have.length(1);
+    expect(kall).toHaveLength(1);
 
     const lukkKall = lukkModalCallback.getCalls();
-    expect(lukkKall).to.have.length(1);
+    expect(lukkKall).toHaveLength(1);
   });
 
   it('skal vise modal for fjerne og så velge å fjerne verge', () => {
@@ -36,15 +35,15 @@ describe('<MenyVergeIndex>', () => {
     const wrapper = shallowWithIntl(<MenyVergeIndex fjernVerge={fjernVergeCallback} lukkModal={lukkModalCallback} />);
 
     const modal = wrapper.find(OkAvbrytModal);
-    expect(modal).to.have.length(1);
-    expect(modal.prop('textCode')).is.eql('MenyVergeIndex.FjernVergeSporsmal');
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('text')).toEqual('Fjern verge/fullmektig?');
 
     modal.prop('submit')();
 
     const kall = fjernVergeCallback.getCalls();
-    expect(kall).to.have.length(1);
+    expect(kall).toHaveLength(1);
 
     const lukkKall = lukkModalCallback.getCalls();
-    expect(lukkKall).to.have.length(1);
+    expect(lukkKall).toHaveLength(1);
   });
 });

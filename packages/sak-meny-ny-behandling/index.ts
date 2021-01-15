@@ -1,1 +1,1 @@
-export { default, skalViseIMeny, getMenytekst } from './src/MenyNyBehandlingIndex';
+export { default, getMenytekst } from './src/MenyNyBehandlingIndex';

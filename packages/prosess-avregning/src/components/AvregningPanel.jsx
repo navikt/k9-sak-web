@@ -342,7 +342,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       fagsak,
       featureToggles,
     } = ownProps;
-    const erFrisinn = fagsakYtelseType.FRISINN === fagsak.fagsakYtelseType?.kode;
+    const erFrisinn = fagsakYtelseType.FRISINN === fagsak.sakstype?.kode;
     const hasOpenTilbakekrevingsbehandling =
       tilbakekrevingvalg !== undefined &&
       tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;

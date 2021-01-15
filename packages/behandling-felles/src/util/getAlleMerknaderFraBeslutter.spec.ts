@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { Behandling } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -45,7 +43,7 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
   it('skal hente alle merknader fra beslutter når behandlingstatus er BEHANDLING_UTREDER', () => {
     const merknader = getAlleMerknaderFraBeslutter(behandling as Behandling, aksjonspunkter);
 
-    expect(merknader).is.eql({
+    expect(merknader).toEqual({
       [aksjonspunkter[0].definisjon.kode]: {
         notAccepted: true,
       },
@@ -62,6 +60,6 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
     };
     const merknader = getAlleMerknaderFraBeslutter(behandlingMedAnnenStatus as Behandling, aksjonspunkter);
 
-    expect(merknader).is.eql({});
+    expect(merknader).toEqual({});
   });
 });

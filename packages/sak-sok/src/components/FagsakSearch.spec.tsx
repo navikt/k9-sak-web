@@ -1,16 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import FagsakSearch from './FagsakSearch';
 import FagsakList from './FagsakList';
 import SearchForm from './SearchForm';
-import PersonInfo from './person/PersonInfo';
 
 describe('<FagsakSearch>', () => {
   const fagsak = {
-    saksnummer: 12345,
+    saksnummer: '12345',
     sakstype: {
       kode: 'TEST',
       kodeverk: '',
@@ -57,9 +55,9 @@ describe('<FagsakSearch>', () => {
     );
 
     const searchComp = wrapper.find(SearchForm);
-    expect(searchComp).to.have.length(1);
-    expect(wrapper.find('Label')).to.have.length(0);
-    expect(wrapper.find(FagsakList)).to.have.length(0);
+    expect(searchComp).toHaveLength(1);
+    expect(wrapper.find('Label')).toHaveLength(0);
+    expect(wrapper.find(FagsakList)).toHaveLength(0);
   });
 
   it('skal vise søkefelt og label for ingen søketreff når ingen fagsaker blir hentet', () => {
@@ -74,13 +72,13 @@ describe('<FagsakSearch>', () => {
       />,
     );
 
-    expect(wrapper.find(SearchForm)).to.have.length(1);
+    expect(wrapper.find(SearchForm)).toHaveLength(1);
     const labelComp = wrapper.find('Normaltekst');
-    expect(labelComp).to.have.length(1);
-    expect(labelComp.find('FormattedMessage').prop('id')).to.eql('FagsakSearch.ZeroSearchResults');
+    expect(labelComp).toHaveLength(1);
+    expect(labelComp.find('FormattedMessage').prop('id')).toEqual('FagsakSearch.ZeroSearchResults');
   });
 
-  it('skal vise søkefelt og søketreff der person og to fagsaker blir vist', () => {
+  it('skal vise søkefelt og søketreff der to fagsaker blir vist', () => {
     const searchFagsakFunction = sinon.spy();
     const selectFagsakFunction = sinon.spy();
     const wrapper = shallow(
@@ -94,15 +92,12 @@ describe('<FagsakSearch>', () => {
       />,
     );
 
-    expect(wrapper.find(SearchForm)).to.have.length(1);
-    expect(wrapper.find('Label')).to.have.length(0);
-
-    const personComp = wrapper.find(PersonInfo);
-    expect(personComp).to.have.length(1);
+    expect(wrapper.find(SearchForm)).toHaveLength(1);
+    expect(wrapper.find('Label')).toHaveLength(0);
 
     const fagsakListComp = wrapper.find(FagsakList);
-    expect(fagsakListComp).to.have.length(1);
-    expect(fagsakListComp.prop('fagsaker')).to.eql([fagsak, fagsak]);
-    expect(fagsakListComp.prop('selectFagsakCallback')).to.eql(selectFagsakFunction);
+    expect(fagsakListComp).toHaveLength(1);
+    expect(fagsakListComp.prop('fagsaker')).toEqual([fagsak, fagsak]);
+    expect(fagsakListComp.prop('selectFagsakCallback')).toEqual(selectFagsakFunction);
   });
 });

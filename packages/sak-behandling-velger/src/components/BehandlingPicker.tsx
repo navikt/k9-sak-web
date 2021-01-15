@@ -1,16 +1,16 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactElement } from 'react';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
+import { Location } from 'history';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-import behandlingstype from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { BehandlingAppKontekst, KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
 
 import BehandlingPickerItem from './BehandlingPickerItem';
 
 import styles from './behandlingPicker.less';
 
-export const sortBehandlinger = behandlinger =>
+export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
   behandlinger.sort((b1, b2) => {
     if (b1.avsluttet && !b2.avsluttet) {
       return 1;
@@ -25,14 +25,13 @@ export const sortBehandlinger = behandlinger =>
   });
 
 const renderListItems = (
-  behandlinger,
-  getBehandlingLocation,
-  behandlingId,
-  showAll,
-  toggleShowAll,
-  alleKodeverk,
-  klagekodeverk,
-) =>
+  behandlinger: BehandlingAppKontekst[],
+  getBehandlingLocation: (behandlingId: number) => Location,
+  showAll: boolean,
+  toggleShowAll: () => void,
+  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
+  behandlingId?: number,
+): ReactElement[] =>
   sortBehandlinger(behandlinger)
     .filter(behandling => showAll || behandling.id === behandlingId)
     .map(behandling => (
@@ -44,20 +43,19 @@ const renderListItems = (
           isActive={behandling.id === behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
-          alleKodeverk={behandling.type.kode === behandlingstype.KLAGE ? klagekodeverk : alleKodeverk}
+          getKodeverkFn={getKodeverkFn}
         />
       </li>
     ));
 
 interface OwnProps {
-  behandlinger: Behandling[];
-  getBehandlingLocation: (behandlingId: number) => void;
+  behandlinger: BehandlingAppKontekst[];
+  getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  klagekodeverk?: { [key: string]: KodeverkMedNavn[] };
+  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
 /**
@@ -72,8 +70,7 @@ const BehandlingPicker: FunctionComponent<OwnProps> = ({
   behandlingId,
   showAll,
   toggleShowAll,
-  alleKodeverk,
-  klagekodeverk,
+  getKodeverkFn,
 }) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && (
@@ -82,15 +79,7 @@ const BehandlingPicker: FunctionComponent<OwnProps> = ({
       </Normaltekst>
     )}
     {!noExistingBehandlinger &&
-      renderListItems(
-        behandlinger,
-        getBehandlingLocation,
-        behandlingId,
-        showAll,
-        toggleShowAll,
-        alleKodeverk,
-        klagekodeverk,
-      )}
+      renderListItems(behandlinger, getBehandlingLocation, showAll, toggleShowAll, getKodeverkFn, behandlingId)}
   </ul>
 );
 

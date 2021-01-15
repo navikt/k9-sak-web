@@ -36,9 +36,7 @@ const PermisjonPeriode = ({ arbeidsforhold }) => (
     )}
   </>
 );
-
 PermisjonPeriode.propTypes = {
   arbeidsforhold: arbeidsforholdPropType.isRequired,
 };
-
 export default PermisjonPeriode;

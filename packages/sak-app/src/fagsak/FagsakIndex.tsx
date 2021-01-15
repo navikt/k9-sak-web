@@ -1,136 +1,195 @@
-import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import React, { FunctionComponent, useState, useCallback } from 'react';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { DataFetchPendingModal, requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak } from '@k9-sak-web/types';
-import { DataFetcher, DataFetcherTriggers, getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
+import { KodeverkMedNavn, Personopplysninger, Fagsak, FagsakPerson, Kodeverk } from '@k9-sak-web/types';
 
+import { LoadingPanel, DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
+
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
+import useBehandlingEndret from '../behandling/useBehandlingEndret';
+import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
-import { setSelectedSaksnummer } from './duck';
-
-import { behandlingerPath } from '../app/paths';
-import FagsakResolver from './FagsakResolver';
+import { pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerPath } from '../app/paths';
 import FagsakGrid from './components/FagsakGrid';
-import {
-  getSelectedBehandlingId,
-  getBehandlingVersjon,
-  getBehandlingSprak,
-  getUrlBehandlingId,
-  getBehandlingType,
-  finnesVerge,
-} from '../behandling/duck';
-import fpsakApi from '../data/fpsakApi';
-import { getAlleFpSakKodeverk } from '../kodeverk/duck';
-import trackRouteParam from '../app/trackRouteParam';
+import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
+import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+import useHentAlleBehandlinger from './useHentAlleBehandlinger';
+import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 
-const endepunkter = [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER];
-const ingenEndepunkter = [];
-
-const erTilbakekreving = behandlingType =>
+const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
-
-interface OwnProps {
-  harValgtBehandling: boolean;
-  behandlingId?: number;
-  behandlingVersjon?: number;
-  behandlingType?: Kodeverk;
-  selectedSaksnummer: string;
-  requestPendingMessage?: string;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode?: Kodeverk;
-  fagsak?: Fagsak;
-  harVerge: boolean;
-}
-
-interface DataProps {
-  behandlingPersonopplysninger?: Personopplysninger;
-  behandlingFamilieHendelse?: FamilieHendelseSamling;
-  annenPartBehandling?: {
-    saksnr: {
-      verdi: string;
-    };
-    behandlingId: number;
-  };
-}
 
 /**
  * FagsakIndex
  *
  * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
-export const FagsakIndex: FunctionComponent<OwnProps> = ({
-  harValgtBehandling,
-  selectedSaksnummer,
-  requestPendingMessage,
-  behandlingId,
-  behandlingVersjon,
-  behandlingType,
-  alleKodeverk,
-  sprakkode,
-  fagsak,
-  harVerge,
-}) => (
-  <>
-    <FagsakResolver key={selectedSaksnummer}>
+const FagsakIndex: FunctionComponent = () => {
+  const [behandlingerTeller, setBehandlingTeller] = useState(0);
+  const [requestPendingMessage, setRequestPendingMessage] = useState<string>();
+
+  const [behandlingIdOgVersjon, setIdOgVersjon] = useState({ behandlingId: undefined, behandlingVersjon: undefined });
+  const setBehandlingIdOgVersjon = useCallback(
+    (behandlingId, behandlingVersjon) => setIdOgVersjon({ behandlingId, behandlingVersjon }),
+    [],
+  );
+  const { behandlingId, behandlingVersjon } = behandlingIdOgVersjon;
+
+  const oppfriskBehandlinger = useCallback(() => setBehandlingTeller(behandlingerTeller + 1), [behandlingerTeller]);
+
+  const { selected: selectedSaksnummer } = useTrackRouteParam<string>({
+    paramName: 'saksnummer',
+  });
+
+  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
+    K9sakApiKeys.KODEVERK,
+  );
+
+  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
+
+  const { data: fagsakPerson, state: fagsakPersonState } = restApiHooks.useGlobalStateRestApi<FagsakPerson>(
+    K9sakApiKeys.SAK_BRUKER,
+    { saksnummer: selectedSaksnummer },
+    {
+      updateTriggers: [selectedSaksnummer],
+      suspendRequest: !selectedSaksnummer,
+    },
+  );
+
+  const { data: fagsak, state: fagsakState } = restApiHooks.useRestApi<Fagsak>(
+    K9sakApiKeys.FETCH_FAGSAK,
+    { saksnummer: selectedSaksnummer },
+    {
+      updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon],
+      suspendRequest: !selectedSaksnummer || erBehandlingEndretFraUndefined,
+      keepData: true,
+    },
+  );
+
+  const [fagsakRettigheter, harFerdighentetfagsakRettigheter] = useHentFagsakRettigheter(
+    selectedSaksnummer,
+    behandlingId,
+    behandlingVersjon,
+  );
+
+  const [alleBehandlinger, harFerdighentetAlleBehandlinger] = useHentAlleBehandlinger(
+    selectedSaksnummer,
+    behandlingId,
+    behandlingVersjon,
+    behandlingerTeller,
+  );
+
+  const location = useLocation();
+  const skalIkkeHenteData =
+    !selectedSaksnummer || erUrlUnderBehandling(location) || (erBehandlingValgt(location) && !behandlingId);
+
+  const options = {
+    updateTriggers: [skalIkkeHenteData, behandlingId, behandlingVersjon],
+    suspendRequest: skalIkkeHenteData,
+    keepData: true,
+  };
+
+  const {
+    data: behandlingPersonopplysninger,
+    state: personopplysningerState,
+  } = restApiHooks.useRestApi<Personopplysninger>(K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
+
+  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
+
+  const { data: behandlingRettigheter } = restApiHooks.useRestApi<BehandlingRettigheter>(
+    K9sakApiKeys.BEHANDLING_RETTIGHETER,
+    { uuid: behandling?.uuid },
+    options,
+  );
+
+  if (!fagsak) {
+    if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
+      return <LoadingPanel />;
+    }
+    return <Redirect to={pathToMissingPage()} />;
+  }
+  if (
+    fagsakPersonState === RestApiState.NOT_STARTED ||
+    fagsakPersonState === RestApiState.LOADING ||
+    !harFerdighentetfagsakRettigheter
+  ) {
+    return <LoadingPanel />;
+  }
+
+  if (fagsak.saksnummer !== selectedSaksnummer) {
+    return <Redirect to={pathToMissingPage()} />;
+  }
+
+  const harVerge = behandling ? behandling.harVerge : false;
+
+  return (
+    <>
       <FagsakGrid
-        behandlingContent={<Route strict path={behandlingerPath} component={BehandlingerIndex} />}
-        profileAndNavigationContent={<FagsakProfileIndex />}
-        supportContent={<BehandlingSupportIndex />}
+        behandlingContent={
+          <Route
+            strict
+            path={behandlingerPath}
+            render={props => (
+              <BehandlingerIndex
+                {...props}
+                fagsak={fagsak}
+                alleBehandlinger={alleBehandlinger}
+                setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
+                setRequestPendingMessage={setRequestPendingMessage}
+              />
+            )}
+          />
+        }
+        profileAndNavigationContent={
+          <FagsakProfileIndex
+            fagsak={fagsak}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            alleBehandlinger={alleBehandlinger}
+            harHentetBehandlinger={harFerdighentetAlleBehandlinger}
+            oppfriskBehandlinger={oppfriskBehandlinger}
+            fagsakRettigheter={fagsakRettigheter}
+            behandlingRettigheter={behandlingRettigheter}
+          />
+        }
+        supportContent={
+          <BehandlingSupportIndex
+            fagsak={fagsak}
+            alleBehandlinger={alleBehandlinger}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            behandlingRettigheter={behandlingRettigheter}
+          />
+        }
         visittkortContent={() => {
-          if (harValgtBehandling && !behandlingId) {
+          if (skalIkkeHenteData) {
             return null;
           }
 
+          if (personopplysningerState === RestApiState.LOADING) {
+            return <LoadingPanel />;
+          }
+
           return (
-            <DataFetcher
-              fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion: behandlingVersjon }, false)}
-              endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
-              key={endepunkter.every(endepunkt => endepunkt.isEndpointEnabled()) ? 0 : 1}
-              endpoints={endepunkter.every(endepunkt => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
-              showOldDataWhenRefetching
-              loadingPanel={<LoadingPanel />}
-              render={(dataProps: DataProps) => (
-                <VisittkortSakIndex
-                  personopplysninger={dataProps.behandlingPersonopplysninger}
-                  alleKodeverk={alleKodeverk}
-                  sprakkode={sprakkode}
-                  fagsak={fagsak}
-                  harTilbakekrevingVerge={erTilbakekreving(behandlingType) && harVerge}
-                />
-              )}
+            <VisittkortSakIndex
+              personopplysninger={behandlingPersonopplysninger}
+              alleKodeverk={alleKodeverk}
+              sprakkode={behandling?.sprakkode}
+              fagsakPerson={fagsakPerson || fagsak.person}
+              harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
             />
           );
         }}
       />
-    </FagsakResolver>
-    {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
-  </>
-);
+      {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
+    </>
+  );
+};
 
-const mapStateToProps = state => ({
-  harValgtBehandling: !!getUrlBehandlingId(state),
-  behandlingId: getSelectedBehandlingId(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  behandlingType: getBehandlingType(state),
-  selectedSaksnummer: getSelectedSaksnummer(state),
-  requestPendingMessage: getRequestPollingMessage(state),
-  alleKodeverk: getAlleFpSakKodeverk(state),
-  sprakkode: getBehandlingSprak(state),
-  fagsak: getSelectedFagsak(state),
-  harVerge: finnesVerge(state),
-});
-
-export default trackRouteParam({
-  paramName: 'saksnummer',
-  parse: saksnummerFromUrl => saksnummerFromUrl,
-  storeParam: setSelectedSaksnummer,
-  getParamFromStore: getSelectedSaksnummer,
-})(connect(mapStateToProps)(requireProps(['selectedSaksnummer'])(FagsakIndex)));
+export default FagsakIndex;
