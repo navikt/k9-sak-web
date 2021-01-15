@@ -1,7 +1,7 @@
-const faresignalVurdering = {
-  INNVIRKNING: 'INNVIRKNING',
-  INGEN_INNVIRKNING: 'INGEN_INNVIRKNING',
-  UDEFINERT: '-',
-};
+enum FaresignalVurdering {
+  INNVIRKNING = 'INNVIRKNING',
+  INGEN_INNVIRKNING = 'INGEN_INNVIRKNING',
+  UDEFINERT = '-',
+}
 
-export default faresignalVurdering;
+export default FaresignalVurdering;

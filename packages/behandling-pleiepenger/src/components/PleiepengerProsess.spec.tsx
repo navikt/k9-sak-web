@@ -1,16 +1,15 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ProsessStegPanel,
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
   ProsessStegContainer,
-} from '@fpsak-frontend/behandling-felles';
+} from '@k9-sak-web/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -24,20 +23,22 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerProsess from './PleiepengerProsess';
+import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 
 describe('<PleiepengerProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    fagsakYtelseType: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
-    fagsakStatus: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-    fagsakPerson: {
-      alder: 30,
-      personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
-      erDod: false,
-      erKvinne: true,
-      navn: 'Espen Utvikler',
-      personnummer: '12345',
-    },
+    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+  } as Fagsak;
+
+  const fagsakPerson = {
+    alder: 30,
+    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    erDod: false,
+    erKvinne: true,
+    navn: 'Espen Utvikler',
+    personnummer: '12345',
   };
   const behandling = {
     id: 1,
@@ -96,6 +97,14 @@ describe('<PleiepengerProsess>', () => {
     },
   };
 
+  const arbeidsgiverOpplysningerPerId = {
+    123: {
+      erPrivatPerson: false,
+      identifikator: 'testId',
+      navn: 'testNavn',
+    },
+  };
+
   const fetchedData: Partial<FetchedData> = {
     aksjonspunkter,
     vilkar,
@@ -107,6 +116,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -116,13 +126,14 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
 
     const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).is.eql([
+    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
       {
         isActive: true,
         isDisabled: false,
@@ -180,6 +191,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -189,7 +201,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -199,10 +212,10 @@ describe('<PleiepengerProsess>', () => {
     meny.prop('velgProsessStegPanelCallback')(2);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('uttak');
-    expect(opppdaterKall[0].args[1]).to.eql('default');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('uttak');
+    expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
@@ -219,6 +232,8 @@ describe('<PleiepengerProsess>', () => {
       status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
     };
 
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
+
     const opneSokeside = sinon.spy();
 
     const customFetchedData: Partial<FetchedData> = {
@@ -231,6 +246,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={customFetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={vedtakBehandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
@@ -242,13 +258,14 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
 
     const modal = wrapper.find(FatterVedtakStatusModal);
-    expect(modal.prop('visModal')).is.false;
+    expect(modal.prop('visModal')).toBe(false);
 
     const panel = wrapper.find(ProsessStegPanel);
     (
@@ -258,12 +275,12 @@ describe('<PleiepengerProsess>', () => {
     )();
 
     const oppdatertModal = wrapper.find(FatterVedtakStatusModal);
-    expect(oppdatertModal.prop('visModal')).is.true;
+    expect(oppdatertModal.prop('visModal')).toBe(true);
 
     oppdatertModal.prop('lukkModal')();
 
     const opppdaterKall = opneSokeside.getCalls();
-    expect(opppdaterKall).to.have.length(1);
+    expect(opppdaterKall).toHaveLength(1);
   });
 
   it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
@@ -276,6 +293,8 @@ describe('<PleiepengerProsess>', () => {
       },
     ];
 
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
+
     const opneSokeside = sinon.spy();
 
     const customFetchedData: Partial<FetchedData> = {
@@ -288,6 +307,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={customFetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
@@ -299,13 +319,14 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
 
     const modal = wrapper.find(IverksetterVedtakStatusModal);
-    expect(modal.prop('visModal')).is.false;
+    expect(modal.prop('visModal')).toBe(false);
 
     const panel = wrapper.find(ProsessStegPanel);
     (
@@ -315,12 +336,12 @@ describe('<PleiepengerProsess>', () => {
     )();
 
     const oppdatertModal = wrapper.find(IverksetterVedtakStatusModal);
-    expect(oppdatertModal.prop('visModal')).is.true;
+    expect(oppdatertModal.prop('visModal')).toBe(true);
 
     oppdatertModal.prop('lukkModal')();
 
     const opppdaterKall = opneSokeside.getCalls();
-    expect(opppdaterKall).to.have.length(1);
+    expect(opppdaterKall).toHaveLength(1);
   });
 
   it('skal gå til søkeside når en har revurderingsaksjonspunkt', async () => {
@@ -345,6 +366,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={customFetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
@@ -356,7 +378,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -369,7 +392,7 @@ describe('<PleiepengerProsess>', () => {
     )();
 
     const opppdaterKall = opneSokeside.getCalls();
-    expect(opppdaterKall).to.have.length(1);
+    expect(opppdaterKall).toHaveLength(1);
   });
 
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', async () => {
@@ -378,6 +401,7 @@ describe('<PleiepengerProsess>', () => {
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -387,7 +411,8 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
-        dispatch={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
@@ -400,18 +425,19 @@ describe('<PleiepengerProsess>', () => {
     )();
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    expect(opppdaterKall).to.have.length(1);
-    expect(opppdaterKall[0].args).to.have.length(2);
-    expect(opppdaterKall[0].args[0]).to.eql('default');
-    expect(opppdaterKall[0].args[1]).to.eql('default');
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('default');
+    expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
-    const dispatch = sinon.spy();
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE, undefined);
     const wrapper = shallow(
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -421,27 +447,38 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={dispatch}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('vedtak');
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).toEqual('vedtak');
     const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData().previewCallback;
-    expect(forhandsvisCallback).is.not.null;
+    expect(forhandsvisCallback).not.toBeNull();
 
     forhandsvisCallback({ param: 'test' });
 
-    expect(dispatch.getCalls()).to.have.length(1);
+    const requestData = requestPleiepengerApi.getRequestMockData(PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE);
+    expect(requestData).toHaveLength(1);
+    expect(requestData[0].params).toEqual({
+      aktørId: undefined,
+      avsenderApplikasjon: 'K9SAK',
+      eksternReferanse: undefined,
+      param: 'test',
+      saksnummer: '123456',
+      ytelseType: fagsak.sakstype,
+    });
   });
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
-    const dispatch = sinon.spy();
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE, undefined);
     const wrapper = shallow(
       <PleiepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
@@ -451,19 +488,33 @@ describe('<PleiepengerProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
-        dispatch={dispatch}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('simulering');
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).toEqual('simulering');
     const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData()
       .previewFptilbakeCallback;
-    expect(forhandsvisCallback).is.not.null;
+    expect(forhandsvisCallback).not.toBeNull();
 
     forhandsvisCallback({ param: 'test' });
 
-    expect(dispatch.getCalls()).to.have.length(1);
+    const requestData = requestPleiepengerApi.getRequestMockData(
+      PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+    );
+    expect(requestData).toHaveLength(1);
+    expect(requestData[0].params).toEqual({
+      behandlingUuid: undefined,
+      brevmalkode: undefined,
+      fagsakYtelseType: fagsak.sakstype,
+      mottaker: {
+        param: 'test',
+      },
+      saksnummer: undefined,
+      varseltekst: '',
+    });
   });
 });

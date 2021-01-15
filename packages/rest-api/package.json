@@ -1,11 +1,11 @@
 {
-  "name": "@fpsak-frontend/rest-api",
+  "name": "@k9-sak-web/rest-api",
   "version": "1.0.0",
   "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@sentry/browser": "^5.29.2",
+    "@sentry/browser": "^5.29.1",
     "axios": "^0.21.1"
   },
   "devDependencies": {}

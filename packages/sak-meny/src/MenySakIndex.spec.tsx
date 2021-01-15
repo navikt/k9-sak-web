@@ -1,9 +1,8 @@
 import React from 'react';
-import { expect } from 'chai';
 import Popover from '@navikt/nap-popover';
 import { Knapp } from 'nav-frontend-knapper';
 
-import shallowWithIntl from '../i18n';
+import shallowWithIntl from '../i18n/index';
 import MenySakIndex from './MenySakIndex';
 import MenyData from './MenyData';
 
@@ -18,17 +17,18 @@ describe('<MenySakIndex>', () => {
     );
 
     const popover = wrapper.find(Popover);
-    expect(popover).to.have.length(1);
+    expect(popover).toHaveLength(1);
 
-    expect(popover.prop('popperIsVisible')).is.false;
+    expect(popover.prop('popperIsVisible')).toBe(false);
 
+    // @ts-ignore
     const wrapper2 = shallowWithIntl(popover.prop('referenceProps').children('ref'));
 
     const knapp = wrapper2.find(Knapp);
-    expect(knapp).to.have.length(1);
-    knapp.prop('onClick')();
+    expect(knapp).toHaveLength(1);
+    knapp.prop('onClick')({} as React.MouseEvent<any>);
 
-    expect(wrapper.find(Popover).prop('popperIsVisible')).is.true;
+    expect(wrapper.find(Popover).prop('popperIsVisible')).toBe(true);
   });
 
   it('skal åpne modal ved trykk på menyinnslag og så lukke den ved å bruke funksjon for lukking', () => {
@@ -40,20 +40,20 @@ describe('<MenySakIndex>', () => {
       />,
     );
 
-    expect(wrapper.find('button')).to.have.length(0);
+    expect(wrapper.find('button')).toHaveLength(0);
 
     const popover = wrapper.find(Popover);
     const wrapper2 = shallowWithIntl(popover.prop('popperProps').children());
 
     const button = wrapper2.find('button');
-    expect(button).to.have.length(1);
-    button.prop('onClick')(0);
+    expect(button).toHaveLength(1);
+    button.prop('onClick')({} as React.MouseEvent<any>);
 
     const span = wrapper.find('button');
-    expect(span).to.have.length(1);
+    expect(span).toHaveLength(1);
 
-    span.prop('onClick')();
+    span.prop('onClick')({} as React.MouseEvent<any>);
 
-    expect(wrapper.find('button')).to.have.length(0);
+    expect(wrapper.find('button')).toHaveLength(0);
   });
 });

@@ -1,11 +1,12 @@
-import React, { FunctionComponent, useMemo, useCallback } from 'react';
+import React, { FunctionComponent, useMemo, useCallback, Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
+import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML, LoadingPanel } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
@@ -18,6 +19,7 @@ interface OwnProps {
   submitCallback: (data: any) => Promise<any>;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
+  useMultipleRestApi: (endpoints: EndpointData[], options: Options) => RestApiData<any>;
 }
 
 const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
@@ -27,25 +29,17 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
   submitCallback,
   apentFaktaPanelInfo,
   oppdaterProsessStegOgFaktaPanelIUrl,
+  useMultipleRestApi,
 }) => {
   const filteredPanels = prosessStegData.filter(stegData => stegData.getKomponentData);
-  const panels = filteredPanels.map(stegData => (
-    <DataFetcher
-      key={stegData.getId()}
-      fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-      endpoints={stegData.getProsessStegDelPanelDef().getEndepunkter()}
-      loadingPanel={<div>test</div>}
-      render={dataProps =>
-        stegData.getProsessStegDelPanelDef().getKomponent({
-          ...dataProps,
-          behandling,
-          alleKodeverk,
-          submitCallback,
-          ...stegData.getKomponentData(),
-        })
-      }
-    />
-  ));
+
+  const endepunkter = filteredPanels.flatMap(stegData =>
+    stegData
+      .getProsessStegDelPanelDef()
+      .getEndepunkter()
+      .map(e => ({ key: e })),
+  );
+  const { data, state } = useMultipleRestApi(endepunkter, { updateTriggers: [behandling.versjon], isCachingOn: true });
 
   const aksjonspunktTekstKoder = useMemo(
     () =>
@@ -68,6 +62,10 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
     [behandling.versjon],
   );
 
+  if (state === RestApiState.NOT_STARTED || state === RestApiState.LOADING) {
+    return <LoadingPanel />;
+  }
+
   return (
     <FadingPanel>
       {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
@@ -75,12 +73,12 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
           <AksjonspunktHelpTextHTML>
             {apentFaktaPanelInfo && erIkkeFerdigbehandlet
               ? [
-                  <>
+                  <Fragment key="1">
                     <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
                     <a href="" onClick={oppdaterUrl}>
                       <FormattedMessage id={apentFaktaPanelInfo.textCode} />
                     </a>
-                  </>,
+                  </Fragment>,
                 ]
               : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
           </AksjonspunktHelpTextHTML>
@@ -89,20 +87,32 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
       )}
       <Row className="">
         <Column xs="6">
-          {panels
+          {filteredPanels
             .filter((_panel, index) => index < 2)
-            .map((panel, index) => (
-              <div key={panel.key} className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
-                {panel}
+            .map((stegData, index) => (
+              <div key={stegData.getId()} className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
+                {stegData.getProsessStegDelPanelDef().getKomponent({
+                  ...data,
+                  behandling,
+                  alleKodeverk,
+                  submitCallback,
+                  ...stegData.getKomponentData(),
+                })}
               </div>
             ))}
         </Column>
         <Column xs="6">
-          {panels
+          {filteredPanels
             .filter((_panel, index) => index > 1)
-            .map((panel, index) => (
-              <div key={panel.key} className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
-                {panel}
+            .map((stegData, index) => (
+              <div key={stegData.getId()} className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
+                {stegData.getProsessStegDelPanelDef().getKomponent({
+                  ...data,
+                  behandling,
+                  alleKodeverk,
+                  submitCallback,
+                  ...stegData.getKomponentData(),
+                })}
               </div>
             ))}
         </Column>

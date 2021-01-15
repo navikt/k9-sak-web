@@ -1,23 +1,25 @@
-import React, { FunctionComponent, useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
-import { destroy } from 'redux-form';
+import React, { FunctionComponent, useEffect, useState, useCallback, useMemo } from 'react';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import { FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner } from '@fpsak-frontend/behandling-felles';
-import { Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { Behandling, Fagsak, KodeverkMedNavn, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 import InnsynPaneler from './components/InnsynPaneler';
 import FetchedData from './types/fetchedDataTsType';
+import { restApiInnsynHooks, requestInnsynApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 
-const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN, innsynApi.INNSYN_DOKUMENTER];
+const getInnsynData = saksnummer => [
+  { key: InnsynBehandlingApiKeys.AKSJONSPUNKTER },
+  { key: InnsynBehandlingApiKeys.VILKAR },
+  { key: InnsynBehandlingApiKeys.INNSYN },
+  { key: InnsynBehandlingApiKeys.INNSYN_DOKUMENTER, params: { saksnummer } },
+];
 
 interface OwnProps {
   behandlingId: number;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -28,138 +30,113 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
+  setRequestPendingMessage: (message: string) => void;
   featureToggles: FeatureToggles;
 }
 
-interface StateProps {
-  behandling?: Behandling;
-  forrigeBehandling?: Behandling;
-}
-
-interface DispatchProps {
-  nyBehandlendeEnhet: (params: any) => Promise<void>;
-  settBehandlingPaVent: (params: any) => Promise<void>;
-  taBehandlingAvVent: (params: any, { keepData: boolean }) => Promise<void>;
-  henleggBehandling: (params: any) => Promise<void>;
-  settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
-  resetRestApiContext: () => (dspatch: any) => void;
-  destroyReduxForm: (form: string) => void;
-}
-
-type Props = OwnProps & StateProps & DispatchProps;
-
-const BehandlingInnsynIndex: FunctionComponent<Props> = ({
+const BehandlingInnsynIndex: FunctionComponent<OwnProps> = ({
   behandlingEventHandler,
-  nyBehandlendeEnhet,
-  settBehandlingPaVent,
-  taBehandlingAvVent,
-  henleggBehandling,
-  hentBehandling,
   behandlingId,
-  resetRestApiContext,
-  destroyReduxForm,
-  behandling,
   oppdaterBehandlingVersjon,
   kodeverk,
   fagsak,
+  fagsakPerson,
   rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtProsessSteg,
-  settPaVent,
   opneSokeside,
-  forrigeBehandling,
+  setRequestPendingMessage,
   featureToggles,
 }) => {
-  const forrigeVersjon = useRef<number>();
+  const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
+    current: undefined,
+    previous: undefined,
+  });
+  const behandling = nyOgForrigeBehandling.current;
+  const forrigeBehandling = nyOgForrigeBehandling.previous;
+
+  const setBehandling = useCallback(nyBehandling => {
+    requestInnsynApi.resetCache();
+    requestInnsynApi.setLinks(nyBehandling.links);
+    setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
+  }, []);
+
+  const { startRequest: hentBehandling, data: behandlingRes } = restApiInnsynHooks.useRestApiRunner<Behandling>(
+    InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
+  );
+  useSetBehandlingVedEndring(behandlingRes, setBehandling);
+
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+
+  const { startRequest: nyBehandlendeEnhet } = restApiInnsynHooks.useRestApiRunner(
+    InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
+  );
+  const { startRequest: settBehandlingPaVent } = restApiInnsynHooks.useRestApiRunner(
+    InnsynBehandlingApiKeys.BEHANDLING_ON_HOLD,
+  );
+  const { startRequest: taBehandlingAvVent } = restApiInnsynHooks.useRestApiRunner<Behandling>(
+    InnsynBehandlingApiKeys.RESUME_BEHANDLING,
+  );
+  const { startRequest: henleggBehandling } = restApiInnsynHooks.useRestApiRunner(
+    InnsynBehandlingApiKeys.HENLEGG_BEHANDLING,
+  );
+  const { startRequest: settPaVent } = restApiInnsynHooks.useRestApiRunner(InnsynBehandlingApiKeys.UPDATE_ON_HOLD);
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
-      endreBehandlendeEnhet: params =>
-        nyBehandlendeEnhet(params).then(() => hentBehandling({ behandlingId }, { keepData: true })),
-      settBehandlingPaVent: params =>
-        settBehandlingPaVent(params).then(() => hentBehandling({ behandlingId }, { keepData: true })),
-      taBehandlingAvVent: params => taBehandlingAvVent(params, { keepData: true }),
+      endreBehandlendeEnhet: params => nyBehandlendeEnhet(params).then(() => hentBehandling({ behandlingId }, true)),
+      settBehandlingPaVent: params => settBehandlingPaVent(params).then(() => hentBehandling({ behandlingId }, true)),
+      taBehandlingAvVent: params =>
+        taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
     });
 
-    hentBehandling({ behandlingId }, { keepData: false });
+    requestInnsynApi.setRequestPendingHandler(setRequestPendingMessage);
+    requestInnsynApi.setAddErrorMessageHandler(addErrorMessage);
+
+    hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
-      resetRestApiContext();
-      setTimeout(() => {
-        destroyReduxForm(getBehandlingFormPrefix(behandlingId, forrigeVersjon.current));
-      }, 1000);
     };
-  }, [behandlingId]);
+  }, []);
 
-  if (!behandling) {
+  const innsynEndepunkter = useMemo(() => getInnsynData(fagsak.saksnummer), [fagsak.saksnummer]);
+  const { data, state } = restApiInnsynHooks.useMultipleRestApi<FetchedData>(innsynEndepunkter, {
+    keepData: true,
+    updateTriggers: [behandling?.versjon],
+    suspendRequest: !behandling,
+  });
+
+  const hasNotFinished = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
+  if (!behandling || (hasNotFinished && data === undefined)) {
     return <LoadingPanel />;
   }
 
-  forrigeVersjon.current = behandling.versjon;
-
-  reduxRestApi.injectPaths(behandling.links);
-
   return (
-    <DataFetcher
-      fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-      showOldDataWhenRefetching
-      endpoints={innsynData}
-      endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
-      loadingPanel={<LoadingPanel />}
-      render={(dataProps: FetchedData, isFinished) => (
-        <>
-          <ReduxFormStateCleaner
-            behandlingId={behandling.id}
-            behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon}
-          />
-          <InnsynPaneler
-            behandling={isFinished ? behandling : forrigeBehandling}
-            fetchedData={dataProps}
-            fagsak={fagsak}
-            kodeverk={kodeverk}
-            rettigheter={rettigheter}
-            valgtProsessSteg={valgtProsessSteg}
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-            settPaVent={settPaVent}
-            hentBehandling={hentBehandling}
-            opneSokeside={opneSokeside}
-            featureToggles={featureToggles}
-          />
-        </>
-      )}
-    />
+    <>
+      <ReduxFormStateCleaner
+        behandlingId={behandling.id}
+        behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
+      />
+      <InnsynPaneler
+        behandling={hasNotFinished ? forrigeBehandling : behandling}
+        fetchedData={data}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        kodeverk={kodeverk}
+        rettigheter={rettigheter}
+        valgtProsessSteg={valgtProsessSteg}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+        settPaVent={settPaVent}
+        hentBehandling={hentBehandling}
+        opneSokeside={opneSokeside}
+        setBehandling={setBehandling}
+        featureToggles={featureToggles}
+      />
+    </>
   );
 };
 
-const mapStateToProps = state => ({
-  behandling: innsynApi.BEHANDLING_INNSYN.getRestApiData()(state),
-  forrigeBehandling: innsynApi.BEHANDLING_INNSYN.getRestApiPreviousData()(state),
-});
-
-const getResetRestApiContext = () => dispatch => {
-  Object.values(InnsynBehandlingApiKeys).forEach(value => {
-    dispatch(innsynApi[value].resetRestApi()());
-  });
-};
-
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  ...bindActionCreators(
-    {
-      nyBehandlendeEnhet: innsynApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest(),
-      settBehandlingPaVent: innsynApi.BEHANDLING_ON_HOLD.makeRestApiRequest(),
-      taBehandlingAvVent: innsynApi.RESUME_BEHANDLING.makeRestApiRequest(),
-      henleggBehandling: innsynApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
-      settPaVent: innsynApi.UPDATE_ON_HOLD.makeRestApiRequest(),
-      hentBehandling: innsynApi.BEHANDLING_INNSYN.makeRestApiRequest(),
-      resetRestApiContext: getResetRestApiContext,
-      destroyReduxForm: destroy,
-    },
-    dispatch,
-  ),
-});
-
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingInnsynIndex);
+export default BehandlingInnsynIndex;

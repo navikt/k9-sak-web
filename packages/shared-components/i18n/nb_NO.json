@@ -1,0 +1,48 @@
+{
+  "AdvarselModal.Ok": "OK",
+
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
+
+  "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
+
+  "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
+
+  "OkAvbrytModal.Ok": "OK",
+  "OkAvbrytModal.Avbryt": "Avbryt",
+
+  "OverstyringKnapp.Overstyring": "Overstyr",
+
+  "PeriodLabel.DateToday": "d.d.",
+
+  "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
+
+  "DateTimeLabel.Kl": "Kl.",
+
+  "Calendar.Day.0": "søndag",
+  "Calendar.Day.1": "mandag",
+  "Calendar.Day.2": "tirsdag",
+  "Calendar.Day.3": "onsdag",
+  "Calendar.Day.4": "torsdag",
+  "Calendar.Day.5": "fredag",
+  "Calendar.Day.6": "lørdag",
+  "Calendar.Day.Short.0": "søn",
+  "Calendar.Day.Short.1": "man",
+  "Calendar.Day.Short.2": "tir",
+  "Calendar.Day.Short.3": "ons",
+  "Calendar.Day.Short.4": "tor",
+  "Calendar.Day.Short.5": "fre",
+  "Calendar.Day.Short.6": "lør",
+  "Calendar.Month.0": "Januar",
+  "Calendar.Month.1": "Februar",
+  "Calendar.Month.2": "Mars",
+  "Calendar.Month.3": "April",
+  "Calendar.Month.4": "Mai",
+  "Calendar.Month.5": "Juni",
+  "Calendar.Month.6": "Juli",
+  "Calendar.Month.7": "August",
+  "Calendar.Month.8": "September",
+  "Calendar.Month.9": "Oktober",
+  "Calendar.Month.10": "November",
+  "Calendar.Month.11": "Desember"
+}

@@ -1,11 +1,10 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import Modal from 'nav-frontend-modal';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import MessagesModal from './MessagesModal';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl from '../../i18n/index';
 
 describe('<MessagesModal>', () => {
   it('skal vise modal', () => {
@@ -15,7 +14,7 @@ describe('<MessagesModal>', () => {
     );
 
     const modal = wrapper.find(Modal);
-    expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('onRequestClose')).to.eql(closeCallback);
+    expect(modal.prop('isOpen')).toBe(true);
+    expect(modal.prop('onRequestClose')).toEqual(closeCallback);
   });
 });

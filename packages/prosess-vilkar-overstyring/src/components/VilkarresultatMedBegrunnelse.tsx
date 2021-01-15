@@ -8,7 +8,6 @@ interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
-  hasAksjonspunkt: boolean;
   avslagsarsaker: Kodeverk[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
@@ -25,7 +24,6 @@ export const VilkarresultatMedBegrunnelse = ({
   erVilkarOk,
   readOnly,
   avslagsarsaker,
-  hasAksjonspunkt,
   erMedlemskapsPanel,
   skalViseBegrunnelse,
   customVilkarIkkeOppfyltText,
@@ -38,7 +36,6 @@ export const VilkarresultatMedBegrunnelse = ({
       customVilkarOppfyltText={customVilkarOppfyltText}
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
-      hasAksjonspunkt={hasAksjonspunkt}
       erMedlemskapsPanel={erMedlemskapsPanel}
     />
     {skalViseBegrunnelse && (

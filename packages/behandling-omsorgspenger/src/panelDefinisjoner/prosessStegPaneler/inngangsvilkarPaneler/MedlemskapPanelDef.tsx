@@ -1,8 +1,8 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
 
-import omsorgspengerBehandlingApi from '../../../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../../data/omsorgspengerBehandlingApi';
 
 class MedlemskapPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
@@ -17,7 +17,7 @@ class MedlemskapPanelDef extends ProsessStegPanelDef {
 
   getVilkarKoder = () => [vilkarType.MEDLEMSKAPSVILKARET];
 
-  getEndepunkter = () => [omsorgspengerBehandlingApi.MEDLEMSKAP];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.MEDLEMSKAP];
 
   getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 

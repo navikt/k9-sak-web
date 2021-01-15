@@ -3,22 +3,22 @@ import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl'
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import { KodeverkMedNavn, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { getLanguageCodeFromSprakkode, getAddresses, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { getKodeverknavnFn, getLanguageFromSprakkode, getAddresses, Adresser } from '@fpsak-frontend/utils';
 
 import styles from './visittkortDetaljerPopup.less';
 
-const borSokerMedBarnet = (adresser, personopplysningerForBarn = []) =>
+const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Personopplysninger[] = []): boolean =>
   personopplysningerForBarn.some(
     barn =>
       adresser[opplysningAdresseType.BOSTEDSADRESSE] ===
       getAddresses(barn.adresser)[opplysningAdresseType.BOSTEDSADRESSE],
   );
 
-const findPersonStatus = personopplysning => {
+const findPersonStatus = (personopplysning: Personopplysninger): Kodeverk => {
   if (personopplysning.avklartPersonstatus) {
     return personopplysning.avklartPersonstatus.overstyrtPersonstatus;
   }
@@ -28,7 +28,7 @@ const findPersonStatus = personopplysning => {
 interface OwnProps {
   personopplysninger: Personopplysninger;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode: Kodeverk;
+  sprakkode?: Kodeverk;
 }
 
 const VisittkortDetaljerPopup: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -94,7 +94,7 @@ const VisittkortDetaljerPopup: FunctionComponent<OwnProps & WrappedComponentProp
           <FlexColumn>
             <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Malform.Beskrivelse' })} alignBottom>
               <EtikettInfo className={styles.etikett} typo="undertekst">
-                <FormattedMessage id={getLanguageCodeFromSprakkode(sprakkode)} />
+                {getLanguageFromSprakkode(sprakkode)}
               </EtikettInfo>
             </Tooltip>
           </FlexColumn>

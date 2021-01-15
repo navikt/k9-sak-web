@@ -1,11 +1,10 @@
+import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import klageApi from '@fpsak-frontend/behandling-klage/src/data/klageBehandlingApi';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
 import styles from './tempsaveAndPreviewKlageLink.less';
 
 const transformValues = (values: any, aksjonspunktCode: string) => ({
@@ -31,7 +30,7 @@ const getBrevData = (tekst: string) => {
 
 interface OwnProps {
   formValues: any;
-  saveKlage: (params: any) => void;
+  saveKlage: (params: any) => Promise<any>;
   aksjonspunktCode: string;
   readOnly: boolean;
   previewCallback: (brevData: any) => void;
@@ -39,45 +38,17 @@ interface OwnProps {
   resetSaveKlage: () => void;
 }
 
-const useForhaandsvise = (
-  readOnly: boolean,
-  hasFinishedSaveKlage: boolean,
-  previewCallback: (data) => void,
-  formValues: any,
-  resetSaveKlage: () => void,
-) => {
-  const [skalForhaandsvise, setSkalForhaandsvise] = useState(false);
-  useEffect(() => {
-    if (!readOnly && hasFinishedSaveKlage && skalForhaandsvise) {
-      previewCallback(getBrevData(formValues.fritekstTilBrev));
-      setSkalForhaandsvise(false);
-      resetSaveKlage();
-    }
-  }, [skalForhaandsvise, hasFinishedSaveKlage, readOnly, formValues.fritekstTilBrev, previewCallback, resetSaveKlage]);
-
-  return setSkalForhaandsvise;
-};
-
 export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   formValues,
   saveKlage,
   aksjonspunktCode,
   readOnly,
   previewCallback,
-  hasFinishedSaveKlage,
-  resetSaveKlage,
 }) => {
-  const setSkalForhaandsvise = useForhaandsvise(
-    readOnly,
-    hasFinishedSaveKlage,
-    previewCallback,
-    formValues,
-    resetSaveKlage,
-  );
-
   const tempSave = event => {
-    saveKlage(transformValues(formValues, aksjonspunktCode));
-    setSkalForhaandsvise(true);
+    saveKlage(transformValues(formValues, aksjonspunktCode)).then(() =>
+      previewCallback(getBrevData(formValues.fritekstTilBrev)),
+    );
     event.preventDefault();
   };
 
@@ -97,12 +68,4 @@ export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
   );
 };
 
-const mapStateToProps = state => ({
-  hasFinishedSaveKlage: !!klageApi.SAVE_KLAGE_VURDERING.getRestApiFinished()(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({ resetSaveKlage: klageApi.SAVE_KLAGE_VURDERING.resetRestApi() }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TempSaveAndPreviewKlageLink);
+export default TempSaveAndPreviewKlageLink;

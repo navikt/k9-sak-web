@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
@@ -22,9 +21,9 @@ describe('<Periodpicker>', () => {
     );
 
     const inputField = wrapper.find(Input);
-    expect(inputField).to.have.length(1);
-    expect(inputField.prop('value')).to.eql('30.08.2017 - 31.10.2017');
-    expect(wrapper.find(CalendarToggleButton)).to.have.length(1);
+    expect(inputField).toHaveLength(1);
+    expect(inputField.prop('value')).toEqual('30.08.2017 - 31.10.2017');
+    expect(wrapper.find(CalendarToggleButton)).toHaveLength(1);
   });
 
   it('skal vise dato-velger ved trykk på knapp', () => {
@@ -42,9 +41,9 @@ describe('<Periodpicker>', () => {
     wrapper.update();
 
     const overlay = wrapper.find(PeriodCalendarOverlay);
-    expect(overlay).to.have.length(1);
-    expect(overlay.prop('startDate')).to.eql(moment('30.08.2017', DDMMYYYY_DATE_FORMAT).toDate());
-    expect(overlay.prop('endDate')).to.eql(moment('31.10.2017', DDMMYYYY_DATE_FORMAT).toDate());
+    expect(overlay).toHaveLength(1);
+    expect(overlay.prop('startDate')).toEqual(moment('30.08.2017', DDMMYYYY_DATE_FORMAT).toDate());
+    expect(overlay.prop('endDate')).toEqual(moment('31.10.2017', DDMMYYYY_DATE_FORMAT).toDate());
   });
 
   it('skal lage periode med lik start- og sluttdato når en velger dato og det ikke finnes noe fra før', () => {
@@ -65,7 +64,7 @@ describe('<Periodpicker>', () => {
     wrapper.update();
 
     const inputField = wrapper.find(Input);
-    expect(inputField.prop('value')).to.eql('30.08.2017 - 30.08.2017');
+    expect(inputField.prop('value')).toEqual('30.08.2017 - 30.08.2017');
   });
 
   it('skal lage periode med ny startdato når en velger dato etter nåværende periode', () => {
@@ -91,7 +90,7 @@ describe('<Periodpicker>', () => {
     wrapper.update();
 
     const updatedInputField = wrapper.find(Input);
-    expect(updatedInputField.prop('value')).to.eql('30.07.2017 - 30.10.2017');
+    expect(updatedInputField.prop('value')).toEqual('30.07.2017 - 30.10.2017');
   });
 
   it('skal lage periode med ny sluttdato når en velger dato etter nåværende periode', () => {
@@ -117,6 +116,6 @@ describe('<Periodpicker>', () => {
     wrapper.update();
 
     const updatedInputField = wrapper.find(Input);
-    expect(updatedInputField.prop('value')).to.eql('30.08.2017 - 30.11.2017');
+    expect(updatedInputField.prop('value')).toEqual('30.08.2017 - 30.11.2017');
   });
 });

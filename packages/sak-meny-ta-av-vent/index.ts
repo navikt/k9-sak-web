@@ -1,1 +1,1 @@
-export { default, skalViseIMeny, getMenytekst } from './src/MenyTaAvVentIndex';
+export { default, getMenytekst } from './src/MenyTaAvVentIndex';

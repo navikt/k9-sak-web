@@ -3,7 +3,7 @@ import React from 'react';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
-import { FaktaPanelDef } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 class BeregningFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.BEREGNING;
@@ -21,10 +21,10 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ beregningsgrunnlag }) => beregningsgrunnlag && beregningsgrunnlag.length > 0;
 
-  getData = ({ rettigheter, beregningsgrunnlag, arbeidsgivere }) => ({
+  getData = ({ rettigheter, beregningsgrunnlag, arbeidsgiverOpplysningerPerId }) => ({
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     beregningsgrunnlag,
-    arbeidsgivere,
+    arbeidsgivere: arbeidsgiverOpplysningerPerId,
   });
 }
 

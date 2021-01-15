@@ -2,19 +2,20 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { Aksjonspunkt, Behandling, Sykdom } from '@k9-sak-web/types';
+
 import withReduxProvider from '../../../decorators/withRedux';
-import alleKodeverk from '../../mocks/alleKodeverk.json';
 
 const behandling = {
-  id: '1',
+  id: 1,
   versjon: 1,
   sprakkode: {
     kode: 'NO',
+    kodeverk: '',
   },
-};
+} as Behandling;
 
 // FIXME bytt ut med riktig akjsonpunkt når det er klart
 const aksjonspunkter = [
@@ -29,12 +30,7 @@ const aksjonspunkter = [
     kanLoses: true,
     erAktivt: true,
   },
-];
-
-const toggle = (openInfoPanels, togglePanel) => value => {
-  const exists = openInfoPanels.some(op => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
+] as Aksjonspunkt[];
 
 export default {
   title: 'fakta/pleiepenger/fakta-medisinsk-vilkar',
@@ -43,33 +39,29 @@ export default {
 };
 
 export const visFaktaOmMedisinskVilkar = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.MEDISINSKVILKAAR]);
   return (
     <MedisinskVilkarIndex
       behandling={object('behandling', behandling)}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
       aksjonspunkter={[]}
-      alleKodeverk={alleKodeverk}
+      harApneAksjonspunkter
+      submittable
+      sykdom={{} as Sykdom}
     />
   );
 };
 
 export const visFaktaOmMedisinskVilkarMedAkjsonspunkt = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.MEDISINSKVILKAAR]);
   return (
     <MedisinskVilkarIndex
       behandling={object('behandling', behandling)}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
       aksjonspunkter={aksjonspunkter}
-      alleKodeverk={alleKodeverk}
+      harApneAksjonspunkter
+      submittable
+      sykdom={{} as Sykdom}
     />
   );
 };

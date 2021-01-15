@@ -1,112 +1,139 @@
-import React, { FunctionComponent, useCallback } from 'react';
-import { RouteProps } from 'react-router';
-import { connect } from 'react-redux';
+import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
+import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
+import { Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
 
 import { getSupportPanelLocationCreator } from '../app/paths';
-import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
-import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
-import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
-import HistoryIndex from './history/HistoryIndex';
-import MessagesIndex from './messages/MessagesIndex';
-import DocumentIndex from './documents/DocumentIndex';
-import ApprovalIndex from './approval/ApprovalIndex';
-import trackRouteParam from '../app/trackRouteParam';
-
+import HistorikkIndex from './historikk/HistorikkIndex';
+import MeldingIndex from './melding/MeldingIndex';
+import DokumentIndex from './dokument/DokumentIndex';
+import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import useTrackRouteParam from '../app/useTrackRouteParam';
 import styles from './behandlingSupportIndex.less';
+import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 
-const renderSupportPanel = supportPanel => {
-  switch (supportPanel) {
-    case supportTabs.APPROVAL:
-    case supportTabs.RETURNED:
-      return <ApprovalIndex />;
-    case supportTabs.HISTORY:
-      return <HistoryIndex />;
-    case supportTabs.MESSAGES:
-      return <MessagesIndex />;
-    case supportTabs.DOCUMENTS:
-      return <DocumentIndex />;
-    default:
-      return null;
-  }
-};
+export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
+  Object.values(SupportTabs).filter(supportPanel => {
+    switch (supportPanel) {
+      case SupportTabs.TIL_BESLUTTER:
+        return behandlingRettigheter && behandlingRettigheter.behandlingTilGodkjenning;
+      case SupportTabs.FRA_BESLUTTER:
+        return behandlingRettigheter && behandlingRettigheter.behandlingFraBeslutter;
+      default:
+        return true;
+    }
+  });
+
+export const hentValgbarePaneler = (
+  synligePaneler: string[],
+  sendMeldingErRelevant: boolean,
+  behandlingRettigheter?: BehandlingRettigheter,
+): string[] =>
+  synligePaneler.filter(supportPanel => {
+    if (supportPanel === SupportTabs.MELDINGER) {
+      return behandlingRettigheter && sendMeldingErRelevant ? behandlingRettigheter.behandlingKanSendeMelding : false;
+    }
+    return true;
+  });
 
 interface OwnProps {
-  acccessibleSupportPanels: string[];
-  enabledSupportPanels: string[];
-  activeSupportPanel: string;
-  getSupportPanelLocation: (supportPanel: string) => RouteProps['location'];
+  fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
+  behandlingId?: number;
+  behandlingVersjon?: number;
+  behandlingRettigheter?: BehandlingRettigheter;
 }
 
 /**
  * BehandlingSupportIndex
  *
- * Containerkomponent for behandlingsstøttepanelet.
  * Har ansvar for å lage navigasjonsrad med korrekte navigasjonsvalg, og route til rett
  * støttepanelkomponent ihht. gitt parameter i URL-en.
  */
-export const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
-  activeSupportPanel,
-  acccessibleSupportPanels,
-  enabledSupportPanels,
-  getSupportPanelLocation,
+const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
+  fagsak,
+  alleBehandlinger,
+  behandlingId,
+  behandlingVersjon,
+  behandlingRettigheter,
 }) => {
+  const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
+    paramName: 'stotte',
+    isQueryParam: true,
+  });
+
+  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
+
   const history = useHistory();
+
+  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
+  const erSendMeldingRelevant = fagsak && !erPaVent;
+
+  const synligeSupportPaneler = useMemo(() => hentSynligePaneler(behandlingRettigheter), [behandlingRettigheter]);
+  const valgbareSupportPaneler = useMemo(
+    () => hentValgbarePaneler(synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter),
+    [synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter],
+  );
+
+  const defaultSupportPanel = valgbareSupportPaneler.find(() => true) || SupportTabs.HISTORIKK;
+  const aktivtSupportPanel = valgbareSupportPaneler.includes(valgtSupportPanel)
+    ? valgtSupportPanel
+    : defaultSupportPanel;
+
   const changeRouteCallback = useCallback(
     index => {
-      const supportPanel = acccessibleSupportPanels[index];
+      const supportPanel = synligeSupportPaneler[index];
+      const getSupportPanelLocation = getSupportPanelLocationCreator(location);
       history.push(getSupportPanelLocation(supportPanel));
     },
-    [history.location, acccessibleSupportPanels],
+    [location, synligeSupportPaneler],
   );
 
   return (
-    <BehandlingsupportDataResolver>
+    <>
       <div className={styles.meny}>
         <SupportMenySakIndex
-          tilgjengeligeTabs={acccessibleSupportPanels}
-          valgbareTabs={enabledSupportPanels}
-          valgtIndex={acccessibleSupportPanels.findIndex(p => p === activeSupportPanel)}
+          tilgjengeligeTabs={synligeSupportPaneler}
+          valgbareTabs={valgbareSupportPaneler}
+          valgtIndex={synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel)}
           onClick={changeRouteCallback}
         />
       </div>
-      <div className={activeSupportPanel === supportTabs.HISTORY ? styles.containerHistorikk : styles.container}>
-        {renderSupportPanel(activeSupportPanel)}
+      <div className={aktivtSupportPanel === SupportTabs.HISTORIKK ? styles.containerHistorikk : styles.container}>
+        {(aktivtSupportPanel === SupportTabs.TIL_BESLUTTER || aktivtSupportPanel === SupportTabs.FRA_BESLUTTER) && (
+          <TotrinnskontrollIndex
+            fagsak={fagsak}
+            alleBehandlinger={alleBehandlinger}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+        )}
+        {aktivtSupportPanel === SupportTabs.HISTORIKK && (
+          <HistorikkIndex
+            saksnummer={fagsak.saksnummer}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+        )}
+        {aktivtSupportPanel === SupportTabs.MELDINGER && (
+          <MeldingIndex
+            fagsak={fagsak}
+            alleBehandlinger={alleBehandlinger}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+        )}
+        {aktivtSupportPanel === SupportTabs.DOKUMENTER && (
+          <DokumentIndex
+            saksnummer={fagsak.saksnummer}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+        )}
       </div>
-    </BehandlingsupportDataResolver>
+    </>
   );
 };
 
-const getDefaultSupportPanel = enabledSupportPanels => enabledSupportPanels.find(() => true) || supportTabs.HISTORY;
-
-const mapStateToProps = state => {
-  const acccessibleSupportPanels = getAccessibleSupportPanels(state);
-  const enabledSupportPanels = getEnabledSupportPanels(state);
-  const selectedSupportPanel = getSelectedSupportPanel(state);
-
-  const defaultSupportPanel = getDefaultSupportPanel(enabledSupportPanels);
-  const activeSupportPanel = enabledSupportPanels.includes(selectedSupportPanel)
-    ? selectedSupportPanel
-    : defaultSupportPanel;
-  return {
-    acccessibleSupportPanels,
-    enabledSupportPanels,
-    activeSupportPanel,
-  };
-};
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...ownProps,
-  ...dispatchProps,
-  ...stateProps,
-  getSupportPanelLocation: getSupportPanelLocationCreator(ownProps.location), // gets prop 'location' from trackRouteParam
-});
-
-export default trackRouteParam({
-  paramName: 'stotte',
-  storeParam: setSelectedSupportPanel,
-  getParamFromStore: getSelectedSupportPanel,
-  isQueryParam: true,
-})(connect(mapStateToProps, null, mergeProps)(BehandlingSupportIndex));
+export default BehandlingSupportIndex;

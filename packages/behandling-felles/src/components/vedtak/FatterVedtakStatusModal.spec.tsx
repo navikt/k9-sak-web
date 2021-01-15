@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
@@ -12,19 +11,21 @@ describe('<FatterVedtakStatusModal>', () => {
   const closeEventCallback = sinon.spy();
 
   it('skal rendre modal for fatter vedtak', () => {
-    const wrapper = shallowWithIntl(<FatterVedtakStatusModal.WrappedComponent
-      intl={intlMock}
-      visModal
-      tekstkode="FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver"
-      lukkModal={closeEventCallback}
-    />);
+    const wrapper = shallowWithIntl(
+      <FatterVedtakStatusModal.WrappedComponent
+        intl={intlMock}
+        visModal
+        tekstkode="FatterVedtakStatusModal.KlagenErFerdigbehandlet"
+        lukkModal={closeEventCallback}
+      />,
+    );
 
     const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(1);
-    expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Forslag til klageresultat er sendt til medunderskriver.');
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('isOpen')).toBe(true);
+    expect(modal.prop('contentLabel')).toEqual('Klagen er ferdigbehandlet.');
 
     const button = wrapper.find(Hovedknapp);
-    expect(button).to.have.length(1);
+    expect(button).toHaveLength(1);
   });
 });

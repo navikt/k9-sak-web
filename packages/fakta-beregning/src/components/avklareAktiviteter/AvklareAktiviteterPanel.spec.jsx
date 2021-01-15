@@ -5,11 +5,11 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '../beregning-test-helper';
 import { erAvklartAktivitetEndret, transformValues } from './AvklareAktiviteterPanel';
 import AvklareAktiviteterPanelContent, {
   BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,

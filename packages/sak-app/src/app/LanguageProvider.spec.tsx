@@ -1,23 +1,27 @@
 import React from 'react';
-import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import { LanguageProvider } from './LanguageProvider';
+import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
+import LanguageProvider from './LanguageProvider';
 
 describe('<LanguageProvider>', () => {
   it('skal sette opp react-intl', () => {
+    requestApi.mock(K9sakApiKeys.LANGUAGE_FILE, {
+      'Header.Foreldrepenger': 'Foreldrepenger',
+    });
+
     const wrapper = mountWithIntl(
-      <LanguageProvider nbMessages={{ 'Header.Ytelse': 'Foreldrepenger' }}>
-        <FormattedMessage id="Header.Ytelse" tagName="span" />
+      <LanguageProvider>
+        <FormattedMessage id="Header.Foreldrepenger" tagName="span" />
       </LanguageProvider>,
     );
     const intlProvider = wrapper.find('IntlProvider');
-    expect(intlProvider).to.have.length(1);
-    expect(intlProvider.prop('messages')).to.eql({ 'Header.Ytelse': 'Foreldrepenger' });
+    expect(intlProvider).toHaveLength(1);
+    expect(intlProvider.prop('messages')).toEqual({ 'Header.Foreldrepenger': 'Foreldrepenger' });
     const span = wrapper.find('span');
-    expect(span).to.have.length(1);
-    expect(span.text()).to.eql('Foreldrepenger');
+    expect(span).toHaveLength(1);
+    expect(span.text()).toEqual('Foreldrepenger');
   });
 });

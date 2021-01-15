@@ -7,15 +7,12 @@ import Lukknapp from 'nav-frontend-lukknapp';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
+import Feilmelding from './feilmeldingTsType';
 
 import styles from './errorMessagePanel.less';
 
 interface OwnProps {
-  showDetailedErrorMessages: boolean;
-  errorMessages: {
-    message: string;
-    additionalInfo?: any;
-  }[];
+  errorMessages: Feilmelding[];
   removeErrorMessage: () => void;
 }
 
@@ -30,7 +27,7 @@ interface StateProps {
  * Presentasjonskomponent. Definerer hvordan feilmeldinger vises.
  */
 export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProps, StateProps> {
-  constructor(props) {
+  constructor(props: OwnProps & WrappedComponentProps) {
     super(props);
 
     this.state = {
@@ -42,7 +39,7 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
     this.toggleModalOnKeyDown = this.toggleModalOnKeyDown.bind(this);
   }
 
-  toggleModalOnClick(event, index) {
+  toggleModalOnClick(event: React.MouseEvent | React.KeyboardEvent, index: number): void {
     const { isModalOpen } = this.state;
     this.setState({
       isModalOpen: !isModalOpen,
@@ -52,7 +49,7 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
     if (event) event.preventDefault();
   }
 
-  toggleModalOnKeyDown(event, index) {
+  toggleModalOnKeyDown(event: React.KeyboardEvent, index: number): void {
     if (event.key === 'Enter' || event.key === ' ') {
       this.toggleModalOnClick(event, index);
     } else {
@@ -61,7 +58,7 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
   }
 
   render() {
-    const { showDetailedErrorMessages, errorMessages, removeErrorMessage, intl } = this.props;
+    const { errorMessages, removeErrorMessage, intl } = this.props;
     const { isModalOpen, selectedErrorMsgIndex } = this.state;
 
     if (errorMessages.length === 0) {
@@ -74,7 +71,7 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
           <Row key={message.message}>
             <Column xs="11">
               <Undertekst className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Undertekst>
-              {showDetailedErrorMessages && message.additionalInfo && (
+              {message.additionalInfo && (
                 <Undertekst>
                   <a
                     href=""

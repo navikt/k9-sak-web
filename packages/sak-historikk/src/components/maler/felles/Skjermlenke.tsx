@@ -10,7 +10,7 @@ interface SkjermlenkeProps {
   behandlingLocation?: Location;
   getKodeverknavn?: (kodeverkObjekt: Kodeverk, undertype?: string) => string;
   scrollUpOnClick?: boolean;
-  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => string;
+  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => Location;
 }
 
 const Skjermlenke: React.FunctionComponent<SkjermlenkeProps> = ({

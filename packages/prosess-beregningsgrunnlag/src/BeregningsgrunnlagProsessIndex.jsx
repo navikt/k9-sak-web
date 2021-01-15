@@ -45,7 +45,7 @@ const BeregningsgrunnlagProsessIndex = ({
         isApOpen={isAksjonspunktOpen}
         vilkar={vilkar}
         alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere}
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
       />

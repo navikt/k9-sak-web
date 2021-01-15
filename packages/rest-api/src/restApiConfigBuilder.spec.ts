@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import RestApiConfigBuilder from './RestApiConfigBuilder';
 
 describe('RestApiConfigBuilder', () => {
@@ -9,21 +7,21 @@ describe('RestApiConfigBuilder', () => {
       .withPost('www.espenutvikler.com', 'ESPENUTVIKLER')
       .build();
 
-    expect(endpoints).has.length(2);
-    expect(endpoints[0].name).is.eql('PJOKKEN');
-    expect(endpoints[0].path).is.eql('www.pjokken.com');
-    expect(endpoints[0].restMethod).is.eql('GET');
-    expect(endpoints[0].config).is.eql({
+    expect(endpoints).toHaveLength(2);
+    expect(endpoints[0].name).toEqual('PJOKKEN');
+    expect(endpoints[0].path).toEqual('www.pjokken.com');
+    expect(endpoints[0].restMethod).toEqual('GET');
+    expect(endpoints[0].config).toEqual({
       maxPollingLimit: undefined,
-      saveResponseIn: undefined,
+      isResponseBlob: false,
     });
 
-    expect(endpoints[1].name).is.eql('ESPENUTVIKLER');
-    expect(endpoints[1].path).is.eql('www.espenutvikler.com');
-    expect(endpoints[1].restMethod).is.eql('POST');
-    expect(endpoints[1].config).is.eql({
+    expect(endpoints[1].name).toEqual('ESPENUTVIKLER');
+    expect(endpoints[1].path).toEqual('www.espenutvikler.com');
+    expect(endpoints[1].restMethod).toEqual('POST');
+    expect(endpoints[1].config).toEqual({
       maxPollingLimit: undefined,
-      saveResponseIn: undefined,
+      isResponseBlob: false,
     });
   });
 });

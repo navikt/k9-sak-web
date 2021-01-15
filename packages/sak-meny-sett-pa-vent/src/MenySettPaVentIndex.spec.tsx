@@ -1,9 +1,9 @@
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
 
-import SettBehandlingPaVentModal from './components/SettBehandlingPaVentModal';
-import shallowWithIntl from '../i18n';
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
+
+import shallowWithIntl from '../i18n/index';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
 describe('<MenySettPaVentIndex>', () => {
@@ -18,21 +18,22 @@ describe('<MenySettPaVentIndex>', () => {
         settBehandlingPaVent={setBehandlingOnHoldCallback}
         ventearsaker={[]}
         lukkModal={lukkModalCallback}
+        erTilbakekreving={false}
       />,
     );
 
-    const modal = wrapper.find(SettBehandlingPaVentModal);
-    expect(modal).to.have.length(1);
+    const modal = wrapper.find(SettPaVentModalIndex);
+    expect(modal).toHaveLength(1);
 
-    modal.prop('onSubmit')({
+    modal.prop('submitCallback')({
       frist: '20-12-2020',
       ventearsak: 'test',
     });
 
     const kall = setBehandlingOnHoldCallback.getCalls();
-    expect(kall).to.have.length(1);
-    expect(kall[0].args).to.have.length(1);
-    expect(kall[0].args[0]).to.eql({
+    expect(kall).toHaveLength(1);
+    expect(kall[0].args).toHaveLength(1);
+    expect(kall[0].args[0]).toEqual({
       behandlingId: 3,
       behandlingVersjon: 1,
       frist: '20-12-2020',
