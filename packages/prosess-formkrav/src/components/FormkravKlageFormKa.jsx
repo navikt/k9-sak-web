@@ -38,6 +38,7 @@ export const FormkravKlageFormKa = ({
       alleKodeverk={alleKodeverk}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
       parterMedKlagerett={parterMedKlagerett}
+      skalKunneVelgeKlagepart={false}
     />
   </form>
 );

@@ -38,6 +38,7 @@ export const FormkravKlageFormNfpImpl = ({
       alleKodeverk={alleKodeverk}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
       parterMedKlagerett={parterMedKlagerett}
+      skalKunneVelgeKlagepart
     />
   </form>
 );
