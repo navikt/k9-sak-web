@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { FormattedMessage, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -150,7 +150,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
 const OpptjeningVilkarAksjonspunktPanel = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: FORM_NAME,
-  })(OpptjeningVilkarAksjonspunktPanelImpl),
+  })(injectIntl(OpptjeningVilkarAksjonspunktPanelImpl)),
 );
 
 export default OpptjeningVilkarAksjonspunktPanel;

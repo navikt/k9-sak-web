@@ -14,9 +14,11 @@ import alleKodeverk from '../mocks/alleKodeverk.json';
 const behandling = {
   id: 1,
   versjon: 1,
-  behandlingArsaker: [{
-    erAutomatiskRevurdering: true,
-  }],
+  behandlingÅrsaker: [
+    {
+      erAutomatiskRevurdering: true,
+    },
+  ],
   sprakkode: {
     kode: 'NN',
   },
@@ -27,10 +29,12 @@ const behandling = {
 
 const familieHendelse = {
   register: {
-    avklartBarn: [{
-      fodselsdato: '2019-01-10',
-      dodsdato: undefined,
-    }],
+    avklartBarn: [
+      {
+        fodselsdato: '2019-01-10',
+        dodsdato: undefined,
+      },
+    ],
   },
   gjeldende: {
     termindato: '2019-01-01',
@@ -55,15 +59,17 @@ const familiehendelseOriginalBehandling = {
   antallBarnFodsel: 1,
 };
 
-const aksjonspunkter = [{
-  definisjon: {
-    kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL,
+const aksjonspunkter = [
+  {
+    definisjon: {
+      kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL,
+    },
+    status: {
+      kode: aksjonspunktStatus.OPPRETTET,
+    },
+    begrunnelse: undefined,
   },
-  status: {
-    kode: aksjonspunktStatus.OPPRETTET,
-  },
-  begrunnelse: undefined,
-}];
+];
 
 export default {
   title: 'prosess/prosess-varsel-om-revurdering',

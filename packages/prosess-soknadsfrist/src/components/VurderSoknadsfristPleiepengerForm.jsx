@@ -180,7 +180,7 @@ export const buildInitialValues = createSelector(
       ? undefined
       : uttaksperiodegrense.mottattDato !== mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
-    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+    ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
 
@@ -188,7 +188,7 @@ const transformValues = (values, aksjonspunkter) => ({
   harGyldigGrunn: values.gyldigSenFremsetting,
   ansesMottattDato: values.ansesMottatt,
   kode: aksjonspunkter[0].definisjon.kode,
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 
 const formName = 'VurderSoknadsfristPleiepengerForm';

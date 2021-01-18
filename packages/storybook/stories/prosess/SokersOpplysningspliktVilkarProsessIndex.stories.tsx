@@ -23,6 +23,7 @@ const soknad = {
       },
       arbeidsgiver: {
         organisasjonsnummer: '1234',
+        navn: 'Statoil',
       },
     },
   ],

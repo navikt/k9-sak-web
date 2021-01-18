@@ -36,15 +36,23 @@ export const visPanelForKlagevurderingMedAksjonspunktNk = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [{
-          navn: 'Denne er avvist fordi...',
-        }],
+        avvistArsaker: [
+          {
+            navn: 'Denne er avvist fordi...',
+          },
+        ],
       },
     })}
-    apCodes={[aksjonspunktCodes.BEHANDLE_KLAGE_NK]}
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.BEHANDLE_KLAGE_NK,
+        },
+      },
+    ]}
     saveKlage={action('button-click')}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('readOnly', false)}
     previewCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
@@ -63,15 +71,23 @@ export const visPanelForKlagevurderingMedAksjonspunktNfp = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [{
-          navn: 'Denne er avvist fordi...',
-        }],
+        avvistArsaker: [
+          {
+            navn: 'Denne er avvist fordi...',
+          },
+        ],
       },
     })}
-    apCodes={[aksjonspunktCodes.BEHANDLE_KLAGE_NFP]}
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
+        },
+      },
+    ]}
     saveKlage={action('button-click')}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('readOnly', false)}
     previewCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
