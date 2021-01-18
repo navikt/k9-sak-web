@@ -49,7 +49,6 @@ const arbeidsgiverOpplysningerPerId = {
 };
 
 const getKodeverknavn = () => undefined;
-
 const perioder = [];
 
 describe('<GrunnlagForAarsinntektPanelAT>', () => {
@@ -147,6 +146,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
     let rowNrFlex = 1;
     andeler.forEach(andel => {
       const teksterAndel = rows.at(rowNr).find('Normaltekst');
+      console.log(rows.debug());
       expect(teksterAndel.at(0).childAt(0).text()).to.equal(
         createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId),
       );

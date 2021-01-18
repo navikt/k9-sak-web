@@ -3,6 +3,7 @@ type Arbeidsgiver = Readonly<{
   arbeidsgiverAktørId?: string;
   organisasjonsnummer?: string;
   aktørId?: string;
+  navn?: string;
 }>;
 
 export default Arbeidsgiver;

@@ -45,6 +45,7 @@ const mockTableData = {
     arbeidsgiver1: [firstCol, secondCol, thirdCol, fourthCol],
   },
 };
+
 const mockbruttoPerodeList = [
   {
     brutto: 560500,

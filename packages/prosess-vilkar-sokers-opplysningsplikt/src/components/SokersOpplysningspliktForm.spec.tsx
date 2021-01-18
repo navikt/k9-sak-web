@@ -28,6 +28,7 @@ describe('<SokersOpplysningspliktForm>', () => {
         },
         arbeidsgiver: {
           organisasjonsnummer: '973861778',
+          navn: 'Statoil Asaavd Statoil Sokkelvirksomhet',
         },
         brukerHarSagtAtIkkeKommer: false,
       },
@@ -40,6 +41,7 @@ describe('<SokersOpplysningspliktForm>', () => {
         brukerHarSagtAtIkkeKommer: null,
       },
     ] as ManglendeVedleggSoknad[];
+
     const dokumentTypeIds = [
       {
         kode: dokumentTypeId.INNTEKTSMELDING,

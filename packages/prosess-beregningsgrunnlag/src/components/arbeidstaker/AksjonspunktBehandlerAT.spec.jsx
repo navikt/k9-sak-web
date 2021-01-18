@@ -46,6 +46,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
       mockAndel('Arbeidsgiver 1', '123', 100, 200000, true),
       mockAndel('Arbeidsgiver 2', '456', 100, 200000, true),
     ];
+
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandlerAT
         readOnly={false}
