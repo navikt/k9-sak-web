@@ -97,8 +97,9 @@ const buildInitialValues = createSelector(
     ownProps => ownProps.klageVurdering,
     ownProps => ownProps.avsluttedeBehandlinger,
     ownProps => ownProps.valgtPartMedKlagerett,
+    ownProps => ownProps.parterMedKlagerett,
   ],
-  (klageVurdering, avsluttedeBehandlinger, valgtPartMedKlagerett) => {
+  (klageVurdering, avsluttedeBehandlinger, valgtPartMedKlagerett, parterMedKlagerett) => {
     const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
     return {
       vedtak: klageFormkavResultatNfp ? getPaklagdVedtak(klageFormkavResultatNfp, avsluttedeBehandlinger) : null,
@@ -107,7 +108,9 @@ const buildInitialValues = createSelector(
       erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
       erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
       erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
-      valgtPartMedKlagerett: JSON.stringify(valgtPartMedKlagerett),
+      valgtPartMedKlagerett: valgtPartMedKlagerett
+        ? JSON.stringify(valgtPartMedKlagerett)
+        : Array.isArray(parterMedKlagerett) && parterMedKlagerett.length === 1 && JSON.stringify(parterMedKlagerett[0]),
     };
   },
 );

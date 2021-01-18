@@ -83,7 +83,7 @@ export const FormkravKlageForm = ({
           {Array.isArray(parterMedKlagerett) && parterMedKlagerett.length ? (
             <>
               <SelectField
-                readOnly={readOnly}
+                readOnly={readOnly || aksjonspunktCode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA}
                 name="valgtPartMedKlagerett"
                 selectValues={parterMedKlagerett.map(part => (
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
@@ -91,7 +91,11 @@ export const FormkravKlageForm = ({
                   </option>
                 ))}
                 className={readOnly ? styles.selectReadOnly : null}
-                label={intl.formatMessage({ id: 'Klage.Formkrav.velgPartMedKlagerett' })}
+                label={intl.formatMessage(
+                  aksjonspunktCode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA
+                    ? { id: 'Klage.Formkrav.valgtPartMedKlagerett' }
+                    : { id: 'Klage.Formkrav.velgPartMedKlagerett' },
+                )}
                 validate={[required]}
                 bredde="xl"
               />
