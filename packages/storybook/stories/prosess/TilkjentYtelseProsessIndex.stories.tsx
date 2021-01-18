@@ -6,21 +6,23 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
+import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak, InntektArbeidYtelse } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const fagsak = {
-  fagsakYtelseType: {
+  sakstype: {
     kode: fagsakYtelseType.FORELDREPENGER,
+    kodeverk: '',
   },
-};
+} as Fagsak;
 
 const behandling = {
   id: 1,
   versjon: 1,
-};
+} as Behandling;
 
 const beregningsresultat = {
   opphoersdato: '2021-03-27',
@@ -28,6 +30,7 @@ const beregningsresultat = {
     {
       andeler: [
         {
+          // @ts-ignore Fiks
           aktivitetStatus: {
             kode: 'AT',
             kodeverk: 'AKTIVITET_STATUS',
@@ -185,7 +188,8 @@ const beregningsresultat = {
     },
   ],
   skalHindreTilbaketrekk: false,
-};
+  utbetaltePerioder: [],
+} as BeregningsresultatUtbetalt;
 
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
@@ -196,34 +200,42 @@ export default {
 export const visUtenAksjonspunkt = () => (
   <TilkjentYtelseProsessIndex
     behandling={object('behandling', behandling)}
-    beregningresultat={beregningsresultat}
+    beregningsresultat={beregningsresultat}
     fagsak={fagsak}
     aksjonspunkter={[]}
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
+    inntektArbeidYtelse={{} as InntektArbeidYtelse}
+    vilkar={[]}
   />
 );
 
 export const visÅpentAksjonspunkt = () => (
   <TilkjentYtelseProsessIndex
     behandling={object('behandling', behandling)}
-    beregningresultat={beregningsresultat}
+    beregningsresultat={beregningsresultat}
     fagsak={fagsak}
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
+    aksjonspunkter={
+      [
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
+            kodeverk: '',
+          },
+          status: {
+            kode: aksjonspunktStatus.OPPRETTET,
+            kodeverk: '',
+          },
         },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-      },
-    ]}
-    alleKodeverk={alleKodeverk}
+      ] as Aksjonspunkt[]
+    }
+    alleKodeverk={alleKodeverk as any}
     isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
+    inntektArbeidYtelse={{} as InntektArbeidYtelse}
+    vilkar={[]}
   />
 );

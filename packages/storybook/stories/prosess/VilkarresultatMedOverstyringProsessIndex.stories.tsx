@@ -7,16 +7,19 @@ import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vi
 import { action } from '@storybook/addon-actions';
 import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
 
 const avslagsarsaker = [
   {
     kode: 'AVSLAG_TEST_1',
     navn: 'Dette er en avslagsårsak',
+    kodeverk: '',
   },
   {
     kode: 'AVSLAG_TEST_2',
     navn: 'Dette er en annen avslagsårsak',
+    kodeverk: '',
   },
 ];
 
@@ -40,7 +43,7 @@ const vilkarOpptjening = [
         },
       },
     ],
-  },
+  } as Vilkar,
 ];
 
 const vilkarMedlemskap = [
@@ -52,7 +55,7 @@ const vilkarMedlemskap = [
         vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
       },
     ],
-  },
+  } as Vilkar,
 ];
 
 export default {
@@ -65,13 +68,16 @@ export const visOverstyringspanelForOpptjening = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
-      behandling={{
-        id: 1,
-        versjon: 1,
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-        },
-      }}
+      behandling={
+        {
+          id: 1,
+          versjon: 1,
+          type: {
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          },
+        } as Behandling
+      }
       medlemskap={{
         fom: '2019-01-01',
       }}
@@ -84,7 +90,6 @@ export const visOverstyringspanelForOpptjening = () => {
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       avslagsarsaker={avslagsarsaker}
-      status={vilkarUtfallType.OPPFYLT}
       panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
@@ -98,13 +103,16 @@ export const visOverstyringspanelForMedlemskap = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
-      behandling={{
-        id: 1,
-        versjon: 1,
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-        },
-      }}
+      behandling={
+        {
+          id: 1,
+          versjon: 1,
+          type: {
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          },
+        } as Behandling
+      }
       medlemskap={{
         fom: '2019-01-01',
       }}
@@ -117,7 +125,6 @@ export const visOverstyringspanelForMedlemskap = () => {
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       avslagsarsaker={avslagsarsaker}
-      status={vilkarUtfallType.OPPFYLT}
       panelTittelKode="Inngangsvilkar.Medlemskapsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR}
@@ -129,33 +136,40 @@ export const visOverstyringspanelForMedlemskap = () => {
 
 export const visOverstyrtAksjonspunktSomErBekreftet = () => (
   <VilkarresultatMedOverstyringProsessIndex
-    behandling={{
-      id: 1,
-      versjon: 1,
-      type: {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-      },
-      behandlingsresultat: {
-        avslagsarsak: {
-          kode: 'AVSLAG_TEST_1',
+    behandling={
+      {
+        id: 1,
+        versjon: 1,
+        type: {
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
         },
-      },
-    }}
+        behandlingsresultat: {
+          avslagsarsak: {
+            kode: 'AVSLAG_TEST_1',
+          },
+        },
+      } as Behandling
+    }
     medlemskap={{
       fom: '2019-01-01',
     }}
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+    aksjonspunkter={
+      [
+        {
+          definisjon: {
+            kode: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+            kodeverk: '',
+          },
+          status: {
+            kode: aksjonspunktStatus.UTFORT,
+            kodeverk: '',
+          },
+          kanLoses: false,
+          begrunnelse: 'Dette er en begrunnelse',
         },
-        status: {
-          kode: aksjonspunktStatus.UTFORT,
-        },
-        kanLoses: false,
-        begrunnelse: 'Dette er en begrunnelse',
-      },
-    ]}
+      ] as Aksjonspunkt[]
+    }
     submitCallback={action('button-click')}
     overrideReadOnly={boolean('overrideReadOnly', false)}
     kanOverstyreAccess={object('kanOverstyreAccess', {
@@ -164,7 +178,6 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => (
     toggleOverstyring={action('button-click')}
     erOverstyrt={boolean('erOverstyrt', false)}
     avslagsarsaker={avslagsarsaker}
-    status={vilkarUtfallType.IKKE_OPPFYLT}
     panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
     lovReferanse="§§ Dette er en lovreferanse"
     overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}

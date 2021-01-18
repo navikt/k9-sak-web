@@ -7,6 +7,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
 import opptjeningAktivitetKlassifisering from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/kodeverk/opptjeningAktivitetKlassifisering';
+import { Aksjonspunkt, OpptjeningBehandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -87,23 +88,28 @@ export default {
 
 export const visPanelForÅpentAksjonspunkt = () => (
   <OpptjeningVilkarProsessIndex
-    behandling={{
-      id: 1,
-      versjon: 1,
-      behandlingsresultat,
-    }}
-    opptjening={opptjeninger}
-    aksjonspunkter={[
+    behandling={
       {
-        definisjon: {
-          kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
+        id: 1,
+        versjon: 1,
+        behandlingsresultat,
+      } as OpptjeningBehandling
+    }
+    // @ts-ignore Fiks!
+    opptjening={opptjeninger}
+    aksjonspunkter={
+      [
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
+          },
+          status: {
+            kode: aksjonspunktStatus.OPPRETTET,
+          },
+          begrunnelse: undefined,
         },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-      },
-    ]}
+      ] as Aksjonspunkt[]
+    }
     status={vilkarUtfallType.IKKE_VURDERT}
     lovReferanse="§§Dette er en lovreferanse"
     submitCallback={action('button-click')}
@@ -115,11 +121,14 @@ export const visPanelForÅpentAksjonspunkt = () => (
 
 export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
   <OpptjeningVilkarProsessIndex
-    behandling={{
-      id: 1,
-      versjon: 1,
-      behandlingsresultat: {},
-    }}
+    behandling={
+      {
+        id: 1,
+        versjon: 1,
+        behandlingsresultat: {},
+      } as OpptjeningBehandling
+    }
+    // @ts-ignore Fiks!
     opptjening={opptjening}
     aksjonspunkter={[]}
     status={vilkarUtfallType.IKKE_VURDERT}

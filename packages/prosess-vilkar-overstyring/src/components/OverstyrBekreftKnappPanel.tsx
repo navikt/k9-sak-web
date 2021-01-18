@@ -1,9 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-const OverstyrBekreftKnappPanel = ({ submitting, pristine, overrideReadOnly }) => {
+interface OwnProps {
+  submitting: boolean;
+  pristine: boolean;
+  overrideReadOnly: boolean;
+}
+
+const OverstyrBekreftKnappPanel: FunctionComponent<OwnProps> = ({ submitting, pristine, overrideReadOnly }) => {
   if (overrideReadOnly) {
     return null;
   }
@@ -12,12 +17,6 @@ const OverstyrBekreftKnappPanel = ({ submitting, pristine, overrideReadOnly }) =
       <FormattedMessage id="OverstyrBekreftKnappPanel.ConfirmInformation" />
     </Hovedknapp>
   );
-};
-
-OverstyrBekreftKnappPanel.propTypes = {
-  submitting: PropTypes.bool.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  overrideReadOnly: PropTypes.bool.isRequired,
 };
 
 export default OverstyrBekreftKnappPanel;

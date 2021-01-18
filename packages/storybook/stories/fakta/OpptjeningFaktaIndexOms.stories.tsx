@@ -6,6 +6,7 @@ import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAkti
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
+import { Aksjonspunkt, Opptjening, OpptjeningBehandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -15,7 +16,7 @@ import arbeidsgivere from '../mocks/arbeidsgivere.json';
 const behandling = {
   id: 1,
   versjon: 1,
-};
+} as OpptjeningBehandling;
 
 const opptjeningNårEnHarAksjonspunkt = {
   opptjeninger: [
@@ -79,7 +80,7 @@ const opptjeningNårEnHarAksjonspunkt = {
       ],
     },
   ],
-};
+} as { opptjeninger: Opptjening[] };
 
 const opptjeningUtenAksjonspunkt = {
   opptjeninger: [
@@ -89,8 +90,9 @@ const opptjeningUtenAksjonspunkt = {
         opptjeningTom: '2019-09-29',
         opptjeningperiode: {
           dager: 4,
-          månder: 10,
+          måneder: 10,
         },
+        fastsattOpptjeningAktivitetList: [],
       },
       opptjeningAktivitetList: [
         {
@@ -106,7 +108,6 @@ const opptjeningUtenAksjonspunkt = {
           erGodkjent: true,
           erManueltOpprettet: false,
           erPeriodeEndret: false,
-          aringRegistreringsdato: '1995-09-14',
           oppdragsgiverOrg: '973861778',
           stillingsandel: 50,
         },
@@ -130,7 +131,7 @@ const opptjeningUtenAksjonspunkt = {
       ],
     },
   ],
-};
+} as { opptjeninger: Opptjening[] };
 
 const merknaderFraBeslutter = {
   notAccepted: false,
@@ -146,20 +147,22 @@ export const visAksjonspunktForOpptjeningsvilkåret = () => (
   <OpptjeningFaktaIndex
     behandling={behandling}
     opptjening={object('opptjening', opptjeningNårEnHarAksjonspunkt)}
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
+    aksjonspunkter={
+      [
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
+          },
+          status: {
+            kode: aksjonspunktStatus.OPPRETTET,
+          },
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
         },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    alleKodeverk={alleKodeverk}
+      ] as Aksjonspunkt[]
+    }
+    alleKodeverk={alleKodeverk as any}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
@@ -176,8 +179,8 @@ export const visPanelUtenAksjonpunkt = () => (
     behandling={behandling}
     opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
     aksjonspunkter={[]}
-    alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    alleKodeverk={alleKodeverk as any}
     alleMerknaderFraBeslutter={{}}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
