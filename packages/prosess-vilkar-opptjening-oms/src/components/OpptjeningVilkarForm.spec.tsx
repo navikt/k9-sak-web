@@ -5,8 +5,8 @@ import { shallow } from 'enzyme';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, FastsattOpptjening, Vilkårresultat } from '@K9-sak-web/types';
 import opptjeningAktivitetKlassifisering from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/kodeverk/opptjeningAktivitetKlassifisering';
+import { Aksjonspunkt, FastsattOpptjening, Vilkårresultat } from '@k9-sak-web/types';
 
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
