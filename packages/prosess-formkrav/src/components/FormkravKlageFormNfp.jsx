@@ -23,6 +23,7 @@ export const FormkravKlageFormNfpImpl = ({
   readOnly,
   readOnlySubmitButton,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
   parterMedKlagerett,
   ...formProps
@@ -36,6 +37,7 @@ export const FormkravKlageFormNfpImpl = ({
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
       formProps={formProps}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
       parterMedKlagerett={parterMedKlagerett}
       skalKunneVelgeKlagepart

@@ -63,6 +63,7 @@ export const FormkravKlageForm = ({
   intl,
   formProps,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
   skalKunneVelgeKlagepart,
 }) => {
@@ -88,7 +89,11 @@ export const FormkravKlageForm = ({
                 name="valgtPartMedKlagerett"
                 selectValues={parterMedKlagerett.map(part => (
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
-                    {part.identifikasjon.id}
+                    {arbeidsgiverOpplysningerPerId &&
+                    arbeidsgiverOpplysningerPerId[part.identifikasjon.id] &&
+                    arbeidsgiverOpplysningerPerId[part.identifikasjon.id].navn
+                      ? `${arbeidsgiverOpplysningerPerId[part.identifikasjon.id].navn} (${part.identifikasjon.id})`
+                      : part.identifikasjon.id}
                   </option>
                 ))}
                 className={readOnly ? styles.selectReadOnly : null}
@@ -190,6 +195,7 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
   skalKunneVelgeKlagepart: PropTypes.bool,
 };

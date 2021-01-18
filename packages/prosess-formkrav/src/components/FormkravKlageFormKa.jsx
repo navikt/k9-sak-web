@@ -23,6 +23,7 @@ export const FormkravKlageFormKa = ({
   readOnly,
   readOnlySubmitButton,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
   parterMedKlagerett,
   ...formProps
@@ -36,6 +37,7 @@ export const FormkravKlageFormKa = ({
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA}
       formProps={formProps}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
       parterMedKlagerett={parterMedKlagerett}
       skalKunneVelgeKlagepart={false}
@@ -46,6 +48,8 @@ export const FormkravKlageFormKa = ({
 FormkravKlageFormKa.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ...formPropTypes,
