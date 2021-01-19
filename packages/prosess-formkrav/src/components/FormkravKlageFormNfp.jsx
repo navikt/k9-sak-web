@@ -23,6 +23,7 @@ export const FormkravKlageFormNfpImpl = ({
   readOnly,
   readOnlySubmitButton,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
   parterMedKlagerett,
   ...formProps
@@ -36,8 +37,10 @@ export const FormkravKlageFormNfpImpl = ({
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
       formProps={formProps}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
       parterMedKlagerett={parterMedKlagerett}
+      skalKunneVelgeKlagepart
     />
   </form>
 );
@@ -97,9 +100,14 @@ const buildInitialValues = createSelector(
     ownProps => ownProps.klageVurdering,
     ownProps => ownProps.avsluttedeBehandlinger,
     ownProps => ownProps.valgtPartMedKlagerett,
+    ownProps => ownProps.parterMedKlagerett,
   ],
-  (klageVurdering, avsluttedeBehandlinger, valgtPartMedKlagerett) => {
+  (klageVurdering, avsluttedeBehandlinger, valgtPartMedKlagerett, parterMedKlagerett) => {
     const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
+    const defaultKlagepart =
+      Array.isArray(parterMedKlagerett) && parterMedKlagerett.length === 1
+        ? JSON.stringify(parterMedKlagerett[0])
+        : null;
     return {
       vedtak: klageFormkavResultatNfp ? getPaklagdVedtak(klageFormkavResultatNfp, avsluttedeBehandlinger) : null,
       begrunnelse: klageFormkavResultatNfp ? klageFormkavResultatNfp.begrunnelse : null,
@@ -107,7 +115,7 @@ const buildInitialValues = createSelector(
       erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,
       erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
       erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
-      valgtPartMedKlagerett: JSON.stringify(valgtPartMedKlagerett),
+      valgtPartMedKlagerett: valgtPartMedKlagerett ? JSON.stringify(valgtPartMedKlagerett) : defaultKlagepart,
     };
   },
 );
