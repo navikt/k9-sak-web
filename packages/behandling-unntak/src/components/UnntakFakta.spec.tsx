@@ -144,7 +144,6 @@ describe('<UnntakFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
       />,
     );
 
@@ -186,7 +185,6 @@ describe('<UnntakFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
       />,
     );
 

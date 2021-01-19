@@ -77,10 +77,14 @@ describe('<KlageProsess>', () => {
     },
   } as KlageVurdering;
 
+  const arbeidsgivere = {
+    arbeidsgivere: {},
+  };
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallow(
       <KlageProsess
-        data={{ aksjonspunkter, klageVurdering }}
+        data={{ aksjonspunkter, klageVurdering, arbeidsgivere }}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
@@ -144,7 +148,7 @@ describe('<KlageProsess>', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <KlageProsess
-        data={{ aksjonspunkter, klageVurdering }}
+        data={{ aksjonspunkter, klageVurdering, arbeidsgivere }}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}

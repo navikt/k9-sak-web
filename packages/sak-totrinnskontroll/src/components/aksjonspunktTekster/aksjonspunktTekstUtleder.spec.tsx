@@ -12,13 +12,13 @@ import { KlageVurdering, TotrinnskontrollAksjonspunkt, TotrinnskontrollArbeidsfo
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
 const medholdIKlage = {
-  klageVurdering: { kode: klageVurderingCodes.MEDHOLD_I_KLAGE, kodeverk: '' },
-  klageVurderingOmgjoer: { kode: klageVurderingOmgjoerCodes.GUNST_MEDHOLD_I_KLAGE, kodeverk: '' },
+  klageVurdering: klageVurderingCodes.MEDHOLD_I_KLAGE,
+  klageVurderingOmgjoer: klageVurderingOmgjoerCodes.GUNST_MEDHOLD_I_KLAGE,
 };
-const oppheveYtelsesVedtak = { klageVurdering: { kode: klageVurderingCodes.OPPHEVE_YTELSESVEDTAK, kodeverk: '' } };
-const avvistKlage = { klageVurdering: { kode: klageVurderingCodes.AVVIS_KLAGE, kodeverk: '' } };
+const oppheveYtelsesVedtak = { klageVurdering: klageVurderingCodes.OPPHEVE_YTELSESVEDTAK };
+const avvistKlage = { klageVurdering: klageVurderingCodes.AVVIS_KLAGE };
 const behandlingStatusFVED = { kode: behandlingStatusCodes.FATTER_VEDTAK, kodeverk: '' };
-const stadfesteKlage = { klageVurdering: { kode: klageVurderingCodes.STADFESTE_YTELSESVEDTAK, kodeverk: '' } };
+const stadfesteKlage = { klageVurdering: klageVurderingCodes.STADFESTE_YTELSESVEDTAK };
 
 const arbeidsforholdHandlingTyper = [
   { kode: 'BRUK', navn: 'aaa', kodeverk: '' },

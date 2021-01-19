@@ -5,7 +5,6 @@ import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-fr
 import {
   Arbeidsforhold,
   ArbeidsgiverOpplysningerPerId,
-  FeatureToggles,
   KodeverkMedNavn,
   Utfalltype,
   Uttaksperiode,
@@ -31,7 +30,6 @@ interface AktivitetTabellProps {
   arbeidsforholdtypeKode: string;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
-  featureToggles: FeatureToggles;
 }
 
 const periodevisning = (periode: string): string => {
@@ -84,7 +82,6 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
   arbeidsforholdtypeKode,
   uttaksperioder,
   aktivitetsstatuser,
-  featureToggles,
 }) => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const [valgteDetaljfaner, velgDetaljfaner] = useState<number[]>();
@@ -238,7 +235,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
             };
 
             const faner = ['Uttaksplan.Vilkår', 'Uttaksplan.Hjemler'];
-            if (nøkkeltall && featureToggles?.PERIODISERTE_NOKKELTALL) {
+            if (nøkkeltall) {
               faner.push(nøkkeltall.migrertData ? 'Uttaksplan.Nokkeltall.Migrert' : 'Uttaksplan.Nokkeltall');
             }
 
@@ -273,7 +270,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                             kompakt
                             defaultAktiv={valgteDetaljfaner?.[index]}
                           />
-                          {!nøkkeltall && featureToggles?.PERIODISERTE_NOKKELTALL && (
+                          {!nøkkeltall && (
                             <>
                               {/* Nav-frontend-tabs støtter ikke deaktiverte faner */}
                               <div className={styles.deaktivertFane}>

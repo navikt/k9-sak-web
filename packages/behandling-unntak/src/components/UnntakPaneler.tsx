@@ -101,7 +101,6 @@ const UnntakPaneler: FunctionComponent<OwnProps> = ({
         setApentFaktaPanel={setApentFaktaPanel}
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={featureToggles}
       />
     </>
   );
