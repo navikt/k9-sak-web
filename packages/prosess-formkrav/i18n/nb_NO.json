@@ -14,6 +14,7 @@
   "Klage.Formkrav.Ja": "Ja",
   "Klage.Formkrav.Nei": "Nei",
   "Klage.Formkrav.velgPartMedKlagerett": "Velg klagepart",
+  "Klage.Formkrav.valgtPartMedKlagerett": "Klagepart",
 
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
