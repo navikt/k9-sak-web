@@ -143,7 +143,6 @@ const getFaktaPanels = (
     behandlingId,
     behandlingVersjon,
     alleKodeverk,
-    arbeidsgiverOpplysningerPerId,
     fieldArrayID,
   );
   faktaPanels.push(
