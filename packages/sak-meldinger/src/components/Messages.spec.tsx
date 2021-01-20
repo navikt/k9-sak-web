@@ -58,6 +58,8 @@ describe('<Messages>', () => {
 
     const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
     expect(recipientSelect).toHaveLength(0);
+
+    expect(selectFields).toHaveLength(1);
   });
 
   it('skal vise to select-bokser når brevmal er valgt', () => {
@@ -66,6 +68,7 @@ describe('<Messages>', () => {
         {...mockProps}
         templates={templates}
         sprakKode={sprakkode}
+        brevmalkode={templates[0].kode}
         causes={causes}
         behandlingId={1}
         behandlingVersjon={2}
@@ -81,11 +84,11 @@ describe('<Messages>', () => {
     expect(templateSelect).toHaveLength(1);
     expect(templateSelect.prop('selectValues')).toHaveLength(3);
 
-    templateSelect.simulate('change', { target: { value: 'Mal1' } });
-
     const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
-    expect(recipientSelect).toHaveLength(0);
+    expect(recipientSelect).toHaveLength(1);
     expect(recipientSelect.prop('selectValues')).toHaveLength(1);
+
+    expect(selectFields).toHaveLength(2);
   });
 
   it('skal vise forhåndvisningslenke når fritekst er gyldig', () => {
@@ -95,6 +98,7 @@ describe('<Messages>', () => {
         {...mockProps}
         templates={templates}
         sprakKode={sprakkode}
+        brevmalkode="REVURD"
         causes={causes}
         previewCallback={previewEventCallback}
         fritekst="Dokument"
@@ -137,12 +141,10 @@ describe('<Messages>', () => {
     expect(templateSelect).toHaveLength(1);
     expect(templateSelect.prop('selectValues')).toHaveLength(3);
 
-    templateSelect.simulate('change', { target: { value: 'Mal1' } });
-
     const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
     expect(recipientSelect).toHaveLength(1);
     expect(recipientSelect.prop('selectValues')).toHaveLength(1);
 
-    expect(form.find('SelectField')).toHaveLength(3);
+    expect(selectFields).toHaveLength(3);
   });
 });
