@@ -18,13 +18,13 @@ class PanelDef extends ProsessStegPanelDef {
     klageVurdering,
     parterMedKlagerett,
     valgtPartMedKlagerett,
-    arbeidsgiverOpplysninger,
+    arbeidsgiverOpplysningerPerId,
   }) => ({
     avsluttedeBehandlinger: alleBehandlinger.filter(b => b.status.kode === behandlingStatus.AVSLUTTET),
     klageVurdering,
     parterMedKlagerett,
     valgtPartMedKlagerett,
-    arbeidsgiverOpplysninger,
+    arbeidsgiverOpplysningerPerId,
   });
 }
 

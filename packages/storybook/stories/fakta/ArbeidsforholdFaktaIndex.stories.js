@@ -79,7 +79,7 @@ export const visAksjonspunktForAvklaringAvArbeidsforhold = () => (
       },
     ]}
     alleKodeverk={alleKodeverk}
-    arbeidsgiverOpplysninger={{ arbeidsgivere }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}
@@ -111,7 +111,7 @@ export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => (
       },
     ]}
     alleKodeverk={alleKodeverk}
-    arbeidsgiverOpplysninger={{ arbeidsgivere }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}
@@ -131,7 +131,7 @@ export const visPanelUtenAksjonspunkter = () => (
     })}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
-    arbeidsgiverOpplysninger={{ arbeidsgivere }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     alleMerknaderFraBeslutter={{}}
     submitCallback={action('button-click')}
     harApneAksjonspunkter={boolean('harApneAksjonspunkter', false)}
@@ -178,7 +178,7 @@ export const visPanelForPermisjon = () => (
       },
     ]}
     alleKodeverk={alleKodeverk}
-    arbeidsgiverOpplysninger={{ arbeidsgivere }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}
@@ -235,7 +235,7 @@ export const visPanelForFlerePermisjoner = () => (
       },
     ]}
     alleKodeverk={alleKodeverk}
-    arbeidsgiverOpplysninger={{ arbeidsgivere }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}

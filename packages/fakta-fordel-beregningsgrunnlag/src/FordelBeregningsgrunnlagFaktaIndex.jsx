@@ -48,7 +48,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
   behandling,
   beregningsgrunnlag,
   alleKodeverk,
-  arbeidsgiverOpplysninger,
+  arbeidsgiverOpplysningerPerId,
   alleMerknaderFraBeslutter,
   aksjonspunkter,
   submitCallback,
@@ -96,7 +96,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           vilkårsperioder={vilkårsperioder}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
       </div>
     </RawIntlProvider>
@@ -110,7 +110,7 @@ FordelBeregningsgrunnlagFaktaIndex.propTypes = {
     notAccepted: PropTypes.bool,
   }).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  arbeidsgiverOpplysninger: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,

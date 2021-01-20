@@ -56,7 +56,7 @@ const BeregningFaktaIndex = ({
   readOnly,
   submittable,
   erOverstyrer,
-  arbeidsgiverOpplysninger,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
   const skalBrukeTabs = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
@@ -95,7 +95,7 @@ const BeregningFaktaIndex = ({
           beregningsgrunnlag={aktivtBeregningsrunnlag}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [aktivtBeregningsrunnlag]}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
         <VerticalSpacer thirtyTwoPx />
         <VurderFaktaBeregningPanel
@@ -111,7 +111,7 @@ const BeregningFaktaIndex = ({
           erOverstyrer={erOverstyrer}
           alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
       </div>
     </RawIntlProvider>
@@ -130,7 +130,7 @@ BeregningFaktaIndex.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
-  arbeidsgiverOpplysninger: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 BeregningFaktaIndex.defaultProps = {

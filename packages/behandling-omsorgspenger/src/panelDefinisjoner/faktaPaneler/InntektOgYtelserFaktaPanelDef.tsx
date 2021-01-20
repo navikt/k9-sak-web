@@ -19,8 +19,8 @@ class InntektOgYtelserFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
-  getData = ({ arbeidsgiverOpplysninger }) => ({
-    arbeidsgiverOpplysninger,
+  getData = ({ arbeidsgiverOpplysningerPerId }) => ({
+    arbeidsgiverOpplysningerPerId,
   });
 }
 
