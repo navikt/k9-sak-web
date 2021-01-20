@@ -58,8 +58,6 @@ describe('<Messages>', () => {
 
     const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
     expect(recipientSelect).toHaveLength(0);
-
-    expect(selectFields).toHaveLength(1);
   });
 
   it('skal vise to select-bokser når brevmal er valgt', () => {
@@ -78,7 +76,7 @@ describe('<Messages>', () => {
 
     const form = wrapper.find('form');
     const selectFields = form.find('SelectField');
-    expect(selectFields).toHaveLength(1);
+    expect(selectFields).toHaveLength(2);
 
     const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
     expect(templateSelect).toHaveLength(1);
@@ -87,8 +85,6 @@ describe('<Messages>', () => {
     const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
     expect(recipientSelect).toHaveLength(1);
     expect(recipientSelect.prop('selectValues')).toHaveLength(1);
-
-    expect(selectFields).toHaveLength(2);
   });
 
   it('skal vise forhåndvisningslenke når fritekst er gyldig', () => {
@@ -136,6 +132,7 @@ describe('<Messages>', () => {
 
     const form = wrapper.find('form');
     const selectFields = form.find('SelectField');
+    expect(selectFields).toHaveLength(3);
 
     const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
     expect(templateSelect).toHaveLength(1);
@@ -144,7 +141,5 @@ describe('<Messages>', () => {
     const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
     expect(recipientSelect).toHaveLength(1);
     expect(recipientSelect.prop('selectValues')).toHaveLength(1);
-
-    expect(selectFields).toHaveLength(3);
   });
 });
