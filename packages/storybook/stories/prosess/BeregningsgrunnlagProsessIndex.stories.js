@@ -446,7 +446,7 @@ export const arbeidstakerUtenAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -474,7 +474,7 @@ export const brukersAndelUtenAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -500,7 +500,7 @@ export const arbeidstakerMedAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -532,7 +532,7 @@ export const arbeidstakerFrilansMedAvvikMedGradering = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -553,7 +553,7 @@ export const militær = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -618,7 +618,7 @@ export const selvstendigNæringsdrivende = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -665,7 +665,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -696,7 +696,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -751,7 +751,7 @@ export const naturalYtelse = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -780,7 +780,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -811,7 +811,7 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -859,7 +859,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -917,7 +917,7 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -970,7 +970,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1019,7 +1019,7 @@ export const arbeidstakerMed3Arbeidsforhold2ISammeOrganisasjonSide3 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1054,7 +1054,7 @@ export const arbeidstakerAvslagHalvGSide4 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1085,7 +1085,7 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1117,7 +1117,7 @@ export const arbeidstakerMedAksjonspunktBehandletSide6 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1158,7 +1158,7 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1223,7 +1223,7 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktBehandletSide7 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1246,7 +1246,7 @@ export const FrilansSide8 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1269,7 +1269,7 @@ export const FrilansMedAksjonspunktSide9 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1294,7 +1294,7 @@ export const arbeidstakerFrilansMedAksjonspunktSide10 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1328,7 +1328,7 @@ export const arbeidstakerFrilansMedAksjonspunktBehandletSide11 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1378,7 +1378,7 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1445,7 +1445,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1499,7 +1499,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1558,7 +1558,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1612,7 +1612,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1665,7 +1665,7 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
       isAksjonspunktOpen
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1714,7 +1714,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1764,7 +1764,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1815,7 +1815,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1872,7 +1872,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1929,7 +1929,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -1983,7 +1983,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2051,7 +2051,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2119,7 +2119,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2142,7 +2142,7 @@ export const YtelseFraNavSide26 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2165,7 +2165,7 @@ export const arbeidstakerOgAAPMedAksjonspunktSide27 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2198,7 +2198,7 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2228,7 +2228,7 @@ export const arbeidstakerDagpengerMedBesteberegningSide28 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2260,7 +2260,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2291,7 +2291,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeFnOgDpOverstigerSNSide
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2322,7 +2322,7 @@ export const ArbeidstagerDagpengerOgSelvstendigNæringsdrivendeATOgDpOverstigerS
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2377,7 +2377,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };
@@ -2401,7 +2401,7 @@ export const militærOgSiviltjenesteSide33 = () => {
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysninger={{ arbeidsgivere }}
     />
   );
 };

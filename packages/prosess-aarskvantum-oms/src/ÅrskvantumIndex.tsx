@@ -3,7 +3,7 @@ import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
 import {
   Behandling,
   KodeverkMedNavn,
-  ArbeidsgiverOpplysningerPerId,
+  ArbeidsgiverOpplysningerWrapper,
   Aksjonspunkt,
   InntektArbeidYtelse,
 } from '@k9-sak-web/types';
@@ -36,7 +36,7 @@ interface ÅrsakvantumIndexProps {
   submitCallback: (values: any[]) => void;
   aksjonspunkterForSteg?: Aksjonspunkt[];
   inntektArbeidYtelse: InntektArbeidYtelse;
-  arbeidsgivere: ArbeidsgiverOpplysningerPerId;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
@@ -48,7 +48,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   submitCallback,
   aksjonspunkterForSteg = [],
   inntektArbeidYtelse,
-  arbeidsgivere,
+  arbeidsgiverOpplysninger,
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
@@ -72,7 +72,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiv={sisteUttaksplan?.aktiv}
         // @ts-ignore
         arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
       />
     </RawIntlProvider>
   );

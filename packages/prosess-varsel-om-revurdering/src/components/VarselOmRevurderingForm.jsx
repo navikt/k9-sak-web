@@ -266,10 +266,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     familiehendelse,
   } = ownProps;
   const onSubmit = values => submitCallback([values]);
-  const erAutomatiskRevurdering = behandlingArsaker.reduce(
-    (result, current) => result || current.erAutomatiskRevurdering,
-    false,
-  );
+  const erAutomatiskRevurdering =
+    behandlingArsaker &&
+    behandlingArsaker.reduce((result, current) => result || current.erAutomatiskRevurdering, false);
   const aksjonspunkt = aksjonspunkter[0];
   const ventearsaker = ownProps.alleKodeverk[kodeverkTyper.VENT_AARSAK];
   const languageCode = getLanguageCodeFromSprakkode(sprakkode);

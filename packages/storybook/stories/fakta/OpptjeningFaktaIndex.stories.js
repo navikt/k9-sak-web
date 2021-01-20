@@ -152,7 +152,7 @@ export const visAksjonspunktForOpptjeningsvilkåret = () => (
       },
     ]}
     alleKodeverk={alleKodeverk}
-    arbeidsgivere={arbeidsgivere}
+    arbeidsgiverOpplysninger={{ arbeidsgivere }}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}
@@ -169,7 +169,7 @@ export const visPanelUtenAksjonpunkt = () => (
     opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
-    arbeidsgivere={arbeidsgivere}
+    arbeidsgiverOpplysninger={{ arbeidsgivere }}
     alleMerknaderFraBeslutter={{}}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}

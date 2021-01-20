@@ -15,6 +15,7 @@ import {
   BehandlingAppKontekst,
   FeatureToggles,
   FagsakPerson,
+  ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
 
 import useTrackRouteParam from '../app/useTrackRouteParam';
@@ -68,6 +69,7 @@ interface OwnProps {
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }
 
@@ -81,6 +83,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   setBehandlingIdOgVersjon,
   fagsak,
   alleBehandlinger,
+  arbeidsgiverOpplysninger,
   setRequestPendingMessage,
 }) => {
   const { selected: behandlingId } = useTrackRouteParam<number>({
@@ -157,6 +160,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     opneSokeside,
     setRequestPendingMessage,
     valgtProsessSteg: query.punkt,
+    arbeidsgiverOpplysninger,
   };
 
   const fagsakBehandlingerInfo = useMemo(

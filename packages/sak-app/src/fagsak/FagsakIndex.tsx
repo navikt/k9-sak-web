@@ -3,7 +3,14 @@ import { Route, Redirect, useLocation } from 'react-router-dom';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { KodeverkMedNavn, Personopplysninger, Fagsak, FagsakPerson, Kodeverk } from '@k9-sak-web/types';
+import {
+  KodeverkMedNavn,
+  Personopplysninger,
+  Fagsak,
+  FagsakPerson,
+  Kodeverk,
+  ArbeidsgiverOpplysningerWrapper,
+} from '@k9-sak-web/types';
 
 import { LoadingPanel, DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -102,6 +109,15 @@ const FagsakIndex: FunctionComponent = () => {
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
+  const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
+    K9sakApiKeys.ARBEIDSGIVERE,
+    {},
+    {
+      updateTriggers: [!behandling],
+      suspendRequest: !behandling,
+    },
+  );
+
   const { data: behandlingRettigheter } = restApiHooks.useRestApi<BehandlingRettigheter>(
     K9sakApiKeys.BEHANDLING_RETTIGHETER,
     { uuid: behandling?.uuid },
@@ -114,11 +130,11 @@ const FagsakIndex: FunctionComponent = () => {
     }
     return <Redirect to={pathToMissingPage()} />;
   }
-  if (
-    fagsakPersonState === RestApiState.NOT_STARTED ||
-    fagsakPersonState === RestApiState.LOADING ||
-    !harFerdighentetfagsakRettigheter
-  ) {
+
+  const harIkkeHentetfagsakPersonData =
+    fagsakPersonState === RestApiState.LOADING || fagsakPersonState === RestApiState.NOT_STARTED;
+
+  if (harIkkeHentetfagsakPersonData || !harFerdighentetfagsakRettigheter) {
     return <LoadingPanel />;
   }
 
@@ -142,6 +158,7 @@ const FagsakIndex: FunctionComponent = () => {
                 alleBehandlinger={alleBehandlinger}
                 setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
                 setRequestPendingMessage={setRequestPendingMessage}
+                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
               />
             )}
           />
@@ -165,6 +182,7 @@ const FagsakIndex: FunctionComponent = () => {
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             behandlingRettigheter={behandlingRettigheter}
+            arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
           />
         }
         visittkortContent={() => {

@@ -43,6 +43,7 @@ interface OwnProps {
   featureToggles: FeatureToggles;
   kodeverk?: { [key: string]: KodeverkMedNavn[] };
   setRequestPendingMessage: (message: string) => void;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
@@ -58,6 +59,7 @@ const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
   opneSokeside,
   valgtFaktaSteg,
   setRequestPendingMessage,
+  arbeidsgiverOpplysninger,
   featureToggles,
 }) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
@@ -137,22 +139,8 @@ const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
     suspendRequest: !behandling,
   });
 
-  const {
-    data: arbeidsgiverOpplysninger,
-    state: arbeidOppState,
-  } = restApiUnntakHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
-    UnntakBehandlingApiKeys.ARBEIDSGIVERE,
-    {},
-    {
-      updateTriggers: [!behandling],
-      suspendRequest: !behandling,
-    },
-  );
-
   const harIkkeHentetBehandlingsdata = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
-  const harIkkeHentetArbeidsgiverOpplysninger =
-    arbeidOppState === RestApiState.LOADING || arbeidOppState === RestApiState.NOT_STARTED;
-  if (!behandling || harIkkeHentetArbeidsgiverOpplysninger || (harIkkeHentetBehandlingsdata && data === undefined)) {
+  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined)) {
     return <LoadingPanel />;
   }
 
@@ -178,7 +166,7 @@ const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger.arbeidsgivere}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
       />
     </>

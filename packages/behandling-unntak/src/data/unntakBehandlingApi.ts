@@ -39,7 +39,6 @@ export enum UnntakBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
-  ARBEIDSGIVERE = 'ARBEIDSGIVERE',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -64,7 +63,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('forbrukte-dager', UnntakBehandlingApiKeys.FORBRUKTE_DAGER)
   .withRel('inntekt', UnntakBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('tilgjengelige-vedtaksbrev', UnntakBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
-  .withRel('arbeidsgivere', UnntakBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withRel('dokumentdata-lagre', UnntakBehandlingApiKeys.DOKUMENTDATA_LAGRE)

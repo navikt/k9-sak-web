@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
 import { IngenBehandlingValgtPanel } from '@k9-sak-web/sak-infosider';
 
 import { behandlingPath } from '../app/paths';
@@ -12,6 +12,7 @@ interface OwnProps {
   alleBehandlinger: BehandlingAppKontekst[];
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
   setRequestPendingMessage: (message: string) => void;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
@@ -19,6 +20,7 @@ export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
   alleBehandlinger,
   setBehandlingIdOgVersjon,
   setRequestPendingMessage,
+  arbeidsgiverOpplysninger,
 }) => (
   <Switch>
     <Route
@@ -31,6 +33,7 @@ export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
           alleBehandlinger={alleBehandlinger}
           setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
           setRequestPendingMessage={setRequestPendingMessage}
+          arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
         />
       )}
     />

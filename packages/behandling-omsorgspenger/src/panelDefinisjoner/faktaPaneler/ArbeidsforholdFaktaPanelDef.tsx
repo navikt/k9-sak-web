@@ -25,9 +25,9 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
-  getData = ({ personopplysninger, arbeidsgiverOpplysningerPerId }) => ({
+  getData = ({ personopplysninger, arbeidsgiverOpplysninger }) => ({
     personopplysninger,
-    arbeidsgivere: arbeidsgiverOpplysningerPerId,
+    arbeidsgiverOpplysninger,
   });
 }
 

@@ -44,7 +44,6 @@ export enum PleiepengerBehandlingApiKeys {
   OMSORGEN_FOR = 'OMSORGEN_FOR',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
-  ARBEIDSGIVERE = 'ARBEIDSGIVERE',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -75,7 +74,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
   .withRel('vedtak-varsel', PleiepengerBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('omsorgen-for', PleiepengerBehandlingApiKeys.OMSORGEN_FOR)
-  .withRel('arbeidsgivere', PleiepengerBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

@@ -32,7 +32,7 @@ const FormkravProsessIndex = ({
   alleKodeverk,
   parterMedKlagerett,
   valgtPartMedKlagerett,
-  arbeidsgivere,
+  arbeidsgiverOpplysninger,
 }) => (
   <RawIntlProvider value={intl}>
     {Array.isArray(aksjonspunkter) &&
@@ -48,7 +48,7 @@ const FormkravProsessIndex = ({
           avsluttedeBehandlinger={avsluttedeBehandlinger}
           parterMedKlagerett={parterMedKlagerett}
           valgtPartMedKlagerett={valgtPartMedKlagerett}
-          arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         />
       )}
     {Array.isArray(aksjonspunkter) &&
@@ -64,7 +64,7 @@ const FormkravProsessIndex = ({
           avsluttedeBehandlinger={avsluttedeBehandlinger}
           parterMedKlagerett={parterMedKlagerett}
           valgtPartMedKlagerett={valgtPartMedKlagerett}
-          arbeidsgiverOpplysningerPerId={arbeidsgivere ? arbeidsgivere.arbeidsgivere : {}}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         />
       )}
   </RawIntlProvider>
@@ -81,7 +81,7 @@ FormkravProsessIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   valgtPartMedKlagerett: PropTypes.shape(),
-  arbeidsgivere: PropTypes.shape(),
+  arbeidsgiverOpplysninger: PropTypes.shape(),
 };
 
 FormkravProsessIndex.defaultProps = {

@@ -1,7 +1,14 @@
 import React, { FunctionComponent } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
+import {
+  Fagsak,
+  Behandling,
+  Kodeverk,
+  KodeverkMedNavn,
+  FagsakPerson,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -27,6 +34,7 @@ interface OwnProps {
     opprettet: string;
     avsluttet?: string;
   }[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   setBehandling: (behandling: Behandling) => void;
 }
 
@@ -44,6 +52,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   hentBehandling,
   opneSokeside,
   alleBehandlinger,
+  arbeidsgiverOpplysningerPerId,
   setBehandling,
 }) => (
   <>
@@ -66,6 +75,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
       opneSokeside={opneSokeside}
       alleBehandlinger={alleBehandlinger}
       alleKodeverk={kodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       setBehandling={setBehandling}
     />
   </>
