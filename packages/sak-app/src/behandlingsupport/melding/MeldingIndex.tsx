@@ -8,7 +8,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex, FormValues } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { BehandlingAppKontekst, Fagsak, Kodeverk } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak, Kodeverk, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { useFpSakKodeverk } from '../../data/useKodeverk';
@@ -89,6 +89,7 @@ interface OwnProps {
   alleBehandlinger: BehandlingAppKontekst[];
   behandlingId: number;
   behandlingVersjon?: number;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 interface Brevmal {
@@ -98,14 +99,19 @@ interface Brevmal {
 }
 
 const EMPTY_ARRAY = [];
-const RECIPIENTS = ['Søker'];
 
 /**
  * MeldingIndex
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, behandlingId, behandlingVersjon }) => {
+const MeldingIndex: FunctionComponent<OwnProps> = ({
+  fagsak,
+  alleBehandlinger,
+  behandlingId,
+  behandlingVersjon,
+  arbeidsgiverOpplysninger,
+}) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
   const [showMessagesModal, setShowMessageModal] = useState(false);
   const [submitCounter, setSubmitCounter] = useState(0);
@@ -202,7 +208,6 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, b
 
       <MeldingerSakIndex
         submitCallback={submitCallback}
-        recipients={RECIPIENTS}
         sprakKode={behandling?.sprakkode}
         previewCallback={previewCallback}
         behandlingId={behandlingId}
@@ -210,6 +215,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, b
         revurderingVarslingArsak={revurderingVarslingArsak}
         templates={brevmaler}
         isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
       />
 
       {submitFinished && showSettPaVentModal && (

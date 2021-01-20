@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Kodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import {
   ariaCheck,
   getLanguageCodeFromSprakkode,
@@ -38,6 +38,18 @@ export type Template = {
   tilgjengelig: boolean;
 };
 
+export type Mottaker = {
+  id: string;
+  type: string;
+};
+
+export interface Brevmaler {
+  [index: string]: {
+    navn: string;
+    mottakere: Mottaker[];
+  };
+}
+
 const getFritekstMessage = (brevmalkode?: string): string =>
   brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst';
 
@@ -54,11 +66,11 @@ interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   previewCallback: (mottaker: string, brevmalkode: string, fritekst: string, arsakskode: string) => void;
-  recipients: string[];
-  templates: Template[];
+  templates: Template[] | Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 interface MappedOwnProps {
@@ -67,6 +79,24 @@ interface MappedOwnProps {
   brevmalkode?: string;
   fritekst?: string;
   arsakskode?: string;
+}
+
+const RECIPIENTS = ['Bruker'];
+
+function lagVisningsNavnForMottaker(mottaker, arbeidsgiverOpplysningerPerId) {
+  if (
+    arbeidsgiverOpplysningerPerId &&
+    arbeidsgiverOpplysningerPerId[mottaker] &&
+    arbeidsgiverOpplysningerPerId[mottaker].navn
+  ) {
+    return `${arbeidsgiverOpplysningerPerId[mottaker].navn} (${mottaker})`;
+  }
+
+  if (/^(\d).*$/.test(mottaker)) {
+    return `Bruker (${mottaker})`;
+  }
+
+  return mottaker;
 }
 
 /**
@@ -79,7 +109,6 @@ export const MessagesImpl: FunctionComponent<
   PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
 > = ({
   intl,
-  recipients = [],
   templates = [],
   causes = [],
   previewCallback,
@@ -89,6 +118,7 @@ export const MessagesImpl: FunctionComponent<
   brevmalkode,
   fritekst,
   arsakskode,
+  arbeidsgiverOpplysningerPerId,
   ...formProps
 }) => {
   if (!sprakKode) {
@@ -107,33 +137,51 @@ export const MessagesImpl: FunctionComponent<
   };
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
+
+  let recipients: string[] = RECIPIENTS;
+  let tmpls: Template[] = Array.isArray(templates) ? templates : [];
+
+  // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
+  // komponentene burde oppdateres for å bedre håndtere ny struktur når den er tatt i bruk overallt.
+  if (!Array.isArray(templates) && typeof templates === 'object') {
+    tmpls = Object.keys(templates).map(key => ({ navn: templates[key].navn, kode: key, tilgjengelig: true }));
+    recipients =
+      brevmalkode && templates[brevmalkode] && templates[brevmalkode].mottakere
+        ? templates[brevmalkode].mottakere.map(m => m.id)
+        : [];
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <SelectField
-        name="mottaker"
-        label={intl.formatMessage({ id: 'Messages.Recipient' })}
-        validate={[required]}
-        placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
-        selectValues={(recipients || []).map(recipient => (
-          <option key={recipient} value={recipient}>
-            {recipient}
-          </option>
-        ))}
-        bredde="xxl"
-      />
-      <VerticalSpacer eightPx />
       <SelectField
         name="brevmalkode"
         label={intl.formatMessage({ id: 'Messages.Template' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
-        selectValues={(templates || []).map(template => (
+        selectValues={(tmpls || []).map(template => (
           <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>
             {template.navn}
           </option>
         ))}
         bredde="xxl"
       />
+      {brevmalkode && (
+        <>
+          <VerticalSpacer eightPx />
+          <SelectField
+            name="mottaker"
+            label={intl.formatMessage({ id: 'Messages.Recipient' })}
+            validate={[required]}
+            placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
+            selectValues={(recipients || []).map(recipient => (
+              <option key={recipient} value={recipient}>
+                {lagVisningsNavnForMottaker(recipient, arbeidsgiverOpplysningerPerId)}
+              </option>
+            ))}
+            bredde="xxl"
+          />
+        </>
+      )}
       {brevmalkode === dokumentMalType.REVURDERING_DOK && (
         <>
           <VerticalSpacer eightPx />
@@ -165,11 +213,12 @@ export const MessagesImpl: FunctionComponent<
           </div>
         </>
       )}
+      <VerticalSpacer eightPx />
       <div className={styles.buttonRow}>
         <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
           {intl.formatMessage({ id: 'Messages.Submit' })}
         </Hovedknapp>
-        {(templates || []).length > 0 && (
+        {(tmpls || []).length > 0 && (
           <a
             href=""
             onClick={previewMessage}
@@ -186,14 +235,17 @@ export const MessagesImpl: FunctionComponent<
 
 const formName = 'Messages';
 
-const buildInitalValues = (
-  recipients: string[],
-  templates: Template[],
-  isKontrollerRevurderingApOpen?: boolean,
-): FormValues => {
+const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
+  // let firstTemplate = templates && Array.isArray(templates) ? templates[0] : {};
+
+  // if (!Array.isArray(templates) && typeof templates === 'object') {
+  //   firstTemplate = Object.keys(templates).map(key => ({ navn: templates[key].navn, kode: key, tilgjengelig: true }))[0];
+  // }
+
   const initialValues = {
-    mottaker: recipients[0] ? recipients[0] : null,
-    brevmalkode: templates && templates[0] ? templates[0].kode : null,
+    // brevmalkode: firstTemplate.kode || null,
+    brevmalkode: null,
+    mottaker: null,
     fritekst: '',
     aarsakskode: null,
   };
@@ -224,7 +276,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
       'arsakskode',
     ),
     causes: getfilteredCauses(ownProps),
-    initialValues: buildInitalValues(ownProps.recipients, ownProps.templates, ownProps.isKontrollerRevurderingApOpen),
+    initialValues: buildInitalValues(ownProps.templates, ownProps.isKontrollerRevurderingApOpen),
     onSubmit,
   });
 };

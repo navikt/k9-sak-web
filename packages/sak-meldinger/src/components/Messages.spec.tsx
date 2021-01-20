@@ -17,12 +17,11 @@ const mockProps = {
   validateModel: () => undefined,
   isSubmitting: false,
   intl: intlMock,
+  arbeidsgiverOpplysningerPerId: {},
   ...reduxFormPropsMock,
 };
 
 describe('<Messages>', () => {
-  const recipients = ['Søker', 'Annen person'];
-
   const sprakkode = {
     kode: 'en',
     kodeverk: 'Engelsk',
@@ -36,11 +35,10 @@ describe('<Messages>', () => {
 
   const causes = [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }];
 
-  it('skal vise to select-bokser', () => {
+  it('skal vise en select-boks når brevmal ikke er valgt', () => {
     const wrapper = shallowWithIntl(
       <Messages
         {...mockProps}
-        recipients={recipients}
         templates={templates}
         sprakKode={sprakkode}
         causes={causes}
@@ -52,15 +50,42 @@ describe('<Messages>', () => {
 
     const form = wrapper.find('form');
     const selectFields = form.find('SelectField');
-    expect(selectFields).toHaveLength(2);
-
-    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
-    expect(recipientSelect).toHaveLength(1);
-    expect(recipientSelect.prop('selectValues')).toHaveLength(2);
+    expect(selectFields).toHaveLength(1);
 
     const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
     expect(templateSelect).toHaveLength(1);
     expect(templateSelect.prop('selectValues')).toHaveLength(3);
+
+    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    expect(recipientSelect).toHaveLength(0);
+  });
+
+  it('skal vise to select-bokser når brevmal er valgt', () => {
+    const wrapper = shallowWithIntl(
+      <Messages
+        {...mockProps}
+        templates={templates}
+        sprakKode={sprakkode}
+        causes={causes}
+        behandlingId={1}
+        behandlingVersjon={2}
+        revurderingVarslingArsak={[{} as KodeverkMedNavn]}
+      />,
+    );
+
+    const form = wrapper.find('form');
+    const selectFields = form.find('SelectField');
+    expect(selectFields).toHaveLength(1);
+
+    const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
+    expect(templateSelect).toHaveLength(1);
+    expect(templateSelect.prop('selectValues')).toHaveLength(3);
+
+    templateSelect.simulate('change', { target: { value: 'Mal1' } });
+
+    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    expect(recipientSelect).toHaveLength(0);
+    expect(recipientSelect.prop('selectValues')).toHaveLength(1);
   });
 
   it('skal vise forhåndvisningslenke når fritekst er gyldig', () => {
@@ -68,7 +93,6 @@ describe('<Messages>', () => {
     const wrapper = shallowWithIntl(
       <Messages
         {...mockProps}
-        recipients={recipients}
         templates={templates}
         sprakKode={sprakkode}
         causes={causes}
@@ -94,7 +118,6 @@ describe('<Messages>', () => {
     const wrapper = shallowWithIntl(
       <Messages
         {...mockProps}
-        recipients={recipients}
         templates={templates}
         sprakKode={sprakkode}
         brevmalkode="REVURD"
@@ -109,14 +132,17 @@ describe('<Messages>', () => {
 
     const form = wrapper.find('form');
     const selectFields = form.find('SelectField');
-    expect(selectFields).toHaveLength(3);
-
-    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
-    expect(recipientSelect).toHaveLength(1);
-    expect(recipientSelect.prop('selectValues')).toHaveLength(2);
 
     const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
     expect(templateSelect).toHaveLength(1);
     expect(templateSelect.prop('selectValues')).toHaveLength(3);
+
+    templateSelect.simulate('change', { target: { value: 'Mal1' } });
+
+    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    expect(recipientSelect).toHaveLength(1);
+    expect(recipientSelect.prop('selectValues')).toHaveLength(1);
+
+    expect(form.find('SelectField')).toHaveLength(3);
   });
 });

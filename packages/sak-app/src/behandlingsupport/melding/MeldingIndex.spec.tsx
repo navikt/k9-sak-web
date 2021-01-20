@@ -22,8 +22,6 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('<MeldingIndex>', () => {
-  const recipients = ['Søker'];
-
   const fagsak = {
     saksnummer: '123456',
   };
@@ -73,7 +71,6 @@ describe('<MeldingIndex>', () => {
     );
 
     const index = wrapper.find(MeldingerSakIndex);
-    expect(index.prop('recipients')).toEqual(recipients);
     expect(index.prop('templates')).toEqual(templates);
   });
 
