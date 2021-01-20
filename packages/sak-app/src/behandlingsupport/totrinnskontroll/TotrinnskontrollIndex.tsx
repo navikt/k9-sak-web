@@ -14,6 +14,8 @@ import {
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { useKodeverk } from '../../data/useKodeverk';
@@ -117,14 +119,21 @@ const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
     K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT,
   );
 
-  const forhandsvisMelding = useVisForhandsvisningAvMelding(behandling.type);
+  const erTilbakekreving =
+    BehandlingType.TILBAKEKREVING === behandling?.type.kode ||
+    BehandlingType.TILBAKEKREVING_REVURDERING === behandling?.type.kode;
 
+  const forhaandsvisRequest = erTilbakekreving
+    ? {
+        behandlingUuid: behandling.uuid,
+        ytelseType: fagsak.sakstype,
+        gjelderVedtak: true,
+      }
+    : { ...lagForhåndsvisRequest(behandling, fagsak, fagsak.person, { dokumentMal: dokumentMalType.UTLED }) };
+
+  const forhandsvisMelding = useVisForhandsvisningAvMelding(behandling.type);
   const forhandsvisVedtaksbrev = useCallback(() => {
-    forhandsvisMelding(false, {
-      behandlingUuid: behandling.uuid,
-      ytelseType: fagsak.sakstype,
-      gjelderVedtak: true,
-    });
+    forhandsvisMelding(false, forhaandsvisRequest);
   }, []);
   const onSubmit = useCallback(
     getLagreFunksjon(
