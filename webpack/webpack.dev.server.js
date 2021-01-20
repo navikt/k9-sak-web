@@ -26,6 +26,12 @@ const options = {
     // }
   },
   proxy: {
+    '/k9/microfrontend/omsorgsdager/**': {
+      target: 'http://localhost:8088',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: {'^/k9/microfrontend/omsorgsdager': ''}
+    },
     '/k9/formidling/dokumentdata/**': {
       target: process.env.APP_URL_K9FORMIDLING_DD || 'http://localhost:8294',
       secure: false,

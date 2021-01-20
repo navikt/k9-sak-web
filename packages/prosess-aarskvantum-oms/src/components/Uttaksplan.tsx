@@ -6,7 +6,7 @@ import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { KodeverkMedNavn, Arbeidsforhold, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { joinNonNullStrings } from '@fpsak-frontend/utils';
+import { joinNonNullStrings, MicroFrontend } from '@fpsak-frontend/utils';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
 import styles from './uttaksplan.less';
@@ -51,6 +51,10 @@ const mapAktiviteterTilTabell = (
   });
 };
 
+const initializeMicrofrontendOmsorgsdager = elementId =>
+  (window as any).renderMicrofrontendOmsorgsdagerApp(elementId, {});
+const microfrontendOmsorgsdagerId = 'microfrontendOmsorgsdager';
+
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   aktiviteterBehandling = [],
   aktiviteterHittilIÅr = [],
@@ -94,6 +98,15 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
           arbeidsforhold,
           arbeidsgiverOpplysningerPerId,
         )}
+      <MicroFrontend
+        id={microfrontendOmsorgsdagerId}
+        jsSrc="/k9/microfrontend/omsorgsdager/1.5.14/app.js"
+        jsIntegrity="sha384-NsWJCwd3919XNYI9s2AlMfw3B81AaEhPE5ZaFXRAj1z/7pcpyJGVao8VMOx6tm29"
+        stylesheetSrc="/k9/microfrontend/omsorgsdager/1.5.14/styles.css"
+        stylesheetIntegrity="sha384-o7iPMR4OWEOzteK4DzZjG2CmI2iH7TaCrb0Eua2jQkCq8rqvGxJB+fOTjiK06DXp"
+        onReady={() => initializeMicrofrontendOmsorgsdager(microfrontendOmsorgsdagerId)}
+        onError={() => {}}
+      />
     </div>
   );
 };
