@@ -17,6 +17,7 @@ const dokumentMalType = {
   INNVILGELSE: 'INNVILGELSE',
   AVSLAG: 'AVSLAG',
   UTLED: 'UTLED',
+  HENLEGG_BEHANDLING_DOK: 'HENLEG',
 };
 
 export default dokumentMalType;
