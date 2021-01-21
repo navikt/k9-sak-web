@@ -65,39 +65,7 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
 }) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
   return (
-    <div className={styles.uttaksboks}>
-      <div className={styles.overskrift}>
-        {!aktiv && (
-          <AlertStripeInfo className={styles.alertstripe}>
-            <FormattedMessage id="Uttaksplan.Inaktiv" />
-          </AlertStripeInfo>
-        )}
-        <Undertittel tag="h3">
-          <Image src={kalender} />
-          <FormattedMessage id="Uttaksplan.Heading" />
-        </Undertittel>
-      </div>
-      <Tabs
-        tabs={[
-          { label: <FormattedMessage id="Uttaksplan.DenneBehandling" /> },
-          { label: <FormattedMessage id="Uttaksplan.HittilIÅr" /> },
-        ]}
-        onChange={(e, valgtIndex) => setValgtTabIndex(valgtIndex)}
-      />
-      {valgtTabIndex === 0 &&
-        mapAktiviteterTilTabell(
-          aktiviteterBehandling,
-          aktivitetsstatuser,
-          arbeidsforhold,
-          arbeidsgiverOpplysningerPerId,
-        )}
-      {valgtTabIndex === 1 &&
-        mapAktiviteterTilTabell(
-          aktiviteterHittilIÅr,
-          aktivitetsstatuser,
-          arbeidsforhold,
-          arbeidsgiverOpplysningerPerId,
-        )}
+    <>
       <MicroFrontend
         id={microfrontendOmsorgsdagerId}
         jsSrc="/k9/microfrontend/omsorgsdager/1.5.14/app.js"
@@ -107,7 +75,41 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
         onReady={() => initializeMicrofrontendOmsorgsdager(microfrontendOmsorgsdagerId)}
         onError={() => {}}
       />
-    </div>
+      <div className={styles.uttaksboks}>
+        <div className={styles.overskrift}>
+          {!aktiv && (
+            <AlertStripeInfo className={styles.alertstripe}>
+              <FormattedMessage id="Uttaksplan.Inaktiv" />
+            </AlertStripeInfo>
+          )}
+          <Undertittel tag="h3">
+            <Image src={kalender} />
+            <FormattedMessage id="Uttaksplan.Heading" />
+          </Undertittel>
+        </div>
+        <Tabs
+          tabs={[
+            { label: <FormattedMessage id="Uttaksplan.DenneBehandling" /> },
+            { label: <FormattedMessage id="Uttaksplan.HittilIÅr" /> },
+          ]}
+          onChange={(e, valgtIndex) => setValgtTabIndex(valgtIndex)}
+        />
+        {valgtTabIndex === 0 &&
+          mapAktiviteterTilTabell(
+            aktiviteterBehandling,
+            aktivitetsstatuser,
+            arbeidsforhold,
+            arbeidsgiverOpplysningerPerId,
+          )}
+        {valgtTabIndex === 1 &&
+          mapAktiviteterTilTabell(
+            aktiviteterHittilIÅr,
+            aktivitetsstatuser,
+            arbeidsforhold,
+            arbeidsgiverOpplysningerPerId,
+          )}
+      </div>
+    </>
   );
 };
 
