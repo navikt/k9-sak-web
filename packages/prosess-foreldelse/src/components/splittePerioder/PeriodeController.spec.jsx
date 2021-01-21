@@ -50,16 +50,14 @@ describe('<PeriodeController>', () => {
 
   it('skal splitte periode via modal', async () => {
     const response = {
-      payload: {
-        perioder: [
-          {
-            belop: 400,
-          },
-          {
-            belop: 600,
-          },
-        ],
-      },
+      perioder: [
+        {
+          belop: 400,
+        },
+        {
+          belop: 600,
+        },
+      ],
     };
     const beregnBelop = () => Promise.resolve(response);
     const oppdaterSplittedePerioder = sinon.spy();
