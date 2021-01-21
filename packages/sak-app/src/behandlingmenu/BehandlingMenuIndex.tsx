@@ -36,7 +36,7 @@ import {
   openBehandlingForChanges,
 } from './behandlingMenuOperations';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
-import useVisForhandsvisningAvMelding from '../data/useVisForhandsvisningAvMelding';
+import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import ApplicationContextPath from '../app/ApplicationContextPath';
@@ -190,7 +190,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   const uuidForSistLukkede = useMemo(() => getUuidForSisteLukkedeForsteEllerRevurd(alleBehandlinger), [
     alleBehandlinger,
   ]);
-  const previewHenleggBehandling = useVisForhandsvisningAvMelding(behandling?.type);
+  const previewHenleggBehandling = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   if (navAnsatt.kanVeilede) {
     return null;
