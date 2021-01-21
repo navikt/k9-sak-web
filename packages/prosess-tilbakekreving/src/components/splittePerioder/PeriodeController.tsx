@@ -9,7 +9,7 @@ import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 
 import DelOppPeriodeModal from './DelOppPeriodeModal';
-import DataForPeriode from "../../types/dataForPeriodeTsType";
+import DataForPeriode from '../../types/dataForPeriodeTsType';
 
 import styles from './periodeController.less';
 
@@ -90,9 +90,9 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
       perioder: [forstePeriode, andrePeriode],
     };
 
-    callBeregnBelop(params).then((response) => {
-      const { perioder } = response.payload;
-      const harPeriodeMedBelop0 = perioder.some((p) => p.belop === 0);
+    callBeregnBelop(params).then(response => {
+      const { perioder } = response;
+      const harPeriodeMedBelop0 = perioder.some(p => p.belop === 0);
       if (harPeriodeMedBelop0) {
         this.setState((state: any) => ({
           ...state,
@@ -116,15 +116,7 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
   }
 
   render() {
-    const {
-      intl,
-      callbackForward,
-      callbackBackward,
-      periode,
-      readOnly,
-      behandlingId,
-      behandlingVersjon,
-    } = this.props;
+    const { intl, callbackForward, callbackBackward, periode, readOnly, behandlingId, behandlingVersjon } = this.props;
 
     const { showDelPeriodeModal, finnesBelopMed0Verdi } = this.state;
 
@@ -137,8 +129,7 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
           </Element>
         </Column>
         <Column xs="7">
-          {!readOnly
-          && (
+          {!readOnly && (
             <span className={styles.splitPeriodPosition}>
               <Image
                 tabIndex={0}
@@ -147,15 +138,14 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
                 srcHover={splitPeriodImageHoverUrl}
                 alt={intl.formatMessage({ id: 'PeriodeController.DelOppPerioden' })}
                 onMouseDown={this.showModal}
-                onKeyDown={(e) => (e.keyCode === 13 ? this.showModal(e) : null)}
+                onKeyDown={e => (e.keyCode === 13 ? this.showModal(e) : null)}
               />
               <FormattedMessage id="PeriodeController.DelOppPerioden" />
             </span>
           )}
-          {showDelPeriodeModal
-          && (
+          {showDelPeriodeModal && (
             <DelOppPeriodeModal
-            // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+              // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               cancelEvent={this.hideModal}
@@ -168,8 +158,16 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
         </Column>
         <Column xs="2">
           <FloatRight>
-            <TimeLineButton text={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })} type="prev" callback={callbackBackward} />
-            <TimeLineButton text={intl.formatMessage({ id: 'PeriodeController.NestePeriode' })} type="next" callback={callbackForward} />
+            <TimeLineButton
+              text={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })}
+              type="prev"
+              callback={callbackBackward}
+            />
+            <TimeLineButton
+              text={intl.formatMessage({ id: 'PeriodeController.NestePeriode' })}
+              type="next"
+              callback={callbackForward}
+            />
           </FloatRight>
         </Column>
       </Row>

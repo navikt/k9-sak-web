@@ -6,7 +6,7 @@ import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import { PeriodeController } from './PeriodeController';
 import shallowWithIntl from '../../../i18n';
-import DataForPeriode from "../../types/dataForPeriodeTsType";
+import DataForPeriode from '../../types/dataForPeriodeTsType';
 
 describe('<PeriodeController>', () => {
   it('skal vise knapp for å dele opp perioden og knapper for å velge forrige eller neste periode', () => {
@@ -51,16 +51,14 @@ describe('<PeriodeController>', () => {
 
   it('skal splitte periode via modal', async () => {
     const response = {
-      payload: {
-        perioder: [
-          {
-            belop: 400,
-          },
-          {
-            belop: 600,
-          },
-        ],
-      },
+      perioder: [
+        {
+          belop: 400,
+        },
+        {
+          belop: 600,
+        },
+      ],
     };
     const beregnBelop = () => Promise.resolve(response);
     const oppdaterSplittedePerioder = sinon.spy();
