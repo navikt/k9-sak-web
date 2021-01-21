@@ -15,7 +15,7 @@ const forhandsvis = (data: any) => {
 };
 
 export const useVisForhandsvisningAvMelding = (behandling: Behandling, fagsak?: Fagsak): ForhandsvisFunksjon => {
-  const erTilbakekreving = erTilbakekrevingType(behandling.type);
+  const erTilbakekreving = erTilbakekrevingType(behandling?.type);
 
   if (!erTilbakekreving && !fagsak) {
     throw new Error('Fagsak er påkrevd ved forhåndvisning mot formidling');
