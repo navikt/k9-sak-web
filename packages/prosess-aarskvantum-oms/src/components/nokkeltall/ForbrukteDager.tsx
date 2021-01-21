@@ -21,8 +21,10 @@ const forbrukteDagerDetaljer = (
   smittevernDagerTimer?: DagerTimer,
   utbetaltForMangeDagerTimer?: DagerTimer,
 ): Nokkeltalldetalj[] => {
-  const detaljer: Nokkeltalldetalj[] = [
-    {
+  const detaljer: Nokkeltalldetalj[] = [];
+
+  if (tidFraInfotrygd.dager || tidFraInfotrygd.timer) {
+    detaljer.push({
       antallDager: tidFraInfotrygd.dager,
       antallTimer: <AntallTimer timer={tidFraInfotrygd.timer} />,
       overskrifttekstId: 'Nøkkeltall.DagerFraInfotrygd',
@@ -31,18 +33,19 @@ const forbrukteDagerDetaljer = (
       ) : (
         <FormattedMessage id="Nøkkeltall.DagerFraInfotrygd.Dager.InfoText" values={{ dager: tidFraInfotrygd.dager }} />
       ),
-    },
-    {
-      antallDager: forbruktDagerTimer.dager,
-      antallTimer: <AntallTimer timer={forbruktDagerTimer.timer} />,
-      overskrifttekstId: 'Nøkkeltall.ForbrukteDager',
-      infotekstContent: forbruktDagerTimer.timer ? (
-        <FormattedMessage id="Nøkkeltall.ForbrukteDager.DagerOgTimer.InfoText" values={{ ...forbruktDagerTimer }} />
-      ) : (
-        <FormattedMessage id="Nøkkeltall.ForbrukteDager.Dager.InfoText" values={{ dager: forbruktDagerTimer.dager }} />
-      ),
-    },
-  ];
+    });
+  }
+
+  detaljer.push({
+    antallDager: forbruktDagerTimer.dager,
+    antallTimer: <AntallTimer timer={forbruktDagerTimer.timer} />,
+    overskrifttekstId: 'Nøkkeltall.ForbrukteDager',
+    infotekstContent: forbruktDagerTimer.timer ? (
+      <FormattedMessage id="Nøkkeltall.ForbrukteDager.DagerOgTimer.InfoText" values={{ ...forbruktDagerTimer }} />
+    ) : (
+      <FormattedMessage id="Nøkkeltall.ForbrukteDager.Dager.InfoText" values={{ dager: forbruktDagerTimer.dager }} />
+    ),
+  });
 
   if (smittevernDagerTimer) {
     detaljer.push({

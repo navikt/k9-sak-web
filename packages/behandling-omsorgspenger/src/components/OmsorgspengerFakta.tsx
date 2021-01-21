@@ -7,7 +7,6 @@ import {
   Behandling,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -41,7 +40,6 @@ interface OwnProps {
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  featureToggles: FeatureToggles;
 }
 
 const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -59,7 +57,6 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   setApentFaktaPanel,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
-  featureToggles,
 }) => {
   const { aksjonspunkter, ...rest } = data;
 
@@ -84,7 +81,7 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
-    faktaPanelDefinisjoner(featureToggles),
+    faktaPanelDefinisjoner,
     dataTilUtledingAvOmsorgPaneler,
     behandling,
     rettigheter,

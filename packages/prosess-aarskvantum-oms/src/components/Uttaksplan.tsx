@@ -4,7 +4,7 @@ import Tabs from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { KodeverkMedNavn, Arbeidsforhold, ArbeidsgiverOpplysningerPerId, FeatureToggles } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Arbeidsforhold, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import Aktivitet from '../dto/Aktivitet';
@@ -18,7 +18,6 @@ interface UttaksplanProps {
   aktivitetsstatuser: KodeverkMedNavn[];
   arbeidsforhold: Arbeidsforhold[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  featureToggles: FeatureToggles;
 }
 
 const mapAktiviteterTilTabell = (
@@ -26,7 +25,6 @@ const mapAktiviteterTilTabell = (
   aktivitetsstatuser: KodeverkMedNavn[],
   alleArbeidsforhold: Arbeidsforhold[],
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-  featureToggles: FeatureToggles,
 ) => {
   if (!aktiviteter.length) {
     return <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />;
@@ -48,7 +46,6 @@ const mapAktiviteterTilTabell = (
         uttaksperioder={uttaksperioder}
         aktivitetsstatuser={aktivitetsstatuser}
         key={joinNonNullStrings(Object.values(arbeidsforhold))}
-        featureToggles={featureToggles}
       />
     );
   });
@@ -61,7 +58,6 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
   aktiv,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
-  featureToggles,
 }) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
   return (
@@ -90,7 +86,6 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
           aktivitetsstatuser,
           arbeidsforhold,
           arbeidsgiverOpplysningerPerId,
-          featureToggles,
         )}
       {valgtTabIndex === 1 &&
         mapAktiviteterTilTabell(
@@ -98,7 +93,6 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
           aktivitetsstatuser,
           arbeidsforhold,
           arbeidsgiverOpplysningerPerId,
-          featureToggles,
         )}
     </div>
   );

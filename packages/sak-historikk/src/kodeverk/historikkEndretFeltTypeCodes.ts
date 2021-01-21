@@ -464,6 +464,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'VALG',
     feltId: 'HistorikkEndretFelt.Valg',
   },
+  TILKJENT_YTELSE: {
+    kode: 'TILKJENT_YTELSE',
+    feltId: 'HistorikkEndretFelt.TilkjentYtelse',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;
