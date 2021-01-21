@@ -203,7 +203,7 @@ const manuelleRevurderingsArsaker = [
   behandlingArsakType.ETTER_KLAGE,
 ];
 
-const unntakVurderingsArsaker = [behandlingArsakType.ANNET];
+const unntakVurderingsArsaker = [behandlingArsakType.UNNT_GENERELL, behandlingArsakType.ANNET];
 
 const tilbakekrevingRevurderingArsaker = [
   behandlingArsakType.RE_FORELDELSE,
