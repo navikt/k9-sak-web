@@ -26,6 +26,7 @@ const behandlingArsakType = {
   RE_VILKÅR: 'RE_VILKÅR',
   RE_FORELDELSE: 'RE_FORELDELSE',
   RE_FEILUTBETALT_BELØP_REDUSERT: 'RE_FEILUTBETALT_BELØP_REDUSERT',
+  UNNT_GENERELL: 'UNNT_GENERELL',
 };
 
 export default behandlingArsakType;

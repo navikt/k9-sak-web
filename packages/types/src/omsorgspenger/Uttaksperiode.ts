@@ -9,6 +9,7 @@ export const VilkårEnum = stringEnum({
   SMITTEVERN: 'SMITTEVERN',
   UIDENTIFISERT_RAMMEVEDTAK: 'UIDENTIFISERT_RAMMEVEDTAK',
   ARBEIDSFORHOLD: 'ARBEIDSFORHOLD',
+  ANDRE_SKAL_DEKKE_DAGENE: 'ANDRE_SKAL_DEKKE_DAGENE',
 });
 
 export type Vilkår = typeof VilkårEnum[keyof typeof VilkårEnum];
