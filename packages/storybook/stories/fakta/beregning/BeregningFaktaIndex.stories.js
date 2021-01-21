@@ -20,6 +20,14 @@ import {
   behandling as behandlingFlerePerioder,
 } from './scenario/ForSentRefusjonskravFlereBG';
 
+import {
+  beregningsgrunnlag as bgKunYtelse,
+  aksjonspunkt as apKunYtelse,
+  behandling as behandlingKunYtelse,
+} from './scenario/KunYtelse';
+
+
+
 import withReduxProvider from '../../../decorators/withRedux';
 
 import alleKodeverk from '../../mocks/alleKodeverk.json';
@@ -196,6 +204,25 @@ export default {
   component: BeregningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
+
+
+export const KunYtelsePåSkjæringstidspunktet = () => (
+  <BeregningFaktaIndex
+    behandling={behandlingKunYtelse}
+    beregningsgrunnlag={bgKunYtelse}
+    aksjonspunkter={apKunYtelse}
+    erOverstyrer
+    alleKodeverk={alleKodeverk}
+    arbeidsgivere={arbeidsgivere}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
 
 export const ForSentRefusjonskravOgFlerePerioder = () => (
   <BeregningFaktaIndex

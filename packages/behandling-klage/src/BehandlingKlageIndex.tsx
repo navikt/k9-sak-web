@@ -14,6 +14,7 @@ const klageData = [
   { key: KlageBehandlingApiKeys.KLAGE_VURDERING },
   { key: KlageBehandlingApiKeys.PARTER_MED_KLAGERETT },
   { key: KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT },
+  { key: KlageBehandlingApiKeys.ARBEIDSGIVERE },
 ];
 
 interface OwnProps {

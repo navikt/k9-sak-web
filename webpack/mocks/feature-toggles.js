@@ -13,10 +13,6 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
-  {
-    key: 'PERIODISERTE_NOKKELTALL',
-    value: process.env.PERIODISERTE_NOKKELTALL,
-  },
 ];
 
 module.exports = function (app) {
