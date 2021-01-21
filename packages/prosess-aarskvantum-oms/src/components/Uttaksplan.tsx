@@ -68,10 +68,10 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
     <>
       <MicroFrontend
         id={microfrontendOmsorgsdagerId}
-        jsSrc="/k9/microfrontend/omsorgsdager/1.5.14/app.js"
-        jsIntegrity="sha384-NsWJCwd3919XNYI9s2AlMfw3B81AaEhPE5ZaFXRAj1z/7pcpyJGVao8VMOx6tm29"
-        stylesheetSrc="/k9/microfrontend/omsorgsdager/1.5.14/styles.css"
-        stylesheetIntegrity="sha384-o7iPMR4OWEOzteK4DzZjG2CmI2iH7TaCrb0Eua2jQkCq8rqvGxJB+fOTjiK06DXp"
+        jsSrc="/k9/microfrontend/omsorgsdager/1.5.15/app.js"
+        jsIntegrity="sha384-/kGL4tJEFN/xL/UihvDTYcnLjYtzgarIaPszUGU9jyNLPN1j1Zq35IsSEBxrEOwg"
+        stylesheetSrc="/k9/microfrontend/omsorgsdager/1.5.15/styles.css"
+        stylesheetIntegrity="sha384-D6mnBSiYF3HI+jySnUtKmjX4Ajz+rYOY/38zDGfXO73I+Bwg+/tU0wNmCRpg2Og9"
         onReady={() => initializeMicrofrontendOmsorgsdager(microfrontendOmsorgsdagerId)}
         onError={() => {}}
       />
