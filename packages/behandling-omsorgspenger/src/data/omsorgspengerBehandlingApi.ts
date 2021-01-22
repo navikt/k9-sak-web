@@ -42,7 +42,6 @@ export enum OmsorgspengerBehandlingApiKeys {
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
-  ARBEIDSGIVERE = 'ARBEIDSGIVERE',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -71,7 +70,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('full-uttaksplan', OmsorgspengerBehandlingApiKeys.FULL_UTTAKSPLAN)
   .withRel('inntekt', OmsorgspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('tilgjengelige-vedtaksbrev', OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
-  .withRel('arbeidsgivere', OmsorgspengerBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withRel('dokumentdata-lagre', OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

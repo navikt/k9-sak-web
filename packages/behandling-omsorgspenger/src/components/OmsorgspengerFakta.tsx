@@ -9,6 +9,7 @@ import {
   FagsakPerson,
   FeatureToggles,
   KodeverkMedNavn,
+  FeatureToggles,
 } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
