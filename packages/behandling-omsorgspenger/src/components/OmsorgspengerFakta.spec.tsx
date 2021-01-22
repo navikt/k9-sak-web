@@ -153,6 +153,7 @@ describe('<OmsorgspengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{}}
       />,
     );
 
@@ -195,6 +196,7 @@ describe('<OmsorgspengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{}}
       />,
     );
 
@@ -233,6 +235,7 @@ describe('<OmsorgspengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{}}
       />,
     );
 
