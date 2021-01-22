@@ -1,6 +1,7 @@
-import { Kodeverk } from '@k9-sak-web/types';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import { K9sakApiKeys, restApiHooks } from './k9sakApi';
 
 type ForhandsvisFunksjon = (erHenleggelse: boolean, data: any) => void;
@@ -13,26 +14,32 @@ const forhandsvis = (data: any) => {
   }
 };
 
-const useVisForhandsvisningAvMelding = (behandlingType?: Kodeverk): ForhandsvisFunksjon => {
+export const useVisForhandsvisningAvMelding = (behandling: Behandling, fagsak?: Fagsak): ForhandsvisFunksjon => {
+  const erTilbakekreving = erTilbakekrevingType(behandling?.type);
+
+  if (!erTilbakekreving && !fagsak) {
+    throw new Error('Fagsak er påkrevd ved forhåndvisning mot formidling');
+  }
+
   const { startRequest: forhandsvisTilbakekrevingHenleggelse } = restApiHooks.useRestApiRunner(
     K9sakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
   );
   const { startRequest: forhandsvisTilbakekreving } = restApiHooks.useRestApiRunner(
     K9sakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING,
   );
-  const { startRequest: forhandsvisMelding } = restApiHooks.useRestApiRunner(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
 
-  const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandlingType?.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType?.kode;
+  const { startRequest: forhandsvisMelding } = restApiHooks.useRestApiRunner(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
 
   return (erHenleggelse: boolean, data: any): void => {
     if (erTilbakekreving && erHenleggelse) {
-      forhandsvisTilbakekrevingHenleggelse(data).then(response => forhandsvis(response));
+      forhandsvisTilbakekrevingHenleggelse({ behandlingUuid: behandling.uuid, ...data }).then(response =>
+        forhandsvis(response),
+      );
     } else if (erTilbakekreving) {
-      forhandsvisTilbakekreving(data).then(response => forhandsvis(response));
+      forhandsvisTilbakekreving({ behandlingUuid: behandling.uuid, ...data }).then(response => forhandsvis(response));
     } else {
-      forhandsvisMelding(data).then(response => forhandsvis(response));
+      const req = { ...lagForhåndsvisRequest(behandling, fagsak, fagsak.person, data) };
+      forhandsvisMelding(req).then(response => forhandsvis(response));
     }
   };
 };
