@@ -28,7 +28,8 @@ abstract class FaktaPanelDef {
   /**
    * Data som komponent er avhengig av må defineres her slik at det kan hentes fra server
    */
-  public getEndepunkter = (): string[] => [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public getEndepunkter = (featureToggles?: any): string[] => [];
 
   /**
    * For å avgjøre om komponent skal vises brukes denne i @see skalVisePanel

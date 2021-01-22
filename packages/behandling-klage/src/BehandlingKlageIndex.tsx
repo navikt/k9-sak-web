@@ -1,7 +1,14 @@
 import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
 
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import {
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  Kodeverk,
+  KodeverkMedNavn,
+  ArbeidsgiverOpplysningerWrapper,
+} from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
@@ -14,7 +21,6 @@ const klageData = [
   { key: KlageBehandlingApiKeys.KLAGE_VURDERING },
   { key: KlageBehandlingApiKeys.PARTER_MED_KLAGERETT },
   { key: KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT },
-  { key: KlageBehandlingApiKeys.ARBEIDSGIVERE },
 ];
 
 interface OwnProps {
@@ -39,6 +45,7 @@ interface OwnProps {
     opprettet: string;
     avsluttet?: string;
   }[];
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }
 
@@ -54,6 +61,7 @@ const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   opneSokeside,
   alleBehandlinger,
+  arbeidsgiverOpplysninger,
   setRequestPendingMessage,
 }) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
@@ -140,6 +148,7 @@ const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
         hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         alleBehandlinger={alleBehandlinger}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         setBehandling={setBehandling}
       />
     </>

@@ -26,7 +26,7 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getData = ({ personopplysninger, arbeidsgiverOpplysningerPerId }) => ({
     personopplysninger,
-    arbeidsgivere: arbeidsgiverOpplysningerPerId,
+    arbeidsgiverOpplysningerPerId,
   });
 }
 
