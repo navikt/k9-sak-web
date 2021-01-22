@@ -9,7 +9,14 @@ import {
   ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling, FagsakPerson } from '@k9-sak-web/types';
+import {
+  Fagsak,
+  Kodeverk,
+  KodeverkMedNavn,
+  Behandling,
+  FagsakPerson,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
@@ -38,6 +45,7 @@ interface OwnProps {
     type: Kodeverk;
     avsluttet?: string;
   }[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   setBehandling: (behandling: Behandling) => void;
 }
 
@@ -127,6 +135,7 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   alleBehandlinger,
+  arbeidsgiverOpplysningerPerId,
   setBehandling,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
@@ -151,6 +160,7 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
 
   const dataTilUtledingAvFpPaneler = {
     alleBehandlinger,
+    arbeidsgiverOpplysningerPerId,
     klageVurdering: data.klageVurdering,
     saveKlageText: useCallback(
       saveKlageText(lagreKlageVurdering, lagreReapneKlageVurdering, behandling, data.aksjonspunkter),

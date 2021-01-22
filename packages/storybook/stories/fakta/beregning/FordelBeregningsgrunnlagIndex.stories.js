@@ -329,7 +329,7 @@ export const aapOgRefusjon = () => {
     <FordelBeregningsgrunnlagFaktaIndex
       behandling={lagBehandling([{ fom: '2019-09-16' }])}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -371,7 +371,7 @@ export const kanEndreRefusjonskrav = () => {
     <FordelBeregningsgrunnlagFaktaIndex
       behandling={lagBehandling([{ fom: '2019-09-16' }])}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
@@ -434,7 +434,7 @@ export const skalSlåSammenNaturalytelseperioder = () => {
     <FordelBeregningsgrunnlagFaktaIndex
       behandling={lagBehandling([{ fom: '2019-09-16' }])}
       alleKodeverk={alleKodeverk}
-      arbeidsgivere={arbeidsgivere}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}

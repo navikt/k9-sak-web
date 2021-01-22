@@ -29,7 +29,7 @@ interface OpptjeningFaktaIndexProps {
   alleMerknaderFraBeslutter: any;
   utlandDokStatus?: UtlandDokStatus;
   alleKodeverk: AlleKodeverk;
-  arbeidsgivere: ArbeidsgiverOpplysningerPerId;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   submitCallback: (props: SubmitCallback[]) => void;
   readOnly: boolean;
   harApneAksjonspunkter: boolean;
@@ -43,7 +43,7 @@ const OpptjeningFaktaIndex = ({
   utlandDokStatus,
   alleMerknaderFraBeslutter,
   alleKodeverk,
-  arbeidsgivere,
+  arbeidsgiverOpplysningerPerId,
   harApneAksjonspunkter,
   submittable,
   submitCallback,
@@ -61,7 +61,7 @@ const OpptjeningFaktaIndex = ({
         readOnly={readOnly}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         harApneAksjonspunkter={harApneAksjonspunkter}
         submittable={submittable}
       />

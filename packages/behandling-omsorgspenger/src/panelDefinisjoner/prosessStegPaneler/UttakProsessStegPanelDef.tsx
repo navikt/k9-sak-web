@@ -35,7 +35,7 @@ class PanelDef extends ProsessStegPanelDef {
     årskvantum: forbrukteDager,
     aksjonspunkterForSteg,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
-    arbeidsgivere: arbeidsgiverOpplysningerPerId,
+    arbeidsgiverOpplysningerPerId,
   });
 }
 

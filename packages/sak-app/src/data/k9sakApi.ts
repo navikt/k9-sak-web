@@ -57,6 +57,7 @@ export enum K9sakApiKeys {
   PREVIEW_MESSAGE_FORMIDLING = 'PREVIEW_MESSAGE_FORMIDLING',
   PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE = 'PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
+  ARBEIDSGIVERE = 'ARBEIDSGIVERE',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -70,6 +71,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilbake-kodeverk', K9sakApiKeys.KODEVERK_TILBAKE)
   .withRel('klage-kodeverk', K9sakApiKeys.KODEVERK_KLAGE)
   .withRel('behandlende-enheter', K9sakApiKeys.BEHANDLENDE_ENHETER)
+  .withRel('arbeidsgivere', K9sakApiKeys.ARBEIDSGIVERE)
 
   // Feature toggles
   .withGet('/k9/feature-toggle/toggles.json', K9sakApiKeys.FEATURE_TOGGLE)
