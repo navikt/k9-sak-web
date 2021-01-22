@@ -13,7 +13,6 @@ interface OwnProps {
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
   setRequestPendingMessage: (message: string) => void;
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
@@ -22,7 +21,6 @@ export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
   arbeidsgiverOpplysninger,
   setBehandlingIdOgVersjon,
   setRequestPendingMessage,
-  arbeidsgiverOpplysninger,
 }) => (
   <Switch>
     <Route
@@ -36,7 +34,6 @@ export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
           arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
           setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
           setRequestPendingMessage={setRequestPendingMessage}
-          arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
         />
       )}
     />

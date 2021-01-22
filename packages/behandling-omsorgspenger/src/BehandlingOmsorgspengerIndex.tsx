@@ -65,7 +65,6 @@ const BehandlingOmsorgspengerIndex: FunctionComponent<OwnProps> = ({
   valgtFaktaSteg,
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
-  arbeidsgiverOpplysninger,
   featureToggles,
 }) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({

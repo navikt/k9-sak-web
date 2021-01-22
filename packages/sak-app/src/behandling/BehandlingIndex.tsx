@@ -161,7 +161,6 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     opneSokeside,
     setRequestPendingMessage,
     valgtProsessSteg: query.punkt,
-    arbeidsgiverOpplysninger,
   };
 
   const fagsakBehandlingerInfo = useMemo(

@@ -48,7 +48,6 @@ interface OwnProps {
   kodeverk?: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 const BehandlingPleiepengerIndex: FunctionComponent<OwnProps> = ({
@@ -65,7 +64,6 @@ const BehandlingPleiepengerIndex: FunctionComponent<OwnProps> = ({
   valgtFaktaSteg,
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
-  arbeidsgiverOpplysninger,
   featureToggles,
 }) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
