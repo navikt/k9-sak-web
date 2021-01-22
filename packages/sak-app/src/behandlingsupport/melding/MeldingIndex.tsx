@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -12,7 +12,7 @@ import { BehandlingAppKontekst, Fagsak, Kodeverk, ArbeidsgiverOpplysningerWrappe
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { useFpSakKodeverk } from '../../data/useKodeverk';
-import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
+import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
 import { K9sakApiKeys, restApiHooks, requestApi } from '../../data/k9sakApi';
 
@@ -31,9 +31,7 @@ const getSubmitCallback = (
     values.brevmalkode === dokumentMalType.INNOPP ||
     values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
     values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-  const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
+  const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
 
   setShowMessageModal(!isInnhentEllerForlenget);
 
@@ -63,23 +61,17 @@ const getPreviewCallback = (
   behandlingUuid: string,
   fagsakYtelseType: Kodeverk,
   fetchPreview: (erHenleggelse: boolean, data: any) => void,
-) => (mottaker: string, dokumentMal: string, fritekst: string, aarsakskode: string) => {
-  const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
-  const data = erTilbakekreving
+) => (mottaker: string, dokumentMal: string, fritekst: string) => {
+  const data = erTilbakekrevingType({ kode: behandlingTypeKode })
     ? {
-        behandlingUuid,
         fritekst: fritekst || ' ',
         brevmalkode: dokumentMal,
       }
     : {
-        behandlingUuid,
-        ytelseType: fagsakYtelseType,
-        fritekst: fritekst || ' ',
-        arsakskode: aarsakskode || null,
-        mottaker,
+        // TODO: legg inn overstyrtMottaker når det er klart. mottaker bør være egen type
+        //  overstyrtMottaker: mottaker,
         dokumentMal,
+        dokumentdata: { fritekst: fritekst || ' ' },
       };
   fetchPreview(false, data);
 };
@@ -165,7 +157,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({
     [behandlingId, behandlingVersjon],
   );
 
-  const fetchPreview = useVisForhandsvisningAvMelding(behandling.type);
+  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   const previewCallback = useCallback(
     getPreviewCallback(behandling.type.kode, behandling.uuid, fagsak.sakstype, fetchPreview),

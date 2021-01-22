@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { useHistory } from 'react-router-dom';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
@@ -40,6 +41,8 @@ const MenySettPaVentIndex: FunctionComponent<OwnProps> = ({
   lukkModal,
   erTilbakekreving,
 }) => {
+  const history = useHistory();
+
   const submit = useCallback(
     formValues => {
       const values = {
@@ -50,7 +53,8 @@ const MenySettPaVentIndex: FunctionComponent<OwnProps> = ({
       };
       settBehandlingPaVent(values);
 
-      lukkModal();
+      // lukkModal();
+      history.push('/');
     },
     [behandlingId, behandlingVersjon],
   );

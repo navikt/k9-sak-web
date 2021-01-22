@@ -1,20 +1,20 @@
-import React, { FunctionComponent, useState, useCallback } from 'react';
+import React, { FunctionComponent, useCallback, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
-  NavAnsatt,
+  BehandlingAppKontekst,
   Fagsak,
   KlageVurdering,
+  NavAnsatt,
   TotrinnskontrollSkjermlenkeContext,
-  BehandlingAppKontekst,
 } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
-
-import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { useKodeverk } from '../../data/useKodeverk';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
@@ -117,14 +117,18 @@ const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
     K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT,
   );
 
-  const forhandsvisMelding = useVisForhandsvisningAvMelding(behandling.type);
-
+  const erTilbakekreving = erTilbakekrevingType(behandling?.type);
+  const forhandsvisMelding = useVisForhandsvisningAvMelding(behandling, fagsak);
   const forhandsvisVedtaksbrev = useCallback(() => {
-    forhandsvisMelding(false, {
-      behandlingUuid: behandling.uuid,
-      ytelseType: fagsak.sakstype,
-      gjelderVedtak: true,
-    });
+    forhandsvisMelding(
+      false,
+      erTilbakekreving
+        ? {
+            ytelseType: fagsak.sakstype,
+            gjelderVedtak: true,
+          }
+        : { dokumentMal: dokumentMalType.UTLED },
+    );
   }, []);
   const onSubmit = useCallback(
     getLagreFunksjon(

@@ -39,6 +39,7 @@ export enum UnntakBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -55,6 +56,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soknad-original-behandling', UnntakBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
   .withRel('familiehendelse-original-behandling', UnntakBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel('soeker-medlemskap-v2', UnntakBehandlingApiKeys.MEDLEMSKAP)
+  .withRel('arbeidsforhold-v1', UnntakBehandlingApiKeys.ARBEIDSFORHOLD)
   .withRel('inntekt-arbeid-ytelse', UnntakBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', UnntakBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', UnntakBehandlingApiKeys.OPPTJENING)
