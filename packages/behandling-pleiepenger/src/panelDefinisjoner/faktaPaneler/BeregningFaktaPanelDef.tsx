@@ -24,7 +24,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
   getData = ({ rettigheter, beregningsgrunnlag, arbeidsgiverOpplysningerPerId }) => ({
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     beregningsgrunnlag,
-    arbeidsgivere: arbeidsgiverOpplysningerPerId,
+    arbeidsgiverOpplysningerPerId,
   });
 }
 

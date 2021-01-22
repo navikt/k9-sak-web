@@ -146,6 +146,7 @@ describe('<OmsorgspengerFakta>', () => {
         fagsakPerson={fagsakPerson}
         rettigheter={rettigheter}
         alleKodeverk={{}}
+        inntektArbeidYtelse={inntektArbeidYtelse}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"
         valgtProsessSteg="default"
@@ -153,6 +154,7 @@ describe('<OmsorgspengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{}}
       />,
     );
 
@@ -188,6 +190,7 @@ describe('<OmsorgspengerFakta>', () => {
         fagsakPerson={fagsakPerson}
         rettigheter={rettigheter}
         alleKodeverk={{}}
+        inntektArbeidYtelse={inntektArbeidYtelse}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         valgtFaktaSteg="default"
         valgtProsessSteg="default"
@@ -195,6 +198,7 @@ describe('<OmsorgspengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{}}
       />,
     );
 
@@ -226,6 +230,7 @@ describe('<OmsorgspengerFakta>', () => {
         fagsakPerson={fagsakPerson}
         rettigheter={rettigheter}
         alleKodeverk={{}}
+        inntektArbeidYtelse={inntektArbeidYtelse}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"
         valgtProsessSteg="default"
@@ -233,6 +238,7 @@ describe('<OmsorgspengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{}}
       />,
     );
 

@@ -3,7 +3,14 @@ import { Route, Redirect, useLocation } from 'react-router-dom';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { KodeverkMedNavn, Personopplysninger, Fagsak, FagsakPerson, Kodeverk } from '@k9-sak-web/types';
+import {
+  KodeverkMedNavn,
+  Personopplysninger,
+  Fagsak,
+  FagsakPerson,
+  Kodeverk,
+  ArbeidsgiverOpplysningerWrapper,
+} from '@k9-sak-web/types';
 
 import { LoadingPanel, DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -102,6 +109,15 @@ const FagsakIndex: FunctionComponent = () => {
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
+  const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
+    K9sakApiKeys.ARBEIDSGIVERE,
+    {},
+    {
+      updateTriggers: [!behandling],
+      suspendRequest: !behandling,
+    },
+  );
+
   const { data: behandlingRettigheter } = restApiHooks.useRestApi<BehandlingRettigheter>(
     K9sakApiKeys.BEHANDLING_RETTIGHETER,
     { uuid: behandling?.uuid },
@@ -140,6 +156,7 @@ const FagsakIndex: FunctionComponent = () => {
                 {...props}
                 fagsak={fagsak}
                 alleBehandlinger={alleBehandlinger}
+                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                 setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
                 setRequestPendingMessage={setRequestPendingMessage}
               />

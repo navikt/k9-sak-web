@@ -47,6 +47,7 @@ interface OwnProps {
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
   kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }
 
@@ -62,6 +63,7 @@ const BehandlingOmsorgspengerIndex: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   opneSokeside,
   valgtFaktaSteg,
+  arbeidsgiverOpplysninger,
   setRequestPendingMessage,
   featureToggles,
 }) => {
@@ -146,22 +148,8 @@ const BehandlingOmsorgspengerIndex: FunctionComponent<OwnProps> = ({
     suspendRequest: !behandling,
   });
 
-  const {
-    data: arbeidsgiverOpplysninger,
-    state: arbeidOppState,
-  } = restApiOmsorgHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
-    OmsorgspengerBehandlingApiKeys.ARBEIDSGIVERE,
-    {},
-    {
-      updateTriggers: [!behandling],
-      suspendRequest: !behandling,
-    },
-  );
-
   const harIkkeHentetBehandlingsdata = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
-  const harIkkeHentetArbeidsgiverOpplysninger =
-    arbeidOppState === RestApiState.LOADING || arbeidOppState === RestApiState.NOT_STARTED;
-  if (!behandling || harIkkeHentetArbeidsgiverOpplysninger || (harIkkeHentetBehandlingsdata && data === undefined)) {
+  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined)) {
     return <LoadingPanel />;
   }
 
@@ -187,7 +175,7 @@ const BehandlingOmsorgspengerIndex: FunctionComponent<OwnProps> = ({
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger.arbeidsgivere}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
       />
     </>

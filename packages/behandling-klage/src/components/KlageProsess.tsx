@@ -9,7 +9,14 @@ import {
   ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling, FagsakPerson } from '@k9-sak-web/types';
+import {
+  Fagsak,
+  Kodeverk,
+  KodeverkMedNavn,
+  Behandling,
+  FagsakPerson,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
@@ -38,6 +45,7 @@ interface OwnProps {
     type: Kodeverk;
     avsluttet?: string;
   }[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   setBehandling: (behandling: Behandling) => void;
 }
 
@@ -75,7 +83,7 @@ const previewCallback = (
   fagsak: Fagsak,
   fagsakPerson: FagsakPerson,
   behandling: Behandling,
-  valgtPartMedKlagerett: KlagePart
+  valgtPartMedKlagerett: KlagePart,
 ) => parametre => {
   const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
     ...parametre,
@@ -127,6 +135,7 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   alleBehandlinger,
+  arbeidsgiverOpplysningerPerId,
   setBehandling,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
@@ -151,12 +160,16 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
 
   const dataTilUtledingAvFpPaneler = {
     alleBehandlinger,
+    arbeidsgiverOpplysningerPerId,
     klageVurdering: data.klageVurdering,
     saveKlageText: useCallback(
       saveKlageText(lagreKlageVurdering, lagreReapneKlageVurdering, behandling, data.aksjonspunkter),
       [behandling.versjon],
     ),
-    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling, data.valgtPartMedKlagerett), [behandling.versjon]),
+    previewCallback: useCallback(
+      previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling, data.valgtPartMedKlagerett),
+      [behandling.versjon],
+    ),
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
