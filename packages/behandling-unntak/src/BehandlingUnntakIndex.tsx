@@ -42,6 +42,7 @@ interface OwnProps {
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
   kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
@@ -58,6 +59,7 @@ const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   opneSokeside,
   valgtFaktaSteg,
+  arbeidsgiverOpplysninger,
   setRequestPendingMessage,
   arbeidsgiverOpplysninger,
   featureToggles,

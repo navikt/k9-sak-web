@@ -10,6 +10,7 @@ import BehandlingIndex from './BehandlingIndex';
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
   setRequestPendingMessage: (message: string) => void;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
@@ -18,6 +19,7 @@ interface OwnProps {
 export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
   fagsak,
   alleBehandlinger,
+  arbeidsgiverOpplysninger,
   setBehandlingIdOgVersjon,
   setRequestPendingMessage,
   arbeidsgiverOpplysninger,
@@ -31,6 +33,7 @@ export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
           {...props}
           fagsak={fagsak}
           alleBehandlinger={alleBehandlinger}
+          arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
           setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
           setRequestPendingMessage={setRequestPendingMessage}
           arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}

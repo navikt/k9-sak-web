@@ -267,7 +267,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   } = ownProps;
   const onSubmit = values => submitCallback([values]);
   const erAutomatiskRevurdering =
-    behandlingArsaker &&
+    Array.isArray(behandlingArsaker) &&
     behandlingArsaker.reduce((result, current) => result || current.erAutomatiskRevurdering, false);
   const aksjonspunkt = aksjonspunkter[0];
   const ventearsaker = ownProps.alleKodeverk[kodeverkTyper.VENT_AARSAK];

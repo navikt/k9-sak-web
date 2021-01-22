@@ -156,6 +156,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     fagsak,
     fagsakPerson,
     rettigheter,
+    arbeidsgiverOpplysninger,
     featureToggles,
     opneSokeside,
     setRequestPendingMessage,

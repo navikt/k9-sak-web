@@ -63,6 +63,7 @@ const BehandlingOmsorgspengerIndex: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   opneSokeside,
   valgtFaktaSteg,
+  arbeidsgiverOpplysninger,
   setRequestPendingMessage,
   arbeidsgiverOpplysninger,
   featureToggles,

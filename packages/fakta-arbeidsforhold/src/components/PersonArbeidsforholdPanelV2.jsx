@@ -229,8 +229,11 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
           {unikeArbeidsgivere.map(a => {
             const arbeidsforholdPerArbeidsgiver = arbeidsforhold.filter(af => af.arbeidsgiver.arbeidsgiverOrgnr === a);
 
-            const navn = `${arbeidsgiverOpplysningerPerId[a].navn} (${arbeidsforholdPerArbeidsgiver.length} arbeidsforhold)`;
-
+            const navn = `${
+              arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[a]
+                ? arbeidsgiverOpplysningerPerId[a].navn
+                : a
+            } (${arbeidsforholdPerArbeidsgiver.length} arbeidsforhold)`;
             return (
               <>
                 <FlexRow key={a}>
