@@ -10,6 +10,7 @@ import { joinNonNullStrings, MicroFrontend } from '@fpsak-frontend/utils';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
 import styles from './uttaksplan.less';
+import KomponenterIMicroFrontend from '../types/KomponenterIMicroFrontend';
 
 interface UttaksplanProps {
   aktiviteterBehandling: Aktivitet[];
@@ -52,7 +53,9 @@ const mapAktiviteterTilTabell = (
 };
 
 const initializeMicrofrontendOmsorgsdager = elementId =>
-  (window as any).renderMicrofrontendOmsorgsdagerApp(elementId, {});
+  (window as any).renderMicrofrontendOmsorgsdagerApp(elementId, {
+    visKomponent: KomponenterIMicroFrontend.KORRIGERE_PERIODER,
+  });
 const microfrontendOmsorgsdagerId = 'microfrontendOmsorgsdager';
 
 const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
@@ -68,9 +71,9 @@ const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
     <>
       <MicroFrontend
         id={microfrontendOmsorgsdagerId}
-        jsSrc="/k9/microfrontend/omsorgsdager/1.5.15/app.js"
-        jsIntegrity="sha384-/kGL4tJEFN/xL/UihvDTYcnLjYtzgarIaPszUGU9jyNLPN1j1Zq35IsSEBxrEOwg"
-        stylesheetSrc="/k9/microfrontend/omsorgsdager/1.5.15/styles.css"
+        jsSrc="/k9/microfrontend/omsorgsdager/build/1.5.15/app.js"
+        jsIntegrity="sha256-nOxS0w9MtU198p2w/11gRfsoowhAaAwyovc/DfhtiVM="
+        stylesheetSrc="/k9/microfrontend/omsorgsdagerbuild/build/1.5.15/styles.css"
         stylesheetIntegrity="sha384-D6mnBSiYF3HI+jySnUtKmjX4Ajz+rYOY/38zDGfXO73I+Bwg+/tU0wNmCRpg2Og9"
         onReady={() => initializeMicrofrontendOmsorgsdager(microfrontendOmsorgsdagerId)}
         onError={() => {}}
