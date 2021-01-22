@@ -32,7 +32,6 @@ export enum FrisinnBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
-  ARBEIDSGIVERE = 'ARBEIDSGIVERE',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -54,7 +53,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-kontroller-fakta-perioder', FrisinnBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('vedtak-varsel', FrisinnBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('tilgjengelige-vedtaksbrev', FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
-  .withRel('arbeidsgivere', FrisinnBehandlingApiKeys.ARBEIDSGIVERE)
 
   // operasjoner
   .withRel('dokumentdata-lagre', FrisinnBehandlingApiKeys.DOKUMENTDATA_LAGRE)

@@ -48,7 +48,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
   readOnly,
   alleMerknaderFraBeslutter,
   arbeidsforhold,
-  arbeidsgivere,
+  arbeidsgiverOpplysningerPerId,
   hasOpenAksjonspunkter,
   alleKodeverk,
   behandlingId,
@@ -77,7 +77,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
         <PersonArbeidsforholdPanelV2
           readOnly={readOnly}
           arbeidsforhold={arbeidsforhold}
-          arbeidsgivere={arbeidsgivere}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           hasAksjonspunkter={aksjonspunkter.length > 0}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
           alleKodeverk={alleKodeverk}
@@ -101,7 +101,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
 ArbeidsforholdInfoPanelImplV2.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  arbeidsgivere: PropTypes.instanceOf(Map).isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
