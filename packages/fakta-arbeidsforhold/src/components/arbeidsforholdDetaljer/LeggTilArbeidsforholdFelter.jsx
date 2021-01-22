@@ -11,7 +11,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
-import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
+import { FlexContainer, FlexRow, FlexColumn, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 
@@ -80,6 +80,7 @@ const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandl
         </FlexColumn>
       </FlexRow>
       <FlexRow>
+        <VerticalSpacer sixteenPx />
         <FlexColumn className={styles.navnColumn}>
           <InputField
             name="yrkestittel"

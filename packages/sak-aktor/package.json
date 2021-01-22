@@ -6,9 +6,9 @@
   "private": true,
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
-    "@k9-sak-web/types": "1.0.0",
-    "@fpsak-frontend/utils": "1.0.0",
     "@fpsak-frontend/sak-visittkort": "1.0.0",
+    "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
     "nav-frontend-lenkepanel": "^1.0.64",
     "nav-frontend-lenkepanel-style": "^0.3.44",
     "nav-frontend-typografi": "2.0.37",
