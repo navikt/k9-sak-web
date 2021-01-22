@@ -45,6 +45,7 @@ export enum PleiepengerBehandlingApiKeys {
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
   ARBEIDSGIVERE = 'ARBEIDSGIVERE',
+  ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -64,6 +65,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('familiehendelse-original-behandling', PleiepengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel('soeker-medlemskap-v2', PleiepengerBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
+  .withRel('arbeidsforhold-v1', PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD)
   .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', PleiepengerBehandlingApiKeys.VERGE)
   .withRel('opptjening', PleiepengerBehandlingApiKeys.OPPTJENING)
