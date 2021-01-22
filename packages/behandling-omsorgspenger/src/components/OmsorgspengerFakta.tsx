@@ -41,7 +41,7 @@ interface OwnProps {
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  featureToggles: FeatureToggles;
+  featureToggles?: FeatureToggles;
 }
 
 const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
