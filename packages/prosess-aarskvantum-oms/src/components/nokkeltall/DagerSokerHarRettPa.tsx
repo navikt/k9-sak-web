@@ -15,6 +15,7 @@ interface DagerSokerHarRettPaProps {
   benyttetRammemelding: boolean;
   visDetaljer: () => void;
   viserDetaljer: boolean;
+  ar: string;
 }
 
 const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = ({
@@ -25,6 +26,7 @@ const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = (
   benyttetRammemelding,
   visDetaljer,
   viserDetaljer,
+  ar,
 }) => {
   const location = useLocation();
   const { search, pathname } = location;
@@ -62,7 +64,7 @@ const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = (
     detaljer.push({
       antallDager: antallKoronadager,
       overskrifttekstId: 'Nøkkeltall.Koronadager',
-      infotekstContent: <FormattedMessage id="Nøkkeltall.Koronadager.InfoText" />,
+      infotekstContent: <FormattedMessage id={`Nøkkeltall.Koronadager.InfoText.${ar}`} />,
     });
   }
 
