@@ -6,6 +6,13 @@ import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import shallowWithIntl from '../i18n/index';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
+}));
+
 describe('<MenySettPaVentIndex>', () => {
   it('skal vise modal og velge å åpne ta behandling av vent', () => {
     const setBehandlingOnHoldCallback = sinon.spy();
