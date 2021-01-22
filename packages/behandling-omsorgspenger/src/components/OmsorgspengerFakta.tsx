@@ -7,7 +7,6 @@ import {
   Behandling,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
   FeatureToggles,
 } from '@k9-sak-web/types';
