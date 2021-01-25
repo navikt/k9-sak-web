@@ -153,27 +153,33 @@ export const MessagesImpl: FunctionComponent<
 
   return (
     <form onSubmit={handleSubmit}>
-      <SelectField
-        name="brevmalkode"
-        label={intl.formatMessage({ id: 'Messages.Template' })}
-        validate={[required]}
-        placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
-        selectValues={(tmpls || []).map(template => (
-          <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>
-            {template.navn}
-          </option>
-        ))}
-        bredde="xxl"
-      />
-      {brevmalkode && (
+      {Array.isArray(tmpls) && tmpls.length && (
+        <>
+          <SelectField
+            name="brevmalkode"
+            readOnly={tmpls.length === 1}
+            label={intl.formatMessage({ id: 'Messages.Template' })}
+            validate={[required]}
+            placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
+            selectValues={(tmpls || []).map(template => (
+              <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>
+                {template.navn}
+              </option>
+            ))}
+            bredde="xxl"
+          />
+        </>
+      )}
+      {Array.isArray(recipients) && recipients.length && (
         <>
           <VerticalSpacer eightPx />
           <SelectField
             name="mottaker"
+            readOnly={recipients.length === 1}
             label={intl.formatMessage({ id: 'Messages.Recipient' })}
             validate={[required]}
             placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
-            selectValues={(recipients || []).map(recipient => (
+            selectValues={recipients.map(recipient => (
               <option key={recipient} value={recipient}>
                 {lagVisningsNavnForMottaker(recipient, arbeidsgiverOpplysningerPerId)}
               </option>
@@ -236,16 +242,20 @@ export const MessagesImpl: FunctionComponent<
 const formName = 'Messages';
 
 const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
-  // let firstTemplate = templates && Array.isArray(templates) ? templates[0] : {};
+  let brevmal = Array.isArray(templates) && templates.length ? templates[0] : { kode: null };
+  let mottaker = RECIPIENTS[0];
 
-  // if (!Array.isArray(templates) && typeof templates === 'object') {
-  //   firstTemplate = Object.keys(templates).map(key => ({ navn: templates[key].navn, kode: key, tilgjengelig: true }))[0];
-  // }
+  if (templates && !Array.isArray(templates) && typeof templates === 'object') {
+    brevmal = { kode: Object.keys(templates)[0] };
+    mottaker =
+      templates[brevmal.kode].mottakere && templates[brevmal.kode].mottakere[0]
+        ? templates[brevmal.kode].mottakere[0].id
+        : null;
+  }
 
   const initialValues = {
-    // brevmalkode: firstTemplate.kode || null,
-    brevmalkode: null,
-    mottaker: null,
+    brevmalkode: brevmal && brevmal.kode ? brevmal.kode : null,
+    mottaker,
     fritekst: '',
     aarsakskode: null,
   };
