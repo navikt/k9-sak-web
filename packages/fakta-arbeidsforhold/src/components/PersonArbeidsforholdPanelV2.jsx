@@ -335,6 +335,7 @@ const PersonArbeidsforholdPanelV2 = connect(
 PersonArbeidsforholdPanelV2.buildInitialValues = arbeidsforhold => ({
   arbeidsforhold,
 });
+
 PersonArbeidsforholdPanelV2.isReadOnly = (state, behandlingId, behandlingVersjon) => {
   const isDetailFormOpen = !!behandlingFormValueSelector(
     PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2,
@@ -351,4 +352,5 @@ PersonArbeidsforholdPanelV2.isReadOnly = (state, behandlingId, behandlingVersjon
   )(state, 'arbeidsforhold');
   return !arbeidsforhold;
 };
+
 export default PersonArbeidsforholdPanelV2;
