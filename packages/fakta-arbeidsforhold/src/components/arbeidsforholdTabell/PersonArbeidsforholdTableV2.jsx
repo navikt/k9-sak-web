@@ -26,11 +26,14 @@ const headerColumnContent = [
   <></>,
 ];
 
-export const utledNøkkel = arbeidsforhold => {
-  if (arbeidsforhold.lagtTilAvSaksbehandler) {
-    return arbeidsforhold.navn;
-  }
-  return `${arbeidsforhold.eksternArbeidsforholdId}${arbeidsforhold.arbeidsforholdId}${arbeidsforhold.arbeidsgiverIdentifiktorGUI}`;
+export const utledNøkkel = ({ id, arbeidsforhold }) => {
+  const arbeidsforholdId =
+    id || (arbeidsforhold && arbeidsforhold.arbeidsforholdId ? arbeidsforhold.arbeidsforholdId : '');
+  const internId = arbeidsforhold && arbeidsforhold.internArbeidsforholdId ? arbeidsforhold.internArbeidsforholdId : '';
+  const eksternId =
+    arbeidsforhold && arbeidsforhold.eksternArbeidsforholdId ? arbeidsforhold.eksternArbeidsforholdId : '';
+
+  return `${arbeidsforholdId}${internId}${eksternId}`;
 };
 
 const PersonArbeidsforholdTableV2 = ({
@@ -86,7 +89,14 @@ const PersonArbeidsforholdTableV2 = ({
               ? `${parseFloat(a.stillingsprosent).toFixed(2)} %`
               : '';
           const navn = utledArbeidsforholdYrkestittel(a);
-          const kilde = a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode;
+          const kilde =
+            Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
+
+          const harAksjonspunktÅrsaker = Array.isArray(a.aksjonspunktÅrsaker) && a.aksjonspunktÅrsaker.length > 0;
+          const harPermisjoner = Array.isArray(a.permisjoner) && a.permisjoner.length > 0;
+          const harPerioder = Array.isArray(a.perioder) && a.perioder.length > 0;
+          const harInntektsmeldinger = Array.isArray(a.inntektsmeldinger) && a.inntektsmeldinger.length > 0;
+
           return (
             <>
               <TableRow
@@ -95,17 +105,18 @@ const PersonArbeidsforholdTableV2 = ({
                 onMouseDown={selectArbeidsforholdCallback}
                 onKeyDown={selectArbeidsforholdCallback}
                 isSelected={a.id === selectedId}
-                isApLeftBorder={a.aksjonspunktÅrsaker.length > 0}
+                isApLeftBorder={harAksjonspunktÅrsaker}
               >
                 <TableColumn>
                   <Normaltekst>{decodeHtmlEntity(navn)}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                   <Normaltekst>
-                    <PeriodLabel
-                      dateStringFom={a.perioder && a.perioder.length > 0 ? a.perioder[0].fom : {}}
-                      dateStringTom={a.perioder && a.perioder.length > 0 ? a.perioder[0].tom : {}}
-                    />
+                    {harPerioder ? (
+                      <PeriodLabel dateStringFom={a.perioder[0].fom} dateStringTom={a.perioder[0].tom} />
+                    ) : (
+                      '-'
+                    )}
                   </Normaltekst>
                 </TableColumn>
                 <TableColumn>
@@ -115,13 +126,13 @@ const PersonArbeidsforholdTableV2 = ({
                   <Normaltekst>{stillingsprosent}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
-                  {a.inntektsmeldinger[0] && a.inntektsmeldinger[0].mottattTidspunkt && (
+                  {harInntektsmeldinger && a.inntektsmeldinger[0].mottattTidspunkt && (
                     <Normaltekst>
                       <DateLabel dateString={a.inntektsmeldinger[0].mottattTidspunkt} />
                     </Normaltekst>
                   )}
                 </TableColumn>
-                {a.aksjonspunktÅrsaker.length > 0 && (
+                {harAksjonspunktÅrsaker && (
                   <TableColumn className={styles.aksjonspunktColumn}>
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
                       <Image
@@ -152,18 +163,14 @@ const PersonArbeidsforholdTableV2 = ({
                     </button>
                   </TableColumn>
                 )}
-                {a.aksjonspunktÅrsaker.length === 0 && a.permisjoner.length > 0 && (
+                {(!harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length === 0) && harPermisjoner && (
                   <TableColumn className={styles.aksjonspunktColumn}>
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
                       <Normaltekst className={styles.visLukkAksjonspunkt}>
                         {intl.formatMessage(
                           selectedArbeidsforhold === a && visAksjonspunktInfo
-                            ? {
-                                id: 'PersonArbeidsforholdTable.LukkPermisjon',
-                              }
-                            : {
-                                id: 'PersonArbeidsforholdTable.VisPermisjon',
-                              },
+                            ? { id: 'PersonArbeidsforholdTable.LukkPermisjon' }
+                            : { id: 'PersonArbeidsforholdTable.VisPermisjon' },
                         )}
                       </Normaltekst>
                       <Image
