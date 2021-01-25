@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -117,19 +117,11 @@ const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
     K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT,
   );
 
-  const erTilbakekreving = erTilbakekrevingType(behandling?.type);
   const forhandsvisMelding = useVisForhandsvisningAvMelding(behandling, fagsak);
   const forhandsvisVedtaksbrev = useCallback(() => {
-    forhandsvisMelding(
-      false,
-      erTilbakekreving
-        ? {
-            ytelseType: fagsak.sakstype,
-            gjelderVedtak: true,
-          }
-        : { dokumentMal: dokumentMalType.UTLED },
-    );
+    forhandsvisMelding(false, { dokumentMal: dokumentMalType.UTLED });
   }, []);
+
   const onSubmit = useCallback(
     getLagreFunksjon(
       fagsak.saksnummer,
