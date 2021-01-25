@@ -128,7 +128,7 @@ const PersonArbeidsforholdTableV2 = ({
                 <TableColumn>
                   {harInntektsmeldinger && a.inntektsmeldinger[0].mottattTidspunkt && (
                     <Normaltekst>
-                      <DateLabel dateString={harInntektsmeldinger && a.inntektsmeldinger[0].mottattTidspunkt} />
+                      <DateLabel dateString={a.inntektsmeldinger[0].mottattTidspunkt} />
                     </Normaltekst>
                   )}
                 </TableColumn>
@@ -163,29 +163,28 @@ const PersonArbeidsforholdTableV2 = ({
                     </button>
                   </TableColumn>
                 )}
-                {!harAksjonspunktÅrsaker ||
-                  (a.aksjonspunktÅrsaker.length === 0 && harPermisjoner && (
-                    <TableColumn className={styles.aksjonspunktColumn}>
-                      <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
-                        <Normaltekst className={styles.visLukkAksjonspunkt}>
-                          {intl.formatMessage(
-                            selectedArbeidsforhold === a && visAksjonspunktInfo
-                              ? { id: 'PersonArbeidsforholdTable.LukkPermisjon' }
-                              : { id: 'PersonArbeidsforholdTable.VisPermisjon' },
-                          )}
-                        </Normaltekst>
-                        <Image
-                          className={
-                            selectedArbeidsforhold && selectedArbeidsforhold.id === a.id
-                              ? styles.chevronOpp
-                              : styles.chevronNed
-                          }
-                          src={chevronIkonUrl}
-                          alt=""
-                        />
-                      </button>
-                    </TableColumn>
-                  ))}
+                {(!harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length === 0) && harPermisjoner && (
+                  <TableColumn className={styles.aksjonspunktColumn}>
+                    <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
+                      <Normaltekst className={styles.visLukkAksjonspunkt}>
+                        {intl.formatMessage(
+                          selectedArbeidsforhold === a && visAksjonspunktInfo
+                            ? { id: 'PersonArbeidsforholdTable.LukkPermisjon' }
+                            : { id: 'PersonArbeidsforholdTable.VisPermisjon' },
+                        )}
+                      </Normaltekst>
+                      <Image
+                        className={
+                          selectedArbeidsforhold && selectedArbeidsforhold.id === a.id
+                            ? styles.chevronOpp
+                            : styles.chevronNed
+                        }
+                        src={chevronIkonUrl}
+                        alt=""
+                      />
+                    </button>
+                  </TableColumn>
+                )}
                 <TableColumn>
                   {a.handlingType === arbeidsforholdHandlingType.BRUK && a.aksjonspunktÅrsaker.length === 0 && (
                     <Image
