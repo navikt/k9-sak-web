@@ -340,14 +340,6 @@ PersonArbeidsforholdPanelV2.buildInitialValues = arbeidsforhold => ({
 });
 
 PersonArbeidsforholdPanelV2.isReadOnly = (state, behandlingId, behandlingVersjon) => {
-  const isDetailFormOpen = !!behandlingFormValueSelector(
-    PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2,
-    behandlingId,
-    behandlingVersjon,
-  )(state, 'navn');
-  if (isDetailFormOpen) {
-    return true;
-  }
   const arbeidsforhold = behandlingFormValueSelector(
     'ArbeidsforholdInfoPanelV2',
     behandlingId,
