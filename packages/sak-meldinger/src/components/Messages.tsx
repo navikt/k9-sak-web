@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -81,7 +81,11 @@ interface MappedOwnProps {
   arsakskode?: string;
 }
 
+const formName = 'Messages';
 const RECIPIENTS = ['Bruker'];
+
+const createValidateRecipient = recipients => value =>
+  Array.isArray(recipients) && recipients.includes(value) ? [{ id: 'ValidationMessage.InvalidRecipient' }] : undefined;
 
 function lagVisningsNavnForMottaker(mottaker, arbeidsgiverOpplysningerPerId) {
   if (
@@ -143,13 +147,20 @@ export const MessagesImpl: FunctionComponent<
 
   // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
   // komponentene burde oppdateres for å bedre håndtere ny struktur når den er tatt i bruk overallt.
-  if (!Array.isArray(templates) && typeof templates === 'object') {
+  if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
     tmpls = Object.keys(templates).map(key => ({ navn: templates[key].navn, kode: key, tilgjengelig: true }));
     recipients =
       brevmalkode && templates[brevmalkode] && templates[brevmalkode].mottakere
         ? templates[brevmalkode].mottakere.map(m => m.id)
         : [];
   }
+
+  useEffect(() => {
+    // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
+    if (brevmalkode) {
+      formProps.change('mottaker', recipients.includes(mottaker) ? mottaker : recipients[0]);
+    }
+  }, [brevmalkode]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -174,10 +185,11 @@ export const MessagesImpl: FunctionComponent<
         <>
           <VerticalSpacer eightPx />
           <SelectField
+            key={brevmalkode}
             name="mottaker"
-            readOnly={recipients.length === 1}
+            readOnly={recipients.length === 1 && mottaker && mottaker === recipients[0]}
             label={intl.formatMessage({ id: 'Messages.Recipient' })}
-            validate={[required]}
+            validate={[required, createValidateRecipient(recipients)]}
             placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
             selectValues={recipients.map(recipient => (
               <option key={recipient} value={recipient}>
@@ -239,13 +251,13 @@ export const MessagesImpl: FunctionComponent<
   );
 };
 
-const formName = 'Messages';
-
 const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
   let brevmal = Array.isArray(templates) && templates.length ? templates[0] : { kode: null };
   let mottaker = RECIPIENTS[0];
 
-  if (templates && !Array.isArray(templates) && typeof templates === 'object') {
+  // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
+  // komponentene burde oppdateres for å bedre håndtere ny struktur når den er tatt i bruk overallt.
+  if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
     brevmal = { kode: Object.keys(templates)[0] };
     mottaker =
       templates[brevmal.kode].mottakere && templates[brevmal.kode].mottakere[0]
@@ -256,6 +268,7 @@ const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurd
   const initialValues = {
     brevmalkode: brevmal && brevmal.kode ? brevmal.kode : null,
     mottaker,
+    // mottaker: null,
     fritekst: '',
     aarsakskode: null,
   };
