@@ -111,12 +111,6 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
     const { arbeidsforhold } = this.props;
 
     const handlingType = values.arbeidsforholdHandlingField;
-    const perioder = [
-      {
-        fom: values.fomDato,
-        tom: values.tomDato,
-      },
-    ];
 
     if (handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER) {
       if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {
@@ -126,12 +120,27 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
 
     const arbeidsgiverNavn = values.navn;
 
-    const newValues = {
+    const perioder = [
+      {
+        fom: values.fomDato,
+        tom: values.tomDato,
+      },
+    ];
+
+    let newValues = {
       ...values,
       handlingType,
       arbeidsgiverNavn,
-      perioder,
     };
+
+    if (values.fomDato && values.tomDato) {
+      newValues = {
+        ...values,
+        handlingType,
+        arbeidsgiverNavn,
+        perioder,
+      };
+    }
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
 

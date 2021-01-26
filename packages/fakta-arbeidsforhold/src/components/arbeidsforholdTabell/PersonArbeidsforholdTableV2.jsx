@@ -5,7 +5,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
@@ -39,14 +38,13 @@ export const utledNøkkel = ({ id, arbeidsforhold }) => {
 const PersonArbeidsforholdTableV2 = ({
   alleArbeidsforhold,
   selectedId,
-  selectArbeidsforholdCallback,
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
   updateArbeidsforhold,
 }) => {
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
-  const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(false);
+  const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
   const intl = useIntl();
 
   const visPermisjon = arbeidsforhold => {
@@ -102,8 +100,8 @@ const PersonArbeidsforholdTableV2 = ({
               <TableRow
                 key={utledNøkkel(a)}
                 model={a}
-                onMouseDown={selectArbeidsforholdCallback}
-                onKeyDown={selectArbeidsforholdCallback}
+                onMouseDown={() => setVisAksjonspunktInfo(true)}
+                onKeyDown={() => setVisAksjonspunktInfo(true)}
                 isSelected={a.id === selectedId}
                 isApLeftBorder={harAksjonspunktÅrsaker}
               >
@@ -132,37 +130,6 @@ const PersonArbeidsforholdTableV2 = ({
                     </Normaltekst>
                   )}
                 </TableColumn>
-                {harAksjonspunktÅrsaker && (
-                  <TableColumn className={styles.aksjonspunktColumn}>
-                    <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
-                      <Image
-                        src={advarselImageUrl}
-                        alt=""
-                        tooltip={<FormattedMessage id="PersonArbeidsforholdTable.TrengerAvklaring" />}
-                      />
-                      <Normaltekst className={styles.visLukkAksjonspunkt}>
-                        {intl.formatMessage(
-                          selectedArbeidsforhold === a && visAksjonspunktInfo
-                            ? {
-                                id: 'PersonArbeidsforholdTable.LukkAksjospunkt',
-                              }
-                            : {
-                                id: 'PersonArbeidsforholdTable.VisAksjospunkt',
-                              },
-                        )}
-                      </Normaltekst>
-                      <Image
-                        className={
-                          selectedArbeidsforhold && selectedArbeidsforhold.id === a.id && visAksjonspunktInfo
-                            ? styles.chevronOpp
-                            : styles.chevronNed
-                        }
-                        src={chevronIkonUrl}
-                        alt=""
-                      />
-                    </button>
-                  </TableColumn>
-                )}
                 {(!harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length === 0) && harPermisjoner && (
                   <TableColumn className={styles.aksjonspunktColumn}>
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
@@ -197,10 +164,10 @@ const PersonArbeidsforholdTableV2 = ({
                   )}
                 </TableColumn>
               </TableRow>
-              {selectedArbeidsforhold && selectedArbeidsforhold.id === a.id && visAksjonspunktInfo && (
+              {visAksjonspunktInfo && (
                 <PersonArbeidsforholdDetailFormV2
                   key={a.id}
-                  arbeidsforhold={selectedArbeidsforhold}
+                  arbeidsforhold={a}
                   hasAksjonspunkter
                   hasOpenAksjonspunkter
                   updateArbeidsforhold={updateArbeidsforhold}
@@ -226,7 +193,6 @@ const PersonArbeidsforholdTableV2 = ({
 PersonArbeidsforholdTableV2.propTypes = {
   alleArbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType).isRequired,
   selectedId: PropTypes.string,
-  selectArbeidsforholdCallback: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
