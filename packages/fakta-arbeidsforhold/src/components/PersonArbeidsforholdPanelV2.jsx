@@ -111,15 +111,16 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
     const { arbeidsforhold } = this.props;
 
     const handlingType = values.arbeidsforholdHandlingField;
+    const lagtTilAvSaksbehandler = handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER;
 
-    if (handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER) {
+    if (lagtTilAvSaksbehandler) {
       if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {
         values.kilde.push({ kode: arbeidsforholdKilder.SAKSBEHANDLER });
       }
     }
 
     const arbeidsgiverNavn = values.navn;
-
+    let stillingsprosent = 0;
     const perioder = [
       {
         fom: values.fomDato,
@@ -130,14 +131,16 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
     let newValues = {
       ...values,
       handlingType,
-      arbeidsgiverNavn,
+      stillingsprosent,
     };
 
-    if (values.fomDato && values.tomDato) {
+    if (lagtTilAvSaksbehandler) {
+      stillingsprosent = values.stillingsprosent;
       newValues = {
         ...values,
         handlingType,
         arbeidsgiverNavn,
+        stillingsprosent,
         perioder,
       };
     }
