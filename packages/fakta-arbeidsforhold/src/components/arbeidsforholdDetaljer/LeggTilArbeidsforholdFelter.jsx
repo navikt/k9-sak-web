@@ -65,6 +65,8 @@ const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandl
             readOnly={readOnly}
           />
         </FlexColumn>
+      </FlexRow>
+      <FlexRow>
         <FlexColumn className={styles.columnItem}>
           <InputField
             name="stillingsprosent"

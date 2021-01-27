@@ -44,7 +44,22 @@ const AksjonspunktAvklarArbeidsforholdText: FunctionComponent<OwnProps & Wrapped
         </FlexRow>
         <FlexRow>
           <Normaltekst className={styles.info}>
-            <FormattedMessage id="HelpText.TaKontakt" />
+            <FormattedMessage id="HelpText.TaKontakt" values={{ li: <li />, br: <br /> }} />
+            <VerticalSpacer eightPx />
+            <li>
+              {' '}
+              <FormattedMessage id="HelpText.Option1" />
+            </li>
+            <li>
+              {' '}
+              <FormattedMessage id="HelpText.Option2" />
+            </li>
+            <li>
+              {' '}
+              <FormattedMessage id="HelpText.Option3" />
+            </li>
+            <VerticalSpacer eightPx />
+            <FormattedMessage id="HelpText.SettPaaVent" />
           </Normaltekst>
         </FlexRow>
         <div className={styles.hl} />
