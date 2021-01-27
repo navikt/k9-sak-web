@@ -13,11 +13,13 @@ interface ForbrukteDagerProps {
   utbetaltForMangeDagerTimer?: DagerTimer;
   visDetaljer: () => void;
   viserDetaljer: boolean;
+  ar: string;
 }
 
 const forbrukteDagerDetaljer = (
   tidFraInfotrygd: DagerTimer,
   forbruktDagerTimer: DagerTimer,
+  ar: string,
   smittevernDagerTimer?: DagerTimer,
   utbetaltForMangeDagerTimer?: DagerTimer,
 ): Nokkeltalldetalj[] => {
@@ -52,7 +54,7 @@ const forbrukteDagerDetaljer = (
       antallDager: smittevernDagerTimer.dager,
       antallTimer: <AntallTimer timer={smittevernDagerTimer.timer} />,
       overskrifttekstId: 'Nøkkeltall.Smittevern',
-      infotekstContent: <FormattedMessage id="Nøkkeltall.Smittevern.InfoText" />,
+      infotekstContent: <FormattedMessage id={`Nøkkeltall.Smittevern.InfoText.${ar}`} />,
     });
   } else if (utbetaltForMangeDagerTimer) {
     detaljer.push({
@@ -84,6 +86,7 @@ const ForbrukteDager: React.FunctionComponent<ForbrukteDagerProps> = ({
   utbetaltForMangeDagerTimer,
   viserDetaljer,
   visDetaljer,
+  ar,
 }) => {
   return (
     <Nokkeltall
@@ -95,6 +98,7 @@ const ForbrukteDager: React.FunctionComponent<ForbrukteDagerProps> = ({
       detaljer={forbrukteDagerDetaljer(
         infotrygdDagerTimer,
         forbrukteDagerTimer,
+        ar,
         smittevernDagerTimer,
         utbetaltForMangeDagerTimer,
       )}

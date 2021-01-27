@@ -10,9 +10,9 @@ import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 
 import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
-import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
 import arbeidsforholdAksjonspunkterPropType from '../propTypes/arbeidsforholdAksjonspunkterPropType';
 import PersonArbeidsforholdPanelV2 from './PersonArbeidsforholdPanelV2';
+import { BekreftOgForsettKnappV2 } from './BekreftOgForsettKnappV2';
 
 // ----------------------------------------------------------------------------
 // VARIABLES
@@ -56,7 +56,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
   ...formProps
 }) => {
   const { host } = window.location;
-  const shouldDisableSubmitButton = (aksjonspunkter.length === 0 && formProps.pristine) || host !== 'app-q1.adeo.no';
+  const shouldDisableSubmitButton = formProps.pristine || host !== 'app-q1.adeo.no';
 
   return (
     <>
@@ -85,12 +85,11 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
           behandlingVersjon={behandlingVersjon}
         />
         {harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
-          <BekreftOgForsettKnapp
-            readOnly={readOnly || shouldDisableSubmitButton}
+          <BekreftOgForsettKnappV2
+            readOnly={shouldDisableSubmitButton}
             isSubmitting={formProps.submitting}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
-            isBekreftButtonReadOnly={false}
           />
         )}
       </form>

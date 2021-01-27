@@ -24,6 +24,7 @@ describe('<NokkeltallContainer>', () => {
           uttaksperioder={[uttaksperiode]}
           visEllerSkjulNokkeltalldetaljer={() => undefined}
           migrertData={false}
+          ar="2020"
         />,
       );
 

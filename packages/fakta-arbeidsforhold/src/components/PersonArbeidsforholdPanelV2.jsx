@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer, FaktaGruppe, TableColumn, Image, FlexRow } from '@fpsak-frontend/shared-components';
@@ -45,7 +45,7 @@ const findFomDato = (arbeidsforhold, replacedArbeidsforhold) =>
   arbeidsforhold.erstatterArbeidsforholdId ? replacedArbeidsforhold.fomDato : arbeidsforhold.originalFomDato;
 
 export const harAksjonspunkter = arbeidsforhold => {
-  return arbeidsforhold.filter(af => af.aksjonspunktÅrsaker.length > 0).length > 0;
+  return Array.isArray(arbeidsforhold) && arbeidsforhold.filter(af => af.aksjonspunktÅrsaker.length > 0).length > 0;
 };
 
 /**
@@ -85,12 +85,12 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
   setSelectedArbeidsgiver(selected) {
     const { selectedArbeidsgiver } = this.state;
 
-    if (selectedArbeidsgiver === undefined) {
-      this.setState({ selectedArbeidsgiver: selected });
-    }
-    if (selectedArbeidsgiver.id === selected.id) {
+    if (selectedArbeidsgiver && selectedArbeidsgiver.id === selected.id) {
       this.setState({ selectedArbeidsgiver: undefined });
+      return;
     }
+
+    this.setState({ selectedArbeidsgiver: selected });
   }
 
   setFormField(fieldName, fieldValue) {
@@ -111,12 +111,6 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
     const { arbeidsforhold } = this.props;
 
     const handlingType = values.arbeidsforholdHandlingField;
-    const perioder = [
-      {
-        fom: values.fomDato,
-        tom: values.tomDato,
-      },
-    ];
 
     if (handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER) {
       if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {
@@ -126,12 +120,27 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
 
     const arbeidsgiverNavn = values.navn;
 
-    const newValues = {
+    const perioder = [
+      {
+        fom: values.fomDato,
+        tom: values.tomDato,
+      },
+    ];
+
+    let newValues = {
       ...values,
       handlingType,
       arbeidsgiverNavn,
-      perioder,
     };
+
+    if (values.fomDato && values.tomDato) {
+      newValues = {
+        ...values,
+        handlingType,
+        arbeidsgiverNavn,
+        perioder,
+      };
+    }
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
 
@@ -180,9 +189,11 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
         arbeidsgiverOrgnr: undefined,
         arbeidsgiverAktørId: undefined,
       },
-      kilde: {
-        kode: arbeidsforholdKilder.SAKSBEHANDLER,
-      },
+      kilde: [
+        {
+          kode: arbeidsforholdKilder.SAKSBEHANDLER,
+        },
+      ],
       arbeidsforhold: {
         internArbeidsforholdId: undefined,
         eksternArbeidsforholdId: undefined,
@@ -223,17 +234,22 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
 
     const { selectedArbeidsforhold, selectedArbeidsgiver } = this.state;
     const unikeArbeidsgivere = [...new Set(arbeidsforhold.map(af => af.arbeidsgiver.arbeidsgiverOrgnr))];
+
     return (
       <>
         <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]}>
           {unikeArbeidsgivere.map(a => {
-            const arbeidsforholdPerArbeidsgiver = arbeidsforhold.filter(af => af.arbeidsgiver.arbeidsgiverOrgnr === a);
+            const arbeidsforholdPerArbeidsgiver = (arbeidsforhold || []).filter(
+              af => af.arbeidsgiver.arbeidsgiverOrgnr === a,
+            );
 
-            const navn = `${
+            const arbeidsgiverNavn =
               arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[a]
                 ? arbeidsgiverOpplysningerPerId[a].navn
-                : a
-            } (${arbeidsforholdPerArbeidsgiver.length} arbeidsforhold)`;
+                : a;
+            const navn = `${arbeidsgiverNavn} (${arbeidsforholdPerArbeidsgiver.length} arbeidsforhold)`;
+            const erValgt = selectedArbeidsgiver === a;
+
             return (
               <>
                 <FlexRow key={a}>
@@ -252,7 +268,7 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
                     >
                       <Normaltekst className={styles.visLukkArbeidsforhold}>
                         {intl.formatMessage(
-                          selectedArbeidsgiver === a
+                          erValgt
                             ? {
                                 id: 'PersonArbeidsforholdPanel.LukkArbeidsforhold',
                               }
@@ -261,16 +277,13 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
                               },
                         )}
                       </Normaltekst>
-                      <Image
-                        className={selectedArbeidsgiver === a ? styles.chevronOpp : styles.chevronNed}
-                        src={chevronIkonUrl}
-                        alt=""
-                      />
+                      <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
                     </button>
                   </TableColumn>
                 </FlexRow>
-                {selectedArbeidsgiver === a && (
+                {erValgt && (
                   <PersonArbeidsforholdTableV2
+                    src={chevronIkonUrl}
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
                     hasArbeidsforholdAksjonspunkt={harAksjonspunkter}
@@ -334,15 +347,8 @@ const PersonArbeidsforholdPanelV2 = connect(
 PersonArbeidsforholdPanelV2.buildInitialValues = arbeidsforhold => ({
   arbeidsforhold,
 });
+
 PersonArbeidsforholdPanelV2.isReadOnly = (state, behandlingId, behandlingVersjon) => {
-  const isDetailFormOpen = !!behandlingFormValueSelector(
-    PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2,
-    behandlingId,
-    behandlingVersjon,
-  )(state, 'navn');
-  if (isDetailFormOpen) {
-    return true;
-  }
   const arbeidsforhold = behandlingFormValueSelector(
     'ArbeidsforholdInfoPanelV2',
     behandlingId,
@@ -350,4 +356,5 @@ PersonArbeidsforholdPanelV2.isReadOnly = (state, behandlingId, behandlingVersjon
   )(state, 'arbeidsforhold');
   return !arbeidsforhold;
 };
+
 export default PersonArbeidsforholdPanelV2;
