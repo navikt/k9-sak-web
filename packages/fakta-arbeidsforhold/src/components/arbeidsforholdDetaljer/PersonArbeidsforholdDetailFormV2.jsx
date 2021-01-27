@@ -46,7 +46,6 @@ export const PersonArbeidsforholdDetailFormV2 = ({
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
       />
-      <VerticalSpacer twentyPx />
       <ArbeidsforholdBegrunnelse
         readOnly={false}
         formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
