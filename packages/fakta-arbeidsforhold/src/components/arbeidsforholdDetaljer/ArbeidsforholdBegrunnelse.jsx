@@ -7,6 +7,7 @@ import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } fro
 
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 import aktivtArbeidsforholdHandling from '../../kodeverk/aktivtArbeidsforholdHandling';
+import styles from './arbeidsforholdBegrunnelse.less';
 
 /**
  * ArbeidsforholdBegrunnelse er ansvarlig for å vise begrunnelsesfeltet.
@@ -20,7 +21,7 @@ export const ArbeidsforholdBegrunnelse = ({
   behandlingId,
   behandlingVersjon,
 }) => (
-  <>
+  <div className={styles.container}>
     <BehandlingFormFieldCleaner
       formName={formName}
       fieldNames={['begrunnelse']}
@@ -37,7 +38,7 @@ export const ArbeidsforholdBegrunnelse = ({
         />
       )}
     </BehandlingFormFieldCleaner>
-  </>
+  </div>
 );
 ArbeidsforholdBegrunnelse.propTypes = {
   readOnly: PropTypes.bool.isRequired,
