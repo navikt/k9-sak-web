@@ -172,6 +172,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               vurderteVilkår.vilkår,
             ]);
             const utfallIngenUtbetaling = utfallErIngenUtbetaling(delvisFravær);
+            const ar = periode.match(/^\d{4}/)[0];
 
             const visVilkarHjemlerEllerNokkeltall = faneindex => {
               switch (faneindex) {
@@ -203,6 +204,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                         apneNokkeltall={apneNokkeltall}
                         visEllerSkjulNokkeltalldetaljer={visEllerSkjulNokkeltalldetaljer}
                         migrertData={nøkkeltall.migrertData}
+                        ar={ar}
                       />
                     </td>
                   );

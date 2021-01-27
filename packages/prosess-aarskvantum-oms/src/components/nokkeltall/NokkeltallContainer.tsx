@@ -35,6 +35,7 @@ export type NokkeltallContainerProps = Pick<
   apneNokkeltall?: Nokkeltalltype[];
   visEllerSkjulNokkeltalldetaljer: (nokkeltalltype: Nokkeltalltype) => void;
   migrertData: boolean;
+  ar: string;
 };
 
 const absoluttverdiDagerTimer = ({ dager, timer }: DagerTimer): DagerTimer => ({
@@ -57,6 +58,7 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
   apneNokkeltall,
   visEllerSkjulNokkeltalldetaljer,
   migrertData,
+  ar,
 }) => {
   const erIKoronaperioden = React.useMemo(
     () => uttaksperioder.some(({ periode }) => periodeErIKoronaperioden(periode)),
@@ -94,6 +96,7 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
         benyttetRammemelding={benyttetRammemelding}
         viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.DAGER_SOKER_HAR_RETT_PA)}
         visDetaljer={() => visEllerSkjulNokkeltalldetaljer(Nokkeltalltype.DAGER_SOKER_HAR_RETT_PA)}
+        ar={ar}
       />
       <DagerNavKanUtbetale
         dagerNavKanUtbetale={dagerNavKanUtbetale}
@@ -110,6 +113,7 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
         utbetaltForMangeDagerTimer={utbetaltFlereDagerEnnRett ? absoluttverdiDagerTimer(rest) : null}
         viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.FORBRUKTE_DAGER)}
         visDetaljer={() => visEllerSkjulNokkeltalldetaljer(Nokkeltalltype.FORBRUKTE_DAGER)}
+        ar={ar}
       />
       <Restdager
         tilgodeDagertimer={{
