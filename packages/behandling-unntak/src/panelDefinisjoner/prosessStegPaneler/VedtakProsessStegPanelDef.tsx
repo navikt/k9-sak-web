@@ -34,7 +34,15 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
-  getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, fagsak, arbeidsgivere }) => {
+  getData = ({
+    previewCallback,
+    rettigheter,
+    aksjonspunkter,
+    vilkar,
+    simuleringResultat,
+    fagsak,
+    arbeidsgiverOpplysningerPerId,
+  }) => {
     return {
       previewCallback,
       aksjonspunkter,
@@ -42,7 +50,7 @@ class PanelDef extends ProsessStegPanelDef {
       simuleringResultat,
       ytelseTypeKode: fagsak?.fagsakYtelseType?.kode,
       employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-      arbeidsgivere,
+      arbeidsgiverOpplysningerPerId,
     };
   };
 }
