@@ -62,13 +62,6 @@ const AksjonspunktAvklarArbeidsforholdText: FunctionComponent<OwnProps & Wrapped
             <FormattedMessage id="HelpText.SettPaaVent" />
           </Normaltekst>
         </FlexRow>
-        <div className={styles.hl} />
-        <VerticalSpacer sixteenPx />
-        <FlexRow>
-          <Normaltekst className={styles.helptext}>
-            <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
-          </Normaltekst>
-        </FlexRow>
       </FlexContainer>
     </div>
   );
