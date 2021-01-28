@@ -152,13 +152,11 @@ const inntektArbeidYtelseMedNavn = {
 } as InntektArbeidYtelse;
 
 const arbeidsgivere = {
-  arbeidsgivere: {
-    12345678: {
-      erPrivatPerson: false,
-      referanse: '12345678',
-      identifikator: orgNr1,
-      navn: 'Bedrift AS',
-    },
+  12345678: {
+    erPrivatPerson: false,
+    referanse: '12345678',
+    identifikator: orgNr1,
+    navn: 'Bedrift AS',
   },
 };
 

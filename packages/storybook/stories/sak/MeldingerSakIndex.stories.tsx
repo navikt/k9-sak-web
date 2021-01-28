@@ -8,7 +8,6 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const recipients = ['Søker'];
 const templates = [
   {
     kode: dokumentMalType.INNHENT_DOK,
@@ -44,7 +43,6 @@ export const visMeldingerPanel = () => (
   >
     <MeldingerSakIndex
       submitCallback={action('button-click')}
-      recipients={object('recipients', recipients)}
       templates={object('templates', templates)}
       sprakKode={object('sprakKode', sprakKode)}
       previewCallback={action('button-click')}

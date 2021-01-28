@@ -13,7 +13,7 @@ type QueryParams = {
   risiko?: boolean;
 };
 
-const DEV_LOGIN_URL = 'http://localhost:8080/k9/sak/jetty/login';
+const DEV_LOGIN_URL = 'http://localhost:9000/k9/web';
 
 export const fagsakPath = '/fagsak/:saksnummer/';
 export const aktoerPath = '/aktoer/:aktoerId(\\d+)';

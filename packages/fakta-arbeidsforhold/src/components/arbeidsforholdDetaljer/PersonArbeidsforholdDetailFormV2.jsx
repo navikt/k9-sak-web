@@ -15,8 +15,12 @@ import ArbeidsforholdRadioknapperV2 from './ArbeidsforholdRadioknapperV2';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 
 import styles from './personArbeidsforholdDetailForm.less';
+import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2 = 'PersonArbeidsforholdDetailFormV2';
+
+const IMutenArbeidsforhold = arbeidsforhold =>
+  arbeidsforhold.aksjonspunktÅrsaker.some(a => a.kode === aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
 
 // ----------------------------------------------------------------------------------
 // Component: PersonArbeidsforholdDetailFormV2
@@ -35,35 +39,44 @@ export const PersonArbeidsforholdDetailFormV2 = ({
     <VerticalSpacer eightPx />
     <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
     <VerticalSpacer eightPx />
-    <Normaltekst className={styles.spørsmål}>
-      <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
-    </Normaltekst>
-    <Row>
-      <VerticalSpacer twentyPx />
-      <ArbeidsforholdRadioknapperV2
-        formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
-        arbeidsforhold={arbeidsforhold}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
-      <VerticalSpacer twentyPx />
-      <ArbeidsforholdBegrunnelse
-        readOnly={false}
-        formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
-      <VerticalSpacer sixteenPx />
-      <FlexContainer fluid>
-        <FlexRow>
-          <FlexColumn>
-            <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
-              <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-            </Hovedknapp>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    </Row>
+    {IMutenArbeidsforhold(arbeidsforhold) && (
+      <>
+        <div className={styles.hl} />
+        <VerticalSpacer sixteenPx />
+        <Normaltekst>
+          <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
+        </Normaltekst>
+        <VerticalSpacer eightPx />
+        <Normaltekst className={styles.spørsmål}>
+          <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
+        </Normaltekst>
+        <Row>
+          <VerticalSpacer twentyPx />
+          <ArbeidsforholdRadioknapperV2
+            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
+            arbeidsforhold={arbeidsforhold}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+          <ArbeidsforholdBegrunnelse
+            readOnly={false}
+            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+          <VerticalSpacer sixteenPx />
+          <FlexContainer fluid>
+            <FlexRow>
+              <FlexColumn>
+                <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
+                </Hovedknapp>
+              </FlexColumn>
+            </FlexRow>
+          </FlexContainer>
+        </Row>
+      </>
+    )}
   </div>
 );
 
