@@ -49,7 +49,7 @@ const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = (
                 id="Nøkkeltall.Rammemelding"
                 values={{
                   a: (...lenketekst) => (
-                    <Lenke href={`${pathname}${formatQueryString(faktapanelUttak)}`}>{lenketekst}</Lenke>
+                    <Lenke href={`/k9/web${pathname}${formatQueryString(faktapanelUttak)}`}>{lenketekst}</Lenke>
                   ),
                 }}
               />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import ErrorPageWrapper from './components/ErrorPageWrapper';
@@ -13,9 +14,9 @@ import ErrorPageWrapper from './components/ErrorPageWrapper';
 const ForbiddenPage = () => (
   <ErrorPageWrapper titleCode="ForbiddenPage.Header">
     <br />
-    <a href="/">
+    <Link to="/">
       <FormattedMessage id="ForbiddenPage.LinkText" />
-    </a>
+    </Link>
     <br />
   </ErrorPageWrapper>
 );
