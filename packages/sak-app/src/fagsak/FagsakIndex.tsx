@@ -130,11 +130,11 @@ const FagsakIndex: FunctionComponent = () => {
     }
     return <Redirect to={pathToMissingPage()} />;
   }
-  if (
-    fagsakPersonState === RestApiState.NOT_STARTED ||
-    fagsakPersonState === RestApiState.LOADING ||
-    !harFerdighentetfagsakRettigheter
-  ) {
+
+  const harIkkeHentetfagsakPersonData =
+    fagsakPersonState === RestApiState.LOADING || fagsakPersonState === RestApiState.NOT_STARTED;
+
+  if (harIkkeHentetfagsakPersonData || !harFerdighentetfagsakRettigheter) {
     return <LoadingPanel />;
   }
 
@@ -182,6 +182,7 @@ const FagsakIndex: FunctionComponent = () => {
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             behandlingRettigheter={behandlingRettigheter}
+            arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
           />
         }
         visittkortContent={() => {

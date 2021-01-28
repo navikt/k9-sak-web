@@ -37,6 +37,7 @@
   "ValidationMessage.InvalidPeriod": "Startdato må være før eller lik sluttdato",
   "ValidationMessage.InvalidPeriodRange": "Periode er utenfor opptjeningsperioden",
   "ValidationMessage.InvalidNumber": "Feltet kan kun inneholde tall",
+  "ValidationMessage.InvalidRecipient": "Ugyldig mottaker",
   "ValidationMessage.utbetalingsgradErMerSamtidigUttaksprosent": "Feltet kan ikke være høyere enn samtidig uttaksprosent",
   "ValidationMessage.maxLengthOrFodselsnr": "Du kan skrive maksimalt {length} tegn eller et fødselsnummer (11 siffer)",
   "ValidationMessage.Registrering.TerminEllerFoedselMessage": "Fyll ut informasjon om termindato eller fødselsdato",

@@ -2,7 +2,7 @@ import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
-import { Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { Fagsak, BehandlingAppKontekst, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
 
 import { getSupportPanelLocationCreator } from '../app/paths';
 import HistorikkIndex from './historikk/HistorikkIndex';
@@ -43,6 +43,7 @@ interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
   behandlingRettigheter?: BehandlingRettigheter;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 /**
@@ -57,6 +58,7 @@ const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   behandlingRettigheter,
+  arbeidsgiverOpplysninger,
 }) => {
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
@@ -122,6 +124,7 @@ const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
             alleBehandlinger={alleBehandlinger}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
+            arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
           />
         )}
         {aktivtSupportPanel === SupportTabs.DOKUMENTER && (
