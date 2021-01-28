@@ -99,7 +99,10 @@ export const arbeidsforholdV2PropType = PropTypes.shape({
     }),
   ),
   stillingsprosent: PropTypes.number,
-  aksjonspunktÅrsaker: PropTypes.arrayOf(PropTypes.string),
+  aksjonspunktÅrsaker: PropTypes.arrayOf({
+    kode: PropTypes.string,
+    kodeverk: PropTypes.string,
+  }),
   inntektsmeldinger: PropTypes.arrayOf(
     PropTypes.shape({
       journalpostId: PropTypes.string,
