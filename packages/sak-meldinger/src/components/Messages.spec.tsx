@@ -45,7 +45,6 @@ describe('<Messages>', () => {
         behandlingId={1}
         behandlingVersjon={2}
         revurderingVarslingArsak={[{} as KodeverkMedNavn]}
-        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -75,7 +74,6 @@ describe('<Messages>', () => {
         behandlingId={1}
         behandlingVersjon={2}
         revurderingVarslingArsak={[{} as KodeverkMedNavn]}
-        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -102,7 +100,6 @@ describe('<Messages>', () => {
         behandlingId={1}
         behandlingVersjon={2}
         revurderingVarslingArsak={[{} as KodeverkMedNavn]}
-        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 

@@ -159,7 +159,6 @@ const FagsakIndex: FunctionComponent = () => {
                 arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                 setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
                 setRequestPendingMessage={setRequestPendingMessage}
-                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
               />
             )}
           />
