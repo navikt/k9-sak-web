@@ -30,6 +30,7 @@ describe('<FritekstBrevPanel>', () => {
     expect(overskrift.at(1).prop('readOnly')).to.equal(true);
     expect(wrapper.find(PreviewLink)).to.have.length(0);
   });
+
   it('skal vise alle felter i vanlig modus', () => {
     const wrapper = shallowWithIntl(
       <FritekstBrevPanel.WrappedComponent

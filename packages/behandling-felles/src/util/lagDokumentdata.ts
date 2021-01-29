@@ -12,9 +12,17 @@ function lagDokumentdata(aksjonspunktModell) {
         brødtekst: aksjonspunktModell.fritekstbrev?.brødtekst,
         overskrift: aksjonspunktModell.fritekstbrev?.overskrift,
       },
+      ...(aksjonspunktModell.overstyrtMottaker
+        ? { [dokumentdatatype.OVERSTYRT_MOTTAKER]: aksjonspunktModell.overstyrtMottaker }
+        : {}),
     };
   }
-  return { [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK };
+  return {
+    [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK,
+    ...(aksjonspunktModell.overstyrtMottaker
+      ? { [dokumentdatatype.OVERSTYRT_MOTTAKER]: aksjonspunktModell.overstyrtMottaker }
+      : {}),
+  };
 }
 
 export default lagDokumentdata;
