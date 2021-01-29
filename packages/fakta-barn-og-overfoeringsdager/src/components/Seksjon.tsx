@@ -14,10 +14,17 @@ interface SeksjonProps {
     values?: any;
   };
   bakgrunn: 'grå' | 'hvit';
+  medMarg?: boolean;
 }
 
-const Seksjon: FunctionComponent<SeksjonProps> = ({ imgSrc, title, bakgrunn, children }) => (
-  <section className={classNames('seksjon', { grå: bakgrunn === 'grå' })}>
+const Seksjon: FunctionComponent<SeksjonProps> = ({
+  imgSrc,
+  title,
+  bakgrunn,
+  children,
+  medMarg,
+}) => (
+  <section className={classNames('seksjon', { grå: bakgrunn === 'grå', medMarg })}>
     <Undertittel tag="h3" className={styles.tittel}>
       <Image src={imgSrc} />
       <FormattedMessage id={title.id} values={title.values} />
