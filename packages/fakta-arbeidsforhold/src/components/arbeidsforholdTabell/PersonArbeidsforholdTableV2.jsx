@@ -153,15 +153,17 @@ const PersonArbeidsforholdTableV2 = ({
                   </TableColumn>
                 )}
                 <TableColumn>
-                  {a.handlingType.kode === arbeidsforholdHandlingType.BRUK && a.aksjonspunktÅrsaker.length === 0 && (
-                    <Image
-                      src={erIBrukImageUrl}
-                      alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
-                      tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
-                      tabIndex="0"
-                      alignTooltipLeft
-                    />
-                  )}
+                  {a.handlingType &&
+                    a.handlingType.kode === arbeidsforholdHandlingType.BRUK &&
+                    a.aksjonspunktÅrsaker.length === 0 && (
+                      <Image
+                        src={erIBrukImageUrl}
+                        alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
+                        tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
+                        tabIndex="0"
+                        alignTooltipLeft
+                      />
+                    )}
                 </TableColumn>
               </TableRow>
               {visAksjonspunktInfo && (harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length > 0) && (
