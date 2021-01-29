@@ -133,7 +133,7 @@ const PersonArbeidsforholdTableV2 = ({
                 {(!harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length === 0) && harPermisjoner && (
                   <TableColumn className={styles.aksjonspunktColumn}>
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
-                      <Normaltekst className={styles.visLukkAksjonspunkt}>
+                      <Normaltekst className={styles.visLukkPermisjon}>
                         {intl.formatMessage(
                           selectedArbeidsforhold === a && visAksjonspunktInfo
                             ? { id: 'PersonArbeidsforholdTable.LukkPermisjon' }
@@ -153,7 +153,7 @@ const PersonArbeidsforholdTableV2 = ({
                   </TableColumn>
                 )}
                 <TableColumn>
-                  {a.handlingType === arbeidsforholdHandlingType.BRUK && a.aksjonspunktÅrsaker.length === 0 && (
+                  {a.handlingType.kode === arbeidsforholdHandlingType.BRUK && a.aksjonspunktÅrsaker.length === 0 && (
                     <Image
                       src={erIBrukImageUrl}
                       alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
