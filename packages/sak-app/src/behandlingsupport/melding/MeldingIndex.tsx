@@ -179,6 +179,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({
     },
   );
 
+  const skalHenteBrevmaler = requestApi.hasPath(K9sakApiKeys.BREVMALER);
   const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmal[]>(
     K9sakApiKeys.BREVMALER,
     undefined,
@@ -187,7 +188,10 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({
     },
   );
 
-  if (stateBrevmaler === RestApiState.LOADING || (skalHenteRevAp && stateRevAp === RestApiState.LOADING)) {
+  if (
+    (skalHenteBrevmaler && (stateBrevmaler === RestApiState.NOT_STARTED || stateBrevmaler === RestApiState.LOADING)) ||
+    (skalHenteRevAp && stateRevAp === RestApiState.LOADING)
+  ) {
     return <LoadingPanel />;
   }
 
