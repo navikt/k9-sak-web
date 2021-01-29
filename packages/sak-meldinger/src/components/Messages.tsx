@@ -168,7 +168,7 @@ export const MessagesImpl: FunctionComponent<
         <>
           <SelectField
             name="brevmalkode"
-            readOnly={tmpls.length === 1}
+            readOnly={tmpls.length === 1 && brevmalkode && brevmalkode === tmpls[0].kode}
             label={intl.formatMessage({ id: 'Messages.Template' })}
             validate={[required]}
             placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
@@ -272,6 +272,7 @@ const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurd
     fritekst: '',
     aarsakskode: null,
   };
+
   return isKontrollerRevurderingApOpen
     ? { ...initialValues, brevmalkode: dokumentMalType.REVURDERING_DOK }
     : { ...initialValues };
