@@ -68,8 +68,8 @@ const getPreviewCallback = (
         brevmalkode: dokumentMal,
       }
     : {
-        // TODO: legg inn overstyrtMottaker når det er klart. mottaker bør være egen type
-        //  overstyrtMottaker: mottaker,
+        // TODO: fjern denne sjekken når overstyrtMottaker er implementert overalt
+        overstyrtMottaker: typeof mottaker === 'object' && mottaker.id && mottaker.type ? mottaker : undefined,
         dokumentMal,
         dokumentdata: { fritekst: fritekst || ' ' },
       };

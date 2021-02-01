@@ -20,7 +20,7 @@ interface OwnProps {
   submitCallback: (values: FormValues) => void;
   templates?: Template[];
   sprakKode: Kodeverk;
-  previewCallback: (mottaker: string, brevmalkode: string, fritekst: string, arsakskode: string) => void;
+  previewCallback: (mottaker: string, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
   behandlingId: number;
   behandlingVersjon: number;
   isKontrollerRevurderingApOpen?: boolean;
