@@ -71,6 +71,7 @@ describe('<Messages>', () => {
         causes={causes}
         previewCallback={previewEventCallback}
         fritekst="Dokument"
+        mottaker="Bruker"
         behandlingId={1}
         behandlingVersjon={2}
         revurderingVarslingArsak={[{} as KodeverkMedNavn]}
