@@ -8,7 +8,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex, FormValues } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { BehandlingAppKontekst, Fagsak, Kodeverk, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak, Kodeverk, ArbeidsgiverOpplysningerWrapper, Mottaker } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { useFpSakKodeverk } from '../../data/useKodeverk';
@@ -61,7 +61,7 @@ const getPreviewCallback = (
   behandlingUuid: string,
   fagsakYtelseType: Kodeverk,
   fetchPreview: (erHenleggelse: boolean, data: any) => void,
-) => (mottaker: string, dokumentMal: string, fritekst: string) => {
+) => (mottaker: string | Mottaker, dokumentMal: string, fritekst: string) => {
   const data = erTilbakekrevingType({ kode: behandlingTypeKode })
     ? {
         fritekst: fritekst || ' ',

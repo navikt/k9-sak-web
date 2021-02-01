@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Kodeverk, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId, Mottaker } from '@k9-sak-web/types';
 
 import Messages, { FormValues, Template } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
@@ -20,7 +20,7 @@ interface OwnProps {
   submitCallback: (values: FormValues) => void;
   templates?: Template[];
   sprakKode: Kodeverk;
-  previewCallback: (mottaker: string, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
+  previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
   behandlingId: number;
   behandlingVersjon: number;
   isKontrollerRevurderingApOpen?: boolean;
