@@ -1,0 +1,17 @@
+{
+  "name": "@k9-sak-web/behandling-kronisk-sykt-barn",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@k9-sak-web/behandling-felles": "1.0.0",
+    "@k9-sak-web/konstanter": "1.0.0",
+    "@k9-sak-web/rest-api": "1.0.0",
+    "@k9-sak-web/rest-api-hooks": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
+    "react": "^16.14.0",
+    "react-intl": "^5.10.11",
+  },
+  "devDependencies": {}
+}
