@@ -15,6 +15,7 @@ import {
   maxLength,
   minLength,
   required,
+  safeJSONParse,
 } from '@fpsak-frontend/utils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { SelectField, TextAreaField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
@@ -70,10 +71,12 @@ interface MappedOwnProps {
 }
 
 const formName = 'Messages';
-const RECIPIENTS = ['Bruker'];
+const RECIPIENT = { id: 'Bruker', type: '' };
 
 const createValidateRecipient = recipients => value =>
-  Array.isArray(recipients) && recipients.includes(value) ? [{ id: 'ValidationMessage.InvalidRecipient' }] : undefined;
+  Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value)
+    ? [{ id: 'ValidationMessage.InvalidRecipient' }]
+    : undefined;
 
 function lagVisningsNavnForMottaker(mottaker, arbeidsgiverOpplysningerPerId) {
   if (
@@ -120,14 +123,14 @@ export const MessagesImpl: FunctionComponent<
   const previewMessage = e => {
     e.preventDefault();
 
-    if (mottaker && brevmalkode) {
-      previewCallback(mottaker, brevmalkode, fritekst);
-    }
+    const overstyrtMottaker = mottaker && mottaker !== JSON.stringify(RECIPIENT) ? safeJSONParse(mottaker) : undefined;
+
+    previewCallback(overstyrtMottaker, brevmalkode, fritekst);
   };
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
 
-  let recipients: string[] = RECIPIENTS;
+  let recipients: string[] = [RECIPIENT];
   let tmpls: Template[] = Array.isArray(templates) ? templates : [];
 
   // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
@@ -135,15 +138,20 @@ export const MessagesImpl: FunctionComponent<
   if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
     tmpls = Object.keys(templates).map(key => ({ navn: templates[key].navn, kode: key, tilgjengelig: true }));
     recipients =
-      brevmalkode && templates[brevmalkode] && templates[brevmalkode].mottakere
-        ? templates[brevmalkode].mottakere.map(m => m.id)
+      brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
+        ? templates[brevmalkode].mottakere
         : [];
   }
 
   useEffect(() => {
     // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
     if (brevmalkode) {
-      formProps.change('mottaker', recipients.includes(mottaker) ? mottaker : recipients[0]);
+      formProps.change(
+        'mottaker',
+        Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === mottaker)
+          ? mottaker
+          : JSON.stringify(recipients[0]),
+      );
     }
   }, [brevmalkode]);
 
@@ -172,13 +180,13 @@ export const MessagesImpl: FunctionComponent<
           <SelectField
             key={brevmalkode}
             name="mottaker"
-            readOnly={recipients.length === 1 && mottaker && mottaker === recipients[0]}
+            readOnly={recipients.length === 1 && mottaker && mottaker === JSON.stringify(recipients[0])}
             label={intl.formatMessage({ id: 'Messages.Recipient' })}
             validate={[required, createValidateRecipient(recipients)]}
             placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
             selectValues={recipients.map(recipient => (
-              <option key={recipient} value={recipient}>
-                {lagVisningsNavnForMottaker(recipient, arbeidsgiverOpplysningerPerId)}
+              <option key={recipient.id} value={JSON.stringify(recipient)}>
+                {lagVisningsNavnForMottaker(recipient.id, arbeidsgiverOpplysningerPerId)}
               </option>
             ))}
             bredde="xxl"
@@ -221,7 +229,7 @@ export const MessagesImpl: FunctionComponent<
         <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
           {intl.formatMessage({ id: 'Messages.Submit' })}
         </Hovedknapp>
-        {(tmpls || []).length > 0 && (
+        {brevmalkode && (
           <a
             href=""
             onClick={previewMessage}
@@ -238,7 +246,7 @@ export const MessagesImpl: FunctionComponent<
 
 const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
   let brevmal = Array.isArray(templates) && templates.length ? templates[0] : { kode: null };
-  let mottaker = RECIPIENTS[0];
+  let mottaker = JSON.stringify(RECIPIENT);
 
   // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
   // komponentene burde oppdateres for å bedre håndtere ny struktur når den er tatt i bruk overallt.
@@ -246,7 +254,7 @@ const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurd
     brevmal = { kode: Object.keys(templates)[0] };
     mottaker =
       templates[brevmal.kode].mottakere && templates[brevmal.kode].mottakere[0]
-        ? templates[brevmal.kode].mottakere[0].id
+        ? JSON.stringify(templates[brevmal.kode].mottakere[0])
         : null;
   }
 
@@ -268,7 +276,11 @@ const transformValues = values => {
   if (values.brevmalkode === dokumentMalType.REVURDERING_DOK && newValues.arsakskode !== ugunstAarsakTyper.ANNET) {
     newValues.fritekst = ' ';
   }
-  return newValues;
+  const mottaker =
+    newValues.mottaker && newValues.mottaker !== JSON.stringify(RECIPIENT)
+      ? safeJSONParse(newValues.mottaker)
+      : undefined;
+  return { ...newValues, mottaker };
 };
 const getfilteredCauses = createSelector([(ownProps: PureOwnProps) => ownProps.revurderingVarslingArsak], causes =>
   causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),

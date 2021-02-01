@@ -61,15 +61,14 @@ const getPreviewCallback = (
   behandlingUuid: string,
   fagsakYtelseType: Kodeverk,
   fetchPreview: (erHenleggelse: boolean, data: any) => void,
-) => (mottaker: string | Mottaker, dokumentMal: string, fritekst: string) => {
+) => (overstyrtMottaker?: Mottaker, dokumentMal: string, fritekst: string) => {
   const data = erTilbakekrevingType({ kode: behandlingTypeKode })
     ? {
         fritekst: fritekst || ' ',
         brevmalkode: dokumentMal,
       }
     : {
-        // TODO: fjern denne sjekken når overstyrtMottaker er implementert overalt
-        overstyrtMottaker: typeof mottaker === 'object' && mottaker.id && mottaker.type ? mottaker : undefined,
+        overstyrtMottaker,
         dokumentMal,
         dokumentdata: { fritekst: fritekst || ' ' },
       };
