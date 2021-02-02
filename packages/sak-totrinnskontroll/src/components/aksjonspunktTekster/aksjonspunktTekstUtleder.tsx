@@ -80,7 +80,7 @@ const buildArbeidsforholdText = (
   aksjonspunkt: TotrinnskontrollAksjonspunkt,
   arbeidsforholdHandlingTyper: KodeverkMedNavn[],
 ) =>
-  aksjonspunkt.arbeidforholdDtos.map(arbeidforholdDto => {
+  aksjonspunkt.arbeidsforholdDtos.map(arbeidforholdDto => {
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     return (
       <>

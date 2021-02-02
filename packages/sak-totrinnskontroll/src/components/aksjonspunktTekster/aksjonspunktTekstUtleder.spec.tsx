@@ -772,7 +772,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5080', () => {
-    const arbeidforholdDtos = [
+    const arbeidsforholdDtos = [
       {
         navn: 'COLOR LINE CREW AS',
         organisasjonsnummer: '973135678',
@@ -796,7 +796,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
       totrinnskontrollGodkjent: false,
-      arbeidforholdDtos,
+      arbeidsforholdDtos,
     } as TotrinnskontrollAksjonspunkt;
 
     const messages = getAksjonspunkttekst(true, null, null, [], false, aksjonspunkt);
