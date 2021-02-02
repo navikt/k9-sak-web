@@ -22,7 +22,6 @@ import {
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -172,14 +171,6 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
-  const lagreArsakerTilRedusertUtbetaling = arsaker => {
-    if (featureToggles?.DOKUMENTDATA) {
-      lagreDokumentdata({
-        [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
-      });
-    }
-  };
-
   const dataTilUtledingAvPleiepengerPaneler = {
     fagsakPerson,
     previewCallback: useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
@@ -192,7 +183,6 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
     alleKodeverk,
     featureToggles,
     arbeidsgiverOpplysningerPerId,
-    lagreArsakerTilRedusertUtbetaling,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(

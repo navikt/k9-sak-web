@@ -97,6 +97,7 @@ export class VedtakRevurderingFormImpl extends Component {
       bgPeriodeMedAvslagsårsak,
       tilgjengeligeVedtaksbrev,
       dokumentdata,
+      arbeidsgiverOpplysningerPerId,
       ...formProps
     } = this.props;
     const { erSendtInnUtenArsaker } = this.state;
@@ -205,6 +206,7 @@ export class VedtakRevurderingFormImpl extends Component {
               brødtekst={brødtekst}
               overskrift={overskrift}
               begrunnelse={begrunnelse}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             />
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
@@ -243,8 +245,8 @@ VedtakRevurderingFormImpl.propTypes = {
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
-  lagreArsakerTilRedusertUtbetaling: PropTypes.func,
   dokumentdata: PropTypes.shape(),
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 
@@ -401,13 +403,6 @@ const VedtakRevurderingForm = connect(
   injectIntl(
     behandlingForm({
       form: VEDTAK_REVURDERING_FORM_NAME,
-      onChange: (values, dispatch, props) =>
-        props.lagreArsakerTilRedusertUtbetaling && props.behandlingStatusKode !== behandlingStatusCode.AVSLUTTET
-          ? props.lagreArsakerTilRedusertUtbetaling(
-              Object.values(redusertUtbetalingArsak).filter(a => values[a]),
-              dispatch,
-            )
-          : null,
     })(VedtakRevurderingFormImpl),
   ),
 );
