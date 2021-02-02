@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { KodeverkMedNavn, Kodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Kodeverk, ArbeidsgiverOpplysningerPerId, Brevmaler, Mottaker } from '@k9-sak-web/types';
 import {
   ariaCheck,
   getLanguageCodeFromSprakkode,
@@ -38,18 +38,6 @@ export type Template = {
   tilgjengelig: boolean;
 };
 
-export type Mottaker = {
-  id: string;
-  type: string;
-};
-
-export interface Brevmaler {
-  [index: string]: {
-    navn: string;
-    mottakere: Mottaker[];
-  };
-}
-
 const getFritekstMessage = (brevmalkode?: string): string =>
   brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst';
 
@@ -65,7 +53,7 @@ interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
   behandlingId: number;
   behandlingVersjon: number;
-  previewCallback: (mottaker: string, brevmalkode: string, fritekst: string, arsakskode: string) => void;
+  previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
   templates: Template[] | Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
@@ -130,14 +118,11 @@ export const MessagesImpl: FunctionComponent<
   }
 
   const previewMessage = e => {
-    if (formProps.valid || formProps.pristine) {
-      previewCallback(mottaker, brevmalkode, fritekst, arsakskode);
-    } else {
-      // TODO Fungerar dette? Typescript seier at submit ikkje ligg i formProps
-      // @ts-ignore
-      formProps.submit();
-    }
     e.preventDefault();
+
+    if (mottaker && brevmalkode) {
+      previewCallback(mottaker, brevmalkode, fritekst);
+    }
   };
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
@@ -270,7 +255,7 @@ const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurd
     mottaker,
     // mottaker: null,
     fritekst: '',
-    aarsakskode: null,
+    // arsakskode: null,
   };
 
   return isKontrollerRevurderingApOpen

@@ -75,3 +75,4 @@ export {
   ArbeidsgiverOpplysningerWrapper,
   ArbeidsgiverOpplysninger,
 } from './src/arbeidsgiverOpplysningerTsType';
+export { default as Brevmaler, Mottaker } from './src/meldingTsType';
