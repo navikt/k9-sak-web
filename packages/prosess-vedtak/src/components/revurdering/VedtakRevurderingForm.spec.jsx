@@ -97,6 +97,7 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly={false}
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -148,6 +149,7 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -184,6 +186,7 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -221,6 +224,7 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -251,6 +255,7 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -284,6 +289,7 @@ describe('<VedtakRevurderingForm>', () => {
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
         tilgjengeligeVedtaksbrev={['FRITEKST']}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
