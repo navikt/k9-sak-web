@@ -158,7 +158,7 @@ export const MessagesImpl: FunctionComponent<
 
   return (
     <form onSubmit={handleSubmit}>
-      {Array.isArray(tmpls) && tmpls.length && (
+      {Array.isArray(tmpls) && tmpls.length ? (
         <>
           <SelectField
             name="brevmalkode"
@@ -173,74 +173,76 @@ export const MessagesImpl: FunctionComponent<
             ))}
             bredde="xxl"
           />
-        </>
-      )}
-      {Array.isArray(recipients) && recipients.length && (
-        <>
+          {Array.isArray(recipients) && recipients.length && (
+            <>
+              <VerticalSpacer eightPx />
+              <SelectField
+                key={brevmalkode}
+                name="mottaker"
+                readOnly={recipients.length === 1 && mottaker && mottaker === JSON.stringify(recipients[0])}
+                label={intl.formatMessage({ id: 'Messages.Recipient' })}
+                validate={[/* required, */ createValidateRecipient(recipients)]}
+                placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
+                selectValues={recipients.map(recipient => (
+                  <option key={recipient.id} value={JSON.stringify(recipient)}>
+                    {lagVisningsNavnForMottaker(recipient.id, arbeidsgiverOpplysningerPerId)}
+                  </option>
+                ))}
+                bredde="xxl"
+              />
+            </>
+          )}
+          {brevmalkode === dokumentMalType.REVURDERING_DOK && (
+            <>
+              <VerticalSpacer eightPx />
+              <SelectField
+                name="arsakskode"
+                label={intl.formatMessage({ id: 'Messages.Årsak' })}
+                validate={[required]}
+                placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
+                selectValues={causes.map(cause => (
+                  <option key={cause.kode} value={cause.kode}>
+                    {cause.navn}
+                  </option>
+                ))}
+                bredde="xxl"
+              />
+            </>
+          )}
+          {showFritekst(brevmalkode, arsakskode) && (
+            <>
+              <VerticalSpacer eightPx />
+              <div className="input--xxl">
+                <TextAreaField
+                  name="fritekst"
+                  label={intl.formatMessage({ id: getFritekstMessage(brevmalkode) })}
+                  validate={[required, maxLength4000, minLength3, hasValidText]}
+                  maxLength={4000}
+                  badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
+                />
+              </div>
+            </>
+          )}
           <VerticalSpacer eightPx />
-          <SelectField
-            key={brevmalkode}
-            name="mottaker"
-            readOnly={recipients.length === 1 && mottaker && mottaker === JSON.stringify(recipients[0])}
-            label={intl.formatMessage({ id: 'Messages.Recipient' })}
-            validate={[/* required, */ createValidateRecipient(recipients)]}
-            placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
-            selectValues={recipients.map(recipient => (
-              <option key={recipient.id} value={JSON.stringify(recipient)}>
-                {lagVisningsNavnForMottaker(recipient.id, arbeidsgiverOpplysningerPerId)}
-              </option>
-            ))}
-            bredde="xxl"
-          />
-        </>
-      )}
-      {brevmalkode === dokumentMalType.REVURDERING_DOK && (
-        <>
-          <VerticalSpacer eightPx />
-          <SelectField
-            name="arsakskode"
-            label={intl.formatMessage({ id: 'Messages.Årsak' })}
-            validate={[required]}
-            placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
-            selectValues={causes.map(cause => (
-              <option key={cause.kode} value={cause.kode}>
-                {cause.navn}
-              </option>
-            ))}
-            bredde="xxl"
-          />
-        </>
-      )}
-      {showFritekst(brevmalkode, arsakskode) && (
-        <>
-          <VerticalSpacer eightPx />
-          <div className="input--xxl">
-            <TextAreaField
-              name="fritekst"
-              label={intl.formatMessage({ id: getFritekstMessage(brevmalkode) })}
-              validate={[required, maxLength4000, minLength3, hasValidText]}
-              maxLength={4000}
-              badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
-            />
+          <div className={styles.buttonRow}>
+            <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
+              {intl.formatMessage({ id: 'Messages.Submit' })}
+            </Hovedknapp>
+            {brevmalkode && (
+              <a
+                href=""
+                onClick={previewMessage}
+                onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
+                className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+              >
+                {intl.formatMessage({ id: 'Messages.Preview' })}
+              </a>
+            )}
           </div>
         </>
+      ) : (
+        <p>{intl.formatMessage({ id: 'Messages.SavnerMaler' })}</p>
       )}
-      <VerticalSpacer eightPx />
-      <div className={styles.buttonRow}>
-        <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
-          {intl.formatMessage({ id: 'Messages.Submit' })}
-        </Hovedknapp>
-        {brevmalkode && (
-          <a
-            href=""
-            onClick={previewMessage}
-            onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
-            className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-          >
-            {intl.formatMessage({ id: 'Messages.Preview' })}
-          </a>
-        )}
-      </div>
     </form>
   );
 };

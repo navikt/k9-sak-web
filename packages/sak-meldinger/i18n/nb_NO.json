@@ -11,6 +11,7 @@
   "Messages.Preview": "Forhåndsvis",
   "Messages.PreviewText": "Forhåndsvis varselbrev",
   "Messages.Beskrivelse": "Foretrukket språk",
+  "Messages.SavnerMaler": "Ingen brev kan bestilles for ytelsen",
 
   "MessagesModal.description": "Brevet er bestilt",
   "MessagesModal.text": "Brevet er bestilt",
