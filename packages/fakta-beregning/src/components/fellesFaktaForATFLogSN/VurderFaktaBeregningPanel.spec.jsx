@@ -1,9 +1,7 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
-  BEGRUNNELSE_FAKTA_TILFELLER_NAME,
   buildInitialValuesVurderFaktaBeregning,
   harIkkeEndringerIAvklarMedFlereAksjonspunkter,
   transformValuesVurderFaktaBeregning,
@@ -50,45 +48,12 @@ describe('<VurderFaktaBeregningPanel>', () => {
     const values = {
       vurderFaktaListe: [faktaOmBeregning],
     };
-    const transformed = transformValuesVurderFaktaBeregning(values, [{faktaOmBeregning}],  [{periode: {fom: '2020-01-01'}}]);
+    const transformed = transformValuesVurderFaktaBeregning(
+      values,
+      [{ faktaOmBeregning }],
+      [{ periode: { fom: '2020-01-01' } }],
+    );
     expect(transformed).to.be.empty;
-  });
-
-  it('skal transformValues med aksjonspunkt', () => {
-    const tilfeller = [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING];
-    const faktaOmBeregning = {
-      vurderBesteberegning: {},
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
-      avklarAktiviteter: {
-        ventelonnVartpenger: {
-          inkludert: null,
-        },
-      },
-      aksjonspunkter,
-    };
-    const values = {
-      [BEGRUNNELSE_FAKTA_TILFELLER_NAME]: 'begrunnelse',
-      vurderFaktaListe: [
-        {
-          aksjonspunkter,
-          faktaOmBeregning,
-          tilfeller,
-        },
-      ],
-    };
-
-    const bg = {
-      faktaOmBeregning: {
-        vurderBesteberegning: {},
-        faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
-        avklarAktiviteter: {
-          skjæringstidspunkt: '2020-03-01',
-        },
-      },
-    };
-    const transformed = transformValuesVurderFaktaBeregning(values, [bg],  [{periode: {fom: '2020-03-01'}}]);
-    expect(transformed[0].begrunnelse).to.equal('begrunnelse');
-    expect(transformed[0].kode).to.equal(VURDER_FAKTA_FOR_ATFL_SN);
   });
 
   it('skal returnere true for endring i avklar med kun avklar aksjonspunkt', () => {

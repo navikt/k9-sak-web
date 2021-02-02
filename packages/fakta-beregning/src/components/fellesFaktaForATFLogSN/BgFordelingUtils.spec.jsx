@@ -12,9 +12,11 @@ import {
   skalRedigereInntektForAndel,
   skalRedigereInntektskategoriForAndel,
 } from './BgFordelingUtils';
-import { finnFrilansFieldName, utledArbeidsforholdFieldName } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
+import {
+  finnFrilansFieldName,
+  utledArbeidsforholdFieldName,
+} from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
 import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
-import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 
 const arbeidsgiver = {
   arbeidsgiverNavn: 'Virksomheten',
@@ -53,7 +55,6 @@ describe('<BgFordelingUtils>', () => {
 
   const dagpengeField = mapAndelToField(dagpengerAndel);
 
-
   it('skal mappe dagpengerandel til feltverdier', () => {
     expect(dagpengeField.aktivitetStatus).to.equal('DP');
     expect(dagpengeField.andelsnr).to.equal(1);
@@ -65,7 +66,6 @@ describe('<BgFordelingUtils>', () => {
     expect(dagpengeField.belopReadOnly).to.equal('0');
     expect(dagpengeField.refusjonskrav).to.equal('');
   });
-
 
   it('skal mappe AAP-andel til feltverdier', () => {
     const AAPAndel = {
@@ -90,7 +90,6 @@ describe('<BgFordelingUtils>', () => {
     expect(aapField.belopReadOnly).to.equal('10 000');
     expect(aapField.refusjonskrav).to.equal('');
   });
-
 
   it('skal mappe AT uten inntektsmelding med FL i samme org til feltverdier', () => {
     const ATAndel = {
@@ -249,7 +248,6 @@ describe('<BgFordelingUtils>', () => {
     expect(arbeidsforholdIV.arbeidsperiodeTom).to.equal('2018-01-01');
   });
 
-
   const arbeidstakerAndel4 = {
     arbeidsforhold: {
       ...arbeidsgiver,
@@ -265,9 +263,16 @@ describe('<BgFordelingUtils>', () => {
   };
 
   const beregningsgrunnlag = {
-    beregningsgrunnlagPeriode: [{
-      beregningsgrunnlagPrStatusOgAndel: [arbeidstakerAndel1, arbeidstakerAndel3, frilansAndel, arbeidstakerAndel4, kunstigArbeidstakerAndel],
-    },
+    beregningsgrunnlagPeriode: [
+      {
+        beregningsgrunnlagPrStatusOgAndel: [
+          arbeidstakerAndel1,
+          arbeidstakerAndel3,
+          frilansAndel,
+          arbeidstakerAndel4,
+          kunstigArbeidstakerAndel,
+        ],
+      },
     ],
   };
 
@@ -308,19 +313,6 @@ describe('<BgFordelingUtils>', () => {
     refusjonskravFraInntektsmelding: null,
   };
 
-  it('skal redigere inntektskategori for arbeidstakerandel som skalhaBesteberegning', () => {
-    const andelFieldValue = {
-      ...andelValuesUtenInntektsmelding,
-      ...setGenerellAndelsinfo(arbeidstakerAndel3),
-    };
-    const vals = {
-      [besteberegningField]: true,
-    };
-    const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals, beregningsgrunnlag)(andelFieldValue);
-    expect(skalRedigereInntektskategori).to.equal(true);
-  });
-
-
   it('skal redigere inntektskategori for kunstig arbeid', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
@@ -328,7 +320,10 @@ describe('<BgFordelingUtils>', () => {
       ...setGenerellAndelsinfo(kunstigArbeidstakerAndel),
     };
     const vals = {};
-    const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(
+      vals,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntektskategori).to.equal(true);
   });
 
@@ -339,7 +334,11 @@ describe('<BgFordelingUtils>', () => {
     };
     const copyValues = { ...values };
     copyValues[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] = true;
-    const skalRedigereInntekt = skalRedigereInntektForAndel(copyValues, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      copyValues,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
   });
 
@@ -348,7 +347,11 @@ describe('<BgFordelingUtils>', () => {
       ...andelValuesUtenInntektsmelding,
       ...setGenerellAndelsinfo(arbeidstakerAndel3),
     };
-    const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      values,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
   });
 
@@ -358,7 +361,11 @@ describe('<BgFordelingUtils>', () => {
       ...setGenerellAndelsinfo(arbeidstakerAndel1),
     };
     faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM = [arbeidstakerAndel1];
-    const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      values,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
   });
 
@@ -383,7 +390,11 @@ describe('<BgFordelingUtils>', () => {
     const faktaOmBeregningCopy = { ...faktaOmBeregning };
     arbeidstakerAndel4.inntektPrMnd = 30000;
     faktaOmBeregningCopy.arbeidstakerOgFrilanserISammeOrganisasjonListe = [arbeidstakerAndel4];
-    const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregningCopy, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      values,
+      faktaOmBeregningCopy,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(false);
   });
 
@@ -395,7 +406,11 @@ describe('<BgFordelingUtils>', () => {
     const faktaOmBeregningCopy = { ...faktaOmBeregning };
     arbeidstakerAndel4.inntektPrMnd = null;
     faktaOmBeregningCopy.arbeidstakerOgFrilanserISammeOrganisasjonListe = [arbeidstakerAndel4];
-    const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregningCopy, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      values,
+      faktaOmBeregningCopy,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
   });
 
@@ -404,7 +419,11 @@ describe('<BgFordelingUtils>', () => {
       ...andelValuesUtenInntektsmelding,
       ...setGenerellAndelsinfo(frilansAndel),
     };
-    const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      values,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
   });
 
@@ -416,7 +435,11 @@ describe('<BgFordelingUtils>', () => {
       ...andelValuesUtenInntektsmelding,
       ...setGenerellAndelsinfo(frilansAndel),
     };
-    const skalRedigereInntekt = skalRedigereInntektForAndel(valuesLocalCopy, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      valuesLocalCopy,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
   });
 
@@ -428,7 +451,11 @@ describe('<BgFordelingUtils>', () => {
       ...andelValuesUtenInntektsmelding,
       ...setGenerellAndelsinfo(frilansAndel),
     };
-    const skalRedigereInntekt = skalRedigereInntektForAndel(valuesLocalCopy, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      valuesLocalCopy,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(false);
   });
   it('skal redigere inntekt for frilansandel i samme org som arbeidstaker', () => {
@@ -437,7 +464,11 @@ describe('<BgFordelingUtils>', () => {
       ...setGenerellAndelsinfo(frilansAndel),
     };
     faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe = [arbeidstakerAndel4];
-    const skalRedigereInntekt = skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)(andelFieldValue);
+    const skalRedigereInntekt = skalRedigereInntektForAndel(
+      values,
+      faktaOmBeregning,
+      beregningsgrunnlag,
+    )(andelFieldValue);
     expect(skalRedigereInntekt).to.equal(true);
   });
 

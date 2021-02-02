@@ -10,8 +10,7 @@ import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodever
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
-export const getTekstForAndelBruktIBeregning = (andel) => {
+export const getTekstForAndelBruktIBeregning = andel => {
   if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';
   }
@@ -20,20 +19,14 @@ export const getTekstForAndelBruktIBeregning = (andel) => {
   }
   return '';
 };
-const isAktivitetKodeDagpenger = (aktivitetStatusKode) => aktivitetStatusKode === aktivitetStatus.DAGPENGER;
 
-const TilstotendeYtelser2 = ({
-  alleAndeler,
-  relevanteStatuser,
-  gjelderBesteberegning,
-}) => {
-  const relevanteAndeler = alleAndeler.filter((andel) => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
+const TilstotendeYtelser2 = ({ alleAndeler, relevanteStatuser }) => {
+  const relevanteAndeler = alleAndeler.filter(andel => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
   const harFlereYtelser = relevanteAndeler.length > 1;
 
   return (
     <>
-      {relevanteStatuser.isKombinasjonsstatus
-      && (
+      {relevanteStatuser.isKombinasjonsstatus && (
         <>
           <AvsnittSkiller luftOver luftUnder />
           <Element className={beregningStyles.avsnittOverskrift}>
@@ -63,27 +56,20 @@ const TilstotendeYtelser2 = ({
             <Row>
               <Column xs="4">
                 <Element>
-                  <FormattedMessage
-                    id={getTekstForAndelBruktIBeregning(andel)}
-                  />
+                  <FormattedMessage id={getTekstForAndelBruktIBeregning(andel)} />
                 </Element>
               </Column>
               <Column xs="3" />
-              <Column xs="2" className={beregningStyles.colMaanedText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
+              <Column xs="2" className={beregningStyles.colMaanedText}>
+                <Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst>
+              </Column>
               <Column xs="2" className={beregningStyles.colAarText}>
-                <Normaltekst className={!harFlereYtelser ? beregningStyles.semiBoldText : ''}>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst>
+                <Normaltekst className={!harFlereYtelser ? beregningStyles.semiBoldText : ''}>
+                  {formatCurrencyNoKr(andel.beregnetPrAar)}
+                </Normaltekst>
               </Column>
               <Column xs="2" />
             </Row>
-            {gjelderBesteberegning && isAktivitetKodeDagpenger(andel.aktivitetStatus.kode) && (
-              <Row>
-                <Column xs="12">
-                  <Normaltekst>
-                    <FormattedMessage id="Beregningsgrunnlag.TilstottendeYtelse.Besteberegning" />
-                  </Normaltekst>
-                </Column>
-              </Row>
-            )}
           </div>
         ))}
       </>
@@ -94,7 +80,6 @@ const TilstotendeYtelser2 = ({
 TilstotendeYtelser2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
-  gjelderBesteberegning: PropTypes.bool.isRequired,
 };
 
 export default TilstotendeYtelser2;

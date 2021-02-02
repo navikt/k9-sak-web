@@ -19,7 +19,6 @@ import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 import VurderEtterlonnSluttpakkeForm from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
-import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import VurderRefusjonForm from './vurderrefusjon/VurderRefusjonForm';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
 
@@ -32,9 +31,7 @@ export const getFaktaOmBeregning = createSelector(
 export const getVurderMottarYtelse = createSelector([getFaktaOmBeregning], (faktaOmBeregning = {}) =>
   faktaOmBeregning ? faktaOmBeregning.vurderMottarYtelse : undefined,
 );
-export const getVurderBesteberegning = createSelector([getFaktaOmBeregning], (faktaOmBeregning = {}) =>
-  faktaOmBeregning ? faktaOmBeregning.vurderBesteberegning : undefined,
-);
+
 export const getArbeidsgiverInfoForRefusjonskravSomKommerForSent = createSelector(
   [getFaktaOmBeregning],
   (faktaOmBeregning = {}) => {
@@ -56,7 +53,6 @@ export const validationForVurderFakta = values => {
   return {
     ...getKunYtelseValidation(values, kunYtelse, tilfeller),
     ...VurderMottarYtelseForm.validate(values, vurderMottarYtelse),
-    ...VurderBesteberegningForm.validate(values, tilfeller),
     ...VurderOgFastsettATFL.validate(values, tilfeller, faktaOmBeregning, beregningsgrunnlag),
   };
 };
@@ -347,7 +343,6 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...buildInitialValuesKunYtelse(props.kunYtelse, props.tilfeller, props.faktaOmBeregning.andelerForFaktaOmBeregning),
   ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, props.vurderFaktaAP),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
-  ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
   ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
   ...VurderRefusjonForm.buildInitialValues(props.tilfeller, props.refusjonskravSomKommerForSentListe),
 });
@@ -369,7 +364,6 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
     return tilfeller;
   },
   vurderMottarYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.vurderMottarYtelse,
-  vurderBesteberegning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.vurderBesteberegning,
   alleKodeverk: ownProps => ownProps.alleKodeverk,
   aksjonspunkter: ownProps => ownProps.aksjonspunkter,
   faktaOmBeregning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning,

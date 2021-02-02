@@ -2090,11 +2090,6 @@
       "kodeverk": "FAKTA_OM_BEREGNING_TILFELLE"
     },
     {
-      "kode": "FASTSETT_BESTEBEREGNING_FØDENDE_KVINNE",
-      "navn": "Fastsett besteberegning fødende kvinne",
-      "kodeverk": "FAKTA_OM_BEREGNING_TILFELLE"
-    },
-    {
       "kode": "FASTSETT_MAANEDSINNTEKT_FL",
       "navn": "Fastsett månedsinntekt frilans",
       "kodeverk": "FAKTA_OM_BEREGNING_TILFELLE"
@@ -2167,11 +2162,6 @@
     {
       "kode": "VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD",
       "navn": "Vurder tidsbegrenset arbeidsforhold",
-      "kodeverk": "FAKTA_OM_BEREGNING_TILFELLE"
-    },
-    {
-      "kode": "VURDER_BESTEBEREGNING",
-      "navn": "Vurder om søker skal ha besteberegning",
       "kodeverk": "FAKTA_OM_BEREGNING_TILFELLE"
     }
   ],
@@ -5372,11 +5362,6 @@
     {
       "kode": "ER_ANKE_IKKE_KONKRET",
       "navn": "Er anke ikke konkret.",
-      "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
-    },
-    {
-      "kode": "FORDELING_ETTER_BESTEBEREGNING",
-      "navn": "Fordeling etter besteberegning",
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {

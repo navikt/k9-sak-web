@@ -3,30 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { NavFieldGroup } from '@fpsak-frontend/form';
-import { formatCurrencyNoKr, isArrayEmpty, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
-import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { isArrayEmpty, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { mapAndelToField, skalFastsetteInntektForSN, skalHaBesteberegningSelector } from './BgFordelingUtils';
+import { mapAndelToField, skalFastsetteInntektForSN } from './BgFordelingUtils';
 import styles from './inntektFieldArray.less';
 import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../BeregningFormUtils';
 import { AndelRow, getHeaderTextCodes } from './InntektFieldArrayRow';
 import AddAndelButton from './AddAndelButton';
 import SummaryRow from './SummaryRow';
-
-const dagpenger = (aktivitetStatuser, beregnetPrAar) => ({
-  andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.DAGPENGER)[0].navn,
-  aktivitetStatus: aktivitetStatus.DAGPENGER,
-  fastsattBelop: beregnetPrAar || beregnetPrAar === 0 ? formatCurrencyNoKr(beregnetPrAar / 12) : '',
-  inntektskategori: inntektskategorier.DAGPENGER,
-  nyAndel: true,
-  skalKunneEndreAktivitet: false,
-  lagtTilAvSaksbehandler: true,
-});
 
 const isDirty = (meta, isBeregningFormDirty) => meta.dirty || isBeregningFormDirty;
 
@@ -117,41 +104,6 @@ const createBruttoBGSummaryRow = (fields, readOnly, beregningsgrunnlag, behandli
   />
 );
 
-const findDagpengerIndex = fields => {
-  let dagpengerIndex = -1;
-  fields.forEach((id, index) => {
-    const field = fields.get(index);
-    if (field.aktivitetStatus === aktivitetStatus.DAGPENGER) {
-      dagpengerIndex = index;
-    }
-  });
-  return dagpengerIndex;
-};
-
-export const leggTilDagpengerOmBesteberegning = (
-  fields,
-  skalHaBesteberegning,
-  aktivitetStatuser,
-  dagpengeAndelLagtTilIForrige,
-) => {
-  const dpIndex = findDagpengerIndex(fields);
-  if (!skalHaBesteberegning) {
-    if (dpIndex !== -1) {
-      const field = fields.get(dpIndex);
-      if (field.lagtTilAvSaksbehandler) {
-        fields.remove(dpIndex);
-      }
-    }
-    return;
-  }
-  if (dpIndex !== -1) {
-    return;
-  }
-  fields.push(
-    dagpenger(aktivitetStatuser, dagpengeAndelLagtTilIForrige ? dagpengeAndelLagtTilIForrige.beregnetPrAar : undefined),
-  );
-};
-
 /**
  *  InntektFieldArray
  *
@@ -166,9 +118,6 @@ export const InntektFieldArrayImpl = ({
   isBeregningFormDirty,
   erKunYtelse,
   skalKunneLeggeTilAndel,
-  aktivitetStatuser,
-  dagpengeAndelLagtTilIForrige,
-  skalHaBesteberegning,
   skalFastsetteSN,
   behandlingId,
   behandlingVersjon,
@@ -188,7 +137,7 @@ export const InntektFieldArrayImpl = ({
     alleKodeverk,
     arbeidsgiverOpplysningerPerId,
   );
-  leggTilDagpengerOmBesteberegning(fields, skalHaBesteberegning, aktivitetStatuser, dagpengeAndelLagtTilIForrige);
+
   if (tablerows.length === 0) {
     return null;
   }
@@ -218,9 +167,6 @@ InntektFieldArrayImpl.propTypes = {
   isBeregningFormDirty: PropTypes.bool.isRequired,
   erKunYtelse: PropTypes.bool.isRequired,
   skalKunneLeggeTilAndel: PropTypes.bool,
-  aktivitetStatuser: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
-  skalHaBesteberegning: PropTypes.bool.isRequired,
-  dagpengeAndelLagtTilIForrige: PropTypes.shape(),
   skalFastsetteSN: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -231,7 +177,6 @@ InntektFieldArrayImpl.propTypes = {
 };
 
 InntektFieldArrayImpl.defaultProps = {
-  dagpengeAndelLagtTilIForrige: undefined,
   skalKunneLeggeTilAndel: true,
 };
 
@@ -288,17 +233,8 @@ InntektFieldArray.buildInitialValues = andeler => {
   return andeler.map(a => mapAndelToField(a));
 };
 
-const finnDagpengeAndelLagtTilIForrige = bg => {
-  const andelerLagtTil = bg.beregningsgrunnlagPeriode[0].andelerLagtTilManueltIForrige;
-  return andelerLagtTil
-    ? andelerLagtTil.find(andel => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER)
-    : undefined;
-};
-
 export const mapStateToProps = (state, ownProps) => {
   const isBeregningFormDirty = isFormDirty(state, ownProps);
-  const aktivitetStatuser = ownProps.alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-  const skalHaBesteberegning = skalHaBesteberegningSelector(state, ownProps) === true;
   const skalFastsetteSN = skalFastsetteInntektForSN(state, ownProps);
   const tilfeller = ownProps.beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller
     ? ownProps.beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
@@ -306,9 +242,6 @@ export const mapStateToProps = (state, ownProps) => {
   return {
     skalFastsetteSN,
     isBeregningFormDirty,
-    skalHaBesteberegning,
-    aktivitetStatuser,
-    dagpengeAndelLagtTilIForrige: finnDagpengeAndelLagtTilIForrige(ownProps.beregningsgrunnlag),
     erKunYtelse: tilfeller && tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
   };
 };
