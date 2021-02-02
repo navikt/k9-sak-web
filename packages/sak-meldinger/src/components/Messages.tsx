@@ -74,9 +74,10 @@ const formName = 'Messages';
 const RECIPIENT = { id: 'Bruker', type: '' };
 
 const createValidateRecipient = recipients => value =>
-  Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value)
-    ? [{ id: 'ValidationMessage.InvalidRecipient' }]
-    : undefined;
+  value === JSON.stringify(RECIPIENT) ||
+  (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
+    ? undefined
+    : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
 function lagVisningsNavnForMottaker(mottaker, arbeidsgiverOpplysningerPerId) {
   if (
@@ -182,7 +183,7 @@ export const MessagesImpl: FunctionComponent<
             name="mottaker"
             readOnly={recipients.length === 1 && mottaker && mottaker === JSON.stringify(recipients[0])}
             label={intl.formatMessage({ id: 'Messages.Recipient' })}
-            validate={[required, createValidateRecipient(recipients)]}
+            validate={[/* required, */ createValidateRecipient(recipients)]}
             placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
             selectValues={recipients.map(recipient => (
               <option key={recipient.id} value={JSON.stringify(recipient)}>
