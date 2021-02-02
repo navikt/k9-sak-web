@@ -54,7 +54,7 @@ interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
   behandlingId: number;
   behandlingVersjon: number;
-  previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
+  previewCallback: (mottaker: Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
   templates: Template[] | Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
@@ -130,7 +130,7 @@ export const MessagesImpl: FunctionComponent<
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
 
-  let recipients: string[] = [RECIPIENT];
+  let recipients: Mottaker[] = [RECIPIENT];
   let tmpls: Template[] = Array.isArray(templates) ? templates : [];
 
   // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
