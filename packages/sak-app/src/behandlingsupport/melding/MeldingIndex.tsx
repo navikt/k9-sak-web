@@ -61,7 +61,7 @@ const getPreviewCallback = (
   behandlingUuid: string,
   fagsakYtelseType: Kodeverk,
   fetchPreview: (erHenleggelse: boolean, data: any) => void,
-) => (overstyrtMottaker?: Mottaker, dokumentMal: string, fritekst: string) => {
+) => (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string) => {
   const data = erTilbakekrevingType({ kode: behandlingTypeKode })
     ? {
         fritekst: fritekst || ' ',
