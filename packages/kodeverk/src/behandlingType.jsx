@@ -10,4 +10,7 @@ const behandlingType = {
   TILBAKEKREVING_REVURDERING: 'BT-009',
 };
 
+export const erTilbakekrevingType = type =>
+  behandlingType.TILBAKEKREVING === type?.kode || behandlingType.TILBAKEKREVING_REVURDERING === type?.kode;
+
 export default behandlingType;

@@ -9,13 +9,14 @@ import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import styles from './henleggBehandlingModal.less';
 
 const maxLength1500 = maxLength(1500);
@@ -28,16 +29,21 @@ const previewHenleggBehandlingDoc = (
   fritekst: string,
   behandlingId: number,
   behandlingUuid?: string,
+  behandlingType?: Kodeverk,
 ) => (e: React.MouseEvent | React.KeyboardEvent): void => {
   // TODO Hardkoda verdiar. Er dette eit kodeverk?
-  const data = {
-    behandlingUuid,
-    ytelseType,
-    dokumentMal: 'HENLEG',
-    fritekst,
-    mottaker: 'Søker',
-    behandlingId,
-  };
+  const data = erTilbakekrevingType(behandlingType)
+    ? {
+        ytelseType,
+        dokumentMal: 'HENLEG',
+        fritekst,
+        mottaker: 'Søker',
+        behandlingId,
+      }
+    : {
+        dokumentMal: dokumentMalType.HENLEGG_BEHANDLING_DOK,
+        dokumentdata: { fritekst: fritekst || ' ' },
+      };
   previewHenleggBehandling(true, data);
   e.preventDefault();
 };
@@ -223,6 +229,7 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
                         fritekst,
                         behandlingId,
                         behandlingUuid,
+                        behandlingType,
                       )}
                       onKeyDown={previewHenleggBehandlingDoc(
                         previewHenleggBehandling,
@@ -230,6 +237,7 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
                         fritekst,
                         behandlingId,
                         behandlingUuid,
+                        behandlingType,
                       )}
                       className="lenke lenke--frittstaende"
                     >

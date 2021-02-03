@@ -32,6 +32,9 @@ describe('<TotrinnskontrollIndex>', () => {
       kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: '',
     },
+    person: {
+      aktørId: '123',
+    },
   };
 
   const alleBehandlinger = [

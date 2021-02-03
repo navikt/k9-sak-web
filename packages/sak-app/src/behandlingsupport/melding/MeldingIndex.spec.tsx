@@ -22,10 +22,9 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('<MeldingIndex>', () => {
-  const recipients = ['Søker'];
-
   const fagsak = {
     saksnummer: '123456',
+    person: { aktørId: '123' },
   };
 
   const alleBehandlinger = [
@@ -73,7 +72,6 @@ describe('<MeldingIndex>', () => {
     );
 
     const index = wrapper.find(MeldingerSakIndex);
-    expect(index.prop('recipients')).toEqual(recipients);
     expect(index.prop('templates')).toEqual(templates);
   });
 
@@ -98,7 +96,7 @@ describe('<MeldingIndex>', () => {
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
     expect(reqData).toHaveLength(1);
-    expect(reqData[0].params.fritekst).toBe(' ');
+    expect(reqData[0].params.dokumentdata.fritekst).toBe(' ');
   });
 
   it('skal lukke av modal', async () => {

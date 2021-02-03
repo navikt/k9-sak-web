@@ -63,7 +63,9 @@ export const FormkravKlageForm = ({
   intl,
   formProps,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
+  skalKunneVelgeKlagepart,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
@@ -83,15 +85,23 @@ export const FormkravKlageForm = ({
           {Array.isArray(parterMedKlagerett) && parterMedKlagerett.length ? (
             <>
               <SelectField
-                readOnly={readOnly}
+                readOnly={readOnly || !skalKunneVelgeKlagepart}
                 name="valgtPartMedKlagerett"
                 selectValues={parterMedKlagerett.map(part => (
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
-                    {part.identifikasjon.id}
+                    {arbeidsgiverOpplysningerPerId &&
+                    arbeidsgiverOpplysningerPerId[part.identifikasjon.id] &&
+                    arbeidsgiverOpplysningerPerId[part.identifikasjon.id].navn
+                      ? `${arbeidsgiverOpplysningerPerId[part.identifikasjon.id].navn} (${part.identifikasjon.id})`
+                      : part.identifikasjon.id}
                   </option>
                 ))}
                 className={readOnly ? styles.selectReadOnly : null}
-                label={intl.formatMessage({ id: 'Klage.Formkrav.velgPartMedKlagerett' })}
+                label={intl.formatMessage(
+                  skalKunneVelgeKlagepart
+                    ? { id: 'Klage.Formkrav.velgPartMedKlagerett' }
+                    : { id: 'Klage.Formkrav.valgtPartMedKlagerett' },
+                )}
                 validate={[required]}
                 bredde="xl"
               />
@@ -185,12 +195,15 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
+  skalKunneVelgeKlagepart: PropTypes.bool,
 };
 
 FormkravKlageForm.defaultProps = {
   readOnly: true,
   readOnlySubmitButton: true,
+  skalKunneVelgeKlagepart: true,
 };
 
 export default injectIntl(FormkravKlageForm);

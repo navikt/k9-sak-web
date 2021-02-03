@@ -5,7 +5,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
@@ -26,24 +25,26 @@ const headerColumnContent = [
   <></>,
 ];
 
-export const utledNøkkel = arbeidsforhold => {
-  if (arbeidsforhold.lagtTilAvSaksbehandler) {
-    return arbeidsforhold.navn;
-  }
-  return `${arbeidsforhold.eksternArbeidsforholdId}${arbeidsforhold.arbeidsforholdId}${arbeidsforhold.arbeidsgiverIdentifiktorGUI}`;
+export const utledNøkkel = ({ id, arbeidsforhold }) => {
+  const arbeidsforholdId =
+    id || (arbeidsforhold && arbeidsforhold.arbeidsforholdId ? arbeidsforhold.arbeidsforholdId : '');
+  const internId = arbeidsforhold && arbeidsforhold.internArbeidsforholdId ? arbeidsforhold.internArbeidsforholdId : '';
+  const eksternId =
+    arbeidsforhold && arbeidsforhold.eksternArbeidsforholdId ? arbeidsforhold.eksternArbeidsforholdId : '';
+
+  return `${arbeidsforholdId}${internId}${eksternId}`;
 };
 
 const PersonArbeidsforholdTableV2 = ({
   alleArbeidsforhold,
   selectedId,
-  selectArbeidsforholdCallback,
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
   updateArbeidsforhold,
 }) => {
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
-  const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(false);
+  const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
   const intl = useIntl();
 
   const visPermisjon = arbeidsforhold => {
@@ -86,26 +87,34 @@ const PersonArbeidsforholdTableV2 = ({
               ? `${parseFloat(a.stillingsprosent).toFixed(2)} %`
               : '';
           const navn = utledArbeidsforholdYrkestittel(a);
-          const kilde = a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode;
+          const kilde =
+            Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
+
+          const harAksjonspunktÅrsaker = Array.isArray(a.aksjonspunktÅrsaker) && a.aksjonspunktÅrsaker.length > 0;
+          const harPermisjoner = Array.isArray(a.permisjoner) && a.permisjoner.length > 0;
+          const harPerioder = Array.isArray(a.perioder) && a.perioder.length > 0;
+          const harInntektsmeldinger = Array.isArray(a.inntektsmeldinger) && a.inntektsmeldinger.length > 0;
+
           return (
             <>
               <TableRow
                 key={utledNøkkel(a)}
                 model={a}
-                onMouseDown={selectArbeidsforholdCallback}
-                onKeyDown={selectArbeidsforholdCallback}
+                onMouseDown={() => setVisAksjonspunktInfo(true)}
+                onKeyDown={() => setVisAksjonspunktInfo(true)}
                 isSelected={a.id === selectedId}
-                isApLeftBorder={a.aksjonspunktÅrsaker.length > 0}
+                isApLeftBorder={harAksjonspunktÅrsaker}
               >
                 <TableColumn>
                   <Normaltekst>{decodeHtmlEntity(navn)}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                   <Normaltekst>
-                    <PeriodLabel
-                      dateStringFom={a.perioder && a.perioder.length > 0 ? a.perioder[0].fom : {}}
-                      dateStringTom={a.perioder && a.perioder.length > 0 ? a.perioder[0].tom : {}}
-                    />
+                    {harPerioder ? (
+                      <PeriodLabel dateStringFom={a.perioder[0].fom} dateStringTom={a.perioder[0].tom} />
+                    ) : (
+                      '-'
+                    )}
                   </Normaltekst>
                 </TableColumn>
                 <TableColumn>
@@ -115,55 +124,20 @@ const PersonArbeidsforholdTableV2 = ({
                   <Normaltekst>{stillingsprosent}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
-                  {a.inntektsmeldinger[0] && a.inntektsmeldinger[0].mottattTidspunkt && (
+                  {harInntektsmeldinger && a.inntektsmeldinger[0].mottattTidspunkt && (
                     <Normaltekst>
                       <DateLabel dateString={a.inntektsmeldinger[0].mottattTidspunkt} />
                     </Normaltekst>
                   )}
                 </TableColumn>
-                {a.aksjonspunktÅrsaker.length > 0 && (
+                {(!harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length === 0) && harPermisjoner && (
                   <TableColumn className={styles.aksjonspunktColumn}>
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
-                      <Image
-                        src={advarselImageUrl}
-                        alt=""
-                        tooltip={<FormattedMessage id="PersonArbeidsforholdTable.TrengerAvklaring" />}
-                      />
-                      <Normaltekst className={styles.visLukkAksjonspunkt}>
+                      <Normaltekst className={styles.visLukkPermisjon}>
                         {intl.formatMessage(
                           selectedArbeidsforhold === a && visAksjonspunktInfo
-                            ? {
-                                id: 'PersonArbeidsforholdTable.LukkAksjospunkt',
-                              }
-                            : {
-                                id: 'PersonArbeidsforholdTable.VisAksjospunkt',
-                              },
-                        )}
-                      </Normaltekst>
-                      <Image
-                        className={
-                          selectedArbeidsforhold && selectedArbeidsforhold.id === a.id && visAksjonspunktInfo
-                            ? styles.chevronOpp
-                            : styles.chevronNed
-                        }
-                        src={chevronIkonUrl}
-                        alt=""
-                      />
-                    </button>
-                  </TableColumn>
-                )}
-                {a.aksjonspunktÅrsaker.length === 0 && a.permisjoner.length > 0 && (
-                  <TableColumn className={styles.aksjonspunktColumn}>
-                    <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
-                      <Normaltekst className={styles.visLukkAksjonspunkt}>
-                        {intl.formatMessage(
-                          selectedArbeidsforhold === a && visAksjonspunktInfo
-                            ? {
-                                id: 'PersonArbeidsforholdTable.LukkPermisjon',
-                              }
-                            : {
-                                id: 'PersonArbeidsforholdTable.VisPermisjon',
-                              },
+                            ? { id: 'PersonArbeidsforholdTable.LukkPermisjon' }
+                            : { id: 'PersonArbeidsforholdTable.VisPermisjon' },
                         )}
                       </Normaltekst>
                       <Image
@@ -179,21 +153,23 @@ const PersonArbeidsforholdTableV2 = ({
                   </TableColumn>
                 )}
                 <TableColumn>
-                  {a.handlingType === arbeidsforholdHandlingType.BRUK && a.aksjonspunktÅrsaker.length === 0 && (
-                    <Image
-                      src={erIBrukImageUrl}
-                      alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
-                      tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
-                      tabIndex="0"
-                      alignTooltipLeft
-                    />
-                  )}
+                  {a.handlingType &&
+                    a.handlingType.kode === arbeidsforholdHandlingType.BRUK &&
+                    a.aksjonspunktÅrsaker.length === 0 && (
+                      <Image
+                        src={erIBrukImageUrl}
+                        alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
+                        tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
+                        tabIndex="0"
+                        alignTooltipLeft
+                      />
+                    )}
                 </TableColumn>
               </TableRow>
-              {selectedArbeidsforhold && selectedArbeidsforhold.id === a.id && visAksjonspunktInfo && (
+              {visAksjonspunktInfo && (harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length > 0) && (
                 <PersonArbeidsforholdDetailFormV2
                   key={a.id}
-                  arbeidsforhold={selectedArbeidsforhold}
+                  arbeidsforhold={a}
                   hasAksjonspunkter
                   hasOpenAksjonspunkter
                   updateArbeidsforhold={updateArbeidsforhold}
@@ -219,7 +195,6 @@ const PersonArbeidsforholdTableV2 = ({
 PersonArbeidsforholdTableV2.propTypes = {
   alleArbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType).isRequired,
   selectedId: PropTypes.string,
-  selectArbeidsforholdCallback: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,

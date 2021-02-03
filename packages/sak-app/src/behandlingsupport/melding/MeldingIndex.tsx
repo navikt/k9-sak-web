@@ -1,18 +1,18 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex, FormValues } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { BehandlingAppKontekst, Fagsak, Kodeverk } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak, Kodeverk, ArbeidsgiverOpplysningerWrapper, Mottaker } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { useFpSakKodeverk } from '../../data/useKodeverk';
-import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
+import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
 import { K9sakApiKeys, restApiHooks, requestApi } from '../../data/k9sakApi';
 
@@ -31,9 +31,7 @@ const getSubmitCallback = (
     values.brevmalkode === dokumentMalType.INNOPP ||
     values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
     values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-  const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
+  const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
 
   setShowMessageModal(!isInnhentEllerForlenget);
 
@@ -63,23 +61,16 @@ const getPreviewCallback = (
   behandlingUuid: string,
   fagsakYtelseType: Kodeverk,
   fetchPreview: (erHenleggelse: boolean, data: any) => void,
-) => (mottaker: string, dokumentMal: string, fritekst: string, aarsakskode: string) => {
-  const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandlingTypeKode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
-  const data = erTilbakekreving
+) => (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string) => {
+  const data = erTilbakekrevingType({ kode: behandlingTypeKode })
     ? {
-        behandlingUuid,
         fritekst: fritekst || ' ',
         brevmalkode: dokumentMal,
       }
     : {
-        behandlingUuid,
-        ytelseType: fagsakYtelseType,
-        fritekst: fritekst || ' ',
-        arsakskode: aarsakskode || null,
-        mottaker,
+        overstyrtMottaker,
         dokumentMal,
+        dokumentdata: { fritekst: fritekst || ' ' },
       };
   fetchPreview(false, data);
 };
@@ -89,6 +80,7 @@ interface OwnProps {
   alleBehandlinger: BehandlingAppKontekst[];
   behandlingId: number;
   behandlingVersjon?: number;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 interface Brevmal {
@@ -98,14 +90,19 @@ interface Brevmal {
 }
 
 const EMPTY_ARRAY = [];
-const RECIPIENTS = ['Søker'];
 
 /**
  * MeldingIndex
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, behandlingId, behandlingVersjon }) => {
+const MeldingIndex: FunctionComponent<OwnProps> = ({
+  fagsak,
+  alleBehandlinger,
+  behandlingId,
+  behandlingVersjon,
+  arbeidsgiverOpplysninger,
+}) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
   const [showMessagesModal, setShowMessageModal] = useState(false);
   const [submitCounter, setSubmitCounter] = useState(0);
@@ -159,7 +156,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, b
     [behandlingId, behandlingVersjon],
   );
 
-  const fetchPreview = useVisForhandsvisningAvMelding(behandling.type);
+  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   const previewCallback = useCallback(
     getPreviewCallback(behandling.type.kode, behandling.uuid, fagsak.sakstype, fetchPreview),
@@ -181,6 +178,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, b
     },
   );
 
+  const skalHenteBrevmaler = requestApi.hasPath(K9sakApiKeys.BREVMALER);
   const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmal[]>(
     K9sakApiKeys.BREVMALER,
     undefined,
@@ -189,7 +187,10 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, b
     },
   );
 
-  if (stateBrevmaler === RestApiState.LOADING || (skalHenteRevAp && stateRevAp === RestApiState.LOADING)) {
+  if (
+    (skalHenteBrevmaler && (stateBrevmaler === RestApiState.NOT_STARTED || stateBrevmaler === RestApiState.LOADING)) ||
+    (skalHenteRevAp && stateRevAp === RestApiState.LOADING)
+  ) {
     return <LoadingPanel />;
   }
 
@@ -202,7 +203,6 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, b
 
       <MeldingerSakIndex
         submitCallback={submitCallback}
-        recipients={RECIPIENTS}
         sprakKode={behandling?.sprakkode}
         previewCallback={previewCallback}
         behandlingId={behandlingId}
@@ -210,6 +210,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({ fagsak, alleBehandlinger, b
         revurderingVarslingArsak={revurderingVarslingArsak}
         templates={brevmaler}
         isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
       />
 
       {submitFinished && showSettPaVentModal && (

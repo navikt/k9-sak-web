@@ -42,12 +42,12 @@ const VedtakPanels = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   vilkar,
   beregningsgrunnlag,
   resultatstrukturOriginalBehandling,
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
-  lagreArsakerTilRedusertUtbetaling,
   dokumentdata,
 }) => {
   const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(
@@ -88,8 +88,8 @@ const VedtakPanels = ({
         vedtakVarsel={vedtakVarsel}
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        lagreArsakerTilRedusertUtbetaling={lagreArsakerTilRedusertUtbetaling}
         dokumentdata={dokumentdata}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     );
   }
@@ -113,6 +113,7 @@ const VedtakPanels = ({
       ytelseTypeKode={ytelseTypeKode}
       kanOverstyre={employeeHasAccess}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       vilkar={vilkar}
       beregningErManueltFastsatt={beregningErManueltFastsatt}
       vedtakVarsel={vedtakVarsel}
@@ -138,6 +139,7 @@ VedtakPanels.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
   readOnly: PropTypes.bool.isRequired,
@@ -147,7 +149,6 @@ VedtakPanels.propTypes = {
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
-  lagreArsakerTilRedusertUtbetaling: PropTypes.func,
   dokumentdata: PropTypes.shape(),
 };
 

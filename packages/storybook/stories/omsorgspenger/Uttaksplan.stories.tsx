@@ -152,13 +152,11 @@ const inntektArbeidYtelseMedNavn = {
 } as InntektArbeidYtelse;
 
 const arbeidsgivere = {
-  arbeidsgivere: {
-    12345678: {
-      erPrivatPerson: false,
-      referanse: '12345678',
-      identifikator: orgNr1,
-      navn: 'Bedrift AS',
-    },
+  12345678: {
+    erPrivatPerson: false,
+    referanse: '12345678',
+    identifikator: orgNr1,
+    navn: 'Bedrift AS',
   },
 };
 
@@ -175,7 +173,7 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
     aksjonspunkterForSteg={aksjonspunkterForSteg}
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
     fullUttaksplan={{ aktiviteter: [] }}
-    arbeidsgivere={arbeidsgivere}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     featureToggles={{}}
   />
 );
@@ -190,7 +188,7 @@ export const behandletAksjonspunkt = () => (
     aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }] as Aksjonspunkt[]}
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
     fullUttaksplan={{ aktiviteter: [] }}
-    arbeidsgivere={arbeidsgivere}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     featureToggles={{}}
   />
 );
@@ -205,7 +203,7 @@ export const aksjonspunktAvslåttePerioder = () => (
     aksjonspunkterForSteg={aksjonspunkterForSteg}
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
     fullUttaksplan={{ aktiviteter: [] }}
-    arbeidsgivere={arbeidsgivere}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     featureToggles={{}}
   />
 );
@@ -220,7 +218,7 @@ export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
     aksjonspunkterForSteg={aksjonspunkterForSteg}
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
     fullUttaksplan={{ aktiviteter: [] }}
-    arbeidsgivere={arbeidsgivere}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
     featureToggles={{}}
   />
 );

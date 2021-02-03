@@ -26,7 +26,7 @@ class PanelDef extends ProsessStegPanelDef {
     UnntakBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
     UnntakBehandlingApiKeys.VEDTAK_VARSEL,
     UnntakBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-    // unntakBehandlingApi.DOKUMENTDATA_HENTE,
+    UnntakBehandlingApiKeys.DOKUMENTDATA_HENTE,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
@@ -34,16 +34,23 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
     findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
-  getData = ({ previewCallback, rettigheter, aksjonspunkter, vilkar, simuleringResultat, fagsak }) => {
-    return {
-      previewCallback,
-      aksjonspunkter,
-      vilkar,
-      simuleringResultat,
-      ytelseTypeKode: fagsak?.fagsakYtelseType?.kode,
-      employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-    };
-  };
+  getData = ({
+    previewCallback,
+    rettigheter,
+    aksjonspunkter,
+    vilkar,
+    simuleringResultat,
+    fagsak,
+    arbeidsgiverOpplysningerPerId,
+  }) => ({
+    previewCallback,
+    aksjonspunkter,
+    vilkar,
+    simuleringResultat,
+    ytelseTypeKode: fagsak?.fagsakYtelseType?.kode,
+    employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+    arbeidsgiverOpplysningerPerId,
+  });
 }
 
 class VedtakProsessStegPanelDef extends ProsessStegDef {

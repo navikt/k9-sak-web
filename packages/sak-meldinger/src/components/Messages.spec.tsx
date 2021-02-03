@@ -17,12 +17,11 @@ const mockProps = {
   validateModel: () => undefined,
   isSubmitting: false,
   intl: intlMock,
+  arbeidsgiverOpplysningerPerId: {},
   ...reduxFormPropsMock,
 };
 
 describe('<Messages>', () => {
-  const recipients = ['Søker', 'Annen person'];
-
   const sprakkode = {
     kode: 'en',
     kodeverk: 'Engelsk',
@@ -40,7 +39,6 @@ describe('<Messages>', () => {
     const wrapper = shallowWithIntl(
       <Messages
         {...mockProps}
-        recipients={recipients}
         templates={templates}
         sprakKode={sprakkode}
         causes={causes}
@@ -54,13 +52,12 @@ describe('<Messages>', () => {
     const selectFields = form.find('SelectField');
     expect(selectFields).toHaveLength(2);
 
-    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
-    expect(recipientSelect).toHaveLength(1);
-    expect(recipientSelect.prop('selectValues')).toHaveLength(2);
-
     const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
     expect(templateSelect).toHaveLength(1);
     expect(templateSelect.prop('selectValues')).toHaveLength(3);
+
+    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    expect(recipientSelect).toHaveLength(1);
   });
 
   it('skal vise forhåndvisningslenke når fritekst er gyldig', () => {
@@ -68,12 +65,13 @@ describe('<Messages>', () => {
     const wrapper = shallowWithIntl(
       <Messages
         {...mockProps}
-        recipients={recipients}
         templates={templates}
         sprakKode={sprakkode}
+        brevmalkode="REVURD"
         causes={causes}
         previewCallback={previewEventCallback}
         fritekst="Dokument"
+        mottaker="Bruker"
         behandlingId={1}
         behandlingVersjon={2}
         revurderingVarslingArsak={[{} as KodeverkMedNavn]}
@@ -94,7 +92,6 @@ describe('<Messages>', () => {
     const wrapper = shallowWithIntl(
       <Messages
         {...mockProps}
-        recipients={recipients}
         templates={templates}
         sprakKode={sprakkode}
         brevmalkode="REVURD"
@@ -111,12 +108,12 @@ describe('<Messages>', () => {
     const selectFields = form.find('SelectField');
     expect(selectFields).toHaveLength(3);
 
-    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
-    expect(recipientSelect).toHaveLength(1);
-    expect(recipientSelect.prop('selectValues')).toHaveLength(2);
-
     const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
     expect(templateSelect).toHaveLength(1);
     expect(templateSelect.prop('selectValues')).toHaveLength(3);
+
+    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    expect(recipientSelect).toHaveLength(1);
+    expect(recipientSelect.prop('selectValues')).toHaveLength(1);
   });
 });

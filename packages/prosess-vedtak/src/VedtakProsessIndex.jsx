@@ -41,9 +41,9 @@ const VedtakProsessIndex = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
-  lagreArsakerTilRedusertUtbetaling,
   dokumentdataHente,
 }) => (
   <RawIntlProvider value={intl}>
@@ -71,9 +71,9 @@ const VedtakProsessIndex = ({
       previewCallback={previewCallback}
       submitCallback={submitCallback}
       alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       vedtakVarsel={vedtakVarsel}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-      lagreArsakerTilRedusertUtbetaling={lagreArsakerTilRedusertUtbetaling}
       dokumentdata={dokumentdataHente}
     />
   </RawIntlProvider>
@@ -95,10 +95,10 @@ VedtakProsessIndex.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
-  lagreArsakerTilRedusertUtbetaling: PropTypes.func,
   dokumentdataHente: PropTypes.shape(),
 };
 

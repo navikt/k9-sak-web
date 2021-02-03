@@ -47,7 +47,7 @@ class PanelDef extends ProsessStegPanelDef {
     simuleringResultat,
     beregningsgrunnlag,
     forbrukteDager,
-    lagreArsakerTilRedusertUtbetaling,
+    arbeidsgiverOpplysningerPerId,
   }) => ({
     previewCallback,
     aksjonspunkter,
@@ -57,7 +57,7 @@ class PanelDef extends ProsessStegPanelDef {
     ytelseTypeKode: fagsakYtelseType.OMSORGSPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
-    lagreArsakerTilRedusertUtbetaling,
+    arbeidsgiverOpplysningerPerId,
   });
 }
 

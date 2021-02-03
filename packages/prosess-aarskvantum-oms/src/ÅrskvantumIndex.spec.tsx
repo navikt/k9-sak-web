@@ -76,8 +76,7 @@ describe('<ÅrskvantumIndex>', () => {
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
         inntektArbeidYtelse={inntektArbeidYtelse}
-        arbeidsgivere={arbeidsgivere}
-        featureToggles={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere}
       />,
     );
 
@@ -95,8 +94,7 @@ describe('<ÅrskvantumIndex>', () => {
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
         inntektArbeidYtelse={inntektArbeidYtelse}
-        arbeidsgivere={arbeidsgivere}
-        featureToggles={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgivere}
       />,
     );
 

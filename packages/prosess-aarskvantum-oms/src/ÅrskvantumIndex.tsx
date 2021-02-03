@@ -5,7 +5,6 @@ import {
   KodeverkMedNavn,
   ArbeidsgiverOpplysningerPerId,
   Aksjonspunkt,
-  FeatureToggles,
   InntektArbeidYtelse,
 } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -37,8 +36,7 @@ interface ÅrsakvantumIndexProps {
   submitCallback: (values: any[]) => void;
   aksjonspunkterForSteg?: Aksjonspunkt[];
   inntektArbeidYtelse: InntektArbeidYtelse;
-  arbeidsgivere: ArbeidsgiverOpplysningerPerId;
-  featureToggles: FeatureToggles;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
@@ -50,8 +48,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   submitCallback,
   aksjonspunkterForSteg = [],
   inntektArbeidYtelse,
-  arbeidsgivere,
-  featureToggles,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
@@ -75,8 +72,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
         aktiv={sisteUttaksplan?.aktiv}
         // @ts-ignore
         arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere}
-        featureToggles={featureToggles}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     </RawIntlProvider>
   );

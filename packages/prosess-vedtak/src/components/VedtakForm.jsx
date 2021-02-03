@@ -18,7 +18,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import { kanHaFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
@@ -72,6 +72,7 @@ export class VedtakForm extends Component {
       ytelseTypeKode,
       resultatstruktur,
       alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
       tilbakekrevingvalg,
       simuleringResultat,
       vilkar,
@@ -81,6 +82,7 @@ export class VedtakForm extends Component {
       brødtekst,
       overskrift,
       begrunnelse,
+      overstyrtMottaker,
       ...formProps
     } = this.props;
 
@@ -145,6 +147,7 @@ export class VedtakForm extends Component {
             readOnly={readOnly}
             sprakkode={sprakkode}
             ytelseTypeKode={ytelseTypeKode}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             dokumentdata={dokumentdata}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             beregningErManueltFastsatt={beregningErManueltFastsatt}
@@ -154,6 +157,7 @@ export class VedtakForm extends Component {
             brødtekst={brødtekst}
             overskrift={overskrift}
             begrunnelse={begrunnelse}
+            overstyrtMottaker={overstyrtMottaker}
           />
           {kanSendesTilGodkjenning(behandlingStatusKode) && (
             <Row>
@@ -201,6 +205,7 @@ VedtakForm.propTypes = {
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
@@ -252,6 +257,7 @@ export const buildInitialValues = createSelector(
       vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+    overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
     begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
   }),
 );
@@ -264,7 +270,11 @@ const transformValues = values =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     begrunnelse: values.begrunnelse,
-    fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
+    overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+    fritekstbrev: {
+      brødtekst: values.brødtekst,
+      overskrift: values.overskrift,
+    },
     skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
     skalUndertrykkeBrev: values.skalUndertrykkeBrev,
     isVedtakSubmission,
@@ -297,6 +307,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'brødtekst',
       'overskrift',
       'begrunnelse',
+      'overstyrtMottaker',
     ),
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
     behandlingStatusKode: ownProps.behandlingStatus.kode,

@@ -80,7 +80,7 @@ const buildArbeidsforholdText = (
   aksjonspunkt: TotrinnskontrollAksjonspunkt,
   arbeidsforholdHandlingTyper: KodeverkMedNavn[],
 ) =>
-  aksjonspunkt.arbeidforholdDtos.map(arbeidforholdDto => {
+  aksjonspunkt.arbeidsforholdDtos.map(arbeidforholdDto => {
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     return (
       <>
@@ -207,7 +207,7 @@ const getTextForKlageHelper = (
   klageVurderingResultat: KlageVurdering['klageVurderingResultatNK'] | KlageVurdering['klageVurderingResultatNFP'],
 ) => {
   let aksjonspunktTextId = '';
-  switch (klageVurderingResultat.klageVurdering.kode) {
+  switch (klageVurderingResultat.klageVurdering) {
     case klageVurderingCodes.STADFESTE_YTELSESVEDTAK:
       aksjonspunktTextId = 'ToTrinnsForm.Klage.StadfesteYtelsesVedtak';
       break;
@@ -223,9 +223,9 @@ const getTextForKlageHelper = (
     case klageVurderingCodes.MEDHOLD_I_KLAGE:
       if (
         klageVurderingResultat.klageVurderingOmgjoer &&
-        klageVurderingResultat.klageVurderingOmgjoer.kode !== klageVurderingOmgjoerCodes.UDEFINERT
+        klageVurderingResultat.klageVurderingOmgjoer !== klageVurderingOmgjoerCodes.UDEFINERT
       ) {
-        aksjonspunktTextId = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer.kode];
+        aksjonspunktTextId = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer];
         break;
       }
       aksjonspunktTextId = 'VedtakForm.ResultatKlageMedhold';

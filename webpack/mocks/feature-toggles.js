@@ -14,8 +14,8 @@ const featureToggles = [
     value: process.env.UNNTAKSBEHANDLING,
   },
   {
-    key: 'PERIODISERTE_NOKKELTALL',
-    value: process.env.PERIODISERTE_NOKKELTALL,
+    key: 'ARBEIDSFORHOLD_V2',
+    value: process.env.ARBEIDSFORHOLD_V2,
   },
 ];
 

@@ -5,6 +5,7 @@ import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FeatureToggles } from '@k9-sak-web/types';
 import { UnntakBehandlingApiKeys } from '../../data/unntakBehandlingApi';
 
 class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
@@ -14,7 +15,10 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
-  getEndepunkter = () => [UnntakBehandlingApiKeys.INNTEKT_ARBEID_YTELSE];
+  getEndepunkter = (featureToggles: FeatureToggles = {}) =>
+    featureToggles.ARBEIDSFORHOLD_V2
+      ? [UnntakBehandlingApiKeys.ARBEIDSFORHOLD]
+      : [UnntakBehandlingApiKeys.INNTEKT_ARBEID_YTELSE];
 
   getKomponent = props => <ArbeidsforholdFaktaIndex {...props} />;
 
@@ -22,7 +26,7 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getData = ({ personopplysninger, arbeidsgiverOpplysningerPerId }) => ({
     personopplysninger,
-    arbeidsgivere: arbeidsgiverOpplysningerPerId,
+    arbeidsgiverOpplysningerPerId,
   });
 }
 

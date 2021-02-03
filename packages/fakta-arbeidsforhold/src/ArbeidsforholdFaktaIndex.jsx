@@ -24,7 +24,7 @@ const ArbeidsforholdFaktaIndex = ({
   behandling,
   inntektArbeidYtelse,
   arbeidsforhold,
-  arbeidsgivere,
+  arbeidsgiverOpplysningerPerId,
   alleKodeverk,
   alleMerknaderFraBeslutter,
   aksjonspunkter,
@@ -48,15 +48,15 @@ const ArbeidsforholdFaktaIndex = ({
         hasOpenAksjonspunkter={harApneAksjonspunkter}
         submitCallback={submitCallback}
         readOnly={readOnly}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     )}
-    {arbeidsforhold && arbeidsgivere && (
+    {arbeidsforhold && arbeidsgiverOpplysningerPerId && (
       <ArbeidsforholdInfoPanelV2
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         arbeidsforhold={arbeidsforhold}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         aksjonspunkter={aksjonspunkter}
@@ -77,10 +77,10 @@ ArbeidsforholdFaktaIndex.propTypes = {
   }).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType).isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
-  arbeidsgivere: PropTypes.shape().isRequired,
 };
 
 export default ArbeidsforholdFaktaIndex;
