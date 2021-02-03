@@ -56,7 +56,7 @@ export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: Array<string> | 
     typeof tilgjengeligeVedtaksbrev === 'object' &&
     !Array.isArray(tilgjengeligeVedtaksbrev) &&
     Array.isArray(tilgjengeligeVedtaksbrev.alternativeMottakere) &&
-    tilgjengeligeVedtaksbrev.alternativeMottakere.length
+    tilgjengeligeVedtaksbrev.alternativeMottakere.length > 0
   );
 }
 
