@@ -173,14 +173,6 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     FrisinnBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
 
-  const lagreArsakerTilRedusertUtbetaling = arsaker => {
-    if (featureToggles?.DOKUMENTDATA) {
-      lagreDokumentdata({
-        [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
-      });
-    }
-  };
-
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
@@ -196,7 +188,6 @@ const FrisinnProsess: FunctionComponent<OwnProps> = ({
     alleKodeverk,
     arbeidsgiverOpplysningerPerId,
     featureToggles,
-    lagreArsakerTilRedusertUtbetaling,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
