@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { FormattedMessage } from 'react-intl';
@@ -11,18 +12,14 @@ import { setGenerellAndelsinfo } from '../BgFordelingUtils';
 
 const { FASTSETT_BG_KUN_YTELSE } = faktaOmBeregningTilfelle;
 export const brukersAndelFieldArrayName = 'brukersAndelBG';
-export const setFaktaPanelForKunYtelse = (
-  faktaPanels,
-  tilfeller,
+const FastsettBgKunYtelsePanel = ({
   readOnly,
   isAksjonspunktClosed,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
   fieldArrayID,
-) => {
-  if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
-    faktaPanels.push(
+}) => (
       <React.Fragment key="FASTSETT_BG_KUN_YTELSE">
         <BorderBox>
           <Row>
@@ -42,9 +39,16 @@ export const setFaktaPanelForKunYtelse = (
             alleKodeverk={alleKodeverk}
           />
         </BorderBox>
-      </React.Fragment>,
-    );
-  }
+      </React.Fragment>
+);
+
+FastsettBgKunYtelsePanel.propTypes = {
+  readOnly: PropTypes.bool.isRequired,
+  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  fieldArrayID: PropTypes.string.isRequired,
 };
 
 const transformValues = values => ({
@@ -59,14 +63,11 @@ const transformValues = values => ({
   },
 });
 
-export const transformValuesForKunYtelse = (values, tilfeller) => {
-  if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
+FastsettBgKunYtelsePanel.transformValues = (values) => {
     return {
       faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
       ...transformValues(values),
     };
-  }
-  return {};
 };
 
 const validate = (values, aktivertePaneler) => {
@@ -78,7 +79,7 @@ const validate = (values, aktivertePaneler) => {
   return errors;
 };
 
-export const getKunYtelseValidation = (values, aktivertePaneler) => {
+FastsettBgKunYtelsePanel.validate = (values, aktivertePaneler) => {
   if (aktivertePaneler.includes(FASTSETT_BG_KUN_YTELSE)) {
     return validate(values, aktivertePaneler);
   }
@@ -104,9 +105,11 @@ const buildInitialValues = (kunYtelse, faktaOmBeregningAndeler) => {
   return initialValues;
 };
 
-export const buildInitialValuesKunYtelse = (kunYtelse, tilfeller, faktaOmBeregningAndeler) => {
+FastsettBgKunYtelsePanel.buildInitialValues = (kunYtelse, tilfeller, faktaOmBeregningAndeler) => {
   if (tilfeller && tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
     return buildInitialValues(kunYtelse, faktaOmBeregningAndeler);
   }
   return {};
 };
+
+export default FastsettBgKunYtelsePanel;

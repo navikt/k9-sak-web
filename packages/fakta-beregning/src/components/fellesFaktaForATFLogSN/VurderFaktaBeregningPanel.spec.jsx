@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  buildInitialValuesVurderFaktaBeregning,
   harIkkeEndringerIAvklarMedFlereAksjonspunkter,
   transformValuesVurderFaktaBeregning,
 } from './VurderFaktaBeregningPanel';
@@ -21,19 +20,7 @@ const avklarAktiviteterAp = {
   },
 };
 
-const aksjonspunkter = [
-  {
-    definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN },
-  },
-];
-
 describe('<VurderFaktaBeregningPanel>', () => {
-  it('skal bygge initial values', () => {
-    const initialValuesFelles = () => ({ test: 'test' });
-    const initialValues = buildInitialValuesVurderFaktaBeregning.resultFunc(aksjonspunkter, initialValuesFelles);
-    expect(initialValues.test).to.equal('test');
-  });
-
   it('skal ikkje transformValues uten aksjonspunkt', () => {
     const faktaOmBeregning = {
       avklarAktiviteter: {

@@ -1,11 +1,7 @@
 import { expect } from 'chai';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import {
-  brukersAndelFieldArrayName,
-  transformValuesForKunYtelse,
-  buildInitialValuesKunYtelse,
-} from './FastsettBgKunYtelse';
+import Panel, { brukersAndelFieldArrayName } from './FastsettBgKunYtelse';
 
 const { FASTSETT_BG_KUN_YTELSE } = faktaOmBeregningTilfelle;
 const faktaOmBeregningAndel1 = {
@@ -43,7 +39,7 @@ describe('<KunYtelsePanel>', () => {
     };
     const values = {};
     values[`${brukersAndelFieldArrayName}`] = [andel1, andel2];
-    const transformedValues = transformValuesForKunYtelse(values, [FASTSETT_BG_KUN_YTELSE]);
+    const transformedValues = Panel.transformValues(values, [FASTSETT_BG_KUN_YTELSE]);
     expect(transformedValues.kunYtelseFordeling.andeler).to.have.length(2);
     expect(transformedValues.kunYtelseFordeling.andeler[0].andelsnr).to.equal(1);
     expect(transformedValues.kunYtelseFordeling.andeler[0].fastsattBeløp).to.equal(10000);
@@ -74,7 +70,7 @@ describe('<KunYtelsePanel>', () => {
     const kunYtelse = {
       andeler: [andel1, andel2],
     };
-    const initialValues = buildInitialValuesKunYtelse(kunYtelse, [FASTSETT_BG_KUN_YTELSE], faktaOmBeregningAndeler);
+    const initialValues = Panel.buildInitialValues(kunYtelse, [FASTSETT_BG_KUN_YTELSE], faktaOmBeregningAndeler);
     const andeler = initialValues[`${brukersAndelFieldArrayName}`];
     expect(andeler).to.have.length(2);
     expect(andeler[0].andelsnr).to.equal(1);

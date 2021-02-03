@@ -42,6 +42,7 @@ interface FaktaSubmitButtonProps {
   behandlingId?: number;
   behandlingVersjon?: number;
   doNotCheckForRequiredFields?: boolean;
+  validateHiddenFields?: boolean;
   dataId?: string;
 }
 
