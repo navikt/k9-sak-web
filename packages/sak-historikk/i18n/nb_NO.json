@@ -238,7 +238,6 @@
   "HistorikkEndretFelt.Frilansvirksomhet": "Frilansvirksomhet",
   "HistorikkEndretFelt.FordelingForAndel": "{value}",
   "HistorikkEndretFelt.FordelingForNyAndel": "{value}",
-  "HistorikkEndretFelt.FordelingEtterBestebergning": "Fordeling etter besteberegning",
   "HistorikkEndretFelt.InnktektskategoriForAndel": "Inntektskategori for {value}",
   "HistorikkEndretFelt.MottarYtelseForArbeid": "Mottar søker ytelse for arbeid i {value}",
   "HistorikkEndretFelt.MottarYtelseForFrilans": "Mottar søker ytelse for frilansaktiviteten",

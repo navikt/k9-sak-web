@@ -166,7 +166,6 @@ describe('<Beregningsgrunnlag>', () => {
         relevanteStatuser={{ isArbeidstaker: true, isKombinasjonsstatus: true }}
         gjeldendeAksjonspunkter={[]}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -189,7 +188,6 @@ describe('<Beregningsgrunnlag>', () => {
         relevanteStatuser={{ isFrilanser: true, isKombinasjonsstatus: true }}
         gjeldendeAksjonspunkter={[]}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -212,7 +210,6 @@ describe('<Beregningsgrunnlag>', () => {
         relevanteStatuser={{ isSelvstendigNaeringsdrivende: true }}
         gjeldendeAksjonspunkter={[]}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -236,7 +233,6 @@ describe('<Beregningsgrunnlag>', () => {
         gjeldendeAksjonspunkter={ap}
         relevanteStatuser={{ isSelvstendigNaeringsdrivende: true }}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -261,7 +257,6 @@ describe('<Beregningsgrunnlag>', () => {
         allePerioder={lagPerioderMedAndeler([selvstedigNaeringsdrivendeAndel, arbeidstakerAndel])}
         relevanteStatuser={{ isArbeidstaker: true, isSelvstendigNaeringsdrivende: true, isKombinasjonsstatus: true }}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -286,7 +281,6 @@ describe('<Beregningsgrunnlag>', () => {
         }}
         gjeldendeAksjonspunkter={[]}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -312,7 +306,6 @@ describe('<Beregningsgrunnlag>', () => {
           isKombinasjonsstatus: true,
         }}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -339,7 +332,6 @@ describe('<Beregningsgrunnlag>', () => {
           isKombinasjonsstatus: true,
         }}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -364,7 +356,6 @@ describe('<Beregningsgrunnlag>', () => {
           isSelvstendigNaeringsdrivende: false,
         }}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -377,9 +368,6 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(TilstotendeYtelser)).to.have.length(1);
-
-    const ytelsePanel = wrapper.find(TilstotendeYtelser);
-    expect(ytelsePanel.props().gjelderBesteberegning).to.equal(false);
   });
   it('Skal teste at korrekte komponenter vises for andre tilstøtende ytelser uten aksjonspunkt', () => {
     const wrapper = shallowWithIntl(
@@ -393,7 +381,6 @@ describe('<Beregningsgrunnlag>', () => {
         }}
         gjeldendeAksjonspunkter={[]}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}
@@ -416,7 +403,6 @@ describe('<Beregningsgrunnlag>', () => {
         relevanteStatuser={{ isMilitaer: true }}
         gjeldendeAksjonspunkter={[]}
         readOnlySubmitButton
-        gjelderBesteberegning={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         behandlingId={1}

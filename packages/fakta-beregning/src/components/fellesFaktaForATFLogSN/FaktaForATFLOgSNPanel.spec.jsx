@@ -10,7 +10,6 @@ import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/Tidsb
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
-import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 import { INNTEKT_FIELD_ARRAY_NAME } from './BgFordelingUtils';
 
@@ -109,66 +108,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     );
     const vurderATFL = wrapper.find(VurderOgFastsettATFL);
     expect(vurderATFL).to.have.length(1);
-  });
-
-  it('skal kunne transform values for kun besteberegning', () => {
-    const aktivePaneler = [faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
-    const andel1 = { andelsnr: 1, aktivitetStatus: { kode: 'ATFL' } };
-    const andel2 = { andelsnr: 2, aktivitetStatus: { kode: 'SN' } };
-    const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: aktivePaneler.map(kode => ({ kode })),
-      besteberegningAndeler: [andel1, andel2],
-      vurderBesteberegning: { andeler: [andel1, andel2] },
-    };
-    const beregningsgrunnlag = {
-      beregninsgrunnlagPeriode: [
-        {
-          beregningsgrunnlagPrStatusOgAndel: [andel1, andel2],
-        },
-      ],
-    };
-    const values = {
-      tilfeller: aktivePaneler,
-      vurderMottarYtelse: undefined,
-      faktaOmBeregning,
-      beregningsgrunnlag,
-    };
-    values[besteberegningField] = true;
-    values[INNTEKT_FIELD_ARRAY_NAME] = [
-      {
-        fastsattBelop: '10 000',
-        inntektskategori: 'ARBEIDSTAKER',
-        andelsnr: andel1.andelsnr,
-        skalRedigereInntekt: true,
-      },
-      {
-        fastsattBelop: '20 000',
-        inntektskategori: 'SELVSTENDIG_NÆRINGSDRIVENDE',
-        andelsnr: andel2.andelsnr,
-        skalRedigereInntekt: true,
-      },
-    ];
-    const transformedValues = transformValuesFaktaForATFLOgSN(values);
-    expect(transformedValues.fakta.faktaOmBeregningTilfeller).to.have.length(2);
-    expect(transformedValues.fakta.faktaOmBeregningTilfeller[1]).is.eql(
-      faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE,
-    );
-    expect(transformedValues.fakta.faktaOmBeregningTilfeller[0]).is.eql(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING);
-    expect(transformedValues.fakta.besteberegningAndeler.besteberegningAndelListe).to.have.length(2);
-    expect(transformedValues.fakta.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).is.eql(andel1.andelsnr);
-    expect(
-      transformedValues.fakta.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp,
-    ).is.eql(10000);
-    expect(
-      transformedValues.fakta.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.inntektskategori,
-    ).is.eql('ARBEIDSTAKER');
-    expect(transformedValues.fakta.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).is.eql(andel2.andelsnr);
-    expect(
-      transformedValues.fakta.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.fastsattBeløp,
-    ).is.eql(20000);
-    expect(
-      transformedValues.fakta.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.inntektskategori,
-    ).is.eql('SELVSTENDIG_NÆRINGSDRIVENDE');
   });
 
   it('skal kunne transform values nyoppstartet fl og lønnsendring', () => {

@@ -755,10 +755,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekte tekster for kombinasjon av aksjonspunkt 5058', () => {
     const beregningDto = {
-      faktaOmBeregningTilfeller: [
-        { kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING },
-        { kode: faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD },
-      ],
+      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD }],
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
@@ -766,9 +763,10 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
       beregningDto,
     } as TotrinnskontrollAksjonspunkt;
+
     const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
-    expect(message[0]).toEqual(<FormattedMessage id="ToTrinnsForm.Beregning.VurderBesteberegning" />);
-    expect(message[1]).toEqual(<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />);
+
+    expect(message[0]).toEqual(<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />);
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5080', () => {

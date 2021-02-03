@@ -38,10 +38,6 @@ type VurderMilitaer = Readonly<{
   harMilitaer?: boolean;
 }>;
 
-type VurderBesteberegning = Readonly<{
-  skalHaBesteberegning?: boolean;
-}>;
-
 type AvklarAktiviteter = Readonly<{
   aktiviteterTomDatoMapping?: {
     tom: string;
@@ -65,7 +61,6 @@ type FaktaOmBeregning = Readonly<{
   avklarAktiviteter?: AvklarAktiviteter;
   frilansAndel?: FaktaOmBeregningAndel;
   vurderMilitaer?: VurderMilitaer;
-  vurderBesteberegning?: VurderBesteberegning;
   refusjonskravSomKommerForSentListe?: RefusjonskravSomKommerForSentListe[];
   arbeidsforholdMedLønnsendringUtenIM?: FaktaOmBeregningAndel[];
   andelerForFaktaOmBeregning: AndelForFaktaOmBeregning[];

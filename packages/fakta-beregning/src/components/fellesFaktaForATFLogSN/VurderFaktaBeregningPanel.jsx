@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { formPropTypes, FieldArray } from 'redux-form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -70,17 +69,6 @@ const lagHelpTextsForFakta = () => {
 const hasOpenAksjonspunkt = (kode, aksjonspunkter) =>
   aksjonspunkter.some(ap => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
 
-export const buildInitialValuesVurderFaktaBeregning = createSelector(
-  [
-    ownProps => ownProps.aksjonspunkter,
-    (ownProps, beregningsgrunnlag) => getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag),
-  ],
-  (aksjonspunkter, buildInitialValuesTilfeller) => ({
-    aksjonspunkter,
-    ...buildInitialValuesTilfeller(),
-  }),
-);
-
 const harTilfeller = beregningsgrunnlag =>
   beregningsgrunnlag.faktaOmBeregning &&
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller &&
@@ -133,12 +121,12 @@ export class VurderFaktaBeregningPanelImpl extends Component {
 
     if (fields.length === 0) {
       if (harFlereBeregningsgrunnlag) {
-        alleBeregningsgrunnlag.forEach(() => {
-          const initialValues = buildInitialValuesVurderFaktaBeregning(this.props);
+        alleBeregningsgrunnlag.forEach((bg) => {
+          const initialValues = getBuildInitialValuesFaktaForATFLOgSN(this.props, bg);
           fields.push(initialValues);
         });
       } else {
-        const initialValues = buildInitialValuesVurderFaktaBeregning(this.props);
+        const initialValues = getBuildInitialValuesFaktaForATFLOgSN(this.props, alleBeregningsgrunnlag);
         fields.push(initialValues);
       }
     }
@@ -258,7 +246,7 @@ const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingRes
       const vilkarPeriode = behandlingResultatPerioder.find(periode => periode.periode.fom === stpOpptjening);
       return {
         periode: vilkarPeriode.periode,
-        ...transformValuesFaktaForATFLOgSN(faktaBeregningValues, erOverstyring(currentFormValues)),
+        ...transformValuesFaktaForATFLOgSN(faktaBeregningValues),
       };
     });
 };
@@ -290,11 +278,27 @@ export const validateVurderFaktaBeregning = values => {
   const { aksjonspunkter } = values;
   if (aksjonspunkter && hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && values) {
     return {
-      ...validationForVurderFakta(values),
+      [fieldArrayName]: values[fieldArrayName].map((value) => validationForVurderFakta(value))
     };
   }
   return null;
 };
+
+export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex) => (
+  {
+  [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
+      aksjonspunkter: ownProps.aksjonspunkter,
+      ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
+
+  })),
+  aksjonspunkter: ownProps.aksjonspunkter,
+  alleBeregningsgrunnlag,
+  aktivtBeregningsgrunnlagIndex,
+  ...FaktaBegrunnelseTextField.buildInitialValues(
+    findAksjonspunktMedBegrunnelse(ownProps.aksjonspunkter),
+    BEGRUNNELSE_FAKTA_TILFELLER_NAME)
+}
+);
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = values =>
@@ -305,23 +309,12 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
         initialProps.behandlingResultatPerioder,
       ),
     );
-  const validate = values => validateVurderFaktaBeregning(values);
   return (state, ownProps) => {
     const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex } = ownProps;
-    const initialValues = {
-      [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => {
-        return buildInitialValuesVurderFaktaBeregning(ownProps, beregningsgrunnlag);
-      }),
-      aktivtBeregningsgrunnlagIndex,
-      ...FaktaBegrunnelseTextField.buildInitialValues(
-        findAksjonspunktMedBegrunnelse(ownProps.aksjonspunkter),
-        BEGRUNNELSE_FAKTA_TILFELLER_NAME,
-      ),
-    };
+    const initialValues = buildInitialValues(ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex);
     return {
       initialValues,
       onSubmit,
-      validate,
       verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state, ownProps),
       erOverstyrt: erOverstyringAvBeregningsgrunnlag(state, ownProps),
       hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME],
@@ -331,6 +324,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
 
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
+    validate: validateVurderFaktaBeregning,
     form: formNameVurderFaktaBeregning,
   })(VurderFaktaBeregningPanelImpl),
 );

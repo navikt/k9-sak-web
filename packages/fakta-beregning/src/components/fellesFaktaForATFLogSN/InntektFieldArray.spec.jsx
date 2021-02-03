@@ -9,14 +9,9 @@ import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Table } from '@fpsak-frontend/shared-components';
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '../beregning-test-helper';
-import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import { AndelRow } from './InntektFieldArrayRow';
 import SummaryRow from './SummaryRow';
-import InntektFieldArray, {
-  InntektFieldArrayImpl,
-  leggTilDagpengerOmBesteberegning,
-  mapStateToProps,
-} from './InntektFieldArray';
+import InntektFieldArray, { InntektFieldArrayImpl, mapStateToProps } from './InntektFieldArray';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 import shallowWithIntl from '../../../i18n';
 
@@ -66,7 +61,7 @@ const ownProps = {
 describe('<InntektFieldArray>', () => {
   it('skal mappe state til props for ikkje kun ytelse', () => {
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
+      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }],
     };
     const bg = {
       beregningsgrunnlagPeriode: [{}],
@@ -76,25 +71,6 @@ describe('<InntektFieldArray>', () => {
     const props = mapStateToProps(state, { ...ownProps, beregningsgrunnlag: bg });
     expect(props.isBeregningFormDirty).to.eql(false);
     expect(props.erKunYtelse).to.eql(false);
-  });
-
-  it('skal med dagpengeandel lagt til tidligere', () => {
-    const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
-    };
-    const dagpengeAndel = { aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER }, beregnetPrAar: 120000 };
-    const bg = {
-      beregningsgrunnlagPeriode: [
-        {
-          andelerLagtTilManueltIForrige: [dagpengeAndel],
-        },
-      ],
-      faktaOmBeregning,
-    };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
-    const props = mapStateToProps(state, { ...ownProps, beregningsgrunnlag: bg });
-    expect(props.isBeregningFormDirty).to.eql(false);
-    expect(props.dagpengeAndelLagtTilIForrige).to.eql(dagpengeAndel);
   });
 
   it('skal mappe state til props for kun ytelse', () => {
@@ -126,11 +102,10 @@ describe('<InntektFieldArray>', () => {
   const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);
 
   const faktaOmBeregning = {
-    faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
+    faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }],
   };
   const initial = {};
   initial.fieldArrayName = [andelField];
-  initial[besteberegningField] = true;
   const bg = {
     beregningsgrunnlagPeriode: [{}],
     faktaOmBeregning,
@@ -225,89 +200,6 @@ describe('<InntektFieldArray>', () => {
     expect(andelRows.length).to.eql(2);
     const summaryRow = table.find(SummaryRow);
     expect(summaryRow.length).to.eql(1);
-  });
-
-  it('skal legge til dagpengeandel', () => {
-    const dagpengeAndel = { aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER }, beregnetPrAar: 120000 };
-    const newbg = {
-      beregningsgrunnlagPeriode: [
-        {
-          andelerLagtTilManueltIForrige: [dagpengeAndel],
-        },
-      ],
-      faktaOmBeregning,
-    };
-    const values = { [besteberegningField]: true };
-    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
-      aksjonspunkter,
-      newbg,
-      formNameVurderFaktaBeregning,
-      values,
-    );
-    const newprops = mapStateToProps(newstate, { ...ownProps, beregningsgrunnlag: newbg });
-    const wrapper = shallowWithIntl(
-      <InntektFieldArrayImpl
-        intl={intlMock}
-        fields={fields}
-        meta={{}}
-        readOnly={false}
-        beregningsgrunnlag={newbg}
-        arbeidsgiverOpplysningerPerId={{}}
-        {...ownProps}
-        {...newprops}
-      />,
-    );
-    const table = wrapper.find(Table);
-    expect(table.length).to.eql(1);
-    const andelRows = table.find(AndelRow);
-    expect(andelRows.length).to.eql(2);
-    const summaryRow = table.find(SummaryRow);
-    expect(summaryRow.length).to.eql(1);
-  });
-
-  it('skal fjerne dagpengeandel om dagpenger og lagt til manuelt', () => {
-    const newfields = new MockFieldsWithContent('fieldArrayName', [
-      { aktivitetStatus: aktivitetStatuser.DAGPENGER, lagtTilAvSaksbehandler: true },
-    ]);
-    leggTilDagpengerOmBesteberegning(newfields, false, [aktivitetStatuser.DAGPENGER], undefined);
-    expect(newfields.length).to.equal(0);
-  });
-
-  it('skal ikkje fjerne dagpengeandel om dagpenger og ikkje lagt til manuelt', () => {
-    const newfields = new MockFieldsWithContent('fieldArrayName', [
-      { aktivitetStatus: aktivitetStatuser.DAGPENGER, lagtTilAvSaksbehandler: false },
-    ]);
-    leggTilDagpengerOmBesteberegning(newfields, false, [aktivitetStatuser.DAGPENGER], undefined);
-    expect(newfields.length).to.equal(1);
-  });
-
-  it('skal legge til dagpengeandel med fastsatt belop', () => {
-    const dagpengeAndel = { aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER }, beregnetPrAar: 120000 };
-    const newbg = {
-      beregningsgrunnlagPeriode: [
-        {
-          andelerLagtTilManueltIForrige: [dagpengeAndel],
-        },
-      ],
-      faktaOmBeregning,
-    };
-    const values = { [besteberegningField]: true };
-    const newstate = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
-      aksjonspunkter,
-      newbg,
-      formNameVurderFaktaBeregning,
-      values,
-    );
-    const newprops = mapStateToProps(newstate, { ...ownProps, beregningsgrunnlag: newbg });
-    const newfields = [];
-    leggTilDagpengerOmBesteberegning(
-      newfields,
-      newprops.skalHaBesteberegning,
-      newprops.aktivitetStatuser,
-      newprops.dagpengeAndelLagtTilIForrige,
-    );
-    expect(newfields.length).to.equal(1);
-    expect(newfields[0].fastsattBelop).to.equal('10 000');
   });
 
   it('skal validere eksisterende andeler uten errors', () => {
