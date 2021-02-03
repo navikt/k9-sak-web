@@ -14,6 +14,14 @@ const initializeMedisinskVilkår = (elementId, httpErrorHandler, endpoints: Simp
         window.location.hash = '';
       }
     },
+    onDokumentValgt: dokumentId => {
+      if (dokumentId !== null) {
+        window.history.pushState('', '', `#dokument=${dokumentId}`);
+      } else {
+        window.location.hash = '';
+      }
+    },
+    dokument: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('dokument'),
     vurdering: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('vurdering'),
     httpErrorHandler,
     endpoints,
@@ -55,9 +63,9 @@ export default ({ behandling: { links, uuid } }) => {
             { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
             { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },
             { rel: 'sykdom-dokument-oversikt', desiredName: 'dokumentoversikt' },
-            { rel: 'sykdom-innleggelse-endring', desiredName: 'innleggelsesperioder'},
-            { rel: 'sykdom-innleggelse', desiredName: 'lagreInnleggelsesperioder'},
-            { rel: 'sykdom-diagnosekoder-endring', desiredName: 'diagnosekoder'}
+            { rel: 'sykdom-innleggelse-endring', desiredName: 'innleggelsesperioder' },
+            { rel: 'sykdom-innleggelse', desiredName: 'lagreInnleggelsesperioder' },
+            { rel: 'sykdom-diagnosekoder-endring', desiredName: 'diagnosekoder' },
           ]),
           uuid,
         )
