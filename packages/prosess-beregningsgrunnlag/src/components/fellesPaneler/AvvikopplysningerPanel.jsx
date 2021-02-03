@@ -50,16 +50,8 @@ const lagRelevantePaneler = (
   allePerioder,
   harAksjonspunkter,
   sammenligningsgrunnlagPrStatus,
-  gjelderBesteberegning,
   skalViseAvviksprosent,
 ) => {
-  if (gjelderBesteberegning) {
-    return (
-      <Normaltekst>
-        <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Besteberegning" />
-      </Normaltekst>
-    );
-  }
   if (relevanteStatuser.isMilitaer) {
     return (
       <Normaltekst>
@@ -129,7 +121,6 @@ const AvviksopplysningerPanel = ({
   allePerioder,
   harAksjonspunkter,
   sammenligningsgrunnlagPrStatus,
-  gjelderBesteberegning,
   skalViseAvviksprosent,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
@@ -152,7 +143,6 @@ const AvviksopplysningerPanel = ({
         allePerioder,
         harAksjonspunkter,
         sammenligningsgrunnlagPrStatus,
-        gjelderBesteberegning,
         skalViseAvviksprosent,
       )}
     </Panel>
@@ -164,7 +154,6 @@ AvviksopplysningerPanel.propTypes = {
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
-  gjelderBesteberegning: PropTypes.bool.isRequired,
   skalViseAvviksprosent: PropTypes.bool,
 };
 

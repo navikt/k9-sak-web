@@ -67,7 +67,6 @@ const lagBGAndel = (andelsnr, aktivitetstatuskode, beregnet) => ({
   overstyrtPrAar: null,
   bruttoPrAar: beregnet,
   andelsnr,
-  besteberegningPrAar: null,
   inntektskategori: {
     kode: 'ARBEIDSTAKER',
     kodeverk: 'INNTEKTSKATEGORI',
@@ -113,7 +112,6 @@ const lagBG = (perioder, faktaOmFordeling) => {
       faktaOmBeregningTilfeller: null,
       arbeidstakerOgFrilanserISammeOrganisasjonListe: null,
       arbeidsforholdMedLønnsendringUtenIM: null,
-      besteberegningAndeler: null,
       vurderMottarYtelse: null,
       avklarAktiviteter: {
         skjæringstidspunkt: '2019-09-16',
@@ -138,7 +136,6 @@ const lagBG = (perioder, faktaOmFordeling) => {
           },
         ],
       },
-      vurderBesteberegning: null,
       andelerForFaktaOmBeregning: [
         {
           belopReadOnly: 30000,
