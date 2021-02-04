@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import ArbeidDto from './components/dto/ArbeidDto';
 import { mapDtoTilInternobjekt } from './UttakFaktaIndex';
 
@@ -23,7 +22,7 @@ describe('<UttakFaktaIndex>', () => {
 
     const arbeid = mapDtoTilInternobjekt(arbeidDto);
 
-    expect(arbeid).to.eql([
+    expect(arbeid).toEqual([
       {
         ...arbeidDto[0],
         perioder: [

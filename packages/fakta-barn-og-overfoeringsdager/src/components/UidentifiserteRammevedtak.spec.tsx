@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { shallowWithIntl } from '../../i18n';
 import UidentifiserteRammevedtak from './UidentifiserteRammevedtak';
@@ -39,16 +38,16 @@ describe('<UidentifiserteRammevedtak>', () => {
     const utvidetRett = shallowWithIntl(
       <UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.UTVIDET_RETT} />,
     );
-    expect(utvidetRett.find('li')).to.have.length(3);
+    expect(utvidetRett.find('li')).toHaveLength(3);
 
     const aleneomsorg = shallowWithIntl(
       <UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.ALENEOMSORG} />,
     );
-    expect(aleneomsorg.find('li')).to.have.length(2);
+    expect(aleneomsorg.find('li')).toHaveLength(2);
 
     const fosterbarn = shallowWithIntl(
       <UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.FOSTERBARN} />,
     );
-    expect(fosterbarn.find('li')).to.have.length(1);
+    expect(fosterbarn.find('li')).toHaveLength(1);
   });
 });

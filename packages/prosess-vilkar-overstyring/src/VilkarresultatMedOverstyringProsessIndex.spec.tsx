@@ -1,7 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
 import SideMenu from '@navikt/nap-side-menu';
 
 import { Behandling } from '@k9-sak-web/types';
@@ -63,7 +62,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     );
 
     const tabs = wrapper.find(SideMenu);
-    expect(tabs).to.have.length(0);
+    expect(tabs).toHaveLength(0);
   });
 
   it('skal rendre tabs dersom mer enn en periode', () => {
@@ -134,6 +133,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     );
 
     const tabs = wrapper.find(SideMenu);
-    expect(tabs).to.have.length(1);
+    expect(tabs).toHaveLength(1);
   });
 });
