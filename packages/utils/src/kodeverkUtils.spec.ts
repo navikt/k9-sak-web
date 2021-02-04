@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
@@ -24,7 +22,7 @@ describe('<kodeverkUtils>', () => {
 
     const navn = getKodeverknavnFraKode(alleKodeverk, kodeverkType, kode);
 
-    expect(navn).to.equal('Lønn under utdanning');
+    expect(navn).toBe('Lønn under utdanning');
   });
 
   it('skal finne navn til gitt kodeverk-objekt', () => {
@@ -45,7 +43,7 @@ describe('<kodeverkUtils>', () => {
 
     const navn = getKodeverknavnFn(alleKodeverk, kodeverkTyper)(kodeverk);
 
-    expect(navn).to.equal('Lønn under utdanning');
+    expect(navn).toBe('Lønn under utdanning');
   });
 
   it('skal finne navn til gitt kodeverk-objekt når en har underkategori i kodeverk-json', () => {
@@ -77,6 +75,6 @@ describe('<kodeverkUtils>', () => {
     // evt. må typen til alle-kodeverk endrast i heile appen)
     const navn = getKodeverknavnFn(alleKodeverk, kodeverkTyper)(kodeverk, vilkarType.MEDLEMSKAPSVILKARET);
 
-    expect(navn).to.equal('Ingen beregningsregler');
+    expect(navn).toBe('Ingen beregningsregler');
   });
 });
