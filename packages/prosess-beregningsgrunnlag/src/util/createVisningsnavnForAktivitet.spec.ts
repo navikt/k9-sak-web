@@ -1,4 +1,4 @@
-import createVisningsnavnForAktivitet from './visningsnavnHelper';
+import createVisningsnavnForAktivitet from './createVisningsnavnForAktivitet';
 
 const andelUtenArbeidsforholdId = {
   arbeidsforholdType: {

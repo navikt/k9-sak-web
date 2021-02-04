@@ -22,7 +22,7 @@ import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { InputField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
-import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from '../../util/createVisningsnavnForAktivitet';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';

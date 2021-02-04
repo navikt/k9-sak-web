@@ -16,7 +16,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
-import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from '../../util/createVisningsnavnForAktivitet';
 import styles from './graderingUtenBG.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 

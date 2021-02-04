@@ -209,7 +209,7 @@ export const getSortedManglendeVedlegg = createSelector([(ownProps: PureOwnProps
     : [],
 );
 
-const hasSoknad = createSelector(
+const harSoknad = createSelector(
   [(ownProps: PureOwnProps) => ownProps.soknad],
   soknad => soknad !== null && isObject(soknad),
 );
@@ -224,7 +224,7 @@ const lagArbeidsgiverKey = arbeidsgiver => {
 export const buildInitialValues = createSelector(
   [
     getSortedManglendeVedlegg,
-    hasSoknad,
+    harSoknad,
     (ownProps: PureOwnProps) => ownProps.status,
     (ownProps: PureOwnProps) => ownProps.aksjonspunkter,
   ],
@@ -287,7 +287,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
     return {
       getKodeverknavn,
       onSubmit: submitSelector(ownProps),
-      hasSoknad: hasSoknad(ownProps),
+      hasSoknad: harSoknad(ownProps),
       originalErVilkarOk: erVilkarOk,
       dokumentTypeIds: alleKodeverk[kodeverkTyper.DOKUMENT_TYPE_ID],
       manglendeVedlegg: getSortedManglendeVedlegg(ownProps),
