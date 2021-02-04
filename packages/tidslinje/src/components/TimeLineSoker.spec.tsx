@@ -12,7 +12,7 @@ describe('<TimeLineSoker>', () => {
     );
     const rows = wrapper.find('Row');
     expect(rows).toHaveLength(2);
-    expect(rows.find(Image).at(0).props().tooltip.length).toBeGreaterThan(3);
-    expect(rows.find(Image).at(1).props().tooltip.length).toBeGreaterThan(3);
+    expect(rows.find(Image).at(0).props().tooltip).toEqual('Kvinne');
+    expect(rows.find(Image).at(1).props().tooltip).toEqual('Mann');
   });
 });

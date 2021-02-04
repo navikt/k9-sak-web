@@ -21,7 +21,6 @@ describe('<PeriodeKnapp>', () => {
 
     const knapp = wrapper.find('button');
     const periodetekst = knapp.text();
-
-    expect(periodetekst).toEqual(expect.arrayContaining(['03.02.2020 - 05.04.2020']));
+    expect(periodetekst).toEqual('02: 03.02.2020 - 05.04.2020');
   });
 });

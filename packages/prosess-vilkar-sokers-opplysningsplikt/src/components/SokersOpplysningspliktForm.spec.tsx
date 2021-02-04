@@ -92,7 +92,7 @@ describe('<SokersOpplysningspliktForm>', () => {
     const columnsAtRow2 = rows.last().children();
     expect(columnsAtRow2).toHaveLength(2);
     expect(columnsAtRow2.first().childAt(0).text()).toEqual('terminbekreftelse');
-    expect(columnsAtRow2.at(1).childAt(0)).is.empty;
+    expect(columnsAtRow2.at(1).childAt(0)).toEqual({});
   });
 
   it('skal ikke vise tabell når ingen vedlegg mangler', () => {
