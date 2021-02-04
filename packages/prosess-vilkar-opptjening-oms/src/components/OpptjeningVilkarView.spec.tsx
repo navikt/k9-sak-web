@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { FastsattOpptjeningAktivitet } from '@k9-sak-web/types';
@@ -19,6 +18,6 @@ describe('<OpptjeningVilkarView>', () => {
       />,
     );
 
-    expect(wrapper.find(OpptjeningTimeLineLight)).to.have.length(1);
+    expect(wrapper.find(OpptjeningTimeLineLight)).toHaveLength(1);
   });
 });

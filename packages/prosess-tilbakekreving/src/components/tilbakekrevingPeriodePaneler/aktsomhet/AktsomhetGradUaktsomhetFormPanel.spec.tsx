@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
@@ -39,8 +38,8 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(RadioGroupField)).to.have.length(1);
-    expect(wrapper.find(AktsomhetSarligeGrunnerFormPanel)).to.have.length(1);
+    expect(wrapper.find(RadioGroupField)).toHaveLength(1);
+    expect(wrapper.find(AktsomhetSarligeGrunnerFormPanel)).toHaveLength(1);
   });
 
   it('skal ikke måtte velge om en skal tilbakekreve beløp når totalbeløpet er under 4 rettsgebyr med grad er ulik simpel uaktsom', () => {
@@ -58,9 +57,9 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(RadioGroupField)).to.have.length(0);
-    expect(wrapper.find(TextAreaField)).to.have.length(1);
-    expect(wrapper.find(AktsomhetSarligeGrunnerFormPanel)).to.have.length(1);
+    expect(wrapper.find(RadioGroupField)).toHaveLength(0);
+    expect(wrapper.find(TextAreaField)).toHaveLength(1);
+    expect(wrapper.find(AktsomhetSarligeGrunnerFormPanel)).toHaveLength(1);
   });
 
   it('skal ikke måtte velge om en skal tilbakekreve beløp når totalbeløpet er over 4 rettsgebyr med grad er lik simpel uaktsom', () => {
@@ -78,8 +77,8 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(RadioGroupField)).to.have.length(0);
-    expect(wrapper.find(TextAreaField)).to.have.length(1);
-    expect(wrapper.find(AktsomhetSarligeGrunnerFormPanel)).to.have.length(1);
+    expect(wrapper.find(RadioGroupField)).toHaveLength(0);
+    expect(wrapper.find(TextAreaField)).toHaveLength(1);
+    expect(wrapper.find(AktsomhetSarligeGrunnerFormPanel)).toHaveLength(1);
   });
 });

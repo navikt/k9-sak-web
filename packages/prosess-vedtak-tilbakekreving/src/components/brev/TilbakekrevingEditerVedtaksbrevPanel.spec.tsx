@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
@@ -88,13 +87,13 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
     );
 
     const paneler = wrapper.find(Ekspanderbartpanel);
-    expect(paneler).to.have.length(3);
-    expect(paneler.first().prop('tittel')).to.eql('Du må betale tilbake foreldrepenger');
-    expect(paneler.first().prop('apen')).is.false;
-    expect(paneler.at(1).prop('tittel')).to.eql('Perioden fra og med 10. april 2019 til og med 14. april 2019');
-    expect(paneler.at(1).prop('apen')).is.false;
-    expect(paneler.last().prop('tittel')).to.eql('Hvordan betale tilbake pengene du skylder');
-    expect(paneler.last().prop('apen')).is.false;
+    expect(paneler).toHaveLength(3);
+    expect(paneler.first().prop('tittel')).toEqual('Du må betale tilbake foreldrepenger');
+    expect(paneler.first().prop('apen')).toBe(false);
+    expect(paneler.at(1).prop('tittel')).toEqual('Perioden fra og med 10. april 2019 til og med 14. april 2019');
+    expect(paneler.at(1).prop('apen')).toBe(false);
+    expect(paneler.last().prop('tittel')).toEqual('Hvordan betale tilbake pengene du skylder');
+    expect(paneler.last().prop('apen')).toBe(false);
   });
 
   it('skal automatisk åpne panel som ikke har obligatorisk verdi utfylt', () => {
@@ -111,16 +110,16 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
     );
 
     const paneler = wrapper.find(Ekspanderbartpanel);
-    expect(paneler).to.have.length(3);
-    expect(paneler.at(0).prop('apen')).is.true;
-    expect(paneler.at(1).prop('apen')).is.true;
-    expect(paneler.at(2).prop('apen')).is.false;
+    expect(paneler).toHaveLength(3);
+    expect(paneler.at(0).prop('apen')).toBe(true);
+    expect(paneler.at(1).prop('apen')).toBe(true);
+    expect(paneler.at(2).prop('apen')).toBe(false);
   });
 
   it('skal sette opp initial values for form', () => {
     const initialValues = TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(vedtaksbrevAvsnitt);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       '2019-10-10_2019-11-10': {
         FAKTA: 'faktafritekst for periode 1',
         SÆRLIGEGRUNNER: 'særligegrunner-fritekst for periode 1',

@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 // eslint-disable-next-line import/extensions
@@ -12,8 +11,8 @@ describe('<TimeLineSoker>', () => {
       <TimeLineSoker hovedsokerKjonnKode={KjønnkodeEnum.KVINNE} medsokerKjonnKode={KjønnkodeEnum.MANN} />,
     );
     const rows = wrapper.find('Row');
-    expect(rows).to.have.length(2);
-    expect(rows.find(Image).at(0).props().tooltip).to.have.length.above(3);
-    expect(rows.find(Image).at(1).props().tooltip).to.have.length.above(3);
+    expect(rows).toHaveLength(2);
+    expect(rows.find(Image).at(0).props().tooltip.length).toBeGreaterThan(3);
+    expect(rows.find(Image).at(1).props().tooltip.length).toBeGreaterThan(3);
   });
 });

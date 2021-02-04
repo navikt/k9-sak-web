@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 
@@ -47,9 +46,9 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     );
 
     const melding = wrapper.find(FormattedMessage);
-    expect(melding).to.have.length(3);
+    expect(melding).toHaveLength(3);
 
     const vilkarResultatMedBegrunnelse = wrapper.find(VilkarresultatMedBegrunnelse);
-    expect(vilkarResultatMedBegrunnelse).to.have.length(1);
+    expect(vilkarResultatMedBegrunnelse).toHaveLength(1);
   });
 });

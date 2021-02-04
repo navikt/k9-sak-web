@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -13,8 +12,8 @@ describe('<AksjonspunktHelpText>', () => {
         {[<FormattedMessage key="1" id="HelpText.Aksjonspunkt" />]}
       </AksjonspunktHelpText.WrappedComponent>,
     );
-    expect(wrapper.find(Image)).to.have.length(1);
-    expect(wrapper.find('Element').childAt(0).prop('id')).is.eql('HelpText.Aksjonspunkt');
+    expect(wrapper.find(Image)).toHaveLength(1);
+    expect(wrapper.find('Element').childAt(0).prop('id')).toEqual('HelpText.Aksjonspunkt');
   });
 
   it('skal kun vise hjelpetekst når aksjonspunkt er lukket', () => {
@@ -23,7 +22,7 @@ describe('<AksjonspunktHelpText>', () => {
         {[<FormattedMessage key="1" id="HelpText.Aksjonspunkt" />]}
       </AksjonspunktHelpText.WrappedComponent>,
     );
-    expect(wrapper.find(Image)).to.have.length(0);
-    expect(wrapper.find(Normaltekst).childAt(1).prop('id')).is.eql('HelpText.Aksjonspunkt');
+    expect(wrapper.find(Image)).toHaveLength(0);
+    expect(wrapper.find(Normaltekst).childAt(1).prop('id')).toEqual('HelpText.Aksjonspunkt');
   });
 });
