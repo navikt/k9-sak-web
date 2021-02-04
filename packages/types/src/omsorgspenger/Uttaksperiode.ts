@@ -28,7 +28,7 @@ export type Map<Key extends string | number, Value> = {
 
 export type VurderteVilkår = Map<Vilkår, Utfalltype>;
 
-export interface Uttaksperiode {
+export type Uttaksperiode = {
   periode: string; // fom/tom
   delvisFravær?: string; // Duration
   utfall: Utfalltype;
@@ -38,9 +38,9 @@ export interface Uttaksperiode {
   };
   hjemler: string[];
   nøkkeltall?: Nøkkeltall;
-}
+};
 
-export interface Nøkkeltall {
+export type Nøkkeltall = {
   totaltAntallDager: number;
   antallKoronadager: number;
   antallDagerArbeidsgiverDekker: number;
@@ -50,6 +50,6 @@ export interface Nøkkeltall {
   forbruktTid: string; // Duration
   smittevernTid: string; // Duration
   migrertData: boolean;
-}
+};
 
 export default Uttaksperiode;

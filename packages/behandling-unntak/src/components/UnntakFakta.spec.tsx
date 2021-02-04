@@ -35,7 +35,7 @@ describe('<UnntakFakta>', () => {
     id: 1,
     versjon: 2,
     status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.UNNTAKSBEHANDLING, kodeverk: 'test' },
+    type: { kode: behandlingType.UNNTAK, kodeverk: 'test' },
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,

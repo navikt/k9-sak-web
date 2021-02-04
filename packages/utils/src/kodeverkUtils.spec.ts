@@ -58,7 +58,7 @@ describe('<kodeverkUtils>', () => {
             navn: 'Ingen beregningsregler',
           },
         ],
-        [vilkarType.OPPTJENINGSPERIODE]: [
+        [vilkarType.SOKERSOPPLYSNINGSPLIKT]: [
           {
             kode: 'test 2',
             kodeverk: 'AVSLAGSARSAK',

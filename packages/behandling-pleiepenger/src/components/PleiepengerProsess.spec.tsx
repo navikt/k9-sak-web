@@ -2,7 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ProsessStegPanel,
@@ -64,7 +64,7 @@ describe('<PleiepengerProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
+      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
       status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
       kanLoses: true,
       erAktivt: true,
@@ -89,13 +89,13 @@ describe('<PleiepengerProsess>', () => {
   const soknad = {
     fodselsdatoer: {
       0: '2019-01-01',
-    },
+    } as Record<number, string>,
     antallBarn: 1,
     soknadType: {
-      kode: soknadType.FODSERL,
+      kode: soknadType.FODSEL,
       kodeverk: 'test',
     },
-  };
+  } as Soknad;
 
   const arbeidsgiverOpplysningerPerId = {
     123: {

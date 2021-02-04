@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -51,7 +51,6 @@ export const RegistrereVergeInfoPanelImpl = ({
         />
         <VerticalSpacer twentyPx />
         <FaktaBegrunnelseTextField
-          isDirty={formProps.dirty}
           isSubmittable={submittable}
           isReadOnly={readOnly}
           hasBegrunnelse={!!initialValues.begrunnelse}

@@ -3,19 +3,21 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 import { TilbakekrevingVedtakFormImpl as TilbakekrevingVedtakForm } from './TilbakekrevingVedtakForm';
 import underavsnittType from '../kodeverk/avsnittType';
+import { intlMock } from '../../i18n/index';
 
 describe('<TilbakekrevingVedtakForm>', () => {
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
         {...reduxFormPropsMock}
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
@@ -39,7 +41,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
     );
 
     expect(wrapper.find(TilbakekrevingEditerVedtaksbrevPanel)).to.have.length(1);
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
     expect(knapp).to.have.length(1);
     expect(knapp.prop('isSubmittable')).is.true;
     expect(wrapper.find('a')).to.have.length(1);
@@ -50,6 +52,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
         {...reduxFormPropsMock}
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
         fetchPreviewVedtaksbrev={fetchPreview}
@@ -104,6 +107,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
         {...reduxFormPropsMock}
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
@@ -126,7 +130,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
       />,
     );
 
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
     expect(knapp).to.have.length(1);
     expect(knapp.prop('isSubmittable')).is.false;
     expect(wrapper.find('a')).to.have.length(0);
@@ -136,6 +140,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
         {...reduxFormPropsMock}
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
@@ -169,7 +174,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
       />,
     );
 
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
     expect(knapp).to.have.length(1);
     expect(knapp.prop('isSubmittable')).is.false;
     expect(wrapper.find('a')).to.have.length(1);
