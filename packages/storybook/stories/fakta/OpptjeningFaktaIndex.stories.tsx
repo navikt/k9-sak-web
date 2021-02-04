@@ -6,7 +6,7 @@ import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAkti
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
-import { ArbeidsgiverOpplysningerPerId, Opptjening, OpptjeningBehandling } from '@k9-sak-web/types';
+import { Opptjening, OpptjeningBehandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';
 
