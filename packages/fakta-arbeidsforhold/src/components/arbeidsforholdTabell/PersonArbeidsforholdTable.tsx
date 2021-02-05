@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { PropTypes } from 'prop-types';
+import React, { FunctionComponent, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
@@ -8,12 +7,13 @@ import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import { utledArbeidsforholdYrkestittel } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
 import styles from './personArbeidsforholdTable.less';
-import PersonArbeidsforholdDetailFormV2 from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailFormV2';
+import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 
 const headerColumnContent = [
@@ -25,7 +25,7 @@ const headerColumnContent = [
   <></>,
 ];
 
-export const utledNøkkel = ({ id, arbeidsforhold }) => {
+export const utledNøkkel = (id, arbeidsforhold) => {
   const arbeidsforholdId =
     id || (arbeidsforhold && arbeidsforhold.arbeidsforholdId ? arbeidsforhold.arbeidsforholdId : '');
   const internId = arbeidsforhold && arbeidsforhold.internArbeidsforholdId ? arbeidsforhold.internArbeidsforholdId : '';
@@ -35,7 +35,16 @@ export const utledNøkkel = ({ id, arbeidsforhold }) => {
   return `${arbeidsforholdId}${internId}${eksternId}`;
 };
 
-const PersonArbeidsforholdTableV2 = ({
+interface OwnProps {
+  alleArbeidsforhold: ArbeidsforholdV2[];
+  updateArbeidsforhold: (values: any) => void;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  selectedId?: string;
+  behandlingId: number;
+  behandlingVersjon: number;
+}
+
+const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
   alleArbeidsforhold,
   selectedId,
   alleKodeverk,
@@ -83,9 +92,7 @@ const PersonArbeidsforholdTableV2 = ({
       {alleArbeidsforhold &&
         alleArbeidsforhold.map(a => {
           const stillingsprosent =
-            a.stillingsprosent !== undefined && a.stillingsprosent !== null
-              ? `${parseFloat(a.stillingsprosent).toFixed(2)} %`
-              : '';
+            a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${a.stillingsprosent.toFixed(2)} %` : '';
           const navn = utledArbeidsforholdYrkestittel(a);
           const kilde =
             Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
@@ -98,7 +105,7 @@ const PersonArbeidsforholdTableV2 = ({
           return (
             <>
               <TableRow
-                key={utledNøkkel(a)}
+                key={utledNøkkel(a.id, a.arbeidsforhold)}
                 model={a}
                 onMouseDown={() => setVisAksjonspunktInfo(true)}
                 onKeyDown={() => setVisAksjonspunktInfo(true)}
@@ -160,14 +167,14 @@ const PersonArbeidsforholdTableV2 = ({
                         src={erIBrukImageUrl}
                         alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
                         tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
-                        tabIndex="0"
+                        tabIndex={0}
                         alignTooltipLeft
                       />
                     )}
                 </TableColumn>
               </TableRow>
               {visAksjonspunktInfo && (harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length > 0) && (
-                <PersonArbeidsforholdDetailFormV2
+                <PersonArbeidsforholdDetailForm
                   key={a.id}
                   arbeidsforhold={a}
                   hasAksjonspunkter
@@ -192,17 +199,4 @@ const PersonArbeidsforholdTableV2 = ({
   );
 };
 
-PersonArbeidsforholdTableV2.propTypes = {
-  alleArbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType).isRequired,
-  selectedId: PropTypes.string,
-  alleKodeverk: PropTypes.shape().isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  updateArbeidsforhold: PropTypes.func.isRequired,
-};
-
-PersonArbeidsforholdTableV2.defaultProps = {
-  selectedId: undefined,
-};
-
-export default PersonArbeidsforholdTableV2;
+export default PersonArbeidsforholdTable;

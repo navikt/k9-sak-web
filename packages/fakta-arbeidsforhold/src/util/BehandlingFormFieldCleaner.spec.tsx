@@ -14,6 +14,9 @@ describe('BehandlingFormFieldCleaner', () => {
         behandlingFormName="TEST_FORM"
         fieldNames={['tomDato', 'fomDato']}
         reduxChange={changeCallback}
+        behandlingId={1}
+        behandlingVersjon={2}
+        formName="test"
       >
         <InputField name="fomDato" />
         <div>
@@ -21,7 +24,6 @@ describe('BehandlingFormFieldCleaner', () => {
         </div>
       </BehandlingFormFieldCleaner>,
     );
-
 
     expect(wrapper.find(InputField)).to.have.length(2);
     expect(changeCallback.getCalls()).has.length(0);
@@ -34,6 +36,9 @@ describe('BehandlingFormFieldCleaner', () => {
         behandlingFormName="TEST_FORM"
         fieldNames={['tomDato', 'fomDato']}
         reduxChange={changeCallback}
+        behandlingId={1}
+        behandlingVersjon={2}
+        formName="test"
       >
         <InputField name="fomDato" />
         <div>
@@ -47,10 +52,11 @@ describe('BehandlingFormFieldCleaner', () => {
 
     // Fjern fomDato fra DOM
     wrapper.setProps({
-      children:
-  <div>
-    <InputField name="tomDato" />
-  </div>,
+      children: (
+        <div>
+          <InputField name="tomDato" />
+        </div>
+      ),
     });
 
     const field = wrapper.find(InputField);
@@ -71,6 +77,9 @@ describe('BehandlingFormFieldCleaner', () => {
         behandlingFormName="TEST_FORM"
         fieldNames={['tomDato', 'fomDato']}
         reduxChange={changeCallback}
+        behandlingId={1}
+        behandlingVersjon={2}
+        formName="test"
       >
         <InputField name="fomDato" />
         <div>
@@ -105,6 +114,9 @@ describe('BehandlingFormFieldCleaner', () => {
         behandlingFormName="TEST_FORM"
         fieldNames={['tomDato', 'fomDato']}
         reduxChange={changeCallback}
+        behandlingId={1}
+        behandlingVersjon={2}
+        formName="test"
       >
         <InputField name="fomDato" />
         <div>

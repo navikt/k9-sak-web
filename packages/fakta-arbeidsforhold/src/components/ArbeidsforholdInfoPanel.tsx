@@ -1,24 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
-
-import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
-import arbeidsforholdAksjonspunkterPropType from '../propTypes/arbeidsforholdAksjonspunkterPropType';
-import PersonArbeidsforholdPanelV2 from './PersonArbeidsforholdPanelV2';
-import { BekreftOgForsettKnappV2 } from './BekreftOgForsettKnappV2';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { InjectedFormProps } from 'redux-form';
+import { BekreftOgForsettKnapp } from './BekreftOgForsettKnapp';
+import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 
 // ----------------------------------------------------------------------------
 // VARIABLES
 // ----------------------------------------------------------------------------
 
-const formName = 'ArbeidsforholdInfoPanelV2';
+const formName = 'ArbeidsforholdInfoPanel';
 
 // ----------------------------------------------------------------------------
 // METHODS
@@ -38,21 +36,36 @@ export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
 const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
   aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
+interface PureOwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  aksjonspunkter: Aksjonspunkt[];
+  arbeidsforhold: ArbeidsforholdV2[];
+  submitCallback: (...args: any[]) => any;
+  readOnly: boolean;
+  hasOpenAksjonspunkter: boolean;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+}
+
 /**
  * ArbeidsforholdInfoPanelImpl:
  * Ansvarlig for å rendre aksjonspunktteksten, arbeidsforholdene, og
  * bekreft & fortsett knappen
  * */
-export const ArbeidsforholdInfoPanelImplV2 = ({
+export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
+  PureOwnProps & InjectedFormProps & WrappedComponentProps
+> = ({
   aksjonspunkter,
   readOnly,
   alleMerknaderFraBeslutter,
-  arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
   hasOpenAksjonspunkter,
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
+  intl,
   ...formProps
 }) => {
   const { host } = window.location;
@@ -74,9 +87,9 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
         <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />
       </h3>
       <form onSubmit={formProps.handleSubmit}>
-        <PersonArbeidsforholdPanelV2
+        <PersonArbeidsforholdPanel
+          intl={intl}
           readOnly={readOnly}
-          arbeidsforhold={arbeidsforhold}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           hasAksjonspunkter={aksjonspunkter.length > 0}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -85,37 +98,28 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
           behandlingVersjon={behandlingVersjon}
         />
         {harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
-          <BekreftOgForsettKnappV2
-            readOnly={shouldDisableSubmitButton}
-            isSubmitting={formProps.submitting}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
+          <BekreftOgForsettKnapp readOnly={shouldDisableSubmitButton} isSubmitting={formProps.submitting} />
         )}
       </form>
     </>
   );
 };
 
-ArbeidsforholdInfoPanelImplV2.propTypes = {
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
-  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
-  aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool,
-  }).isRequired,
+type FormValues = {
+  arbeidsforhold: ArbeidsforholdV2[];
 };
 
-const buildInitialValues = createSelector([ownProps => ownProps.arbeidsforhold], arbeidsforhold => ({
-  ...PersonArbeidsforholdPanelV2.buildInitialValues(arbeidsforhold),
-}));
+const buildInitialValues = createSelector(
+  [
+    (ownProps: PureOwnProps) => ownProps.arbeidsforhold,
+    (ownProps: PureOwnProps) => ownProps.arbeidsgiverOpplysningerPerId,
+  ],
+  (arbeidsforhold): FormValues => ({
+    ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
+  }),
+);
 
-const transformValues = values => {
+const transformValues = (values: FormValues): any => {
   const arbeidsforhold = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(values.arbeidsforhold);
   return {
     arbeidsforhold: arbeidsforhold.map(a =>
@@ -136,11 +140,14 @@ const transformValues = values => {
   };
 };
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
-  return (state, ownProps) => ({
-    initialValues: buildInitialValues(ownProps),
-    onSubmit,
-  });
-};
-export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImplV2));
+const lagSubmitFn = createSelector(
+  [(ownProps: PureOwnProps) => ownProps.submitCallback],
+  submitCallback => (values: FormValues) => submitCallback([transformValues(values)]),
+);
+
+const mapStateToProps = (_state, ownProps: PureOwnProps) => ({
+  initialValues: buildInitialValues(ownProps),
+  onSubmit: lagSubmitFn(ownProps),
+});
+
+export default connect(mapStateToProps)(behandlingForm({ form: formName })(injectIntl(ArbeidsforholdInfoPanelImpl)));

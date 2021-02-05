@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { WrappedComponentProps } from 'react-intl';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { VerticalSpacer, FaktaGruppe, TableColumn, Image, FlexRow } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FaktaGruppe, Image, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Normaltekst } from 'nav-frontend-typografi';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
-import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { FormAction } from 'redux-form/lib/actions';
+import Arbeidsgiver from '@k9-sak-web/types/src/arbeidsgiverTsType';
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
-import PersonArbeidsforholdTableV2 from './arbeidsforholdTabell/PersonArbeidsforholdTableV2';
-import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2 } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailFormV2';
+import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
+import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 
 import styles from './personArbeidsforholdPanel.less';
+import CustomArbeidsforhold from '../typer/CustomArbeidsforholdTsType';
 
 // -------------------------------------------------------------------------------------------------------------
 // Methods
@@ -48,6 +51,50 @@ export const harAksjonspunkter = arbeidsforhold => {
   return Array.isArray(arbeidsforhold) && arbeidsforhold.filter(af => af.aksjonspunktÅrsaker.length > 0).length > 0;
 };
 
+interface PureOwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  readOnly: boolean;
+  hasAksjonspunkter: boolean;
+  alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+}
+
+interface MappedOwnProps {
+  arbeidsforhold: CustomArbeidsforhold[];
+  behandlingFormPrefix: string;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+}
+
+interface DispatchProps {
+  reduxFormChange: (
+    form: string,
+    field: string,
+    value: any,
+    touch?: boolean,
+    persistentSubmitErrors?: boolean,
+  ) => FormAction;
+  reduxFormInitialize: (form: string, data: any) => FormAction;
+}
+
+interface OwnState {
+  selectedArbeidsforhold?: CustomArbeidsforhold;
+  selectedArbeidsgiver?: Arbeidsgiver;
+}
+
+interface StaticFunctions {
+  buildInitialValues?: (
+    arbeidsforhold: ArbeidsforholdV2[],
+    arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+  ) => {
+    arbeidsforhold: ArbeidsforholdV2[];
+  };
+  isReadOnly?: (state: any, behandlingId: number, behandlingVersjon: number) => boolean;
+}
+
+type Props = PureOwnProps & MappedOwnProps & DispatchProps & StaticFunctions & WrappedComponentProps;
+
 /**
  * PersonArbeidsforholdPanelImpl:
  * - Håndterer staten for children-components.
@@ -55,9 +102,22 @@ export const harAksjonspunkter = arbeidsforhold => {
  * som har samme navn i GUI og PropTypen blir fylt inn 'automatisk', mens andre variabler som
  * ikke er med i PropTypen må håndteres f.eks. i UpdateArbeidsforhold metoden.
  */
-export class PersonArbeidsforholdPanelImplV2 extends Component {
-  constructor() {
-    super();
+export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
+  static buildInitialValues = (arbeidsforhold: ArbeidsforholdV2[]) => ({
+    arbeidsforhold,
+  });
+
+  static isReadOnly = (state: any, behandlingId: number, behandlingVersjon: number): boolean => {
+    const arbeidsforhold = behandlingFormValueSelector(
+      'ArbeidsforholdInfoPanel',
+      behandlingId,
+      behandlingVersjon,
+    )(state, 'arbeidsforhold');
+    return !arbeidsforhold;
+  };
+
+  constructor(props: Props) {
+    super(props);
     this.state = {
       selectedArbeidsforhold: undefined,
       selectedArbeidsgiver: undefined,
@@ -85,7 +145,7 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
   setSelectedArbeidsgiver(selected) {
     const { selectedArbeidsgiver } = this.state;
 
-    if (selectedArbeidsgiver && selectedArbeidsgiver.id === selected.id) {
+    if (selectedArbeidsgiver && selectedArbeidsgiver.arbeidsgiverOrgnr === selected.identifikator) {
       this.setState({ selectedArbeidsgiver: undefined });
       return;
     }
@@ -95,14 +155,14 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
 
   setFormField(fieldName, fieldValue) {
     const { behandlingFormPrefix, reduxFormChange: formChange } = this.props;
-    formChange(`${behandlingFormPrefix}.${'ArbeidsforholdInfoPanelV2'}`, fieldName, fieldValue);
+    formChange(`${behandlingFormPrefix}.${'ArbeidsforholdInfoPanel'}`, fieldName, fieldValue);
   }
 
   initializeActivityForm(arbeidsforhold) {
     const { selectedArbeidsforhold } = this.state;
     if (selectedArbeidsforhold !== arbeidsforhold) {
       const { behandlingFormPrefix, reduxFormInitialize: formInitialize } = this.props;
-      formInitialize(`${behandlingFormPrefix}.${PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}`, arbeidsforhold);
+      formInitialize(`${behandlingFormPrefix}.${PERSON_ARBEIDSFORHOLD_DETAIL_FORM}`, arbeidsforhold);
     }
   }
 
@@ -195,6 +255,7 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
       kilde: [
         {
           kode: arbeidsforholdKilder.SAKSBEHANDLER,
+          kodeverk: 'ARBEIDSFORHOLD_KILDE',
         },
       ],
       arbeidsforhold: {
@@ -256,13 +317,13 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
             return (
               <>
                 <FlexRow key={a}>
-                  <TableColumn className={styles.arbeidsgiverColumn}>
+                  <FlexColumn className={styles.arbeidsgiverColumn}>
                     <div className={styles.overskrift}>
                       <Image src={briefcaseImg} />
                       <Normaltekst>{navn}</Normaltekst>
                     </div>
-                  </TableColumn>
-                  <TableColumn className={styles.aksjonspunktColumn}>
+                  </FlexColumn>
+                  <FlexColumn className={styles.aksjonspunktColumn}>
                     {harAksjonspunkter(arbeidsforholdPerArbeidsgiver) && <Image src={advarselImageUrl} alt="" />}
                     <button
                       className={styles.knappContainer}
@@ -282,19 +343,17 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
                       </Normaltekst>
                       <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
                     </button>
-                  </TableColumn>
+                  </FlexColumn>
                 </FlexRow>
                 {erValgt && (
-                  <PersonArbeidsforholdTableV2
-                    src={chevronIkonUrl}
+                  <PersonArbeidsforholdTable
+                    key={a}
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
-                    hasArbeidsforholdAksjonspunkt={harAksjonspunkter}
                     alleKodeverk={alleKodeverk}
                     behandlingId={behandlingId}
                     behandlingVersjon={behandlingVersjon}
                     updateArbeidsforhold={this.updateArbeidsforhold}
-                    cancelArbeidsforhold={this.cancelArbeidsforhold}
                   />
                 )}
               </>
@@ -307,22 +366,9 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
   }
 }
 
-PersonArbeidsforholdPanelImplV2.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType).isRequired,
-  behandlingFormPrefix: PropTypes.string.isRequired,
-  reduxFormChange: PropTypes.func.isRequired,
-  reduxFormInitialize: PropTypes.func.isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool,
-  }).isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-};
-const FORM_NAVN = 'ArbeidsforholdInfoPanelV2';
-const mapStateToProps = (state, ownProps) => {
+const FORM_NAVN = 'ArbeidsforholdInfoPanel';
+
+const mapStateToProps = (state: any, ownProps: PureOwnProps): MappedOwnProps => {
   const arbeidsforhold = behandlingFormValueSelector(
     FORM_NAVN,
     ownProps.behandlingId,
@@ -334,7 +380,7 @@ const mapStateToProps = (state, ownProps) => {
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
   };
 };
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   ...bindActionCreators(
     {
       reduxFormChange,
@@ -343,21 +389,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch,
   ),
 });
-const PersonArbeidsforholdPanelV2 = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(injectIntl(PersonArbeidsforholdPanelImplV2));
-PersonArbeidsforholdPanelV2.buildInitialValues = arbeidsforhold => ({
-  arbeidsforhold,
-});
+const PersonArbeidsforholdPanel = connect(mapStateToProps, mapDispatchToProps)(PersonArbeidsforholdPanelImpl);
 
-PersonArbeidsforholdPanelV2.isReadOnly = (state, behandlingId, behandlingVersjon) => {
-  const arbeidsforhold = behandlingFormValueSelector(
-    'ArbeidsforholdInfoPanelV2',
-    behandlingId,
-    behandlingVersjon,
-  )(state, 'arbeidsforhold');
-  return !arbeidsforhold;
-};
-
-export default PersonArbeidsforholdPanelV2;
+export default PersonArbeidsforholdPanel;

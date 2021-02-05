@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -12,9 +12,6 @@ import styles from './aksjonspunktAvklarArbeidsforholdText.less';
 import VerticalSpacer from './VerticalSpacer';
 
 interface OwnProps {
-  children: string[] | ReactNode[];
-  isAksjonspunktOpen: boolean;
-  marginBottom?: boolean;
   arbeidsforhold: ArbeidsforholdV2;
 }
 
@@ -36,7 +33,12 @@ const AksjonspunktAvklarArbeidsforholdText: FunctionComponent<OwnProps & Wrapped
               <FormattedMessage
                 id="HelpText.FinnesIkkeIRegisteret"
                 values={{
-                  yrkestittel: `${arbeidsforhold.yrkestittel}(${arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId})`,
+                  yrkestittel: `${arbeidsforhold.yrkestittel}
+                  (${
+                    arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+                      ? arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+                      : ''
+                  })`,
                 }}
               />
             </Normaltekst>

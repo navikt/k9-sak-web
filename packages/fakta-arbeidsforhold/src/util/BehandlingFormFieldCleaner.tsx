@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, ReactElement, ReactNode } from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { change as reduxChange } from 'redux-form';
 
 import { getBehandlingFormName } from '@fpsak-frontend/form';
@@ -21,7 +20,21 @@ const findAllNames = children =>
       })
     : [];
 
-// TODO (TOR) Flytt til fp-behandling-felles
+interface PureOwnProps {
+  formName: string;
+  behandlingId: number;
+  behandlingVersjon: number;
+  fieldNames: string[];
+  children: ReactNode | ReactElement;
+}
+
+interface MappedOwnProps {
+  behandlingFormName: string;
+}
+
+interface DispatchProps {
+  reduxChange: (behandlingFormName: string, fieldName: string, value: any) => void;
+}
 
 /**
  * BehandlingFormFieldCleaner
@@ -34,7 +47,11 @@ const findAllNames = children =>
  * <BehandlingFormFieldCleaner formName={TEST_FORM} fieldNames={['fomDato']}>{children}</BehandlingFormFieldCleaner>
  * ```
  */
-export class BehandlingFormFieldCleaner extends Component {
+export class BehandlingFormFieldCleaner extends Component<PureOwnProps & MappedOwnProps & DispatchProps> {
+  static defaultProps = {
+    children: [],
+  };
+
   shouldComponentUpdate(nextProps) {
     const { children } = this.props;
     const oldNames = findAllNames(children);
@@ -62,27 +79,20 @@ export class BehandlingFormFieldCleaner extends Component {
   }
 }
 
-BehandlingFormFieldCleaner.propTypes = {
-  behandlingFormName: PropTypes.string.isRequired,
-  fieldNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  reduxChange: PropTypes.func.isRequired,
-};
-
-BehandlingFormFieldCleaner.defaultProps = {
-  children: [],
-};
-
 const getCompleteFormName = createSelector(
-  [ownProps => ownProps.formName, ownProps => ownProps.behandlingId, ownProps => ownProps.behandlingVersjon],
-  (formName, behandlingId, versjon) => getBehandlingFormName(behandlingId, versjon, formName),
+  [
+    (ownProps: PureOwnProps) => ownProps.formName,
+    (ownProps: PureOwnProps) => ownProps.behandlingId,
+    (ownProps: PureOwnProps) => ownProps.behandlingVersjon,
+  ],
+  (formName, behandlingId, versjon): string => getBehandlingFormName(behandlingId, versjon, formName),
 );
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (_state: any, ownProps: PureOwnProps): MappedOwnProps => ({
   behandlingFormName: getCompleteFormName(ownProps),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators(
     {
       reduxChange,

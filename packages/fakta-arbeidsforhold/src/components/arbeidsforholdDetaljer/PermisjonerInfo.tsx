@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
 
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import styles from './permisjonPeriode.less';
-import { arbeidsforholdV2PropType } from '../../../../prop-types/src/arbeidsforholdPropType';
 
 const utledPeriodeLabelKey = (id, index) => id + index;
 
-const PermisjonerInfo = ({ arbeidsforhold }) => (
+interface OwnProps {
+  arbeidsforhold: ArbeidsforholdV2;
+}
+
+const PermisjonerInfo: FunctionComponent<OwnProps> = ({ arbeidsforhold }) => (
   <>
     {arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0 && (
       <div>
@@ -39,9 +43,5 @@ const PermisjonerInfo = ({ arbeidsforhold }) => (
     )}
   </>
 );
-
-PermisjonerInfo.propTypes = {
-  arbeidsforhold: arbeidsforholdV2PropType.isRequired,
-};
 
 export default PermisjonerInfo;

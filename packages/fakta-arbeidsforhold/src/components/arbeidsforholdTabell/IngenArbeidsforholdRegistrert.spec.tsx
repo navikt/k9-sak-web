@@ -17,6 +17,7 @@ describe('<IngenArbeidsforholdRegistrert>', () => {
   it('Skal sjekke at IngenArbeidsforholdRegistrert rendrer korrekt', () => {
     const wrapper = shallowWithIntl(<IngenArbeidsforholdRegistrert headerColumnContent={headerColumnContent} />);
     expect(wrapper.find(TableColumn)).has.length(6);
+    // @ts-ignore
     expect(wrapper.find(FormattedMessage).props().id).to.eql('PersonArbeidsforholdTable.IngenArbeidsforholdRegistrert');
   });
 });
