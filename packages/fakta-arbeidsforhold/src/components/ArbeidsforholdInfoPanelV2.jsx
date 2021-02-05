@@ -64,7 +64,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
         <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
           {[
             <FormattedMessage
-              key="ArbeidsforholdInfoPanelAksjonspunkt"
+              key="ArbeidsforholdInfoPanelAksjonspunktV2"
               id="ArbeidsforholdInfoPanel.AvklarArbeidsforhold"
             />,
           ]}
@@ -100,7 +100,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
 ArbeidsforholdInfoPanelImplV2.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,

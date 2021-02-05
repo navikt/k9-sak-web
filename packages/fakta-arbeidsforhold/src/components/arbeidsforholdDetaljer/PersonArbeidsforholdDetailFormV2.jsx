@@ -8,7 +8,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapperV2 from './ArbeidsforholdRadioknapperV2';
@@ -40,42 +39,31 @@ export const PersonArbeidsforholdDetailFormV2 = ({
     <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
     <VerticalSpacer eightPx />
     {IMutenArbeidsforhold(arbeidsforhold) && (
-      <>
-        <div className={styles.hl} />
+      <Row>
+        <VerticalSpacer twentyPx />
+        <ArbeidsforholdRadioknapperV2
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
+          arbeidsforhold={arbeidsforhold}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+        <ArbeidsforholdBegrunnelse
+          readOnly={false}
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
         <VerticalSpacer sixteenPx />
-        <Normaltekst>
-          <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
-        </Normaltekst>
-        <VerticalSpacer eightPx />
-        <Normaltekst className={styles.spørsmål}>
-          <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
-        </Normaltekst>
-        <Row>
-          <VerticalSpacer twentyPx />
-          <ArbeidsforholdRadioknapperV2
-            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
-            arbeidsforhold={arbeidsforhold}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-          <ArbeidsforholdBegrunnelse
-            readOnly={false}
-            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-          <VerticalSpacer sixteenPx />
-          <FlexContainer fluid>
-            <FlexRow>
-              <FlexColumn>
-                <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
-                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-                </Hovedknapp>
-              </FlexColumn>
-            </FlexRow>
-          </FlexContainer>
-        </Row>
-      </>
+        <FlexContainer fluid>
+          <FlexRow>
+            <FlexColumn>
+              <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+                <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
+              </Hovedknapp>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </Row>
     )}
   </div>
 );

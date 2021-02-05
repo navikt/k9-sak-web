@@ -168,7 +168,7 @@ const PersonArbeidsforholdTableV2 = ({
               </TableRow>
               {visAksjonspunktInfo && (harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length > 0) && (
                 <PersonArbeidsforholdDetailFormV2
-                  key={a.id}
+                  key={a.arbeidsforholdId}
                   arbeidsforhold={a}
                   hasAksjonspunkter
                   hasOpenAksjonspunkter
