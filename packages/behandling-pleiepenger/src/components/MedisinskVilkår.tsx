@@ -33,7 +33,7 @@ const initializeMedisinskVilkår = (
     httpErrorHandler,
     endpoints,
     behandlingUuid,
-    løsAksjonspunkt,
+    onFinished: løsAksjonspunkt,
   });
 };
 
