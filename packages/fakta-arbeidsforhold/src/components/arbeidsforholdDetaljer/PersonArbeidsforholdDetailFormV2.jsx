@@ -34,40 +34,38 @@ export const PersonArbeidsforholdDetailFormV2 = ({
   alleKodeverk,
   ...formProps
 }) => (
-  <>
-    <div className={styles.container}>
-      <VerticalSpacer eightPx />
-      <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
-      <VerticalSpacer eightPx />
-      {IMutenArbeidsforhold(arbeidsforhold) && (
-        <Row>
-          <VerticalSpacer twentyPx />
-          <ArbeidsforholdRadioknapperV2
-            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
-            arbeidsforhold={arbeidsforhold}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-          <ArbeidsforholdBegrunnelse
-            readOnly={false}
-            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-          <VerticalSpacer sixteenPx />
-          <FlexContainer fluid>
-            <FlexRow>
-              <FlexColumn>
-                <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
-                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-                </Hovedknapp>
-              </FlexColumn>
-            </FlexRow>
-          </FlexContainer>
-        </Row>
-      )}
-    </div>
-  </>
+  <div className={styles.container}>
+    <VerticalSpacer eightPx />
+    <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
+    <VerticalSpacer eightPx />
+    {IMutenArbeidsforhold(arbeidsforhold) && (
+      <Row>
+        <VerticalSpacer twentyPx />
+        <ArbeidsforholdRadioknapperV2
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
+          arbeidsforhold={arbeidsforhold}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+        <ArbeidsforholdBegrunnelse
+          readOnly={false}
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+        <VerticalSpacer sixteenPx />
+        <FlexContainer fluid>
+          <FlexRow>
+            <FlexColumn>
+              <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+                <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
+              </Hovedknapp>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </Row>
+    )}
+  </div>
 );
 
 PersonArbeidsforholdDetailFormV2.propTypes = {
