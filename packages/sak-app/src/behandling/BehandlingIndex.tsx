@@ -26,13 +26,14 @@ import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from '../app/ErrorBoundary';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
-const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
+// const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
 const BehandlingInnsynIndex = React.lazy(() => import('@k9-sak-web/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@k9-sak-web/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@k9-sak-web/behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@k9-sak-web/behandling-anke'));
 const BehandlingFrisinnIndex = React.lazy(() => import('@k9-sak-web/behandling-frisinn'));
 const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
+const BehandlingUtvidetRettIndex = React.lazy(() => import('@k9-sak-web/behandling-utvidet-rett'));
 
 const erTilbakekreving = (behandlingTypeKode: string): boolean =>
   behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
@@ -258,7 +259,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
-          <BehandlingOmsorgspengerIndex
+          <BehandlingUtvidetRettIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
             {...defaultProps}
