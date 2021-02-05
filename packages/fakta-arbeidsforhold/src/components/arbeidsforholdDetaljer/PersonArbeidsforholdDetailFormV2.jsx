@@ -8,7 +8,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapperV2 from './ArbeidsforholdRadioknapperV2';
@@ -35,21 +34,12 @@ export const PersonArbeidsforholdDetailFormV2 = ({
   alleKodeverk,
   ...formProps
 }) => (
-  <div className={styles.container}>
-    <VerticalSpacer eightPx />
-    <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
-    <VerticalSpacer eightPx />
-    {IMutenArbeidsforhold(arbeidsforhold) && (
-      <>
-        <div className={styles.hl} />
-        <VerticalSpacer sixteenPx />
-        <Normaltekst>
-          <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
-        </Normaltekst>
-        <VerticalSpacer eightPx />
-        <Normaltekst className={styles.spørsmål}>
-          <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
-        </Normaltekst>
+  <>
+    <div className={styles.container}>
+      <VerticalSpacer eightPx />
+      <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
+      <VerticalSpacer eightPx />
+      {IMutenArbeidsforhold(arbeidsforhold) && (
         <Row>
           <VerticalSpacer twentyPx />
           <ArbeidsforholdRadioknapperV2
@@ -75,9 +65,9 @@ export const PersonArbeidsforholdDetailFormV2 = ({
             </FlexRow>
           </FlexContainer>
         </Row>
-      </>
-    )}
-  </div>
+      )}
+    </div>
+  </>
 );
 
 PersonArbeidsforholdDetailFormV2.propTypes = {

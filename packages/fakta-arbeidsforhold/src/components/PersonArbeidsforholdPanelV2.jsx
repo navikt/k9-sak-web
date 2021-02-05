@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { VerticalSpacer, FaktaGruppe, TableColumn, Image, FlexRow } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FaktaGruppe, Image, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Normaltekst } from 'nav-frontend-typografi';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
@@ -255,14 +255,14 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
 
             return (
               <>
-                <FlexRow key={a}>
-                  <TableColumn className={styles.arbeidsgiverColumn}>
+                <FlexRow key={a.id}>
+                  <FlexColumn className={styles.arbeidsgiverColumn}>
                     <div className={styles.overskrift}>
                       <Image src={briefcaseImg} />
                       <Normaltekst>{navn}</Normaltekst>
                     </div>
-                  </TableColumn>
-                  <TableColumn className={styles.aksjonspunktColumn}>
+                  </FlexColumn>
+                  <FlexColumn className={styles.aksjonspunktColumn}>
                     {harAksjonspunkter(arbeidsforholdPerArbeidsgiver) && <Image src={advarselImageUrl} alt="" />}
                     <button
                       className={styles.knappContainer}
@@ -282,7 +282,7 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
                       </Normaltekst>
                       <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
                     </button>
-                  </TableColumn>
+                  </FlexColumn>
                 </FlexRow>
                 {erValgt && (
                   <PersonArbeidsforholdTableV2
@@ -309,7 +309,7 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
 
 PersonArbeidsforholdPanelImplV2.propTypes = {
   intl: PropTypes.shape().isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,

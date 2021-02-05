@@ -441,7 +441,7 @@ PersonArbeidsforholdPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
 };
 
 const FORM_NAVN = 'ArbeidsforholdInfoPanel';

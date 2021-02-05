@@ -64,7 +64,7 @@ export const ArbeidsforholdInfoPanelImplV2 = ({
         <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
           {[
             <FormattedMessage
-              key="ArbeidsforholdInfoPanelAksjonspunkt"
+              key="ArbeidsforholdInfoPanelAksjonspunktV2"
               id="ArbeidsforholdInfoPanel.AvklarArbeidsforhold"
             />,
           ]}

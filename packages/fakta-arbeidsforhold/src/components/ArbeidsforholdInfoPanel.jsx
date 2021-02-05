@@ -108,7 +108,7 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
   skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

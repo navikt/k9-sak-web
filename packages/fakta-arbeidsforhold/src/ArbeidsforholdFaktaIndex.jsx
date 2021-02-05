@@ -70,14 +70,14 @@ const ArbeidsforholdFaktaIndex = ({
 
 ArbeidsforholdFaktaIndex.propTypes = {
   behandling: arbeidsforholdBehandlingPropType.isRequired,
-  inntektArbeidYtelse: arbeidsforholdInntektArbeidYtelsePropType.isRequired,
+  inntektArbeidYtelse: arbeidsforholdInntektArbeidYtelsePropType,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType).isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
