@@ -77,7 +77,7 @@ ArbeidsforholdFaktaIndex.propTypes = {
   }).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType).isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,

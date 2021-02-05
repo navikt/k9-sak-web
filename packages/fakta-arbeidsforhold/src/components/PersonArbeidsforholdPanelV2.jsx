@@ -309,7 +309,7 @@ export class PersonArbeidsforholdPanelImplV2 extends Component {
 
 PersonArbeidsforholdPanelImplV2.propTypes = {
   intl: PropTypes.shape().isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType).isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,

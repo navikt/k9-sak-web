@@ -102,7 +102,7 @@ const PersonArbeidsforholdTable = ({
 PersonArbeidsforholdTable.propTypes = {
   alleArbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
   selectedId: PropTypes.string,
-  arbeidsgiverOpplysningerPerId: PropTypes.instanceOf(Map).isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   selectArbeidsforholdCallback: PropTypes.func.isRequired,
 };
 
