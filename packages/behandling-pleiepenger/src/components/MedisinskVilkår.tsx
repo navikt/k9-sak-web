@@ -4,8 +4,15 @@ import { useRestApiErrorDispatcher } from '../../../rest-api-hooks';
 import EventType from '../../../rest-api/src/requestApi/eventType';
 import findEndpointsForMedisinskVilkårFrontend from '../microfrontend/utils/findEndpointsForMedisinskVilkårFrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
+import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
 
-const initializeMedisinskVilkår = (elementId, httpErrorHandler, endpoints: SimpleEndpoints, behandlingUuid: string) => {
+const initializeMedisinskVilkår = (
+  elementId,
+  httpErrorHandler,
+  endpoints: SimpleEndpoints,
+  behandlingUuid: string,
+  løsAksjonspunkt,
+) => {
   (window as any).renderMedisinskVilkarApp(elementId, {
     onVurderingValgt: vurdering => {
       if (vurdering !== null) {
@@ -26,11 +33,12 @@ const initializeMedisinskVilkår = (elementId, httpErrorHandler, endpoints: Simp
     httpErrorHandler,
     endpoints,
     behandlingUuid,
+    løsAksjonspunkt,
   });
 };
 
 const medisinskVilkårAppID = 'medisinskVilkårApp';
-export default ({ behandling: { links, uuid } }) => {
+export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandler = (status: number, locationHeader?: string) => {
     if (status === 403) {
@@ -44,6 +52,9 @@ export default ({ behandling: { links, uuid } }) => {
       }
     }
   };
+
+  const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter);
+  const løsAksjonspunkt = () => submitCallback([{ kode: medisinskVilkårAksjonspunktkode }]);
 
   return (
     <MicroFrontend
@@ -68,6 +79,7 @@ export default ({ behandling: { links, uuid } }) => {
             { rel: 'sykdom-diagnosekoder-endring', desiredName: 'diagnosekoder' },
           ]),
           uuid,
+          løsAksjonspunkt,
         )
       }
       onError={() => {}}
