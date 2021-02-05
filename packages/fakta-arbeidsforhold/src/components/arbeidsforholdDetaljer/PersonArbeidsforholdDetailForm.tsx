@@ -7,7 +7,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
-import { Normaltekst } from 'nav-frontend-typografi';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
@@ -51,50 +50,38 @@ export const PersonArbeidsforholdDetailForm: FunctionComponent<Props> = ({
   behandlingVersjon,
   ...formProps
 }) => (
-  <>
+  <FlexContainer>
     <div className={styles.container}>
       <VerticalSpacer eightPx />
       <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} />
       <VerticalSpacer eightPx />
       {IMutenArbeidsforhold(arbeidsforhold) && (
-        <>
-          <div className={styles.hl} />
+        <Row>
+          <ArbeidsforholdRadioknapper
+            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+          <ArbeidsforholdBegrunnelse
+            readOnly={false}
+            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
           <VerticalSpacer sixteenPx />
-          <Normaltekst>
-            <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
-          </Normaltekst>
-          <VerticalSpacer eightPx />
-          <Normaltekst className={styles.spørsmål}>
-            <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
-          </Normaltekst>
-          <Row>
-            <VerticalSpacer twentyPx />
-            <ArbeidsforholdRadioknapper
-              formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
-            <ArbeidsforholdBegrunnelse
-              readOnly={false}
-              formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
-            <VerticalSpacer sixteenPx />
-            <FlexContainer>
-              <FlexRow>
-                <FlexColumn>
-                  <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
-                    <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-                  </Hovedknapp>
-                </FlexColumn>
-              </FlexRow>
-            </FlexContainer>
-          </Row>
-        </>
+          <FlexContainer>
+            <FlexRow>
+              <FlexColumn>
+                <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
+                </Hovedknapp>
+              </FlexColumn>
+            </FlexRow>
+          </FlexContainer>
+        </Row>
       )}
     </div>
-  </>
+  </FlexContainer>
 );
 
 const validateForm = values => ({
