@@ -12,6 +12,7 @@ const initializeMedisinskVilkår = (
   endpoints: SimpleEndpoints,
   behandlingUuid: string,
   løsAksjonspunkt,
+  readOnly,
 ) => {
   (window as any).renderMedisinskVilkarApp(elementId, {
     onVurderingValgt: vurdering => {
@@ -34,11 +35,12 @@ const initializeMedisinskVilkår = (
     endpoints,
     behandlingUuid,
     onFinished: løsAksjonspunkt,
+    readOnly,
   });
 };
 
 const medisinskVilkårAppID = 'medisinskVilkårApp';
-export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter }) => {
+export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandler = (status: number, locationHeader?: string) => {
     if (status === 403) {
@@ -79,6 +81,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter })
           ]),
           uuid,
           løsAksjonspunkt,
+          readOnly,
         )
       }
       onError={() => {}}
