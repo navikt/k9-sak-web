@@ -42,6 +42,7 @@ const VedtakPanels = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  personopplysninger,
   arbeidsgiverOpplysningerPerId,
   vilkar,
   beregningsgrunnlag,
@@ -89,6 +90,7 @@ const VedtakPanels = ({
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
         dokumentdata={dokumentdata}
+        personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     );
@@ -113,6 +115,7 @@ const VedtakPanels = ({
       ytelseTypeKode={ytelseTypeKode}
       kanOverstyre={employeeHasAccess}
       alleKodeverk={alleKodeverk}
+      personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       vilkar={vilkar}
       beregningErManueltFastsatt={beregningErManueltFastsatt}
@@ -139,6 +142,7 @@ VedtakPanels.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
@@ -148,7 +152,7 @@ VedtakPanels.propTypes = {
   behandlingTypeKode: PropTypes.string.isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
   dokumentdata: PropTypes.shape(),
 };
 

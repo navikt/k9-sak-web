@@ -245,7 +245,7 @@ VedtakRevurderingFormImpl.propTypes = {
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
   dokumentdata: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   ...formPropTypes,

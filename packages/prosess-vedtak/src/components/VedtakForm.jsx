@@ -72,6 +72,7 @@ export class VedtakForm extends Component {
       ytelseTypeKode,
       resultatstruktur,
       alleKodeverk,
+      personopplysninger,
       arbeidsgiverOpplysningerPerId,
       tilbakekrevingvalg,
       simuleringResultat,
@@ -147,6 +148,7 @@ export class VedtakForm extends Component {
             readOnly={readOnly}
             sprakkode={sprakkode}
             ytelseTypeKode={ytelseTypeKode}
+            personopplysninger={personopplysninger}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             dokumentdata={dokumentdata}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
@@ -205,12 +207,13 @@ VedtakForm.propTypes = {
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
   dokumentdata: PropTypes.shape(),
   ...formPropTypes,
 };

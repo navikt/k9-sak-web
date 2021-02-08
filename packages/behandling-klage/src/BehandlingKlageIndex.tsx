@@ -19,6 +19,7 @@ import { restApiKlageHooks, requestKlageApi, KlageBehandlingApiKeys } from './da
 const klageData = [
   { key: KlageBehandlingApiKeys.AKSJONSPUNKTER },
   { key: KlageBehandlingApiKeys.KLAGE_VURDERING },
+  { key: KlageBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: KlageBehandlingApiKeys.PARTER_MED_KLAGERETT },
   { key: KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT },
 ];
