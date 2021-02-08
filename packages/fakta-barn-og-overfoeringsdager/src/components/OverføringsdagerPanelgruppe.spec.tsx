@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallowWithIntl } from '../../i18n';
 import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import { OverføringsretningEnum } from '../types/Overføring';
@@ -18,6 +17,6 @@ describe('<OverføringsdagerPanelgruppe>', () => {
       />,
     );
 
-    expect(wrapper.find(OverføringsdagerPanel)).to.have.length(3);
+    expect(wrapper.find(OverføringsdagerPanel)).toHaveLength(3);
   });
 });

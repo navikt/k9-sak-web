@@ -55,7 +55,7 @@ describe('<AnkeProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
+      definisjon: { kode: aksjonspunktCodes.AVKLAR_AKTIVITETER, kodeverk: 'test' },
       status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
       kanLoses: true,
       erAktivt: true,
@@ -63,7 +63,7 @@ describe('<AnkeProsess>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.ADOPSJONSVILKARET, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.MEDISINSKVILKARET, kodeverk: 'test' },
       overstyrbar: true,
     } as Vilkar,
   ];

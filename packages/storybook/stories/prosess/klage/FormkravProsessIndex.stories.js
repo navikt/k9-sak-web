@@ -19,13 +19,15 @@ const behandling = {
   },
 };
 
-const avsluttedeBehandlinger = [{
-  id: 1,
-  type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
+const avsluttedeBehandlinger = [
+  {
+    id: 1,
+    type: {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+    },
+    avsluttet: '2017-08-02T00:54:25.455',
   },
-  avsluttet: '2017-08-02T00:54:25.455',
-}];
+];
 
 export default {
   title: 'prosess/klage/prosess-formkrav',
@@ -45,17 +47,25 @@ export const visFormkravPanelForAksjonspunktNfp = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [{
-          navn: 'Denne er avvist fordi...',
-        }],
+        avvistArsaker: [
+          {
+            navn: 'Denne er avvist fordi...',
+          },
+        ],
       },
     })}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('readOnly', false)}
     readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
     avsluttedeBehandlinger={avsluttedeBehandlinger}
-    apCodes={[aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP]}
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
+        },
+      },
+    ]}
   />
 );
 
@@ -71,16 +81,24 @@ export const visFormkravPanelForAksjonspunktKa = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [{
-          navn: 'Denne er avvist fordi...',
-        }],
+        avvistArsaker: [
+          {
+            navn: 'Denne er avvist fordi...',
+          },
+        ],
       },
     })}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('readOnly', false)}
     readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
     avsluttedeBehandlinger={avsluttedeBehandlinger}
-    apCodes={[aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA]}
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
+        },
+      },
+    ]}
   />
 );

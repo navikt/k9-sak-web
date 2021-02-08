@@ -8,7 +8,7 @@ import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAkti
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '../beregning-test-helper';
 import { erAvklartAktivitetEndret, transformValues } from './AvklareAktiviteterPanel';
 import AvklareAktiviteterPanelContent, {
@@ -18,6 +18,7 @@ import AvklareAktiviteterPanelContent, {
 } from './AvklareAktiviteterPanelContent';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import { formNameAvklarAktiviteter } from '../BeregningFormUtils';
+import { intlMock } from '../../../i18n/index';
 
 const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER, VURDER_FAKTA_FOR_ATFL_SN } = aksjonspunktCodes;
 
@@ -149,8 +150,9 @@ describe('<AvklareAktiviteterPanel>', () => {
       },
     };
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         hasBegrunnelse={false}
@@ -185,8 +187,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aksjonspunkter = [];
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         hasBegrunnelse={false}
@@ -228,8 +231,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
 
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         hasBegrunnelse={false}
@@ -271,8 +275,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
 
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         beregningsgrunnlag={{
@@ -324,8 +329,9 @@ describe('<AvklareAktiviteterPanel>', () => {
       },
     };
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         beregningsgrunnlag={beregningsgrunnlag}
@@ -362,8 +368,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } }];
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         beregningsgrunnlag={{
@@ -407,8 +414,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     const aksjonspunkter = [];
 
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         beregningsgrunnlag={{
@@ -451,8 +459,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         beregningsgrunnlag={{
@@ -495,8 +504,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
     const wrapper = shallow(
-      <AvklareAktiviteterPanelContent
+      <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
+        intl={intlMock}
         readOnly={false}
         isAksjonspunktClosed={false}
         beregningsgrunnlag={{

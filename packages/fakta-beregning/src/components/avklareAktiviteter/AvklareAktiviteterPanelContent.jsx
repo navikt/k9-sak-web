@@ -1,15 +1,17 @@
 import React from 'react';
-import { CheckboxField } from '@fpsak-frontend/form';
 import { createSelector } from 'reselect';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Element } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { Element } from 'nav-frontend-typografi';
 
+import { CheckboxField } from '@fpsak-frontend/form';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
+import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
+
 import styles from './avklareAktiviteterPanel.less';
 
 export const BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME = 'begrunnelseAvklareAktiviteter';
@@ -83,6 +85,7 @@ const hasOpenAvklarAksjonspunkter = aksjonspunkter =>
 
 const AvklareAktiviteterPanelContent = props => {
   const {
+    intl,
     readOnly,
     isAksjonspunktClosed,
     submittable,
@@ -181,16 +184,15 @@ const AvklareAktiviteterPanelContent = props => {
                   <>
                     <FaktaBegrunnelseTextField
                       name={`${field}.${BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}`}
-                      isDirty={formProps.dirty}
                       isSubmittable={submittable}
                       isReadOnly={readOnly}
                       hasBegrunnelse={hasBegrunnelse}
                     />
                     {skalViseSubmitknappInneforBorderBox && (
                       <FaktaSubmitButton
-                        buttonTextId={
-                          erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText'
-                        }
+                        buttonText={intl.formatMessage({
+                          id: erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText',
+                        })}
                         formName={formProps.form}
                         isSubmittable={submittable && submitEnabled && !formProps.error}
                         isReadOnly={readOnly}
@@ -207,7 +209,9 @@ const AvklareAktiviteterPanelContent = props => {
                   <>
                     <VerticalSpacer twentyPx />
                     <FaktaSubmitButton
-                      buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : undefined}
+                      buttonText={
+                        erOverstyrt ? intl.formatMessage({ id: 'AvklarAktivitetPanel.OverstyrText' }) : undefined
+                      }
                       formName={formProps.form}
                       isSubmittable={submittable && submitEnabled && !formProps.error}
                       isReadOnly={readOnly}
@@ -224,4 +228,4 @@ const AvklareAktiviteterPanelContent = props => {
   );
 };
 
-export default AvklareAktiviteterPanelContent;
+export default injectIntl(AvklareAktiviteterPanelContent);

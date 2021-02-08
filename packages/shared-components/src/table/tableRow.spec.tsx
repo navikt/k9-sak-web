@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import TableRow from './TableRow';
@@ -16,10 +15,10 @@ describe('<TableRow>', () => {
       </TableRow>,
     );
 
-    expect(wrapper.find('tr')).to.have.length(1);
+    expect(wrapper.find('tr')).toHaveLength(1);
     const col = wrapper.find('TableColumn');
-    expect(col).to.have.length(1);
-    expect(col.childAt(0).text()).to.eql('1');
+    expect(col).toHaveLength(1);
+    expect(col.childAt(0).text()).toEqual('1');
   });
 
   it('skal trigge events ved museklikk og tasteklikk', () => {
@@ -33,11 +32,11 @@ describe('<TableRow>', () => {
 
     const row = wrapper.find('tr');
     row.simulate('mouseDown');
-    expect(mouseEventFunction).to.have.property('callCount', 1);
-    expect(keyEventFunction).to.have.property('callCount', 0);
+    expect(mouseEventFunction).toHaveProperty('callCount', 1);
+    expect(keyEventFunction).toHaveProperty('callCount', 0);
 
     row.simulate('keyDown', { target: { tagName: 'TR' }, key: 'Enter', preventDefault: sinon.spy() });
-    expect(keyEventFunction).to.have.property('callCount', 1);
-    expect(mouseEventFunction).to.have.property('callCount', 1);
+    expect(keyEventFunction).toHaveProperty('callCount', 1);
+    expect(mouseEventFunction).toHaveProperty('callCount', 1);
   });
 });

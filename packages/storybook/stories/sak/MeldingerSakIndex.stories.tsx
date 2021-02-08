@@ -6,6 +6,7 @@ import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldin
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
+import arbeidsgivere from '../mocks/arbeidsgivere.json';
 import withReduxProvider from '../../decorators/withRedux';
 
 const templates = [
@@ -49,6 +50,7 @@ export const visMeldingerPanel = () => (
       behandlingId={1}
       behandlingVersjon={1}
       isKontrollerRevurderingApOpen={false}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
       revurderingVarslingArsak={[
         {
           kode: ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER,

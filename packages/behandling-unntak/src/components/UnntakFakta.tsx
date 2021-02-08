@@ -17,13 +17,7 @@ import { restApiUnntakHooks, UnntakBehandlingApiKeys } from '../data/unntakBehan
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-const overstyringApCodes = [
-  ac.OVERSTYR_AVKLAR_STARTDATO,
-  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYR_AVKLAR_STARTDATO,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-];
+const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER];
 
 interface OwnProps {
   data: FetchedData;

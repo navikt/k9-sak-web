@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import React from 'react';
 import sinon from 'sinon';
 import shallowWithIntl from '../../i18n';
@@ -52,6 +51,6 @@ describe('<AvslagårsakListe>', () => {
 
     const wrapper = shallowWithIntl(<AvslagsårsakListe vilkar={vilkar} getKodeverknavn={sinon.spy()} />);
     const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    expect(normaltekstFields).toHaveLength(2);
   });
 });

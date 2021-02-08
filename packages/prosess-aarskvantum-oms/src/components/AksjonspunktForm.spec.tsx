@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { CheckboxField, RadioOption } from '@fpsak-frontend/form/index';
@@ -53,8 +52,8 @@ describe('<AksjonspunktForm>', () => {
       const checkbox = wrapper.find(CheckboxField);
       const radios = wrapper.find(RadioOption);
 
-      expect(checkbox).to.have.length(1);
-      expect(radios).to.have.length(0);
+      expect(checkbox).toHaveLength(1);
+      expect(radios).toHaveLength(0);
     });
 
     it('viser radios hvis man ikke har uavklarte perioder', () => {
@@ -75,8 +74,8 @@ describe('<AksjonspunktForm>', () => {
       const checkbox = wrapper.find(CheckboxField);
       const radios = wrapper.find(RadioOption);
 
-      expect(checkbox).to.have.length(0);
-      expect(radios).to.have.length(2);
+      expect(checkbox).toHaveLength(0);
+      expect(radios).toHaveLength(2);
     });
   });
 
@@ -89,7 +88,7 @@ describe('<AksjonspunktForm>', () => {
 
       const rebehandlingDto = transformValues(valgtReBehandling);
 
-      expect(rebehandlingDto).to.eql([
+      expect(rebehandlingDto).toEqual([
         {
           fortsettBehandling: false,
           begrunnelse: valgtReBehandling.begrunnelse,
@@ -104,7 +103,7 @@ describe('<AksjonspunktForm>', () => {
 
       const fortsettDto = transformValues(valgtFortsett);
 
-      expect(fortsettDto).to.eql([
+      expect(fortsettDto).toEqual([
         {
           fortsettBehandling: true,
           begrunnelse: valgtFortsett.begrunnelse,
@@ -120,7 +119,7 @@ describe('<AksjonspunktForm>', () => {
 
       const mappet = transformValues(bekreftelse);
 
-      expect(mappet).to.eql([
+      expect(mappet).toEqual([
         {
           fortsettBehandling: false,
           kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,

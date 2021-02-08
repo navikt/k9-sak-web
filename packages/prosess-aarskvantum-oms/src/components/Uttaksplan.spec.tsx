@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { Arbeidsforhold, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../../i18n';
 import Uttaksplan from './Uttaksplan';
@@ -82,9 +81,9 @@ describe('Uttaksplan', () => {
         );
       });
 
-      expect(tabell).to.have.length(1);
+      expect(tabell).toHaveLength(1);
     });
 
-    expect(tabeller).to.have.length(aktiviteter.length);
+    expect(tabeller).toHaveLength(aktiviteter.length);
   });
 });

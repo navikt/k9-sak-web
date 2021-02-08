@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { joinNonNullStrings, safeJSONParse } from './stringUtils';
 
 describe('stringUtils', () => {
@@ -7,7 +6,7 @@ describe('stringUtils', () => {
 
     const result = joinNonNullStrings(stringList);
 
-    expect(result).to.equal('1hei2');
+    expect(result).toBe('1hei2');
   });
 });
 
@@ -17,7 +16,7 @@ describe('safeJSONParse', () => {
 
     const result = safeJSONParse(str);
 
-    expect(result).is.null;
+    expect(result).toBeNull();
   });
 
   it('safeJSONParse returnerer JSON parsed data hvis argumentet er valid JSON', () => {
@@ -25,6 +24,6 @@ describe('safeJSONParse', () => {
 
     const result = safeJSONParse(str);
 
-    expect(result.hello).to.equal('world');
+    expect(result.hello).toBe('world');
   });
 });

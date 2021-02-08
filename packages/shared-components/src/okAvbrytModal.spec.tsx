@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import Modal from 'nav-frontend-modal';
@@ -20,12 +19,12 @@ describe('<OkAvbrytModal>', () => {
     );
 
     const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(1);
-    expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('OkAvbrytModal.OpenBehandling');
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('isOpen')).toBe(true);
+    expect(modal.prop('contentLabel')).toEqual('OkAvbrytModal.OpenBehandling');
 
     const message = wrapper.find(FormattedMessage);
-    expect(message).to.have.length(1);
-    expect(message.prop('id')).is.eql('OkAvbrytModal.OpenBehandling');
+    expect(message).toHaveLength(1);
+    expect(message.prop('id')).toEqual('OkAvbrytModal.OpenBehandling');
   });
 });

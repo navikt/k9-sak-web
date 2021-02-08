@@ -1,21 +1,22 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 import { TilbakekrevingVedtakFormImpl as TilbakekrevingVedtakForm } from './TilbakekrevingVedtakForm';
 import underavsnittType from '../kodeverk/avsnittType';
+import { intlMock } from '../../i18n/index';
 
 describe('<TilbakekrevingVedtakForm>', () => {
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
         {...reduxFormPropsMock}
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
@@ -38,11 +39,11 @@ describe('<TilbakekrevingVedtakForm>', () => {
       />,
     );
 
-    expect(wrapper.find(TilbakekrevingEditerVedtaksbrevPanel)).to.have.length(1);
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
-    expect(knapp).to.have.length(1);
-    expect(knapp.prop('isSubmittable')).is.true;
-    expect(wrapper.find('a')).to.have.length(1);
+    expect(wrapper.find(TilbakekrevingEditerVedtaksbrevPanel)).toHaveLength(1);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
+    expect(knapp).toHaveLength(1);
+    expect(knapp.prop('isSubmittable')).toBe(true);
+    expect(wrapper.find('a')).toHaveLength(1);
   });
 
   it('skal formatere data for forhåndsvisning av vedtaksbrevet', () => {
@@ -50,6 +51,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
         {...reduxFormPropsMock}
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
         fetchPreviewVedtaksbrev={fetchPreview}
@@ -83,8 +85,8 @@ describe('<TilbakekrevingVedtakForm>', () => {
     // @ts-ignore
     wrapper.find('a').prop('onClick')({ preventDefault: sinon.spy() });
 
-    expect(fetchPreview.calledOnce).to.true;
-    expect(fetchPreview.getCalls()[0].args[0]).is.eql({
+    expect(fetchPreview.calledOnce).toBe(true);
+    expect(fetchPreview.getCalls()[0].args[0]).toEqual({
       uuid: 'uuid',
       oppsummeringstekst: 'Dette er oppsummeringen',
       perioderMedTekst: [
@@ -104,6 +106,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
         {...reduxFormPropsMock}
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
@@ -126,16 +129,17 @@ describe('<TilbakekrevingVedtakForm>', () => {
       />,
     );
 
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
-    expect(knapp).to.have.length(1);
-    expect(knapp.prop('isSubmittable')).is.false;
-    expect(wrapper.find('a')).to.have.length(0);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
+    expect(knapp).toHaveLength(1);
+    expect(knapp.prop('isSubmittable')).toBe(false);
+    expect(wrapper.find('a')).toHaveLength(0);
   });
 
   it('skal ikke vise trykkbar godkjenningsknapp og forhåndsvisningslenke når obligatorisk oppsummering for revurdering tilbakekreving ikke er utfylt', () => {
     const wrapper = shallow(
       <TilbakekrevingVedtakForm
         {...reduxFormPropsMock}
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
         fetchPreviewVedtaksbrev={sinon.spy()}
@@ -169,11 +173,11 @@ describe('<TilbakekrevingVedtakForm>', () => {
       />,
     );
 
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
-    expect(knapp).to.have.length(1);
-    expect(knapp.prop('isSubmittable')).is.false;
-    expect(wrapper.find('a')).to.have.length(1);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
+    expect(knapp).toHaveLength(1);
+    expect(knapp.prop('isSubmittable')).toBe(false);
+    expect(wrapper.find('a')).toHaveLength(1);
     const flexColumns = wrapper.find(FlexColumn);
-    expect(flexColumns).to.have.length(5);
+    expect(flexColumns).toHaveLength(5);
   });
 });

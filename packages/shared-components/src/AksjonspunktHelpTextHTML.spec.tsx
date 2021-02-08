@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FormattedMessage } from 'react-intl';
 import AksjonspunktHelpTextHTML from './AksjonspunktHelpTextHTML';
@@ -13,16 +12,16 @@ describe('<AksjonspunktHelpTextHTML>', () => {
     );
     const flexContainer = wrapper.find('FlexContainer');
     const messages = flexContainer.first().find('FormattedMessage');
-    expect(messages.at(0).prop('id')).is.eql('Beregningsgrunnlag.Helptext.Arbeidstaker2');
-    expect(messages.at(0).prop('values')).is.eql({ verdi: 23 });
+    expect(messages.at(0).prop('id')).toEqual('Beregningsgrunnlag.Helptext.Arbeidstaker2');
+    expect(messages.at(0).prop('values')).toEqual({ verdi: 23 });
     const image = flexContainer.first().find('Image');
-    expect(image.length).to.equal(1);
+    expect(image.length).toBe(1);
   });
   it('Skal teste at aksjonspunkt hjelp ikke vises når ikke aksjonspunkt', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktHelpTextHTML.WrappedComponent intl={intlMock}>{[]}</AksjonspunktHelpTextHTML.WrappedComponent>,
     );
     const flexContainer = wrapper.find('FlexContainer');
-    expect(flexContainer.length).to.equal(0);
+    expect(flexContainer.length).toBe(0);
   });
 });

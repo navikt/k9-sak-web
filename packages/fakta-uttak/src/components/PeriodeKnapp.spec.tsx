@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { expect } from 'chai';
 import PeriodeKnapp from './PeriodeKnapp';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 import { UttakFaktaFormContext } from './uttakUtils';
@@ -22,7 +21,6 @@ describe('<PeriodeKnapp>', () => {
 
     const knapp = wrapper.find('button');
     const periodetekst = knapp.text();
-
-    expect(periodetekst).to.contain('03.02.2020 - 05.04.2020');
+    expect(periodetekst).toEqual('02: 03.02.2020 - 05.04.2020');
   });
 });

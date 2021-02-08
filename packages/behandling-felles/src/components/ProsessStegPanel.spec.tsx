@@ -51,7 +51,7 @@ describe('<ProsessStegPanel>', () => {
         kodeverk: 'AKSJONSPUNKT_STATUS',
       },
       definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
+        kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
         kodeverk: 'AKSJONSPUNKT_KODE',
       },
       kanLoses: true,
@@ -92,7 +92,7 @@ describe('<ProsessStegPanel>', () => {
   it('skal vise panel for henlagt behandling når valgt panel er vedtakspanelet og behandling er henlagt', () => {
     const vedtakPanelDef = lagPanelDef(
       prosessStegCodes.VEDTAK,
-      [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL],
+      [aksjonspunktCodes.AVKLAR_AKTIVITETER],
       ['VEDTAK.TEKST'],
     );
     const vedtakStegDef = lagStegDef(prosessStegCodes.VEDTAK, [vedtakPanelDef]);
@@ -135,7 +135,7 @@ describe('<ProsessStegPanel>', () => {
   it('skal vise panel for steg ikke behandlet når steget ikke er behandlet og saken ikke er henlagt', () => {
     const vedtakPanelDef = lagPanelDef(
       prosessStegCodes.VEDTAK,
-      [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL],
+      [aksjonspunktCodes.AVKLAR_AKTIVITETER],
       ['VEDTAK.TEKST'],
     );
     const vedtakStegDef = lagStegDef(prosessStegCodes.VEDTAK, [vedtakPanelDef]);
@@ -175,12 +175,12 @@ describe('<ProsessStegPanel>', () => {
       {
         ...aksjonspunkter[0],
         definisjon: {
-          kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+          kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
           kodeverk: 'AKSJONSPUNKT_KODE',
         },
       },
     ];
-    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
+    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
     const omsorgPanelDef = lagPanelDef('OMSORG', [], ['OMSORG.TEKST']);
     const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef, omsorgPanelDef]);
     const utledetFodselDelPanel = new ProsessStegPanelUtledet(
@@ -236,12 +236,12 @@ describe('<ProsessStegPanel>', () => {
       {
         ...aksjonspunkter[0],
         definisjon: {
-          kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+          kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
           kodeverk: 'AKSJONSPUNKT_KODE',
         },
       },
     ];
-    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
+    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
     const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef]);
     const utledetFodselDelPanel = new ProsessStegPanelUtledet(
       inngangsvilkarStegDef,
@@ -287,12 +287,12 @@ describe('<ProsessStegPanel>', () => {
       {
         ...aksjonspunkter[0],
         definisjon: {
-          kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+          kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
           kodeverk: 'AKSJONSPUNKT_KODE',
         },
       },
     ];
-    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
+    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
     const omsorgPanelDef = lagPanelDef('OMSORG', [], ['OMSORG.TEKST']);
     const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef, omsorgPanelDef]);
     const utledetFodselDelPanel = new ProsessStegPanelUtledet(
