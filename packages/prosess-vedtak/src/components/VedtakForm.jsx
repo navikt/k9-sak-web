@@ -101,8 +101,7 @@ export class VedtakForm extends Component {
           {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
             <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
           ) : (
-            kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
-            !harBareFritekstbrev(tilgjengeligeVedtaksbrev) && (
+            kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
               <VedtakOverstyrendeKnapp
                 toggleCallback={this.onToggleOverstyring}
                 readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
@@ -235,6 +234,7 @@ export const buildInitialValues = createSelector(
     ownProps => ownProps.sprakkode,
     ownProps => ownProps.vedtakVarsel,
     ownProps => ownProps.dokumentdata,
+    ownProps => ownProps.tilgjengeligeVedtaksbrev,
   ],
   (
     status,
@@ -245,6 +245,7 @@ export const buildInitialValues = createSelector(
     sprakkode,
     vedtakVarsel,
     dokumentdata,
+    tilgjengeligeVedtaksbrev,
   ) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseTypeKode ? ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD : false,
@@ -252,7 +253,8 @@ export const buildInitialValues = createSelector(
     aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
-      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
+      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST ||
+      harBareFritekstbrev(tilgjengeligeVedtaksbrev),
     skalUndertrykkeBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
       vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
