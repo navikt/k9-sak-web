@@ -19,7 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Column, Row } from 'nav-frontend-grid';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { kanHaFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -116,7 +116,8 @@ export class VedtakRevurderingFormImpl extends Component {
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
               <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
             ) : (
-              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+              !harBareFritekstbrev(tilgjengeligeVedtaksbrev) && (
                 <VedtakOverstyrendeKnapp
                   toggleCallback={this.onToggleOverstyring}
                   readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
@@ -244,7 +245,7 @@ VedtakRevurderingFormImpl.propTypes = {
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
   dokumentdata: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   ...formPropTypes,

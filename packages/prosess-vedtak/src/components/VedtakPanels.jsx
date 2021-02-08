@@ -148,7 +148,7 @@ VedtakPanels.propTypes = {
   behandlingTypeKode: PropTypes.string.isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
   dokumentdata: PropTypes.shape(),
 };
 
