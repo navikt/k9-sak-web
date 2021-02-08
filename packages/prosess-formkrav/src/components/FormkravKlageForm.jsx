@@ -18,7 +18,7 @@ import {
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import lagVisningsnavnForKlagepart from '../utils/visningsNavn';
+import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
 import styles from './formkravKlageForm.less';
 

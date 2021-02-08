@@ -1,8 +1,8 @@
-import { Personpplysninger, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Personopplysninger, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 function lagVisningsnavnForKlagepart(
   partId: string,
-  personopplysninger?: Personpplysninger,
+  personopplysninger?: Personopplysninger,
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
 ): string {
   if (

@@ -31,8 +31,8 @@ interface OwnProps {
   behandlingVersjon: number;
   isKontrollerRevurderingApOpen?: boolean;
   revurderingVarslingArsak: KodeverkMedNavn[];
-  personopplysninger: Personopplysninger;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  personopplysninger?: Personopplysninger;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
 const MeldingerSakIndex: FunctionComponent<OwnProps> = ({

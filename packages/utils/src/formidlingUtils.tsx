@@ -1,4 +1,4 @@
-import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FagsakPerson, Personopplysninger, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';

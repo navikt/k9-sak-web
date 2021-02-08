@@ -67,8 +67,8 @@ interface PureOwnProps {
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
-  personopplysninger: Personopplysninger;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  personopplysninger?: Personopplysninger;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
 interface MappedOwnProps {

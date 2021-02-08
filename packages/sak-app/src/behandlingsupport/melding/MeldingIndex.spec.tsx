@@ -68,8 +68,6 @@ describe('<MeldingIndex>', () => {
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
         behandlingVersjon={123}
-        personopplysninger={{}}
-        arbeidsgiverOpplysninger={{}}
       />,
     );
 
@@ -89,8 +87,6 @@ describe('<MeldingIndex>', () => {
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
         behandlingVersjon={123}
-        personopplysninger={{}}
-        arbeidsgiverOpplysninger={{}}
       />,
     );
 
@@ -115,8 +111,6 @@ describe('<MeldingIndex>', () => {
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
         behandlingVersjon={123}
-        personopplysninger={{}}
-        arbeidsgiverOpplysninger={{}}
       />,
     );
 
@@ -155,8 +149,6 @@ describe('<MeldingIndex>', () => {
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
         behandlingVersjon={123}
-        personopplysninger={{}}
-        arbeidsgiverOpplysninger={{}}
       />,
     );
 
@@ -194,8 +186,6 @@ describe('<MeldingIndex>', () => {
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
         behandlingVersjon={123}
-        personopplysninger={{}}
-        arbeidsgiverOpplysninger={{}}
       />,
     );
 
@@ -240,8 +230,6 @@ describe('<MeldingIndex>', () => {
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
         behandlingVersjon={123}
-        personopplysninger={{}}
-        arbeidsgiverOpplysninger={{}}
       />,
     );
 
@@ -286,8 +274,6 @@ describe('<MeldingIndex>', () => {
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
         behandlingVersjon={123}
-        personopplysninger={{}}
-        arbeidsgiverOpplysninger={{}}
       />,
     );
 
@@ -337,8 +323,6 @@ describe('<MeldingIndex>', () => {
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
         behandlingId={1}
         behandlingVersjon={123}
-        personopplysninger={{}}
-        arbeidsgiverOpplysninger={{}}
       />,
     );
 
