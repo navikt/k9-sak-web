@@ -1,7 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Kodeverk, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId, Mottaker } from '@k9-sak-web/types';
+import {
+  Kodeverk,
+  KodeverkMedNavn,
+  Personopplysninger,
+  ArbeidsgiverOpplysningerPerId,
+  Mottaker,
+} from '@k9-sak-web/types';
 
 import Messages, { FormValues, Template } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
@@ -25,6 +31,7 @@ interface OwnProps {
   behandlingVersjon: number;
   isKontrollerRevurderingApOpen?: boolean;
   revurderingVarslingArsak: KodeverkMedNavn[];
+  personopplysninger: Personopplysninger;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -37,6 +44,7 @@ const MeldingerSakIndex: FunctionComponent<OwnProps> = ({
   behandlingVersjon,
   isKontrollerRevurderingApOpen = false,
   revurderingVarslingArsak,
+  personopplysninger,
   arbeidsgiverOpplysningerPerId,
 }) => (
   <RawIntlProvider value={intl}>
@@ -49,6 +57,7 @@ const MeldingerSakIndex: FunctionComponent<OwnProps> = ({
       behandlingVersjon={behandlingVersjon}
       isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
       revurderingVarslingArsak={revurderingVarslingArsak}
+      personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
   </RawIntlProvider>

@@ -175,16 +175,23 @@ const FagsakIndex: FunctionComponent = () => {
             behandlingRettigheter={behandlingRettigheter}
           />
         }
-        supportContent={
-          <BehandlingSupportIndex
-            fagsak={fagsak}
-            alleBehandlinger={alleBehandlinger}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            behandlingRettigheter={behandlingRettigheter}
-            arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-          />
-        }
+        supportContent={() => {
+          if (personopplysningerState === RestApiState.LOADING) {
+            return <LoadingPanel />;
+          }
+
+          return (
+            <BehandlingSupportIndex
+              fagsak={fagsak}
+              alleBehandlinger={alleBehandlinger}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              behandlingRettigheter={behandlingRettigheter}
+              personopplysninger={behandlingPersonopplysninger}
+              arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+            />
+          );
+        }}
         visittkortContent={() => {
           if (skalIkkeHenteData) {
             return null;

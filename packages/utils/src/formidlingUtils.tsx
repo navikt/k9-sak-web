@@ -16,6 +16,26 @@ export function bestemAvsenderApp(type: string): string {
   return type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK;
 }
 
+export function lagVisningsnavnForMottaker(
+  mottakerId: string,
+  personopplysninger?: Personopplysninger,
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
+): string {
+  if (
+    arbeidsgiverOpplysningerPerId &&
+    arbeidsgiverOpplysningerPerId[mottakerId] &&
+    arbeidsgiverOpplysningerPerId[mottakerId].navn
+  ) {
+    return `${arbeidsgiverOpplysningerPerId[mottakerId].navn} (${mottakerId})`;
+  }
+
+  if (personopplysninger && personopplysninger.aktoerId === mottakerId && personopplysninger.navn) {
+    return `${personopplysninger.navn} (${mottakerId})`;
+  }
+
+  return mottakerId;
+}
+
 function lesTilgjengeligeVedtaksbrev(
   tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev,
 ): Array<string> {
