@@ -1,11 +1,6 @@
-import ArbeidsforholdFaktaPanelDef from './faktaPaneler/ArbeidsforholdFaktaPanelDef';
-import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/MedlemskapsvilkaretFaktaPanelDef';
-import OmsorgenForFaktaPanelDef from './faktaPaneler/OmsorgenForFaktaPanelDef';
+import BarnFaktaPanelDef from './faktaPaneler/BarnFaktaPanelDef';
+import UttakFaktaPanelDef from './faktaPaneler/UttakFaktaPanelDef';
 
-const faktaPanelDefinisjoner = [
-  new ArbeidsforholdFaktaPanelDef(),
-  new MedlemskapsvilkaretFaktaPanelDef(),
-  new OmsorgenForFaktaPanelDef(),
-];
+const faktaPanelDefinisjoner = [new UttakFaktaPanelDef(), new BarnFaktaPanelDef()];
 
 export default faktaPanelDefinisjoner;

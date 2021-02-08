@@ -4,6 +4,7 @@ const fagsakYtelseType = {
   SVANGERSKAPSPENGER: 'SVP',
   PLEIEPENGER: 'PSB',
   OMSORGSPENGER: 'OMP',
+  UTVIDET_RETT: 'UTR',
   FRISINN: 'FRISINN',
 };
 

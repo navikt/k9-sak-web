@@ -19,7 +19,8 @@ import {
 } from './data/utvidetRettBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
 import UtvidetRettPaneler from './components/UtvidetRettPaneler';
-import { fagsakMock, fagsakPersonMock } from './components/mock/mockInput';
+import { mockInput } from './components/mock/mockInput';
+import { mockSaksdata } from './components/mock/mockSaksdata';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
@@ -56,10 +57,10 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
-  kodeverk,
-  // fagsak,
-  // fagsakPerson,git ad
-  rettigheter,
+  // kodeverk,
+  fagsak,
+  fagsakPerson,
+  // rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtProsessSteg,
   opneSokeside,
@@ -155,7 +156,6 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
   if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined)) {
     return <LoadingPanel />;
   }
-
   return (
     <>
       <ReduxFormStateCleaner
@@ -164,11 +164,11 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
       />
       <UtvidetRettPaneler
         behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsakMock}
-        fagsakPerson={fagsakPersonMock}
-        alleKodeverk={kodeverk}
-        rettigheter={rettigheter}
+        fetchedData={mockSaksdata}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        alleKodeverk={mockInput.kodeverk}
+        rettigheter={mockInput.rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
@@ -178,7 +178,7 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? mockInput.arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
       />
     </>

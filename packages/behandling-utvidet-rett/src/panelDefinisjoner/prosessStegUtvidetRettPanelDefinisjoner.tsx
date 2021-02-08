@@ -1,10 +1,10 @@
 import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarProsessStegPanelDef';
 import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPanelDef';
-import UtvidetRettPanelDef from './prosessStegPaneler/UtvidetRettPanelDef';
+import UtvidetRettProsessStegPanelDef from './prosessStegPaneler/UtvidetRettPanelDef';
 
 const prosessStegPanelDefinisjoner = [
   new InngangsvilkarProsessStegPanelDef(),
-  new UtvidetRettPanelDef(),
+  new UtvidetRettProsessStegPanelDef(),
   new VedtakProsessStegPanelDef(),
 ];
 

@@ -24,6 +24,7 @@ import { getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsess
 import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from '../app/ErrorBoundary';
+import BehandlingOmsorgspengerIndex from '../../../behandling-omsorgspenger';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 // const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
@@ -256,6 +257,19 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   }
 
   if (fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER) {
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <BehandlingOmsorgspengerIndex
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={query.fakta}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
+      </Suspense>
+    );
+  }
+  if (fagsak.sakstype.kode === FagsakYtelseType.UTVIDET_RETT) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>

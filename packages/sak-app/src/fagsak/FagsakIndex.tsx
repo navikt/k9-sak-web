@@ -26,6 +26,7 @@ import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
+import { mockFagsak } from './mock_utvidetRett/mockFagsak';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -154,7 +155,7 @@ const FagsakIndex: FunctionComponent = () => {
             render={props => (
               <BehandlingerIndex
                 {...props}
-                fagsak={fagsak}
+                fagsak={mockFagsak}
                 alleBehandlinger={alleBehandlinger}
                 arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                 setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}

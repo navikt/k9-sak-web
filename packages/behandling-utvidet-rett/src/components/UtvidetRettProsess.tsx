@@ -193,6 +193,7 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     lagreArsakerTilRedusertUtbetaling,
     ...data,
   };
+
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
     prosessStegPanelDefinisjoner,
     dataTilUtledingAvFpPaneler,
