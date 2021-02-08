@@ -20,7 +20,7 @@ type ArbeidsforholdV2 = Readonly<{
     type?: Kodeverk;
   }[];
   stillingsprosent?: number;
-  aksjonspunktÅrsaker: Kodeverk;
+  aksjonspunktÅrsaker: Kodeverk[];
   inntektsmeldinger: Inntektsmelding[];
 }>;
 

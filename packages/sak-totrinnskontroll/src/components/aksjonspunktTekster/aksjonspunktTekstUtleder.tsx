@@ -113,11 +113,7 @@ const buildUttakText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode[]
         id = 'ToTrinnsForm.AvklarUttak.PeriodeSlettet';
       } else if (uttakperiode.erLagtTil) {
         id = 'ToTrinnsForm.AvklarUttak.PeriodeLagtTil';
-      } else if (
-        uttakperiode.erEndret &&
-        (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.FASTSETT_UTTAKPERIODER ||
-          aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.TILKNYTTET_STORTINGET)
-      ) {
+      } else if (uttakperiode.erEndret && aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.TILKNYTTET_STORTINGET) {
         id = 'ToTrinnsForm.ManueltFastsattUttak.PeriodeEndret';
       } else if (
         uttakperiode.erEndret &&
@@ -145,13 +141,6 @@ const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt)
 const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt) => {
   const aksjonspunktTextId = totrinnsTilbakekrevingkontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
   return aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null;
-};
-
-const getTextForForeldreansvarsvilkåretAndreLedd = (isForeldrepenger: boolean) => {
-  const aksjonspunktTextId = isForeldrepenger
-    ? 'ToTrinnsForm.Foreldreansvar.VurderVilkarForeldreansvarAndreLeddFP'
-    : 'ToTrinnsForm.Foreldreansvar.VurderVilkarForeldreansvarAndreLeddES';
-  return [<FormattedMessage id={aksjonspunktTextId} />];
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
@@ -248,8 +237,6 @@ const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingSta
   return null;
 };
 
-const buildAvklarAnnenForelderText = () => <FormattedMessage id="ToTrinnsForm.AvklarUttak.AnnenForelderHarRett" />;
-
 const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkt) =>
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP ||
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ||
@@ -290,12 +277,6 @@ const getAksjonspunkttekst = (
     return buildUttakText(aksjonspunkt);
   }
 
-  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT) {
-    return [buildAvklarAnnenForelderText()];
-  }
-  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD) {
-    return getTextForForeldreansvarsvilkåretAndreLedd(isForeldrepenger);
-  }
   if (erKlageAksjonspunkt(aksjonspunkt)) {
     return [getTextForKlage(klagebehandlingVurdering, behandlingStatus)];
   }

@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes, FieldArray } from 'redux-form';
+
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import { behandlingForm } from '@fpsak-frontend/form';
-
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
+
 import FaktaForATFLOgSNPanel, {
   getBuildInitialValuesFaktaForATFLOgSN,
   transformValuesFaktaForATFLOgSN,
@@ -188,7 +189,6 @@ export class VurderFaktaBeregningPanelImpl extends Component {
               <>
                 <FaktaBegrunnelseTextField
                   name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
-                  isDirty={formProps.dirty}
                   isSubmittable={submittable}
                   isReadOnly={readOnly}
                   hasBegrunnelse={hasBegrunnelse}

@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { FieldArray } from 'redux-form';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
   hasBehandlingFormErrorsOfType,
@@ -188,7 +188,7 @@ export const BeregningFP = props => {
           {aksjonspunkter.length > 0 && (
             <Row>
               <Column xs="12">
-                <BehandlingspunktSubmitButton
+                <ProsessStegSubmitButton
                   formName={formName}
                   behandlingId={behandling.id}
                   behandlingVersjon={behandling.versjon}

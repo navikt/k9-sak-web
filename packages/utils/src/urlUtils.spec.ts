@@ -1,16 +1,14 @@
-import { expect } from 'chai';
-
 import { buildPath, parseQueryString } from './urlUtils';
 
 describe('Url-utils', () => {
   it('skal parse url parameter', () => {
     const queryString = '?errormessage=Det+finnes+ingen+sak+med+denne+referansen%3A+266';
-    expect(parseQueryString(queryString)).to.eql({ errormessage: 'Det finnes ingen sak med denne referansen: 266' });
+    expect(parseQueryString(queryString)).toEqual({ errormessage: 'Det finnes ingen sak med denne referansen: 266' });
   });
 
   it('skal parse to url parametere', () => {
     const queryString = '?errormessage=Det+finnes+ingen+sak+med+denne+referansen%3A+266&message=Dette+er+en+test';
-    expect(parseQueryString(queryString)).to.eql({
+    expect(parseQueryString(queryString)).toEqual({
       errormessage: 'Det finnes ingen sak med denne referansen: 266',
       message: 'Dette er en test',
     });
@@ -27,12 +25,12 @@ describe('Url-utils', () => {
 
     const path = buildPath(route, params);
 
-    expect(path).to.eql('/test/foo/bar/1/:requiredParam/:baz([a-z]{2})');
+    expect(path).toEqual('/test/foo/bar/1/:requiredParam/:baz([a-z]{2})');
 
     const relativeRoute = 'hei/paa/:hvem';
 
     const relativePath = buildPath(relativeRoute, { hvem: 'deg' });
 
-    expect(relativePath).to.eql('hei/paa/deg');
+    expect(relativePath).toEqual('hei/paa/deg');
   });
 });

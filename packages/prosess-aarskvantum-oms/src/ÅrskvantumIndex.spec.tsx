@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { Behandling, InntektArbeidYtelse } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../i18n';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
@@ -80,7 +79,7 @@ describe('<ÅrskvantumIndex>', () => {
       />,
     );
 
-    expect(wrapperAksjonspunkt.find(AksjonspunktForm)).to.have.length(1);
+    expect(wrapperAksjonspunkt.find(AksjonspunktForm)).toHaveLength(1);
   });
 
   it('rendrer ikke aksjonspunkt-form hvis det ikke finnes aksjonspunkter', () => {
@@ -98,6 +97,6 @@ describe('<ÅrskvantumIndex>', () => {
       />,
     );
 
-    expect(wrapperIngenAksjonspunkt.find(AksjonspunktForm)).to.have.length(0);
+    expect(wrapperIngenAksjonspunkt.find(AksjonspunktForm)).toHaveLength(0);
   });
 });

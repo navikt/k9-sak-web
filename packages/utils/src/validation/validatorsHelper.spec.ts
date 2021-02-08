@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import moment from 'moment';
 import {
   dateRangesAreSequential,
@@ -18,56 +17,56 @@ import {
 describe('validatorsHelper', () => {
   describe('isoDateRegex', () => {
     it('Skal sjekke om dato format er riktig ISO', () => {
-      expect(isoDateRegex.test('2018-04-01')).is.true;
-      expect(isoDateRegex.test('12-04-2018')).is.false;
+      expect(isoDateRegex.test('2018-04-01')).toBe(true);
+      expect(isoDateRegex.test('12-04-2018')).toBe(false);
     });
   });
 
   describe('integerRegex', () => {
     it('Skal sjekke om input er int', () => {
-      expect(integerRegex.test('34')).is.true;
-      expect(integerRegex.test('34.5')).is.false;
-      expect(integerRegex.test('XXX')).is.false;
+      expect(integerRegex.test('34')).toBe(true);
+      expect(integerRegex.test('34.5')).toBe(false);
+      expect(integerRegex.test('XXX')).toBe(false);
     });
   });
 
   describe('decimalRegex', () => {
     it('Skal sjekke om input er desimal', () => {
-      expect(decimalRegex.test('23,34')).is.true;
-      expect(decimalRegex.test('XXX')).is.false;
+      expect(decimalRegex.test('23,34')).toBe(true);
+      expect(decimalRegex.test('XXX')).toBe(false);
     });
   });
 
   describe('saksnummerOrFodselsnummerPattern', () => {
     it('Skal sjekke om saksnummer er i riktig format', () => {
-      expect(saksnummerOrFodselsnummerPattern.test('123456789012345678')).is.true;
-      expect(saksnummerOrFodselsnummerPattern.test('X123456789012345678')).is.false;
+      expect(saksnummerOrFodselsnummerPattern.test('123456789012345678')).toBe(true);
+      expect(saksnummerOrFodselsnummerPattern.test('X123456789012345678')).toBe(false);
     });
   });
 
   describe('textRegex', () => {
     it('Skal sjekke om input er tekst', () => {
-      expect(textRegex.test('text')).is.true;
-      expect(textRegex.test('3434')).is.true;
+      expect(textRegex.test('text')).toBe(true);
+      expect(textRegex.test('3434')).toBe(true);
     });
   });
 
   describe('textGyldigRegex', () => {
     it('Skal sjekke om input er i gyldig tekst format', () => {
-      expect(textGyldigRegex.test('Text')).is.true;
+      expect(textGyldigRegex.test('Text')).toBe(true);
     });
   });
 
   describe('nameRegex', () => {
     it('Skal sjekke om input er et navn', () => {
-      expect(nameRegex.test('Ola Nordmann')).is.true;
-      expect(nameRegex.test('Ola Nordmann!')).is.false;
+      expect(nameRegex.test('Ola Nordmann')).toBe(true);
+      expect(nameRegex.test('Ola Nordmann!')).toBe(false);
     });
   });
 
   describe('nameGyldigRegex', () => {
     it('Skal sjekke om navn er et gyldig navn', () => {
-      expect(nameGyldigRegex.test('Ola Nordmann')).is.true;
+      expect(nameGyldigRegex.test('Ola Nordmann')).toBe(true);
     });
   });
 
@@ -75,20 +74,20 @@ describe('validatorsHelper', () => {
     it('Skal sjekke om input er tom', () => {
       const emptyText = null;
       const text = 'Not Empty';
-      expect(isEmpty(emptyText)).is.true;
-      expect(isEmpty(text)).is.false;
+      expect(isEmpty(emptyText)).toBe(true);
+      expect(isEmpty(text)).toBe(false);
     });
   });
 
   describe('yesterday', () => {
     it('Skal sjekke om dato er i går', () => {
-      expect(yesterday()).is.eql(moment().subtract(1, 'days').startOf('day'));
+      expect(yesterday()).toEqual(moment().subtract(1, 'days').startOf('day'));
     });
   });
 
   describe('tomorrow', () => {
     it('Skal sjekke om dato er i morgen', () => {
-      expect(tomorrow()).is.eql(moment().add(1, 'days').startOf('day'));
+      expect(tomorrow()).toEqual(moment().add(1, 'days').startOf('day'));
     });
   });
 
@@ -102,8 +101,8 @@ describe('validatorsHelper', () => {
         ['2018-04-01', '2018-05-01'],
         ['2018-05-02', '2018-05-31'],
       ];
-      expect(dateRangesAreSequential(rangesMatch)).is.false;
-      expect(dateRangesAreSequential(ranges)).is.true;
+      expect(dateRangesAreSequential(rangesMatch)).toBe(false);
+      expect(dateRangesAreSequential(ranges)).toBe(true);
     });
   });
 });

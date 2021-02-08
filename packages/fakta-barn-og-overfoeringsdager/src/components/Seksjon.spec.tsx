@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import { shallowWithIntl } from '../../i18n';
 import Seksjon from './Seksjon';
@@ -14,6 +13,6 @@ it('rendrer tittel og children', () => {
     </Seksjon>,
   );
 
-  expect(wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === titleId)).to.have.length(1);
-  expect(wrapper.find(`#${testId}`)).to.have.length(1);
+  expect(wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === titleId)).toHaveLength(1);
+  expect(wrapper.find(`#${testId}`)).toHaveLength(1);
 });

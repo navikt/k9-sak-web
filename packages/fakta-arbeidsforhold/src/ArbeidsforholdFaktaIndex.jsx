@@ -70,7 +70,7 @@ const ArbeidsforholdFaktaIndex = ({
 
 ArbeidsforholdFaktaIndex.propTypes = {
   behandling: arbeidsforholdBehandlingPropType.isRequired,
-  inntektArbeidYtelse: arbeidsforholdInntektArbeidYtelsePropType.isRequired,
+  inntektArbeidYtelse: arbeidsforholdInntektArbeidYtelsePropType,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdV2PropType),
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
