@@ -288,10 +288,11 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
-        tilgjengeligeVedtaksbrev={['FRITEKST']}
+        tilgjengeligeVedtaksbrev={['FRITEKST', 'AUTOMATISK']}
         arbeidsgiverOpplysningerPerId={{}}
       />,
     );
+
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
     expect(overstyringsKnapp).to.have.length(1);
   });

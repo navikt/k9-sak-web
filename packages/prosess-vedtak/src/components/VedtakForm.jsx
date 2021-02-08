@@ -19,7 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
-import { kanHaFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -237,6 +237,7 @@ export const buildInitialValues = createSelector(
     ownProps => ownProps.sprakkode,
     ownProps => ownProps.vedtakVarsel,
     ownProps => ownProps.dokumentdata,
+    ownProps => ownProps.tilgjengeligeVedtaksbrev,
   ],
   (
     status,
@@ -247,6 +248,7 @@ export const buildInitialValues = createSelector(
     sprakkode,
     vedtakVarsel,
     dokumentdata,
+    tilgjengeligeVedtaksbrev,
   ) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseTypeKode ? ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD : false,
@@ -254,7 +256,8 @@ export const buildInitialValues = createSelector(
     aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
-      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
+      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST ||
+      harBareFritekstbrev(tilgjengeligeVedtaksbrev),
     skalUndertrykkeBrev:
       dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
       vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
