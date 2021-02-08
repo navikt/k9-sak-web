@@ -70,7 +70,8 @@ export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: Array<string> | 
   return (
     typeof tilgjengeligeVedtaksbrev === 'object' &&
     !Array.isArray(tilgjengeligeVedtaksbrev) &&
-    Array.isArray(tilgjengeligeVedtaksbrev.alternativeMottakere)
+    Array.isArray(tilgjengeligeVedtaksbrev.alternativeMottakere) &&
+    tilgjengeligeVedtaksbrev.alternativeMottakere.length > 0
   );
 }
 
