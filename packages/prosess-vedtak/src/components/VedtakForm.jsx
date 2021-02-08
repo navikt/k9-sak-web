@@ -210,7 +210,7 @@ VedtakForm.propTypes = {
   simuleringResultat: PropTypes.shape(),
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
   dokumentdata: PropTypes.shape(),
   ...formPropTypes,
 };

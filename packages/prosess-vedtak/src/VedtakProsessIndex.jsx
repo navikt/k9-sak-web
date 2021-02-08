@@ -98,7 +98,7 @@ VedtakProsessIndex.propTypes = {
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
   dokumentdataHente: PropTypes.shape(),
 };
 
