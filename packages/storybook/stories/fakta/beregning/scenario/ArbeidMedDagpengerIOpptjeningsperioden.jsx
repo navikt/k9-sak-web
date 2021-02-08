@@ -32,7 +32,6 @@ export const beregningsgrunnlag = {
           andelsnr: 1,
           inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
           arbeidsforhold: {
-            arbeidsgiverNavn: 'BEDRIFT AS',
             arbeidsgiverId: '910909088',
             startdato: '2019-02-03',
             opphoersdato: '2020-02-03',
@@ -79,7 +78,6 @@ export const beregningsgrunnlag = {
           tom: '2020-01-13',
           aktiviteter: [
             {
-              arbeidsgiverNavn: 'BEDRIFT AS',
               arbeidsgiverId: '910909088',
               eksternArbeidsforholdId: null,
               fom: '2019-02-03',
@@ -95,7 +93,6 @@ export const beregningsgrunnlag = {
           tom: '2019-11-12',
           aktiviteter: [
             {
-              arbeidsgiverNavn: null,
               arbeidsgiverId: null,
               eksternArbeidsforholdId: null,
               fom: '2019-02-03',
@@ -118,7 +115,6 @@ export const beregningsgrunnlag = {
         refusjonskrav: null,
         visningsnavn: 'BEDRIFT AS (910909088)',
         arbeidsforhold: {
-          arbeidsgiverNavn: 'BEDRIFT AS',
           arbeidsgiverId: '910909088',
           startdato: '2019-02-03',
           opphoersdato: '2020-02-03',

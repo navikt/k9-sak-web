@@ -333,10 +333,11 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
   ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
   ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
-  ...FastsettBgKunYtelsePanel.buildInitialValues(props.kunYtelse, props.tilfeller, props.faktaOmBeregning.andelerForFaktaOmBeregning),
+  ...FastsettBgKunYtelsePanel.buildInitialValues(props.kunYtelse, props.tilfeller, 
+    props.faktaOmBeregning.andelerForFaktaOmBeregning, props.alleKodeverk),
   ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, props.vurderFaktaAP),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
-  ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
+  ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning, props.alleKodeverk, props.arbeidsgiverOpplysningerPerId),
   ...VurderRefusjonForm.buildInitialValues(props.tilfeller, props.refusjonskravSomKommerForSentListe),
 });
 
@@ -360,6 +361,7 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   alleKodeverk: ownProps => ownProps.alleKodeverk,
   aksjonspunkter: ownProps => ownProps.aksjonspunkter,
   faktaOmBeregning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning,
+  arbeidsgiverOpplysningerPerId: ownProps => ownProps.arbeidsgiverOpplysningerPerId,
   refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
 });
 

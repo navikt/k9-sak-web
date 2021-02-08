@@ -226,11 +226,11 @@ InntektFieldArray.validate = (values, erKunYtelse, skalRedigereInntekt) => {
   return null;
 };
 
-InntektFieldArray.buildInitialValues = andeler => {
+InntektFieldArray.buildInitialValues = (andeler, alleKodeverk, arbeidsgiverOpplysningerPerId) => {
   if (!andeler || andeler.length === 0) {
     return {};
   }
-  return andeler.map(a => mapAndelToField(a));
+  return andeler.map(a => mapAndelToField(a, alleKodeverk, arbeidsgiverOpplysningerPerId));
 };
 
 export const mapStateToProps = (state, ownProps) => {

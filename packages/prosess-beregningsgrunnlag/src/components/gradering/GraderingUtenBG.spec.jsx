@@ -24,7 +24,6 @@ const atAndelEn = {
     kode: aktivitetStatus.ARBEIDSTAKER,
   },
   arbeidsforhold: {
-    arbeidsgiverNavn: 'arbeidsgiver',
     arbeidsgiverId: '123',
     arbeidsgiverIdent: '123',
   },
@@ -36,7 +35,6 @@ const atAndelTo = {
     kode: aktivitetStatus.ARBEIDSTAKER,
   },
   arbeidsforhold: {
-    arbeidsgiverNavn: 'arbeidsgiver',
     arbeidsgiverId: '456',
     arbeidsgiverIdent: '456',
   },

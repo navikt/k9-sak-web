@@ -66,8 +66,6 @@ const finnArbeidsgiverId = arbeidsforhold => {
 };
 
 export const setArbeidsforholdInitialValues = andel => ({
-  arbeidsgiverNavn:
-    andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverNavn !== 0 ? andel.arbeidsforhold.arbeidsgiverNavn : '',
   arbeidsgiverId: finnArbeidsgiverId(andel.arbeidsforhold),
   arbeidsforholdId:
     andel.arbeidsforhold && andel.arbeidsforhold.arbeidsforholdId !== 0 ? andel.arbeidsforhold.arbeidsforholdId : '',

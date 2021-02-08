@@ -56,7 +56,6 @@ describe('<ATFLSammeOrg>', () => {
 
 
   const arbeidsforhold = {
-    arbeidsgiverNavn: 'bedrift',
     arbeidsgiverId: '123',
     arbeidsforholdId: 'abc',
     startdato: '2018-01-01',
@@ -68,7 +67,6 @@ describe('<ATFLSammeOrg>', () => {
     inntektskategori: { kode: inntektskategorier.FRILANSER },
     aktivitetStatus: { kode: aktivitetStatus.FRILANSER },
     lagtTilAvSaksbehandler: false,
-    andelIArbeid: [],
   };
 
   const faktaOmBeregningATAndel = {
@@ -77,7 +75,6 @@ describe('<ATFLSammeOrg>', () => {
     inntektskategori: { kode: inntektskategorier.ARBEIDSTAKER },
     aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER },
     lagtTilAvSaksbehandler: false,
-    andelIArbeid: [],
   };
 
   const frilansAndelInntekt = {

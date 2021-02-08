@@ -15,6 +15,14 @@ import {
 } from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
 import {
+  beregningsgrunnlag as bgTest,
+  aksjonspunkt as apTest,
+  behandling as behTest,
+} from './scenario/test';
+
+
+
+import {
   beregningsgrunnlag as bgFlerePerioder,
   aksjonspunkt as apFlerePerioder,
   behandling as behandlingFlerePerioder,
@@ -105,7 +113,6 @@ const standardFaktaArbeidstakerAndel = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverNavn: 'Bedriften',
     arbeidsgiverId: '12345678',
     arbeidsforholdId: null,
     startdato: '01.01.2019',
@@ -119,7 +126,6 @@ const standardFaktaArbeidstakerAndel2 = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverNavn: 'Bedriften2',
     arbeidsgiverId: '12345679',
     arbeidsforholdId: null,
     startdato: '01.01.2019',
@@ -133,7 +139,6 @@ const tidsbegrensetFaktaArbeidstakerAndel = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverNavn: 'Bedriften3',
     arbeidsgiverId: '12345671',
     arbeidsforholdId: null,
     startdato: '01.09.2019',
@@ -147,7 +152,6 @@ const etterlønnSluttpakkeFaktaArbeidstakerAndel = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverNavn: 'Bedriften4',
     arbeidsgiverId: '795349533',
     arbeidsforholdId: null,
     startdato: '01.09.2019',
@@ -196,6 +200,24 @@ export default {
   component: BeregningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
+
+export const test = () => (
+  <BeregningFaktaIndex
+    behandling={behTest}
+    beregningsgrunnlag={bgTest}
+    aksjonspunkter={apTest}
+    erOverstyrer
+    alleKodeverk={alleKodeverk}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
 
 export const KunYtelsePåSkjæringstidspunktet = () => (
   <BeregningFaktaIndex

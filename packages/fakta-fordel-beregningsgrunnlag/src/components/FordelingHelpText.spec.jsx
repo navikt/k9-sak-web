@@ -5,7 +5,6 @@ import { createFordelArbeidsforholdString, textCase } from './FordelingHelpText'
 const fn = sinon.spy();
 
 const arbeidsforhold = {
-  arbeidsgiverNavn: 'Sopra Steria',
   arbeidsforholdId: '987654321',
   arbeidsgiverId: '123456789',
   eksternArbeidsforholdId: '56789',

@@ -1,3 +1,4 @@
+
 {
   "12345678": {
     "erPrivatPerson": false,
@@ -25,6 +26,13 @@
     "referanse": "795349533",
     "identifikator": "795349533",
     "navn": "A.Bedriften4",
+    "fødselsdato": null
+  },
+  "123456789": {
+    "erPrivatPerson": false,
+    "referanse": "123456789",
+    "identifikator": "123456789",
+    "navn": "A.Bedriften5",
     "fødselsdato": null
   },
   "910909088": {

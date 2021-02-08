@@ -1,7 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
 type BeregningsgrunnlagArbeidsforhold = Readonly<{
-  arbeidsgiverNavn?: string;
   arbeidsgiverId?: string;
   startdato?: string;
   opphoersdato?: string;
@@ -42,7 +41,6 @@ type AvklarAktiviteter = Readonly<{
   aktiviteterTomDatoMapping?: {
     tom: string;
     aktiviteter: {
-      arbeidsgiverNavn?: string;
       arbeidsgiverId?: string;
       eksternArbeidsforholdId?: string;
       fom: string;
@@ -80,7 +78,6 @@ type Beregningsgrunnlag = Readonly<{
       erTidsbegrensetArbeidsforhold?: boolean;
       erNyoppstartet?: boolean;
       arbeidsgiverId?: string;
-      arbeidsgiverNavn?: string;
       andelsnr?: number;
       lonnsendringIBeregningsperioden?: boolean;
     }[];

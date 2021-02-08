@@ -71,7 +71,6 @@ const vilkarMedUtfall = kode => [
 ];
 
 const lagArbeidsforhold = (
-  arbeidsgiverNavn,
   arbeidsgiverId,
   arbeidsforholdId,
   eksternArbeidsforholdId,
@@ -79,7 +78,6 @@ const lagArbeidsforhold = (
   stillingsNavn,
   stillingsProsent,
 ) => ({
-  arbeidsgiverNavn,
   arbeidsgiverId,
   startdato: '2018-10-09',
   opphoersdato,
@@ -133,7 +131,6 @@ const lagAndel = (
     kodeverk: 'INNTEKTSKATEGORI',
   },
   arbeidsforhold: {
-    arbeidsgiverNavn: 'BEDRIFT AS',
     arbeidsgiverId: '910909088',
     startdato: '2018-10-09',
     opphoersdato: null,
@@ -232,7 +229,6 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
             tom: '2019-09-16',
             aktivitete: [
               {
-                arbeidsgiverNavn: 'BEDRIFT AS',
                 arbeidsgiverId: '910909088',
                 fom: '2018-10-09',
                 tom: '9999-12-31',
@@ -263,7 +259,6 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
           refusjonskrav: 30000,
           visningsnavn: 'BEDRIFT AS (910909088) ...55bb',
           arbeidsforhold: {
-            arbeidsgiverNavn: 'BEDRIFT AS',
             arbeidsgiverId: '910909088',
             startdato: '2018-10-09',
             opphoersdato: null,
@@ -701,11 +696,8 @@ export const naturalYtelse = () => {
   const andel1 = lagAndel('AT', 240000, undefined, undefined);
   const andel2 = lagAndel('AT', 740000, 744000, undefined);
   const andel3 = lagAndel('AT', 750000, 755000, undefined);
-  andel1.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 1';
   andel1.arbeidsforhold.arbeidsgiverId = '9109090881';
-  andel2.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 2';
   andel2.arbeidsforhold.arbeidsgiverId = '9109090882';
-  andel3.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 3';
   andel3.arbeidsforhold.arbeidsgiverId = '9109090883';
   andel2.bortfaltNaturalytelse = 2231;
   andel3.bortfaltNaturalytelse = 3231;

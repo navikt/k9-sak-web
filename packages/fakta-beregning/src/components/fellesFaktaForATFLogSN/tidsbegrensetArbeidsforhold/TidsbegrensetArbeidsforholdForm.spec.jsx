@@ -9,7 +9,6 @@ import shallowWithIntl from '../../../../i18n';
 const andeler = [
   {
     arbeidsforhold: {
-      arbeidsgiverNavn: 'arbeidsgiver 1',
       arbeidsgiverId: '123456789',
       startdato: '2017-01-01',
       opphoersdato: '2017-02-02',
@@ -17,11 +16,10 @@ const andeler = [
   },
   {
     arbeidsforhold: {
-      arbeidsgiverNavn: 'arbeidsgiver 2',
       arbeidsgiverId: '987654321',
       startdato: '2017-02-02',
       opphoersdato: '2017-03-03',
-    },
+    }
   },
 ];
 

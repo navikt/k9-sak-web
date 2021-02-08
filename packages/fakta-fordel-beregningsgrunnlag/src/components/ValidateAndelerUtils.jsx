@@ -82,7 +82,6 @@ const finnArbeidsforholdRefusjonsinfoListe = andelList => {
       const {
         refusjonskravFraInntektsmelding,
         arbeidsforholdId,
-        arbeidsgiverNavn,
         arbeidsgiverId,
         eksternArbeidsforholdId,
       } = andel;
@@ -93,7 +92,6 @@ const finnArbeidsforholdRefusjonsinfoListe = andelList => {
       arbeidsforholdRefusjonsbelop.push({
         arbeidsforholdId,
         eksternArbeidsforholdId,
-        arbeidsgiverNavn,
         arbeidsgiverId,
         refusjonskravFraInntektsmelding,
         totalRefusjon,
