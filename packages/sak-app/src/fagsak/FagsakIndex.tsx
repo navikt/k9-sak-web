@@ -26,7 +26,10 @@ import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
-import { mockFagsak } from './mock_utvidetRett/mockFagsak';
+import mockFagsak from './mock_utvidetRett/mockFagsak';
+import mockFagsakRettigheter from './mock_utvidetRett/mockfagsakRettigheter';
+import mockAlleBehandlinger from './mock_utvidetRett/mockAlleBehandlinger';
+import mockArbeidsgiverOpplysninger from './mock_utvidetRett/mockArbeidsgiverOpplysninger';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -80,6 +83,7 @@ const FagsakIndex: FunctionComponent = () => {
     },
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fagsakRettigheter, harFerdighentetfagsakRettigheter] = useHentFagsakRettigheter(
     selectedSaksnummer,
     behandlingId,
@@ -110,6 +114,7 @@ const FagsakIndex: FunctionComponent = () => {
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     K9sakApiKeys.ARBEIDSGIVERE,
     {},
@@ -156,8 +161,8 @@ const FagsakIndex: FunctionComponent = () => {
               <BehandlingerIndex
                 {...props}
                 fagsak={mockFagsak}
-                alleBehandlinger={alleBehandlinger}
-                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                alleBehandlinger={mockAlleBehandlinger}
+                arbeidsgiverOpplysninger={mockArbeidsgiverOpplysninger}
                 setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
                 setRequestPendingMessage={setRequestPendingMessage}
               />
@@ -169,21 +174,21 @@ const FagsakIndex: FunctionComponent = () => {
             fagsak={fagsak}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
-            alleBehandlinger={alleBehandlinger}
+            alleBehandlinger={mockAlleBehandlinger}
             harHentetBehandlinger={harFerdighentetAlleBehandlinger}
             oppfriskBehandlinger={oppfriskBehandlinger}
-            fagsakRettigheter={fagsakRettigheter}
+            fagsakRettigheter={mockFagsakRettigheter}
             behandlingRettigheter={behandlingRettigheter}
           />
         }
         supportContent={
           <BehandlingSupportIndex
             fagsak={fagsak}
-            alleBehandlinger={alleBehandlinger}
+            alleBehandlinger={mockAlleBehandlinger}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             behandlingRettigheter={behandlingRettigheter}
-            arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+            arbeidsgiverOpplysninger={mockArbeidsgiverOpplysninger}
           />
         }
         visittkortContent={() => {

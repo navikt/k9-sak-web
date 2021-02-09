@@ -19,8 +19,8 @@ import {
 } from './data/utvidetRettBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
 import UtvidetRettPaneler from './components/UtvidetRettPaneler';
-import { mockInput } from './components/mock/mockInput';
-import { mockSaksdata } from './components/mock/mockSaksdata';
+import mockBehandlingsdata from './components/mock/mockBehandlingsdata';
+import mockAlleKodeverk from './components/mock/mockKodeverk';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
@@ -60,7 +60,7 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
   // kodeverk,
   fagsak,
   fagsakPerson,
-  // rettigheter,
+  rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtProsessSteg,
   opneSokeside,
@@ -164,11 +164,11 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
       />
       <UtvidetRettPaneler
         behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={mockSaksdata}
+        fetchedData={mockBehandlingsdata}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
-        alleKodeverk={mockInput.kodeverk}
-        rettigheter={mockInput.rettigheter}
+        alleKodeverk={mockAlleKodeverk}
+        rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
@@ -178,7 +178,7 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? mockInput.arbeidsgiverOpplysninger.arbeidsgivere : {}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
       />
     </>

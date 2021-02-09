@@ -24,9 +24,9 @@ export default () => {
     <MicroFrontend
       id={utvidetRettVilkårAppID}
       jsSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/app.js"
-      jsIntegrity="sha256-q2c1bN4ihEZNwTDkLPjaQdUP7nmV22Q0mLj1NGGsmKU="
+      jsIntegrity="sha256-NWhwxOqikCBjeZWPK12x+oXUoO4a54ooXsL9NOjX/NM="
       stylesheetSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/styles.css"
-      stylesheetIntegrity="sha256-8r891aB/ccVgbCZIZJjDXLt+GRlbvzie1nyN/r7bxT8="
+      stylesheetIntegrity="sha256-DXBRhyo7fuuxMZcLU3Mw1fZLvAxJx/zpsvPoB+v5XoM="
       onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID)}
       onError={() => {}}
     />

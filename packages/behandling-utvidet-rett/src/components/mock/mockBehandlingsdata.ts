@@ -1,8 +1,9 @@
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-// eslint-disable-next-line import/prefer-default-export
-export const mockSaksdata = {
+let mockBehandlingsdata;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default mockBehandlingsdata = {
   aksjonspunkter: [
     {
       definisjon: { kode: aksjonspunktCodes.UTVIDET_RETT, kodeverk: 'test' },

@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/prefer-default-export
-export const mockFagsak = {
+let mockFagsak;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default mockFagsak = <Readonly<any>>{
   saksnummer: '5YC1S',
   sakstype: {
     kode: 'UTR',
