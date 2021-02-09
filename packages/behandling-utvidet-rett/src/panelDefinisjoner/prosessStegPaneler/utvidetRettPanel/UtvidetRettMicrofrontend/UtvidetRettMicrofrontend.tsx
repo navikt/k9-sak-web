@@ -1,36 +1,34 @@
 import * as React from 'react';
-// import { MicroFrontend } from '@fpsak-frontend/utils';
+import { MicroFrontend } from '@fpsak-frontend/utils';
 
-/* const initializeUtvidetRettVilkar = elementId => {
-  (window as any).renderMedisinskVilkarApp(elementId, {
-    onVurderingValgt: vurdering => {
-      if (vurdering !== null) {
-        window.history.pushState('', '', `#vurdering=${vurdering}`);
-      } else {
-        window.location.hash = '';
-      }
+const vilkarMidlertidigAlene = {
+  visKomponent: 'VilkarMidlertidigAlene',
+  props: {
+    type: 'VilkarMidlertidigAlene',
+    soknedsopplysninger: {
+      årsak: 'Årsak',
+      beskrivelse: 'Beskrivelse',
+      periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
     },
-  });
+    onSubmit: (vilkarOppfylt, dato, begrunnelse) => console.log(vilkarOppfylt, dato, begrunnelse),
+  },
 };
 
-const medisinskVilkårAppID = 'medisinskVilkårApp';
+const initializeUtvidetRettVilkar = elementId => {
+  (window as any).renderMicrofrontendOmsorgsdagerApp(elementId, vilkarMidlertidigAlene);
+};
+
+const utvidetRettVilkårAppID = 'utvidetRettApp';
 export default () => {
   return (
     <MicroFrontend
-      id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.4.2/app.js"
-      jsIntegrity="sha384-iNIBcJsYevOG/6mMde96Zy76+n0IarHJehHRWuBmVxn6fGK5sHlm4fRVIeLyXp3S"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.4.2/styles.css"
-      stylesheetIntegrity="sha384-Ns3um5ypN0Dx4jWK7OT/rD9piP7up1qj4/bP3AYwhQtLHhc2SOMBTStumAyR0IXu"
-      onReady={() => initializeUtvidetRettVilkar(medisinskVilkårAppID)}
+      id={utvidetRettVilkårAppID}
+      jsSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/app.js"
+      jsIntegrity="sha256-q2c1bN4ihEZNwTDkLPjaQdUP7nmV22Q0mLj1NGGsmKU="
+      stylesheetSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/styles.css"
+      stylesheetIntegrity="sha256-8r891aB/ccVgbCZIZJjDXLt+GRlbvzie1nyN/r7bxT8="
+      onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID)}
       onError={() => {}}
     />
   );
-}; */
-
-const TestComponent = props => {
-  console.log(props);
-  return <>Hi</>;
 };
-
-export default TestComponent;

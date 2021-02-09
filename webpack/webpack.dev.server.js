@@ -73,6 +73,12 @@ const options = {
       secure: false,
       changeOrigin: !!process.env.APP_URL_DIAGNOSEKODER,
     },
+    '/k9/microfrontend/omsorgsdager/**': {
+      target: 'http://localhost:8088',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/microfrontend/omsorgsdager': '' },
+    },
   },
   publicPath: config.output.publicPath,
   hot: true,
