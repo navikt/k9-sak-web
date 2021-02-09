@@ -3,8 +3,10 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, getKodeverknavnFn, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { createSelector } from 'reselect';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fakta-beregning/src/components/ArbeidsforholdHelper';
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { harEtterlonnSluttpakkeField } from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
@@ -28,14 +30,37 @@ export const setArbeidsforholdInitialValues = andel => ({
   arbeidsforholdType: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsforholdType : '',
 });
 
-export const setGenerellAndelsinfo = andel => ({
-  andel: andel.visningsnavn,
+const createAndelnavn = (andel, alleKodeverk, arbeidsgiverOpplysningerPerId, erKunYtelse) => {
+  if (!andel.aktivitetStatus || andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
+    return '';
+  }
+  if (erKunYtelse && andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL) {
+    return 'Ytelse';
+  }
+  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.arbeidsforhold) {
+    return createVisningsnavnForAktivitet(andel.arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId);
+  }
+  return getKodeverknavnFn(alleKodeverk, kodeverkTyper)(andel.aktivitetStatus);
+};
+
+
+export const setGenerellAndelsinfo = (andel, alleKodeverk, arbeidsgiverOpplysningerPerId = {}, erKunYtelse = false) => ({
+  andel: createAndelnavn(andel, alleKodeverk, arbeidsgiverOpplysningerPerId, erKunYtelse),
   aktivitetStatus: andel.aktivitetStatus.kode,
   andelsnr: andel.andelsnr,
   nyAndel: false,
   inntektskategori: preutfyllInntektskategori(andel),
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
 });
+
+export const setGenerellAndelsinfoUtenNavn = (andel) => ({
+  aktivitetStatus: andel.aktivitetStatus.kode,
+  andelsnr: andel.andelsnr,
+  nyAndel: false,
+  inntektskategori: preutfyllInntektskategori(andel),
+  lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
+});
+
 
 const listeInneholderAndel = (liste, field) =>
   liste
@@ -223,8 +248,17 @@ export const mapToBelop = skalRedigereInntekt => andel => {
   return readOnlyBelop ? removeSpacesFromNumber(readOnlyBelop) : 0;
 };
 
-export const mapAndelToField = andel => ({
-  ...setGenerellAndelsinfo(andel),
+export const mapAndelToFieldUtenNavn = (andel) => ({
+  ...setGenerellAndelsinfoUtenNavn(andel),
+  ...setArbeidsforholdInitialValues(andel),
+  skalKunneEndreAktivitet: andel.skalKunneEndreAktivitet,
+  fastsattBelop: andel.fastsattBelop || andel.fastsattBelop === 0 ? formatCurrencyNoKr(andel.fastsattBelop) : '',
+  belopReadOnly: andel.belopReadOnly || andel.belopReadOnly === 0 ? formatCurrencyNoKr(andel.belopReadOnly) : '',
+  refusjonskrav: andel.refusjonskrav || andel.refusjonskrav === 0 ? formatCurrencyNoKr(andel.refusjonskrav) : '',
+});
+
+export const mapAndelToField = (andel, alleKodeverk, arbeidsgiverOpplysningerPerId) => ({
+  ...setGenerellAndelsinfo(andel, alleKodeverk, arbeidsgiverOpplysningerPerId),
   ...setArbeidsforholdInitialValues(andel),
   skalKunneEndreAktivitet: andel.skalKunneEndreAktivitet,
   fastsattBelop: andel.fastsattBelop || andel.fastsattBelop === 0 ? formatCurrencyNoKr(andel.fastsattBelop) : '',

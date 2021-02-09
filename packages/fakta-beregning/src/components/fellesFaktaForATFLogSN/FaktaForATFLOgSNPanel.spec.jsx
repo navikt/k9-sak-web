@@ -121,7 +121,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         navn: 'Arbeidstaker',
       },
       arbeidsforhold: {
-        arbeidsgiverNavn: 'bedrift',
         arbeidsgiverId: '123',
         arbeidsforholdId: 'abc',
         startdato: '2018-01-01',
@@ -135,7 +134,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         navn: 'Arbeidstaker',
       },
       arbeidsforhold: {
-        arbeidsgiverNavn: 'bedrift',
         arbeidsgiverId: '123',
         arbeidsforholdId: 'abc',
         startdato: '2018-01-01',

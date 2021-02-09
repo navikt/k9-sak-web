@@ -164,7 +164,6 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
   const arbeidsforhold = finnArbeidsforholdForAndel(arbeidsforholdList, val);
   if (arbeidsforhold) {
     field.arbeidsforholdId = arbeidsforhold.arbeidsforholdId;
-    field.arbeidsgiverNavn = arbeidsforhold.arbeidsgiverNavn;
     field.arbeidsgiverId = arbeidsforhold.arbeidsgiverId;
     field.arbeidsperiodeFom = arbeidsforhold.startdato;
     field.arbeidsperiodeTom = arbeidsforhold.opphoersdato;

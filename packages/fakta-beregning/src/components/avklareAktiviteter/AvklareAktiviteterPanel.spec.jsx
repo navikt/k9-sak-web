@@ -69,7 +69,6 @@ const lagStateMedAvklarAktitiveter = (
 };
 
 const aktivitet1 = {
-  arbeidsgiverNavn: 'Arbeidsgiveren',
   arbeidsgiverId: '384723894723',
   fom: '2019-01-01',
   tom: null,
@@ -78,7 +77,6 @@ const aktivitet1 = {
 };
 
 const aktivitet2 = {
-  arbeidsgiverNavn: 'Arbeidsgiveren2',
   arbeidsgiverId: '334534623342',
   arbeidsforholdId: 'efj8343f34f',
   fom: '2019-01-01',
@@ -88,7 +86,6 @@ const aktivitet2 = {
 };
 
 const aktivitet3 = {
-  arbeidsgiverNavn: 'Arbeidsgiveren3',
   aktørIdString: '324234234234',
   arbeidsgiverId: '1960-01-01',
   arbeidsforholdId: 'efj8343f34f',
@@ -99,7 +96,6 @@ const aktivitet3 = {
 };
 
 const aktivitetAAP = {
-  arbeidsgiverNavn: null,
   arbeidsgiverId: null,
   arbeidsforholdType: { kode: 'AAP', navn: 'Arbeidsavklaringspenger', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   fom: '2019-01-01',
@@ -145,7 +141,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       faktaOmBeregning: {
         avklarAktiviteter,
         andelerForFaktaOmBeregning: [
-          { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+          { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
         ],
       },
     };
@@ -210,7 +206,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [
-              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
             ],
           },
         }}
@@ -255,7 +251,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [
-              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
             ],
           },
         }}
@@ -284,7 +280,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [
-              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
             ],
           },
         }}
@@ -324,7 +320,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       faktaOmBeregning: {
         avklarAktiviteter,
         andelerForFaktaOmBeregning: [
-          { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+          { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
         ],
       },
     };
@@ -377,7 +373,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [
-              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
             ],
           },
         }}
@@ -423,7 +419,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [
-              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
             ],
           },
         }}
@@ -468,7 +464,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [
-              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
             ],
           },
         }}
@@ -513,7 +509,7 @@ describe('<AvklareAktiviteterPanel>', () => {
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [
-              { visningsnavn: 'test', skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
+              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
             ],
           },
         }}

@@ -16,7 +16,7 @@ import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 import {
   skalRedigereInntektForAndel,
-  mapAndelToField,
+  mapAndelToFieldUtenNavn,
   erOverstyring,
   getSkalRedigereInntekt,
   INNTEKT_FIELD_ARRAY_NAME,
@@ -45,7 +45,7 @@ const harVurdert = (tilfeller, values, faktaOmBeregning) =>
 
 const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) =>
   faktaOmBeregning.andelerForFaktaOmBeregning
-    .map(andel => mapAndelToField(andel))
+    .map(andel => mapAndelToFieldUtenNavn(andel))
     .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
 
 export const findInstruksjonForFastsetting = (skalFastsetteFL, skalFastsetteAT, harKunstigArbeid) => {
@@ -180,7 +180,7 @@ const VurderOgFastsettATFL = ({
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning) => {
+VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning,  alleKodeverk, arbeidsgiverOpplysningerPerId) => {
   if (!faktaOmBeregning) {
     return {};
   }
@@ -189,7 +189,7 @@ VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning) => 
     return {};
   }
   return {
-    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler),
+    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler, alleKodeverk, arbeidsgiverOpplysningerPerId),
     ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
   };
 };

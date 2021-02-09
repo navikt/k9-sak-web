@@ -67,7 +67,6 @@ export const getUniqueListOfArbeidsforholdFields = (fields) => {
         andelsnr: field.andelsnr,
         arbeidsforholdId: field.arbeidsforholdId,
         arbeidsgiverId: field.arbeidsgiverId,
-        arbeidsgiverNavn: field.arbeidsgiverNavn,
         arbeidsperiodeFom: field.arbeidsperiodeFom,
         arbeidsperiodeTom: field.arbeidsperiodeTom,
       };
@@ -79,7 +78,6 @@ export const getUniqueListOfArbeidsforholdFields = (fields) => {
 
 
 export const arbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverNavn: PropTypes.string,
   arbeidsgiverId: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,

@@ -14,7 +14,6 @@ const andelUtenArbeidsforholdId = {
   arbeidsforholdType: {
     kode: 'A',
   },
-  arbeidsgiverNavn: 'Andeby bank',
   arbeidsgiverId: '321',
 };
 
@@ -22,7 +21,6 @@ const andelMedAlt = {
   arbeidsforholdType: {
     kode: 'A',
   },
-  arbeidsgiverNavn: 'Andeby bank',
   arbeidsgiverId: '321',
   arbeidsforholdId: '999888777',
   eksternArbeidsforholdId: '56789',
