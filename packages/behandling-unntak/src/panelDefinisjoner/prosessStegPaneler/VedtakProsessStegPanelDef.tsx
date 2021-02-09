@@ -41,6 +41,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     fagsak,
+    personopplysninger,
     arbeidsgiverOpplysningerPerId,
   }) => ({
     previewCallback,
@@ -49,6 +50,7 @@ class PanelDef extends ProsessStegPanelDef {
     simuleringResultat,
     ytelseTypeKode: fagsak?.fagsakYtelseType?.kode,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+    personopplysninger,
     arbeidsgiverOpplysningerPerId,
   });
 }
