@@ -1,6 +1,5 @@
 import { Uttaksperiode } from '@k9-sak-web/types';
 import React from 'react';
-import { expect } from 'chai';
 import { shallowWithIntl } from '../../../i18n';
 import NokkeltallContainer from './NokkeltallContainer';
 import ForbrukteDager from './ForbrukteDager';
@@ -29,7 +28,7 @@ describe('<NokkeltallContainer>', () => {
       );
 
       const forbrukteDagerBoks = nøkkeltallContainer.find(ForbrukteDager);
-      expect(forbrukteDagerBoks).to.have.length(1);
+      expect(forbrukteDagerBoks).toHaveLength(1);
 
       return forbrukteDagerBoks.props();
     };
@@ -45,8 +44,8 @@ describe('<NokkeltallContainer>', () => {
         smitteverndager,
       );
 
-      expect(smittevernDagerTimer).to.eql({ dager: 1, timer: 3 });
-      expect(utbetaltForMangeDagerTimer).to.eql(null);
+      expect(smittevernDagerTimer).toEqual({ dager: 1, timer: 3 });
+      expect(utbetaltForMangeDagerTimer).toEqual(null);
     });
 
     it('rendrer for mange utbetalte dager dersom restdager er negative smitteverndager ikke finnes', () => {
@@ -57,8 +56,8 @@ describe('<NokkeltallContainer>', () => {
         periodeUtenomSmittevernstiden,
       );
 
-      expect(utbetaltForMangeDagerTimer).to.eql({ dager: 1, timer: 3 });
-      expect(smittevernDagerTimer).to.eql(null);
+      expect(utbetaltForMangeDagerTimer).toEqual({ dager: 1, timer: 3 });
+      expect(smittevernDagerTimer).toEqual(null);
     });
   });
 });

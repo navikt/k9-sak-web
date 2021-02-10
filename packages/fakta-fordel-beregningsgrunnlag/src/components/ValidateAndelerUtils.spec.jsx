@@ -42,7 +42,6 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal ikkje gi error når total refusjon er lavere enn inntektsmelding', () => {
     const arbeidsgiverAndersen = {
       arbeidsforholdId: '89r2hf923',
-      arbeidsgiverNavn: 'Andersen flyttebyrå',
       arbeidsgiverId: '36363463463',
     };
     const andeler = [
@@ -60,7 +59,6 @@ describe('<ValidateAndelerUtils>', () => {
         arbeidsforholdId: '43r34h',
         refusjonskrav: '40 000',
         refusjonskravFraInntektsmelding: 40000,
-        arbeidsgiverNavn: 'Torgersen flyttebyrå',
         arbeidsgiverId: '658568568',
       },
       {
@@ -76,7 +74,6 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal ikkje gi error når total refusjon er lavere enn inntektsmelding for arbeidsforholdId lik null', () => {
     const arbeidsgiverAndersen = {
       arbeidsforholdId: null,
-      arbeidsgiverNavn: 'Andersen flyttebyrå',
       arbeidsgiverId: '36363463463',
     };
     const andeler = [
@@ -94,7 +91,6 @@ describe('<ValidateAndelerUtils>', () => {
         arbeidsforholdId: null,
         refusjonskrav: '40 000',
         refusjonskravFraInntektsmelding: 40000,
-        arbeidsgiverNavn: 'Torgersen flyttebyrå',
         arbeidsgiverId: '658568568',
       },
       {
@@ -110,7 +106,6 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal ikkje gi error når total refusjon er lik inntektsmelding', () => {
     const arbeidsgiverAndersen = {
       arbeidsforholdId: '89r2hf923',
-      arbeidsgiverNavn: 'Andersen flyttebyrå',
       arbeidsgiverId: '36363463463',
     };
     const andeler = [
@@ -128,7 +123,6 @@ describe('<ValidateAndelerUtils>', () => {
         arbeidsforholdId: '43r34h',
         refusjonskrav: '40 000',
         refusjonskravFraInntektsmelding: 40000,
-        arbeidsgiverNavn: 'Torgersen flyttebyrå',
         arbeidsgiverId: '658568568',
       },
       {
@@ -144,7 +138,6 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal gi error når total refusjon høyere enn inntektsmelding', () => {
     const arbeidsgiverAndersen = {
       arbeidsforholdId: '89r2hf923',
-      arbeidsgiverNavn: 'Andersen flyttebyrå',
       arbeidsgiverId: '36363463463',
     };
     const andeler = [
@@ -162,7 +155,6 @@ describe('<ValidateAndelerUtils>', () => {
         arbeidsforholdId: '43r34h',
         refusjonskrav: '40 000',
         refusjonskravFraInntektsmelding: 40000,
-        arbeidsgiverNavn: 'Torgersen flyttebyrå',
         arbeidsgiverId: '658568568',
       },
       {
@@ -797,7 +789,6 @@ describe('<ValidateAndelerUtils>', () => {
         harPeriodeAarsakGraderingEllerRefusjon: true,
         andel: 'Arbeidsgiver 1',
         fastsattBelop: '10 000',
-        arbeidsgiverNavn: 'Arbeidsgiver 1',
         arbeidsgiverId: '2342353525',
         arbeidsperiodeFom: '2016-01-01',
         arbeidsforholdId: '3r4h3uihr43',
@@ -809,7 +800,6 @@ describe('<ValidateAndelerUtils>', () => {
         harPeriodeAarsakGraderingEllerRefusjon: true,
         andel: 'Arbeidsgiver 1',
         fastsattBelop: '20 000',
-        arbeidsgiverNavn: 'Arbeidsgiver 1',
         arbeidsgiverId: '2342353525',
         arbeidsperiodeFom: '2016-01-01',
         arbeidsforholdId: '3r4h3uihr43',
@@ -833,7 +823,6 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal validere mot beregningsgrunnlagPrAar for arbeidsforhold som tilkommer før skjæringstidspunktet', () => {
     const andelValue = {
       andel: 'Arbeidsgiver 1',
-      arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
       eksternArbeidsforholdId: '56789',
@@ -858,7 +847,6 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal ikkje validere mot beløp om det ikkje finnes ein matchende arbeidsforholdInntektMapping', () => {
     const andelValue = {
       andel: 'Arbeidsgiver 1',
-      arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
     };
@@ -882,7 +870,6 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal returnere required error om fastsatt beløp ikkje er satt', () => {
     const andelValue = {
       andel: 'Arbeidsgiver 1',
-      arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
       fastsattBelop: '',

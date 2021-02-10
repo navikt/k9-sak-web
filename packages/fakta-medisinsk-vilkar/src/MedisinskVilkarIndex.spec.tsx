@@ -1,5 +1,4 @@
 import MedisinskVilkarIndex from '@fpsak-frontend/fakta-medisinsk-vilkar';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
@@ -34,6 +33,6 @@ describe('<MedisinskVilkarIndex>', () => {
         sykdom={sykdom as Sykdom}
       />,
     );
-    expect(wrapper.find(MedisinskVilkarForm)).has.length(1);
+    expect(wrapper.find(MedisinskVilkarForm)).toHaveLength(1);
   });
 });

@@ -3,10 +3,9 @@ import { shallow } from 'enzyme';
 
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Fagsak, TotrinnskontrollAksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
 
 import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex';
@@ -60,16 +59,6 @@ describe('<TotrinnskontrollIndex>', () => {
     [kodeverkTyper.SKJERMLENKE_TYPE]: [],
   };
 
-  const createAksjonspunkt = aksjonspunktKode =>
-    ({
-      aksjonspunktKode,
-      beregningDto: null,
-      besluttersBegrunnelse: null,
-      opptjeningAktiviteter: [],
-      totrinnskontrollGodkjent: null,
-      vurderPaNyttArsaker: [],
-    } as TotrinnskontrollAksjonspunkt);
-
   const navAnsatt = {
     brukernavn: 'Test',
     kanBehandleKode6: false,
@@ -82,31 +71,6 @@ describe('<TotrinnskontrollIndex>', () => {
     navn: 'Test',
   };
 
-  const getTotrinnsaksjonspunkterFoedsel = () => ({
-    skjermlenkeType: 'FAKTA_OM_FOEDSEL',
-    totrinnskontrollAksjonspunkter: [
-      createAksjonspunkt(aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL),
-      createAksjonspunkt(aksjonspunktCodes.TERMINBEKREFTELSE),
-      createAksjonspunkt(aksjonspunktCodes.AUTO_VENT_PÅ_FODSELREGISTRERING),
-    ],
-  });
-
-  const getTotrinnsaksjonspunkterOmsorg = () => ({
-    skjermlenkeType: 'FAKTA_FOR_OMSORG',
-    totrinnskontrollAksjonspunkter: [
-      createAksjonspunkt(aksjonspunktCodes.OMSORGSOVERTAKELSE),
-      createAksjonspunkt(aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET),
-    ],
-  });
-
-  const getTotrinnsaksjonspunkterForeldreansvar = () => ({
-    skjermlenkeType: 'PUNKT_FOR_FORELDREANSVAR',
-    totrinnskontrollAksjonspunkter: [
-      createAksjonspunkt(aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD),
-      createAksjonspunkt(aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD),
-    ],
-  });
-
   it('skal vise modal når beslutter godkjenner', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, kodeverk);
@@ -116,11 +80,7 @@ describe('<TotrinnskontrollIndex>', () => {
     requestApi.mock(K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
     requestApi.mock(K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV, {});
 
-    const totrinnskontrollAksjonspunkter = [
-      getTotrinnsaksjonspunkterFoedsel(),
-      getTotrinnsaksjonspunkterOmsorg(),
-      getTotrinnsaksjonspunkterForeldreansvar(),
-    ];
+    const totrinnskontrollAksjonspunkter = [];
     requestApi.mock(K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER, totrinnskontrollAksjonspunkter);
 
     const wrapper = shallow(

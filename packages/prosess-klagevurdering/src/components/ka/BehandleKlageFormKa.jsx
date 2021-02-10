@@ -10,7 +10,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -68,7 +68,7 @@ export const BehandleKlageFormKaImpl = ({
         <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="8">
-            <BehandlingspunktSubmitButton
+            <ProsessStegSubmitButton
               formName={formProps.form}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}

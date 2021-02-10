@@ -20,7 +20,7 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, BeregningsresultatFp } from '@k9-sak-web/types';
 
 import styles from './tilbaketrekkpanel.less';
@@ -105,7 +105,7 @@ export const Tilbaketrekkpanel: FC<PureOwnProps & WrappedComponentProps & Inject
       <Row>
         <Column xs="1">
           <VerticalSpacer eightPx />
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}

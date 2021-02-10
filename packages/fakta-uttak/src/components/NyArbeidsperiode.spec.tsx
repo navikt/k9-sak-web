@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import sinon from 'sinon';
 // TODO Denne komponenten skal ikkje aksessere pakka sak-app!
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
-import { expect } from 'chai';
 import { mountWithIntl } from '../../i18n';
 import NyArbeidsperiode from './NyArbeidsperiode';
 
@@ -44,9 +43,9 @@ describe('<NyArbeidsperiode>', () => {
         timerIJobbTilVanlig: 20.5,
         timerFårJobbet: 10.9,
       }),
-    ).is.true;
+    ).toBe(true);
 
     // eslint-disable-next-line no-unused-expressions
-    expect(avbrytSpy.calledOnce).is.true;
+    expect(avbrytSpy.calledOnce).toBe(true);
   });
 });

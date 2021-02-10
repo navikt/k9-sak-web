@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
@@ -60,8 +59,8 @@ describe('<AktsomhetFormPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(RadioOption)).to.have.length(3);
-    expect(wrapper.find(AktsomhetGradFormPanel)).to.have.length(0);
+    expect(wrapper.find(RadioOption)).toHaveLength(3);
+    expect(wrapper.find(AktsomhetGradFormPanel)).toHaveLength(0);
   });
 
   it('skal vise panel for aktsomhet når dette er valgt', () => {
@@ -80,8 +79,8 @@ describe('<AktsomhetFormPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(RadioOption)).to.have.length(3);
-    expect(wrapper.find(AktsomhetGradFormPanel)).to.have.length(1);
+    expect(wrapper.find(RadioOption)).toHaveLength(3);
+    expect(wrapper.find(AktsomhetGradFormPanel)).toHaveLength(1);
   });
 
   it('skal ikke vise panel for aktsomhet når dette ikke er valgt', () => {
@@ -100,8 +99,8 @@ describe('<AktsomhetFormPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(RadioOption)).to.have.length(3);
-    expect(wrapper.find(AktsomhetGradFormPanel)).to.have.length(0);
+    expect(wrapper.find(RadioOption)).toHaveLength(3);
+    expect(wrapper.find(AktsomhetGradFormPanel)).toHaveLength(0);
   });
 
   it('skal vise riktig labels når valg resultattype ikke er Forsto/Burde forstått', () => {
@@ -121,10 +120,10 @@ describe('<AktsomhetFormPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(RadioOption)).to.have.length(3);
-    expect(wrapper.find(RadioOption).find({ value: 'SIMPEL_UAKTSOM' }).prop('label')).to.equal('simpel');
-    expect(wrapper.find(RadioOption).find({ value: 'GROVT_UAKTSOM' }).prop('label')).to.equal('grovt');
-    expect(wrapper.find(RadioOption).find({ value: 'FORSETT' }).prop('label')).to.equal('forsett');
+    expect(wrapper.find(RadioOption)).toHaveLength(3);
+    expect(wrapper.find(RadioOption).find({ value: 'SIMPEL_UAKTSOM' }).prop('label')).toBe('simpel');
+    expect(wrapper.find(RadioOption).find({ value: 'GROVT_UAKTSOM' }).prop('label')).toBe('grovt');
+    expect(wrapper.find(RadioOption).find({ value: 'FORSETT' }).prop('label')).toBe('forsett');
   });
 
   it('skal vise riktig labels når valg resultattype er Forsto/Burde forstått', () => {
@@ -145,18 +144,18 @@ describe('<AktsomhetFormPanel>', () => {
     );
 
     const radioOptions = wrapper.find(RadioOption);
-    expect(radioOptions).to.have.length(3);
+    expect(radioOptions).toHaveLength(3);
 
     const simpelUaksomLabel = radioOptions.find({ value: 'SIMPEL_UAKTSOM' }).prop('label');
     const grovtUaktsomLabel = radioOptions.find({ value: 'GROVT_UAKTSOM' }).prop('label');
     const forsettLabel = radioOptions.find({ value: 'FORSETT' }).prop('label');
 
-    expect(simpelUaksomLabel.type).is.equal(FormattedMessage);
-    expect(simpelUaksomLabel.props.id).is.equal('AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom');
-    expect(grovtUaktsomLabel.type).is.equal(FormattedMessage);
-    expect(grovtUaktsomLabel.props.id).is.equal('AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt');
-    expect(forsettLabel.type).is.equal(FormattedMessage);
-    expect(forsettLabel.props.id).is.equal('AktsomhetFormPanel.AktsomhetTyperLabel.Forsett');
+    expect(simpelUaksomLabel.type).toBe(FormattedMessage);
+    expect(simpelUaksomLabel.props.id).toBe('AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom');
+    expect(grovtUaktsomLabel.type).toBe(FormattedMessage);
+    expect(grovtUaktsomLabel.props.id).toBe('AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt');
+    expect(forsettLabel.type).toBe(FormattedMessage);
+    expect(forsettLabel.props.id).toBe('AktsomhetFormPanel.AktsomhetTyperLabel.Forsett');
   });
 
   it('skal lage form-initialvalues fra struktur når en har aktsomhetsgrad FORSETT', () => {
@@ -165,7 +164,7 @@ describe('<AktsomhetFormPanel>', () => {
     };
     const initialValues = AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       handletUaktsomhetGrad: Aktsomhet.FORSETT,
     });
   });
@@ -186,7 +185,7 @@ describe('<AktsomhetFormPanel>', () => {
     };
     const initialValues = AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       handletUaktsomhetGrad: Aktsomhet.GROVT_UAKTSOM,
       [Aktsomhet.GROVT_UAKTSOM]: {
         [SarligGrunn.GRAD_AV_UAKTSOMHET]: true,
@@ -220,7 +219,7 @@ describe('<AktsomhetFormPanel>', () => {
     };
     const initialValues = AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       handletUaktsomhetGrad: Aktsomhet.GROVT_UAKTSOM,
       [Aktsomhet.GROVT_UAKTSOM]: {
         [SarligGrunn.GRAD_AV_UAKTSOMHET]: true,
@@ -245,7 +244,7 @@ describe('<AktsomhetFormPanel>', () => {
     const vurderingBegrunnelse = 'test';
     const transformertData = AktsomhetFormPanel.transformValues(info, sarligGrunnTyper, vurderingBegrunnelse);
 
-    expect(transformertData).to.eql({
+    expect(transformertData).toEqual({
       '@type': 'annet',
       aktsomhet: Aktsomhet.FORSETT,
       aktsomhetInfo: null,
@@ -271,7 +270,7 @@ describe('<AktsomhetFormPanel>', () => {
     const vurderingBegrunnelse = 'test';
     const transformertData = AktsomhetFormPanel.transformValues(info, sarligGrunnTyper, vurderingBegrunnelse);
 
-    expect(transformertData).to.eql({
+    expect(transformertData).toEqual({
       '@type': 'annet',
       aktsomhet: Aktsomhet.GROVT_UAKTSOM,
       aktsomhetInfo: {

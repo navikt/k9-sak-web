@@ -23,15 +23,17 @@ const behandling = {
   behandlingPaaVent: false,
 };
 
-const aksjonspunkter = [{
-  definisjon: {
-    kode: aksjonspunktCodes.FORESLA_VEDTAK,
+const aksjonspunkter = [
+  {
+    definisjon: {
+      kode: aksjonspunktCodes.FORESLA_VEDTAK,
+    },
+    status: {
+      kode: aksjonspunktStatus.OPPRETTET,
+    },
+    begrunnelse: undefined,
   },
-  status: {
-    kode: aksjonspunktStatus.OPPRETTET,
-  },
-  begrunnelse: undefined,
-}];
+];
 
 export default {
   title: 'prosess/klage/prosess-vedtak-klage',
@@ -51,16 +53,18 @@ export const visVedtakspanelDerKlageErVurdertAvNk = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [{
-          kode: 'IKKE_KONKRET',
-          kodeverk: 'KLAGE_AVVIST_AARSAK',
-        }],
+        avvistArsaker: [
+          {
+            kode: 'IKKE_KONKRET',
+            kodeverk: 'KLAGE_AVVIST_AARSAK',
+          },
+        ],
       },
     })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
   />
 );
@@ -77,16 +81,18 @@ export const visVedtakspanelDerKlageErVurdertAvNfp = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [{
-          kode: 'IKKE_KONKRET',
-          kodeverk: 'KLAGE_AVVIST_AARSAK',
-        }],
+        avvistArsaker: [
+          {
+            kode: 'IKKE_KONKRET',
+            kodeverk: 'KLAGE_AVVIST_AARSAK',
+          },
+        ],
       },
     })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
   />
 );

@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { expect } from 'chai';
 import FastBreddeAligner, { Kolonne } from './FastBreddeAligner';
 
 it('rendrer alle kolonner med gitt content', () => {
@@ -22,7 +21,7 @@ it('rendrer alle kolonner med gitt content', () => {
   const wrapper = shallow(<FastBreddeAligner kolonner={kolonner} />);
   const renderedKolonner = wrapper.find(Kolonne);
 
-  expect(renderedKolonner).to.have.length(2);
-  expect(renderedKolonner.filterWhere(kol => kol.text() === content1)).to.have.length(1);
-  expect(renderedKolonner.filterWhere(kol => kol.text() === content2)).to.have.length(1);
+  expect(renderedKolonner).toHaveLength(2);
+  expect(renderedKolonner.filterWhere(kol => kol.text() === content1)).toHaveLength(1);
+  expect(renderedKolonner.filterWhere(kol => kol.text() === content2)).toHaveLength(1);
 });

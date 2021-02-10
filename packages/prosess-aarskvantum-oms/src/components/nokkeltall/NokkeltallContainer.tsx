@@ -77,9 +77,8 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
   const tidFraInfotrygd = konverterDesimalTilDagerOgTimer(antallDagerInfotrygd);
   const navHarUtbetaltDagerTimer = sumTid(totaltForbruktDagerTimer, tidFraInfotrygd);
   const dagerRettPå = grunnrettsdager + antallKoronadager;
-  const dagerNavKanUtbetale = dagerRettPå - antallDagerArbeidsgiverDekker;
+  const dagerNavKanUtbetale = Math.max(dagerRettPå - antallDagerArbeidsgiverDekker, 0);
   const alleDagerErForbrukt = !!harSmitteverndager || utbetaltFlereDagerEnnRett;
-  const forbruktDagerTimer = restTidErNegativt ? { dager: dagerNavKanUtbetale } : totaltForbruktDagerTimer;
 
   return (
     <section className={styles.nokkeltall}>
@@ -108,7 +107,7 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
       <ForbrukteDager
         navHarUtbetaltDagerTimer={navHarUtbetaltDagerTimer}
         infotrygdDagerTimer={tidFraInfotrygd}
-        forbrukteDagerTimer={forbruktDagerTimer}
+        forbrukteDagerTimer={totaltForbruktDagerTimer}
         smittevernDagerTimer={smittevernDagerTimer}
         utbetaltForMangeDagerTimer={utbetaltFlereDagerEnnRett ? absoluttverdiDagerTimer(rest) : null}
         viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.FORBRUKTE_DAGER)}

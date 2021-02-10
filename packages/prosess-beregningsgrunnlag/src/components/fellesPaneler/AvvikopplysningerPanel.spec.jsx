@@ -44,7 +44,6 @@ describe('<Avviksopplysninger>', () => {
         sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
         allePerioder={allePerioder}
         aktivitetStatusKode=""
-        gjelderBesteberegning={false}
       />,
     );
     const panel = wrapper.find('Panel');
@@ -63,7 +62,6 @@ describe('<Avviksopplysninger>', () => {
         sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
         allePerioder={allePerioder}
         aktivitetStatusKode=""
-        gjelderBesteberegning={false}
       />,
     );
     const panel = wrapper.find('Panel');
@@ -98,7 +96,6 @@ describe('<Avviksopplysninger>', () => {
         relevanteStatuser={relevanteStatuser}
         allePerioder={perioderMedSNAndel}
         aktivitetStatusKode=""
-        gjelderBesteberegning={false}
       />,
     );
     const panel = wrapper.find('Panel');
@@ -120,7 +117,6 @@ describe('<Avviksopplysninger>', () => {
         sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
         allePerioder={allePerioder}
         aktivitetStatusKode=""
-        gjelderBesteberegning={false}
       />,
     );
     const panel = wrapper.find('Panel');
@@ -142,7 +138,6 @@ describe('<Avviksopplysninger>', () => {
         sammenligningsgrunnlagPrStatus={[{}]}
         allePerioder={allePerioder}
         aktivitetStatusKode=""
-        gjelderBesteberegning={false}
       />,
     );
     const panel = wrapper.find('Panel');
@@ -168,7 +163,6 @@ describe('<Avviksopplysninger>', () => {
         sammenligningsgrunnlagPrStatus={[{}]}
         allePerioder={allePerioder}
         aktivitetStatusKode=""
-        gjelderBesteberegning={false}
       />,
     );
     const panel = wrapper.find('Panel');
@@ -194,7 +188,6 @@ describe('<Avviksopplysninger>', () => {
         sammenligningsgrunnlagPrStatus={[{}]}
         allePerioder={allePerioder}
         aktivitetStatusKode=""
-        gjelderBesteberegning={false}
       />,
     );
     const panel = wrapper.find('Panel');
@@ -202,30 +195,6 @@ describe('<Avviksopplysninger>', () => {
     const headerTitle = formatedText.first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
     expect(formatedText.last().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.Miletar');
-    expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
-    expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
-    expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);
-  });
-  it('Skal teste at riktig componenter blir renderet når besteberegning', () => {
-    relevanteStatuser.isArbeidstaker = false;
-    relevanteStatuser.isSelvstendigNaeringsdrivende = false;
-    relevanteStatuser.isFrilanser = false;
-    relevanteStatuser.isAAP = false;
-    relevanteStatuser.isMilitaer = false;
-    const wrapper = shallowWithIntl(
-      <AvviksopplysningerPanel
-        relevanteStatuser={relevanteStatuser}
-        sammenligningsgrunnlagPrStatus={[{}]}
-        allePerioder={allePerioder}
-        aktivitetStatusKode=""
-        gjelderBesteberegning
-      />,
-    );
-    const panel = wrapper.find('Panel');
-    const formatedText = panel.find('FormattedMessage');
-    const headerTitle = formatedText.first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
-    expect(formatedText.last().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.Besteberegning');
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);

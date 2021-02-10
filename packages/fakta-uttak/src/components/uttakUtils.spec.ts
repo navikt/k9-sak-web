@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import ArbeidsforholdPeriode from './types/ArbeidsforholdPeriode';
 import { arbeidsprosentNormal, beregnNyePerioder, visningsdato } from './uttakUtils';
 
@@ -28,17 +27,17 @@ describe('beregner nye perioder fra en periodeendring', () => {
 
     const nyePerioder = beregnNyePerioder(perioder, periodeInniFørstePeriode);
 
-    expect(nyePerioder).to.have.length(4);
-    expect(nyePerioder[0]).to.eql({
+    expect(nyePerioder).toHaveLength(4);
+    expect(nyePerioder[0]).toEqual({
       ...periode1,
       tom: '2020-01-06',
     });
-    expect(nyePerioder[1]).to.eql(periodeInniFørstePeriode);
-    expect(nyePerioder[2]).to.eql({
+    expect(nyePerioder[1]).toEqual(periodeInniFørstePeriode);
+    expect(nyePerioder[2]).toEqual({
       ...periode1,
       fom: '2020-01-15',
     });
-    expect(nyePerioder[3]).to.eql(periode2);
+    expect(nyePerioder[3]).toEqual(periode2);
   });
 
   it('ny periode lik eksisterende, erstatter den eksisterende', () => {
@@ -50,9 +49,9 @@ describe('beregner nye perioder fra en periodeendring', () => {
 
     const nyePerioder = beregnNyePerioder(perioder, nyPeriode);
 
-    expect(nyePerioder).to.have.length(2);
-    expect(nyePerioder[0]).to.eql(periode1);
-    expect(nyePerioder[1]).to.eql(nyPeriode);
+    expect(nyePerioder).toHaveLength(2);
+    expect(nyePerioder[0]).toEqual(periode1);
+    expect(nyePerioder[1]).toEqual(nyPeriode);
   });
 
   it('ny periode som overlapper eksisterende periode, overksriver overlappende del', () => {
@@ -65,13 +64,13 @@ describe('beregner nye perioder fra en periodeendring', () => {
 
     const nyePerioder = beregnNyePerioder(perioder, nyPeriode);
 
-    expect(nyePerioder).to.have.length(3);
-    expect(nyePerioder[0]).to.eql({
+    expect(nyePerioder).toHaveLength(3);
+    expect(nyePerioder[0]).toEqual({
       ...periode1,
       tom: '2020-01-14',
     });
-    expect(nyePerioder[1]).to.eql(nyPeriode);
-    expect(nyePerioder[2]).to.eql({
+    expect(nyePerioder[1]).toEqual(nyPeriode);
+    expect(nyePerioder[2]).toEqual({
       ...periode2,
       fom: '2020-02-16',
     });
@@ -87,7 +86,7 @@ describe('beregner nye perioder fra en periodeendring', () => {
 
     const nyePerioder = beregnNyePerioder(perioder, nyPeriode);
 
-    expect(nyePerioder).to.eql([nyPeriode]);
+    expect(nyePerioder).toEqual([nyPeriode]);
   });
 
   it('ny periode legges til mellom perioder', () => {
@@ -115,7 +114,7 @@ describe('beregner nye perioder fra en periodeendring', () => {
 
     const nyePerioder = beregnNyePerioder(eksiterendePerioder, nyPeriode);
 
-    expect(nyePerioder).to.eql([eksiterendePerioder[0], nyPeriode, eksiterendePerioder[1]]);
+    expect(nyePerioder).toEqual([eksiterendePerioder[0], nyPeriode, eksiterendePerioder[1]]);
   });
 });
 
@@ -125,7 +124,7 @@ describe('visningsdato', () => {
 
     const visning = visningsdato(isodato);
 
-    expect(visning).to.equal('14.03.2020');
+    expect(visning).toBe('14.03.2020');
   });
 });
 
@@ -133,14 +132,14 @@ describe('arbeidsprosent', () => {
   it('regner ut prosent i forhold normaluke på 37,5 timer og formaterer med 1 desimal hvis det finnes', () => {
     const test1 = 20;
     const resultat1 = arbeidsprosentNormal(test1);
-    expect(resultat1).to.equal('53.3');
+    expect(resultat1).toBe('53.3');
 
     const test2 = 37.5;
     const resultat2 = arbeidsprosentNormal(test2);
-    expect(resultat2).to.equal('100');
+    expect(resultat2).toBe('100');
 
     const test3 = 15;
     const resultat3 = arbeidsprosentNormal(test3);
-    expect(resultat3).to.equal('40');
+    expect(resultat3).toBe('40');
   });
 });

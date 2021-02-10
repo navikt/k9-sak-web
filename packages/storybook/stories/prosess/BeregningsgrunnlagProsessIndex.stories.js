@@ -10,7 +10,6 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import withReduxProvider from '../../decorators/withRedux';
@@ -72,7 +71,6 @@ const vilkarMedUtfall = kode => [
 ];
 
 const lagArbeidsforhold = (
-  arbeidsgiverNavn,
   arbeidsgiverId,
   arbeidsforholdId,
   eksternArbeidsforholdId,
@@ -80,7 +78,6 @@ const lagArbeidsforhold = (
   stillingsNavn,
   stillingsProsent,
 ) => ({
-  arbeidsgiverNavn,
   arbeidsgiverId,
   startdato: '2018-10-09',
   opphoersdato,
@@ -129,13 +126,11 @@ const lagAndel = (
   erNyIArbeidslivet: null,
   lonnsendringIBeregningsperioden: null,
   andelsnr: 1,
-  besteberegningPrAar: null,
   inntektskategori: {
     kode: 'ARBEIDSTAKER',
     kodeverk: 'INNTEKTSKATEGORI',
   },
   arbeidsforhold: {
-    arbeidsgiverNavn: 'BEDRIFT AS',
     arbeidsgiverId: '910909088',
     startdato: '2018-10-09',
     opphoersdato: null,
@@ -227,7 +222,6 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
       faktaOmBeregningTilfeller: null,
       arbeidstakerOgFrilanserISammeOrganisasjonListe: null,
       arbeidsforholdMedLønnsendringUtenIM: null,
-      besteberegningAndeler: null,
       vurderMottarYtelse: null,
       avklarAktiviteter: {
         aktiviteterTomDatoMapping: [
@@ -235,7 +229,6 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
             tom: '2019-09-16',
             aktivitete: [
               {
-                arbeidsgiverNavn: 'BEDRIFT AS',
                 arbeidsgiverId: '910909088',
                 fom: '2018-10-09',
                 tom: '9999-12-31',
@@ -251,7 +244,6 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
           },
         ],
       },
-      vurderBesteberegning: null,
       andelerForFaktaOmBeregning: [
         {
           belopReadOnly: 30000,
@@ -267,7 +259,6 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
           refusjonskrav: 30000,
           visningsnavn: 'BEDRIFT AS (910909088) ...55bb',
           arbeidsforhold: {
-            arbeidsgiverNavn: 'BEDRIFT AS',
             arbeidsgiverId: '910909088',
             startdato: '2018-10-09',
             opphoersdato: null,
@@ -705,11 +696,8 @@ export const naturalYtelse = () => {
   const andel1 = lagAndel('AT', 240000, undefined, undefined);
   const andel2 = lagAndel('AT', 740000, 744000, undefined);
   const andel3 = lagAndel('AT', 750000, 755000, undefined);
-  andel1.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 1';
   andel1.arbeidsforhold.arbeidsgiverId = '9109090881';
-  andel2.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 2';
   andel2.arbeidsforhold.arbeidsgiverId = '9109090882';
-  andel3.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 3';
   andel3.arbeidsforhold.arbeidsgiverId = '9109090883';
   andel2.bortfaltNaturalytelse = 2231;
   andel3.bortfaltNaturalytelse = 3231;
@@ -2202,36 +2190,7 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
     />
   );
 };
-export const arbeidstakerDagpengerMedBesteberegningSide28 = () => {
-  const andeler = [lagAndel('DP', 343094, undefined, undefined), lagAndel('AT', 107232, undefined, undefined)];
 
-  const perioder = [lagPeriodeMedDagsats(andeler, 1732)];
-  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 450326;
-  perioder[0].avkortetPrAar = 599148;
-
-  const statuser = [lagStatus('AT'), lagStatus('DP')];
-  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
-
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.faktaOmBeregning.faktaOmBeregningTilfeller = [
-    { kode: faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE },
-  ];
-  bg.dekningsgrad = 100;
-  return (
-    <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={[bg, bg]}
-      submitCallback={action('button-click')}
-      aksjonspunkter={[]}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
-      alleKodeverk={alleKodeverk}
-      arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    />
-  );
-};
 export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
   const andeler = [
     lagAndel('FL', 40824, undefined, undefined),
@@ -2264,6 +2223,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
     />
   );
 };
+
 export const frilansDagpengerOgSelvstendigNæringsdrivendeFnOgDpOverstigerSNSide30 = () => {
   const andeler = [
     lagAndel('FL', 40824, undefined, undefined),

@@ -16,7 +16,7 @@ import {
   VerticalSpacer,
   FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -234,7 +234,7 @@ export class ForeldelseForm extends Component {
                   />
                 )}
                 <VerticalSpacer twentyPx />
-                <BehandlingspunktSubmitButton
+                <ProsessStegSubmitButton
                   formName={FORELDELSE_FORM_NAME}
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}

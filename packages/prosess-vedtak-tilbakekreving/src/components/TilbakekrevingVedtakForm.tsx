@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import classNames from 'classnames';
 import { createSelector } from 'reselect';
 import { InjectedFormProps } from 'redux-form';
 
 import { omit } from '@fpsak-frontend/utils';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
   isBehandlingFormSubmitting,
@@ -63,7 +63,8 @@ interface OwnProps {
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
 }
 
-export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & InjectedFormProps> = ({
+export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & InjectedFormProps & WrappedComponentProps> = ({
+  intl,
   readOnly,
   fetchPreviewVedtaksbrev,
   vedtaksbrevAvsnitt,
@@ -93,8 +94,8 @@ export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & Injected
     <FlexContainer>
       <FlexRow>
         <FlexColumn>
-          <BehandlingspunktSubmitButton
-            textCode="TilbakekrevingVedtakForm.TilGodkjenning"
+          <ProsessStegSubmitButton
+            text={intl.formatMessage({ id: 'TilbakekrevingVedtakForm.TilGodkjenning' })}
             // @ts-ignore Fjern denne når komponent er over på TS
             formName={formName}
             behandlingId={behandlingId}
@@ -223,7 +224,7 @@ const mapStateToPropsFactory = (state: any, ownProps: PureOwnProps) => {
 const TilbakekrevingVedtakForm = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(TilbakekrevingVedtakFormImpl),
+  })(injectIntl(TilbakekrevingVedtakFormImpl)),
 );
 
 export default TilbakekrevingVedtakForm;

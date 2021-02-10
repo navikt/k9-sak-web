@@ -45,6 +45,7 @@ const mockTableData = {
     arbeidsgiver1: [firstCol, secondCol, thirdCol, fourthCol],
   },
 };
+
 const mockbruttoPerodeList = [
   {
     brutto: 560500,
@@ -75,8 +76,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
-          arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
           eksternArbeidsforholdId: '345678',
         },
@@ -90,8 +91,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '456',
+          arbeidsgiverIdent: '456',
           arbeidsforholdId: '456',
           eksternArbeidsforholdId: '567890',
         },
@@ -112,8 +113,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
-          arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
           eksternArbeidsforholdId: '345678',
         },
@@ -127,9 +128,9 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '456',
           arbeidsforholdId: '456',
+          arbeidsgiverIdent: '456',
           eksternArbeidsforholdId: '567890',
         },
         andelsnr: 2,
@@ -148,8 +149,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
-          arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
           eksternArbeidsforholdId: '345678',
         },
@@ -163,8 +164,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '456',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '456',
           eksternArbeidsforholdId: '567890',
         },
@@ -184,8 +185,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
-          arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
           eksternArbeidsforholdId: '345678',
         },
@@ -199,8 +200,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '456',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '456',
           eksternArbeidsforholdId: '567890',
         },
@@ -230,6 +231,7 @@ const keyForPeriodeOgAndel = (periodeNr, andelNr) =>
     beregningsgrunnlagPerioder[periodeNr].beregningsgrunnlagPrStatusOgAndel[andelNr],
     beregningsgrunnlagPerioder[periodeNr],
   );
+
 const alleKodeverk = {
   test: 'test',
 };
@@ -276,13 +278,6 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
     const initialValues = AksjonspunktBehandlerTidsbegrenset.buildInitialValues(beregningsgrunnlagPerioder);
     expect(initialValues).to.eql(expectedInitialValues);
   });
-  const aksjonspunkter = [
-    {
-      definisjon: {
-        kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-      },
-    },
-  ];
   it(
     'Skal teste at selector lager forventet objekt ut av en liste med beregningsgrunnlagperioder ' +
       'som inneholder kortvarige arbeidsforhold når vi har aksjonspunkt',
@@ -347,8 +342,8 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
         beregningsgrunnlagPerioder,
         alleKodeverk,
         arbeidsgiverOpplysningerPerId,
-        aksjonspunkter,
       );
+
       expect(selectorData).to.deep.equal(expectedResultObjectWhenWeHaveAksjonspunkt);
     },
   );

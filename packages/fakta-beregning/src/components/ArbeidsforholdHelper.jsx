@@ -30,7 +30,6 @@ export const sortArbeidsforholdList = arbeidsforhold => {
 };
 
 export const arbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverNavn: PropTypes.string,
   arbeidsgiverId: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
@@ -52,12 +51,11 @@ export const getUniqueListOfArbeidsforholdFields = fields => {
   fields.forEach((id, index) => {
     const field = fields.get(index);
 
-    if (field.arbeidsgiverNavn !== null && !arbeidsforholdEksistererIListen(field, arbeidsgiverList)) {
+    if (!arbeidsforholdEksistererIListen(field, arbeidsgiverList)) {
       const arbeidsforholdObject = {
         andelsnr: field.andelsnr,
         arbeidsforholdId: field.arbeidsforholdId,
         arbeidsgiverId: field.arbeidsgiverId,
-        arbeidsgiverNavn: field.arbeidsgiverNavn,
         arbeidsperiodeFom: field.arbeidsperiodeFom,
         arbeidsperiodeTom: field.arbeidsperiodeTom,
       };

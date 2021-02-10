@@ -37,7 +37,7 @@ describe('<InngangsvilkarPanel>', () => {
 
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL, kodeverk: 'BEHANDLING_DEF' },
+      definisjon: { kode: aksjonspunktCodes.AVKLAR_AKTIVITETER, kodeverk: 'BEHANDLING_DEF' },
       status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
       kanLoses: true,
       erAktivt: true,
@@ -72,7 +72,7 @@ describe('<InngangsvilkarPanel>', () => {
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
 
-    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
+    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
     const fodselStegDef = lagStegDef('FODSEL', fodselPanelDef);
     const utledetFodselDelPanel = new ProsessStegPanelUtledet(
       fodselStegDef,
@@ -145,7 +145,7 @@ describe('<InngangsvilkarPanel>', () => {
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
 
-    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
+    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
     const fodselStegDef = lagStegDef('FODSEL', fodselPanelDef);
     const utledetFodselDelPanel = new ProsessStegPanelUtledet(
       fodselStegDef,

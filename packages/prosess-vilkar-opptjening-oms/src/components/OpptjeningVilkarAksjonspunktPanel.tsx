@@ -1,16 +1,12 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import {
-  BehandlingspunktBegrunnelseTextField,
-  ProsessPanelTemplate,
-  VilkarResultPicker,
-} from '@fpsak-frontend/fp-felles';
+import { VilkarResultPicker, ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, FastsattOpptjening, Opptjening, SubmitCallback, Vilkårresultat } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
 import React, { FunctionComponent, useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -52,8 +48,9 @@ interface StateProps {
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
 export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
-  OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps
+  OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps & WrappedComponentProps
 > = ({
+  intl,
   behandlingId,
   behandlingVersjon,
   erVilkarOk,
@@ -87,9 +84,10 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
 
   return (
     <ProsessPanelTemplate
-      titleCode="OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret"
+      title={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret' })}
       isAksjonspunktOpen={isApOpen}
-      formProps={formProps}
+      formName={formProps.form}
+      handleSubmit={formProps.handleSubmit}
       isDirty={dirty}
       readOnlySubmitButton={readOnlySubmitButton}
       readOnly={readOnly}
@@ -127,7 +125,7 @@ export const buildInitialValues = createSelector(
   ],
   (vilkårsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(vilkårsresultat?.avslagsårsak?.kode, aksjonspunkter, status),
-    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+    ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
 
@@ -175,7 +173,7 @@ const OpptjeningVilkarAksjonspunktPanel = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: FORM_NAME,
     enableReinitialize: true,
-  })(OpptjeningVilkarAksjonspunktPanelImpl),
+  })(injectIntl(OpptjeningVilkarAksjonspunktPanelImpl)),
 );
 
 export default OpptjeningVilkarAksjonspunktPanel;

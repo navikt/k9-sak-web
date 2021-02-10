@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
@@ -64,7 +63,7 @@ describe('<UttakFaktaForm>', () => {
     );
 
     const kolonner = wrapper.find(UttakFormKolonne);
-    expect(kolonner).to.have.length(3);
+    expect(kolonner).toHaveLength(3);
   });
 
   it('oppdaterer arbeidsgivere basert på ny periode', () => {
@@ -85,14 +84,14 @@ describe('<UttakFaktaForm>', () => {
     )(nyPeriode);
 
     // eslint-disable-next-line no-unused-expressions
-    expect(setValgtPeriodeSpy.calledOnceWith(1)).to.be.true;
+    expect(setValgtPeriodeSpy.calledOnceWith(1)).toBe(true);
 
-    expect(oppdaterFormSpy.getCalls()).to.have.length(1);
+    expect(oppdaterFormSpy.getCalls()).toHaveLength(1);
     const oppdaterteArbeidsgivere: Arbeid[] = oppdaterFormSpy.getCalls()[0].args[0];
 
-    expect(oppdaterteArbeidsgivere).to.have.length(2);
-    expect(oppdaterteArbeidsgivere[0]).to.eql(arbeid[0]);
-    expect(oppdaterteArbeidsgivere[1].arbeidsforhold).to.eql(arbeid[1].arbeidsforhold);
+    expect(oppdaterteArbeidsgivere).toHaveLength(2);
+    expect(oppdaterteArbeidsgivere[0]).toEqual(arbeid[0]);
+    expect(oppdaterteArbeidsgivere[1].arbeidsforhold).toEqual(arbeid[1].arbeidsforhold);
     const expectedPerioder: ArbeidsforholdPeriode[] = [
       {
         ...arbeid[1].perioder[0],
@@ -106,7 +105,7 @@ describe('<UttakFaktaForm>', () => {
       arbeid[1].perioder[1],
     ];
 
-    expect(oppdaterteArbeidsgivere[1].perioder).to.eql(expectedPerioder);
+    expect(oppdaterteArbeidsgivere[1].perioder).toEqual(expectedPerioder);
   });
 
   it('transformerer skjemaverdier til dto onSubmit', () => {
@@ -118,7 +117,7 @@ describe('<UttakFaktaForm>', () => {
 
     const transformert = transformValues(skjemaverdier);
 
-    expect(transformert).to.eql([
+    expect(transformert).toEqual([
       {
         begrunnelse: skjemaverdier.begrunnelse,
         kode: 'FAKE_CODE',

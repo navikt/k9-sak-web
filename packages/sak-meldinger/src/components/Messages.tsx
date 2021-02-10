@@ -7,7 +7,14 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { KodeverkMedNavn, Kodeverk, ArbeidsgiverOpplysningerPerId, Brevmaler, Mottaker } from '@k9-sak-web/types';
+import {
+  KodeverkMedNavn,
+  Kodeverk,
+  Personopplysninger,
+  ArbeidsgiverOpplysningerPerId,
+  Brevmaler,
+  Mottaker,
+} from '@k9-sak-web/types';
 import {
   ariaCheck,
   getLanguageCodeFromSprakkode,
@@ -17,6 +24,7 @@ import {
   required,
   safeJSONParse,
 } from '@fpsak-frontend/utils';
+import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { SelectField, TextAreaField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -59,7 +67,8 @@ interface PureOwnProps {
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  personopplysninger?: Personopplysninger;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
 interface MappedOwnProps {
@@ -78,22 +87,6 @@ const createValidateRecipient = recipients => value =>
   (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
-
-function lagVisningsNavnForMottaker(mottaker, arbeidsgiverOpplysningerPerId) {
-  if (
-    arbeidsgiverOpplysningerPerId &&
-    arbeidsgiverOpplysningerPerId[mottaker] &&
-    arbeidsgiverOpplysningerPerId[mottaker].navn
-  ) {
-    return `${arbeidsgiverOpplysningerPerId[mottaker].navn} (${mottaker})`;
-  }
-
-  if (/^(\d).*$/.test(mottaker)) {
-    return `Bruker (${mottaker})`;
-  }
-
-  return mottaker;
-}
 
 /**
  * Messages
@@ -114,6 +107,7 @@ export const MessagesImpl: FunctionComponent<
   brevmalkode,
   fritekst,
   arsakskode,
+  personopplysninger,
   arbeidsgiverOpplysningerPerId,
   ...formProps
 }) => {
@@ -185,7 +179,7 @@ export const MessagesImpl: FunctionComponent<
                 placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
                 selectValues={recipients.map(recipient => (
                   <option key={recipient.id} value={JSON.stringify(recipient)}>
-                    {lagVisningsNavnForMottaker(recipient.id, arbeidsgiverOpplysningerPerId)}
+                    {lagVisningsnavnForMottaker(recipient.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
                   </option>
                 ))}
                 bredde="xxl"

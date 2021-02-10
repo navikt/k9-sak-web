@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { TextAreaField } from '@fpsak-frontend/form';
 
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';
@@ -28,7 +28,7 @@ describe('<InnsynVedtakForm>', () => {
         innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
     );
-    expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
+    expect(wrapper.find(ProsessStegSubmitButton)).to.have.length(1);
   });
 
   it('skal ikke vise bekreft vedtak-knapp når readonly', () => {
@@ -46,7 +46,7 @@ describe('<InnsynVedtakForm>', () => {
         innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
     );
-    expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
+    expect(wrapper.find(ProsessStegSubmitButton)).to.have.length(0);
   });
 
   //  Tester for readOnly betingelse se-documenter lenke

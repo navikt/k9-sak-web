@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
@@ -73,8 +72,9 @@ const arbeidsgiverOpplysningerPerId = {
 const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);
 
 const faktaOmBeregning = {
-  faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
+  faktaOmBeregningTilfeller: [],
 };
+
 const initial = {};
 initial.fieldArrayName = [andelField];
 const beregningsgrunnlag = {

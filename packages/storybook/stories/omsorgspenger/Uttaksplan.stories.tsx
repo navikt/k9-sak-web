@@ -174,7 +174,6 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    featureToggles={{}}
   />
 );
 
@@ -189,7 +188,6 @@ export const behandletAksjonspunkt = () => (
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    featureToggles={{}}
   />
 );
 
@@ -204,7 +202,6 @@ export const aksjonspunktAvslåttePerioder = () => (
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    featureToggles={{}}
   />
 );
 
@@ -219,6 +216,5 @@ export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
     inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    featureToggles={{}}
   />
 );
