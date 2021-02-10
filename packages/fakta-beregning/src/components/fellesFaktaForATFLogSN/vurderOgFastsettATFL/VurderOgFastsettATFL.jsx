@@ -180,7 +180,12 @@ const VurderOgFastsettATFL = ({
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning,  alleKodeverk, arbeidsgiverOpplysningerPerId) => {
+VurderOgFastsettATFL.buildInitialValues = (
+  aksjonspunkter,
+  faktaOmBeregning,
+  alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
+) => {
   if (!faktaOmBeregning) {
     return {};
   }
@@ -189,7 +194,11 @@ VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning,  al
     return {};
   }
   return {
-    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler, alleKodeverk, arbeidsgiverOpplysningerPerId),
+    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(
+      andeler,
+      alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
+    ),
     ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
   };
 };

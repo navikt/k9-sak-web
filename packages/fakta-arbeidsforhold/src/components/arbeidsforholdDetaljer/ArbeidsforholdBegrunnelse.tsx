@@ -1,7 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-
 import { minLength, maxLength, required, hasValidText } from '@fpsak-frontend/utils';
 import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/form';
 
@@ -9,10 +7,23 @@ import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 import aktivtArbeidsforholdHandling from '../../kodeverk/aktivtArbeidsforholdHandling';
 import styles from './arbeidsforholdBegrunnelse.less';
 
+interface PureOwnProps {
+  readOnly: boolean;
+  formName: string;
+  behandlingId: number;
+  behandlingVersjon: number;
+}
+
+interface MappedOwnProps {
+  isDirty: boolean;
+  harBegrunnelse: boolean;
+  skalAvslaaYtelse: boolean;
+}
+
 /**
  * ArbeidsforholdBegrunnelse er ansvarlig for å vise begrunnelsesfeltet.
  */
-export const ArbeidsforholdBegrunnelse = ({
+export const ArbeidsforholdBegrunnelse: FunctionComponent<PureOwnProps & MappedOwnProps> = ({
   readOnly,
   formName,
   isDirty,
@@ -40,16 +51,8 @@ export const ArbeidsforholdBegrunnelse = ({
     </BehandlingFormFieldCleaner>
   </div>
 );
-ArbeidsforholdBegrunnelse.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
-  isDirty: PropTypes.bool.isRequired,
-  harBegrunnelse: PropTypes.bool.isRequired,
-  skalAvslaaYtelse: PropTypes.bool.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-};
-const mapStateToProps = (state, initialProps) => {
+
+const mapStateToProps = (state: any, initialProps: PureOwnProps): MappedOwnProps => {
   const { formName, behandlingId, behandlingVersjon } = initialProps;
   const aktivtArbeidsforholdHandlingValue = behandlingFormValueSelector(
     formName,
@@ -62,4 +65,5 @@ const mapStateToProps = (state, initialProps) => {
     skalAvslaaYtelse: aktivtArbeidsforholdHandlingValue === aktivtArbeidsforholdHandling.AVSLA_YTELSE,
   };
 };
+
 export default connect(mapStateToProps)(ArbeidsforholdBegrunnelse);

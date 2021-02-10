@@ -301,12 +301,7 @@ export const aapOgRefusjon = () => {
   const arbeidsforhold = lagArbeidsforhold('999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000);
   andreAndeler[1].arbeidsforhold = arbeidsforhold;
   const andrePeriode = lagFordelPeriode(andreAndeler, '2019-11-27', undefined, true, false);
-  const arbfor = lagArbforTilFordeling(
-    '999999999',
-    'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF',
-    300000,
-    '2019-11-27',
-  );
+  const arbfor = lagArbforTilFordeling('999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000, '2019-11-27');
   const faktaOmFordeling = lagFaktaOmFordeling([arbfor], [førstePeriode, andrePeriode]);
 
   const førsteBGPeriode = lagBGPeriode([lagBGAndel(1, 'AAP', 100000)], '2019-08-05', '2019-11-26', []);
@@ -342,12 +337,7 @@ export const kanEndreRefusjonskrav = () => {
   const arbeidsforhold = lagArbeidsforhold('999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000);
   andreAndeler[1].arbeidsforhold = arbeidsforhold;
   const andrePeriode = lagFordelPeriode(andreAndeler, '2019-11-27', undefined, true, true);
-  const arbfor = lagArbforTilFordeling(
-    '999999999',
-    'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF',
-    300000,
-    '2019-11-27',
-  );
+  const arbfor = lagArbforTilFordeling('999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000, '2019-11-27');
   const faktaOmFordeling = lagFaktaOmFordeling([arbfor], [førstePeriode, andrePeriode]);
 
   const førsteBGPeriode = lagBGPeriode([lagBGAndel(1, 'AAP', 100000)], '2019-08-05', '2019-11-26', []);
@@ -411,12 +401,7 @@ export const skalSlåSammenNaturalytelseperioder = () => {
     periodeAarsak.ENDRING_I_REFUSJONSKRAV,
   ]);
 
-  const arbfor = lagArbforTilFordeling(
-    '999999999',
-    'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF',
-    300000,
-    '2019-12-06',
-  );
+  const arbfor = lagArbforTilFordeling('999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000, '2019-12-06');
   const faktaOmFordeling = lagFaktaOmFordeling([arbfor], [førstePeriode, andrePeriode, tredjePeriode]);
 
   const bg = lagBG([førsteBGPeriode, andreBGPperiode, tredjeBGPeriode], faktaOmFordeling);

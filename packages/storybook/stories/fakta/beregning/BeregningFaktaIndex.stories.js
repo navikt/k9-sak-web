@@ -14,13 +14,7 @@ import {
   aksjonspunkt as aksjonspunktArbeidOgDagpenger,
 } from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
-import {
-  beregningsgrunnlag as bgTest,
-  aksjonspunkt as apTest,
-  behandling as behTest,
-} from './scenario/test';
-
-
+import { beregningsgrunnlag as bgTest, aksjonspunkt as apTest, behandling as behTest } from './scenario/test';
 
 import {
   beregningsgrunnlag as bgFlerePerioder,

@@ -6,7 +6,7 @@ import { change as reduxChange } from 'redux-form';
 
 import { getBehandlingFormName } from '@fpsak-frontend/form';
 
-const findAllNames = (children: any): any[] =>
+const findAllNames = children =>
   children
     ? React.Children.map(children, child => {
         let all = [];
@@ -52,7 +52,7 @@ export class BehandlingFormFieldCleaner extends Component<PureOwnProps & MappedO
     children: [],
   };
 
-  shouldComponentUpdate(nextProps: PureOwnProps & MappedOwnProps & DispatchProps): boolean {
+  shouldComponentUpdate(nextProps) {
     const { children } = this.props;
     const oldNames = findAllNames(children);
     const newNames = findAllNames(nextProps.children);
@@ -62,7 +62,7 @@ export class BehandlingFormFieldCleaner extends Component<PureOwnProps & MappedO
     return !diff1 || !diff2;
   }
 
-  componentDidUpdate(): void {
+  componentDidUpdate() {
     const { behandlingFormName, children, fieldNames, reduxChange: reduxFieldChange } = this.props;
     const doNotRemoveFieldNames = findAllNames(children);
 

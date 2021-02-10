@@ -19,7 +19,7 @@ const andeler = [
       arbeidsgiverId: '987654321',
       startdato: '2017-02-02',
       opphoersdato: '2017-03-03',
-    }
+    },
   },
 ];
 

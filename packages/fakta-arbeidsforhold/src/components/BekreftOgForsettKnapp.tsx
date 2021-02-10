@@ -1,15 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+interface PureOwnProps {
+  readOnly: boolean;
+  isSubmitting: boolean;
+}
+
 /**
  * BekreftOgForsettKnapp:
  * Ansvarlig for å rendre bekreft og fortsett knappen, samt disable den hvis nødvendig
  */
-export const BekreftOgForsettKnappV2 = ({ isSubmitting, readOnly }) => (
+export const BekreftOgForsettKnapp: FunctionComponent<PureOwnProps> = ({ readOnly, isSubmitting }) => (
   <>
     <VerticalSpacer twentyPx />
     <Hovedknapp mini spinner={isSubmitting} disabled={readOnly || isSubmitting}>
@@ -18,9 +22,4 @@ export const BekreftOgForsettKnappV2 = ({ isSubmitting, readOnly }) => (
   </>
 );
 
-BekreftOgForsettKnappV2.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  isSubmitting: PropTypes.bool.isRequired,
-};
-
-export default BekreftOgForsettKnappV2;
+export default BekreftOgForsettKnapp;

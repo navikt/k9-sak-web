@@ -140,9 +140,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const beregningsgrunnlag = {
       faktaOmBeregning: {
         avklarAktiviteter,
-        andelerForFaktaOmBeregning: [
-          { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-        ],
+        andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
       },
     };
     const wrapper = shallow(
@@ -205,9 +203,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
-            andelerForFaktaOmBeregning: [
-              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-            ],
+            andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
         aktivtBeregningsgrunnlagIndex={0}
@@ -250,9 +246,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
-            andelerForFaktaOmBeregning: [
-              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-            ],
+            andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
         reduxFormInitialize={sinon.spy()}
@@ -279,9 +273,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
-            andelerForFaktaOmBeregning: [
-              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-            ],
+            andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
         hasBegrunnelse={false}
@@ -319,9 +311,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const beregningsgrunnlag = {
       faktaOmBeregning: {
         avklarAktiviteter,
-        andelerForFaktaOmBeregning: [
-          { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-        ],
+        andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
       },
     };
     const wrapper = shallow(
@@ -372,9 +362,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
-            andelerForFaktaOmBeregning: [
-              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-            ],
+            andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
         hasBegrunnelse={false}
@@ -418,9 +406,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
-            andelerForFaktaOmBeregning: [
-              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-            ],
+            andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
         hasBegrunnelse={false}
@@ -463,9 +449,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
-            andelerForFaktaOmBeregning: [
-              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-            ],
+            andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
         hasBegrunnelse={false}
@@ -508,9 +492,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={{
           faktaOmBeregning: {
             avklarAktiviteter,
-            andelerForFaktaOmBeregning: [
-              { skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true },
-            ],
+            andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
         aktivtBeregningsgrunnlagIndex={0}

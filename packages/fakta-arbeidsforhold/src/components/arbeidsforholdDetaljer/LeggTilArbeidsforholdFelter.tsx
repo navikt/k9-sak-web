@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import moment from 'moment';
 
 import {
@@ -12,26 +11,44 @@ import {
 } from '@fpsak-frontend/utils';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { FlexContainer, FlexRow, FlexColumn, VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 
 import styles from './leggTilArbeidsforholdFelter.less';
+import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 
 // ----------------------------------------------------------------------------------
 // Methods
 // ----------------------------------------------------------------------------------
-const sluttdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailFormV2.DateNotAfterOrEqual' }, { dato }];
-const startdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailFormV2.DateNotBeforeOrEqual' }, { dato }];
+const sluttdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }];
+const startdatoErrorMsg = dato => [{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeOrEqual' }, { dato }];
 const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
+
+interface OwnProps {
+  readOnly: boolean;
+  formName: string;
+  behandlingId: number;
+  behandlingVersjon: number;
+}
+
+interface StaticFunctions {
+  validate?: (
+    values: CustomArbeidsforhold,
+  ) => {
+    tomDato: string;
+    fomDato: string;
+  } | null;
+}
 
 // ----------------------------------------------------------------------------------
 // Component : LeggTilArbeidsforholdFelter
 // ----------------------------------------------------------------------------------
 
-/**
- * Component: LeggTilArbeidsforholdFelter
- */
-const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandlingVersjon }) => (
+const LeggTilArbeidsforholdFelter: FunctionComponent<OwnProps> & StaticFunctions = ({
+  readOnly,
+  formName,
+  behandlingId,
+  behandlingVersjon,
+}) => (
   <BehandlingFormFieldCleaner
     formName={formName}
     fieldNames={['arbeidsgiverNavn', 'startdato', 'sluttdato', 'stillingsprosent', 'yrkestittel']}
@@ -97,20 +114,20 @@ const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandl
   </BehandlingFormFieldCleaner>
 );
 
-LeggTilArbeidsforholdFelter.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-};
-
-LeggTilArbeidsforholdFelter.validate = values => {
+LeggTilArbeidsforholdFelter.validate = (
+  values: CustomArbeidsforhold,
+): {
+  tomDato: string;
+  fomDato: string;
+} | null => {
   if (values === undefined || values === null) {
     return null;
   }
   if (values.fomDato && values.tomDato && moment(values.fomDato).isAfter(moment(values.tomDato))) {
     return {
+      // @ts-ignore
       tomDato: sluttdatoErrorMsg(formatDate(values.fomDato)),
+      // @ts-ignore
       fomDato: startdatoErrorMsg(formatDate(values.tomDato)),
     };
   }

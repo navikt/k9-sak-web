@@ -6,8 +6,7 @@ import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
 
 export const AAP_ARBEIDSGIVER_KEY = 'AAP_ARBEIDSGIVER_GRUNNLAG';
 
-
-const BelopPrArbeidsgiverPropType =  PropTypes.shape({
+const BelopPrArbeidsgiverPropType = PropTypes.shape({
   key: PropTypes.string.isRequired,
   fastsattBelop: PropTypes.number.isRequired,
   beregningsgrunnlagPrAar: PropTypes.number.isRequired,
@@ -126,8 +125,6 @@ const TotalbelopPrArbeidsgiverError = ({ totalInntektPrArbeidsforhold }) => {
     </div>
   );
 };
-
-
 
 TotalbelopPrArbeidsgiverError.propTypes = {
   totalInntektPrArbeidsforhold: PropTypes.arrayOf(BelopPrArbeidsgiverPropType).isRequired,

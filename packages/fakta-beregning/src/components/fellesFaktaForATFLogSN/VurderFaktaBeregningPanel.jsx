@@ -122,7 +122,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
 
     if (fields.length === 0) {
       if (harFlereBeregningsgrunnlag) {
-        alleBeregningsgrunnlag.forEach((bg) => {
+        alleBeregningsgrunnlag.forEach(bg => {
           const initialValues = getBuildInitialValuesFaktaForATFLOgSN(this.props, bg);
           fields.push(initialValues);
         });
@@ -278,27 +278,25 @@ export const validateVurderFaktaBeregning = values => {
   const { aksjonspunkter } = values;
   if (aksjonspunkter && hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && values) {
     return {
-      [fieldArrayName]: values[fieldArrayName].map((value) => validationForVurderFakta(value))
+      [fieldArrayName]: values[fieldArrayName].map(value => validationForVurderFakta(value)),
     };
   }
   return null;
 };
 
-export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex) => (
-  {
+export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex) => ({
   [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
-      aksjonspunkter: ownProps.aksjonspunkter,
-      ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
-
+    aksjonspunkter: ownProps.aksjonspunkter,
+    ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
   })),
   aksjonspunkter: ownProps.aksjonspunkter,
   alleBeregningsgrunnlag,
   aktivtBeregningsgrunnlagIndex,
   ...FaktaBegrunnelseTextField.buildInitialValues(
     findAksjonspunktMedBegrunnelse(ownProps.aksjonspunkter),
-    BEGRUNNELSE_FAKTA_TILFELLER_NAME)
-}
-);
+    BEGRUNNELSE_FAKTA_TILFELLER_NAME,
+  ),
+});
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = values =>

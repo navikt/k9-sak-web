@@ -20,26 +20,26 @@ const FastsettBgKunYtelsePanel = ({
   alleKodeverk,
   fieldArrayID,
 }) => (
-      <React.Fragment key="FASTSETT_BG_KUN_YTELSE">
-        <BorderBox>
-          <Row>
-            <Column xs="9">
-              <Element>
-                <FormattedMessage id="KunYtelsePanel.Overskrift" />
-              </Element>
-            </Column>
-          </Row>
-          <FieldArray
-            name={`${fieldArrayID}.${brukersAndelFieldArrayName}`}
-            component={BrukersAndelFieldArray}
-            readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-          />
-        </BorderBox>
-      </React.Fragment>
+  <React.Fragment key="FASTSETT_BG_KUN_YTELSE">
+    <BorderBox>
+      <Row>
+        <Column xs="9">
+          <Element>
+            <FormattedMessage id="KunYtelsePanel.Overskrift" />
+          </Element>
+        </Column>
+      </Row>
+      <FieldArray
+        name={`${fieldArrayID}.${brukersAndelFieldArrayName}`}
+        component={BrukersAndelFieldArray}
+        readOnly={readOnly}
+        isAksjonspunktClosed={isAksjonspunktClosed}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+      />
+    </BorderBox>
+  </React.Fragment>
 );
 
 FastsettBgKunYtelsePanel.propTypes = {
@@ -63,11 +63,11 @@ const transformValues = values => ({
   },
 });
 
-FastsettBgKunYtelsePanel.transformValues = (values) => {
-    return {
-      faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
-      ...transformValues(values),
-    };
+FastsettBgKunYtelsePanel.transformValues = values => {
+  return {
+    faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
+    ...transformValues(values),
+  };
 };
 
 const validate = (values, aktivertePaneler) => {

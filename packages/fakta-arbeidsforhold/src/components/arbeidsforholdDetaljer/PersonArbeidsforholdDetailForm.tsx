@@ -1,60 +1,74 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { InjectedFormProps } from 'redux-form';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
-import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
-import ArbeidsforholdRadioknapperV2 from './ArbeidsforholdRadioknapperV2';
+import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 
 import styles from './personArbeidsforholdDetailForm.less';
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
+import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 
-export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2 = 'PersonArbeidsforholdDetailFormV2';
+export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
 
 const IMutenArbeidsforhold = arbeidsforhold =>
   arbeidsforhold.aksjonspunktÅrsaker.some(a => a.kode === aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
 
+interface PureOwnProps {
+  arbeidsforhold: ArbeidsforholdV2;
+  behandlingId: number;
+  behandlingVersjon: number;
+  skjulArbeidsforhold: () => void;
+  updateArbeidsforhold: (values) => void;
+}
+
+type FormValues = CustomArbeidsforhold;
+
+interface MappedOwnProps {
+  onSubmit: (formValues: FormValues) => void;
+  validate: (formValues: FormValues, props: any) => void;
+}
+
+type Props = PureOwnProps & MappedOwnProps & InjectedFormProps & WrappedComponentProps;
+
 // ----------------------------------------------------------------------------------
-// Component: PersonArbeidsforholdDetailFormV2
+// Component: PersonArbeidsforholdDetailForm
 // ----------------------------------------------------------------------------------
 /**
- * PersonArbeidsforholdDetailFormV2
+ * PersonArbeidsforholdDetailForm
  */
-export const PersonArbeidsforholdDetailFormV2 = ({
+export const PersonArbeidsforholdDetailForm: FunctionComponent<Props> = ({
   arbeidsforhold,
   behandlingId,
   behandlingVersjon,
-  alleKodeverk,
   ...formProps
 }) => (
   <div className={styles.container}>
     <VerticalSpacer eightPx />
-    <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
+    <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} />
     <VerticalSpacer eightPx />
     {IMutenArbeidsforhold(arbeidsforhold) && (
       <Row>
-        <VerticalSpacer twentyPx />
-        <ArbeidsforholdRadioknapperV2
-          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
-          arbeidsforhold={arbeidsforhold}
+        <ArbeidsforholdRadioknapper
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
         />
         <ArbeidsforholdBegrunnelse
           readOnly={false}
-          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2}
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
         />
         <VerticalSpacer sixteenPx />
-        <FlexContainer fluid>
+        <FlexContainer>
           <FlexRow>
             <FlexColumn>
               <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
@@ -68,42 +82,35 @@ export const PersonArbeidsforholdDetailFormV2 = ({
   </div>
 );
 
-PersonArbeidsforholdDetailFormV2.propTypes = {
-  arbeidsforhold: arbeidsforholdV2PropType.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  skjulArbeidsforhold: PropTypes.func.isRequired,
-  ...formPropTypes,
-};
+const validateForm = values => ({
+  ...LeggTilArbeidsforholdFelter.validate(values),
+});
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+const mapStateToPropsFactory = (_initialState: any, initialOwnProps: PureOwnProps) => {
   return (state, ownProps) => {
     const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
     const onSubmit = values => {
       initialOwnProps.updateArbeidsforhold(values);
       skjulArbeidsforhold();
     };
+    const validate = (values: FormValues) => validateForm(values);
     return {
       initialValues: arbeidsforhold,
       readOnly: readOnly || arbeidsforhold.aksjonspunktÅrsaker.length === 0,
       arbeidsforholdHandlingVerdi: behandlingFormValueSelector(
-        PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2,
+        PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
         behandlingId,
         behandlingVersjon,
       )(state, 'arbeidsforholdHandlingField'),
       onSubmit,
+      validate,
     };
   };
 };
 
-const validateForm = values => ({
-  ...LeggTilArbeidsforholdFelter.validate(values),
-});
-
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
-    form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM_V2,
-    validate: values => validateForm(values),
+    form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
     enableReinitialize: true,
-  })(PersonArbeidsforholdDetailFormV2),
+  })(injectIntl(PersonArbeidsforholdDetailForm)),
 );

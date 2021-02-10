@@ -64,9 +64,7 @@ const arbeidstakerAndelerUtenIM = [
 const beregningsgrunnlag = {
   beregningsgrunnlagPeriode: [
     {
-      beregningsgrunnlagPrStatusOgAndel: [
-        andel, andel2, andel3, frilansAndel,
-      ],
+      beregningsgrunnlagPrStatusOgAndel: [andel, andel2, andel3, frilansAndel],
     },
   ],
 };
@@ -106,7 +104,6 @@ describe('<VurderMottarYtelseUtils>', () => {
     const harVurdert = harVurdertMottarYtelse(values, vurderMottarYtelse);
     expect(harVurdert).to.equal(true);
   });
-
 
   it('skal returnere false når man har ikkje vurdert alle punktene i mottar ytelse for arbeidstaker uten inntektsmelding', () => {
     const vurderMottarYtelse = {
@@ -156,7 +153,6 @@ describe('<VurderMottarYtelseUtils>', () => {
     expect(mottarYtelseMap[4]).to.equal(true);
   });
 
-
   it('skalFastsetteInntektATUtenInntektsmelding skal returnere true om det er minst ein AT-andel som skal fastsett inntekt', () => {
     const vurderMottarYtelse = {
       arbeidstakerAndelerUtenIM,
@@ -169,7 +165,6 @@ describe('<VurderMottarYtelseUtils>', () => {
     const skalFastsetteAT = skalFastsetteInntektATUtenInntektsmelding(values, vurderMottarYtelse);
     expect(skalFastsetteAT).to.equal(true);
   });
-
 
   it('skalFastsetteInntektATUtenInntektsmelding skal returnere false om ingen AT andeler eksisterer i values', () => {
     const vurderMottarYtelse = {

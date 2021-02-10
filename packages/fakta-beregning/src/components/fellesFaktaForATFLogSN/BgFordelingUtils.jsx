@@ -43,8 +43,12 @@ const createAndelnavn = (andel, alleKodeverk, arbeidsgiverOpplysningerPerId, erK
   return getKodeverknavnFn(alleKodeverk, kodeverkTyper)(andel.aktivitetStatus);
 };
 
-
-export const setGenerellAndelsinfo = (andel, alleKodeverk, arbeidsgiverOpplysningerPerId = {}, erKunYtelse = false) => ({
+export const setGenerellAndelsinfo = (
+  andel,
+  alleKodeverk,
+  arbeidsgiverOpplysningerPerId = {},
+  erKunYtelse = false,
+) => ({
   andel: createAndelnavn(andel, alleKodeverk, arbeidsgiverOpplysningerPerId, erKunYtelse),
   aktivitetStatus: andel.aktivitetStatus.kode,
   andelsnr: andel.andelsnr,
@@ -53,14 +57,13 @@ export const setGenerellAndelsinfo = (andel, alleKodeverk, arbeidsgiverOpplysnin
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
 });
 
-export const setGenerellAndelsinfoUtenNavn = (andel) => ({
+export const setGenerellAndelsinfoUtenNavn = andel => ({
   aktivitetStatus: andel.aktivitetStatus.kode,
   andelsnr: andel.andelsnr,
   nyAndel: false,
   inntektskategori: preutfyllInntektskategori(andel),
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
 });
-
 
 const listeInneholderAndel = (liste, field) =>
   liste
@@ -248,7 +251,7 @@ export const mapToBelop = skalRedigereInntekt => andel => {
   return readOnlyBelop ? removeSpacesFromNumber(readOnlyBelop) : 0;
 };
 
-export const mapAndelToFieldUtenNavn = (andel) => ({
+export const mapAndelToFieldUtenNavn = andel => ({
   ...setGenerellAndelsinfoUtenNavn(andel),
   ...setArbeidsforholdInitialValues(andel),
   skalKunneEndreAktivitet: andel.skalKunneEndreAktivitet,

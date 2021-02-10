@@ -1,29 +1,39 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import PropTypes from 'prop-types';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { arbeidsforholdV2PropType } from '@fpsak-frontend/prop-types/src/arbeidsforholdPropType';
-import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 
-const isKildeAaRegisteret = arbeidsforhold =>
-  arbeidsforhold.kilde && arbeidsforhold.kilde.includes(arbeidsforholdKilder.AAREGISTERET);
+interface OwnProps {
+  formName: string;
+  behandlingId: number;
+  behandlingVersjon: number;
+}
 
 /**
- * Component: ArbeidsforholdRadioknapperV2
+ * Component: ArbeidsforholdRadioknapper
  * Ansvarlig for å håndtere visning av RadioKnapper for arbeidsforhold
  * som står i aksjonspunktet 5080 i fakta om arbeidsforhold.
  */
-const ArbeidsforholdRadioknapperV2 = ({ arbeidsforhold, behandlingId, behandlingVersjon, formName }) => (
+const ArbeidsforholdRadioknapper: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  behandlingId,
+  behandlingVersjon,
+  formName,
+}) => (
   <RadioGroupField name="arbeidsforholdHandlingField" validate={[required]} direction="vertical">
     <RadioOption
-      label={{ id: 'PersonArbeidsforholdDetailFormV2.ArbeidsforholdErAktivt' }}
+      label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt' }}
       value={arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER}
     >
-      <BehandlingFormFieldCleaner formName={formName} fieldNames={['aktivtArbeidsforholdHandlingField']}>
+      <BehandlingFormFieldCleaner
+        formName={formName}
+        fieldNames={['arbeidsforholdHandlingField']}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+      >
         <LeggTilArbeidsforholdFelter
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
@@ -36,16 +46,8 @@ const ArbeidsforholdRadioknapperV2 = ({ arbeidsforhold, behandlingId, behandling
     <RadioOption
       label={{ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' }}
       value={arbeidsforholdHandlingType.BRUK}
-      disabled={isKildeAaRegisteret(arbeidsforhold)}
     />
   </RadioGroupField>
 );
 
-ArbeidsforholdRadioknapperV2.propTypes = {
-  arbeidsforhold: arbeidsforholdV2PropType.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  formName: PropTypes.string.isRequired,
-};
-
-export default ArbeidsforholdRadioknapperV2;
+export default injectIntl(ArbeidsforholdRadioknapper);

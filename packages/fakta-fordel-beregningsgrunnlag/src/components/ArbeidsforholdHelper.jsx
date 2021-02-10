@@ -3,21 +3,25 @@ import { createSelector } from 'reselect';
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
-    return arbeidsgiverList.map(({ arbeidsgiverId }) => (arbeidsgiverId)).includes(arbeidsforhold.arbeidsgiverId);
+    return arbeidsgiverList.map(({ arbeidsgiverId }) => arbeidsgiverId).includes(arbeidsforhold.arbeidsgiverId);
   }
-  return arbeidsgiverList.map(({ arbeidsforholdId }) => (arbeidsforholdId)).includes(arbeidsforhold.arbeidsforholdId);
+  return arbeidsgiverList.map(({ arbeidsforholdId }) => arbeidsforholdId).includes(arbeidsforhold.arbeidsforholdId);
 };
 
-const finnBgAndelMedSammeArbeidsforhold = (bgAndeler, andel) => bgAndeler.find(({ arbeidsforhold }) => !!arbeidsforhold
-&& arbeidsforhold.arbeidsgiverId === andel.arbeidsforhold.arbeidsgiverId
-&& arbeidsforhold.arbeidsforholdId === andel.arbeidsforhold.arbeidsforholdId);
+const finnBgAndelMedSammeArbeidsforhold = (bgAndeler, andel) =>
+  bgAndeler.find(
+    ({ arbeidsforhold }) =>
+      !!arbeidsforhold &&
+      arbeidsforhold.arbeidsgiverId === andel.arbeidsforhold.arbeidsgiverId &&
+      arbeidsforhold.arbeidsforholdId === andel.arbeidsforhold.arbeidsforholdId,
+  );
 
 export const getUniqueListOfArbeidsforholdFromAndeler = (andeler, bgAndeler) => {
   const arbeidsgiverList = [];
   if (andeler === undefined) {
     return arbeidsgiverList;
   }
-  andeler.forEach((andel) => {
+  andeler.forEach(andel => {
     if (andel.arbeidsforhold !== null && !arbeidsforholdEksistererIListen(andel.arbeidsforhold, arbeidsgiverList)) {
       const bgAndel = finnBgAndelMedSammeArbeidsforhold(bgAndeler, andel);
       const arbeidsforholdObject = {
@@ -35,27 +39,26 @@ export const getUniqueListOfArbeidsforholdFromAndeler = (andeler, bgAndeler) => 
 
 const emptyList = [];
 
-const finnAndelerFraFordelingperioder = (fordelPerioder) => (fordelPerioder.length > 0
-  ? fordelPerioder.flatMap((p) => p.fordelBeregningsgrunnlagAndeler) : emptyList);
+const finnAndelerFraFordelingperioder = fordelPerioder =>
+  fordelPerioder.length > 0 ? fordelPerioder.flatMap(p => p.fordelBeregningsgrunnlagAndeler) : emptyList;
 
-const finnAndelerFraBgperioder = (bgPerioder) => (bgPerioder.length > 0
-  ? bgPerioder.flatMap((p) => p.beregningsgrunnlagPrStatusOgAndel) : emptyList);
+const finnAndelerFraBgperioder = bgPerioder =>
+  bgPerioder.length > 0 ? bgPerioder.flatMap(p => p.beregningsgrunnlagPrStatusOgAndel) : emptyList;
 
-const getUniqueListOfArbeidsforholdFromPerioder = (fordelPerioder, bgPerioder) => getUniqueListOfArbeidsforholdFromAndeler(
-  finnAndelerFraFordelingperioder(fordelPerioder),
-  finnAndelerFraBgperioder(bgPerioder),
-);
+const getUniqueListOfArbeidsforholdFromPerioder = (fordelPerioder, bgPerioder) =>
+  getUniqueListOfArbeidsforholdFromAndeler(
+    finnAndelerFraFordelingperioder(fordelPerioder),
+    finnAndelerFraBgperioder(bgPerioder),
+  );
 
-export const getUniqueListOfArbeidsforhold = createSelector(
-  [(props) => props.beregningsgrunnlag],
-  (beregningsgrunnlag) => {
-    const fordelBGPerioder = beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
-    const bgPerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
-    return getUniqueListOfArbeidsforholdFromPerioder(fordelBGPerioder, bgPerioder);
-  },
-);
+export const getUniqueListOfArbeidsforhold = createSelector([props => props.beregningsgrunnlag], beregningsgrunnlag => {
+  const fordelBGPerioder =
+    beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
+  const bgPerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
+  return getUniqueListOfArbeidsforholdFromPerioder(fordelBGPerioder, bgPerioder);
+});
 
-export const getUniqueListOfArbeidsforholdFields = (fields) => {
+export const getUniqueListOfArbeidsforholdFields = fields => {
   const arbeidsgiverList = [];
   if (fields === undefined) {
     return arbeidsgiverList;
@@ -75,7 +78,6 @@ export const getUniqueListOfArbeidsforholdFields = (fields) => {
   }
   return arbeidsgiverList;
 };
-
 
 export const arbeidsforholdProptype = PropTypes.shape({
   arbeidsgiverId: PropTypes.string,

@@ -64,16 +64,16 @@ const alleKodeverk = {
 
 const arbeidsgiverOpplysningerPerId = {
   1231414: {
-    navn: 'Arbeidsgiveren'
+    navn: 'Arbeidsgiveren',
   },
   3284788923: {
     navn: 'Virksomheten',
-  }
+  },
 };
 
 describe('<BgFordelingUtils>', () => {
   const dagpengerAndel = {
-    aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, kodeverk: 'AKTIVITET_STATUS'},
+    aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, kodeverk: 'AKTIVITET_STATUS' },
     andelsnr: 1,
     skalKunneEndreAktivitet: false,
     lagtTilAvSaksbehandler: true,
@@ -132,9 +132,8 @@ describe('<BgFordelingUtils>', () => {
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
       arbeidsforhold: {
-        arbeidsgiverId: "1231414"
-      }
-
+        arbeidsgiverId: '1231414',
+      },
     };
     const atField = mapAndelToField(ATAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
     expect(atField.aktivitetStatus).to.equal('AT');
@@ -181,9 +180,9 @@ describe('<BgFordelingUtils>', () => {
       belopFraMeldekortPrMnd: null,
       fastsattBelop: null,
       belopReadOnly: 20000,
-      arbeidsforhold: { 
-        belopFraInntektsmeldingPrMnd: 20000, 
-        arbeidsgiverId: "1231414"
+      arbeidsforhold: {
+        belopFraInntektsmeldingPrMnd: 20000,
+        arbeidsgiverId: '1231414',
       },
     };
     const atField = mapAndelToField(ATAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
@@ -243,7 +242,11 @@ describe('<BgFordelingUtils>', () => {
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
     };
-    const arbeidsforholdIV = setArbeidsforholdInitialValues(andelValueFromState, alleKodeverk, arbeidsgiverOpplysningerPerId);
+    const arbeidsforholdIV = setArbeidsforholdInitialValues(
+      andelValueFromState,
+      alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(arbeidsforholdIV.arbeidsforholdId).to.equal(null);
     expect(arbeidsforholdIV.arbeidsperiodeFom).to.equal('');
     expect(arbeidsforholdIV.arbeidsperiodeTom).to.equal('');
