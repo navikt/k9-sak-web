@@ -33,7 +33,7 @@ import styles from './personArbeidsforholdPanel.less';
 // -------------------------------------------------------------------------------------------------------------
 
 const cleanUpArbeidsforhold = (newValues, originalValues) => {
-  if (!newValues.handlingType.kode === arbeidsforholdHandlingType.BRUK) {
+  if (newValues.handlingType.kode !== arbeidsforholdHandlingType.BRUK) {
     return {
       ...newValues,
       tomDato: originalValues.tomDato,

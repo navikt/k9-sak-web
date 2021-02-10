@@ -125,7 +125,9 @@ LeggTilArbeidsforholdFelter.validate = (
   }
   if (values.fomDato && values.tomDato && moment(values.fomDato).isAfter(moment(values.tomDato))) {
     return {
+      // @ts-ignore
       tomDato: sluttdatoErrorMsg(formatDate(values.fomDato)),
+      // @ts-ignore
       fomDato: startdatoErrorMsg(formatDate(values.tomDato)),
     };
   }
