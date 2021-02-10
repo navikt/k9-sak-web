@@ -1,199 +1,115 @@
 import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
 import { TextAreaField } from '@fpsak-frontend/form';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { shallow } from 'enzyme';
 import { PersonArbeidsforholdDetailForm } from './PersonArbeidsforholdDetailForm';
-import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
-import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
+import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 
 describe('<PersonArbeidsforholdDetailForm>', () => {
   const arbeidsforhold = {
     id: '1',
-    arbeidsforholdId: '1231-2345',
-    navn: 'Svendsen Eksos',
-    arbeidsgiverIdentifikator: '1234567',
-    arbeidsgiverIdentifiktorGUI: '1234567',
-    fomDato: '2018-01-01',
-    tomDato: '2018-10-10',
-    kilde: {
-      kode: 'INNTEKT',
-      navn: '',
+    arbeidsforhold: {
+      eksternArbeidsforholdId: '1231-2345',
+      internArbeidsforholdId: '1231-2345',
     },
-    mottattDatoInntektsmelding: undefined,
-    brukArbeidsforholdet: true,
-    erNyttArbeidsforhold: undefined,
-    erstatterArbeidsforholdId: undefined,
-    tilVurdering: true,
+    arbeidsgiver: {
+      arbeidsgiverOrgnr: '1234567',
+      arbeidsgiverAktørId: null,
+    },
+    perioder: [
+      {
+        fom: '2018-01-01',
+        tom: '2018-10-10',
+      },
+    ],
+    kilde: [
+      {
+        kode: 'INNTEKT',
+        kodeverk: '',
+      },
+    ],
+    handlingType: {
+      kode: 'BRUK',
+      kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
+    },
+    aksjonspunktÅrsaker: [
+      {
+        kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
+        kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
+      },
+    ],
+    inntektsmeldinger: [],
   };
   it('skal ikke vise tekstfelt for begrunnelse når form ikke er dirty og begrunnelse ikke har verdi', () => {
-    const wrapper = shallowWithIntl(
+    const wrapper = shallow(
       <PersonArbeidsforholdDetailForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        cancelArbeidsforhold={sinon.spy()}
-        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
-        isErstattArbeidsforhold
-        hasReceivedInntektsmelding
-        harErstattetEttEllerFlere
-        readOnly={false}
-        vurderOmSkalErstattes={false}
-        aktivtArbeidsforholdTillatUtenIM={false}
+        updateArbeidsforhold={() => undefined}
+        onSubmit={() => undefined}
+        validate={() => undefined}
+        skjulArbeidsforhold={() => undefined}
         arbeidsforhold={arbeidsforhold}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
         initialValues={{
           begrunnelse: '',
-          replaceOptions: [],
         }}
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={{}}
       />,
     );
-    expect(wrapper.find(TextAreaField)).has.length(0);
+    expect(wrapper.find(TextAreaField)).toHaveLength(0);
   });
 
-  it('skal vise tekst for å erstatte alle tidligere arbeidsforhold når behandling er i bruk og flagget harErstattetEttEllerFlere er satt', () => {
+  it('skal vise radioknapper når arbeidsforholdUtenIM', () => {
     const wrapper = shallowWithIntl(
       <PersonArbeidsforholdDetailForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        cancelArbeidsforhold={sinon.spy()}
-        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
-        isErstattArbeidsforhold
-        hasReceivedInntektsmelding
-        harErstattetEttEllerFlere
-        readOnly={false}
-        vurderOmSkalErstattes={false}
-        aktivtArbeidsforholdTillatUtenIM={false}
+        updateArbeidsforhold={() => undefined}
+        onSubmit={() => undefined}
+        validate={() => undefined}
+        skjulArbeidsforhold={() => undefined}
         arbeidsforhold={arbeidsforhold}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
         initialValues={{
           begrunnelse: '',
-          replaceOptions: [],
         }}
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={{}}
       />,
     );
+    const radiogroup = wrapper.find(ArbeidsforholdRadioknapper);
+    expect(radiogroup).toHaveLength(1);
+  });
 
-    expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(1);
-  });
-  it('skal ikke vise tekst for å erstatte alle tidligere arbeidsforhold når behandling ikke er i bruk', () => {
+  it('skal ikke vise radioknapper når det er mismatch med arbeidsforholdId og virksomhetsnummer', () => {
+    const arbeidsforhold2 = {
+      ...arbeidsforhold,
+      aksjonspunktÅrsaker: [
+        {
+          kode: 'OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE',
+          kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
+        },
+      ],
+    };
     const wrapper = shallowWithIntl(
       <PersonArbeidsforholdDetailForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        cancelArbeidsforhold={sinon.spy()}
-        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD}
-        isErstattArbeidsforhold
-        hasReceivedInntektsmelding
-        harErstattetEttEllerFlere
-        readOnly={false}
-        vurderOmSkalErstattes={false}
-        aktivtArbeidsforholdTillatUtenIM={false}
-        arbeidsforhold={arbeidsforhold}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
+        updateArbeidsforhold={() => undefined}
+        onSubmit={() => undefined}
+        validate={() => undefined}
+        skjulArbeidsforhold={() => undefined}
+        arbeidsforhold={arbeidsforhold2}
         initialValues={{
           begrunnelse: '',
-          replaceOptions: [],
         }}
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={{}}
       />,
     );
-
-    expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(0);
-  });
-  it('skal ikke vise tekst for å erstatte alle tidligere arbeidsforhold når flagget harErstattetEttEllerFlere ikke er satt', () => {
-    const wrapper = shallowWithIntl(
-      <PersonArbeidsforholdDetailForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        cancelArbeidsforhold={sinon.spy()}
-        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
-        isErstattArbeidsforhold
-        hasReceivedInntektsmelding
-        harErstattetEttEllerFlere={false}
-        readOnly={false}
-        vurderOmSkalErstattes={false}
-        aktivtArbeidsforholdTillatUtenIM={false}
-        arbeidsforhold={arbeidsforhold}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-        initialValues={{
-          begrunnelse: '',
-          replaceOptions: [],
-        }}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={{}}
-      />,
-    );
-    expect(wrapper.find('[id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod"]')).has.length(0);
-  });
-  it('skal vise LeggTilArbeidsforholdFelter', () => {
-    const wrapper = shallowWithIntl(
-      <PersonArbeidsforholdDetailForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        cancelArbeidsforhold={sinon.spy()}
-        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
-        isErstattArbeidsforhold
-        hasReceivedInntektsmelding={false}
-        harErstattetEttEllerFlere
-        readOnly={false}
-        vurderOmSkalErstattes={false}
-        aktivtArbeidsforholdTillatUtenIM={false}
-        arbeidsforhold={arbeidsforhold}
-        skalKunneLeggeTilNyeArbeidsforhold
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-        initialValues={{
-          begrunnelse: '',
-          replaceOptions: [],
-        }}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={{}}
-      />,
-    );
-    const radiogroup = wrapper.find(LeggTilArbeidsforholdFelter);
-    expect(radiogroup).has.length(1);
-  });
-  it('skal ikke vise LeggTilArbeidsforholdFelter', () => {
-    const wrapper = shallowWithIntl(
-      <PersonArbeidsforholdDetailForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        cancelArbeidsforhold={sinon.spy()}
-        arbeidsforholdHandlingVerdi={arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD}
-        isErstattArbeidsforhold
-        hasReceivedInntektsmelding={false}
-        harErstattetEttEllerFlere
-        readOnly={false}
-        vurderOmSkalErstattes={false}
-        aktivtArbeidsforholdTillatUtenIM={false}
-        arbeidsforhold={arbeidsforhold}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
-        initialValues={{
-          begrunnelse: '',
-          replaceOptions: [],
-        }}
-        behandlingId={1}
-        behandlingVersjon={1}
-        alleKodeverk={{}}
-      />,
-    );
-    const radiogroup = wrapper.find(LeggTilArbeidsforholdFelter);
-    expect(radiogroup).has.length(0);
+    const radiogroup = wrapper.find(ArbeidsforholdRadioknapper);
+    expect(radiogroup).toHaveLength(0);
   });
 });

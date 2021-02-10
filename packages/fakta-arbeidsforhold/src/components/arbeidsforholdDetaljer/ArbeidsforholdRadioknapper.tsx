@@ -30,7 +30,7 @@ const ArbeidsforholdRadioknapper: FunctionComponent<OwnProps & WrappedComponentP
     >
       <BehandlingFormFieldCleaner
         formName={formName}
-        fieldNames={['aktivtArbeidsforholdHandlingField']}
+        fieldNames={['arbeidsforholdHandlingField']}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
       >

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, IntlShape } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
@@ -42,6 +42,7 @@ interface OwnProps {
   selectedId?: string;
   behandlingId: number;
   behandlingVersjon: number;
+  intl: IntlShape;
 }
 
 const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
@@ -51,10 +52,10 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   updateArbeidsforhold,
+  intl,
 }) => {
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
   const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
-  const intl = useIntl();
 
   const visPermisjon = arbeidsforhold => {
     if (selectedArbeidsforhold === undefined) {
@@ -93,7 +94,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
         alleArbeidsforhold.map(a => {
           const stillingsprosent =
             a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${a.stillingsprosent.toFixed(2)} %` : '';
-          const navn = utledArbeidsforholdYrkestittel(a);
+          const yrkestittel = utledArbeidsforholdYrkestittel(a);
           const kilde =
             Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
 
@@ -113,7 +114,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                 isApLeftBorder={harAksjonspunktÅrsaker}
               >
                 <TableColumn>
-                  <Normaltekst>{decodeHtmlEntity(navn)}</Normaltekst>
+                  <Normaltekst>{decodeHtmlEntity(yrkestittel)}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                   <Normaltekst>

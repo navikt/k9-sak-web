@@ -23,7 +23,11 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
       <FormattedMessage
         id="HelpText.FinnesIkkeIRegisteret"
         values={{
-          yrkestittel: `${arbeidsforhold.yrkestittel}(${arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId})`,
+          yrkestittel: `${arbeidsforhold.yrkestittel}(${
+            arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+              ? arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+              : ''
+          })`,
         }}
       />
     );
@@ -49,67 +53,67 @@ const AksjonspunktAvklarArbeidsforholdText: FunctionComponent<OwnProps & Wrapped
     .map(k => k.kode)
     .includes(aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
   return (
-    <div>
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn className={styles.message}>
-            <Image
-              className={styles.image}
-              alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
-              src={advarselIkonUrl}
-            />
-            <Normaltekst className={styles.info}>
-              {utledAksjonspunktText(arbeidsforhold, imUtenArbeidsforhold)}
-            </Normaltekst>
-          </FlexColumn>
-        </FlexRow>
-
-        {imUtenArbeidsforhold && (
-          <>
-            <FlexRow>
-              <Normaltekst className={styles.info}>
-                <FormattedMessage id="HelpText.TaKontakt" values={{ li: <li />, br: <br /> }} />
-                <VerticalSpacer eightPx />
-                <li>
-                  {' '}
-                  <FormattedMessage id="HelpText.Option1" />
-                </li>
-                <li>
-                  {' '}
-                  <FormattedMessage id="HelpText.Option2" />
-                </li>
-                <li>
-                  {' '}
-                  <FormattedMessage id="HelpText.Option3" />
-                </li>
-                <VerticalSpacer eightPx />
-                <FormattedMessage id="HelpText.SettPaaVent" />
-              </Normaltekst>
-            </FlexRow>
-            <FlexRow>
-              <div className={styles.hl} />
-            </FlexRow>
-            <VerticalSpacer eightPx />
-            <FlexRow>
-              <Normaltekst>
-                <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
-              </Normaltekst>
-            </FlexRow>
-            <VerticalSpacer eightPx />
-            <FlexRow>
-              <Normaltekst className={styles.spørsmål}>
-                <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
-              </Normaltekst>
-            </FlexRow>
-          </>
-        )}
-        {overgangArbeidsforholdsId && (
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn className={styles.message}>
+          <Image
+            className={styles.image}
+            alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+            src={advarselIkonUrl}
+          />
           <Normaltekst className={styles.info}>
-            <FormattedMessage id="HelpText.TaKontaktOvergangArbeidsforholdId" />
+            {utledAksjonspunktText(arbeidsforhold, imUtenArbeidsforhold)}
           </Normaltekst>
-        )}
-      </FlexContainer>
-    </div>
+        </FlexColumn>
+      </FlexRow>
+
+      {imUtenArbeidsforhold && (
+        <>
+          <FlexRow>
+            <Normaltekst className={styles.info}>
+              <FormattedMessage id="HelpText.TaKontakt" values={{ li: <li />, br: <br /> }} />
+              <VerticalSpacer eightPx />
+              <li>
+                {' '}
+                <FormattedMessage id="HelpText.Option1" />
+              </li>
+              <li>
+                {' '}
+                <FormattedMessage id="HelpText.Option2" />
+              </li>
+              <li>
+                {' '}
+                <FormattedMessage id="HelpText.Option3" />
+              </li>
+            </Normaltekst>
+          </FlexRow>
+          <FlexRow>
+            {' '}
+            <FormattedMessage id="HelpText.SettPaaVent" />
+          </FlexRow>
+          <FlexRow>
+            <div className={styles.hl} />
+          </FlexRow>
+          <VerticalSpacer eightPx />
+          <FlexRow>
+            <Normaltekst>
+              <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
+            </Normaltekst>
+          </FlexRow>
+          <VerticalSpacer eightPx />
+          <FlexRow>
+            <Normaltekst className={styles.spørsmål}>
+              <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
+            </Normaltekst>
+          </FlexRow>
+        </>
+      )}
+      {overgangArbeidsforholdsId && (
+        <Normaltekst className={styles.info}>
+          <FormattedMessage id="HelpText.TaKontaktOvergangArbeidsforholdId" />
+        </Normaltekst>
+      )}
+    </FlexContainer>
   );
 };
 

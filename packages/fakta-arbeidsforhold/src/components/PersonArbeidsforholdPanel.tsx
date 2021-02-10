@@ -6,7 +6,14 @@ import { connect } from 'react-redux';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { VerticalSpacer, FaktaGruppe, Image, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
+import {
+  VerticalSpacer,
+  FaktaGruppe,
+  Image,
+  FlexRow,
+  FlexColumn,
+  FlexContainer,
+} from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Normaltekst } from 'nav-frontend-typografi';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
@@ -20,32 +27,20 @@ import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforho
 import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 
 import styles from './personArbeidsforholdPanel.less';
-import CustomArbeidsforhold from '../typer/CustomArbeidsforholdTsType';
 
 // -------------------------------------------------------------------------------------------------------------
 // Methods
 // -------------------------------------------------------------------------------------------------------------
 
 const cleanUpArbeidsforhold = (newValues, originalValues) => {
-  if (!newValues.brukArbeidsforholdet) {
+  if (!newValues.handlingType === arbeidsforholdHandlingType.BRUK) {
     return {
       ...newValues,
-      erNyttArbeidsforhold: undefined,
-      erstatterArbeidsforholdId: undefined,
       tomDato: originalValues.tomDato,
-    };
-  }
-  if (newValues.erNyttArbeidsforhold) {
-    return {
-      ...newValues,
-      erstatterArbeidsforholdId: undefined,
     };
   }
   return newValues;
 };
-
-const findFomDato = (arbeidsforhold, replacedArbeidsforhold) =>
-  arbeidsforhold.erstatterArbeidsforholdId ? replacedArbeidsforhold.fomDato : arbeidsforhold.originalFomDato;
 
 export const harAksjonspunkter = arbeidsforhold => {
   return Array.isArray(arbeidsforhold) && arbeidsforhold.filter(af => af.aksjonspunktÅrsaker.length > 0).length > 0;
@@ -62,7 +57,7 @@ interface PureOwnProps {
 }
 
 interface MappedOwnProps {
-  arbeidsforhold: CustomArbeidsforhold[];
+  arbeidsforhold: ArbeidsforholdV2[];
   behandlingFormPrefix: string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
@@ -79,7 +74,7 @@ interface DispatchProps {
 }
 
 interface OwnState {
-  selectedArbeidsforhold?: CustomArbeidsforhold;
+  selectedArbeidsforhold?: ArbeidsforholdV2;
   selectedArbeidsgiver?: Arbeidsgiver;
 }
 
@@ -127,7 +122,6 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     this.updateArbeidsforhold = this.updateArbeidsforhold.bind(this);
     this.cancelArbeidsforhold = this.cancelArbeidsforhold.bind(this);
     this.initializeActivityForm = this.initializeActivityForm.bind(this);
-    this.leggTilArbeidsforhold = this.leggTilArbeidsforhold.bind(this);
   }
 
   // eslint-disable-next-line camelcase
@@ -157,6 +151,14 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     const { behandlingFormPrefix, reduxFormChange: formChange } = this.props;
     formChange(`${behandlingFormPrefix}.${'ArbeidsforholdInfoPanel'}`, fieldName, fieldValue);
   }
+
+  utledNøkkel = (a, arbeidsgiverOpplysningerPerId) => {
+    const nøkkel = arbeidsgiverOpplysningerPerId[a]
+      ? arbeidsgiverOpplysningerPerId[a].navn + arbeidsgiverOpplysningerPerId[a].identifikator
+      : a;
+
+    return nøkkel;
+  };
 
   initializeActivityForm(arbeidsforhold) {
     const { selectedArbeidsforhold } = this.state;
@@ -207,32 +209,11 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
 
-    let other = arbeidsforhold.filter(o => o.id !== cleanedValues.id);
-    const oldState = arbeidsforhold.find(a => a.id === cleanedValues.id);
-    let { fomDato } = cleanedValues;
-    if (
-      oldState !== undefined &&
-      oldState !== null &&
-      cleanedValues.erstatterArbeidsforholdId !== oldState.erstatterArbeidsforholdId
-    ) {
-      if (oldState.erstatterArbeidsforholdId) {
-        other = other.map(o => (o.id === oldState.erstatterArbeidsforholdId ? { ...o, erSlettet: false } : o));
-      }
-      if (cleanedValues.erstatterArbeidsforholdId) {
-        other = other.map(o => (o.id === cleanedValues.erstatterArbeidsforholdId ? { ...o, erSlettet: true } : o));
-      }
-      fomDato = findFomDato(
-        cleanedValues,
-        arbeidsforhold.find(a => a.id === cleanedValues.erstatterArbeidsforholdId),
-      );
-    }
-
+    const other = arbeidsforhold.filter(o => o.id !== cleanedValues.id);
     this.setFormField(
       'arbeidsforhold',
       other.concat({
         ...cleanedValues,
-        fomDato,
-        erEndret: true,
       }),
     );
 
@@ -242,47 +223,6 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
   cancelArbeidsforhold() {
     this.setState({ selectedArbeidsforhold: undefined });
     this.initializeActivityForm({});
-  }
-
-  leggTilArbeidsforhold() {
-    const lagtTilArbeidsforhold = {
-      id: `${new Date().getTime()}_${Math.floor(Math.random() * 1000000000)}`,
-      arbeidsgiverNavn: undefined,
-      arbeidsgiver: {
-        arbeidsgiverOrgnr: undefined,
-        arbeidsgiverAktørId: undefined,
-      },
-      kilde: [
-        {
-          kode: arbeidsforholdKilder.SAKSBEHANDLER,
-          kodeverk: 'ARBEIDSFORHOLD_KILDE',
-        },
-      ],
-      arbeidsforhold: {
-        internArbeidsforholdId: undefined,
-        eksternArbeidsforholdId: undefined,
-      },
-      yrkestittel: undefined,
-      begrunnelse: undefined,
-      perioder: [
-        {
-          fom: undefined,
-          tom: undefined,
-        },
-      ],
-      handlingType: undefined,
-      permisjoner: [
-        {
-          permisjonFom: undefined,
-          permisjonTom: undefined,
-        },
-      ],
-      stillingsprosent: undefined,
-      aksjonspunktÅrsaker: [],
-      inntektsmeldinger: [],
-    };
-    this.setState({ selectedArbeidsforhold: lagtTilArbeidsforhold });
-    this.initializeActivityForm(lagtTilArbeidsforhold);
   }
 
   render() {
@@ -310,13 +250,13 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
             const arbeidsgiverNavn =
               arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[a]
                 ? arbeidsgiverOpplysningerPerId[a].navn
-                : a;
+                : `Ukjent arbeidsgivernavn(${a})`;
             const navn = `${arbeidsgiverNavn} (${arbeidsforholdPerArbeidsgiver.length} arbeidsforhold)`;
             const erValgt = selectedArbeidsgiver === a;
 
             return (
-              <>
-                <FlexRow key={a}>
+              <FlexContainer key={this.utledNøkkel(a, arbeidsgiverOpplysningerPerId)}>
+                <FlexRow>
                   <FlexColumn className={styles.arbeidsgiverColumn}>
                     <div className={styles.overskrift}>
                       <Image src={briefcaseImg} />
@@ -347,6 +287,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                 </FlexRow>
                 {erValgt && (
                   <PersonArbeidsforholdTable
+                    intl={intl}
                     key={a}
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
@@ -356,7 +297,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                     updateArbeidsforhold={this.updateArbeidsforhold}
                   />
                 )}
-              </>
+              </FlexContainer>
             );
           })}
         </FaktaGruppe>

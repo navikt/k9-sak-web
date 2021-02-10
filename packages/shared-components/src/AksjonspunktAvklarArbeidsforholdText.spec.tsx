@@ -12,6 +12,9 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
         intl={intlMock}
         arbeidsforhold={
           {
+            arbeidsforhold: {
+              eksternArbeidsforholdId: '5678',
+            },
             aksjonspunktÅrsaker: [
               {
                 kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
@@ -24,7 +27,8 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
     );
     const flexContainer = wrapper.find('FlexContainer');
     const messages = flexContainer.first().find('FormattedMessage');
-    expect(messages.at(0).prop('id')).is.eql('HelpText.TaKontakt');
+    expect(messages.at(0).prop('id')).is.eql('HelpText.FinnesIkkeIRegisteret');
+    expect(messages.at(1).prop('id')).is.eql('HelpText.TaKontakt');
     const image = flexContainer.first().find('Image');
     expect(image.length).to.equal(1);
   });
@@ -46,7 +50,8 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
     );
     const flexContainer = wrapper.find('FlexContainer');
     const messages = flexContainer.first().find('FormattedMessage');
-    expect(messages.at(0).prop('id')).is.eql('HelpText.TaKontaktOvergangArbeidsforholdId');
+    expect(messages.at(0).prop('id')).is.eql('HelpText.OvergangAbedsforholdsId');
+    expect(messages.at(1).prop('id')).is.eql('HelpText.TaKontaktOvergangArbeidsforholdId');
     const image = flexContainer.first().find('Image');
     expect(image.length).to.equal(1);
   });

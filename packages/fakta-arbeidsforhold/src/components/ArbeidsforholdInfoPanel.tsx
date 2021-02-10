@@ -69,7 +69,7 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
   ...formProps
 }) => {
   const { host } = window.location;
-  const shouldDisableSubmitButton = formProps.pristine || host !== 'app-q1.adeo.no';
+  const shouldDisableSubmitButton = formProps.pristine || host !== 'localhost:9000';
 
   return (
     <>

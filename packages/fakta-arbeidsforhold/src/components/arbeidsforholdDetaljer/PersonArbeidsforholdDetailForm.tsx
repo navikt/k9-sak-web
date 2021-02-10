@@ -50,38 +50,36 @@ export const PersonArbeidsforholdDetailForm: FunctionComponent<Props> = ({
   behandlingVersjon,
   ...formProps
 }) => (
-  <FlexContainer>
-    <div className={styles.container}>
-      <VerticalSpacer eightPx />
-      <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} />
-      <VerticalSpacer eightPx />
-      {IMutenArbeidsforhold(arbeidsforhold) && (
-        <Row>
-          <ArbeidsforholdRadioknapper
-            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-          <ArbeidsforholdBegrunnelse
-            readOnly={false}
-            formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-          <VerticalSpacer sixteenPx />
-          <FlexContainer>
-            <FlexRow>
-              <FlexColumn>
-                <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
-                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-                </Hovedknapp>
-              </FlexColumn>
-            </FlexRow>
-          </FlexContainer>
-        </Row>
-      )}
-    </div>
-  </FlexContainer>
+  <div className={styles.container}>
+    <VerticalSpacer eightPx />
+    <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} />
+    <VerticalSpacer eightPx />
+    {IMutenArbeidsforhold(arbeidsforhold) && (
+      <Row>
+        <ArbeidsforholdRadioknapper
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+        <ArbeidsforholdBegrunnelse
+          readOnly={false}
+          formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+        <VerticalSpacer sixteenPx />
+        <FlexContainer>
+          <FlexRow>
+            <FlexColumn>
+              <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+                <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
+              </Hovedknapp>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </Row>
+    )}
+  </div>
 );
 
 const validateForm = values => ({

@@ -18,7 +18,6 @@ const configureStore = () => {
     enhancer = compose(applyMiddleware(...middleware));
   }
 
-  // NB! IKKE LEGG TIL NYE REDUCERE!
   const allReducers = combineReducers({
     form: formReducer,
   });
