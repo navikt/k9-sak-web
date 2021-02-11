@@ -78,6 +78,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
             { rel: 'sykdom-dokument-oversikt', desiredName: 'dokumentoversikt' },
             { rel: 'sykdom-innleggelse', desiredName: 'innleggelsesperioder' },
             { rel: 'sykdom-diagnosekoder', desiredName: 'diagnosekoder' },
+            { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
           ]),
           uuid,
           løsAksjonspunkt,
