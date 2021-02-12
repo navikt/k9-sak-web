@@ -41,7 +41,7 @@ const DeltBosted: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
           <Element>
             <FormattedMessage id="FaktaRammevedtak.Barn.TOM" />
           </Element>
-          deltBosted && <Normaltekst>{formaterDato(deltBosted.tom)}</Normaltekst>
+          <Normaltekst>{formaterDato(deltBosted.tom)}</Normaltekst>
         </div>
       </div>
     </Panel>
