@@ -56,7 +56,8 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   };
 
   const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter);
-  const løsAksjonspunkt = () => submitCallback([{ kode: medisinskVilkårAksjonspunktkode }]);
+  const løsAksjonspunkt = () =>
+    submitCallback([{ kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet' }]);
 
   return (
     <MicroFrontend
