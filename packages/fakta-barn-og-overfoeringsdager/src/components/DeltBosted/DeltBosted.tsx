@@ -12,7 +12,7 @@ interface BarnInputProps {
 }
 
 const DeltBosted: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
-  const { aleneomsorg, kroniskSykdom, fosterbarn, utenlandskBarn, fødselsnummer } = barnet;
+  const { deltBosted, fødselsnummer } = barnet;
 
   return (
     <Panel border className={styles.barnInput}>
@@ -22,53 +22,28 @@ const DeltBosted: FunctionComponent<BarnInputProps> = ({ barnet, index }) => {
         </h4>
         <span className={styles.italic}>{fødselsnummer}</span>
       </div>
-      {(aleneomsorg || kroniskSykdom || fosterbarn || utenlandskBarn) && (
-        <div className={styles.rammevedtak}>
-          <div>
-            <Element>
-              <FormattedMessage id="FaktaRammevedtak.Barn.Rammevedtak" />
-            </Element>
-            {kroniskSykdom && (
-              <Normaltekst>
-                <FormattedMessage id="FaktaRammevedtak.Barn.UtvidetRett" />
-              </Normaltekst>
-            )}
-            {aleneomsorg && (
-              <Normaltekst>
-                <FormattedMessage id="FaktaRammevedtak.Barn.Aleneomsorg" />
-              </Normaltekst>
-            )}
-            {fosterbarn && (
-              <Normaltekst>
-                <FormattedMessage id="FaktaRammevedtak.Barn.Fosterbarn" />
-              </Normaltekst>
-            )}
-            {utenlandskBarn && (
-              <Normaltekst>
-                <FormattedMessage id="FaktaRammevedtak.Barn.UtenlandskBarn" />
-              </Normaltekst>
-            )}
-          </div>
-          <div>
-            <Element>
-              <FormattedMessage id="FaktaRammevedtak.Barn.FOM" />
-            </Element>
-            {kroniskSykdom && <Normaltekst>{formaterDato(kroniskSykdom.fom)}</Normaltekst>}
-            {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.fom)}</Normaltekst>}
-            {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.fom)}</Normaltekst>}
-            {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.fom)}</Normaltekst>}
-          </div>
-          <div>
-            <Element>
-              <FormattedMessage id="FaktaRammevedtak.Barn.TOM" />
-            </Element>
-            {kroniskSykdom && <Normaltekst>{formaterDato(kroniskSykdom.tom)}</Normaltekst>}
-            {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
-            {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.tom)}</Normaltekst>}
-            {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.tom)}</Normaltekst>}
-          </div>
+      <div className={styles.rammevedtak}>
+        <div>
+          <Element>
+            <FormattedMessage id="FaktaRammevedtak.Barn.Rammevedtak" />
+          </Element>
+          <Normaltekst>
+            <FormattedMessage id="FaktaRammevedtak.Barn.DeltBosted" />
+          </Normaltekst>
         </div>
-      )}
+        <div>
+          <Element>
+            <FormattedMessage id="FaktaRammevedtak.Barn.FOM" />
+          </Element>
+          <Normaltekst>{formaterDato(deltBosted.fom)}</Normaltekst>
+        </div>
+        <div>
+          <Element>
+            <FormattedMessage id="FaktaRammevedtak.Barn.TOM" />
+          </Element>
+          deltBosted && <Normaltekst>{formaterDato(deltBosted.tom)}</Normaltekst>
+        </div>
+      </div>
     </Panel>
   );
 };
