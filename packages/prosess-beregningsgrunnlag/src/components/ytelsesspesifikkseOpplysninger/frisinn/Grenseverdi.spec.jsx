@@ -8,69 +8,53 @@ import Grenseverdi from './Grenseverdi';
 
 const seksG = 599148;
 
-const lagBgPeriode = (fom, tom, andeler) => {
-  return {
-    beregningsgrunnlagPeriodeFom: fom,
-    beregningsgrunnlagPeriodeTom: tom,
-    beregningsgrunnlagPrStatusOgAndel: andeler,
-  };
-};
+const lagBgPeriode = (fom, tom, andeler) => ({
+  beregningsgrunnlagPeriodeFom: fom,
+  beregningsgrunnlagPeriodeTom: tom,
+  beregningsgrunnlagPrStatusOgAndel: andeler,
+});
 
-const lagFrisinnAndel = (status, beløp) => {
-  return {
-    oppgittInntekt: beløp,
-    statusSøktFor: {
-      kode: status,
-    },
-  };
-};
+const lagFrisinnAndel = (status, beløp) => ({
+  oppgittInntekt: beløp,
+  statusSøktFor: {
+    kode: status,
+  },
+});
 
-const lagFrisinnPeriode = (fom, tom, frisinnAndeler) => {
-  return {
-    fom,
-    tom,
-    frisinnAndeler,
-  };
-};
+const lagFrisinnPeriode = (fom, tom, frisinnAndeler) => ({
+  fom,
+  tom,
+  frisinnAndeler,
+});
 
-const lagFrisinngrunnlag = frisinnPerioder => {
-  return {
-    frisinnPerioder,
-  };
-};
+const lagFrisinngrunnlag = frisinnPerioder => ({
+  frisinnPerioder,
+});
 
-const lagBGAndel = (status, brutto) => {
-  return {
-    aktivitetStatus: {
-      kode: status,
-    },
-    bruttoPrAar: brutto,
-  };
-};
+const lagBGAndel = (status, brutto) => ({
+  aktivitetStatus: {
+    kode: status,
+  },
+  bruttoPrAar: brutto,
+});
 
-const lagBG = (perioder, frisinn) => {
-  return {
-    grunnbeløp: 99858,
-    beregningsgrunnlagPeriode: perioder,
-    ytelsesspesifiktGrunnlag: frisinn,
-  };
-};
+const lagBG = (perioder, frisinn) => ({
+  grunnbeløp: 99858,
+  beregningsgrunnlagPeriode: perioder,
+  ytelsesspesifiktGrunnlag: frisinn,
+});
 
 const formaterDato = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 
-const lagForventetVerdiOverskrift = (dato1, dato2) => {
-  return {
-    fom: formaterDato(dato1),
-    tom: formaterDato(dato2),
-  };
-};
+const lagForventetVerdiOverskrift = (dato1, dato2) => ({
+  fom: formaterDato(dato1),
+  tom: formaterDato(dato2),
+});
 
-const lagForventetVerdiRegnestykke = (originaltInntektstak, annenInntektIkkeSøktFor) => {
-  return {
-    grenseverdi: formatCurrencyNoKr(originaltInntektstak),
-    annenInntekt: formatCurrencyNoKr(annenInntektIkkeSøktFor),
-  };
-};
+const lagForventetVerdiRegnestykke = (originaltInntektstak, annenInntektIkkeSøktFor) => ({
+  grenseverdi: formatCurrencyNoKr(originaltInntektstak),
+  annenInntekt: formatCurrencyNoKr(annenInntektIkkeSøktFor),
+});
 
 const behandling = {
   id: 1,

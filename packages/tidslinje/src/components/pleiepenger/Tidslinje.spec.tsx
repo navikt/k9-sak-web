@@ -50,14 +50,7 @@ describe('<Tidslinje>', () => {
         ],
       },
     ];
-    const wrapper = shallow(
-      <Tidslinje
-        rader={rader}
-        velgPeriode={() => {
-          return undefined;
-        }}
-      />,
-    );
+    const wrapper = shallow(<Tidslinje rader={rader} velgPeriode={() => undefined} />);
 
     const timeline = wrapper.find(Timeline);
     expect(timeline).toHaveLength(1);
