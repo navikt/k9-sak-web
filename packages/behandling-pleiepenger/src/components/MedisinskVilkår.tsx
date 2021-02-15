@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '../../../rest-api-hooks';
-import EventType from '../../../rest-api/src/requestApi/eventType';
+import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import findEndpointsForMedisinskVilkårFrontend from '../microfrontend/utils/findEndpointsForMedisinskVilkårFrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
