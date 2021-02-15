@@ -73,12 +73,12 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
       setVisAksjonspunktInfo(true);
       setSelectedArbeidsforhold(arbeidsforhold);
     }
-    if (arbeidsforhold.id === selectedArbeidsforhold.id && !visAksjonspunktInfo) {
+    if (selectedArbeidsforhold && arbeidsforhold.id === selectedArbeidsforhold.id && !visAksjonspunktInfo) {
       setSelectedArbeidsforhold(undefined);
       setVisAksjonspunktInfo(true);
     }
 
-    if (arbeidsforhold.id === selectedArbeidsforhold.id && visAksjonspunktInfo) {
+    if (selectedArbeidsforhold && arbeidsforhold.id === selectedArbeidsforhold.id && visAksjonspunktInfo) {
       setSelectedArbeidsforhold(undefined);
       setVisAksjonspunktInfo(false);
     }
