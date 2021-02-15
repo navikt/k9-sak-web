@@ -30,7 +30,7 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
         kodeverk: 'AKSJONSPUNKT_STATUS',
       },
       definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
+        kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
         kodeverk: 'AKSJONSPUNKT_KODE',
       },
       kanLoses: true,

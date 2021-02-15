@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import { formPropTypes, FieldArray } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { FaktaSubmitButton, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { behandlingForm } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
+
 import FordelBeregningsgrunnlagForm from './fordeling/FordelBeregningsgrunnlagForm';
 import FordelingHelpText from './FordelingHelpText';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
@@ -75,7 +76,6 @@ const renderFordeling = ({
             <>
               <FaktaBegrunnelseTextField
                 name={BEGRUNNELSE_FORDELING_NAME}
-                isDirty={formProps.dirty}
                 isSubmittable={submittable}
                 isReadOnly={readOnly}
                 hasBegrunnelse={hasBegrunnelse}

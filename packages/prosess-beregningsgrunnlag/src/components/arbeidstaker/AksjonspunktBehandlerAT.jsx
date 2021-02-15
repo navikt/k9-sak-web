@@ -6,9 +6,9 @@ import { InputField } from '@fpsak-frontend/form';
 import { parseCurrencyInput, removeSpacesFromNumber, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
-
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
+import createVisningsnavnForAktivitet from '../../util/createVisningsnavnForAktivitet';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
 const andelErIkkeTilkommetEllerLagtTilAvSBH = andel => {
@@ -29,12 +29,20 @@ const finnAndelerSomSkalVisesAT = andeler => {
     .filter(andel => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
 
+const lagVisningsnavn = (arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+  const arbeidsgiverInformasjon = arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdent];
+  if (!arbeidsgiverInformasjon) {
+    return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
+  }
+  return createVisningsnavnForAktivitet(arbeidsgiverInformasjon, arbeidsforhold.eksternArbeidsforholdId);
+};
+
 const createRows = (relevanteAndelerAT, getKodeverknavn, arbeidsgiverOpplysningerPerId, readOnly, fieldArrayID) => {
   const rows = relevanteAndelerAT.map((andel, index) => (
     <Row key={`index${index + 1}`} className={styles.verticalAlignMiddle}>
       <Column xs="7">
         <Normaltekst>
-          {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
+          {lagVisningsnavn(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
         </Normaltekst>
       </Column>
       <Column xs="5">

@@ -1,6 +1,5 @@
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
@@ -26,9 +25,9 @@ describe('<PeriodeController>', () => {
 
     const knapper = wrapper.find(TimeLineButton);
 
-    expect(knapper).to.have.length(2);
-    expect(knapper.first().prop('text')).is.length.above(3);
-    expect(knapper.last().prop('text')).is.length.above(3);
+    expect(knapper).toHaveLength(2);
+    expect(knapper.first().prop('text').length).toBeGreaterThan(3);
+    expect(knapper.last().prop('text').length).toBeGreaterThan(3);
   });
 
   it('skal ikke vise knapp for å dele opp perioder når readonly', () => {
@@ -46,7 +45,7 @@ describe('<PeriodeController>', () => {
       />,
     );
 
-    expect(wrapper.find(TimeLineButton)).to.have.length(2);
+    expect(wrapper.find(TimeLineButton)).toHaveLength(2);
   });
 
   it('skal splitte periode via modal', async () => {
@@ -94,10 +93,10 @@ describe('<PeriodeController>', () => {
     const modal = wrapper.find(DelOppPeriodeModal);
     await modal.prop('splitPeriod')(formValues);
 
-    expect(oppdaterSplittedePerioder.called).is.true;
+    expect(oppdaterSplittedePerioder.called).toBe(true);
     const { args } = oppdaterSplittedePerioder.getCalls()[0];
-    expect(args).has.length(1);
-    expect(args[0]).is.eql([
+    expect(args).toHaveLength(1);
+    expect(args[0]).toEqual([
       {
         feilutbetaling: 400,
         fom: '2019-10-10',

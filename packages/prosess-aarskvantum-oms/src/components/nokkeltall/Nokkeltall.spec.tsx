@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mountWithIntl } from '../../../i18n';
 import Nokkeltall from './Nokkeltall';
 
@@ -30,7 +29,7 @@ describe('<Nokkeltall>', () => {
     );
 
     const detaljer = wrapper.find('div');
-    expect(detaljer).to.have.length(2);
+    expect(detaljer).toHaveLength(2);
   });
 
   it('Viser ikke detaljer dersom den ikke er åpnet', () => {
@@ -59,6 +58,6 @@ describe('<Nokkeltall>', () => {
     );
 
     const detaljer = wrapper.find('div');
-    expect(detaljer).to.have.length(0);
+    expect(detaljer).toHaveLength(0);
   });
 });

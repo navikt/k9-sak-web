@@ -11,14 +11,7 @@ import { restApiFrisinnHooks, FrisinnBehandlingApiKeys } from '../data/frisinnBe
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaFrisinnPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-const overstyringApCodes = [
-  ac.OVERSTYR_AVKLAR_STARTDATO,
-  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYR_AVKLAR_STARTDATO,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-  ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-];
+const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
 interface OwnProps {
   data: FetchedData;

@@ -15,7 +15,7 @@ const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold
 
 const createArbeidsforholdRadioKey = andel =>
   andel && andel.arbeidsforhold
-    ? `${andel.arbeidsforhold.arbeidsgiverNavn}(${andel.arbeidsforhold.arbeidsforholdId})(${andel.andelsnr})`
+    ? `${andel.arbeidsforhold.arbeidsgiverId}(${andel.arbeidsforhold.arbeidsforholdId})(${andel.andelsnr})`
     : '';
 /**
  * TidsbegrensetArbeidsforholdForm

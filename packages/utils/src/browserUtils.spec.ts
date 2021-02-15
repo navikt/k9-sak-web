@@ -1,11 +1,9 @@
-import { expect } from 'chai';
-
 import { isEdge, isIE11 } from './browserUtils';
 
 describe('browserUtils', () => {
   describe('isIE11', () => {
     it('Skal returnere false hvis useragent ikke er IE11', () => {
-      expect(isIE11()).is.false;
+      expect(isIE11()).toBe(false);
     });
 
     it('Skal returnere true hvis useragent er IE11', () => {
@@ -20,13 +18,13 @@ describe('browserUtils', () => {
           return true;
         },
       });
-      expect(isIE11()).is.true;
+      expect(isIE11()).toBe(true);
     });
   });
 
   describe('isEdge', () => {
     it('Skal returnere false hvis useragent ikke er Edge', () => {
-      expect(isEdge()).is.false;
+      expect(isEdge()).toBe(false);
     });
 
     it('Skal returnere true hvis useragent er Edge', () => {
@@ -35,7 +33,7 @@ describe('browserUtils', () => {
           return '/Edge/';
         },
       });
-      expect(isEdge()).is.true;
+      expect(isEdge()).toBe(true);
     });
   });
 });

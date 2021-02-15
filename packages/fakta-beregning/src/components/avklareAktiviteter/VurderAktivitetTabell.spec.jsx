@@ -9,7 +9,6 @@ import { Table, TableRow, TableColumn, EditedIcon } from '@fpsak-frontend/shared
 import VurderAktiviteterTabell, { lagAktivitetFieldId, skalVurdereAktivitet } from './VurderAktiviteterTabell';
 
 const aktivitet1 = {
-  arbeidsgiverNavn: 'Arbeidsgiveren',
   arbeidsgiverId: '384723894723',
   fom: '2019-01-01',
   tom: null,
@@ -18,7 +17,6 @@ const aktivitet1 = {
 };
 
 const aktivitet2 = {
-  arbeidsgiverNavn: 'Arbeidsgiveren2',
   arbeidsgiverId: '334534623342',
   arbeidsforholdId: 'efj8343f34f',
   eksternArbeidsforholdId: '123456',
@@ -29,7 +27,6 @@ const aktivitet2 = {
 };
 
 const aktivitet3 = {
-  arbeidsgiverNavn: 'Arbeidsgiveren3',
   aktørIdString: '324234234234',
   arbeidsgiverId: '1960-01-01',
   arbeidsforholdId: 'efj8343f34f',
@@ -41,7 +38,6 @@ const aktivitet3 = {
 };
 
 const aktivitetAAP = {
-  arbeidsgiverNavn: null,
   arbeidsgiverId: null,
   arbeidsforholdType: { kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   fom: '2019-01-01',
@@ -50,7 +46,6 @@ const aktivitetAAP = {
 };
 
 const aktivitetVentelonnVartpenger = {
-  arbeidsgiverNavn: null,
   arbeidsgiverId: null,
   arbeidsforholdType: { kode: 'VENTELØNN_VARTPENGER', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   fom: '2019-01-01',

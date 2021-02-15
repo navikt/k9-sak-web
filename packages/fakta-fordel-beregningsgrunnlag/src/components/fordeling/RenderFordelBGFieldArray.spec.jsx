@@ -44,7 +44,6 @@ const arbeidstakerAndelsnr = 1;
 const arbeidsgiverId = '12338';
 const arbeidsforholdList = [
   {
-    arbeidsgiverNavn: arbeidstakerNavn,
     arbeidsgiverId,
     startDato: '2016-01-01',
     opphoersdato: '2018-04-01',
@@ -58,7 +57,7 @@ const arbeidsgiverOpplysningerPerId = {
   12338: {
     identifikator: '12338',
     referanse: '12338',
-    navn: 'Hansens bil og brems AS',
+    navn: arbeidstakerNavn,
     fødselsdato: null,
   },
   14235235235: {
@@ -365,7 +364,6 @@ describe('<RenderFordelBGFieldArray>', () => {
   });
 
   const arbeidsgiverInfo = {
-    arbeidsgiverNavn: 'Test',
     arbeidsgiverId: '14235235235',
     arbeidsforholdId: '82389r32fe9343tr',
     eksternArbeidsforholdId: '234567',

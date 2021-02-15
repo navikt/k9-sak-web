@@ -1,9 +1,8 @@
-import { expect } from 'chai';
 import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
 
 const sjekkKonvertering = ({ dager, timer }: DagerTimer, expectedDager, expectedTimer) => {
-  expect(dager).to.equal(expectedDager);
-  expect(timer).to.equal(expectedTimer);
+  expect(dager).toBe(expectedDager);
+  expect(timer).toBe(expectedTimer);
 };
 
 describe('durationUtils', () => {
@@ -49,8 +48,8 @@ describe('durationUtils', () => {
 
     const sum = sumTid(dt1, dt2);
 
-    expect(sum.dager).to.eql(7);
-    expect(sum.timer).to.eql(0);
+    expect(sum.dager).toEqual(7);
+    expect(sum.timer).toEqual(0);
   });
 
   it('summerer dager og timer', () => {
@@ -59,8 +58,8 @@ describe('durationUtils', () => {
 
     const sum = sumTid(dt1, dt2);
 
-    expect(sum.dager).to.eql(7);
-    expect(sum.timer).to.eql(5.5);
+    expect(sum.dager).toEqual(7);
+    expect(sum.timer).toEqual(5.5);
   });
 
   it('timer over 7.5 gjøres om til dager og timer', () => {
@@ -69,7 +68,7 @@ describe('durationUtils', () => {
 
     const sum = sumTid(dt1, dt2);
 
-    expect(sum.dager).to.eql(8);
-    expect(sum.timer).to.eql(3.75);
+    expect(sum.dager).toEqual(8);
+    expect(sum.timer).toEqual(3.75);
   });
 });
