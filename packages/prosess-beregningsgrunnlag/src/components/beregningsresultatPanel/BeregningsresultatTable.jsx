@@ -328,9 +328,8 @@ const finnDagsats = (periode, erOmsorgspenger) => {
   return periode.dagsats;
 };
 
-const harOmsorgspengegrunnlag = ytelseGrunnlag => {
-  return ytelseGrunnlag && ytelseGrunnlag.ytelsetype === fagsakYtelseType.OMSORGSPENGER;
-};
+const harOmsorgspengegrunnlag = ytelseGrunnlag =>
+  ytelseGrunnlag && ytelseGrunnlag.ytelsetype === fagsakYtelseType.OMSORGSPENGER;
 
 export const createBeregningTableData = createSelector(
   [

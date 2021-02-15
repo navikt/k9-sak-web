@@ -170,8 +170,8 @@ const kreverManuellBehandlingFn = bg => {
   return false;
 };
 
-const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, vilkårsperioder) => {
-  return fieldArrayList
+const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, vilkårsperioder) =>
+  fieldArrayList
     .filter((currentFormValues, index) => kreverManuellBehandlingFn(alleBeregningsgrunnlag[index]))
     .map((currentFormValues, index) => {
       const bg = alleBeregningsgrunnlag[index];
@@ -182,7 +182,6 @@ const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, vilkårsperio
         ...FordelBeregningsgrunnlagForm.transformValues(currentFormValues, bg),
       };
     });
-};
 
 export const transformValuesFordelBeregning = createSelector(
   [

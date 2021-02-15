@@ -231,8 +231,8 @@ BeregningFP.defaultProps = {
 const getSammenligningsgrunnlagsPrStatus = bg =>
   bg && bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
 
-const formaterAksjonspunkter = aksjonspunkter => {
-  return flattenArray(aksjonspunkter).map(aksjonspunkt => {
+const formaterAksjonspunkter = aksjonspunkter =>
+  flattenArray(aksjonspunkter).map(aksjonspunkt => {
     const { kode } = aksjonspunkt;
     return {
       '@type': kode,
@@ -245,7 +245,6 @@ const formaterAksjonspunkter = aksjonspunkter => {
       ],
     };
   });
-};
 
 export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {

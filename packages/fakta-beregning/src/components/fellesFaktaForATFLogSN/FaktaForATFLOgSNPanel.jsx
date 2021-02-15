@@ -330,11 +330,10 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...VurderRefusjonForm.buildInitialValues(props.tilfeller, props.refusjonskravSomKommerForSentListe),
 });
 
-const getFaktaOmBeregningTilfellerKoder = faktaOmBeregning => {
-  return faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
+const getFaktaOmBeregningTilfellerKoder = faktaOmBeregning =>
+  faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
     ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
     : [];
-};
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
   beregningsgrunnlag: (ownProps, beregningsgrunnlag) => beregningsgrunnlag,
@@ -356,17 +355,15 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [mapStateToBuildInitialValuesProps, (ownProps, beregningsgrunnlag) => beregningsgrunnlag],
-  (props, beregningsgrunnlag) => () => {
-    return {
-      tilfeller: props.tilfeller,
-      kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
-      faktaOmBeregning: props.faktaOmBeregning,
-      beregningsgrunnlag,
-      vurderMottarYtelse: props.vurderMottarYtelse,
-      kunYtelse: props.kunYtelse,
-      ...buildInitialValuesForTilfeller(props),
-    };
-  },
+  (props, beregningsgrunnlag) => () => ({
+    tilfeller: props.tilfeller,
+    kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
+    faktaOmBeregning: props.faktaOmBeregning,
+    beregningsgrunnlag,
+    vurderMottarYtelse: props.vurderMottarYtelse,
+    kunYtelse: props.kunYtelse,
+    ...buildInitialValuesForTilfeller(props),
+  }),
 );
 
 const emptyArray = [];

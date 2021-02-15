@@ -47,42 +47,40 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   arbeidsforhold,
   vilkar,
   ...formProps
-}) => {
-  return (
-    <>
-      {aksjonspunkter.length > 0 && (
-        <>
-          <VerticalSpacer twentyPx />
-          <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
-            {[
-              <FormattedMessage
-                id="TilkjentYtelse.AksjonspunktHelpText"
-                key={aksjonspunktCodes.MANUELL_TILKJENT_YTELSE}
-              />,
-            ]}
-          </AksjonspunktHelpTextTemp>
-          <VerticalSpacer twentyPx />
-        </>
-      )}
+}) => (
+  <>
+    {aksjonspunkter.length > 0 && (
+      <>
+        <VerticalSpacer twentyPx />
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+          {[
+            <FormattedMessage
+              id="TilkjentYtelse.AksjonspunktHelpText"
+              key={aksjonspunktCodes.MANUELL_TILKJENT_YTELSE}
+            />,
+          ]}
+        </AksjonspunktHelpTextTemp>
+        <VerticalSpacer twentyPx />
+      </>
+    )}
 
-      <form onSubmit={formProps.handleSubmit}>
-        {formProps.warning && <span>{formProps.warning}</span>}
-        <PeriodeTabell
-          // readOnlySubmitButton={readOnlySubmitButton}
-          readOnly={readOnly}
-          submitting={formProps.submitting}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          alleKodeverk={alleKodeverk}
-          // @ts-ignore
-          arbeidsforhold={arbeidsforhold}
-          vilkar={vilkar}
-        />
-        {formProps.error && <span>{formProps.error}</span>}
-      </form>
-    </>
-  );
-};
+    <form onSubmit={formProps.handleSubmit}>
+      {formProps.warning && <span>{formProps.warning}</span>}
+      <PeriodeTabell
+        // readOnlySubmitButton={readOnlySubmitButton}
+        readOnly={readOnly}
+        submitting={formProps.submitting}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+        // @ts-ignore
+        arbeidsforhold={arbeidsforhold}
+        vilkar={vilkar}
+      />
+      {formProps.error && <span>{formProps.error}</span>}
+    </form>
+  </>
+);
 
 TilkjentYtelseForm.propTypes = {
   readOnly: PropTypes.bool,
@@ -162,17 +160,15 @@ const buildInitialValues = createSelector(
   },
 );
 
-export const transformValues = (values: any) => {
-  return [
-    {
-      kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
-      tilkjentYtelse: {
-        perioder: values.perioder,
-      },
-      // begrunnelse: '',
+export const transformValues = (values: any) => [
+  {
+    kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
+    tilkjentYtelse: {
+      perioder: values.perioder,
     },
-  ];
-};
+    // begrunnelse: '',
+  },
+];
 
 const lagSubmitFn = createSelector(
   [(ownProps: PureOwnProps) => ownProps.submitCallback, buildInitialValues],
