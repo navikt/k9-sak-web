@@ -9,7 +9,7 @@ describe('<FagsakGrid>', () => {
       <FagsakGrid
         behandlingContent={<div id="behandlingContent" />}
         profileAndNavigationContent={<div id="profileContent" />}
-        supportContent={<div id="supportContent" />}
+        supportContent={() => <div id="supportContent" />}
         visittkortContent={() => <div id="visittkort" />}
       />,
     );

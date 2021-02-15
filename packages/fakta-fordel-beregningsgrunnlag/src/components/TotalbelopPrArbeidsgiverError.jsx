@@ -6,6 +6,13 @@ import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
 
 export const AAP_ARBEIDSGIVER_KEY = 'AAP_ARBEIDSGIVER_GRUNNLAG';
 
+const BelopPrArbeidsgiverPropType = PropTypes.shape({
+  key: PropTypes.string.isRequired,
+  fastsattBelop: PropTypes.number.isRequired,
+  beregningsgrunnlagPrAar: PropTypes.number.isRequired,
+  arbeidsgiverNavn: PropTypes.string.isRequired,
+});
+
 const finnArbeidsgiverNavn = (andel, identifikator, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   if (identifikator === AAP_ARBEIDSGIVER_KEY && !andel.arbeidsgiverId) {
     return null;
@@ -26,14 +33,12 @@ const leggTilGrunnlagvalidering = (
     const newGrunnlag = { ...totalInntektArbeidsforholdList[idx] };
     newGrunnlag.fastsattBelop += removeSpacesFromNumber(andel.fastsattBelop || '0');
     newGrunnlag.beregningsgrunnlagPrAar += removeSpacesFromNumber(andel.beregningsgrunnlagPrAar || '0');
-    if (!newGrunnlag.arbeidsgiverNavn) {
-      newGrunnlag.arbeidsgiverNavn = finnArbeidsgiverNavn(
-        andel,
-        identifikator,
-        getKodeverknavn,
-        arbeidsgiverOpplysningerPerId,
-      );
-    }
+    newGrunnlag.arbeidsgiverNavn = finnArbeidsgiverNavn(
+      andel,
+      identifikator,
+      getKodeverknavn,
+      arbeidsgiverOpplysningerPerId,
+    );
     newList[idx] = newGrunnlag;
   } else {
     newList.push({
@@ -122,15 +127,7 @@ const TotalbelopPrArbeidsgiverError = ({ totalInntektPrArbeidsforhold }) => {
 };
 
 TotalbelopPrArbeidsgiverError.propTypes = {
-  totalInntektPrArbeidsforhold: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string,
-      fastsattBelop: PropTypes.number,
-      registerInntekt: PropTypes.number,
-      belopFraInntektsmelding: PropTypes.number,
-      notBeforeStp: PropTypes.bool,
-    }),
-  ).isRequired,
+  totalInntektPrArbeidsforhold: PropTypes.arrayOf(BelopPrArbeidsgiverPropType).isRequired,
 };
 
 export default TotalbelopPrArbeidsgiverError;

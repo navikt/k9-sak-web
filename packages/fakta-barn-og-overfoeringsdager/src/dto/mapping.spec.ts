@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import mapDtoTilFormValues from './mapping';
 
@@ -99,19 +98,19 @@ it('mapping fra DTO til formValues', () => {
     koronaoverføringGir,
   } = mapDtoTilFormValues(rammevedtak);
 
-  expect(barn).to.have.length(4);
-  expect(barn[0].fødselsnummer).to.equal(barnFnr);
-  expect(barn[0].kroniskSykdom).to.eql({ fom: utvidetRett.gyldigFraOgMed, tom: utvidetRett.gyldigTilOgMed });
-  expect(barn[0].aleneomsorg).to.eql({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
-  expect(barn[1].kroniskSykdom).to.equal(undefined);
-  expect(barn[1].aleneomsorg).to.eql({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
-  expect(barn[2].fødselsnummer).to.eql(fosterbarn.mottaker);
-  expect(barn[2].fosterbarn).to.eql({ fom: fosterbarn.gyldigFraOgMed, tom: fosterbarn.gyldigTilOgMed });
-  expect(barn[3].fødselsnummer).to.eql(utenlandskBarn.fødselsdato);
-  expect(barn[3].utenlandskBarn).to.eql({ fom: utenlandskBarn.gyldigFraOgMed, tom: utenlandskBarn.gyldigTilOgMed });
+  expect(barn).toHaveLength(4);
+  expect(barn[0].fødselsnummer).toBe(barnFnr);
+  expect(barn[0].kroniskSykdom).toEqual({ fom: utvidetRett.gyldigFraOgMed, tom: utvidetRett.gyldigTilOgMed });
+  expect(barn[0].aleneomsorg).toEqual({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
+  expect(barn[1].kroniskSykdom).toBeUndefined();
+  expect(barn[1].aleneomsorg).toEqual({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
+  expect(barn[2].fødselsnummer).toEqual(fosterbarn.mottaker);
+  expect(barn[2].fosterbarn).toEqual({ fom: fosterbarn.gyldigFraOgMed, tom: fosterbarn.gyldigTilOgMed });
+  expect(barn[3].fødselsnummer).toEqual(utenlandskBarn.fødselsdato);
+  expect(barn[3].utenlandskBarn).toEqual({ fom: utenlandskBarn.gyldigFraOgMed, tom: utenlandskBarn.gyldigTilOgMed });
 
   const assertOverføring = (overføring, expectedDager, expectedMottakerAvsender, expectedFom, expectedTom) => {
-    expect(overføring).to.eql([
+    expect(overføring).toEqual([
       {
         antallDager: expectedDager,
         mottakerAvsenderFnr: expectedMottakerAvsender,
@@ -128,5 +127,5 @@ it('mapping fra DTO til formValues', () => {
   assertOverføring(fordelingGir, 5, mottaker, gyldigFraOgMedGir, gyldigTilOgMedGir);
   assertOverføring(koronaoverføringGir, 6, mottaker, gyldigFraOgMedGir, gyldigTilOgMedGir);
 
-  expect(midlertidigAleneansvar).to.eql(midlertidigAleneansvar);
+  expect(midlertidigAleneansvar).toEqual(midlertidigAleneansvar);
 });

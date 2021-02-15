@@ -60,6 +60,7 @@ const manuelleVenteArsaker = [
   venteArsakType.UTVIDET_TILSVAR_FRIST,
   venteArsakType.ENDRE_TILKJENT_YTELSE,
   venteArsakType.VENT_PÅ_MULIG_MOTREGNING,
+  venteArsakType.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
 ];
 
 const automatiskeVentearsakerForTilbakekreving = [

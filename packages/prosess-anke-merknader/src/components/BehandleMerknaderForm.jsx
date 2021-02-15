@@ -19,7 +19,7 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
 
@@ -36,7 +36,9 @@ const AnkeMerknader = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel><FormattedMessage id="Ankebehandling.Merknad.Title" /></Undertittel>
+      <Undertittel>
+        <FormattedMessage id="Ankebehandling.Merknad.Title" />
+      </Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.Merknad.HelpText" key={aksjonspunktCode} />]}
@@ -45,12 +47,7 @@ const AnkeMerknader = ({
       <Row>
         <Column xs="7">
           <FormattedMessage id="Ankebehandling.Merknad.Merknader" />
-          <RadioGroupField
-            name="erMerknaderMottatt"
-            validate={[required]}
-            direction="horisontal"
-            readOnly={readOnly}
-          >
+          <RadioGroupField name="erMerknaderMottatt" validate={[required]} direction="horisontal" readOnly={readOnly}>
             <RadioOption value="ja" label={{ id: 'Ankebehandling.Merknad.Merknader.Ja' }} />
             <RadioOption value="nei" label={{ id: 'Ankebehandling.Merknad.Merknader.Nei' }} />
           </RadioGroupField>
@@ -60,13 +57,18 @@ const AnkeMerknader = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="7">
-          <TextAreaField readOnly={readOnly} readOnlyHideEmpty={false} label={{ id: 'Ankebehandling.Merknad.Merknader.Kommentarer' }} name="merknadKommentar" />
+          <TextAreaField
+            readOnly={readOnly}
+            readOnlyHideEmpty={false}
+            label={{ id: 'Ankebehandling.Merknad.Merknader.Kommentarer' }}
+            name="merknadKommentar"
+          />
         </Column>
       </Row>
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="8">
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
@@ -115,7 +117,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const buildInitialValues = createSelector([(ownProps) => ownProps.ankeVurderingResultat], (resultat) => ({
+const buildInitialValues = createSelector([ownProps => ownProps.ankeVurderingResultat], resultat => ({
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
   fritekstTilBrev: resultat ? resultat.fritekstTilBrev : null,
@@ -123,18 +125,23 @@ const buildInitialValues = createSelector([(ownProps) => ownProps.ankeVurderingR
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return (state, ownProps) => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(ownProps),
-    formValues: behandlingFormValueSelector(ankeMerknaderFormName, ownProps.behandlingId, ownProps.behandlingVersjon)(state,
-      'ankeVurdering', 'fritekstTilBrev'),
+    formValues: behandlingFormValueSelector(ankeMerknaderFormName, ownProps.behandlingId, ownProps.behandlingVersjon)(
+      state,
+      'ankeVurdering',
+      'fritekstTilBrev',
+    ),
     onSubmit,
   });
 };
 
-const BehandleMerknaderForm = connect(mapStateToPropsFactory)(behandlingForm({
-  form: ankeMerknaderFormName,
-})(AnkeMerknader));
+const BehandleMerknaderForm = connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: ankeMerknaderFormName,
+  })(AnkeMerknader),
+);
 
 export default BehandleMerknaderForm;

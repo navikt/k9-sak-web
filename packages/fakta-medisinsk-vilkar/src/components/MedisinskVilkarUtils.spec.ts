@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import MedisinskVilkårConsts from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkårConstants';
 import moment from 'moment';
 import { LegeerklæringKilde } from '@k9-sak-web/types/src/medisinsk-vilkår/MedisinskVilkår';
@@ -132,7 +131,7 @@ describe('medisinskVilkarUtils', () => {
         begrunnelse: 'begrunnelseTo',
       },
     ];
-    expect(result).to.deep.equal(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   it('skal returnere utvidede perioder som dekker deler av perioden med kontinuerlig tilsyn', () => {
@@ -153,7 +152,7 @@ describe('medisinskVilkarUtils', () => {
         begrunnelse: 'begrunnelseFire',
       },
     ];
-    expect(result).to.deep.equal(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   it('skal slå sammen hele og delvise perioder med utvidet kontinuerlig tilsyn', () => {
@@ -161,7 +160,7 @@ describe('medisinskVilkarUtils', () => {
     const delvisePerioder = getDelvisePerioder(partialFormState);
     const kombinertePerioder = helePerioder.concat(delvisePerioder);
     const result = getPerioderMedUtvidetKontinuerligTilsynOgPleie(partialFormState);
-    expect(kombinertePerioder).to.deep.equal(result);
+    expect(kombinertePerioder).toEqual(result);
   });
 
   it('skal bygge periode med utvidet kontinuerlig tilsyn', () => {
@@ -170,7 +169,7 @@ describe('medisinskVilkarUtils', () => {
       sykdomRequestResponse,
     );
     const expectedResult = { fom: '2020-02-02', tom: '2020-02-24' };
-    expect(expectedResult).to.deep.equal(result);
+    expect(expectedResult).toEqual(result);
   });
 
   it('skal finne ut om det er behov for to omsorgspersoner', () => {
@@ -186,9 +185,9 @@ describe('medisinskVilkarUtils', () => {
       sykdomRequestResponse.perioderMedKontinuerligTilsynOgPleie[2],
       sykdomRequestResponse,
     );
-    expect(result1).to.eql(MedisinskVilkårConsts.JA_DELER);
-    expect(result2).to.eql(MedisinskVilkårConsts.NEI);
-    expect(result3).to.eql(MedisinskVilkårConsts.JA_HELE);
+    expect(result1).toEqual(MedisinskVilkårConsts.JA_DELER);
+    expect(result2).toEqual(MedisinskVilkårConsts.NEI);
+    expect(result3).toEqual(MedisinskVilkårConsts.JA_HELE);
   });
 
   it('skal finne begrunnelse for utvidet tilsyn', () => {
@@ -196,7 +195,7 @@ describe('medisinskVilkarUtils', () => {
       sykdomRequestResponse.perioderMedKontinuerligTilsynOgPleie[0],
       sykdomRequestResponse,
     );
-    expect(result).to.eql('hallo');
+    expect(result).toEqual('hallo');
   });
 
   it('skal lage en liste med perioder med kontinuerlig tilsyn', () => {
@@ -236,7 +235,7 @@ describe('medisinskVilkarUtils', () => {
         sammenhengMellomSykdomOgTilsynBegrunnelse: 'begrunnelse',
       },
     ];
-    expect(result).to.deep.equal(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   // TODO (Hallvard): Finn en bedre måte å teste dette på
@@ -247,19 +246,19 @@ describe('medisinskVilkarUtils', () => {
       year: 'numeric',
     });
     const result1 = getMomentConvertedDate('2020-02-20');
-    expect(result1.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
+    expect(result1.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).toEqual(
       expectedResult,
     );
     const result2 = getMomentConvertedDate(moment('2020-02-20'));
-    expect(result2.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
+    expect(result2.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).toEqual(
       expectedResult,
     );
     const result3 = getMomentConvertedDate(moment('2020-02-20').toDate());
-    expect(result3.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
+    expect(result3.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).toEqual(
       expectedResult,
     );
     const result4 = getMomentConvertedDate(moment('2020-02-20').toDate().toString());
-    expect(result4.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).to.deep.equal(
+    expect(result4.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).toEqual(
       expectedResult,
     );
   });

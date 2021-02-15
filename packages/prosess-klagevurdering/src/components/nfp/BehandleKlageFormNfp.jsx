@@ -11,7 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -63,13 +63,13 @@ export const BehandleKlageFormNfpImpl = ({
         medholdReasons={alleKodeverk[kodeverkTyper.KLAGE_MEDHOLD_ARSAK]}
       />
       <div className={styles.confirmVilkarForm}>
-        <BehandlingspunktBegrunnelseTextField readOnly={readOnly} textCode="BehandleKlageFormNfp.BegrunnelseForKlage" />
+        <ProsessStegBegrunnelseTextField readOnly={readOnly} textCode="BehandleKlageFormNfp.BegrunnelseForKlage" />
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="8">
-            <BehandlingspunktSubmitButton
+            <ProsessStegSubmitButton
               formName={formProps.form}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}

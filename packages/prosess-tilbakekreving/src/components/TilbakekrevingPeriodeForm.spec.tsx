@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
@@ -76,7 +75,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       />,
     );
 
-    expect(wrapper.find(ForeldetFormPanel)).to.have.length(1);
+    expect(wrapper.find(ForeldetFormPanel)).toHaveLength(1);
   });
 
   it('skal teste kopiering av vilkårsvudering for periode', () => {
@@ -159,10 +158,10 @@ describe('<TilbakekrevingPeriodeForm>', () => {
 
     // Tester om nedtrekksmenyen for perioder som kan kopieres vises
     const selectField = wrapper.find('[name="perioderForKopi"]');
-    expect(selectField).to.have.lengthOf(1);
+    expect(selectField).toHaveLength(1);
     // @ts-ignore
     const values = selectField.props().selectValues;
-    expect(values).to.have.lengthOf(2);
+    expect(values).toHaveLength(2);
 
     selectField.props().onChange(
       {
@@ -176,11 +175,11 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     );
 
     const changeValueCalls = changeValue.getCalls();
-    expect(changeValueCalls).to.have.length(4);
-    expect(changeValueCalls[0].args[1]).to.be.eql(vilkårsPerioder[1].valgtVilkarResultatType);
-    expect(changeValueCalls[1].args[1]).to.be.eql(vilkårsPerioder[1].begrunnelse);
-    expect(changeValueCalls[2].args[1]).to.be.eql(vilkårsPerioder[1].vurderingBegrunnelse);
-    expect(changeValueCalls[3].args[1]).to.be.eql(vilkårsPerioder[1][vilkarResultat.FORSTO_BURDE_FORSTAATT]);
+    expect(changeValueCalls).toHaveLength(4);
+    expect(changeValueCalls[0].args[1]).toEqual(vilkårsPerioder[1].valgtVilkarResultatType);
+    expect(changeValueCalls[1].args[1]).toEqual(vilkårsPerioder[1].begrunnelse);
+    expect(changeValueCalls[2].args[1]).toEqual(vilkårsPerioder[1].vurderingBegrunnelse);
+    expect(changeValueCalls[3].args[1]).toEqual(vilkårsPerioder[1][vilkarResultat.FORSTO_BURDE_FORSTAATT]);
   });
 
   // TODO (TOR) Skriv fleire testar

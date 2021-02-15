@@ -40,11 +40,7 @@ const andeler = [dpAndel, aapAndel, urelatertAndel];
 describe('<TilstotendeYtelser>', () => {
   it('Skal teste at de korrekte ytelser for dagpenger / AAP vises og at urelaterte andeler ikke vises', () => {
     const wrapper = shallowWithIntl(
-      <TilstotendeYtelser2
-        alleAndeler={andeler}
-        relevanteStatuser={relevanteStatuser(false, false)}
-        gjelderBesteberegning={false}
-      />,
+      <TilstotendeYtelser2 alleAndeler={andeler} relevanteStatuser={relevanteStatuser(false, false)} />,
     );
     const formattedMessage = wrapper.find('FormattedMessage');
     expect(formattedMessage).to.have.length(4);

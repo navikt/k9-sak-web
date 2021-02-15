@@ -6,7 +6,6 @@ import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
-
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 

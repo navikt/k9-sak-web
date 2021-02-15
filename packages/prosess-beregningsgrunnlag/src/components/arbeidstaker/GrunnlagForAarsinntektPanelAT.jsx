@@ -4,7 +4,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst, EtikettLiten } from 'nav-frontend-typografi';
 
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -13,6 +12,7 @@ import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { Column, Row } from 'nav-frontend-grid';
 import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import createVisningsnavnForAktivitet from '../../util/createVisningsnavnForAktivitet';
 import NaturalytelsePanel2 from './NaturalytelsePanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
@@ -79,22 +79,26 @@ const månedsinntekt = årsinntekt => {
   return årsinntekt / 12;
 };
 
+const lagVisningForAndel = (andel, arbeidsgiverOpplysningerPerId, getKodeverknavn) => {
+  const arbeidsforholdInfo = arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent];
+  if (!arbeidsforholdInfo) {
+    return andel.arbeidsforhold.arbeidsforholdType ? getKodeverknavn(andel.arbeidsforhold.arbeidsforholdType) : '';
+  }
+  return createVisningsnavnForAktivitet(arbeidsforholdInfo, andel.arbeidsforhold.eksternArbeidsforholdId);
+};
+
 const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, arbeidsgiverOpplysningerPerId, userIdent) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = månedsinntekt(beregnetAarsinntekt);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment
-      key={`ArbInntektWrapper${createVisningsnavnForAktivitet(
-        andel.arbeidsforhold,
-        getKodeverknavn,
-        arbeidsgiverOpplysningerPerId,
-      )}${index + 1}`}
+      key={`ArbInntektWrapper${lagVisningForAndel(andel, arbeidsgiverOpplysningerPerId, getKodeverknavn)}${index + 1}`}
     >
       <Row key={`index${index + 1}`}>
         <Column xs="7" key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
-            {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
+            {lagVisningForAndel(andel, arbeidsgiverOpplysningerPerId, getKodeverknavn)}
           </Normaltekst>
         </Column>
 

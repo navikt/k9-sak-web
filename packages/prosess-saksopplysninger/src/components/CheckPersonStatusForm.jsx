@@ -22,7 +22,7 @@ import {
 } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 
 import styles from './checkPersonStatusForm.less';
 
@@ -81,9 +81,9 @@ export const CheckPersonStatusFormImpl = ({
       )}
     </div>
     <VerticalSpacer sixteenPx />
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
     <VerticalSpacer sixteenPx />
-    <BehandlingspunktSubmitButton
+    <ProsessStegSubmitButton
       formName={formProps.form}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -149,7 +149,7 @@ export const buildInitialValues = createSelector(
           : getKodeverknavn(personstatus),
       fortsettBehandling: isAksjonspunktOpen(aksjonspunkt.status.kode) ? undefined : shouldContinueBehandling,
       personstatus: getValgtOpplysning(avklartPersonstatus),
-      ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+      ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
   },
 );
@@ -169,7 +169,7 @@ const transformValues = (values, aksjonspunkter) => ({
   fortsettBehandling: values.fortsettBehandling,
   personstatus: values.personstatus,
   kode: aksjonspunkter[0].definisjon.kode,
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 
 const formName = 'CheckPersonStatusForm';

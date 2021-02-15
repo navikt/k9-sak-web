@@ -17,7 +17,6 @@ export const getKodeverknavnFraKode = (
   const kodeverk = kodeverkForType.find(k => k.kode === kode);
   return kodeverk ? kodeverk.navn : '';
 };
-
 export const getKodeverknavnFn = (
   alleKodeverk: { [key: string]: KodeverkMedNavn[] },
   kodeverkTyper: { [key: string]: string },

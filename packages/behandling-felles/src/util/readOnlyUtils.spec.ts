@@ -32,7 +32,7 @@ describe('<readOnlyUtils>', () => {
         kodeverk: 'AKSJONSPUNKT_STATUS',
       },
       definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
+        kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
         kodeverk: 'AKSJONSPUNKT_KODE',
       },
       kanLoses: true,
@@ -44,7 +44,7 @@ describe('<readOnlyUtils>', () => {
 
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.FODSELSVILKARET_MOR, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET, kodeverk: 'test' },
       overstyrbar: true,
       perioder: [
         {

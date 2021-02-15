@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fakta-beregning/src/components/ArbeidsforholdHelper';
+
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 
 const { VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT } = faktaOmBeregningTilfelle;
@@ -17,7 +19,7 @@ export const lagFieldName = arbeidsgiverVisningsnavn =>
 
 const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktClosed, fieldArrayID) =>
   senRefusjonkravListe.map(kravPerArbeidsgiver => {
-    const { arbeidsgiverVisningsnavn } = kravPerArbeidsgiver;
+    const arbeidsgiverVisningsnavn = createVisningsnavnForAktivitet(kravPerArbeidsgiver);
     return (
       <React.Fragment key={arbeidsgiverVisningsnavn}>
         <VerticalSpacer twentyPx />

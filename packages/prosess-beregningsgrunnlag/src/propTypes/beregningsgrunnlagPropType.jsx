@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverNavn: PropTypes.string,
   arbeidsgiverId: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
@@ -17,12 +16,13 @@ const faktaOmBeregningAndelPropType = PropTypes.shape({
   aktivitetStatus: kodeverkObjektPropType,
 });
 
-
 const faktaOmBeregningPropType = PropTypes.shape({
-  beregningsgrunnlagArbeidsforhold: PropTypes.arrayOf(PropTypes.shape({
-    ...beregningsgrunnlagArbeidsforholdProptype,
-    erTidsbegrensetArbeidsforhold: PropTypes.bool,
-  })),
+  beregningsgrunnlagArbeidsforhold: PropTypes.arrayOf(
+    PropTypes.shape({
+      ...beregningsgrunnlagArbeidsforholdProptype,
+      erTidsbegrensetArbeidsforhold: PropTypes.bool,
+    }),
+  ),
   frilansAndel: faktaOmBeregningAndelPropType,
   arbeidsforholdMedLønnsendringUtenIM: faktaOmBeregningAndelPropType,
 });
@@ -39,7 +39,6 @@ const arbeidsforholdTilFordelingPropType = PropTypes.shape({
   arbeidsforholdId: PropTypes.string,
   arbeidsforholdType: kodeverkObjektPropType,
   arbeidsgiverId: PropTypes.string,
-  arbeidsgiverNavn: PropTypes.string,
   belopFraInntektsmeldingPrMnd: PropTypes.number,
   eksternArbeidsforholdId: PropTypes.string,
   naturalytelseBortfaltPrÅr: PropTypes.number,
@@ -90,50 +89,54 @@ const faktaOmFordelingPropType = PropTypes.shape({
 });
 
 const beregningsgrunnlagPropType = PropTypes.shape({
-  aktivitetStatus: PropTypes.arrayOf(PropTypes.shape({
-    aktivitetStatus: kodeverkObjektPropType,
-  })),
-  beregningsgrunnlagPeriode: PropTypes.arrayOf(PropTypes.shape({
-    avkortetPrAar: PropTypes.number,
-    beregnetPrAar: PropTypes.number,
-    beregningsgrunnlagPeriodeFom: PropTypes.string,
-    beregningsgrunnlagPeriodeTom: PropTypes.string,
-    bruttoInkludertBortfaltNaturalytelsePrAar: PropTypes.number,
-    bruttoPrAar: PropTypes.number,
-    dagsats: PropTypes.number,
-    ledetekstAvkortet: PropTypes.string,
-    ledetekstBrutto: PropTypes.string,
-    ledetekstRedusert: PropTypes.string,
-    overstyrtPrAar: PropTypes.number,
-    redusertPrAar: PropTypes.number,
-    periodeAarsaker: PropTypes.arrayOf(kodeverkObjektPropType),
-    beregningsgrunnlagPrStatusOgAndel: PropTypes.arrayOf(PropTypes.shape({
+  aktivitetStatus: PropTypes.arrayOf(
+    PropTypes.shape({
       aktivitetStatus: kodeverkObjektPropType,
-      arbeidsforholdType: kodeverkObjektPropType,
+    }),
+  ),
+  beregningsgrunnlagPeriode: PropTypes.arrayOf(
+    PropTypes.shape({
       avkortetPrAar: PropTypes.number,
       beregnetPrAar: PropTypes.number,
-      beregningsgrunnlagFom: PropTypes.string,
-      beregningsgrunnlagTom: PropTypes.string,
+      beregningsgrunnlagPeriodeFom: PropTypes.string,
+      beregningsgrunnlagPeriodeTom: PropTypes.string,
+      bruttoInkludertBortfaltNaturalytelsePrAar: PropTypes.number,
       bruttoPrAar: PropTypes.number,
-      arbeidsforholdId: PropTypes.string,
+      dagsats: PropTypes.number,
+      ledetekstAvkortet: PropTypes.string,
+      ledetekstBrutto: PropTypes.string,
+      ledetekstRedusert: PropTypes.string,
       overstyrtPrAar: PropTypes.number,
       redusertPrAar: PropTypes.number,
-      pgi1: PropTypes.number,
-      pgi2: PropTypes.number,
-      pgi3: PropTypes.number,
-      pgiSnitt: PropTypes.number,
-      aarsbeloepFraTilstoetendeYtelse: PropTypes.number,
-      bortfaltNaturalytelse: PropTypes.number,
-      erNyIArbeidslivet: PropTypes.bool,
-      erTidsbegrensetArbeidsforhold: PropTypes.bool,
-      erNyoppstartet: PropTypes.bool,
-      arbeidsgiverId: PropTypes.string,
-      arbeidsgiverNavn: PropTypes.string,
-      andelsnr: PropTypes.number,
-      lonnsendringIBeregningsperioden: PropTypes.bool,
-      besteberegningPrAar: PropTypes.number,
-    })),
-  })),
+      periodeAarsaker: PropTypes.arrayOf(kodeverkObjektPropType),
+      beregningsgrunnlagPrStatusOgAndel: PropTypes.arrayOf(
+        PropTypes.shape({
+          aktivitetStatus: kodeverkObjektPropType,
+          arbeidsforholdType: kodeverkObjektPropType,
+          avkortetPrAar: PropTypes.number,
+          beregnetPrAar: PropTypes.number,
+          beregningsgrunnlagFom: PropTypes.string,
+          beregningsgrunnlagTom: PropTypes.string,
+          bruttoPrAar: PropTypes.number,
+          arbeidsforholdId: PropTypes.string,
+          overstyrtPrAar: PropTypes.number,
+          redusertPrAar: PropTypes.number,
+          pgi1: PropTypes.number,
+          pgi2: PropTypes.number,
+          pgi3: PropTypes.number,
+          pgiSnitt: PropTypes.number,
+          aarsbeloepFraTilstoetendeYtelse: PropTypes.number,
+          bortfaltNaturalytelse: PropTypes.number,
+          erNyIArbeidslivet: PropTypes.bool,
+          erTidsbegrensetArbeidsforhold: PropTypes.bool,
+          erNyoppstartet: PropTypes.bool,
+          arbeidsgiverId: PropTypes.string,
+          andelsnr: PropTypes.number,
+          lonnsendringIBeregningsperioden: PropTypes.bool,
+        }),
+      ),
+    }),
+  ),
   sammenligningsgrunnlag: PropTypes.shape({
     avvikPromille: PropTypes.number,
     rapportertPrAar: PropTypes.number,

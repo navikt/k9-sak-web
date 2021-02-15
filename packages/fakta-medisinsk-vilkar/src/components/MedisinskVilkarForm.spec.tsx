@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
@@ -51,9 +50,9 @@ describe('<MedisinskVilkarForm>', () => {
         perioderMedKontinuerligTilsynOgPleie={{}}
       />,
     );
-    expect(wrapper.find(KontinuerligTilsynOgPleie)).has.length(1);
-    expect(wrapper.find(DiagnosekodeSelector)).has.length(1);
-    expect(wrapper.find(Legeerklaering)).has.length(1);
-    expect(wrapper.find(MedisinskVilkarFormButtons)).has.length(1);
+    expect(wrapper.find(KontinuerligTilsynOgPleie)).toHaveLength(1);
+    expect(wrapper.find(DiagnosekodeSelector)).toHaveLength(1);
+    expect(wrapper.find(Legeerklaering)).toHaveLength(1);
+    expect(wrapper.find(MedisinskVilkarFormButtons)).toHaveLength(1);
   });
 });
