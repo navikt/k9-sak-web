@@ -62,7 +62,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.5.0/main.js"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.5.0/app.js"
       jsIntegrity="sha384-iwXwfuyBdktquifSX/TfEUHAQ03Urw5tM/X2ATCyRIBfJdT5jPR16MRT5wJxR60g"
       stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.5.0/styles.css"
       stylesheetIntegrity="sha384-ro9ZEBJEWZEhZB9lZ7+e2ceTx0jtVa/HZlE867122hKrvRTQ722hcYtb03rkRF0I"
