@@ -24,9 +24,7 @@ it('rendrer delt bosted panel med rett info', () => {
     wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === tekstId);
 
   const elementerMedTypeOchText = (nodeType, tekst) =>
-    wrapper.findWhere(node => {
-      return node.name() === nodeType && node.text() === tekst;
-    });
+    wrapper.findWhere(node => node.name() === nodeType && node.text() === tekst);
 
   const deltBostedVisning = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.DeltBosted');
   const fosterbarn = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.Fosterbarn');
