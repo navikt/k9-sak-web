@@ -17,7 +17,7 @@ import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbe
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 
 const headerColumnContent = [
-  <FormattedMessage key={1} id="PersonArbeidsforholdTable.Arbeidsforhold" values={{ br: <br /> }} />,
+  <FormattedMessage key={1} id="PersonArbeidsforholdTable.Yrkestittel" values={{ br: <br /> }} />,
   <FormattedMessage key={2} id="PersonArbeidsforholdTable.Periode" values={{ br: <br /> }} />,
   <FormattedMessage key={3} id="PersonArbeidsforholdTable.Kilde" values={{ br: <br /> }} />,
   <FormattedMessage key={4} id="PersonArbeidsforholdTable.Stillingsprosent" values={{ br: <br /> }} />,
@@ -73,12 +73,12 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
       setVisAksjonspunktInfo(true);
       setSelectedArbeidsforhold(arbeidsforhold);
     }
-    if (arbeidsforhold.id === selectedArbeidsforhold.id && !visAksjonspunktInfo) {
+    if (selectedArbeidsforhold && arbeidsforhold.id === selectedArbeidsforhold.id && !visAksjonspunktInfo) {
       setSelectedArbeidsforhold(undefined);
       setVisAksjonspunktInfo(true);
     }
 
-    if (arbeidsforhold.id === selectedArbeidsforhold.id && visAksjonspunktInfo) {
+    if (selectedArbeidsforhold && arbeidsforhold.id === selectedArbeidsforhold.id && visAksjonspunktInfo) {
       setSelectedArbeidsforhold(undefined);
       setVisAksjonspunktInfo(false);
     }

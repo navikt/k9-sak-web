@@ -2,7 +2,7 @@
   "PersonArbeidsforholdPanel.ArbeidsforholdHeader": "Aktive arbeidsforhold",
   "PersonArbeidsforholdPanel.LukkArbeidsforhold": "Lukk arbeidsforhold",
   "PersonArbeidsforholdPanel.VisArbeidsforhold": "Vis arbeidsforhold",
-  "PersonArbeidsforholdTable.Arbeidsforhold": "{br}Arbeidsforhold",
+  "PersonArbeidsforholdTable.Yrkestittel": "{br}Yrkestittel",
   "PersonArbeidsforholdTable.Periode": "{br}Periode",
   "PersonArbeidsforholdTable.Kilde": "{br}Kilde",
   "PersonArbeidsforholdTable.Stillingsprosent": "{br}Stillingsprosent",
@@ -65,6 +65,7 @@
 
   "ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert": "Ingen arbeidsforhold registrert. Vurder om det er dokumentert andre arbeidsforhold.",
   "ArbeidsforholdInfoPanel.AvklarArbeidsforhold": "Avklar om arbeidsforholdene skal benyttes i behandlingen",
+  "ArbeidsforholdInfoPanel.BegrunnelseFraSaksbehandler": "Begrunnelse fra saksbehandler: ",
 
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",

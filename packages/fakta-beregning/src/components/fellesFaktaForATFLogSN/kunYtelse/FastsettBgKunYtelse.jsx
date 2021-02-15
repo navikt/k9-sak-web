@@ -63,12 +63,10 @@ const transformValues = values => ({
   },
 });
 
-FastsettBgKunYtelsePanel.transformValues = values => {
-  return {
-    faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
-    ...transformValues(values),
-  };
-};
+FastsettBgKunYtelsePanel.transformValues = values => ({
+  faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
+  ...transformValues(values),
+});
 
 const validate = (values, aktivertePaneler) => {
   if (!values || !aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {

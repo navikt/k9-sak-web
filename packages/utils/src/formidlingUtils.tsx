@@ -85,15 +85,13 @@ export const lagForhåndsvisRequest = (
   fagsak: Fagsak,
   fagsakPerson: FagsakPerson,
   data: any,
-): ForhåndsvisRequest => {
-  return {
-    eksternReferanse: behandling.uuid,
-    ytelseType: fagsak.sakstype,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsakPerson.aktørId,
-    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-    ...data,
-  };
-};
+): ForhåndsvisRequest => ({
+  eksternReferanse: behandling.uuid,
+  ytelseType: fagsak.sakstype,
+  saksnummer: fagsak.saksnummer,
+  aktørId: fagsakPerson.aktørId,
+  avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+  ...data,
+});
 
 export default lagForhåndsvisRequest;

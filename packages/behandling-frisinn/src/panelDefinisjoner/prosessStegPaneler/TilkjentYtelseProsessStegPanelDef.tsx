@@ -7,13 +7,9 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 
 const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const { perioder } = beregningsresultatUtbetaling;
-  const alleUtfall = perioder.flatMap(({ andeler }) => {
-    return [
-      ...andeler.flatMap(({ uttak }) => {
-        return [...uttak.flatMap(({ utfall }) => utfall)];
-      }),
-    ];
-  });
+  const alleUtfall = perioder.flatMap(({ andeler }) => [
+    ...andeler.flatMap(({ uttak }) => [...uttak.flatMap(({ utfall }) => utfall)]),
+  ]);
   // TODO Burde bruka kodeverk-konstant (ikkje hardkode 'INNVILGET')
   return !alleUtfall.some(utfall => utfall === 'INNVILGET');
 };
@@ -39,13 +35,11 @@ class PanelDef extends ProsessStegPanelDef {
     return vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ fagsak, beregningsresultatUtbetalt, personopplysninger }) => {
-    return {
-      fagsak,
-      personopplysninger,
-      beregningsresultat: beregningsresultatUtbetalt,
-    };
-  };
+  getData = ({ fagsak, beregningsresultatUtbetalt, personopplysninger }) => ({
+    fagsak,
+    personopplysninger,
+    beregningsresultat: beregningsresultatUtbetalt,
+  });
 }
 
 class TilkjentYtelseProsessStegPanelDef extends ProsessStegDef {

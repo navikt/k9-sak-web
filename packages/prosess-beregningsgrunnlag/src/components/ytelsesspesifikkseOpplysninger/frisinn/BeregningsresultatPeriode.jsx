@@ -38,18 +38,16 @@ const statuserDetErSøktOmIPerioden = (bgPeriode, ytelsegrunnlag) => {
   return gjeldendePeriode ? gjeldendePeriode.frisinnAndeler : [];
 };
 
-const lagBeskrivelseMedBeløpRad = (tekstId, beløp) => {
-  return (
-    <Row>
-      <Column xs="10">
-        <FormattedMessage id={tekstId} />
-      </Column>
-      <Column xs="2">
-        <Normaltekst>{formatCurrencyNoKr(beløp)}</Normaltekst>
-      </Column>
-    </Row>
-  );
-};
+const lagBeskrivelseMedBeløpRad = (tekstId, beløp) => (
+  <Row>
+    <Column xs="10">
+      <FormattedMessage id={tekstId} />
+    </Column>
+    <Column xs="2">
+      <Normaltekst>{formatCurrencyNoKr(beløp)}</Normaltekst>
+    </Column>
+  </Row>
+);
 
 const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, løpendeBeløp, gjeldendeDekningsgrad) => {
   const multiplikator = gjeldendeDekningsgrad === dekningsgrad.SEKSTI ? 0.6 : 0.8;

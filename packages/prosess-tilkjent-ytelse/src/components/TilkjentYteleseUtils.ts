@@ -1,12 +1,10 @@
-export const getAktivitet = (aktivitetStatus, getKodeverknavn) => {
+export const getAktivitet = (aktivitetStatus, getKodeverknavn) =>
   // hvis valgtAndel ikke satt ennå return tom string.
-  return aktivitetStatus === undefined ? '' : getKodeverknavn(aktivitetStatus);
-};
+  aktivitetStatus === undefined ? '' : getKodeverknavn(aktivitetStatus);
 
-export const getInntektskategori = (inntektkategori, getKodeverknavn) => {
+export const getInntektskategori = (inntektkategori, getKodeverknavn) =>
   // hvis valgtAndel ikke satt ennå return tom string.
-  return inntektkategori === undefined ? '' : getKodeverknavn(inntektkategori);
-};
+  inntektkategori === undefined ? '' : getKodeverknavn(inntektkategori);
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 

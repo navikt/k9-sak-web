@@ -9,8 +9,12 @@ import { omit } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { InjectedFormProps } from 'redux-form';
+import Panel from 'nav-frontend-paneler';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { BekreftOgForsettKnapp } from './BekreftOgForsettKnapp';
 import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
+
+import styles from './arbeidsforholdInfoPanel.less';
 
 // ----------------------------------------------------------------------------
 // VARIABLES
@@ -71,17 +75,30 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
   const { host } = window.location;
   const shouldDisableSubmitButton = formProps.pristine || host !== 'app-q1.adeo.no';
 
+  const erForBeslutter = aksjonspunkter.length > 0 && aksjonspunkter.some(a => a.toTrinnsBehandling && a.erAktivt);
+  const begrunnelse = erForBeslutter ? aksjonspunkter.find(a => a.erAktivt && a.toTrinnsBehandling).begrunnelse : '';
+
   return (
     <>
       {aksjonspunkter.length > 0 && (
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
-          {[
-            <FormattedMessage
-              key="ArbeidsforholdInfoPanelAksjonspunkt"
-              id="ArbeidsforholdInfoPanel.AvklarArbeidsforhold"
-            />,
-          ]}
-        </AksjonspunktHelpTextTemp>
+        <Panel className={styles.begrunnelseSaksbehandler}>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
+            {[
+              <FormattedMessage
+                key="ArbeidsforholdInfoPanelAksjonspunkt"
+                id="ArbeidsforholdInfoPanel.AvklarArbeidsforhold"
+              />,
+            ]}
+          </AksjonspunktHelpTextTemp>
+          {erForBeslutter && (
+            <Normaltekst>
+              <strong>
+                <FormattedMessage id="ArbeidsforholdInfoPanel.BegrunnelseFraSaksbehandler" />
+              </strong>
+              {begrunnelse}
+            </Normaltekst>
+          )}
+        </Panel>
       )}
       <h3>
         <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />
