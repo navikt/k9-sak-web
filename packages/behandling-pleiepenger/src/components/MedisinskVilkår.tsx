@@ -86,7 +86,6 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           readOnly,
         )
       }
-      onError={() => {}}
     />
   );
 };
