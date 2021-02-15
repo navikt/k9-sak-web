@@ -48,12 +48,11 @@ const getOptions = (perioderSortert: Periode<any>[]) => ({
   zoomMin: 1000 * 60 * 60 * 24 * 30,
 });
 
-const createGroups = (rader: TidslinjeRad<Periode<any>>[]) => {
-  return rader.map(rad => ({
+const createGroups = (rader: TidslinjeRad<Periode<any>>[]) =>
+  rader.map(rad => ({
     id: rad.id,
     content: '',
   }));
-};
 
 const createItems = (perioder: Periode<any>[]) =>
   perioder.map(periode => ({
@@ -99,12 +98,14 @@ const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
     }
   }, []);
 
-  const allePerioderSortert = useMemo(() => {
-    return rader
-      .map(leggPåGroupId)
-      .flatMap(rad => rad.perioder)
-      .sort((p1, p2) => momentDate(p1.fom).diff(momentDate(p2.fom)));
-  }, [rader]);
+  const allePerioderSortert = useMemo(
+    () =>
+      rader
+        .map(leggPåGroupId)
+        .flatMap(rad => rad.perioder)
+        .sort((p1, p2) => momentDate(p1.fom).diff(momentDate(p2.fom))),
+    [rader],
+  );
 
   const timeline = (
     <div className={styles.timeLineWrapper}>

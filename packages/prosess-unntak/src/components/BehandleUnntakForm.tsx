@@ -108,16 +108,14 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-export const transformValues = values => {
-  return {
-    periode: values.periode,
-    avslagsårsak: values.avslagsårsak,
-    utfall: values.utfall,
-    behandlingResultatType: values.behandlingsresultat,
-    begrunnelse: values.begrunnelse,
-    kode: aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR,
-  };
-};
+export const transformValues = values => ({
+  periode: values.periode,
+  avslagsårsak: values.avslagsårsak,
+  utfall: values.utfall,
+  behandlingResultatType: values.behandlingsresultat,
+  begrunnelse: values.begrunnelse,
+  kode: aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR,
+});
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);

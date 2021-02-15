@@ -86,12 +86,10 @@ VilkarresultatMedBegrunnelse.defaultProps = {
   skalViseBegrunnelse: true,
 };
 
-VilkarresultatMedBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => {
-  return {
-    ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status),
-    ...VilkarBegrunnelse.buildInitialValues(periode),
-  };
-};
+VilkarresultatMedBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => ({
+  ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status),
+  ...VilkarBegrunnelse.buildInitialValues(periode),
+});
 
 VilkarresultatMedBegrunnelse.transformValues = values => ({
   begrunnelse: values.begrunnelse,

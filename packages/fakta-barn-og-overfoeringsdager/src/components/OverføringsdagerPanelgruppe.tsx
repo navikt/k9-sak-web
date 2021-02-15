@@ -19,32 +19,30 @@ const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgrup
   retning,
   behandlingId,
   behandlingVersjon,
-}) => {
-  return (
-    <div className={styles.panelgruppeContainer}>
-      <OverføringsdagerPanel
-        overføringer={fordelinger}
-        retning={retning}
-        type={OverføringstypeEnum.FORDELING}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
-      <OverføringsdagerPanel
-        overføringer={overføringer}
-        retning={retning}
-        type={OverføringstypeEnum.OVERFØRING}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
-      <OverføringsdagerPanel
-        overføringer={koronaoverføringer}
-        retning={retning}
-        type={OverføringstypeEnum.KORONAOVERFØRING}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      />
-    </div>
-  );
-};
+}) => (
+  <div className={styles.panelgruppeContainer}>
+    <OverføringsdagerPanel
+      overføringer={fordelinger}
+      retning={retning}
+      type={OverføringstypeEnum.FORDELING}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+    />
+    <OverføringsdagerPanel
+      overføringer={overføringer}
+      retning={retning}
+      type={OverføringstypeEnum.OVERFØRING}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+    />
+    <OverføringsdagerPanel
+      overføringer={koronaoverføringer}
+      retning={retning}
+      type={OverføringstypeEnum.KORONAOVERFØRING}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+    />
+  </div>
+);
 
 export default OverføringsdagerPanelgruppe;

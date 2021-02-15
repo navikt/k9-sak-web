@@ -14,9 +14,7 @@ interface OverføringsraderFormImplProps {
 const OverføringsraderFormImpl: FunctionComponent<InjectedFormProps & OverføringsraderFormImplProps> = ({
   type,
   retning,
-}) => {
-  return <FieldArray name="overføringer" component={Overføringsrader} props={{ type, retning }} />;
-};
+}) => <FieldArray name="overføringer" component={Overføringsrader} props={{ type, retning }} />;
 
 interface OverføringsraderFormProps {
   initialValues: Overføring[];

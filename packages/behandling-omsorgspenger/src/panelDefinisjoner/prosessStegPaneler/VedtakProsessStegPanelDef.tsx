@@ -23,16 +23,14 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => {
-    return [
-      OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG,
-      OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
-      OmsorgspengerBehandlingApiKeys.MEDLEMSKAP,
-      OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL,
-      OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-      OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
-    ];
-  };
+  getEndepunkter = () => [
+    OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG,
+    OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+    OmsorgspengerBehandlingApiKeys.MEDLEMSKAP,
+    OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL,
+    OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 

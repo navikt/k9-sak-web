@@ -45,13 +45,11 @@ const getManuellBrevCallback = ({ brødtekst, overskrift, overstyrtMottaker, for
   e.preventDefault();
 };
 
-const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }) => {
-  return {
-    dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
-    dokumentMal: dokumentMalType.UTLED,
-    ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-  };
-};
+const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }) => ({
+  dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
+  dokumentMal: dokumentMalType.UTLED,
+  ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+});
 
 const getPreviewAutomatiskBrevCallbackUtenValidering = ({
   fritekst,

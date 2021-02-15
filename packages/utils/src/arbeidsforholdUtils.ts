@@ -23,8 +23,7 @@ export const utledArbeidsforholdNavn = (
     : `${navn} (${arbeidsforhold.arbeidsgiverIdentifiktorGUI})`;
 };
 
-export const utledArbeidsforholdYrkestittel = (arbeidsforhold: ArbeidsforholdV2) => {
-  return arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+export const utledArbeidsforholdYrkestittel = (arbeidsforhold: ArbeidsforholdV2) =>
+  arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
     ? `${arbeidsforhold.yrkestittel} (${getEndCharFromId(arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId)})`
     : `${arbeidsforhold.yrkestittel}`;
-};

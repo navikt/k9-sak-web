@@ -135,15 +135,13 @@ const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & Inject
   aktiviteter,
   handleSubmit,
   isAksjonspunktOpen,
-}) => {
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className={styles.graBoks}>
-        <FormContent handleSubmit={handleSubmit} aktiviteter={aktiviteter} isAksjonspunktOpen={isAksjonspunktOpen} />
-      </div>
-    </form>
-  );
-};
+}) => (
+  <form onSubmit={handleSubmit}>
+    <div className={styles.graBoks}>
+      <FormContent handleSubmit={handleSubmit} aktiviteter={aktiviteter} isAksjonspunktOpen={isAksjonspunktOpen} />
+    </div>
+  </form>
+);
 
 export interface FormValues {
   begrunnelse?: string;
@@ -179,14 +177,12 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
   return (
     state,
     { aktiviteter, isAksjonspunktOpen, aksjonspunkterForSteg = [] }: AksjonspunktFormProps,
-  ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
-    return {
-      onSubmit,
-      aktiviteter,
-      isAksjonspunktOpen,
-      initialValues: { begrunnelse: aksjonspunkterForSteg[0]?.begrunnelse },
-    };
-  };
+  ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => ({
+    onSubmit,
+    aktiviteter,
+    isAksjonspunktOpen,
+    initialValues: { begrunnelse: aksjonspunkterForSteg[0]?.begrunnelse },
+  });
 };
 
 export default connect(mapStateToPropsFactory)(

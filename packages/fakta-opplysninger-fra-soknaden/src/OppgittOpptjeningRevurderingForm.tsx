@@ -438,16 +438,15 @@ const validateForm = (values: OppgittOpptjeningRevurderingFormValues, oppgittOpp
 
 const mapStateToProps = (_, props) => {
   const { submitCallback, oppgittOpptjening, behandlingId, behandlingVersjon, aksjonspunkter } = props;
-  const onSubmit = formValues => {
+  const onSubmit = formValues =>
     // For å håndtere validering for deler av formen som ligger i andre måneder enn den som rendres
-    return new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => {
       const errors = validateForm(formValues, props.oppgittOpptjening);
       if (!errors || Object.keys(errors).length === 0) {
         return resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
       }
       return reject(errors);
     });
-  };
   const initialValues = buildInitialValues(oppgittOpptjening, aksjonspunkter);
   const validate = values => {
     const validationResult = validateForm(values, oppgittOpptjening);

@@ -233,8 +233,8 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) => {
-  return fieldArrayList
+const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) =>
+  fieldArrayList
     .filter(
       (currentFormValues, index) =>
         måVurderes(alleBeregningsgrunnlag[index], currentFormValues.aksjonspunkter) || erOverstyring(currentFormValues),
@@ -249,7 +249,6 @@ const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingRes
         ...transformValuesFaktaForATFLOgSN(faktaBeregningValues),
       };
     });
-};
 
 export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnlag, behandlingResultatPerioder) => {
   const fieldArrayList = values[fieldArrayName];
