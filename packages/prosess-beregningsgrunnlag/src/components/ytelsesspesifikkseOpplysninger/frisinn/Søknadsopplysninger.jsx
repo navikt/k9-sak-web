@@ -10,23 +10,21 @@ import moment from 'moment';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 
-const lagPerioderadMedTekst = (tekstId, fom, tom) => {
-  return (
-    <Row>
-      <Column xs="12">
-        <Normaltekst>
-          <FormattedMessage
-            id={tekstId}
-            values={{
-              fom: moment(fom).format(DDMMYYYY_DATE_FORMAT),
-              tom: moment(tom).format(DDMMYYYY_DATE_FORMAT),
-            }}
-          />
-        </Normaltekst>
-      </Column>
-    </Row>
-  );
-};
+const lagPerioderadMedTekst = (tekstId, fom, tom) => (
+  <Row>
+    <Column xs="12">
+      <Normaltekst>
+        <FormattedMessage
+          id={tekstId}
+          values={{
+            fom: moment(fom).format(DDMMYYYY_DATE_FORMAT),
+            tom: moment(tom).format(DDMMYYYY_DATE_FORMAT),
+          }}
+        />
+      </Normaltekst>
+    </Column>
+  </Row>
+);
 
 const lagSøktYtelseRadPeriode = periode => {
   const snAndel = periode.frisinnAndeler.find(

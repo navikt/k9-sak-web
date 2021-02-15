@@ -100,11 +100,12 @@ export const VilkarresultatMedOverstyringForm: FunctionComponent<
     toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));
   };
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       reset();
-    };
-  }, [periodeFom, periodeTom]);
+    },
+    [periodeFom, periodeTom],
+  );
 
   return (
     <form onSubmit={handleSubmit}>

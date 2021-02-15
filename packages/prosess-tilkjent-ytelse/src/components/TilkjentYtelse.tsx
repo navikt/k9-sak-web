@@ -93,17 +93,15 @@ const andelerUtgjør100ProsentTilsammen = periode => {
   return false;
 };
 
-const prepareTimelineData = (periode, index, intl, getKodeverknavn) => {
-  return {
-    ...periode,
-    className: andelerUtgjør100ProsentTilsammen(periode) ? 'innvilget' : 'gradert',
-    group: 1,
-    id: index,
-    start: parseDateString(periode.fom),
-    end: moment(parseDateString(periode.tom)).add(1, 'day'),
-    title: createTooltipContent(intl, periode, getKodeverknavn),
-  };
-};
+const prepareTimelineData = (periode, index, intl, getKodeverknavn) => ({
+  ...periode,
+  className: andelerUtgjør100ProsentTilsammen(periode) ? 'innvilget' : 'gradert',
+  group: 1,
+  id: index,
+  start: parseDateString(periode.fom),
+  end: moment(parseDateString(periode.tom)).add(1, 'day'),
+  title: createTooltipContent(intl, periode, getKodeverknavn),
+});
 
 interface OwnProps {
   items: PeriodeMedId[];

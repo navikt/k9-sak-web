@@ -7,21 +7,15 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 const harIngenAndeler = perioder => {
-  const alleAndeler = perioder.flatMap(({ andeler }) => {
-    return [...andeler];
-  });
+  const alleAndeler = perioder.flatMap(({ andeler }) => [...andeler]);
   return alleAndeler.length === 0;
 };
 
 const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const { perioder } = beregningsresultatUtbetaling;
-  const alleUtfall = perioder.flatMap(({ andeler }) => {
-    return [
-      ...andeler.flatMap(({ uttak }) => {
-        return [...uttak.flatMap(({ utfall }) => utfall)];
-      }),
-    ];
-  });
+  const alleUtfall = perioder.flatMap(({ andeler }) => [
+    ...andeler.flatMap(({ uttak }) => [...uttak.flatMap(({ utfall }) => utfall)]),
+  ]);
   return !alleUtfall.some(utfall => utfall === 'INNVILGET');
 };
 
@@ -47,13 +41,11 @@ class PanelDef extends ProsessStegPanelDef {
     return vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ fagsak, beregningsresultatUtbetaling, personopplysninger }) => {
-    return {
-      fagsak,
-      personopplysninger,
-      beregningsresultat: beregningsresultatUtbetaling,
-    };
-  };
+  getData = ({ fagsak, beregningsresultatUtbetaling, personopplysninger }) => ({
+    fagsak,
+    personopplysninger,
+    beregningsresultat: beregningsresultatUtbetaling,
+  });
 }
 
 class TilkjentYtelseProsessStegPanelDef extends ProsessStegDef {

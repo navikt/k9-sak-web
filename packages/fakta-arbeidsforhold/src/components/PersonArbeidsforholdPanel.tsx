@@ -42,9 +42,8 @@ const cleanUpArbeidsforhold = (newValues, originalValues) => {
   return newValues;
 };
 
-export const harAksjonspunkter = arbeidsforhold => {
-  return Array.isArray(arbeidsforhold) && arbeidsforhold.filter(af => af.aksjonspunktÅrsaker.length > 0).length > 0;
-};
+export const harAksjonspunkter = arbeidsforhold =>
+  Array.isArray(arbeidsforhold) && arbeidsforhold.filter(af => af.aksjonspunktÅrsaker.length > 0).length > 0;
 
 interface PureOwnProps {
   behandlingId: number;

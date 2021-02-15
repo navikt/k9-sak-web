@@ -86,25 +86,23 @@ const validateForm = values => ({
   ...LeggTilArbeidsforholdFelter.validate(values),
 });
 
-const mapStateToPropsFactory = (_initialState: any, initialOwnProps: PureOwnProps) => {
-  return (state, ownProps) => {
-    const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
-    const onSubmit = values => {
-      initialOwnProps.updateArbeidsforhold(values);
-      skjulArbeidsforhold();
-    };
-    const validate = (values: FormValues) => validateForm(values);
-    return {
-      initialValues: arbeidsforhold,
-      readOnly: readOnly || arbeidsforhold.aksjonspunktÅrsaker.length === 0,
-      arbeidsforholdHandlingVerdi: behandlingFormValueSelector(
-        PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
-        behandlingId,
-        behandlingVersjon,
-      )(state, 'arbeidsforholdHandlingField'),
-      onSubmit,
-      validate,
-    };
+const mapStateToPropsFactory = (_initialState: any, initialOwnProps: PureOwnProps) => (state, ownProps) => {
+  const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
+  const onSubmit = values => {
+    initialOwnProps.updateArbeidsforhold(values);
+    skjulArbeidsforhold();
+  };
+  const validate = (values: FormValues) => validateForm(values);
+  return {
+    initialValues: arbeidsforhold,
+    readOnly: readOnly || arbeidsforhold.aksjonspunktÅrsaker.length === 0,
+    arbeidsforholdHandlingVerdi: behandlingFormValueSelector(
+      PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
+      behandlingId,
+      behandlingVersjon,
+    )(state, 'arbeidsforholdHandlingField'),
+    onSubmit,
+    validate,
   };
 };
 

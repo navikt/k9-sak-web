@@ -252,11 +252,8 @@ const getStatusList = beregningsgrunnlagPeriode => {
   return statusList;
 };
 
-const harFrisinngrunnlag = beregningsgrunnlag => {
-  return (
-    beregningsgrunnlag.ytelsesspesifiktGrunnlag && beregningsgrunnlag.ytelsesspesifiktGrunnlag.ytelsetype === 'FRISINN'
-  );
-};
+const harFrisinngrunnlag = beregningsgrunnlag =>
+  beregningsgrunnlag.ytelsesspesifiktGrunnlag && beregningsgrunnlag.ytelsesspesifiktGrunnlag.ytelsetype === 'FRISINN';
 
 const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
   if (

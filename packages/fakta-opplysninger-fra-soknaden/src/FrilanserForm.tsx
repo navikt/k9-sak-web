@@ -21,11 +21,12 @@ const FrilanserForm = ({
 }: FrilanserFormProps) => {
   const intl = useIntl();
 
-  React.useEffect(() => {
-    return () => {
+  React.useEffect(
+    () => () => {
       clearFrilansValues();
-    };
-  }, []);
+    },
+    [],
+  );
 
   return (
     <>
