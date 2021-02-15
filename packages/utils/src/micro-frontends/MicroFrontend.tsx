@@ -11,7 +11,7 @@ interface MicroFrontendProps {
   stylesheetSrc?: string;
   stylesheetIntegrity?: string;
   onReady: () => void;
-  onError: () => void;
+  onError?: () => void;
 }
 
 const createScriptTagElement = (src, id, integrity, onReady, onError) => {
