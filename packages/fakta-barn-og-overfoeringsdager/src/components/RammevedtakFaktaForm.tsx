@@ -66,6 +66,8 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
       ...koronaoverføringFår,
     ].length > 0;
 
+  const barnMedDeltBosted = barn.filter(barnet => barnet.deltBosted !== undefined);
+
   return (
     <>
       <UidentifiserteRammevedtak type={RammevedtakEnum.UIDENTIFISERT} rammevedtak={rammevedtak} />
@@ -138,8 +140,8 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
       </Seksjon>
       <Seksjon bakgrunn="hvit" title={{ id: 'FaktaRammevedtak.harDeltBosted.Tittel' }} imgSrc={hjem} medMarg>
         <>
-          {!barn.length && <FormattedMessage id="FaktaRammevedtak.harDeltBosted.IngenRammemelding" />}
-          {barn.map((barnet, index) => (
+          {!barnMedDeltBosted.length && <FormattedMessage id="FaktaRammevedtak.harDeltBosted.IngenRammemelding" />}
+          {barnMedDeltBosted.map((barnet, index) => (
             <DeltBosted barnet={barnet} index={index} key={barnet.fødselsnummer} />
           ))}
         </>
