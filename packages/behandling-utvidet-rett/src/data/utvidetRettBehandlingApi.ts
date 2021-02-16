@@ -43,35 +43,41 @@ export enum UtvidetRettBehandlingApiKeys {
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
   OMSORGEN_FOR = 'OMSORGEN_FOR',
+  BEREGNINGSRESULTAT = 'BEREGNINGSRESULTAT',
 }
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/sak/api/behandlinger', UtvidetRettBehandlingApiKeys.BEHANDLING_OMSORG)
 
   // behandlingsdata
-  .withRel('beregningsresultat-utbetalt', UtvidetRettBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
+  .withRel('omsorgen-for', UtvidetRettBehandlingApiKeys.OMSORGEN_FOR)
   .withRel('aksjonspunkter', UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', UtvidetRettBehandlingApiKeys.VILKAR)
-  .withRel('soeker-personopplysninger', UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER)
-  .withRel('simuleringResultat', UtvidetRettBehandlingApiKeys.SIMULERING_RESULTAT)
-  .withRel('tilbakekrevingvalg', UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withRel('beregningsgrunnlag-alle', UtvidetRettBehandlingApiKeys.BEREGNINGSGRUNNLAG)
-  .withRel('familiehendelse-v2', UtvidetRettBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', UtvidetRettBehandlingApiKeys.SOKNAD)
-  .withRel('soknad-original-behandling', UtvidetRettBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
-  .withRel('familiehendelse-original-behandling', UtvidetRettBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
-  .withRel('soeker-medlemskap-v2', UtvidetRettBehandlingApiKeys.MEDLEMSKAP)
+  .withRel('soeker-personopplysninger', UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('inntekt-arbeid-ytelse', UtvidetRettBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('arbeidsforhold-v1', UtvidetRettBehandlingApiKeys.ARBEIDSFORHOLD)
-  .withRel('soeker-verge', UtvidetRettBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', UtvidetRettBehandlingApiKeys.OPPTJENING)
-  .withRel('sendt-varsel-om-revurdering', UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withRel('vedtak-varsel', UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL)
-  .withRel('forbrukte-dager', UtvidetRettBehandlingApiKeys.FORBRUKTE_DAGER)
-  .withRel('full-uttaksplan', UtvidetRettBehandlingApiKeys.FULL_UTTAKSPLAN)
   .withRel('inntekt', UtvidetRettBehandlingApiKeys.INNTEKT_OG_YTELSER)
+  .withRel('vedtak-varsel', UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL)
+  .withRel('beregningsresultat-utbetalt', UtvidetRettBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
+  .withRel('beregningsgrunnlag', UtvidetRettBehandlingApiKeys.BEREGNINGSGRUNNLAG)
+  .withRel('beregningsresultat', UtvidetRettBehandlingApiKeys.BEREGNINGSRESULTAT)
+  .withRel('beregningsgrunnlag-alle', UtvidetRettBehandlingApiKeys.BEREGNINGSGRUNNLAG)
+  .withRel('simuleringResultat', UtvidetRettBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilgjengelige-vedtaksbrev', UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
-  .withRel('omsorgen-for', UtvidetRettBehandlingApiKeys.OMSORGEN_FOR)
+  .withRel('forbrukte-dager', UtvidetRettBehandlingApiKeys.FORBRUKTE_DAGER)
+
+  .withRel('tilbakekrevingvalg', UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG)
+  .withRel('sendt-varsel-om-revurdering', UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
+  .withRel('soeker-medlemskap-v2', UtvidetRettBehandlingApiKeys.MEDLEMSKAP)
+  /* .withRel('familiehendelse-v2', UtvidetRettBehandlingApiKeys.FAMILIEHENDELSE)
+  .withRel('soknad-original-behandling', UtvidetRettBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
+  .withRel('familiehendelse-original-behandling', UtvidetRettBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
+
+  .withRel('soeker-verge', UtvidetRettBehandlingApiKeys.VERGE)
+
+  .withRel('full-uttaksplan', UtvidetRettBehandlingApiKeys.FULL_UTTAKSPLAN) */
 
   // operasjoner
   .withRel('dokumentdata-lagre', UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE)

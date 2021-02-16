@@ -19,14 +19,12 @@ import {
 } from './data/utvidetRettBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
 import UtvidetRettPaneler from './components/UtvidetRettPaneler';
-import mockBehandlingsdata from './components/mock/mockBehandlingsdata';
-import mockAlleKodeverk from './components/mock/mockKodeverk';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
   { key: UtvidetRettBehandlingApiKeys.VILKAR },
   { key: UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER },
-  { key: UtvidetRettBehandlingApiKeys.SOKNAD },
+  // { key: UtvidetRettBehandlingApiKeys.SOKNAD },
   { key: UtvidetRettBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: UtvidetRettBehandlingApiKeys.BEREGNINGSGRUNNLAG },
   { key: UtvidetRettBehandlingApiKeys.SIMULERING_RESULTAT },
@@ -57,7 +55,7 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
-  // kodeverk,
+  kodeverk,
   fagsak,
   fagsakPerson,
   rettigheter,
@@ -164,10 +162,10 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
       />
       <UtvidetRettPaneler
         behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={mockBehandlingsdata}
+        fetchedData={data}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
-        alleKodeverk={mockAlleKodeverk}
+        alleKodeverk={kodeverk}
         rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}
