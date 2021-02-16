@@ -26,10 +26,8 @@ import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
-import mockFagsak from './mock_utvidetRett/mockFagsak';
 import mockFagsakRettigheter from './mock_utvidetRett/mockfagsakRettigheter';
 import mockAlleBehandlinger from './mock_utvidetRett/mockAlleBehandlinger';
-import mockArbeidsgiverOpplysninger from './mock_utvidetRett/mockArbeidsgiverOpplysninger';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -149,7 +147,6 @@ const FagsakIndex: FunctionComponent = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-
   return (
     <>
       <FagsakGrid
@@ -160,9 +157,9 @@ const FagsakIndex: FunctionComponent = () => {
             render={props => (
               <BehandlingerIndex
                 {...props}
-                fagsak={mockFagsak}
-                alleBehandlinger={mockAlleBehandlinger}
-                arbeidsgiverOpplysninger={mockArbeidsgiverOpplysninger}
+                fagsak={fagsak}
+                alleBehandlinger={alleBehandlinger}
+                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                 setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
                 setRequestPendingMessage={setRequestPendingMessage}
               />
@@ -188,7 +185,7 @@ const FagsakIndex: FunctionComponent = () => {
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             behandlingRettigheter={behandlingRettigheter}
-            arbeidsgiverOpplysninger={mockArbeidsgiverOpplysninger}
+            arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
           />
         }
         visittkortContent={() => {

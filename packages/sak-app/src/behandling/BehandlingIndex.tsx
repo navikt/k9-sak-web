@@ -269,7 +269,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
       </Suspense>
     );
   }
-  if (fagsak.sakstype.kode === FagsakYtelseType.UTVIDET_RETT) {
+  if (fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
