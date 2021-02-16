@@ -72,11 +72,12 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
   intl,
   ...formProps
 }) => {
-  const { host } = window.location;
-  const shouldDisableSubmitButton = formProps.pristine || host !== 'app-q1.adeo.no';
+  const shouldDisableSubmitButton = formProps.pristine;
 
   const erForBeslutter = aksjonspunkter.length > 0 && aksjonspunkter.some(a => a.toTrinnsBehandling && a.erAktivt);
-  const begrunnelse = erForBeslutter ? aksjonspunkter.find(a => a.erAktivt && a.toTrinnsBehandling).begrunnelse : '';
+  const begrunnelse = erForBeslutter
+    ? aksjonspunkter.find(a => a.erAktivt && a.toTrinnsBehandling && a.definisjon.kode === '5058').begrunnelse
+    : '';
 
   return (
     <>
