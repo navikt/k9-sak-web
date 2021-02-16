@@ -14,6 +14,7 @@ export const RammevedtakEnum = stringEnum({
   MIDLERTIDIG_ALENEOMSORG: 'MidlertidigAleneOmOmsorgen',
   FOSTERBARN: 'Fosterbarn',
   UTENLANDSK_BARN: 'UtenlandskBarn',
+  DELT_BOSTED: 'DeltBosted',
 });
 
 export type RammevedtakType = typeof RammevedtakEnum[keyof typeof RammevedtakEnum];

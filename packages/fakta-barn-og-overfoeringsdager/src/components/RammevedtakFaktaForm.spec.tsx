@@ -16,7 +16,7 @@ describe('<RammevedtakFaktaFormImpl>', () => {
     overføringGir: [],
   };
 
-  it('rendrer barn, overføringer og midlertidig aleneansvar-seksjoner', () => {
+  it('rendrer barn, overføringer, delt bosted og midlertidig aleneansvar-seksjoner', () => {
     const wrapper = shallowWithIntl(
       <RammevedtakFaktaFormImpl
         {...reduxFormPropsMock}
@@ -27,6 +27,6 @@ describe('<RammevedtakFaktaFormImpl>', () => {
       />,
     );
 
-    expect(wrapper.find(Seksjon)).toHaveLength(3);
+    expect(wrapper.find(Seksjon)).toHaveLength(4);
   });
 });
