@@ -23,6 +23,7 @@ export const FormkravKlageFormNfpImpl = ({
   readOnly,
   readOnlySubmitButton,
   alleKodeverk,
+  personopplysninger,
   arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
   parterMedKlagerett,
@@ -37,6 +38,7 @@ export const FormkravKlageFormNfpImpl = ({
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
       formProps={formProps}
       alleKodeverk={alleKodeverk}
+      personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
       parterMedKlagerett={parterMedKlagerett}
@@ -48,6 +50,9 @@ export const FormkravKlageFormNfpImpl = ({
 FormkravKlageFormNfpImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ...formPropTypes,

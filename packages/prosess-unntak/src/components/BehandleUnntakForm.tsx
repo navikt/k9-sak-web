@@ -1,11 +1,11 @@
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import {
   behandlingForm,
@@ -24,18 +24,26 @@ import {
   AksjonspunktHelpTextTemp,
   FlexColumn,
 } from '@fpsak-frontend/shared-components';
+import { Kodeverk } from '@k9-sak-web/types';
 import FritekstTextField from './FritekstTextField';
 
 const FORM_NAME = 'BehandleUnntakForm';
 
-export const BehandleUnntakFormImpl = ({
+interface OwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  readOnly: boolean;
+  readOnlySubmitButton: boolean;
+  sprakkode: Kodeverk;
+}
+
+export const BehandleUnntakForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
   behandlingId,
   behandlingVersjon,
   readOnly,
   handleSubmit,
   readOnlySubmitButton,
   sprakkode,
-  intl,
   // alleKodeverk,
   ...formProps
 }) => (
@@ -58,7 +66,7 @@ export const BehandleUnntakFormImpl = ({
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer twentyPx />
 
-      <FritekstTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
+      <FritekstTextField sprakkode={sprakkode} readOnly={readOnly} />
 
       <VerticalSpacer twentyPx />
 
@@ -68,7 +76,7 @@ export const BehandleUnntakFormImpl = ({
       </RadioGroupField>
 
       <FlexColumn>
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
@@ -83,19 +91,13 @@ export const BehandleUnntakFormImpl = ({
   </form>
 );
 
-BehandleUnntakFormImpl.propTypes = {
-  previewCallback: PropTypes.func.isRequired,
-  // saveUnntak: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool,
-  readOnlySubmitButton: PropTypes.bool,
-};
-
-BehandleUnntakFormImpl.defaultProps = {
+BehandleUnntakForm.defaultProps = {
   readOnly: true,
   readOnlySubmitButton: true,
 };
 
 export const buildInitialValues = createSelector(
+  // @ts-ignore Fiks dette!
   [ownProps => ownProps.vilkårsresultat, ownProps => ownProps.behandlingsresultat, ownProps => ownProps.vilkar],
   (vilkårsresultat, behandlingsresultat, vilkar) => ({
     periode: vilkårsresultat ? vilkårsresultat[0].periode : null,
@@ -106,16 +108,14 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-export const transformValues = values => {
-  return {
-    periode: values.periode,
-    avslagsårsak: values.avslagsårsak,
-    utfall: values.utfall,
-    behandlingResultatType: values.behandlingsresultat,
-    begrunnelse: values.begrunnelse,
-    kode: aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR,
-  };
-};
+export const transformValues = values => ({
+  periode: values.periode,
+  avslagsårsak: values.avslagsårsak,
+  utfall: values.utfall,
+  behandlingResultatType: values.behandlingsresultat,
+  begrunnelse: values.begrunnelse,
+  kode: aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR,
+});
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
@@ -132,10 +132,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-const BehandleUnntakForm = connect(mapStateToPropsFactory)(
+export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: FORM_NAME,
-  })(BehandleUnntakFormImpl),
+  })(BehandleUnntakForm),
 );
-
-export default injectIntl(BehandleUnntakForm);

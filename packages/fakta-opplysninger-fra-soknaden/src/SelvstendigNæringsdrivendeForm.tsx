@@ -21,11 +21,12 @@ const SelvstendigNæringsdrivendeForm = ({
 }: SelvstendigNæringsdrivendeFormProps) => {
   const intl = useIntl();
 
-  React.useEffect(() => {
-    return () => {
+  React.useEffect(
+    () => () => {
       clearSelvstendigValues();
-    };
-  }, []);
+    },
+    [],
+  );
 
   return (
     <>

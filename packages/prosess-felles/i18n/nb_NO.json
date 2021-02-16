@@ -1,0 +1,14 @@
+{
+  "ProsessPanelTemplate.ErOppfylt": "Vilkåret er oppfylt",
+  "ProsessPanelTemplate.ErIkkeOppfylt": "Vilkåret er avslått",
+  "ProsessPanelTemplate.IkkeBehandlet": "Ikke behandlet",
+
+  "VilkarResultPicker.Arsak": "Avslagsårsak",
+  "VilkarResultPicker.SelectArsak": "Velg årsak",
+  
+  "ProsessStegBegrunnelseTextField.ExplanationRequired": "Vurdering",
+  "ProsessStegBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
+  "ProsessStegBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",
+
+  "SubmitButton.ConfirmInformation": "Bekreft og fortsett"
+}

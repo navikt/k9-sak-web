@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 
 import TableColumn from './TableColumn';
 
@@ -9,7 +8,7 @@ describe('<TableColumn>', () => {
     const wrapper = shallow(<TableColumn>testverdi</TableColumn>);
 
     const col = wrapper.find('td');
-    expect(col).to.have.length(1);
-    expect(col.text()).is.eql('testverdi');
+    expect(col).toHaveLength(1);
+    expect(col.text()).toEqual('testverdi');
   });
 });

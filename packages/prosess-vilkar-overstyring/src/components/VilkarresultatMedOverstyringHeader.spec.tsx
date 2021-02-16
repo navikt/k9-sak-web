@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { EtikettLiten } from 'nav-frontend-typografi';
 import React from 'react';
@@ -32,11 +31,11 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
       </Provider>,
     );
     const melding = wrapper.find(FormattedMessage);
-    expect(melding).to.have.length(2);
-    expect(melding.first().prop('id')).to.eql('Behandlingspunkt.Soknadsfristvilkaret');
+    expect(melding).toHaveLength(2);
+    expect(melding.first().prop('id')).toEqual('Behandlingspunkt.Soknadsfristvilkaret');
 
     const normaltekst = wrapper.find(EtikettLiten);
-    expect(normaltekst).to.have.length(1);
-    expect(normaltekst.childAt(0).text()).to.eql('§23');
+    expect(normaltekst).toHaveLength(1);
+    expect(normaltekst.childAt(0).text()).toEqual('§23');
   });
 });

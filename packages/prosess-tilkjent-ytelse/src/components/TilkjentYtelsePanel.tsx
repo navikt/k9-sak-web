@@ -140,11 +140,9 @@ const finnTilbaketrekkAksjonspunkt = createSelector(
   },
 );
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    beregningresultat: ownProps.beregningsresultat,
-    vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  beregningresultat: ownProps.beregningsresultat,
+  vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
+});
 
 export default connect(mapStateToProps)(TilkjentYtelsePanelImpl);

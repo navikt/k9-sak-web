@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { TableColumn } from '@fpsak-frontend/shared-components/index';
-import { expect } from 'chai';
 import UttakTabell from './UttakTabell';
 import { UtfallEnum } from './dto/Utfall';
 import { InnvilgetÅrsakEnum } from './dto/InnvilgetÅrsakType';
@@ -30,6 +29,6 @@ describe('<UttakTabell>', () => {
 
     const kolonner = wrapper.find(TableColumn);
 
-    expect(kolonner).to.have.length(5);
+    expect(kolonner).toHaveLength(5);
   });
 });

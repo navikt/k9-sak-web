@@ -38,27 +38,25 @@ const Autocomplete: FunctionComponent<AutocompleteFieldProps & AutocompleteProps
   inputValue,
   input: { onChange },
   dataId,
-}) => {
-  return (
-    // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <label htmlFor={id} className={styles.autocompleteLabel} data-id={dataId}>
-      <Element className={styles.typoElement}>{label}</Element>
-      <NAPAutocomplete
-        id={id}
-        suggestions={suggestions}
-        value={inputValue}
-        onChange={onInputValueChange}
-        onSelect={e => {
-          onChange(e);
-          onInputValueChange(e.value);
-        }}
-        ariaLabel={ariaLabel}
-        placeholder={placeholder}
-        name={name}
-      />
-    </label>
-  );
-};
+}) => (
+  // eslint-disable-next-line jsx-a11y/label-has-associated-control
+  <label htmlFor={id} className={styles.autocompleteLabel} data-id={dataId}>
+    <Element className={styles.typoElement}>{label}</Element>
+    <NAPAutocomplete
+      id={id}
+      suggestions={suggestions}
+      value={inputValue}
+      onChange={onInputValueChange}
+      onSelect={e => {
+        onChange(e);
+        onInputValueChange(e.value);
+      }}
+      ariaLabel={ariaLabel}
+      placeholder={placeholder}
+      name={name}
+    />
+  </label>
+);
 
 const AutocompleteField = (props: AutocompleteProps) => {
   const { readOnly } = props;

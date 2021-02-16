@@ -41,7 +41,7 @@ const behandlinger = [
     behandlingHenlagt: false,
     behandlingKoet: false,
     toTrinnsBehandling: false,
-    behandlingArsaker: [],
+    behandlingÅrsaker: [],
     behandlingsresultat: {
       type: {
         kode: 'AVSLÅTT',

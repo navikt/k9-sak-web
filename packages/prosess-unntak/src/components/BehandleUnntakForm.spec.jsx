@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { BehandleUnntakFormImpl } from './BehandleUnntakForm';
+import { BehandleUnntakForm } from './BehandleUnntakForm';
 import shallowWithIntl from '../../i18n';
 
 describe('<BehandleKlageFormKaImpl>', () => {
@@ -21,7 +21,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
 
   it.skip('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
     const wrapper = shallowWithIntl(
-      <BehandleUnntakFormImpl
+      <BehandleUnntakForm
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
@@ -43,7 +43,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
 
   it.skip('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
     const wrapper = shallowWithIntl(
-      <BehandleUnntakFormImpl
+      <BehandleUnntakForm
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues2}
@@ -65,7 +65,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
 
   it.skip('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
     const wrapper = shallowWithIntl(
-      <BehandleUnntakFormImpl
+      <BehandleUnntakForm
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues3}

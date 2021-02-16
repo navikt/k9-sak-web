@@ -65,7 +65,6 @@ const createRelevantePaneler = (
   relevanteStatuser,
   allePerioder,
   readOnly,
-  gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
@@ -120,11 +119,7 @@ const createRelevantePaneler = (
     )}
     {relevanteStatuser.harDagpengerEllerAAP && (
       <div>
-        <TilstotendeYtelser
-          alleAndeler={alleAndelerIForstePeriode}
-          relevanteStatuser={relevanteStatuser}
-          gjelderBesteberegning={gjelderBesteberegning}
-        />
+        <TilstotendeYtelser alleAndeler={alleAndelerIForstePeriode} relevanteStatuser={relevanteStatuser} />
       </div>
     )}
     {relevanteStatuser.isMilitaer && (
@@ -173,7 +168,6 @@ export const BeregningsgrunnlagImpl = ({
   relevanteStatuser,
   gjeldendeAksjonspunkter,
   allePerioder,
-  gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
@@ -188,7 +182,6 @@ export const BeregningsgrunnlagImpl = ({
     relevanteStatuser,
     allePerioder,
     readOnly,
-    gjelderBesteberegning,
     behandlingId,
     behandlingVersjon,
     alleKodeverk,
@@ -203,7 +196,6 @@ BeregningsgrunnlagImpl.propTypes = {
   gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
-  gjelderBesteberegning: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

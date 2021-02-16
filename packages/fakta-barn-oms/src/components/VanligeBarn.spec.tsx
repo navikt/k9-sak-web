@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { shallowWithIntl } from '../../i18n';
 import BarnInfo from './BarnInfo';
@@ -30,6 +29,6 @@ describe('<BarnInfo>', () => {
     ];
     const wrapper = shallowWithIntl(<VanligeBarn barn={barn} />);
 
-    expect(wrapper.find(BarnInfo)).to.have.length(barn.length);
+    expect(wrapper.find(BarnInfo)).toHaveLength(barn.length);
   });
 });

@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Systemtittel } from 'nav-frontend-typografi';
@@ -51,8 +50,8 @@ describe('<TilbakekrevingVedtak>', () => {
       />,
     );
 
-    expect(wrapper.find(TilbakekrevingVedtakPeriodeTabell)).to.have.length(1);
-    expect(wrapper.find(TilbakekrevingVedtakForm)).to.have.length(1);
-    expect(wrapper.find(Systemtittel)).to.have.length(0);
+    expect(wrapper.find(TilbakekrevingVedtakPeriodeTabell)).toHaveLength(1);
+    expect(wrapper.find(TilbakekrevingVedtakForm)).toHaveLength(1);
+    expect(wrapper.find(Systemtittel)).toHaveLength(0);
   });
 });

@@ -1,4 +1,11 @@
+import Arbeidsgiver from './arbeidsgiverTsType';
 import Kodeverk from './kodeverkTsType';
+
+export type ManglendeVedleggSoknad = Readonly<{
+  dokumentType: Kodeverk;
+  arbeidsgiver: Arbeidsgiver;
+  brukerHarSagtAtIkkeKommer: boolean;
+}>;
 
 type Soknad = Readonly<{
   fodselsdatoer?: Record<number, string>;
@@ -6,6 +13,7 @@ type Soknad = Readonly<{
   antallBarn: number;
   utstedtdato?: string;
   soknadType: Kodeverk;
+  manglendeVedlegg: ManglendeVedleggSoknad[];
 }>;
 
 export default Soknad;

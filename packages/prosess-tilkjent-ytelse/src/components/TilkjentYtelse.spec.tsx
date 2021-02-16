@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { TimeLineControl } from '@fpsak-frontend/tidslinje';
@@ -56,6 +55,6 @@ describe('<TilkjentYtelse>', () => {
         alleKodeverk={{}}
       />,
     );
-    expect(wrapper.find(TimeLineControl)).to.have.length(1);
+    expect(wrapper.find(TimeLineControl)).toHaveLength(1);
   });
 });

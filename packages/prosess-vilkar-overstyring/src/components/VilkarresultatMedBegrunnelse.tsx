@@ -1,14 +1,18 @@
-import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Kodeverk } from '@k9-sak-web/types';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
+import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+
 import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
+import VilkarBegrunnelse from './VilkarBegrunnelse';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
-  avslagsarsaker: Kodeverk[];
+  avslagsarsaker: KodeverkMedNavn[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
@@ -32,8 +36,36 @@ export const VilkarresultatMedBegrunnelse = ({
   <>
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
-      customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
-      customVilkarOppfyltText={customVilkarOppfyltText}
+      customVilkarOppfyltText={
+        <FormattedMessage
+          id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
+          values={
+            customVilkarOppfyltText
+              ? {
+                  b: chunks => <b>{chunks}</b>,
+                  ...customVilkarIkkeOppfyltText.values,
+                }
+              : { b: chunks => <b>{chunks}</b> }
+          }
+        />
+      }
+      customVilkarIkkeOppfyltText={
+        <FormattedMessage
+          id={
+            customVilkarIkkeOppfyltText
+              ? customVilkarOppfyltText.id
+              : 'VilkarresultatMedOverstyringForm.VilkarIkkeOppfylt'
+          }
+          values={
+            customVilkarIkkeOppfyltText
+              ? {
+                  b: chunks => <b>{chunks}</b>,
+                  ...customVilkarIkkeOppfyltText.values,
+                }
+              : { b: chunks => <b>{chunks}</b> }
+          }
+        />
+      }
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
       erMedlemskapsPanel={erMedlemskapsPanel}
@@ -54,12 +86,10 @@ VilkarresultatMedBegrunnelse.defaultProps = {
   skalViseBegrunnelse: true,
 };
 
-VilkarresultatMedBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => {
-  return {
-    ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status),
-    ...VilkarBegrunnelse.buildInitialValues(periode),
-  };
-};
+VilkarresultatMedBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => ({
+  ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status),
+  ...VilkarBegrunnelse.buildInitialValues(periode),
+});
 
 VilkarresultatMedBegrunnelse.transformValues = values => ({
   begrunnelse: values.begrunnelse,

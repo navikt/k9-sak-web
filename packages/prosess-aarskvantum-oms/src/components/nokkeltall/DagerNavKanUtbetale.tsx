@@ -17,32 +17,30 @@ const DagerNavKanUtbetale: React.FunctionComponent<DagerNavKanUtbetaleProps> = (
   antallDagerArbeidsgiverDekker,
   visDetaljer,
   viserDetaljer,
-}) => {
-  return (
-    <Nokkeltall
-      overskrift={{ antallDager: dagerNavKanUtbetale, overskrifttekstId: 'Nøkkeltall.DagerNavKanUtbetale' }}
-      detaljer={[
-        {
-          antallDager: dagerRettPå,
-          overskrifttekstId: 'Nøkkeltall.TotaltAntallDager',
-          infotekstContent: <FormattedMessage id="Nøkkeltall.TotaltAntallDager.InfoText" />,
-        },
-        {
-          antallDager: -antallDagerArbeidsgiverDekker,
-          overskrifttekstId: 'Nøkkeltall.DagerDekketAvArbeidsgiver',
-          infotekstContent: (
-            <FormattedMessage
-              id="Nøkkeltall.DagerDekketAvArbeidsgiver.InfoText"
-              values={{ dager: antallDagerArbeidsgiverDekker }}
-            />
-          ),
-        },
-      ]}
-      viserDetaljer={viserDetaljer}
-      visDetaljer={visDetaljer}
-      className={styles.dagerNavKanUtbetale}
-    />
-  );
-};
+}) => (
+  <Nokkeltall
+    overskrift={{ antallDager: dagerNavKanUtbetale, overskrifttekstId: 'Nøkkeltall.DagerNavKanUtbetale' }}
+    detaljer={[
+      {
+        antallDager: dagerRettPå,
+        overskrifttekstId: 'Nøkkeltall.TotaltAntallDager',
+        infotekstContent: <FormattedMessage id="Nøkkeltall.TotaltAntallDager.InfoText" />,
+      },
+      {
+        antallDager: -antallDagerArbeidsgiverDekker,
+        overskrifttekstId: 'Nøkkeltall.DagerDekketAvArbeidsgiver',
+        infotekstContent: (
+          <FormattedMessage
+            id="Nøkkeltall.DagerDekketAvArbeidsgiver.InfoText"
+            values={{ dager: antallDagerArbeidsgiverDekker }}
+          />
+        ),
+      },
+    ]}
+    viserDetaljer={viserDetaljer}
+    visDetaljer={visDetaljer}
+    className={styles.dagerNavKanUtbetale}
+  />
+);
 
 export default DagerNavKanUtbetale;

@@ -48,26 +48,24 @@ const OpptjeningFaktaIndex = ({
   submittable,
   submitCallback,
   readOnly,
-}: OpptjeningFaktaIndexProps) => {
-  return (
-    <RawIntlProvider value={intl}>
-      <OpptjeningInfoPanel
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        opptjeningList={opptjening.opptjeninger}
-        dokStatus={utlandDokStatus ? utlandDokStatus.dokStatus : undefined}
-        aksjonspunkter={aksjonspunkter}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        harApneAksjonspunkter={harApneAksjonspunkter}
-        submittable={submittable}
-      />
-    </RawIntlProvider>
-  );
-};
+}: OpptjeningFaktaIndexProps) => (
+  <RawIntlProvider value={intl}>
+    <OpptjeningInfoPanel
+      behandlingId={behandling.id}
+      behandlingVersjon={behandling.versjon}
+      opptjeningList={opptjening.opptjeninger}
+      dokStatus={utlandDokStatus ? utlandDokStatus.dokStatus : undefined}
+      aksjonspunkter={aksjonspunkter}
+      submitCallback={submitCallback}
+      readOnly={readOnly}
+      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      harApneAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
+    />
+  </RawIntlProvider>
+);
 
 OpptjeningFaktaIndex.defaultProps = {
   opptjening: undefined,

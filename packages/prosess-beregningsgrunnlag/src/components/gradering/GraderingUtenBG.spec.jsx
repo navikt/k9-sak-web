@@ -24,8 +24,8 @@ const atAndelEn = {
     kode: aktivitetStatus.ARBEIDSTAKER,
   },
   arbeidsforhold: {
-    arbeidsgiverNavn: 'arbeidsgiver',
     arbeidsgiverId: '123',
+    arbeidsgiverIdent: '123',
   },
   andelsnr: 1,
 };
@@ -35,8 +35,8 @@ const atAndelTo = {
     kode: aktivitetStatus.ARBEIDSTAKER,
   },
   arbeidsforhold: {
-    arbeidsgiverNavn: 'arbeidsgiver',
     arbeidsgiverId: '456',
+    arbeidsgiverIdent: '456',
   },
   andelsnr: 2,
 };
@@ -57,16 +57,16 @@ const flAndel = {
 
 const arbeidsgiverOpplysningerPerId = {
   123: {
+    erPrivatPerson: false,
     identifikator: '123',
     referanse: '123',
     navn: 'arbeidsgiver',
-    fødselsdato: null,
   },
   456: {
+    erPrivatPerson: false,
     identifikator: '456',
     referanse: '456',
     navn: 'arbeidsgiver',
-    fødselsdato: null,
   },
 };
 

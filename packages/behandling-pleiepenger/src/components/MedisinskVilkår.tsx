@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '../../../rest-api-hooks';
-import EventType from '../../../rest-api/src/requestApi/eventType';
+import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import findEndpointsForMedisinskVilkårFrontend from '../microfrontend/utils/findEndpointsForMedisinskVilkårFrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
@@ -62,7 +62,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.5.0/main.js"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.5.0/app.js"
       jsIntegrity="sha384-iwXwfuyBdktquifSX/TfEUHAQ03Urw5tM/X2ATCyRIBfJdT5jPR16MRT5wJxR60g"
       stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.5.0/styles.css"
       stylesheetIntegrity="sha384-ro9ZEBJEWZEhZB9lZ7+e2ceTx0jtVa/HZlE867122hKrvRTQ722hcYtb03rkRF0I"
@@ -86,7 +86,6 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           readOnly,
         )
       }
-      onError={() => {}}
     />
   );
 };
