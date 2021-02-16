@@ -34,7 +34,11 @@ const PermisjonerInfo: FunctionComponent<OwnProps> = ({ arbeidsforhold }) => (
               <Normaltekst className={styles.div}>
                 <FormattedMessage id="PersonArbeidsforholdDetailForm.Permisjonype" />
               </Normaltekst>
-              <Normaltekst className={styles.type}>{permisjon.type}</Normaltekst>
+              <Normaltekst className={styles.type}>{permisjon.type.kode}</Normaltekst>
+              <Normaltekst className={styles.div}>
+                <FormattedMessage id="PersonArbeidsforholdDetailForm.Prosent" />
+              </Normaltekst>
+              <Normaltekst className={styles.type}>{permisjon.permisjonsprosent}</Normaltekst>
             </div>
           </div>
         ))}
