@@ -2,22 +2,18 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import React from 'react';
-import { UtvidetRettBehandlingApiKeys } from '../../../data/utvidetRettBehandlingApi';
 import UtvidetRettMicrofrontend from '../utvidetRettMicrofrontend/UtvidetRettMicrofrontend';
 
 class OmsorgenForPanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UtvidetRettMicrofrontend {...props} />;
 
-  // getTekstKode = () => 'Inngangsvilkar.OmsorgenFor';
+  getTekstKode = () => 'Inngangsvilkar.OmsorgenFor';
 
-  getTekstKode = () => 'Inngangsvilkar.Medlemskapsvilkaret';
+  getAksjonspunktKoder = () => [aksjonspunktCodes.OMSORGEN_FOR];
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR];
+  getVilkarKoder = () => [vilkarType.OMSORGEN_FOR];
 
-  // getVilkarKoder = () => [vilkarType.OMSORGENFORVILKARET];
-  getVilkarKoder = () => [vilkarType.MEDLEMSKAPSVILKARET];
-
-  getEndepunkter = () => [UtvidetRettBehandlingApiKeys.MEDLEMSKAP];
+  // getEndepunkter = () => [UtvidetRettBehandlingApiKeys.MEDLEMSKAP];
 
   // getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 
