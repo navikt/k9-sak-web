@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import findEndpointsForMedisinskVilkårFrontend from '../microfrontend/utils/findEndpointsForMedisinskVilkårFrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
+import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
 
 const initializeMedisinskVilkår = (
   elementId,
-  httpErrorHandler,
+  httpErrorHandlerFn,
   endpoints: SimpleEndpoints,
   behandlingUuid: string,
   løsAksjonspunkt,
@@ -31,7 +31,7 @@ const initializeMedisinskVilkår = (
     },
     dokument: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('dokument'),
     vurdering: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('vurdering'),
-    httpErrorHandler,
+    httpErrorHandler: httpErrorHandlerFn,
     endpoints,
     behandlingUuid,
     onFinished: løsAksjonspunkt,
@@ -42,18 +42,8 @@ const initializeMedisinskVilkår = (
 const medisinskVilkårAppID = 'medisinskVilkårApp';
 export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
-  const httpErrorHandler = (status: number, locationHeader?: string) => {
-    if (status === 403) {
-      addErrorMessage({ type: EventType.REQUEST_FORBIDDEN });
-    } else if (status === 401) {
-      if (locationHeader) {
-        const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
-        window.location.href = `${locationHeader}?redirectTo=${currentPath}`;
-      } else {
-        addErrorMessage({ type: EventType.REQUEST_UNAUTHORIZED });
-      }
-    }
-  };
+  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
+    httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter);
   const løsAksjonspunkt = () =>
@@ -69,7 +59,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
-          httpErrorHandler,
+          httpErrorHandlerCaller,
           findEndpointsForMedisinskVilkårFrontend(links, [
             { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
             { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
