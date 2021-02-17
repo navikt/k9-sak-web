@@ -57,6 +57,10 @@ const mapDtoTilFormValues = (rammevedtak: Rammevedtak[]): FormValues => {
         return mapRammevedtakBarn(tmpBarn, rv, 'fødselsdato', 'utenlandskBarn');
       }
 
+      if (rv.type === RammevedtakEnum.DELT_BOSTED) {
+        return mapRammevedtakBarn(tmpBarn, rv, 'deltBostedMed', 'deltBosted');
+      }
+
       return tmpBarn;
     }, {}),
   );
