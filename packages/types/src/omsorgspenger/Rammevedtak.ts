@@ -29,6 +29,7 @@ export type Rammevedtak = {
   mottaker?: string;
   utvidetRettFor?: string;
   aleneOmOmsorgenFor?: string;
+  deltBostedMed?: string;
   fosterbarnFor?: string;
   fødselsdato?: string;
   lengde?: string; // Duration (smittevernsdager)
