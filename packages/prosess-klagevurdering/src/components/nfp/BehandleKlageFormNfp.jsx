@@ -65,7 +65,7 @@ export const BehandleKlageFormNfpImpl = ({
       <div className={styles.confirmVilkarForm}>
         <ProsessStegBegrunnelseTextField
           readOnly={readOnly}
-          maxLength={100000}
+          // maxLength={100000}
           textCode="BehandleKlageFormNfp.BegrunnelseForKlage"
         />
         <VerticalSpacer sixteenPx />
