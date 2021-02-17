@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import findEndpointsForMedisinskVilkårFrontend from '../microfrontend/utils/findEndpointsForMedisinskVilkårFrontend';
+import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
 import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
@@ -60,7 +60,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
           httpErrorHandlerCaller,
-          findEndpointsForMedisinskVilkårFrontend(links, [
+          findEndpointsForMicrofrontend(links, [
             { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
             { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
             { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
