@@ -24,9 +24,6 @@ const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
   { key: UtvidetRettBehandlingApiKeys.VILKAR },
   { key: UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER },
-  // { key: UtvidetRettBehandlingApiKeys.SOKNAD },
-  { key: UtvidetRettBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
-  { key: UtvidetRettBehandlingApiKeys.BEREGNINGSGRUNNLAG },
   { key: UtvidetRettBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: UtvidetRettBehandlingApiKeys.FORBRUKTE_DAGER },
 ];
@@ -154,6 +151,8 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
   if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined)) {
     return <LoadingPanel />;
   }
+
+  console.log(data);
   return (
     <>
       <ReduxFormStateCleaner
