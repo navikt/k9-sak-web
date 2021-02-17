@@ -10,19 +10,13 @@ export enum UtvidetRettBehandlingApiKeys {
   SAVE_OVERSTYRT_AKSJONSPUNKT = 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE = 'PREVIEW_MESSAGE',
   PREVIEW_TILBAKEKREVING_MESSAGE = 'PREVIEW_TILBAKEKREVING_MESSAGE',
-  STONADSKONTOER_GITT_UTTAKSPERIODER = 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   AKSJONSPUNKTER = 'AKSJONSPUNKTER',
   VILKAR = 'VILKAR',
   PERSONOPPLYSNINGER = 'PERSONOPPLYSNINGER',
-  SIMULERING_RESULTAT = 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG = 'TILBAKEKREVINGVALG',
-  FAMILIEHENDELSE = 'FAMILIEHENDELSE',
-  SOKNAD_ORIGINAL_BEHANDLING = 'SOKNAD_ORIGINAL_BEHANDLING',
-  FAMILIEHENDELSE_ORIGINAL_BEHANDLING = 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
+  SOKNAD = 'SOKNAD',
   MEDLEMSKAP = 'MEDLEMSKAP',
-  INNTEKT_ARBEID_YTELSE = 'INNTEKT_ARBEID_YTELSE',
   VERGE = 'VERGE',
-  OPPTJENING = 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING = 'SEND_VARSEL_OM_REVURDERING',
   BEHANDLING_NY_BEHANDLENDE_ENHET = 'BEHANDLING_NY_BEHANDLENDE_ENHET',
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
@@ -33,11 +27,9 @@ export enum UtvidetRettBehandlingApiKeys {
   VERGE_FJERN = 'VERGE_FJERN',
   VEDTAK_VARSEL = 'VEDTAK_VARSEL',
   FORBRUKTE_DAGER = 'FORBRUKTE_DAGER',
-  INNTEKT_OG_YTELSER = 'INNTEKT_OG_YTELSER',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
-  ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
   OMSORGEN_FOR = 'OMSORGEN_FOR',
 }
 
@@ -48,19 +40,16 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('omsorgen-for', UtvidetRettBehandlingApiKeys.OMSORGEN_FOR)
   .withRel('aksjonspunkter', UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', UtvidetRettBehandlingApiKeys.VILKAR)
+  .withRel('soknad', UtvidetRettBehandlingApiKeys.SOKNAD)
   .withRel('soeker-personopplysninger', UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER)
-  .withRel('inntekt-arbeid-ytelse', UtvidetRettBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
-  .withRel('arbeidsforhold-v1', UtvidetRettBehandlingApiKeys.ARBEIDSFORHOLD)
-  .withRel('opptjening-v2', UtvidetRettBehandlingApiKeys.OPPTJENING)
-  .withRel('inntekt', UtvidetRettBehandlingApiKeys.INNTEKT_OG_YTELSER)
-  .withRel('vedtak-varsel', UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL)
-  .withRel('simuleringResultat', UtvidetRettBehandlingApiKeys.SIMULERING_RESULTAT)
-  .withRel('tilgjengelige-vedtaksbrev', UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('forbrukte-dager', UtvidetRettBehandlingApiKeys.FORBRUKTE_DAGER)
 
+  // Brukes av vedtakpanel
   .withRel('tilbakekrevingvalg', UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG)
   .withRel('sendt-varsel-om-revurdering', UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('soeker-medlemskap-v2', UtvidetRettBehandlingApiKeys.MEDLEMSKAP)
+  .withRel('vedtak-varsel', UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL)
+  .withRel('tilgjengelige-vedtaksbrev', UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
 
   // operasjoner
   .withRel('dokumentdata-lagre', UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE)
@@ -73,10 +62,7 @@ const endpoints = new RestApiConfigBuilder()
     '/k9/sak/api/behandling/aksjonspunkt/overstyr',
     UtvidetRettBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
   )
-  .withPost(
-    '/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
-    UtvidetRettBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
-  )
+
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', UtvidetRettBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', UtvidetRettBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', UtvidetRettBehandlingApiKeys.RESUME_BEHANDLING)

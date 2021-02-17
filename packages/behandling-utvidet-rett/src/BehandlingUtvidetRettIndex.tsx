@@ -22,10 +22,11 @@ import UtvidetRettPaneler from './components/UtvidetRettPaneler';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
-  { key: UtvidetRettBehandlingApiKeys.VILKAR },
-  { key: UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER },
-  { key: UtvidetRettBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: UtvidetRettBehandlingApiKeys.FORBRUKTE_DAGER },
+  { key: UtvidetRettBehandlingApiKeys.OMSORGEN_FOR },
+  { key: UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER },
+  { key: UtvidetRettBehandlingApiKeys.SOKNAD },
+  { key: UtvidetRettBehandlingApiKeys.VILKAR },
 ];
 
 interface OwnProps {
@@ -152,7 +153,6 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
     return <LoadingPanel />;
   }
 
-  console.log(data);
   return (
     <>
       <ReduxFormStateCleaner

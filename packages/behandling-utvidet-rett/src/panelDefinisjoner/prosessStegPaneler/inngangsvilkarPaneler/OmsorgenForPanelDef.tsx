@@ -12,7 +12,7 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
 
   // getVilkarKoder = () => [vilkarType.OMSORGEN_FOR];
 
-  // getEndepunkter = () => [UtvidetRettBehandlingApiKeys.MEDLEMSKAP];
+  // getEndepunkter = () => [UtvidetRettBehandlingApiKeys.OMSORGEN_FOR];
 
   // getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 
