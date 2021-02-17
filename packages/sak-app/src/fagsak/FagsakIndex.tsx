@@ -143,6 +143,7 @@ const FagsakIndex: FunctionComponent = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
+
   return (
     <>
       <FagsakGrid
