@@ -24,10 +24,9 @@ import { getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsess
 import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from '../app/ErrorBoundary';
-import BehandlingOmsorgspengerIndex from '../../../behandling-omsorgspenger';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
-// const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
+const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
 const BehandlingInnsynIndex = React.lazy(() => import('@k9-sak-web/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@k9-sak-web/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@k9-sak-web/behandling-tilbakekreving'));
