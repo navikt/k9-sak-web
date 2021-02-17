@@ -74,9 +74,10 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
 }) => {
   const shouldDisableSubmitButton = formProps.pristine;
 
-  const erForBeslutter = aksjonspunkter.length > 0 && aksjonspunkter.some(a => a.toTrinnsBehandling && a.erAktivt);
+  const erForBeslutter =
+    aksjonspunkter.length > 0 && aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
   const begrunnelse = erForBeslutter
-    ? aksjonspunkter.find(a => a.erAktivt && a.toTrinnsBehandling && a.definisjon.kode === '5058').begrunnelse
+    ? aksjonspunkter.find(a => a.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse
     : '';
 
   return (
