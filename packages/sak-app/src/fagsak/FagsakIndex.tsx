@@ -79,7 +79,6 @@ const FagsakIndex: FunctionComponent = () => {
     },
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fagsakRettigheter, harFerdighentetfagsakRettigheter] = useHentFagsakRettigheter(
     selectedSaksnummer,
     behandlingId,
@@ -110,7 +109,6 @@ const FagsakIndex: FunctionComponent = () => {
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     K9sakApiKeys.ARBEIDSGIVERE,
     {},
