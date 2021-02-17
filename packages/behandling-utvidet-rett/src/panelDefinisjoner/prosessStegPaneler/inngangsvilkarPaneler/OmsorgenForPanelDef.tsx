@@ -1,4 +1,3 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import React from 'react';
@@ -11,7 +10,7 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OMSORGEN_FOR];
 
-  getVilkarKoder = () => [vilkarType.OMSORGEN_FOR];
+  // getVilkarKoder = () => [vilkarType.OMSORGEN_FOR];
 
   // getEndepunkter = () => [UtvidetRettBehandlingApiKeys.MEDLEMSKAP];
 
