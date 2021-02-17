@@ -57,9 +57,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
   const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
 
-  const visPermisjon = arbeidsforhold => {
-    return arbeidsforhold.aksjonspunktÅrsaker.length === 0 && arbeidsforhold.permisjoner;
-  };
+  const visPermisjon = arbeidsforhold => arbeidsforhold.aksjonspunktÅrsaker.length === 0 && arbeidsforhold.permisjoner;
 
   const setValgtArbeidsforhold = arbeidsforhold => {
     if (selectedArbeidsforhold === undefined) {
