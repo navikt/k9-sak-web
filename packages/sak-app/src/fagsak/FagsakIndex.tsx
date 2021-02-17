@@ -26,8 +26,6 @@ import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
-import mockFagsakRettigheter from './mock_utvidetRett/mockfagsakRettigheter';
-import mockAlleBehandlinger from './mock_utvidetRett/mockAlleBehandlinger';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -171,17 +169,17 @@ const FagsakIndex: FunctionComponent = () => {
             fagsak={fagsak}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
-            alleBehandlinger={mockAlleBehandlinger}
+            alleBehandlinger={alleBehandlinger}
             harHentetBehandlinger={harFerdighentetAlleBehandlinger}
             oppfriskBehandlinger={oppfriskBehandlinger}
-            fagsakRettigheter={mockFagsakRettigheter}
+            fagsakRettigheter={fagsakRettigheter}
             behandlingRettigheter={behandlingRettigheter}
           />
         }
         supportContent={
           <BehandlingSupportIndex
             fagsak={fagsak}
-            alleBehandlinger={mockAlleBehandlinger}
+            alleBehandlinger={alleBehandlinger}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             behandlingRettigheter={behandlingRettigheter}
