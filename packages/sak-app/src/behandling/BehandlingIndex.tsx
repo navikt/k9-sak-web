@@ -269,6 +269,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
       </Suspense>
     );
   }
+
   if (
     fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
     fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
