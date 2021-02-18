@@ -1,5 +1,8 @@
 let mockBehandlingsdata;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+// OBS Soknad er for kronisk syk
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default mockBehandlingsdata = {
   aksjonspunkter: [
     {

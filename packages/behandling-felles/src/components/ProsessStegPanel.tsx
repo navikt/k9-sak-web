@@ -88,6 +88,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   }
 
   const harHentetData = panelKeys.length === 0 || hentDataState === RestApiState.SUCCESS;
+
   const delPaneler = valgtProsessSteg.getDelPaneler();
 
   return (
@@ -106,6 +107,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
                 <>
                   {delPaneler[0].getProsessStegDelPanelDef().getKomponent({
                     ...data,
+                    fagsak,
                     behandling,
                     alleKodeverk,
                     submitCallback: bekreftAksjonspunktCallback,
