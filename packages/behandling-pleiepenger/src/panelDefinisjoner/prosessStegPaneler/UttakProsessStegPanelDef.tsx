@@ -1,20 +1,27 @@
-import React from 'react';
-
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { uttaksplaner, behandlingPersonMap } from '@fpsak-frontend/prosess-uttak/src/components/dto/testdata';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import React from 'react';
 import Uttak from '../../components/Uttak';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <Uttak {...props} />;
+  getKomponent = ({ behandling, uttaksperioder }) => <Uttak uuid={behandling.uuid} uttaksperioder={uttaksperioder} />;
 
   getAksjonspunktKoder = () => [];
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = () => ({
-    uttaksplaner,
-    behandlingPersonMap,
+  getOverstyrtStatus = props => {
+    const { uttak } = props;
+    if (!uttak) {
+      return vilkarUtfallType.IKKE_VURDERT;
+    }
+
+    return vilkarUtfallType.OPPFYLT;
+  };
+
+  getData = ({ uttak }) => ({
+    uttaksperioder: uttak,
   });
 }
 
