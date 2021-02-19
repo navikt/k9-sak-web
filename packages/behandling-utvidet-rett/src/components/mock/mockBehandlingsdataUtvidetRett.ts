@@ -137,8 +137,31 @@ export default mockBehandlingsdata = {
             kodeverk: 'VILKAR_UTFALL_TYPE',
           },
           periode: {
-            fom: '2019-02-18',
-            tom: '2037-02-18',
+            fom: '2021-01-19',
+            tom: '2021-08-17',
+          },
+          begrunnelse: null,
+        },
+      ],
+    },
+    {
+      vilkarType: {
+        kode: 'K9_VK_9_6',
+        kodeverk: 'VILKAR_TYPE',
+      },
+      lovReferanse: '§ 9-6 3. ledd',
+      overstyrbar: false,
+      perioder: [
+        {
+          avslagKode: null,
+          merknadParametere: {},
+          vilkarStatus: {
+            kode: 'OPPFYLT',
+            kodeverk: 'VILKAR_UTFALL_TYPE',
+          },
+          periode: {
+            fom: '2021-01-19',
+            tom: '2021-08-17',
           },
           begrunnelse: null,
         },
@@ -160,31 +183,8 @@ export default mockBehandlingsdata = {
             kodeverk: 'VILKAR_UTFALL_TYPE',
           },
           periode: {
-            fom: '2019-02-18',
-            tom: '2037-02-18',
-          },
-          begrunnelse: null,
-        },
-      ],
-    },
-    {
-      vilkarType: {
-        kode: 'K9_VK_9_6',
-        kodeverk: 'VILKAR_TYPE',
-      },
-      lovReferanse: '§ 9-6 2. ledd',
-      overstyrbar: false,
-      perioder: [
-        {
-          avslagKode: null,
-          merknadParametere: {},
-          vilkarStatus: {
-            kode: 'OPPFYLT',
-            kodeverk: 'VILKAR_UTFALL_TYPE',
-          },
-          periode: {
-            fom: '2019-02-18',
-            tom: '2037-02-18',
+            fom: '2021-01-19',
+            tom: '2021-08-17',
           },
           begrunnelse: null,
         },

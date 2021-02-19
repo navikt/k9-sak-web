@@ -15,7 +15,20 @@ const utvidetRettTestData = {
       kanLoses: true,
       erAktivt: true,
     },
+    {
+      definisjon: { kode: aksjonspunktCodes.UTVIDET_RETT, kodeverk: 'test' },
+      status: { kode: 'UTFO', kodeverk: 'test' },
+      kanLoses: true,
+      erAktivt: true,
+    },
   ] as Aksjonspunkt[],
+  arbeidsgiverOpplysningerPerId: {
+    123: {
+      erPrivatPerson: false,
+      identifikator: 'testId',
+      navn: 'testNavn',
+    },
+  },
   behandling: {
     id: 1,
     versjon: 2,
