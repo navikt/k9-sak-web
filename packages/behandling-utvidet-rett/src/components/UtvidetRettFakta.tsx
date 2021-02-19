@@ -10,7 +10,7 @@ import {
   KodeverkMedNavn,
   FeatureToggles,
 } from '@k9-sak-web/types';
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+// import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
@@ -19,12 +19,12 @@ import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaUtvidetRettPanelDe
 import FetchedData from '../types/fetchedDataTsType';
 
 const overstyringApCodes = [
-  ac.OVERSTYR_AVKLAR_STARTDATO,
-  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYR_AVKLAR_STARTDATO,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-  ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+  // ac.OVERSTYR_AVKLAR_STARTDATO,
+  // ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
+  // ac.OVERSTYR_AVKLAR_STARTDATO,
+  // ac.MANUELL_AVKLAR_FAKTA_UTTAK,
+  // ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+  // ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
 ];
 
 interface OwnProps {
@@ -40,7 +40,7 @@ interface OwnProps {
   valgtProsessSteg?: string;
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
   setBehandling: (behandling: Behandling) => void;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
   featureToggles?: FeatureToggles;
 }
 
