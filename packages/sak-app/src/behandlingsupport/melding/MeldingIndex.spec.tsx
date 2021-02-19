@@ -92,7 +92,7 @@ describe('<MeldingIndex>', () => {
 
     const index = wrapper.find(MeldingerSakIndex);
     const previewCallback = index.prop('previewCallback') as (params: any) => void;
-    previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
+    previewCallback({ overstyrtMottaker: { id: '12345678', type: 'AKTØRID' }, brevmalkode: 'Mal1' });
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
     expect(reqData).toHaveLength(1);
@@ -115,7 +115,7 @@ describe('<MeldingIndex>', () => {
     );
 
     const message = {
-      mottaker: 'Michal Utvikler',
+      overstyrtMottaker: { id: '12345678', type: 'AKTØRID' },
       brevmalkode: 'testbrevkode',
       fritekst: 'Dette er en tekst',
       arsakskode: undefined,
@@ -153,7 +153,7 @@ describe('<MeldingIndex>', () => {
     );
 
     const message = {
-      mottaker: 'Espen Utvikler',
+      overstyrtMottaker: { id: '12345678', type: 'AKTØRID' },
       brevmalkode: 'testkode',
       fritekst: 'Dette er en tekst',
       arsakskode: undefined,
@@ -167,7 +167,7 @@ describe('<MeldingIndex>', () => {
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({
       behandlingId: 1,
-      mottaker: message.mottaker,
+      overstyrtMottaker: message.overstyrtMottaker,
       brevmalkode: message.brevmalkode,
       fritekst: message.fritekst,
       arsakskode: undefined,
@@ -190,7 +190,7 @@ describe('<MeldingIndex>', () => {
     );
 
     const message = {
-      mottaker: 'Michal Utvikler',
+      overstyrtMottaker: { id: '12345678', type: 'AKTØRID' },
       brevmalkode: 'testbrevkode',
       fritekst: 'Dette er en tekst',
       arsakskode: undefined,
@@ -211,7 +211,7 @@ describe('<MeldingIndex>', () => {
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({
       behandlingId: 1,
-      mottaker: message.mottaker,
+      overstyrtMottaker: message.overstyrtMottaker,
       brevmalkode: message.brevmalkode,
       fritekst: message.fritekst,
       arsakskode: undefined,
@@ -234,7 +234,7 @@ describe('<MeldingIndex>', () => {
     );
 
     const message = {
-      mottaker: 'Michal Utvikler',
+      overstyrtMottaker: { id: '12345678', type: 'AKTØRID' },
       brevmalkode: 'INNHEN',
       fritekst: 'Dette er en tekst',
       arsakskode: undefined,
@@ -255,7 +255,7 @@ describe('<MeldingIndex>', () => {
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({
       behandlingId: 1,
-      mottaker: message.mottaker,
+      overstyrtMottaker: message.overstyrtMottaker,
       brevmalkode: message.brevmalkode,
       fritekst: message.fritekst,
       arsakskode: undefined,
@@ -278,7 +278,7 @@ describe('<MeldingIndex>', () => {
     );
 
     const message = {
-      mottaker: 'Michal Utvikler',
+      overstyrtMottaker: { id: '12345678', type: 'AKTØRID' },
       brevmalkode: 'FORLEN',
       fritekst: 'Dette er en tekst',
       arsakskode: undefined,
@@ -299,7 +299,7 @@ describe('<MeldingIndex>', () => {
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({
       behandlingId: 1,
-      mottaker: message.mottaker,
+      overstyrtMottaker: message.overstyrtMottaker,
       brevmalkode: message.brevmalkode,
       fritekst: message.fritekst,
       arsakskode: undefined,
@@ -327,7 +327,7 @@ describe('<MeldingIndex>', () => {
     );
 
     const message = {
-      mottaker: 'Michal Utvikler',
+      overstyrtMottaker: { id: '12345678', type: 'AKTØRID' },
       brevmalkode: 'FORLEN',
       fritekst: 'Dette er en tekst',
       arsakskode: undefined,
