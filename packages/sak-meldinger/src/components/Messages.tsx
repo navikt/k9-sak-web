@@ -35,7 +35,7 @@ const maxLength4000 = maxLength(4000);
 const minLength3 = minLength(3);
 
 export type FormValues = {
-  mottaker: string;
+  overstyrtMottaker: string;
   brevmalkode: string;
   fritekst: string;
   arsakskode?: string;
@@ -62,7 +62,7 @@ interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
   behandlingId: number;
   behandlingVersjon: number;
-  previewCallback: (mottaker: Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
+  previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
   templates: Template[] | Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
@@ -73,7 +73,7 @@ interface PureOwnProps {
 
 interface MappedOwnProps {
   causes: KodeverkMedNavn[];
-  mottaker?: string;
+  overstyrtMottaker?: string;
   brevmalkode?: string;
   fritekst?: string;
   arsakskode?: string;
@@ -103,7 +103,7 @@ export const MessagesImpl: FunctionComponent<
   previewCallback,
   handleSubmit,
   sprakKode,
-  mottaker,
+  overstyrtMottaker,
   brevmalkode,
   fritekst,
   arsakskode,
@@ -118,9 +118,13 @@ export const MessagesImpl: FunctionComponent<
   const previewMessage = e => {
     e.preventDefault();
 
-    const overstyrtMottaker = mottaker && mottaker !== JSON.stringify(RECIPIENT) ? safeJSONParse(mottaker) : undefined;
-
-    previewCallback(overstyrtMottaker, brevmalkode, fritekst);
+    previewCallback(
+      overstyrtMottaker && overstyrtMottaker !== JSON.stringify(RECIPIENT)
+        ? safeJSONParse(overstyrtMottaker)
+        : undefined,
+      brevmalkode,
+      fritekst,
+    );
   };
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
@@ -142,9 +146,9 @@ export const MessagesImpl: FunctionComponent<
     // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
     if (brevmalkode) {
       formProps.change(
-        'mottaker',
-        Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === mottaker)
-          ? mottaker
+        'overstyrtMottaker',
+        Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)
+          ? overstyrtMottaker
           : JSON.stringify(recipients[0]),
       );
     }
@@ -172,8 +176,10 @@ export const MessagesImpl: FunctionComponent<
               <VerticalSpacer eightPx />
               <SelectField
                 key={brevmalkode}
-                name="mottaker"
-                readOnly={recipients.length === 1 && mottaker && mottaker === JSON.stringify(recipients[0])}
+                name="overstyrtMottaker"
+                readOnly={
+                  recipients.length === 1 && overstyrtMottaker && overstyrtMottaker === JSON.stringify(recipients[0])
+                }
                 label={intl.formatMessage({ id: 'Messages.Recipient' })}
                 validate={[/* required, */ createValidateRecipient(recipients)]}
                 placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
@@ -243,13 +249,13 @@ export const MessagesImpl: FunctionComponent<
 
 const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
   let brevmal = Array.isArray(templates) && templates.length ? templates[0] : { kode: null };
-  let mottaker = JSON.stringify(RECIPIENT);
+  let overstyrtMottaker = JSON.stringify(RECIPIENT);
 
   // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
   // komponentene burde oppdateres for å bedre håndtere ny struktur når den er tatt i bruk overallt.
   if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
     brevmal = { kode: Object.keys(templates)[0] };
-    mottaker =
+    overstyrtMottaker =
       templates[brevmal.kode].mottakere && templates[brevmal.kode].mottakere[0]
         ? JSON.stringify(templates[brevmal.kode].mottakere[0])
         : null;
@@ -257,8 +263,8 @@ const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurd
 
   const initialValues = {
     brevmalkode: brevmal && brevmal.kode ? brevmal.kode : null,
-    mottaker,
-    // mottaker: null,
+    overstyrtMottaker,
+    // overstyrtMottaker: null,
     fritekst: '',
     // arsakskode: null,
   };
@@ -273,11 +279,11 @@ const transformValues = values => {
   if (values.brevmalkode === dokumentMalType.REVURDERING_DOK && newValues.arsakskode !== ugunstAarsakTyper.ANNET) {
     newValues.fritekst = ' ';
   }
-  const mottaker =
-    newValues.mottaker && newValues.mottaker !== JSON.stringify(RECIPIENT)
-      ? safeJSONParse(newValues.mottaker)
+  const overstyrtMottaker =
+    newValues.overstyrtMottaker && newValues.overstyrtMottaker !== JSON.stringify(RECIPIENT)
+      ? safeJSONParse(newValues.overstyrtMottaker)
       : undefined;
-  return { ...newValues, mottaker };
+  return { ...newValues, overstyrtMottaker };
 };
 const getfilteredCauses = createSelector([(ownProps: PureOwnProps) => ownProps.revurderingVarslingArsak], causes =>
   causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
@@ -288,7 +294,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
   return (state, ownProps: PureOwnProps): MappedOwnProps => ({
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
-      'mottaker',
+      'overstyrtMottaker',
       'brevmalkode',
       'fritekst',
       'arsakskode',
