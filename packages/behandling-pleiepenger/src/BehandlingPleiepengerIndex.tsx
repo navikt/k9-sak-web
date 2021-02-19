@@ -28,6 +28,7 @@ const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
   { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
+  { key: PleiepengerBehandlingApiKeys.UTTAK },
 ];
 
 interface OwnProps {
