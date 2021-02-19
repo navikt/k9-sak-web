@@ -14,8 +14,6 @@ import {
   aksjonspunkt as aksjonspunktArbeidOgDagpenger,
 } from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
-import { beregningsgrunnlag as bgTest, aksjonspunkt as apTest, behandling as behTest } from './scenario/test';
-
 import {
   beregningsgrunnlag as bgFlerePerioder,
   aksjonspunkt as apFlerePerioder,
@@ -194,24 +192,6 @@ export default {
   component: BeregningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
-
-export const test = () => (
-  <BeregningFaktaIndex
-    behandling={behTest}
-    beregningsgrunnlag={bgTest}
-    aksjonspunkter={apTest}
-    erOverstyrer
-    alleKodeverk={alleKodeverk}
-    arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
-    submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
-    submittable={boolean('submittable', true)}
-  />
-);
 
 export const KunYtelsePåSkjæringstidspunktet = () => (
   <BeregningFaktaIndex

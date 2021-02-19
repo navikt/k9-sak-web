@@ -239,10 +239,9 @@ const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingRes
       (currentFormValues, index) =>
         måVurderes(alleBeregningsgrunnlag[index], currentFormValues.aksjonspunkter) || erOverstyring(currentFormValues),
     )
-    .map((currentFormValues, index) => {
+    .map(currentFormValues => {
       const faktaBeregningValues = currentFormValues;
-      const bg = alleBeregningsgrunnlag[index];
-      const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
+      const stpOpptjening = faktaBeregningValues.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
       const vilkarPeriode = behandlingResultatPerioder.find(periode => periode.periode.fom === stpOpptjening);
       return {
         periode: vilkarPeriode.periode,
