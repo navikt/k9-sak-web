@@ -5,7 +5,9 @@ import React from 'react';
 import Uttak from '../../components/Uttak';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder }) => <Uttak uuid={behandling.uuid} uttaksperioder={uttaksperioder} />;
+  getKomponent = ({ behandling, uttaksperioder }) => (
+    <Uttak uuid={behandling.uuid} uttaksperioder={uttaksperioder?.perioder} />
+  );
 
   getAksjonspunktKoder = () => [];
 
