@@ -19,7 +19,6 @@ import {
 } from './data/utvidetRettBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
 import UtvidetRettPaneler from './components/UtvidetRettPaneler';
-import mockBehandlingsdataUtvidetRett from './components/mock/mockBehandlingsdataUtvidetRett';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
@@ -162,7 +161,7 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
       />
       <UtvidetRettPaneler
         behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={mockBehandlingsdataUtvidetRett}
+        fetchedData={data}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         alleKodeverk={kodeverk}

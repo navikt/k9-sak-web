@@ -9,14 +9,6 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
   getTekstKode = () => 'Inngangsvilkar.OmsorgenFor';
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OMSORGEN_FOR];
-
-  // getVilkarKoder = () => [vilkarType.OMSORGEN_FOR];
-
-  // getEndepunkter = () => [UtvidetRettBehandlingApiKeys.OMSORGEN_FOR];
-
-  // getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
-
-  // getData = data => this.overstyringDef.getData(data);
 }
 
 export default OmsorgenForPanelDef;
