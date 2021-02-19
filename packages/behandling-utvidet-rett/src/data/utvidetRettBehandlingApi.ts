@@ -4,7 +4,7 @@ import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
 
 export enum UtvidetRettBehandlingApiKeys {
-  BEHANDLING_OMSORG = 'BEHANDLING_OMSORG',
+  BEHANDLING_UTVIDET_RETT = 'BEHANDLING_UTVIDET_RETT',
   UPDATE_ON_HOLD = 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT = 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT = 'SAVE_OVERSTYRT_AKSJONSPUNKT',
@@ -34,7 +34,7 @@ export enum UtvidetRettBehandlingApiKeys {
 }
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger', UtvidetRettBehandlingApiKeys.BEHANDLING_OMSORG)
+  .withAsyncPost('/k9/sak/api/behandlinger', UtvidetRettBehandlingApiKeys.BEHANDLING_UTVIDET_RETT)
 
   // behandlingsdata
   .withRel('omsorgen-for', UtvidetRettBehandlingApiKeys.OMSORGEN_FOR)

@@ -3,10 +3,12 @@ import { MicroFrontend } from '@fpsak-frontend/utils';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Aksjonspunkt, Fagsak } from '@k9-sak-web/types';
 
+// TODO Enum for omsorg och sjekk på ytelsetype for omsorgprocesstype og callback funktion
 const kartleggePropertyTilMikrofrontendKomponent = (
   fagsak: Fagsak,
   isReadOnly: boolean,
   aksjonspunkter: Aksjonspunkt[],
+  submitCallback,
 ) => {
   let objektTilMikrofrontend = {};
   switch (aksjonspunkter[0].definisjon.kode) {
@@ -19,6 +21,7 @@ const kartleggePropertyTilMikrofrontendKomponent = (
           prosesstype: 'KRONISK_SYKT_BARN',
           lesemodus: isReadOnly,
         },
+        onSubmit: submitCallback,
       };
       break;
 
@@ -31,6 +34,7 @@ const kartleggePropertyTilMikrofrontendKomponent = (
             stiTilEndepunkt: 'api',
             lesemodus: false,
           },
+          onSubmit: submitCallback,
         };
       }
       if (fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE) {
@@ -41,22 +45,22 @@ const kartleggePropertyTilMikrofrontendKomponent = (
             lesemodus: isReadOnly,
             stiTilEndepunkt: 'api',
           },
+          onSubmit: submitCallback,
         };
       }
       break;
     }
     default:
-      // TODO Vad skjer om man ikke finner riktig komponent? Visa felmelding i mikrofrontend?
       break;
   }
 
   return objektTilMikrofrontend;
 };
 
-const initializeUtvidetRettVilkar = (elementId, { isReadOnly, fagsak, aksjonspunkter }) => {
+const initializeUtvidetRettVilkar = (elementId, { isReadOnly, fagsak, aksjonspunkter, submitCallback }) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
-    kartleggePropertyTilMikrofrontendKomponent(fagsak, isReadOnly, aksjonspunkter),
+    kartleggePropertyTilMikrofrontendKomponent(fagsak, isReadOnly, aksjonspunkter, submitCallback),
   );
 };
 

@@ -83,7 +83,7 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
     startRequest: hentBehandling,
     data: behandlingRes,
     state: behandlingState,
-  } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.BEHANDLING_OMSORG);
+  } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.BEHANDLING_UTVIDET_RETT);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
