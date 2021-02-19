@@ -66,7 +66,7 @@
 
   "ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert": "Ingen arbeidsforhold registrert. Vurder om det er dokumentert andre arbeidsforhold.",
   "ArbeidsforholdInfoPanel.AvklarArbeidsforhold": "Avklar om arbeidsforholdene skal benyttes i behandlingen",
-  "ArbeidsforholdInfoPanel.BegrunnelseFraSaksbehandler": "Begrunnelse fra saksbehandler: ",
+  "ArbeidsforholdInfoPanel.BegrunnelseFraSaksbehandler": "Begrunnelse fra saksbehandler for arbeidsforholdet {navn}: ",
 
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",

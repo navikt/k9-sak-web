@@ -69,16 +69,12 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
+  arbeidsforhold,
   intl,
   ...formProps
 }) => {
   const shouldDisableSubmitButton = formProps.pristine;
-
-  const erForBeslutter =
-    aksjonspunkter.length > 0 && aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
-  const begrunnelse = erForBeslutter
-    ? aksjonspunkter.find(a => a.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse
-    : '';
+  const arbeidsforholdMedBegrunnelse = arbeidsforhold.filter(a => a.begrunnelse !== null);
 
   return (
     <>
@@ -92,14 +88,25 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
               />,
             ]}
           </AksjonspunktHelpTextTemp>
-          {erForBeslutter && (
-            <Normaltekst>
-              <strong>
-                <FormattedMessage id="ArbeidsforholdInfoPanel.BegrunnelseFraSaksbehandler" />
-              </strong>
-              {begrunnelse}
-            </Normaltekst>
-          )}
+          {arbeidsforholdMedBegrunnelse.length > 0 &&
+            arbeidsforholdMedBegrunnelse.map(ab => {
+              const arbeidsgiverNavn =
+                arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[ab.arbeidsgiver.arbeidsgiverOrgnr]
+                  ? arbeidsgiverOpplysningerPerId[ab.arbeidsgiver.arbeidsgiverOrgnr].navn
+                  : ab.arbeidsgiver.arbeidsgiverOrgnr;
+
+              return (
+                <Normaltekst>
+                  <strong>
+                    <FormattedMessage
+                      id="ArbeidsforholdInfoPanel.BegrunnelseFraSaksbehandler"
+                      values={{ navn: arbeidsgiverNavn }}
+                    />
+                  </strong>
+                  {ab.begrunnelse}
+                </Normaltekst>
+              );
+            })}
         </Panel>
       )}
       <h3>
