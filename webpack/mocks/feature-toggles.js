@@ -13,10 +13,6 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
-  {
-    key: 'ARBEIDSFORHOLD_V2',
-    value: process.env.ARBEIDSFORHOLD_V2,
-  },
 ];
 
 module.exports = function (app) {

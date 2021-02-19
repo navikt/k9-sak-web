@@ -69,5 +69,3 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-    - name: ARBEIDSFORHOLD_V2
-      value: "true"
