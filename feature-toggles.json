@@ -10,9 +10,5 @@
   {
     "key":  "UNNTAKSBEHANDLING",
     "value": "${UNNTAKSBEHANDLING}"
-  },
-  {
-    "key": "ARBEIDSFORHOLD_V2",
-    "value": "${ARBEIDSFORHOLD_V2}"
   }
 ]
