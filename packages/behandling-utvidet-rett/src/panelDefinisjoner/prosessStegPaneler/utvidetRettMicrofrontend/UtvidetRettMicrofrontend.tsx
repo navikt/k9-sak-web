@@ -2,10 +2,10 @@ import * as React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import kartleggePropertyTilMikrofrontendKomponent from './UtvidetRettMikrofrontendHjelpFunksjoner';
 
-const initializeUtvidetRettVilkar = (elementId, { isReadOnly, fagsak, aksjonspunkter, submitCallback }) => {
+const initializeUtvidetRettVilkar = (elementId, { isReadOnly, behandling, aksjonspunkter, submitCallback }) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
-    kartleggePropertyTilMikrofrontendKomponent(fagsak, isReadOnly, aksjonspunkter, submitCallback),
+    kartleggePropertyTilMikrofrontendKomponent(behandling, isReadOnly, aksjonspunkter, submitCallback),
   );
 };
 

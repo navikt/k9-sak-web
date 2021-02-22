@@ -190,6 +190,7 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     ),
     alleKodeverk,
     arbeidsgiverOpplysningerPerId,
+    fagsak,
     lagreArsakerTilRedusertUtbetaling,
     ...data,
   };
@@ -235,6 +236,8 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     [behandling.versjon],
   );
 
+  // eslint-disable-next-line no-param-reassign
+  behandling.fagSaksType = fagsak.sakstype.kode;
   return (
     <>
       <IverksetterVedtakStatusModal

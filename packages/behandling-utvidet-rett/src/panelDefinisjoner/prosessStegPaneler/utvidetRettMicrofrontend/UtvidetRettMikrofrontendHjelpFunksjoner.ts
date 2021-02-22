@@ -1,17 +1,17 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Aksjonspunkt, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VilkarMidlertidigAleneProps } from '../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 
 const kartleggePropertyTilMikrofrontendKomponent = (
-  fagsak: Fagsak,
+  behandling: Behandling,
   isReadOnly: boolean,
   aksjonspunkter: Aksjonspunkt[],
   submitCallback,
 ) => {
   let objektTilMikrofrontend = {};
   const aksjonspunktKode = aksjonspunkter[0].definisjon.kode;
-  const fagsaksType = fagsak.sakstype.kode;
+  const fagsaksType = behandling.fagSaksType;
 
   switch (aksjonspunktKode) {
     case aksjonspunktCodes.OMSORGEN_FOR:
