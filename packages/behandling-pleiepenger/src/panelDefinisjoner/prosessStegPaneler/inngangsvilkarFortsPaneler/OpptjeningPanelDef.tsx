@@ -1,15 +1,17 @@
 import React from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
 
-import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
+import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
 
-class PanelDef extends ProsessStegPanelDef {
+import { PleiepengerBehandlingApiKeys } from '../../../data/pleiepengerBehandlingApi';
+
+class OpptjeningPanelDef extends ProsessStegPanelDef {
   getKomponent = props => <OpptjeningVilkarProsessIndex {...props} />;
+
+  getTekstKode = () => 'Behandlingspunkt.Opptjening';
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET];
 
@@ -25,12 +27,4 @@ class PanelDef extends ProsessStegPanelDef {
     new ProsessStegOverstyringPanelDef(this, aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET);
 }
 
-class OpptjeningProsessStegPanelDef extends ProsessStegDef {
-  getUrlKode = () => prosessStegCodes.OPPTJENING;
-
-  getTekstKode = () => 'Behandlingspunkt.Opptjening';
-
-  getPanelDefinisjoner = () => [new PanelDef()];
-}
-
-export default OpptjeningProsessStegPanelDef;
+export default OpptjeningPanelDef;
