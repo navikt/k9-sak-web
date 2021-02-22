@@ -26,7 +26,7 @@ export enum UtvidetRettBehandlingApiKeys {
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   VEDTAK_VARSEL = 'VEDTAK_VARSEL',
-  FORBRUKTE_DAGER = 'FORBRUKTE_DAGER',
+  RAMMEVEDTAK = 'RAMMEVEDTAK',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
@@ -42,7 +42,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('vilkar-v3', UtvidetRettBehandlingApiKeys.VILKAR)
   .withRel('soknad', UtvidetRettBehandlingApiKeys.SOKNAD)
   .withRel('soeker-personopplysninger', UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER)
-  .withRel('forbrukte-dager', UtvidetRettBehandlingApiKeys.FORBRUKTE_DAGER)
+  .withRel('rammevedtak', UtvidetRettBehandlingApiKeys.RAMMEVEDTAK)
 
   // Brukes av vedtakpanel
   .withRel('tilbakekrevingvalg', UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG)

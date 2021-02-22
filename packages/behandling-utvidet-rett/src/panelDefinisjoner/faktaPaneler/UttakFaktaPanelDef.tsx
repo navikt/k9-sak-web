@@ -10,9 +10,9 @@ class UttakFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <FaktaRammevedtakIndex {...props} />;
 
-  getOverstyrVisningAvKomponent = ({ forbrukteDager }) => !!forbrukteDager;
+  getOverstyrVisningAvKomponent = ({ rammevedtak }) => !!rammevedtak;
 
-  getData = ({ forbrukteDager }) => ({ rammevedtak: forbrukteDager?.rammevedtak || [] });
+  getData = ({ rammevedtak }) => ({ rammevedtak: rammevedtak?.rammevedtak || [] });
 }
 
 export default UttakFaktaPanelDef;

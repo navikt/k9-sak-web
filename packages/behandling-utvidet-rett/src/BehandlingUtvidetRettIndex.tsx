@@ -22,7 +22,7 @@ import UtvidetRettPaneler from './components/UtvidetRettPaneler';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
-  { key: UtvidetRettBehandlingApiKeys.FORBRUKTE_DAGER },
+  { key: UtvidetRettBehandlingApiKeys.RAMMEVEDTAK },
   { key: UtvidetRettBehandlingApiKeys.OMSORGEN_FOR },
   { key: UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: UtvidetRettBehandlingApiKeys.SOKNAD },

@@ -10,9 +10,9 @@ class BarnFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <FaktaBarnIndex {...props} />;
 
-  getOverstyrVisningAvKomponent = ({ forbrukteDager }) => !!forbrukteDager;
+  getOverstyrVisningAvKomponent = ({ rammevedtak }) => !!rammevedtak;
 
-  getData = ({ forbrukteDager }) => ({ barn: forbrukteDager?.barna || [] });
+  getData = ({ soknad }) => ({ barn: soknad?.barna || [] });
 }
 
 export default BarnFaktaPanelDef;
