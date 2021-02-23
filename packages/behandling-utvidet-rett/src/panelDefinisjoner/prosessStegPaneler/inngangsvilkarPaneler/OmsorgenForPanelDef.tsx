@@ -9,6 +9,10 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
   getTekstKode = () => 'Inngangsvilkar.OmsorgenFor';
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OMSORGEN_FOR];
+
+  // TODO Legg till for vilkar når OmsorgenFor får egen vilkarstype
+
+  getVilkarKoder = () => [vilkarType.UTVIDETRETTVILKARET];
 }
 
 export default OmsorgenForPanelDef;

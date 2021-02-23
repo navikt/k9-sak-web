@@ -1,6 +1,8 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VilkarMidlertidigAleneProps } from '../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../types/MikrofrontendKomponenter';
 
@@ -15,26 +17,78 @@ const formatereLostAksjonspunktObjekt = (aksjonspunktKode, begrunnelse, erVilkar
     },
   };
 };
-const formatereInformasjonsTilLeseModusObjekt = (begrunnelse, vilkarOppfylt, fom, tom) => {
-  return {
-    begrunnelse,
-    vilkarOppfylt,
-    dato: {
-      fra: fom,
-      til: tom,
-    },
+
+const filtrerVilkar = (vilkarArr: Vilkar[], vilkarTypeFraAksjonspunkt: string) => {
+  const vilkarFraAksjonspunkt = vilkarArr.filter(vilkar => vilkar.vilkarType.kode === vilkarTypeFraAksjonspunkt);
+  if (vilkarFraAksjonspunkt[0]) return vilkarFraAksjonspunkt[0];
+  return undefined;
+};
+
+const generereNavnPåAksjonspunktForVurdertVilkar = (vilkarTypeFraAksjonspunkt: string) => {
+  let navn = '';
+  // TODO legg till for omsorgen for når den får egen vilkarskode og for KS og MA når de får to ulike.
+  switch (vilkarTypeFraAksjonspunkt) {
+    case vilkarType.UTVIDETRETTVILKARET:
+      navn = 'Utvidet rett';
+      break;
+    default:
+      navn = 'Omsorgen for';
+      break;
+  }
+  return navn;
+};
+
+const generereInfoForVurdertVilkar = (
+  skalVilkarsUtfallVises: boolean,
+  vilkarArr: Vilkar[],
+  vilkarTypeFraAksjonspunkt: string,
+) => {
+  const vurdertVilkar = {
+    begrunnelse: '',
+    navnPåAksjonspunkt: '',
+    vilkarOppfylt: false,
+    vilkar: '',
   };
+
+  if (skalVilkarsUtfallVises) {
+    const vilkar = filtrerVilkar(vilkarArr, vilkarTypeFraAksjonspunkt);
+    if (vilkar && vilkar.perioder.length > 0) {
+      const periode = vilkar.perioder[0];
+      vurdertVilkar.begrunnelse = periode.begrunnelse;
+      vurdertVilkar.navnPåAksjonspunkt = generereNavnPåAksjonspunktForVurdertVilkar(vilkarTypeFraAksjonspunkt);
+      vurdertVilkar.vilkarOppfylt = periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+      vurdertVilkar.vilkar = vilkar.lovReferanse;
+    }
+  }
+  return vurdertVilkar;
+};
+
+const erVilkarVurdert = (vilkarArr: Vilkar[], vilkarTypeFraAksjonspunkt: string) => {
+  const vilkar = filtrerVilkar(vilkarArr, vilkarTypeFraAksjonspunkt);
+  let vilkarVurdert = false;
+
+  if (vilkar && vilkar.perioder.length > 0) {
+    const periode = vilkar.perioder[0];
+    const vilkarUtfall = periode.vilkarStatus.kode;
+    vilkarVurdert = vilkarUtfall !== vilkarUtfallType.IKKE_VURDERT;
+  }
+
+  return vilkarVurdert;
 };
 
 const kartleggePropertyTilMikrofrontendKomponent = (
   behandling: Behandling,
   isReadOnly: boolean,
   aksjonspunkter: Aksjonspunkt[],
+  vilkar: Vilkar[],
   submitCallback,
+  isAksjonspunktOpen,
 ) => {
   let objektTilMikrofrontend = {};
   const aksjonspunktKode = aksjonspunkter[0].definisjon.kode;
   const fagsaksType = behandling.fagSaksType;
+  const vilkarTypeFraAksjonspunkt = aksjonspunkter[0].vilkarType.kode;
+  const skalVilkarsUtfallVises = !isAksjonspunktOpen && erVilkarVurdert(vilkar, vilkarTypeFraAksjonspunkt);
 
   switch (aksjonspunktKode) {
     case aksjonspunktCodes.OMSORGEN_FOR:
@@ -76,13 +130,20 @@ const kartleggePropertyTilMikrofrontendKomponent = (
               beskrivelse: 'Beskrivelse',
               periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
             },
-            informasjonTilLesemodus: formatereInformasjonsTilLeseModusObjekt(
-              'Begrunnelse',
-              true,
-              '22.03.1993',
-              '22.12.1994',
+            vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
+            informasjonOmVilkar: generereInfoForVurdertVilkar(
+              skalVilkarsUtfallVises,
+              vilkar,
+              vilkarTypeFraAksjonspunkt,
             ),
-
+            informasjonTilLesemodus: {
+              begrunnelse: 'Begrunnelse',
+              vilkarOppfylt: true,
+              dato: {
+                fra: '22.03.1993',
+                til: '22.12.1994',
+              },
+            },
             onSubmit: ({ begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til }) => {
               submitCallback([
                 formatereLostAksjonspunktObjekt(

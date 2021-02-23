@@ -1,22 +1,31 @@
 export interface VilkarMidlertidigAleneProps {
   lesemodus: boolean;
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
-  informasjonTilLesemodus?: VilkarMidlertidigGrunnlagForBeslutt;
+  informasjonTilLesemodus?: VilkarMidlertidigInformasjonTilLesemodus;
+  vedtakFattetVilkarOppfylt: boolean;
+  informasjonOmVilkar?: VilkarMidlertidigInformasjonOmVilkar;
   onSubmit: (VilkarMidlertidigGrunnlagForBeslutt) => void;
 }
 
-interface VilkarMidlertidigAleneDato {
+export interface VilkarMidlertidigAleneDato {
   til: string;
   fra: string;
 }
 
-interface VilkarMidlertidigSoknadsopplysninger {
+export interface VilkarMidlertidigInformasjonOmVilkar {
+  begrunnelse: string;
+  navnPåAksjonspunkt: string;
+  vilkarOppfylt: boolean;
+  vilkar: string;
+}
+
+export interface VilkarMidlertidigSoknadsopplysninger {
   årsak: string;
   beskrivelse?: string;
   periode: string;
 }
 
-interface VilkarMidlertidigGrunnlagForBeslutt {
+export interface VilkarMidlertidigInformasjonTilLesemodus {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   dato: VilkarMidlertidigAleneDato;
