@@ -236,8 +236,10 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     [behandling.versjon],
   );
 
+  // TODO Fjerne dette når vi får en egen aksjonspunkt.
   // eslint-disable-next-line no-param-reassign
   behandling.fagSaksType = fagsak.sakstype.kode;
+
   return (
     <>
       <IverksetterVedtakStatusModal
