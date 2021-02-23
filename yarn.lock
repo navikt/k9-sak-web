@@ -12884,10 +12884,10 @@ nav-frontend-skjema@3.0.40:
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-3.0.40.tgz#d6bb9bfe5ce353fdc573b5792a2fee85fca2afba"
   integrity sha512-lqBkYox8QZjDH0h0fYJbx/dVa2nZRzeReIwFDQPaBGUjEAsP+1acoALsTste7LiLhyk+EfSB5dtwbkMC+An1VQ==
 
-nav-frontend-snakkeboble-style@0.2.38:
-  version "0.2.38"
-  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-0.2.38.tgz#846b86e47ad5f1a6ae2b7fa1c2884677aa3200ea"
-  integrity sha512-gJ40R3efQpBw0bquUMUWUBLHeDUtCTzYT18SANLPsWN+vjRwub5I26xt/W9SnIp9sEmlB36u7KzUfzpFcBSQng==
+nav-frontend-snakkeboble-style@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-snakkeboble-style/-/nav-frontend-snakkeboble-style-1.0.2.tgz#a6f6ea5a12a4210b7ff3271d6389cb46173e9fd7"
+  integrity sha512-eDf1ftKuODZ1R9p1w4HXMD2aeLq5THTioGZXJHohkwxNbULOiU6PgsHfzwFPy024Qpk00uGdOqeqTVHBj0zSJA==
 
 nav-frontend-snakkeboble@2.0.23:
   version "2.0.23"
