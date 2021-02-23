@@ -6,7 +6,6 @@ const initializeUtvidetRettVilkar = (
   elementId,
   { isReadOnly, behandling, aksjonspunkter, vilkar, submitCallback, isAksjonspunktOpen },
 ) => {
-  console.log(vilkar);
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
     kartleggePropertyTilMikrofrontendKomponent(
@@ -22,7 +21,6 @@ const initializeUtvidetRettVilkar = (
 
 const utvidetRettVilkårAppID = 'utvidetRettApp';
 export default props => {
-  console.log(props);
   return (
     <MicroFrontend
       id={utvidetRettVilkårAppID}

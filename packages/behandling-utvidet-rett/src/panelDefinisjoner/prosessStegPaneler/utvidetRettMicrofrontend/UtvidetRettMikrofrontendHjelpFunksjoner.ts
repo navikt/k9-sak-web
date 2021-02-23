@@ -90,7 +90,6 @@ const kartleggePropertyTilMikrofrontendKomponent = (
   const vilkarTypeFraAksjonspunkt = aksjonspunkter[0].vilkarType.kode;
   const skalVilkarsUtfallVises = !isAksjonspunktOpen && erVilkarVurdert(vilkar, vilkarTypeFraAksjonspunkt);
 
-  console.log(fagsaksType);
   switch (aksjonspunktKode) {
     case aksjonspunktCodes.OMSORGEN_FOR:
       objektTilMikrofrontend = {
