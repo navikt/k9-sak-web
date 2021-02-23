@@ -90,6 +90,7 @@ const kartleggePropertyTilMikrofrontendKomponent = (
   const vilkarTypeFraAksjonspunkt = aksjonspunkter[0].vilkarType.kode;
   const skalVilkarsUtfallVises = !isAksjonspunktOpen && erVilkarVurdert(vilkar, vilkarTypeFraAksjonspunkt);
 
+  console.log(fagsaksType);
   switch (aksjonspunktKode) {
     case aksjonspunktCodes.OMSORGEN_FOR:
       objektTilMikrofrontend = {
@@ -97,10 +98,8 @@ const kartleggePropertyTilMikrofrontendKomponent = (
         props: {
           behandlingsid: '123',
           stiTilEndepunkt: 'api',
-          prosesstype:
-            fagsaksType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
-              ? 'KRONISK_SYKT_BARN'
-              : 'MIDLERTIDIG_ALENE',
+          // prosesstype: fagsaksType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ? 'KRONISK_SYKT_BARN' : 'MIDLERTIDIG_ALENE',
+          prosesstype: 'KRONISK_SYKT_BARN',
           lesemodus: isReadOnly,
         },
         onSubmit: submitCallback,
