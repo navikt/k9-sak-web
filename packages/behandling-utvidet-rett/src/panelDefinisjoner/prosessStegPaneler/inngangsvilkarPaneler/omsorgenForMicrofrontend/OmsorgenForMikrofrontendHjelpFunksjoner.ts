@@ -8,6 +8,7 @@ const kartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   aksjonspunkter: Aksjonspunkt[],
   vilkar: Vilkar[],
   submitCallback,
+  angitteBarn,
 ) => {
   let objektTilMikrofrontend = {};
   const aksjonspunktKode = aksjonspunkter[0].definisjon.kode;
@@ -18,7 +19,7 @@ const kartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
       props: {
         lesemodus: isReadOnly,
         harOmsorgen: false,
-        barnetsFnr: '01010050053',
+        barnetsFnr: angitteBarn.map(barn => barn.personIdent),
       },
       losAksjonspunkt: ({ harSokerOmsorg, begrunnelse }) => {
         submitCallback([

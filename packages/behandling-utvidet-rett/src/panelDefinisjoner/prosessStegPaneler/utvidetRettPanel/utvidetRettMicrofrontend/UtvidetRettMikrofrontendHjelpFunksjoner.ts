@@ -1,5 +1,5 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { erVilkarVurdert, generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
@@ -12,11 +12,10 @@ const kartleggePropertyTilMikrofrontendKomponent = (
   submitCallback,
   isAksjonspunktOpen,
   soknad,
-  fagsak: Fagsak,
+  fagsaksType,
 ) => {
   let objektTilMikrofrontend = {};
   const aksjonspunktKode = aksjonspunkter[0].definisjon.kode;
-  const fagsaksType = fagsak.sakstype.kode;
   const vilkarTypeFraAksjonspunkt = aksjonspunkter[0].vilkarType.kode;
   const skalVilkarsUtfallVises = !isAksjonspunktOpen && erVilkarVurdert(vilkar, vilkarTypeFraAksjonspunkt);
 
@@ -25,7 +24,7 @@ const kartleggePropertyTilMikrofrontendKomponent = (
       objektTilMikrofrontend = {
         visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
         props: {
-          lesemodus: isReadOnly,
+          lesemodus: false,
           legeerklaeringsinfo: { harDokumentasjon: true, harSammenheng: true, begrunnelse: 'Begrunnelse' },
           losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) =>
             submitCallback([

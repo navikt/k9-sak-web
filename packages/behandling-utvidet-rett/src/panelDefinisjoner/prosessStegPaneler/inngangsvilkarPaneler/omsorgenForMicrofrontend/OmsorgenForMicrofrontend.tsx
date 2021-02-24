@@ -2,7 +2,10 @@ import * as React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import kartleggePropertyTilOmsorgenForMikrofrontendKomponent from './OmsorgenForMikrofrontendHjelpFunksjoner';
 
-const initializeOmsorgenForVilkar = (elementId, { isReadOnly, behandling, aksjonspunkter, vilkar, submitCallback }) => {
+const initializeOmsorgenForVilkar = (
+  elementId,
+  { isReadOnly, behandling, aksjonspunkter, vilkar, submitCallback, angitteBarn },
+) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
     kartleggePropertyTilOmsorgenForMikrofrontendKomponent(
@@ -11,6 +14,7 @@ const initializeOmsorgenForVilkar = (elementId, { isReadOnly, behandling, aksjon
       aksjonspunkter,
       vilkar,
       submitCallback,
+      angitteBarn,
     ),
   );
 };

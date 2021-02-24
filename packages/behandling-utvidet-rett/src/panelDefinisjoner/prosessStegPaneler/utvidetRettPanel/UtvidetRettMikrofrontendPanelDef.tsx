@@ -9,7 +9,7 @@ class UtvidetRettMicrofrontendPanelDef extends ProsessStegPanelDef {
   getAksjonspunktKoder = () => [aksjonspunktCodes.UTVIDET_RETT];
 
   getData = ({ fagsak, soknad, vilkar }) => ({
-    fagsak,
+    fagsaksType: fagsak.sakstype.kode,
     soknad,
     vilkar,
   });

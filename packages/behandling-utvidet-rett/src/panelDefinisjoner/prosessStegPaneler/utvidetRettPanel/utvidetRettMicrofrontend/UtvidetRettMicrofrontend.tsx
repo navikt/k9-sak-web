@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import { Fagsak } from '@k9-sak-web/types';
 import kartleggePropertyTilMikrofrontendKomponent from './UtvidetRettMikrofrontendHjelpFunksjoner';
 
 const initializeUtvidetRettVilkar = (
   elementId,
-  { isReadOnly, behandling, aksjonspunkter, vilkar, submitCallback, isAksjonspunktOpen, soknad, fagsak },
+  { isReadOnly, behandling, aksjonspunkter, vilkar, submitCallback, isAksjonspunktOpen, soknad, fagsaksType },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
@@ -17,7 +16,7 @@ const initializeUtvidetRettVilkar = (
       submitCallback,
       isAksjonspunktOpen,
       soknad,
-      fagsak as Fagsak,
+      fagsaksType,
     ),
   );
 };

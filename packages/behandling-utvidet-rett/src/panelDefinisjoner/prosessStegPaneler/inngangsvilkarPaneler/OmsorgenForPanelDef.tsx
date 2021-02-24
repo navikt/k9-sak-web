@@ -10,10 +10,12 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OMSORGEN_FOR];
 
-  getData = ({ soknad, vilkar }) => ({
-    soknad,
-    vilkar,
-  });
+  getData = ({ soknad, vilkar }) => {
+    return {
+      angitteBarn: soknad.angittePersoner.filter(person => person.rolle === 'BARN'),
+      vilkar,
+    };
+  };
 }
 
 export default OmsorgenForPanelDef;
