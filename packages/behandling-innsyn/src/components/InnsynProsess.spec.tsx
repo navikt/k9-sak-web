@@ -64,7 +64,7 @@ describe('<InnsynProsess>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.MEDISINSKVILKARET, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, kodeverk: 'test' },
       overstyrbar: true,
     } as Vilkar,
   ];
