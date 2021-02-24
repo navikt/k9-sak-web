@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
+import { Fagsak } from '@k9-sak-web/types';
 import kartleggePropertyTilMikrofrontendKomponent from './UtvidetRettMikrofrontendHjelpFunksjoner';
 
 const initializeUtvidetRettVilkar = (
   elementId,
-  { isReadOnly, behandling, aksjonspunkter, vilkar, submitCallback, isAksjonspunktOpen },
+  { isReadOnly, behandling, aksjonspunkter, vilkar, submitCallback, isAksjonspunktOpen, soknad, fagsak },
 ) => {
-  console.log('Ny render med props', aksjonspunkter);
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
     kartleggePropertyTilMikrofrontendKomponent(
@@ -16,19 +16,21 @@ const initializeUtvidetRettVilkar = (
       vilkar,
       submitCallback,
       isAksjonspunktOpen,
+      soknad,
+      fagsak as Fagsak,
     ),
   );
 };
 
-const utvidetRettVilkårAppID = 'utvidetRettApp';
 export default props => {
+  const utvidetRettVilkårAppID = 'utvidetRettApp';
   return (
     <MicroFrontend
       id={utvidetRettVilkårAppID}
       jsSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/app.js"
-      jsIntegrity="sha256-eMm6syZ6S/oIwwRMVWDIfp4RgnozhIfUA0AT8faAOeQ="
+      jsIntegrity="sha256-rERqjiSBvdL3Mkfca5HPrBArb8ADhJUtVn5FeGM+5bw="
       stylesheetSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/styles.css"
-      stylesheetIntegrity="sha256-XSoWL7x4IE2gltvaPblopfNsxJkAw8yjBYVxKXQSB2o="
+      stylesheetIntegrity="sha256-OwN7oHh3pVJdFYDdrsgwa0kLqYwGWSIBTSUOZSJgL68="
       onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID, props)}
       onError={() => {}}
     />

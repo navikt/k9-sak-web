@@ -59,6 +59,7 @@ export default ({
 
   React.useEffect(() => {
     if (document.getElementById(scriptId) === null) {
+      console.log('Legger til i DOM');
       addElementToDOM(() => createScriptTagElement(jsSrc, scriptId, jsIntegrity, onReady, onError));
     }
     if (document.getElementById(linkId) === null && stylesheetSrc) {
