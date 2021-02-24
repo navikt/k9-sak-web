@@ -92,11 +92,8 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),
   });
 
-  const behandlingVersjon = alleBehandlinger.some(b => b.id === behandlingId)
-    ? alleBehandlinger.find(b => b.id === behandlingId).versjon
-    : undefined;
-
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
+  const behandlingVersjon = behandling?.versjon;
 
   useEffect(() => {
     if (behandling) {
