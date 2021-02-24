@@ -156,6 +156,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'OMSORGSVILKAR',
     feltId: 'HistorikkEndretFelt.ApplicationInformation',
   },
+  OMSORG_FOR: {
+    kode: 'OMSORG_FOR',
+    feltId: 'HistorikkEndretFelt.ApplicationInformation',
+  },
   OPPHOLDSRETT_EOS: {
     kode: 'OPPHOLDSRETT_EOS',
     feltId: 'HistorikkEndretFelt.Oppholdsrett',
@@ -207,6 +211,10 @@ const historikkEndretFeltTypeCodes = {
   UTSTEDTDATO: {
     kode: 'UTSTEDTDATO',
     feltId: 'HistorikkEndretFelt.UtstedtDato',
+  },
+  UTVIDETRETT: {
+    kode: 'UTVIDETRETT',
+    feltId: 'HistorikkEndretFelt.UtvidetRett',
   },
   VILKAR_SOM_ANVENDES: {
     kode: 'VILKAR_SOM_ANVENDES',
