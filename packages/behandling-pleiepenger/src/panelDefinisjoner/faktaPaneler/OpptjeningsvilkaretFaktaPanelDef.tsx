@@ -14,7 +14,7 @@ const erAllePerioderOppfylt = vilkarsperioder =>
 
 const shouldShowOpptjening = vilkar =>
   vilkar.some(v => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET) &&
-  vilkar.some(v => v.vilkarType.kode === vilkarType.MEDISINSKVILKARET && erAllePerioderOppfylt(v.perioder));
+  vilkar.some(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR && erAllePerioderOppfylt(v.perioder));
 
 class OpptjeningsvilkaretFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.OPPTJENINGSVILKARET;

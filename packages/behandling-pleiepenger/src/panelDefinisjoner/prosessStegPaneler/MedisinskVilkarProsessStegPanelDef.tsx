@@ -10,7 +10,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
-  getVilkarKoder = () => [vilkarType.MEDISINSKVILKARET];
+  getVilkarKoder = () => [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR];
 
   getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 
