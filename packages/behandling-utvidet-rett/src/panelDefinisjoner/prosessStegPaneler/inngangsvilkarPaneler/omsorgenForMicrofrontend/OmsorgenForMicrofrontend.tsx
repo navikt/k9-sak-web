@@ -25,7 +25,7 @@ export default props => {
     <MicroFrontend
       id={omsorgenForVilkårAppID}
       jsSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/app.js"
-      jsIntegrity="sha256-rERqjiSBvdL3Mkfca5HPrBArb8ADhJUtVn5FeGM+5bw="
+      jsIntegrity="sha256-WcRHIyakKzq9WUg9ecXSd95zmQ6s0Nq8abH23dy6MBM="
       stylesheetSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/styles.css"
       stylesheetIntegrity="sha256-OwN7oHh3pVJdFYDdrsgwa0kLqYwGWSIBTSUOZSJgL68="
       onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, props)}
