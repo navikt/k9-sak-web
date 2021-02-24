@@ -12,15 +12,7 @@ import {
   lagDokumentdata,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import {
-  Fagsak,
-  FagsakPerson,
-  KodeverkMedNavn,
-  Behandling,
-  FeatureToggles,
-  ArbeidsgiverOpplysningerPerId,
-} from '@k9-sak-web/types';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import { Fagsak, FagsakPerson, KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
@@ -52,7 +44,6 @@ interface OwnProps {
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   setBehandling: (behandling: Behandling) => void;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
 }
 
@@ -143,7 +134,6 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   apentFaktaPanelInfo,
   setBehandling,
-  arbeidsgiverOpplysningerPerId,
   featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
@@ -155,10 +145,7 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     startRequest: lagreAksjonspunkter,
     data: apBehandlingRes,
   } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT);
-  const {
-    startRequest: lagreOverstyrteAksjonspunkter,
-    data: apOverstyrtBehandlingRes,
-  } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+
   const { startRequest: forhandsvisMelding } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.PREVIEW_MESSAGE,
   );
@@ -169,15 +156,6 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
-  useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
-
-  const lagreArsakerTilRedusertUtbetaling = arsaker => {
-    if (featureToggles?.DOKUMENTDATA) {
-      lagreDokumentdata({
-        [dokumentdatatype.REDUSERT_UTBETALING_AARSAK]: arsaker,
-      });
-    }
-  };
 
   const dataTilUtledingAvFpPaneler = {
     fagsakPerson,
@@ -189,9 +167,7 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
       [behandling.versjon],
     ),
     alleKodeverk,
-    arbeidsgiverOpplysningerPerId,
     fagsak,
-    lagreArsakerTilRedusertUtbetaling,
     ...data,
   };
 
@@ -267,7 +243,6 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           lagreAksjonspunkter={lagreAksjonspunkter}
-          lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
           useMultipleRestApi={restApiUtvidetRettHooks.useMultipleRestApi}
           featureToggles={featureToggles}
         />

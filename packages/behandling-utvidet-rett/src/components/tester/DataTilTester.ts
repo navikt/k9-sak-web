@@ -95,6 +95,32 @@ const utvidetRettTestData = {
     },
   },
   vilkar: [] as Vilkar[],
+  soknad: {
+    begrunnelseForSenInnsending: null,
+    manglendeVedlegg: [],
+    angittePersoner: [
+      {
+        navn: 'DUCK DOLE',
+        fødselsdato: '2019-02-18',
+        rolle: 'BARN',
+        aktørId: '9907481888926',
+        personIdent: '07481888926',
+      },
+    ],
+    mottattDato: '2021-02-18',
+    oppgittStartdato: '2021-02-18',
+    oppgittTilknytning: null,
+    soknadsdato: '2021-02-18',
+    spraakkode: {
+      kode: 'NB',
+      kodeverk: 'SPRAAK_KODE',
+    },
+    tilleggsopplysninger: null,
+    søknadsperiode: {
+      fom: '2021-02-18',
+      tom: '9999-12-31',
+    },
+  },
 };
 
 export default utvidetRettTestData;

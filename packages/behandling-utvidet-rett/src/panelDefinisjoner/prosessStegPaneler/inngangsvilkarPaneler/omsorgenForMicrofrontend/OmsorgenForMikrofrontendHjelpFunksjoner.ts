@@ -12,8 +12,7 @@ const kartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
 ) => {
   let objektTilMikrofrontend = {};
   const aksjonspunktKode = aksjonspunkter[0].definisjon.kode;
-  const barnl = angitteBarn.map(barn => barn.personIdent);
-  console.log(barnl);
+
   if (aksjonspunktKode === aksjonspunktCodes.OMSORGEN_FOR) {
     objektTilMikrofrontend = {
       visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,

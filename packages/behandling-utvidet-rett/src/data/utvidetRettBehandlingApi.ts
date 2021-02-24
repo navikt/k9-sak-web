@@ -7,7 +7,6 @@ export enum UtvidetRettBehandlingApiKeys {
   BEHANDLING_UTVIDET_RETT = 'BEHANDLING_UTVIDET_RETT',
   UPDATE_ON_HOLD = 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT = 'SAVE_AKSJONSPUNKT',
-  SAVE_OVERSTYRT_AKSJONSPUNKT = 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE = 'PREVIEW_MESSAGE',
   PREVIEW_TILBAKEKREVING_MESSAGE = 'PREVIEW_TILBAKEKREVING_MESSAGE',
   AKSJONSPUNKTER = 'AKSJONSPUNKTER',
@@ -58,10 +57,6 @@ const endpoints = new RestApiConfigBuilder()
   // TODO Flytt alle endepunkter under til backend på same måte som i fp-frontend
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', UtvidetRettBehandlingApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost(
-    '/k9/sak/api/behandling/aksjonspunkt/overstyr',
-    UtvidetRettBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
-  )
 
   .withPost('/k9/sak/api/behandlinger/bytt-enhet', UtvidetRettBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/k9/sak/api/behandlinger/henlegg', UtvidetRettBehandlingApiKeys.HENLEGG_BEHANDLING)
