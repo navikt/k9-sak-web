@@ -12,7 +12,7 @@ class UttakFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ rammevedtak }) => !!rammevedtak;
 
-  getData = ({ rammevedtak }) => ({ rammevedtak: rammevedtak?.rammevedtak || [] });
+  getData = ({ rammevedtak }) => ({ rammevedtak });
 }
 
 export default UttakFaktaPanelDef;

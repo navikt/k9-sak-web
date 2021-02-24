@@ -61,7 +61,6 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   opneSokeside,
   valgtFaktaSteg,
-  arbeidsgiverOpplysninger,
   setRequestPendingMessage,
   featureToggles,
 }) => {
@@ -153,6 +152,9 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
     return <LoadingPanel />;
   }
 
+  // TODO fjerne når endepunktet for rammevedtak er merget in i k9-sak.
+  data.rammevedtak = [];
+
   return (
     <>
       <ReduxFormStateCleaner
@@ -175,7 +177,6 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
       />
     </>

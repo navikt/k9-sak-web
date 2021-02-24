@@ -1,10 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-
-import { Behandling } from '@k9-sak-web/types';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-
 import utvidetRettTestData from './DataTilTester';
 import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettProsess from '../UtvidetRettProsess';
@@ -15,16 +12,18 @@ const {
   behandling,
   fagsak,
   fagsakPerson,
-  forbrukteDager,
   rettigheter,
   vilkar,
+  rammevedtak,
+  soknad,
 } = utvidetRettTestData;
 
 describe('<UtvidetRettProsess>', () => {
   const fetchedData: Partial<FetchedData> = {
     aksjonspunkter,
     vilkar,
-    forbrukteDager,
+    rammevedtak,
+    soknad,
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
@@ -78,38 +77,5 @@ describe('<UtvidetRettProsess>', () => {
         type: 'default',
       },
     ]);
-  });
-
-  it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallow(
-      <UtvidetRettProsess
-        data={fetchedData as FetchedData}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        behandling={behandling as Behandling}
-        alleKodeverk={{}}
-        rettigheter={rettigheter}
-        valgtProsessSteg="default"
-        valgtFaktaSteg="default"
-        hasFetchError={false}
-        oppdaterBehandlingVersjon={sinon.spy()}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        opneSokeside={sinon.spy()}
-        setBehandling={sinon.spy()}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
-      />,
-    );
-
-    const meny = wrapper.find(ProsessStegContainer);
-
-    console.log(meny.prop('velgProsessStegPanelCallback')(2));
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-    console.log(opppdaterKall);
-    expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual('uttak');
-    expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 });

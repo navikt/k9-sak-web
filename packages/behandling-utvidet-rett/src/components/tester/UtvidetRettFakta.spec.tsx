@@ -3,20 +3,19 @@ import sinon from 'sinon';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import { Behandling } from '@k9-sak-web/types';
-import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
 import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import UtvidetRettFakta from '../UtvidetRettFakta';
 import FetchedData from '../../types/fetchedDataTsType';
 import utvidetRettTestData from './DataTilTester';
 
-const { aksjonspunkter, behandling, fagsak, fagsakPerson, forbrukteDager, rettigheter, vilkar } = utvidetRettTestData;
+const { aksjonspunkter, behandling, fagsak, fagsakPerson, rettigheter, vilkar, rammevedtak } = utvidetRettTestData;
 
 describe('<UtvidetRettFakta>', () => {
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
-      forbrukteDager,
+      rammevedtak,
     };
 
     const wrapper = shallowWithIntl(
@@ -60,7 +59,7 @@ describe('<UtvidetRettFakta>', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
-      forbrukteDager,
+      rammevedtak,
     };
 
     const wrapper = shallowWithIntl(
@@ -97,7 +96,7 @@ describe('<UtvidetRettFakta>', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
-      forbrukteDager,
+      rammevedtak,
     };
 
     const wrapper = shallowWithIntl(
@@ -123,10 +122,5 @@ describe('<UtvidetRettFakta>', () => {
     expect(registrerteRammemeldingerPanel.prop('readOnly')).toBe(false);
     expect(registrerteRammemeldingerPanel.prop('submittable')).toBe(true);
     expect(registrerteRammemeldingerPanel.prop('harApneAksjonspunkter')).toBe(false);
-
-    const barnPanel = wrapper.find(FaktaBarnIndex);
-    expect(barnPanel.prop('readOnly')).toBe(false);
-    expect(barnPanel.prop('submittable')).toBe(false);
-    expect(barnPanel.prop('harApneAksjonspunkter')).toBe(false);
   });
 });
