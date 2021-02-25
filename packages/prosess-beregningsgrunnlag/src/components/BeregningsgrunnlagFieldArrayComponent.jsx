@@ -3,7 +3,6 @@ import BeregningForm2 from './beregningForm/BeregningForm';
 
 const BeregningsgrunnlagFieldArrayComponent = ({
   fields,
-  harFlereBeregningsgrunnlag,
   initialValues,
   aktivtBeregningsgrunnlagIndeks,
   aktivtBeregningsgrunnlag,
@@ -18,14 +17,9 @@ const BeregningsgrunnlagFieldArrayComponent = ({
   vilkaarBG,
 }) => {
   if (fields.length === 0) {
-    if (harFlereBeregningsgrunnlag) {
-      // eslint-disable-next-line
-      initialValues.forEach(initialValueObject => {
-        fields.push(initialValueObject);
-      });
-    } else {
-      fields.push(initialValues[0]);
-    }
+    initialValues.forEach(initialValueObject => {
+      fields.push(initialValueObject);
+    });
   }
   return fields.map((fieldId, index) =>
     index === aktivtBeregningsgrunnlagIndeks ? (

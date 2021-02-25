@@ -347,7 +347,7 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -420,7 +420,7 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -480,7 +480,7 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -542,7 +542,7 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -589,7 +589,7 @@ export const VurderingAvMilitær = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -656,7 +656,7 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -705,7 +705,7 @@ export const KunTidsbegrensetArbeidsforhold = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -753,7 +753,7 @@ export const VurderingAvEtterlønnSluttpakke = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -805,7 +805,7 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -852,7 +852,7 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -1048,7 +1048,7 @@ export const KombinasjonstestForFaktapanel = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
@@ -1132,7 +1132,7 @@ export const OverstyringAvInntekt = () => {
   return (
     <BeregningFaktaIndex
       behandling={behandling}
-      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
       aksjonspunkter={[
         {
           definisjon: {
