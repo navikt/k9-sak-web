@@ -6,7 +6,7 @@ import { Behandling } from '@k9-sak-web/types';
 import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import UtvidetRettFakta from '../UtvidetRettFakta';
 import FetchedData from '../../types/fetchedDataTsType';
-import utvidetRettTestData from './DataTilTester';
+import utvidetRettTestData from './utvidetRettTestData';
 
 const { aksjonspunkter, behandling, fagsak, fagsakPerson, rettigheter, vilkar, rammevedtak } = utvidetRettTestData;
 

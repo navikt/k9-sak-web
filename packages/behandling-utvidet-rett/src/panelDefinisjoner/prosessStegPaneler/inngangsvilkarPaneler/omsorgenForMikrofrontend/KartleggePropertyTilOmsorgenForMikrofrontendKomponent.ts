@@ -2,7 +2,7 @@ import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 
-const kartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
+const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   behandling: Behandling,
   isReadOnly: boolean,
   aksjonspunkter: Aksjonspunkt[],
@@ -35,4 +35,4 @@ const kartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   return objektTilMikrofrontend;
 };
 
-export default kartleggePropertyTilOmsorgenForMikrofrontendKomponent;
+export default KartleggePropertyTilOmsorgenForMikrofrontendKomponent;

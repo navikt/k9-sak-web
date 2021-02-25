@@ -4,7 +4,7 @@ import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrof
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { erVilkarVurdert, generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
 
-const kartleggePropertyTilMikrofrontendKomponent = (
+const KartleggePropertyTilMikrofrontendKomponent = (
   behandling: Behandling,
   isReadOnly: boolean,
   aksjonspunkter: Aksjonspunkt[],
@@ -88,4 +88,4 @@ const kartleggePropertyTilMikrofrontendKomponent = (
   return objektTilMikrofrontend;
 };
 
-export default kartleggePropertyTilMikrofrontendKomponent;
+export default KartleggePropertyTilMikrofrontendKomponent;

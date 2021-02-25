@@ -2,10 +2,10 @@ import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/Inngangsvilk
 import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPanelDef';
 import UtvidetRettProsessStegPanelDef from './prosessStegPaneler/UtvidetRettPanelDef';
 
-const prosessStegPanelDefinisjoner = [
+const prosessStegUtvidetRettPanelDefinisjoner = [
   new InngangsvilkarProsessStegPanelDef(),
   new UtvidetRettProsessStegPanelDef(),
   new VedtakProsessStegPanelDef(),
 ];
 
-export default prosessStegPanelDefinisjoner;
+export default prosessStegUtvidetRettPanelDefinisjoner;

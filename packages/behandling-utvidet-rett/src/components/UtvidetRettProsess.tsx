@@ -15,7 +15,7 @@ import {
 import { Fagsak, FagsakPerson, KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
-import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
+import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 
@@ -172,7 +172,7 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
   };
 
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
-    prosessStegPanelDefinisjoner,
+    prosessStegUtvidetRettPanelDefinisjoner,
     dataTilUtledingAvFpPaneler,
     fagsak,
     rettigheter,

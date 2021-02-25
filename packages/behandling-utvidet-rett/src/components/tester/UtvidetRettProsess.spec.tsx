@@ -2,7 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-import utvidetRettTestData from './DataTilTester';
+import utvidetRettTestData from './utvidetRettTestData';
 import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettProsess from '../UtvidetRettProsess';
 

@@ -1,10 +1,10 @@
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import React from 'react';
-import UtvidetRettMicrofrontend from './utvidetRettMicrofrontend/UtvidetRettMicrofrontend';
+import UtvidetRettMikrofrontend from './utvidetRettMikrofrontend/UtvidetRettMikrofrontend';
 
-class UtvidetRettMicrofrontendPanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <UtvidetRettMicrofrontend {...props} />;
+class UtvidetRettMikrofrontendPanelDef extends ProsessStegPanelDef {
+  getKomponent = props => <UtvidetRettMikrofrontend {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.UTVIDET_RETT];
 
@@ -14,4 +14,4 @@ class UtvidetRettMicrofrontendPanelDef extends ProsessStegPanelDef {
     vilkar,
   });
 }
-export default UtvidetRettMicrofrontendPanelDef;
+export default UtvidetRettMikrofrontendPanelDef;

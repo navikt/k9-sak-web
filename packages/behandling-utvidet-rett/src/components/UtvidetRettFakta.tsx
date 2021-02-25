@@ -3,7 +3,6 @@ import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
-// import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
