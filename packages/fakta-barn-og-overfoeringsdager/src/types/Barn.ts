@@ -8,5 +8,6 @@ export default interface Barn {
   aleneomsorg?: Gyldighetsperiode;
   fosterbarn?: Gyldighetsperiode;
   utenlandskBarn?: Gyldighetsperiode;
+  deltBosted?: Gyldighetsperiode;
   fødselsnummer: string;
 }

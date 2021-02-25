@@ -12,7 +12,6 @@ import {
   getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -23,6 +22,7 @@ import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { InputField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
+import createVisningsnavnForAktivitet from '../../util/createVisningsnavnForAktivitet';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
@@ -105,6 +105,14 @@ const createMapValueObject = () => ({
   inputfieldKey: '',
 });
 
+const lagVisningsnavnForAktivitet = (arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+  const arbeidsforholdInfo = arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdent];
+  if (!arbeidsforholdInfo) {
+    return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
+  }
+  return createVisningsnavnForAktivitet(arbeidsforholdInfo, arbeidsforhold.eksternArbeidsforholdId);
+};
+
 // Initialiserer arbeidsforholdet mappet med data som skal vises uansett hva slags data vi har.
 // Dette innebærer at første kolonne i raden skal inneholde andelsnavn og andre kolonne skal inneholde beregnetPrAar.
 // Vi antar at alle andeler ligger i alle perioder, henter derfor kun ut andeler fra den første perioden.
@@ -115,7 +123,7 @@ const initializeMap = (perioder, getKodeverknavn, arbeidsgiverOpplysningerPerId)
   alleAndeler.forEach(andel => {
     const andelMapNavn = createArbeidsforholdMapKey(andel.arbeidsforhold, arbeidsgiverOpplysningerPerId);
     const mapValueMedAndelNavn = createMapValueObject();
-    mapValueMedAndelNavn.tabellInnhold = createVisningsnavnForAktivitet(
+    mapValueMedAndelNavn.tabellInnhold = lagVisningsnavnForAktivitet(
       andel.arbeidsforhold,
       getKodeverknavn,
       arbeidsgiverOpplysningerPerId,

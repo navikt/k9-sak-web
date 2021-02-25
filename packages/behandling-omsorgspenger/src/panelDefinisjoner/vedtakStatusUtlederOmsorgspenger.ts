@@ -10,11 +10,7 @@ const hasOnlyClosedAps = (aksjonspunkter, vedtakAksjonspunkter) =>
     .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon.kode === ap.definisjon.kode))
     .every(ap => !isAksjonspunktOpen(ap.status.kode));
 
-const hasAksjonspunkt = ap =>
-  ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING ||
-  ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG ||
-  ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG ||
-  ap.definisjon.kode === aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER;
+const hasAksjonspunkt = ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING;
 
 const isAksjonspunktOpenAndOfType = ap => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status.kode);
 

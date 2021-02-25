@@ -15,9 +15,7 @@ const finnSamletBruttoForStatus = (andeler, status) => {
   return inntekt;
 };
 
-const erMars2020 = dato => {
-  return dato.month() === 2 && dato.year() === 2020;
-};
+const erMars2020 = dato => dato.month() === 2 && dato.year() === 2020;
 
 const erSøktForMars2020 = frisinnPeriode => {
   const tom = moment(frisinnPeriode.tom);

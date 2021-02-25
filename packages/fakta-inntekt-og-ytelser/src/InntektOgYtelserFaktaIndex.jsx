@@ -14,13 +14,11 @@ const intl = createIntl(
   cache,
 );
 
-const InntektOgYtelserFaktaIndex = ({ inntektOgYtelser }) => {
-  return (
-    <RawIntlProvider value={intl}>
-      <InntektOgYtelserPanel inntekter={inntektOgYtelser.inntekt} />
-    </RawIntlProvider>
-  );
-};
+const InntektOgYtelserFaktaIndex = ({ inntektOgYtelser }) => (
+  <RawIntlProvider value={intl}>
+    <InntektOgYtelserPanel inntekter={inntektOgYtelser.inntekt} />
+  </RawIntlProvider>
+);
 
 InntektOgYtelserFaktaIndex.propTypes = {
   inntektOgYtelser: PropTypes.shape().isRequired,

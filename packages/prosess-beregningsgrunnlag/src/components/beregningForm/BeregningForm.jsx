@@ -6,7 +6,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import { Undertittel } from 'nav-frontend-typografi';
@@ -48,13 +47,6 @@ const {
 // ------------------------------------------------------------------------------------------ //
 // Methods
 // ------------------------------------------------------------------------------------------ //
-
-const gjelderBehandlingenBesteberegning = faktaOmBeregning =>
-  faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
-    ? faktaOmBeregning.faktaOmBeregningTilfeller.some(
-        tilfelle => tilfelle.kode === faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE,
-      )
-    : false;
 
 const harPerioderMedAvsluttedeArbeidsforhold = allePerioder =>
   allePerioder.some(
@@ -260,11 +252,8 @@ const getStatusList = beregningsgrunnlagPeriode => {
   return statusList;
 };
 
-const harFrisinngrunnlag = beregningsgrunnlag => {
-  return (
-    beregningsgrunnlag.ytelsesspesifiktGrunnlag && beregningsgrunnlag.ytelsesspesifiktGrunnlag.ytelsetype === 'FRISINN'
-  );
-};
+const harFrisinngrunnlag = beregningsgrunnlag =>
+  beregningsgrunnlag.ytelsesspesifiktGrunnlag && beregningsgrunnlag.ytelsesspesifiktGrunnlag.ytelsetype === 'FRISINN';
 
 const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
   if (
@@ -300,13 +289,7 @@ export const BeregningFormImpl = ({
   vilkaarBG,
   fieldArrayID,
 }) => {
-  const {
-    dekningsgrad,
-    skjaeringstidspunktBeregning,
-    beregningsgrunnlagPeriode,
-    faktaOmBeregning,
-  } = beregningsgrunnlag;
-  const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
+  const { dekningsgrad, skjaeringstidspunktBeregning, beregningsgrunnlagPeriode } = beregningsgrunnlag;
   const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
@@ -347,7 +330,6 @@ export const BeregningFormImpl = ({
                 readOnlySubmitButton={readOnlySubmitButton}
                 formName={formName}
                 allePerioder={beregningsgrunnlagPeriode}
-                gjelderBesteberegning={gjelderBesteberegning}
                 behandlingId={behandling.id}
                 behandlingVersjon={behandling.versjon}
                 alleKodeverk={alleKodeverk}
@@ -372,7 +354,6 @@ export const BeregningFormImpl = ({
             relevanteStatuser={relevanteStatuser}
             allePerioder={beregningsgrunnlagPeriode}
             harAksjonspunkter={harAksjonspunkter}
-            gjelderBesteberegning={gjelderBesteberegning}
             skalViseAvviksprosent={skalViseAvviksprosent}
           />
           {harAksjonspunkter && (

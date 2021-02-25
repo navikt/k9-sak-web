@@ -1,9 +1,9 @@
 import React from 'react';
 import sinon from 'sinon';
-import { expect } from 'chai';
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
+import { PeriodeMedId } from './TilkjentYtelse';
 
 const selectedItemDataFL = {
   andeler: [
@@ -46,7 +46,7 @@ const selectedItemDataFL = {
   fom: '2020-04-20',
   tom: '2020-04-24',
   id: 0,
-};
+} as PeriodeMedId;
 
 const selectedItemStartDate = '2020-04-24';
 const selectedItemEndDate = '2020-04-24';
@@ -79,9 +79,9 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         alleKodeverk={{}}
       />,
     );
-    expect(wrapper.find('FormattedMessage')).to.have.lengthOf(12);
-    expect(wrapper.find('FormattedMessage').at(7).props().id).to.equal('TilkjentYtelse.PeriodeData.Aktivitetsstatus');
+    expect(wrapper.find('FormattedMessage')).toHaveLength(12);
+    expect(wrapper.find('FormattedMessage').at(7).props().id).toBe('TilkjentYtelse.PeriodeData.Aktivitetsstatus');
 
-    expect(createVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn)).to.equal('Frilans');
+    expect(createVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn)).toBe('Frilans');
   });
 });

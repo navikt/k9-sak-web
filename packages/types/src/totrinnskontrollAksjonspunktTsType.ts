@@ -45,7 +45,7 @@ type TotrinnskontrollAksjonspunkt = Readonly<{
     erLagtTil: boolean;
     erEndret: boolean;
   }[];
-  arbeidforholdDtos?: TotrinnskontrollArbeidsforhold[];
+  arbeidsforholdDtos?: TotrinnskontrollArbeidsforhold[];
   beregningDtoer?: TotrinnsBeregningDto[];
   beregningDto?: TotrinnsBeregningDto;
 }>;

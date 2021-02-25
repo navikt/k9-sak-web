@@ -4,9 +4,9 @@ import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropTy
 import Frisinnpanel from './frisinn/Frisinnpanel';
 import beregningsgrunnlagBehandlingPropType from '../../propTypes/beregningsgrunnlagBehandlingPropType';
 
-const lagFrisinnpaneler = (beregningsgrunnlag, behandling) => {
-  return <Frisinnpanel beregningsgrunnlag={beregningsgrunnlag} behandling={behandling} />;
-};
+const lagFrisinnpaneler = (beregningsgrunnlag, behandling) => (
+  <Frisinnpanel beregningsgrunnlag={beregningsgrunnlag} behandling={behandling} />
+);
 
 /**
  * YtelsegrunnlagPanel

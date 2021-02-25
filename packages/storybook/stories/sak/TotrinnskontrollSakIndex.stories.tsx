@@ -28,7 +28,7 @@ const data = [
         totrinnskontrollGodkjent: null,
         vurderPaNyttArsaker: [],
         uttakPerioder: [],
-        arbeidforholdDtos: [],
+        arbeidsforholdDtos: [],
       },
     ],
   },
@@ -59,7 +59,7 @@ const dataReadOnly = [
           },
         ],
         uttakPerioder: [],
-        arbeidforholdDtos: [],
+        arbeidsforholdDtos: [],
       },
     ],
   },
@@ -83,7 +83,7 @@ const behandling = {
     kode: behandlingType.FORSTEGANGSSOKNAD,
     kodeverk: '',
   },
-  behandlingArsaker: [],
+  behandlingÅrsaker: [],
   toTrinnsBehandling: true,
 } as Behandling;
 
@@ -116,10 +116,7 @@ export const visTotrinnskontrollForBeslutter = () => (
       behandlingKlageVurdering={
         {
           klageVurderingResultatNFP: {
-            klageVurdering: {
-              kode: 'STADFESTE_YTELSESVEDTAK',
-              kodeverk: '',
-            },
+            klageVurdering: 'STADFESTE_YTELSESVEDTAK',
           },
         } as KlageVurdering
       }
@@ -159,10 +156,7 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       behandlingKlageVurdering={
         {
           klageVurderingResultatNFP: {
-            klageVurdering: {
-              kode: 'STADFESTE_YTELSESVEDTAK',
-              kodeverk: '',
-            },
+            klageVurdering: 'STADFESTE_YTELSESVEDTAK',
           },
         } as KlageVurdering
       }

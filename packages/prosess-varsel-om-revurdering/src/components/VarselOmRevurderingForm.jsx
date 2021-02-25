@@ -10,7 +10,9 @@ import PropTypes from 'prop-types';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
   RadioGroupField,
   RadioOption,
@@ -19,7 +21,6 @@ import {
   behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   hasValidText,
@@ -35,8 +36,6 @@ import revurderingSoknadPropType from '../propTypes/revurderingSoknadPropType';
 import styles from './varselOmRevurderingForm.less';
 
 const minLength3 = minLength(3);
-
-const hasValueChanged = (originalValue, newValue) => !(originalValue === newValue || (!newValue && !originalValue));
 
 /**
  * VarselOmRevurderingForm
@@ -102,20 +101,13 @@ export class VarselOmRevurderingFormImpl extends React.Component {
       languageCode,
       readOnly,
       sendVarsel,
-      frist,
       aksjonspunktStatus,
-      aksjonspunktKode,
       begrunnelse,
-      ventearsak,
-      originalVentearsak,
-      originalFrist,
       ventearsaker,
+      behandlingTypeKode,
       ...formProps
     } = this.props;
     const { showSettPaVentModal } = this.state;
-
-    const venteArsakHasChanged = hasValueChanged(originalVentearsak, ventearsak);
-    const fristHasChanged = hasValueChanged(originalFrist, frist);
 
     return (
       <form>
@@ -176,22 +168,18 @@ export class VarselOmRevurderingFormImpl extends React.Component {
             <Normaltekst>{begrunnelse}</Normaltekst>
           </div>
         )}
-        <SettBehandlingPaVentModal
+        <SettPaVentModalIndex
           showModal={showSettPaVentModal}
-          aksjonspunktKode={aksjonspunktKode}
-          frist={frist}
+          frist={moment().add(28, 'days').format(ISO_DATE_FORMAT)}
           cancelEvent={this.hideSettPaVentModal}
-          comment={
-            <Normaltekst>
-              <FormattedMessage id="VarselOmRevurderingForm.BrevBlirBestilt" />
-            </Normaltekst>
-          }
-          venteArsakHasChanged={venteArsakHasChanged}
-          fristHasChanged={fristHasChanged}
-          showAvbryt
-          handleSubmit={this.handleSubmitFromModal}
-          hasManualPaVent
+          submitCallback={this.handleSubmitFromModal}
           ventearsaker={ventearsaker}
+          visBrevErBestilt
+          hasManualPaVent
+          erTilbakekreving={
+            behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
+            behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
+          }
         />
       </form>
     );
@@ -210,9 +198,6 @@ VarselOmRevurderingFormImpl.propTypes = {
   sendVarsel: PropTypes.bool,
   fritekst: PropTypes.string,
   begrunnelse: PropTypes.string,
-  frist: PropTypes.string,
-  originalVentearsak: PropTypes.string,
-  ventearsak: PropTypes.string,
   ventearsaker: PropTypes.arrayOf(
     PropTypes.shape({
       kode: PropTypes.string,
@@ -231,12 +216,9 @@ VarselOmRevurderingFormImpl.propTypes = {
 VarselOmRevurderingFormImpl.defaultProps = {
   sendVarsel: false,
   fritekst: null,
-  frist: moment().add(28, 'days').format(ISO_DATE_FORMAT),
   begrunnelse: null,
   languageCode: null,
   erAutomatiskRevurdering: false,
-  originalVentearsak: null,
-  ventearsak: null,
   ventearsaker: [],
   avklartBarn: undefined,
   termindato: undefined,
@@ -261,8 +243,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunkter,
     submitCallback,
     sprakkode,
-    ventearsak,
-    frist,
     familiehendelse,
   } = ownProps;
   const onSubmit = values => submitCallback([values]);
@@ -276,20 +256,11 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     initialValues: buildInitialValues(state, ownProps),
     aksjonspunktStatus: aksjonspunkt.status.kode,
-    aksjonspunktKode: aksjonspunkt.definisjon.kode,
     begrunnelse: aksjonspunkt.begrunnelse,
-    ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
-      state,
-      'sendVarsel',
-      'fritekst',
-      'frist',
-      'ventearsak',
-    ),
+    ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'sendVarsel', 'fritekst', 'frist'),
     avklartBarn: nullSafe(familiehendelse.register).avklartBarn,
     termindato: nullSafe(familiehendelse.gjeldende).termindato,
     vedtaksDatoSomSvangerskapsuke: nullSafe(familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
-    originalVentearsak: ventearsak,
-    originalFrist: frist,
     behandlingTypeKode: behandlingType.kode,
     languageCode,
     ventearsaker,

@@ -19,12 +19,10 @@ const getBrevKode = ankeVurdering => {
   }
 };
 
-const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => {
-  return {
-    dokumentdata: fritekstTilBrev && { fritekst: fritekstTilBrev },
-    dokumentMal: getBrevKode(ankeVurdering),
-  };
-};
+const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => ({
+  dokumentdata: fritekstTilBrev && { fritekst: fritekstTilBrev },
+  dokumentMal: getBrevKode(ankeVurdering),
+});
 
 const PreviewAnkeLink = ({ previewCallback, fritekstTilBrev, ankeVurdering, aksjonspunktCode, readOnly }) => {
   const previewMessage = e => {

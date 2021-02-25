@@ -42,13 +42,13 @@ const VedtakPanels = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  personopplysninger,
   arbeidsgiverOpplysningerPerId,
   vilkar,
   beregningsgrunnlag,
   resultatstrukturOriginalBehandling,
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
-  lagreArsakerTilRedusertUtbetaling,
   dokumentdata,
 }) => {
   const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(
@@ -89,8 +89,9 @@ const VedtakPanels = ({
         vedtakVarsel={vedtakVarsel}
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        lagreArsakerTilRedusertUtbetaling={lagreArsakerTilRedusertUtbetaling}
         dokumentdata={dokumentdata}
+        personopplysninger={personopplysninger}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     );
   }
@@ -114,6 +115,7 @@ const VedtakPanels = ({
       ytelseTypeKode={ytelseTypeKode}
       kanOverstyre={employeeHasAccess}
       alleKodeverk={alleKodeverk}
+      personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       vilkar={vilkar}
       beregningErManueltFastsatt={beregningErManueltFastsatt}
@@ -140,6 +142,7 @@ VedtakPanels.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
@@ -149,8 +152,7 @@ VedtakPanels.propTypes = {
   behandlingTypeKode: PropTypes.string.isRequired,
   beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
   vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
-  lagreArsakerTilRedusertUtbetaling: PropTypes.func,
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
   dokumentdata: PropTypes.shape(),
 };
 

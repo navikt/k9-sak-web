@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Panel from 'nav-frontend-paneler';
 import { FormattedMessage } from 'react-intl';
@@ -19,7 +18,7 @@ it('rendrer panel om barnet med rett info', () => {
 
   const wrapper = shallow(<BarnVisning barnet={barn} index={0} />);
 
-  expect(wrapper.find(Panel)).to.have.length(1);
+  expect(wrapper.find(Panel)).toHaveLength(1);
 
   const elementerMedFormatterTekstId = tekstId =>
     wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === tekstId);
@@ -28,7 +27,7 @@ it('rendrer panel om barnet med rett info', () => {
   const aleneomsorgvisning = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.Aleneomsorg');
   const fosterbarn = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.Fosterbarn');
 
-  expect(kroniskSykdomVisning).to.have.length(1);
-  expect(aleneomsorgvisning).to.have.length(0);
-  expect(fosterbarn).to.have.length(1);
+  expect(kroniskSykdomVisning).toHaveLength(1);
+  expect(aleneomsorgvisning).toHaveLength(0);
+  expect(fosterbarn).toHaveLength(1);
 });

@@ -52,6 +52,7 @@ const manuelleVenteArsaker = [
   venteArsakType.AVV_RESPONS_REVURDERING,
   venteArsakType.FOR_TIDLIG_SOKNAD,
   venteArsakType.VENT_PÅ_SISTE_AAP_ELLER_DP_MELDEKORT,
+  venteArsakType.VENT_PÅ_NY_INNTEKTSMELDING_MED_GYLDIG_ARB_ID,
   venteArsakType.ANKE_VENTER_PAA_MERKNADER_FRA_BRUKER,
   venteArsakType.ANKE_OVERSENDT_TIL_TRYGDERETTEN,
   venteArsakType.VENT_OPDT_INNTEKTSMELDING,
@@ -59,6 +60,7 @@ const manuelleVenteArsaker = [
   venteArsakType.UTVIDET_TILSVAR_FRIST,
   venteArsakType.ENDRE_TILKJENT_YTELSE,
   venteArsakType.VENT_PÅ_MULIG_MOTREGNING,
+  venteArsakType.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
 ];
 
 const automatiskeVentearsakerForTilbakekreving = [

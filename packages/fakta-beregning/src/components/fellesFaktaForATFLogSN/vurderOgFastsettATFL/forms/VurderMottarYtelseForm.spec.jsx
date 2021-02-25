@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { RadioGroupField } from '@fpsak-frontend/form';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import VurderMottarYtelseForm, {
   frilansMedAndreFrilanstilfeller,
@@ -12,6 +11,7 @@ import VurderMottarYtelseForm, {
   mottarYtelseForArbeidMsg,
   VurderMottarYtelseFormImpl,
 } from './VurderMottarYtelseForm';
+import { createVisningsnavnForAktivitet } from '../../../ArbeidsforholdHelper';
 import { finnFrilansFieldName, utledArbeidsforholdFieldName } from './VurderMottarYtelseUtils';
 
 const requiredMessageId = isRequiredMessage()[0].id;
@@ -45,7 +45,6 @@ const arbeidsgiverOpplysningerPerId = {
 };
 
 const arbeidsforhold = {
-  arbeidsgiverNavn: 'Virksomheten',
   arbeidsgiverId: '3284788923',
   arbeidsforholdId: '321378huda7e2',
   startdato: '2017-01-01',
@@ -53,7 +52,6 @@ const arbeidsforhold = {
 };
 
 const arbeidsforhold2 = {
-  arbeidsgiverNavn: 'Virksomheten2',
   arbeidsgiverId: '843597943435',
   arbeidsforholdId: 'jjisefoosfe',
   startdato: '2017-01-01',
@@ -61,7 +59,6 @@ const arbeidsforhold2 = {
 };
 
 const arbeidsforhold3 = {
-  arbeidsgiverNavn: 'Virksomheten2',
   arbeidsgiverId: '843597943435',
   arbeidsforholdId: '5465465464',
   startdato: '2017-01-01',
@@ -228,7 +225,7 @@ describe('<VurderMottarYtelseForm>', () => {
         erFrilans={false}
         arbeidsforholdUtenIM={arbeidstakerAndelerUtenIM}
         alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
     const atRadio = wrapper.find(RadioGroupField);
@@ -240,9 +237,13 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(formattedMsg).to.have.length(3);
     formattedMsg.forEach((msg, index) => {
       expect(msg.prop('id')).to.equal(mottarYtelseForArbeidMsg());
-      expect(msg.prop('values').arbeid).to.equal(
-        createVisningsnavnForAktivitet(arbeidstakerAndelerUtenIM[index].arbeidsforhold, alleKodeverk),
-      );
+      expect(msg.prop('values')).to.eql({
+        arbeid: createVisningsnavnForAktivitet(
+          arbeidstakerAndelerUtenIM[index].arbeidsforhold,
+          alleKodeverk,
+          arbeidsgiverOpplysningerPerId,
+        ),
+      });
     });
   });
 

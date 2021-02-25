@@ -219,11 +219,10 @@ const getAndelsnr = aktivitet => {
   return aktivitet.andelsnr;
 };
 
-export const mapTilFastsatteVerdier = (aktivitet, skalHaBesteberegning) => ({
+export const mapTilFastsatteVerdier = aktivitet => ({
   refusjonPrÅr: aktivitet.skalKunneEndreRefusjon ? removeSpacesFromNumber(aktivitet.refusjonskrav) : null,
   fastsattÅrsbeløp: removeSpacesFromNumber(aktivitet.fastsattBelop),
   inntektskategori: aktivitet.inntektskategori,
-  skalHaBesteberegning,
 });
 
 export const mapAndel = aktivitet => ({

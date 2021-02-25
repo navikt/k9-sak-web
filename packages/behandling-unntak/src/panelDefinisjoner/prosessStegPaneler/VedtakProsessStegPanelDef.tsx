@@ -41,18 +41,18 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     fagsak,
+    personopplysninger,
     arbeidsgiverOpplysningerPerId,
-  }) => {
-    return {
-      previewCallback,
-      aksjonspunkter,
-      vilkar,
-      simuleringResultat,
-      ytelseTypeKode: fagsak?.fagsakYtelseType?.kode,
-      employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-      arbeidsgiverOpplysningerPerId,
-    };
-  };
+  }) => ({
+    previewCallback,
+    aksjonspunkter,
+    vilkar,
+    simuleringResultat,
+    ytelseTypeKode: fagsak?.fagsakYtelseType?.kode,
+    employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+    personopplysninger,
+    arbeidsgiverOpplysningerPerId,
+  });
 }
 
 class VedtakProsessStegPanelDef extends ProsessStegDef {

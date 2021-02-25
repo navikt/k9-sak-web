@@ -1,4 +1,4 @@
-import { Aksjonspunkt, Opptjening, OpptjeningBehandling, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
 import React from 'react';

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { KjønnkodeEnum } from '@k9-sak-web/types/src/Kjønnkode';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 import { mapRader } from './Uttak';
@@ -105,6 +104,6 @@ describe('<Uttak>', () => {
         ],
       },
     ];
-    expect(mappet).to.eql(expected);
+    expect(mappet).toEqual(expected);
   });
 });

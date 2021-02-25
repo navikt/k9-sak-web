@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import {
@@ -15,103 +15,148 @@ import {
 } from '@fpsak-frontend/form';
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
 
-const isVedtakUtenToTrinn = (apCodes) => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
-const isMedUnderskriver = (apCodes) => apCodes.includes(aksjonspunktCodes.FORESLA_VEDTAK); // 5015
-const isFatterVedtak = (apCodes) => apCodes.includes(aksjonspunktCodes.FATTER_VEDTAK); // 5016
+const isVedtakUtenToTrinn = apCodes => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
+const isMedUnderskriver = apCodes => apCodes.includes(aksjonspunktCodes.FORESLA_VEDTAK); // 5015
+const isFatterVedtak = apCodes => apCodes.includes(aksjonspunktCodes.FATTER_VEDTAK); // 5016
 
-const ResultatEnkel = (resultat) => (
+const ResultatEnkel = resultat => (
   <div>
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Stadfest" /></Undertekst>
-    <VerticalSpacer sixteenPx />
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
-    <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
-  </div>
-);
-
-const ResultatOpphev = (resultat) => (
-  <div>
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Oppheves" /></Undertekst>
-    <VerticalSpacer sixteenPx />
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
-    <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
-  </div>
-);
-
-const ResultatAvvise = (resultat) => (
-  <>
     <Undertekst>
-      {resultat.ankevurderingresultat.paAnketBehandlingId != null
-      && (<FormattedMessage id="Ankebehandling.Resultat.Innstilling.Avvises" />)}
-      {resultat.ankevurderingresultat.paAnketBehandlingId == null
-      && (<FormattedMessage id="Ankebehandling.Resultat.Innstilling.AvvisesUten" />)}
+      <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Stadfest" />
     </Undertekst>
     <VerticalSpacer sixteenPx />
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" /></Undertekst>
+    <Undertekst>
+      <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" />
+    </Undertekst>
+    <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
+  </div>
+);
+
+const ResultatOpphev = resultat => (
+  <div>
+    <Undertekst>
+      <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Oppheves" />
+    </Undertekst>
+    <VerticalSpacer sixteenPx />
+    <Undertekst>
+      <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" />
+    </Undertekst>
+    <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
+  </div>
+);
+
+const ResultatAvvise = resultat => (
+  <>
+    <Undertekst>
+      {resultat.ankevurderingresultat.paAnketBehandlingId != null && (
+        <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Avvises" />
+      )}
+      {resultat.ankevurderingresultat.paAnketBehandlingId == null && (
+        <FormattedMessage id="Ankebehandling.Resultat.Innstilling.AvvisesUten" />
+      )}
+    </Undertekst>
+    <VerticalSpacer sixteenPx />
+    <Undertekst>
+      <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" />
+    </Undertekst>
     <ul>
-      {resultat.ankevurderingresultat.erAnkerIkkePart
-      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkePart" /></li>)}
-      {resultat.ankevurderingresultat.erIkkeKonkret
-      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" /></li>)}
-      {resultat.ankevurderingresultat.erFristIkkeOverholdt
-      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" /></li>)}
-      {resultat.ankevurderingresultat.erIkkeSignert
-      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" /></li>)}
+      {resultat.ankevurderingresultat.erAnkerIkkePart && (
+        <li>
+          <FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />
+        </li>
+      )}
+      {resultat.ankevurderingresultat.erIkkeKonkret && (
+        <li>
+          <FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" />
+        </li>
+      )}
+      {resultat.ankevurderingresultat.erFristIkkeOverholdt && (
+        <li>
+          <FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" />
+        </li>
+      )}
+      {resultat.ankevurderingresultat.erIkkeSignert && (
+        <li>
+          <FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />
+        </li>
+      )}
     </ul>
     <Undertekst>
       <FormattedMessage id="Ankebehandling.Realitetsbehandles" />
-      <FormattedMessage id={resultat.ankevurderingresultat.erSubsidiartRealitetsbehandles
-        ? 'Ankebehandling.Realitetsbehandles.Ja' : 'Ankebehandling.Realitetsbehandles.Nei'}
+      <FormattedMessage
+        id={
+          resultat.ankevurderingresultat.erSubsidiartRealitetsbehandles
+            ? 'Ankebehandling.Realitetsbehandles.Ja'
+            : 'Ankebehandling.Realitetsbehandles.Nei'
+        }
       />
     </Undertekst>
     <VerticalSpacer sixteenPx />
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
+    <Undertekst>
+      <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" />
+    </Undertekst>
     <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
   </>
 );
 
-const hentSprakKode = (ankeOmgjoerArsak) => {
+const hentSprakKode = ankeOmgjoerArsak => {
   switch (ankeOmgjoerArsak) {
-    case ankeVurderingOmgjoer.ANKE_TIL_UGUNST: return 'Ankebehandling.Resultat.Innstilling.Omgjores.TilUgunst';
-    case ankeVurderingOmgjoer.ANKE_TIL_GUNST: return 'Ankebehandling.Resultat.Innstilling.Omgjores.TilGunst';
-    case ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST: return 'Ankebehandling.Resultat.Innstilling.Omgjores.Delvis';
-    default: return '';
+    case ankeVurderingOmgjoer.ANKE_TIL_UGUNST:
+      return 'Ankebehandling.Resultat.Innstilling.Omgjores.TilUgunst';
+    case ankeVurderingOmgjoer.ANKE_TIL_GUNST:
+      return 'Ankebehandling.Resultat.Innstilling.Omgjores.TilGunst';
+    case ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST:
+      return 'Ankebehandling.Resultat.Innstilling.Omgjores.Delvis';
+    default:
+      return '';
   }
 };
 
-
-const ResultatOmgjores = (resultat) => (
+const ResultatOmgjores = resultat => (
   <>
-    <Undertekst><FormattedMessage id={hentSprakKode(resultat.ankevurderingresultat.ankeVurderingOmgjoer)} /></Undertekst>
+    <Undertekst>
+      <FormattedMessage id={hentSprakKode(resultat.ankevurderingresultat.ankeVurderingOmgjoer)} />
+    </Undertekst>
     <VerticalSpacer sixteenPx />
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" /></Undertekst>
+    <Undertekst>
+      <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" />
+    </Undertekst>
     <Undertekst>{resultat.ankevurderingresultat.ankeOmgjoerArsakNavn}</Undertekst>
     <VerticalSpacer sixteenPx />
-    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
+    <Undertekst>
+      <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" />
+    </Undertekst>
     <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
   </>
 );
 
-const AnkeResultat = (resultat) => {
+const AnkeResultat = resultat => {
   if (!resultat || !resultat.ankevurderingresultat) {
     return null;
   }
   const { ankevurderingresultat } = resultat;
   switch (ankevurderingresultat.ankeVurdering) {
-    case ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK: return (<ResultatEnkel ankevurderingresultat={ankevurderingresultat} />);
-    case ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE: return (<ResultatOpphev ankevurderingresultat={ankevurderingresultat} />);
-    case ankeVurdering.ANKE_OMGJOER: return (<ResultatOmgjores ankevurderingresultat={ankevurderingresultat} />);
-    case ankeVurdering.ANKE_AVVIS: return (<ResultatAvvise ankevurderingresultat={ankevurderingresultat} />);
-    default: return <div>???</div>;
+    case ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK:
+      return <ResultatEnkel ankevurderingresultat={ankevurderingresultat} />;
+    case ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE:
+      return <ResultatOpphev ankevurderingresultat={ankevurderingresultat} />;
+    case ankeVurdering.ANKE_OMGJOER:
+      return <ResultatOmgjores ankevurderingresultat={ankevurderingresultat} />;
+    case ankeVurdering.ANKE_AVVIS:
+      return <ResultatAvvise ankevurderingresultat={ankevurderingresultat} />;
+    default:
+      return <div>???</div>;
   }
 };
 
 const AnkeResultatForm = ({
+  intl,
   handleSubmit,
   previewCallback,
   aksjonspunktCode,
@@ -124,18 +169,22 @@ const AnkeResultatForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel><FormattedMessage id="Ankebehandling.Resultat.Title" /></Undertittel>
+      <Undertittel>
+        <FormattedMessage id="Ankebehandling.Resultat.Title" />
+      </Undertittel>
       <VerticalSpacer fourPx />
       <Row>
         <Column xs="12">
-          <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling" /></Undertekst>
+          <Undertekst>
+            <FormattedMessage id="Ankebehandling.Resultat.Innstilling" />
+          </Undertekst>
           <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
         </Column>
       </Row>
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="12">
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
@@ -145,10 +194,10 @@ const AnkeResultatForm = ({
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            textCode="Ankebehandling.Resultat.SendTilMedunderskriver"
+            text={intl.formatMessage({ id: 'Ankebehandling.Resultat.SendTilMedunderskriver' })}
           />
           <span>&nbsp;</span>
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
@@ -158,7 +207,7 @@ const AnkeResultatForm = ({
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            textCode="Ankebehandling.Resultat.FerdigstillAnke"
+            text={intl.formatMessage({ id: 'Ankebehandling.Resultat.FerdigstillAnke' })}
           />
           <span>&nbsp;</span>
           <PreviewAnkeLink
@@ -174,6 +223,7 @@ const AnkeResultatForm = ({
 );
 
 AnkeResultatForm.propTypes = {
+  intl: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   saveAnke: PropTypes.func.isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
@@ -216,9 +266,9 @@ const transformValues = (values, aksjonspunktCode) => ({
 });
 
 const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
-const formatId = (b) => (b === null ? IKKE_PAA_ANKET_BEHANDLING_ID : `${b}`);
+const formatId = b => (b === null ? IKKE_PAA_ANKET_BEHANDLING_ID : `${b}`);
 // TODO (TOR) Rydd i dette! Treng neppe senda med alt dette til backend
-const buildInitialValues = createSelector([(ownProps) => ownProps.ankeVurderingResultat], (resultat) => ({
+const buildInitialValues = createSelector([ownProps => ownProps.ankeVurderingResultat], resultat => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -240,18 +290,24 @@ const formName = 'ankeResultatForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return (state, ownProps) => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(ownProps),
-    formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state,
-      'ankeVurdering', 'fritekstTilBrev', 'gjelderVedtak'),
+    formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
+      state,
+      'ankeVurdering',
+      'fritekstTilBrev',
+      'gjelderVedtak',
+    ),
     onSubmit,
   });
 };
 
-const BehandleResultatForm = connect(mapStateToPropsFactory)(behandlingForm({
-  form: formName,
-})(AnkeResultatForm));
+const BehandleResultatForm = connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: formName,
+  })(injectIntl(AnkeResultatForm)),
+);
 
 export default BehandleResultatForm;

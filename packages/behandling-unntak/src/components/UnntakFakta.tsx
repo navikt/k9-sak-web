@@ -2,13 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
@@ -17,13 +11,7 @@ import { restApiUnntakHooks, UnntakBehandlingApiKeys } from '../data/unntakBehan
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-const overstyringApCodes = [
-  ac.OVERSTYR_AVKLAR_STARTDATO,
-  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYR_AVKLAR_STARTDATO,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-];
+const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER];
 
 interface OwnProps {
   data: FetchedData;

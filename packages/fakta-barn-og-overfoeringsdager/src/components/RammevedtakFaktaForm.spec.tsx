@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { shallowWithIntl } from '../../i18n';
 import { RammevedtakFaktaFormImpl } from './RammevedtakFaktaForm';
@@ -17,7 +16,7 @@ describe('<RammevedtakFaktaFormImpl>', () => {
     overføringGir: [],
   };
 
-  it('rendrer barn, overføringer og midlertidig aleneansvar-seksjoner', () => {
+  it('rendrer barn, overføringer, delt bosted og midlertidig aleneansvar-seksjoner', () => {
     const wrapper = shallowWithIntl(
       <RammevedtakFaktaFormImpl
         {...reduxFormPropsMock}
@@ -28,6 +27,6 @@ describe('<RammevedtakFaktaFormImpl>', () => {
       />,
     );
 
-    expect(wrapper.find(Seksjon)).to.have.length(3);
+    expect(wrapper.find(Seksjon)).toHaveLength(4);
   });
 });

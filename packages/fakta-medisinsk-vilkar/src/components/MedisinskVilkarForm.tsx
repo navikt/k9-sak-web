@@ -183,46 +183,44 @@ export const MedisinskVilkarFormImpl: FunctionComponent<
   );
 };
 
-const transformValues = (values: TransformValues, periodeTilVurdering: Periode, identifikator?: string) => {
-  return {
-    kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
-    begrunnelse: 'placeholder', // TODO (Hallvard): Finn ut hva vi skal gjøre her
-    legeerklæring: [
-      {
-        identifikator: identifikator ?? null,
-        diagnosekode: values.diagnosekode.key ?? values.diagnosekode,
-        kilde: values.legeerklaeringkilde,
-        fom: values.legeerklæringFom,
-        tom: values.legeerklæringFom,
-        innleggelsesperioder: values.innleggelsesperiode ? [values.innleggelsesperiode] : undefined,
+const transformValues = (values: TransformValues, periodeTilVurdering: Periode, identifikator?: string) => ({
+  kode: aksjonspunktCodes.MEDISINSK_VILKAAR,
+  begrunnelse: 'placeholder', // TODO (Hallvard): Finn ut hva vi skal gjøre her
+  legeerklæring: [
+    {
+      identifikator: identifikator ?? null,
+      diagnosekode: values.diagnosekode.key ?? values.diagnosekode,
+      kilde: values.legeerklaeringkilde,
+      fom: values.legeerklæringFom,
+      tom: values.legeerklæringFom,
+      innleggelsesperioder: values.innleggelsesperiode ? [values.innleggelsesperiode] : undefined,
+    },
+  ],
+  pleiebehov: isHeleSokandsperiodenInnlegelse(values.innleggelsesperiode, periodeTilVurdering)
+    ? {}
+    : {
+        perioderMedKontinuerligTilsynOgPleie: values.perioderMedKontinuerligTilsynOgPleie
+          ?.filter(
+            periodeMedKontinuerligTilsynOgPleie =>
+              periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie &&
+              !!periodeMedKontinuerligTilsynOgPleie.fom &&
+              !!periodeMedKontinuerligTilsynOgPleie.tom,
+          )
+          .map(periodeMedKontinuerligTilsynOgPleie => ({
+            periode: {
+              fom: periodeMedKontinuerligTilsynOgPleie.fom,
+              tom: periodeMedKontinuerligTilsynOgPleie.tom,
+            },
+            begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
+            årsaksammenheng: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsyn,
+            årsaksammenhengBegrunnelse: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsynBegrunnelse,
+          })),
+        perioderMedUtvidetKontinuerligTilsynOgPleie:
+          values.perioderMedKontinuerligTilsynOgPleie?.length > 0
+            ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
+            : undefined,
       },
-    ],
-    pleiebehov: isHeleSokandsperiodenInnlegelse(values.innleggelsesperiode, periodeTilVurdering)
-      ? {}
-      : {
-          perioderMedKontinuerligTilsynOgPleie: values.perioderMedKontinuerligTilsynOgPleie
-            ?.filter(
-              periodeMedKontinuerligTilsynOgPleie =>
-                periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie &&
-                !!periodeMedKontinuerligTilsynOgPleie.fom &&
-                !!periodeMedKontinuerligTilsynOgPleie.tom,
-            )
-            .map(periodeMedKontinuerligTilsynOgPleie => ({
-              periode: {
-                fom: periodeMedKontinuerligTilsynOgPleie.fom,
-                tom: periodeMedKontinuerligTilsynOgPleie.tom,
-              },
-              begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
-              årsaksammenheng: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsyn,
-              årsaksammenhengBegrunnelse: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsynBegrunnelse,
-            })),
-          perioderMedUtvidetKontinuerligTilsynOgPleie:
-            values.perioderMedKontinuerligTilsynOgPleie?.length > 0
-              ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
-              : undefined,
-        },
-  };
-};
+});
 
 const buildInitialValues = createSelector(
   [(props: { sykdom: Sykdom }) => props.sykdom, (props: { aksjonspunkter: Aksjonspunkt[] }) => props.aksjonspunkter],

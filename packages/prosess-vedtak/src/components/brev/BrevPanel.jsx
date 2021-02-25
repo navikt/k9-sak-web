@@ -8,6 +8,8 @@ import {
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
   kanOverstyreMottakere,
+  harBareFritekstbrev,
+  lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { Column, Row } from 'nav-frontend-grid';
 import { SelectField } from '@fpsak-frontend/form';
@@ -43,13 +45,11 @@ const getManuellBrevCallback = ({ brødtekst, overskrift, overstyrtMottaker, for
   e.preventDefault();
 };
 
-const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }) => {
-  return {
-    dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
-    dokumentMal: dokumentMalType.UTLED,
-    ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-  };
-};
+const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }) => ({
+  dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
+  dokumentMal: dokumentMalType.UTLED,
+  ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+});
 
 const getPreviewAutomatiskBrevCallbackUtenValidering = ({
   fritekst,
@@ -81,6 +81,7 @@ export const BrevPanel = props => {
     intl,
     readOnly,
     sprakkode,
+    personopplysninger,
     arbeidsgiverOpplysningerPerId,
     beregningErManueltFastsatt,
     tilgjengeligeVedtaksbrev,
@@ -146,7 +147,8 @@ export const BrevPanel = props => {
     </>
   );
 
-  const brevpanel = skalBrukeOverstyrendeFritekstBrev ? fritekstbrev : automatiskbrev;
+  const brevpanel =
+    skalBrukeOverstyrendeFritekstBrev || harBareFritekstbrev(tilgjengeligeVedtaksbrev) ? fritekstbrev : automatiskbrev;
 
   return (
     <div>
@@ -158,11 +160,7 @@ export const BrevPanel = props => {
               name="overstyrtMottaker"
               selectValues={tilgjengeligeVedtaksbrev.alternativeMottakere.map(mottaker => (
                 <option value={JSON.stringify(mottaker)} key={mottaker.id}>
-                  {arbeidsgiverOpplysningerPerId &&
-                  arbeidsgiverOpplysningerPerId[mottaker.id] &&
-                  arbeidsgiverOpplysningerPerId[mottaker.id].navn
-                    ? `${arbeidsgiverOpplysningerPerId[mottaker.id].navn} (${mottaker.id})`
-                    : mottaker.id}
+                  {lagVisningsnavnForMottaker(mottaker.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
                 </option>
               ))}
               className={readOnly ? styles.selectReadOnly : null}
@@ -199,6 +197,7 @@ BrevPanel.propTypes = {
   overskrift: PropTypes.string,
   overstyrtMottaker: PropTypes.string,
   behandlingResultat: PropTypes.shape(),
+  personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formProps: PropTypes.shape().isRequired,
 };

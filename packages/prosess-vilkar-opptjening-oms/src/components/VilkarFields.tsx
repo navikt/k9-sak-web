@@ -1,6 +1,8 @@
-import { BehandlingspunktBegrunnelseTextField, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import * as React from 'react';
+import { VilkarResultPicker, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 
 interface VilkarFieldsProps {
   fieldPrefix: string;
@@ -8,19 +10,22 @@ interface VilkarFieldsProps {
   readOnly: boolean;
 }
 
-const VilkarFields = React.memo(({ fieldPrefix, erVilkarOk, readOnly }: VilkarFieldsProps) => {
-  return (
-    <>
-      <VilkarResultPicker
-        erVilkarOk={erVilkarOk}
-        readOnly={readOnly}
-        customVilkarOppfyltText={{ id: 'OpptjeningVilkarAksjonspunktPanel.ErOppfylt' }}
-        customVilkarIkkeOppfyltText={{ id: 'OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt' }}
-        fieldNamePrefix={fieldPrefix}
-      />
-      <VerticalSpacer sixteenPx />
-      <BehandlingspunktBegrunnelseTextField readOnly={readOnly} fieldNamePrefix={fieldPrefix} />
-    </>
-  );
-});
+const VilkarFields = React.memo(({ fieldPrefix, erVilkarOk, readOnly }: VilkarFieldsProps) => (
+  <>
+    <VilkarResultPicker
+      erVilkarOk={erVilkarOk}
+      readOnly={readOnly}
+      customVilkarOppfyltText={<FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />}
+      customVilkarIkkeOppfyltText={
+        <FormattedMessage
+          id="OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt"
+          values={{ b: chunks => <b>{chunks}</b> }}
+        />
+      }
+      fieldNamePrefix={fieldPrefix}
+    />
+    <VerticalSpacer sixteenPx />
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} fieldNamePrefix={fieldPrefix} />
+  </>
+));
 export default VilkarFields;

@@ -23,15 +23,13 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = () => {
-    return [
-      PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG,
-      PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
-      PleiepengerBehandlingApiKeys.MEDLEMSKAP,
-      PleiepengerBehandlingApiKeys.VEDTAK_VARSEL,
-      PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
-    ];
-  };
+  getEndepunkter = () => [
+    PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG,
+    PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+    PleiepengerBehandlingApiKeys.MEDLEMSKAP,
+    PleiepengerBehandlingApiKeys.VEDTAK_VARSEL,
+    PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -45,7 +43,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    lagreArsakerTilRedusertUtbetaling,
+    arbeidsgiverOpplysningerPerId,
   }) => ({
     previewCallback,
     aksjonspunkter,
@@ -54,7 +52,7 @@ class PanelDef extends ProsessStegPanelDef {
     beregningsgrunnlag,
     ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
-    lagreArsakerTilRedusertUtbetaling,
+    arbeidsgiverOpplysningerPerId,
   });
 }
 

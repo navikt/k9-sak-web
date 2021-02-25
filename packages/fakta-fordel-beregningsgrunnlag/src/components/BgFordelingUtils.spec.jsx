@@ -11,7 +11,6 @@ import {
 } from './BgFordelingUtils';
 
 const arbeidsgiver = {
-  arbeidsgiverNavn: 'Virksomheten',
   arbeidsgiverId: '3284788923',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',
@@ -68,7 +67,6 @@ describe('<BgFordelingUtils>', () => {
   it('skal sette initial values for generell andelinfo med arbeidsforhold', () => {
     const andelValueFromState = {
       arbeidsforhold: {
-        arbeidsgiverNavn: 'Virksomheten',
         arbeidsgiverId: '3284788923',
         arbeidsforholdId: '321378huda7e2',
         eksternArbeidsforholdId: '345678',

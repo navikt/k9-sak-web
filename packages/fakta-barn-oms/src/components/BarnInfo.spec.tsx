@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { expect } from 'chai';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { FormattedMessage } from 'react-intl';
 import { shallowWithIntl } from '../../i18n';
@@ -21,10 +20,10 @@ describe('<BarnInfo>', () => {
     const elementMedTekstId = tekstId =>
       wrapper.find(FormattedMessage).filterWhere(message => message.prop('id') === tekstId);
 
-    expect(elementMedTekstId('FaktaBarn.BorIkkeMedSøker')).to.have.length(1);
-    expect(elementMedTekstId('FaktaBarn.Død')).to.have.length(0);
-    expect(elementMedTekstId('FaktaBarn.Fosterbarn')).to.have.length(0);
-    expect(elementMedTekstId('FaktaBarn.UtenlandskBarn')).to.have.length(0);
+    expect(elementMedTekstId('FaktaBarn.BorIkkeMedSøker')).toHaveLength(1);
+    expect(elementMedTekstId('FaktaBarn.Død')).toHaveLength(0);
+    expect(elementMedTekstId('FaktaBarn.Fosterbarn')).toHaveLength(0);
+    expect(elementMedTekstId('FaktaBarn.UtenlandskBarn')).toHaveLength(0);
   });
 
   it('viser om barnet bor med søker, er fosterbarn, dødt eller utenlandsk', () => {
@@ -46,8 +45,8 @@ describe('<BarnInfo>', () => {
     const elementMedTekstId = tekstId =>
       wrapper.find(FormattedMessage).filterWhere(message => message.prop('id') === tekstId);
 
-    expect(htmlElementMedTekstId('FaktaBarn.BorMedSøker')).to.have.length(1);
-    expect(elementMedTekstId('FaktaBarn.Død')).to.have.length(1);
-    expect(elementMedTekstId('FaktaBarn.Fosterbarn')).to.have.length(1);
+    expect(htmlElementMedTekstId('FaktaBarn.BorMedSøker')).toHaveLength(1);
+    expect(elementMedTekstId('FaktaBarn.Død')).toHaveLength(1);
+    expect(elementMedTekstId('FaktaBarn.Fosterbarn')).toHaveLength(1);
   });
 });

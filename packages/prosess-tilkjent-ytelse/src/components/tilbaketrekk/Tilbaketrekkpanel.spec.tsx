@@ -1,24 +1,25 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
 import shallowWithIntl from '../../../i18n';
 
-const lagAksjonspunktTilbaketrekk = begrunnelse => ({
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-  },
-  status: {
-    kode: 'OPPR',
-  },
-  begrunnelse,
-});
+const lagAksjonspunktTilbaketrekk = begrunnelse =>
+  ({
+    definisjon: {
+      kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
+    },
+    status: {
+      kode: 'OPPR',
+    },
+    begrunnelse,
+  } as Aksjonspunkt);
 
 describe('<Tilbaketrekkpanel>', () => {
   it('skal teste at komponent vises korrekt', () => {
@@ -36,20 +37,20 @@ describe('<Tilbaketrekkpanel>', () => {
     );
 
     const radioOption = wrapper.find(RadioOption);
-    expect(radioOption).to.have.length(2);
+    expect(radioOption).toHaveLength(2);
     const textfield = wrapper.find(TextAreaField);
-    expect(textfield).to.have.length(1);
-    const button = wrapper.find(BehandlingspunktSubmitButton);
-    expect(button).to.have.length(1);
+    expect(textfield).toHaveLength(1);
+    const button = wrapper.find(ProsessStegSubmitButton);
+    expect(button).toHaveLength(1);
     const element = wrapper.find(Element);
-    expect(element).to.have.length(1);
+    expect(element).toHaveLength(1);
   });
 
   it('skal teste at komponent bygger korrekte initial values dersom alle data mangler', () => {
     const expectedInitialValues = undefined;
 
     const actualInitialValues = buildInitialValues.resultFunc({}, {});
-    expect(actualInitialValues).is.deep.equal(expectedInitialValues);
+    expect(actualInitialValues).toEqual(expectedInitialValues);
   });
 
   it('skal teste at komponent bygger korrekte initial values dersom aksjonspunkt ikke er løst før', () => {
@@ -61,7 +62,7 @@ describe('<Tilbaketrekkpanel>', () => {
       skalHindreTilbaketrekk: null,
     };
     const actualInitialValues = buildInitialValues.resultFunc(ownProps, tilkjentYtelse);
-    expect(actualInitialValues).is.deep.equal(expectedInitialValues);
+    expect(actualInitialValues).toEqual(expectedInitialValues);
   });
 
   it('skal teste at komponent bygger korrekte initial values dersom aksjonspunkt er løst før og er satt til false', () => {
@@ -76,7 +77,7 @@ describe('<Tilbaketrekkpanel>', () => {
       skalHindreTilbaketrekk: false,
     };
     const actualInitialValues = buildInitialValues.resultFunc(ownProps.vurderTilbaketrekkAP, tilkjentYtelse);
-    expect(actualInitialValues).is.deep.equal(expectedInitialValues);
+    expect(actualInitialValues).toEqual(expectedInitialValues);
   });
 
   it('skal teste at komponent bygger korrekte initial values dersom aksjonspunkt er løst før og er satt til true', () => {
@@ -91,7 +92,7 @@ describe('<Tilbaketrekkpanel>', () => {
       skalHindreTilbaketrekk: true,
     };
     const actualInitialValues = buildInitialValues.resultFunc(ownProps.vurderTilbaketrekkAP, tilkjentYtelse);
-    expect(actualInitialValues).is.deep.equal(expectedInitialValues);
+    expect(actualInitialValues).toEqual(expectedInitialValues);
   });
 
   it('skal teste at transformvalues settes korrekt', () => {
@@ -105,6 +106,6 @@ describe('<Tilbaketrekkpanel>', () => {
       begrunnelseVurderTilbaketrekk: 'Test',
     };
     const actualTransformedValues = transformValues(values);
-    expect(actualTransformedValues).is.deep.equal(expectedTransformedValues);
+    expect(actualTransformedValues).toEqual(expectedTransformedValues);
   });
 });

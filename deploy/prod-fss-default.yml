@@ -70,4 +70,4 @@ spec:
     - name: TILBAKE
       value: "true"
     - name: ARBEIDSFORHOLD_V2
-      value: "false"
+      value: "true"

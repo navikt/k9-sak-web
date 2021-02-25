@@ -3,63 +3,51 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { erSøktForAndelISøknadsperiode, finnFrisinnperioderSomSkalVises } from './FrisinnUtils';
 
-const lagBgPeriode = (beregningsgrunnlagPeriodeFom, beregningsgrunnlagPeriodeTom) => {
-  return {
-    beregningsgrunnlagPeriodeFom,
-    beregningsgrunnlagPeriodeTom,
-  };
-};
+const lagBgPeriode = (beregningsgrunnlagPeriodeFom, beregningsgrunnlagPeriodeTom) => ({
+  beregningsgrunnlagPeriodeFom,
+  beregningsgrunnlagPeriodeTom,
+});
 
-const lagFrisinnAndel = (status, beløp) => {
-  return {
-    oppgittInntekt: beløp,
-    statusSøktFor: {
-      kode: status,
-    },
-  };
-};
+const lagFrisinnAndel = (status, beløp) => ({
+  oppgittInntekt: beløp,
+  statusSøktFor: {
+    kode: status,
+  },
+});
 
-const lagFrisinnPeriode = (fom, tom, frisinnAndeler) => {
-  return {
-    fom,
-    tom,
-    frisinnAndeler,
-  };
-};
+const lagFrisinnPeriode = (fom, tom, frisinnAndeler) => ({
+  fom,
+  tom,
+  frisinnAndeler,
+});
 
-const lagFrisinngrunnlag = frisinnPerioder => {
-  return {
+const lagFrisinngrunnlag = frisinnPerioder => ({
+  frisinnPerioder,
+});
+
+const lagFrisinngrunnlagBG = frisinnPerioder => ({
+  ytelsesspesifiktGrunnlag: {
     frisinnPerioder,
-  };
-};
+  },
+});
 
-const lagFrisinngrunnlagBG = frisinnPerioder => {
-  return {
-    ytelsesspesifiktGrunnlag: {
-      frisinnPerioder,
-    },
-  };
-};
-
-const lagBehandling = kode => {
-  return {
-    id: 1,
-    versjon: 1,
-    behandlingÅrsaker: [
-      {
-        behandlingArsakType: {
-          kode,
-        },
-        erAutomatiskRevurdering: false,
-        manueltOpprettet: false,
+const lagBehandling = kode => ({
+  id: 1,
+  versjon: 1,
+  behandlingÅrsaker: [
+    {
+      behandlingArsakType: {
+        kode,
       },
-    ],
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: 'Språkkode',
+      erAutomatiskRevurdering: false,
+      manueltOpprettet: false,
     },
-  };
-};
+  ],
+  sprakkode: {
+    kode: 'NB',
+    kodeverk: 'Språkkode',
+  },
+});
 
 describe('<FrisinnUtils>', () => {
   it('Skal finne at det er søkt frilans når kun en måned', () => {

@@ -19,7 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Column, Row } from 'nav-frontend-grid';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { kanHaFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -97,6 +97,7 @@ export class VedtakRevurderingFormImpl extends Component {
       bgPeriodeMedAvslagsårsak,
       tilgjengeligeVedtaksbrev,
       dokumentdata,
+      arbeidsgiverOpplysningerPerId,
       ...formProps
     } = this.props;
     const { erSendtInnUtenArsaker } = this.state;
@@ -115,7 +116,8 @@ export class VedtakRevurderingFormImpl extends Component {
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
               <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
             ) : (
-              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+              !harBareFritekstbrev(tilgjengeligeVedtaksbrev) && (
                 <VedtakOverstyrendeKnapp
                   toggleCallback={this.onToggleOverstyring}
                   readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
@@ -205,6 +207,7 @@ export class VedtakRevurderingFormImpl extends Component {
               brødtekst={brødtekst}
               overskrift={overskrift}
               begrunnelse={begrunnelse}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             />
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
@@ -242,9 +245,9 @@ VedtakRevurderingFormImpl.propTypes = {
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
-  lagreArsakerTilRedusertUtbetaling: PropTypes.func,
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
   dokumentdata: PropTypes.shape(),
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 
@@ -401,13 +404,6 @@ const VedtakRevurderingForm = connect(
   injectIntl(
     behandlingForm({
       form: VEDTAK_REVURDERING_FORM_NAME,
-      onChange: (values, dispatch, props) =>
-        props.lagreArsakerTilRedusertUtbetaling && props.behandlingStatusKode !== behandlingStatusCode.AVSLUTTET
-          ? props.lagreArsakerTilRedusertUtbetaling(
-              Object.values(redusertUtbetalingArsak).filter(a => values[a]),
-              dispatch,
-            )
-          : null,
     })(VedtakRevurderingFormImpl),
   ),
 );

@@ -7,7 +7,7 @@ import { required } from '@fpsak-frontend/utils';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 
 import styles from './klageVurderingRadioOptionsKa.less';
@@ -20,9 +20,9 @@ export const KlageVurderingRadioOptionsKa = ({ readOnly, medholdReasons, klageVu
   ));
   return (
     <div>
-      <BehandlingspunktBegrunnelseTextField
+      <ProsessStegBegrunnelseTextField
         readOnly={readOnly}
-        textCode="KlageVurderingRadioOptionsKa.VurderingForKlage"
+        text={intl.formatMessage({ id: 'KlageVurderingRadioOptionsKa.VurderingForKlage' })}
       />
       <VerticalSpacer sixteenPx />
       <Row>

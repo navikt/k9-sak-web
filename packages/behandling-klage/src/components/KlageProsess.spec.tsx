@@ -54,7 +54,7 @@ describe('<KlageProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
+      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
       status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
       kanLoses: true,
       erAktivt: true,

@@ -1,6 +1,5 @@
 import { TableRow } from '@fpsak-frontend/shared-components';
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
@@ -54,18 +53,18 @@ describe('<AktivitetTabell />', () => {
     );
     const kolonner = wrapper.find('td');
 
-    expect(kolonner).to.have.length(5);
+    expect(kolonner).toHaveLength(5);
 
     const kolonnerMedTekst = tekst => kolonner.findWhere(kolonne => kolonne.text() === tekst);
     const kolonnerMedFormatterTekstId = tekstId =>
       kolonner.find(FormattedMessage).findWhere(formatert => formatert.prop('id') === tekstId);
 
-    expect(kolonnerMedTekst('01.03.2020 - 31.03.2020')).to.have.length(1);
+    expect(kolonnerMedTekst('01.03.2020 - 31.03.2020')).toHaveLength(1);
     const uttak = kolonner.find(Utfall);
-    expect(uttak.prop('utfall')).to.equal('AVSLÅTT');
-    expect(kolonnerMedTekst('0%')).to.have.length(2);
-    expect(kolonnerMedFormatterTekstId('Uttaksplan.FulltFravær')).to.have.length(1);
-    expect(kolonner.find(NavFrontendChevron)).to.have.length(1);
+    expect(uttak.prop('utfall')).toBe('AVSLÅTT');
+    expect(kolonnerMedTekst('0%')).toHaveLength(2);
+    expect(kolonnerMedFormatterTekstId('Uttaksplan.FulltFravær')).toHaveLength(1);
+    expect(kolonner.find(NavFrontendChevron)).toHaveLength(1);
   });
 
   it('Klikk expandknapp rendrer detaljer og viser vilkår om arbeidsforhold sist', () => {
@@ -79,16 +78,16 @@ describe('<AktivitetTabell />', () => {
       />,
     );
 
-    expect(wrapper.find(TableRow)).to.have.length(aktivitet.uttaksperioder.length);
+    expect(wrapper.find(TableRow)).toHaveLength(aktivitet.uttaksperioder.length);
     wrapper.find('button').simulate('click');
 
     const expandedContent = wrapper.find(TableRow);
 
-    expect(expandedContent).to.have.length(aktivitet.uttaksperioder.length * 3);
+    expect(expandedContent).toHaveLength(aktivitet.uttaksperioder.length * 3);
 
     const vilkår = expandedContent.at(2).find(Normaltekst);
 
-    expect(vilkår).to.have.length(3);
-    expect(vilkår.last().find(FormattedMessage).prop('id')).to.equal('Uttaksplan.Vilkår.ARBEIDSFORHOLD_AVSLÅTT');
+    expect(vilkår).toHaveLength(3);
+    expect(vilkår.last().find(FormattedMessage).prop('id')).toBe('Uttaksplan.Vilkår.ARBEIDSFORHOLD_AVSLÅTT');
   });
 });

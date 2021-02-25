@@ -16,7 +16,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { TextAreaField, RadioGroupField, RadioOption, behandlingForm } from '@fpsak-frontend/form';
 import { required, minLength, maxLength, hasValidText } from '@fpsak-frontend/utils';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles/src/fakta/FaktaSubmitButton';
+import { FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 import SokerinfoTable from './SokerinfoTable';
 import styles from './omsorgenForInfo.less';
 
@@ -156,14 +156,12 @@ const OmsorgenForInfoPanelImpl: FunctionComponent<OmsorgenForInfoPanelImplProps 
             <FlexColumn>
               <VerticalSpacer twentyPx />
               <FaktaSubmitButton
-                buttonTextId="SubmitButton.ConfirmInformation"
                 formName={formName}
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
                 isSubmittable={submittable}
                 isReadOnly={readOnly} // TODO: Mangler overstyringDisabled
                 hasOpenAksjonspunkter={harApneAksjonspunkter}
-                dataId="medisinskVilkarSubmitButton"
               />
             </FlexColumn>
           </FlexRow>
@@ -178,13 +176,11 @@ interface TransformValues {
   harOmsorgenFor: boolean;
 }
 
-const transformValues = (values: TransformValues) => {
-  return {
-    kode: aksjonspunktCodes.OMSORGEN_FOR,
-    begrunnelse: values.vurdering,
-    harOmsorgenFor: values.harOmsorgenFor,
-  };
-};
+const transformValues = (values: TransformValues) => ({
+  kode: aksjonspunktCodes.OMSORGEN_FOR,
+  begrunnelse: values.vurdering,
+  harOmsorgenFor: values.harOmsorgenFor,
+});
 
 const buildInitialValues = createSelector(
   [(props: { aksjonspunkter: Aksjonspunkt[] }) => props.aksjonspunkter],

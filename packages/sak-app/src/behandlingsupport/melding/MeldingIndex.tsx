@@ -8,7 +8,14 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex, FormValues } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { BehandlingAppKontekst, Fagsak, Kodeverk, ArbeidsgiverOpplysningerWrapper, Mottaker } from '@k9-sak-web/types';
+import {
+  BehandlingAppKontekst,
+  Fagsak,
+  Kodeverk,
+  Personopplysninger,
+  ArbeidsgiverOpplysningerWrapper,
+  Mottaker,
+} from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { useFpSakKodeverk } from '../../data/useKodeverk';
@@ -61,15 +68,14 @@ const getPreviewCallback = (
   behandlingUuid: string,
   fagsakYtelseType: Kodeverk,
   fetchPreview: (erHenleggelse: boolean, data: any) => void,
-) => (mottaker: string | Mottaker, dokumentMal: string, fritekst: string) => {
+) => (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string) => {
   const data = erTilbakekrevingType({ kode: behandlingTypeKode })
     ? {
         fritekst: fritekst || ' ',
         brevmalkode: dokumentMal,
       }
     : {
-        // TODO: fjern denne sjekken når overstyrtMottaker er implementert overalt
-        overstyrtMottaker: typeof mottaker === 'object' && mottaker.id && mottaker.type ? mottaker : undefined,
+        overstyrtMottaker,
         dokumentMal,
         dokumentdata: { fritekst: fritekst || ' ' },
       };
@@ -81,6 +87,7 @@ interface OwnProps {
   alleBehandlinger: BehandlingAppKontekst[];
   behandlingId: number;
   behandlingVersjon?: number;
+  personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
@@ -102,6 +109,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({
   alleBehandlinger,
   behandlingId,
   behandlingVersjon,
+  personopplysninger,
   arbeidsgiverOpplysninger,
 }) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
@@ -211,6 +219,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({
         revurderingVarslingArsak={revurderingVarslingArsak}
         templates={brevmaler}
         isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
+        personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
       />
 
