@@ -50,7 +50,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     vilkar,
     simuleringResultat,
-    beregningsgrunnlag: !!beregningsgrunnlag ? [beregningsgrunnlag[0]] : beregningsgrunnlag, // FRISINN skal alltid vise ett beregningsgrunnlag
+    beregningsgrunnlag: beregningsgrunnlag ? [beregningsgrunnlag[0]] : [], // FRISINN skal alltid vise ett beregningsgrunnlag
     ytelseTypeKode: fagsakYtelseType.FRISINN,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,

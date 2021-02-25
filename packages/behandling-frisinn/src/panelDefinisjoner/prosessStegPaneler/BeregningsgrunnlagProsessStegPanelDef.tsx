@@ -24,7 +24,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({ fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, featureToggles }) => ({
     fagsak,
-    beregningsgrunnlag: !!beregningsgrunnlag ? [beregningsgrunnlag[0]] : beregningsgrunnlag,
+    beregningsgrunnlag: beregningsgrunnlag ? [beregningsgrunnlag[0]] : [],
     arbeidsgiverOpplysningerPerId,
     featureToggles,
   });
