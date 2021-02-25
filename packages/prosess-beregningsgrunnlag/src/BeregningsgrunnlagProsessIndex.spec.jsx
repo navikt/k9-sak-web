@@ -87,7 +87,7 @@ describe('<BeregningsgrunnlagProsessIndex>', () => {
     const wrapper = shallowWithIntl(
       <BeregningsgrunnlagProsessIndex
         behandling={behandling}
-        beregningsgrunnlag={beregningsgrunnlag}
+        beregningsgrunnlag={[beregningsgrunnlag]}
         aksjonspunkter={[]}
         submitCallback={sinon.spy}
         isReadOnly={false}
