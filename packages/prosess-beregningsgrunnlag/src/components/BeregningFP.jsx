@@ -119,11 +119,11 @@ export const BeregningFP = props => {
   const aktivtBeregningsgrunnlag = harFlereBeregningsgrunnlag
     ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
     : beregningsgrunnlag;
-  if (!aktivtBeregningsgrunnlag) {
+  const vilkaarBG = getBGVilkar(vilkar);
+  if (!aktivtBeregningsgrunnlag || vilkaarBG === undefined) {
     return visningForManglendeBG();
   }
   const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsgrunnlag);
-  const vilkaarBG = getBGVilkar(vilkar);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
@@ -231,7 +231,7 @@ BeregningFP.defaultProps = {
 const getSammenligningsgrunnlagsPrStatus = bg =>
   bg && bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
 
-const formaterAksjonspunkter = aksjonspunkter =>
+const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
   flattenArray(aksjonspunkter).map(aksjonspunkt => {
     const { kode } = aksjonspunkt;
     return {
@@ -241,6 +241,7 @@ const formaterAksjonspunkter = aksjonspunkter =>
         {
           '@type': kode,
           ...aksjonspunkt,
+          periode: perioder.find(p => p.periode.fom === aksjonspunkt.skjæringstidspunkt).periode,
         },
       ],
     };
@@ -283,7 +284,7 @@ export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter) 
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { aksjonspunkter, submitCallback, beregningsgrunnlag } = initialOwnProps;
+  const { aksjonspunkter, submitCallback, beregningsgrunnlag, vilkar } = initialOwnProps;
   const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
 
   const onSubmit = values => {
@@ -339,7 +340,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
         },
       );
     }
-    return submitCallback(formaterAksjonspunkter(alleAksjonspunkter), beregningsgrunnlag);
+    return submitCallback(formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder));
   };
 
   return (state, ownProps) => ({

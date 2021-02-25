@@ -130,7 +130,7 @@ describe('<PleiepengerFakta>', () => {
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
-    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, inntektArbeidYtelse);
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD, inntektArbeidYtelse);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -182,7 +182,7 @@ describe('<PleiepengerFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
-    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, inntektArbeidYtelse);
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD, inntektArbeidYtelse);
 
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
@@ -222,7 +222,7 @@ describe('<PleiepengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
-    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE, inntektArbeidYtelse);
+    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD, inntektArbeidYtelse);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,

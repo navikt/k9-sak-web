@@ -17,17 +17,15 @@ export default {
   decorators: [withReduxProvider],
 };
 
-export const visFaktaOmAlderOgOmsorg = () => {
-  return (
-    <OmsorgenForFaktaIndex
-      behandling={behandling}
-      personopplysninger={{} as Personopplysninger}
-      omsorgenFor={{} as OmsorgenFor}
-      submitCallback={action('button-click')}
-      harApneAksjonspunkter
-      submittable
-      aksjonspunkter={[]}
-      readOnly
-    />
-  );
-};
+export const visFaktaOmAlderOgOmsorg = () => (
+  <OmsorgenForFaktaIndex
+    behandling={behandling}
+    personopplysninger={{} as Personopplysninger}
+    omsorgenFor={{} as OmsorgenFor}
+    submitCallback={action('button-click')}
+    harApneAksjonspunkter
+    submittable
+    aksjonspunkter={[]}
+    readOnly
+  />
+);

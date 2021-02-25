@@ -5,7 +5,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
-import { FeatureToggles } from '@k9-sak-web/types';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
@@ -15,10 +14,7 @@ class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
-  getEndepunkter = (featureToggles: FeatureToggles = {}) =>
-    featureToggles.ARBEIDSFORHOLD_V2
-      ? [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD]
-      : [PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE];
+  getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getKomponent = props => <ArbeidsforholdFaktaIndex {...props} />;
 

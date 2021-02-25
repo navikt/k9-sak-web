@@ -107,17 +107,15 @@ export default {
   decorators: [withReduxProvider],
 };
 
-export const visOpplysningerFraSøknaden = () => {
-  return (
-    <OppgittOpptjeningRevurdering
-      behandling={behandling}
-      readOnly={false}
-      submitCallback={action('button-click')}
-      harApneAksjonspunkter
-      submittable
-      kanEndrePåSøknadsopplysninger
-      oppgittOpptjening={opplysningerFraSøknaden}
-      aksjonspunkter={aksjonspunkter}
-    />
-  );
-};
+export const visOpplysningerFraSøknaden = () => (
+  <OppgittOpptjeningRevurdering
+    behandling={behandling}
+    readOnly={false}
+    submitCallback={action('button-click')}
+    harApneAksjonspunkter
+    submittable
+    kanEndrePåSøknadsopplysninger
+    oppgittOpptjening={opplysningerFraSøknaden}
+    aksjonspunkter={aksjonspunkter}
+  />
+);

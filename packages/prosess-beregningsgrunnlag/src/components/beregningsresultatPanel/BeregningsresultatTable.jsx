@@ -12,7 +12,6 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import dekningsgradKode from '@fpsak-frontend/kodeverk/src/dekningsgrad';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
 import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
@@ -321,15 +320,12 @@ const sjekkharBortfaltNaturalYtelse = periode => {
   );
 };
 
-const finnDagsats = (periode, erOmsorgspenger) => {
-  if (erOmsorgspenger && periode.avkortetPrAar) {
+const finnDagsats = (periode) => {
+  if (periode.avkortetPrAar) {
     return Math.round(periode.avkortetPrAar / VIRKEDAGER_PR_AAR);
   }
-  return periode.dagsats;
+  return null;
 };
-
-const harOmsorgspengegrunnlag = ytelseGrunnlag =>
-  ytelseGrunnlag && ytelseGrunnlag.ytelsetype === fagsakYtelseType.OMSORGSPENGER;
 
 export const createBeregningTableData = createSelector(
   [
@@ -348,7 +344,6 @@ export const createBeregningTableData = createSelector(
     );
     const periodeResultatTabeller = [];
     const seksG = grunnbelop * 6;
-    const erOmsorgspenger = harOmsorgspengegrunnlag(ytelseGrunnlag);
     perioderSomSkalVises.forEach(periode => {
       const headers = [];
       const bruttoRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.BruttoTotalt" /> };
@@ -369,7 +364,7 @@ export const createBeregningTableData = createSelector(
       if (dekningsgrad !== dekningsgradKode.HUNDRE) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
-      dagsatserRad.verdi = formatCurrencyNoKr(finnDagsats(periode, erOmsorgspenger));
+      dagsatserRad.verdi = formatCurrencyNoKr(finnDagsats(periode));
       const rows = [];
       const rowsAndeler = [];
       const rowsForklaringer = [];

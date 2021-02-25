@@ -271,6 +271,7 @@ describe('<BeregningsresultatTable>', () => {
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(snAndel);
     beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1330250;
     beregningsgrunnlagPerioder[0].avkortetPrAar = seksG;
+    beregningsgrunnlagPerioder[0].dagsats = 2287;
     beregningsgrunnlagPerioder[0].redusertPrAar = 554985;
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
@@ -330,6 +331,7 @@ describe('<BeregningsresultatTable>', () => {
     snAndel.skalFastsetteGrunnlag = true;
     beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1147342;
     beregningsgrunnlagPerioder[0].avkortetPrAar = seksG;
+    beregningsgrunnlagPerioder[0].dagsats = 2287;
     beregningsgrunnlagPerioder[0].redusertPrAar = 479318;
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].bruttoPrAar = 551316;
 

@@ -1,7 +1,7 @@
 import SimpleLink from '../types/SimpleLink';
 import SimpleEndpoints from '../types/SimpleEndpoints';
 
-function findEndpointsForMedisinskVilkårFrontend(
+function findEndpointsForMicrofrontend(
   links: SimpleLink[],
   desiredRels: { rel: string; desiredName: string }[],
 ): SimpleEndpoints {
@@ -15,4 +15,4 @@ function findEndpointsForMedisinskVilkårFrontend(
   return endpoints;
 }
 
-export default findEndpointsForMedisinskVilkårFrontend;
+export default findEndpointsForMicrofrontend;

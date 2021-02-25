@@ -57,28 +57,19 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
   const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
 
-  const visPermisjon = arbeidsforhold => {
-    if (selectedArbeidsforhold === undefined) {
-      return false;
-    }
-    return (
-      arbeidsforhold.id === selectedArbeidsforhold.id &&
-      arbeidsforhold.aksjonspunktÅrsaker.length === 0 &&
-      arbeidsforhold.permisjoner
-    );
-  };
+  const visPermisjon = arbeidsforhold => arbeidsforhold.aksjonspunktÅrsaker.length === 0 && arbeidsforhold.permisjoner;
 
   const setValgtArbeidsforhold = arbeidsforhold => {
     if (selectedArbeidsforhold === undefined) {
       setVisAksjonspunktInfo(true);
       setSelectedArbeidsforhold(arbeidsforhold);
     }
-    if (selectedArbeidsforhold && arbeidsforhold.id === selectedArbeidsforhold.id && !visAksjonspunktInfo) {
+    if (arbeidsforhold === selectedArbeidsforhold && !visAksjonspunktInfo) {
       setSelectedArbeidsforhold(undefined);
       setVisAksjonspunktInfo(true);
     }
 
-    if (selectedArbeidsforhold && arbeidsforhold.id === selectedArbeidsforhold.id && visAksjonspunktInfo) {
+    if (selectedArbeidsforhold === arbeidsforhold && visAksjonspunktInfo) {
       setSelectedArbeidsforhold(undefined);
       setVisAksjonspunktInfo(false);
     }
@@ -97,7 +88,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
           const yrkestittel = utledArbeidsforholdYrkestittel(a);
           const kilde =
             Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
-
+          const erValgt = selectedArbeidsforhold === a;
           const harAksjonspunktÅrsaker = Array.isArray(a.aksjonspunktÅrsaker) && a.aksjonspunktÅrsaker.length > 0;
           const harPermisjoner = Array.isArray(a.permisjoner) && a.permisjoner.length > 0;
           const harPerioder = Array.isArray(a.perioder) && a.perioder.length > 0;
@@ -138,32 +129,24 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                     </Normaltekst>
                   )}
                 </TableColumn>
-                {(!harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length === 0) && harPermisjoner && (
+                {!harAksjonspunktÅrsaker && harPermisjoner && (
                   <TableColumn className={styles.aksjonspunktColumn}>
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
                       <Normaltekst className={styles.visLukkPermisjon}>
                         {intl.formatMessage(
-                          selectedArbeidsforhold === a && visAksjonspunktInfo
+                          erValgt && visAksjonspunktInfo
                             ? { id: 'PersonArbeidsforholdTable.LukkPermisjon' }
                             : { id: 'PersonArbeidsforholdTable.VisPermisjon' },
                         )}
                       </Normaltekst>
-                      <Image
-                        className={
-                          selectedArbeidsforhold && selectedArbeidsforhold.id === a.id
-                            ? styles.chevronOpp
-                            : styles.chevronNed
-                        }
-                        src={chevronIkonUrl}
-                        alt=""
-                      />
+                      <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
                     </button>
                   </TableColumn>
                 )}
                 <TableColumn>
                   {a.handlingType &&
                     a.handlingType.kode === arbeidsforholdHandlingType.BRUK &&
-                    a.aksjonspunktÅrsaker.length === 0 && (
+                    !harAksjonspunktÅrsaker && (
                       <Image
                         src={erIBrukImageUrl}
                         alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
@@ -174,7 +157,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                     )}
                 </TableColumn>
               </TableRow>
-              {visAksjonspunktInfo && (harAksjonspunktÅrsaker || a.aksjonspunktÅrsaker.length > 0) && (
+              {visAksjonspunktInfo && harAksjonspunktÅrsaker && (
                 <PersonArbeidsforholdDetailForm
                   key={a.id}
                   arbeidsforhold={a}
@@ -188,7 +171,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                   alleKodeverk={alleKodeverk}
                 />
               )}
-              {visPermisjon(a) && (
+              {erValgt && visPermisjon(a) && (
                 <FlexRow>
                   <PermisjonerInfo arbeidsforhold={a} />
                 </FlexRow>

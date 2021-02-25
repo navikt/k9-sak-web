@@ -50,7 +50,7 @@ const getSubmitCallback = (
       }
     : {
         behandlingId,
-        mottaker: values.mottaker,
+        overstyrtMottaker: values.overstyrtMottaker,
         brevmalkode: values.brevmalkode,
         fritekst: values.fritekst,
         arsakskode: values.arsakskode,

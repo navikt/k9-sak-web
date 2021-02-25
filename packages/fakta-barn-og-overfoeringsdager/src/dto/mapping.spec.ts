@@ -22,6 +22,15 @@ const aleneOmOmsorgen: Rammevedtak = {
   gyldigTilOgMed: '2020-12-31',
 };
 
+const deltBostedsBarn: Rammevedtak = {
+  type: RammevedtakEnum.DELT_BOSTED,
+  deltBostedMed: barnFnr,
+  gyldigFraOgMed: '2019-02-20',
+  gyldigTilOgMed: '2021-12-31',
+  lengde: 'PT0S',
+  vedtatt: '2021-01-02',
+};
+
 const fosterbarn: Rammevedtak = {
   type: RammevedtakEnum.FOSTERBARN,
   mottaker: '010119',
@@ -79,6 +88,7 @@ it('mapping fra DTO til formValues', () => {
     utenlandskBarn,
     midlertidigAleneOmOmsorgen,
     uidentifisertRammevedtak,
+    deltBostedsBarn,
     overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P1D'),
     overføringFårRammevedtak(RammevedtakEnum.FORDELING_FÅR, 'P2D'),
     overføringFårRammevedtak(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P3D'),
@@ -102,6 +112,7 @@ it('mapping fra DTO til formValues', () => {
   expect(barn[0].fødselsnummer).toBe(barnFnr);
   expect(barn[0].kroniskSykdom).toEqual({ fom: utvidetRett.gyldigFraOgMed, tom: utvidetRett.gyldigTilOgMed });
   expect(barn[0].aleneomsorg).toEqual({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
+  expect(barn[0].deltBosted).toEqual({ fom: deltBostedsBarn.gyldigFraOgMed, tom: deltBostedsBarn.gyldigTilOgMed });
   expect(barn[1].kroniskSykdom).toBeUndefined();
   expect(barn[1].aleneomsorg).toEqual({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
   expect(barn[2].fødselsnummer).toEqual(fosterbarn.mottaker);

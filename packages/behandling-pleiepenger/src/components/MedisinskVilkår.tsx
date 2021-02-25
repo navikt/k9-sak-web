@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
-import findEndpointsForMedisinskVilkårFrontend from '../microfrontend/utils/findEndpointsForMedisinskVilkårFrontend';
+import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
+import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
 
 const initializeMedisinskVilkår = (
   elementId,
-  httpErrorHandler,
+  httpErrorHandlerFn,
   endpoints: SimpleEndpoints,
   behandlingUuid: string,
   løsAksjonspunkt,
@@ -31,7 +31,7 @@ const initializeMedisinskVilkår = (
     },
     dokument: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('dokument'),
     vurdering: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('vurdering'),
-    httpErrorHandler,
+    httpErrorHandler: httpErrorHandlerFn,
     endpoints,
     behandlingUuid,
     onFinished: løsAksjonspunkt,
@@ -42,18 +42,8 @@ const initializeMedisinskVilkår = (
 const medisinskVilkårAppID = 'medisinskVilkårApp';
 export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
-  const httpErrorHandler = (status: number, locationHeader?: string) => {
-    if (status === 403) {
-      addErrorMessage({ type: EventType.REQUEST_FORBIDDEN });
-    } else if (status === 401) {
-      if (locationHeader) {
-        const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
-        window.location.href = `${locationHeader}?redirectTo=${currentPath}`;
-      } else {
-        addErrorMessage({ type: EventType.REQUEST_UNAUTHORIZED });
-      }
-    }
-  };
+  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
+    httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter);
   const løsAksjonspunkt = () =>
@@ -62,15 +52,15 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.5.0/app.js"
-      jsIntegrity="sha384-iwXwfuyBdktquifSX/TfEUHAQ03Urw5tM/X2ATCyRIBfJdT5jPR16MRT5wJxR60g"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.5.0/styles.css"
-      stylesheetIntegrity="sha384-ro9ZEBJEWZEhZB9lZ7+e2ceTx0jtVa/HZlE867122hKrvRTQ722hcYtb03rkRF0I"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.5.6/app.js"
+      jsIntegrity="sha384-tAHAInSTiF6QR3b7u62Z8cUyPRB3Gn+8Z8W0LxBdu91aq9p2+NLWfwdbxxZc/jvQ"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.5.6/styles.css"
+      stylesheetIntegrity="sha384-borzfvbIp86YgZGdXgYWk4nJS08y1ncXNytB/tHeVnrZ32ha6sW93Rn9Lxgcf6Oa"
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
-          httpErrorHandler,
-          findEndpointsForMedisinskVilkårFrontend(links, [
+          httpErrorHandlerCaller,
+          findEndpointsForMicrofrontend(links, [
             { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
             { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
             { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },

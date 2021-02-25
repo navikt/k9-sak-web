@@ -28,6 +28,7 @@ class PanelDef extends ProsessStegPanelDef {
     PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
     PleiepengerBehandlingApiKeys.MEDLEMSKAP,
     PleiepengerBehandlingApiKeys.VEDTAK_VARSEL,
+    PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
     PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
   ];
 
