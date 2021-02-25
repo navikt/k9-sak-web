@@ -55,6 +55,8 @@ spec:
       value: "http://k9-sak"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "http://k9-sak"
+    - name: OMSORGSDAGER_FRONTEND_URL
+      value: "http://k9-sak"
 
     # Feature-flag
     - name: VARSELTEKST

@@ -24,10 +24,10 @@ export default props => {
   return (
     <MicroFrontend
       id={omsorgenForVilkårAppID}
-      jsSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/app.js"
-      jsIntegrity="sha256-WcRHIyakKzq9WUg9ecXSd95zmQ6s0Nq8abH23dy6MBM="
-      stylesheetSrc="/k9/microfrontend/omsorgsdager/build/1.5.17/styles.css"
-      stylesheetIntegrity="sha256-OwN7oHh3pVJdFYDdrsgwa0kLqYwGWSIBTSUOZSJgL68="
+      jsSrc="/k9/microfrontend/omsorgsdager/1.5.18/app.js"
+      jsIntegrity="sha384-cJdFwt78KR5o77lkU9vj8zk4ltEb8eIE+IBewaCbz+rllMxYxfZfkEaUuBEbydoN"
+      stylesheetSrc="/k9/microfrontend/omsorgsdager/1.5.18/styles.css"
+      stylesheetIntegrity="sha384-QXxPpC6LOzUrjKWnX6aEaoD0969YYqQjYy5LSoyRA6GSQmlac+d/3qUNrn0U+z5d"
       onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, props)}
       onError={() => {}}
     />
