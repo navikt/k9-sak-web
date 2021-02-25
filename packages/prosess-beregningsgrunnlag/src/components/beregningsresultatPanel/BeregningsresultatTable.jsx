@@ -333,11 +333,9 @@ export const createBeregningTableData = createSelector(
     (state, ownProps) => ownProps.aktivitetStatusList,
     (state, ownProps) => ownProps.dekningsgrad,
     (state, ownProps) => ownProps.grunnbelop,
-    (state, ownProps) => ownProps.harAksjonspunkter,
     (state, ownProps) => ownProps.vilkaarBG,
-    (state, ownProps) => ownProps.ytelseGrunnlag,
   ],
-  (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, harAksjonspunkter, vilkaarBG, ytelseGrunnlag) => {
+  (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, vilkaarBG) => {
     const { vilkarStatus } = vilkaarBG.perioder[0];
     const perioderSomSkalVises = allePerioder.filter(periode =>
       periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker),

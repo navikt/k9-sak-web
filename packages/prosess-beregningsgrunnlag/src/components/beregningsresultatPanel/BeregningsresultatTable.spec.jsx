@@ -67,7 +67,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -91,7 +90,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -113,7 +111,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -139,7 +136,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -186,7 +182,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -226,7 +221,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -278,7 +272,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
 
@@ -340,7 +333,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -399,7 +391,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
 
@@ -448,7 +439,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
 
@@ -502,7 +492,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -543,7 +532,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -581,7 +569,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -634,15 +621,12 @@ describe('<BeregningsresultatTable>', () => {
     ];
     const dekningsgrad = 100;
     const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
-    const ytelseGrunnlag = { skalAvviksvurdere: false, ytelsetype: 'OMP' };
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
-      ytelseGrunnlag,
     );
     selectorData.forEach(periode => {
       const { dagsatser } = periode;
@@ -680,15 +664,12 @@ describe('<BeregningsresultatTable>', () => {
     ];
     const dekningsgrad = 100;
     const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
-    const ytelseGrunnlag = { skalAvviksvurdere: false, ytelsetype: 'OMP' };
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
-      ytelseGrunnlag,
     );
     selectorData.forEach(periode => {
       const { dagsatser } = periode;
