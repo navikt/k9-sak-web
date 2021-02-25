@@ -11,7 +11,6 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -286,7 +285,6 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
       vurderMilitaer: null,
       refusjonskravSomKommerForSentListe: null,
     },
-    andelerMedGraderingUtenBG: null,
     hjemmel: {
       kode: 'F_14_7_8_30',
       kodeverk: 'BG_HJEMMEL',
@@ -491,38 +489,6 @@ export const arbeidstakerMedAvvik = () => {
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
-      alleKodeverk={alleKodeverk}
-      arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    />
-  );
-};
-
-export const arbeidstakerFrilansMedAvvikMedGradering = () => {
-  const andeler = [lagAndel('AT', 551316, undefined, false), lagAndel('FL', 596000, undefined, false)];
-  andeler[0].skalFastsetteGrunnlag = true;
-  andeler[1].skalFastsetteGrunnlag = false;
-  const perioder = [lagStandardPeriode(andeler)];
-  const statuser = [lagStatus('AT'), lagStatus('FL')];
-  const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.AT, 140000, undefined, 77000),
-    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 16.242342, 11000),
-  ];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.andelerMedGraderingUtenBG = andeler;
-  const aksjonsPunkter1 = lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
-  const aksjonsPunkter2 = lagAPMedKode(aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
-  aksjonsPunkter1[0].status.kode = aksjonspunktStatus.UTFORT;
-  aksjonsPunkter1[0].begrunnelse = 'Dette er begrunnelsen';
-  return (
-    <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={[bg, bg]}
-      aksjonspunkter={aksjonsPunkter1.concat(aksjonsPunkter2)}
-      submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -774,36 +740,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
   );
 };
 
-export const graderingPåBeregningsgrunnlagUtenPenger = () => {
-  const andeler = [
-    lagAndel('SN', 300000, undefined, undefined),
-    lagAndel('AT', 137250, undefined, undefined),
-    lagAndel('FL', 130250, undefined, undefined),
-  ];
-  const pgi = lagPGIVerdier();
-  andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 654985;
-  // const perioder = [lagStandardPeriode(andeler)];
-  const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
-  const statuser = [lagStatus('AT_FL_SN')];
-  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.andelerMedGraderingUtenBG = andeler;
-  return (
-    <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={[bg, bg]}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)}
-      submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
-      alleKodeverk={alleKodeverk}
-      arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    />
-  );
-};
+
 export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   const andeler = [lagAndel('SN', 328105, undefined, undefined, false), lagAndel('AT', 72194, undefined, undefined)];
   const pgi = lagPGIVerdier();

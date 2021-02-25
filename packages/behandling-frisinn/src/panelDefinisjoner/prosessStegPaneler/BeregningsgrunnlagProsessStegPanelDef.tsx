@@ -15,7 +15,6 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-    aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
     aksjonspunktCodes.VURDER_DEKNINGSGRAD,
   ];
 
@@ -25,7 +24,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({ fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, featureToggles }) => ({
     fagsak,
-    beregningsgrunnlag,
+    beregningsgrunnlag: !!beregningsgrunnlag ? [beregningsgrunnlag[0]] : beregningsgrunnlag,
     arbeidsgiverOpplysningerPerId,
     featureToggles,
   });
