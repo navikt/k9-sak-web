@@ -74,7 +74,7 @@ const options = {
       changeOrigin: !!process.env.APP_URL_DIAGNOSEKODER,
     },
     '/k9/microfrontend/omsorgsdager/**': {
-      target: 'http://localhost:8088',
+      target: process.env.OMSORGSDAGER_FRONTEND_URL || 'http://localhost:8088',
       secure: false,
       changeOrigin: true,
       pathRewrite: { '^/k9/microfrontend/omsorgsdager': '' },
