@@ -136,7 +136,6 @@ export const beregningsgrunnlag = {
     vurderMilitaer: { harMilitaer: null },
     refusjonskravSomKommerForSentListe: null,
   },
-  andelerMedGraderingUtenBG: null,
   hjemmel: { kode: '-', kodeverk: 'BG_HJEMMEL' },
   faktaOmFordeling: null,
   årsinntektVisningstall: 0,

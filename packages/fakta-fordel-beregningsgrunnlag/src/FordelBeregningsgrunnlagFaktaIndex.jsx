@@ -56,12 +56,9 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
   harApneAksjonspunkter,
   submittable,
 }) => {
-  const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
-  const skalBrukeTabs = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
+  const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
-  const aktivtBeregningsrunnlag = harFlereBeregningsgrunnlag
-    ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
-    : beregningsgrunnlag;
+  const aktivtBeregningsrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
 
   const kreverManuellBehandling = kreverManuellBehandlingFn(aktivtBeregningsrunnlag);
 
@@ -95,7 +92,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
           kreverManuellBehandling={kreverManuellBehandling}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           vilkårsperioder={vilkårsperioder}
-          alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
+          alleBeregningsgrunnlag={beregningsgrunnlag}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
       </div>
@@ -105,7 +102,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
 
 FordelBeregningsgrunnlagFaktaIndex.propTypes = {
   behandling: fordelBeregningsgrunnlagBehandlingPropType.isRequired,
-  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

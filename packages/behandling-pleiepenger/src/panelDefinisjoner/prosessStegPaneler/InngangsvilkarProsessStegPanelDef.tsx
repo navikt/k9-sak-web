@@ -1,9 +1,10 @@
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
 
-import SokersOpplysningspliktPanelDef from './inngangsvilkarPaneler/SokersOpplysningspliktPanelDef';
+import SoknadsfristPanelDef from './inngangsvilkarPaneler/SoknadsfristPanelDef';
+import AlderPanelDef from './inngangsvilkarPaneler/AlderPanelDef';
 import OmsorgenForPanelDef from './inngangsvilkarPaneler/OmsorgenForPanelDef';
-import MedlemskapPanelDef from './inngangsvilkarPaneler/MedlemskapPanelDef';
+import SokersOpplysningspliktPanelDef from './inngangsvilkarPaneler/SokersOpplysningspliktPanelDef';
 
 class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.INNGANGSVILKAR;
@@ -11,9 +12,10 @@ class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
   getTekstKode = () => 'Behandlingspunkt.Inngangsvilkar';
 
   getPanelDefinisjoner = () => [
-    new SokersOpplysningspliktPanelDef(),
+    new SoknadsfristPanelDef(),
+    new AlderPanelDef(),
     new OmsorgenForPanelDef(),
-    new MedlemskapPanelDef(),
+    new SokersOpplysningspliktPanelDef(),
   ];
 }
 

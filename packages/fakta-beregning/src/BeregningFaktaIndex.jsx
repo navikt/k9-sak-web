@@ -58,12 +58,9 @@ const BeregningFaktaIndex = ({
   erOverstyrer,
   arbeidsgiverOpplysningerPerId,
 }) => {
-  const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
-  const skalBrukeTabs = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
+  const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
-  const aktivtBeregningsrunnlag = harFlereBeregningsgrunnlag
-    ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
-    : beregningsgrunnlag;
+  const aktivtBeregningsrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
 
   const vilkårsperioder = behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR;
 
@@ -94,7 +91,7 @@ const BeregningFaktaIndex = ({
           behandlingVersjon={behandling.versjon}
           beregningsgrunnlag={aktivtBeregningsrunnlag}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
-          alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [aktivtBeregningsrunnlag]}
+          alleBeregningsgrunnlag={beregningsgrunnlag}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
         <VerticalSpacer thirtyTwoPx />
@@ -109,7 +106,7 @@ const BeregningFaktaIndex = ({
           beregningsgrunnlag={aktivtBeregningsrunnlag}
           behandlingResultatPerioder={vilkårsperioder}
           erOverstyrer={erOverstyrer}
-          alleBeregningsgrunnlag={harFlereBeregningsgrunnlag ? beregningsgrunnlag : [beregningsgrunnlag]}
+          alleBeregningsgrunnlag={beregningsgrunnlag}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
@@ -120,7 +117,7 @@ const BeregningFaktaIndex = ({
 
 BeregningFaktaIndex.propTypes = {
   behandling: beregningBehandlingPropType.isRequired,
-  beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
+  beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

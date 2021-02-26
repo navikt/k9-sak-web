@@ -11,7 +11,6 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -53,20 +52,20 @@ const lagAPMedKode = kode => [
   },
 ];
 
-const vilkarMedUtfall = kode => [
+const vilkarMedUtfall = (kode, fomArray) => [
   {
     vilkarType: {
       kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
       kodeverk: 'vilkarType',
     },
-    perioder: [
-      {
+    perioder: fomArray.map(fom => 
+      ({
+        periode: { fom, tom: null},
         vilkarStatus: {
           kode,
           kodeverk: 'vilkarStatus',
         },
-      },
-    ],
+      })),
   },
 ];
 
@@ -199,6 +198,7 @@ const lagStatus = kode => ({
 const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
   const beregningsgrunnlag = {
     skjaeringstidspunktBeregning: '2019-09-16',
+    skjæringstidspunkt: '2019-09-16',
     aktivitetStatus: statuser,
     beregningsgrunnlagPeriode: perioder,
     dekningsgrad: 80,
@@ -285,7 +285,6 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
       vurderMilitaer: null,
       refusjonskravSomKommerForSentListe: null,
     },
-    andelerMedGraderingUtenBG: null,
     hjemmel: {
       kode: 'F_14_7_8_30',
       kodeverk: 'BG_HJEMMEL',
@@ -435,7 +434,7 @@ export const arbeidstakerUtenAvvik = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -463,7 +462,7 @@ export const brukersAndelUtenAvvik = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -489,39 +488,7 @@ export const arbeidstakerMedAvvik = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
-      alleKodeverk={alleKodeverk}
-      arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    />
-  );
-};
-
-export const arbeidstakerFrilansMedAvvikMedGradering = () => {
-  const andeler = [lagAndel('AT', 551316, undefined, false), lagAndel('FL', 596000, undefined, false)];
-  andeler[0].skalFastsetteGrunnlag = true;
-  andeler[1].skalFastsetteGrunnlag = false;
-  const perioder = [lagStandardPeriode(andeler)];
-  const statuser = [lagStatus('AT'), lagStatus('FL')];
-  const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.AT, 140000, undefined, 77000),
-    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 16.242342, 11000),
-  ];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.andelerMedGraderingUtenBG = andeler;
-  const aksjonsPunkter1 = lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
-  const aksjonsPunkter2 = lagAPMedKode(aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
-  aksjonsPunkter1[0].status.kode = aksjonspunktStatus.UTFORT;
-  aksjonsPunkter1[0].begrunnelse = 'Dette er begrunnelsen';
-  return (
-    <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={[bg, bg]}
-      aksjonspunkter={aksjonsPunkter1.concat(aksjonsPunkter2)}
-      submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -542,7 +509,7 @@ export const militær = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -607,7 +574,7 @@ export const selvstendigNæringsdrivende = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -654,7 +621,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -685,7 +652,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -737,7 +704,7 @@ export const naturalYtelse = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -766,43 +733,14 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
   );
 };
 
-export const graderingPåBeregningsgrunnlagUtenPenger = () => {
-  const andeler = [
-    lagAndel('SN', 300000, undefined, undefined),
-    lagAndel('AT', 137250, undefined, undefined),
-    lagAndel('FL', 130250, undefined, undefined),
-  ];
-  const pgi = lagPGIVerdier();
-  andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 654985;
-  // const perioder = [lagStandardPeriode(andeler)];
-  const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
-  const statuser = [lagStatus('AT_FL_SN')];
-  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.andelerMedGraderingUtenBG = andeler;
-  return (
-    <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={[bg, bg]}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)}
-      submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
-      alleKodeverk={alleKodeverk}
-      arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    />
-  );
-};
+
 export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   const andeler = [lagAndel('SN', 328105, undefined, undefined, false), lagAndel('AT', 72194, undefined, undefined)];
   const pgi = lagPGIVerdier();
@@ -845,7 +783,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -903,7 +841,7 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -956,7 +894,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1005,7 +943,7 @@ export const arbeidstakerMed3Arbeidsforhold2ISammeOrganisasjonSide3 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1040,7 +978,7 @@ export const arbeidstakerAvslagHalvGSide4 = () => {
       readOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1071,7 +1009,7 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1103,7 +1041,7 @@ export const arbeidstakerMedAksjonspunktBehandletSide6 = () => {
       isReadOnly
       readOnlySubmitButton
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1144,7 +1082,7 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1209,7 +1147,7 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktBehandletSide7 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1232,7 +1170,7 @@ export const FrilansSide8 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1255,7 +1193,7 @@ export const FrilansMedAksjonspunktSide9 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1280,7 +1218,7 @@ export const arbeidstakerFrilansMedAksjonspunktSide10 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1314,7 +1252,7 @@ export const arbeidstakerFrilansMedAksjonspunktBehandletSide11 = () => {
       isReadOnly
       readOnlySubmitButton
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1364,7 +1302,7 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1431,7 +1369,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1485,7 +1423,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1544,7 +1482,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
       isReadOnly
       readOnlySubmitButton
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1598,7 +1536,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1651,7 +1589,7 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1700,7 +1638,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1750,7 +1688,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1801,7 +1739,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1858,7 +1796,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
       isReadOnly
       readOnlySubmitButton
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1915,7 +1853,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
       isReadOnly
       readOnlySubmitButton
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -1969,7 +1907,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2037,7 +1975,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       isReadOnly
       readOnlySubmitButton
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2105,7 +2043,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
       isReadOnly
       readOnlySubmitButton
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2128,7 +2066,7 @@ export const YtelseFraNavSide26 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2151,7 +2089,7 @@ export const arbeidstakerOgAAPMedAksjonspunktSide27 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2184,7 +2122,7 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2217,7 +2155,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2249,7 +2187,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeFnOgDpOverstigerSNSide
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2280,7 +2218,7 @@ export const ArbeidstagerDagpengerOgSelvstendigNæringsdrivendeATOgDpOverstigerS
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2335,7 +2273,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -2359,7 +2297,7 @@ export const militærOgSiviltjenesteSide33 = () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [bg.skjaeringstidspunktBeregning, bg.skjaeringstidspunktBeregning])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />

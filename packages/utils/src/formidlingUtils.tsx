@@ -68,7 +68,8 @@ export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: Array<string> | Tilg
 }
 
 export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {
-  return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).every(vb => vb === vedtaksbrevtype.FRITEKST);
+  const vedtaksbrev = lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev);
+  return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
 export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {

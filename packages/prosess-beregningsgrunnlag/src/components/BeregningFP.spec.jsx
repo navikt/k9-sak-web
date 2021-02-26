@@ -9,11 +9,9 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { BeregningFP } from './BeregningFP';
-import GraderingUtenBGFieldArrayComponent from './GraderingUtenBGFieldArrayComponent';
 import BeregningForm2 from './beregningForm/BeregningForm';
-import GraderingUtenBG2 from './gradering/GraderingUtenBG';
 
-const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille, gradering) => {
+const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille) => {
   const beregningsgrunnlag = {
     halvG: 30000,
     ledetekstBrutto: 'Brutto tekst',
@@ -21,7 +19,6 @@ const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avv
     ledetekstRedusert: 'Redusert tekst',
     skjaeringstidspunktBeregning: '12.12.2017',
     årsinntektVisningstall: beregnetPrAar,
-    andelerMedGraderingUtenBG: gradering,
     sammenligningsgrunnlag: {
       avvikPromille,
       rapportertPrAar: sammenligningSum,
@@ -53,24 +50,6 @@ const vilkar = [
   },
 ];
 
-const graderingAP = [
-  {
-    id: 55,
-    erAktivt: true,
-    definisjon: {
-      kode: aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
-      navn: 'Fastsett varig brutto beregning ATFL',
-    },
-    toTrinnsBehandling: false,
-    status: {
-      kode: 'OPPR',
-      navn: 'Opprettet',
-    },
-    begrunnelse: 'begrunnelse arbeidstaker/frilans',
-    vilkarType: null,
-    kanLoses: true,
-  },
-];
 
 const gjeldendeAksjonspunkter = [
   {
@@ -111,7 +90,7 @@ describe('<BeregningFP>', () => {
       <BeregningFP
         readOnly={false}
         submitCallback={sinon.spy}
-        beregningsgrunnlag={lagBeregningsgrunnlag(true, 100000, 100000, null, null)}
+        beregningsgrunnlag={[lagBeregningsgrunnlag(true, 100000, 100000, null)]}
         vilkar={vilkar}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -138,7 +117,7 @@ describe('<BeregningFP>', () => {
       <BeregningFP
         readOnly={false}
         submitCallback={sinon.spy}
-        beregningsgrunnlag={null}
+        beregningsgrunnlag={[null]}
         vilkar={vilkar}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -164,7 +143,7 @@ describe('<BeregningFP>', () => {
         submitCallback={sinon.spy}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, null)}
+        beregningsgrunnlag={[lagBeregningsgrunnlag(true, 250000, 250000, undefined)]}
         vilkar={vilkar}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         aksjonspunkter={gjeldendeAksjonspunkter}
@@ -179,45 +158,5 @@ describe('<BeregningFP>', () => {
     const messages = wrapper.find(FormattedMessage);
     expect(messages).to.be.lengthOf(0);
   });
-  it('skal teste at GraderingUtenBG vises når sokerHarGraderingPaaAndelUtenBG er true', () => {
-    const wrapper = shallow(
-      <BeregningFP
-        readOnly={false}
-        submitCallback={sinon.spy}
-        beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, [{ test: 'test' }])}
-        vilkar={vilkar}
-        gjeldendeAksjonspunkter={graderingAP}
-        aksjonspunkter={graderingAP}
-        behandling={behandling}
-        alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={{}}
-        readOnlySubmitButton
-        intl={intlMock}
-        handleSubmit={() => {}}
-      />,
-    );
-    const graderingUtenBG = wrapper.find(FieldArray);
-    expect(graderingUtenBG.at(1).props().component).equals(GraderingUtenBGFieldArrayComponent);
-  });
 
-  it('skal teste at GraderingUtenBG ikke vises når sokerHarGraderingPaaAndelUtenBG er false', () => {
-    const wrapper = shallow(
-      <BeregningFP
-        readOnly={false}
-        submitCallback={sinon.spy}
-        beregningsgrunnlag={lagBeregningsgrunnlag(true, 250000, 250000, undefined, null)}
-        vilkar={vilkar}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-        aksjonspunkter={gjeldendeAksjonspunkter}
-        behandling={behandling}
-        alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={{}}
-        readOnlySubmitButton
-        intl={intlMock}
-        handleSubmit={() => {}}
-      />,
-    );
-    const graderingUtenBG = wrapper.find(GraderingUtenBG2);
-    expect(graderingUtenBG).to.be.lengthOf(0);
-  });
 });

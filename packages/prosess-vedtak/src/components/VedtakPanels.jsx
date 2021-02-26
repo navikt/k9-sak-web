@@ -55,13 +55,13 @@ const VedtakPanels = ({
     beregningsgrunnlag,
     aksjonspunkter,
   );
-  if (behandlingTypeKode === behandlingType.REVURDERING) {
-    const bgYtelsegrunnlag = beregningsgrunnlag?.ytelsesspesifiktGrunnlag;
+  if (behandlingTypeKode === behandlingType.REVURDERING && !!beregningsgrunnlag) {
+    const bgYtelsegrunnlag = beregningsgrunnlag[0].ytelsesspesifiktGrunnlag;
     let bgPeriodeMedAvslagsårsak;
     if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
       bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(
         bgYtelsegrunnlag.avslagsårsakPrPeriode,
-        beregningsgrunnlag.beregningsgrunnlagPeriode,
+        beregningsgrunnlag[0].beregningsgrunnlagPeriode,
       );
     }
     return (
@@ -150,7 +150,7 @@ VedtakPanels.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
-  beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
+  beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
   dokumentdata: PropTypes.shape(),
