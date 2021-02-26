@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { InputField } from '@fpsak-frontend/form';
@@ -13,9 +14,9 @@ describe('BehandlingFormFieldCleaner', () => {
         behandlingFormName="TEST_FORM"
         fieldNames={['tomDato', 'fomDato']}
         reduxChange={changeCallback}
-        formName="test"
         behandlingId={1}
         behandlingVersjon={2}
+        formName="test"
       >
         <InputField name="fomDato" />
         <div>
@@ -24,8 +25,8 @@ describe('BehandlingFormFieldCleaner', () => {
       </BehandlingFormFieldCleaner>,
     );
 
-    expect(wrapper.find(InputField)).toHaveLength(2);
-    expect(changeCallback.getCalls()).toHaveLength(0);
+    expect(wrapper.find(InputField)).to.have.length(2);
+    expect(changeCallback.getCalls()).has.length(0);
   });
 
   it('skal fjerne fomDato fra redux-state', () => {
@@ -35,9 +36,9 @@ describe('BehandlingFormFieldCleaner', () => {
         behandlingFormName="TEST_FORM"
         fieldNames={['tomDato', 'fomDato']}
         reduxChange={changeCallback}
-        formName="test"
         behandlingId={1}
         behandlingVersjon={2}
+        formName="test"
       >
         <InputField name="fomDato" />
         <div>
@@ -46,8 +47,8 @@ describe('BehandlingFormFieldCleaner', () => {
       </BehandlingFormFieldCleaner>,
     );
 
-    expect(wrapper.find(InputField)).toHaveLength(2);
-    expect(changeCallback.called).toBe(false);
+    expect(wrapper.find(InputField)).to.have.length(2);
+    expect(changeCallback.called).is.false;
 
     // Fjern fomDato fra DOM
     wrapper.setProps({
@@ -59,14 +60,14 @@ describe('BehandlingFormFieldCleaner', () => {
     });
 
     const field = wrapper.find(InputField);
-    expect(field).toHaveLength(1);
-    expect(field.prop('name')).toEqual('tomDato');
-    expect(changeCallback.getCalls()).toHaveLength(1);
+    expect(field).to.have.length(1);
+    expect(field.prop('name')).to.eql('tomDato');
+    expect(changeCallback.getCalls()).has.length(1);
     const { args } = changeCallback.getCalls()[0];
-    expect(args).toHaveLength(3);
-    expect(args[0]).toEqual('TEST_FORM');
-    expect(args[1]).toEqual('fomDato');
-    expect(args[2]).toBeNull();
+    expect(args).has.length(3);
+    expect(args[0]).is.eql('TEST_FORM');
+    expect(args[1]).is.eql('fomDato');
+    expect(args[2]).is.null;
   });
 
   it('skal fjerne tomDato fra redux-state', () => {
@@ -76,9 +77,9 @@ describe('BehandlingFormFieldCleaner', () => {
         behandlingFormName="TEST_FORM"
         fieldNames={['tomDato', 'fomDato']}
         reduxChange={changeCallback}
-        formName="test"
         behandlingId={1}
         behandlingVersjon={2}
+        formName="test"
       >
         <InputField name="fomDato" />
         <div>
@@ -87,8 +88,8 @@ describe('BehandlingFormFieldCleaner', () => {
       </BehandlingFormFieldCleaner>,
     );
 
-    expect(wrapper.find(InputField)).toHaveLength(2);
-    expect(changeCallback.called).toBe(false);
+    expect(wrapper.find(InputField)).to.have.length(2);
+    expect(changeCallback.called).is.false;
 
     // Fjern tomDato fra DOM
     wrapper.setProps({
@@ -96,14 +97,14 @@ describe('BehandlingFormFieldCleaner', () => {
     });
 
     const field = wrapper.find(InputField);
-    expect(field).toHaveLength(1);
-    expect(field.prop('name')).toEqual('fomDato');
-    expect(changeCallback.getCalls()).toHaveLength(1);
+    expect(field).to.have.length(1);
+    expect(field.prop('name')).to.eql('fomDato');
+    expect(changeCallback.getCalls()).has.length(1);
     const { args } = changeCallback.getCalls()[0];
-    expect(args).toHaveLength(3);
-    expect(args[0]).toEqual('TEST_FORM');
-    expect(args[1]).toEqual('tomDato');
-    expect(args[2]).toBeNull();
+    expect(args).has.length(3);
+    expect(args[0]).is.eql('TEST_FORM');
+    expect(args[1]).is.eql('tomDato');
+    expect(args[2]).is.null;
   });
 
   it('skal fjerne både fomDato og tomDato fra redux-state', () => {
@@ -113,9 +114,9 @@ describe('BehandlingFormFieldCleaner', () => {
         behandlingFormName="TEST_FORM"
         fieldNames={['tomDato', 'fomDato']}
         reduxChange={changeCallback}
-        formName="test"
         behandlingId={1}
         behandlingVersjon={2}
+        formName="test"
       >
         <InputField name="fomDato" />
         <div>
@@ -124,25 +125,25 @@ describe('BehandlingFormFieldCleaner', () => {
       </BehandlingFormFieldCleaner>,
     );
 
-    expect(wrapper.find(InputField)).toHaveLength(2);
-    expect(changeCallback.called).toBe(false);
+    expect(wrapper.find(InputField)).to.have.length(2);
+    expect(changeCallback.called).is.false;
 
     // Fjern tomDato fra DOM
     wrapper.setProps({
       children: <span />,
     });
 
-    expect(wrapper.find(InputField)).toHaveLength(0);
-    expect(changeCallback.getCalls()).toHaveLength(2);
+    expect(wrapper.find(InputField)).to.have.length(0);
+    expect(changeCallback.getCalls()).has.length(2);
     const args1 = changeCallback.getCalls()[0].args;
-    expect(args1).toHaveLength(3);
-    expect(args1[0]).toEqual('TEST_FORM');
-    expect(args1[1]).toEqual('tomDato');
-    expect(args1[2]).toBeNull();
+    expect(args1).has.length(3);
+    expect(args1[0]).is.eql('TEST_FORM');
+    expect(args1[1]).is.eql('tomDato');
+    expect(args1[2]).is.null;
     const args2 = changeCallback.getCalls()[1].args;
-    expect(args2).toHaveLength(3);
-    expect(args2[0]).toEqual('TEST_FORM');
-    expect(args2[1]).toEqual('fomDato');
-    expect(args2[2]).toBeNull();
+    expect(args2).has.length(3);
+    expect(args2[0]).is.eql('TEST_FORM');
+    expect(args2[1]).is.eql('fomDato');
+    expect(args2[2]).is.null;
   });
 });

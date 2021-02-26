@@ -14,6 +14,7 @@ export const RammevedtakEnum = stringEnum({
   MIDLERTIDIG_ALENEOMSORG: 'MidlertidigAleneOmOmsorgen',
   FOSTERBARN: 'Fosterbarn',
   UTENLANDSK_BARN: 'UtenlandskBarn',
+  DELT_BOSTED: 'DeltBosted',
 });
 
 export type RammevedtakType = typeof RammevedtakEnum[keyof typeof RammevedtakEnum];
@@ -28,6 +29,7 @@ export type Rammevedtak = {
   mottaker?: string;
   utvidetRettFor?: string;
   aleneOmOmsorgenFor?: string;
+  deltBostedMed?: string;
   fosterbarnFor?: string;
   fødselsdato?: string;
   lengde?: string; // Duration (smittevernsdager)

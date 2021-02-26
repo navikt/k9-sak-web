@@ -1,4 +1,4 @@
-import aksjonspunktCodes, { isBeregningAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isBeregningAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
@@ -35,7 +35,6 @@ import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVil
 import { transformValues } from './beregningForm/BeregningForm';
 import BeregningsgrunnlagFieldArrayComponent from './BeregningsgrunnlagFieldArrayComponent';
 import styles from './beregningFP.less';
-import GraderingUtenBGFieldArrayComponent from './GraderingUtenBGFieldArrayComponent';
 import beregningStyles from './beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import Beregningsgrunnlag from './beregningsgrunnlagPanel/Beregningsgrunnlag';
 import AksjonspunktBehandlerTB from './arbeidstaker/AksjonspunktBehandlerTB';
@@ -82,10 +81,6 @@ const getRelevanteStatuser = bg =>
 const getBGVilkar = vilkar =>
   vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
 
-const getAksjonspunktForGraderingPaaAndelUtenBG = aksjonspunkter =>
-  aksjonspunkter
-    ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
-    : undefined;
 
 /**
  * BeregningFP
@@ -113,18 +108,14 @@ export const BeregningFP = props => {
     initialValues,
     intl,
   } = props;
-  const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
-  const skalBrukeSidemeny = harFlereBeregningsgrunnlag && beregningsgrunnlag.length > 1;
+  const skalBrukeSidemeny = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
-  const aktivtBeregningsgrunnlag = harFlereBeregningsgrunnlag
-    ? beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks]
-    : beregningsgrunnlag;
-  if (!aktivtBeregningsgrunnlag) {
+  const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
+  const vilkaarBG = getBGVilkar(vilkar);
+  if (!aktivtBeregningsgrunnlag || vilkaarBG === undefined) {
     return visningForManglendeBG();
   }
   const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsgrunnlag);
-  const vilkaarBG = getBGVilkar(vilkar);
-  const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
@@ -152,7 +143,6 @@ export const BeregningFP = props => {
             name="beregningsgrunnlagListe"
             component={BeregningsgrunnlagFieldArrayComponent}
             props={{
-              harFlereBeregningsgrunnlag,
               initialValues,
               aktivtBeregningsgrunnlagIndeks,
               aktivtBeregningsgrunnlag,
@@ -167,24 +157,6 @@ export const BeregningFP = props => {
               arbeidsgiverOpplysningerPerId,
             }}
           />
-          {sokerHarGraderingPaaAndelUtenBG && (
-            <FieldArray
-              name="graderingUtenBgListe"
-              component={GraderingUtenBGFieldArrayComponent}
-              props={{
-                harFlereBeregningsgrunnlag,
-                initialValues,
-                aktivtBeregningsgrunnlagIndeks,
-                submitCallback,
-                readOnly,
-                behandling,
-                aksjonspunkter,
-                aktivtBeregningsgrunnlag,
-                alleKodeverk,
-                arbeidsgiverOpplysningerPerId,
-              }}
-            />
-          )}
           {aksjonspunkter.length > 0 && (
             <Row>
               <Column xs="12">
@@ -214,7 +186,7 @@ BeregningFP.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-  beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
+  beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),
   vilkar: PropTypes.arrayOf(beregningsgrunnlagVilkarPropType).isRequired,
   behandling: beregningsgrunnlagBehandlingPropType,
   // eslint-disable-next-line
@@ -231,8 +203,8 @@ BeregningFP.defaultProps = {
 const getSammenligningsgrunnlagsPrStatus = bg =>
   bg && bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
 
-const formaterAksjonspunkter = aksjonspunkter => {
-  return flattenArray(aksjonspunkter).map(aksjonspunkt => {
+const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
+  flattenArray(aksjonspunkter).map(aksjonspunkt => {
     const { kode } = aksjonspunkt;
     return {
       '@type': kode,
@@ -241,11 +213,11 @@ const formaterAksjonspunkter = aksjonspunkter => {
         {
           '@type': kode,
           ...aksjonspunkt,
+          periode: perioder.find(p => p.periode.fom === aksjonspunkt.skjæringstidspunkt).periode,
         },
       ],
     };
   });
-};
 
 export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
@@ -274,80 +246,58 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
   return initialValues;
 };
 
-export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
-  if (Array.isArray(beregningsgrunnlag)) {
-    return beregningsgrunnlag.map(currentBeregningsgrunnlag =>
-      buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter),
-    );
-  }
-  return [buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, gjeldendeAksjonspunkter)];
-};
+export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter) => beregningsgrunnlag.map(currentBeregningsgrunnlag =>
+    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter),
+  );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { aksjonspunkter, submitCallback, beregningsgrunnlag } = initialOwnProps;
+  const { aksjonspunkter, submitCallback, beregningsgrunnlag, vilkar } = initialOwnProps;
   const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
 
   const onSubmit = values => {
-    const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
-    const fieldArrayValuesList = sokerHarGraderingPaaAndelUtenBG
-      ? values.graderingUtenBgListe
-      : values.beregningsgrunnlagListe;
-    let alleAksjonspunkter;
-    if (sokerHarGraderingPaaAndelUtenBG) {
-      alleAksjonspunkter = fieldArrayValuesList.map(currentBeregningsgrunnlagSkjemaverdier => {
-        const { begrunnelse } = currentBeregningsgrunnlagSkjemaverdier;
-        const skalSettesPåVent = currentBeregningsgrunnlagSkjemaverdier.graderingUtenBGSettPaaVent;
-        return {
-          kode: aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
-          begrunnelse,
-          skalSettesPåVent,
-        };
-      });
-    } else {
-      alleAksjonspunkter = fieldArrayValuesList.map(
-        (currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
-          const opprinneligBeregningsgrunnlag = beregningsgrunnlag[currentBeregningsgrunnlagIndex];
-          const allePerioder = opprinneligBeregningsgrunnlag
-            ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
-            : [];
-          const alleAndelerIForstePeriode =
-            allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
-          const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(opprinneligBeregningsgrunnlag);
-          const relevanteStatuser = getRelevanteStatuser(opprinneligBeregningsgrunnlag);
-          const samletSammenligningsgrunnnlag =
-            sammenligningsgrunnlagPrStatus &&
-            sammenligningsgrunnlagPrStatus.find(
-              sammenLigGr => sammenLigGr.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
-            );
-          const harNyttIkkeSamletSammenligningsgrunnlag =
-            sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
-
-          const transformedValues = transformValues(
-            {
-              ...currentBeregningsgrunnlagSkjemaverdier,
-              skjæringstidspunkt:
-                (typeof beregningsgrunnlag === 'object' && beregningsgrunnlag.skjæringstidspunkt) ||
-                beregningsgrunnlag[currentBeregningsgrunnlagIndex].skjæringstidspunkt,
-            },
-            relevanteStatuser,
-            alleAndelerIForstePeriode,
-            gjeldendeAksjonspunkter,
-            allePerioder,
-            harNyttIkkeSamletSammenligningsgrunnlag,
+    const fieldArrayValuesList = values.beregningsgrunnlagListe;
+    const alleAksjonspunkter = fieldArrayValuesList.map(
+      (currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
+        const opprinneligBeregningsgrunnlag = beregningsgrunnlag[currentBeregningsgrunnlagIndex];
+        const allePerioder = opprinneligBeregningsgrunnlag
+          ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
+          : [];
+        const alleAndelerIForstePeriode =
+          allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
+        const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(opprinneligBeregningsgrunnlag);
+        const relevanteStatuser = getRelevanteStatuser(opprinneligBeregningsgrunnlag);
+        const samletSammenligningsgrunnnlag =
+          sammenligningsgrunnlagPrStatus &&
+          sammenligningsgrunnlagPrStatus.find(
+            sammenLigGr => sammenLigGr.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
           );
+        const harNyttIkkeSamletSammenligningsgrunnlag =
+          sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
 
-          return transformedValues;
-        },
-      );
-    }
-    return submitCallback(formaterAksjonspunkter(alleAksjonspunkter), beregningsgrunnlag);
+        const transformedValues = transformValues(
+          {
+            ...currentBeregningsgrunnlagSkjemaverdier,
+            skjæringstidspunkt:
+              (typeof beregningsgrunnlag === 'object' && beregningsgrunnlag.skjæringstidspunkt) ||
+              beregningsgrunnlag[currentBeregningsgrunnlagIndex].skjæringstidspunkt,
+          },
+          relevanteStatuser,
+          alleAndelerIForstePeriode,
+          gjeldendeAksjonspunkter,
+          allePerioder,
+          harNyttIkkeSamletSammenligningsgrunnlag,
+        );
+
+        return transformedValues;
+      },
+    );
+    return submitCallback(formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder));
   };
 
   return (state, ownProps) => ({
     onSubmit,
     initialValues: {
       beregningsgrunnlagListe: buildInitialValues(ownProps.beregningsgrunnlag, ownProps.aksjonspunkter),
-      graderingUtenBgListe: buildInitialValues(ownProps.beregningsgrunnlag, ownProps.aksjonspunkter),
     },
     fieldArrayID: ownProps.fieldArrayID,
     gjeldendeAksjonspunkter,

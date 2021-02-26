@@ -38,14 +38,7 @@ const MedisinskVilkarFormButtons: FunctionComponent<MedisinskVilkarFormButtonsPr
       </FlexColumn>
       <FlexColumn>
         {!readOnly && (
-          <Knapp
-            mini
-            htmlType="button"
-            onClick={() => {
-              return false;
-            }}
-            disabled={false}
-          >
+          <Knapp mini htmlType="button" onClick={() => false} disabled={false}>
             Avbryt
           </Knapp>
         )}

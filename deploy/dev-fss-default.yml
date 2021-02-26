@@ -52,9 +52,11 @@ spec:
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake"
     - name: APP_DIAGNOSEKODER
-      value: "http://diagnosekode-api"
+      value: "http://diagnosekode-api/diagnosekoder/"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"
+    - name: PSB_UTTAK_FRONTEND_URL
+      value: "https://psb-uttak-frontend.dev.adeo.no/"
 
    # Feature-flag
     - name: VARSELTEKST
@@ -66,7 +68,5 @@ spec:
     - name: KLAGEBEHANDLING
       value: "true"
     - name: TILBAKE
-      value: "true"
-    - name: ARBEIDSFORHOLD_V2
       value: "true"
 

@@ -42,9 +42,11 @@ export enum PleiepengerBehandlingApiKeys {
   SYKDOM = 'SYKDOM',
   VEDTAK_VARSEL = 'VEDTAK_VARSEL',
   OMSORGEN_FOR = 'OMSORGEN_FOR',
+  TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
+  UTTAK = 'UTTAK',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -57,7 +59,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soeker-personopplysninger', PleiepengerBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withRel('beregningsgrunnlag', PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG)
+  .withRel('beregningsgrunnlag-alle', PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG)
   .withRel('familiehendelse-v2', PleiepengerBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', PleiepengerBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', PleiepengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
@@ -67,7 +69,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('arbeidsforhold-v1', PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD)
   .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', PleiepengerBehandlingApiKeys.VERGE)
-  .withRel('opptjening', PleiepengerBehandlingApiKeys.OPPTJENING)
+  .withRel('opptjening-v2', PleiepengerBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('fakta-arbeidsforhold', PleiepengerBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
   .withRel('uttaksresultat-perioder', PleiepengerBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
@@ -76,6 +78,8 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
   .withRel('vedtak-varsel', PleiepengerBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('omsorgen-for', PleiepengerBehandlingApiKeys.OMSORGEN_FOR)
+  .withRel('tilgjengelige-vedtaksbrev', PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerBehandlingApiKeys.UTTAK)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

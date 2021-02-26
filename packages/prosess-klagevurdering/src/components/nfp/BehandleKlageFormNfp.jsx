@@ -63,7 +63,11 @@ export const BehandleKlageFormNfpImpl = ({
         medholdReasons={alleKodeverk[kodeverkTyper.KLAGE_MEDHOLD_ARSAK]}
       />
       <div className={styles.confirmVilkarForm}>
-        <ProsessStegBegrunnelseTextField readOnly={readOnly} textCode="BehandleKlageFormNfp.BegrunnelseForKlage" />
+        <ProsessStegBegrunnelseTextField
+          readOnly={readOnly}
+          // maxLength={100000}
+          textCode="BehandleKlageFormNfp.BegrunnelseForKlage"
+        />
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />

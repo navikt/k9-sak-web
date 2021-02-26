@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
@@ -9,6 +10,7 @@ import {
   mapToBelop,
   setArbeidsforholdInitialValues,
   setGenerellAndelsinfo,
+  setGenerellAndelsinfoUtenNavn,
   skalRedigereInntektForAndel,
   skalRedigereInntektskategoriForAndel,
 } from './BgFordelingUtils';
@@ -19,7 +21,6 @@ import {
 import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
 
 const arbeidsgiver = {
-  arbeidsgiverNavn: 'Virksomheten',
   arbeidsgiverId: '3284788923',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',
@@ -40,9 +41,39 @@ const arbeidstakerAndel1 = {
   ...arbeidstakerIkkeFastsatt,
 };
 
+const alleKodeverk = {
+  [kodeverkTyper.AKTIVITET_STATUS]: [
+    {
+      kode: aktivitetStatuser.ARBEIDSTAKER,
+      navn: 'Arbeidstaker',
+    },
+    {
+      kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
+      navn: 'Selvstendig næringsdrivende',
+    },
+    {
+      kode: aktivitetStatuser.DAGPENGER,
+      navn: 'Dagpenger',
+    },
+    {
+      kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER,
+      navn: 'Arbeidsavklaringspenger',
+    },
+  ],
+};
+
+const arbeidsgiverOpplysningerPerId = {
+  1231414: {
+    navn: 'Arbeidsgiveren',
+  },
+  3284788923: {
+    navn: 'Virksomheten',
+  },
+};
+
 describe('<BgFordelingUtils>', () => {
   const dagpengerAndel = {
-    aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, navn: 'Dagpenger' },
+    aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, kodeverk: 'AKTIVITET_STATUS' },
     andelsnr: 1,
     skalKunneEndreAktivitet: false,
     lagtTilAvSaksbehandler: true,
@@ -53,7 +84,7 @@ describe('<BgFordelingUtils>', () => {
     belopFraMeldekortPrMnd: 0,
   };
 
-  const dagpengeField = mapAndelToField(dagpengerAndel);
+  const dagpengeField = mapAndelToField(dagpengerAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
 
   it('skal mappe dagpengerandel til feltverdier', () => {
     expect(dagpengeField.aktivitetStatus).to.equal('DP');
@@ -69,7 +100,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal mappe AAP-andel til feltverdier', () => {
     const AAPAndel = {
-      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER, navn: 'Arbeidsavklaringspenger' },
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER, kodeverk: 'AKTIVITET_STATUS' },
       andelsnr: 1,
       skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
@@ -79,7 +110,7 @@ describe('<BgFordelingUtils>', () => {
       belopReadOnly: 10000,
       belopFraMeldekortPrMnd: 10000,
     };
-    const aapField = mapAndelToField(AAPAndel);
+    const aapField = mapAndelToField(AAPAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
     expect(aapField.aktivitetStatus).to.equal('AAP');
     expect(aapField.andelsnr).to.equal(1);
     expect(aapField.nyAndel).to.equal(false);
@@ -93,15 +124,18 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal mappe AT uten inntektsmelding med FL i samme org til feltverdier', () => {
     const ATAndel = {
-      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, kodeverk: 'AKTIVITET_STATUS' },
       andelsnr: 1,
       skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'AT' },
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
+      arbeidsforhold: {
+        arbeidsgiverId: '1231414',
+      },
     };
-    const atField = mapAndelToField(ATAndel);
+    const atField = mapAndelToField(ATAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
     expect(atField.aktivitetStatus).to.equal('AT');
     expect(atField.andelsnr).to.equal(1);
     expect(atField.nyAndel).to.equal(false);
@@ -114,8 +148,8 @@ describe('<BgFordelingUtils>', () => {
   });
 
   it('skal mappe FL med AT i samme org til feltverdier', () => {
-    const ATAndel = {
-      aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser' },
+    const FLAndel = {
+      aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser', kodeverk: 'AKTIVITET_STATUS' },
       andelsnr: 1,
       skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
@@ -123,7 +157,7 @@ describe('<BgFordelingUtils>', () => {
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
     };
-    const atField = mapAndelToField(ATAndel);
+    const atField = mapAndelToField(FLAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
     expect(atField.aktivitetStatus).to.equal('FL');
     expect(atField.andelsnr).to.equal(1);
     expect(atField.nyAndel).to.equal(false);
@@ -137,7 +171,7 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal mappe AT med inntektsmelding til feltverdier', () => {
     const ATAndel = {
-      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker', kodeverk: 'AKTIVITET_STATUS' },
       andelsnr: 1,
       skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
@@ -146,9 +180,12 @@ describe('<BgFordelingUtils>', () => {
       belopFraMeldekortPrMnd: null,
       fastsattBelop: null,
       belopReadOnly: 20000,
-      arbeidsforhold: { belopFraInntektsmeldingPrMnd: 20000 },
+      arbeidsforhold: {
+        belopFraInntektsmeldingPrMnd: 20000,
+        arbeidsgiverId: '1231414',
+      },
     };
-    const atField = mapAndelToField(ATAndel);
+    const atField = mapAndelToField(ATAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
     expect(atField.aktivitetStatus).to.equal('AT');
     expect(atField.andelsnr).to.equal(1);
     expect(atField.nyAndel).to.equal(false);
@@ -163,19 +200,18 @@ describe('<BgFordelingUtils>', () => {
   it('skal sette initial values for generell andelinfo med arbeidsforhold', () => {
     const andelValueFromState = {
       arbeidsforhold: {
-        arbeidsgiverNavn: 'Virksomheten',
         arbeidsgiverId: '3284788923',
         arbeidsforholdId: '321378huda7e2',
+        eksternArbeidsforholdId: '321378huda7e2',
       },
-      visningsnavn: 'Virksomheten (3284788923) ...a7e2',
-      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
+      aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, kodeverk: 'AKTIVITET_STATUS' },
       andelsnr: 3,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'ARBEIDSTAKER' },
     };
 
-    const andelsInfo = setGenerellAndelsinfo(andelValueFromState);
-    expect(andelsInfo.andel).to.equal('Virksomheten (3284788923) ...a7e2');
+    const andelsInfo = setGenerellAndelsinfo(andelValueFromState, alleKodeverk, arbeidsgiverOpplysningerPerId);
+    expect(andelsInfo.andel).to.equal('Virksomheten (3284788923)...a7e2');
     expect(andelsInfo.aktivitetStatus).to.equal('AT');
     expect(andelsInfo.andelsnr).to.equal(3);
     expect(andelsInfo.nyAndel).to.equal(false);
@@ -185,13 +221,12 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal sette initial values for generell andelinfo uten arbeidsforhold', () => {
     const andelValueFromState = {
-      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE },
+      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, kodeverk: 'AKTIVITET_STATUS' },
       andelsnr: 2,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
-      visningsnavn: 'Selvstendig næringsdrivende',
     };
-    const andelsInfo = setGenerellAndelsinfo(andelValueFromState);
+    const andelsInfo = setGenerellAndelsinfo(andelValueFromState, alleKodeverk, arbeidsgiverOpplysningerPerId);
     expect(andelsInfo.andel).to.equal('Selvstendig næringsdrivende');
     expect(andelsInfo.aktivitetStatus).to.equal('SN');
     expect(andelsInfo.andelsnr).to.equal(2);
@@ -202,12 +237,16 @@ describe('<BgFordelingUtils>', () => {
 
   it('skal ikkje sette arbeidsforhold initial values for andel uten arbeidsforhold', () => {
     const andelValueFromState = {
-      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE },
+      aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, kodeverk: 'AKTIVITET_STATUS' },
       andelsnr: 2,
       lagtTilAvSaksbehandler: true,
       inntektskategori: { kode: 'SN' },
     };
-    const arbeidsforholdIV = setArbeidsforholdInitialValues(andelValueFromState);
+    const arbeidsforholdIV = setArbeidsforholdInitialValues(
+      andelValueFromState,
+      alleKodeverk,
+      arbeidsgiverOpplysningerPerId,
+    );
     expect(arbeidsforholdIV.arbeidsforholdId).to.equal(null);
     expect(arbeidsforholdIV.arbeidsperiodeFom).to.equal('');
     expect(arbeidsforholdIV.arbeidsperiodeTom).to.equal('');
@@ -216,7 +255,6 @@ describe('<BgFordelingUtils>', () => {
   const andelsnrKunstigArbeid = 241;
 
   const kunstigArbeidsgiver = {
-    arbeidsgiverNavn: 'Kunstig virksomhet',
     arbeidsgiverId: '42672364432',
     startdato: '2017-01-01',
     opphoersdato: '2018-01-01',
@@ -236,6 +274,7 @@ describe('<BgFordelingUtils>', () => {
     arbeidsforhold: {
       ...arbeidsgiver,
       arbeidsforholdId: '321378huda7e2',
+      eksternArbeidsforholdId: '321378huda7e2',
     },
     andelsnr: 3,
     ...arbeidstakerIkkeFastsatt,
@@ -317,7 +356,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
       ...setArbeidsforholdInitialValues(kunstigArbeidstakerAndel),
-      ...setGenerellAndelsinfo(kunstigArbeidstakerAndel),
+      ...setGenerellAndelsinfoUtenNavn(kunstigArbeidstakerAndel),
     };
     const vals = {};
     const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(
@@ -330,7 +369,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal redigere inntekt ved overstyring', () => {
     const andelFieldValue = {
       ...andelValuesMedInntektsmelding,
-      ...setGenerellAndelsinfo(arbeidstakerAndel4),
+      ...setGenerellAndelsinfoUtenNavn(arbeidstakerAndel4),
     };
     const copyValues = { ...values };
     copyValues[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] = true;
@@ -345,7 +384,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal redigere inntekt for arbeidstakerandel som mottar ytelse', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
-      ...setGenerellAndelsinfo(arbeidstakerAndel3),
+      ...setGenerellAndelsinfoUtenNavn(arbeidstakerAndel3),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(
       values,
@@ -358,7 +397,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal redigere inntekt for arbeidstakerandel som ikke mottar ytelse, men har lonnsendring', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
-      ...setGenerellAndelsinfo(arbeidstakerAndel1),
+      ...setGenerellAndelsinfoUtenNavn(arbeidstakerAndel1),
     };
     faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM = [arbeidstakerAndel1];
     const skalRedigereInntekt = skalRedigereInntektForAndel(
@@ -385,7 +424,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal ikkje redigere inntekt for arbeidstakerandel med inntektsmelding i samme org som frilans', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
-      ...setGenerellAndelsinfo(arbeidstakerAndel4),
+      ...setGenerellAndelsinfoUtenNavn(arbeidstakerAndel4),
     };
     const faktaOmBeregningCopy = { ...faktaOmBeregning };
     arbeidstakerAndel4.inntektPrMnd = 30000;
@@ -401,7 +440,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal redigere inntekt for arbeidstakerandel uten inntektsmelding i samme org som frilans', () => {
     const andelFieldValue = {
       ...andelValuesMedInntektsmelding,
-      ...setGenerellAndelsinfo(arbeidstakerAndel4),
+      ...setGenerellAndelsinfoUtenNavn(arbeidstakerAndel4),
     };
     const faktaOmBeregningCopy = { ...faktaOmBeregning };
     arbeidstakerAndel4.inntektPrMnd = null;
@@ -417,7 +456,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal redigere inntekt for frilansandel som mottar ytelse', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfoUtenNavn(frilansAndel),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(
       values,
@@ -433,7 +472,7 @@ describe('<BgFordelingUtils>', () => {
     valuesLocalCopy[erNyoppstartetFLField] = true;
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfoUtenNavn(frilansAndel),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(
       valuesLocalCopy,
@@ -449,7 +488,7 @@ describe('<BgFordelingUtils>', () => {
     valuesLocalCopy[erNyoppstartetFLField] = false;
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfoUtenNavn(frilansAndel),
     };
     const skalRedigereInntekt = skalRedigereInntektForAndel(
       valuesLocalCopy,
@@ -461,7 +500,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal redigere inntekt for frilansandel i samme org som arbeidstaker', () => {
     const andelFieldValue = {
       ...andelValuesUtenInntektsmelding,
-      ...setGenerellAndelsinfo(frilansAndel),
+      ...setGenerellAndelsinfoUtenNavn(frilansAndel),
     };
     faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe = [arbeidstakerAndel4];
     const skalRedigereInntekt = skalRedigereInntektForAndel(

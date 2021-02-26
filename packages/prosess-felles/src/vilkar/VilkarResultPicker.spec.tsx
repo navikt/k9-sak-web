@@ -119,7 +119,7 @@ describe('<VilkarResultPicker>', () => {
           kode: aksjonspunktStatus.UTFORT,
         },
         vilkarType: {
-          kode: vilkarType.MEDISINSKVILKARET,
+          kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         },
       },
     ] as Aksjonspunkt[];

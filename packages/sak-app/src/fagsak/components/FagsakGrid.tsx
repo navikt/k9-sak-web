@@ -6,7 +6,7 @@ import styles from './fagsakGrid.less';
 interface OwnProps {
   behandlingContent: ReactNode;
   profileAndNavigationContent: ReactNode;
-  supportContent: ReactNode;
+  supportContent: () => ReactNode;
   visittkortContent: () => ReactNode;
 }
 
@@ -30,7 +30,7 @@ const FagsakGrid: FunctionComponent<OwnProps> = ({
       </div>
       <div className={styles.rightColumn}>
         <div>{profileAndNavigationContent}</div>
-        <div>{supportContent}</div>
+        <div>{supportContent()}</div>
       </div>
     </div>
   </>

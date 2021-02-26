@@ -14,9 +14,8 @@ const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Amount',
 ];
 
-const sortInntekter = (inntekt1, inntekt2) => {
-  return moment(inntekt2.fom, ISO_DATE_FORMAT).diff(moment(inntekt1.fom, ISO_DATE_FORMAT));
-};
+const sortInntekter = (inntekt1, inntekt2) =>
+  moment(inntekt2.fom, ISO_DATE_FORMAT).diff(moment(inntekt1.fom, ISO_DATE_FORMAT));
 
 const InntektOgYtelserFaktaPanel = ({ inntekter }) => {
   if (!inntekter || inntekter.length === 0) {

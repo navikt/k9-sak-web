@@ -235,9 +235,7 @@ const getIsAksjonspunktClosed = createSelector([ownProps => ownProps.aksjonspunk
 });
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
-  const onSubmit = vals => {
-    return initialProps.submitCallback(transformValues(vals));
-  };
+  const onSubmit = vals => initialProps.submitCallback(transformValues(vals));
   return (state, ownProps) => {
     const values = getFormValuesForAvklarAktiviteter(state, ownProps);
 

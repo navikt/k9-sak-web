@@ -10,7 +10,6 @@ const faktaOmBeregningAndel1 = {
   lagtTilAvSaksbehandler: false,
   inntektskategori: { kode: inntektskategorier.UDEFINERT },
   aktivitetStatus: { kode: 'BA' },
-  visningsnavn: 'Brukers andel',
 };
 const faktaOmBeregningAndel2 = {
   andelsnr: 2,
@@ -18,7 +17,6 @@ const faktaOmBeregningAndel2 = {
   lagtTilAvSaksbehandler: true,
   inntektskategori: { kode: inntektskategorier.ARBEIDSTAKER },
   aktivitetStatus: { kode: 'BA' },
-  visningsnavn: 'Brukers andel',
 };
 const faktaOmBeregningAndeler = [faktaOmBeregningAndel1, faktaOmBeregningAndel2];
 describe('<KunYtelsePanel>', () => {
@@ -74,14 +72,14 @@ describe('<KunYtelsePanel>', () => {
     const andeler = initialValues[`${brukersAndelFieldArrayName}`];
     expect(andeler).to.have.length(2);
     expect(andeler[0].andelsnr).to.equal(1);
-    expect(andeler[0].andel).to.equal('Brukers andel');
+    expect(andeler[0].andel).to.equal('Ytelse');
     expect(andeler[0].aktivitetStatus).to.equal('BA');
     expect(andeler[0].fastsattBelop).to.equal('');
     expect(andeler[0].inntektskategori).to.equal('');
     expect(andeler[0].nyAndel).to.equal(false);
     expect(andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(andeler[1].andelsnr).to.equal(2);
-    expect(andeler[1].andel).to.equal('Brukers andel');
+    expect(andeler[1].andel).to.equal('Ytelse');
     expect(andeler[1].fastsattBelop).to.equal('10 000');
     expect(andeler[1].aktivitetStatus).to.equal('BA');
     expect(andeler[1].inntektskategori).to.equal(inntektskategorier.ARBEIDSTAKER);

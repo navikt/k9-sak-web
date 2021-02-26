@@ -87,26 +87,24 @@ const ForbrukteDager: React.FunctionComponent<ForbrukteDagerProps> = ({
   viserDetaljer,
   visDetaljer,
   ar,
-}) => {
-  return (
-    <Nokkeltall
-      overskrift={{
-        antallDager: navHarUtbetaltDagerTimer.dager,
-        antallTimer: <AntallTimer timer={navHarUtbetaltDagerTimer.timer} />,
-        overskrifttekstId: 'Nøkkeltall.DagerNavHarUtbetalt',
-      }}
-      detaljer={forbrukteDagerDetaljer(
-        infotrygdDagerTimer,
-        forbrukteDagerTimer,
-        ar,
-        smittevernDagerTimer,
-        utbetaltForMangeDagerTimer,
-      )}
-      viserDetaljer={viserDetaljer}
-      visDetaljer={visDetaljer}
-      className={styles.dagerNavHarUtbetalt}
-    />
-  );
-};
+}) => (
+  <Nokkeltall
+    overskrift={{
+      antallDager: navHarUtbetaltDagerTimer.dager,
+      antallTimer: <AntallTimer timer={navHarUtbetaltDagerTimer.timer} />,
+      overskrifttekstId: 'Nøkkeltall.DagerNavHarUtbetalt',
+    }}
+    detaljer={forbrukteDagerDetaljer(
+      infotrygdDagerTimer,
+      forbrukteDagerTimer,
+      ar,
+      smittevernDagerTimer,
+      utbetaltForMangeDagerTimer,
+    )}
+    viserDetaljer={viserDetaljer}
+    visDetaljer={visDetaljer}
+    className={styles.dagerNavHarUtbetalt}
+  />
+);
 
 export default ForbrukteDager;

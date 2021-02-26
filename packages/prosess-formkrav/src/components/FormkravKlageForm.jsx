@@ -18,6 +18,7 @@ import {
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
 import styles from './formkravKlageForm.less';
 
@@ -63,6 +64,7 @@ export const FormkravKlageForm = ({
   intl,
   formProps,
   alleKodeverk,
+  personopplysninger,
   arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
   skalKunneVelgeKlagepart,
@@ -89,11 +91,11 @@ export const FormkravKlageForm = ({
                 name="valgtPartMedKlagerett"
                 selectValues={parterMedKlagerett.map(part => (
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
-                    {arbeidsgiverOpplysningerPerId &&
-                    arbeidsgiverOpplysningerPerId[part.identifikasjon.id] &&
-                    arbeidsgiverOpplysningerPerId[part.identifikasjon.id].navn
-                      ? `${arbeidsgiverOpplysningerPerId[part.identifikasjon.id].navn} (${part.identifikasjon.id})`
-                      : part.identifikasjon.id}
+                    {lagVisningsnavnForKlagepart(
+                      part.identifikasjon.id,
+                      personopplysninger,
+                      arbeidsgiverOpplysningerPerId,
+                    )}
                   </option>
                 ))}
                 className={readOnly ? styles.selectReadOnly : null}
@@ -195,6 +197,7 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
   skalKunneVelgeKlagepart: PropTypes.bool,

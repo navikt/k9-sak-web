@@ -55,6 +55,8 @@ spec:
       value: "http://k9-sak"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "http://k9-sak"
+    - name: PSB_UTTAK_FRONTEND_URL
+      value: "http://k9-sak"
 
     # Feature-flag
     - name: VARSELTEKST
@@ -67,5 +69,3 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-    - name: ARBEIDSFORHOLD_V2
-      value: "false"

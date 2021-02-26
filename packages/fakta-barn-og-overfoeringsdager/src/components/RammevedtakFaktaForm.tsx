@@ -15,6 +15,7 @@ import user from '@fpsak-frontend/assets/images/user.svg';
 import users from '@fpsak-frontend/assets/images/users.svg';
 import { Element } from 'nav-frontend-typografi';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import { hjem } from '@fpsak-frontend/assets/images';
 import mapDtoTilFormValues from '../dto/mapping';
 import FormValues from '../types/FormValues';
 import MidlertidigAlene from './MidlertidigAlene';
@@ -25,6 +26,7 @@ import Seksjon from './Seksjon';
 import FastBreddeAligner from './FastBreddeAligner';
 import BarnVisning from './BarnVisning';
 import UidentifiserteRammevedtak from './UidentifiserteRammevedtak';
+import DeltBosted from './DeltBosted/DeltBosted';
 
 interface RammevedtakFaktaFormProps {
   rammevedtak: Rammevedtak[];
@@ -63,6 +65,8 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
       ...koronaoverføringGir,
       ...koronaoverføringFår,
     ].length > 0;
+
+  const barnMedDeltBosted = barn.filter(barnet => barnet.deltBosted !== undefined);
 
   return (
     <>
@@ -133,6 +137,14 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
       </Seksjon>
       <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.ErMidlertidigAlene.Tittel' }} imgSrc={user} medMarg>
         <MidlertidigAlene midlertidigAlene={midlertidigAleneansvar} />
+      </Seksjon>
+      <Seksjon bakgrunn="hvit" title={{ id: 'FaktaRammevedtak.harDeltBosted.Tittel' }} imgSrc={hjem} medMarg>
+        <>
+          {!barnMedDeltBosted.length && <FormattedMessage id="FaktaRammevedtak.harDeltBosted.IngenRammemelding" />}
+          {barnMedDeltBosted.map((barnet, index) => (
+            <DeltBosted barnet={barnet} index={index} key={barnet.fødselsnummer} />
+          ))}
+        </>
       </Seksjon>
     </>
   );

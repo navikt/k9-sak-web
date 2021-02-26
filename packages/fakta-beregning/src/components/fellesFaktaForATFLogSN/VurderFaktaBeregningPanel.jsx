@@ -122,7 +122,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
 
     if (fields.length === 0) {
       if (harFlereBeregningsgrunnlag) {
-        alleBeregningsgrunnlag.forEach((bg) => {
+        alleBeregningsgrunnlag.forEach(bg => {
           const initialValues = getBuildInitialValuesFaktaForATFLOgSN(this.props, bg);
           fields.push(initialValues);
         });
@@ -233,23 +233,21 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) => {
-  return fieldArrayList
+const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) =>
+  fieldArrayList
     .filter(
       (currentFormValues, index) =>
         måVurderes(alleBeregningsgrunnlag[index], currentFormValues.aksjonspunkter) || erOverstyring(currentFormValues),
     )
-    .map((currentFormValues, index) => {
+    .map(currentFormValues => {
       const faktaBeregningValues = currentFormValues;
-      const bg = alleBeregningsgrunnlag[index];
-      const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
+      const stpOpptjening = faktaBeregningValues.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
       const vilkarPeriode = behandlingResultatPerioder.find(periode => periode.periode.fom === stpOpptjening);
       return {
         periode: vilkarPeriode.periode,
         ...transformValuesFaktaForATFLOgSN(faktaBeregningValues),
       };
     });
-};
 
 export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnlag, behandlingResultatPerioder) => {
   const fieldArrayList = values[fieldArrayName];
@@ -278,27 +276,25 @@ export const validateVurderFaktaBeregning = values => {
   const { aksjonspunkter } = values;
   if (aksjonspunkter && hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && values) {
     return {
-      [fieldArrayName]: values[fieldArrayName].map((value) => validationForVurderFakta(value))
+      [fieldArrayName]: values[fieldArrayName].map(value => validationForVurderFakta(value)),
     };
   }
   return null;
 };
 
-export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex) => (
-  {
+export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex) => ({
   [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
-      aksjonspunkter: ownProps.aksjonspunkter,
-      ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
-
+    aksjonspunkter: ownProps.aksjonspunkter,
+    ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
   })),
   aksjonspunkter: ownProps.aksjonspunkter,
   alleBeregningsgrunnlag,
   aktivtBeregningsgrunnlagIndex,
   ...FaktaBegrunnelseTextField.buildInitialValues(
     findAksjonspunktMedBegrunnelse(ownProps.aksjonspunkter),
-    BEGRUNNELSE_FAKTA_TILFELLER_NAME)
-}
-);
+    BEGRUNNELSE_FAKTA_TILFELLER_NAME,
+  ),
+});
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = values =>

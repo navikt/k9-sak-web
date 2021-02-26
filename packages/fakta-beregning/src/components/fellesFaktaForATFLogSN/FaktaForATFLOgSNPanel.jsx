@@ -277,29 +277,15 @@ export const transformValues = (
   return transformed;
 };
 
-export const setInntektValues = (
-  aktivePaneler,
-  faktaOmBeregning,
-  beregningsgrunnlag,
-) => values => {
+export const setInntektValues = (aktivePaneler, faktaOmBeregning, beregningsgrunnlag) => values => {
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
     return { fakta: FastsettBgKunYtelsePanel.transformValues(values), overstyrteAndeler: [] };
   }
   return { ...VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values) };
 };
 
-const setValuesForVurderFakta = (
-  tilfeller,
-  values,
-  kortvarigeArbeidsforhold,
-  faktaOmBeregning,
-  beregningsgrunnlag,
-) => {
-  const vurderFaktaValues = setInntektValues(
-    tilfeller,
-    faktaOmBeregning,
-    beregningsgrunnlag
-  )(values);
+const setValuesForVurderFakta = (tilfeller, values, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag) => {
+  const vurderFaktaValues = setInntektValues(tilfeller, faktaOmBeregning, beregningsgrunnlag)(values);
   return {
     fakta: transformValues(
       tilfeller,
@@ -312,15 +298,9 @@ const setValuesForVurderFakta = (
   };
 };
 
-export const transformValuesFaktaForATFLOgSN = (values) => {
+export const transformValuesFaktaForATFLOgSN = values => {
   const { tilfeller, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag } = values;
-  return setValuesForVurderFakta(
-    tilfeller,
-    values,
-    kortvarigeArbeidsforhold,
-    faktaOmBeregning,
-    beregningsgrunnlag,
-  );
+  return setValuesForVurderFakta(tilfeller, values, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag);
 };
 
 const getVurderFaktaAksjonspunkt = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
@@ -333,18 +313,27 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
   ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
   ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
-  ...FastsettBgKunYtelsePanel.buildInitialValues(props.kunYtelse, props.tilfeller, props.faktaOmBeregning.andelerForFaktaOmBeregning),
+  ...FastsettBgKunYtelsePanel.buildInitialValues(
+    props.kunYtelse,
+    props.tilfeller,
+    props.faktaOmBeregning.andelerForFaktaOmBeregning,
+    props.alleKodeverk,
+  ),
   ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, props.vurderFaktaAP),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
-  ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
+  ...VurderOgFastsettATFL.buildInitialValues(
+    props.aksjonspunkter,
+    props.faktaOmBeregning,
+    props.alleKodeverk,
+    props.arbeidsgiverOpplysningerPerId,
+  ),
   ...VurderRefusjonForm.buildInitialValues(props.tilfeller, props.refusjonskravSomKommerForSentListe),
 });
 
-const getFaktaOmBeregningTilfellerKoder = faktaOmBeregning => {
-  return faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
+const getFaktaOmBeregningTilfellerKoder = faktaOmBeregning =>
+  faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
     ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
     : [];
-};
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
   beregningsgrunnlag: (ownProps, beregningsgrunnlag) => beregningsgrunnlag,
@@ -360,22 +349,21 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   alleKodeverk: ownProps => ownProps.alleKodeverk,
   aksjonspunkter: ownProps => ownProps.aksjonspunkter,
   faktaOmBeregning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning,
+  arbeidsgiverOpplysningerPerId: ownProps => ownProps.arbeidsgiverOpplysningerPerId,
   refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [mapStateToBuildInitialValuesProps, (ownProps, beregningsgrunnlag) => beregningsgrunnlag],
-  (props, beregningsgrunnlag) => () => {
-    return {
-      tilfeller: props.tilfeller,
-      kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
-      faktaOmBeregning: props.faktaOmBeregning,
-      beregningsgrunnlag,
-      vurderMottarYtelse: props.vurderMottarYtelse,
-      kunYtelse: props.kunYtelse,
-      ...buildInitialValuesForTilfeller(props),
-    };
-  },
+  (props, beregningsgrunnlag) => () => ({
+    tilfeller: props.tilfeller,
+    kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
+    faktaOmBeregning: props.faktaOmBeregning,
+    beregningsgrunnlag,
+    vurderMottarYtelse: props.vurderMottarYtelse,
+    kunYtelse: props.kunYtelse,
+    ...buildInitialValuesForTilfeller(props),
+  }),
 );
 
 const emptyArray = [];

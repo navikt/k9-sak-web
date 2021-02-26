@@ -45,7 +45,6 @@ const arbeidsgiverOpplysningerPerId = {
 };
 
 const arbeidsforhold = {
-  arbeidsgiverNavn: 'Virksomheten',
   arbeidsgiverId: '3284788923',
   arbeidsforholdId: '321378huda7e2',
   startdato: '2017-01-01',
@@ -53,7 +52,6 @@ const arbeidsforhold = {
 };
 
 const arbeidsforhold2 = {
-  arbeidsgiverNavn: 'Virksomheten2',
   arbeidsgiverId: '843597943435',
   arbeidsforholdId: 'jjisefoosfe',
   startdato: '2017-01-01',
@@ -61,7 +59,6 @@ const arbeidsforhold2 = {
 };
 
 const arbeidsforhold3 = {
-  arbeidsgiverNavn: 'Virksomheten2',
   arbeidsgiverId: '843597943435',
   arbeidsforholdId: '5465465464',
   startdato: '2017-01-01',

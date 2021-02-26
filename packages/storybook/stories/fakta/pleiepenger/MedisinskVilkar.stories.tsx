@@ -38,30 +38,26 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visFaktaOmMedisinskVilkar = () => {
-  return (
-    <MedisinskVilkarIndex
-      behandling={object('behandling', behandling)}
-      submitCallback={action('button-click')}
-      readOnly={boolean('readOnly', false)}
-      aksjonspunkter={[]}
-      harApneAksjonspunkter
-      submittable
-      sykdom={{} as Sykdom}
-    />
-  );
-};
+export const visFaktaOmMedisinskVilkar = () => (
+  <MedisinskVilkarIndex
+    behandling={object('behandling', behandling)}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    aksjonspunkter={[]}
+    harApneAksjonspunkter
+    submittable
+    sykdom={{} as Sykdom}
+  />
+);
 
-export const visFaktaOmMedisinskVilkarMedAkjsonspunkt = () => {
-  return (
-    <MedisinskVilkarIndex
-      behandling={object('behandling', behandling)}
-      submitCallback={action('button-click')}
-      readOnly={boolean('readOnly', false)}
-      aksjonspunkter={aksjonspunkter}
-      harApneAksjonspunkter
-      submittable
-      sykdom={{} as Sykdom}
-    />
-  );
-};
+export const visFaktaOmMedisinskVilkarMedAkjsonspunkt = () => (
+  <MedisinskVilkarIndex
+    behandling={object('behandling', behandling)}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    aksjonspunkter={aksjonspunkter}
+    harApneAksjonspunkter
+    submittable
+    sykdom={{} as Sykdom}
+  />
+);

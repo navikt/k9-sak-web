@@ -21,12 +21,10 @@ const transformValues = (values: any, aksjonspunktCode: string) => ({
   kode: aksjonspunktCode,
 });
 
-const getBrevData = (tekst: string) => {
-  return {
-    dokumentdata: tekst && { fritekst: tekst },
-    dokumentMal: dokumentMalType.UTLED,
-  };
-};
+const getBrevData = (tekst: string) => ({
+  dokumentdata: tekst && { fritekst: tekst },
+  dokumentMal: dokumentMalType.UTLED,
+});
 
 interface OwnProps {
   formValues: any;

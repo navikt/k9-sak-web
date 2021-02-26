@@ -20,26 +20,26 @@ const FastsettBgKunYtelsePanel = ({
   alleKodeverk,
   fieldArrayID,
 }) => (
-      <React.Fragment key="FASTSETT_BG_KUN_YTELSE">
-        <BorderBox>
-          <Row>
-            <Column xs="9">
-              <Element>
-                <FormattedMessage id="KunYtelsePanel.Overskrift" />
-              </Element>
-            </Column>
-          </Row>
-          <FieldArray
-            name={`${fieldArrayID}.${brukersAndelFieldArrayName}`}
-            component={BrukersAndelFieldArray}
-            readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-          />
-        </BorderBox>
-      </React.Fragment>
+  <React.Fragment key="FASTSETT_BG_KUN_YTELSE">
+    <BorderBox>
+      <Row>
+        <Column xs="9">
+          <Element>
+            <FormattedMessage id="KunYtelsePanel.Overskrift" />
+          </Element>
+        </Column>
+      </Row>
+      <FieldArray
+        name={`${fieldArrayID}.${brukersAndelFieldArrayName}`}
+        component={BrukersAndelFieldArray}
+        readOnly={readOnly}
+        isAksjonspunktClosed={isAksjonspunktClosed}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+      />
+    </BorderBox>
+  </React.Fragment>
 );
 
 FastsettBgKunYtelsePanel.propTypes = {
@@ -63,12 +63,10 @@ const transformValues = values => ({
   },
 });
 
-FastsettBgKunYtelsePanel.transformValues = (values) => {
-    return {
-      faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
-      ...transformValues(values),
-    };
-};
+FastsettBgKunYtelsePanel.transformValues = values => ({
+  faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
+  ...transformValues(values),
+});
 
 const validate = (values, aktivertePaneler) => {
   if (!values || !aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
@@ -86,7 +84,7 @@ FastsettBgKunYtelsePanel.validate = (values, aktivertePaneler) => {
   return {};
 };
 
-const buildInitialValues = (kunYtelse, faktaOmBeregningAndeler) => {
+const buildInitialValues = (kunYtelse, faktaOmBeregningAndeler, getKodeverknavn) => {
   if (!kunYtelse || !kunYtelse.andeler || kunYtelse.andeler.length === 0) {
     return {};
   }
@@ -94,7 +92,7 @@ const buildInitialValues = (kunYtelse, faktaOmBeregningAndeler) => {
     [brukersAndelFieldArrayName]: kunYtelse.andeler.map(andel => {
       const andelMedInfo = faktaOmBeregningAndeler.find(faktaAndel => faktaAndel.andelsnr === andel.andelsnr);
       return {
-        ...setGenerellAndelsinfo(andelMedInfo),
+        ...setGenerellAndelsinfo(andelMedInfo, getKodeverknavn, {}, true),
         fastsattBelop:
           andel.fastsattBelopPrMnd || andel.fastsattBelopPrMnd === 0
             ? formatCurrencyNoKr(andel.fastsattBelopPrMnd)
@@ -105,9 +103,9 @@ const buildInitialValues = (kunYtelse, faktaOmBeregningAndeler) => {
   return initialValues;
 };
 
-FastsettBgKunYtelsePanel.buildInitialValues = (kunYtelse, tilfeller, faktaOmBeregningAndeler) => {
+FastsettBgKunYtelsePanel.buildInitialValues = (kunYtelse, tilfeller, faktaOmBeregningAndeler, alleKodeverk) => {
   if (tilfeller && tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
-    return buildInitialValues(kunYtelse, faktaOmBeregningAndeler);
+    return buildInitialValues(kunYtelse, faktaOmBeregningAndeler, alleKodeverk);
   }
   return {};
 };

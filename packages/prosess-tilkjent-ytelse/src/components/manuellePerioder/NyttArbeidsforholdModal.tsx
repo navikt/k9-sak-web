@@ -26,55 +26,53 @@ export const NyttArbeidsforholdModal: FC<OwnProps & WrappedComponentProps & Inje
   cancelEvent,
   intl,
   ...formProps
-}) => {
-  return (
-    <Modal
-      className={styles.modal}
-      isOpen={showModal}
-      contentLabel="Nytt arbeidsforhold"
-      onRequestClose={closeEvent}
-      closeButton={false}
-      shouldCloseOnOverlayClick={false}
-    >
-      <FlexContainer wrap>
-        <FlexRow>
-          <FlexColumn className={styles.fullWidth}>
-            <InputField
-              label={{ id: 'TilkjentYtelse.ArbeidsgiverNavn' }}
-              name="navn"
-              validate={[required]}
-              format={value => value}
-            />
+}) => (
+  <Modal
+    className={styles.modal}
+    isOpen={showModal}
+    contentLabel="Nytt arbeidsforhold"
+    onRequestClose={closeEvent}
+    closeButton={false}
+    shouldCloseOnOverlayClick={false}
+  >
+    <FlexContainer wrap>
+      <FlexRow>
+        <FlexColumn className={styles.fullWidth}>
+          <InputField
+            label={{ id: 'TilkjentYtelse.ArbeidsgiverNavn' }}
+            name="navn"
+            validate={[required]}
+            format={value => value}
+          />
 
-            <InputField
-              label={{ id: 'TilkjentYtelse.ArbeidsgiverOrgnummer' }}
-              name="arbeidsgiverIdentifikator"
-              validate={[required, hasValidOrgNumber]}
-              format={value => value}
-            />
-          </FlexColumn>
-        </FlexRow>
-        <FlexRow>
-          <FlexColumn className={styles.right}>
-            <VerticalSpacer eightPx />
-            <Hovedknapp mini className={styles.button} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
-              {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
-            </Hovedknapp>
-            <Knapp
-              mini
-              onClick={() => {
-                cancelEvent();
-                formProps.destroy();
-              }}
-            >
-              {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
-            </Knapp>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    </Modal>
-  );
-};
+          <InputField
+            label={{ id: 'TilkjentYtelse.ArbeidsgiverOrgnummer' }}
+            name="arbeidsgiverIdentifikator"
+            validate={[required, hasValidOrgNumber]}
+            format={value => value}
+          />
+        </FlexColumn>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn className={styles.right}>
+          <VerticalSpacer eightPx />
+          <Hovedknapp mini className={styles.button} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+            {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
+          </Hovedknapp>
+          <Knapp
+            mini
+            onClick={() => {
+              cancelEvent();
+              formProps.destroy();
+            }}
+          >
+            {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
+          </Knapp>
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
+  </Modal>
+);
 
 NyttArbeidsforholdModal.defaultProps = {
   showModal: false,
@@ -87,12 +85,10 @@ interface PureOwnProps {
 const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
   const onSubmit = (values: any) => ownProps.closeEvent(values);
 
-  return () => {
-    return {
-      initialValues: defaultArbeidsforhold,
-      onSubmit,
-    };
-  };
+  return () => ({
+    initialValues: defaultArbeidsforhold,
+    onSubmit,
+  });
 };
 
 export default connect(mapStateToPropsFactory)(

@@ -17,7 +17,6 @@ const mockProps = {
   validateModel: () => undefined,
   isSubmitting: false,
   intl: intlMock,
-  arbeidsgiverOpplysningerPerId: {},
   ...reduxFormPropsMock,
 };
 
@@ -56,7 +55,7 @@ describe('<Messages>', () => {
     expect(templateSelect).toHaveLength(1);
     expect(templateSelect.prop('selectValues')).toHaveLength(3);
 
-    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'overstyrtMottaker');
     expect(recipientSelect).toHaveLength(1);
   });
 
@@ -71,7 +70,7 @@ describe('<Messages>', () => {
         causes={causes}
         previewCallback={previewEventCallback}
         fritekst="Dokument"
-        mottaker="Bruker"
+        overstyrtMottaker="Bruker"
         behandlingId={1}
         behandlingVersjon={2}
         revurderingVarslingArsak={[{} as KodeverkMedNavn]}
@@ -112,7 +111,7 @@ describe('<Messages>', () => {
     expect(templateSelect).toHaveLength(1);
     expect(templateSelect.prop('selectValues')).toHaveLength(3);
 
-    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'overstyrtMottaker');
     expect(recipientSelect).toHaveLength(1);
     expect(recipientSelect.prop('selectValues')).toHaveLength(1);
   });

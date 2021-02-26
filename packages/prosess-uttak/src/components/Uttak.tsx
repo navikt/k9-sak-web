@@ -27,8 +27,8 @@ const erKvinne = kjønnkode => kjønnkode === navBrukerKjonn.KVINNE;
 
 const fulltNavn = navn => [navn.fornavn, navn.mellomavn, navn.etternavn].filter(n => !!n).join(' ');
 
-export const mapRader = (uttaksplaner: Uttaksplan[], intl): TidslinjeRad<Uttaksperiode>[] => {
-  return uttaksplaner.map(({ behandlingId, perioder }) => {
+export const mapRader = (uttaksplaner: Uttaksplan[], intl): TidslinjeRad<Uttaksperiode>[] =>
+  uttaksplaner.map(({ behandlingId, perioder }) => {
     const tidslinjeperioder: TidslinjePeriode<Uttaksperiode>[] = perioder.map((periode, index) => {
       const { utfall, grad, fom, tom } = periode;
       const hoverText =
@@ -57,7 +57,6 @@ export const mapRader = (uttaksplaner: Uttaksplan[], intl): TidslinjeRad<Uttaksp
       perioder: tidslinjeperioder,
     };
   });
-};
 
 export const mapSideContent = (uttaksplaner: Uttaksplan[], intl): ReactNode[] =>
   uttaksplaner.map(({ person, behandlingId }) => {

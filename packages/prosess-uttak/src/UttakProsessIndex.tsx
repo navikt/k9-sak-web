@@ -42,8 +42,8 @@ const mapÅrsaker: (periode: UttaksperiodeDto) => Årsak<InnvilgetÅrsakType | A
 const mapUttaksplanerDtoTilInternformat: (
   uttaksplaner: UttaksplanerDto,
   behandlingPersonMap: BehandlingPersonMap,
-) => Uttaksplan[] = (uttaksplaner, behandlingPersonMap) => {
-  return Object.entries(uttaksplaner).map(([behandlingId, behandling]) => {
+) => Uttaksplan[] = (uttaksplaner, behandlingPersonMap) =>
+  Object.entries(uttaksplaner).map(([behandlingId, behandling]) => {
     const person = behandlingPersonMap[behandlingId];
     const perioder: Uttaksperiode[] = Object.entries(behandling.perioder).map(([fomTom, periode]) => {
       const [fom, tom] = fomTom.split('/');
@@ -66,14 +66,11 @@ const mapUttaksplanerDtoTilInternformat: (
 
     return uttaksplan;
   });
-};
 
-const UttakProsessIndex: FunctionComponent<UttakProsessIndexProps> = ({ uttaksplaner, behandlingPersonMap }) => {
-  return (
-    <RawIntlProvider value={intl}>
-      <Uttak uttaksplaner={mapUttaksplanerDtoTilInternformat(uttaksplaner, behandlingPersonMap)} />
-    </RawIntlProvider>
-  );
-};
+const UttakProsessIndex: FunctionComponent<UttakProsessIndexProps> = ({ uttaksplaner, behandlingPersonMap }) => (
+  <RawIntlProvider value={intl}>
+    <Uttak uttaksplaner={mapUttaksplanerDtoTilInternformat(uttaksplaner, behandlingPersonMap)} />
+  </RawIntlProvider>
+);
 
 export default UttakProsessIndex;

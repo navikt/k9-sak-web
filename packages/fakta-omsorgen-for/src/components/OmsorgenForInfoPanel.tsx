@@ -176,13 +176,11 @@ interface TransformValues {
   harOmsorgenFor: boolean;
 }
 
-const transformValues = (values: TransformValues) => {
-  return {
-    kode: aksjonspunktCodes.OMSORGEN_FOR,
-    begrunnelse: values.vurdering,
-    harOmsorgenFor: values.harOmsorgenFor,
-  };
-};
+const transformValues = (values: TransformValues) => ({
+  kode: aksjonspunktCodes.OMSORGEN_FOR,
+  begrunnelse: values.vurdering,
+  harOmsorgenFor: values.harOmsorgenFor,
+});
 
 const buildInitialValues = createSelector(
   [(props: { aksjonspunkter: Aksjonspunkt[] }) => props.aksjonspunkter],

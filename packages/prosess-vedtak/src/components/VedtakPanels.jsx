@@ -42,6 +42,7 @@ const VedtakPanels = ({
   ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
+  personopplysninger,
   arbeidsgiverOpplysningerPerId,
   vilkar,
   beregningsgrunnlag,
@@ -54,13 +55,13 @@ const VedtakPanels = ({
     beregningsgrunnlag,
     aksjonspunkter,
   );
-  if (behandlingTypeKode === behandlingType.REVURDERING) {
-    const bgYtelsegrunnlag = beregningsgrunnlag?.ytelsesspesifiktGrunnlag;
+  if (behandlingTypeKode === behandlingType.REVURDERING && !!beregningsgrunnlag) {
+    const bgYtelsegrunnlag = beregningsgrunnlag[0].ytelsesspesifiktGrunnlag;
     let bgPeriodeMedAvslagsårsak;
     if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
       bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(
         bgYtelsegrunnlag.avslagsårsakPrPeriode,
-        beregningsgrunnlag.beregningsgrunnlagPeriode,
+        beregningsgrunnlag[0].beregningsgrunnlagPeriode,
       );
     }
     return (
@@ -89,6 +90,7 @@ const VedtakPanels = ({
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
         dokumentdata={dokumentdata}
+        personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     );
@@ -113,6 +115,7 @@ const VedtakPanels = ({
       ytelseTypeKode={ytelseTypeKode}
       kanOverstyre={employeeHasAccess}
       alleKodeverk={alleKodeverk}
+      personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       vilkar={vilkar}
       beregningErManueltFastsatt={beregningErManueltFastsatt}
@@ -139,6 +142,7 @@ VedtakPanels.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
@@ -146,9 +150,9 @@ VedtakPanels.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
-  beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
+  beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
   vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.arrayOf(PropTypes.string),
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
   dokumentdata: PropTypes.shape(),
 };
 

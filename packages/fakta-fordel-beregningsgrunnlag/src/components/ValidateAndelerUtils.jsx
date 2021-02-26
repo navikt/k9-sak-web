@@ -79,13 +79,7 @@ const finnArbeidsforholdRefusjonsinfoListe = andelList => {
           belopsInfo.totalRefusjon + Number(removeSpacesFromNumber(andel.refusjonskrav));
       }
     } else {
-      const {
-        refusjonskravFraInntektsmelding,
-        arbeidsforholdId,
-        arbeidsgiverNavn,
-        arbeidsgiverId,
-        eksternArbeidsforholdId,
-      } = andel;
+      const { refusjonskravFraInntektsmelding, arbeidsforholdId, arbeidsgiverId, eksternArbeidsforholdId } = andel;
       let totalRefusjon = 0;
       if (andel.refusjonskrav !== null && andel.refusjonskrav !== undefined) {
         totalRefusjon = Number(removeSpacesFromNumber(andel.refusjonskrav));
@@ -93,7 +87,6 @@ const finnArbeidsforholdRefusjonsinfoListe = andelList => {
       arbeidsforholdRefusjonsbelop.push({
         arbeidsforholdId,
         eksternArbeidsforholdId,
-        arbeidsgiverNavn,
         arbeidsgiverId,
         refusjonskravFraInntektsmelding,
         totalRefusjon,

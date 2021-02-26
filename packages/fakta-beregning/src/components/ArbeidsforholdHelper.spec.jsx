@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import { sortArbeidsforholdList } from './ArbeidsforholdHelper';
 
-const createArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, startdato, opphoersdato, arbeidsforholdId) => ({
-  arbeidsgiverNavn,
+const createArbeidsforhold = (arbeidsgiverId, startdato, opphoersdato, arbeidsforholdId) => ({
   arbeidsgiverId,
   startdato,
   opphoersdato,
@@ -10,11 +9,11 @@ const createArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, startdato, oppho
 });
 
 const aleneståendeArbeidsforholdList = [
-  { arbeidsforhold: createArbeidsforhold('Sopra Steria AS', '213456789', '1995-01-01', null, '2142324235') },
-  { arbeidsforhold: createArbeidsforhold('Acando AS', '8439347348', '1999-01-01', null, '872489238') },
-  { arbeidsforhold: createArbeidsforhold('Espens byggvarer AS', '1234342342', '2001-01-01', '2003-01-01', '1231414') },
-  { arbeidsforhold: createArbeidsforhold('Petters fiskeutstyr AS', '4646234', '1991-03-21', '2010-01-01', '5462242') },
-  { arbeidsforhold: createArbeidsforhold('Espens byggvarer AS', '1234342342', '2001-01-01', '2003-01-01', '1231414') },
+  { arbeidsforhold: createArbeidsforhold('213456789', '1995-01-01', null, '2142324235') },
+  { arbeidsforhold: createArbeidsforhold('8439347348', '1999-01-01', null, '872489238') },
+  { arbeidsforhold: createArbeidsforhold('1234342342', '2001-01-01', '2003-01-01', '1231414') },
+  { arbeidsforhold: createArbeidsforhold('4646234', '1991-03-21', '2010-01-01', '5462242') },
+  { arbeidsforhold: createArbeidsforhold('1234342342', '2001-01-01', '2003-01-01', '1231414') },
 ];
 
 describe('<ArbeidsforholdHelper>', () => {

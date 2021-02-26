@@ -32,6 +32,7 @@ describe('<BrevPanel>', () => {
         formProps={reduxFormPropsMock}
       />,
     );
+
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(1);
     expect(wrapper.find(VedtakPreviewLink)).to.have.length(1);
     expect(wrapper.find(FritekstBrevPanel)).to.have.length(0);
@@ -45,7 +46,7 @@ describe('<BrevPanel>', () => {
         sprakkode={{ kode: 'NB' }}
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
-        tilgjengeligeVedtaksbrev={['FRITEKST']}
+        tilgjengeligeVedtaksbrev={['AUTOMATISK', 'FRITEKST']}
         skalBrukeOverstyrendeFritekstBrev
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -57,6 +58,33 @@ describe('<BrevPanel>', () => {
         formProps={reduxFormPropsMock}
       />,
     );
+
+    expect(wrapper.find(FritekstBrevPanel)).to.have.length(1);
+    expect(wrapper.find(VedtakPreviewLink)).to.have.length(1);
+    expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(0);
+  });
+
+  it('skal vise fritekstpanel selv om ikke overstyrt når fritekst er eneste typen', () => {
+    const wrapper = shallow(
+      <BrevPanel
+        intl={intlMock}
+        readOnly={false}
+        sprakkode={{ kode: 'NB' }}
+        beregningErManueltFastsatt={false}
+        dokumentdata={{}}
+        tilgjengeligeVedtaksbrev={['FRITEKST']}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        begrunnelse=""
+        previewCallback={sinon.spy()}
+        redusertUtbetalingÅrsaker={[]}
+        brødtekst={null}
+        overskrift={null}
+        behandlingResultat={null}
+        overstyrtMottaker={null}
+        formProps={reduxFormPropsMock}
+      />,
+    );
+
     expect(wrapper.find(FritekstBrevPanel)).to.have.length(1);
     expect(wrapper.find(VedtakPreviewLink)).to.have.length(1);
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(0);
