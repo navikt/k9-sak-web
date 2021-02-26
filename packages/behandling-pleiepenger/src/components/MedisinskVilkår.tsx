@@ -49,6 +49,8 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   const løsAksjonspunkt = () =>
     submitCallback([{ kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet' }]);
 
+  const harAksjonspunkt = !!medisinskVilkårAksjonspunktkode;
+
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
@@ -73,7 +75,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           ]),
           uuid,
           løsAksjonspunkt,
-          readOnly,
+          readOnly || !harAksjonspunkt,
         )
       }
     />
