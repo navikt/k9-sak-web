@@ -177,7 +177,6 @@ const lagBG = (perioder, faktaOmFordeling) => {
       vurderMilitaer: null,
       refusjonskravSomKommerForSentListe: null,
     },
-    andelerMedGraderingUtenBG: null,
     hjemmel: {
       kode: 'F_14_7_8_30',
       kodeverk: 'BG_HJEMMEL',

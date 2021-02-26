@@ -67,7 +67,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -91,7 +90,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -113,7 +111,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -139,7 +136,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -186,7 +182,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -226,7 +221,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -271,13 +265,13 @@ describe('<BeregningsresultatTable>', () => {
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(snAndel);
     beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1330250;
     beregningsgrunnlagPerioder[0].avkortetPrAar = seksG;
+    beregningsgrunnlagPerioder[0].dagsats = 2287;
     beregningsgrunnlagPerioder[0].redusertPrAar = 554985;
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
 
@@ -330,6 +324,7 @@ describe('<BeregningsresultatTable>', () => {
     snAndel.skalFastsetteGrunnlag = true;
     beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1147342;
     beregningsgrunnlagPerioder[0].avkortetPrAar = seksG;
+    beregningsgrunnlagPerioder[0].dagsats = 2287;
     beregningsgrunnlagPerioder[0].redusertPrAar = 479318;
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].bruttoPrAar = 551316;
 
@@ -338,7 +333,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -397,7 +391,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
 
@@ -446,7 +439,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
 
@@ -500,7 +492,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -541,7 +532,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -579,7 +569,6 @@ describe('<BeregningsresultatTable>', () => {
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
     );
     selectorData.forEach(periode => {
@@ -632,15 +621,12 @@ describe('<BeregningsresultatTable>', () => {
     ];
     const dekningsgrad = 100;
     const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
-    const ytelseGrunnlag = { skalAvviksvurdere: false, ytelsetype: 'OMP' };
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
-      ytelseGrunnlag,
     );
     selectorData.forEach(periode => {
       const { dagsatser } = periode;
@@ -678,15 +664,12 @@ describe('<BeregningsresultatTable>', () => {
     ];
     const dekningsgrad = 100;
     const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
-    const ytelseGrunnlag = { skalAvviksvurdere: false, ytelsetype: 'OMP' };
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
       dekningsgrad,
       grunnbelop,
-      false,
       vilkaarBG,
-      ytelseGrunnlag,
     );
     selectorData.forEach(periode => {
       const { dagsatser } = periode;
