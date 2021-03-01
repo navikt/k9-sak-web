@@ -43,6 +43,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   intl: IntlShape;
+  harAksjonspunktAvklarArbeidsforhold: boolean;
 }
 
 const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
@@ -53,11 +54,12 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
   behandlingVersjon,
   updateArbeidsforhold,
   intl,
+  harAksjonspunktAvklarArbeidsforhold,
 }) => {
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
   const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
 
-  const visPermisjon = arbeidsforhold => arbeidsforhold.aksjonspunktÅrsaker.length === 0 && arbeidsforhold.permisjoner;
+  const visPermisjon = arbeidsforhold => !harAksjonspunktAvklarArbeidsforhold && arbeidsforhold.permisjoner;
 
   const setValgtArbeidsforhold = arbeidsforhold => {
     if (selectedArbeidsforhold === undefined) {
@@ -89,7 +91,6 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
           const kilde =
             Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
           const erValgt = selectedArbeidsforhold === a;
-          const harAksjonspunktÅrsaker = Array.isArray(a.aksjonspunktÅrsaker) && a.aksjonspunktÅrsaker.length > 0;
           const harPermisjoner = Array.isArray(a.permisjoner) && a.permisjoner.length > 0;
           const harPerioder = Array.isArray(a.perioder) && a.perioder.length > 0;
           const harInntektsmeldinger = Array.isArray(a.inntektsmeldinger) && a.inntektsmeldinger.length > 0;
@@ -102,7 +103,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                 onMouseDown={() => setVisAksjonspunktInfo(true)}
                 onKeyDown={() => setVisAksjonspunktInfo(true)}
                 isSelected={a.id === selectedId}
-                isApLeftBorder={harAksjonspunktÅrsaker}
+                isApLeftBorder={harAksjonspunktAvklarArbeidsforhold}
               >
                 <TableColumn>
                   <Normaltekst>{decodeHtmlEntity(yrkestittel)}</Normaltekst>
@@ -129,7 +130,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                     </Normaltekst>
                   )}
                 </TableColumn>
-                {!harAksjonspunktÅrsaker && harPermisjoner && (
+                {!harAksjonspunktAvklarArbeidsforhold && harPermisjoner && (
                   <TableColumn className={styles.aksjonspunktColumn}>
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
                       <Normaltekst className={styles.visLukkPermisjon}>
@@ -146,7 +147,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                 <TableColumn>
                   {a.handlingType &&
                     a.handlingType.kode === arbeidsforholdHandlingType.BRUK &&
-                    !harAksjonspunktÅrsaker && (
+                    !harAksjonspunktAvklarArbeidsforhold && (
                       <Image
                         src={erIBrukImageUrl}
                         alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
@@ -157,15 +158,12 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                     )}
                 </TableColumn>
               </TableRow>
-              {visAksjonspunktInfo && harAksjonspunktÅrsaker && (
+              {visAksjonspunktInfo && harAksjonspunktAvklarArbeidsforhold && (
                 <PersonArbeidsforholdDetailForm
                   key={a.id}
                   arbeidsforhold={a}
-                  hasAksjonspunkter
-                  hasOpenAksjonspunkter
                   updateArbeidsforhold={updateArbeidsforhold}
                   skjulArbeidsforhold={() => setVisAksjonspunktInfo(false)}
-                  aktivtArbeidsforholdTillatUtenIM
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
                   alleKodeverk={alleKodeverk}
