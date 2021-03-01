@@ -14,7 +14,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
-import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaUtvidetRettPanelDefinisjoner';
+import faktaUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/faktaUtvidetRettPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
@@ -69,7 +69,7 @@ const UtvidetRettFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
-    faktaPanelDefinisjoner,
+    faktaUtvidetRettPanelDefinisjoner,
     dataTilUtledingAvUtvidetRettPaneler,
     behandling,
     rettigheter,

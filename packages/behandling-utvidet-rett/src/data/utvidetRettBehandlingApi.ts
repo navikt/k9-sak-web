@@ -54,7 +54,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('dokumentdata-lagre', UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE)
   .withRel('dokumentdata-hente', UtvidetRettBehandlingApiKeys.DOKUMENTDATA_HENTE)
 
-  // TODO Flytt alle endepunkter under til backend på same måte som i fp-frontend
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', UtvidetRettBehandlingApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT)
 

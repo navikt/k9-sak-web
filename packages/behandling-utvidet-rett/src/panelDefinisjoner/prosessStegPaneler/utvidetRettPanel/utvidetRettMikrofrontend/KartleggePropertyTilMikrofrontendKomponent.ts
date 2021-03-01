@@ -60,7 +60,7 @@ const KartleggePropertyTilMikrofrontendKomponent = (
         visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_MIDLERTIDIG_ALENE,
         props: {
           lesemodus: isReadOnly,
-          // TODO Lägg in söknadsupplysningar när det är tillgängligt från API.
+          // Lägg in söknadsupplysningar när det är tillgängligt från API.
           soknadsopplysninger: {
             årsak: 'Årsak',
             beskrivelse: 'Beskrivelse',

@@ -153,9 +153,6 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
     return <LoadingPanel />;
   }
 
-  // TODO fjerne når endepunktet for rammevedtak er merget in i k9-sak.
-  data.rammevedtak = [];
-
   return (
     <>
       <ReduxFormStateCleaner
