@@ -83,6 +83,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal vise tabell med to arbeidsforhold der den ene raden er markert som valgt', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[arbeidsforhold, arbeidsforhold2]}
         selectedId={arbeidsforhold.id}
@@ -113,6 +114,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal ikke vise mottatt dato for inntektsmelding når denne ikke finnes', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[arbeidsforhold]}
         selectedId={arbeidsforhold.id}
@@ -140,6 +142,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     };
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[newArbeidsforhold]}
         selectedId={newArbeidsforhold.id}
@@ -165,6 +168,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     };
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[newArbeidsforhold]}
         selectedId={arbeidsforhold.id}
@@ -192,6 +196,7 @@ describe('<PersonArbeidsforholdTable>', () => {
 
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold={false}
         intl={intlMock}
         alleArbeidsforhold={[newArbeidsforhold]}
         selectedId={newArbeidsforhold.id}
@@ -210,6 +215,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal vise IngenArbeidsforholdRegistrert komponent når ingen arbeidsforhold', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[]}
         selectedId={undefined}
@@ -230,6 +236,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     };
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[endretArbeidsforhold]}
         selectedId={undefined}
@@ -254,6 +261,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     };
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[endretArbeidsforhold]}
         selectedId={undefined}
@@ -274,6 +282,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     };
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[endretArbeidsforhold]}
         selectedId={undefined}
@@ -304,6 +313,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal vise arbeidsforhold-detaljer på alle arbeidsforhold som har er aksjonspunkt', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
         alleArbeidsforhold={[arbeidsforhold]}
         selectedId="1"
@@ -319,6 +329,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal ikke vise arbeidsforhold automatisk når det ikke er aksjonspunkt på det', () => {
     const wrapper = mountWithIntl(
       <PersonArbeidsforholdTable
+        harAksjonspunktAvklarArbeidsforhold={false}
         intl={intlMock}
         alleArbeidsforhold={[
           {
