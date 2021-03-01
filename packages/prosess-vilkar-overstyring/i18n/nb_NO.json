@@ -25,7 +25,9 @@
 
   "Inngangsvilkar.Opptjeningsvilkaret": "Opptjening",
   "Inngangsvilkar.Medlemskapsvilkaret": "Medlemskap",
-  "Inngangsvilkar.OmsorgenFor": "Alder og omsorg",
+  "Inngangsvilkar.OmsorgenFor": "Omsorg",
+  "Inngangsvilkar.Alder": "Alder",
+  "Inngangsvilkar.Soknadsfrist": "Søknadsfrist",
   "Behandlingspunkt.MedisinskVilkar": "Medisinsk vilkår",
   "Behandlingspunkt.Opptjening": "Opptjening",
 

@@ -166,11 +166,6 @@ describe('<PleiepengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Alder og omsorg',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
         tekst: 'Sykdom',
       },
       {
