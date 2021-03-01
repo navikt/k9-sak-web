@@ -12,7 +12,14 @@ import {
   lagDokumentdata,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, FagsakPerson, KodeverkMedNavn, Behandling, FeatureToggles } from '@k9-sak-web/types';
+import {
+  Fagsak,
+  FagsakPerson,
+  KodeverkMedNavn,
+  Behandling,
+  FeatureToggles,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
@@ -45,6 +52,7 @@ interface OwnProps {
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   setBehandling: (behandling: Behandling) => void;
   featureToggles: FeatureToggles;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 const getForhandsvisCallback = (
@@ -135,6 +143,7 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
   apentFaktaPanelInfo,
   setBehandling,
   featureToggles,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
@@ -168,6 +177,7 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     ),
     alleKodeverk,
     fagsak,
+    arbeidsgiverOpplysningerPerId,
     ...data,
   };
 

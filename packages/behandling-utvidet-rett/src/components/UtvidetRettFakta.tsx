@@ -2,7 +2,14 @@ import React, { FunctionComponent } from 'react';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
+import {
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  KodeverkMedNavn,
+  FeatureToggles,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
@@ -24,6 +31,7 @@ interface OwnProps {
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
   setBehandling: (behandling: Behandling) => void;
   featureToggles?: FeatureToggles;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 const UtvidetRettFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -41,6 +49,7 @@ const UtvidetRettFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setApentFaktaPanel,
   setBehandling,
   featureToggles,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const { aksjonspunkter, ...rest } = data;
 
@@ -55,6 +64,7 @@ const UtvidetRettFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     fagsakPerson,
     behandling,
     hasFetchError,
+    arbeidsgiverOpplysningerPerId,
     ...rest,
   };
 

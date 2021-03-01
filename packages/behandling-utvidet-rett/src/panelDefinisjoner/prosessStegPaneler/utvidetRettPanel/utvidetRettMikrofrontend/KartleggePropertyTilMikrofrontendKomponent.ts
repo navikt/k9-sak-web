@@ -3,6 +3,8 @@ import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { erVilkarVurdert, generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { VilkarKroniskSyktBarnProps } from '../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
+import KroniskSyktBarnLegeerklaeringsinfo from '../../../../types/utvidetRettMikrofrontend/Legeerklaeringsinfo';
 
 const KartleggePropertyTilMikrofrontendKomponent = (
   behandling: Behandling,
@@ -24,18 +26,32 @@ const KartleggePropertyTilMikrofrontendKomponent = (
       objektTilMikrofrontend = {
         visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
         props: {
-          lesemodus: false,
-          legeerklaeringsinfo: { harDokumentasjon: true, harSammenheng: true, begrunnelse: 'Begrunnelse' },
+          lesemodus: isReadOnly,
+          legeerklaeringsinfo: {
+            harDokumentasjon: true,
+            harSammenheng: true,
+            begrunnelse: 'Begrunnelse',
+          } as KroniskSyktBarnLegeerklaeringsinfo,
+          vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
+          informasjonOmVilkar: generereInfoForVurdertVilkar(
+            skalVilkarsUtfallVises,
+            vilkar,
+            vilkarTypeFraAksjonspunkt,
+            'Utvidet Rett',
+          ),
           losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) =>
             submitCallback([
               {
                 kode: aksjonspunktKode,
                 begrunnelse,
-                harSammenheng,
-                harDokumentasjon,
+                erVilkarOk: harDokumentasjon,
+                periode: {
+                  fom: soknad.søknadsperiode.fom,
+                  tom: soknad.søknadsperiode.tom,
+                },
               },
             ]),
-        },
+        } as VilkarKroniskSyktBarnProps,
       };
       break;
     }
@@ -50,7 +66,7 @@ const KartleggePropertyTilMikrofrontendKomponent = (
             beskrivelse: 'Beskrivelse',
             periode: `${soknad.søknadsperiode.fom} - ${soknad.søknadsperiode.tom}`,
           },
-          vedtakFattetVilkarOppfylt: false,
+          vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
           informasjonOmVilkar: generereInfoForVurdertVilkar(
             skalVilkarsUtfallVises,
             vilkar,

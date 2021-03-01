@@ -47,6 +47,13 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.VilkarStatusInnvilgetFrisinn';
   }
 
+  if (
+    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
+    ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
+  ) {
+    return 'VedtakForm.VilkarStatusInnvilgetUtvidetRett';
+  }
+
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 

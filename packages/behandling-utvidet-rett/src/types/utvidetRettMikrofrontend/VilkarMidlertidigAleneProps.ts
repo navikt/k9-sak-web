@@ -1,22 +1,17 @@
+import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+
 export interface VilkarMidlertidigAleneProps {
   lesemodus: boolean;
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
   informasjonTilLesemodus?: VilkarMidlertidigInformasjonTilLesemodus;
   vedtakFattetVilkarOppfylt: boolean;
-  informasjonOmVilkar?: VilkarMidlertidigInformasjonOmVilkar;
+  informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   onSubmit: (VilkarMidlertidigGrunnlagForBeslutt) => void;
 }
 
 export interface VilkarMidlertidigAleneDato {
   til: string;
   fra: string;
-}
-
-export interface VilkarMidlertidigInformasjonOmVilkar {
-  begrunnelse: string;
-  navnPåAksjonspunkt: string;
-  vilkarOppfylt: boolean;
-  vilkar: string;
 }
 
 export interface VilkarMidlertidigSoknadsopplysninger {

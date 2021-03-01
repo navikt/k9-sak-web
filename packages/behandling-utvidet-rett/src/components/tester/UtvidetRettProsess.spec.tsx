@@ -14,16 +14,14 @@ const {
   fagsakPerson,
   rettigheter,
   vilkar,
-  rammevedtak,
-  soknad,
 } = utvidetRettTestData;
 
 describe('<UtvidetRettProsess>', () => {
   const fetchedData: Partial<FetchedData> = {
     aksjonspunkter,
     vilkar,
-    rammevedtak,
-    soknad,
+    rammevedtak: [],
+    soknad: [],
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {

@@ -1,11 +1,10 @@
+import Legeerklaeringsinfo from './Legeerklaeringsinfo';
+import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+
 export interface VilkarKroniskSyktBarnProps {
+  informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   lesemodus?: boolean;
   legeerklaeringsinfo: Legeerklaeringsinfo;
-  losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) => void;
-}
-
-interface Legeerklaeringsinfo {
-  harDokumentasjon: boolean;
-  harSammenheng: boolean;
-  begrunnelse: string;
+  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => void;
+  vedtakFattetVilkarOppfylt: boolean;
 }

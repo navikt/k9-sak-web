@@ -1,7 +1,14 @@
 import React, { FunctionComponent, useState } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, FeatureToggles, Fagsak, FagsakPerson } from '@k9-sak-web/types';
+import {
+  KodeverkMedNavn,
+  Behandling,
+  FeatureToggles,
+  Fagsak,
+  FagsakPerson,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 
 import UtvidetRettProsess from './UtvidetRettProsess';
 import UtvidetRettFakta from './UtvidetRettFakta';
@@ -24,6 +31,7 @@ interface OwnProps {
   hasFetchError: boolean;
   featureToggles: FeatureToggles;
   setBehandling: (behandling: Behandling) => void;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 interface FaktaPanelInfo {
@@ -48,6 +56,7 @@ const UtvidetRettPaneler: FunctionComponent<OwnProps> = ({
   hasFetchError,
   featureToggles,
   setBehandling,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
 
@@ -76,6 +85,7 @@ const UtvidetRettPaneler: FunctionComponent<OwnProps> = ({
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         setBehandling={setBehandling}
         featureToggles={featureToggles}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
       <UtvidetRettFakta
         behandling={behandling}
@@ -91,6 +101,7 @@ const UtvidetRettPaneler: FunctionComponent<OwnProps> = ({
         setApentFaktaPanel={setApentFaktaPanel}
         setBehandling={setBehandling}
         featureToggles={featureToggles}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     </>
   );

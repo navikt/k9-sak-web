@@ -61,6 +61,7 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   opneSokeside,
   valgtFaktaSteg,
+  arbeidsgiverOpplysninger,
   setRequestPendingMessage,
   featureToggles,
 }) => {
@@ -177,6 +178,7 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
       />
     </>
