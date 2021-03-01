@@ -14,6 +14,7 @@ const {
   fagsakPerson,
   rettigheter,
   vilkar,
+  soknad,
 } = utvidetRettTestData;
 
 describe('<UtvidetRettProsess>', () => {
@@ -21,13 +22,13 @@ describe('<UtvidetRettProsess>', () => {
     aksjonspunkter,
     vilkar,
     rammevedtak: [],
-    soknad: [],
+    soknad,
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallow(
       <UtvidetRettProsess
-        data={fetchedData}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling}
@@ -39,7 +40,7 @@ describe('<UtvidetRettProsess>', () => {
         oppdaterBehandlingVersjon={sinon.spy()}
         opneSokeside={sinon.spy()}
         hasFetchError={false}
-        apentFaktaPanelInfo={sinon.spy()}
+        apentFaktaPanelInfo={{ urlCode: 'default', textCode: 'default' }}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
@@ -65,14 +66,6 @@ describe('<UtvidetRettProsess>', () => {
         isFinished: true,
         usePartialStatus: false,
         type: 'success',
-      },
-      {
-        labelId: 'Behandlingspunkt.Vedtak',
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        usePartialStatus: false,
-        type: 'default',
       },
     ]);
   });

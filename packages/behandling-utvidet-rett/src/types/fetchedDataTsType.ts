@@ -1,10 +1,11 @@
-import { Aksjonspunkt, Personopplysninger, Rammevedtak, Soknad, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Personopplysninger, Rammevedtak, Vilkar } from '@k9-sak-web/types';
+import UtvidetRettSoknad from './UtvidetRettSoknad';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
   personopplysninger: Personopplysninger;
-  soknad: Soknad;
+  soknad: UtvidetRettSoknad;
   rammevedtak: Rammevedtak[];
 }
 

@@ -3,7 +3,8 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Vilkar, Rammevedtak } from '@k9-sak-web/types';
+import UtvidetRettSoknad from '../../types/UtvidetRettSoknad';
 
 const utvidetRettTestData = {
   aksjonspunkter: [
@@ -61,16 +62,7 @@ const utvidetRettTestData = {
       gyldigTilOgMed: '2022-02-04',
       avsender: '02099541043',
     },
-  ],
-  barna: [
-    {
-      personIdent: '30482094089',
-      fødselsdato: '2021-02-02',
-      dødsdato: null,
-      harSammeBosted: true,
-      barnType: 'VANLIG',
-    },
-  ],
+  ] as Rammevedtak[],
   rettigheter: {
     writeAccess: {
       isEnabled: true,
@@ -107,7 +99,7 @@ const utvidetRettTestData = {
       fom: '2021-02-18',
       tom: '9999-12-31',
     },
-  },
+  } as UtvidetRettSoknad,
   personopplysninger: {
     aktoerId: '9930518028614',
     diskresjonskode: {
@@ -300,6 +292,7 @@ const utvidetRettTestData = {
       kodeverk: 'LANDKODER',
     },
   },
+  arbeidsgiverOpplysninger: {},
 };
 
 export default utvidetRettTestData;

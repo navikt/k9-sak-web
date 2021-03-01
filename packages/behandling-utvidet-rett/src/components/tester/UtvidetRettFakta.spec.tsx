@@ -34,6 +34,7 @@ describe('<UtvidetRettFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         featureToggles={{}}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -78,6 +79,7 @@ describe('<UtvidetRettFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         featureToggles={{}}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
@@ -115,6 +117,7 @@ describe('<UtvidetRettFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         featureToggles={{}}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
 
