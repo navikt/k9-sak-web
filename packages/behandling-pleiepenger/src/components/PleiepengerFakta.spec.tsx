@@ -168,11 +168,6 @@ describe('<PleiepengerFakta>', () => {
         harAksjonspunkt: false,
         tekst: 'Sykdom',
       },
-      {
-        tekst: 'Uttak',
-        erAktiv: false,
-        harAksjonspunkt: false,
-      },
     ]);
   });
 
