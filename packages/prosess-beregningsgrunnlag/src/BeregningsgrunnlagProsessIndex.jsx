@@ -61,7 +61,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  beregningsgrunnlag: PropTypes.oneOfType([beregningsgrunnlagPropType, PropTypes.arrayOf(beregningsgrunnlagPropType)]),
+  beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape().isRequired,

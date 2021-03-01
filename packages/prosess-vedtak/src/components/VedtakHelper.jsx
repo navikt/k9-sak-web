@@ -103,18 +103,16 @@ export const shouldGiveBegrunnelse = (klageVurderingResultatNK, klageVurderingRe
     hasKlageVurderingSomIkkeErAvvist(klageVurderingResultatNFP, klageVurderingResultatNK));
 
 export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnlag, aksjonspunkter) => {
-  const harFlereBeregningsgrunnlag = Array.isArray(beregningsgrunnlag);
-  if (!beregningsgrunnlag || !aksjonspunkter || (harFlereBeregningsgrunnlag && beregningsgrunnlag.length === 0)) {
+  if (!beregningsgrunnlag || !aksjonspunkter || beregningsgrunnlag.length === 0) {
     return false;
   }
   const behandlingHarLøstBGAP = aksjonspunkter.find(
     ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status.kode === aksjonspunktStatus.UTFORT,
   );
 
-  const førstePeriode = harFlereBeregningsgrunnlag
-    ? beregningsgrunnlag[0].beregningsgrunnlagPeriode[0] // TODO (Hallvard) Er dette god nok løsning?
-    : beregningsgrunnlag.beregningsgrunnlagPeriode[0];
-  const andelSomErManueltFastsatt = førstePeriode.beregningsgrunnlagPrStatusOgAndel.find(
+  const alleAndelerFørstePerioder = beregningsgrunnlag.map(bg => bg.beregningsgrunnlagPeriode[0])
+      .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel);
+  const andelSomErManueltFastsatt = alleAndelerFørstePerioder.find(
     andel => andel.overstyrtPrAar || andel.overstyrtPrAar === 0,
   );
   return !!behandlingHarLøstBGAP || !!andelSomErManueltFastsatt;

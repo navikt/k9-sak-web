@@ -76,16 +76,80 @@ describe('<PleiepengerProsess>', () => {
       overstyrbar: true,
       perioder: [
         {
+          merknadParametere: {},
           vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          merknadParametere: {
-            antattGodkjentArbeid: 'P0D',
-            antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
-          },
-          periode: { fom: '2020-03-16', tom: '2020-03-19' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
+        },
+      ],
+    },
+    {
+      vilkarType: { kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET, kodeverk: 'test' },
+      overstyrbar: true,
+      perioder: [
+        {
+          merknadParametere: {},
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
+        },
+      ],
+    },
+    {
+      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+      overstyrbar: true,
+      perioder: [
+        {
+          merknadParametere: {},
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
+        },
+      ],
+    },
+    {
+      vilkarType: { kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, kodeverk: 'test' },
+      overstyrbar: true,
+      perioder: [
+        {
+          merknadParametere: {},
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
+        },
+      ],
+    },
+    {
+      vilkarType: { kode: vilkarType.OPPTJENINGSVILKARET, kodeverk: 'test' },
+      overstyrbar: true,
+      perioder: [
+        {
+          merknadParametere: {},
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
+        },
+      ],
+    },
+    {
+      vilkarType: { kode: vilkarType.OMSORGENFORVILKARET, kodeverk: 'test' },
+      overstyrbar: true,
+      perioder: [
+        {
+          merknadParametere: {},
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
+        },
+      ],
+    },
+    {
+      vilkarType: { kode: vilkarType.SOKNADSFRISTVILKARET, kodeverk: 'test' },
+      overstyrbar: true,
+      perioder: [
+        {
+          merknadParametere: {},
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
   ];
+
   const soknad = {
     fodselsdatoer: {
       0: '2019-01-01',
@@ -118,7 +182,9 @@ describe('<PleiepengerProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={{}}
+        alleKodeverk={{
+          [kodeverkTyper.AVSLAGSARSAK]: [],
+        }}
         rettigheter={rettigheter}
         valgtProsessSteg="inngangsvilkar"
         valgtFaktaSteg="arbeidsforhold"
@@ -135,50 +201,66 @@ describe('<PleiepengerProsess>', () => {
     const meny = wrapper.find(ProsessStegContainer);
     expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
       {
+        labelId: 'Behandlingspunkt.Inngangsvilkar',
         isActive: true,
         isDisabled: false,
         isFinished: false,
-        labelId: 'Behandlingspunkt.Inngangsvilkar',
         type: 'default',
         usePartialStatus: false,
       },
       {
+        labelId: 'Behandlingspunkt.MedisinskVilkar',
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        labelId: 'Behandlingspunkt.Beregning',
         type: 'default',
         usePartialStatus: false,
       },
       {
+        labelId: 'Behandlingspunkt.InngangsvilkarForts',
         isActive: false,
         isDisabled: false,
         isFinished: false,
+        type: 'default',
+        usePartialStatus: false,
+      },
+      {
         labelId: 'Behandlingspunkt.Uttak',
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
         type: 'default',
         usePartialStatus: false,
       },
       {
+        labelId: 'Behandlingspunkt.Beregning',
         isActive: false,
         isDisabled: false,
         isFinished: false,
+        type: 'default',
+        usePartialStatus: false,
+      },
+      {
         labelId: 'Behandlingspunkt.TilkjentYtelse',
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
         type: 'default',
         usePartialStatus: false,
       },
       {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
         labelId: 'Behandlingspunkt.Avregning',
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
         type: 'default',
         usePartialStatus: false,
       },
       {
+        labelId: 'Behandlingspunkt.Vedtak',
         isActive: false,
         isDisabled: false,
         isFinished: false,
-        labelId: 'Behandlingspunkt.Vedtak',
         type: 'default',
         usePartialStatus: false,
       },
@@ -193,7 +275,9 @@ describe('<PleiepengerProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={{}}
+        alleKodeverk={{
+          [kodeverkTyper.AVSLAGSARSAK]: [],
+        }}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
@@ -214,7 +298,7 @@ describe('<PleiepengerProsess>', () => {
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).toHaveLength(1);
     expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual('uttak');
+    expect(opppdaterKall[0].args[0]).toEqual('opptjening');
     expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 
@@ -403,7 +487,9 @@ describe('<PleiepengerProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={{}}
+        alleKodeverk={{
+          [kodeverkTyper.AVSLAGSARSAK]: [],
+        }}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
@@ -439,7 +525,9 @@ describe('<PleiepengerProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={{}}
+        alleKodeverk={{
+          [kodeverkTyper.AVSLAGSARSAK]: [],
+        }}
         rettigheter={rettigheter}
         valgtProsessSteg="vedtak"
         valgtFaktaSteg="default"
@@ -480,7 +568,9 @@ describe('<PleiepengerProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={{}}
+        alleKodeverk={{
+          [kodeverkTyper.AVSLAGSARSAK]: [],
+        }}
         rettigheter={rettigheter}
         valgtProsessSteg="simulering"
         valgtFaktaSteg="default"
