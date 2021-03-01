@@ -41,7 +41,6 @@ export enum PleiepengerBehandlingApiKeys {
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
   VEDTAK_VARSEL = 'VEDTAK_VARSEL',
-  OMSORGEN_FOR = 'OMSORGEN_FOR',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
@@ -77,7 +76,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-kontroller-fakta-perioder', PleiepengerBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
   .withRel('vedtak-varsel', PleiepengerBehandlingApiKeys.VEDTAK_VARSEL)
-  .withRel('omsorgen-for', PleiepengerBehandlingApiKeys.OMSORGEN_FOR)
   .withRel('tilgjengelige-vedtaksbrev', PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerBehandlingApiKeys.UTTAK)
 
