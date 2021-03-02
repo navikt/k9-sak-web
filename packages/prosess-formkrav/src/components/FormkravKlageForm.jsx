@@ -110,7 +110,7 @@ export const FormkravKlageForm = ({
               <VerticalSpacer sixteenPx />
             </>
           ) : null}
-          <ProsessStegBegrunnelseTextField readOnly={readOnly} />
+          <ProsessStegBegrunnelseTextField readOnly={readOnly} maxLength={100000} />
         </Column>
         <Column xs="6">
           <SelectField
