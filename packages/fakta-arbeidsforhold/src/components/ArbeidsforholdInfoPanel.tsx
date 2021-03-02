@@ -10,7 +10,6 @@ import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { InjectedFormProps } from 'redux-form';
 import Panel from 'nav-frontend-paneler';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { BekreftOgForsettKnapp } from './BekreftOgForsettKnapp';
 import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 
@@ -73,12 +72,7 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
   ...formProps
 }) => {
   const shouldDisableSubmitButton = formProps.pristine;
-
-  const erForBeslutter =
-    aksjonspunkter.length > 0 && aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
-  const begrunnelse = erForBeslutter
-    ? aksjonspunkter.find(a => a.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse
-    : '';
+  const harAksjonspunktAvklarArbeidsforhold = harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter);
 
   return (
     <>
@@ -92,14 +86,6 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
               />,
             ]}
           </AksjonspunktHelpTextTemp>
-          {erForBeslutter && (
-            <Normaltekst>
-              <strong>
-                <FormattedMessage id="ArbeidsforholdInfoPanel.BegrunnelseFraSaksbehandler" />
-              </strong>
-              {begrunnelse}
-            </Normaltekst>
-          )}
         </Panel>
       )}
       <h3>
@@ -110,13 +96,13 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
           intl={intl}
           readOnly={readOnly}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          hasAksjonspunkter={aksjonspunkter.length > 0}
+          hasAksjonspunkter={harAksjonspunktAvklarArbeidsforhold}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
           alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
         />
-        {harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
+        {harAksjonspunktAvklarArbeidsforhold && (
           <BekreftOgForsettKnapp readOnly={shouldDisableSubmitButton} isSubmitting={formProps.submitting} />
         )}
       </form>
