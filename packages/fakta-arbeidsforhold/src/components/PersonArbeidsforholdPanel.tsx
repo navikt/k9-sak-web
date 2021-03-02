@@ -233,6 +233,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
       alleKodeverk,
       behandlingId,
       behandlingVersjon,
+      hasAksjonspunkter,
     } = this.props;
 
     const { selectedArbeidsforhold, selectedArbeidsgiver } = this.state;
@@ -263,7 +264,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                     </div>
                   </FlexColumn>
                   <FlexColumn className={styles.aksjonspunktColumn}>
-                    {harAksjonspunkter(arbeidsforholdPerArbeidsgiver) && <Image src={advarselImageUrl} alt="" />}
+                    {hasAksjonspunkter && <Image src={advarselImageUrl} alt="" />}
                     <button
                       className={styles.knappContainer}
                       type="button"
@@ -288,6 +289,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                   <PersonArbeidsforholdTable
                     intl={intl}
                     key={a}
+                    harAksjonspunktAvklarArbeidsforhold={hasAksjonspunkter}
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
                     alleKodeverk={alleKodeverk}
