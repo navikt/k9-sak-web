@@ -22,6 +22,7 @@ export const KlageVurderingRadioOptionsKa = ({ readOnly, medholdReasons, klageVu
     <div>
       <ProsessStegBegrunnelseTextField
         readOnly={readOnly}
+        maxLength={100000}
         text={intl.formatMessage({ id: 'KlageVurderingRadioOptionsKa.VurderingForKlage' })}
       />
       <VerticalSpacer sixteenPx />
