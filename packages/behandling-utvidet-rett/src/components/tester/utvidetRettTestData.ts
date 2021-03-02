@@ -57,10 +57,10 @@ const utvidetRettTestData = {
     {
       type: 'OverføringFår',
       vedtatt: '2020-01-01',
-      lengde: 'PT480H',
+      lengde: '',
       gyldigFraOgMed: '2020-01-01',
       gyldigTilOgMed: '2022-02-04',
-      avsender: '02099541043',
+      avsender: '',
     },
   ] as Rammevedtak[],
   rettigheter: {
@@ -80,10 +80,10 @@ const utvidetRettTestData = {
     angittePersoner: [
       {
         navn: 'DUCK DOLE',
-        fødselsdato: '2019-02-18',
+        fødselsdato: '',
         rolle: 'BARN',
-        aktørId: '9907481888926',
-        personIdent: '07481888926',
+        aktørId: '',
+        personIdent: '',
       },
     ],
     mottattDato: '2021-02-18',
@@ -100,199 +100,6 @@ const utvidetRettTestData = {
       tom: '9999-12-31',
     },
   } as UtvidetRettSoknad,
-  personopplysninger: {
-    aktoerId: '9930518028614',
-    diskresjonskode: {
-      kode: 'UDEF',
-      kodeverk: 'DISKRESJONSKODE',
-    },
-    fnr: '30518028614',
-    adresser: [
-      {
-        adresselinje1: 'Fjordlandet 10 B',
-        adresselinje2: null,
-        adresselinje3: null,
-        adresseType: {
-          kode: 'BOSTEDSADRESSE',
-          kodeverk: 'ADRESSE_TYPE',
-        },
-        land: 'NOR',
-        mottakerNavn: 'Skravlepapegøye Gunnhild',
-        postNummer: '2500',
-        poststed: null,
-      },
-    ],
-    annenPart: null,
-    avklartPersonstatus: {
-      orginalPersonstatus: {
-        kode: 'BOSA',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-      overstyrtPersonstatus: {
-        kode: 'BOSA',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-    },
-    barn: [
-      {
-        aktoerId: '9930482094089',
-        diskresjonskode: {
-          kode: 'UDEF',
-          kodeverk: 'DISKRESJONSKODE',
-        },
-        fnr: '30482094089',
-        adresser: [
-          {
-            adresselinje1: 'Fjordlandet 10 B',
-            adresselinje2: null,
-            adresselinje3: null,
-            adresseType: {
-              kode: 'BOSTEDSADRESSE',
-              kodeverk: 'ADRESSE_TYPE',
-            },
-            land: 'NOR',
-            mottakerNavn: 'Duck Dole',
-            postNummer: '2500',
-            poststed: null,
-          },
-        ],
-        annenPart: null,
-        avklartPersonstatus: {
-          orginalPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
-          overstyrtPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
-        },
-        barn: [],
-        barnFraTpsRelatertTilSoknad: [],
-        barnSoktFor: [],
-        dodsdato: null,
-        ektefelle: null,
-        fodselsdato: '2021-02-02',
-        harVerge: false,
-        navBrukerKjonn: {
-          kode: 'K',
-          kodeverk: 'BRUKER_KJOENN',
-        },
-        navn: 'Duck Dole',
-        nummer: null,
-        personstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        region: {
-          kode: 'NORDEN',
-          kodeverk: 'REGION',
-        },
-        sivilstand: {
-          kode: 'UGIF',
-          kodeverk: 'SIVILSTAND_TYPE',
-        },
-        statsborgerskap: {
-          kode: 'NOR',
-          navn: 'NOR',
-          kodeverk: 'LANDKODER',
-        },
-      },
-    ],
-    barnFraTpsRelatertTilSoknad: [],
-    barnSoktFor: [],
-    dodsdato: null,
-    ektefelle: {
-      aktoerId: '9913459959631',
-      diskresjonskode: {
-        kode: 'UDEF',
-        kodeverk: 'DISKRESJONSKODE',
-      },
-      fnr: '13459959631',
-      adresser: [
-        {
-          adresselinje1: 'Fjordlandet 10 B',
-          adresselinje2: null,
-          adresselinje3: null,
-          adresseType: {
-            kode: 'BOSTEDSADRESSE',
-            kodeverk: 'ADRESSE_TYPE',
-          },
-          land: 'NOR',
-          mottakerNavn: 'Terrier Bernt',
-          postNummer: '2500',
-          poststed: null,
-        },
-      ],
-      annenPart: null,
-      avklartPersonstatus: {
-        orginalPersonstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        overstyrtPersonstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-      },
-      barn: [],
-      barnFraTpsRelatertTilSoknad: [],
-      barnSoktFor: [],
-      dodsdato: null,
-      ektefelle: null,
-      fodselsdato: '1971-02-04',
-      harVerge: false,
-      navBrukerKjonn: {
-        kode: 'M',
-        kodeverk: 'BRUKER_KJOENN',
-      },
-      navn: 'Terrier Bernt',
-      nummer: null,
-      personstatus: {
-        kode: 'BOSA',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-      region: {
-        kode: 'NORDEN',
-        kodeverk: 'REGION',
-      },
-      sivilstand: {
-        kode: 'UGIF',
-        kodeverk: 'SIVILSTAND_TYPE',
-      },
-      statsborgerskap: {
-        kode: 'NOR',
-        navn: 'NOR',
-        kodeverk: 'LANDKODER',
-      },
-    },
-    fodselsdato: '1971-02-04',
-    harVerge: false,
-    navBrukerKjonn: {
-      kode: 'K',
-      kodeverk: 'BRUKER_KJOENN',
-    },
-    navn: 'Skravlepapegøye Gunnhild',
-    nummer: null,
-    personstatus: {
-      kode: 'BOSA',
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
-    region: {
-      kode: 'NORDEN',
-      kodeverk: 'REGION',
-    },
-    sivilstand: {
-      kode: 'GIFT',
-      kodeverk: 'SIVILSTAND_TYPE',
-    },
-    statsborgerskap: {
-      kode: 'NOR',
-      navn: 'NOR',
-      kodeverk: 'LANDKODER',
-    },
-  },
-  arbeidsgiverOpplysninger: {},
 };
 
 export default utvidetRettTestData;
