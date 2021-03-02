@@ -11,10 +11,16 @@ class UtvidetRettMikrofrontendPanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [UtvidetRettBehandlingApiKeys.VILKAR];
 
-  getData = ({ fagsak, soknad, vilkar }) => ({
-    fagsaksType: fagsak.sakstype.kode,
-    soknad,
-    vilkar,
+  getData = ({ fagsak, soknad, vilkar, aksjonspunkter }) => ({
+    saksInformasjon: {
+      fagsaksType: fagsak.sakstype.kode,
+      vedtakFattetAksjonspunkt: aksjonspunkter.filter(
+        aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.FATTER_VEDTAK,
+      ),
+      soknad,
+      vilkar,
+    },
   });
 }
+
 export default UtvidetRettMikrofrontendPanelDef;

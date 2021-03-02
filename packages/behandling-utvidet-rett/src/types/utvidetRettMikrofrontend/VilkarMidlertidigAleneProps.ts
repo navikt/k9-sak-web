@@ -6,7 +6,7 @@ export interface VilkarMidlertidigAleneProps {
   informasjonTilLesemodus?: VilkarMidlertidigInformasjonTilLesemodus;
   vedtakFattetVilkarOppfylt: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
-  onSubmit: (VilkarMidlertidigGrunnlagForBeslutt) => void;
+  losAksjonspunkt: (VilkarMidlertidigGrunnlagForBeslutt) => void;
 }
 
 export interface VilkarMidlertidigAleneDato {

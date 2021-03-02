@@ -1,11 +1,16 @@
-import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
-import { generereInfoForVurdertVilkar, erVilkarVurdert } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import {
+  generereInfoForVurdertVilkar,
+  erVilkarVurdert,
+  hentBegrunnelseOgVilkarOppfylt,
+} from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
+import { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
 
 const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
-  behandling: Behandling,
+  vedtakFattetAksjonspunkt,
   isReadOnly: boolean,
   aksjonspunkter: Aksjonspunkt[],
   vilkar: Vilkar[],
@@ -14,28 +19,35 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   angitteBarn,
 ) => {
   let objektTilMikrofrontend = {};
-  const aksjonspunktKode = aksjonspunkter[0].definisjon.kode;
-  const vilkarTypeFraAksjonspunkt = aksjonspunkter[0].vilkarType.kode;
-  const skalVilkarsUtfallVises = !isAksjonspunktOpen && erVilkarVurdert(vilkar, vilkarTypeFraAksjonspunkt);
+  const aksjonspunkt = aksjonspunkter[0];
+  const vilkarKnyttetTilAksjonspunkt = vilkar.filter(
+    vilkaret => vilkaret.vilkarType.kode === aksjonspunkt.vilkarType.kode,
+  )[0];
 
-  if (aksjonspunktKode === aksjonspunktCodes.OMSORGEN_FOR) {
+  if (aksjonspunkt && vilkarKnyttetTilAksjonspunkt && aksjonspunkt.definisjon.kode === aksjonspunktCodes.OMSORGEN_FOR) {
+    const vedtakFattet = vedtakFattetAksjonspunkt.length > 0 && !vedtakFattetAksjonspunkt[0].kanLoses;
+    const skalVilkarsUtfallVises = !isAksjonspunktOpen && vedtakFattet && erVilkarVurdert(vilkarKnyttetTilAksjonspunkt);
+    console.log(isReadOnly, isAksjonspunktOpen);
     objektTilMikrofrontend = {
       visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
       props: {
-        lesemodus: isReadOnly,
-        harOmsorgen: false,
+        lesemodus: isReadOnly || !isAksjonspunktOpen,
+        informasjonTilLesemodus: hentBegrunnelseOgVilkarOppfylt(
+          vilkarKnyttetTilAksjonspunkt,
+          aksjonspunkt,
+        ) as InformasjonTilLesemodus,
         barn: angitteBarn.map(barn => barn.personIdent),
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
         informasjonOmVilkar: generereInfoForVurdertVilkar(
           skalVilkarsUtfallVises,
-          vilkar,
-          vilkarTypeFraAksjonspunkt,
+          vilkarKnyttetTilAksjonspunkt,
+          aksjonspunkt.begrunnelse,
           'Omsorgen for',
         ),
-        losAksjonspunkt: ({ harOmsorgen, begrunnelse }) => {
+        losAksjonspunkt: (harOmsorgen, begrunnelse) => {
           submitCallback([
             {
-              kode: aksjonspunktKode,
+              kode: aksjonspunkt.definisjon.kode,
               harOmsorgenFor: harOmsorgen,
               begrunnelse,
             },
@@ -43,7 +55,12 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
         },
       } as OmsorgenForProps,
     };
+  } else {
+    objektTilMikrofrontend = {
+      visKomponent: UtvidetRettMikrofrontendVisning.ERROR,
+    };
   }
+
   return objektTilMikrofrontend;
 };
 

@@ -1,10 +1,11 @@
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import { InformasjonTilLesemodus } from './informasjonTilLesemodus';
 
 export interface OmsorgenForProps {
-  barn: string[];
-  harOmsorgen?: boolean;
-  informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   lesemodus?: boolean;
-  losAksjonspunkt: (harOmsorgen, begrunnelse) => void;
+  informasjonTilLesemodus?: InformasjonTilLesemodus;
   vedtakFattetVilkarOppfylt: boolean;
+  informasjonOmVilkar?: InformasjonOmVurdertVilkar;
+  barn: string[];
+  losAksjonspunkt: (harOmsorgen, begrunnelse) => void;
 }

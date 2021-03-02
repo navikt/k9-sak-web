@@ -1,10 +1,10 @@
-import Legeerklaeringsinfo from './Legeerklaeringsinfo';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import { InformasjonTilLesemodus } from './informasjonTilLesemodus';
 
 export interface VilkarKroniskSyktBarnProps {
-  informasjonOmVilkar?: InformasjonOmVurdertVilkar;
-  lesemodus?: boolean;
-  legeerklaeringsinfo: Legeerklaeringsinfo;
-  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => void;
   vedtakFattetVilkarOppfylt: boolean;
+  informasjonOmVilkar?: InformasjonOmVurdertVilkar;
+  lesemodus: boolean;
+  informasjonTilLesemodus?: InformasjonTilLesemodus;
+  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => void;
 }
