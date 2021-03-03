@@ -28,14 +28,6 @@ import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/u
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
-const forhandsvis = (data: any) => {
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(data);
-  } else if (URL.createObjectURL) {
-    window.open(URL.createObjectURL(data));
-  }
-};
-
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
@@ -55,14 +47,12 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
-const getForhandsvisCallback = (
-  forhandsvisMelding: (data: any) => Promise<any>,
-  fagsak: Fagsak,
-  fagsakPerson: FagsakPerson,
-  behandling: Behandling,
-) => (data: any) => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, data);
-  return forhandsvisMelding(request).then(response => forhandsvis(response));
+const forhandsvis = (data: any) => {
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(data);
+  } else if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
 };
 
 const getForhandsvisTilbakeCallback = (
@@ -79,6 +69,16 @@ const getForhandsvisTilbakeCallback = (
     saksnummer,
   };
   return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+};
+
+const getForhandsvisCallback = (
+  forhandsvisMelding: (data: any) => Promise<any>,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  behandling: Behandling,
+) => (data: any) => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, data);
+  return forhandsvisMelding(request).then(response => forhandsvis(response));
 };
 
 const getLagringSideeffekter = (

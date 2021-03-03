@@ -22,7 +22,7 @@ import UtvidetRettPaneler from './components/UtvidetRettPaneler';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
-  // { key: UtvidetRettBehandlingApiKeys.RAMMEVEDTAK },
+  { key: UtvidetRettBehandlingApiKeys.RAMMEVEDTAK },
   { key: UtvidetRettBehandlingApiKeys.OMSORGEN_FOR },
   { key: UtvidetRettBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: UtvidetRettBehandlingApiKeys.SOKNAD },
@@ -152,8 +152,6 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
   if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined)) {
     return <LoadingPanel />;
   }
-
-  data.rammevedtak = { rammevedtak: [] };
 
   return (
     <>
