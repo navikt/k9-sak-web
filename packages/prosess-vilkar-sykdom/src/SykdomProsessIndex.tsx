@@ -11,6 +11,7 @@ import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import { dateFormat } from '@fpsak-frontend/utils';
+import { Vilkar } from '@k9-sak-web/types';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.less';
 
@@ -41,14 +42,19 @@ const getVilkarOkMessage = originalErVilkarOk => {
   );
 };
 
-const SykdomProsessIndex = ({ panelTittelKode, lovReferanse, vilkar }) => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  const activeVilkår = vilkar[0];
-  const activePeriode = activeVilkår?.perioder[activeTab];
+interface SykdomProsessIndexProps {
+  vilkar: Vilkar;
+  lovReferanse?: string;
+  panelTittelKode: string;
+}
+
+const SykdomProsessIndex = ({ panelTittelKode, lovReferanse, vilkar }: SykdomProsessIndexProps) => {
+  const { perioder } = vilkar;
+  const [activePeriode, setActivePeirode] = React.useState(perioder[0]);
   const status = activePeriode.vilkarStatus.kode;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
+  const skalBrukeSidemeny = perioder.length > 1;
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
   return (
@@ -57,14 +63,14 @@ const SykdomProsessIndex = ({ panelTittelKode, lovReferanse, vilkar }) => {
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
-              links={activeVilkår.perioder.map((currentPeriode, currentPeriodeIndex) => ({
-                active: activeTab === currentPeriodeIndex,
-                label: `${dateFormat(activeVilkår.perioder[currentPeriodeIndex].periode.fom)} - ${dateFormat(
-                  activeVilkår.perioder[currentPeriodeIndex].periode.tom,
+              links={perioder.map((currentPeriode, currentPeriodeIndex) => ({
+                active: perioder.indexOf(activePeriode) === currentPeriodeIndex,
+                label: `${dateFormat(perioder[currentPeriodeIndex].periode.fom)} - ${dateFormat(
+                  perioder[currentPeriodeIndex].periode.tom,
                 )}`,
               }))}
               onClick={clickedIndex => {
-                setActiveTab(clickedIndex);
+                setActivePeirode(perioder[clickedIndex]);
               }}
               theme="arrow"
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}

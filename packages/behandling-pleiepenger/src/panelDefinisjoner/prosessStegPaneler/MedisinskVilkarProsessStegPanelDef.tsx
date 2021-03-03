@@ -8,7 +8,13 @@ import * as React from 'react';
 class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
-  getKomponent = props => <SykdomProsessIndex {...props} />;
+  getKomponent = props => {
+    const vilkår = props.vilkar?.length === 1 ? props.vilkar[0] : null;
+    if (!vilkår) {
+      return null;
+    }
+    return <SykdomProsessIndex {...props} vilkar={vilkår} />;
+  };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
