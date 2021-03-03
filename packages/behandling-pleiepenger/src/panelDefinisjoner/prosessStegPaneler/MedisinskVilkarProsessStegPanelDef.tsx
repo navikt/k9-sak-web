@@ -1,12 +1,20 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { ProsessStegDef, ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
+import * as React from 'react';
 
 class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
-  getKomponent = props => this.overstyringDef.getKomponent(props);
+  getKomponent = props => {
+    const vilkår = props.vilkar?.length === 1 ? props.vilkar[0] : null;
+    if (!vilkår) {
+      return null;
+    }
+    return <SykdomProsessIndex {...props} vilkar={vilkår} />;
+  };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 

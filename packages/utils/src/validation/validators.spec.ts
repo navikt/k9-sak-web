@@ -438,7 +438,7 @@ describe('Validators', () => {
       const result = hasValidText('Hei {}*');
       expect(result).toHaveLength(2);
       expect(result[0]).toEqual({ id: 'ValidationMessage.InvalidText' });
-      expect(result[1]).toEqual({ text: '{}*' });
+      expect(result[1]).toEqual({ text: '{}' });
     });
   });
 
