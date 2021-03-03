@@ -22,17 +22,17 @@ const utvidetRettTestData = {
     },
   ] as Aksjonspunkt[],
   arbeidsgiverOpplysningerPerId: {
-    123: {
+    345: {
       erPrivatPerson: false,
-      identifikator: 'testId',
-      navn: 'testNavn',
+      identifikator: 'test',
+      navn: 'test',
     },
   },
   behandling: {
-    id: 1,
-    versjon: 2,
-    status: { kode: behandlingStatus.AVSLUTTET, kodeverk: 'test' },
-    type: { kode: 'BT-002', kodeverk: 'test' },
+    id: 995,
+    versjon: 22,
+    status: { kode: behandlingStatus.AVSLUTTET, kodeverk: 'tilTest' },
+    type: { kode: 'BT-002', kodeverk: 'tilTest' },
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -41,17 +41,17 @@ const utvidetRettTestData = {
     links: [],
   } as Behandling,
   fagsak: {
-    saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    saksnummer: '111111',
+    sakstype: { kode: fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN, kodeverk: 'tilTest' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'tilTest' },
   } as Fagsak,
   fagsakPerson: {
-    alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    alder: 25,
+    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'tilTest' },
     erDod: false,
-    erKvinne: true,
-    navn: 'Espen Utvikler',
-    personnummer: '12345',
+    erKvinne: false,
+    navn: 'Espen testperson',
+    personnummer: '11111',
   } as FagsakPerson,
   rammevedtak: [
     {
