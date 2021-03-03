@@ -11,14 +11,13 @@ import {
   ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-
+import FetchedData from './types/fetchedDataTsType';
+import UtvidetRettPaneler from './components/UtvidetRettPaneler';
 import {
   restApiUtvidetRettHooks,
   requestUtvidetRettApi,
   UtvidetRettBehandlingApiKeys,
 } from './data/utvidetRettBehandlingApi';
-import FetchedData from './types/fetchedDataTsType';
-import UtvidetRettPaneler from './components/UtvidetRettPaneler';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
@@ -87,32 +86,32 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
-  const { startRequest: nyBehandlendeEnhet } = restApiUtvidetRettHooks.useRestApiRunner(
-    UtvidetRettBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
-  );
   const { startRequest: settBehandlingPaVent } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.BEHANDLING_ON_HOLD,
   );
-  const { startRequest: taBehandlingAvVent } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(
-    UtvidetRettBehandlingApiKeys.RESUME_BEHANDLING,
+  const { startRequest: nyBehandlendeEnhet } = restApiUtvidetRettHooks.useRestApiRunner(
+    UtvidetRettBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
   );
   const { startRequest: henleggBehandling } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.HENLEGG_BEHANDLING,
   );
-  const { startRequest: settPaVent } = restApiUtvidetRettHooks.useRestApiRunner(
-    UtvidetRettBehandlingApiKeys.UPDATE_ON_HOLD,
+  const { startRequest: taBehandlingAvVent } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(
+    UtvidetRettBehandlingApiKeys.RESUME_BEHANDLING,
   );
   const { startRequest: opneBehandlingForEndringer } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
   );
-  const { startRequest: opprettVerge } = restApiUtvidetRettHooks.useRestApiRunner(
-    UtvidetRettBehandlingApiKeys.VERGE_OPPRETT,
+  const { startRequest: settPaVent } = restApiUtvidetRettHooks.useRestApiRunner(
+    UtvidetRettBehandlingApiKeys.UPDATE_ON_HOLD,
   );
   const { startRequest: fjernVerge } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.VERGE_FJERN,
   );
   const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
+  const { startRequest: opprettVerge } = restApiUtvidetRettHooks.useRestApiRunner(
+    UtvidetRettBehandlingApiKeys.VERGE_OPPRETT,
   );
 
   useEffect(() => {
@@ -122,18 +121,18 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
+      opprettVerge: params =>
+        opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
+      fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
       opneBehandlingForEndringer: params =>
         opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
           setBehandling(behandlingResOpneForEndring),
         ),
-      opprettVerge: params =>
-        opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
-      fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
-    requestUtvidetRettApi.setRequestPendingHandler(setRequestPendingMessage);
     requestUtvidetRettApi.setAddErrorMessageHandler(addErrorMessage);
+    requestUtvidetRettApi.setRequestPendingHandler(setRequestPendingMessage);
 
     hentBehandling({ behandlingId }, false);
 

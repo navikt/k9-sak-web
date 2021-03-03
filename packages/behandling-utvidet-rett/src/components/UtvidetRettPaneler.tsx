@@ -10,9 +10,9 @@ import {
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
 
+import FetchedData from '../types/fetchedDataTsType';
 import UtvidetRettProsess from './UtvidetRettProsess';
 import UtvidetRettFakta from './UtvidetRettFakta';
-import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fetchedData: FetchedData;

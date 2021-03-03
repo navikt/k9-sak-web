@@ -22,10 +22,9 @@ import {
 } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
-import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
-
+import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
@@ -150,19 +149,18 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     oppdaterBehandlingVersjon,
   );
 
+  const { startRequest: lagreDokumentdata } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(
+    UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE,
+  );
+  const { startRequest: forhandsvisMelding } = restApiUtvidetRettHooks.useRestApiRunner(
+    UtvidetRettBehandlingApiKeys.PREVIEW_MESSAGE,
+  );
   const {
     startRequest: lagreAksjonspunkter,
     data: apBehandlingRes,
   } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT);
-
-  const { startRequest: forhandsvisMelding } = restApiUtvidetRettHooks.useRestApiRunner(
-    UtvidetRettBehandlingApiKeys.PREVIEW_MESSAGE,
-  );
   const { startRequest: forhandsvisTilbakekrevingMelding } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(
     UtvidetRettBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-  );
-  const { startRequest: lagreDokumentdata } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(
-    UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
