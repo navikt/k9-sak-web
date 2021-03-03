@@ -81,7 +81,6 @@ const getRelevanteStatuser = bg =>
 const getBGVilkar = vilkar =>
   vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
 
-
 /**
  * BeregningFP
  *
@@ -209,6 +208,7 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
     return {
       '@type': kode,
       kode,
+      begrunnelse: aksjonspunkt.begrunnelse,
       grunnlag: [
         {
           '@type': kode,
@@ -246,7 +246,8 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
   return initialValues;
 };
 
-export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter) => beregningsgrunnlag.map(currentBeregningsgrunnlag =>
+export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter) =>
+  beregningsgrunnlag.map(currentBeregningsgrunnlag =>
     buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter),
   );
 
