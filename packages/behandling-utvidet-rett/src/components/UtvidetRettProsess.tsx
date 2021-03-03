@@ -27,7 +27,7 @@ import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/u
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
-interface OwnProps {
+interface Props {
   data: FetchedData;
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
@@ -126,7 +126,7 @@ const getLagringSideeffekter = (
   };
 };
 
-const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
+const UtvidetRettProsess: FunctionComponent<Props> = ({
   data,
   fagsak,
   fagsakPerson,
@@ -148,13 +148,13 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     behandling.versjon,
     oppdaterBehandlingVersjon,
   );
-
   const { startRequest: lagreDokumentdata } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(
     UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
   const { startRequest: forhandsvisMelding } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.PREVIEW_MESSAGE,
   );
+
   const {
     startRequest: lagreAksjonspunkter,
     data: apBehandlingRes,
@@ -203,14 +203,6 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     apentFaktaPanelInfo,
   );
 
-  const fatterVedtakTextCode = useMemo(
-    () =>
-      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
-        ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionOMS',
-    [behandling.versjon],
-  );
-
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
     prosessStegPaneler,
     valgtFaktaSteg,
@@ -218,6 +210,14 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     oppdaterProsessStegOgFaktaPanelIUrl,
     valgtProsessSteg,
     valgtPanel,
+  );
+
+  const fatterVedtakTextCode = useMemo(
+    () =>
+      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
+        ? 'FatterVedtakStatusModal.SendtBeslutter'
+        : 'FatterVedtakStatusModal.ModalDescriptionOMS',
+    [behandling.versjon],
   );
 
   return (

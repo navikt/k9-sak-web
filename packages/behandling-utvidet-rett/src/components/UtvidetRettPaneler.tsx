@@ -14,6 +14,11 @@ import FetchedData from '../types/fetchedDataTsType';
 import UtvidetRettProsess from './UtvidetRettProsess';
 import UtvidetRettFakta from './UtvidetRettFakta';
 
+interface FaktaPanelInfo {
+  urlCode: string;
+  textCode: string;
+}
+
 interface OwnProps {
   fetchedData: FetchedData;
   fagsak: Fagsak;
@@ -32,11 +37,6 @@ interface OwnProps {
   featureToggles: FeatureToggles;
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-}
-
-interface FaktaPanelInfo {
-  urlCode: string;
-  textCode: string;
 }
 
 const UtvidetRettPaneler: FunctionComponent<OwnProps> = ({

@@ -37,11 +37,22 @@ export const erVilkarVurdert = (vilkarArr: Vilkar) => {
   return vilkarVurdert;
 };
 
-export const hentBegrunnelseOgVilkarOppfylt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt) => {
-  if (vilkar.perioder[0]) {
+export const hentBegrunnelseOgVilkarOppfylt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, medPeriode: boolean) => {
+  if (vilkar.perioder[0] && !medPeriode) {
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
+    };
+  }
+
+  if (vilkar.perioder[0] && medPeriode) {
+    return {
+      begrunnelse: aksjonspunkt.begrunnelse,
+      vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
+      dato: {
+        fra: vilkar.perioder[0].periode.fom,
+        til: vilkar.perioder[0].periode.tom,
+      },
     };
   }
   return {

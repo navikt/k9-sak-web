@@ -45,6 +45,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
             informasjonTilLesemodus: hentBegrunnelseOgVilkarOppfylt(
               vilkarKnyttetTilAksjonspunkt,
               aksjonspunkt,
+              false,
             ) as InformasjonTilLesemodus,
             vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
             informasjonOmVilkar: generereInfoForVurdertVilkar(
@@ -71,14 +72,14 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
         break;
       }
       case FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE: {
+        const angittForelder = soknad.angittePersoner.filter(person => person.rolle === 'ANPA');
         objektTilMikrofrontend = {
           visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_MIDLERTIDIG_ALENE,
           props: {
             lesemodus: isReadOnly || !isAksjonspunktOpen,
-            // Lägg in söknadsupplysningar när det är tillgängligt från API.
             soknadsopplysninger: {
-              årsak: 'Årsak',
-              beskrivelse: 'Beskrivelse',
+              årsak: angittForelder[0]?.situasjonKode || '',
+              beskrivelse: angittForelder[0]?.tilleggsopplysninger || '',
               periode: `${soknad.søknadsperiode.fom} - ${soknad.søknadsperiode.tom}`,
             },
             vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
@@ -88,19 +89,12 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
               aksjonspunkt.begrunnelse,
               'Utvidet Rett',
             ),
-            informasjonTilLesemodus: {
-              begrunnelse: 'Begrunnelse',
-              vilkarOppfylt: true,
-              dato: {
-                fra: '22.03.1993',
-                til: '22.12.1994',
-              },
-            },
-            losAksjonspunkt: ({ begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til }) => {
+            informasjonTilLesemodus: hentBegrunnelseOgVilkarOppfylt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, true),
+            losAksjonspunkt: ({ begrunnelseRegistret, erSokerenMidlertidigAleneOmOmsorgen, fra, til }) => {
               submitCallback([
                 {
                   kode: aksjonspunkt.definisjon.kode,
-                  begrunnelse,
+                  begrunnelse: begrunnelseRegistret,
                   erVilkarOk: erSokerenMidlertidigAleneOmOmsorgen,
                   periode: {
                     fom: fra,

@@ -35,6 +35,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
         informasjonTilLesemodus: hentBegrunnelseOgVilkarOppfylt(
           vilkarKnyttetTilAksjonspunkt,
           aksjonspunkt,
+          false,
         ) as InformasjonTilLesemodus,
         barn: angitteBarn.map(barn => barn.personIdent),
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
