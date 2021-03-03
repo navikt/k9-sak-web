@@ -181,6 +181,17 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     ...data,
   };
 
+  const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
+  const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
+  const lagringSideeffekterCallback = getLagringSideeffekter(
+    toggleIverksetterVedtakModal,
+    toggleFatterVedtakModal,
+    toggleSkalOppdatereFagsakContext,
+    oppdaterProsessStegOgFaktaPanelIUrl,
+    opneSokeside,
+    lagreDokumentdata,
+  );
+
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
     prosessStegUtvidetRettPanelDefinisjoner,
     dataTilUtledingAvFpPaneler,
@@ -194,15 +205,12 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     apentFaktaPanelInfo,
   );
 
-  const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
-  const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
-  const lagringSideeffekterCallback = getLagringSideeffekter(
-    toggleIverksetterVedtakModal,
-    toggleFatterVedtakModal,
-    toggleSkalOppdatereFagsakContext,
-    oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside,
-    lagreDokumentdata,
+  const fatterVedtakTextCode = useMemo(
+    () =>
+      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
+        ? 'FatterVedtakStatusModal.SendtBeslutter'
+        : 'FatterVedtakStatusModal.ModalDescriptionOMS',
+    [behandling.versjon],
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
@@ -212,14 +220,6 @@ const UtvidetRettProsess: FunctionComponent<OwnProps> = ({
     oppdaterProsessStegOgFaktaPanelIUrl,
     valgtProsessSteg,
     valgtPanel,
-  );
-
-  const fatterVedtakTextCode = useMemo(
-    () =>
-      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
-        ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionOMS',
-    [behandling.versjon],
   );
 
   return (

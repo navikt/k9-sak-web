@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import UtvidetRettBarnFakta from '../../components/UtvidetRettBarnFakta';
+import UtvidetRettBarnFakta from '../../components/UtvidetRettBarnFakta/UtvidetRettBarnFakta';
 
 class BarnFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.BARN;
@@ -12,6 +12,9 @@ class BarnFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ rammevedtak }) => !!rammevedtak;
 
-  getData = ({ personopplysninger }) => personopplysninger;
+  getData = ({ personopplysninger, fagsak }) => ({
+    personopplysninger,
+    fagsaksType: fagsak.sakstype.kode,
+  });
 }
 export default BarnFaktaPanelDef;
