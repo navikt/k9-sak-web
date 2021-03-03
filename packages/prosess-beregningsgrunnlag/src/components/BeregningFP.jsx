@@ -211,8 +211,8 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
       begrunnelse: aksjonspunkt.begrunnelse,
       grunnlag: [
         {
-          '@type': kode,
-          ...aksjonspunkt,
+          inntektFrilanser: aksjonspunkt.inntektFrilanser,
+          inntektPrAndelList: aksjonspunkt.inntektPrAndelList,
           periode: perioder.find(p => p.periode.fom === aksjonspunkt.skjæringstidspunkt).periode,
         },
       ],
