@@ -1,40 +1,15 @@
 import React, { FunctionComponent } from 'react';
-
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import {
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  KodeverkMedNavn,
-  FeatureToggles,
-  ArbeidsgiverOpplysningerPerId,
-} from '@k9-sak-web/types';
+import { SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { Behandling } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import faktaUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/faktaUtvidetRettPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import { FaktaProps } from '../types/FaktaProps';
 
-interface OwnProps {
-  data: FetchedData;
-  fagsak: Fagsak;
-  fagsakPerson: FagsakPerson;
-  behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  rettigheter: Rettigheter;
-  hasFetchError: boolean;
-  oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
-  valgtFaktaSteg?: string;
-  valgtProsessSteg?: string;
-  setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
-  setBehandling: (behandling: Behandling) => void;
-  featureToggles?: FeatureToggles;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-}
-
-const UtvidetRettFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const UtvidetRettFakta: FunctionComponent<FaktaProps & WrappedComponentProps> = ({
   intl,
   data,
   behandling,

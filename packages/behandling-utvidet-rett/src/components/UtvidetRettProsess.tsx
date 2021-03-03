@@ -3,7 +3,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  Rettigheter,
   prosessStegHooks,
   IverksetterVedtakStatusModal,
   FatterVedtakStatusModal,
@@ -12,39 +11,13 @@ import {
   lagDokumentdata,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import {
-  Fagsak,
-  FagsakPerson,
-  KodeverkMedNavn,
-  Behandling,
-  FeatureToggles,
-  ArbeidsgiverOpplysningerPerId,
-} from '@k9-sak-web/types';
+import { Fagsak, FagsakPerson, Behandling } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
-import FetchedData from '../types/fetchedDataTsType';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
-
-interface Props {
-  data: FetchedData;
-  fagsak: Fagsak;
-  fagsakPerson: FagsakPerson;
-  behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  rettigheter: Rettigheter;
-  valgtProsessSteg?: string;
-  valgtFaktaSteg?: string;
-  hasFetchError: boolean;
-  oppdaterBehandlingVersjon: (versjon: number) => void;
-  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  opneSokeside: () => void;
-  apentFaktaPanelInfo?: { urlCode: string; textCode: string };
-  setBehandling: (behandling: Behandling) => void;
-  featureToggles: FeatureToggles;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-}
+import { ProsessProps } from '../types/ProsessProps';
 
 const forhandsvis = (data: any) => {
   if (window.navigator.msSaveOrOpenBlob) {
@@ -126,7 +99,7 @@ const getLagringSideeffekter = (
   };
 };
 
-const UtvidetRettProsess: FunctionComponent<Props> = ({
+const UtvidetRettProsess: FunctionComponent<ProsessProps> = ({
   data,
   fagsak,
   fagsakPerson,

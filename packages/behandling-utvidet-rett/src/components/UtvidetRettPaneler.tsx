@@ -1,45 +1,11 @@
 import React, { FunctionComponent, useState } from 'react';
-
-import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import {
-  KodeverkMedNavn,
-  Behandling,
-  FeatureToggles,
-  Fagsak,
-  FagsakPerson,
-  ArbeidsgiverOpplysningerPerId,
-} from '@k9-sak-web/types';
-
-import FetchedData from '../types/fetchedDataTsType';
+import { BehandlingPaVent } from '@k9-sak-web/behandling-felles';
 import UtvidetRettProsess from './UtvidetRettProsess';
 import UtvidetRettFakta from './UtvidetRettFakta';
+import { PanelerProps } from '../types/PanelerProps';
+import { FaktaPanelInfoProps } from '../types/FaktaPanelInfoProps';
 
-interface FaktaPanelInfo {
-  urlCode: string;
-  textCode: string;
-}
-
-interface OwnProps {
-  fetchedData: FetchedData;
-  fagsak: Fagsak;
-  fagsakPerson: FagsakPerson;
-  behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  rettigheter: Rettigheter;
-  valgtProsessSteg?: string;
-  valgtFaktaSteg?: string;
-  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  oppdaterBehandlingVersjon: (versjon: number) => void;
-  settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
-  opneSokeside: () => void;
-  hasFetchError: boolean;
-  featureToggles: FeatureToggles;
-  setBehandling: (behandling: Behandling) => void;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-}
-
-const UtvidetRettPaneler: FunctionComponent<OwnProps> = ({
+const UtvidetRettPaneler: FunctionComponent<PanelerProps> = ({
   fetchedData,
   fagsak,
   fagsakPerson,
@@ -58,7 +24,7 @@ const UtvidetRettPaneler: FunctionComponent<OwnProps> = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
 }) => {
-  const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
+  const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfoProps>();
 
   return (
     <>
