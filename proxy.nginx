@@ -134,6 +134,16 @@ server {
     error_page 504 = @504_json;
   }
 
+  location  "/k9/microfrontend/omsorgsdager/" {
+    proxy_ssl_server_name on;
+    proxy_pass "${OMSORGSDAGER_FRONTEND_URL}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
   location  "/k9/microfrontend/psb-uttak/" {
     proxy_ssl_server_name on;
     proxy_pass "${PSB_UTTAK_FRONTEND_URL}";

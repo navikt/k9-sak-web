@@ -21,6 +21,7 @@ const prosessStegCodes = {
   VARSEL: 'varsel',
   VEDTAK: 'vedtak',
   UTTAK: 'uttak',
+  UTVIDET_RETT: 'utvidet_rett',
   SIMULERING: 'simulering',
   KLAGE_RESULTAT: 'resultat',
   ANKEBEHANDLING: 'ankebehandling',

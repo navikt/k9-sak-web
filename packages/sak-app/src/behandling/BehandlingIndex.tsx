@@ -33,6 +33,7 @@ const BehandlingTilbakekrevingIndex = React.lazy(() => import('@k9-sak-web/behan
 const BehandlingAnkeIndex = React.lazy(() => import('@k9-sak-web/behandling-anke'));
 const BehandlingFrisinnIndex = React.lazy(() => import('@k9-sak-web/behandling-frisinn'));
 const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
+const BehandlingUtvidetRettIndex = React.lazy(() => import('@k9-sak-web/behandling-utvidet-rett'));
 
 const erTilbakekreving = (behandlingTypeKode: string): boolean =>
   behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
@@ -91,11 +92,8 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),
   });
 
-  const behandlingVersjon = alleBehandlinger.some(b => b.id === behandlingId)
-    ? alleBehandlinger.find(b => b.id === behandlingId).versjon
-    : undefined;
-
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
+  const behandlingVersjon = behandling?.versjon;
 
   useEffect(() => {
     if (behandling) {
@@ -259,6 +257,23 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
           <BehandlingOmsorgspengerIndex
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={query.fakta}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
+      </Suspense>
+    );
+  }
+
+  if (
+    fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
+    fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
+  ) {
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <BehandlingUtvidetRettIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
             {...defaultProps}
