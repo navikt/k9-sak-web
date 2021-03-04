@@ -27,7 +27,6 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   if (aksjonspunkt && vilkarKnyttetTilAksjonspunkt && aksjonspunkt.definisjon.kode === aksjonspunktCodes.OMSORGEN_FOR) {
     const vedtakFattet = vedtakFattetAksjonspunkt.length > 0 && !vedtakFattetAksjonspunkt[0].kanLoses;
     const skalVilkarsUtfallVises = !isAksjonspunktOpen && vedtakFattet && erVilkarVurdert(vilkarKnyttetTilAksjonspunkt);
-    console.log(isReadOnly, isAksjonspunktOpen);
     objektTilMikrofrontend = {
       visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
       props: {
