@@ -1,0 +1,50 @@
+import React from 'react';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+
+import { UtvidetRettBehandlingApiKeys } from '../../data/utvidetRettBehandlingApi';
+
+class PanelDef extends ProsessStegPanelDef {
+  getKomponent = props => <VedtakProsessIndex {...props} />;
+
+  getAksjonspunktKoder = () => [aksjonspunktCodes.FORESLA_VEDTAK, aksjonspunktCodes.FATTER_VEDTAK];
+
+  getEndepunkter = () => [
+    UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG,
+    UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+    UtvidetRettBehandlingApiKeys.MEDLEMSKAP,
+    UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL,
+    UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    UtvidetRettBehandlingApiKeys.DOKUMENTDATA_HENTE,
+  ];
+
+  getData = ({
+    previewCallback,
+    rettigheter,
+    aksjonspunkter,
+    vilkar,
+    fagsak,
+    personopplysninger,
+    arbeidsgiverOpplysningerPerId,
+  }) => ({
+    previewCallback,
+    aksjonspunkter,
+    vilkar,
+    personopplysninger,
+    ytelseTypeKode: fagsak.sakstype.kode,
+    employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+    arbeidsgiverOpplysningerPerId,
+  });
+}
+
+class VedtakProsessStegPanelDef extends ProsessStegDef {
+  getUrlKode = () => prosessStegCodes.VEDTAK;
+
+  getTekstKode = () => 'Behandlingspunkt.Vedtak';
+
+  getPanelDefinisjoner = () => [new PanelDef()];
+}
+
+export default VedtakProsessStegPanelDef;

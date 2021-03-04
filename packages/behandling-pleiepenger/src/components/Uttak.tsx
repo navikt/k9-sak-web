@@ -17,10 +17,10 @@ const uttakAppID = 'uttakApp';
 export default ({ uuid, uttaksperioder }: UttakProps) => (
   <MicroFrontend
     id={uttakAppID}
-    jsSrc="/k9/microfrontend/psb-uttak/1.0.9/app.js"
-    jsIntegrity="sha384-h1K5E6zjfVetyJO9mEViqmGvld6FvhDEHke7BDCZcdR+vzzMAE/K641Bylv7o+jQ"
-    stylesheetSrc="/k9/microfrontend/psb-uttak/1.0.9/styles.css"
-    stylesheetIntegrity="sha384-XwcNDA26KHmidkAIWeaxDvZdYiQ/jchQaPPdwGDDYGM7UK/a8kxb+eNNuNkei7vs"
+    jsSrc="/k9/microfrontend/psb-uttak/1.0.10/app.js"
+    jsIntegrity="sha384-WOcVKGQGM6n++eqAFKy1dR3lwCYk1YxXjAY+B/nqvm/Uh4Z7HuDWP6OXTVfrY6Hx"
+    stylesheetSrc="/k9/microfrontend/psb-uttak/1.0.10/styles.css"
+    stylesheetIntegrity="sha384-51nKGyNXcGiRBsYcBQh15bMF6C3M1CTlUVBKKrcuiJdQ0I4p9RH96WOIRMko4RdY"
     onReady={() => initializeUttak(uttakAppID, uttaksperioder, uuid)}
   />
 );

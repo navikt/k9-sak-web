@@ -55,6 +55,8 @@ spec:
       value: "http://diagnosekode-api/diagnosekoder/"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"
+    - name: OMSORGSDAGER_FRONTEND_URL
+      value: "https://omsorgsdager-frontend.dev.intern.nav.no/"
     - name: PSB_UTTAK_FRONTEND_URL
       value: "https://psb-uttak-frontend.dev.adeo.no/"
 

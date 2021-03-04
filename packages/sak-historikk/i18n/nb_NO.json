@@ -290,6 +290,8 @@
   "HistorikkEndretFelt.BehandlendeEnhet": "Behandlende enhet",
   "HistorikkEndretFelt.FastsettSelvstendigNaeringForm.BruttoBerGr": "Brutto næringsinntekt",
   "HistorikkEndretFelt.ApplicationInformation": "Ektefelles/samboers barn",
+  "HistorikkEndretFelt.UtvidetRett": "Vilkar for utvidet rett",
+  "HistorikkEndretFelt.OmsorgenFor": "Omsorgsvilkåret",
   "HistorikkEndretFelt.FastsettSelvstendigNaeringForm.EndringNæring": "Endring i næringsvirksomhet",
   "HistorikkEndretFelt.AarsinntektPanel.Frilansinntekt": "Frilansinntekt",
   "HistorikkEndretFelt.GyldigMedlemFolketrygden": "Vurder om søker har gyldig medlemskap i perioden",
