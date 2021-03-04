@@ -101,7 +101,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       FORM_NAME,
       ownProps.behandlingId,
       ownProps.behandlingVersjon,
-    )(state, 'erVarigEndretNaering'),
+    )(state, `${ownProps.fieldArrayID}.erVarigEndretNaering`),
     isAksjonspunktClosed: !isAksjonspunktOpen(aksjonspunkt.status.kode),
     fieldArrayID: ownProps.fieldArrayID,
   });
