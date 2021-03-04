@@ -110,10 +110,6 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
       default:
         break;
     }
-  } else {
-    objektTilMikrofrontend = {
-      visKomponent: UtvidetRettMikrofrontendVisning.ERROR,
-    };
   }
   return objektTilMikrofrontend;
 };

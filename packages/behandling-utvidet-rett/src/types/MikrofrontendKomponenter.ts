@@ -3,6 +3,5 @@ enum UtvidetRettMikrofrontendVisning {
   VILKAR_KRONISK_SYKT_BARN = 'VilkarKroniskSyktBarn',
   VILKAR_MIDLERTIDIG_ALENE = 'VilkarMidlertidigAlene',
   OMSORG = 'Omsorg',
-  ERROR = 'Error',
 }
 export default UtvidetRettMikrofrontendVisning;

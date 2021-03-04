@@ -56,12 +56,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
         },
       } as OmsorgenForProps,
     };
-  } else {
-    objektTilMikrofrontend = {
-      visKomponent: UtvidetRettMikrofrontendVisning.ERROR,
-    };
   }
-
   return objektTilMikrofrontend;
 };
 

@@ -150,7 +150,7 @@ const historikkEndretFeltTypeCodes = {
   },
   OMSORG_FOR: {
     kode: 'OMSORG_FOR',
-    feltId: 'HistorikkEndretFelt.ApplicationInformation',
+    feltId: 'HistorikkEndretFelt.OmsorgenFor',
   },
   OPPHOLDSRETT_EOS: {
     kode: 'OPPHOLDSRETT_EOS',

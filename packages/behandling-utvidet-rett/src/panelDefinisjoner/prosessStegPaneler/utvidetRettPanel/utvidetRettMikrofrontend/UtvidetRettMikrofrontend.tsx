@@ -23,10 +23,10 @@ export default props => {
   return (
     <MicroFrontend
       id={utvidetRettVilkårAppID}
-      jsSrc="/k9/microfrontend/omsorgsdager/build/1.5.18/app.js"
-      jsIntegrity="sha256-aTCejInqutCcOrMRI/YrzHXm8c7D3wDEifY89zzuiLw="
-      stylesheetSrc="/k9/microfrontend/omsorgsdager/build/1.5.18/styles.css"
-      stylesheetIntegrity="sha256-VRRG1yM8vZZlfQI9e7J7FHwNyaVnMRqT+Y/0JKYLc1U="
+      jsSrc="/k9/microfrontend/omsorgsdager/1.5.19/app.js"
+      jsIntegrity="sha384-hxxqB3imhH23iM7JUhnlItkMSIDb1ArUYJLznzgFCd3zDR/0CalwMZR2O3gW75RO"
+      stylesheetSrc="/k9/microfrontend/omsorgsdager/1.5.19/styles.css"
+      stylesheetIntegrity="sha384-tiIFqqTAYStHMNAiUIA+DhMmSORk+iE0XQji2SaJNXyg8OwRyHWhWbt1pqxNy3w8"
       onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID, props)}
     />
   );

@@ -17,7 +17,7 @@ class PanelDef extends ProsessStegPanelDef {
     UtvidetRettBehandlingApiKeys.MEDLEMSKAP,
     UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL,
     UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-    // UtvidetRettBehandlingApiKeys.DOKUMENTDATA_HENTE,
+    UtvidetRettBehandlingApiKeys.DOKUMENTDATA_HENTE,
   ];
 
   getData = ({

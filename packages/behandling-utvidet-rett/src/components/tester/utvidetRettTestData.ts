@@ -20,7 +20,14 @@ const utvidetRettTestData = {
       kanLoses: true,
       erAktivt: true,
     },
+    {
+      definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
+      status: { kode: 'UTFO', kodeverk: 'test' },
+      kanLoses: true,
+      erAktivt: true,
+    },
   ] as Aksjonspunkt[],
+
   arbeidsgiverOpplysningerPerId: {
     345: {
       erPrivatPerson: false,
