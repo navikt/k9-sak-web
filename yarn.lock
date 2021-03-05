@@ -12582,10 +12582,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-nav-frontend-alertstriper-style@2.0.37:
-  version "2.0.37"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.37.tgz#5309d64c9c4a9aace5fa70d62df00fe267d1c58c"
-  integrity sha512-N69uwYe+6mpAaY1LrTtNG3oAgRIBS03nClQXgMXxk6UnJ4MZ3VLBVWk3jLveVQeyCNZv4zQXEhQFPIVuEj+I0A==
+nav-frontend-alertstriper-style@2.0.38:
+  version "2.0.38"
+  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.38.tgz#c68ff029b2821074d062ecfdecf6fd81b0b46443"
+  integrity sha512-kIhB4V28gHt4UGMFJzb/I2k9tJh0gibv4kAnLjhC6d9oypuoWrmfc5q05r7Fq6nCu/kOiaeYHG28cOWhZvztcw==
 
 nav-frontend-alertstriper@3.0.50, nav-frontend-alertstriper@^3.0.38:
   version "3.0.50"
