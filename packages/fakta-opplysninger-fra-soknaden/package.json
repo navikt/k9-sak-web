@@ -11,7 +11,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@types/redux-form": "^8.2.3",
     "moment": "^2.24.0",
-    "nav-frontend-core": "5.0.10",
+    "nav-frontend-core": "5.0.11",
     "nav-frontend-knapper": "2.0.24",
     "nav-frontend-knapper-style": "1.0.11",
     "nav-frontend-typografi": "2.0.37",
