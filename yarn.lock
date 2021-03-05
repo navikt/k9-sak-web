@@ -12741,10 +12741,10 @@ nav-frontend-lesmerpanel@1.0.2:
   resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel/-/nav-frontend-lesmerpanel-1.0.2.tgz#f1f147e57194762934310a65a75ff533b1d6c2ca"
   integrity sha512-aDs7CCgc0Q0LGLLCEjajvnxhOEudOSi92o3KspKMsGKjYUlarKZQhCbJ4xNXCMU6uw04JX9Rpw/H7ue0s7TRIw==
 
-nav-frontend-lukknapp-style@0.2.34:
-  version "0.2.34"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.34.tgz#0c245fc3bcfeadbf7bc5851005d9fe354ebacdc9"
-  integrity sha512-FHhNB5AmYk74/jIr1LD54sdRRTd0c1Dh3wOCs/xmEy9TTPfqA4shh20TBARSvuWBuYKAMLfPFtJHQVqRkqjrRQ==
+nav-frontend-lukknapp-style@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-1.0.2.tgz#40f56f0fce7a63c0d9da4f7c02d9b781177099a0"
+  integrity sha512-DZ2SslNrNSGyrQhbMwW6De64jU58IMxM1JbX/FCBVkc8rYi12wgSIxBm0i6iWYRz6cPkNaWIxk4eTIo60y+kxA==
 
 nav-frontend-lukknapp@1.0.43:
   version "1.0.43"
