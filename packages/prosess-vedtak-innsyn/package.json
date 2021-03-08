@@ -7,7 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "nav-frontend-grid": "1.0.44",
+    "nav-frontend-grid": "1.0.50",
     "nav-frontend-typografi": "2.0.37",
     "nav-frontend-typografi-style": "1.0.35",
     "prop-types": "^15.7.2",
