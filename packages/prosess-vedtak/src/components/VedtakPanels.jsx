@@ -51,17 +51,15 @@ const VedtakPanels = ({
   tilgjengeligeVedtaksbrev,
   dokumentdata,
 }) => {
-  const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(
-    beregningsgrunnlag,
-    aksjonspunkter,
-  );
-  if (behandlingTypeKode === behandlingType.REVURDERING && !!beregningsgrunnlag) {
-    const bgYtelsegrunnlag = beregningsgrunnlag[0].ytelsesspesifiktGrunnlag;
+  const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
+  const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(bg, aksjonspunkter);
+  if (behandlingTypeKode === behandlingType.REVURDERING && Array.isArray(bg) && bg.length) {
+    const bgYtelsegrunnlag = bg[0].ytelsesspesifiktGrunnlag;
     let bgPeriodeMedAvslagsårsak;
     if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
       bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(
         bgYtelsegrunnlag.avslagsårsakPrPeriode,
-        beregningsgrunnlag[0].beregningsgrunnlagPeriode,
+        bg[0].beregningsgrunnlagPeriode,
       );
     }
     return (

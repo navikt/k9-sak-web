@@ -151,13 +151,10 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     formChange(`${behandlingFormPrefix}.${'ArbeidsforholdInfoPanel'}`, fieldName, fieldValue);
   }
 
-  utledNøkkel = (a, arbeidsgiverOpplysningerPerId) => {
-    const nøkkel = arbeidsgiverOpplysningerPerId[a]
+  utledNøkkel = (a, arbeidsgiverOpplysningerPerId) =>
+    arbeidsgiverOpplysningerPerId[a]
       ? arbeidsgiverOpplysningerPerId[a].navn + arbeidsgiverOpplysningerPerId[a].identifikator
       : a;
-
-    return nøkkel;
-  };
 
   initializeActivityForm(arbeidsforhold) {
     const { selectedArbeidsforhold } = this.state;

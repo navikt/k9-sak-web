@@ -16,27 +16,21 @@ const summerFordeling = (fields, skalRedigereInntekt) => {
     const belop = skalRedigereInntekt(field) ? field.fastsattBelop : field.belopReadOnly;
     sum += belop ? parseInt(removeSpacesFromNumber(belop), 10) : 0;
   });
-  return sum > 0 ? formatCurrencyNoKr(sum) : 0;
+  return formatCurrencyNoKr(sum);
 };
 
-const SummaryRow = ({
-  skalVisePeriode, skalViseRefusjon, readOnly, sumFordeling,
-}) => (
+const SummaryRow = ({ skalVisePeriode, skalViseRefusjon, readOnly, sumFordeling }) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.FordelingBG.Sum" />
     </TableColumn>
-    {skalVisePeriode
-          && <TableColumn />}
+    {skalVisePeriode && <TableColumn />}
     <TableColumn className={styles.rightAlign}>
       <div className={styles.readOnlyContainer}>
-        <Normaltekst className={readOnly ? styles.readOnlyContent : ''}>
-          {sumFordeling}
-        </Normaltekst>
+        <Normaltekst className={readOnly ? styles.readOnlyContent : ''}>{sumFordeling}</Normaltekst>
       </div>
     </TableColumn>
-    {skalViseRefusjon
-          && <TableColumn />}
+    {skalViseRefusjon && <TableColumn />}
     <TableColumn />
   </TableRow>
 );
@@ -45,7 +39,7 @@ SummaryRow.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   skalVisePeriode: PropTypes.bool.isRequired,
   skalViseRefusjon: PropTypes.bool.isRequired,
-  sumFordeling: PropTypes.number.isRequired,
+  sumFordeling: PropTypes.string.isRequired,
 };
 
 export const mapStateToProps = (state, ownProps) => {
