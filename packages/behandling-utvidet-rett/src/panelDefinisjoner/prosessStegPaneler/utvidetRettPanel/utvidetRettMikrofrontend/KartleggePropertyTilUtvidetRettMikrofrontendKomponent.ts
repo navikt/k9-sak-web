@@ -1,5 +1,6 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import {
@@ -7,15 +8,22 @@ import {
   generereInfoForVurdertVilkar,
   hentBegrunnelseOgVilkarOppfylt,
 } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
-import { VilkarKroniskSyktBarnProps } from '../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
+import {
+  InformasjonTilLesemodusKroniskSyk,
+  VilkarKroniskSyktBarnProps,
+} from '../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import UtvidetRettSoknad from '../../../../types/UtvidetRettSoknad';
-import { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
 
 interface Saksinformasjon {
   fagsaksType: string;
   vedtakFattetAksjonspunkt: Aksjonspunkt[];
   vilkar: Vilkar[];
   soknad: UtvidetRettSoknad;
+}
+
+enum Avslagskoder {
+  IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET = '1073',
+  IKKE_OKT_RISIKO_FRA_FRAVAER = '1074',
 }
 
 const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
@@ -42,11 +50,12 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
           props: {
             lesemodus: isReadOnly || !isAksjonspunktOpen,
-            informasjonTilLesemodus: hentBegrunnelseOgVilkarOppfylt(
-              vilkarKnyttetTilAksjonspunkt,
-              aksjonspunkt,
-              false,
-            ) as InformasjonTilLesemodus,
+            informasjonTilLesemodus: {
+              begrunnelse: aksjonspunkt.begrunnelse,
+              vilkarOppfylt: vilkarKnyttetTilAksjonspunkt.perioder[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
+              avslagsArsakErIkkeRiskioFraFravaer:
+                vilkarKnyttetTilAksjonspunkt.perioder[0]?.avslagKode === Avslagskoder.IKKE_OKT_RISIKO_FRA_FRAVAER,
+            } as InformasjonTilLesemodusKroniskSyk,
             vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
             informasjonOmVilkar: generereInfoForVurdertVilkar(
               skalVilkarsUtfallVises,
@@ -54,18 +63,23 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
               aksjonspunkt.begrunnelse,
               'Utvidet Rett',
             ),
-            losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => {
-              submitCallback([
-                {
-                  kode: aksjonspunkt.definisjon.kode,
-                  begrunnelse,
-                  erVilkarOk: endreHarDokumentasjonOgFravaerRisiko,
-                  periode: {
-                    fom: soknad.søknadsperiode.fom,
-                    tom: soknad.søknadsperiode.tom,
-                  },
+            losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer) => {
+              const losAksjonspunktObjekt = {
+                kode: aksjonspunkt.definisjon.kode,
+                begrunnelse,
+                erVilkarOk: harDokumentasjonOgFravaerRisiko,
+                periode: {
+                  fom: soknad.søknadsperiode.fom,
+                  tom: soknad.søknadsperiode.tom,
                 },
-              ]);
+              };
+
+              if (!harDokumentasjonOgFravaerRisiko)
+                losAksjonspunktObjekt['avslagsårsak'] = avslagsArsakErIkkeRiskioFraFravaer
+                  ? Avslagskoder.IKKE_OKT_RISIKO_FRA_FRAVAER
+                  : Avslagskoder.IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET;
+
+              submitCallback([losAksjonspunktObjekt]);
             },
           } as VilkarKroniskSyktBarnProps,
         };

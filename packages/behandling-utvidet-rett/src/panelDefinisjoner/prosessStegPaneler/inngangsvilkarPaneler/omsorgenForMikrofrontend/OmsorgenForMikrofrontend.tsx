@@ -24,10 +24,10 @@ const omsorgenForVilkårAppID = 'omsorgenForRettApp';
 export default props => (
   <MicroFrontend
     id={omsorgenForVilkårAppID}
-    jsSrc="/k9/microfrontend/omsorgsdager/1.5.19/app.js"
-    jsIntegrity="sha384-hxxqB3imhH23iM7JUhnlItkMSIDb1ArUYJLznzgFCd3zDR/0CalwMZR2O3gW75RO"
-    stylesheetSrc="/k9/microfrontend/omsorgsdager/1.5.19/styles.css"
-    stylesheetIntegrity="sha384-tiIFqqTAYStHMNAiUIA+DhMmSORk+iE0XQji2SaJNXyg8OwRyHWhWbt1pqxNy3w8"
+    jsSrc="/k9/microfrontend/omsorgsdager/1.5.23/app.js"
+    jsIntegrity="sha384-dj63ZcJMh5ahToAx/PxIy/z62/XQeYOhWMyTqH2rEiNcWPtJETcO+1K4YbeYVU9q"
+    stylesheetSrc="/k9/microfrontend/omsorgsdager/1.5.23/styles.css"
+    stylesheetIntegrity="sha384-s7NpvoZYFA4hqjZz3fcDywhn8ToSND1O1xwyGj6g2Z0brU/DDoFHAekre+XmKrw+"
     onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, props)}
   />
 );

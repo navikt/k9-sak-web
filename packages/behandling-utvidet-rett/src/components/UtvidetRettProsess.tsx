@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useCallback, useMemo } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+
 import {
   prosessStegHooks,
   IverksetterVedtakStatusModal,
@@ -14,6 +14,7 @@ import {
 import { Fagsak, FagsakPerson, Behandling } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
@@ -185,13 +186,24 @@ const UtvidetRettProsess: FunctionComponent<ProsessProps> = ({
     valgtPanel,
   );
 
-  const fatterVedtakTextCode = useMemo(
-    () =>
-      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
-        ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionOMS',
-    [behandling.versjon],
-  );
+  const velgVedtakTextCode = panel => {
+    const fatterVedtakAksjonspunkt = panel
+      .getAksjonspunkter()
+      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FATTER_VEDTAK);
+    const foreslåVedtakAksjonspunkt = panel
+      .getAksjonspunkter()
+      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+
+    if (
+      fatterVedtakAksjonspunkt[0]?.status.kode === aksjonspunktStatus.OPPRETTET &&
+      foreslåVedtakAksjonspunkt[0]?.status.kode === aksjonspunktStatus.UTFORT
+    ) {
+      return 'FatterVedtakStatusModal.SendtBeslutter';
+    }
+    return 'FatterVedtakStatusModal.ModalDescriptionUtvidetRett';
+  };
+
+  const fatterVedtakTextCode = useMemo(() => velgVedtakTextCode(valgtPanel), [behandling.versjon]);
 
   return (
     <>
