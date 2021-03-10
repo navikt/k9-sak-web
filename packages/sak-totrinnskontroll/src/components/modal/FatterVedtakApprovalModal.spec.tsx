@@ -116,7 +116,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     expect(modal).toHaveLength(1);
     expect(modal.prop('isOpen')).toBe(true);
     expect(modal.prop('contentLabel')).toEqual(
-      'Utvidet rett er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+      'Ekstra omsorgsdager innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
     );
 
     const button = wrapper.find(Hovedknapp);

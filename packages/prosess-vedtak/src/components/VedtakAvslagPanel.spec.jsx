@@ -169,7 +169,7 @@ describe('<VedtakAvslagPanel>', () => {
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Utvidet rett er avslått');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
@@ -194,7 +194,7 @@ describe('<VedtakAvslagPanel>', () => {
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Utvidet rett er avslått');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
