@@ -5,11 +5,11 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 const vedtakVilkarPropType = PropTypes.shape({
   lovReferanse: PropTypes.string,
   vilkarType: kodeverkObjektPropType.isRequired,
-  perioder: [
-    {
+  perioder: PropTypes.arrayOf(
+    PropTypes.shape({
       vilkarStatus: kodeverkObjektPropType.isRequired,
-    },
-  ],
+    }),
+  ),
 });
 
 export default vedtakVilkarPropType;

@@ -44,6 +44,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
+    personopplysninger,
     arbeidsgiverOpplysningerPerId,
   }) => ({
     previewCallback,
@@ -53,6 +54,7 @@ class PanelDef extends ProsessStegPanelDef {
     beregningsgrunnlag: beregningsgrunnlag ? [beregningsgrunnlag[0]] : [], // FRISINN skal alltid vise ett beregningsgrunnlag
     ytelseTypeKode: fagsakYtelseType.FRISINN,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+    personopplysninger,
     arbeidsgiverOpplysningerPerId,
   });
 }
