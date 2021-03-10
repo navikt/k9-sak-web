@@ -51,7 +51,7 @@ const getInfoTextCode = (
     }
     if (
       ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-      FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
     ) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetUtvidetRett';
     }
@@ -67,7 +67,7 @@ const getInfoTextCode = (
     }
     if (
       ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-      FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
     ) {
       return 'FatterVedtakApprovalModal.OpphortUtvidetRett';
     }
@@ -83,7 +83,7 @@ const getInfoTextCode = (
   }
   if (
     ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
   ) {
     return 'FatterVedtakApprovalModal.InnvilgetUtvidetRett';
   }
@@ -113,7 +113,7 @@ const getModalDescriptionTextCode = (
   }
   if (
     ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
   ) {
     return 'FatterVedtakApprovalModal.ModalDescriptionUtvidetRettApproval';
   }

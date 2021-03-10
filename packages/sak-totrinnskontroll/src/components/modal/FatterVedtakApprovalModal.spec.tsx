@@ -94,4 +94,32 @@ describe('<FatterVedtakApprovalModal>', () => {
     const button = wrapper.find(Hovedknapp);
     expect(button).toHaveLength(1);
   });
+
+  it('skal rendre modal for iverksetter vedtak utvidet rett', () => {
+    const wrapper = shallowWithIntl(
+      <FatterVedtakApprovalModal.WrappedComponent
+        intl={intlMock}
+        closeEvent={closeEventCallback}
+        allAksjonspunktApproved
+        behandlingId={1}
+        behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
+        behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+        fagsakYtelseType={{
+          kode: fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
+          kodeverk: '',
+        }}
+        erKlageWithKA
+      />,
+    );
+
+    const modal = wrapper.find(Modal);
+    expect(modal).toHaveLength(1);
+    expect(modal.prop('isOpen')).toBe(true);
+    expect(modal.prop('contentLabel')).toEqual(
+      'Utvidet rett er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+    );
+
+    const button = wrapper.find(Hovedknapp);
+    expect(button).toHaveLength(1);
+  });
 });

@@ -71,7 +71,7 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
 
   if (
     ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
   ) {
     return 'VedtakForm.UtvidetRettIkkeInnvilget';
   }
