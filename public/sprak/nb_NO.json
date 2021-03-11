@@ -241,6 +241,7 @@
   "FatterVedtakStatusModal.ModalDescription": "Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.",
   "FatterVedtakStatusModal.ModalDescriptionFRISINN": "FRISINN er avslått.",
   "FatterVedtakStatusModal.ModalDescriptionOMS": "Omsorgspenger er avslått.",
+  "FatterVedtakStatusModal.ModalDescriptionUtvidetRett": "Ekstra omsorgsdager er avslått.",
   "FatterVedtakStatusModal.ModalDescriptionPleiepenger": "Pleiepenger er avslått.",
   "FatterVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
