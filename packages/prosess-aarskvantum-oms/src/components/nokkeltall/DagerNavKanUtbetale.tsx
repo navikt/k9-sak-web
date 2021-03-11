@@ -28,12 +28,9 @@ const DagerNavKanUtbetale: React.FunctionComponent<DagerNavKanUtbetaleProps> = (
       },
       {
         antallDager: -antallDagerArbeidsgiverDekker,
-        overskrifttekstId: 'Nøkkeltall.DagerDekketAvArbeidsgiver',
+        overskrifttekstId: 'Nøkkeltall.Ventetid',
         infotekstContent: (
-          <FormattedMessage
-            id="Nøkkeltall.DagerDekketAvArbeidsgiver.InfoText"
-            values={{ dager: antallDagerArbeidsgiverDekker }}
-          />
+          <FormattedMessage id="Nøkkeltall.Ventetid.InfoText" values={{ dager: antallDagerArbeidsgiverDekker }} />
         ),
       },
     ]}
