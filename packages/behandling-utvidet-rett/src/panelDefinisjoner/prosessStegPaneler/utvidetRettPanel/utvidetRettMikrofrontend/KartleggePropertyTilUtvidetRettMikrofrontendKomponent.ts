@@ -45,18 +45,12 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
   aksjonspunktKode: string,
   begrunnelse: string,
   erVilkarOk: boolean,
-  fom: string,
-  tom: string,
   avslagsArsakErIkkeRiskioFraFravaer: boolean,
 ) => {
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
-    periode: {
-      fom,
-      tom,
-    },
   };
 
   if (!erVilkarOk) {
@@ -108,8 +102,6 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
                   aksjonspunkt.definisjon.kode,
                   begrunnelse,
                   harDokumentasjonOgFravaerRisiko,
-                  soknad.søknadsperiode.fom,
-                  soknad.søknadsperiode.tom,
                   avslagsArsakErIkkeRiskioFraFravaer,
                 ),
               ]);
