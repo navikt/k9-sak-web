@@ -156,13 +156,13 @@ describe('<UtvidetRettProsess>', () => {
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
         rettigheter={rettigheter}
-        valgtProsessSteg="default"
+        valgtProsessSteg="vedtak"
         valgtFaktaSteg="default"
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         oppdaterBehandlingVersjon={sinon.spy()}
         opneSokeside={opneSokeside}
         hasFetchError={false}
-        apentFaktaPanelInfo={{ urlCode: 'default', textCode: 'default' }}
+        apentFaktaPanelInfo={{ urlCode: 'vedtak', textCode: 'vedtak' }}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
@@ -216,13 +216,13 @@ describe('<UtvidetRettProsess>', () => {
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
         rettigheter={rettigheter}
-        valgtProsessSteg="default"
+        valgtProsessSteg="vedtak"
         valgtFaktaSteg="default"
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         oppdaterBehandlingVersjon={sinon.spy()}
         opneSokeside={opneSokeside}
         hasFetchError={false}
-        apentFaktaPanelInfo={{ urlCode: 'default', textCode: 'default' }}
+        apentFaktaPanelInfo={{ urlCode: 'vedtak', textCode: 'vedtak' }}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}

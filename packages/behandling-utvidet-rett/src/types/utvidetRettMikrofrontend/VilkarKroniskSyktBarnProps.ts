@@ -1,10 +1,15 @@
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
-import { InformasjonTilLesemodus } from './informasjonTilLesemodus';
 
 export interface VilkarKroniskSyktBarnProps {
   vedtakFattetVilkarOppfylt: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   lesemodus: boolean;
-  informasjonTilLesemodus?: InformasjonTilLesemodus;
-  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => void;
+  informasjonTilLesemodus?: InformasjonTilLesemodusKroniskSyk;
+  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode) => void;
+}
+
+export interface InformasjonTilLesemodusKroniskSyk {
+  begrunnelse: string;
+  vilkarOppfylt: boolean;
+  avslagsArsakErIkkeRiskioFraFravaer: boolean;
 }
