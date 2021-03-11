@@ -13,6 +13,8 @@ import shallowWithIntl from '../../i18n';
 
 const pleiepenger = fagsakYtelseType.PLEIEPENGER;
 const omsorgspenger = fagsakYtelseType.OMSORGSPENGER;
+const kroniskSyktBarn = fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN;
+const midlertidigAlene = fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
 
 describe('<VedtakAvslagPanel>', () => {
   const behandling = {
@@ -143,6 +145,56 @@ describe('<VedtakAvslagPanel>', () => {
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.first().childAt(0).text()).to.eql('Omsorgspenger er avslått');
+
+    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
+  });
+
+  it('skal rendre avslagspanel for utvidet rett kronisk sykt barn', () => {
+    const wrapper = shallowWithIntl(
+      <VedtakAvslagPanelImpl
+        intl={intlMock}
+        vilkar={vilkarUtenSoknadsfrist}
+        behandlingsresultat={behandlingsresultat}
+        sprakkode={sprakkode}
+        readOnly
+        behandlinger={[behandling]}
+        ytelseTypeKode={kroniskSyktBarn}
+        alleKodeverk={{}}
+      />,
+    );
+
+    const undertekstFields = wrapper.find('Undertekst');
+    expect(undertekstFields).to.have.length(2);
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+
+    const normaltekstFields = wrapper.find('Normaltekst');
+    expect(normaltekstFields).to.have.length(1);
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
+
+    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
+  });
+
+  it('skal rendre avslagspanel for midlertidig alene', () => {
+    const wrapper = shallowWithIntl(
+      <VedtakAvslagPanelImpl
+        intl={intlMock}
+        vilkar={vilkarUtenSoknadsfrist}
+        behandlingsresultat={behandlingsresultat}
+        sprakkode={sprakkode}
+        readOnly
+        behandlinger={[behandling]}
+        ytelseTypeKode={midlertidigAlene}
+        alleKodeverk={{}}
+      />,
+    );
+
+    const undertekstFields = wrapper.find('Undertekst');
+    expect(undertekstFields).to.have.length(2);
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+
+    const normaltekstFields = wrapper.find('Normaltekst');
+    expect(normaltekstFields).to.have.length(1);
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });

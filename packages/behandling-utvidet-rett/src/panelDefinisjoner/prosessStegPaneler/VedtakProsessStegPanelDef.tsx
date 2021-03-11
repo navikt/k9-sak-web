@@ -20,6 +20,8 @@ class PanelDef extends ProsessStegPanelDef {
     UtvidetRettBehandlingApiKeys.DOKUMENTDATA_HENTE,
   ];
 
+  getOverstyrVisningAvKomponent = () => true;
+
   getData = ({
     previewCallback,
     rettigheter,

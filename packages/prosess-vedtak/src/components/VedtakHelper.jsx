@@ -69,6 +69,13 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
+  if (
+    ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+  ) {
+    return 'VedtakForm.UtvidetRettIkkeInnvilget';
+  }
+
   if (ytelseType === fagsakYtelseType.FRISINN) {
     return 'VedtakForm.FrisinnIkkeInnvilget';
   }
@@ -110,8 +117,9 @@ export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnl
     ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status.kode === aksjonspunktStatus.UTFORT,
   );
 
-  const alleAndelerFørstePerioder = beregningsgrunnlag.map(bg => bg.beregningsgrunnlagPeriode[0])
-      .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel);
+  const alleAndelerFørstePerioder = beregningsgrunnlag
+    .map(bg => bg.beregningsgrunnlagPeriode[0])
+    .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel);
   const andelSomErManueltFastsatt = alleAndelerFørstePerioder.find(
     andel => andel.overstyrtPrAar || andel.overstyrtPrAar === 0,
   );

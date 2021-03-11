@@ -49,6 +49,12 @@ const getInfoTextCode = (
     if (ytelseType.kode === FagsakYtelseType.FRISINN) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetFRISINN';
     }
+    if (
+      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+    ) {
+      return 'FatterVedtakApprovalModal.IkkeInnvilgetUtvidetRett';
+    }
     return 'FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger';
   }
   // HVIS OPPHØRT
@@ -59,6 +65,12 @@ const getInfoTextCode = (
     if (ytelseType.kode === FagsakYtelseType.FRISINN) {
       return 'FatterVedtakApprovalModal.OpphortFRISINN';
     }
+    if (
+      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+    ) {
+      return 'FatterVedtakApprovalModal.OpphortUtvidetRett';
+    }
     return 'FatterVedtakApprovalModal.OpphortOmsorgpenger';
   }
 
@@ -68,6 +80,12 @@ const getInfoTextCode = (
   }
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
     return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
+  }
+  if (
+    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+  ) {
+    return 'FatterVedtakApprovalModal.InnvilgetUtvidetRett';
   }
   return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
 };
@@ -92,6 +110,12 @@ const getModalDescriptionTextCode = (
   }
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
     return 'FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval';
+  }
+  if (
+    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
+  ) {
+    return 'FatterVedtakApprovalModal.ModalDescriptionUtvidetRettApproval';
   }
   return 'FatterVedtakApprovalModal.ModalDescriptionOMSApproval';
 };
