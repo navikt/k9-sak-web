@@ -165,7 +165,7 @@ export const MessagesImpl: FunctionComponent<
             ))}
             bredde="xxl"
           />
-          {recipients.length ? (
+          {recipients.length > 0 && (
             <>
               <VerticalSpacer eightPx />
               <SelectField
@@ -185,8 +185,8 @@ export const MessagesImpl: FunctionComponent<
                 bredde="xxl"
               />
             </>
-          ) : null}
-          {brevmalkode === dokumentMalType.REVURDERING_DOK ? (
+          )}
+          {brevmalkode === dokumentMalType.REVURDERING_DOK && (
             <>
               <VerticalSpacer eightPx />
               <SelectField
@@ -202,8 +202,8 @@ export const MessagesImpl: FunctionComponent<
                 bredde="xxl"
               />
             </>
-          ) : null}
-          {showFritekst(brevmalkode, arsakskode) ? (
+          )}
+          {showFritekst(brevmalkode, arsakskode) && (
             <>
               <VerticalSpacer eightPx />
               <div className="input--xxl">
@@ -216,13 +216,13 @@ export const MessagesImpl: FunctionComponent<
                 />
               </div>
             </>
-          ) : null}
+          )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>
             <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
               {intl.formatMessage({ id: 'Messages.Submit' })}
             </Hovedknapp>
-            {brevmalkode ? (
+            {brevmalkode && (
               <a
                 href=""
                 onClick={previewMessage}
@@ -231,7 +231,7 @@ export const MessagesImpl: FunctionComponent<
               >
                 {intl.formatMessage({ id: 'Messages.Preview' })}
               </a>
-            ) : null}
+            )}
           </div>
         </>
       ) : (

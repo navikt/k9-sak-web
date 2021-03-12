@@ -6,6 +6,7 @@ export type Mottaker = {
 export interface Brevmal {
   navn: string;
   kode?: string;
+  tilgjengelig?: boolean;
   mottakere: Mottaker[];
 }
 
