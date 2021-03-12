@@ -4,6 +4,8 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Vilkar, Rammevedtak } from '@k9-sak-web/types';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import UtvidetRettSoknad from '../../types/UtvidetRettSoknad';
 
 const utvidetRettTestData = {
@@ -80,7 +82,30 @@ const utvidetRettTestData = {
       employeeHasAccess: true,
     },
   },
-  vilkar: [] as Vilkar[],
+  vilkar: [
+    {
+      vilkarType: { kode: vilkarType.UTVIDETRETTVILKARET, kodeverk: 'test' },
+      overstyrbar: true,
+      perioder: [
+        {
+          merknadParametere: {},
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
+        },
+      ],
+    },
+    {
+      vilkarType: { kode: vilkarType.OMP_OMSORGENFORVILKARET, kodeverk: 'test' },
+      overstyrbar: true,
+      perioder: [
+        {
+          merknadParametere: {},
+          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          periode: { fom: '2020-12-30', tom: '2021-02-28' },
+        },
+      ],
+    },
+  ] as Vilkar[],
   soknad: {
     begrunnelseForSenInnsending: null,
     manglendeVedlegg: [],
