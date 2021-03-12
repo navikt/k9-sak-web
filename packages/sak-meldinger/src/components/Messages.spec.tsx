@@ -26,11 +26,43 @@ describe('<Messages>', () => {
     kodeverk: 'Engelsk',
   };
 
-  const templates = [
-    { kode: 'Mal1', navn: 'Mal 1', tilgjengelig: true },
-    { kode: 'Mal2', navn: 'Mal 2', tilgjengelig: true },
-    { kode: 'Mal3', navn: 'Mal 3', tilgjengelig: true },
-  ];
+  const templates = {
+    INNHEN: {
+      navn: 'Innhent dokumentasjon',
+      mottakere: [
+        {
+          id: '00000000',
+          type: 'AKTØRID',
+        },
+        {
+          id: '123456789',
+          type: 'ORGNR',
+        },
+      ],
+    },
+    REVURD: {
+      navn: 'Innhent dokumentasjon',
+      mottakere: [
+        {
+          id: '00000000',
+          type: 'AKTØRID',
+        },
+        {
+          id: '123456789',
+          type: 'ORGNR',
+        },
+      ],
+    },
+    ETTERLYS_INNTEKTSMELDING_DOK: {
+      navn: 'Etterlys inntektsmelding',
+      mottakere: [
+        {
+          id: '123456789',
+          type: 'ORGNR',
+        },
+      ],
+    },
+  };
 
   const causes = [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }];
 
@@ -40,6 +72,7 @@ describe('<Messages>', () => {
         {...mockProps}
         templates={templates}
         sprakKode={sprakkode}
+        brevmalkode="INNHEN"
         causes={causes}
         behandlingId={1}
         behandlingVersjon={2}
@@ -57,6 +90,7 @@ describe('<Messages>', () => {
 
     const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'overstyrtMottaker');
     expect(recipientSelect).toHaveLength(1);
+    expect(recipientSelect.prop('selectValues')).toHaveLength(2);
   });
 
   it('skal vise forhåndvisningslenke når fritekst er gyldig', () => {
@@ -66,7 +100,7 @@ describe('<Messages>', () => {
         {...mockProps}
         templates={templates}
         sprakKode={sprakkode}
-        brevmalkode="REVURD"
+        brevmalkode="INNHEN"
         causes={causes}
         previewCallback={previewEventCallback}
         fritekst="Dokument"
@@ -113,6 +147,10 @@ describe('<Messages>', () => {
 
     const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'overstyrtMottaker');
     expect(recipientSelect).toHaveLength(1);
-    expect(recipientSelect.prop('selectValues')).toHaveLength(1);
+    expect(recipientSelect.prop('selectValues')).toHaveLength(2);
+
+    const causesSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'arsakskode');
+    expect(causesSelect).toHaveLength(1);
+    expect(causesSelect.prop('selectValues')).toHaveLength(1);
   });
 });
