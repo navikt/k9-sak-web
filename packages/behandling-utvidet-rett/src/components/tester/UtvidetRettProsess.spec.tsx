@@ -60,31 +60,30 @@ describe('<UtvidetRettProsess>', () => {
 
     const meny = wrapper.find(ProsessStegContainer);
     const formaterteProsessStegPaneler = meny.prop('formaterteProsessStegPaneler');
-    formaterteProsessStegPaneler;
     expect(formaterteProsessStegPaneler).toEqual([
       {
         labelId: 'Behandlingspunkt.Inngangsvilkar',
         isActive: true,
         isDisabled: false,
-        isFinished: true,
+        isFinished: false,
         usePartialStatus: false,
-        type: 'success',
+        type: 'default',
       },
       {
         labelId: 'Behandlingspunkt.UtvidetRett',
         isActive: false,
         isDisabled: false,
-        isFinished: true,
+        isFinished: false,
         usePartialStatus: false,
-        type: 'success',
+        type: 'default',
       },
       {
         labelId: 'Behandlingspunkt.Vedtak',
         isActive: false,
         isDisabled: false,
-        isFinished: true,
+        isFinished: false,
         usePartialStatus: false,
-        type: 'success',
+        type: 'default',
       },
     ]);
   });
