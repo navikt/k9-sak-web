@@ -248,7 +248,7 @@ const buildInitalValues = (templates: Brevmaler, isKontrollerRevurderingApOpen?:
   if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
     [brevmalkode] = Object.keys(templates);
     overstyrtMottaker =
-      templates[brevmalkode].mottakere && Array.isArray(templates[brevmalkode].mottakere)
+      templates[brevmalkode] && templates[brevmalkode].mottakere && Array.isArray(templates[brevmalkode].mottakere)
         ? JSON.stringify(templates[brevmalkode].mottakere[0])
         : null;
   }
