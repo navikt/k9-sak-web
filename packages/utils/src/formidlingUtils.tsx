@@ -31,7 +31,7 @@ export function lagVisningsnavnForMottaker(
   }
 
   if (personopplysninger && personopplysninger.aktoerId === mottakerId && personopplysninger.navn) {
-    return `${personopplysninger.navn} (${mottakerId})`;
+    return `${personopplysninger.navn} (${personopplysninger.fnr})`;
   }
 
   return mottakerId;
