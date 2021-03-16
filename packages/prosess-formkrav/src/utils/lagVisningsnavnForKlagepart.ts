@@ -14,7 +14,7 @@ function lagVisningsnavnForKlagepart(
   }
 
   if (personopplysninger && personopplysninger.aktoerId === partId) {
-    return `${personopplysninger.navn} (${partId})`;
+    return `${personopplysninger.navn} (${personopplysninger.fnr || personopplysninger.nummer || partId})`;
   }
 
   return partId;

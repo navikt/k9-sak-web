@@ -6,10 +6,11 @@ import {
   KodeverkMedNavn,
   Personopplysninger,
   ArbeidsgiverOpplysningerPerId,
+  Brevmaler,
   Mottaker,
 } from '@k9-sak-web/types';
 
-import Messages, { FormValues, Template } from './components/Messages';
+import Messages, { FormValues } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
@@ -24,7 +25,7 @@ const intl = createIntl(
 
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
-  templates?: Template[];
+  templates: Brevmaler;
   sprakKode: Kodeverk;
   previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
   behandlingId: number;
@@ -37,7 +38,7 @@ interface OwnProps {
 
 const MeldingerSakIndex: FunctionComponent<OwnProps> = ({
   submitCallback,
-  templates = [],
+  templates,
   sprakKode,
   previewCallback,
   behandlingId,

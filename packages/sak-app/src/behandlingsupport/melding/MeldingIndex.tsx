@@ -14,6 +14,7 @@ import {
   Kodeverk,
   Personopplysninger,
   ArbeidsgiverOpplysningerWrapper,
+  Brevmaler,
   Mottaker,
 } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
@@ -89,12 +90,6 @@ interface OwnProps {
   behandlingVersjon?: number;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
-}
-
-interface Brevmal {
-  kode: string;
-  navn: string;
-  tilgjengelig: boolean;
 }
 
 const EMPTY_ARRAY = [];
@@ -188,7 +183,7 @@ const MeldingIndex: FunctionComponent<OwnProps> = ({
   );
 
   const skalHenteBrevmaler = requestApi.hasPath(K9sakApiKeys.BREVMALER);
-  const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmal[]>(
+  const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmaler>(
     K9sakApiKeys.BREVMALER,
     undefined,
     {

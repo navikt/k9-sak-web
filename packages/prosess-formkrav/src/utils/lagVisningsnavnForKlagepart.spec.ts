@@ -22,6 +22,7 @@ describe('lagVisningsnavnForKlagepart', () => {
     const personopplysninger = {
       aktoerId: '12345678',
       navn: 'Petra Tester',
+      fnr: '72031833441',
       navBrukerKjonn: {
         kode: 'K',
         kodeverk: 'BRUKER_KJOENN',
@@ -67,6 +68,7 @@ describe('lagVisningsnavnForKlagepart', () => {
     const personopplysninger = {
       aktoerId: '12345678',
       navn: 'Petra Tester',
+      fnr: '72031833441',
       navBrukerKjonn: {
         kode: 'K',
         kodeverk: 'BRUKER_KJOENN',
@@ -94,7 +96,7 @@ describe('lagVisningsnavnForKlagepart', () => {
     };
 
     const navn = lagVisningsnavnForKlagepart(partId, personopplysninger, arbeidsgiverOpplysningerPerId);
-    const expected = `Petra Tester (12345678)`;
+    const expected = `Petra Tester (72031833441)`;
     expect(navn).to.eql(expected);
   });
 
@@ -112,6 +114,7 @@ describe('lagVisningsnavnForKlagepart', () => {
     const personopplysninger = {
       aktoerId: '23456781',
       navn: 'Petra Tester',
+      fnr: '72031833441',
       navBrukerKjonn: {
         kode: 'K',
         kodeverk: 'BRUKER_KJOENN',
