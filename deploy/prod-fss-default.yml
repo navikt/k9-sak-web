@@ -56,7 +56,7 @@ spec:
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "http://k9-sak"
     - name: OMSORGSDAGER_FRONTEND_URL
-      value: "http://k9-sak"
+      value: "https://omsorgsdager-frontend.intern.nav.no/"
     - name: PSB_UTTAK_FRONTEND_URL
       value: "http://k9-sak"
 

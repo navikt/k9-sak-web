@@ -14,6 +14,8 @@ class UtvidetRettMikrofrontendPanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [UtvidetRettBehandlingApiKeys.VILKAR];
 
+  getOverstyrVisningAvKomponent = () => true;
+
   getData = ({ fagsak, soknad, vilkar, aksjonspunkter }) => ({
     saksInformasjon: {
       fagsaksType: fagsak.sakstype.kode,

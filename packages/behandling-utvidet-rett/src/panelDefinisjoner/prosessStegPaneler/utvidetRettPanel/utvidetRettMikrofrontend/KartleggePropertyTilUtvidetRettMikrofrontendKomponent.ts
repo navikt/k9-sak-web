@@ -1,6 +1,7 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import {
@@ -68,12 +69,13 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   aksjonspunkter: Aksjonspunkt[],
   submitCallback,
   isAksjonspunktOpen,
+  behandling,
 ) => {
   let objektTilMikrofrontend = {};
   const { vilkar, soknad, fagsaksType, vedtakFattetAksjonspunkt } = saksInformasjon;
   const aksjonspunkt = aksjonspunkter[0];
   const vilkarKnyttetTilAksjonspunkt = vilkar.filter(
-    vilkaret => vilkaret.vilkarType.kode === aksjonspunkt.vilkarType.kode,
+    vilkaret => vilkaret.vilkarType.kode === aksjonspunkt?.vilkarType.kode,
   )[0];
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkarKnyttetTilAksjonspunkt;
 
@@ -81,12 +83,14 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
     const vedtakFattet = vedtakFattetAksjonspunkt.length > 0 && !vedtakFattetAksjonspunkt[0].kanLoses;
     const skalVilkarsUtfallVises = !isAksjonspunktOpen && vedtakFattet && erVilkarVurdert(vilkarKnyttetTilAksjonspunkt);
     const lesemodus = isReadOnly || !isAksjonspunktOpen;
+    const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
     switch (fagsaksType) {
       case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN: {
         objektTilMikrofrontend = {
           visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
           props: {
+            aksjonspunktLost,
             lesemodus,
             informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkarKnyttetTilAksjonspunkt, aksjonspunkt),
             vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
@@ -115,6 +119,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
         objektTilMikrofrontend = {
           visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_MIDLERTIDIG_ALENE,
           props: {
+            aksjonspunktLost,
             lesemodus,
             soknadsopplysninger: {
               årsak: angittForelder[0]?.situasjonKode || '',

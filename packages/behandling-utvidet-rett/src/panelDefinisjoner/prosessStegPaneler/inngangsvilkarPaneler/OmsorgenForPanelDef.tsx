@@ -13,6 +13,8 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
 
   getVilkarKoder = () => [vilkarType.OMP_OMSORGENFORVILKARET];
 
+  getOverstyrVisningAvKomponent = () => true;
+
   getData = ({ soknad, vilkar, aksjonspunkter }) => ({
     angitteBarn: soknad.angittePersoner.filter(person => person.rolle === 'BARN'),
     vedtakFattetAksjonspunkt: aksjonspunkter.filter(

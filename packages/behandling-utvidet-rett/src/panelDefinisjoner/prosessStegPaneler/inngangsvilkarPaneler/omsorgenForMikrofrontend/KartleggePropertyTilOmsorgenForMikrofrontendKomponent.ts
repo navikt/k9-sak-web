@@ -1,5 +1,6 @@
 import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import {
   generereInfoForVurdertVilkar,
@@ -17,6 +18,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   isAksjonspunktOpen,
   submitCallback,
   angitteBarn,
+  behandling,
 ) => {
   let objektTilMikrofrontend = {};
   const aksjonspunkt = aksjonspunkter[0];
@@ -27,9 +29,12 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   if (aksjonspunkt && vilkarKnyttetTilAksjonspunkt && aksjonspunkt.definisjon.kode === aksjonspunktCodes.OMSORGEN_FOR) {
     const vedtakFattet = vedtakFattetAksjonspunkt.length > 0 && !vedtakFattetAksjonspunkt[0].kanLoses;
     const skalVilkarsUtfallVises = !isAksjonspunktOpen && vedtakFattet && erVilkarVurdert(vilkarKnyttetTilAksjonspunkt);
+    const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+
     objektTilMikrofrontend = {
       visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
       props: {
+        aksjonspunktLost,
         lesemodus: isReadOnly || !isAksjonspunktOpen,
         informasjonTilLesemodus: hentBegrunnelseOgVilkarOppfylt(
           vilkarKnyttetTilAksjonspunkt,

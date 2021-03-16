@@ -2,6 +2,7 @@ import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface VilkarKroniskSyktBarnProps {
   vedtakFattetVilkarOppfylt: boolean;
+  aksjonspunktLost: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   lesemodus: boolean;
   informasjonTilLesemodus?: InformasjonTilLesemodusKroniskSyk;
