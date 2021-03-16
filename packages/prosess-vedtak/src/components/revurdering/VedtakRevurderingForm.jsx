@@ -202,7 +202,7 @@ export class VedtakRevurderingFormImpl extends Component {
               previewCallback={previewCallback}
               formProps={formProps}
               redusertUtbetalingÅrsaker={
-                readOnly ? vedtakVarsel.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)
+                readOnly ? vedtakVarsel?.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)
               }
               brødtekst={brødtekst}
               overskrift={overskrift}
