@@ -13,6 +13,7 @@ import {
   Personopplysninger,
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
+  Brevmal,
   Mottaker,
 } from '@k9-sak-web/types';
 import {
@@ -41,12 +42,6 @@ export type FormValues = {
   arsakskode?: string;
 };
 
-export type Template = {
-  kode: string;
-  navn: string;
-  tilgjengelig: boolean;
-};
-
 const getFritekstMessage = (brevmalkode?: string): string =>
   brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst';
 
@@ -63,7 +58,7 @@ interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
-  templates: Template[] | Brevmaler;
+  templates: Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
@@ -88,6 +83,11 @@ const createValidateRecipient = recipients => value =>
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
+const transformTemplates = templates =>
+  templates && typeof templates === 'object' && !Array.isArray(templates)
+    ? Object.keys(templates).map(key => ({ ...templates[key], kode: key }))
+    : [];
+
 /**
  * Messages
  *
@@ -98,7 +98,7 @@ export const MessagesImpl: FunctionComponent<
   PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
 > = ({
   intl,
-  templates = [],
+  templates,
   causes = [],
   previewCallback,
   handleSubmit,
@@ -129,25 +129,19 @@ export const MessagesImpl: FunctionComponent<
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
 
-  let recipients: Mottaker[] = [RECIPIENT];
-  let tmpls: Template[] = Array.isArray(templates) ? templates : [];
+  const recipients: Mottaker[] =
+    templates && brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
+      ? templates[brevmalkode].mottakere
+      : [];
 
-  // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
-  // komponentene burde oppdateres for å bedre håndtere ny struktur når den er tatt i bruk overallt.
-  if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
-    tmpls = Object.keys(templates).map(key => ({ navn: templates[key].navn, kode: key, tilgjengelig: true }));
-    recipients =
-      brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
-        ? templates[brevmalkode].mottakere
-        : [];
-  }
+  const tmpls: Brevmal[] = transformTemplates(templates);
 
   useEffect(() => {
     // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
     if (brevmalkode) {
       formProps.change(
         'overstyrtMottaker',
-        Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)
+        recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)
           ? overstyrtMottaker
           : JSON.stringify(recipients[0]),
       );
@@ -164,14 +158,14 @@ export const MessagesImpl: FunctionComponent<
             label={intl.formatMessage({ id: 'Messages.Template' })}
             validate={[required]}
             placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
-            selectValues={(tmpls || []).map(template => (
-              <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>
+            selectValues={tmpls.map(template => (
+              <option key={template.kode} value={template.kode} disabled={template.tilgjengelig === false}>
                 {template.navn}
               </option>
             ))}
             bredde="xxl"
           />
-          {Array.isArray(recipients) && recipients.length && (
+          {recipients.length > 0 && (
             <>
               <VerticalSpacer eightPx />
               <SelectField
@@ -200,7 +194,7 @@ export const MessagesImpl: FunctionComponent<
                 label={intl.formatMessage({ id: 'Messages.Årsak' })}
                 validate={[required]}
                 placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
-                selectValues={causes.map(cause => (
+                selectValues={(causes || []).map(cause => (
                   <option key={cause.kode} value={cause.kode}>
                     {cause.navn}
                   </option>
@@ -247,22 +241,20 @@ export const MessagesImpl: FunctionComponent<
   );
 };
 
-const buildInitalValues = (templates: Template[] | Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
-  let brevmal = Array.isArray(templates) && templates.length ? templates[0] : { kode: null };
+const buildInitalValues = (templates: Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
+  let brevmalkode = null;
   let overstyrtMottaker = JSON.stringify(RECIPIENT);
 
-  // TODO: Dette er bare en midlertidig løsning for å være kompatibel med ny/gammel struktur.
-  // komponentene burde oppdateres for å bedre håndtere ny struktur når den er tatt i bruk overallt.
   if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
-    brevmal = { kode: Object.keys(templates)[0] };
+    [brevmalkode] = Object.keys(templates);
     overstyrtMottaker =
-      templates[brevmal.kode].mottakere && templates[brevmal.kode].mottakere[0]
-        ? JSON.stringify(templates[brevmal.kode].mottakere[0])
+      templates[brevmalkode] && templates[brevmalkode].mottakere && Array.isArray(templates[brevmalkode].mottakere)
+        ? JSON.stringify(templates[brevmalkode].mottakere[0])
         : null;
   }
 
   const initialValues = {
-    brevmalkode: brevmal && brevmal.kode ? brevmal.kode : null,
+    brevmalkode,
     overstyrtMottaker,
     // overstyrtMottaker: null,
     fritekst: '',

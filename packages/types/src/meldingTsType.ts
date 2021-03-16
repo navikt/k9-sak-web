@@ -3,11 +3,15 @@ export type Mottaker = {
   type: string;
 };
 
+export interface Brevmal {
+  navn: string;
+  kode?: string;
+  tilgjengelig?: boolean;
+  mottakere: Mottaker[];
+}
+
 interface Brevmaler {
-  [index: string]: {
-    navn: string;
-    mottakere: Mottaker[];
-  };
+  [index: string]: Brevmal;
 }
 
 export default Brevmaler;

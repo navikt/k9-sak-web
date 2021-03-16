@@ -9,18 +9,34 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import arbeidsgivere from '../mocks/arbeidsgivere.json';
 import withReduxProvider from '../../decorators/withRedux';
 
-const templates = [
-  {
-    kode: dokumentMalType.INNHENT_DOK,
+const templates = {
+  [dokumentMalType.INNHENT_DOK]: {
     navn: 'Innhent dokumentasjon',
-    tilgjengelig: true,
+    mottakere: [
+      {
+        id: '00000000',
+        type: 'AKTØRID',
+      },
+      {
+        id: '123456789',
+        type: 'ORGNR',
+      },
+    ],
   },
-  {
-    kode: dokumentMalType.REVURDERING_DOK,
+  [dokumentMalType.REVURDERING_DOK]: {
     navn: 'Revurderingsdokumentasjon',
-    tilgjengelig: true,
+    mottakere: [
+      {
+        id: '00000000',
+        type: 'AKTØRID',
+      },
+      {
+        id: '123456789',
+        type: 'ORGNR',
+      },
+    ],
   },
-];
+};
 
 const sprakKode = {
   kode: '',
