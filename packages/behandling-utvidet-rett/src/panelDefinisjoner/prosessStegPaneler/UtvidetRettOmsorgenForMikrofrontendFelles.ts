@@ -1,4 +1,4 @@
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { Vilkar } from '@k9-sak-web/types';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { InformasjonOmVurdertVilkar } from '../../types/utvidetRettMikrofrontend/InformasjonOmVurdertVilkar';
 
@@ -25,40 +25,4 @@ export const generereInfoForVurdertVilkar = (
   return vurdertVilkar;
 };
 
-export const erVilkarVurdert = (vilkarArr: Vilkar) => {
-  let vilkarVurdert = false;
-
-  if (vilkarArr.perioder.length > 0) {
-    const periode = vilkarArr.perioder[0];
-    const vilkarUtfall = periode.vilkarStatus.kode;
-    vilkarVurdert = vilkarUtfall !== vilkarUtfallType.IKKE_VURDERT;
-  }
-
-  return vilkarVurdert;
-};
-
-export const hentBegrunnelseOgVilkarOppfylt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, medPeriode: boolean) => {
-  if (vilkar.perioder[0] && !medPeriode) {
-    return {
-      begrunnelse: aksjonspunkt.begrunnelse,
-      vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
-    };
-  }
-
-  if (vilkar.perioder[0] && medPeriode) {
-    return {
-      begrunnelse: aksjonspunkt.begrunnelse,
-      vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
-      dato: {
-        fra: vilkar.perioder[0].periode.fom,
-        til: vilkar.perioder[0].periode.tom,
-      },
-    };
-  }
-  return {
-    begrunnelse: 'Noe gikk galt.',
-    vilkarOppfylt: false,
-  };
-};
-
-export default { erVilkarVurdert, hentBegrunnelseOgVilkarOppfylt, generereInfoForVurdertVilkar };
+export default { generereInfoForVurdertVilkar };

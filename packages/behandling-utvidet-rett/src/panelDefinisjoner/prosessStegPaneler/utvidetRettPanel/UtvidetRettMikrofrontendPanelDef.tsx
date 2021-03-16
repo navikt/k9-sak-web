@@ -16,14 +16,10 @@ class UtvidetRettMikrofrontendPanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ fagsak, soknad, vilkar, aksjonspunkter }) => ({
+  getData = ({ fagsak, soknad }) => ({
     saksInformasjon: {
       fagsaksType: fagsak.sakstype.kode,
-      vedtakFattetAksjonspunkt: aksjonspunkter.filter(
-        aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.FATTER_VEDTAK,
-      ),
       soknad,
-      vilkar,
     },
   });
 }

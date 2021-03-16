@@ -5,17 +5,17 @@ import KartleggePropertyTilUtvidetRettMikrofrontendKomponent from './KartleggePr
 
 const initializeUtvidetRettVilkar = (
   elementId,
-  { saksInformasjon, isReadOnly, aksjonspunkter, submitCallback, isAksjonspunktOpen, behandling },
+  { saksInformasjon, isReadOnly, aksjonspunkter, submitCallback, isAksjonspunktOpen, behandling, status, vilkar },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
     KartleggePropertyTilUtvidetRettMikrofrontendKomponent(
       saksInformasjon,
       isReadOnly,
-      aksjonspunkter,
       submitCallback,
-      isAksjonspunktOpen,
       behandling,
+      { aksjonspunkter, isAksjonspunktOpen },
+      { vilkar, status },
     ),
   );
 };

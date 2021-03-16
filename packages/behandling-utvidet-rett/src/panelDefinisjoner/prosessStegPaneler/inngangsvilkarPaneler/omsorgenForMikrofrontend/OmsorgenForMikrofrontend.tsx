@@ -5,28 +5,17 @@ import KartleggePropertyTilOmsorgenForMikrofrontendKomponent from './KartleggePr
 
 const initializeOmsorgenForVilkar = (
   elementId,
-  {
-    vedtakFattetAksjonspunkt,
-    isReadOnly,
-    aksjonspunkter,
-    vilkar,
-    isAksjonspunktOpen,
-    submitCallback,
-    angitteBarn,
-    behandling,
-  },
+  { isReadOnly, aksjonspunkter, isAksjonspunktOpen, submitCallback, behandling, status, vilkar, angitteBarn },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
     KartleggePropertyTilOmsorgenForMikrofrontendKomponent(
-      vedtakFattetAksjonspunkt,
       isReadOnly,
-      aksjonspunkter,
-      vilkar,
-      isAksjonspunktOpen,
       submitCallback,
-      angitteBarn,
       behandling,
+      angitteBarn,
+      { aksjonspunkter, isAksjonspunktOpen },
+      { vilkar, status },
     ),
   );
 };
