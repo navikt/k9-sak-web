@@ -22,14 +22,14 @@ const initializeUtvidetRettVilkar = (
 
 const hentVersjonInformasjon = () => {
   const produksjonsVersjon = {
-    versjon: '1.5.25',
-    jsIntegrity: 'sha384-QEtSsaqYq1p4LvBJL7teyK3owigDKoL8YqacOzt8iWEs/luugnTdy1Vs2obZgyHl',
-    stylesheetIntegrity: 'sha384-8hP7XTKTOvV+B+ay0KKB/qG6sH0BIzHiYVMNXITSdudshPpPyjcsIsxXdDgYpLns',
+    versjon: '1.5.29',
+    jsIntegrity: 'sha384-hHFYOcum1J9U/5dNOouYiTlcPhv4bF/SBVvlyri9YHsSWNFD2HrK9NxUkqUPjorm',
+    stylesheetIntegrity: 'sha384-s7zKNrhjA1tpqnkyej5k6S6jybA6XM3bdjEMmWg9iMy7Mnj2pVupmHEmWn9LX1pY',
   };
   const preprodVersjon = {
-    versjon: '1.5.25',
-    jsIntegrity: 'sha384-QEtSsaqYq1p4LvBJL7teyK3owigDKoL8YqacOzt8iWEs/luugnTdy1Vs2obZgyHl',
-    stylesheetIntegrity: 'sha384-8hP7XTKTOvV+B+ay0KKB/qG6sH0BIzHiYVMNXITSdudshPpPyjcsIsxXdDgYpLns',
+    versjon: '1.5.29',
+    jsIntegrity: 'sha384-hHFYOcum1J9U/5dNOouYiTlcPhv4bF/SBVvlyri9YHsSWNFD2HrK9NxUkqUPjorm',
+    stylesheetIntegrity: 'sha384-s7zKNrhjA1tpqnkyej5k6S6jybA6XM3bdjEMmWg9iMy7Mnj2pVupmHEmWn9LX1pY',
   };
   return sjekkHvisErIProduksjon ? produksjonsVersjon : preprodVersjon;
 };
