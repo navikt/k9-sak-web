@@ -158,8 +158,8 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.UTVIDET_RETT,
   },
-  PUNKT_FOR_OMSORGEN_FOR: {
-    kode: 'PUNKT_FOR_OMSORGEN_FOR',
+  FAKTA_OM_OMSORGEN_FOR: {
+    kode: 'FAKTA_OM_OMSORGEN_FOR',
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },

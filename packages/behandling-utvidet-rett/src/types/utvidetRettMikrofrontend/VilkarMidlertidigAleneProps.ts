@@ -2,6 +2,7 @@ import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface VilkarMidlertidigAleneProps {
   lesemodus: boolean;
+  aksjonspunktLost: boolean;
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
   informasjonTilLesemodus?: VilkarMidlertidigInformasjonTilLesemodus;
   vedtakFattetVilkarOppfylt: boolean;

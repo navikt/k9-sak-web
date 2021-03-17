@@ -1,92 +1,48 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
+import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { VilkarKroniskSyktBarnProps } from '../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import {
-  erVilkarVurdert,
-  generereInfoForVurdertVilkar,
-  hentBegrunnelseOgVilkarOppfylt,
-} from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
+  AksjonspunktInformasjon,
+  SaksinformasjonUtvidetRett,
+  VilkarInformasjon,
+} from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
 import {
-  InformasjonTilLesemodusKroniskSyk,
-  VilkarKroniskSyktBarnProps,
-} from '../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
-import UtvidetRettSoknad from '../../../../types/UtvidetRettSoknad';
-
-interface Saksinformasjon {
-  fagsaksType: string;
-  vedtakFattetAksjonspunkt: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  soknad: UtvidetRettSoknad;
-}
-
-enum Avslagskoder {
-  IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET = '1073',
-  IKKE_OKT_RISIKO_FRA_FRAVAER = '1074',
-}
-
-const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt) => {
-  if (vilkar.perioder[0]) {
-    return {
-      begrunnelse: aksjonspunkt.begrunnelse,
-      vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
-      avslagsArsakErIkkeRiskioFraFravaer: vilkar.perioder[0]?.avslagKode === Avslagskoder.IKKE_OKT_RISIKO_FRA_FRAVAER,
-    } as InformasjonTilLesemodusKroniskSyk;
-  }
-  return {
-    begrunnelse: '',
-    vilkarOppfylt: false,
-    avslagsArsakErIkkeRiskioFraFravaer: false,
-  };
-};
-
-const formatereLosAksjonspunktObjektForKroniskSyk = (
-  aksjonspunktKode: string,
-  begrunnelse: string,
-  erVilkarOk: boolean,
-  avslagsArsakErIkkeRiskioFraFravaer: boolean,
-) => {
-  const losAksjonspunktObjekt = {
-    kode: aksjonspunktKode,
-    begrunnelse,
-    erVilkarOk,
-  };
-
-  if (!erVilkarOk) {
-    losAksjonspunktObjekt['avslagsårsak'] = avslagsArsakErIkkeRiskioFraFravaer
-      ? Avslagskoder.IKKE_OKT_RISIKO_FRA_FRAVAER
-      : Avslagskoder.IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET;
-  }
-
-  return losAksjonspunktObjekt;
-};
+  formatereLesemodusObjektForKroniskSyk,
+  formatereLosAksjonspunktObjektForKroniskSyk,
+} from './FormatereObjektForKroniskSyk';
 
 const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
-  saksInformasjon: Saksinformasjon,
+  saksInformasjon: SaksinformasjonUtvidetRett,
   isReadOnly: boolean,
-  aksjonspunkter: Aksjonspunkt[],
   submitCallback,
-  isAksjonspunktOpen,
+  behandling,
+  aksjonspunktInformasjon: AksjonspunktInformasjon,
+  vilkarInformasjon: VilkarInformasjon,
 ) => {
   let objektTilMikrofrontend = {};
-  const { vilkar, soknad, fagsaksType, vedtakFattetAksjonspunkt } = saksInformasjon;
+  const { soknad, fagsaksType } = saksInformasjon;
+  const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
+  const { vilkar, status } = vilkarInformasjon;
+
   const aksjonspunkt = aksjonspunkter[0];
-  const vilkarKnyttetTilAksjonspunkt = vilkar.filter(
-    vilkaret => vilkaret.vilkarType.kode === aksjonspunkt.vilkarType.kode,
-  )[0];
+  const vilkarKnyttetTilAksjonspunkt = vilkar[0];
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkarKnyttetTilAksjonspunkt;
 
   if (eksistererAksjonspunktOgVilkar) {
-    const vedtakFattet = vedtakFattetAksjonspunkt.length > 0 && !vedtakFattetAksjonspunkt[0].kanLoses;
-    const skalVilkarsUtfallVises = !isAksjonspunktOpen && vedtakFattet && erVilkarVurdert(vilkarKnyttetTilAksjonspunkt);
+    const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
     const lesemodus = isReadOnly || !isAksjonspunktOpen;
+    const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
     switch (fagsaksType) {
       case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN: {
         objektTilMikrofrontend = {
           visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
           props: {
+            aksjonspunktLost,
             lesemodus,
             informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkarKnyttetTilAksjonspunkt, aksjonspunkt),
             vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
@@ -115,6 +71,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
         objektTilMikrofrontend = {
           visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_MIDLERTIDIG_ALENE,
           props: {
+            aksjonspunktLost,
             lesemodus,
             soknadsopplysninger: {
               årsak: angittForelder[0]?.situasjonKode || '',
@@ -128,7 +85,14 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
               aksjonspunkt.begrunnelse,
               'Utvidet Rett',
             ),
-            informasjonTilLesemodus: hentBegrunnelseOgVilkarOppfylt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, true),
+            informasjonTilLesemodus: {
+              begrunnelse: aksjonspunkt.begrunnelse,
+              vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
+              dato: {
+                fra: vilkarKnyttetTilAksjonspunkt.perioder[0].periode.fom,
+                til: vilkarKnyttetTilAksjonspunkt.perioder[0].periode.tom,
+              },
+            },
             losAksjonspunkt: ({ begrunnelseRegistret, erSokerenMidlertidigAleneOmOmsorgen, fra, til }) => {
               submitCallback([
                 {
