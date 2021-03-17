@@ -22,13 +22,13 @@ const initializeOmsorgenForVilkar = (
 
 const hentVersjonInformasjon = () => {
   const produksjonsVersjon = {
-    versjon: '1.5.27',
-    jsIntegrity: 'sha384-Q1kMNpslcgQsxbbPEwseiFgLvi846SPQt8mJBdg2ht0gkmwtdG1JFZATyFKpQOjy',
+    versjon: '1.5.28',
+    jsIntegrity: 'sha384-hHFYOcum1J9U/5dNOouYiTlcPhv4bF/SBVvlyri9YHsSWNFD2HrK9NxUkqUPjorm',
     stylesheetIntegrity: 'sha384-nOive4WXPnmw2xQVp8/QTvtAK7TXATPusVCVtVCJa9SYQmBDdn/7WmwEHJJCJWSF',
   };
   const preprodVersjon = {
-    versjon: '1.5.27',
-    jsIntegrity: 'sha384-Q1kMNpslcgQsxbbPEwseiFgLvi846SPQt8mJBdg2ht0gkmwtdG1JFZATyFKpQOjy',
+    versjon: '1.5.28',
+    jsIntegrity: 'sha384-hHFYOcum1J9U/5dNOouYiTlcPhv4bF/SBVvlyri9YHsSWNFD2HrK9NxUkqUPjorm',
     stylesheetIntegrity: 'sha384-nOive4WXPnmw2xQVp8/QTvtAK7TXATPusVCVtVCJa9SYQmBDdn/7WmwEHJJCJWSF',
   };
   return sjekkHvisErIProduksjon ? produksjonsVersjon : preprodVersjon;
