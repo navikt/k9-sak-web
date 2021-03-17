@@ -85,7 +85,6 @@ const henleggArsakerPerBehandlingType = {
     behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
     behandlingResultatType.HENLAGT_FEILOPPRETTET,
     behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
-    behandlingResultatType.MANGLER_BEREGNINGSREGLER,
   ],
 };
 
