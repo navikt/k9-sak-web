@@ -54,10 +54,10 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.6.2/app.js"
-      jsIntegrity="sha384-5HmLA+XoJDlf0E76wKgXVOZxoRNjDtrrEiHpZrjQlpuxOESDirshFdUpCs3PQcyy"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.6.2/styles.css"
-      stylesheetIntegrity="sha384-slL/GmzB6v6VBRLpT+y5achD6c1qwysmWeAnumV+w071MV3dw2xmpn/1EoiwSz9X"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.7.0/app.js"
+      jsIntegrity="sha384-GavVm9jCloJl05QdLGoT1MTKmlfltGLJ14/cBmZrUarrgPBM4oPIXtlATdtx2/oL"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.7.0/styles.css"
+      stylesheetIntegrity="sha384-u+q6w3oU3efhdypgAQphFmL8qgcmzEJoJWefXZik+Ou1bhJzof1epDv6sga1n96d"
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
@@ -72,6 +72,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
             { rel: 'sykdom-innleggelse', desiredName: 'innleggelsesperioder' },
             { rel: 'sykdom-diagnosekoder', desiredName: 'diagnosekoder' },
             { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
+            { rel: 'sykdom-aksjonspunkt', desiredName: 'status' },
           ]),
           uuid,
           løsAksjonspunkt,
