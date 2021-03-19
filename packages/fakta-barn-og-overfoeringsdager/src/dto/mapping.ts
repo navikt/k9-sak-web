@@ -55,15 +55,13 @@ const mapUtvidetRettRammevedtakBarn = (
     tom: rv.gyldigTilOgMed,
   }));
 
-  const obj = {
+  return {
     [fnr]: {
       ...eksisterendeBarn,
       fødselsnummer: fnr,
       [typeFeltnavn]: perioderRammevedtak,
     },
   };
-
-  return obj;
 };
 
 const mapDtoTilFormValues = (rammevedtak: Rammevedtak[]): FormValues => {
