@@ -4,7 +4,7 @@ interface Gyldighetsperiode {
 }
 
 export default interface Barn {
-  kroniskSykdom?: Gyldighetsperiode;
+  kroniskSykdom?: Gyldighetsperiode[];
   aleneomsorg?: Gyldighetsperiode;
   fosterbarn?: Gyldighetsperiode;
   utenlandskBarn?: Gyldighetsperiode;

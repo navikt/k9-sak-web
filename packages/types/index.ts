@@ -5,7 +5,6 @@ export { default as Behandling } from './src/behandlingTsType';
 export { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsType';
 export { default as BeregningsresultatFp } from './src/beregningsresultatFpTsType';
 export { default as Dokument } from './src/dokumentTsType';
-export { default as InntektArbeidYtelse } from './src/inntektArbeidYtelseTsType';
 export { default as Kodeverk } from './src/kodeverkTsType';
 export { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
 export { default as NavAnsatt } from './src/navAnsattTsType';

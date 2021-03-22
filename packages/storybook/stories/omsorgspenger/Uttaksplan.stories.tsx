@@ -2,11 +2,18 @@ import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
-import { Behandling, UtfallEnum, Uttaksperiode, Vilkår, VilkårEnum, VurderteVilkår } from '@k9-sak-web/types';
+import {
+  Behandling,
+  UtfallEnum,
+  Uttaksperiode,
+  Vilkår,
+  VilkårEnum,
+  VurderteVilkår,
+  Aksjonspunkt,
+  Arbeidsforhold,
+} from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
-import InntektArbeidYtelse from '@k9-sak-web/types/src/inntektArbeidYtelseTsType';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -136,20 +143,18 @@ const behandling = {
 
 const aksjonspunkterForSteg = [{}] as Aksjonspunkt[];
 
-const inntektArbeidYtelseMedNavn = {
-  arbeidsforhold: [
-    {
-      arbeidsgiverReferanse: '12345678',
-      eksternArbeidsforholdId: arbForhId1,
-      arbeidsforholdId: arbForhId1,
-    },
-    {
-      arbeidsgiverReferanse: '12345678',
-      eksternArbeidsforholdId: arbForhId2,
-      arbeidsforholdId: arbForhId2,
-    },
-  ],
-} as InntektArbeidYtelse;
+const arbeidsforhold = [
+  {
+    arbeidsgiverReferanse: '12345678',
+    eksternArbeidsforholdId: arbForhId1,
+    arbeidsforholdId: arbForhId1,
+  },
+  {
+    arbeidsgiverReferanse: '12345678',
+    eksternArbeidsforholdId: arbForhId2,
+    arbeidsforholdId: arbForhId2,
+  },
+] as Arbeidsforhold[];
 
 const arbeidsgivere = {
   12345678: {
@@ -171,7 +176,7 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
-    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
+    arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
   />
@@ -185,7 +190,7 @@ export const behandletAksjonspunkt = () => (
     isAksjonspunktOpen={false}
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }] as Aksjonspunkt[]}
-    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
+    arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
   />
@@ -199,7 +204,7 @@ export const aksjonspunktAvslåttePerioder = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
-    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
+    arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
   />
@@ -213,7 +218,7 @@ export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
     isAksjonspunktOpen
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={aksjonspunkterForSteg}
-    inntektArbeidYtelse={inntektArbeidYtelseMedNavn}
+    arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
   />

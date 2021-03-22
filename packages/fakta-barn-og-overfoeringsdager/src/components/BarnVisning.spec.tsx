@@ -12,7 +12,7 @@ it('rendrer panel om barnet med rett info', () => {
   };
   const barn: Barn = {
     fødselsnummer: '12312312312',
-    kroniskSykdom: periode,
+    kroniskSykdom: [periode],
     fosterbarn: periode,
   };
 

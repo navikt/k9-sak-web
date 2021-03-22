@@ -64,11 +64,14 @@ describe('<OmsorgspengerFakta>', () => {
     },
   ];
   const vilkar = [];
-  const inntektArbeidYtelse = {
-    skalKunneLeggeTilNyeArbeidsforhold: true,
-    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
-    relatertTilgrensendeYtelserForAnnenForelder: [],
-  };
+  const arbeidsforhold = [
+    {
+      arbeidsgiverReferanse: '12345678',
+      kilde: {
+        kode: '-',
+      },
+    },
+  ];
 
   const soker = {
     navn: 'Espen Utvikler',
@@ -213,7 +216,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
-    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, inntektArbeidYtelse);
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,

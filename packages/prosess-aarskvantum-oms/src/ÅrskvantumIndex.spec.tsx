@@ -1,5 +1,5 @@
 import React from 'react';
-import { Behandling, InntektArbeidYtelse } from '@k9-sak-web/types';
+import { Behandling, Arbeidsforhold } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../i18n';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
 import AksjonspunktForm from './components/AksjonspunktForm';
@@ -30,16 +30,14 @@ const behandling = {
   versjon: 1,
 } as Behandling;
 
-const inntektArbeidYtelse = {
-  arbeidsforhold: [
-    {
-      arbeidsgiverReferanse: '12345678',
-      kilde: {
-        kode: '-',
-      },
+const arbeidsforhold = [
+  {
+    arbeidsgiverReferanse: '12345678',
+    kilde: {
+      kode: '-',
     },
-  ],
-} as InntektArbeidYtelse;
+  },
+] as Arbeidsforhold[];
 
 const arbeidsgivere = {
   12345678: {
@@ -74,7 +72,7 @@ describe('<ÅrskvantumIndex>', () => {
         fullUttaksplan={{}}
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
-        inntektArbeidYtelse={inntektArbeidYtelse}
+        arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgivere}
       />,
     );
@@ -92,7 +90,7 @@ describe('<ÅrskvantumIndex>', () => {
         fullUttaksplan={{}}
         isAksjonspunktOpen={false}
         submitCallback={() => undefined}
-        inntektArbeidYtelse={inntektArbeidYtelse}
+        arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgivere}
       />,
     );

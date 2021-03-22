@@ -18,7 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [
     OmsorgspengerBehandlingApiKeys.FULL_UTTAKSPLAN,
-    OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE,
+    OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD,
   ];
 
   getOverstyrtStatus = ({ forbrukteDager }: { forbrukteDager: ÅrskvantumForbrukteDager }) => {
