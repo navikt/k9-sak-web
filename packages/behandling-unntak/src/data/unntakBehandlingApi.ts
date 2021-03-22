@@ -22,7 +22,6 @@ export enum UnntakBehandlingApiKeys {
   SOKNAD_ORIGINAL_BEHANDLING = 'SOKNAD_ORIGINAL_BEHANDLING',
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING = 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   MEDLEMSKAP = 'MEDLEMSKAP',
-  INNTEKT_ARBEID_YTELSE = 'INNTEKT_ARBEID_YTELSE',
   VERGE = 'VERGE',
   OPPTJENING = 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING = 'SEND_VARSEL_OM_REVURDERING',
@@ -57,7 +56,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('familiehendelse-original-behandling', UnntakBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel('soeker-medlemskap-v2', UnntakBehandlingApiKeys.MEDLEMSKAP)
   .withRel('arbeidsforhold-v1', UnntakBehandlingApiKeys.ARBEIDSFORHOLD)
-  .withRel('inntekt-arbeid-ytelse', UnntakBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', UnntakBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', UnntakBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', UnntakBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)

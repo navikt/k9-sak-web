@@ -28,7 +28,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getEndepunkter = () => [UnntakBehandlingApiKeys.INNTEKT_ARBEID_YTELSE];
+  getEndepunkter = () => [UnntakBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getOverstyrtStatus = ({ beregningsresultatUtbetaling }) => {
     const manglerBeregningsresultatUtbetaling =

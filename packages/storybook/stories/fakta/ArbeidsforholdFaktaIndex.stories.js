@@ -47,24 +47,20 @@ export default {
 export const visAksjonspunktForAvklaringAvArbeidsforhold = () => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    inntektArbeidYtelse={object('inntektArbeidYtelse', {
-      arbeidsforhold: [
-        {
-          ...arbeidsforhold,
-          tilVurdering: true,
-          mottattDatoInntektsmelding: undefined,
-        },
-        {
-          ...arbeidsforhold,
-          navn: 'NSB',
-          id: '2',
-          tilVurdering: true,
-          mottattDatoInntektsmelding: undefined,
-        },
-      ],
-      skalKunneLeggeTilNyeArbeidsforhold: false,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-    })}
+    arbeidsforhold={object('arbeidsforhold', [
+      {
+        ...arbeidsforhold,
+        tilVurdering: true,
+        mottattDatoInntektsmelding: undefined,
+      },
+      {
+        ...arbeidsforhold,
+        navn: 'NSB',
+        id: '2',
+        tilVurdering: true,
+        mottattDatoInntektsmelding: undefined,
+      },
+    ])}
     aksjonspunkter={[
       {
         definisjon: {
@@ -92,11 +88,7 @@ export const visAksjonspunktForAvklaringAvArbeidsforhold = () => (
 export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    inntektArbeidYtelse={object('inntektArbeidYtelse', {
-      arbeidsforhold: [],
-      skalKunneLeggeTilNyeArbeidsforhold: true,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-    })}
+    arbeidsforhold={object('arbeidsforhold', [])}
     aksjonspunkter={[
       {
         definisjon: {
@@ -124,11 +116,7 @@ export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => (
 export const visPanelUtenAksjonspunkter = () => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    inntektArbeidYtelse={object('inntektArbeidYtelse', {
-      arbeidsforhold: [arbeidsforhold],
-      skalKunneLeggeTilNyeArbeidsforhold: false,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-    })}
+    arbeidsforhold={object('arbeidsforhold', [arbeidsforhold])}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -142,28 +130,24 @@ export const visPanelUtenAksjonspunkter = () => (
 export const visPanelForPermisjon = () => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    inntektArbeidYtelse={object('inntektArbeidYtelse', {
-      arbeidsforhold: [
-        {
-          ...arbeidsforhold,
-          mottattDatoInntektsmelding: undefined,
-          tilVurdering: true,
-          permisjoner: [
-            {
-              type: {
-                kode: 'PERMISJON',
-              },
-              permisjonFom: '2018-10-10',
-              permisjonTom: '2019-10-10',
-              permisjonsprosent: 100,
-              permisjonsÅrsak: 'aarsak',
+    arbeidsforhold={object('arbeidsforhold', [
+      {
+        ...arbeidsforhold,
+        mottattDatoInntektsmelding: undefined,
+        tilVurdering: true,
+        permisjoner: [
+          {
+            type: {
+              kode: 'PERMISJON',
             },
-          ],
-        },
-      ],
-      skalKunneLeggeTilNyeArbeidsforhold: false,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-    })}
+            permisjonFom: '2018-10-10',
+            permisjonTom: '2019-10-10',
+            permisjonsprosent: 100,
+            permisjonsÅrsak: 'aarsak',
+          },
+        ],
+      },
+    ])}
     aksjonspunkter={[
       {
         definisjon: {
@@ -191,36 +175,32 @@ export const visPanelForPermisjon = () => (
 export const visPanelForFlerePermisjoner = () => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    inntektArbeidYtelse={object('inntektArbeidYtelse', {
-      arbeidsforhold: [
-        {
-          ...arbeidsforhold,
-          tilVurdering: true,
-          permisjoner: [
-            {
-              type: {
-                kode: 'PERMISJON',
-              },
-              permisjonFom: '2015-01-01',
-              permisjonTom: undefined,
-              permisjonsprosent: 100,
-              permisjonsÅrsak: 'aarsak',
+    arbeidsforhold={object('arbeidsforhold', [
+      {
+        ...arbeidsforhold,
+        tilVurdering: true,
+        permisjoner: [
+          {
+            type: {
+              kode: 'PERMISJON',
             },
-            {
-              type: {
-                kode: 'PERMISJON',
-              },
-              permisjonFom: '2017-01-01',
-              permisjonTom: '2019-01-01',
-              permisjonsprosent: 100,
-              permisjonsÅrsak: 'aarsak',
+            permisjonFom: '2015-01-01',
+            permisjonTom: undefined,
+            permisjonsprosent: 100,
+            permisjonsÅrsak: 'aarsak',
+          },
+          {
+            type: {
+              kode: 'PERMISJON',
             },
-          ],
-        },
-      ],
-      skalKunneLeggeTilNyeArbeidsforhold: false,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-    })}
+            permisjonFom: '2017-01-01',
+            permisjonTom: '2019-01-01',
+            permisjonsprosent: 100,
+            permisjonsÅrsak: 'aarsak',
+          },
+        ],
+      },
+    ])}
     aksjonspunkter={[
       {
         definisjon: {

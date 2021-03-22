@@ -8,7 +8,6 @@ import {
   Aksjonspunkt,
   Kodeverk,
   BeregningsresultatUtbetalt,
-  InntektArbeidYtelse,
   Arbeidsforhold,
   KodeverkMedNavn,
   Vilkar,
@@ -130,7 +129,7 @@ interface PureOwnProps {
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
   behandlingVersjon: number;
-  inntektArbeidYtelse: InntektArbeidYtelse;
+  arbeidsforhold: Arbeidsforhold[];
   submitCallback: (...args: any[]) => any;
 }
 // @ts-ignore
@@ -138,7 +137,7 @@ const buildInitialValues = createSelector(
   [
     // @ts-ignore
     (props: PureOwnProps) => props.beregningsresultat?.perioder,
-    (props: PureOwnProps) => props.inntektArbeidYtelse?.arbeidsforhold,
+    (props: PureOwnProps) => props.arbeidsforhold,
   ],
   (perioder = [], arbeidsforhold = []) => {
     if (perioder) {
