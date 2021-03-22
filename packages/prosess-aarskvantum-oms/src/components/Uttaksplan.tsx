@@ -23,7 +23,7 @@ interface UttaksplanProps {
 const mapAktiviteterTilTabell = (
   aktiviteter: Aktivitet[],
   aktivitetsstatuser: KodeverkMedNavn[],
-  alleArbeidsforhold: Arbeidsforhold[] = [],
+  alleArbeidsforhold: Arbeidsforhold[],
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
   if (!aktiviteter.length) {
