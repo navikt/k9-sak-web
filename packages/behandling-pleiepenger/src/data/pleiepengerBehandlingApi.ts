@@ -24,7 +24,6 @@ export enum PleiepengerBehandlingApiKeys {
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING = 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   MEDLEMSKAP = 'MEDLEMSKAP',
   UTTAK_PERIODE_GRENSE = 'UTTAK_PERIODE_GRENSE',
-  INNTEKT_ARBEID_YTELSE = 'INNTEKT_ARBEID_YTELSE',
   VERGE = 'VERGE',
   OPPTJENING = 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING = 'SEND_VARSEL_OM_REVURDERING',
@@ -66,7 +65,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soeker-medlemskap-v2', PleiepengerBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', PleiepengerBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('arbeidsforhold-v1', PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD)
-  .withRel('inntekt-arbeid-ytelse', PleiepengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', PleiepengerBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', PleiepengerBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)

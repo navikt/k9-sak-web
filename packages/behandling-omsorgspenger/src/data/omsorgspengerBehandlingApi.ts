@@ -23,7 +23,6 @@ export enum OmsorgspengerBehandlingApiKeys {
   SOKNAD_ORIGINAL_BEHANDLING = 'SOKNAD_ORIGINAL_BEHANDLING',
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING = 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   MEDLEMSKAP = 'MEDLEMSKAP',
-  INNTEKT_ARBEID_YTELSE = 'INNTEKT_ARBEID_YTELSE',
   VERGE = 'VERGE',
   OPPTJENING = 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING = 'SEND_VARSEL_OM_REVURDERING',
@@ -60,7 +59,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soknad-original-behandling', OmsorgspengerBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
   .withRel('familiehendelse-original-behandling', OmsorgspengerBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel('soeker-medlemskap-v2', OmsorgspengerBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('inntekt-arbeid-ytelse', OmsorgspengerBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('arbeidsforhold-v1', OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD)
   .withRel('soeker-verge', OmsorgspengerBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', OmsorgspengerBehandlingApiKeys.OPPTJENING)

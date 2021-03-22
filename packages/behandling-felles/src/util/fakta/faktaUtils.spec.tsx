@@ -53,7 +53,7 @@ describe('<faktaUtils>', () => {
 
     getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
-    getData = ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse });
+    getData = ({ personopplysninger, arbeidsforhold }) => ({ personopplysninger, arbeidsforhold });
   }
   class TestFaktaPanelDef extends FaktaPanelDef {
     getUrlKode = () => 'test';
@@ -66,7 +66,7 @@ describe('<faktaUtils>', () => {
   it('skal utlede faktapanel', () => {
     const ekstraPanelData = {
       personopplysninger: 'test_personopplysninger',
-      inntektArbeidYtelse: 'test_inntektArbeidYtelse',
+      arbeidsforhold: 'test_arbeidsforhold',
     };
     const rettigheter = {
       writeAccess: {
@@ -109,7 +109,7 @@ describe('<faktaUtils>', () => {
         [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
       },
       personopplysninger: ekstraPanelData.personopplysninger,
-      inntektArbeidYtelse: ekstraPanelData.inntektArbeidYtelse,
+      arbeidsforhold: ekstraPanelData.arbeidsforhold,
     });
   });
 

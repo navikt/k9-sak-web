@@ -47,18 +47,14 @@ const soknad = {
   },
 };
 
-const inntektArbeidYtelse = {
-  inntektsmeldinger: [
-    {
-      arbeidsgiverStartdato: '2019-02-02',
-      arbeidsgiver: 'Studio Espen',
+const arbeidsforhold = [
+  {
+    arbeidsgiverReferanse: '12345678',
+    kilde: {
+      kode: '-',
     },
-    {
-      arbeidsgiverStartdato: '2019-02-03',
-      arbeidsgiver: 'Auto Joachim bilpleie',
-    },
-  ],
-};
+  },
+];
 const medlemskap = {
   inntekt: [
     {
@@ -247,7 +243,7 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = (
     behandling={object('behandling', behandling)}
     medlemskap={object('medlemskap', medlemskap)}
     soknad={object('soknad', soknad)}
-    inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
+    arbeidsforhold={object('arbeidsforhold', arbeidsforhold)}
     aksjonspunkter={[
       {
         definisjon: {
@@ -283,7 +279,7 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => (
     behandling={object('behandling', behandling)}
     medlemskap={object('medlemskap', medlemskap)}
     soknad={object('soknad', soknad)}
-    inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
+    arbeidsforhold={object('arbeidsforhold', arbeidsforhold)}
     aksjonspunkter={[
       {
         definisjon: {
