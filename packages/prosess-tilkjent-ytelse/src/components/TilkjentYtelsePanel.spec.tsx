@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import { Aksjonspunkt, FamilieHendelse, InntektArbeidYtelse, Personopplysninger, Soknad } from '@k9-sak-web/types';
+import { Aksjonspunkt, FamilieHendelse, Personopplysninger, Arbeidsforhold, Soknad } from '@k9-sak-web/types';
 import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -18,6 +18,15 @@ const tilbaketrekkAP = {
   begrunnelse: undefined,
 } as Aksjonspunkt;
 
+const arbeidsforhold = [
+  {
+    arbeidsgiverReferanse: '12345678',
+    kilde: {
+      kode: '-',
+    },
+  },
+] as Arbeidsforhold[];
+
 describe('<TilkjentYtelsePanelImpl>', () => {
   it('skall innehålla rätt undertekst', () => {
     const wrapper = shallowWithIntl(
@@ -34,7 +43,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         personopplysninger={{} as Personopplysninger}
         soknad={{} as Soknad}
         fagsakYtelseTypeKode=""
-        inntektArbeidYtelse={{} as InntektArbeidYtelse}
+        arbeidsforhold={arbeidsforhold}
         vilkar={[]}
       />,
     );
@@ -60,7 +69,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         personopplysninger={{} as Personopplysninger}
         soknad={{} as Soknad}
         fagsakYtelseTypeKode=""
-        inntektArbeidYtelse={{} as InntektArbeidYtelse}
+        arbeidsforhold={arbeidsforhold}
         vilkar={[]}
       />,
     );

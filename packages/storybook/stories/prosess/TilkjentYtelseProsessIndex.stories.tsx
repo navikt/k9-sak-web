@@ -6,7 +6,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
-import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak, InntektArbeidYtelse } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -191,6 +191,15 @@ const beregningsresultat = {
   utbetaltePerioder: [],
 } as BeregningsresultatUtbetalt;
 
+const arbeidsforhold = [
+  {
+    arbeidsgiverReferanse: '12345678',
+    kilde: {
+      kode: '-',
+    },
+  },
+];
+
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
@@ -207,7 +216,7 @@ export const visUtenAksjonspunkt = () => (
     isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
-    inntektArbeidYtelse={{} as InntektArbeidYtelse}
+    arbeidsforhold={arbeidsforhold}
     vilkar={[]}
   />
 );
@@ -235,7 +244,7 @@ export const visÅpentAksjonspunkt = () => (
     isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
-    inntektArbeidYtelse={{} as InntektArbeidYtelse}
+    arbeidsforhold={arbeidsforhold}
     vilkar={[]}
   />
 );

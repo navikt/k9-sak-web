@@ -52,14 +52,14 @@ describe('<faktaHooks>', () => {
 
     getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
-    getData = ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse });
+    getData = ({ personopplysninger, arbeidsforhold }) => ({ personopplysninger, arbeidsforhold });
   }
 
   it('skal utlede faktapaneler og valgt panel', () => {
     const panelDef = new TestFaktaPanelDef();
     const ekstraPanelData = {
       personopplysninger: 'test_personopplysninger',
-      inntektArbeidYtelse: 'test_inntektArbeidYtelse',
+      arbeidsforhold: 'test_arbeidsforhold',
     };
     const rettigheter = {
       writeAccess: {
@@ -109,7 +109,7 @@ describe('<faktaHooks>', () => {
         [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
       },
       personopplysninger: ekstraPanelData.personopplysninger,
-      inntektArbeidYtelse: ekstraPanelData.inntektArbeidYtelse,
+      arbeidsforhold: ekstraPanelData.arbeidsforhold,
     });
 
     expect(valgtPanel.getUrlKode()).toEqual(faktaPaneler[0].getUrlKode());
