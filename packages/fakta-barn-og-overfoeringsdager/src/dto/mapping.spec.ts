@@ -110,7 +110,7 @@ it('mapping fra DTO til formValues', () => {
 
   expect(barn).toHaveLength(4);
   expect(barn[0].fødselsnummer).toBe(barnFnr);
-  expect(barn[0].kroniskSykdom).toEqual({ fom: utvidetRett.gyldigFraOgMed, tom: utvidetRett.gyldigTilOgMed });
+  expect(barn[0].kroniskSykdom).toEqual([{ fom: utvidetRett.gyldigFraOgMed, tom: utvidetRett.gyldigTilOgMed }]);
   expect(barn[0].aleneomsorg).toEqual({ fom: aleneOmOmsorgen.gyldigFraOgMed, tom: aleneOmOmsorgen.gyldigTilOgMed });
   expect(barn[0].deltBosted).toEqual({ fom: deltBostedsBarn.gyldigFraOgMed, tom: deltBostedsBarn.gyldigTilOgMed });
   expect(barn[1].kroniskSykdom).toBeUndefined();
