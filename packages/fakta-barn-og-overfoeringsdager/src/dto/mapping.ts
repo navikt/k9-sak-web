@@ -56,6 +56,7 @@ const mapUtvidetRettRammevedtakBarn = (
   }));
 
   return {
+    ...tmpBarn,
     [fnr]: {
       ...eksisterendeBarn,
       fødselsnummer: fnr,
