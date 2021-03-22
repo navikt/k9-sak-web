@@ -38,11 +38,38 @@ const mapRammevedtakBarn = (
   };
 };
 
+const mapUtvidetRettRammevedtakBarn = (
+  tmpBarn: Record<string, Barn>,
+  rammevedtak: Rammevedtak[],
+  fnrFeltnavn: string,
+  typeFeltnavn: string,
+) => {
+  const fnr = rammevedtak[0][fnrFeltnavn];
+  if (!fnr) {
+    return tmpBarn;
+  }
+  const eksisterendeBarn = tmpBarn[fnr] || {};
+
+  const perioderRammevedtak = rammevedtak.map(rv => ({
+    fom: rv.gyldigFraOgMed,
+    tom: rv.gyldigTilOgMed,
+  }));
+
+  return {
+    [fnr]: {
+      ...eksisterendeBarn,
+      fødselsnummer: fnr,
+      [typeFeltnavn]: perioderRammevedtak,
+    },
+  };
+};
+
 const mapDtoTilFormValues = (rammevedtak: Rammevedtak[]): FormValues => {
   const barn: Barn[] = Object.values(
     rammevedtak.reduce((tmpBarn, rv) => {
       if (rv.type === RammevedtakEnum.UTVIDET_RETT) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'utvidetRettFor', 'kroniskSykdom');
+        const alleUtvidetRettRammevedtak = rammevedtak.filter(rvedtak => rvedtak.utvidetRettFor === rv.utvidetRettFor);
+        return mapUtvidetRettRammevedtakBarn(tmpBarn, alleUtvidetRettRammevedtak, 'utvidetRettFor', 'kroniskSykdom');
       }
 
       if (rv.type === RammevedtakEnum.ALENEOMSORG) {
