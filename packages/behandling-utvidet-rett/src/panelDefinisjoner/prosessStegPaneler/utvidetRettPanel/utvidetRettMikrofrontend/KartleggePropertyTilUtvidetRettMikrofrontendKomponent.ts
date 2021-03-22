@@ -93,11 +93,11 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
                 til: vilkarKnyttetTilAksjonspunkt.perioder[0].periode.tom,
               },
             },
-            losAksjonspunkt: ({ begrunnelseRegistret, erSokerenMidlertidigAleneOmOmsorgen, fra, til }) => {
+            losAksjonspunkt: ({ begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til }) => {
               submitCallback([
                 {
                   kode: aksjonspunkt.definisjon.kode,
-                  begrunnelse: begrunnelseRegistret,
+                  begrunnelse,
                   erVilkarOk: erSokerenMidlertidigAleneOmOmsorgen,
                   periode: {
                     fom: fra,
