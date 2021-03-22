@@ -31,7 +31,7 @@
     "@k9-sak-web/sak-behandling-velger": "1.0.0",
     "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@sentry/browser": "^6.2.2",
+    "@sentry/browser": "^6.2.3",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "history": "^4.9.0",
