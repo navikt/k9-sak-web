@@ -1,5 +1,4 @@
 export { default as Aksjonspunkt } from './src/aksjonspunktTsType';
-// export { default as Arbeidsforhold } from './src/arbeidsforholdTsType';
 export { default as ArbeidsforholdV2 } from './src/arbeidsforholdV2TsType';
 export { default as Behandling } from './src/behandlingTsType';
 export { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsType';

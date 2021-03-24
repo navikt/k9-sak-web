@@ -164,16 +164,6 @@ const transformValues = (values: any) => ({
       arbeidsgiver: arbeidsgiverValues,
       arbeidsgiverOrgnr: arbeidsgiverValues.identifikator,
       arbeidsforholdRef: arbeidsgiverValues.arbeidsforholdRef,
-      // uttak: [
-      //   {
-      //     periode: {
-      //       fom: values.fom,
-      //       tom: values.tom,
-      //     },
-      //     utbetalingsgrad: andel.utbetalingsgrad,
-      //     utfall: 'INNVILGET',
-      //   },
-      // ],
     };
   }),
   // lagtTilAvSaksbehandler: true,
