@@ -15,22 +15,6 @@ const initializeMedisinskVilkår = (
   readOnly,
 ) => {
   (window as any).renderMedisinskVilkarApp(elementId, {
-    onVurderingValgt: vurdering => {
-      if (vurdering !== null) {
-        window.history.pushState('', '', `#vurdering=${vurdering}`);
-      } else {
-        window.location.hash = '';
-      }
-    },
-    onDokumentValgt: dokumentId => {
-      if (dokumentId !== null) {
-        window.history.pushState('', '', `#dokument=${dokumentId}`);
-      } else {
-        window.location.hash = '';
-      }
-    },
-    dokument: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('dokument'),
-    vurdering: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('vurdering'),
     httpErrorHandler: httpErrorHandlerFn,
     endpoints,
     behandlingUuid,
@@ -54,10 +38,10 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.7.0/app.js"
-      jsIntegrity="sha384-GavVm9jCloJl05QdLGoT1MTKmlfltGLJ14/cBmZrUarrgPBM4oPIXtlATdtx2/oL"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.7.0/styles.css"
-      stylesheetIntegrity="sha384-u+q6w3oU3efhdypgAQphFmL8qgcmzEJoJWefXZik+Ou1bhJzof1epDv6sga1n96d"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.7.2/app.js"
+      jsIntegrity="sha384-r6pmc6r/gVgbSnpjs7YYAFJ+U/SavjwejE2wfIxfBAFdhYWLcyKchMbphxdBsrIc"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.7.2/styles.css"
+      stylesheetIntegrity="sha384-ohShkwNLNuRcyjRxgFPu5m5WnidmAoEgBRs0capQVK6XnVfDpHC7MYF7dLqmSeNy"
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
