@@ -4,7 +4,7 @@ import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BeregningsresultatPeriode, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import {
   calcDaysAndWeeksWithWeekends,
   DDMMYY_DATE_FORMAT,
@@ -43,7 +43,7 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
   };
 };
 
-const createTooltipContent = (intl, item, getKodeverknavn) => {
+const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   const { formatMessage } = intl;
   const periodeDato = `${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}`;
   return `
@@ -71,7 +71,7 @@ const createTooltipContent = (intl, item, getKodeverknavn) => {
               formatMessage(
                 { id: 'Timeline.tooltip.dagsatsPerAndel' },
                 {
-                  arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn),
+                  arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
                   dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
                   br: '<br />',
                 },
@@ -93,14 +93,14 @@ const andelerUtgjør100ProsentTilsammen = periode => {
   return false;
 };
 
-const prepareTimelineData = (periode, index, intl, getKodeverknavn) => ({
+const prepareTimelineData = (periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId) => ({
   ...periode,
   className: andelerUtgjør100ProsentTilsammen(periode) ? 'innvilget' : 'gradert',
   group: 1,
   id: index,
   start: parseDateString(periode.fom),
   end: moment(parseDateString(periode.tom)).add(1, 'day'),
-  title: createTooltipContent(intl, periode, getKodeverknavn),
+  title: createTooltipContent(intl, periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
 });
 
 interface OwnProps {
@@ -110,6 +110,7 @@ interface OwnProps {
     content: string;
   }[];
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 interface OwnState {
@@ -246,7 +247,7 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, intl, alleKodeverk },
+      props: { groups, items, intl, alleKodeverk, arbeidsgiverOpplysningerPerId },
       selectHandler,
       state: { selectedItem },
       zoomIn,
@@ -254,7 +255,9 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
     } = this;
     const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
-    const timelineData = items.map((periode, index) => prepareTimelineData(periode, index, intl, getKodeverknavn));
+    const timelineData = items.map((periode, index) =>
+      prepareTimelineData(periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+    );
     return (
       <div className={styles.timelineContainer}>
         <VerticalSpacer sixteenPx />
@@ -292,6 +295,7 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
             selectedItemData={selectedItem}
             callbackForward={nextPeriod}
             callbackBackward={prevPeriod}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           />
         )}
       </div>

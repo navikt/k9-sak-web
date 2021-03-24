@@ -4,7 +4,7 @@ import { change as reduxFormChange, FieldArray, getFormInitialValues, reset as r
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { KodeverkMedNavn, Arbeidsforhold, Vilkar } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsforholdV2, Vilkar, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { ariaCheck } from '@fpsak-frontend/utils';
@@ -49,7 +49,8 @@ interface OwnProps {
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   slettedePerioder?: any[];
-  arbeidsforhold?: Arbeidsforhold[];
+  arbeidsforhold?: ArbeidsforholdV2[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   vilkar: Vilkar[];
 }
 
@@ -119,7 +120,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
   newArbeidsforholdCallback(nyArbeidsforhold: any) {
     const { behandlingFormPrefix, arbeidsforhold, reduxFormChange: formChange, reduxFormReset: formReset } = this.props;
 
-    const newArbeidsforhold = arbeidsforhold.concat(nyArbeidsforhold);
+    const newArbeidsforhold = (arbeidsforhold || []).concat(nyArbeidsforhold);
 
     formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'arbeidsforhold', newArbeidsforhold);
     formReset(`${behandlingFormPrefix}.nyttArbeidsforholdForm`);
@@ -251,6 +252,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
       readOnly,
       perioder,
       arbeidsforhold,
+      arbeidsgiverOpplysningerPerId,
       submitting,
       behandlingId,
       behandlingVersjon,
@@ -267,6 +269,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
           // @ts-ignore
           component={PeriodeRad}
           arbeidsforhold={arbeidsforhold}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           openSlettPeriodeModalCallback={this.openSlettPeriodeModalCallback}
           updatePeriode={this.updatePeriode}
           editPeriode={this.editPeriode}
@@ -307,6 +310,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
             alleKodeverk={alleKodeverk}
             // @ts-ignore
             arbeidsforhold={arbeidsforhold}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             readOnly={readOnly}
             vilkar={vilkar}
           />

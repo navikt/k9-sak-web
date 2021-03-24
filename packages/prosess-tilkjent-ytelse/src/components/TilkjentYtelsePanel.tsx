@@ -11,7 +11,8 @@ import {
   FamilieHendelse,
   KodeverkMedNavn,
   Personopplysninger,
-  Arbeidsforhold,
+  ArbeidsforholdV2,
+  ArbeidsgiverOpplysningerPerId,
   Soknad,
   Vilkar,
 } from '@k9-sak-web/types';
@@ -54,7 +55,8 @@ interface PureOwnProps {
   readOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
-  arbeidsforhold: Arbeidsforhold[];
+  arbeidsforhold: ArbeidsforholdV2[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   vilkar: Vilkar[];
 }
 
@@ -73,9 +75,11 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
   arbeidsforhold,
   readOnly,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
   vilkar,
 }) => {
   const opphoersdato = beregningresultat?.opphoersdato;
+
   return (
     <>
       <Undertittel>
@@ -95,6 +99,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
           items={formatPerioder(beregningresultat.perioder)}
           groups={groups}
           alleKodeverk={alleKodeverk}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
       )}
 
@@ -104,6 +109,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
           behandlingVersjon={behandlingVersjon}
           beregningsresultat={beregningresultat}
           arbeidsforhold={arbeidsforhold}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           aksjonspunkter={aksjonspunkter}
           alleKodeverk={alleKodeverk}
           readOnly={readOnly}

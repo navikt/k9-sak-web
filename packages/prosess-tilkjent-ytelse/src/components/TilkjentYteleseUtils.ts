@@ -8,13 +8,25 @@ export const getInntektskategori = (inntektkategori, getKodeverknavn) =>
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
-export const createVisningsnavnForAndel = (andel, getKodeverknavn) => {
-  if (!andel.arbeidsgiverNavn) {
+export const createVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+  if (!andel) return '';
+
+  if (!andel.arbeidsgiver || !(andel.arbeidsgiver.arbeidsgiverOrgnr || andel.arbeidsgiver.identifikator)) {
     return andel.aktivitetStatus ? getKodeverknavn(andel.aktivitetStatus) : '';
   }
-  return andel.arbeidsforholdId
-    ? `${andel.arbeidsgiverNavn} (${andel.arbeidsgiverOrgnr})${getEndCharFromId(andel.eksternArbeidsforholdId)}`
-    : `${andel.arbeidsgiverNavn} (${andel.arbeidsgiverOrgnr})`;
+
+  const identifikator = andel.arbeidsgiver.arbeidsgiverOrgnr || andel.arbeidsgiver.identifikator;
+
+  const navn =
+    arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[identifikator]
+      ? arbeidsgiverOpplysningerPerId[identifikator].navn
+      : '';
+
+  if (!navn) {
+    return `${identifikator}${getEndCharFromId(andel.eksternArbeidsforholdId)}`;
+  }
+
+  return `${navn} (${identifikator})${getEndCharFromId(andel.eksternArbeidsforholdId)}`;
 };
 
 export default createVisningsnavnForAndel;

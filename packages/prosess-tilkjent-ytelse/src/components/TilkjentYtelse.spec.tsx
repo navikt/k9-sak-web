@@ -53,6 +53,7 @@ describe('<TilkjentYtelse>', () => {
         groups={[]}
         intl={intlMock}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
     expect(wrapper.find(TimeLineControl)).toHaveLength(1);

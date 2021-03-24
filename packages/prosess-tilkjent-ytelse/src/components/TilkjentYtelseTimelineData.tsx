@@ -8,7 +8,7 @@ import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight } from '@fpsak
 import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import { TabsPure } from 'nav-frontend-tabs';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 
@@ -21,6 +21,7 @@ interface OwnProps {
   callbackForward: (...args: any[]) => any;
   callbackBackward: (...args: any[]) => any;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 /**
@@ -35,6 +36,7 @@ const TilkjentYtelseTimeLineData: FC<OwnProps> = ({
   callbackForward,
   callbackBackward,
   alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   useEffect(() => {
@@ -116,7 +118,7 @@ const TilkjentYtelseTimeLineData: FC<OwnProps> = ({
                   id="Timeline.tooltip.dagsatsPerAndel"
                   key={`index${index + 1}`}
                   values={{
-                    arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn),
+                    arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
                     dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
                     br: <br />,
                   }}
@@ -128,7 +130,7 @@ const TilkjentYtelseTimeLineData: FC<OwnProps> = ({
       <VerticalSpacer eightPx />
       <TabsPure
         tabs={andeler.map((andel, currentAndelIndex) => {
-          const label = createVisningsnavnForAndel(andel, getKodeverknavn);
+          const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
           return {
             aktiv: activeTab === currentAndelIndex,
             label,

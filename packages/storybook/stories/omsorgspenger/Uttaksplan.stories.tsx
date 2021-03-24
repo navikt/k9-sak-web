@@ -10,7 +10,7 @@ import {
   VilkårEnum,
   VurderteVilkår,
   Aksjonspunkt,
-  Arbeidsforhold,
+  ArbeidsforholdV2,
 } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
@@ -145,16 +145,24 @@ const aksjonspunkterForSteg = [{}] as Aksjonspunkt[];
 
 const arbeidsforhold = [
   {
-    arbeidsgiverReferanse: '12345678',
-    eksternArbeidsforholdId: arbForhId1,
-    arbeidsforholdId: arbForhId1,
+    id: arbForhId1,
+    arbeidsgiver: {
+      arbeidsgiverOrgnr: '12345678',
+    },
+    arbeidsforhold: {
+      eksternArbeidsforholdId: arbForhId1,
+    },
   },
   {
-    arbeidsgiverReferanse: '12345678',
-    eksternArbeidsforholdId: arbForhId2,
-    arbeidsforholdId: arbForhId2,
+    id: arbForhId2,
+    arbeidsgiver: {
+      arbeidsgiverOrgnr: '12345678',
+    },
+    arbeidsforhold: {
+      eksternArbeidsforholdId: arbForhId2,
+    },
   },
-] as Arbeidsforhold[];
+] as ArbeidsforholdV2[];
 
 const arbeidsgivere = {
   12345678: {

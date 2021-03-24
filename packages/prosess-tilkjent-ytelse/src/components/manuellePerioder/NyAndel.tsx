@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import { FlexColumn, FlexRow, PeriodFieldArray, Image } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, Arbeidsforhold } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { hasValidDecimal, maxValue, minValue, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
@@ -16,21 +16,16 @@ const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
 const maxValue3999 = maxValue(3999);
 
-const mapArbeidsforhold = (arbeidsForhold: any, getKodeverknavn) =>
-  arbeidsForhold.map((andel: any, index) => {
-    const { arbeidsforholdId, arbeidsgiverIdentifikator, navn, eksternArbeidsforholdId } = andel;
-    const nyAndel = {
-      aktivitetStatus: '',
-      arbeidsgiverNavn: navn,
-      arbeidsgiverOrgnr: arbeidsgiverIdentifikator,
-      arbeidsforholdId,
-      eksternArbeidsforholdId,
-    };
-
-    const label = createVisningsnavnForAndel(nyAndel, getKodeverknavn);
-    const key = `${navn}${index}`;
+const mapArbeidsforhold = (
+  arbeidsForhold: ArbeidsforholdV2[],
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+) =>
+  arbeidsForhold.map((andel: ArbeidsforholdV2, index) => {
+    const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
+    const key = `${andel.id}${index}`;
     return (
-      <option value={`${arbeidsgiverIdentifikator}|${navn}|${eksternArbeidsforholdId}|${arbeidsforholdId}`} key={key}>
+      <option value={JSON.stringify(andel)} key={key}>
         {label}
       </option>
     );
@@ -55,7 +50,8 @@ interface OwnProps {
   readOnly: boolean;
   fields: FieldArrayFieldsProps<any>;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  arbeidsforhold: Arbeidsforhold[];
+  arbeidsforhold: ArbeidsforholdV2[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   newArbeidsforholdCallback: (values: any) => void;
   behandlingId: number;
   behandlingVersjon: number;
@@ -68,6 +64,7 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
   alleKodeverk,
   readOnly,
   arbeidsforhold,
+  arbeidsgiverOpplysningerPerId,
   behandlingId,
   behandlingVersjon,
 }) => {
@@ -100,7 +97,7 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
                 bredde="xl"
                 name={`${periodeElementFieldId}.arbeidsgiver`}
                 validate={[required]}
-                selectValues={mapArbeidsforhold(arbeidsforhold, getKodeverknavn)}
+                selectValues={mapArbeidsforhold(arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
               />
               <div
                 onClick={() => setOpen(true)}

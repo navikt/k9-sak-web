@@ -8,7 +8,8 @@ import {
   Aksjonspunkt,
   Kodeverk,
   BeregningsresultatUtbetalt,
-  Arbeidsforhold,
+  ArbeidsforholdV2,
+  ArbeidsgiverOpplysningerPerId,
   KodeverkMedNavn,
   Vilkar,
 } from '@k9-sak-web/types';
@@ -29,7 +30,8 @@ interface OwnProps {
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   behandlingStatus: Kodeverk;
-  arbeidsforhold: Arbeidsforhold[];
+  arbeidsforhold: ArbeidsforholdV2[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   vilkarForSykdomExists: boolean;
   vilkar: Vilkar[];
 }
@@ -44,6 +46,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   behandlingVersjon,
   alleKodeverk,
   arbeidsforhold,
+  arbeidsgiverOpplysningerPerId,
   vilkar,
   ...formProps
 }) => (
@@ -74,6 +77,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
         alleKodeverk={alleKodeverk}
         // @ts-ignore
         arbeidsforhold={arbeidsforhold}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         vilkar={vilkar}
       />
       {formProps.error && <span>{formProps.error}</span>}
@@ -129,7 +133,7 @@ interface PureOwnProps {
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
   behandlingVersjon: number;
-  arbeidsforhold: Arbeidsforhold[];
+  arbeidsforhold: ArbeidsforholdV2[];
   submitCallback: (...args: any[]) => any;
 }
 // @ts-ignore
