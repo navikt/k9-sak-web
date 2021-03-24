@@ -3,7 +3,7 @@ import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Table, TableColumn } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
@@ -23,6 +23,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingStatus: Kodeverk;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 const headerTextCodes = [
@@ -32,7 +33,12 @@ const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
 ];
 
-const Andeler: FC<OwnProps & WrappedComponentProps> = ({ fields, meta, alleKodeverk }) => {
+const Andeler: FC<OwnProps & WrappedComponentProps> = ({
+  fields,
+  meta,
+  alleKodeverk,
+  arbeidsgiverOpplysningerPerId,
+}) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
@@ -43,7 +49,7 @@ const Andeler: FC<OwnProps & WrappedComponentProps> = ({ fields, meta, alleKodev
       <Table headerTextCodes={headerTextCodes}>
         {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
           const andel = field.get(index);
-          const label = createVisningsnavnForAndel(andel, getKodeverknavn);
+          const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
 
           const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
 

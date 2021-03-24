@@ -5,7 +5,7 @@ import {
   KodeverkMedNavn,
   ArbeidsgiverOpplysningerPerId,
   Aksjonspunkt,
-  Arbeidsforhold,
+  ArbeidsforholdV2,
 } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -35,7 +35,7 @@ interface ÅrsakvantumIndexProps {
   behandling: Behandling;
   submitCallback: (values: any[]) => void;
   aksjonspunkterForSteg?: Aksjonspunkt[];
-  arbeidsforhold: Arbeidsforhold[];
+  arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 

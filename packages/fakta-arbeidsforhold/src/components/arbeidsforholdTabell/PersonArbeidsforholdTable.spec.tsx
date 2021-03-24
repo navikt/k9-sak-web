@@ -3,7 +3,7 @@ import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fp
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import { Normaltekst } from 'nav-frontend-typografi';
 import mountWithIntl, { intlMock } from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
-import PersonArbeidsforholdTable, { utledNøkkel } from './PersonArbeidsforholdTable';
+import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 
@@ -305,9 +305,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     arbfor2.arbeidsforhold.eksternArbeidsforholdId = null;
     arbfor2.arbeidsforhold.internArbeidsforholdId = '345';
 
-    const nøkkel1 = utledNøkkel(arbfor1.id, arbfor1.arbeidsforhold);
-    const nøkkel2 = utledNøkkel(arbfor2.id, arbfor2.arbeidsforhold);
-    expect(nøkkel1).not.toEqual(nøkkel2);
+    expect(arbfor1.id).not.toEqual(arbfor2.id);
   });
 
   it('skal vise arbeidsforhold-detaljer på alle arbeidsforhold som har er aksjonspunkt', () => {

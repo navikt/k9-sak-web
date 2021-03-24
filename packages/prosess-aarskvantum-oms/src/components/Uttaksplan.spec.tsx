@@ -1,5 +1,5 @@
 import React from 'react';
-import { Arbeidsforhold, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
+import { ArbeidsforholdV2, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../../i18n';
 import Uttaksplan from './Uttaksplan';
 import Aktivitet from '../dto/Aktivitet';
@@ -7,9 +7,11 @@ import AktivitetTabell from './AktivitetTabell';
 
 describe('Uttaksplan', () => {
   const orgNr1 = '999';
+  const orgNr2 = '000';
+  const orgNr3 = '111';
   const arbForhId1 = '1';
   const arbForhId2 = '2';
-  const orgNr2 = '000';
+  const arbForhId3 = '3';
 
   const lagAktivitet = (orgNr, arbeidsfoholdId): Aktivitet => ({
     arbeidsforhold: {
@@ -33,31 +35,58 @@ describe('Uttaksplan', () => {
     ],
   });
 
-  const arbeidsforhold: Arbeidsforhold[] = [
-    // @ts-ignore
-    {
-      navn: 'Bedrift AS',
-      arbeidsgiverIdentifikator: orgNr1,
-      arbeidsforholdId: arbForhId1,
+  const arbeidsgiverOpplysningerPerId = {
+    [orgNr1]: {
+      navn: 'Bedrift 1 AS',
+      erPrivatPerson: false,
+      identifikator: orgNr1,
     },
-    // @ts-ignore
-    {
-      navn: 'Bedrift AS',
-      arbeidsgiverIdentifikator: orgNr1,
-      arbeidsforholdId: arbForhId2,
+    [orgNr2]: {
+      navn: 'Bedrift 2 AS',
+      erPrivatPerson: false,
+      identifikator: orgNr2,
     },
-    // @ts-ignore
-    {
+    [orgNr3]: {
       navn: 'Equinor',
-      arbeidsgiverIdentifikator: orgNr2,
-      arbeidsforholdId: arbForhId1,
+      erPrivatPerson: false,
+      identifikator: orgNr3,
     },
-  ];
+  };
+
+  const arbeidsforhold = [
+    {
+      id: arbForhId1,
+      arbeidsgiver: {
+        arbeidsgiverOrgnr: orgNr1,
+      },
+      arbeidsforhold: {
+        internArbeidsforholdId: arbForhId1,
+      },
+    },
+    {
+      id: arbForhId2,
+      arbeidsgiver: {
+        arbeidsgiverOrgnr: orgNr2,
+      },
+      arbeidsforhold: {
+        internArbeidsforholdId: arbForhId2,
+      },
+    },
+    {
+      id: arbForhId3,
+      arbeidsgiver: {
+        arbeidsgiverOrgnr: orgNr3,
+      },
+      arbeidsforhold: {
+        internArbeidsforholdId: arbForhId3,
+      },
+    },
+  ] as ArbeidsforholdV2[];
 
   it('rendrer en tabell per arbeidsforhold', () => {
     const aktivitet1 = lagAktivitet(orgNr1, arbForhId1);
-    const aktivitet2 = lagAktivitet(orgNr1, arbForhId2);
-    const aktivitet3 = lagAktivitet(orgNr2, arbForhId1);
+    const aktivitet2 = lagAktivitet(orgNr2, arbForhId2);
+    const aktivitet3 = lagAktivitet(orgNr3, arbForhId3);
     const aktiviteter: Aktivitet[] = [aktivitet1, aktivitet2, aktivitet3];
     const wrapper = shallowWithIntl(
       <Uttaksplan
@@ -65,7 +94,7 @@ describe('Uttaksplan', () => {
         aktivitetsstatuser={[]}
         aktiviteterHittilIÅr={[]}
         arbeidsforhold={arbeidsforhold}
-        arbeidsgiverOpplysningerPerId={{}}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         aktiv
       />,
     );
@@ -76,8 +105,8 @@ describe('Uttaksplan', () => {
       const tabell = tabeller.findWhere(tab => {
         const tabellForhold = tab.prop('arbeidsforhold');
         return (
-          tabellForhold.arbeidsgiverIdentifikator === forhold.arbeidsgiverIdentifikator &&
-          tabellForhold.arbeidsforholdId === forhold.arbeidsforholdId
+          tabellForhold.arbeidsgiver.arbeidsgiverOrgnr === forhold.arbeidsgiver.arbeidsgiverOrgnr &&
+          tabellForhold.id === forhold.id
         );
       });
 

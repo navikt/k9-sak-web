@@ -240,9 +240,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
       <>
         <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]}>
           {unikeArbeidsgivere.map(a => {
-            const arbeidsforholdPerArbeidsgiver = (arbeidsforhold || []).filter(
-              af => af.arbeidsgiver.arbeidsgiverOrgnr === a,
-            );
+            const arbeidsforholdPerArbeidsgiver = arbeidsforhold.filter(af => af.arbeidsgiver.arbeidsgiverOrgnr === a);
 
             const arbeidsgiverNavn =
               arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[a]

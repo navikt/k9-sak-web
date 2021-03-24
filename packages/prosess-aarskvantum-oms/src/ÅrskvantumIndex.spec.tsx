@@ -1,5 +1,5 @@
 import React from 'react';
-import { Behandling, Arbeidsforhold } from '@k9-sak-web/types';
+import { Behandling, ArbeidsforholdV2 } from '@k9-sak-web/types';
 import { shallowWithIntl } from '../i18n';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
 import AksjonspunktForm from './components/AksjonspunktForm';
@@ -32,12 +32,11 @@ const behandling = {
 
 const arbeidsforhold = [
   {
-    arbeidsgiverReferanse: '12345678',
-    kilde: {
-      kode: '-',
+    arbeidsgiver: {
+      arbeidsgiverOrgnr: '12345678',
     },
   },
-] as Arbeidsforhold[];
+] as ArbeidsforholdV2[];
 
 const arbeidsgivere = {
   12345678: {

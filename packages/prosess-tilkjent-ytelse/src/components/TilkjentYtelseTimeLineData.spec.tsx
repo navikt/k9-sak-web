@@ -77,11 +77,12 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         selectedItemStartDate={selectedItemStartDate}
         selectedItemEndDate={selectedItemEndDate}
         alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
     );
     expect(wrapper.find('FormattedMessage')).toHaveLength(12);
     expect(wrapper.find('FormattedMessage').at(7).props().id).toBe('TilkjentYtelse.PeriodeData.Aktivitetsstatus');
 
-    expect(createVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn)).toBe('Frilans');
+    expect(createVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn, {})).toBe('Frilans');
   });
 });

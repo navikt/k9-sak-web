@@ -3,7 +3,7 @@ import show from '@fpsak-frontend/assets/images/show.svg';
 import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
 import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import {
-  Arbeidsforhold,
+  ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   KodeverkMedNavn,
   Utfalltype,
@@ -25,7 +25,7 @@ import Utfall from './Utfall';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
 
 interface AktivitetTabellProps {
-  arbeidsforhold?: Arbeidsforhold;
+  arbeidsforhold?: ArbeidsforholdV2;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   arbeidsforholdtypeKode: string;
   uttaksperioder: Uttaksperiode[];

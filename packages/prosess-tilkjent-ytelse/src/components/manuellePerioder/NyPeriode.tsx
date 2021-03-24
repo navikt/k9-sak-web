@@ -5,10 +5,10 @@ import moment from 'moment';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks, safeJSONParse, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, Arbeidsforhold, Vilkar } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, Vilkar } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
@@ -25,7 +25,8 @@ interface OwnProps {
   nyPeriode: NyPeriodeType;
   nyPeriodeDisabledDaysFom: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  arbeidsforhold: Arbeidsforhold[];
+  arbeidsforhold: ArbeidsforholdV2[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
   vilkar: Vilkar[];
   behandlingId: number;
@@ -42,6 +43,7 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   behandlingId,
   behandlingVersjon,
   arbeidsforhold,
+  arbeidsgiverOpplysningerPerId,
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
@@ -105,6 +107,7 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
                     readOnly={readOnly}
                     alleKodeverk={alleKodeverk}
                     arbeidsforhold={arbeidsforhold}
+                    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                     behandlingId={behandlingId}
                     behandlingVersjon={behandlingVersjon}
                     newArbeidsforholdCallback={newArbeidsforholdCallback}
@@ -139,51 +142,28 @@ const transformValues = (values: any) => ({
   tom: values.tom,
   // refusjon: values.refusjon,
   andeler: values.andeler.map(andel => {
-    const arbeidsForhold = andel.arbeidsgiver ? andel.arbeidsgiver.split('|') : [];
+    const arbeidsForhold = safeJSONParse(andel.arbeidsgiver);
+
     const arbeidsgiverValues = {
-      identifikator: arbeidsForhold ? arbeidsForhold[0] : undefined,
-      identifikatorGUI: arbeidsForhold ? arbeidsForhold[0] : undefined,
-      navn: arbeidsForhold ? arbeidsForhold[1] : undefined,
-      eksternArbeidsforholdId:
-        arbeidsForhold && arbeidsForhold[2] !== 'null' && arbeidsForhold[2] !== 'undefined' ? arbeidsForhold[2] : '-',
-      arbeidsforholdId:
-        arbeidsForhold && arbeidsForhold[3] !== 'null' && arbeidsForhold[3] !== 'undefined' ? arbeidsForhold[3] : '-',
+      identifikator: arbeidsForhold.arbeidsgiver.arbeidsgiverOrgnr,
+      identifikatorGUI: arbeidsForhold.arbeidsgiver.arbeidsgiverOrgnr,
+      arbeidsforholdId: `${arbeidsForhold.arbeidsgiver.arbeidsgiverOrgnr}-${arbeidsForhold.arbeidsforhold.internArbeidsforholdId}`,
+      arbeidsforholdRef: arbeidsForhold.arbeidsforhold.internArbeidsforholdId,
     };
+
     return {
       utbetalingsgrad: andel.utbetalingsgrad,
-      // DUMMY
-      aktivitetStatus: {
-        kode: 'AT',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
       // INNTEKTSKATEGORI
       inntektskategori: {
         kode: andel.inntektskategori,
         kodeverk: 'INNTEKTSKATEGORI',
       },
-      stillingsprosent: 0,
       refusjon: andel.refusjon,
-      sisteUtbetalingsdato: null,
       tilSoker: null,
       // OPPTJENING_AKTIVITET_TYPE
-      arbeidsforholdType: '-',
       arbeidsgiver: arbeidsgiverValues,
-      arbeidsgiverNavn: arbeidsgiverValues?.navn,
-      arbeidsgiverOrgnr: arbeidsgiverValues?.identifikator,
-      arbeidsforholdId: arbeidsgiverValues.arbeidsforholdId !== '-' ? arbeidsgiverValues.arbeidsforholdId : null,
-      eksternArbeidsforholdId:
-        arbeidsgiverValues.eksternArbeidsforholdId !== '-' ? arbeidsgiverValues.eksternArbeidsforholdId : null,
-      aktørId: null,
-      uttak: [
-        {
-          periode: {
-            fom: values.fom,
-            tom: values.tom,
-          },
-          utbetalingsgrad: andel.utbetalingsgrad,
-          utfall: 'INNVILGET',
-        },
-      ],
+      arbeidsgiverOrgnr: arbeidsgiverValues.identifikator,
+      arbeidsforholdRef: arbeidsgiverValues.arbeidsforholdRef,
     };
   }),
   // lagtTilAvSaksbehandler: true,

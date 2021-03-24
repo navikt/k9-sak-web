@@ -1,26 +1,22 @@
-import { Arbeidsforhold, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const utledArbeidsforholdNavn = (
-  arbeidsforhold: Arbeidsforhold,
+  arbeidsforhold: ArbeidsforholdV2,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
-  const arbeidsgiverOpplysninger = arbeidsgiverOpplysningerPerId
-    ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId || arbeidsforhold.arbeidsgiverIdentifikator]
-    : null;
+  if (!arbeidsforhold || !arbeidsforhold.arbeidsgiver || !arbeidsforhold.arbeidsgiver.arbeidsgiverOrgnr) return '';
 
-  const navn = arbeidsforhold.navn ? arbeidsforhold.navn : arbeidsgiverOpplysninger?.navn;
-  if (arbeidsforhold.lagtTilAvSaksbehandler) {
-    return navn;
-  }
+  const orgnr = arbeidsforhold.arbeidsgiver.arbeidsgiverOrgnr;
 
-  return arbeidsforhold.arbeidsforholdId
-    ? `${navn} (${arbeidsforhold.arbeidsgiverIdentifiktorGUI})${getEndCharFromId(
-        arbeidsforhold.eksternArbeidsforholdId,
+  const arbeidsgiverOpplysninger = arbeidsgiverOpplysningerPerId ? arbeidsgiverOpplysningerPerId[orgnr] : null;
+
+  return arbeidsforhold.arbeidsforhold?.eksternArbeidsforholdId
+    ? `${arbeidsgiverOpplysninger?.navn} (${orgnr})${getEndCharFromId(
+        arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId,
       )}`
-    : `${navn} (${arbeidsforhold.arbeidsgiverIdentifiktorGUI})`;
+    : `${arbeidsgiverOpplysninger?.navn} (${orgnr})`;
 };
 
 export const utledArbeidsforholdYrkestittel = (arbeidsforhold: ArbeidsforholdV2) =>

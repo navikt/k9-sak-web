@@ -25,16 +25,6 @@ const headerColumnContent = [
   <></>,
 ];
 
-export const utledNøkkel = (id, arbeidsforhold) => {
-  const arbeidsforholdId =
-    id || (arbeidsforhold && arbeidsforhold.arbeidsforholdId ? arbeidsforhold.arbeidsforholdId : '');
-  const internId = arbeidsforhold && arbeidsforhold.internArbeidsforholdId ? arbeidsforhold.internArbeidsforholdId : '';
-  const eksternId =
-    arbeidsforhold && arbeidsforhold.eksternArbeidsforholdId ? arbeidsforhold.eksternArbeidsforholdId : '';
-
-  return `${arbeidsforholdId}${internId}${eksternId}`;
-};
-
 interface OwnProps {
   alleArbeidsforhold: ArbeidsforholdV2[];
   updateArbeidsforhold: (values: any) => void;
@@ -98,7 +88,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
           return (
             <>
               <TableRow
-                key={utledNøkkel(a.id, a.arbeidsforhold)}
+                key={a.id}
                 model={a}
                 onMouseDown={() => setVisAksjonspunktInfo(true)}
                 onKeyDown={() => setVisAksjonspunktInfo(true)}

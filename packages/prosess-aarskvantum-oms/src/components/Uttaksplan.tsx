@@ -4,7 +4,7 @@ import Tabs from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { KodeverkMedNavn, Arbeidsforhold, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import Aktivitet from '../dto/Aktivitet';
@@ -16,27 +16,24 @@ interface UttaksplanProps {
   aktiviteterHittilIÅr: Aktivitet[];
   aktiv: boolean;
   aktivitetsstatuser: KodeverkMedNavn[];
-  arbeidsforhold: Arbeidsforhold[];
+  arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
 const mapAktiviteterTilTabell = (
   aktiviteter: Aktivitet[],
   aktivitetsstatuser: KodeverkMedNavn[],
-  alleArbeidsforhold: Arbeidsforhold[],
+  alleArbeidsforhold: ArbeidsforholdV2[],
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
   if (!aktiviteter.length) {
     return <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />;
   }
+
   return aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => {
     const gjeldendeArbeidsforhold = alleArbeidsforhold
-      .filter(
-        arb =>
-          arb.arbeidsgiverIdentifikator === arbeidsforhold.organisasjonsnummer ||
-          arb.arbeidsgiverIdentifiktorGUI === arbeidsforhold.organisasjonsnummer,
-      )
-      .find(arb => arb.arbeidsforholdId === arbeidsforhold.arbeidsforholdId);
+      .filter(arb => arb.arbeidsgiver?.arbeidsgiverOrgnr === arbeidsforhold.organisasjonsnummer)
+      .find(arb => arb.arbeidsforhold?.internArbeidsforholdId === arbeidsforhold.arbeidsforholdId);
 
     return (
       <AktivitetTabell

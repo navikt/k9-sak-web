@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import { Arbeidsforhold, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
+import { ArbeidsforholdV2, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
 import Utfall from './Utfall';
@@ -33,13 +33,15 @@ describe('<AktivitetTabell />', () => {
     ],
   };
 
-  // @ts-ignore
-  const arbeidsforhold: Arbeidsforhold = {
-    navn: 'Bedrift AS',
-    arbeidsgiverIdentifiktorGUI: '999',
-    eksternArbeidsforholdId: '1',
-    arbeidsforholdId: '123',
-  };
+  const arbeidsforhold = {
+    id: '123',
+    arbeidsgiver: {
+      arbeidsgiverOrgnr: '999',
+    },
+    arbeidsforhold: {
+      eksternArbeidsforholdId: '1',
+    },
+  } as ArbeidsforholdV2;
 
   it('rendrer tabellrad med rett info', () => {
     const wrapper = shallow(

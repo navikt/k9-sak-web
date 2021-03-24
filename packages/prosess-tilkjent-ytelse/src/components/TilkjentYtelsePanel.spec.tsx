@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import { Aksjonspunkt, FamilieHendelse, Personopplysninger, Arbeidsforhold, Soknad } from '@k9-sak-web/types';
+import { Aksjonspunkt, FamilieHendelse, Personopplysninger, ArbeidsforholdV2, Soknad } from '@k9-sak-web/types';
 import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -20,12 +20,23 @@ const tilbaketrekkAP = {
 
 const arbeidsforhold = [
   {
-    arbeidsgiverReferanse: '12345678',
-    kilde: {
-      kode: '-',
+    id: '910909088-ab549827-4f9c-40f3-875c-3c28631b2291',
+    arbeidsgiver: { arbeidsgiverOrgnr: '910909088', arbeidsgiverAktørId: null },
+    arbeidsforhold: {
+      internArbeidsforholdId: 'ab549827-4f9c-40f3-875c-3c28631b2291',
+      eksternArbeidsforholdId: 'ARB001-001',
     },
+    yrkestittel: 'Ukjent',
+    begrunnelse: null,
+    perioder: [{ fom: '2020-06-30', tom: '9999-12-31' }],
+    handlingType: { kode: 'BRUK', kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE' },
+    kilde: [{ kode: 'AA-Registeret', kodeverk: 'ARBEIDSFORHOLD_KILDE' }],
+    permisjoner: [],
+    stillingsprosent: 100.0,
+    aksjonspunktÅrsaker: [],
+    inntektsmeldinger: null,
   },
-] as Arbeidsforhold[];
+] as ArbeidsforholdV2[];
 
 describe('<TilkjentYtelsePanelImpl>', () => {
   it('skall innehålla rätt undertekst', () => {
@@ -44,6 +55,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         soknad={{} as Soknad}
         fagsakYtelseTypeKode=""
         arbeidsforhold={arbeidsforhold}
+        arbeidsgiverOpplysningerPerId={{}}
         vilkar={[]}
       />,
     );
@@ -70,6 +82,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         soknad={{} as Soknad}
         fagsakYtelseTypeKode=""
         arbeidsforhold={arbeidsforhold}
+        arbeidsgiverOpplysningerPerId={{}}
         vilkar={[]}
       />,
     );

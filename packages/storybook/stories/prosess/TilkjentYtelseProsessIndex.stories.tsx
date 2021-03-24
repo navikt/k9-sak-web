@@ -193,12 +193,30 @@ const beregningsresultat = {
 
 const arbeidsforhold = [
   {
-    arbeidsgiverReferanse: '12345678',
-    kilde: {
-      kode: '-',
+    id: '910909088-ab549827-4f9c-40f3-875c-3c28631b2291',
+    arbeidsgiver: { arbeidsgiverOrgnr: '12345678', arbeidsgiverAktørId: null },
+    arbeidsforhold: {
+      internArbeidsforholdId: 'ab549827-4f9c-40f3-875c-3c28631b2291',
+      eksternArbeidsforholdId: 'ARB001-001',
     },
+    yrkestittel: 'Ukjent',
+    begrunnelse: null,
+    perioder: [{ fom: '2020-06-30', tom: '9999-12-31' }],
+    handlingType: { kode: 'BRUK', kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE' },
+    kilde: [{ kode: 'AA-Registeret', kodeverk: 'ARBEIDSFORHOLD_KILDE' }],
+    permisjoner: [],
+    stillingsprosent: 100.0,
+    aksjonspunktÅrsaker: [],
+    inntektsmeldinger: null,
   },
 ];
+const arbeidsgiverOpplysningerPerId = {
+  12345678: {
+    navn: 'BEDRIFT1 AS',
+    erPrivatPerson: false,
+    identifikator: '12345678',
+  },
+};
 
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
@@ -217,6 +235,7 @@ export const visUtenAksjonspunkt = () => (
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
     arbeidsforhold={arbeidsforhold}
+    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     vilkar={[]}
   />
 );
@@ -245,6 +264,7 @@ export const visÅpentAksjonspunkt = () => (
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
     arbeidsforhold={arbeidsforhold}
+    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     vilkar={[]}
   />
 );
