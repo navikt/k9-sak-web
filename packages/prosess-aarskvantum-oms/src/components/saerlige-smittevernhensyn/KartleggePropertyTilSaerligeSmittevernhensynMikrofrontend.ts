@@ -12,7 +12,6 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
 ) => {
   let objektTilMikrofrontend = {};
   const aksjonspunkt = aksjonspunkter[0];
-  console.log(aksjonspunkter);
 
   if (aksjonspunkt && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
