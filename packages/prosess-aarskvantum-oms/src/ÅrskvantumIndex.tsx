@@ -9,11 +9,13 @@ import {
 } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import Uttaksplan from './components/Uttaksplan';
 import AksjonspunktForm from './components/AksjonspunktForm';
 import Aktivitet from './dto/Aktivitet';
+import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
 
 const cache = createIntlCache();
 
@@ -52,19 +54,29 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-
   return (
     <RawIntlProvider value={årskvantumIntl}>
-      {aksjonspunkterForSteg.length > 0 && (
-        <AksjonspunktForm
-          aktiviteter={sisteUttaksplan?.aktiviteter}
-          behandlingId={behandling.id}
-          behandlingVersjon={behandling.versjon}
-          submitCallback={submitCallback}
-          aksjonspunkterForSteg={aksjonspunkterForSteg}
-          isAksjonspunktOpen={isAksjonspunktOpen}
+      {aksjonspunkterForSteg[0]?.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
+        <SaerligeSmittevernhensynMikrofrontend
+          {...{
+            behandling,
+            aksjonspunkterForSteg,
+            isAksjonspunktOpen,
+            submitCallback,
+          }}
         />
       )}
+      {aksjonspunkterForSteg.length > 0 &&
+        aksjonspunkterForSteg[0]?.definisjon.kode !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
+          <AksjonspunktForm
+            aktiviteter={sisteUttaksplan?.aktiviteter}
+            behandlingId={behandling.id}
+            behandlingVersjon={behandling.versjon}
+            submitCallback={submitCallback}
+            aksjonspunkterForSteg={aksjonspunkterForSteg}
+            isAksjonspunktOpen={isAksjonspunktOpen}
+          />
+        )}
       <Uttaksplan
         aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}

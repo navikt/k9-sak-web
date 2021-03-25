@@ -12,7 +12,7 @@ import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandli
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <ÅrskvantumIndex {...props} />;
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK];
 
   getOverstyrVisningAvKomponent = () => true;
 
