@@ -16,10 +16,10 @@
     "react": "^16.14.0",
     "react-intl": "^5.10.11",
     "react-redux": "^7.2.1",
+    "react-uuid": "^1.0.2",
     "redux": "^4.0.5",
     "redux-form": "^8.3.6",
-    "reselect": "^4.0.0",
-    "react-uuid": "^1.0.2"
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.18.2",
