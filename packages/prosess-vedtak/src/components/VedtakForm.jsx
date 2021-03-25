@@ -87,11 +87,6 @@ export class VedtakForm extends Component {
       ...formProps
     } = this.props;
 
-    const skalSkjuleFattVedtakKnapp =
-      aksjonspunktKoder &&
-      aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) &&
-      ytelseTypeKode === fagsakYtelseType.FRISINN;
-
     return (
       <>
         <VedtakAksjonspunktPanel
@@ -171,7 +166,6 @@ export class VedtakForm extends Component {
                     onClick={formProps.handleSubmit}
                     disabled={behandlingPaaVent || formProps.submitting}
                     spinner={formProps.submitting}
-                    style={{ display: skalSkjuleFattVedtakKnapp ? 'none' : 'block' }}
                   >
                     {intl.formatMessage({
                       id:
