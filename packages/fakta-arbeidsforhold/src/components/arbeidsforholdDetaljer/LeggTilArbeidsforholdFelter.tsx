@@ -123,12 +123,13 @@ LeggTilArbeidsforholdFelter.validate = (
   if (values === undefined || values === null) {
     return null;
   }
-  if (values.fomDato && values.tomDato && moment(values.fomDato).isAfter(moment(values.tomDato))) {
+  const { fomDato, tomDato } = values;
+  if (fomDato && tomDato && moment(fomDato).isAfter(moment(tomDato))) {
     return {
       // @ts-ignore
-      tomDato: sluttdatoErrorMsg(formatDate(values.fomDato)),
+      tomDato: sluttdatoErrorMsg(formatDate(fomDato)),
       // @ts-ignore
-      fomDato: startdatoErrorMsg(formatDate(values.tomDato)),
+      fomDato: startdatoErrorMsg(formatDate(tomDato)),
     };
   }
   return null;
