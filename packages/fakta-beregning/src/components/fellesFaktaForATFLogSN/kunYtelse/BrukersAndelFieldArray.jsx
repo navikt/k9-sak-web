@@ -201,11 +201,12 @@ BrukersAndelFieldArray.validate = values => {
   if (!values) {
     return null;
   }
-  const arrayErrors = values.map(andelFieldValues => {
-    const fieldErrors = {};
-    fieldErrors.fastsattBelop = required(andelFieldValues.fastsattBelop);
-    fieldErrors.inntektskategori = required(andelFieldValues.inntektskategori);
-    return fieldErrors.fastsattBelop || fieldErrors.inntektskategori ? fieldErrors : null;
+  const arrayErrors = values.map(({ fastsattBelop, inntektskategori }) => {
+    const fastsattBelopErr = required(fastsattBelop);
+    const inntektskategoriErr = required(inntektskategori);
+    return fastsattBelopErr || inntektskategoriErr
+      ? { fastsattBelop: fastsattBelopErr, inntektskategori: inntektskategoriErr }
+      : null;
   });
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;

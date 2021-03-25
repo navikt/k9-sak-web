@@ -26,8 +26,8 @@ const skalViseSletteknapp = (index, fields, readOnly) =>
 const skalViseRefusjon = fields => {
   let skalVise = false;
   fields.forEach((id, index) => {
-    const field = fields.get(index);
-    if (field.refusjonskrav !== '' && field.refusjonskrav !== null && field.refusjonskrav !== undefined) {
+    const { refusjonskrav } = fields.get(index);
+    if (refusjonskrav !== '' && refusjonskrav !== null && refusjonskrav !== undefined) {
       skalVise = true;
     }
   });
@@ -198,18 +198,17 @@ InntektFieldArray.transformValues = values =>
         }))
     : null;
 
-const mapAndelToSortedObject = value => {
-  const { andel, inntektskategori } = value;
-  return { andelsinfo: andel, inntektskategori };
-};
+const mapAndelToSortedObject = ({ andel, inntektskategori }) => ({ andelsinfo: andel, inntektskategori });
 
 InntektFieldArray.validate = (values, erKunYtelse, skalRedigereInntekt) => {
   const arrayErrors = values.map(andelFieldValues => {
-    const fieldErrors = {};
-    fieldErrors.andel = required(andelFieldValues.andel);
-    fieldErrors.fastsattBelop = skalRedigereInntekt(andelFieldValues) ? required(andelFieldValues.fastsattBelop) : null;
-    fieldErrors.inntektskategori = required(andelFieldValues.inntektskategori);
-    return fieldErrors.andel || fieldErrors.fastsattBelop || fieldErrors.inntektskategori ? fieldErrors : null;
+    const { andel, fastsattBelop, inntektskategori } = andelFieldValues;
+    const andelErr = required(andel);
+    const fastsattBelopErr = skalRedigereInntekt(andelFieldValues) ? required(fastsattBelop) : null;
+    const inntektskategoriErr = required(inntektskategori);
+    return andelErr || fastsattBelopErr || inntektskategoriErr
+      ? { andel: andelErr, fastsattBelop: fastsattBelopErr, inntektskategori: inntektskategoriErr }
+      : null;
   });
   if (arrayErrors.some(errors => errors !== null)) {
     return arrayErrors;
