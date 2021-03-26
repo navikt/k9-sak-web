@@ -59,13 +59,13 @@ VurderRefusjonFormImpl.propTypes = {
 };
 
 VurderRefusjonFormImpl.transformValues = arbeidsgiverListe => values => {
-  if (arbeidsgiverListe.length === 0) {
+  if (!arbeidsgiverListe || arbeidsgiverListe.length === 0) {
     return {};
   }
   return {
     refusjonskravGyldighet: arbeidsgiverListe.map(({ arbeidsgiverId, arbeidsgiverVisningsnavn }) => ({
       arbeidsgiverId,
-      skalUtvideGyldighet: values[lagFieldName(arbeidsgiverVisningsnavn)],
+      skalUtvideGyldighet: values ? values[lagFieldName(arbeidsgiverVisningsnavn)] : undefined,
     })),
   };
 };

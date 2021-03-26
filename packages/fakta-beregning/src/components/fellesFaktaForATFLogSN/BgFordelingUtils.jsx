@@ -71,7 +71,7 @@ const listeInneholderAndel = (liste, field) =>
     : undefined;
 
 const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (field, faktaOmBeregning) => {
-  const andelIListe = listeInneholderAndel(faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe, field);
+  const andelIListe = listeInneholderAndel(faktaOmBeregning?.arbeidstakerOgFrilanserISammeOrganisasjonListe, field);
   return andelIListe && (andelIListe.inntektPrMnd === null || andelIListe.inntektPrMnd === undefined);
 };
 
@@ -99,7 +99,7 @@ const erNyoppstartetFrilanser = (field, values) => {
 // Lonnsendring
 
 const harLonnsendringUtenInntektsmelding = (values, field, faktaOmBeregning) =>
-  faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM &&
+  faktaOmBeregning?.arbeidsforholdMedLønnsendringUtenIM &&
   listeInneholderAndel(faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM, field) &&
   values[lonnsendringField];
 
@@ -109,16 +109,16 @@ const erATUtenInntektsmeldingMedLonnsendring = (field, values, faktaOmBeregning)
 // AT og FL i samme organisasjon
 
 export const andelErStatusFLOgHarATISammeOrg = (field, faktaOmBeregning) =>
-  faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe && erFrilanser(field);
+  faktaOmBeregning?.arbeidstakerOgFrilanserISammeOrganisasjonListe && erFrilanser(field);
 
 const andelErStatusATUtenInntektsmeldingOgHarFLISammeOrg = (field, faktaOmBeregning) =>
-  faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe &&
+  faktaOmBeregning?.arbeidstakerOgFrilanserISammeOrganisasjonListe &&
   erArbeidstaker(field) &&
   erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(field, faktaOmBeregning);
 
 // Søker mottar ytelse
 const sokerMottarYtelseForAndel = (values, field, faktaOmBeregning, beregningsgrunnlag) => {
-  const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning.vurderMottarYtelse, beregningsgrunnlag);
+  const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning?.vurderMottarYtelse, beregningsgrunnlag);
   return mottarYtelseMap[field.andelsnr] || mottarYtelseMap[field.andelsnrRef];
 };
 
@@ -147,7 +147,7 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
 // Kun Ytelse
 
 const harKunYtelse = faktaOmBeregning =>
-  !!faktaOmBeregning.faktaOmBeregningTilfeller &&
+  !!faktaOmBeregning?.faktaOmBeregningTilfeller &&
   faktaOmBeregning.faktaOmBeregningTilfeller.find(
     ({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE,
   ) !== undefined;
@@ -207,7 +207,7 @@ export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregnings
 export const getSkalRedigereInntekt = createSelector(
   [
     getFormValuesForBeregning,
-    (state, ownProps) => ownProps.beregningsgrunnlag.faktaOmBeregning,
+    (state, ownProps) => ownProps.beregningsgrunnlag?.faktaOmBeregning,
     (state, ownProps) => ownProps.beregningsgrunnlag,
   ],
   skalRedigereInntektForAndel,

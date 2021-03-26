@@ -58,7 +58,7 @@ const buildInitialValues = (
 };
 
 export const getAvklarAktiviteter = createSelector(
-  [beregningsgrunnlag => beregningsgrunnlag.faktaOmBeregning],
+  [beregningsgrunnlag => beregningsgrunnlag?.faktaOmBeregning],
   (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.avklarAktiviteter : undefined),
 );
 
