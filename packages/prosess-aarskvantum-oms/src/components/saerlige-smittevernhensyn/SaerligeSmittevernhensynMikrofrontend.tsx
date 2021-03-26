@@ -5,7 +5,7 @@ import KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend from './Kartleg
 
 const initializeOmsorgenForVilkar = (
   elementId,
-  { submitCallback, behandling, aksjonspunkterForSteg, isAksjonspunktOpen },
+  { submitCallback, behandling, aksjonspunkterForSteg, isAksjonspunktOpen, aktiviteter },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
@@ -14,20 +14,21 @@ const initializeOmsorgenForVilkar = (
       behandling,
       aksjonspunkterForSteg,
       isAksjonspunktOpen,
+      aktiviteter,
     ),
   );
 };
 
 const hentVersjonInformasjon = () => {
   const produksjonsVersjon = {
-    versjon: '1.5.29',
-    jsIntegrity: 'sha384-hHFYOcum1J9U/5dNOouYiTlcPhv4bF/SBVvlyri9YHsSWNFD2HrK9NxUkqUPjorm',
+    versjon: '1.5.30',
+    jsIntegrity: 'sha384-mWRKTlTCMBqfw28AKXc4HSgGc6O8CVuGXJ1oLO37jaI/QjU1sArXeArfJwGuevgA',
     stylesheetIntegrity: 'sha384-s7zKNrhjA1tpqnkyej5k6S6jybA6XM3bdjEMmWg9iMy7Mnj2pVupmHEmWn9LX1pY',
   };
   const preprodVersjon = {
     versjon: '1.5.30',
-    jsIntegrity: 'sha256-Km83UIztXyVgojh1WWLHDJ5EcwQ1pZTNyomY79cqTC8=',
-    stylesheetIntegrity: 'sha256-uEln+PYm//Fs5v6wRPj4zRXNwfbkHajm9UkwevaxsDo=',
+    jsIntegrity: 'sha384-mWRKTlTCMBqfw28AKXc4HSgGc6O8CVuGXJ1oLO37jaI/QjU1sArXeArfJwGuevgA',
+    stylesheetIntegrity: 'sha384-s7zKNrhjA1tpqnkyej5k6S6jybA6XM3bdjEMmWg9iMy7Mnj2pVupmHEmWn9LX1pY',
   };
   return sjekkHvisErIProduksjon ? produksjonsVersjon : preprodVersjon;
 };
@@ -38,9 +39,9 @@ export default props => {
   return (
     <MicroFrontend
       id={saerligSmittvernhensynVilkårAppID}
-      jsSrc={`/k9/microfrontend/omsorgsdager/build/${versjon}/app.js`}
+      jsSrc={`/k9/microfrontend/omsorgsdager/${versjon}/app.js`}
       jsIntegrity={jsIntegrity}
-      stylesheetSrc={`/k9/microfrontend/omsorgsdager/build/${versjon}/styles.css`}
+      stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
       stylesheetIntegrity={stylesheetIntegrity}
       onReady={() => initializeOmsorgenForVilkar(saerligSmittvernhensynVilkårAppID, props)}
     />
