@@ -22,11 +22,7 @@ export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning
         arbeidsinntekt: field.fastsattBelop,
       }));
 
-    if (
-      faktaOmBeregning.frilansAndel &&
-      !fastsatteAndelsnr.includes(faktaOmBeregning.frilansAndel.andelsnr) &&
-      inntektVerdier
-    ) {
+    if (faktaOmBeregning.frilansAndel && !fastsatteAndelsnr.includes(faktaOmBeregning.frilansAndel.andelsnr)) {
       const frilansVerdi = inntektVerdier.find(verdi => verdi.andelsnr === faktaOmBeregning.frilansAndel.andelsnr);
       andelsliste.push({
         andelsnr: faktaOmBeregning.frilansAndel.andelsnr,
