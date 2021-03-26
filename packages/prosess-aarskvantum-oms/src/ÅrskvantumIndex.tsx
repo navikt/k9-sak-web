@@ -6,6 +6,7 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Aksjonspunkt,
   ArbeidsforholdV2,
+  FeatureToggles,
 } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -39,6 +40,7 @@ interface ÅrsakvantumIndexProps {
   aksjonspunkterForSteg?: Aksjonspunkt[];
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  featureToggles: FeatureToggles;
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
@@ -51,32 +53,36 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   aksjonspunkterForSteg = [],
   arbeidsforhold = [],
   arbeidsgiverOpplysningerPerId,
+  featureToggles,
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
   return (
-    <RawIntlProvider value={årskvantumIntl}>
-      {aksjonspunkterForSteg[0]?.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
-        <SaerligeSmittevernhensynMikrofrontend
-          {...{
-            behandling,
-            aksjonspunkterForSteg,
-            isAksjonspunktOpen,
-            submitCallback,
-          }}
-        />
-      )}
-      {aksjonspunkterForSteg.length > 0 &&
-        aksjonspunkterForSteg[0]?.definisjon.kode !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
-          <AksjonspunktForm
-            aktiviteter={sisteUttaksplan?.aktiviteter}
-            behandlingId={behandling.id}
-            behandlingVersjon={behandling.versjon}
-            submitCallback={submitCallback}
-            aksjonspunkterForSteg={aksjonspunkterForSteg}
-            isAksjonspunktOpen={isAksjonspunktOpen}
+    <RawIntlProvider value={årskvantumIntl}>     
+      {featureToggles?.SAERLIGSMITTEVERNAKSJONSPUNKT &&
+        aksjonspunkterForSteg[0]?.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
+          <SaerligeSmittevernhensynMikrofrontend
+            {...{
+              behandling,
+              aksjonspunkterForSteg,
+              isAksjonspunktOpen,
+              submitCallback,
+              aktiviteter: sisteUttaksplan?.aktiviteter,
+            }}
           />
         )}
+
+      {aksjonspunkterForSteg.length > 0 && (
+        <AksjonspunktForm
+          aktiviteter={sisteUttaksplan?.aktiviteter}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          submitCallback={submitCallback}
+          aksjonspunkterForSteg={aksjonspunkterForSteg}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+        />
+      )}
+      
       <Uttaksplan
         aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
