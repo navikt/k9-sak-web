@@ -73,6 +73,7 @@ describe('<ÅrskvantumIndex>', () => {
         submitCallback={() => undefined}
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgivere}
+        featureToggles={{}}
       />,
     );
 
@@ -91,6 +92,7 @@ describe('<ÅrskvantumIndex>', () => {
         submitCallback={() => undefined}
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgivere}
+        featureToggles={{}}
       />,
     );
 
