@@ -72,18 +72,16 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
           />
         )}
 
-      {aksjonspunkterForSteg.length > 0 &&
-        featureToggles?.SAERLIGSMITTEVERNAKSJONSPUNKT &&
-        aksjonspunkterForSteg[0]?.definisjon.kode !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
-          <AksjonspunktForm
-            aktiviteter={sisteUttaksplan?.aktiviteter}
-            behandlingId={behandling.id}
-            behandlingVersjon={behandling.versjon}
-            submitCallback={submitCallback}
-            aksjonspunkterForSteg={aksjonspunkterForSteg}
-            isAksjonspunktOpen={isAksjonspunktOpen}
-          />
-        )}
+      {aksjonspunkterForSteg.length > 0 && (
+        <AksjonspunktForm
+          aktiviteter={sisteUttaksplan?.aktiviteter}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          submitCallback={submitCallback}
+          aksjonspunkterForSteg={aksjonspunkterForSteg}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+        />
+      )}
       <Uttaksplan
         aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
