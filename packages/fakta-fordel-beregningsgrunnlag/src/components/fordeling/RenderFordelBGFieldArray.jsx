@@ -512,7 +512,7 @@ RenderFordelBGFieldArray.validate = (
   if (
     sumIPeriode !== undefined &&
     sumIPeriode !== null &&
-    values.some(andel => andel.harPeriodeAarsakGraderingEllerRefusjon === true)
+    values.some(({ harPeriodeAarsakGraderingEllerRefusjon }) => harPeriodeAarsakGraderingEllerRefusjon === true)
   ) {
     const fastsattBelopError = validateSumFastsattBelop(values, sumIPeriode);
     if (fastsattBelopError) {

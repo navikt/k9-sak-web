@@ -58,7 +58,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
   return (
-    <RawIntlProvider value={årskvantumIntl}>
+    <RawIntlProvider value={årskvantumIntl}>     
       {featureToggles?.SAERLIGSMITTEVERNAKSJONSPUNKT &&
         aksjonspunkterForSteg[0]?.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
           <SaerligeSmittevernhensynMikrofrontend
@@ -82,6 +82,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
           isAksjonspunktOpen={isAksjonspunktOpen}
         />
       )}
+      
       <Uttaksplan
         aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}

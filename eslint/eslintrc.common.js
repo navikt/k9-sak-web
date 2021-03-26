@@ -67,6 +67,7 @@ const config = {
     'jsx-a11y/anchor-is-valid': OFF,
     'jsx-a11y/control-has-associated-label': OFF,
     'react/jsx-props-no-spreading': OFF,
+    'react/destructuring-assignment': OFF,
     '@typescript-eslint/no-empty-function': OFF,
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-comment': OFF,

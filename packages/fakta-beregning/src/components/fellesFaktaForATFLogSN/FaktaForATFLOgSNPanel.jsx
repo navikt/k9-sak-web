@@ -245,7 +245,7 @@ const vurderRefusjonskravTransform = faktaOmBeregning => (vurderFaktaValues, val
   );
   return {
     ...vurderFaktaValues,
-    ...VurderRefusjonForm.transformValues(faktaOmBeregning.refusjonskravSomKommerForSentListe)(values),
+    ...VurderRefusjonForm.transformValues(faktaOmBeregning?.refusjonskravSomKommerForSentListe)(values),
   };
 };
 
@@ -316,7 +316,7 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...FastsettBgKunYtelsePanel.buildInitialValues(
     props.kunYtelse,
     props.tilfeller,
-    props.faktaOmBeregning.andelerForFaktaOmBeregning,
+    props.faktaOmBeregning?.andelerForFaktaOmBeregning,
     props.alleKodeverk,
   ),
   ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, props.vurderFaktaAP),
@@ -338,17 +338,17 @@ const getFaktaOmBeregningTilfellerKoder = faktaOmBeregning =>
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
   beregningsgrunnlag: (ownProps, beregningsgrunnlag) => beregningsgrunnlag,
   kortvarigeArbeidsforhold: (ownProps, beregningsgrunnlag) =>
-    beregningsgrunnlag.faktaOmBeregning?.kortvarigeArbeidsforhold,
+    beregningsgrunnlag?.faktaOmBeregning?.kortvarigeArbeidsforhold,
   vurderFaktaAP: getVurderFaktaAksjonspunkt,
-  kunYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.kunYtelse,
+  kunYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.faktaOmBeregning?.kunYtelse,
   tilfeller: (ownProps, beregningsgrunnlag) => {
-    const tilfeller = getFaktaOmBeregningTilfellerKoder(beregningsgrunnlag.faktaOmBeregning);
+    const tilfeller = getFaktaOmBeregningTilfellerKoder(beregningsgrunnlag?.faktaOmBeregning);
     return tilfeller;
   },
-  vurderMottarYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning?.vurderMottarYtelse,
+  vurderMottarYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.faktaOmBeregning?.vurderMottarYtelse,
   alleKodeverk: ownProps => ownProps.alleKodeverk,
   aksjonspunkter: ownProps => ownProps.aksjonspunkter,
-  faktaOmBeregning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag.faktaOmBeregning,
+  faktaOmBeregning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.faktaOmBeregning,
   arbeidsgiverOpplysningerPerId: ownProps => ownProps.arbeidsgiverOpplysningerPerId,
   refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
 });
