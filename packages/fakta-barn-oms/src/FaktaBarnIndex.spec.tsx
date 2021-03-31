@@ -8,7 +8,7 @@ import BarnFraRammevedtak from './components/BarnFraRammevedtak';
 
 describe('<FaktaBarnIndex>', () => {
   it('hvis ingen barn, rendres info om dette', () => {
-    const wrapper = shallowWithIntl(<FaktaBarnIndex barn={[]} />);
+    const wrapper = shallowWithIntl(<FaktaBarnIndex barn={[]} rammevedtak={[]} />);
 
     expect(wrapper.find(FormattedMessage).prop('id')).toEqual('FaktaBarn.IngenBarn');
   });
@@ -28,10 +28,28 @@ describe('<FaktaBarnIndex>', () => {
             harSammeBosted: false,
           },
         ]}
+        rammevedtak={[
+          {
+            type: 'Fosterbarn',
+            vedtatt: '2021-03-17',
+            lengde: 'PT0S',
+            gyldigFraOgMed: '2021-03-17',
+            gyldigTilOgMed: '2033-12-31',
+            mottaker: '150915',
+          },
+          {
+            type: 'UtvidetRett',
+            vedtatt: '2021-03-17',
+            lengde: 'PT0S',
+            gyldigFraOgMed: '2021-03-17',
+            gyldigTilOgMed: '2033-12-31',
+            utvidetRettFor: '150915 #2',
+          },
+        ]}
       />,
     );
 
     expect(wrapper.find(VanligeBarn)).toHaveLength(1);
-    expect(wrapper.find(BarnFraRammevedtak)).toHaveLength(1);
+    expect(wrapper.find(BarnFraRammevedtak)).toHaveLength(3);
   });
 });
