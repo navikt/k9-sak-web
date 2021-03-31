@@ -1,0 +1,77 @@
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { v4 as uuidv4 } from 'uuid';
+import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
+import formaterDato from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/utils';
+import styles from './barnVisning.less';
+
+interface BarnInputProps {
+  barnet: KombinertBarnOgRammevedtak;
+}
+
+const BarnRammevedtakVisning: FunctionComponent<BarnInputProps> = ({ barnet }) => {
+  const { aleneomsorg, kroniskSykdom, fosterbarn, utenlandskBarn } = barnet.rammevedtak;
+  return (
+    <div className={styles.rammevedtak}>
+      <div>
+        <Element>
+          <FormattedMessage id="FaktaRammevedtak.Barn.Rammevedtak" />
+        </Element>
+        {kroniskSykdom &&
+          kroniskSykdom.map(() => (
+            <div key={uuidv4()}>
+              <Normaltekst>
+                <FormattedMessage id="FaktaRammevedtak.Barn.UtvidetRett" />
+              </Normaltekst>
+            </div>
+          ))}
+        {aleneomsorg && (
+          <Normaltekst>
+            <FormattedMessage id="FaktaRammevedtak.Barn.Aleneomsorg" />
+          </Normaltekst>
+        )}
+        {fosterbarn && (
+          <Normaltekst>
+            <FormattedMessage id="FaktaRammevedtak.Barn.Fosterbarn" />
+          </Normaltekst>
+        )}
+        {utenlandskBarn && (
+          <Normaltekst>
+            <FormattedMessage id="FaktaRammevedtak.Barn.UtenlandskBarn" />
+          </Normaltekst>
+        )}
+      </div>
+      <div>
+        <Element>
+          <FormattedMessage id="FaktaRammevedtak.Barn.FOM" />
+        </Element>
+        {kroniskSykdom &&
+          kroniskSykdom.map(ks => (
+            <div key={uuidv4()}>
+              <Normaltekst>{formaterDato(ks.fom)}</Normaltekst>
+            </div>
+          ))}
+        {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.fom)}</Normaltekst>}
+        {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.fom)}</Normaltekst>}
+        {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.fom)}</Normaltekst>}
+      </div>
+      <div>
+        <Element>
+          <FormattedMessage id="FaktaRammevedtak.Barn.TOM" />
+        </Element>
+        {kroniskSykdom &&
+          kroniskSykdom.map(ks => (
+            <div key={uuidv4()}>
+              <Normaltekst>{formaterDato(ks.tom)}</Normaltekst>
+            </div>
+          ))}
+        {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
+        {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.tom)}</Normaltekst>}
+        {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.tom)}</Normaltekst>}
+      </div>
+    </div>
+  );
+};
+
+export default BarnRammevedtakVisning;

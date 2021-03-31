@@ -7,7 +7,6 @@ import Seksjon from './Seksjon';
 
 describe('<RammevedtakFaktaFormImpl>', () => {
   const formValues: FormValues = {
-    barn: [],
     fordelingFår: [],
     fordelingGir: [],
     koronaoverføringFår: [],
@@ -16,7 +15,7 @@ describe('<RammevedtakFaktaFormImpl>', () => {
     overføringGir: [],
   };
 
-  it('rendrer barn, overføringer, delt bosted og midlertidig aleneansvar-seksjoner', () => {
+  it('rendrer overføringer seksjon', () => {
     const wrapper = shallowWithIntl(
       <RammevedtakFaktaFormImpl
         {...reduxFormPropsMock}
@@ -27,6 +26,6 @@ describe('<RammevedtakFaktaFormImpl>', () => {
       />,
     );
 
-    expect(wrapper.find(Seksjon)).toHaveLength(4);
+    expect(wrapper.find(Seksjon)).toHaveLength(1);
   });
 });

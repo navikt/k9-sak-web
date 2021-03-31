@@ -12,7 +12,10 @@ class BarnFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ forbrukteDager }) => !!forbrukteDager;
 
-  getData = ({ forbrukteDager }) => ({ barn: forbrukteDager?.barna || [] });
+  getData = ({ forbrukteDager }) => ({
+    barn: forbrukteDager?.barna || [],
+    rammevedtak: forbrukteDager?.rammevedtak || [],
+  });
 }
 
 export default BarnFaktaPanelDef;

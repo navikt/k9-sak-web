@@ -1,34 +1,40 @@
 import React from 'react';
-import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { FormattedMessage } from 'react-intl';
 import { shallowWithIntl } from '../../i18n';
-import BarnInfo from './BarnInfo';
 import VanligeBarn from './VanligeBarn';
+import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 
-describe('<BarnInfo>', () => {
+describe('<VanligeBarn>', () => {
   it('Rendrer hvert barn', () => {
-    const barn: BarnDto[] = [
+    const barn: KombinertBarnOgRammevedtak[] = [
       {
-        personIdent: '010116',
-        fødselsdato: '2016-01-01',
-        harSammeBosted: true,
-        barnType: BarnType.VANLIG,
+        personIdent: '150915',
+        barnRelevantIBehandling: {
+          personIdent: '150915',
+          fødselsdato: '2013-08-31',
+          dødsdato: null,
+          harSammeBosted: true,
+          barnType: BarnType.VANLIG,
+        },
       },
       {
-        personIdent: '02031845962',
-        fødselsdato: '2018-03-02',
-        harSammeBosted: false,
-        barnType: BarnType.VANLIG,
-      },
-      {
-        personIdent: '05051952104',
-        fødselsdato: '2019-05-05',
-        harSammeBosted: true,
-        dødsdato: '2020-03-03',
-        barnType: BarnType.VANLIG,
+        personIdent: '150915',
+        barnRelevantIBehandling: {
+          personIdent: '150915',
+          fødselsdato: '2013-08-31',
+          dødsdato: null,
+          harSammeBosted: true,
+          barnType: BarnType.VANLIG,
+        },
       },
     ];
     const wrapper = shallowWithIntl(<VanligeBarn barn={barn} />);
 
-    expect(wrapper.find(BarnInfo)).toHaveLength(barn.length);
+    const elementerMedFormatterTekstId = tekstId =>
+      wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === tekstId);
+
+    const tekstBarnBehandling = elementerMedFormatterTekstId('FaktaBarn.Behandlingsdato');
+    expect(tekstBarnBehandling).toHaveLength(1);
   });
 });

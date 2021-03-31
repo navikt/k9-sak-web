@@ -1,14 +1,19 @@
 import { FormattedMessage } from 'react-intl';
-import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { Element } from 'nav-frontend-typografi';
 import React, { FunctionComponent } from 'react';
-import BarnInfo from './BarnInfo';
-import Gruppering from './Gruppering';
+import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
+import BarnVisning from './BarnVisning';
+import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 
 interface BarnFraRammevedtakProps {
-  barn: BarnDto[];
+  barn: KombinertBarnOgRammevedtak[];
   startIndex: number;
 }
+
+const AvstandTopp = styled.div`
+  margin-top: 1.5rem;
+`;
 
 const BarnFraRammevedtak: FunctionComponent<BarnFraRammevedtakProps> = ({ barn, startIndex }) => {
   if (barn.length === 0) {
@@ -16,14 +21,16 @@ const BarnFraRammevedtak: FunctionComponent<BarnFraRammevedtakProps> = ({ barn, 
   }
 
   return (
-    <Gruppering>
+    <AvstandTopp key={uuidv4()}>
       <Element>
         <FormattedMessage id="FaktaBarn.HentetLive" />
       </Element>
       {barn.map((barnet, index) => (
-        <BarnInfo barnet={barnet} barnnummer={index + startIndex + 1} key={barnet.personIdent} />
+        <>
+          <BarnVisning barnet={barnet} index={index + startIndex} key={barnet.personIdent} />
+        </>
       ))}
-    </Gruppering>
+    </AvstandTopp>
   );
 };
 
