@@ -13,6 +13,7 @@ import VanligeBarn from './components/VanligeBarn';
 import BarnFraRammevedtak from './components/BarnFraRammevedtak';
 import BarnMedRammevedtak from './dto/BarnMedRammevedtak';
 import KombinertBarnOgRammevedtak from './dto/KombinertBarnOgRammevedtak';
+import UidentifiserteRammevedtak from './components/UidentifiserteRammevedtak';
 
 const cache = createIntlCache();
 
@@ -136,6 +137,11 @@ const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [], ram
 
   return (
     <RawIntlProvider value={intl}>
+      <UidentifiserteRammevedtak type={RammevedtakEnum.UIDENTIFISERT} rammevedtak={rammevedtak} />
+      <UidentifiserteRammevedtak type={RammevedtakEnum.UTVIDET_RETT} rammevedtak={rammevedtak} />
+      <UidentifiserteRammevedtak type={RammevedtakEnum.ALENEOMSORG} rammevedtak={rammevedtak} />
+      <UidentifiserteRammevedtak type={RammevedtakEnum.FOSTERBARN} rammevedtak={rammevedtak} />
+
       <Seksjon bakgrunn="hvit" title={{ id: 'FaktaBarn.Tittel' }} imgSrc={users} medMarg>
         {barn.length === 0 && <FormattedMessage id="FaktaBarn.IngenBarn" />}
         <VanligeBarn barn={vanligeBarn} />

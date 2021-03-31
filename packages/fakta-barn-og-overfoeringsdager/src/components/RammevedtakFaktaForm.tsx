@@ -12,7 +12,7 @@ import {
 import { FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
 import { Element } from 'nav-frontend-typografi';
-import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import mapDtoTilFormValues from '../dto/mapping';
 import FormValues from '../types/FormValues';
 import { OverføringsretningEnum } from '../types/Overføring';
@@ -20,7 +20,6 @@ import { rammevedtakFormName } from './formNames';
 import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import Seksjon from './Seksjon';
 import FastBreddeAligner from './FastBreddeAligner';
-import UidentifiserteRammevedtak from './UidentifiserteRammevedtak';
 
 interface RammevedtakFaktaFormProps {
   rammevedtak: Rammevedtak[];
@@ -30,7 +29,6 @@ interface RammevedtakFaktaFormProps {
 }
 
 export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
-  rammevedtak,
   formValues,
   behandlingId,
   behandlingVersjon,
@@ -60,10 +58,6 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
 
   return (
     <>
-      <UidentifiserteRammevedtak type={RammevedtakEnum.UIDENTIFISERT} rammevedtak={rammevedtak} />
-      <UidentifiserteRammevedtak type={RammevedtakEnum.UTVIDET_RETT} rammevedtak={rammevedtak} />
-      <UidentifiserteRammevedtak type={RammevedtakEnum.ALENEOMSORG} rammevedtak={rammevedtak} />
-      <UidentifiserteRammevedtak type={RammevedtakEnum.FOSTERBARN} rammevedtak={rammevedtak} />
       <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.Overføringer.Tittel' }} imgSrc={transferIcon} medMarg>
         {detFinnesOverføringer ? (
           <>
