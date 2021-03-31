@@ -29,6 +29,8 @@ interface RammevedtakFaktaFormProps {
 }
 
 export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  rammevedtak,
   formValues,
   behandlingId,
   behandlingVersjon,
