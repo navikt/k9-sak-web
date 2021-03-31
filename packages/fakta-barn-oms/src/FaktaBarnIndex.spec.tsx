@@ -5,6 +5,7 @@ import { shallowWithIntl } from '../i18n';
 import FaktaBarnIndex from './FaktaBarnIndex';
 import VanligeBarn from './components/VanligeBarn';
 import BarnFraRammevedtak from './components/BarnFraRammevedtak';
+import MidlertidigAlene from './components/MidlertidigAlene';
 
 describe('<FaktaBarnIndex>', () => {
   it('hvis ingen barn, rendres info om dette', () => {
@@ -50,6 +51,7 @@ describe('<FaktaBarnIndex>', () => {
     );
 
     expect(wrapper.find(VanligeBarn)).toHaveLength(1);
-    expect(wrapper.find(BarnFraRammevedtak)).toHaveLength(3);
+    expect(wrapper.find(BarnFraRammevedtak)).toHaveLength(1);
+    expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
   });
 });

@@ -28,5 +28,5 @@ it('<BarnInformasjonVisning> med rett info', () => {
 
   expect(sammaBosted).toHaveLength(1);
   expect(fosterBarn).toHaveLength(1);
-  expect(utenlandskBarn).toHaveLength(1);
+  expect(utenlandskBarn).toHaveLength(0);
 });

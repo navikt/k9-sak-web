@@ -1,10 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Panel from 'nav-frontend-paneler';
-import { FormattedMessage } from 'react-intl';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import BarnVisning from './BarnVisning';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
+import BarnRammevedtakVisning from './BarnRammevedtakVisning';
+import BarnInformasjonVisning from './BarnInformasjonVisning';
 
 it('<BarnVisning>', () => {
   const barn: KombinertBarnOgRammevedtak = {
@@ -32,17 +33,7 @@ it('<BarnVisning>', () => {
   };
 
   const wrapper = shallow(<BarnVisning barnet={barn} index={0} />);
-
   expect(wrapper.find(Panel)).toHaveLength(1);
-
-  const elementerMedFormatterTekstId = tekstId =>
-    wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === tekstId);
-
-  const kroniskSykdomVisning = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.UtvidetRett');
-  const aleneomsorgvisning = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.Aleneomsorg');
-  const sammaBosted = elementerMedFormatterTekstId('FaktaBarn.BorMedSøker');
-
-  expect(kroniskSykdomVisning).toHaveLength(1);
-  expect(sammaBosted).toHaveLength(1);
-  expect(aleneomsorgvisning).toHaveLength(0);
+  expect(wrapper.find(BarnInformasjonVisning)).toHaveLength(1);
+  expect(wrapper.find(BarnRammevedtakVisning)).toHaveLength(1);
 });

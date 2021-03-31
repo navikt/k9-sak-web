@@ -45,7 +45,7 @@ describe('<UtvidetRettFakta>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: false,
-        tekst: 'Registrerte rammemeldinger',
+        tekst: 'Deling av dager',
       },
       {
         erAktiv: false,
