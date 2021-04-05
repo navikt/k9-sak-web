@@ -21,14 +21,14 @@ import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import Seksjon from './Seksjon';
 import FastBreddeAligner from './FastBreddeAligner';
 
-interface RammevedtakFaktaFormProps {
+interface OverforingerFaktaFormProps {
   rammevedtak: Rammevedtak[];
   behandlingId: number;
   behandlingVersjon: number;
   formValues?: FormValues;
 }
 
-export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormProps & InjectedFormProps> = ({
+export const OverforingerFaktaFormImpl: FunctionComponent<OverforingerFaktaFormProps & InjectedFormProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   rammevedtak,
   formValues,
@@ -117,10 +117,10 @@ export const RammevedtakFaktaFormImpl: FunctionComponent<RammevedtakFaktaFormPro
   );
 };
 
-const mapStateToPropsFactory = (_initialState, initialOwnProps: RammevedtakFaktaFormProps) => {
+const mapStateToPropsFactory = (_initialState, initialOwnProps: OverforingerFaktaFormProps) => {
   const { rammevedtak } = initialOwnProps;
 
-  return (state, { behandlingId, behandlingVersjon }: RammevedtakFaktaFormProps) => {
+  return (state, { behandlingId, behandlingVersjon }: OverforingerFaktaFormProps) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     const formValues = getBehandlingFormValues(rammevedtakFormName, behandlingId, behandlingVersjon)(state) || {};
 
@@ -136,5 +136,5 @@ export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: rammevedtakFormName,
     enableReinitialize: true,
-  })(RammevedtakFaktaFormImpl),
+  })(OverforingerFaktaFormImpl),
 );

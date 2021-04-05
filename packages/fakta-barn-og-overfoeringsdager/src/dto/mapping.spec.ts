@@ -1,11 +1,6 @@
 import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import mapDtoTilFormValues from './mapping';
 
-const uidentifisertRammevedtak: Rammevedtak = {
-  type: RammevedtakEnum.UIDENTIFISERT,
-  fritekst: 'Utolkbar tekst beep boop',
-};
-
 const avsender = '02028920544';
 const gyldigFraOgMedFår = '2020-01-01';
 const gyldigTilOgMedFår = '2020-12-31';
@@ -30,7 +25,6 @@ const overføringGirRammevedtak = (type: RammevedtakType, lengde): Rammevedtak =
 
 it('mapping fra DTO til formValues', () => {
   const rammevedtak: Rammevedtak[] = [
-    uidentifisertRammevedtak,
     overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P1D'),
     overføringFårRammevedtak(RammevedtakEnum.FORDELING_FÅR, 'P2D'),
     overføringFårRammevedtak(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P3D'),

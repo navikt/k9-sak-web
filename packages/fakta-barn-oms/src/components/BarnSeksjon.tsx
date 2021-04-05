@@ -6,32 +6,31 @@ import { v4 as uuidv4 } from 'uuid';
 import BarnVisning from './BarnVisning';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 
-interface BarnFraRammevedtakProps {
+interface BarnSeksjonProps {
   barn: KombinertBarnOgRammevedtak[];
   startIndex: number;
+  tekstId: string;
 }
 
 const AvstandTopp = styled.div`
   margin-top: 1.5rem;
 `;
 
-const BarnFraRammevedtak: FunctionComponent<BarnFraRammevedtakProps> = ({ barn, startIndex }) => {
+const BarnSeksjon: FunctionComponent<BarnSeksjonProps> = ({ barn, startIndex, tekstId }) => {
   if (barn.length === 0) {
     return null;
   }
 
   return (
-    <AvstandTopp key={uuidv4()}>
+    <AvstandTopp>
       <Element>
-        <FormattedMessage id="FaktaBarn.HentetLive" />
+        <FormattedMessage id={tekstId} />
       </Element>
       {barn.map((barnet, index) => (
-        <>
-          <BarnVisning barnet={barnet} index={index + startIndex} key={barnet.personIdent} />
-        </>
+        <BarnVisning barnet={barnet} index={index + startIndex} key={uuidv4()} />
       ))}
     </AvstandTopp>
   );
 };
 
-export default BarnFraRammevedtak;
+export default BarnSeksjon;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { shallowWithIntl } from '../../i18n';
-import { RammevedtakFaktaFormImpl } from './RammevedtakFaktaForm';
+import { OverforingerFaktaFormImpl } from './OverforingerFaktaForm';
 import FormValues from '../types/FormValues';
 import Seksjon from './Seksjon';
 
-describe('<RammevedtakFaktaFormImpl>', () => {
+describe('<OverforingerFaktaFormImpl>', () => {
   const formValues: FormValues = {
     fordelingFår: [],
     fordelingGir: [],
@@ -17,7 +17,7 @@ describe('<RammevedtakFaktaFormImpl>', () => {
 
   it('rendrer overføringer seksjon', () => {
     const wrapper = shallowWithIntl(
-      <RammevedtakFaktaFormImpl
+      <OverforingerFaktaFormImpl
         {...reduxFormPropsMock}
         formValues={formValues}
         rammevedtak={[]}

@@ -3,8 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { shallowWithIntl } from '../i18n';
 import FaktaBarnIndex from './FaktaBarnIndex';
-import VanligeBarn from './components/VanligeBarn';
-import BarnFraRammevedtak from './components/BarnFraRammevedtak';
+import BarnSeksjon from './components/BarnSeksjon';
 import MidlertidigAlene from './components/MidlertidigAlene';
 
 describe('<FaktaBarnIndex>', () => {
@@ -50,8 +49,7 @@ describe('<FaktaBarnIndex>', () => {
       />,
     );
 
-    expect(wrapper.find(VanligeBarn)).toHaveLength(1);
-    expect(wrapper.find(BarnFraRammevedtak)).toHaveLength(1);
+    expect(wrapper.find(BarnSeksjon)).toHaveLength(2);
     expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
   });
 });

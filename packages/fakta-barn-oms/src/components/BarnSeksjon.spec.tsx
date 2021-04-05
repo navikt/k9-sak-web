@@ -2,10 +2,10 @@ import React from 'react';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { FormattedMessage } from 'react-intl';
 import { shallowWithIntl } from '../../i18n';
-import VanligeBarn from './VanligeBarn';
+import BarnSeksjon from './BarnSeksjon';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 
-describe('<VanligeBarn>', () => {
+describe('<BarnSeksjon>', () => {
   it('Rendrer hvert barn', () => {
     const barn: KombinertBarnOgRammevedtak[] = [
       {
@@ -29,7 +29,7 @@ describe('<VanligeBarn>', () => {
         },
       },
     ];
-    const wrapper = shallowWithIntl(<VanligeBarn barn={barn} />);
+    const wrapper = shallowWithIntl(<BarnSeksjon barn={barn} startIndex={0} tekstId="FaktaBarn.Behandlingsdato" />);
 
     const elementerMedFormatterTekstId = tekstId =>
       wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === tekstId);

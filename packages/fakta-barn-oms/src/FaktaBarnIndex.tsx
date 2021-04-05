@@ -9,8 +9,7 @@ import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import MidlertidigAlene from './components/MidlertidigAlene';
 import messages from '../i18n/nb_NO.json';
-import VanligeBarn from './components/VanligeBarn';
-import BarnFraRammevedtak from './components/BarnFraRammevedtak';
+import BarnSeksjon from './components/BarnSeksjon';
 import BarnMedRammevedtak from './dto/BarnMedRammevedtak';
 import KombinertBarnOgRammevedtak from './dto/KombinertBarnOgRammevedtak';
 import UidentifiserteRammevedtak from './components/UidentifiserteRammevedtak';
@@ -144,8 +143,8 @@ const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [], ram
 
       <Seksjon bakgrunn="hvit" title={{ id: 'FaktaBarn.Tittel' }} imgSrc={users} medMarg>
         {barn.length === 0 && <FormattedMessage id="FaktaBarn.IngenBarn" />}
-        <VanligeBarn barn={vanligeBarn} />
-        <BarnFraRammevedtak barn={barnFraRammeVedtak} startIndex={vanligeBarn.length} />
+        <BarnSeksjon barn={vanligeBarn} startIndex={0} tekstId="FaktaBarn.Behandlingsdato" />
+        <BarnSeksjon barn={barnFraRammeVedtak} startIndex={vanligeBarn.length} tekstId="FaktaBarn.HentetLive" />
       </Seksjon>
 
       <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.ErMidlertidigAlene.Tittel' }} imgSrc={user} medMarg>

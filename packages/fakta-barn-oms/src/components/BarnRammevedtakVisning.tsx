@@ -11,7 +11,7 @@ interface BarnInputProps {
 }
 
 const BarnRammevedtakVisning: FunctionComponent<BarnInputProps> = ({ barnet }) => {
-  const { aleneomsorg, kroniskSykdom, fosterbarn, utenlandskBarn } = barnet.rammevedtak;
+  const { aleneomsorg, kroniskSykdom, fosterbarn, utenlandskBarn, deltBosted } = barnet.rammevedtak;
   return (
     <div className={styles.rammevedtak}>
       <div>
@@ -41,6 +41,11 @@ const BarnRammevedtakVisning: FunctionComponent<BarnInputProps> = ({ barnet }) =
             <FormattedMessage id="FaktaRammevedtak.Barn.UtenlandskBarn" />
           </Normaltekst>
         )}
+        {deltBosted && (
+          <Normaltekst>
+            <FormattedMessage id="FaktaRammevedtak.Barn.DeltBosted" />
+          </Normaltekst>
+        )}
       </div>
       <div>
         <Element>
@@ -55,6 +60,7 @@ const BarnRammevedtakVisning: FunctionComponent<BarnInputProps> = ({ barnet }) =
         {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.fom)}</Normaltekst>}
         {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.fom)}</Normaltekst>}
         {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.fom)}</Normaltekst>}
+        {deltBosted && <Normaltekst>{formaterDato(deltBosted.fom)}</Normaltekst>}
       </div>
       <div>
         <Element>
@@ -69,6 +75,7 @@ const BarnRammevedtakVisning: FunctionComponent<BarnInputProps> = ({ barnet }) =
         {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
         {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.tom)}</Normaltekst>}
         {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.tom)}</Normaltekst>}
+        {deltBosted && <Normaltekst>{formaterDato(deltBosted.tom)}</Normaltekst>}
       </div>
     </div>
   );
