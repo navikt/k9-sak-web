@@ -5,11 +5,10 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "nav-frontend-typografi": "2.0.37",
+    "nav-frontend-typografi": "2.0.39",
     "nav-frontend-typografi-style": "1.0.35",
     "react": "^16.14.0",
     "react-intl": "^5.10.11",
     "react-router-dom": "^5.2.0"
-  },
-  "devDependencies": {}
+  }
 }

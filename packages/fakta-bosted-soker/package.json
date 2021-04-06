@@ -12,7 +12,7 @@
     "nav-frontend-etiketter-style": "1.0.19",
     "nav-frontend-grid": "1.0.50",
     "nav-frontend-grid-style": "1.0.2",
-    "nav-frontend-typografi": "2.0.37",
+    "nav-frontend-typografi": "2.0.39",
     "nav-frontend-typografi-style": "1.0.35",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
-    "chai": "^4.2.0",
+    "chai": "^4.3.4",
     "enzyme": "^3.11.0"
   }
 }

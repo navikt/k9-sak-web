@@ -5,8 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "react": "^16.14.0",
-    "@k9-sak-web/rest-api": "1.0.0"
-  },
-  "devDependencies": {}
+    "@k9-sak-web/rest-api": "1.0.0",
+    "react": "^16.14.0"
+  }
 }
