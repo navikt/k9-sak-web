@@ -1,6 +1,8 @@
 import React from 'react';
 import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
 import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { Rammevedtak } from '@k9-sak-web/types';
+import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 
 export default {
   title: 'omsorgspenger/fakta/Barn',
@@ -29,6 +31,29 @@ const barn: BarnDto[] = [
   },
 ];
 
-export const treBarn = () => <FaktaBarnIndex barn={barn} />;
+const rammevedtak: Rammevedtak[] = [
+  {
+    type: 'Fosterbarn',
+    vedtatt: '2021-03-17',
+    lengde: 'PT0S',
+    gyldigFraOgMed: '2021-03-17',
+    gyldigTilOgMed: '2033-12-31',
+    mottaker: '05051952104',
+  },
+  {
+    type: 'UtvidetRett',
+    vedtatt: '2021-03-17',
+    lengde: 'PT0S',
+    gyldigFraOgMed: '2021-03-17',
+    gyldigTilOgMed: '2033-12-31',
+    utvidetRettFor: '150915 #2',
+  },
+  {
+    type: RammevedtakEnum.UIDENTIFISERT,
+    fritekst: '03070189827 @9-6,20 D (Denne mangler type)',
+  },
+];
 
-export const ingenBarn = () => <FaktaBarnIndex barn={[]} />;
+export const treBarn = () => <FaktaBarnIndex barn={barn} rammevedtak={rammevedtak} />;
+
+export const ingenBarn = () => <FaktaBarnIndex barn={[]} rammevedtak={rammevedtak} />;

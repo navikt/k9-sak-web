@@ -39,13 +39,13 @@ describe('<UtvidetRettFakta>', () => {
     );
 
     const panel = wrapper.find(SideMenuWrapper);
-    expect(panel.prop('paneler')[0].tekst).toEqual('Registrerte rammemeldinger');
+    expect(panel.prop('paneler')[0].tekst).toEqual('Deling av dager');
     expect(panel.prop('paneler')[1].tekst).toEqual('Barn');
     expect(panel.prop('paneler')).toEqual([
       {
         erAktiv: true,
         harAksjonspunkt: false,
-        tekst: 'Registrerte rammemeldinger',
+        tekst: 'Deling av dager',
       },
       {
         erAktiv: false,
