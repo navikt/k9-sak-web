@@ -25,10 +25,10 @@ jobs:
       - name: Get yarn cache directory path and set timestamp
         id: yarn-cache-dir-path
         run: |
-          echo "::set-output name=dir::$(yarn cache dir)"
+          echo "::set-output name=dir::$(yarn config get cacheFolder)"
           echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
       - name: Cache node modules
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
