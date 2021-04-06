@@ -77,6 +77,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
               årsak: angittForelder[0]?.situasjonKode || '',
               beskrivelse: angittForelder[0]?.tilleggsopplysninger || '',
               periode: `${soknad.søknadsperiode.fom} - ${soknad.søknadsperiode.tom}`,
+              soknadsdato: soknad.soknadsdato,
             },
             vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
             informasjonOmVilkar: generereInfoForVurdertVilkar(
