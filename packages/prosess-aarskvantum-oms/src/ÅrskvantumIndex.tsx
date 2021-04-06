@@ -6,14 +6,17 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Aksjonspunkt,
   ArbeidsforholdV2,
+  FeatureToggles,
 } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import Uttaksplan from './components/Uttaksplan';
 import AksjonspunktForm from './components/AksjonspunktForm';
 import Aktivitet from './dto/Aktivitet';
+import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
 
 const cache = createIntlCache();
 
@@ -37,6 +40,7 @@ interface ÅrsakvantumIndexProps {
   aksjonspunkterForSteg?: Aksjonspunkt[];
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  featureToggles: FeatureToggles;
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
@@ -49,12 +53,25 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   aksjonspunkterForSteg = [],
   arbeidsforhold = [],
   arbeidsgiverOpplysningerPerId,
+  featureToggles,
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-
   return (
-    <RawIntlProvider value={årskvantumIntl}>
+    <RawIntlProvider value={årskvantumIntl}>     
+      {featureToggles?.SAERLIGSMITTEVERNAKSJONSPUNKT &&
+        aksjonspunkterForSteg[0]?.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
+          <SaerligeSmittevernhensynMikrofrontend
+            {...{
+              behandling,
+              aksjonspunkterForSteg,
+              isAksjonspunktOpen,
+              submitCallback,
+              aktiviteter: sisteUttaksplan?.aktiviteter,
+            }}
+          />
+        )}
+
       {aksjonspunkterForSteg.length > 0 && (
         <AksjonspunktForm
           aktiviteter={sisteUttaksplan?.aktiviteter}
@@ -65,6 +82,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
           isAksjonspunktOpen={isAksjonspunktOpen}
         />
       )}
+      
       <Uttaksplan
         aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}

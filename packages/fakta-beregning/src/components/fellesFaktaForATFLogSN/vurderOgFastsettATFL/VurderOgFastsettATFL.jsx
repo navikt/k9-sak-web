@@ -381,7 +381,7 @@ export const skalFastsettInntektForFrilans = createSelector(
 
 const getManglerInntektsmelding = createSelector([ownProps => ownProps.faktaOmBeregning], faktaOmBeregning => {
   if (
-    faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe &&
+    faktaOmBeregning?.arbeidstakerOgFrilanserISammeOrganisasjonListe &&
     faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.length > 0
   ) {
     return (
@@ -400,6 +400,7 @@ const getSkalViseTabell = createSelector(
   ],
   (tilfeller, beregningsgrunnlag, skalFastsetteSN) => {
     if (
+      beregningsgrunnlag &&
       beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.some(
         andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       )

@@ -71,4 +71,6 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
+    - name: SAERLIGSMITTEVERNAKSJONSPUNKT
+      value: "true"
 

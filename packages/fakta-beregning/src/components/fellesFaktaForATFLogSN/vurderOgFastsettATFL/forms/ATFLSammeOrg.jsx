@@ -4,28 +4,32 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-
 export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
-  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
-  if (tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
-  && inntektVerdier) {
+  const tilfeller = faktaOmBeregning?.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
+  if (
+    tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) &&
+    inntektVerdier
+  ) {
     const andelsliste = inntektVerdier
-      .filter((field) => !fastsatteAndelsnr.includes(field.andelsnr))
-      .filter((field) => faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe.map(({ andelsnr }) => andelsnr).includes(field.andelsnr))
-      .map((field) => ({
+      .filter(field => !fastsatteAndelsnr.includes(field.andelsnr))
+      .filter(field =>
+        faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe
+          .map(({ andelsnr }) => andelsnr)
+          .includes(field.andelsnr),
+      )
+      .map(field => ({
         andelsnr: field.andelsnr,
         arbeidsinntekt: field.fastsattBelop,
       }));
 
-
-    if (faktaOmBeregning.frilansAndel && !fastsatteAndelsnr.includes(faktaOmBeregning.frilansAndel.andelsnr) && inntektVerdier) {
-      const frilansVerdi = inntektVerdier.find((verdi) => verdi.andelsnr === faktaOmBeregning.frilansAndel.andelsnr);
+    if (faktaOmBeregning.frilansAndel && !fastsatteAndelsnr.includes(faktaOmBeregning.frilansAndel.andelsnr)) {
+      const frilansVerdi = inntektVerdier.find(verdi => verdi.andelsnr === faktaOmBeregning.frilansAndel.andelsnr);
       andelsliste.push({
         andelsnr: faktaOmBeregning.frilansAndel.andelsnr,
         arbeidsinntekt: frilansVerdi.fastsattBelop,
       });
     }
-    andelsliste.forEach((andel) => fastsatteAndelsnr.push(andel.andelsnr));
+    andelsliste.forEach(andel => fastsatteAndelsnr.push(andel.andelsnr));
     if (andelsliste.length > 0) {
       return {
         faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
@@ -36,11 +40,12 @@ export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning
   return { faktaOmBeregningTilfeller: [] };
 };
 
-
-const harRiktigTilfelle = (beregningsgrunnlag) => (
-  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller ? beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller
-    .map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) : false
-);
+const harRiktigTilfelle = beregningsgrunnlag =>
+  beregningsgrunnlag?.faktaOmBeregning?.faktaOmBeregningTilfeller
+    ? beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller
+        .map(({ kode }) => kode)
+        .includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+    : false;
 
 export const ATFLSammeOrgTekst = ({ beregningsgrunnlag, manglerInntektsmelding }) => {
   if (!harRiktigTilfelle(beregningsgrunnlag)) {
