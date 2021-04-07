@@ -14,7 +14,7 @@
     "nav-frontend-core": "5.0.11",
     "nav-frontend-knapper": "2.0.32",
     "nav-frontend-knapper-style": "1.0.17",
-    "nav-frontend-typografi": "2.0.37",
+    "nav-frontend-typografi": "3.0.4",
     "nav-frontend-typografi-style": "1.0.35",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",

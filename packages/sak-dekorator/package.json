@@ -24,7 +24,7 @@
     "nav-frontend-modal": "1.0.63",
     "nav-frontend-modal-style": "1.0.2",
     "nav-frontend-paneler-style": "1.0.2",
-    "nav-frontend-typografi": "2.0.37",
+    "nav-frontend-typografi": "3.0.4",
     "nav-frontend-typografi-style": "1.0.35",
     "react": "^16.14.0",
     "react-intl": "^5.10.11"
