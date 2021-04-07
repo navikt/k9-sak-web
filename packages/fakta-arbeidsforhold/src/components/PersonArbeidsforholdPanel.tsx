@@ -286,7 +286,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                   <PersonArbeidsforholdTable
                     intl={intl}
                     harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
-                    selectedId={selectedArbeidsforhold.id}
+                    selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
                     alleKodeverk={alleKodeverk}
                     behandlingId={behandlingId}
