@@ -15,7 +15,7 @@
     "nav-frontend-knapper-style": "1.0.17",
     "nav-frontend-paneler": "2.0.32",
     "nav-frontend-paneler-style": "1.0.2",
-    "nav-frontend-typografi": "2.0.39",
+    "nav-frontend-typografi": "2.0.37",
     "nav-frontend-typografi-style": "1.0.35",
     "react": "^16.14.0",
     "react-collapse": "^5.1.0",
@@ -26,6 +26,6 @@
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "enzyme": "^3.11.0",
-    "sinon": "^9.2.4"
+    "sinon": "^10.0.0"
   }
 }
