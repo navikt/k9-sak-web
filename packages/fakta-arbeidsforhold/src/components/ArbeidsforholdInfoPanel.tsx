@@ -96,7 +96,7 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
           intl={intl}
           readOnly={readOnly}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          hasAksjonspunkter={harAksjonspunktAvklarArbeidsforhold}
+          harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
           alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}

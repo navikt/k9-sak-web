@@ -16,66 +16,6 @@ const behandling: Behandling = {
   versjon: 1,
 };
 
-const fnrEtBarn = '12121212121';
-
-const utvidetRettManglendeFnr: Rammevedtak = {
-  type: RammevedtakEnum.UTVIDET_RETT,
-  gyldigFraOgMed: '2020-01-01',
-  gyldigTilOgMed: '2028-12-31',
-  fritekst: '@9-6 2 L UTV.OMSD*20/',
-};
-
-const utvidetRett: Rammevedtak = {
-  ...utvidetRettManglendeFnr,
-  utvidetRettFor: fnrEtBarn,
-};
-
-const aleneOmOmsorgen: Rammevedtak = {
-  type: RammevedtakEnum.ALENEOMSORG,
-  aleneOmOmsorgenFor: fnrEtBarn,
-  gyldigFraOgMed: '2020-01-01',
-  gyldigTilOgMed: '2020-12-31',
-};
-
-const aleneOmOmsorgenManglendeFnr: Rammevedtak = {
-  type: RammevedtakEnum.ALENEOMSORG,
-  gyldigFraOgMed: '2020-01-01',
-  gyldigTilOgMed: '2020-12-31',
-  fritekst: '@9-6 2 L AL.OMSD*10/',
-};
-
-const fosterbarn: Rammevedtak = {
-  type: RammevedtakEnum.FOSTERBARN,
-  mottaker: fnrEtBarn,
-  gyldigFraOgMed: '2020-01-01',
-  gyldigTilOgMed: '2020-12-31',
-};
-
-const fosterbarnManglendeFnr: Rammevedtak = {
-  type: RammevedtakEnum.FOSTERBARN,
-  gyldigFraOgMed: '2020-01-01',
-  gyldigTilOgMed: '2020-12-31',
-  fritekst: '@9-6 2 L FOST/',
-};
-
-const utenlandskBarn: Rammevedtak = {
-  type: RammevedtakEnum.UTENLANDSK_BARN,
-  fødselsdato: '030318',
-  gyldigFraOgMed: '2019-02-20',
-  gyldigTilOgMed: '2021-12-31',
-};
-
-const midlertidigAleneOmOmsorgen: Rammevedtak = {
-  type: RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG,
-  gyldigFraOgMed: '2020-01-01',
-  gyldigTilOgMed: '2020-12-31',
-};
-
-const uidentifisertRammevedtak: Rammevedtak = {
-  type: RammevedtakEnum.UIDENTIFISERT,
-  fritekst: '03070189827 @9-6,20 D (Denne mangler type)',
-};
-
 const overføringFårRammevedtak = (type: RammevedtakType, lengde): Rammevedtak => ({
   type,
   lengde,
@@ -95,21 +35,6 @@ const overføringGirRammevedtak = (type: RammevedtakType, lengde): Rammevedtak =
 export const medBarnOgUidentifiserteRammevedtak = () => (
   <FaktaRammevedtakIndex
     rammevedtak={[
-      uidentifisertRammevedtak,
-      { ...uidentifisertRammevedtak, fritekst: '010119 (mangler alt)' },
-      utvidetRettManglendeFnr,
-      utvidetRett,
-      {
-        ...utvidetRett,
-        gyldigTilOgMed: undefined,
-        utvidetRettFor: '55555555555',
-      },
-      fosterbarn,
-      fosterbarnManglendeFnr,
-      utenlandskBarn,
-      aleneOmOmsorgen,
-      aleneOmOmsorgenManglendeFnr,
-      { ...aleneOmOmsorgen, aleneOmOmsorgenFor: '78978978978' },
       overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P4D'),
       overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P7D'),
       overføringFårRammevedtak(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P4D'),
@@ -128,7 +53,6 @@ export const ingenBarn = () => (
       overføringFårRammevedtak(RammevedtakEnum.OVERFØRING_FÅR, 'P13D'),
       overføringFårRammevedtak(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P5D'),
       overføringFårRammevedtak(RammevedtakEnum.FORDELING_FÅR, 'P3D'),
-      midlertidigAleneOmOmsorgen,
     ]}
     behandling={behandling}
   />

@@ -19,6 +19,7 @@ export interface VilkarMidlertidigSoknadsopplysninger {
   årsak: string;
   beskrivelse?: string;
   periode: string;
+  soknadsdato: string;
 }
 
 export interface VilkarMidlertidigInformasjonTilLesemodus {
