@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, Fragment, useState } from 'react';
 import { FormattedMessage, IntlShape } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
@@ -7,7 +7,10 @@ import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import { utledArbeidsforholdYrkestittel } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
+import {
+  utledArbeidsforholdYrkestittel,
+  arbeidsforholdHarAksjonspunktÅrsak,
+} from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -49,9 +52,11 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
   const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
 
-  const visPermisjon = arbeidsforhold => !harAksjonspunktAvklarArbeidsforhold && arbeidsforhold.permisjoner;
+  const visPermisjon = (arbeidsforhold: ArbeidsforholdV2) =>
+    !(harAksjonspunktAvklarArbeidsforhold && arbeidsforholdHarAksjonspunktÅrsak(arbeidsforhold)) &&
+    arbeidsforhold.permisjoner;
 
-  const setValgtArbeidsforhold = arbeidsforhold => {
+  const setValgtArbeidsforhold = (arbeidsforhold: ArbeidsforholdV2) => {
     if (selectedArbeidsforhold === undefined) {
       setVisAksjonspunktInfo(true);
       setSelectedArbeidsforhold(arbeidsforhold);
@@ -84,16 +89,16 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
           const harPermisjoner = Array.isArray(a.permisjoner) && a.permisjoner.length > 0;
           const harPerioder = Array.isArray(a.perioder) && a.perioder.length > 0;
           const harInntektsmeldinger = Array.isArray(a.inntektsmeldinger) && a.inntektsmeldinger.length > 0;
+          const harAksjonspunkt = harAksjonspunktAvklarArbeidsforhold && arbeidsforholdHarAksjonspunktÅrsak(a);
 
           return (
-            <>
+            <Fragment key={a.id}>
               <TableRow
-                key={a.id}
                 model={a}
                 onMouseDown={() => setVisAksjonspunktInfo(true)}
                 onKeyDown={() => setVisAksjonspunktInfo(true)}
                 isSelected={a.id === selectedId}
-                isApLeftBorder={harAksjonspunktAvklarArbeidsforhold}
+                isApLeftBorder={harAksjonspunkt}
               >
                 <TableColumn>
                   <Normaltekst>{decodeHtmlEntity(yrkestittel)}</Normaltekst>
@@ -120,7 +125,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                     </Normaltekst>
                   )}
                 </TableColumn>
-                {!harAksjonspunktAvklarArbeidsforhold && harPermisjoner && (
+                {!harAksjonspunkt && harPermisjoner && (
                   <TableColumn className={styles.aksjonspunktColumn}>
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
                       <Normaltekst className={styles.visLukkPermisjon}>
@@ -135,20 +140,18 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                   </TableColumn>
                 )}
                 <TableColumn>
-                  {a.handlingType &&
-                    a.handlingType.kode === arbeidsforholdHandlingType.BRUK &&
-                    !harAksjonspunktAvklarArbeidsforhold && (
-                      <Image
-                        src={erIBrukImageUrl}
-                        alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
-                        tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
-                        tabIndex={0}
-                        alignTooltipLeft
-                      />
-                    )}
+                  {a.handlingType && a.handlingType.kode === arbeidsforholdHandlingType.BRUK && !harAksjonspunkt && (
+                    <Image
+                      src={erIBrukImageUrl}
+                      alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
+                      tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
+                      tabIndex={0}
+                      alignTooltipLeft
+                    />
+                  )}
                 </TableColumn>
               </TableRow>
-              {visAksjonspunktInfo && harAksjonspunktAvklarArbeidsforhold && (
+              {visAksjonspunktInfo && harAksjonspunkt && (
                 <PersonArbeidsforholdDetailForm
                   key={a.id}
                   arbeidsforhold={a}
@@ -164,7 +167,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
                   <PermisjonerInfo arbeidsforhold={a} />
                 </FlexRow>
               )}
-            </>
+            </Fragment>
           );
         })}
     </Table>

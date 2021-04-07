@@ -67,7 +67,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       <PersonArbeidsforholdPanelImpl
         intl={intlMock}
         readOnly={false}
-        hasAksjonspunkter
+        harAksjonspunktAvklarArbeidsforhold
         arbeidsforhold={[arbeidsforhold]}
         behandlingFormPrefix="panel"
         reduxFormChange={sinon.spy()}
