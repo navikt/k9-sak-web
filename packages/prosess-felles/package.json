@@ -18,13 +18,13 @@
     "nav-frontend-typografi-style": "1.0.35",
     "react": "^16.14.0",
     "react-intl": "^5.10.11",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.3",
     "redux": "^4.0.5",
     "redux-form": "^8.3.7"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "enzyme": "^3.11.0",
-    "sinon": "^9.2.2"
+    "sinon": "^10.0.0"
   }
 }
