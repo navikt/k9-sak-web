@@ -24,9 +24,11 @@ jobs:
         with:
           node-version: 12.x
 
-      - name: Get yarn cache directory path
+      - name: Get yarn cache directory path and set timestamp
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        run: |
+          echo "::set-output name=dir::$(yarn cache dir)"
+          echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
 
       - name: Cache node modules
         uses: actions/cache@v2.1.4
