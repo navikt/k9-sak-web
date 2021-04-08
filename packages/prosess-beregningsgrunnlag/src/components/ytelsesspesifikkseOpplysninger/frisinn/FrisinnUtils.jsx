@@ -97,7 +97,7 @@ export const finnFrisinnperioderSomSkalVises = (beregningsgrunnlag, behandling) 
     );
     if (eropprettetGrunetEndring) {
       // Skal kun vise siste søknadsperiode
-      const kronologiskePerioder = frisinnPerioder.sort((a, b) => moment(a.fom) - moment(b.fom));
+      const kronologiskePerioder = [...frisinnPerioder].sort((a, b) => moment(a.fom) - moment(b.fom));
       const sistePeriode = kronologiskePerioder[kronologiskePerioder.length - 1];
       const sisteTom = moment(sistePeriode.tom);
       if (sisteTom.month() === 3) {
