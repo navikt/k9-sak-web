@@ -28,7 +28,7 @@ const erSøktForMars2020 = frisinnPeriode => {
  */
 const finnFrisinnAndelerISøknadsperiodeForStatus = (status, bgPeriode, ytelsegrunnlag) => {
   const { frisinnPerioder } = ytelsegrunnlag;
-  if (!frisinnPerioder) {
+  if (!Array.isArray(frisinnPerioder)) {
     return null;
   }
   const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
@@ -87,6 +87,9 @@ export const finnOppgittInntektForAndelIPeriode = (status, bgPeriode, ytelsegrun
 
 export const finnFrisinnperioderSomSkalVises = (beregningsgrunnlag, behandling) => {
   const { frisinnPerioder } = beregningsgrunnlag.ytelsesspesifiktGrunnlag;
+  if (!Array.isArray(frisinnPerioder)) {
+    return null;
+  }
   if (behandling && behandling.behandlingÅrsaker && frisinnPerioder.length > 1) {
     const årsaker = behandling.behandlingÅrsaker;
     const eropprettetGrunetEndring = årsaker.some(
