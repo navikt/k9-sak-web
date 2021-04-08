@@ -3,10 +3,10 @@ import sinon from 'sinon';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import { Behandling } from '@k9-sak-web/types';
-import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import UtvidetRettFakta from '../UtvidetRettFakta';
 import FetchedData from '../../types/fetchedDataTsType';
 import utvidetRettTestData from './utvidetRettTestData';
+import UtvidetRettBarnFakta from '../UtvidetRettBarnFakta/UtvidetRettBarnFakta';
 
 const { aksjonspunkter, behandling, fagsak, fagsakPerson, rettigheter, vilkar, rammevedtak } = utvidetRettTestData;
 
@@ -42,7 +42,7 @@ describe('<UtvidetRettFakta>', () => {
     expect(panel.prop('paneler')[0].tekst).toEqual('Barn');
     expect(panel.prop('paneler')).toEqual([
       {
-        erAktiv: false,
+        erAktiv: true,
         harAksjonspunkt: false,
         tekst: 'Barn',
       },
@@ -78,8 +78,7 @@ describe('<UtvidetRettFakta>', () => {
     );
 
     const panel = wrapper.find(SideMenuWrapper);
-
-    panel.prop('onClick')(1);
+    panel.prop('onClick')(0);
     const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(calls).toHaveLength(1);
     const { args } = calls[0];
@@ -115,7 +114,7 @@ describe('<UtvidetRettFakta>', () => {
       />,
     );
 
-    const registrerteRammemeldingerPanel = wrapper.find(FaktaRammevedtakIndex);
+    const registrerteRammemeldingerPanel = wrapper.find(UtvidetRettBarnFakta);
     expect(registrerteRammemeldingerPanel.prop('readOnly')).toBe(false);
     expect(registrerteRammemeldingerPanel.prop('submittable')).toBe(true);
     expect(registrerteRammemeldingerPanel.prop('harApneAksjonspunkter')).toBe(false);
