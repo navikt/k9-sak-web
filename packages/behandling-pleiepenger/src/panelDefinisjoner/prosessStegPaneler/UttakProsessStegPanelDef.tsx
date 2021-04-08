@@ -6,33 +6,30 @@ import { Vilkar } from '@k9-sak-web/types';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import Uttak from '../../components/Uttak';
 
+const sjekkOmVilkårHarUvurdertePerioder = (vilkar: Vilkar) =>
+  vilkar.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT);
+
 const erAndreVilkårVurdert = (vilkar: Vilkar[]) => {
   const sykdomVilkar = vilkar.find(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR);
   const opptjeningVilkar = vilkar.find(v => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET);
   const medlemskapVilkar = vilkar.find(v => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET);
 
   if (sykdomVilkar) {
-    const harIkkeVurdertePerioder = sykdomVilkar.perioder.some(
-      periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
-    );
+    const harIkkeVurdertePerioder = sjekkOmVilkårHarUvurdertePerioder(sykdomVilkar);
     if (harIkkeVurdertePerioder) {
       return false;
     }
   }
 
   if (opptjeningVilkar) {
-    const harIkkeVurdertePerioder = opptjeningVilkar.perioder.some(
-      periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
-    );
+    const harIkkeVurdertePerioder = sjekkOmVilkårHarUvurdertePerioder(opptjeningVilkar);
     if (harIkkeVurdertePerioder) {
       return false;
     }
   }
 
   if (medlemskapVilkar) {
-    const harIkkeVurdertePerioder = medlemskapVilkar.perioder.some(
-      periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
-    );
+    const harIkkeVurdertePerioder = sjekkOmVilkårHarUvurdertePerioder(medlemskapVilkar);
     if (harIkkeVurdertePerioder) {
       return false;
     }
