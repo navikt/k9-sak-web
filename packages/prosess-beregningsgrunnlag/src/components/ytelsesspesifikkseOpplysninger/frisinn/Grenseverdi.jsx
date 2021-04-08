@@ -37,6 +37,9 @@ const lagGrenseveriPeriode = (originaltInntektstak, annenInntektIkkeSøktFor, ut
 );
 
 const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {
+  if (!Array.isArray(frisinnPerioder)) {
+    return false;
+  }
   const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
   const bgTom = moment(bgPeriode.beregningsgrunnlagPeriodeTom);
   return frisinnPerioder.some(p => !moment(p.fom).isBefore(bgFom) && !moment(p.tom).isAfter(bgTom));
@@ -49,19 +52,20 @@ const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {
  */
 const finnAllePerioderSomSkalVises = (bgPerioder, frisinnperioder) => {
   const perioder = [];
-  for (let i = 0; i < bgPerioder.length; i += 1) {
-    const periode = bgPerioder[i];
-    if (overlapperMedFrisinnPeriode(periode, frisinnperioder)) {
-      const tom = moment(periode.beregningsgrunnlagPeriodeTom);
-      const sisteDatoIMåned = moment(periode.beregningsgrunnlagPeriodeTom).endOf('month');
-      if (
-        tom.isAfter(førsteDato) &&
-        tom.isSame(sisteDatoIMåned, 'day') &&
-        periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE
-      ) {
-        perioder.push(periode);
+  if (Array.isArray(bgPerioder)) {
+    bgPerioder.forEach(periode => {
+      if (overlapperMedFrisinnPeriode(periode, frisinnperioder)) {
+        const tom = moment(periode.beregningsgrunnlagPeriodeTom);
+        const sisteDatoIMåned = moment(periode.beregningsgrunnlagPeriodeTom).endOf('month');
+        if (
+          tom.isAfter(førsteDato) &&
+          tom.isSame(sisteDatoIMåned, 'day') &&
+          periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE
+        ) {
+          perioder.push(periode);
+        }
       }
-    }
+    });
   }
   return perioder;
 };
@@ -89,9 +93,9 @@ const lagGrenseverdirad = (bg, bgPeriode) => {
     originaltInntektstak > annenInntektIkkeSøktFor ? originaltInntektstak - annenInntektIkkeSøktFor : 0;
 
   const tom = bgPeriode.beregningsgrunnlagPeriodeTom;
-  const førstePeriodeISammeMåned = frisinnGrunnlag.frisinnPerioder.find(frisinnPeriode =>
-    starterFørISammeMåned(frisinnPeriode, bgPeriode),
-  );
+  const førstePeriodeISammeMåned =
+    Array.isArray(frisinnGrunnlag.frisinnPerioder) &&
+    frisinnGrunnlag.frisinnPerioder.find(frisinnPeriode => starterFørISammeMåned(frisinnPeriode, bgPeriode));
   const fom = førstePeriodeISammeMåned ? førstePeriodeISammeMåned.fom : bgPeriode.beregningsgrunnlagPeriodeFom;
   return (
     <>

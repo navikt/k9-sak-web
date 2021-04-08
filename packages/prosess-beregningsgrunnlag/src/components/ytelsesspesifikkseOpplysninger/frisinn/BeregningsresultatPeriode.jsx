@@ -32,9 +32,9 @@ const statuserDetErSøktOmIPerioden = (bgPeriode, ytelsegrunnlag) => {
   const fom = bgPeriode.beregningsgrunnlagPeriodeFom;
   const tom = bgPeriode.beregningsgrunnlagPeriodeTom;
   const perioder = ytelsegrunnlag.frisinnPerioder;
-  const gjeldendePeriode = perioder.find(
-    periode => !moment(fom).isBefore(periode.fom) && !moment(tom).isAfter(periode.tom),
-  );
+  const gjeldendePeriode =
+    Array.isArray(perioder) &&
+    perioder.find(periode => !moment(fom).isBefore(periode.fom) && !moment(tom).isAfter(periode.tom));
   return gjeldendePeriode ? gjeldendePeriode.frisinnAndeler : [];
 };
 

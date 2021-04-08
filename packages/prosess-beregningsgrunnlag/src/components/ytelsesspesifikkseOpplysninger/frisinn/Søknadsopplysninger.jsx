@@ -52,7 +52,7 @@ const Søknadsopplysninger = ({ beregningsgrunnlag }) => {
         </Column>
       </Row>
       <VerticalSpacer eightPx />
-      {frisinnPerioder.map(periode => lagSøktYtelseRadPeriode(periode))}
+      {Array.isArray(frisinnPerioder) && frisinnPerioder.map(periode => lagSøktYtelseRadPeriode(periode))}
       <VerticalSpacer sixteenPx />
     </div>
   );
