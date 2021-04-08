@@ -12,7 +12,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/nap-process-menu": "1.1.0",
     "@navikt/nap-side-menu": "1.0.7",
-    "classnames": "^2.2.6",
+    "classnames": "^2.3.1",
     "nav-frontend-core": "5.0.11",
     "nav-frontend-grid": "1.0.50",
     "nav-frontend-grid-style": "1.0.2",
@@ -24,12 +24,12 @@
     "nav-frontend-typografi-style": "1.0.35",
     "react": "^16.14.0",
     "react-intl": "^5.10.11",
-    "react-redux": "^7.2.1",
-    "redux-form": "^8.3.6",
+    "react-redux": "^7.2.3",
+    "redux-form": "^8.3.7",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
     "enzyme": "^3.11.0",
-    "sinon": "^9.0.3"
+    "sinon": "^10.0.0"
   }
 }
