@@ -12988,9 +12988,9 @@ nav-frontend-tabs-style@^1.0.3:
   integrity sha512-xXjLeOEHTfrtxKFT0xd67b2IO+SCPYdUDEDp24/9NnAaQLJJ7x5q+H2wzoqgZ7LtQf2FRpK39Y31oD2TUV6vMw==
 
 nav-frontend-tabs@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/nav-frontend-tabs/-/nav-frontend-tabs-1.0.3.tgz#2ab429ea6d6aaca90f728219a988cce74b2b779a"
-  integrity sha512-ZR5xZojkCwkJNPUHijUcf4sDMk7VW6kvTPDX+f5pCmWdVSnOzWNUAGVbIJH2OECcgckFeWCRlpFc8JwSQdiE/Q==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs/-/nav-frontend-tabs-1.1.1.tgz#9084578d44390da995d2db1066901a9187ed6417"
+  integrity sha512-UhS8uzIstxKnBmHEAoDXO3eNNQnvqI4MnvF7CzqBr5O1dpfSXezYb8h1K+WQpr+uNXJ/+3gLMfG8U3qu+2m6ng==
 
 nav-frontend-typografi-style@1.0.35, nav-frontend-typografi-style@^1.0.34:
   version "1.0.35"
