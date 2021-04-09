@@ -318,8 +318,9 @@ const buildInitialValues = createSelector(
             vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST)) ||
         harBareFritekstbrev(tilgjengeligeVedtaksbrev),
       skalUndertrykkeBrev:
-        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
-        vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
+        readonly &&
+        (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
+          vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN),
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
       begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
@@ -327,7 +328,7 @@ const buildInitialValues = createSelector(
   },
 );
 
-const transformValues = values =>
+const transformValues = (values, vedtaksbrevmaler) =>
   values.aksjonspunktKoder.map(apCode => {
     const transformedValues = {
       kode: apCode,
@@ -336,6 +337,7 @@ const transformValues = values =>
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
       skalUndertrykkeBrev: values.skalUndertrykkeBrev,
       isVedtakSubmission,
+      vedtaksbrevmaler,
     };
     if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
       transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
@@ -363,7 +365,8 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values));
+  const onSubmit = values =>
+    initialOwnProps.submitCallback(transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev.vedtaksbrevmaler));
   const aksjonspunktKoder =
     initialOwnProps.aksjonspunkter && initialOwnProps.aksjonspunkter.map(ap => ap.definisjon.kode);
   const behandlingArsaker =

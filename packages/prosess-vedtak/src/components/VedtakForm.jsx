@@ -270,7 +270,7 @@ export const getAksjonspunktKoder = createSelector([ownProps => ownProps.aksjons
   aksjonspunkter.map(ap => ap.definisjon.kode),
 );
 
-const transformValues = values =>
+const transformValues = (values, vedtaksbrevmaler) =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     begrunnelse: values.begrunnelse,
@@ -282,6 +282,7 @@ const transformValues = values =>
     skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
     skalUndertrykkeBrev: values.skalUndertrykkeBrev,
     isVedtakSubmission,
+    vedtaksbrevmaler,
   }));
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
@@ -298,7 +299,8 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values));
+  const onSubmit = values =>
+    initialOwnProps.submitCallback(transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev.vedtaksbrevmaler));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),
