@@ -11,6 +11,7 @@ interface TilgjengeligeVedtaksbrev {
     id: string;
     idType: string;
   }>;
+  vedtaksbrevmaler: Map<string, string>;
 }
 
 export function bestemAvsenderApp(type: string): string {
@@ -44,8 +45,13 @@ function lesTilgjengeligeVedtaksbrev(
     return tilgjengeligeVedtaksbrev;
   }
 
-  if (typeof tilgjengeligeVedtaksbrev === 'object' && Array.isArray(tilgjengeligeVedtaksbrev.vedtaksbrev)) {
-    return tilgjengeligeVedtaksbrev.vedtaksbrev;
+  if (typeof tilgjengeligeVedtaksbrev === 'object') {
+    if (tilgjengeligeVedtaksbrev.vedtaksbrevmaler) {
+      return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler);
+    }
+    if (Array.isArray(tilgjengeligeVedtaksbrev.vedtaksbrev)) {
+      return tilgjengeligeVedtaksbrev.vedtaksbrev;
+    }
   }
 
   return [];

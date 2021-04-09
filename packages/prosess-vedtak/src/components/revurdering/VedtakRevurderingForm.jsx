@@ -274,6 +274,8 @@ const buildInitialValues = createSelector(
     ownProps => ownProps.sprakkode,
     ownProps => ownProps.vedtakVarsel,
     ownProps => ownProps.dokumentdata,
+    ownProps => ownProps.tilgjengeligeVedtaksbrev,
+    ownProps => ownProps.readOnly,
   ],
   (
     beregningResultat,
@@ -284,6 +286,8 @@ const buildInitialValues = createSelector(
     sprakkode,
     vedtakVarsel,
     dokumentdata,
+    tilgjengeligeVedtaksbrev,
+    readonly,
   ) => {
     const aksjonspunktKoder = aksjonspunkter
       .filter(ap => ap.erAktivt)
@@ -309,8 +313,10 @@ const buildInitialValues = createSelector(
       sprakkode,
       aksjonspunktKoder,
       skalBrukeOverstyrendeFritekstBrev:
-        dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
-        vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST,
+        (readonly &&
+          (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
+            vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST)) ||
+        harBareFritekstbrev(tilgjengeligeVedtaksbrev),
       skalUndertrykkeBrev:
         dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
         vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,

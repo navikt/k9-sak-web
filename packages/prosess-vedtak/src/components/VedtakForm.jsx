@@ -232,6 +232,7 @@ export const buildInitialValues = createSelector(
     ownProps => ownProps.vedtakVarsel,
     ownProps => ownProps.dokumentdata,
     ownProps => ownProps.tilgjengeligeVedtaksbrev,
+    ownProps => ownProps.readOnly,
   ],
   (
     status,
@@ -243,18 +244,21 @@ export const buildInitialValues = createSelector(
     vedtakVarsel,
     dokumentdata,
     tilgjengeligeVedtaksbrev,
+    readonly,
   ) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseTypeKode ? ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD : false,
     antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
     aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev:
-      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
-      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST ||
+      (readonly &&
+        (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
+          vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST)) ||
       harBareFritekstbrev(tilgjengeligeVedtaksbrev),
     skalUndertrykkeBrev:
-      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
-      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
+      readonly &&
+      (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
+        vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN),
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
     overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
