@@ -51,14 +51,19 @@ const finnBGNæring = (bg, periode) => {
 const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {
   const bgFom = moment(bgPeriode.beregningsgrunnlagPeriodeFom);
   const bgTom = moment(bgPeriode.beregningsgrunnlagPeriodeTom);
-  return frisinnPerioder.some(p => !moment(p.fom).isBefore(bgFom) && !moment(p.tom).isAfter(bgTom));
+  return (
+    Array.isArray(frisinnPerioder) &&
+    frisinnPerioder.some(p => !moment(p.fom).isBefore(bgFom) && !moment(p.tom).isAfter(bgTom))
+  );
 };
 
 const Beregningsresultat = ({ beregningsgrunnlag, behandling }) => {
   const frisinnPerioderSomSkalVises = finnFrisinnperioderSomSkalVises(beregningsgrunnlag, behandling);
-  const bgPerioderSomSkalVises = beregningsgrunnlag.beregningsgrunnlagPeriode.filter(p =>
-    overlapperMedFrisinnPeriode(p, frisinnPerioderSomSkalVises),
-  );
+  const bgPerioderSomSkalVises = Array.isArray(beregningsgrunnlag.beregningsgrunnlagPeriode)
+    ? beregningsgrunnlag.beregningsgrunnlagPeriode.filter(p =>
+        overlapperMedFrisinnPeriode(p, frisinnPerioderSomSkalVises),
+      )
+    : [];
   return (
     <div>
       <Row>
