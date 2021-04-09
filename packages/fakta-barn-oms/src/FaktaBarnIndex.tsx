@@ -91,30 +91,29 @@ const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [], ram
 
   let rammevedtakGruppertPerBarn: BarnMedRammevedtak[] = Object.values(
     rammevedtak.reduce((tmpBarn, rv) => {
-      if (rv.type === RammevedtakEnum.UTVIDET_RETT) {
-        const alleUtvidetRettRammevedtak: Rammevedtak[] = rammevedtak.filter(
-          rvedtak => rvedtak.utvidetRettFor === rv.utvidetRettFor,
-        );
-        return mapRammevedtakBarn(tmpBarn, alleUtvidetRettRammevedtak, 'utvidetRettFor', 'kroniskSykdom');
+      switch (rv.type) {
+        case RammevedtakEnum.UTVIDET_RETT: {
+          const alleUtvidetRettRammevedtak: Rammevedtak[] = rammevedtak.filter(
+            rvedtak => rvedtak.utvidetRettFor === rv.utvidetRettFor,
+          );
+          return mapRammevedtakBarn(tmpBarn, alleUtvidetRettRammevedtak, 'utvidetRettFor', 'kroniskSykdom');
+        }
+        case RammevedtakEnum.ALENEOMSORG: {
+          return mapRammevedtakBarn(tmpBarn, rv, 'aleneOmOmsorgenFor', 'aleneomsorg');
+        }
+        case RammevedtakEnum.FOSTERBARN: {
+          return mapRammevedtakBarn(tmpBarn, rv, 'mottaker', 'fosterbarn');
+        }
+        case RammevedtakEnum.UTENLANDSK_BARN: {
+          return mapRammevedtakBarn(tmpBarn, rv, 'fødselsdato', 'utenlandskBarn');
+        }
+        case RammevedtakEnum.DELT_BOSTED: {
+          return mapRammevedtakBarn(tmpBarn, rv, 'deltBostedMed', 'deltBosted');
+        }
+        default: {
+          return tmpBarn;
+        }
       }
-
-      if (rv.type === RammevedtakEnum.ALENEOMSORG) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'aleneOmOmsorgenFor', 'aleneomsorg');
-      }
-
-      if (rv.type === RammevedtakEnum.FOSTERBARN) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'mottaker', 'fosterbarn');
-      }
-
-      if (rv.type === RammevedtakEnum.UTENLANDSK_BARN) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'fødselsdato', 'utenlandskBarn');
-      }
-
-      if (rv.type === RammevedtakEnum.DELT_BOSTED) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'deltBostedMed', 'deltBosted');
-      }
-
-      return tmpBarn;
     }, {}),
   );
 
