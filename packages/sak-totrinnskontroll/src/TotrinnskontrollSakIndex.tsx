@@ -79,7 +79,6 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
   fagsakYtelseType,
   readOnly,
   onSubmit,
-  forhandsvisVedtaksbrev,
   behandlingKlageVurdering,
   alleKodeverk,
   createLocationForSkjermlenke,
@@ -114,21 +113,6 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
     [erTilbakekreving],
   );
 
-  const erBehandlingEtterKlage = useMemo(
-    () =>
-      behandling
-        ? behandling.behandlingÅrsaker
-            .map(({ behandlingArsakType }) => behandlingArsakType)
-            .some(
-              (bt: Kodeverk) =>
-                bt.kode === klageBehandlingArsakType.ETTER_KLAGE ||
-                bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK ||
-                bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK,
-            )
-        : false,
-    [behandling],
-  );
-
   const sorterteTotrinnskontrollSkjermlenkeContext = useMemo(
     () =>
       erTilbakekreving
@@ -159,12 +143,10 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
           readOnly={readOnly}
           onSubmit={submitHandler}
-          forhandsvisVedtaksbrev={forhandsvisVedtaksbrev}
           erForeldrepengerFagsak={fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER}
           behandlingKlageVurdering={behandlingKlageVurdering}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
           skjemalenkeTyper={skjemalenkeTyper}
-          erBehandlingEtterKlage={erBehandlingEtterKlage}
           erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
