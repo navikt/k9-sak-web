@@ -7,6 +7,7 @@ import users from '@fpsak-frontend/assets/images/users.svg';
 import user from '@fpsak-frontend/assets/images/user.svg';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import MidlertidigAlene from './components/MidlertidigAlene';
 import messages from '../i18n/nb_NO.json';
 import BarnSeksjon from './components/BarnSeksjon';
@@ -27,6 +28,7 @@ const intl = createIntl(
 interface FaktaBarnIndexProps {
   barn: BarnDto[];
   rammevedtak: Rammevedtak[];
+  fagsaksType?: string;
 }
 
 const mapRammevedtakBarn = (
@@ -37,6 +39,7 @@ const mapRammevedtakBarn = (
 ) => {
   const flereRammevedtak = Array.isArray(rammevedtak);
   const fnr = flereRammevedtak ? rammevedtak[0][fnrFeltnavn] : rammevedtak[fnrFeltnavn];
+
   if (!fnr) {
     return tmpBarn;
   }
@@ -65,35 +68,52 @@ const mapRammevedtakBarn = (
   };
 };
 
-const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [], rammevedtak = [] }) => {
+const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [], rammevedtak = [], fagsaksType }) => {
   const midlertidigAleneansvar = rammevedtak.find(rv => rv.type === RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG);
+  let vanligeBarnTekstId;
+  switch (fagsaksType) {
+    case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN: {
+      vanligeBarnTekstId = 'FaktaBarn.UtvidetRettKroniskSyk';
+      break;
+    }
+    case FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE: {
+      vanligeBarnTekstId = 'FaktaBarn.UtvidetRettMidlertidigAlene';
+      break;
+    }
+    default: {
+      vanligeBarnTekstId = 'FaktaBarn.Behandlingsdato';
+      break;
+    }
+  }
+  const utvidetRettBehandling =
+    fagsaksType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+    fagsaksType === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
 
   let rammevedtakGruppertPerBarn: BarnMedRammevedtak[] = Object.values(
     rammevedtak.reduce((tmpBarn, rv) => {
-      if (rv.type === RammevedtakEnum.UTVIDET_RETT) {
-        const alleUtvidetRettRammevedtak: Rammevedtak[] = rammevedtak.filter(
-          rvedtak => rvedtak.utvidetRettFor === rv.utvidetRettFor,
-        );
-        return mapRammevedtakBarn(tmpBarn, alleUtvidetRettRammevedtak, 'utvidetRettFor', 'kroniskSykdom');
+      switch (rv.type) {
+        case RammevedtakEnum.UTVIDET_RETT: {
+          const alleUtvidetRettRammevedtak: Rammevedtak[] = rammevedtak.filter(
+            rvedtak => rvedtak.utvidetRettFor === rv.utvidetRettFor,
+          );
+          return mapRammevedtakBarn(tmpBarn, alleUtvidetRettRammevedtak, 'utvidetRettFor', 'kroniskSykdom');
+        }
+        case RammevedtakEnum.ALENEOMSORG: {
+          return mapRammevedtakBarn(tmpBarn, rv, 'aleneOmOmsorgenFor', 'aleneomsorg');
+        }
+        case RammevedtakEnum.FOSTERBARN: {
+          return mapRammevedtakBarn(tmpBarn, rv, 'mottaker', 'fosterbarn');
+        }
+        case RammevedtakEnum.UTENLANDSK_BARN: {
+          return mapRammevedtakBarn(tmpBarn, rv, 'fødselsdato', 'utenlandskBarn');
+        }
+        case RammevedtakEnum.DELT_BOSTED: {
+          return mapRammevedtakBarn(tmpBarn, rv, 'deltBostedMed', 'deltBosted');
+        }
+        default: {
+          return tmpBarn;
+        }
       }
-
-      if (rv.type === RammevedtakEnum.ALENEOMSORG) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'aleneOmOmsorgenFor', 'aleneomsorg');
-      }
-
-      if (rv.type === RammevedtakEnum.FOSTERBARN) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'mottaker', 'fosterbarn');
-      }
-
-      if (rv.type === RammevedtakEnum.UTENLANDSK_BARN) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'fødselsdato', 'utenlandskBarn');
-      }
-
-      if (rv.type === RammevedtakEnum.DELT_BOSTED) {
-        return mapRammevedtakBarn(tmpBarn, rv, 'deltBostedMed', 'deltBosted');
-      }
-
-      return tmpBarn;
     }, {}),
   );
 
@@ -143,8 +163,10 @@ const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [], ram
 
       <Seksjon bakgrunn="hvit" title={{ id: 'FaktaBarn.Tittel' }} imgSrc={users} medMarg>
         {barn.length === 0 && <FormattedMessage id="FaktaBarn.IngenBarn" />}
-        <BarnSeksjon barn={vanligeBarn} startIndex={0} tekstId="FaktaBarn.Behandlingsdato" />
-        <BarnSeksjon barn={barnFraRammeVedtak} startIndex={vanligeBarn.length} tekstId="FaktaBarn.HentetLive" />
+        <BarnSeksjon barn={vanligeBarn} startIndex={0} tekstId={vanligeBarnTekstId} />
+        {!utvidetRettBehandling && (
+          <BarnSeksjon barn={barnFraRammeVedtak} startIndex={vanligeBarn.length} tekstId="FaktaBarn.HentetLive" />
+        )}
       </Seksjon>
 
       <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.ErMidlertidigAlene.Tittel' }} imgSrc={user} medMarg>
