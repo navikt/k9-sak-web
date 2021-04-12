@@ -34,7 +34,7 @@ export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder }) =
   if (!readOnly && helpTexts.length > 0) {
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnly}>{helpTexts}</AksjonspunktHelpTextTemp>
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen>{helpTexts}</AksjonspunktHelpTextTemp>
         <VerticalSpacer eightPx />
         {aksjonspunktKoder &&
           aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) && (
