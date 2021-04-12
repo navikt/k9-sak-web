@@ -26,7 +26,7 @@ export const formatereLesemodusObjektForMidlertidigAlene = (
   status: string,
 ) => {
   if (vilkar.perioder[0]) {
-    const obj = {
+    return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
       dato: {
@@ -36,7 +36,6 @@ export const formatereLesemodusObjektForMidlertidigAlene = (
       avslagsArsakErPeriodeErIkkeOverSeksMån:
         vilkar.perioder[0]?.avslagKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN,
     };
-    return obj;
   }
   return {
     begrunnelse: '',
