@@ -10,8 +10,8 @@
   "OpptjeningVilkarView.DetailsForSelectedPeriod": "Detaljer for valgt periode",
 
   "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger": "Opptjent rett til pleiepenger",
-  "OpptjeningVilkarAksjonspunktPanel.ErOppfylt": "Søker har oppfylt krav om 6 mnd opptjening, vilkåret er oppfylt.",
-  "OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt": "Søker har ikke oppfylt krav om 6 mnd opptjening, vilkåret er <b>ikke</b> oppfylt.",
+  "OpptjeningVilkarAksjonspunktPanel.ErOppfylt": "Søker har oppfylt krav om 28 dagers opptjening, vilkåret er oppfylt.",
+  "OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt": "Søker har ikke oppfylt krav om 28 dagers opptjening, vilkåret er <b>ikke</b> oppfylt.",
   "OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret": "Opptjening",
 
   "TimeLineNavigation.openData": "Åpne info om første periode",

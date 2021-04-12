@@ -14,12 +14,14 @@ const BarnInformasjonVisning: FunctionComponent<BarnInputProps> = ({ barnet }) =
 
   return (
     <div>
-      <Normaltekst>
-        <FormattedMessage
-          id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
-          values={{ b: chunks => <b>{chunks}</b> }}
-        />
-      </Normaltekst>
+      {harSammeBosted && (
+        <Normaltekst>
+          <FormattedMessage
+            id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
+            values={{ b: chunks => <b>{chunks}</b> }}
+          />
+        </Normaltekst>
+      )}
       {dødsdato && (
         <Normaltekst>
           <FormattedMessage id="FaktaBarn.Død" values={{ dødsdato: visningsdato(dødsdato) }} />
