@@ -97,9 +97,11 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   );
 
   const skalViseRisikoklassifisering = () => {
-    const isFagsakPSB = fagsakYtelseTypeMedNavn.kode === fagsakYtelseType.PLEIEPENGER;
+    const isFagsakPleiepenger = fagsakYtelseTypeMedNavn.kode === fagsakYtelseType.PLEIEPENGER;
     return (
-      kontrollresultatState === RestApiState.SUCCESS && risikoAksjonspunktState === RestApiState.SUCCESS && !isFagsakPSB
+      kontrollresultatState === RestApiState.SUCCESS &&
+      risikoAksjonspunktState === RestApiState.SUCCESS &&
+      !isFagsakPleiepenger
     );
   };
 
