@@ -31,6 +31,7 @@
   "VedtakForm.Fritekst.Beregningsgrunnlag": "Fritekst i brev til søker som handler om fastsettelse av beregningsgrunnlaget",
   "VedtakForm.Fritekst.OverstyrtMottaker": "Velg mottaker",
   "VedtakForm.VurderAnnenYtelse": "Vurder om den åpne oppgaven «Vurder konsekvens for ytelse» påvirker behandlingen",
+  "VedtakForm.VurderOverlappendeYtelserFørVedtak": "Vurder om overlappende ytelser gir konsekvens for vedtak",
   "VedtakForm.VurderDokument": "Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen",
   "VedtakForm.HelpText0": "Beregningsgrunnlaget er endret til ugunst for bruker i revurderingen. ",
   "VedtakForm.HelpText1": "Klikk på ",

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { shallowWithIntl } from '../i18n';
 import FaktaBarnIndex from './FaktaBarnIndex';
 import BarnSeksjon from './components/BarnSeksjon';
@@ -49,7 +50,48 @@ describe('<FaktaBarnIndex>', () => {
       />,
     );
 
-    expect(wrapper.find(BarnSeksjon)).toHaveLength(2);
+    expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
+    expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
+  });
+
+  it('viser vanlige barn vid fagsakstype kronisk syk', () => {
+    const wrapper = shallowWithIntl(
+      <FaktaBarnIndex
+        barn={[
+          {
+            personIdent: '123',
+            barnType: BarnType.VANLIG,
+            harSammeBosted: true,
+          },
+          {
+            personIdent: '456',
+            barnType: BarnType.UTENLANDSK_BARN,
+            harSammeBosted: false,
+          },
+        ]}
+        rammevedtak={[
+          {
+            type: 'Fosterbarn',
+            vedtatt: '2021-03-17',
+            lengde: 'PT0S',
+            gyldigFraOgMed: '2021-03-17',
+            gyldigTilOgMed: '2033-12-31',
+            mottaker: '150915',
+          },
+          {
+            type: 'UtvidetRett',
+            vedtatt: '2021-03-17',
+            lengde: 'PT0S',
+            gyldigFraOgMed: '2021-03-17',
+            gyldigTilOgMed: '2033-12-31',
+            utvidetRettFor: '150915 #2',
+          },
+        ]}
+        fagsaksType={FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN}
+      />,
+    );
+
+    expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
     expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
   });
 });

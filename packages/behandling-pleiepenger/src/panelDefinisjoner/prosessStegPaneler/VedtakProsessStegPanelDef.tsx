@@ -18,6 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
     aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
     aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
     aksjonspunktCodes.VURDERE_DOKUMENT,
     aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,

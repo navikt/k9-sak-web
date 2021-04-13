@@ -1,5 +1,4 @@
 import React from 'react';
-import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Behandling, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
@@ -43,7 +42,6 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
         {...reduxFormPropsMock}
         behandling={behandling}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        forhandsvisVedtaksbrev={sinon.spy()}
         readOnly={false}
         erTilbakekreving
         lagLenke={() => location}
