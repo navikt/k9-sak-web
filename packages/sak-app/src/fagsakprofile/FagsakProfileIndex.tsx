@@ -8,6 +8,7 @@ import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import { KodeverkMedNavn, Fagsak, Aksjonspunkt, Risikoklassifisering, BehandlingAppKontekst } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
@@ -95,6 +96,15 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
     [fagsak.saksnummer],
   );
 
+  const skalViseRisikoklassifisering = () => {
+    const isFagsakPleiepenger = fagsakYtelseTypeMedNavn.kode === fagsakYtelseType.PLEIEPENGER;
+    return (
+      kontrollresultatState === RestApiState.SUCCESS &&
+      risikoAksjonspunktState === RestApiState.SUCCESS &&
+      !isFagsakPleiepenger
+    );
+  };
+
   return (
     <div className={styles.panelPadding}>
       {!harHentetBehandlinger && <LoadingPanel />}
@@ -140,7 +150,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
       {(kontrollresultatState === RestApiState.LOADING || risikoAksjonspunktState === RestApiState.LOADING) && (
         <LoadingPanel />
       )}
-      {kontrollresultatState === RestApiState.SUCCESS && risikoAksjonspunktState === RestApiState.SUCCESS && (
+      {skalViseRisikoklassifisering() && (
         <RisikoklassifiseringIndex
           fagsak={fagsak}
           alleBehandlinger={alleBehandlinger}
