@@ -3,6 +3,5 @@
   "version": "1.0.0",
   "module": "index.tsx",
   "license": "MIT",
-  "private": true,
-  "dependencies": {}
+  "private": true
 }

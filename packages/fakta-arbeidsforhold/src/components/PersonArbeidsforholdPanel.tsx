@@ -22,6 +22,7 @@ import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/type
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { FormAction } from 'redux-form/lib/actions';
 import Arbeidsgiver from '@k9-sak-web/types/src/arbeidsgiverTsType';
+import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
 import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
 import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
@@ -42,14 +43,11 @@ const cleanUpArbeidsforhold = (newValues, originalValues) => {
   return newValues;
 };
 
-export const harAksjonspunkter = arbeidsforhold =>
-  Array.isArray(arbeidsforhold) && arbeidsforhold.filter(af => af.aksjonspunktÅrsaker.length > 0).length > 0;
-
 interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   readOnly: boolean;
-  hasAksjonspunkter: boolean;
+  harAksjonspunktAvklarArbeidsforhold: boolean;
   alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -230,7 +228,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
       alleKodeverk,
       behandlingId,
       behandlingVersjon,
-      hasAksjonspunkter,
+      harAksjonspunktAvklarArbeidsforhold,
     } = this.props;
 
     const { selectedArbeidsforhold, selectedArbeidsgiver } = this.state;
@@ -249,6 +247,10 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
             const navn = `${arbeidsgiverNavn} (${arbeidsforholdPerArbeidsgiver.length} arbeidsforhold)`;
             const erValgt = selectedArbeidsgiver === a;
 
+            const harAksjonspunktForArbeidsgiver =
+              harAksjonspunktAvklarArbeidsforhold &&
+              arbeidsforholdPerArbeidsgiver.some(arbeidsforholdHarAksjonspunktÅrsak);
+
             return (
               <FlexContainer key={this.utledNøkkel(a, arbeidsgiverOpplysningerPerId)}>
                 <FlexRow>
@@ -259,7 +261,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                     </div>
                   </FlexColumn>
                   <FlexColumn className={styles.aksjonspunktColumn}>
-                    {hasAksjonspunkter && <Image src={advarselImageUrl} alt="" />}
+                    {harAksjonspunktForArbeidsgiver && <Image src={advarselImageUrl} alt="" />}
                     <button
                       className={styles.knappContainer}
                       type="button"
@@ -283,8 +285,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                 {erValgt && (
                   <PersonArbeidsforholdTable
                     intl={intl}
-                    key={a}
-                    harAksjonspunktAvklarArbeidsforhold={hasAksjonspunkter}
+                    harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
                     alleKodeverk={alleKodeverk}

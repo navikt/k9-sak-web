@@ -1,4 +1,4 @@
-import formaterDato from './utils';
+import formaterDato from './formaterDato';
 
 describe('utils', () => {
   it('formaterDato formaterer til vinsningsdato hvis iso-format, ellers -', () => {

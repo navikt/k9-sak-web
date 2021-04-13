@@ -12,8 +12,9 @@ class BarnFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ rammevedtak }) => !!rammevedtak;
 
-  getData = ({ personopplysninger, fagsak }) => ({
+  getData = ({ personopplysninger, fagsak, rammevedtak }) => ({
     personopplysninger,
+    rammevedtak: rammevedtak?.rammevedtak || [],
     fagsaksType: fagsak.sakstype.kode,
   });
 }

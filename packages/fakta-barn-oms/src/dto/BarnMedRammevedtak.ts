@@ -1,13 +1,13 @@
-interface Gyldighetsperiode {
+export interface Gyldighetsperiode {
   fom: string;
   tom: string;
 }
 
-export default interface Barn {
+export default interface BarnMedRammevedtak {
   kroniskSykdom?: Gyldighetsperiode[];
   aleneomsorg?: Gyldighetsperiode;
   fosterbarn?: Gyldighetsperiode;
   utenlandskBarn?: Gyldighetsperiode;
   deltBosted?: Gyldighetsperiode;
-  fødselsnummer: string;
+  personIdent: string;
 }

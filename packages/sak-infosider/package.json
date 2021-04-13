@@ -10,6 +10,5 @@
     "react": "^16.14.0",
     "react-intl": "^5.10.11",
     "react-router-dom": "^5.2.0"
-  },
-  "devDependencies": {}
+  }
 }
