@@ -8,7 +8,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { ariaCheck, isRequiredMessage, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
@@ -34,9 +33,7 @@ const erAlleGodkjentEllerAvvist = (formState: TotrinnskontrollAksjonspunkt[] = [
 interface PureOwnProps {
   behandling: Behandling;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
-  forhandsvisVedtaksbrev: () => void;
   behandlingKlageVurdering?: KlageVurdering;
-  erBehandlingEtterKlage?: boolean;
   readOnly: boolean;
   erTilbakekreving: boolean;
   erForeldrepengerFagsak: boolean;
@@ -58,9 +55,7 @@ interface MappedOwnProps {
 export const TotrinnskontrollBeslutterForm: FunctionComponent<PureOwnProps & MappedOwnProps & InjectedFormProps> = ({
   behandling,
   handleSubmit,
-  forhandsvisVedtaksbrev,
   readOnly,
-  erBehandlingEtterKlage,
   behandlingKlageVurdering,
   erForeldrepengerFagsak,
   arbeidsforholdHandlingTyper,
@@ -72,11 +67,6 @@ export const TotrinnskontrollBeslutterForm: FunctionComponent<PureOwnProps & Map
   tilgjengeligeVedtaksbrev,
   ...formProps
 }) => {
-  const erKlage =
-    behandlingKlageVurdering &&
-    (!!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK);
-  const erAnke = behandling && behandling.type.kode === BehandlingType.ANKE;
-
   if (!behandling.toTrinnsBehandling) {
     return null;
   }
@@ -132,14 +122,6 @@ export const TotrinnskontrollBeslutterForm: FunctionComponent<PureOwnProps & Map
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {harTilgjengeligeVedtaksbrev && !erKlage && !erBehandlingEtterKlage && !erAnke && !erTilbakekreving && (
-          <>
-            <VerticalSpacer eightPx />
-            <button type="button" className={styles.buttonLink} onClick={forhandsvisVedtaksbrev}>
-              <FormattedMessage id="ToTrinnsForm.ForhandvisBrev" />
-            </button>
-          </>
-        )}
         {!harTilgjengeligeVedtaksbrev && (
           <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
             <FormattedMessage id="ToTrinnsForm.IkkeVedtaksbrev" />
