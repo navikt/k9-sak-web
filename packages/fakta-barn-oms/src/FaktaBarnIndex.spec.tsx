@@ -50,7 +50,7 @@ describe('<FaktaBarnIndex>', () => {
       />,
     );
 
-    expect(wrapper.find(BarnSeksjon)).toHaveLength(2);
+    expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
     expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
   });
 
