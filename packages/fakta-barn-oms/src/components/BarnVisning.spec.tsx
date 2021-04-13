@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Panel from 'nav-frontend-paneler';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import moment from 'moment';
 import BarnVisning from './BarnVisning';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnRammevedtakVisning from './BarnRammevedtakVisning';
@@ -32,7 +33,16 @@ it('<BarnVisning>', () => {
     },
   };
 
+  const antallÅrFomValgDato = moment('2014-09-01').diff(barn.barnRelevantIBehandling.fødselsdato, 'years').toString();
+  expect(antallÅrFomValgDato).toBe('1');
+
+  const antallÅrFomIdag = moment().diff(barn.barnRelevantIBehandling.fødselsdato, 'years').toString();
+
   const wrapper = shallow(<BarnVisning barnet={barn} index={0} />);
+
+  expect(wrapper.find('span').text().includes(barn.barnRelevantIBehandling.fødselsdato));
+  expect(wrapper.find('span').text().includes(antallÅrFomIdag));
+
   expect(wrapper.find(Panel)).toHaveLength(1);
   expect(wrapper.find(BarnInformasjonVisning)).toHaveLength(1);
   expect(wrapper.find(BarnRammevedtakVisning)).toHaveLength(1);

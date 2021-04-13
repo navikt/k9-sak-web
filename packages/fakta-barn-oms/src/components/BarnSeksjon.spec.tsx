@@ -33,7 +33,6 @@ describe('<BarnSeksjon>', () => {
 
     const elementerMedFormatterTekstId = tekstId =>
       wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === tekstId);
-
     const tekstBarnBehandling = elementerMedFormatterTekstId('FaktaBarn.Behandlingsdato');
     expect(tekstBarnBehandling).toHaveLength(1);
   });
