@@ -18,8 +18,12 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import {
+  kanHaFritekstbrev,
+  harBareFritekstbrev,
+  harOverstyrtMedFritekstbrev,
+  harOverstyrtMedIngenBrev,
+} from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -313,14 +317,11 @@ const buildInitialValues = createSelector(
       sprakkode,
       aksjonspunktKoder,
       skalBrukeOverstyrendeFritekstBrev:
-        (readonly &&
-          (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
-            vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST)) ||
-        harBareFritekstbrev(tilgjengeligeVedtaksbrev),
-      skalUndertrykkeBrev:
-        readonly &&
-        (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
-          vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN),
+        (readonly && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)) ||
+        (!readonly &&
+          kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+          harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)),
+      skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
       begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],

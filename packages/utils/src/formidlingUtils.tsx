@@ -3,6 +3,7 @@ import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 interface TilgjengeligeVedtaksbrev {
   vedtaksbrev: Array<string>;
@@ -61,6 +62,20 @@ export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaks
 export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   const vedtaksbrev = lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev);
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
+}
+
+export function harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel): boolean {
+  return (
+    dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
+    vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST
+  );
+}
+
+export function harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
+  return (
+    dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
+    vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN
+  );
 }
 
 export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {
