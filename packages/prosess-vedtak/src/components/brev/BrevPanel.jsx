@@ -15,6 +15,7 @@ import { SelectField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { safeJSONParse, required } from '@fpsak-frontend/utils';
 
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
@@ -59,7 +60,8 @@ const automatiskVedtaksbrevParams = ({
   tilgjengeligeVedtaksbrev,
 }) => ({
   dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
-  dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler[vedtaksbrevtype.AUTOMATISK],
+  // Bruker UTLED som fallback til formidling er prodsatt
+  dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
 });
 
