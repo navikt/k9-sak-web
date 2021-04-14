@@ -66,22 +66,18 @@ export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedta
 
 export function harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel): boolean {
   return (
-    dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ??
-    vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.FRITEKST
   );
 }
 
 export function harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
   return (
-    dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ??
-    vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.INGEN
   );
 }
 
-export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {
+export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return (
-    typeof tilgjengeligeVedtaksbrev === 'object' &&
-    !Array.isArray(tilgjengeligeVedtaksbrev) &&
     Array.isArray(tilgjengeligeVedtaksbrev.alternativeMottakere) &&
     tilgjengeligeVedtaksbrev.alternativeMottakere.length > 0
   );
