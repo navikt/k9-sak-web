@@ -22,7 +22,7 @@
     "less:lint": "stylelint \"packages/**/*.less\"",
     "dev": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu APP_URL_K9FORMIDLING=http://localhost:8060/rest/dummy node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
     "dev-med-formidling": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu node webpack/webpack.dev.server.js --config webpack/webpack.dev.js",
-    "build": "cross-env NODE_ENV=production webpack --no-progress --colors --config webpack/webpack.prod.js",
+    "build": "cross-env NODE_ENV=production webpack --color --config webpack/webpack.prod.js",
     "lerna": "lerna",
     "lerna:publish": "(lerna updated && lerna publish --cd-version patch --yes -m \"publish [ci skip]\") || echo \"Ingen endringer avslutter OK\"",
     "up": "docker-compose up -d --remove-orphans --build",
