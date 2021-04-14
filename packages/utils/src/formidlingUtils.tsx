@@ -66,14 +66,14 @@ export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedta
 
 export function harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel): boolean {
   return (
-    dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
+    dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ??
     vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST
   );
 }
 
 export function harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
   return (
-    dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
+    dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ??
     vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN
   );
 }

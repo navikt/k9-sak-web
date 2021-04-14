@@ -319,8 +319,8 @@ const buildInitialValues = createSelector(
       skalBrukeOverstyrendeFritekstBrev:
         (readonly && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)) ||
         (!readonly &&
-          kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
-          harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)),
+          (harBareFritekstbrev(tilgjengeligeVedtaksbrev) ||
+            (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)))),
       skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),

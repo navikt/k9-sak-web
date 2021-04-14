@@ -22,6 +22,7 @@ import {
   kanHaFritekstbrev,
   harOverstyrtMedFritekstbrev,
   harOverstyrtMedIngenBrev,
+  harBareFritekstbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
@@ -256,8 +257,8 @@ export const buildInitialValues = createSelector(
     skalBrukeOverstyrendeFritekstBrev:
       (readonly && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)) ||
       (!readonly &&
-        kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
-        harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)),
+        (harBareFritekstbrev(tilgjengeligeVedtaksbrev) ||
+          (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)))),
     skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
