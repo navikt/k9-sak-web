@@ -42,9 +42,6 @@ export type FormValues = {
   arsakskode?: string;
 };
 
-const getFritekstMessage = (brevmalkode?: string): string =>
-  brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst';
-
 // TODO (TOR) Bør erstattast av ein markør fra backend
 const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
   brevmalkode === dokumentMalType.INNHENT_DOK ||
@@ -209,7 +206,7 @@ export const MessagesImpl: FunctionComponent<
               <div className="input--xxl">
                 <TextAreaField
                   name="fritekst"
-                  label={intl.formatMessage({ id: getFritekstMessage(brevmalkode) })}
+                  label={intl.formatMessage({ id: 'Messages.Fritekst' })}
                   validate={[required, maxLength4000, minLength3, hasValidText]}
                   maxLength={4000}
                   badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}

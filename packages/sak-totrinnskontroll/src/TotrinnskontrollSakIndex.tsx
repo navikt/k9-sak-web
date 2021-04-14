@@ -7,7 +7,6 @@ import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
@@ -79,7 +78,6 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
   fagsakYtelseType,
   readOnly,
   onSubmit,
-  forhandsvisVedtaksbrev,
   behandlingKlageVurdering,
   alleKodeverk,
   createLocationForSkjermlenke,
@@ -114,21 +112,6 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
     [erTilbakekreving],
   );
 
-  const erBehandlingEtterKlage = useMemo(
-    () =>
-      behandling
-        ? behandling.behandlingÅrsaker
-            .map(({ behandlingArsakType }) => behandlingArsakType)
-            .some(
-              (bt: Kodeverk) =>
-                bt.kode === klageBehandlingArsakType.ETTER_KLAGE ||
-                bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK ||
-                bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK,
-            )
-        : false,
-    [behandling],
-  );
-
   const sorterteTotrinnskontrollSkjermlenkeContext = useMemo(
     () =>
       erTilbakekreving
@@ -159,12 +142,10 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
           readOnly={readOnly}
           onSubmit={submitHandler}
-          forhandsvisVedtaksbrev={forhandsvisVedtaksbrev}
           erForeldrepengerFagsak={fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER}
           behandlingKlageVurdering={behandlingKlageVurdering}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
           skjemalenkeTyper={skjemalenkeTyper}
-          erBehandlingEtterKlage={erBehandlingEtterKlage}
           erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
