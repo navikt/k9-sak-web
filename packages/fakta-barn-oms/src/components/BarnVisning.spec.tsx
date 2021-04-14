@@ -33,15 +33,17 @@ it('<BarnVisning>', () => {
     },
   };
 
-  const antallÅrFomValgDato = moment('2014-09-01').diff(barn.barnRelevantIBehandling.fødselsdato, 'years').toString();
-  expect(antallÅrFomValgDato).toBe('1');
+  const barnetsAlderVedValgtDato = moment('2014-09-01')
+    .diff(barn.barnRelevantIBehandling.fødselsdato, 'years')
+    .toString();
+  expect(barnetsAlderVedValgtDato).toBe('1');
 
-  const antallÅrFomIdag = moment().diff(barn.barnRelevantIBehandling.fødselsdato, 'years').toString();
+  const barnetsAlderIdag = moment().diff(barn.barnRelevantIBehandling.fødselsdato, 'years').toString();
 
   const wrapper = shallow(<BarnVisning barnet={barn} index={0} />);
 
   expect(wrapper.find('span').text().includes(barn.barnRelevantIBehandling.fødselsdato));
-  expect(wrapper.find('span').text().includes(antallÅrFomIdag));
+  expect(wrapper.find('span').text().includes(barnetsAlderIdag));
 
   expect(wrapper.find(Panel)).toHaveLength(1);
   expect(wrapper.find(BarnInformasjonVisning)).toHaveLength(1);
