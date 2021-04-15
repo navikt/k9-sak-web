@@ -6,8 +6,8 @@ import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/B
 
 interface OwnProps {
   personopplysninger: {
-    barn: { fnr: string }[];
-    barnSoktFor: { fnr: string }[];
+    barn: { fnr: string; fodselsdato: string }[];
+    barnSoktFor: { fnr: string; fodselsdato: string }[];
   };
   rammevedtak: Rammevedtak[];
   fagsaksType: string;
@@ -18,9 +18,10 @@ const UtvidetRettBarnFakta: React.FunctionComponent<OwnProps> = ({ personopplysn
   const barn = erFagsakYtelseTypeKroniskSyktBarn ? personopplysninger.barnSoktFor : personopplysninger.barn;
 
   const formateradeBarn: BarnDto[] = barn.map(
-    ({ fnr }) =>
+    ({ fnr, fodselsdato }) =>
       ({
         personIdent: fnr.substr(0, 6),
+        fødselsdato: fodselsdato,
         harSammeBosted: undefined,
         barnType: BarnType.VANLIG,
       } as BarnDto),
