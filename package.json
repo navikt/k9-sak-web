@@ -48,7 +48,7 @@
     "node-cache": "^5.1.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-modal": "3.12.1"
+    "react-modal": "3.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
