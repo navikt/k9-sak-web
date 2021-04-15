@@ -329,7 +329,7 @@ const buildInitialValues = createSelector(
   },
 );
 
-const transformValues = (values, vedtaksbrevmaler) =>
+const transformValues = (values, tilgjengeligeVedtaksbrev) =>
   values.aksjonspunktKoder.map(apCode => {
     const transformedValues = {
       kode: apCode,
@@ -338,7 +338,7 @@ const transformValues = (values, vedtaksbrevmaler) =>
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
       skalUndertrykkeBrev: values.skalUndertrykkeBrev,
       isVedtakSubmission,
-      vedtaksbrevmaler,
+      tilgjengeligeVedtaksbrev,
     };
     if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
       transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
@@ -367,7 +367,7 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values =>
-    initialOwnProps.submitCallback(transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev.vedtaksbrevmaler));
+    initialOwnProps.submitCallback(transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev));
   const aksjonspunktKoder =
     initialOwnProps.aksjonspunkter && initialOwnProps.aksjonspunkter.map(ap => ap.definisjon.kode);
   const behandlingArsaker =
