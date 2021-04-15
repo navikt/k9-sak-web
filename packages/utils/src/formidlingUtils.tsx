@@ -3,6 +3,7 @@ import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 interface TilgjengeligeVedtaksbrev {
   vedtaksbrev: Array<string>;
@@ -11,6 +12,7 @@ interface TilgjengeligeVedtaksbrev {
     id: string;
     idType: string;
   }>;
+  vedtaksbrevmaler: Map<string, string>;
 }
 
 export function bestemAvsenderApp(type: string): string {
@@ -37,45 +39,45 @@ export function lagVisningsnavnForMottaker(
   return mottakerId;
 }
 
-function lesTilgjengeligeVedtaksbrev(
-  tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev,
-): Array<string> {
-  if (Array.isArray(tilgjengeligeVedtaksbrev)) {
-    return tilgjengeligeVedtaksbrev;
+function lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): Array<string> {
+  if (tilgjengeligeVedtaksbrev.vedtaksbrevmaler) {
+    return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler);
   }
-
-  if (typeof tilgjengeligeVedtaksbrev === 'object' && Array.isArray(tilgjengeligeVedtaksbrev.vedtaksbrev)) {
-    return tilgjengeligeVedtaksbrev.vedtaksbrev;
-  }
-
-  return [];
+  // tilgjengeligeVedtaksbrev.vedtaksbrev kan fjernes når vedtaksbrevmaler i formidling og dokumentdata er prodsatt
+  return tilgjengeligeVedtaksbrev.vedtaksbrev ?? [];
 }
 
-export function finnesTilgjengeligeVedtaksbrev(
-  tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev,
-): boolean {
+export function finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).length > 0;
 }
 
-export function kanHaAutomatiskVedtaksbrev(
-  tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev,
-): boolean {
+export function kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
 }
 
-export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {
+export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
-export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {
+export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   const vedtaksbrev = lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev);
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
-export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: Array<string> | TilgjengeligeVedtaksbrev): boolean {
+export function harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel): boolean {
   return (
-    typeof tilgjengeligeVedtaksbrev === 'object' &&
-    !Array.isArray(tilgjengeligeVedtaksbrev) &&
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.FRITEKST
+  );
+}
+
+export function harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
+  return (
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.INGEN
+  );
+}
+
+export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
+  return (
     Array.isArray(tilgjengeligeVedtaksbrev.alternativeMottakere) &&
     tilgjengeligeVedtaksbrev.alternativeMottakere.length > 0
   );
