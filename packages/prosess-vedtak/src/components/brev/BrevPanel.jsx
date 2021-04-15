@@ -44,7 +44,8 @@ const getManuellBrevCallback = ({
   if (formProps.valid || formProps.pristine) {
     previewCallback({
       dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
-      dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler[vedtaksbrevtype.FRITEKST],
+      // Bruker FRITKS som fallback til formidling er prodsatt
+      dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
       ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
     });
   } else {
@@ -61,7 +62,7 @@ const automatiskVedtaksbrevParams = ({
 }) => ({
   dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
   // Bruker UTLED som fallback til formidling er prodsatt
-  dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
+  dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
 });
 
