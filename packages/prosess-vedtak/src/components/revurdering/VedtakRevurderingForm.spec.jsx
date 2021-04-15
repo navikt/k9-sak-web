@@ -56,6 +56,8 @@ const resultatstruktur = {
   antallBarn: 1,
 };
 
+const tilgjengeligeVedtaksbrev = { vedtaksbrev: [] };
+
 const createBehandlingAvslag = () => createBehandling(BehandlingResultatType.AVSLATT);
 const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPPHOR);
 
@@ -98,6 +100,7 @@ describe('<VedtakRevurderingForm>', () => {
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -150,6 +153,7 @@ describe('<VedtakRevurderingForm>', () => {
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -187,6 +191,7 @@ describe('<VedtakRevurderingForm>', () => {
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -225,6 +230,7 @@ describe('<VedtakRevurderingForm>', () => {
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -256,6 +262,7 @@ describe('<VedtakRevurderingForm>', () => {
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -288,7 +295,7 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
-        tilgjengeligeVedtaksbrev={['FRITEKST', 'AUTOMATISK']}
+        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
         arbeidsgiverOpplysningerPerId={{}}
       />,
     );
