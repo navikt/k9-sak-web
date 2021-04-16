@@ -1,4 +1,4 @@
-import { Behandling, Fagsak, FagsakPerson, Personopplysninger, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Personopplysninger } from '@k9-sak-web/types';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -39,28 +39,20 @@ export function lagVisningsnavnForMottaker(
   return mottakerId;
 }
 
-function lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): Array<string> {
-  if (tilgjengeligeVedtaksbrev?.vedtaksbrevmaler) {
-    return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler);
-  }
-  // tilgjengeligeVedtaksbrev.vedtaksbrev kan fjernes når vedtaksbrevmaler i formidling og dokumentdata er prodsatt
-  return tilgjengeligeVedtaksbrev?.vedtaksbrev ?? [];
-}
-
 export function finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).length > 0;
+  return tilgjengeligeVedtaksbrev.vedtaksbrevmaler.size > 0;
 }
 
 export function kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
+  return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
 }
 
 export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
+  return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
 export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  const vedtaksbrev = lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev);
+  const vedtaksbrev = Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler);
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
