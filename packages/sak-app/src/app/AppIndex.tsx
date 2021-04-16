@@ -41,13 +41,6 @@ const AppIndex: FunctionComponent<OwnProps> = ({ location }) => {
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
   useEffect(() => {
-    // todo sjekke om dette er beste stedet å sette dette for sentry
-    configureScope(scope => {
-      scope.setUser({ username: navAnsatt?.navn });
-    });
-  }, [navAnsatt?.navn]);
-
-  useEffect(() => {
     if (navAnsatt?.funksjonellTid) {
       // TODO (TOR) Dette endrar jo berre moment. Kva med kode som brukar Date direkte?
       const diffInMinutes = moment().diff(navAnsatt.funksjonellTid, 'minutes');
