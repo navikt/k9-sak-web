@@ -16,9 +16,13 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
-import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import {
+  kanHaFritekstbrev,
+  harOverstyrtMedFritekstbrev,
+  harOverstyrtMedIngenBrev,
+  harBareFritekstbrev,
+} from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -232,6 +236,7 @@ export const buildInitialValues = createSelector(
     ownProps => ownProps.vedtakVarsel,
     ownProps => ownProps.dokumentdata,
     ownProps => ownProps.tilgjengeligeVedtaksbrev,
+    ownProps => ownProps.readOnly,
   ],
   (
     status,
@@ -243,18 +248,18 @@ export const buildInitialValues = createSelector(
     vedtakVarsel,
     dokumentdata,
     tilgjengeligeVedtaksbrev,
+    readonly,
   ) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseTypeKode ? ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD : false,
     antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
     aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev:
-      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.FRITEKST ||
-      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.FRITEKST ||
-      harBareFritekstbrev(tilgjengeligeVedtaksbrev),
-    skalUndertrykkeBrev:
-      dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] === vedtaksbrevtype.INGEN ||
-      vedtakVarsel?.vedtaksbrev.kode === vedtaksbrevtype.INGEN,
+      (readonly && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)) ||
+      (!readonly &&
+        (harBareFritekstbrev(tilgjengeligeVedtaksbrev) ||
+          (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)))),
+    skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
     overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
@@ -266,7 +271,7 @@ export const getAksjonspunktKoder = createSelector([ownProps => ownProps.aksjons
   aksjonspunkter.map(ap => ap.definisjon.kode),
 );
 
-const transformValues = values =>
+const transformValues = (values, tilgjengeligeVedtaksbrev) =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     begrunnelse: values.begrunnelse,
@@ -278,6 +283,7 @@ const transformValues = values =>
     skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
     skalUndertrykkeBrev: values.skalUndertrykkeBrev,
     isVedtakSubmission,
+    tilgjengeligeVedtaksbrev,
   }));
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
@@ -294,7 +300,8 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values));
+  const onSubmit = values =>
+    initialOwnProps.submitCallback(transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),

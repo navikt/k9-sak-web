@@ -2,7 +2,6 @@ import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
@@ -16,6 +15,8 @@ import { SelectField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { safeJSONParse, required } from '@fpsak-frontend/utils';
 
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -32,11 +33,19 @@ const kanResultatForhåndsvises = behandlingResultat => {
   return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
 };
 
-const getManuellBrevCallback = ({ brødtekst, overskrift, overstyrtMottaker, formProps, previewCallback }) => e => {
+const getManuellBrevCallback = ({
+  brødtekst,
+  overskrift,
+  overstyrtMottaker,
+  formProps,
+  previewCallback,
+  tilgjengeligeVedtaksbrev,
+}) => e => {
   if (formProps.valid || formProps.pristine) {
     previewCallback({
       dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
-      dokumentMal: dokumentMalType.FRITKS,
+      // Bruker FRITKS som fallback til formidling er prodsatt
+      dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
       ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
     });
   } else {
@@ -45,9 +54,15 @@ const getManuellBrevCallback = ({ brødtekst, overskrift, overstyrtMottaker, for
   e.preventDefault();
 };
 
-const automatiskVedtaksbrevParams = ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }) => ({
+const automatiskVedtaksbrevParams = ({
+  fritekst,
+  redusertUtbetalingÅrsaker,
+  overstyrtMottaker,
+  tilgjengeligeVedtaksbrev,
+}) => ({
   dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
-  dokumentMal: dokumentMalType.UTLED,
+  // Bruker UTLED som fallback til formidling er prodsatt
+  dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
 });
 
@@ -56,8 +71,11 @@ const getPreviewAutomatiskBrevCallbackUtenValidering = ({
   redusertUtbetalingÅrsaker,
   overstyrtMottaker,
   previewCallback,
+  tilgjengeligeVedtaksbrev,
 }) => e => {
-  previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }));
+  previewCallback(
+    automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, tilgjengeligeVedtaksbrev }),
+  );
   e.preventDefault();
 };
 
@@ -67,9 +85,12 @@ const getPreviewAutomatiskBrevCallback = ({
   overstyrtMottaker,
   formProps,
   previewCallback,
+  tilgjengeligeVedtaksbrev,
 }) => e => {
   if (formProps.valid || formProps.pristine) {
-    previewCallback(automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker }));
+    previewCallback(
+      automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, tilgjengeligeVedtaksbrev }),
+    );
   } else {
     formProps.submit();
   }
@@ -102,12 +123,14 @@ export const BrevPanel = props => {
     overstyrtMottaker,
     formProps,
     previewCallback,
+    tilgjengeligeVedtaksbrev,
   });
   const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
     overstyrtMottaker,
     previewCallback,
+    tilgjengeligeVedtaksbrev,
   });
 
   const manuellBrevCallback = getManuellBrevCallback({
@@ -116,6 +139,7 @@ export const BrevPanel = props => {
     overstyrtMottaker,
     formProps,
     previewCallback,
+    tilgjengeligeVedtaksbrev,
   });
 
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);

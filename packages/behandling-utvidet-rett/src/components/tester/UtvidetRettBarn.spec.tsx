@@ -8,7 +8,7 @@ describe('<UtvidetRettBarnFakta>', () => {
   it('skal rendre barn faktapanel korrekt for midlertidig alene', () => {
     const objektTilKomponent = {
       personopplysninger: {
-        barn: [{ fnr: '123456' }],
+        barn: [{ fnr: '123456', fodselsdato: '2019-04-13' }],
         barnSoktFor: [],
       },
       fagsaksType: FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
