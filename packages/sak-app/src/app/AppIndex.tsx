@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState, useEffect, useCallback } from 'reac
 import { withRouter, match } from 'react-router-dom';
 import moment from 'moment';
 import { Location, History } from 'history';
-import { configureScope } from '@sentry/browser';
 
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
@@ -39,13 +38,6 @@ const AppIndex: FunctionComponent<OwnProps> = ({ location }) => {
   const [hasCrashed, setCrashed] = useState(false);
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-
-  useEffect(() => {
-    // todo sjekke om dette er beste stedet å sette dette for sentry
-    configureScope(scope => {
-      scope.setUser({ username: navAnsatt?.navn });
-    });
-  }, [navAnsatt?.navn]);
 
   useEffect(() => {
     if (navAnsatt?.funksjonellTid) {
