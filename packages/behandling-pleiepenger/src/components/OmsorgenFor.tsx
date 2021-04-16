@@ -41,7 +41,7 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const omsorgenForAksjonspunktkode = findAksjonspunktkode(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
-  const readOnlyArgument = omsorgenForAksjonspunktkode === undefined ? readOnly : false;
+  const readOnlyArgument = omsorgenForAksjonspunktkode === undefined ? true : readOnly;
 
   const løsAksjonspunkt = omsorgsperioder =>
     submitCallback([{ kode: omsorgenForAksjonspunktkode, begrunnelse: 'Omsorgen for er behandlet', omsorgsperioder }]);
