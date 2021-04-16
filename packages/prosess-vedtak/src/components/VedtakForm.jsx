@@ -15,7 +15,6 @@ import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingRe
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
@@ -170,7 +169,8 @@ export class VedtakForm extends Component {
                     {intl.formatMessage({
                       id:
                         !skalBrukeOverstyrendeFritekstBrev &&
-                        aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
+                        aksjonspunkter &&
+                        !aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
                           ? 'VedtakForm.FattVedtak'
                           : 'VedtakForm.TilGodkjenning',
                     })}
