@@ -7,6 +7,7 @@ import {
   Personopplysninger,
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
+  Brevmal,
   Mottaker,
 } from '@k9-sak-web/types';
 
@@ -25,7 +26,7 @@ const intl = createIntl(
 
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
-  templates: Brevmaler;
+  templates: Brevmaler | Brevmal[];
   sprakKode: Kodeverk;
   previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
   behandlingId: number;
@@ -51,7 +52,11 @@ const MeldingerSakIndex: FunctionComponent<OwnProps> = ({
   <RawIntlProvider value={intl}>
     <Messages
       submitCallback={submitCallback}
-      templates={templates}
+      // templates={templates}
+      templates={[
+        { kode: 'INNHEN', navn: 'Innhent dokumentasjon', tilgjengelig: true },
+        { kode: 'VARS', navn: 'Varsel om tilbakekreving', tilgjengelig: true },
+      ]}
       sprakKode={sprakKode}
       previewCallback={previewCallback}
       behandlingId={behandlingId}
