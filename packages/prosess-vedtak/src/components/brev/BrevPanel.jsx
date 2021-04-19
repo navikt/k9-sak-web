@@ -213,7 +213,9 @@ BrevPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]).isRequired,
-  informasjonsbehovVedtaksbrev: PropTypes.shape(),
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),

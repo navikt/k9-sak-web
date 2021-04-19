@@ -211,7 +211,9 @@ VedtakForm.propTypes = {
   simuleringResultat: PropTypes.shape(),
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
-  informasjonsbehovVedtaksbrev: PropTypes.shape(),
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
   dokumentdata: PropTypes.shape(),
   ...formPropTypes,
 };
