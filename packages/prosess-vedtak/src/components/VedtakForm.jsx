@@ -81,8 +81,8 @@ export class VedtakForm extends Component {
       tilbakekrevingvalg,
       simuleringResultat,
       vilkar,
-      beregningErManueltFastsatt,
       tilgjengeligeVedtaksbrev,
+      informasjonsbehovVedtaksbrev,
       dokumentdata,
       brødtekst,
       overskrift,
@@ -151,7 +151,7 @@ export class VedtakForm extends Component {
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             dokumentdata={dokumentdata}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-            beregningErManueltFastsatt={beregningErManueltFastsatt}
+            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             previewCallback={previewCallback}
             formProps={formProps}
@@ -209,9 +209,9 @@ VedtakForm.propTypes = {
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
+  informasjonsbehovVedtaksbrev: PropTypes.shape(),
   dokumentdata: PropTypes.shape(),
   ...formPropTypes,
 };

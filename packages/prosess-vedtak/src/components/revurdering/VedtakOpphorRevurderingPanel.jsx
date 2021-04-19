@@ -34,7 +34,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({
   readOnly,
   vedtakVarsel,
   ytelseTypeKode,
-  beregningErManueltFastsatt,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
@@ -61,14 +60,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({
     <VerticalSpacer sixteenPx />
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
     {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
-    {beregningErManueltFastsatt && (
-      <VedtakFritekstPanel
-        readOnly={readOnly}
-        sprakkode={sprakKode}
-        labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
-        vedtakVarsel={vedtakVarsel}
-      />
-    )}
   </div>
 );
 
@@ -80,7 +71,6 @@ VedtakOpphorRevurderingPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   vedtakVarsel: vedtakVarselPropType,
   ytelseTypeKode: PropTypes.string.isRequired,
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
 };
 
 VedtakOpphorRevurderingPanelImpl.defaultProps = {

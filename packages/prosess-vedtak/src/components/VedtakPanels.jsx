@@ -49,10 +49,10 @@ const VedtakPanels = ({
   resultatstrukturOriginalBehandling,
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
+  informasjonsbehovVedtaksbrev,
   dokumentdata,
 }) => {
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
-  const beregningErManueltFastsatt = skalSkriveFritekstGrunnetFastsettingAvBeregning(bg, aksjonspunkter);
   if (behandlingTypeKode === behandlingType.REVURDERING && Array.isArray(bg) && bg.length) {
     const bgYtelsegrunnlag = bg[0].ytelsesspesifiktGrunnlag;
     let bgPeriodeMedAvslagsårsak;
@@ -83,10 +83,10 @@ const VedtakPanels = ({
         vilkar={vilkar}
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}
-        beregningErManueltFastsatt={beregningErManueltFastsatt}
         vedtakVarsel={vedtakVarsel}
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
         dokumentdata={dokumentdata}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -116,9 +116,9 @@ const VedtakPanels = ({
       personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       vilkar={vilkar}
-      beregningErManueltFastsatt={beregningErManueltFastsatt}
       vedtakVarsel={vedtakVarsel}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+      informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
       dokumentdata={dokumentdata}
     />
   );
@@ -151,6 +151,7 @@ VedtakPanels.propTypes = {
   beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
+  informasjonsbehovVedtaksbrev: PropTypes.shape(),
   dokumentdata: PropTypes.shape(),
 };
 

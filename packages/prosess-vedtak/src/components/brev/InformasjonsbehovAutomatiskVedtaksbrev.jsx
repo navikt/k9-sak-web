@@ -7,29 +7,23 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
   sprakkode,
   readOnly,
   begrunnelse,
-  beregningErManueltFastsatt,
+  informasjonsbehovVedtaksbrev,
 }) => {
-  const tilgjengeligeInformasjonsbehov = {
-    FRITEKSTBREV: 'VedtakForm.Fritekst',
-    MANUELT_BEREGNINGSGRUNNLAG: 'VedtakForm.Fritekst.Beregningsgrunnlag',
-  };
-
-  const aktiverteInformasjonsbehov = [];
-
-  if (beregningErManueltFastsatt) {
-    aktiverteInformasjonsbehov.push(tilgjengeligeInformasjonsbehov.MANUELT_BEREGNINGSGRUNNLAG);
-  }
+  const aktiverteInformasjonsbehov = informasjonsbehovVedtaksbrev.informasjonsbehov.filter(
+    ({ type }) => type === 'FRITEKST',
+  );
 
   return (
     <>
       {aktiverteInformasjonsbehov.map(behov => (
         <VedtakFritekstPanel
-          key={behov}
+          key={behov.kode}
           intl={intl}
           readOnly={readOnly}
           sprakkode={sprakkode}
-          labelTextCode={behov}
+          labelTextCode={behov.kode}
           begrunnelse={begrunnelse}
+          begrunnelseFieldName={`${behov.kode}.begrunnelse`}
         />
       ))}
     </>
@@ -41,12 +35,11 @@ InformasjonsbehovAutomatiskVedtaksbrev.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
-  beregningErManueltFastsatt: PropTypes.bool,
+  informasjonsbehovVedtaksbrev: PropTypes.shape(),
 };
 
 InformasjonsbehovAutomatiskVedtaksbrev.defaultProps = {
   begrunnelse: null,
-  beregningErManueltFastsatt: false,
 };
 
 export default InformasjonsbehovAutomatiskVedtaksbrev;

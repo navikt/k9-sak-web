@@ -18,6 +18,7 @@ function lagDokumentdata(aksjonspunktModell) {
         brødtekst: aksjonspunktModell.fritekstbrev?.brødtekst,
         overskrift: aksjonspunktModell.fritekstbrev?.overskrift,
       },
+      TILSYN: 'fritekst',
       ...(aksjonspunktModell.overstyrtMottaker
         ? { [dokumentdatatype.OVERSTYRT_MOTTAKER]: aksjonspunktModell.overstyrtMottaker }
         : {}),

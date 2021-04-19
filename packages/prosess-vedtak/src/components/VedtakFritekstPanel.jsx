@@ -20,14 +20,14 @@ import styles from './vedtakAvslagPanel.less';
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
-const VedtakFritekstPanelImpl = ({ intl, begrunnelse, sprakkode, readOnly, labelTextCode }) => (
+const VedtakFritekstPanelImpl = ({ intl, begrunnelse, begrunnelseFieldName, sprakkode, readOnly, labelTextCode }) => (
   <>
     {!readOnly && (
       <Row>
         <VerticalSpacer sixteenPx />
         <Column xs="8">
           <TextAreaField
-            name="begrunnelse"
+            name={begrunnelseFieldName}
             label={intl.formatMessage({ id: labelTextCode })}
             validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
             maxLength={1500}
@@ -56,11 +56,13 @@ const VedtakFritekstPanelImpl = ({ intl, begrunnelse, sprakkode, readOnly, label
 
 VedtakFritekstPanelImpl.defaultProps = {
   begrunnelse: null,
+  begrunnelseFieldName: 'begrunnelse',
 };
 
 VedtakFritekstPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
+  begrunnelseFieldName: PropTypes.string,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   labelTextCode: PropTypes.string.isRequired,

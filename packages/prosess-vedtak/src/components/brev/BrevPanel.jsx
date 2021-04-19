@@ -104,8 +104,8 @@ export const BrevPanel = props => {
     sprakkode,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
-    beregningErManueltFastsatt,
     tilgjengeligeVedtaksbrev,
+    informasjonsbehovVedtaksbrev,
     skalBrukeOverstyrendeFritekstBrev,
     begrunnelse,
     previewCallback,
@@ -164,8 +164,8 @@ export const BrevPanel = props => {
         intl={intl}
         readOnly={readOnly}
         sprakkode={sprakkode}
-        beregningErManueltFastsatt={beregningErManueltFastsatt}
         begrunnelse={begrunnelse}
+        informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
       />
       {kanResultatForhåndsvises(behandlingResultat) && <VedtakPreviewLink previewCallback={automatiskBrevCallback} />}
     </>
@@ -213,8 +213,8 @@ BrevPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]).isRequired,
+  informasjonsbehovVedtaksbrev: PropTypes.shape(),
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
-  beregningErManueltFastsatt: PropTypes.bool,
   previewCallback: PropTypes.func.isRequired,
   redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),
   brødtekst: PropTypes.string,

@@ -96,7 +96,6 @@ export class VedtakRevurderingFormImpl extends Component {
       vilkar,
       resultatstrukturOriginalBehandling,
       medlemskapFom,
-      beregningErManueltFastsatt,
       vedtakVarsel,
       bgPeriodeMedAvslagsårsak,
       tilgjengeligeVedtaksbrev,
@@ -146,7 +145,6 @@ export class VedtakRevurderingFormImpl extends Component {
                     simuleringResultat={simuleringResultat}
                     alleKodeverk={alleKodeverk}
                     originaltBeregningResultat={resultatstrukturOriginalBehandling}
-                    beregningErManueltFastsatt={beregningErManueltFastsatt}
                     vedtakVarsel={vedtakVarsel}
                     bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
                   />
@@ -177,7 +175,6 @@ export class VedtakRevurderingFormImpl extends Component {
                     sprakKode={sprakkode}
                     medlemskapFom={medlemskapFom}
                     resultatstruktur={resultatstruktur}
-                    beregningErManueltFastsatt={beregningErManueltFastsatt}
                     vedtakVarsel={vedtakVarsel}
                   />
                 )}
@@ -246,7 +243,6 @@ VedtakRevurderingFormImpl.propTypes = {
   revurderingsAarsakString: PropTypes.string,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
