@@ -52,11 +52,7 @@ const MeldingerSakIndex: FunctionComponent<OwnProps> = ({
   <RawIntlProvider value={intl}>
     <Messages
       submitCallback={submitCallback}
-      // templates={templates}
-      templates={[
-        { kode: 'INNHEN', navn: 'Innhent dokumentasjon', tilgjengelig: true },
-        { kode: 'VARS', navn: 'Varsel om tilbakekreving', tilgjengelig: true },
-      ]}
+      templates={templates}
       sprakKode={sprakKode}
       previewCallback={previewCallback}
       behandlingId={behandlingId}
