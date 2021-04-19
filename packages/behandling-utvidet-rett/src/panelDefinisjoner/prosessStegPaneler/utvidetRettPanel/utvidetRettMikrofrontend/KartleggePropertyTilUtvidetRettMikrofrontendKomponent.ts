@@ -1,5 +1,4 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
@@ -12,8 +11,10 @@ import {
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
 import {
   formatereLesemodusObjektForKroniskSyk,
+  formatereLesemodusObjektForMidlertidigAlene,
   formatereLosAksjonspunktObjektForKroniskSyk,
-} from './FormatereObjektForKroniskSyk';
+  formatereLosAksjonspunktObjektForMidlertidigAlene,
+} from './FormatereObjektForUtvidetRett';
 
 const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   saksInformasjon: SaksinformasjonUtvidetRett,
@@ -86,25 +87,29 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
               aksjonspunkt.begrunnelse,
               'Utvidet Rett',
             ),
-            informasjonTilLesemodus: {
-              begrunnelse: aksjonspunkt.begrunnelse,
-              vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
-              dato: {
-                fra: vilkarKnyttetTilAksjonspunkt.perioder[0].periode.fom,
-                til: vilkarKnyttetTilAksjonspunkt.perioder[0].periode.tom,
-              },
-            },
-            losAksjonspunkt: ({ begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til }) => {
+            informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(
+              vilkarKnyttetTilAksjonspunkt,
+              aksjonspunkt,
+              status,
+            ),
+            losAksjonspunkt: ({
+              begrunnelse,
+              erSokerenMidlertidigAleneOmOmsorgen,
+              fra,
+              til,
+              avslagsArsakErPeriodeErIkkeOverSeksMån,
+            }) => {
               submitCallback([
-                {
-                  kode: aksjonspunkt.definisjon.kode,
+                formatereLosAksjonspunktObjektForMidlertidigAlene(
+                  aksjonspunkt.definisjon.kode,
                   begrunnelse,
-                  erVilkarOk: erSokerenMidlertidigAleneOmOmsorgen,
-                  periode: {
+                  erSokerenMidlertidigAleneOmOmsorgen,
+                  {
                     fom: fra,
                     tom: til,
                   },
-                },
+                  avslagsArsakErPeriodeErIkkeOverSeksMån,
+                ),
               ]);
             },
           } as VilkarMidlertidigAleneProps,

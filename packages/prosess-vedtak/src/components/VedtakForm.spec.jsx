@@ -26,10 +26,14 @@ describe('<VedtakForm>', () => {
       kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
     },
   ];
+
+  const ingenTilgjengeligeVedtaksbrev = { vedtaksbrev: [] };
+
   const initialValues = {
     skalBrukeOverstyrendeFritekstBrev: false,
     aksjonspunktKoder,
     sprakkode,
+    tilgjengeligeVedtaksbrev: ingenTilgjengeligeVedtaksbrev,
   };
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     const previewCallback = sinon.spy();
@@ -75,6 +79,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -143,6 +148,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
     const label = wrapper.find('Element');
@@ -207,6 +213,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -273,6 +280,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -335,6 +343,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -397,6 +406,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -463,6 +473,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -528,6 +539,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -592,6 +604,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -657,6 +670,7 @@ describe('<VedtakForm>', () => {
         beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
@@ -666,7 +680,7 @@ describe('<VedtakForm>', () => {
     expect(button).to.have.length(0);
   });
 
-  it('skal sette opp initialvalues når en ikke har beregningsresultat', () => {
+  it('skal sette opp initialvalues når en ikke har beregningsresultat og vedtaksbrev ikke er overstyrt', () => {
     const aksjonspunkter = [
       {
         id: 0,
@@ -703,7 +717,7 @@ describe('<VedtakForm>', () => {
     };
     const vedtakVarsel = {
       vedtaksbrev: {
-        kode: 'FRITEKST',
+        kode: 'AUTOMATISK',
       },
       avslagsarsak: null,
       avslagsarsakFritekst: null,
@@ -711,6 +725,10 @@ describe('<VedtakForm>', () => {
     const dokumentdata = {
       VEDTAKSBREV_TYPE: 'AUTOMATISK',
     };
+
+    const tilgjengeligeVedtaksbrev = { vedtaksbrev: ['FRITEKST', 'AUTOMATISK'] };
+    const readOnly = false;
+
     // eslint-disable-next-line
     const model = buildInitialValues.resultFunc(
       behandlingStatus.BEHANDLING_UTREDES,
@@ -721,6 +739,8 @@ describe('<VedtakForm>', () => {
       sprakkode,
       vedtakVarsel,
       dokumentdata,
+      tilgjengeligeVedtaksbrev,
+      readOnly,
     );
 
     expect(model).to.eql({
@@ -730,14 +750,14 @@ describe('<VedtakForm>', () => {
       overskrift: undefined,
       begrunnelse: undefined,
       overstyrtMottaker: undefined,
-      skalBrukeOverstyrendeFritekstBrev: true,
+      skalBrukeOverstyrendeFritekstBrev: false,
       skalUndertrykkeBrev: false,
       isEngangsstonad: false,
       antallBarn: undefined,
     });
   });
 
-  it('skal sette opp initialvalues når en har beregningsresultat', () => {
+  it('skal sette opp initialvalues når en har beregningsresultat og vedtaksbrev er overstyrt', () => {
     const aksjonspunkter = [
       {
         id: 1,
@@ -786,6 +806,9 @@ describe('<VedtakForm>', () => {
       },
     };
 
+    const tilgjengeligeVedtaksbrev = { vedtaksbrev: ['FRITEKST', 'AUTOMATISK'] };
+    const readOnly = false;
+
     const model = buildInitialValues.resultFunc(
       behandlingStatus.BEHANDLING_UTREDES,
       beregningResultat,
@@ -795,6 +818,8 @@ describe('<VedtakForm>', () => {
       sprakkode,
       vedtakVarsel,
       dokumentdata,
+      tilgjengeligeVedtaksbrev,
+      readOnly,
     );
     expect(model).to.eql({
       aksjonspunktKoder: ['5033'],
@@ -876,7 +901,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={['AUTOMATISK', 'FRITEKST']}
+        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -912,7 +937,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={['AUTOMATISK', 'FRITEKST']}
+        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -948,7 +973,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={['AUTOMATISK', 'FRITEKST']}
+        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
       />,
     );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');

@@ -59,6 +59,8 @@ spec:
       value: "https://omsorgsdager-frontend.dev.intern.nav.no/"
     - name: PSB_UTTAK_FRONTEND_URL
       value: "https://psb-uttak-frontend.dev.adeo.no/"
+    - name: OMSORGEN_FOR_FRONTEND_URL
+      value: "https://omsorgen-for-frontend.dev.adeo.no/"
 
    # Feature-flag
     - name: VARSELTEKST
