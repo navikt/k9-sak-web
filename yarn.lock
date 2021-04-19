@@ -12679,10 +12679,10 @@ nav-frontend-core@^5.0.11:
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-5.0.11.tgz#d2611a79f5f5372166a467a5f6e5eaccb8725086"
   integrity sha512-5b1FMK1mPfnpsXgHMDLY8Tj4SiPXVFg9hXj//qTaO3W2lwMY4Df3dKh4R595OiuVu7IRutAIuocPtXv3ysmsag==
 
-nav-frontend-ekspanderbartpanel-style@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-1.1.1.tgz#05d922c7f2792dffc7d9f6ae82f25c035f871e5b"
-  integrity sha512-JJh1UwdM7VuJvmt43UEP/krVCKKmJ1F2dLg30AJ5SBUnOUJqoJvFZQy8uAmr4RlWstO1n6suBW/I/INjqtk57A==
+nav-frontend-ekspanderbartpanel-style@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-1.1.2.tgz#341ea62b0e7c95f40bcc95c5f45a31ffe04435b0"
+  integrity sha512-0f0WvrO0CuRTIpdDS6WI677odIu4yMLMjsP4Z7JlI/DRByco3AU+0aTjG7T5UXuq17yMbK74wHFpogtmBJ/vAQ==
 
 nav-frontend-ekspanderbartpanel@3.1.1:
   version "3.1.1"
