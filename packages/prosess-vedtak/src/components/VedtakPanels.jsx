@@ -10,10 +10,7 @@ import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import VedtakForm from './VedtakForm';
 import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
-import {
-  skalSkriveFritekstGrunnetFastsettingAvBeregning,
-  finnSistePeriodeMedAvslagsårsakBeregning,
-} from './VedtakHelper';
+import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
 import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
@@ -151,7 +148,9 @@ VedtakPanels.propTypes = {
   beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
-  informasjonsbehovVedtaksbrev: PropTypes.shape(),
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
   dokumentdata: PropTypes.shape(),
 };
 

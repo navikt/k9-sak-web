@@ -48,6 +48,7 @@ const VedtakProsessIndex = ({
   informasjonsbehovVedtaksbrev,
   dokumentdataHente,
 }) => {
+  // eslint-disable-next-line
   informasjonsbehovVedtaksbrev = {
     informasjonsbehov: [
       {
@@ -118,7 +119,9 @@ VedtakProsessIndex.propTypes = {
   beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
-  informasjonsbehovVedtaksbrev: PropTypes.shape(),
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
   dokumentdataHente: PropTypes.shape(),
 };
 

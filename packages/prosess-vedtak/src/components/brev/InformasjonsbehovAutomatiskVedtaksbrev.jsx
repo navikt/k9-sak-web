@@ -9,9 +9,8 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
   begrunnelse,
   informasjonsbehovVedtaksbrev,
 }) => {
-  const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
-    ({ type }) => type === 'FRITEKST',
-  );
+  const aktiverteInformasjonsbehov =
+    (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(({ type }) => type === 'FRITEKST') ?? [];
 
   return (
     <>
@@ -35,11 +34,14 @@ InformasjonsbehovAutomatiskVedtaksbrev.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
-  informasjonsbehovVedtaksbrev: PropTypes.shape(),
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
 };
 
 InformasjonsbehovAutomatiskVedtaksbrev.defaultProps = {
   begrunnelse: null,
+  informasjonsbehovVedtaksbrev: null,
 };
 
 export default InformasjonsbehovAutomatiskVedtaksbrev;
