@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
@@ -29,7 +30,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
-  const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter);
+  const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
   const løsAksjonspunkt = () =>
     submitCallback([{ kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet' }]);
 
