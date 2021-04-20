@@ -31,7 +31,7 @@ const hentVersjonInformasjon = () => {
     jsIntegrity: 'sha384-6w75p2VXMTioGQ9Y2M/aea+FSt3/eL32xO2XIIQqvy4EjQi2iSUMzQP61HKblFyi',
     stylesheetIntegrity: 'sha384-JeMuk/8Y/Cj8/h5Qu/Uh1RpvZQAR1oOkzs3qALRVVF4exKJMFUWxhxMqAyJ6ed/a',
   };
-  return sjekkHvisErIProduksjon ? produksjonsVersjon : preprodVersjon;
+  return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
 };
 
 export default props => {
