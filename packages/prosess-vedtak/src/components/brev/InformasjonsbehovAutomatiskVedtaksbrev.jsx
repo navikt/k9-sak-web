@@ -9,7 +9,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
   begrunnelse,
   informasjonsbehovVedtaksbrev,
 }) => {
-  const aktiverteInformasjonsbehov = informasjonsbehovVedtaksbrev.informasjonsbehov.filter(
+  const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
     ({ type }) => type === 'FRITEKST',
   );
 

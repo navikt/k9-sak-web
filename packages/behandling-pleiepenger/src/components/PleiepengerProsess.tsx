@@ -150,10 +150,9 @@ const PleiepengerProsess: FunctionComponent<OwnProps> = ({
     oppdaterBehandlingVersjon,
   );
 
-  const {
-    startRequest: lagreAksjonspunkter,
-    data: apBehandlingRes,
-  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiPleiepengerHooks.useRestApiRunner<
+    Behandling
+  >(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   const {
     startRequest: lagreOverstyrteAksjonspunkter,
     data: apOverstyrtBehandlingRes,

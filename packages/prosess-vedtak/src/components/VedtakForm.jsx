@@ -286,6 +286,22 @@ const transformValues = (values, tilgjengeligeVedtaksbrev) =>
     tilgjengeligeVedtaksbrev,
   }));
 
+const transformValuesForFlereInformasjonsbehov = (values, tilgjengeligeVedtaksbrev, informasjonsbehov) => {
+  const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode].begrunnelse }));
+  return values.aksjonspunktKoder.map(apCode => ({
+    kode: apCode,
+    overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+    fritekstbrev: {
+      brødtekst: values.brødtekst,
+      overskrift: values.overskrift,
+    },
+    skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+    skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+    isVedtakSubmission,
+    begrunnelserMedInformasjonsbehov: begrunnelser,
+  }));
+};
+
 const erArsakTypeBehandlingEtterKlage = createSelector(
   [ownProps => ownProps.behandlingArsaker],
   (behandlingArsakTyper = []) =>
@@ -299,9 +315,28 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
       ),
 );
 
+const harPotensieltFlereInformasjonsbehov = informasjonsbehovVedtaksbrev => {
+  if (informasjonsbehovVedtaksbrev) {
+    const { informasjonsbehov } = informasjonsbehovVedtaksbrev;
+    return informasjonsbehov.length > 0;
+  }
+  return false;
+};
+
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values =>
-    initialOwnProps.submitCallback(transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev));
+  const onSubmit = values => {
+    const { informasjonsbehovVedtaksbrev, submitCallback } = initialOwnProps;
+    if (harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)) {
+      const transformedValuesForFlereInformasjonsbehov = transformValuesForFlereInformasjonsbehov(
+        values,
+        initialOwnProps.tilgjengeligeVedtaksbrev,
+        informasjonsbehovVedtaksbrev.informasjonsbehov,
+      );
+      return submitCallback(transformedValuesForFlereInformasjonsbehov);
+    }
+    const transformedValues = transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev);
+    return submitCallback(transformedValues);
+  };
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),

@@ -24,13 +24,18 @@ function lagDokumentdata(aksjonspunktModell) {
         : {}),
     };
   }
-  return {
+
+  const dokumentdata = {
     [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK,
     [dokumentdatatype.VEDTAKSBREV_MAL]: vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK],
     ...(aksjonspunktModell.overstyrtMottaker
       ? { [dokumentdatatype.OVERSTYRT_MOTTAKER]: aksjonspunktModell.overstyrtMottaker }
       : {}),
   };
+  aksjonspunktModell.begrunnelserMedInformasjonsbehov.forEach(({ kode, begrunnelse }) => {
+    dokumentdata[kode] = begrunnelse;
+  });
+  return dokumentdata;
 }
 
 export default lagDokumentdata;
