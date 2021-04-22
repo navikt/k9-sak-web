@@ -1,7 +1,6 @@
-import { Aksjonspunkt, FastsattOpptjening, SubmitCallback, Vilkårresultat, Opptjening } from '@k9-sak-web/types';
+import { Aksjonspunkt, SubmitCallback, Vilkårresultat, Vilkarperiode, Opptjening } from '@k9-sak-web/types';
 import React from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
-import OpptjeningVilkarView from './OpptjeningVilkarView';
 
 /**
  * OpptjeningVilkarForm
@@ -13,7 +12,6 @@ interface OpptjeningVilkarFormProps {
   behandlingId: number;
   behandlingVersjon: number;
   vilkårsresultat: Vilkårresultat;
-  fastsattOpptjening: FastsattOpptjening;
   isAksjonspunktOpen: boolean;
   aksjonspunkter: Aksjonspunkt[];
   status: string;
@@ -21,7 +19,8 @@ interface OpptjeningVilkarFormProps {
   readOnlySubmitButton: boolean;
   readOnly: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
-  vilkårIndex: number;
+  vilkårPerioder: Vilkarperiode[];
+  periodeIndex: number;
   opptjeninger: Opptjening[];
 }
 
@@ -29,7 +28,6 @@ const OpptjeningVilkarForm = ({
   behandlingId,
   behandlingVersjon,
   vilkårsresultat,
-  fastsattOpptjening,
   isAksjonspunktOpen,
   aksjonspunkter,
   status,
@@ -37,7 +35,8 @@ const OpptjeningVilkarForm = ({
   readOnlySubmitButton,
   readOnly,
   submitCallback,
-  vilkårIndex,
+  vilkårPerioder,
+  periodeIndex,
   opptjeninger,
 }: OpptjeningVilkarFormProps) => {
   if (Array.isArray(aksjonspunkter) && aksjonspunkter.length > 0) {
@@ -53,21 +52,14 @@ const OpptjeningVilkarForm = ({
         aksjonspunkter={aksjonspunkter}
         status={status}
         lovReferanse={lovReferanse}
-        fastsattOpptjening={fastsattOpptjening}
-        vilkårIndex={vilkårIndex}
+        vilkårPerioder={vilkårPerioder}
+        periodeIndex={periodeIndex}
         opptjeninger={opptjeninger}
       />
     );
   }
-  return (
-    <OpptjeningVilkarView
-      months={fastsattOpptjening?.opptjeningperiode.måneder}
-      days={fastsattOpptjening?.opptjeningperiode.dager}
-      fastsattOpptjeningActivities={fastsattOpptjening?.fastsattOpptjeningAktivitetList}
-      opptjeningFomDate={fastsattOpptjening?.opptjeningFom}
-      opptjeningTomDate={fastsattOpptjening?.opptjeningTom}
-    />
-  );
+
+  return null;
 };
 
 export default OpptjeningVilkarForm;

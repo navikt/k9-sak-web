@@ -1,4 +1,4 @@
-import { Aksjonspunkt, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
+import { Vilkar, Aksjonspunkt, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
 import React from 'react';
@@ -20,6 +20,7 @@ const intl = createIntl(
 );
 
 interface OpptjeningVilkarProsessIndexProps {
+  vilkar: Vilkar[];
   behandling: OpptjeningBehandling;
   opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
@@ -32,6 +33,7 @@ interface OpptjeningVilkarProsessIndexProps {
 }
 
 const OpptjeningVilkarProsessIndex = ({
+  vilkar,
   behandling,
   opptjening,
   aksjonspunkter,
@@ -42,16 +44,21 @@ const OpptjeningVilkarProsessIndex = ({
   isAksjonspunktOpen,
   readOnlySubmitButton,
 }: OpptjeningVilkarProsessIndexProps) => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  const activeOpptjeningObject =
-    Array.isArray(opptjening.opptjeninger) && opptjening.opptjeninger.length
-      ? opptjening.opptjeninger[activeTab]
-      : null;
+  const [activeVilkår] = vilkar;
+  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
+
   const { behandlingsresultat } = behandling;
   const vilkårsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
-  const skalBrukeSidemeny = Array.isArray(opptjening.opptjeninger) && opptjening.opptjeninger.length > 1;
+
+  const [activeTab, setActiveTab] = React.useState(0);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
+
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  console.log('@@@@@@@@@@@@@@@@@@@@@@ vilkar', vilkar);
+  console.log('@@@@@@@@@@@@@@@@@@@@@@ opptjening', opptjening);
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
 
   return (
     <RawIntlProvider value={intl}>
@@ -59,15 +66,11 @@ const OpptjeningVilkarProsessIndex = ({
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
-              links={opptjening.opptjeninger.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-                active: activeTab === currentBeregningsgrunnlagIndex,
-                label: `${intl.formatMessage({ id: 'Sidemeny.Opptjeningsperiode' })} ${
-                  currentBeregningsgrunnlagIndex + 1
-                }`,
+              links={activeVilkår.perioder.map((periode, index) => ({
+                active: activeTab === index,
+                label: `${intl.formatMessage({ id: 'Sidemeny.Opptjeningsperiode' })} ${index + 1}`,
               }))}
-              onClick={clickedIndex => {
-                setActiveTab(clickedIndex);
-              }}
+              onClick={setActiveTab}
               theme="arrow"
             />
           </div>
@@ -77,7 +80,6 @@ const OpptjeningVilkarProsessIndex = ({
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
             vilkårsresultat={vilkårsresultat ? vilkårsresultat[activeTab] : null}
-            fastsattOpptjening={activeOpptjeningObject?.fastsattOpptjening}
             status={status}
             lovReferanse={lovReferanse}
             aksjonspunkter={aksjonspunkter}
@@ -85,7 +87,8 @@ const OpptjeningVilkarProsessIndex = ({
             readOnly={isReadOnly}
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
-            vilkårIndex={activeTab}
+            vilkårPerioder={activeVilkår.perioder}
+            periodeIndex={activeTab}
             opptjeninger={opptjening.opptjeninger}
           />
         </div>
