@@ -59,8 +59,9 @@ const automatiskVedtaksbrevParams = ({
   redusertUtbetalingÅrsaker,
   overstyrtMottaker,
   tilgjengeligeVedtaksbrev,
+  informasjonsbehovValues,
 }) => ({
-  dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
+  dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker, ...informasjonsbehovValues },
   // Bruker UTLED som fallback til formidling er prodsatt
   dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
@@ -86,10 +87,17 @@ const getPreviewAutomatiskBrevCallback = ({
   formProps,
   previewCallback,
   tilgjengeligeVedtaksbrev,
+  informasjonsbehovValues,
 }) => e => {
   if (formProps.valid || formProps.pristine) {
     previewCallback(
-      automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, tilgjengeligeVedtaksbrev }),
+      automatiskVedtaksbrevParams({
+        fritekst,
+        redusertUtbetalingÅrsaker,
+        overstyrtMottaker,
+        tilgjengeligeVedtaksbrev,
+        informasjonsbehovValues,
+      }),
     );
   } else {
     formProps.submit();
@@ -106,6 +114,7 @@ export const BrevPanel = props => {
     arbeidsgiverOpplysningerPerId,
     tilgjengeligeVedtaksbrev,
     informasjonsbehovVedtaksbrev,
+    informasjonsbehovValues,
     skalBrukeOverstyrendeFritekstBrev,
     begrunnelse,
     previewCallback,
@@ -124,6 +133,7 @@ export const BrevPanel = props => {
     formProps,
     previewCallback,
     tilgjengeligeVedtaksbrev,
+    informasjonsbehovValues,
   });
   const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
     fritekst: begrunnelse,
@@ -216,6 +226,7 @@ BrevPanel.propTypes = {
   informasjonsbehovVedtaksbrev: PropTypes.shape({
     informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
   }),
+  informasjonsbehovValues: PropTypes.shape().isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),

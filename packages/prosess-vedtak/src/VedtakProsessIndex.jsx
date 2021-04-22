@@ -47,56 +47,41 @@ const VedtakProsessIndex = ({
   tilgjengeligeVedtaksbrev,
   informasjonsbehovVedtaksbrev,
   dokumentdataHente,
-}) => {
-  // eslint-disable-next-line
-  informasjonsbehovVedtaksbrev = {
-    informasjonsbehov: [
-      {
-        kode: 'KONTINUERLIG_TILSYN',
-        type: 'FRITEKST',
-      },
-      {
-        kode: 'OMSORGEN_FOR',
-        type: 'FRITEKST',
-      },
-    ],
-  };
-  return (
-    <RawIntlProvider value={intl}>
-      <VedtakPanels
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        behandlingTypeKode={behandling.type.kode}
-        behandlingStatus={behandling.status}
-        sprakkode={behandling.sprakkode}
-        behandlingresultat={behandling.behandlingsresultat}
-        behandlingPaaVent={behandling.behandlingPaaVent}
-        behandlingArsaker={behandling.behandlingÅrsaker}
-        beregningsgrunnlag={beregningsgrunnlag}
-        vilkar={vilkar}
-        tilbakekrevingvalg={tilbakekrevingvalg}
-        simuleringResultat={simuleringResultat}
-        resultatstruktur={beregningresultatForeldrepenger}
-        sendVarselOmRevurdering={sendVarselOmRevurdering}
-        resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
-        medlemskapFom={medlemskap ? medlemskap.fom : undefined}
-        aksjonspunkter={aksjonspunkter}
-        ytelseTypeKode={ytelseTypeKode}
-        employeeHasAccess={employeeHasAccess}
-        readOnly={isReadOnly}
-        previewCallback={previewCallback}
-        submitCallback={submitCallback}
-        alleKodeverk={alleKodeverk}
-        personopplysninger={personopplysninger}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-        dokumentdata={dokumentdataHente}
-      />
-    </RawIntlProvider>
-  );
-};
+}) => (
+  <RawIntlProvider value={intl}>
+    <VedtakPanels
+      behandlingId={behandling.id}
+      behandlingVersjon={behandling.versjon}
+      behandlingTypeKode={behandling.type.kode}
+      behandlingStatus={behandling.status}
+      sprakkode={behandling.sprakkode}
+      behandlingresultat={behandling.behandlingsresultat}
+      behandlingPaaVent={behandling.behandlingPaaVent}
+      behandlingArsaker={behandling.behandlingÅrsaker}
+      beregningsgrunnlag={beregningsgrunnlag}
+      vilkar={vilkar}
+      tilbakekrevingvalg={tilbakekrevingvalg}
+      simuleringResultat={simuleringResultat}
+      resultatstruktur={beregningresultatForeldrepenger}
+      sendVarselOmRevurdering={sendVarselOmRevurdering}
+      resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
+      medlemskapFom={medlemskap ? medlemskap.fom : undefined}
+      aksjonspunkter={aksjonspunkter}
+      ytelseTypeKode={ytelseTypeKode}
+      employeeHasAccess={employeeHasAccess}
+      readOnly={isReadOnly}
+      previewCallback={previewCallback}
+      submitCallback={submitCallback}
+      alleKodeverk={alleKodeverk}
+      personopplysninger={personopplysninger}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      vedtakVarsel={vedtakVarsel}
+      tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+      informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+      dokumentdata={dokumentdataHente}
+    />
+  </RawIntlProvider>
+);
 
 VedtakProsessIndex.propTypes = {
   behandling: vedtakBehandlingPropType.isRequired,
