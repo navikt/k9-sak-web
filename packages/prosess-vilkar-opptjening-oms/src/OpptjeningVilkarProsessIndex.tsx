@@ -54,12 +54,6 @@ const OpptjeningVilkarProsessIndex = ({
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-  console.log('@@@@@@@@@@@@@@@@@@@@@@ vilkar', vilkar);
-  console.log('@@@@@@@@@@@@@@@@@@@@@@ opptjening', opptjening);
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-
   return (
     <RawIntlProvider value={intl}>
       <div className={mainContainerClassnames}>
