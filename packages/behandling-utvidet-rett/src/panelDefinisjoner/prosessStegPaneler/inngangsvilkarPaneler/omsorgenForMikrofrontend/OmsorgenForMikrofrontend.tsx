@@ -38,8 +38,8 @@ const hentVersjonInformasjon = () => {
     stylesheetIntegrity: 'sha384-JeMuk/8Y/Cj8/h5Qu/Uh1RpvZQAR1oOkzs3qALRVVF4exKJMFUWxhxMqAyJ6ed/a',
   };
   const preprodVersjon = {
-    versjon: '1.5.35',
-    jsIntegrity: 'sha384-TdE6YDAxYiUf9MfJNhK37w3zwIryNa7MPOuigM6VrM8MBkZlzfpno/GKR/A2LUMx',
+    versjon: '1.5.36',
+    jsIntegrity: 'sha384-T3aFLAo2c7K8f+XjcyBFz3X6hfahj8LiHjFGCr4paO0Rbt2l2snk7ws1PniZcgzc',
     stylesheetIntegrity: 'sha384-qqVqf1BVSlTidE86KqYBuuUlaYXyhbpN1ir3hOsN2dT/Yj5jygdCrlipblJIFzKd',
   };
   return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
