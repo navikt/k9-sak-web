@@ -94,8 +94,8 @@ export class VedtakForm extends Component {
     } = this.props;
 
     const informasjonsbehovValues = {
-      KONTINUERLIG_TILSYN: KONTINUERLIG_TILSYN?.begrunnelse,
-      OMSORGEN_FOR: OMSORGEN_FOR?.begrunnelse,
+      KONTINUERLIG_TILSYN,
+      OMSORGEN_FOR,
     };
 
     return (
@@ -278,6 +278,8 @@ export const buildInitialValues = createSelector(
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
     overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
     begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
+    KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
+    OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
   }),
 );
 
@@ -301,7 +303,7 @@ const transformValues = (values, tilgjengeligeVedtaksbrev) =>
   }));
 
 const transformValuesForFlereInformasjonsbehov = (values, tilgjengeligeVedtaksbrev, informasjonsbehov) => {
-  const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode].begrunnelse }));
+  const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
   return values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),

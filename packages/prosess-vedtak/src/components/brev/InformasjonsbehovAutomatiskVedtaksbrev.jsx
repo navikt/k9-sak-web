@@ -12,6 +12,11 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
   const aktiverteInformasjonsbehov =
     (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(({ type }) => type === 'FRITEKST') ?? [];
 
+  const getLabel = behov => {
+    const type = behov.kode.replace('_', ' ').toLowerCase();
+    return `Fritekstbeskrivelse av ${type}`;
+  };
+
   return (
     <>
       {aktiverteInformasjonsbehov.map(behov => (
@@ -20,9 +25,9 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
           intl={intl}
           readOnly={readOnly}
           sprakkode={sprakkode}
-          labelTextCode={behov.kode}
+          label={getLabel(behov)}
           begrunnelse={begrunnelse}
-          begrunnelseFieldName={`${behov.kode}.begrunnelse`}
+          begrunnelseFieldName={behov.kode}
         />
       ))}
     </>
