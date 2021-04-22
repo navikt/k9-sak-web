@@ -1,6 +1,7 @@
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface VilkarMidlertidigAleneProps {
+  behandlingsID: string;
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;

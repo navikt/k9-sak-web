@@ -62,7 +62,7 @@ describe('<UtvidetRettProsess>', () => {
     const formaterteProsessStegPaneler = meny.prop('formaterteProsessStegPaneler');
     expect(formaterteProsessStegPaneler).toEqual([
       {
-        labelId: 'Behandlingspunkt.Inngangsvilkar',
+        labelId: 'Behandlingspunkt.OmsorgenFor',
         isActive: true,
         isDisabled: false,
         isFinished: false,

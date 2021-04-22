@@ -15,8 +15,9 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ soknad }) => ({
+  getData = ({ fagsak, soknad }) => ({
     angitteBarn: soknad.angittePersoner.filter(person => person.rolle === 'BARN'),
+    fagsaksType: fagsak.sakstype.kode,
   });
 }
 
