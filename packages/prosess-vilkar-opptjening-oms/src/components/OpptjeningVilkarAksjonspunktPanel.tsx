@@ -16,8 +16,8 @@ import VilkarFields from './VilkarFields';
 const FORM_NAME = 'OpptjeningVilkarForm';
 
 const midlertidigInaktiv = {
-  TYPE_A: '7847_A',
-  TYPE_B: '7847_B',
+  TYPE_A: '7847A',
+  TYPE_B: '7847B',
 };
 
 interface VilkårField {
