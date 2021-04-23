@@ -27,7 +27,7 @@ describe('<VedtakForm>', () => {
     },
   ];
 
-  const ingenTilgjengeligeVedtaksbrev = { vedtaksbrev: [] };
+  const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
 
   const initialValues = {
     skalBrukeOverstyrendeFritekstBrev: false,

@@ -7,6 +7,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { VedtakRevurderingFormImpl as UnwrappedForm } from './VedtakRevurderingForm';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
@@ -56,7 +57,7 @@ const resultatstruktur = {
   antallBarn: 1,
 };
 
-const tilgjengeligeVedtaksbrev = { vedtaksbrev: [] };
+const tilgjengeligeVedtaksbrev = { vedtaksbrevmaler: {} };
 
 const createBehandlingAvslag = () => createBehandling(BehandlingResultatType.AVSLATT);
 const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPPHOR);
@@ -295,7 +296,9 @@ describe('<VedtakRevurderingForm>', () => {
         isBehandlingReadOnly
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
-        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
+        tilgjengeligeVedtaksbrev={{
+          vedtaksbrevmaler: { AUTOMATISK: dokumentMalType.INNVILGELSE, FRITEKST: dokumentMalType.FRITKS },
+        }}
         arbeidsgiverOpplysningerPerId={{}}
       />,
     );
