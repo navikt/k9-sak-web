@@ -99,10 +99,19 @@ export class VedtakRevurderingFormImpl extends Component {
       vedtakVarsel,
       bgPeriodeMedAvslagsårsak,
       tilgjengeligeVedtaksbrev,
+      informasjonsbehovVedtaksbrev,
       dokumentdata,
       arbeidsgiverOpplysningerPerId,
+      KONTINUERLIG_TILSYN,
+      OMSORGEN_FOR,
       ...formProps
     } = this.props;
+
+    const informasjonsbehovValues = {
+      KONTINUERLIG_TILSYN,
+      OMSORGEN_FOR,
+    };
+
     const { erSendtInnUtenArsaker } = this.state;
 
     const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
@@ -199,6 +208,8 @@ export class VedtakRevurderingFormImpl extends Component {
               ytelseTypeKode={ytelseTypeKode}
               dokumentdata={dokumentdata}
               tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+              informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+              informasjonsbehovValues={informasjonsbehovValues}
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
               previewCallback={previewCallback}
               formProps={formProps}
@@ -246,7 +257,12 @@ VedtakRevurderingFormImpl.propTypes = {
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
   dokumentdata: PropTypes.shape(),
+  KONTINUERLIG_TILSYN: PropTypes.string,
+  OMSORGEN_FOR: PropTypes.string,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
@@ -262,6 +278,8 @@ VedtakRevurderingFormImpl.defaultProps = {
   skalBrukeOverstyrendeFritekstBrev: false,
   bgPeriodeMedAvslagsårsak: undefined,
   tilgjengeligeVedtaksbrev: undefined,
+  KONTINUERLIG_TILSYN: undefined,
+  OMSORGEN_FOR: undefined,
 };
 
 const buildInitialValues = createSelector(
@@ -321,9 +339,30 @@ const buildInitialValues = createSelector(
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
       begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
+      KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
+      OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
     };
   },
 );
+
+const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov) => {
+  const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
+  return values.aksjonspunktKoder.map(apCode => {
+    const transformedValues = {
+      kode: apCode,
+      begrunnelse: values.begrunnelse,
+      fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
+      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+      isVedtakSubmission,
+      begrunnelserMedInformasjonsbehov: begrunnelser,
+    };
+    if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+      transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
+    }
+    return transformedValues;
+  });
+};
 
 const transformValues = (values, tilgjengeligeVedtaksbrev) =>
   values.aksjonspunktKoder.map(apCode => {
@@ -361,9 +400,27 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   return aarsakTekstList.join(', ');
 };
 
+const harPotensieltFlereInformasjonsbehov = informasjonsbehovVedtaksbrev => {
+  if (informasjonsbehovVedtaksbrev) {
+    const { informasjonsbehov } = informasjonsbehovVedtaksbrev;
+    return informasjonsbehov.length > 0;
+  }
+  return false;
+};
+
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values =>
-    initialOwnProps.submitCallback(transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev));
+  const onSubmit = values => {
+    const { informasjonsbehovVedtaksbrev, submitCallback } = initialOwnProps;
+    if (harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)) {
+      const transformedValuesForFlereInformasjonsbehov = transformValuesForFlereInformasjonsbehov(
+        values,
+        informasjonsbehovVedtaksbrev.informasjonsbehov,
+      );
+      return submitCallback(transformedValuesForFlereInformasjonsbehov);
+    }
+    const transformedValues = transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev);
+    return submitCallback(transformedValues);
+  };
   const aksjonspunktKoder =
     initialOwnProps.aksjonspunkter && initialOwnProps.aksjonspunkter.map(ap => ap.definisjon.kode);
   const behandlingArsaker =
@@ -374,24 +431,35 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper),
   );
 
-  return (state, ownProps) => ({
-    onSubmit,
-    aksjonspunktKoder,
-    revurderingsAarsakString,
-    initialValues: buildInitialValues(ownProps),
-    ...behandlingFormValueSelector(VEDTAK_REVURDERING_FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(
-      state,
-      'antallBarn',
-      'aksjonspunktKoder',
-      'skalBrukeOverstyrendeFritekstBrev',
-      'skalUndertrykkeBrev',
-      'brødtekst',
-      'overskrift',
-      'begrunnelse',
-      ...Object.values(redusertUtbetalingArsak),
-    ),
-    behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
-  });
+  return (state, ownProps) => {
+    const { informasjonsbehovVedtaksbrev } = initialOwnProps;
+    const informasjonsbehovFieldNames = [];
+    if (harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)) {
+      informasjonsbehovVedtaksbrev.informasjonsbehov.forEach(({ kode }) => {
+        informasjonsbehovFieldNames.push(kode);
+      });
+    }
+
+    return {
+      onSubmit,
+      aksjonspunktKoder,
+      revurderingsAarsakString,
+      initialValues: buildInitialValues(ownProps),
+      ...behandlingFormValueSelector(VEDTAK_REVURDERING_FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(
+        state,
+        'antallBarn',
+        'aksjonspunktKoder',
+        'skalBrukeOverstyrendeFritekstBrev',
+        'skalUndertrykkeBrev',
+        'brødtekst',
+        'overskrift',
+        'begrunnelse',
+        ...Object.values(redusertUtbetalingArsak),
+        ...informasjonsbehovFieldNames,
+      ),
+      behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
+    };
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
