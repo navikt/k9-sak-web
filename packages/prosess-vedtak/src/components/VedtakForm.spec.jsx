@@ -10,6 +10,8 @@ import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { buildInitialValues, VedtakForm } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -28,6 +30,12 @@ describe('<VedtakForm>', () => {
   ];
 
   const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
+  const alleTilgjengeligeVedtaksbrev = {
+    vedtaksbrevmaler: {
+      [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
+      [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS,
+    },
+  };
 
   const initialValues = {
     skalBrukeOverstyrendeFritekstBrev: false,
@@ -35,6 +43,7 @@ describe('<VedtakForm>', () => {
     sprakkode,
     tilgjengeligeVedtaksbrev: ingenTilgjengeligeVedtaksbrev,
   };
+
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     const previewCallback = sinon.spy();
     const behandlingsresultat = {
@@ -726,7 +735,6 @@ describe('<VedtakForm>', () => {
       VEDTAKSBREV_TYPE: 'AUTOMATISK',
     };
 
-    const tilgjengeligeVedtaksbrev = { vedtaksbrev: ['FRITEKST', 'AUTOMATISK'] };
     const readOnly = false;
 
     // eslint-disable-next-line
@@ -739,7 +747,7 @@ describe('<VedtakForm>', () => {
       sprakkode,
       vedtakVarsel,
       dokumentdata,
-      tilgjengeligeVedtaksbrev,
+      alleTilgjengeligeVedtaksbrev,
       readOnly,
     );
 
@@ -806,7 +814,6 @@ describe('<VedtakForm>', () => {
       },
     };
 
-    const tilgjengeligeVedtaksbrev = { vedtaksbrev: ['FRITEKST', 'AUTOMATISK'] };
     const readOnly = false;
 
     const model = buildInitialValues.resultFunc(
@@ -818,7 +825,7 @@ describe('<VedtakForm>', () => {
       sprakkode,
       vedtakVarsel,
       dokumentdata,
-      tilgjengeligeVedtaksbrev,
+      alleTilgjengeligeVedtaksbrev,
       readOnly,
     );
     expect(model).to.eql({
@@ -901,7 +908,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
+        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -937,7 +944,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
+        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
       />,
     );
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
@@ -973,7 +980,7 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
+        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
       />,
     );
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');

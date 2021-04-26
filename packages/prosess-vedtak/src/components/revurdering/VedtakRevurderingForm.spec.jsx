@@ -8,6 +8,7 @@ import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VedtakRevurderingFormImpl as UnwrappedForm } from './VedtakRevurderingForm';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
@@ -297,7 +298,10 @@ describe('<VedtakRevurderingForm>', () => {
         resultatstruktur={resultatstruktur}
         beregningErManueltFastsatt={false}
         tilgjengeligeVedtaksbrev={{
-          vedtaksbrevmaler: { AUTOMATISK: dokumentMalType.INNVILGELSE, FRITEKST: dokumentMalType.FRITKS },
+          vedtaksbrevmaler: {
+            [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
+            [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS,
+          },
         }}
         arbeidsgiverOpplysningerPerId={{}}
       />,

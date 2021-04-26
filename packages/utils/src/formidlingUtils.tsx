@@ -39,20 +39,24 @@ export function lagVisningsnavnForMottaker(
   return mottakerId;
 }
 
+function vedtaksbrevmaler(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev) {
+  return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler);
+}
+
 export function finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return tilgjengeligeVedtaksbrev.vedtaksbrevmaler.size > 0;
+  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).length > 0;
 }
 
 export function kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
+  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
 }
 
 export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler).some(vb => vb === vedtaksbrevtype.FRITEKST);
+  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
 export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  const vedtaksbrev = Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler);
+  const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
