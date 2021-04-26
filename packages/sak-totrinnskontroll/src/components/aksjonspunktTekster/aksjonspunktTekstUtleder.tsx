@@ -28,7 +28,7 @@ import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinn
 const formatDate = (date?: string) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const buildVarigEndringBeregningText = (beregningDto: TotrinnskontrollAksjonspunkt['beregningDto']) =>
-  beregningDto.fastsattVarigEndringNaering ? (
+  beregningDto?.fastsattVarigEndringNaering ? (
     <FormattedMessage id="ToTrinnsForm.Beregning.VarigEndring" />
   ) : (
     <FormattedMessage id="ToTrinnsForm.Beregning.IkkeVarigEndring" />
