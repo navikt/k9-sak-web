@@ -1,6 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Behandling } from '@k9-sak-web/types';
+import fagsakTsType from '@k9-sak-web/types/src/fagsakTsType';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
@@ -13,10 +15,11 @@ import {
 const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   isReadOnly: boolean,
   submitCallback,
-  behandling,
+  behandling: Behandling,
   angitteBarn,
   aksjonspunktInformasjon: AksjonspunktInformasjon,
   vilkarInformasjon: VilkarInformasjon,
+  fagsaksType: fagsakTsType,
 ) => {
   let objektTilMikrofrontend = {};
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
@@ -28,10 +31,13 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   if (aksjonspunkt && vilkarKnyttetTilAksjonspunkt && aksjonspunkt.definisjon.kode === aksjonspunktCodes.OMSORGEN_FOR) {
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+    const behandlingsID = behandling.id.toString();
 
     objektTilMikrofrontend = {
       visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
       props: {
+        behandlingsID,
+        fagytelseType: fagsaksType,
         aksjonspunktLost,
         lesemodus: isReadOnly || !isAksjonspunktOpen,
         informasjonTilLesemodus: {

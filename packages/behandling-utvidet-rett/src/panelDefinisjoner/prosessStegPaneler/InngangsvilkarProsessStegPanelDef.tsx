@@ -5,7 +5,7 @@ import OmsorgenForPanelDef from './inngangsvilkarPaneler/OmsorgenForPanelDef';
 class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.INNGANGSVILKAR;
 
-  getTekstKode = () => 'Behandlingspunkt.Inngangsvilkar';
+  getTekstKode = () => 'Behandlingspunkt.OmsorgenFor';
 
   getPanelDefinisjoner = () => [new OmsorgenForPanelDef()];
 }

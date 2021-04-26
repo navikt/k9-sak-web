@@ -174,7 +174,8 @@ export class VedtakForm extends Component {
                     {intl.formatMessage({
                       id:
                         !skalBrukeOverstyrendeFritekstBrev &&
-                        aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
+                        (aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL) ||
+                          aksjonspunktKoder.includes(aksjonspunktCodes.FORESLA_VEDTAK_MANUELT))
                           ? 'VedtakForm.FattVedtak'
                           : 'VedtakForm.TilGodkjenning',
                     })}

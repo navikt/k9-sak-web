@@ -15,7 +15,9 @@ interface OwnProps {
 
 const UtvidetRettBarnFakta: React.FunctionComponent<OwnProps> = ({ personopplysninger, rammevedtak, fagsaksType }) => {
   const erFagsakYtelseTypeKroniskSyktBarn = FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN === fagsaksType;
-  const barn = erFagsakYtelseTypeKroniskSyktBarn ? personopplysninger.barnSoktFor : personopplysninger.barn;
+  const barn = erFagsakYtelseTypeKroniskSyktBarn
+    ? personopplysninger?.barnSoktFor || []
+    : personopplysninger?.barn || [];
 
   const formateradeBarn: BarnDto[] = barn.map(
     ({ fnr, fodselsdato }) =>

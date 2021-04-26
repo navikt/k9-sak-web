@@ -1,6 +1,7 @@
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface VilkarKroniskSyktBarnProps {
+  behandlingsID: string;
   vedtakFattetVilkarOppfylt: boolean;
   aksjonspunktLost: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
