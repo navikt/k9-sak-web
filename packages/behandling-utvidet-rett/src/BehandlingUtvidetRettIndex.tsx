@@ -131,8 +131,8 @@ const BehandlingUtvidetRettIndex: FunctionComponent<OwnProps> = ({
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
-    requestUtvidetRettApi.setAddErrorMessageHandler(addErrorMessage);
     requestUtvidetRettApi.setRequestPendingHandler(setRequestPendingMessage);
+    requestUtvidetRettApi.setAddErrorMessageHandler(addErrorMessage);
 
     hentBehandling({ behandlingId }, false);
 

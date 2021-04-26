@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
@@ -29,7 +30,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
-  const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter);
+  const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
   const løsAksjonspunkt = () =>
     submitCallback([{ kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet' }]);
 
@@ -38,10 +39,10 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.7.5/app.js"
-      jsIntegrity="sha384-pYMa6snjyNU+/H5fw4J+9JG6iq9+qM8JZ3eAk1M02dNlzqq0cTptEk/f/A904zD/"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.7.5/styles.css"
-      stylesheetIntegrity="sha384-qmKBCUO+cSnVUVBmVhjBAJipsunBNkOXAbTclNqgdiWP++w120rTbkcKrO7dawPp"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.7.7/app.js"
+      jsIntegrity="sha384-AVQGmdWFcT2kjsMwRSOEcnIbstp5xHm2kOaR3P864ztXC8ohtmURW1+/1MYqU4ga"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.7.7/styles.css"
+      stylesheetIntegrity="sha384-5MYdvevCXNdkeo7PgDEjBhsvEMMeuUJHJP32I2rj64HeaaaYaJa2JanAMtMgEsN3"
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,

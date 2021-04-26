@@ -12,10 +12,7 @@ interface BarnInputProps {
   index: number;
 }
 
-const beregnAntallÅr = fodselsdato => {
-  const dato = `20${fodselsdato.substr(4, 2)}-${fodselsdato.substr(2, 2)}-${fodselsdato.substr(0, 2)}`;
-  return moment().diff(dato, 'years').toString();
-};
+const beregnAntallÅr = fodselsdato => moment().diff(fodselsdato, 'years').toString();
 
 const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => (
   <Panel border className={styles.barnInput}>
@@ -24,7 +21,7 @@ const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => (
         <FormattedMessage id="FaktaRammevedtak.BarnVisningNummer" values={{ nummer: index + 1 }} />
       </h4>
       <span className={styles.italic}>
-        {barnet.personIdent} ({beregnAntallÅr(barnet.personIdent)} år)
+        {barnet.personIdent} ({beregnAntallÅr(barnet.barnRelevantIBehandling.fødselsdato)} år)
       </span>
     </div>
 

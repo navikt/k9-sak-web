@@ -3,9 +3,11 @@ import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/Medlemskapsvilkaret
 import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/OpptjeningsvilkaretFaktaPanelDef';
 import BeregningFaktaPanelDef from './faktaPaneler/BeregningFaktaPanelDef';
 import MedisinskVilkarFaktaPanelDef2 from './faktaPaneler/MedisinskVilkarFaktaPanelDef2';
+import OmsorgenForFaktaPanelDef from './faktaPaneler/OmsorgenForFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new ArbeidsforholdFaktaPanelDef(),
+  new OmsorgenForFaktaPanelDef(),
   new MedisinskVilkarFaktaPanelDef2(),
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),

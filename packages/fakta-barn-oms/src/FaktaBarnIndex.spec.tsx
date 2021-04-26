@@ -50,11 +50,12 @@ describe('<FaktaBarnIndex>', () => {
       />,
     );
 
-    expect(wrapper.find(BarnSeksjon)).toHaveLength(2);
+    expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
+    expect(wrapper.find(BarnSeksjon).prop('tekstId')).toBe('FaktaBarn.Behandlingsdato');
     expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
   });
 
-  it('viser vanlige barn vid fagsakstype kronisk syk', () => {
+  it('viser barn fra fagsak kronisk syk', () => {
     const wrapper = shallowWithIntl(
       <FaktaBarnIndex
         barn={[
@@ -93,5 +94,48 @@ describe('<FaktaBarnIndex>', () => {
 
     expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
     expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
+    expect(wrapper.find(BarnSeksjon).prop('tekstId')).toBe('FaktaBarn.UtvidetRettKroniskSyk');
+  });
+
+  it('viser barn fra fagsak midlertidig alene', () => {
+    const wrapper = shallowWithIntl(
+      <FaktaBarnIndex
+        barn={[
+          {
+            personIdent: '123',
+            barnType: BarnType.VANLIG,
+            harSammeBosted: true,
+          },
+          {
+            personIdent: '456',
+            barnType: BarnType.UTENLANDSK_BARN,
+            harSammeBosted: false,
+          },
+        ]}
+        rammevedtak={[
+          {
+            type: 'Fosterbarn',
+            vedtatt: '2021-03-17',
+            lengde: 'PT0S',
+            gyldigFraOgMed: '2021-03-17',
+            gyldigTilOgMed: '2033-12-31',
+            mottaker: '150915',
+          },
+          {
+            type: 'UtvidetRett',
+            vedtatt: '2021-03-17',
+            lengde: 'PT0S',
+            gyldigFraOgMed: '2021-03-17',
+            gyldigTilOgMed: '2033-12-31',
+            utvidetRettFor: '150915 #2',
+          },
+        ]}
+        fagsaksType={FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE}
+      />,
+    );
+
+    expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
+    expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
+    expect(wrapper.find(BarnSeksjon).prop('tekstId')).toBe('FaktaBarn.UtvidetRettMidlertidigAlene');
   });
 });

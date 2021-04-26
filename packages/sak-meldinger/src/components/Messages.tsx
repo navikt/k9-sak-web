@@ -42,9 +42,6 @@ export type FormValues = {
   arsakskode?: string;
 };
 
-const getFritekstMessage = (brevmalkode?: string): string =>
-  brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst';
-
 // TODO (TOR) Bør erstattast av ein markør fra backend
 const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
   brevmalkode === dokumentMalType.INNHENT_DOK ||
@@ -58,7 +55,7 @@ interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
-  templates: Brevmaler;
+  templates: Brevmaler | Brevmal[];
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
@@ -86,7 +83,7 @@ const createValidateRecipient = recipients => value =>
 const transformTemplates = templates =>
   templates && typeof templates === 'object' && !Array.isArray(templates)
     ? Object.keys(templates).map(key => ({ ...templates[key], kode: key }))
-    : [];
+    : templates;
 
 /**
  * Messages
@@ -209,7 +206,7 @@ export const MessagesImpl: FunctionComponent<
               <div className="input--xxl">
                 <TextAreaField
                   name="fritekst"
-                  label={intl.formatMessage({ id: getFritekstMessage(brevmalkode) })}
+                  label={intl.formatMessage({ id: 'Messages.Fritekst' })}
                   validate={[required, maxLength4000, minLength3, hasValidText]}
                   maxLength={4000}
                   badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
@@ -241,8 +238,8 @@ export const MessagesImpl: FunctionComponent<
   );
 };
 
-const buildInitalValues = (templates: Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
-  let brevmalkode = null;
+const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurderingApOpen?: boolean): FormValues => {
+  let brevmalkode = Array.isArray(templates) ? templates[0].kode : null;
   let overstyrtMottaker = JSON.stringify(RECIPIENT);
 
   if (templates && typeof templates === 'object' && !Array.isArray(templates)) {

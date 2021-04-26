@@ -19,6 +19,7 @@
   "MedisinskVilkarPanel.MedisinskVilkar": "Sykdom",
   "InntektOgYtelser.Title": "Inntekt og ytelser",
   "OpplysningerFraSoknaden.Title": "Søknaden",
+  "OmsorgenForInfoPanel.Title": "Omsorgen for",
 
   "Personspanel.Arbeidsforhold": "Opplysninger om søker",
 
@@ -46,6 +47,7 @@
   "Behandlingspunkt.Beregning": "Beregning",
   "Behandlingspunkt.Uttak": "Uttak",
   "Behandlingspunkt.UtvidetRett": "Utvidet Rett",
+  "Behandlingspunkt.OmsorgenFor": "Omsorgen For",
   "Behandlingspunkt.BeregningForeldrepenger": "Beregning",
   "Behandlingspunkt.Vedtak": "Vedtak",
   "Behandlingspunkt.Innsyn": "Behandle innsyn",
