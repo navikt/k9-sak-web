@@ -6,7 +6,6 @@ import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 interface TilgjengeligeVedtaksbrev {
-  vedtaksbrev: Array<string>;
   begrunnelse: string;
   alternativeMottakere: Array<{
     id: string;
