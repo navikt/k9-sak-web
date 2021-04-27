@@ -3,17 +3,13 @@ import { MicroFrontend } from '@fpsak-frontend/utils';
 import sjekkHvisErIProduksjon from '@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon';
 import KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend from './KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend';
 
-const initializeOmsorgenForVilkar = (
-  elementId,
-  { submitCallback, behandling, aksjonspunkterForSteg, isAksjonspunktOpen, aktiviteter },
-) => {
+const initializeOmsorgenForVilkar = (elementId, { submitCallback, behandling, saerligSmittevernAp, aktiviteter }) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
     KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend(
       submitCallback,
       behandling,
-      aksjonspunkterForSteg,
-      isAksjonspunktOpen,
+      saerligSmittevernAp,
       aktiviteter,
     ),
   );
@@ -30,7 +26,7 @@ const hentVersjonInformasjon = () => {
     jsIntegrity: 'sha384-mWRKTlTCMBqfw28AKXc4HSgGc6O8CVuGXJ1oLO37jaI/QjU1sArXeArfJwGuevgA',
     stylesheetIntegrity: 'sha384-s7zKNrhjA1tpqnkyej5k6S6jybA6XM3bdjEMmWg9iMy7Mnj2pVupmHEmWn9LX1pY',
   };
-  return sjekkHvisErIProduksjon ? produksjonsVersjon : preprodVersjon;
+  return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
 };
 
 export default props => {
