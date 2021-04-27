@@ -58,11 +58,23 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   erMedlemskapsPanel,
   vilkar,
 }: VilkarresultatMedOverstyringProsessIndexProps) => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  const activeVilkår = vilkar[0];
-  const activePeriode = activeVilkår.perioder[activeTab];
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
+  const [activeVilkår] = vilkar;
 
+  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
+  const perioderSomSkalVurderes = activeVilkår.perioder.filter(periode => periode.vurdersIBehandlingen);
+  const perioderSomIkkeSkalVurderes = activeVilkår.perioder.filter(periode => !periode.vurdersIBehandlingen);
+  const harPerioderSomErVurdert =
+    skalBrukeSidemeny && activeVilkår.perioder.some(periode => !periode.vurdersIBehandlingen);
+
+  const [activeTab, setActiveTab] = React.useState(
+    harPerioderSomErVurdert
+      ? Math.max(
+          activeVilkår.perioder.findIndex(periode => periode.vurdersIBehandlingen),
+          0,
+        )
+      : 0,
+  );
+  const activePeriode = activeVilkår.perioder[activeTab];
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
   return (
@@ -71,18 +83,27 @@ const VilkarresultatMedOverstyringProsessIndex = ({
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
-              links={activeVilkår.perioder.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-                active: activeTab === currentBeregningsgrunnlagIndex,
-                label: `${dateFormat(activeVilkår.perioder[currentBeregningsgrunnlagIndex].periode.fom)} - ${dateFormat(
-                  activeVilkår.perioder[currentBeregningsgrunnlagIndex].periode.tom,
-                )}`,
+              links={perioderSomSkalVurderes.map((periode, index) => ({
+                active: activeTab === index,
+                label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
               }))}
-              onClick={clickedIndex => {
-                setActiveTab(clickedIndex);
-              }}
+              onClick={setActiveTab}
               theme="arrow"
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
+            {perioderSomIkkeSkalVurderes.length > 0 && (
+              <SideMenu
+                links={perioderSomIkkeSkalVurderes.map((periode, index) => ({
+                  active: activeTab === index + perioderSomSkalVurderes.length,
+                  label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
+                }))}
+                onClick={index => {
+                  setActiveTab(index + perioderSomSkalVurderes.length);
+                }}
+                theme="arrow"
+                heading={intl.formatMessage({ id: 'Sidemeny.PerioderVurdert' })}
+              />
+            )}
           </div>
         )}
         <div className={styles.contentContainer}>

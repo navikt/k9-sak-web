@@ -50,7 +50,7 @@ interface SykdomProsessIndexProps {
 
 const SykdomProsessIndex = ({ panelTittelKode, lovReferanse, vilkar }: SykdomProsessIndexProps) => {
   const { perioder } = vilkar;
-  const [activePeriode, setActivePeirode] = React.useState(perioder[0]);
+  const [activePeriode, setActivePeriode] = React.useState(perioder[0]);
   const status = activePeriode.vilkarStatus.kode;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
@@ -70,7 +70,7 @@ const SykdomProsessIndex = ({ panelTittelKode, lovReferanse, vilkar }: SykdomPro
                 )}`,
               }))}
               onClick={clickedIndex => {
-                setActivePeirode(perioder[clickedIndex]);
+                setActivePeriode(perioder[clickedIndex]);
               }}
               theme="arrow"
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}

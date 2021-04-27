@@ -1,4 +1,4 @@
-import { Aksjonspunkt, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkar, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
 import React from 'react';
@@ -23,6 +23,7 @@ interface OpptjeningVilkarProsessIndexProps {
   behandling: OpptjeningBehandling;
   opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
   status: string;
   lovReferanse?: string;
   submitCallback: (props: SubmitCallback[]) => void;
@@ -35,6 +36,7 @@ const OpptjeningVilkarProsessIndex = ({
   behandling,
   opptjening,
   aksjonspunkter,
+  vilkar,
   status,
   lovReferanse,
   submitCallback,
@@ -42,14 +44,21 @@ const OpptjeningVilkarProsessIndex = ({
   isAksjonspunktOpen,
   readOnlySubmitButton,
 }: OpptjeningVilkarProsessIndexProps) => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  const activeOpptjeningObject =
-    Array.isArray(opptjening.opptjeninger) && opptjening.opptjeninger.length
-      ? opptjening.opptjeninger[activeTab]
-      : null;
+  const [activeVilkår] = vilkar;
+
+  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
+  const harPerioderSomErVurdert =
+    skalBrukeSidemeny && activeVilkår.perioder.some(periode => !periode.vurdersIBehandlingen);
+  const [activeTab, setActiveTab] = React.useState(
+    harPerioderSomErVurdert
+      ? Math.max(
+          activeVilkår.perioder.findIndex(periode => periode.vurdersIBehandlingen),
+          0,
+        )
+      : 0,
+  );
   const { behandlingsresultat } = behandling;
   const vilkårsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
-  const skalBrukeSidemeny = Array.isArray(opptjening.opptjeninger) && opptjening.opptjeninger.length > 1;
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
@@ -59,15 +68,11 @@ const OpptjeningVilkarProsessIndex = ({
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
-              links={opptjening.opptjeninger.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-                active: activeTab === currentBeregningsgrunnlagIndex,
-                label: `${intl.formatMessage({ id: 'Sidemeny.Opptjeningsperiode' })} ${
-                  currentBeregningsgrunnlagIndex + 1
-                }`,
+              links={activeVilkår.perioder.map((periode, index) => ({
+                active: activeTab === index,
+                label: `${intl.formatMessage({ id: 'Sidemeny.Opptjeningsperiode' })} ${index + 1}`,
               }))}
-              onClick={clickedIndex => {
-                setActiveTab(clickedIndex);
-              }}
+              onClick={setActiveTab}
               theme="arrow"
             />
           </div>
@@ -77,7 +82,6 @@ const OpptjeningVilkarProsessIndex = ({
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
             vilkårsresultat={vilkårsresultat ? vilkårsresultat[activeTab] : null}
-            fastsattOpptjening={activeOpptjeningObject?.fastsattOpptjening}
             status={status}
             lovReferanse={lovReferanse}
             aksjonspunkter={aksjonspunkter}
@@ -85,7 +89,8 @@ const OpptjeningVilkarProsessIndex = ({
             readOnly={isReadOnly}
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
-            vilkårIndex={activeTab}
+            vilkårPerioder={activeVilkår.perioder}
+            periodeIndex={activeTab}
             opptjeninger={opptjening.opptjeninger}
           />
         </div>
