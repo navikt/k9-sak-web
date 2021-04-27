@@ -1,7 +1,6 @@
 import { Aksjonspunkt, SubmitCallback, Vilkårresultat, Vilkarperiode, Opptjening } from '@k9-sak-web/types';
 import React from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
-// import OpptjeningVilkarView from './OpptjeningVilkarView';
 
 /**
  * OpptjeningVilkarForm
