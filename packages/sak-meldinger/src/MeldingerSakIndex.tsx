@@ -7,6 +7,7 @@ import {
   Personopplysninger,
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
+  Brevmal,
   Mottaker,
 } from '@k9-sak-web/types';
 
@@ -25,7 +26,7 @@ const intl = createIntl(
 
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
-  templates: Brevmaler;
+  templates: Brevmaler | Brevmal[];
   sprakKode: Kodeverk;
   previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
   behandlingId: number;

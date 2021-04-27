@@ -16,11 +16,11 @@
     "nav-frontend-paneler": "2.1.1",
     "nav-frontend-paneler-style": "1.1.1",
     "nav-frontend-typografi": "2.0.37",
-    "nav-frontend-typografi-style": "1.0.35",
+    "nav-frontend-typografi-style": "1.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-intl": "^5.10.11",
-    "react-redux": "^7.2.3",
+    "react-redux": "^7.2.4",
     "redux": "^4.0.5",
     "redux-form": "^8.3.7",
     "reselect": "^4.0.0"

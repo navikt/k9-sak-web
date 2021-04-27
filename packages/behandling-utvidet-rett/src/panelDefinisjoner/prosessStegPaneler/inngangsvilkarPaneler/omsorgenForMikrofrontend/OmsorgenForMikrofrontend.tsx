@@ -5,7 +5,17 @@ import KartleggePropertyTilOmsorgenForMikrofrontendKomponent from './KartleggePr
 
 const initializeOmsorgenForVilkar = (
   elementId,
-  { isReadOnly, aksjonspunkter, isAksjonspunktOpen, submitCallback, behandling, status, vilkar, angitteBarn },
+  {
+    isReadOnly,
+    aksjonspunkter,
+    isAksjonspunktOpen,
+    submitCallback,
+    behandling,
+    status,
+    vilkar,
+    angitteBarn,
+    fagsaksType,
+  },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
@@ -16,22 +26,23 @@ const initializeOmsorgenForVilkar = (
       angitteBarn,
       { aksjonspunkter, isAksjonspunktOpen },
       { vilkar, status },
+      fagsaksType,
     ),
   );
 };
 
 const hentVersjonInformasjon = () => {
   const produksjonsVersjon = {
-    versjon: '1.5.31',
-    jsIntegrity: 'sha384-W82OJHtVisUsjDb6TCA8Su4xfKFZm2y5dwErq7VDYqwfOEDHY2SKjg1oEjHZUuv2',
-    stylesheetIntegrity: 'sha384-JeMuk/8Y/Cj8/h5Qu/Uh1RpvZQAR1oOkzs3qALRVVF4exKJMFUWxhxMqAyJ6ed/a',
+    versjon: '1.5.37',
+    jsIntegrity: 'sha384-T9E+13YgCnqQhCnzpOXWPIZLkeY3ZyG4IPFEWnZOXNBJKvMY4hreCxt4H6ALbtCx',
+    stylesheetIntegrity: 'sha384-qqVqf1BVSlTidE86KqYBuuUlaYXyhbpN1ir3hOsN2dT/Yj5jygdCrlipblJIFzKd',
   };
   const preprodVersjon = {
-    versjon: '1.5.33',
-    jsIntegrity: 'sha384-6w75p2VXMTioGQ9Y2M/aea+FSt3/eL32xO2XIIQqvy4EjQi2iSUMzQP61HKblFyi',
-    stylesheetIntegrity: 'sha384-JeMuk/8Y/Cj8/h5Qu/Uh1RpvZQAR1oOkzs3qALRVVF4exKJMFUWxhxMqAyJ6ed/a',
+    versjon: '1.5.37',
+    jsIntegrity: 'sha384-T9E+13YgCnqQhCnzpOXWPIZLkeY3ZyG4IPFEWnZOXNBJKvMY4hreCxt4H6ALbtCx',
+    stylesheetIntegrity: 'sha384-qqVqf1BVSlTidE86KqYBuuUlaYXyhbpN1ir3hOsN2dT/Yj5jygdCrlipblJIFzKd',
   };
-  return sjekkHvisErIProduksjon ? produksjonsVersjon : preprodVersjon;
+  return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
 };
 
 export default props => {
