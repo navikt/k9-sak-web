@@ -11,6 +11,7 @@ import {
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import Uttaksplan from './components/Uttaksplan';
@@ -57,32 +58,43 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
-  return (
-    <RawIntlProvider value={årskvantumIntl}>     
-      {featureToggles?.SAERLIGSMITTEVERNAKSJONSPUNKT &&
-        aksjonspunkterForSteg[0]?.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK && (
-          <SaerligeSmittevernhensynMikrofrontend
-            {...{
-              behandling,
-              aksjonspunkterForSteg,
-              isAksjonspunktOpen,
-              submitCallback,
-              aktiviteter: sisteUttaksplan?.aktiviteter,
-            }}
-          />
-        )}
 
-      {aksjonspunkterForSteg.length > 0 && (
+  const saerligSmittevernAp: Aksjonspunkt = aksjonspunkterForSteg.find(
+    ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+  );
+  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
+    ap => ap.definisjon.kode !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+  );
+  const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
+
+  const visSaerligSmittevernAksjonspunkt =
+    saerligSmittevernAp !== undefined &&
+    (!åpenAksjonspunkt || saerligSmittevernAp.status.kode === aksjonspunktStatus.UTFORT);
+
+  return (
+    <RawIntlProvider value={årskvantumIntl}>
+      {aksjonspunkter.length > 0 && (
         <AksjonspunktForm
           aktiviteter={sisteUttaksplan?.aktiviteter}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
           aksjonspunkterForSteg={aksjonspunkterForSteg}
-          isAksjonspunktOpen={isAksjonspunktOpen}
+          isAksjonspunktOpen={isAksjonspunktOpen && !visSaerligSmittevernAksjonspunkt}
         />
       )}
-      
+
+      {featureToggles?.SAERLIGSMITTEVERNAKSJONSPUNKT && visSaerligSmittevernAksjonspunkt && (
+        <SaerligeSmittevernhensynMikrofrontend
+          {...{
+            submitCallback,
+            behandling,
+            saerligSmittevernAp,
+            aktiviteter: sisteUttaksplan?.aktiviteter,
+          }}
+        />
+      )}
+
       <Uttaksplan
         aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}

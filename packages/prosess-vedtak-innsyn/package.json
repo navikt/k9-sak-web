@@ -13,7 +13,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-intl": "^5.10.11",
-    "react-redux": "^7.2.3",
+    "react-redux": "^7.2.4",
     "redux-form": "^8.3.7",
     "reselect": "^4.0.0"
   },
