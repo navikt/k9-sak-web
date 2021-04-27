@@ -1,4 +1,5 @@
 export interface SaerligSmittevernhensynProps {
+  behandlingsID: string;
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   årsakFraSoknad: string;
