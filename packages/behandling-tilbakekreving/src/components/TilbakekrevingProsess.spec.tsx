@@ -162,7 +162,7 @@ describe('<TilbakekrevingProsess>', () => {
         isDisabled: false,
         isFinished: false,
         labelId: 'Behandlingspunkt.Vedtak',
-        type: 'danger',
+        type: 'default',
         usePartialStatus: false,
       },
     ]);
