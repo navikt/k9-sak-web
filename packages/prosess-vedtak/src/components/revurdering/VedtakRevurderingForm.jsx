@@ -345,7 +345,7 @@ const buildInitialValues = createSelector(
   },
 );
 
-const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov) => {
+const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, tilgjengeligeVedtaksbrev) => {
   const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
   return values.aksjonspunktKoder.map(apCode => {
     const transformedValues = {
@@ -356,6 +356,7 @@ const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov) => 
       skalUndertrykkeBrev: values.skalUndertrykkeBrev,
       isVedtakSubmission,
       begrunnelserMedInformasjonsbehov: begrunnelser,
+      tilgjengeligeVedtaksbrev,
     };
     if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
       transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
@@ -415,6 +416,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       const transformedValuesForFlereInformasjonsbehov = transformValuesForFlereInformasjonsbehov(
         values,
         informasjonsbehovVedtaksbrev.informasjonsbehov,
+        initialOwnProps.tilgjengeligeVedtaksbrev,
       );
       return submitCallback(transformedValuesForFlereInformasjonsbehov);
     }

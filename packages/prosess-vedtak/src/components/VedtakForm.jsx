@@ -302,7 +302,7 @@ const transformValues = (values, tilgjengeligeVedtaksbrev) =>
     tilgjengeligeVedtaksbrev,
   }));
 
-const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov) => {
+const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, tilgjengeligeVedtaksbrev) => {
   const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
   return values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
@@ -315,6 +315,7 @@ const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov) => 
     skalUndertrykkeBrev: values.skalUndertrykkeBrev,
     isVedtakSubmission,
     begrunnelserMedInformasjonsbehov: begrunnelser,
+    tilgjengeligeVedtaksbrev,
   }));
 };
 
@@ -346,6 +347,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       const transformedValuesForFlereInformasjonsbehov = transformValuesForFlereInformasjonsbehov(
         values,
         informasjonsbehovVedtaksbrev.informasjonsbehov,
+        initialOwnProps.tilgjengeligeVedtaksbrev,
       );
       return submitCallback(transformedValuesForFlereInformasjonsbehov);
     }
