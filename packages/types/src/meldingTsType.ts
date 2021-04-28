@@ -7,7 +7,7 @@ export interface Brevmal {
   navn: string;
   kode?: string;
   tilgjengelig?: boolean;
-  mottakere: Mottaker[];
+  mottakere?: Mottaker[];
 }
 
 interface Brevmaler {

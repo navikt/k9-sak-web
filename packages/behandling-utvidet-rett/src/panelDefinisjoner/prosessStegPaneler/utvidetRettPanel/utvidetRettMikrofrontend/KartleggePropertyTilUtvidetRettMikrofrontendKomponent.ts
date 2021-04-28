@@ -1,5 +1,6 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { Behandling } from '@k9-sak-web/types';
 import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
@@ -20,7 +21,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   saksInformasjon: SaksinformasjonUtvidetRett,
   isReadOnly: boolean,
   submitCallback,
-  behandling,
+  behandling: Behandling,
   aksjonspunktInformasjon: AksjonspunktInformasjon,
   vilkarInformasjon: VilkarInformasjon,
 ) => {
@@ -37,12 +38,14 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
     const lesemodus = isReadOnly || !isAksjonspunktOpen;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+    const behandlingsID = behandling.id.toString();
 
     switch (fagsaksType) {
       case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN: {
         objektTilMikrofrontend = {
           visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
           props: {
+            behandlingsID,
             aksjonspunktLost,
             lesemodus,
             informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkarKnyttetTilAksjonspunkt, aksjonspunkt),
@@ -72,6 +75,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
         objektTilMikrofrontend = {
           visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_MIDLERTIDIG_ALENE,
           props: {
+            behandlingsID,
             aksjonspunktLost,
             lesemodus,
             soknadsopplysninger: {

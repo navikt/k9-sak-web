@@ -66,6 +66,32 @@ describe('<Messages>', () => {
 
   const causes = [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }];
 
+  it('skal støtte brevmaler som array', () => {
+    const wrapper = shallowWithIntl(
+      <Messages
+        {...mockProps}
+        templates={[
+          { kode: 'INNHEN', navn: 'Innhent dokumentasjon', tilgjengelig: true },
+          { kode: 'VARS', navn: 'Varsel om tilbakekreving', tilgjengelig: true },
+        ]}
+        sprakKode={sprakkode}
+        brevmalkode="INNHEN"
+        causes={causes}
+        behandlingId={1}
+        behandlingVersjon={2}
+        revurderingVarslingArsak={[{} as KodeverkMedNavn]}
+      />,
+    );
+
+    const form = wrapper.find('form');
+    const selectFields = form.find('SelectField');
+    expect(selectFields).toHaveLength(1);
+
+    const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
+    expect(templateSelect).toHaveLength(1);
+    expect(templateSelect.prop('selectValues')).toHaveLength(2);
+  });
+
   it('skal vise to select-bokser', () => {
     const wrapper = shallowWithIntl(
       <Messages
