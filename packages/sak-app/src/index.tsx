@@ -6,6 +6,7 @@ import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
+import { FormStateContextProvider } from '@fpsak-frontend/form';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
@@ -56,13 +57,15 @@ const renderFunc = Component => {
   }
   render(
     <Provider store={store}>
-      <Router history={history}>
-        <RestApiProvider>
-          <RestApiErrorProvider>
-            <Component />
-          </RestApiErrorProvider>
-        </RestApiProvider>
-      </Router>
+      <FormStateContextProvider>
+        <Router history={history}>
+          <RestApiProvider>
+            <RestApiErrorProvider>
+              <Component />
+            </RestApiErrorProvider>
+          </RestApiProvider>
+        </Router>
+      </FormStateContextProvider>
     </Provider>,
     app,
   );
