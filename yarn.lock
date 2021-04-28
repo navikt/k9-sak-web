@@ -12795,9 +12795,9 @@ nav-frontend-hjelpetekst-style@^2.0.42:
   integrity sha512-0vd5T8S9AS3d9KlKqqwfGNc+8Qhd6bKoQfGRMgeljbDeowG3dNbC3kYEBVpNL/XurbfWgDIvDbyzzEKI45hkKg==
 
 nav-frontend-hjelpetekst@^2.0.56:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-2.1.1.tgz#d466a9a43e796abe9e35d13f9be5ee19930dce30"
-  integrity sha512-Z+2GEcTj9IGTT5fvW/0Fxeg1DcV1mhdd1N7f96vNaaWol2blFzvYwqXOBVkua8ke8eqXBo1bB2rUpP8DH4H7xw==
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-2.1.2.tgz#9dec0d22d7f8bbf2122e91f5faac4c9fb0afeedd"
+  integrity sha512-FKAZmi47GFqmNEKJLJ5nybI7sfnjLtFOtdhwiLBw8CjjAEjA1XLIs0S7cz9+l66KoL4yL7YoEmyfvIeXX0AMhg==
 
 nav-frontend-ikoner-assets@^1.0.3:
   version "1.0.5"
