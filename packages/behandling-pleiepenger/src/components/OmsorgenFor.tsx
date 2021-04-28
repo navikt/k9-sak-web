@@ -6,7 +6,7 @@ import { BehandlingAppKontekst, Aksjonspunkt } from '@k9-sak-web/types';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
-import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
+import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 
 const initializeOmsorgenFor = (
   elementId,
@@ -40,7 +40,8 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
-  const omsorgenForAksjonspunktkode = findAksjonspunktkode(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
+  const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
+  const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
   const readOnlyArgument = omsorgenForAksjonspunktkode === undefined ? true : readOnly;
 
   const løsAksjonspunkt = omsorgsperioder =>
