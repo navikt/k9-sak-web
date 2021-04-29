@@ -1,5 +1,7 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { VilkarResultPicker, ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkårresultat, Vilkarperiode } from '@k9-sak-web/types';
@@ -12,6 +14,11 @@ import { createSelector } from 'reselect';
 import VilkarFields from './VilkarFields';
 
 const FORM_NAME = 'OpptjeningVilkarForm';
+
+const midlertidigInaktiv = {
+  TYPE_A: '7847A',
+  TYPE_B: '7847B',
+};
 
 interface VilkårField {
   erVilkarOk: boolean;
@@ -31,8 +38,8 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   submitCallback: (props: SubmitCallback[]) => void;
   periodeIndex: number;
   vilkårPerioder: Vilkarperiode[];
-  vilkarFields: VilkårField[];
   opptjeninger: Opptjening[];
+  vilkarFields: VilkårField[];
 }
 
 interface StateProps {
@@ -97,6 +104,20 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
       <Element>
         <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
       </Element>
+
+      <VerticalSpacer eightPx />
+      <RadioGroupField name="innvilgelseMerknadKode" validate={[required]}>
+        <RadioOption
+          label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
+          value={midlertidigInaktiv.TYPE_A}
+        />
+        <RadioOption
+          label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
+          value={midlertidigInaktiv.TYPE_B}
+        />
+      </RadioGroupField>
+      <VerticalSpacer eightPx />
+
       <VilkarFields erVilkarOk={erVilkarOk} readOnly={readOnly} fieldPrefix={`vilkarFields[${periodeIndex}]`} />
     </ProsessPanelTemplate>
   );
@@ -116,6 +137,7 @@ export const buildInitialValues = createSelector(
 
 interface Values {
   vilkarFields: VilkårField[];
+  innvilgelseMerknadKode: string;
 }
 
 const transformValues = (
@@ -126,6 +148,7 @@ const transformValues = (
 ) => ({
   vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => ({
     ...vilkarField,
+    innvilgelseMerknadKode: values.innvilgelseMerknadKode,
     periode: Array.isArray(vilkårPerioder) && vilkårPerioder[index] ? vilkårPerioder[index].periode : {},
   })),
   opptjeningPerioder: Array.isArray(opptjeninger)

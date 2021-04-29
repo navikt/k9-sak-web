@@ -14,6 +14,8 @@
   "OpptjeningVilkarAksjonspunktPanel.ErOppfylt": "Søker har oppfylt krav om 28 dagers opptjening, vilkåret er oppfylt.",
   "OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt": "Søker har ikke oppfylt krav om 28 dagers opptjening, vilkåret er <b>ikke</b> oppfylt.",
   "OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret": "Opptjening",
+  "OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA": "Skal beregnes jf §§ 8-47. (A)",
+  "OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB": "Skal beregnes jf §§ 8-47. (B)",
 
   "TimeLineNavigation.openData": "Åpne info om første periode",
   "TimeLineData.nextPeriod": "Neste periode",
