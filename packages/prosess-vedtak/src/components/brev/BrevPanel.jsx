@@ -212,7 +212,7 @@ BrevPanel.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]).isRequired,
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   beregningErManueltFastsatt: PropTypes.bool,
   previewCallback: PropTypes.func.isRequired,

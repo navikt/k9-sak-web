@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
+import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
 
 const initializeMedisinskVilkår = (
@@ -14,6 +15,7 @@ const initializeMedisinskVilkår = (
   behandlingUuid: string,
   løsAksjonspunkt,
   readOnly,
+  visFortsettknapp,
 ) => {
   (window as any).renderMedisinskVilkarApp(elementId, {
     httpErrorHandler: httpErrorHandlerFn,
@@ -21,6 +23,7 @@ const initializeMedisinskVilkår = (
     behandlingUuid,
     onFinished: løsAksjonspunkt,
     readOnly,
+    visFortsettknapp,
   });
 };
 
@@ -30,7 +33,11 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
-  const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
+  const medisinskVilkårAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
+  const medisinskVilkårAksjonspunktkode = medisinskVilkårAksjonspunkt?.definisjon.kode;
+  const medisinskVilkårAksjonspunktstatus = medisinskVilkårAksjonspunkt?.status.kode;
+  const visFortsettknapp = medisinskVilkårAksjonspunktstatus === aksjonspunktStatus.OPPRETTET;
+
   const løsAksjonspunkt = () =>
     submitCallback([{ kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet' }]);
 
@@ -39,10 +46,10 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.7.8/app.js"
-      jsIntegrity="sha384-wIZ0b9ZDmk6LUVH2fS6Q2AXHTB/6UtzDfZCqZX+Js3mGmPSQg9PZUOJ1F8mUg+O8"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.7.8/styles.css"
-      stylesheetIntegrity="sha384-dxm1bIOspTeSCbMAq7/qMkmbAdolYpgEo+blDrw+/jv5GRWg97kgz2+LP9i4orFI"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.7.11/app.js"
+      jsIntegrity="sha384-QSlQN3OZa1Ig7HhFIwliDrJb6qmdiepYHB/dcdikPCpMgiTvsBAoVBAku9g8iK4/"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.7.11/styles.css"
+      stylesheetIntegrity="sha384-e/1XH7pW4Meq5zJlTTP1OXOeNdr6pq47XkVFdSgmMMxBeQ6GbN6UTkbGRPltTs2l"
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
@@ -62,6 +69,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           uuid,
           løsAksjonspunkt,
           readOnly || !harAksjonspunkt,
+          visFortsettknapp,
         )
       }
     />

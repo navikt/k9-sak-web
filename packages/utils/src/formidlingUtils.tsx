@@ -40,11 +40,11 @@ export function lagVisningsnavnForMottaker(
 }
 
 function lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): Array<string> {
-  if (tilgjengeligeVedtaksbrev.vedtaksbrevmaler) {
+  if (tilgjengeligeVedtaksbrev?.vedtaksbrevmaler) {
     return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler);
   }
   // tilgjengeligeVedtaksbrev.vedtaksbrev kan fjernes når vedtaksbrevmaler i formidling og dokumentdata er prodsatt
-  return tilgjengeligeVedtaksbrev.vedtaksbrev ?? [];
+  return tilgjengeligeVedtaksbrev?.vedtaksbrev ?? [];
 }
 
 export function finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
@@ -78,8 +78,8 @@ export function harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
 
 export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return (
-    Array.isArray(tilgjengeligeVedtaksbrev.alternativeMottakere) &&
-    tilgjengeligeVedtaksbrev.alternativeMottakere.length > 0
+    Array.isArray(tilgjengeligeVedtaksbrev?.alternativeMottakere) &&
+    tilgjengeligeVedtaksbrev?.alternativeMottakere.length > 0
   );
 }
 
