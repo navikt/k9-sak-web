@@ -79,6 +79,12 @@ const options = {
       changeOrigin: true,
       pathRewrite: { '^/k9/microfrontend/omsorgsdager': '' },
     },
+    '/k9/microfrontend/medisinsk-vilkar/**': {
+      target: process.env.MEDISINSK_VILKAR_FRONTEND_URL || 'http://localhost:8088',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/microfrontend/medisinsk-vilkar': '' },
+    },
   },
   publicPath: config.output.publicPath,
   hot: true,

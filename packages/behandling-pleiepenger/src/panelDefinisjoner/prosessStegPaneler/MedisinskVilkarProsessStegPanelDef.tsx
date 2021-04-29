@@ -9,16 +9,26 @@ class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
   getKomponent = props => {
-    const vilkår = props.vilkar?.length === 1 ? props.vilkar[0] : null;
-    if (!vilkår) {
-      return null;
+    if (props.vilkar && props.vilkar.length === 2) {
+      const vilkårUnder18 = props.vilkar[0];
+      const vilkarOver18 = props.vilkar[1];
+      return (
+        <>
+          {vilkårUnder18.perioder && vilkårUnder18.perioder.length > 0 && (
+            <SykdomProsessIndex {...props} vilkar={vilkårUnder18} />
+          )}
+          {vilkarOver18.perioder && vilkarOver18.perioder.length > 0 && (
+            <SykdomProsessIndex {...props} vilkar={vilkarOver18} />
+          )}
+        </>
+      );
     }
-    return <SykdomProsessIndex {...props} vilkar={vilkår} />;
+    return null;
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
-  getVilkarKoder = () => [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR];
+  getVilkarKoder = () => [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
 
   getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 
