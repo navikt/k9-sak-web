@@ -14,12 +14,8 @@ class PanelDef extends ProsessStegPanelDef {
       const vilkarOver18 = props.vilkar[1];
       return (
         <>
-          {vilkårUnder18.perioder && vilkårUnder18.perioder.length > 0 && (
-            <SykdomProsessIndex {...props} vilkar={vilkårUnder18} />
-          )}
-          {vilkarOver18.perioder && vilkarOver18.perioder.length > 0 && (
-            <SykdomProsessIndex {...props} vilkar={vilkarOver18} />
-          )}
+          {vilkårUnder18?.perioder?.length > 0 && <SykdomProsessIndex {...props} vilkar={vilkårUnder18} />}
+          {vilkarOver18?.perioder?.length > 0 && <SykdomProsessIndex {...props} vilkar={vilkarOver18} />}
         </>
       );
     }
