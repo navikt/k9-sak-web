@@ -59,6 +59,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             },
           },
         ]}
+        visAllePerioder
       />,
     );
 
@@ -132,6 +133,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             },
           },
         ]}
+        visAllePerioder
       />,
     );
 
