@@ -1,5 +1,6 @@
 {
   "Behandlingspunkt.MedisinskVilkar": "Sykdom",
+  "Behandlingspunkt.MedisinskVilkarOver18": "Sykdom, pleietrengende over 18",
   "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
   "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
   "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",

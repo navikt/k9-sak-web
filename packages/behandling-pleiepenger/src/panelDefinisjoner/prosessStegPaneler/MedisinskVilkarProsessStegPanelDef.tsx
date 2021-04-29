@@ -4,22 +4,37 @@ import { ProsessStegDef, ProsessStegOverstyringPanelDef, ProsessStegPanelDef } f
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
 import * as React from 'react';
+import { Vilkar } from '@k9-sak-web/types';
+
+interface Props {
+  vilkar: Vilkar[];
+  lovReferanse?: string;
+  panelTittelKode: string;
+}
 
 class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
-  getKomponent = props => {
-    if (props.vilkar && props.vilkar.length === 2) {
-      const vilkårUnder18 = props.vilkar[0];
-      const vilkarOver18 = props.vilkar[1];
-      return (
-        <>
-          {vilkårUnder18?.perioder?.length > 0 && <SykdomProsessIndex {...props} vilkar={vilkårUnder18} />}
-          {vilkarOver18?.perioder?.length > 0 && <SykdomProsessIndex {...props} vilkar={vilkarOver18} />}
-        </>
-      );
-    }
-    return null;
+  getKomponent = (props: Props) => {
+    const { vilkar } = props;
+    const vilkårPleietrengendeUnder18år = vilkar.find(
+      v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+    );
+    const vilkårPleietrengendeOver18år = vilkar.find(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
+    return (
+      <>
+        {vilkårPleietrengendeUnder18år?.perioder?.length > 0 && (
+          <SykdomProsessIndex {...props} vilkar={vilkårPleietrengendeUnder18år} />
+        )}
+        {vilkårPleietrengendeOver18år?.perioder?.length > 0 && (
+          <SykdomProsessIndex
+            {...props}
+            panelTittelKode="Behandlingspunkt.MedisinskVilkarOver18" // TODO: Finne fornuftig tekst i tittel
+            vilkar={vilkårPleietrengendeOver18år}
+          />
+        )}
+      </>
+    );
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
