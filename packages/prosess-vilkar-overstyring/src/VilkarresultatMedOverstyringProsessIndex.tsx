@@ -1,8 +1,8 @@
+import React, { SetStateAction, useState, useEffect } from 'react';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
-import React, { SetStateAction } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
@@ -40,6 +40,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
   overstyringApKode: string;
   erMedlemskapsPanel: boolean;
   vilkar: Vilkar[];
+  visAllePerioder: boolean;
 }
 
 const VilkarresultatMedOverstyringProsessIndex = ({
@@ -57,25 +58,22 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   lovReferanse,
   erMedlemskapsPanel,
   vilkar,
+  visAllePerioder,
 }: VilkarresultatMedOverstyringProsessIndexProps) => {
+  const [activeTab, setActiveTab] = useState(0);
+
   const [activeVilkår] = vilkar;
-
   const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
-  const perioderSomSkalVurderes = activeVilkår.perioder.filter(periode => periode.vurdersIBehandlingen);
-  const perioderSomIkkeSkalVurderes = activeVilkår.perioder.filter(periode => !periode.vurdersIBehandlingen);
-  const harPerioderSomErVurdert =
-    skalBrukeSidemeny && activeVilkår.perioder.some(periode => !periode.vurdersIBehandlingen);
+  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
 
-  const [activeTab, setActiveTab] = React.useState(
-    harPerioderSomErVurdert
-      ? Math.max(
-          activeVilkår.perioder.findIndex(periode => periode.vurdersIBehandlingen),
-          0,
-        )
-      : 0,
-  );
   const activePeriode = activeVilkår.perioder[activeTab];
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
+
+  useEffect(() => {
+    if (!visAllePerioder && activeTab >= perioder.length) {
+      setActiveTab(0);
+    }
+  }, [activeTab, visAllePerioder]);
 
   return (
     <RawIntlProvider value={intl}>
@@ -83,7 +81,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
-              links={perioderSomSkalVurderes.map((periode, index) => ({
+              links={perioder.map((periode, index) => ({
                 active: activeTab === index,
                 label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
               }))}
@@ -91,19 +89,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               theme="arrow"
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
-            {perioderSomIkkeSkalVurderes.length > 0 && (
-              <SideMenu
-                links={perioderSomIkkeSkalVurderes.map((periode, index) => ({
-                  active: activeTab === index + perioderSomSkalVurderes.length,
-                  label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
-                }))}
-                onClick={index => {
-                  setActiveTab(index + perioderSomSkalVurderes.length);
-                }}
-                theme="arrow"
-                heading={intl.formatMessage({ id: 'Sidemeny.PerioderVurdert' })}
-              />
-            )}
           </div>
         )}
         <div className={styles.contentContainer}>
