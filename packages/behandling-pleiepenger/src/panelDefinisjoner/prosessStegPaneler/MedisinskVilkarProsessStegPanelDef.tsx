@@ -21,16 +21,16 @@ class PanelDef extends ProsessStegPanelDef {
       v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
     );
     const vilkårPleietrengendeOver18år = vilkar.find(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
+    const skalVisePanelForVilkårUnder18år = vilkårPleietrengendeUnder18år?.perioder?.length > 0;
+    const skalVisePanelForVilkårOver18år = vilkårPleietrengendeOver18år?.perioder?.length > 0;
     return (
       <>
-        {vilkårPleietrengendeUnder18år?.perioder?.length > 0 && (
-          <SykdomProsessIndex {...props} vilkar={vilkårPleietrengendeUnder18år} />
-        )}
-        {vilkårPleietrengendeOver18år?.perioder?.length > 0 && (
+        {skalVisePanelForVilkårUnder18år && <SykdomProsessIndex {...props} vilkar={vilkårPleietrengendeUnder18år} />}
+        {skalVisePanelForVilkårOver18år && (
           <SykdomProsessIndex
             {...props}
-            panelTittelKode="Behandlingspunkt.MedisinskVilkarOver18" // TODO: Finne fornuftig tekst i tittel
             vilkar={vilkårPleietrengendeOver18år}
+            panelTittelKode="Behandlingspunkt.MedisinskVilkarOver18" // TODO: Finne fornuftig tekst i tittel
           />
         )}
       </>
