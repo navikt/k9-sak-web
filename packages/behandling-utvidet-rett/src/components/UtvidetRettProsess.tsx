@@ -83,7 +83,7 @@ const getLagringSideeffekter = (
 
   if (aksjonspunktModels[0].isVedtakSubmission) {
     const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
-    await lagreDokumentdata(dokumentdata);
+    if (dokumentdata) await lagreDokumentdata(dokumentdata);
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
