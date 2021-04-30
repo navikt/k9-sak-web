@@ -39,7 +39,7 @@ export function lagVisningsnavnForMottaker(
 }
 
 function vedtaksbrevmaler(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev) {
-  return tilgjengeligeVedtaksbrev ? Object.keys(tilgjengeligeVedtaksbrev?.vedtaksbrevmaler) : [];
+  return tilgjengeligeVedtaksbrev?.vedtaksbrevmaler ? Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler) : [];
 }
 
 export function finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
