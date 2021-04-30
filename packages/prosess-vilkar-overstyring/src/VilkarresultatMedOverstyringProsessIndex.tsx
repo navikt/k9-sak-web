@@ -1,8 +1,8 @@
+import React, { SetStateAction, useState, useEffect } from 'react';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
-import React, { SetStateAction } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
@@ -40,6 +40,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
   overstyringApKode: string;
   erMedlemskapsPanel: boolean;
   vilkar: Vilkar[];
+  visAllePerioder: boolean;
 }
 
 const VilkarresultatMedOverstyringProsessIndex = ({
@@ -57,13 +58,22 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   lovReferanse,
   erMedlemskapsPanel,
   vilkar,
+  visAllePerioder,
 }: VilkarresultatMedOverstyringProsessIndexProps) => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  const activeVilkår = vilkar[0];
-  const activePeriode = activeVilkår.perioder[activeTab];
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
+  const [activeTab, setActiveTab] = useState(0);
 
+  const [activeVilkår] = vilkar;
+  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
+  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
+
+  const activePeriode = activeVilkår.perioder[activeTab];
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
+
+  useEffect(() => {
+    if (!visAllePerioder && activeTab >= perioder.length) {
+      setActiveTab(0);
+    }
+  }, [activeTab, visAllePerioder]);
 
   return (
     <RawIntlProvider value={intl}>
@@ -71,15 +81,11 @@ const VilkarresultatMedOverstyringProsessIndex = ({
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
-              links={activeVilkår.perioder.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-                active: activeTab === currentBeregningsgrunnlagIndex,
-                label: `${dateFormat(activeVilkår.perioder[currentBeregningsgrunnlagIndex].periode.fom)} - ${dateFormat(
-                  activeVilkår.perioder[currentBeregningsgrunnlagIndex].periode.tom,
-                )}`,
+              links={perioder.map((periode, index) => ({
+                active: activeTab === index,
+                label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
               }))}
-              onClick={clickedIndex => {
-                setActiveTab(clickedIndex);
-              }}
+              onClick={setActiveTab}
               theme="arrow"
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />

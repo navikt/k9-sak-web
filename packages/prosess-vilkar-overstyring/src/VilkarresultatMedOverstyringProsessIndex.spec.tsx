@@ -46,6 +46,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
+                vurdersIBehandlingen: true,
                 merknadParametere: {
                   test: 'test',
                 },
@@ -58,6 +59,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             },
           },
         ]}
+        visAllePerioder
       />,
     );
 
@@ -103,6 +105,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
+                vurdersIBehandlingen: true,
                 merknadParametere: {
                   test: 'test',
                 },
@@ -117,6 +120,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
+                vurdersIBehandlingen: true,
                 merknadParametere: {
                   test: 'test',
                 },
@@ -129,6 +133,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             },
           },
         ]}
+        visAllePerioder
       />,
     );
 

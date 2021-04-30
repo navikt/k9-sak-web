@@ -38,28 +38,22 @@ const OpptjeningVilkarForm = ({
   vilkårPerioder,
   periodeIndex,
   opptjeninger,
-}: OpptjeningVilkarFormProps) => {
-  if (Array.isArray(aksjonspunkter) && aksjonspunkter.length > 0) {
-    return (
-      <OpptjeningVilkarAksjonspunktPanel
-        submitCallback={submitCallback}
-        isApOpen={isAksjonspunktOpen}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        vilkårsresultat={vilkårsresultat}
-        aksjonspunkter={aksjonspunkter}
-        status={status}
-        lovReferanse={lovReferanse}
-        vilkårPerioder={vilkårPerioder}
-        periodeIndex={periodeIndex}
-        opptjeninger={opptjeninger}
-      />
-    );
-  }
-
-  return null;
-};
+}: OpptjeningVilkarFormProps) => (
+  <OpptjeningVilkarAksjonspunktPanel
+    submitCallback={submitCallback}
+    isApOpen={isAksjonspunktOpen}
+    readOnly={readOnly}
+    readOnlySubmitButton={readOnlySubmitButton}
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
+    vilkårsresultat={vilkårsresultat}
+    aksjonspunkter={aksjonspunkter}
+    status={status}
+    lovReferanse={lovReferanse}
+    vilkårPerioder={vilkårPerioder}
+    periodeIndex={periodeIndex}
+    opptjeninger={opptjeninger}
+  />
+);
 
 export default OpptjeningVilkarForm;

@@ -23,6 +23,7 @@ const ProsessStegContainer: FunctionComponent<OwnProps & WrappedComponentProps> 
       formaterteProsessStegPaneler.map(panel => ({
         ...panel,
         label: intl.formatMessage({ id: panel.labelId }),
+        usePartialStatus: panel.type !== 'default' && panel.usePartialStatus,
       })),
     [formaterteProsessStegPaneler],
   );
