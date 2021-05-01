@@ -3,6 +3,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling } from '@k9-sak-web/types';
 import fagsakTsType from '@k9-sak-web/types/src/fagsakTsType';
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
@@ -20,6 +21,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
   aksjonspunktInformasjon: AksjonspunktInformasjon,
   vilkarInformasjon: VilkarInformasjon,
   fagsaksType: fagsakTsType,
+  FormState: FormStateType,
 ) => {
   let objektTilMikrofrontend = {};
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
@@ -61,6 +63,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
             },
           ]);
         },
+        formState: FormState,
       } as OmsorgenForProps,
     };
   }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import sjekkHvisErIProduksjon from '@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon';
+import { FormState } from '@fpsak-frontend/form/index';
 import KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend from './KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend';
 
 const initializeOmsorgenForVilkar = (elementId, { submitCallback, behandling, saerligSmittevernAp, aktiviteter }) => {
@@ -11,6 +12,7 @@ const initializeOmsorgenForVilkar = (elementId, { submitCallback, behandling, sa
       behandling,
       saerligSmittevernAp,
       aktiviteter,
+      FormState,
     ),
   );
 };
@@ -39,7 +41,7 @@ export default props => {
       jsIntegrity={jsIntegrity}
       stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
       stylesheetIntegrity={stylesheetIntegrity}
-      onReady={() => initializeOmsorgenForVilkar(saerligSmittvernhensynVilkårAppID, props)}
+      onReady={() => initializeOmsorgenForVilkar(saerligSmittvernhensynVilkårAppID, { ...props, FormState })}
     />
   );
 };

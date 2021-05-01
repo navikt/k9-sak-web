@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import sjekkHvisErIProduksjon from '@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon';
+import { FormState } from '@fpsak-frontend/form/index';
 import KartleggePropertyTilUtvidetRettMikrofrontendKomponent from './KartleggePropertyTilUtvidetRettMikrofrontendKomponent';
 
 const initializeUtvidetRettVilkar = (
@@ -16,6 +17,7 @@ const initializeUtvidetRettVilkar = (
       behandling,
       { aksjonspunkter, isAksjonspunktOpen },
       { vilkar, status },
+      FormState,
     ),
   );
 };
@@ -44,7 +46,7 @@ export default props => {
       jsIntegrity={jsIntegrity}
       stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
       stylesheetIntegrity={stylesheetIntegrity}
-      onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID, props)}
+      onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID, { ...props, FormState })}
     />
   );
 };

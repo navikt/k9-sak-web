@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import sjekkHvisErIProduksjon from '@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon';
-import { useFormStateContext } from '@fpsak-frontend/form';
+import { FormState } from '@fpsak-frontend/form';
 import KartleggePropertyTilOmsorgenForMikrofrontendKomponent from './KartleggePropertyTilOmsorgenForMikrofrontendKomponent';
 
 const initializeOmsorgenForVilkar = (
@@ -28,6 +28,7 @@ const initializeOmsorgenForVilkar = (
       { aksjonspunkter, isAksjonspunktOpen },
       { vilkar, status },
       fagsaksType,
+      FormState,
     ),
   );
 };
@@ -49,7 +50,6 @@ const hentVersjonInformasjon = () => {
 export default props => {
   const omsorgenForVilkårAppID = 'omsorgenForRettApp';
   const { versjon, jsIntegrity, stylesheetIntegrity } = hentVersjonInformasjon();
-  const formStateContext = useFormStateContext();
 
   return (
     <MicroFrontend
@@ -58,7 +58,7 @@ export default props => {
       jsIntegrity={jsIntegrity}
       stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
       stylesheetIntegrity={stylesheetIntegrity}
-      onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, { ...props, formStateContext })}
+      onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, { ...props, FormState })}
     />
   );
 };

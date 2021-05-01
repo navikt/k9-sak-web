@@ -2,6 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt, Behandling, UtfallEnum } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import MikrofrontendKomponenter from './types/MikrofrontendKomponenter';
 import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 import Aktivitet from '../../dto/Aktivitet';
@@ -11,6 +12,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   behandling: Behandling,
   aksjonspunkt: Aksjonspunkt,
   aktiviteter: Aktivitet[],
+  FormState: FormStateType,
 ) => {
   let objektTilMikrofrontend = {};
   const smittevernAktiviteter = aktiviteter[0]?.uttaksperioder.filter(
@@ -45,6 +47,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
             },
           ]);
         },
+        formState: FormState,
       } as SaerligSmittevernhensynProps,
     };
   }
