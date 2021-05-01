@@ -13,16 +13,27 @@ import {
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
 
-const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
-  isReadOnly: boolean,
+interface PropTypes {
+  isReadOnly: boolean;
+  submitCallback: any;
+  angitteBarn: { personIdent: string }[];
+  behandling: Behandling;
+  aksjonspunktInformasjon: AksjonspunktInformasjon;
+  vilkarInformasjon: VilkarInformasjon;
+  fagsaksType: fagsakTsType;
+  FormState: FormStateType;
+}
+
+const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
+  isReadOnly,
   submitCallback,
-  behandling: Behandling,
+  behandling,
   angitteBarn,
-  aksjonspunktInformasjon: AksjonspunktInformasjon,
-  vilkarInformasjon: VilkarInformasjon,
-  fagsaksType: fagsakTsType,
-  FormState: FormStateType,
-) => {
+  aksjonspunktInformasjon,
+  vilkarInformasjon,
+  fagsaksType,
+  FormState,
+}: PropTypes) => {
   let objektTilMikrofrontend = {};
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
   const { vilkar, status } = vilkarInformasjon;

@@ -20,16 +20,16 @@ const initializeOmsorgenForVilkar = (
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
     elementId,
-    KartleggePropertyTilOmsorgenForMikrofrontendKomponent(
+    KartleggePropertyTilOmsorgenForMikrofrontendKomponent({
       isReadOnly,
       submitCallback,
       behandling,
       angitteBarn,
-      { aksjonspunkter, isAksjonspunktOpen },
-      { vilkar, status },
+      aksjonspunktInformasjon: { aksjonspunkter, isAksjonspunktOpen },
+      vilkarInformasjon: { vilkar, status },
       fagsaksType,
       FormState,
-    ),
+    }),
   );
 };
 
