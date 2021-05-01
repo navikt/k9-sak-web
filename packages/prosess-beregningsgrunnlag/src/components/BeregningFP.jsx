@@ -129,9 +129,7 @@ export const BeregningFP = props => {
                 currentBeregningsgrunnlagIndex + 1
               }`,
             }))}
-            onClick={clickedIndex => {
-              setAktivtBeregningsgrunnlagIndeks(clickedIndex);
-            }}
+            onClick={setAktivtBeregningsgrunnlagIndeks}
             theme="arrow"
           />
         </div>

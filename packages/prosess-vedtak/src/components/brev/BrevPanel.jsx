@@ -44,7 +44,7 @@ const getManuellBrevCallback = ({
   if (formProps.valid || formProps.pristine) {
     previewCallback({
       dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
-      // Bruker FRITKS som fallback til formidling er prodsatt
+      // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
       dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
       ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
     });
@@ -61,7 +61,7 @@ const automatiskVedtaksbrevParams = ({
   tilgjengeligeVedtaksbrev,
 }) => ({
   dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker },
-  // Bruker UTLED som fallback til formidling er prodsatt
+  // Bruker UTLED som fallback til lenken ikke vises for avsluttede behandlinger
   dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
 });
@@ -212,7 +212,7 @@ BrevPanel.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]).isRequired,
+  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   beregningErManueltFastsatt: PropTypes.bool,
   previewCallback: PropTypes.func.isRequired,
