@@ -18,9 +18,9 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   const smittevernAktiviteter = aktiviteter[0]?.uttaksperioder.filter(
     period => period.vurderteVilkår.vilkår.SMITTEVERN !== undefined,
   );
-
   const erFravaerSaerligSmittevern =
     smittevernAktiviteter[0]?.vurderteVilkår.vilkår.SMITTEVERN === UtfallEnum.INNVILGET;
+  const behandlingsID = behandling.id.toString();
 
   if (aksjonspunkt !== undefined && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
     const isAksjonspunktOpen = aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
@@ -29,7 +29,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
     objektTilMikrofrontend = {
       visKomponent: MikrofrontendKomponenter.KORRIGERE_PERIODER,
       props: {
-        behandlingsID: '',
+        behandlingsID,
         aksjonspunktLost,
         lesemodus: !isAksjonspunktOpen,
         årsakFraSoknad: 'Årsak',
