@@ -5,6 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import { ArbeidsforholdV2, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
+import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
 import Utfall from './Utfall';
@@ -20,6 +21,7 @@ describe('<AktivitetTabell />', () => {
       {
         utfall: UtfallEnum.AVSLÅTT,
         periode: '2020-03-01/2020-03-31',
+        fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
         utbetalingsgrad: 0,
         hjemler: [],
         vurderteVilkår: {
