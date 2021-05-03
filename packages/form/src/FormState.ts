@@ -1,6 +1,8 @@
+import { safeJSONParse } from '@fpsak-frontend/utils';
+
 const state = {};
 
-const getState = (key: string) => state[key];
+const getState = (key: string) => safeJSONParse(state[key]);
 
 const deleteState = (key: string) => {
   delete state[key];
