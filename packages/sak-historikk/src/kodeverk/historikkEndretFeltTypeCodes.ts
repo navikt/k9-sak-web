@@ -400,10 +400,6 @@ const historikkEndretFeltTypeCodes = {
     kode: 'VURDER_GRADERING_PÅ_ANDEL_UTEN_BG',
     feltId: 'HistorikkEndretFelt.VurderGraderingPåAndelUtenBG',
   },
-  DEKNINGSGRAD: {
-    kode: 'VURDER_DEKNINGSGRAD',
-    feltId: 'HistorikkEndretFelt.Dekningsgrad',
-  },
   FAKTA_OM_FEILUTBETALING_AARSAK: {
     kode: 'HENDELSE_AARSAK',
     verdiId: '',
