@@ -6317,15 +6317,10 @@ core-js@^2.6.5:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
-core-js@^3.0.4, core-js@^3.6.5, core-js@^3.8.2:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.11.0.tgz#05dac6aa70c0a4ad842261f8957b961d36eb8926"
-  integrity sha512-bd79DPpx+1Ilh9+30aT5O1sgpQd4Ttg8oqkqi51ZzhedMM1omD2e6IOF48Z/DzDCZ2svp49tN/3vneTK6ZBkXw==
-
-core-js@^3.11.1:
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.11.1.tgz#f920392bf8ed63a0ec8e4e729857bfa3d121c525"
-  integrity sha512-k93Isqg7e4txZWMGNYwevZL9MiogLk8pd1PtwrmFmi8IBq4GXqUaVW/a33Llt6amSI36uSjd0GWwc9pTT9ALlQ==
+core-js@^3.0.4, core-js@^3.11.1, core-js@^3.6.5, core-js@^3.8.2:
+  version "3.11.2"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.11.2.tgz#af087a43373fc6e72942917c4a4c3de43ed574d6"
+  integrity sha512-3tfrrO1JpJSYGKnd9LKTBPqgUES/UYiCzMKeqwR1+jF16q4kD1BY2NvqkfuzXwQ6+CIWm55V9cjD7PQd+hijdw==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -17841,10 +17836,10 @@ vfile@^4.0.0:
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
 
-vis-timeline@7.4.7:
-  version "7.4.7"
-  resolved "https://registry.yarnpkg.com/vis-timeline/-/vis-timeline-7.4.7.tgz#ff1e7383e530bc317160d30e860190f93c732224"
-  integrity sha512-wB/mPBVH3ClgzcM8eawwdBMdVYKcSONAEzhvdrrfjar8x9BAGi8C6JA/5Dhy+/rJwhXQJutwsaABMASMzUzxUA==
+vis-timeline@7.4.8:
+  version "7.4.8"
+  resolved "https://registry.yarnpkg.com/vis-timeline/-/vis-timeline-7.4.8.tgz#4d1c7dfb1c97ccf5a9c7b80aa8b2acae29d18748"
+  integrity sha512-pTsSc/K2gauX0ENWjpY0YynaZok8FafM6x3DzCy4KZ+INjO+EYCk97KMPfCE9HzRTWpBTP7snW1RAUj6kJUg4A==
 
 vm-browserify@^1.0.1:
   version "1.1.2"
