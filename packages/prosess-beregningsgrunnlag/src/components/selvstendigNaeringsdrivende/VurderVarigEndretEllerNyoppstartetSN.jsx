@@ -169,10 +169,14 @@ VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gje
   return undefined;
 };
 
-VurderVarigEndretEllerNyoppstartetSN.transformValues = values => ({
-  begrunnelse: values[begrunnelseFieldname],
-  erVarigEndretNaering: values[varigEndringRadioname],
-  bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
-});
+VurderVarigEndretEllerNyoppstartetSN.transformValues = values => {
+  const erVarigEndring = values[varigEndringRadioname];
+  return {
+    kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+    begrunnelse: values[begrunnelseFieldname],
+    erVarigEndretNaering: erVarigEndring,
+    bruttoBeregningsgrunnlag: erVarigEndring ? removeSpacesFromNumber(values[fastsettInntektFieldname]) : undefined,
+  };
+};
 
 export default injectIntl(VurderVarigEndretEllerNyoppstartetSN);

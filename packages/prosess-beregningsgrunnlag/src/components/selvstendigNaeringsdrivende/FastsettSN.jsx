@@ -147,11 +147,9 @@ FastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
   return undefined;
 };
 
-FastsettSN.transformValuesMedBegrunnelse = values => ({
+FastsettSN.transformValuesNyIArbeidslivet = values => ({
+  kode: FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   begrunnelse: values[begrunnelseFieldname],
-  bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
-});
-FastsettSN.transformValuesUtenBegrunnelse = values => ({
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
 
