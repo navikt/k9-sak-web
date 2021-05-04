@@ -1,7 +1,14 @@
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { finnesTilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 function lagDokumentdata(aksjonspunktModell) {
+  if (
+    aksjonspunktModell.tilgjengeligeVedtaksbrev &&
+    !finnesTilgjengeligeVedtaksbrev(aksjonspunktModell.tilgjengeligeVedtaksbrev)
+  )
+    return null;
+
   const vedtaksbrevmaler = aksjonspunktModell.tilgjengeligeVedtaksbrev?.vedtaksbrevmaler;
 
   if (aksjonspunktModell.skalUndertrykkeBrev) {

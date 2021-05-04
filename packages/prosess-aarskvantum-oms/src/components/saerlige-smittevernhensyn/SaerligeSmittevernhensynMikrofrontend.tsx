@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import sjekkHvisErIProduksjon from '@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon';
+import { FormState } from '@fpsak-frontend/form/index';
 import KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend from './KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend';
 
 const initializeOmsorgenForVilkar = (elementId, { submitCallback, behandling, saerligSmittevernAp, aktiviteter }) => {
@@ -11,6 +12,7 @@ const initializeOmsorgenForVilkar = (elementId, { submitCallback, behandling, sa
       behandling,
       saerligSmittevernAp,
       aktiviteter,
+      FormState,
     ),
   );
 };
@@ -22,9 +24,9 @@ const hentVersjonInformasjon = () => {
     stylesheetIntegrity: 'sha384-s7zKNrhjA1tpqnkyej5k6S6jybA6XM3bdjEMmWg9iMy7Mnj2pVupmHEmWn9LX1pY',
   };
   const preprodVersjon = {
-    versjon: '1.5.30',
-    jsIntegrity: 'sha384-mWRKTlTCMBqfw28AKXc4HSgGc6O8CVuGXJ1oLO37jaI/QjU1sArXeArfJwGuevgA',
-    stylesheetIntegrity: 'sha384-s7zKNrhjA1tpqnkyej5k6S6jybA6XM3bdjEMmWg9iMy7Mnj2pVupmHEmWn9LX1pY',
+    versjon: '1.5.40',
+    jsIntegrity: 'sha384-dcM4G69O4KLmvKOBXwvUV0K0zfTFaJNo27mC8L4VaCTyalpuzO4IKy5KuuLIxQ3U',
+    stylesheetIntegrity: 'sha384-LC4FE5IBLroddA6Ew0fDNUxK+oapnpHA8pFrMSZ7Q67tIbZTe8hn8P/ktKJRojwr',
   };
   return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
 };
@@ -39,7 +41,7 @@ export default props => {
       jsIntegrity={jsIntegrity}
       stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
       stylesheetIntegrity={stylesheetIntegrity}
-      onReady={() => initializeOmsorgenForVilkar(saerligSmittvernhensynVilkårAppID, props)}
+      onReady={() => initializeOmsorgenForVilkar(saerligSmittvernhensynVilkårAppID, { ...props, FormState })}
     />
   );
 };

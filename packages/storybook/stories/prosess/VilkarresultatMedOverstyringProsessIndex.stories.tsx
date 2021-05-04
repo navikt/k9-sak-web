@@ -95,6 +95,7 @@ export const visOverstyringspanelForOpptjening = () => {
       overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
       erMedlemskapsPanel={false}
       vilkar={vilkarOpptjening}
+      visAllePerioder
     />
   );
 };
@@ -130,6 +131,7 @@ export const visOverstyringspanelForMedlemskap = () => {
       overstyringApKode={aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR}
       erMedlemskapsPanel
       vilkar={vilkarMedlemskap}
+      visAllePerioder
     />
   );
 };
@@ -183,5 +185,6 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => (
     overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
     erMedlemskapsPanel={false}
     vilkar={vilkarOpptjening}
+    visAllePerioder
   />
 );

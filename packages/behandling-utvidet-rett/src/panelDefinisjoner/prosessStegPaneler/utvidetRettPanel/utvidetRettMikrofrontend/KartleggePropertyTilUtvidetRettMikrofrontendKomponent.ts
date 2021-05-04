@@ -1,6 +1,7 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Behandling } from '@k9-sak-web/types';
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
@@ -24,6 +25,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   behandling: Behandling,
   aksjonspunktInformasjon: AksjonspunktInformasjon,
   vilkarInformasjon: VilkarInformasjon,
+  FormState: FormStateType,
 ) => {
   let objektTilMikrofrontend = {};
   const { soknad, fagsaksType } = saksInformasjon;
@@ -66,6 +68,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
                 ),
               ]);
             },
+            formState: FormState,
           } as VilkarKroniskSyktBarnProps,
         };
         break;
@@ -116,6 +119,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
                 ),
               ]);
             },
+            formState: FormState,
           } as VilkarMidlertidigAleneProps,
         };
         break;

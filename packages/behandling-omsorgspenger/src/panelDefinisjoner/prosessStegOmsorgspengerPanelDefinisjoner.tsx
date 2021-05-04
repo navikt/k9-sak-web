@@ -1,5 +1,4 @@
 import VarselProsessStegPanelDef from './prosessStegPaneler/VarselProsessStegPanelDef';
-import OpptjeningProsessStegPanelDef from './prosessStegPaneler/OpptjeningProsessStegPanelDef';
 import SaksopplysningerProsessStegPanelDef from './prosessStegPaneler/SaksopplysningerProsessStegPanelDef';
 import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarProsessStegPanelDef';
 import BeregningsgrunnlagProsessStegPanelDef from './prosessStegPaneler/BeregningsgrunnlagProsessStegPanelDef';
@@ -12,7 +11,6 @@ const prosessStegPanelDefinisjoner = [
   new VarselProsessStegPanelDef(),
   new SaksopplysningerProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
-  new OpptjeningProsessStegPanelDef(),
   new UttakProsessStegPanelDef(),
   new BeregningsgrunnlagProsessStegPanelDef(),
   new TilkjentYtelseProsessStegPanelDef(),

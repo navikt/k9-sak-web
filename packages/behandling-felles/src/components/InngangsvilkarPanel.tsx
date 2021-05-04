@@ -1,6 +1,7 @@
-import React, { FunctionComponent, useMemo, useCallback, Fragment } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { FunctionComponent, useMemo, useCallback, useState, Fragment } from 'react';
+import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
+import Tabs from 'nav-frontend-tabs';
 
 import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML, LoadingPanel } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -9,8 +10,19 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import messages from '../i18n/nb_NO.json';
 
 import styles from './inngangsvilkarPanel.less';
+
+const cache = createIntlCache();
+
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 interface OwnProps {
   behandling: Behandling;
@@ -31,6 +43,7 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   useMultipleRestApi,
 }) => {
+  const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const filteredPanels = prosessStegData.filter(stegData => stegData.getKomponentData);
 
   const endepunkter = filteredPanels.flatMap(stegData =>
@@ -66,58 +79,74 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
     return <LoadingPanel />;
   }
 
+  const skalVisePeriodeTabs = filteredPanels.some(panel => panel.vilkar.some(vilkar => vilkar.perioder.length > 1));
+
   return (
-    <FadingPanel>
-      {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
-        <>
-          <AksjonspunktHelpTextHTML>
-            {apentFaktaPanelInfo && erIkkeFerdigbehandlet
-              ? [
-                  <Fragment key="1">
-                    <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
-                    <a href="" onClick={oppdaterUrl}>
-                      <FormattedMessage id={apentFaktaPanelInfo.textCode} />
-                    </a>
-                  </Fragment>,
-                ]
-              : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
-          </AksjonspunktHelpTextHTML>
-          <VerticalSpacer thirtyTwoPx />
-        </>
-      )}
-      <Row className="">
-        <Column xs="6">
-          {filteredPanels
-            .filter((_panel, index) => index < 2)
-            .map((stegData, index) => (
-              <div key={stegData.getId()} className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
-                {stegData.getProsessStegDelPanelDef().getKomponent({
-                  ...data,
-                  behandling,
-                  alleKodeverk,
-                  submitCallback,
-                  ...stegData.getKomponentData(),
-                })}
-              </div>
-            ))}
-        </Column>
-        <Column xs="6">
-          {filteredPanels
-            .filter((_panel, index) => index > 1)
-            .map((stegData, index) => (
-              <div key={stegData.getId()} className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
-                {stegData.getProsessStegDelPanelDef().getKomponent({
-                  ...data,
-                  behandling,
-                  alleKodeverk,
-                  submitCallback,
-                  ...stegData.getKomponentData(),
-                })}
-              </div>
-            ))}
-        </Column>
-      </Row>
-    </FadingPanel>
+    <RawIntlProvider value={intl}>
+      <FadingPanel>
+        {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
+          <>
+            <AksjonspunktHelpTextHTML>
+              {apentFaktaPanelInfo && erIkkeFerdigbehandlet
+                ? [
+                    <Fragment key="1">
+                      <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
+                      <a href="" onClick={oppdaterUrl}>
+                        <FormattedMessage id={apentFaktaPanelInfo.textCode} />
+                      </a>
+                    </Fragment>,
+                  ]
+                : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
+            </AksjonspunktHelpTextHTML>
+            <VerticalSpacer thirtyTwoPx />
+          </>
+        )}
+        {skalVisePeriodeTabs && (
+          <Tabs
+            tabs={[
+              { label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> },
+              { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" /> },
+            ]}
+            onChange={(e, index) => setVisAllePerioder(index === 1)}
+          />
+        )}
+        <VerticalSpacer thirtyTwoPx />
+        <Row className="">
+          <Column xs="6">
+            {filteredPanels
+              .filter((_panel, index) => index < 2)
+              .map((stegData, index) => (
+                <div key={stegData.getId()} className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
+                  {stegData.getProsessStegDelPanelDef().getKomponent({
+                    ...data,
+                    behandling,
+                    alleKodeverk,
+                    submitCallback,
+                    visAllePerioder: !skalVisePeriodeTabs || visAllePerioder,
+                    ...stegData.getKomponentData(),
+                  })}
+                </div>
+              ))}
+          </Column>
+          <Column xs="6">
+            {filteredPanels
+              .filter((_panel, index) => index > 1)
+              .map((stegData, index) => (
+                <div key={stegData.getId()} className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
+                  {stegData.getProsessStegDelPanelDef().getKomponent({
+                    ...data,
+                    behandling,
+                    alleKodeverk,
+                    submitCallback,
+                    visAllePerioder: !skalVisePeriodeTabs || visAllePerioder,
+                    ...stegData.getKomponentData(),
+                  })}
+                </div>
+              ))}
+          </Column>
+        </Row>
+      </FadingPanel>
+    </RawIntlProvider>
   );
 };
 

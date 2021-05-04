@@ -6,6 +6,7 @@ interface ProsessStegMenyRad {
   isDisabled: boolean;
   isFinished: boolean;
   type?: StepType;
+  usePartialStatus: boolean;
 }
 
 export default ProsessStegMenyRad;
