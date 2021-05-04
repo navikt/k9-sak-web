@@ -1,3 +1,5 @@
+export const AINNTEKT_URL = 'https://modapp.adeo.no/a-inntekt'; // /?0#!empty';
+export const AAREG_URL = 'https://modapp.adeo.no/aareg-web'; // /?4';
 export const RETTSKILDE_URL = 'https://lovdata.no/pro/sso/login/nav';
 export const LINK_TIL_BESTE_BEREGNING_REGNEARK =
   'https://navno.sharepoint.com/sites/fag-og-ytelser-familie-foreldrepenger';
