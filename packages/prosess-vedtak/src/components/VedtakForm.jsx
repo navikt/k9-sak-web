@@ -90,12 +90,20 @@ export class VedtakForm extends Component {
       overstyrtMottaker,
       KONTINUERLIG_TILSYN,
       OMSORGEN_FOR,
+      VILKAR_FOR_TO,
+      UNNTAK_FRA_TILSYNSORDNING,
+      BEREGNING_25_PROSENT_AVVIK,
+      OVER_18_AAR,
       ...formProps
     } = this.props;
 
     const informasjonsbehovValues = {
       KONTINUERLIG_TILSYN,
       OMSORGEN_FOR,
+      VILKAR_FOR_TO,
+      UNNTAK_FRA_TILSYNSORDNING,
+      BEREGNING_25_PROSENT_AVVIK,
+      OVER_18_AAR,
     };
 
     return (
@@ -226,6 +234,10 @@ VedtakForm.propTypes = {
   dokumentdata: PropTypes.shape(),
   KONTINUERLIG_TILSYN: PropTypes.string,
   OMSORGEN_FOR: PropTypes.string,
+  VILKAR_FOR_TO: PropTypes.string,
+  UNNTAK_FRA_TILSYNSORDNING: PropTypes.string,
+  BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
+  OVER_18_AAR: PropTypes.string,
   ...formPropTypes,
 };
 
@@ -238,6 +250,10 @@ VedtakForm.defaultProps = {
   dokumentdata: undefined,
   KONTINUERLIG_TILSYN: undefined,
   OMSORGEN_FOR: undefined,
+  VILKAR_FOR_TO: undefined,
+  UNNTAK_FRA_TILSYNSORDNING: undefined,
+  BEREGNING_25_PROSENT_AVVIK: undefined,
+  OVER_18_AAR: undefined,
 };
 
 export const buildInitialValues = createSelector(
@@ -281,6 +297,10 @@ export const buildInitialValues = createSelector(
     begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
     KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
     OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
+    VILKAR_FOR_TO: dokumentdata?.VILKAR_FOR_TO,
+    UNNTAK_FRA_TILSYNSORDNING: dokumentdata?.UNNTAK_FRA_TILSYNSORDNING,
+    BEREGNING_25_PROSENT_AVVIK: dokumentdata?.BEREGNING_25_PROSENT_AVVIK,
+    OVER_18_AAR: dokumentdata?.OVER_18_AAR,
   }),
 );
 
