@@ -147,7 +147,7 @@ VurderVarigEndretEllerNyoppstartetSN.defaultProps = {
   erVarigEndretNaering: false,
 };
 
-const verdiErSatt = verdi => verdi !== null && verdi !== undefined;
+const verdiErSatt = verdi => typeof verdi === 'number';
 
 VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
   if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
