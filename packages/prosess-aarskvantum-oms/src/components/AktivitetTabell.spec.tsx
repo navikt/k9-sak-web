@@ -57,7 +57,7 @@ describe('<AktivitetTabell />', () => {
     );
     const kolonner = wrapper.find('td');
 
-    expect(kolonner).toHaveLength(5);
+    expect(kolonner).toHaveLength(6);
 
     const kolonnerMedTekst = tekst => kolonner.findWhere(kolonne => kolonne.text() === tekst);
     const kolonnerMedFormatterTekstId = tekstId =>
