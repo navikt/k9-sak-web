@@ -108,10 +108,14 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
 
 const VurderOgFastsettSN = connect(mapStateToPropsFactory)(VurderOgFastsettSNImpl);
 
-VurderOgFastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => ({
-  ...VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(relevanteAndeler, gjeldendeAksjonspunkter),
-  ...FastsettSN.buildInitialValues(relevanteAndeler, gjeldendeAksjonspunkter),
-});
+VurderOgFastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
+  if (hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
+    return FastsettSN.buildInitialValuesNyIArbeidslivet(relevanteAndeler, gjeldendeAksjonspunkter);
+  }
+  return {
+    ...VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(relevanteAndeler, gjeldendeAksjonspunkter),
+  };
+};
 
 VurderOgFastsettSN.transformValues = (values, gjeldendeAksjonspunkter) => {
   if (hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {

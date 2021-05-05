@@ -161,7 +161,7 @@ VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gje
     return {
       [varigEndringRadioname]: isAksjonspunktOpen(varigEndretNaeringAP.status.kode)
         ? undefined
-        : relevanteAndeler[0].overstyrtPrAar !== null,
+        : !!relevanteAndeler[0].overstyrtPrAar || relevanteAndeler[0].overstyrtPrAar === 0,
       [begrunnelseFieldname]: varigEndretNaeringAP.begrunnelse ? varigEndretNaeringAP.begrunnelse : '',
       [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,
     };
