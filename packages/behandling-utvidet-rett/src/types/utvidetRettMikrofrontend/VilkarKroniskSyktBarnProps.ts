@@ -1,3 +1,4 @@
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface VilkarKroniskSyktBarnProps {
@@ -8,6 +9,7 @@ export interface VilkarKroniskSyktBarnProps {
   lesemodus: boolean;
   informasjonTilLesemodus?: InformasjonTilLesemodusKroniskSyk;
   losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode) => void;
+  formState: FormStateType;
 }
 
 export interface InformasjonTilLesemodusKroniskSyk {

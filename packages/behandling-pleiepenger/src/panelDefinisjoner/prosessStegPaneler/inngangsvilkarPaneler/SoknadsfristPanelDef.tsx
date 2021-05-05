@@ -1,4 +1,5 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
@@ -10,7 +11,7 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getKomponent = props => this.overstyringDef.getKomponent(props);
 
-  getAksjonspunktKoder = () => [];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR];
 
   getVilkarKoder = () => [vilkarType.SOKNADSFRISTVILKARET];
 
