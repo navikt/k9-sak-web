@@ -148,10 +148,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
     : arbeidsforholdType;
 
   const skalÅrsakVises =
-    uttaksperioder.find(
-      periode =>
-        periode.fraværÅrsak !== FraværÅrsakEnum.ORDINÆRT_FRAVÆR && periode.fraværÅrsak !== FraværÅrsakEnum.UDEFINERT,
-    ) !== undefined;
+    uttaksperioder.find(periode => periode.fraværÅrsak !== FraværÅrsakEnum.UDEFINERT) !== undefined;
 
   const antallKolonner = skalÅrsakVises ? 6 : 5;
 
