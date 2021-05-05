@@ -147,6 +147,8 @@ VurderVarigEndretEllerNyoppstartetSN.defaultProps = {
   erVarigEndretNaering: false,
 };
 
+const verdiErSatt = verdi => verdi !== null && verdi !== undefined;
+
 VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
   if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
     return undefined;
@@ -157,11 +159,12 @@ VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gje
   const varigEndretNaeringAP = gjeldendeAksjonspunkter.find(
     ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
+  const varigEndringValg = isAksjonspunktOpen(varigEndretNaeringAP.status.kode)
+    ? undefined
+    : verdiErSatt(snAndel.overstyrtPrAar);
   if (varigEndretNaeringAP) {
     return {
-      [varigEndringRadioname]: isAksjonspunktOpen(varigEndretNaeringAP.status.kode)
-        ? undefined
-        : !!relevanteAndeler[0].overstyrtPrAar || relevanteAndeler[0].overstyrtPrAar === 0,
+      [varigEndringRadioname]: varigEndringValg,
       [begrunnelseFieldname]: varigEndretNaeringAP.begrunnelse ? varigEndretNaeringAP.begrunnelse : '',
       [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,
     };
