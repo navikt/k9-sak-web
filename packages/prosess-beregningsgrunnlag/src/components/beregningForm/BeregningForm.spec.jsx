@@ -10,7 +10,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
-import shallowWithIntl from '@fpsak-frontend/prosess-vedtak/i18n';
+import shallowWithIntl from '../../../i18n';
 import { BeregningFormImpl, transformValues } from './BeregningForm';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel2 from '../fellesPaneler/SkjeringspunktOgStatusPanel';
@@ -19,25 +19,13 @@ import Beregningsgrunnlag from '../beregningsgrunnlagPanel/Beregningsgrunnlag';
 import BeregningsresultatTable from '../beregningsresultatPanel/BeregningsresultatTable';
 import { buildInitialValuesForBeregningrunnlag } from '../BeregningFP';
 
-const apVurderDekningsgrad = {
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_DEKNINGSGRAD,
-    navn: 'apNavn2',
-  },
-  status: {
-    kode: 'OPPR',
-    navn: 'statusNavn2',
-  },
-  kanLoses: true,
-  erAktivt: true,
-};
 const apFastsettBgATFL = {
   definisjon: {
     kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     navn: 'apNavn1',
   },
   status: {
-    kode: 'UTFO',
+    kode: 'OPPR',
     navn: 'statusNavn1',
   },
   kanLoses: false,
@@ -82,7 +70,19 @@ const apFastsettBgTidsbegrensetArbeidsforhold = {
   erAktivt: true,
 };
 
-const apEttLukketOgEttApent = [apFastsettBgATFL, apVurderDekningsgrad];
+const aksjonspunktliste = [apFastsettBgATFL];
+
+const atAndel = [
+  {
+    aktivitetStatus: {
+      kode: aktivitetStatus.ARBEIDSTAKER,
+    },
+    elementNavn: 'arbeidsgiver 1',
+    beregnetPrAar: 200000,
+    overstyrtPrAar: 100,
+    andelsnr: 1,
+  },
+];
 
 const allAndeler = [
   {
@@ -186,7 +186,7 @@ describe('<BeregningForm>', () => {
         fieldArrayID="dummyId"
         readOnly={false}
         beregningsgrunnlag={beregningsgrunnlag}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+        gjeldendeAksjonspunkter={aksjonspunktliste}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton
@@ -209,7 +209,7 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+        gjeldendeAksjonspunkter={aksjonspunktliste}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -229,7 +229,7 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+        gjeldendeAksjonspunkter={aksjonspunktliste}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -242,7 +242,12 @@ describe('<BeregningForm>', () => {
       />,
     );
     const skjeringspunktOgStatusPanel = wrapper.find(SkjeringspunktOgStatusPanel2);
-    expect(skjeringspunktOgStatusPanel.props().gjeldendeAksjonspunkter).to.equal(apEttLukketOgEttApent);
+    expect(skjeringspunktOgStatusPanel.props().aktivitetStatusList).to.deep.equal([
+      {
+        kode: 'AT',
+        kodeverk: 'AKTIVITET_STATUS',
+      },
+    ]);
   });
 
   it('skal teste at Aksjonspunktbehandler får korrekte props fra BeregningFP', () => {
@@ -250,7 +255,7 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+        gjeldendeAksjonspunkter={aksjonspunktliste}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -267,7 +272,7 @@ describe('<BeregningForm>', () => {
     expect(aksjonspunktBehandler.props().tidsBegrensetInntekt).to.have.equal(false);
     const expectedPerioder = lagPeriode();
     expect(aksjonspunktBehandler.props().allePerioder[0]).to.eql(expectedPerioder);
-    expect(aksjonspunktBehandler.props().aksjonspunkter).to.eql(apEttLukketOgEttApent);
+    expect(aksjonspunktBehandler.props().aksjonspunkter).to.eql(aksjonspunktliste);
   });
 
   it('skal teste at Beregningsgrunnlag får korrekte props fra BeregningFP', () => {
@@ -276,7 +281,7 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+        gjeldendeAksjonspunkter={aksjonspunktliste}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -292,7 +297,7 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = wrapper.find(Beregningsgrunnlag);
     expect(beregningsgrunnlag.props().relevanteStatuser).to.have.equal(relevanteStatuser);
     expect(beregningsgrunnlag.props().readOnly).to.have.equal(false);
-    expect(beregningsgrunnlag.props().gjeldendeAksjonspunkter).to.have.equal(apEttLukketOgEttApent);
+    expect(beregningsgrunnlag.props().gjeldendeAksjonspunkter).to.have.equal(aksjonspunktliste);
     expect(beregningsgrunnlag.props().formName).to.have.equal(formName);
     expect(beregningsgrunnlag.props().readOnlySubmitButton).to.have.equal(true);
     expect(beregningsgrunnlag.props().submitCallback).to.have.equal(sinon.spy);
@@ -306,7 +311,7 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+        gjeldendeAksjonspunkter={aksjonspunktliste}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -329,7 +334,7 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+        gjeldendeAksjonspunkter={aksjonspunktliste}
         beregningsgrunnlag={bg}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -349,92 +354,47 @@ describe('<BeregningForm>', () => {
     expect(beregningsResultatPanel).to.have.lengthOf(1);
   });
 
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5039, samt varigEndring', () => {
+  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5039, varigEndring', () => {
     const values = {
       fellesVurdering: 'bbb',
-      begrunnDekningsgradEndring: 'aaa',
-      dekningsgrad: 100,
       bruttoBeregningsgrunnlag: 240000,
       erVarigEndretNaering: true,
     };
-    const aksjonspunkter = [apVurderDekningsgrad, apVurderVarigEndretEllerNyoppstartetSN];
+    const aksjonspunkter = [apVurderVarigEndretEllerNyoppstartetSN];
     const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
-    expect(result).to.have.lengthOf(2);
-    expect(result[0].kode).to.have.equal('5087');
-    expect(result[1].kode).to.have.equal('5039');
+    expect(result).to.have.lengthOf(1);
+    expect(result[0].kode).to.have.equal('5039');
   });
 
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5039, uten varigEndring', () => {
+  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5039, uten varigEndring', () => {
     const values = {
       fellesVurdering: 'bbb',
-      begrunnDekningsgradEndring: 'aaa',
-      dekningsgrad: 100,
       bruttoBeregningsgrunnlag: 240000,
       erVarigEndretNaering: false,
     };
-    const aksjonspunkter = [apVurderDekningsgrad, apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
-    expect(result).to.have.lengthOf(2);
-    expect(result[0].kode).to.have.equal('5087');
-    expect(result[1].kode).to.have.equal('5039');
-  });
-
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5049', () => {
-    const values = {
-      fellesVurdering: 'bbb',
-      begrunnDekningsgradEndring: 'aaa',
-      dekningsgrad: 100,
-      bruttoBeregningsgrunnlag: 240000,
-    };
-    const aksjonspunkter = [apVurderDekningsgrad, apFastsettBgSnNyIArbeidslivet];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
-    expect(result).to.have.lengthOf(2);
-    expect(result[0].kode).to.have.equal('5087');
-    expect(result[1].kode).to.have.equal('5049');
-  });
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5038', () => {
-    const values = {
-      fellesVurdering: 'bbb',
-      begrunnDekningsgradEndring: 'aaa',
-      dekningsgrad: 100,
-      bruttoBeregningsgrunnlag: 240000,
-    };
-    const aksjonspunkter = [apVurderDekningsgrad, apFastsettBgATFL];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
-    expect(result).to.have.lengthOf(2);
-    expect(result[0].kode).to.have.equal('5087');
-    expect(result[1].kode).to.have.equal('5038');
-  });
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5039', () => {
-    const values = {
-      fellesVurdering: 'bbb',
-      begrunnDekningsgradEndring: 'aaa',
-      dekningsgrad: 100,
-      bruttoBeregningsgrunnlag: 240000,
-    };
-    const aksjonspunkter = [apVurderDekningsgrad, apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
-    expect(result).to.have.lengthOf(2);
-    expect(result[0].kode).to.have.equal('5087');
-    expect(result[1].kode).to.have.equal('5039');
-  });
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087', () => {
-    const values = {
-      begrunnDekningsgradEndring: 'aaa',
-      dekningsgrad: 100,
-    };
-    const aksjonspunkt = [apVurderDekningsgrad];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
+    const aksjonspunkter = [apVurderVarigEndretEllerNyoppstartetSN];
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
     expect(result).to.have.lengthOf(1);
-    expect(result[0].kode).to.have.equal('5087');
+    expect(result[0].kode).to.have.equal('5039');
+  });
+  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5038', () => {
+    const values = {
+      ATFLVurdering: 'bbb',
+      inntekt0: 200000,
+    };
+    const aksjonspunkter = [apFastsettBgATFL];
+    const result = transformValues(values, relevanteStatuser, atAndel, aksjonspunkter, allPerioder);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0].kode).to.have.equal('5038');
   });
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5039', () => {
     const values = {
       fellesVurdering: 'bbb',
+      erVarigEndretNaering: true,
       bruttoBeregningsgrunnlag: 240000,
     };
     const aksjonspunkt = [apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5039');
   });
@@ -444,16 +404,9 @@ describe('<BeregningForm>', () => {
       bruttoBeregningsgrunnlag: 240000,
     };
     const aksjonspunkt = [apFastsettBgSnNyIArbeidslivet];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5049');
-  });
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5038', () => {
-    const values = {};
-    const aksjonspunkt = [apFastsettBgATFL];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
-    expect(result).to.have.lengthOf(1);
-    expect(result[0].kode).to.have.equal('5038');
   });
   it('skal teste buildInitialValues', () => {
     const gjeldendeAksjonspunkter = [apFastsettBgTidsbegrensetArbeidsforhold];
@@ -462,9 +415,7 @@ describe('<BeregningForm>', () => {
     const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, gjeldendeAksjonspunkter);
     const expectedValues = {
       ATFLVurdering: undefined,
-      begrunnDekningsgradEndring: '',
       undefined: '',
-      dekningsgrad: undefined,
     };
     expect(actualValues).to.deep.equal(expectedValues);
   });

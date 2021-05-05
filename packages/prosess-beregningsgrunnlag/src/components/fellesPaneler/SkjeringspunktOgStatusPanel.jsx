@@ -9,15 +9,11 @@ import { DateLabel, FlexContainer, FlexColumn, FlexRow, VerticalSpacer } from '@
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
 import styles from './skjeringspunktOgStatusPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
-
-export const RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN = 'dekningsgrad';
 
 const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
   const statusList = [];
@@ -84,13 +80,5 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const SkjeringspunktOgStatusPanel = connect(mapStateToProps)(SkjeringspunktOgStatusPanelImpl);
-
-SkjeringspunktOgStatusPanel.buildInitialValues = (gjeldendeDekningsgrad, gjeldendeAksjonspunkter) => {
-  const aksjonspunkt =
-    gjeldendeAksjonspunkter &&
-    gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_DEKNINGSGRAD);
-  const initialDekningsgrad = aksjonspunkt && gjeldendeDekningsgrad === 100 ? gjeldendeDekningsgrad : undefined;
-  return { [RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN]: initialDekningsgrad };
-};
 
 export default SkjeringspunktOgStatusPanel;
