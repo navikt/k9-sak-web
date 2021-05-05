@@ -120,38 +120,25 @@ FastsettSN.propTypes = {
   fieldArrayID: PropTypes.string.isRequired,
 };
 
-FastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
+FastsettSN.buildInitialValuesNyIArbeidslivet = (relevanteAndeler, gjeldendeAksjonspunkter) => {
   if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
     return undefined;
   }
-
   const snAndel = relevanteAndeler.find(
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
-
-  // Vi vil kun ha et av disse aksjonspunktene om gangen
-  const fastsettBruttoEtterVarigEndring = gjeldendeAksjonspunkter.find(
-    ap => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-  );
-  const fastsettBruttoNyIArbeidslivet = gjeldendeAksjonspunkter.find(
+  const nyIArbeidslivetAP = gjeldendeAksjonspunkter.find(
     ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   );
-  const gjeldendeAP = fastsettBruttoEtterVarigEndring || fastsettBruttoNyIArbeidslivet;
-
-  if (gjeldendeAP || snAndel.overstyrtPrAar || snAndel.overstyrtPrAar === 0) {
-    return {
-      [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,
-      [begrunnelseFieldname]: gjeldendeAP && gjeldendeAP.begrunnelse ? gjeldendeAP.begrunnelse : '',
-    };
-  }
-  return undefined;
+  return {
+    [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,
+    [begrunnelseFieldname]: nyIArbeidslivetAP && nyIArbeidslivetAP.begrunnelse ? nyIArbeidslivetAP.begrunnelse : '',
+  };
 };
 
-FastsettSN.transformValuesMedBegrunnelse = values => ({
+FastsettSN.transformValuesNyIArbeidslivet = values => ({
+  kode: FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   begrunnelse: values[begrunnelseFieldname],
-  bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
-});
-FastsettSN.transformValuesUtenBegrunnelse = values => ({
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
 
