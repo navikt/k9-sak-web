@@ -6,7 +6,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import styles from '../vedtakForm.less';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
@@ -20,8 +19,6 @@ export const getSubmitKnappTekst = createSelector([ownProps => ownProps.aksjonsp
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
   formProps,
-  skalBrukeOverstyrendeFritekstBrev,
-  ytelseTypeKode,
   readOnly,
   submitKnappTextId,
   harRedusertUtbetaling,
@@ -44,10 +41,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           spinner={formProps.submitting}
         >
           {intl.formatMessage({
-            id:
-              skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.FRISINN
-                ? 'VedtakForm.TilGodkjenning'
-                : submitKnappTextId,
+            id: submitKnappTextId,
           })}
         </Hovedknapp>
       )}
@@ -57,17 +51,11 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 
 VedtakRevurderingSubmitPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
   submitKnappTextId: PropTypes.string.isRequired,
   harRedusertUtbetaling: PropTypes.bool.isRequired,
   visFeilmeldingFordiArsakerMangler: PropTypes.func.isRequired,
-};
-
-VedtakRevurderingSubmitPanelImpl.defaultProps = {
-  skalBrukeOverstyrendeFritekstBrev: undefined,
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(

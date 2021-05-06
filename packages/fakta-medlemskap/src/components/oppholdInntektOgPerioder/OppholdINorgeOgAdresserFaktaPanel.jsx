@@ -84,12 +84,6 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
       <Column xs="6">
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">
           <Undertekst>
-            <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingInNorway" />
-          </Undertekst>
-          <VerticalSpacer fourPx />
-          {sjekkOpphold(opphold.oppholdNorgeNa, intl)}
-          <VerticalSpacer sixteenPx />
-          <Undertekst>
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingInNorwayLast12" />
           </Undertekst>
           <VerticalSpacer fourPx />
