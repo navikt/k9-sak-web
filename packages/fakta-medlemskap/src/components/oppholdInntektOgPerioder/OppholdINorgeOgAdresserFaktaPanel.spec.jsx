@@ -65,11 +65,10 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       />,
     );
     const felter = wrapper.find(Normaltekst);
-    expect(felter).to.have.length(5);
+    expect(felter).to.have.length(4);
     expect(felter.first().childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.Yes');
-    expect(felter.at(1).childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.Yes');
-    expect(felter.at(2).childAt(0).text()).to.eql('Sverige');
-    expect(felter.at(4).childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.No');
+    expect(felter.at(1).childAt(0).text()).to.eql('Sverige');
+    expect(felter.at(3).childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.No');
   });
 
   it('skal rendre form som viser bosatt informasjon', () => {
