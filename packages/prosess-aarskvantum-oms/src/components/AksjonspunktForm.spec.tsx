@@ -3,6 +3,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { CheckboxField, RadioOption } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { shallowWithIntl } from '../../i18n';
 import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues } from './AksjonspunktForm';
 
@@ -11,6 +12,7 @@ import Aktivitet from '../dto/Aktivitet';
 describe('<AksjonspunktForm>', () => {
   const uavklartPeriode: Uttaksperiode = {
     utfall: UtfallEnum.UAVKLART,
+    fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
     periode: '2020-03-01/2020-03-31',
     utbetalingsgrad: 0,
     hjemler: [],
@@ -23,6 +25,7 @@ describe('<AksjonspunktForm>', () => {
 
   const innvilgetPeriode: Uttaksperiode = {
     utfall: UtfallEnum.INNVILGET,
+    fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
     periode: '2020-03-01/2020-03-31',
     utbetalingsgrad: 100,
     hjemler: [],
