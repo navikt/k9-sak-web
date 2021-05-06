@@ -147,6 +147,8 @@ VurderVarigEndretEllerNyoppstartetSN.defaultProps = {
   erVarigEndretNaering: false,
 };
 
+const verdiErSatt = verdi => typeof verdi === 'number';
+
 VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
   if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
     return undefined;
@@ -157,11 +159,12 @@ VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gje
   const varigEndretNaeringAP = gjeldendeAksjonspunkter.find(
     ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
+  const varigEndringValg = isAksjonspunktOpen(varigEndretNaeringAP.status.kode)
+    ? undefined
+    : verdiErSatt(snAndel.overstyrtPrAar);
   if (varigEndretNaeringAP) {
     return {
-      [varigEndringRadioname]: isAksjonspunktOpen(varigEndretNaeringAP.status.kode)
-        ? undefined
-        : relevanteAndeler[0].overstyrtPrAar !== null,
+      [varigEndringRadioname]: varigEndringValg,
       [begrunnelseFieldname]: varigEndretNaeringAP.begrunnelse ? varigEndretNaeringAP.begrunnelse : '',
       [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,
     };
@@ -169,10 +172,14 @@ VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gje
   return undefined;
 };
 
-VurderVarigEndretEllerNyoppstartetSN.transformValues = values => ({
-  begrunnelse: values[begrunnelseFieldname],
-  erVarigEndretNaering: values[varigEndringRadioname],
-  bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
-});
+VurderVarigEndretEllerNyoppstartetSN.transformValues = values => {
+  const erVarigEndring = values[varigEndringRadioname];
+  return {
+    kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+    begrunnelse: values[begrunnelseFieldname],
+    erVarigEndretNaering: erVarigEndring,
+    bruttoBeregningsgrunnlag: erVarigEndring ? removeSpacesFromNumber(values[fastsettInntektFieldname]) : undefined,
+  };
+};
 
 export default injectIntl(VurderVarigEndretEllerNyoppstartetSN);

@@ -11,20 +11,14 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { Undertittel } from 'nav-frontend-typografi';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
-import SkjeringspunktOgStatusPanel, {
-  RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN,
-} from '../fellesPaneler/SkjeringspunktOgStatusPanel';
+import SkjeringspunktOgStatusPanel from '../fellesPaneler/SkjeringspunktOgStatusPanel';
 import VurderOgFastsettSN from '../selvstendigNaeringsdrivende/VurderOgFastsettSN';
-import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
-import Beregningsgrunnlag, {
-  TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING,
-} from '../beregningsgrunnlagPanel/Beregningsgrunnlag';
+import Beregningsgrunnlag from '../beregningsgrunnlagPanel/Beregningsgrunnlag';
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable from '../beregningsresultatPanel/BeregningsresultatTable';
 
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
-import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 import YtelsegrunnlagPanel from '../ytelsesspesifikkseOpplysninger/YtelsegrunnlagPanel';
 
@@ -42,7 +36,6 @@ const {
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
 // ------------------------------------------------------------------------------------------ //
 // Methods
@@ -72,8 +65,6 @@ const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyAr
       return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende2';
     case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
       return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN2';
-    case VURDER_DEKNINGSGRAD:
-      return 'Beregningsgrunnlag.Helptext.BarnetHarDødDeFørsteSeksUkene';
     default:
       return 'Beregningsgrunnlag.Helptext.Ukjent';
   }
@@ -83,11 +74,7 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   if (gjeldendeAksjonspunkter === undefined || gjeldendeAksjonspunkter === null) {
     return undefined;
   }
-  const vurderDekninsgradAksjonspunkt = gjeldendeAksjonspunkter.filter(
-    ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD,
-  );
-  const sorterteAksjonspunkter = vurderDekninsgradAksjonspunkt.concat(gjeldendeAksjonspunkter);
-  const apneAksjonspunkt = sorterteAksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode));
+  const apneAksjonspunkt = gjeldendeAksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode));
   const erDetMinstEttApentAksjonspunkt = apneAksjonspunkt.length > 0;
   const snAndel = alleAndelerIForstePeriode.find(
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
@@ -120,28 +107,6 @@ const harAksjonspunkt = (aksjonspunktKode, gjeldendeAksjonspunkter) =>
   gjeldendeAksjonspunkter !== null &&
   gjeldendeAksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktKode);
 
-const transformValuesATFLHverForSeg = (values, skalFastsetteAT, skalFastsetteFL, alleAndelerIForstePeriode) => [
-  {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-    begrunnelse: AksjonspunktBehandler.transformValues(values),
-    inntektFrilanser: skalFastsetteFL ? AksjonspunktBehandlerFL.transformValuesForFL(values) : undefined,
-    inntektPrAndelList: skalFastsetteAT
-      ? AksjonspunktBehandlerAT.transformValuesForAT(values, alleAndelerIForstePeriode)
-      : undefined,
-  },
-];
-
-const transformValuesATFLHverForSegTidsbegrenset = (values, skalFastsetteAT, skalFastsetteFL, allePerioder) => [
-  {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-    begrunnelse: AksjonspunktBehandler.transformValues(values),
-    inntektFrilanser: skalFastsetteFL ? AksjonspunktBehandlerFL.transformValuesForFL(values) : undefined,
-    fastsatteTidsbegrensedePerioder: skalFastsetteAT
-      ? AksjonspunktBehandlerTB.transformValues(values, allePerioder)
-      : undefined,
-  },
-];
-
 function leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunktListe, skjæringstidspunkt) {
   return aksjonspunktListe.map(aksjonspunkt => ({
     ...aksjonspunkt,
@@ -155,39 +120,14 @@ export const transformValues = (
   alleAndelerIForstePeriode,
   gjeldendeAksjonspunkter,
   allePerioder,
-  harNyttIkkeSamletSammenligningsgrunnlag,
 ) => {
-  const skalFastsetteAT = alleAndelerIForstePeriode.some(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.skalFastsetteGrunnlag,
-  );
-  const skalFastsetteFL = alleAndelerIForstePeriode.some(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER && andel.skalFastsetteGrunnlag,
-  );
-  const skalATOgFLFastsettesHverForSeg =
-    (skalFastsetteAT || skalFastsetteFL) && harNyttIkkeSamletSammenligningsgrunnlag;
   const harTidsbegrensedeArbeidsforhold = harPerioderMedAvsluttedeArbeidsforhold(allePerioder);
   const aksjonspunkter = [];
   const { skjæringstidspunkt } = values;
-  const vurderDekningsgradAksjonspunkt = {
-    kode: VURDER_DEKNINGSGRAD,
-    begrunnelse: values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING],
-    dekningsgrad: values[RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN],
-  };
-  if (harAksjonspunkt(VURDER_DEKNINGSGRAD, gjeldendeAksjonspunkter)) {
-    aksjonspunkter.push(vurderDekningsgradAksjonspunkt);
-  }
   if (
     harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, gjeldendeAksjonspunkter) &&
     !harTidsbegrensedeArbeidsforhold
   ) {
-    if (skalATOgFLFastsettesHverForSeg) {
-      return leggPåSkjæringstidspunktPåAksjonspunktListe(
-        aksjonspunkter.concat(
-          transformValuesATFLHverForSeg(values, skalFastsetteAT, skalFastsetteFL, alleAndelerIForstePeriode),
-        ),
-        skjæringstidspunkt,
-      );
-    }
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
       aksjonspunkter.concat(
         AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode),
@@ -212,10 +152,6 @@ export const transformValues = (
       harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, gjeldendeAksjonspunkter)) &&
     harTidsbegrensedeArbeidsforhold
   ) {
-    if (skalATOgFLFastsettesHverForSeg) {
-      const t = transformValuesATFLHverForSegTidsbegrenset(values, skalFastsetteAT, skalFastsetteFL, allePerioder);
-      return leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunkter.concat(t), skjæringstidspunkt);
-    }
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
       aksjonspunkter.concat(Beregningsgrunnlag.transformValues(values, allePerioder)),
       skjæringstidspunkt,
