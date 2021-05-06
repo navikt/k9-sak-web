@@ -24,7 +24,7 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <MedlemskapFaktaIndex {...props} />;
 
-  getOverstyrVisningAvKomponent = () => false;
+  getOverstyrVisningAvKomponent = ({ personopplysninger, soknad }) => personopplysninger && soknad;
 
   getData = ({ fagsakPerson, soknad, personopplysninger }) => ({
     fagsakPerson,
