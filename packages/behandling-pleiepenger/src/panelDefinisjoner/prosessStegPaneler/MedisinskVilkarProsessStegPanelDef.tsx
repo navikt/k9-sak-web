@@ -30,11 +30,7 @@ class PanelDef extends ProsessStegPanelDef {
       pleietrengendeErOver18år: true,
     }));
     const allePerioder = perioderUnder18.concat(perioderOver18);
-    return (
-      <>
-        <SykdomProsessIndex {...props} perioder={allePerioder} />
-      </>
-    );
+    return <SykdomProsessIndex {...props} perioder={allePerioder} />;
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
