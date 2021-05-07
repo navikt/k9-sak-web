@@ -38,7 +38,7 @@ function lagDokumentdata(aksjonspunktModell) {
       ? { [dokumentdatatype.OVERSTYRT_MOTTAKER]: aksjonspunktModell.overstyrtMottaker }
       : {}),
   };
-  aksjonspunktModell.begrunnelserMedInformasjonsbehov.forEach(({ kode, begrunnelse }) => {
+  aksjonspunktModell.begrunnelserMedInformasjonsbehov?.forEach(({ kode, begrunnelse }) => {
     dokumentdata[kode] = begrunnelse;
   });
   return dokumentdata;
