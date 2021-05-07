@@ -60,7 +60,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   let lovReferanse = '§ 9-10 andre ledd';
   if (activePeriode.pleietrengendeErOver18år) {
-    lovReferanse = '§ 9-10 tredje ledd';
+    lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
   }
 
   return (
