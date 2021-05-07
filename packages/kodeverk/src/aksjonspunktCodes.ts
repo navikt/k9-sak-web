@@ -48,10 +48,6 @@ const aksjonspunktCodes = {
   VURDERING_AV_FORMKRAV_KLAGE_NFP: '5082',
   VURDERING_AV_FORMKRAV_KLAGE_KA: '5083',
   VURDER_FEILUTBETALING: '5084',
-
-  // TODO Fjern dette
-  VURDER_DEKNINGSGRAD: '5087',
-
   VURDER_TILBAKETREKK: '5090',
   SOKERS_OPPLYSNINGSPLIKT_OVST: '6002',
   OVERSTYR_FODSELSVILKAR: '6003',
@@ -109,7 +105,6 @@ const beregningAksjonspunkter = [
   aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  aksjonspunktCodes.VURDER_DEKNINGSGRAD,
 ];
 
 const aksjonspunktIsOfType = (validAksjonspunktCodes: string[]) => (aksjonspunktCode: string): boolean =>

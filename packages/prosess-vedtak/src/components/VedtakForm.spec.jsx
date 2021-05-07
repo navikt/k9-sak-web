@@ -317,6 +317,7 @@ describe('<VedtakForm>', () => {
           navn: 'Opprettet',
           kode: aksjonspunktStatus.OPPRETTET,
         },
+        toTrinnsBehandling: true,
         kanLoses: true,
         erAktivt: true,
       },
@@ -380,6 +381,7 @@ describe('<VedtakForm>', () => {
           navn: 'Opprettet',
           kode: aksjonspunktStatus.OPPRETTET,
         },
+        toTrinnsBehandling: true,
         kanLoses: true,
         erAktivt: true,
       },
@@ -445,6 +447,7 @@ describe('<VedtakForm>', () => {
           navn: 'Opprettet',
           kode: aksjonspunktStatus.OPPRETTET,
         },
+        toTrinnsBehandling: false,
         kanLoses: true,
         erAktivt: true,
       },
@@ -488,7 +491,7 @@ describe('<VedtakForm>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('Fatt vedtak');
   });
 
   it('skal ikke vise knapper når status er avsluttet', () => {

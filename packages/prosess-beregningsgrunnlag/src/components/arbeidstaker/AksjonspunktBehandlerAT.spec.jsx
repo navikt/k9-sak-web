@@ -101,9 +101,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     };
     const values = {
       ATFLVurdering: 'Vurdering',
-      begrunnDekningsgradEndring: '',
       inntekt0: '242 000',
-      dekningsgrad: undefined,
     };
     values;
     const expectedInitialValues = {
@@ -124,9 +122,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     const andeler = [mockAndel('123', 100, 200000, true)];
     const values = {
       ATFLVurdering: 'Vurdering',
-      begrunnDekningsgradEndring: '',
       inntekt0: '242 000',
-      dekningsgrad: undefined,
     };
     values;
     const expectedInitialValues = [
