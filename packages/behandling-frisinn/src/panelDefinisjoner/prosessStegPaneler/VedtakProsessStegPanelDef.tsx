@@ -25,13 +25,16 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = (featureToggles: FeatureToggles = {}) =>
+  getEndepunkter = (featureToggles: FeatureToggles) =>
     [
       FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG,
       FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
       FrisinnBehandlingApiKeys.VEDTAK_VARSEL,
-      FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-    ].concat(featureToggles.DOKUMENTDATA ? [FrisinnBehandlingApiKeys.DOKUMENTDATA_HENTE] : []);
+    ].concat(
+      featureToggles?.DOKUMENTDATA
+        ? [FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV, FrisinnBehandlingApiKeys.DOKUMENTDATA_HENTE]
+        : [],
+    );
 
   getOverstyrVisningAvKomponent = () => true;
 

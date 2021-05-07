@@ -45,6 +45,7 @@ const VedtakProsessIndex = ({
   arbeidsgiverOpplysningerPerId,
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
+  informasjonsbehovVedtaksbrev,
   dokumentdataHente,
 }) => (
   <RawIntlProvider value={intl}>
@@ -76,6 +77,7 @@ const VedtakProsessIndex = ({
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       vedtakVarsel={vedtakVarsel}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+      informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
       dokumentdata={dokumentdataHente}
     />
   </RawIntlProvider>
@@ -102,6 +104,9 @@ VedtakProsessIndex.propTypes = {
   beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
   vedtakVarsel: vedtakVarselPropType,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
   dokumentdataHente: PropTypes.shape(),
 };
 
@@ -113,6 +118,7 @@ VedtakProsessIndex.defaultProps = {
   sendVarselOmRevurdering: false,
   beregningsgrunnlag: undefined,
   tilgjengeligeVedtaksbrev: undefined,
+  informasjonsbehovVedtaksbrev: undefined,
 };
 
 export default VedtakProsessIndex;

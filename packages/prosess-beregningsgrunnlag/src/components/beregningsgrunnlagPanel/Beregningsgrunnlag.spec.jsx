@@ -4,10 +4,7 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import Beregningsgrunnlag, {
-  BeregningsgrunnlagImpl,
-  TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING,
-} from './Beregningsgrunnlag';
+import Beregningsgrunnlag, { BeregningsgrunnlagImpl } from './Beregningsgrunnlag';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
@@ -136,23 +133,6 @@ const selvstendigNyIArbAksjonspunkt = {
   vilkarType: null,
   kanLoses: true,
 };
-const vurderAksjonspunktDekningsgrad = {
-  id: 56,
-  erAktivt: true,
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_DEKNINGSGRAD,
-    navn: 'Vurder Dekningsgrad',
-  },
-  toTrinnsBehandling: false,
-  status: {
-    kode: 'OPPR',
-    navn: 'Opprettet',
-  },
-  begrunnelse: 'begrunnelse dekningsgrad',
-  vilkarType: null,
-  kanLoses: true,
-};
-
 const formName = 'BeregningForm';
 const alleKodeverk = {
   test: 'test',
@@ -417,16 +397,9 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(0);
     expect(wrapper.find(MilitaerPanel)).to.have.length(1);
   });
-  it('Skal teste buildInitialValues med ATFL og vurderDekningsgrad aksjonspunkt', () => {
-    const aksjonspunkter = [vurderAksjonspunktDekningsgrad, atflAksjonspunkt];
-    const values = Beregningsgrunnlag.buildInitialValues(aksjonspunkter);
-    expect(values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING]).to.equal('begrunnelse dekningsgrad');
-    expect(values.ATFLVurdering).to.equal('begrunnelse arbeidstaker/frilans');
-  });
   it('Skal teste buildInitialValues uten aksjonspunkter', () => {
     const aksjonspunkter = [];
     const values = Beregningsgrunnlag.buildInitialValues(aksjonspunkter);
-    expect(values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING]).to.equal('');
     expect(values.ATFLVurdering).to.equal('');
   });
   it('Skal teste at transformValues gir forventet resultat', () => {

@@ -4,6 +4,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import findStatusForVedtak from '@fpsak-frontend/utils/src/findStatusForVedtak';
+import { FeatureToggles } from '@k9-sak-web/types';
 import { UtvidetRettBehandlingApiKeys } from '../../data/utvidetRettBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
@@ -11,14 +12,17 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.FORESLA_VEDTAK, aksjonspunktCodes.FATTER_VEDTAK];
 
-  getEndepunkter = () => [
-    UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG,
-    UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
-    UtvidetRettBehandlingApiKeys.MEDLEMSKAP,
-    UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL,
-    UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-    UtvidetRettBehandlingApiKeys.DOKUMENTDATA_HENTE,
-  ];
+  getEndepunkter = (featureToggles: FeatureToggles) =>
+    [
+      UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG,
+      UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+      UtvidetRettBehandlingApiKeys.MEDLEMSKAP,
+      UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL,
+    ].concat(
+      featureToggles?.DOKUMENTDATA
+        ? [UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV, UtvidetRettBehandlingApiKeys.DOKUMENTDATA_HENTE]
+        : [],
+    );
 
   getOverstyrVisningAvKomponent = () => true;
 

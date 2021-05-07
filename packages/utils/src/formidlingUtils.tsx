@@ -1,4 +1,4 @@
-import { Behandling, Fagsak, FagsakPerson, Personopplysninger, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Personopplysninger } from '@k9-sak-web/types';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -6,7 +6,6 @@ import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 interface TilgjengeligeVedtaksbrev {
-  vedtaksbrev: Array<string>;
   begrunnelse: string;
   alternativeMottakere: Array<{
     id: string;
@@ -39,28 +38,24 @@ export function lagVisningsnavnForMottaker(
   return mottakerId;
 }
 
-function lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): Array<string> {
-  if (tilgjengeligeVedtaksbrev.vedtaksbrevmaler) {
-    return Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler);
-  }
-  // tilgjengeligeVedtaksbrev.vedtaksbrev kan fjernes når vedtaksbrevmaler i formidling og dokumentdata er prodsatt
-  return tilgjengeligeVedtaksbrev.vedtaksbrev ?? [];
+function vedtaksbrevmaler(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev) {
+  return tilgjengeligeVedtaksbrev?.vedtaksbrevmaler ? Object.keys(tilgjengeligeVedtaksbrev.vedtaksbrevmaler) : [];
 }
 
 export function finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).length > 0;
+  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).length > 0;
 }
 
 export function kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
+  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
 }
 
 export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
+  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
 export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  const vedtaksbrev = lesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev);
+  const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
@@ -78,8 +73,8 @@ export function harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
 
 export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return (
-    Array.isArray(tilgjengeligeVedtaksbrev.alternativeMottakere) &&
-    tilgjengeligeVedtaksbrev.alternativeMottakere.length > 0
+    Array.isArray(tilgjengeligeVedtaksbrev?.alternativeMottakere) &&
+    tilgjengeligeVedtaksbrev?.alternativeMottakere.length > 0
   );
 }
 

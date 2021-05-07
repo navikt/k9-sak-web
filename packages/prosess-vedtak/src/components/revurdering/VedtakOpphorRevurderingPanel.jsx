@@ -10,9 +10,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import VedtakFritekstPanel from '../VedtakFritekstPanel';
-import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
-
 const ytelseNavnMap = kode => {
   switch (kode) {
     case fagsakYtelseType.FRISINN:
@@ -26,16 +23,7 @@ const ytelseNavnMap = kode => {
   }
 };
 
-export const VedtakOpphorRevurderingPanelImpl = ({
-  intl,
-  opphoersdato,
-  revurderingsAarsakString,
-  sprakKode,
-  readOnly,
-  vedtakVarsel,
-  ytelseTypeKode,
-  beregningErManueltFastsatt,
-}) => (
+export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, revurderingsAarsakString, ytelseTypeKode }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     {opphoersdato && (
@@ -61,14 +49,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({
     <VerticalSpacer sixteenPx />
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
     {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
-    {beregningErManueltFastsatt && (
-      <VedtakFritekstPanel
-        readOnly={readOnly}
-        sprakkode={sprakKode}
-        labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
-        vedtakVarsel={vedtakVarsel}
-      />
-    )}
   </div>
 );
 
@@ -76,17 +56,12 @@ VedtakOpphorRevurderingPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   opphoersdato: PropTypes.string,
   revurderingsAarsakString: PropTypes.string,
-  sprakKode: PropTypes.shape(),
-  readOnly: PropTypes.bool.isRequired,
-  vedtakVarsel: vedtakVarselPropType,
   ytelseTypeKode: PropTypes.string.isRequired,
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
 };
 
 VedtakOpphorRevurderingPanelImpl.defaultProps = {
   opphoersdato: '',
   revurderingsAarsakString: undefined,
-  sprakKode: undefined,
 };
 
 const getOpphorsdato = createSelector(

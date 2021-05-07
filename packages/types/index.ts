@@ -12,6 +12,7 @@ export { default as SimuleringResultat } from './src/simuleringResultatTsType';
 export { default as Soknad, ManglendeVedleggSoknad } from './src/soknadTsType';
 export { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsType';
 export { default as Vilkar } from './src/vilkarTsType';
+export { default as Vilkarperiode } from './src/vilkarperiode';
 export { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
 export { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';
 export { default as Fagsak } from './src/fagsakTsType';

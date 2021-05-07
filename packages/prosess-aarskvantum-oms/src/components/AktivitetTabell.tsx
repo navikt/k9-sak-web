@@ -19,6 +19,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
+import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import styles from './aktivitetTabell.less';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import Utfall from './Utfall';
@@ -60,6 +61,19 @@ const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => 
   }
   const dager = antallDager(periode);
   return <FormattedMessage id="Uttaksplan.FulltFravær" values={{ dager }} />;
+};
+
+const formaterFraværsårsak = (fraværsårsak: string): ReactNode => {
+  switch (fraværsårsak) {
+    case FraværÅrsakEnum.ORDINÆRT_FRAVÆR:
+      return <FormattedMessage id="Uttaksplan.Årsak.ORDINÆRT_FRAVÆR" />;
+    case FraværÅrsakEnum.STENGT_SKOLE_ELLER_BARNEHAGE:
+      return <FormattedMessage id="Uttaksplan.Årsak.STENGT_SKOLE_ELLER_BARNEHAGE" />;
+    case FraværÅrsakEnum.SMITTEVERNHENSYN:
+      return <FormattedMessage id="Uttaksplan.Årsak.SMITTEVERNHENSYN" />;
+    default:
+      return null;
+  }
 };
 
 const utfallErIngenUtbetaling = (delvisFravær: string) => {
@@ -133,6 +147,11 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
     ? `${arbeidsforholdType}, ${utledArbeidsforholdNavn(arbeidsforhold, arbeidsgiverOpplysningerPerId)}`
     : arbeidsforholdType;
 
+  const skalÅrsakVises =
+    uttaksperioder.find(periode => periode.fraværÅrsak !== FraværÅrsakEnum.UDEFINERT) !== undefined;
+
+  const antallKolonner = skalÅrsakVises ? 6 : 5;
+
   enum Fanenavn {
     VILKAR,
     HJEMMEL,
@@ -154,6 +173,11 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
             <th>
               <FormattedMessage id="Uttaksplan.Fravær" />
             </th>
+            {skalÅrsakVises && (
+              <th>
+                <FormattedMessage id="Uttaksplan.Årsak" />
+              </th>
+            )}
             <th>
               <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
             </th>
@@ -165,7 +189,10 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
         notFocusableHeader
       >
         {uttaksperioder.map(
-          ({ periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler, nøkkeltall }, index) => {
+          (
+            { periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler, nøkkeltall, fraværÅrsak },
+            index,
+          ) => {
             const erValgt = valgtPeriodeIndex === index;
             const erKoronaperiode = useMemo(() => periodeErIKoronaperioden(periode), [periode]);
             const sorterteVilkår = useMemo(() => Object.entries(vurderteVilkår.vilkår).sort(arbeidsforholdSist), [
@@ -178,7 +205,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
               switch (faneindex) {
                 case Fanenavn.HJEMMEL:
                   return (
-                    <td colSpan={5}>
+                    <td colSpan={antallKolonner}>
                       {hjemler.map(hjemmel => (
                         <div key={`${periode}--${hjemmel}`}>
                           <FormattedMessage id={`Uttaksplan.Hjemmel.${hjemmel}`} />
@@ -189,7 +216,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
 
                 case Fanenavn.NOKKELTALL:
                   return (
-                    <td colSpan={5}>
+                    <td colSpan={antallKolonner}>
                       <NøkkeltallContainer
                         totaltAntallDager={nøkkeltall.totaltAntallDager}
                         antallDagerArbeidsgiverDekker={nøkkeltall.antallDagerArbeidsgiverDekker}
@@ -230,7 +257,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                           <Utfall utfall={vilkårsutfall} key={`${periode}--${key}.${vilkårsutfall}`} />
                         ))}
                       </td>
-                      <td colSpan={3} />
+                      <td colSpan={antallKolonner - 2} />
                     </>
                   );
               }
@@ -254,6 +281,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                     />
                   </td>
                   <td>{formaterFravær(periode, delvisFravær)}</td>
+                  {skalÅrsakVises && <td>{formaterFraværsårsak(fraværÅrsak)}</td>}
                   <td>{`${utbetalingsgrad}%`}</td>
                   <td>
                     <button className={styles.utvidelsesknapp} onClick={() => velgPeriode(index)} type="button">
@@ -264,7 +292,7 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
                 {erValgt && (
                   <>
                     <TableRow className={styles.fanerad} notFocusable>
-                      <td colSpan={5}>
+                      <td colSpan={antallKolonner}>
                         <div className={styles.fanewrapper}>
                           <Tabs
                             tabs={faner.map(id => ({ label: <FormattedMessage id={id} /> }))}

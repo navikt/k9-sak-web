@@ -26,7 +26,6 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form/src/behandlingForm';
-import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import { flattenArray } from 'less/lib/less/utils';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
@@ -40,7 +39,6 @@ import Beregningsgrunnlag from './beregningsgrunnlagPanel/Beregningsgrunnlag';
 import AksjonspunktBehandlerTB from './arbeidstaker/AksjonspunktBehandlerTB';
 import AksjonspunktBehandlerFL from './frilanser/AksjonspunktBehandlerFL';
 import VurderOgFastsettSN from './selvstendigNaeringsdrivende/VurderOgFastsettSN';
-import SkjeringspunktOgStatusPanel from './fellesPaneler/SkjeringspunktOgStatusPanel';
 import GrunnlagForAarsinntektPanelAT from './arbeidstaker/GrunnlagForAarsinntektPanelAT';
 
 const cx = classNames.bind(styles);
@@ -129,9 +127,7 @@ export const BeregningFP = props => {
                 currentBeregningsgrunnlagIndex + 1
               }`,
             }))}
-            onClick={clickedIndex => {
-              setAktivtBeregningsgrunnlagIndeks(clickedIndex);
-            }}
+            onClick={setAktivtBeregningsgrunnlagIndeks}
             theme="arrow"
           />
         </div>
@@ -199,9 +195,6 @@ BeregningFP.defaultProps = {
   beregningsgrunnlag: undefined,
 };
 
-const getSammenligningsgrunnlagsPrStatus = bg =>
-  bg && bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined;
-
 const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
   flattenArray(aksjonspunkter).map(aksjonspunkt => {
     const { kode } = aksjonspunkt;
@@ -223,7 +216,6 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
     return undefined;
   }
   const allePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
-  const gjeldendeDekningsgrad = beregningsgrunnlag.dekningsgrad;
   const alleAndelerIForstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
   const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(
     andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
@@ -240,7 +232,6 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
     ...AksjonspunktBehandlerFL.buildInitialValues(frilanserAndeler),
     ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
     ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
-    ...SkjeringspunktOgStatusPanel.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
   };
   return initialValues;
 };
@@ -264,16 +255,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
           : [];
         const alleAndelerIForstePeriode =
           allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
-        const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(opprinneligBeregningsgrunnlag);
         const relevanteStatuser = getRelevanteStatuser(opprinneligBeregningsgrunnlag);
-        const samletSammenligningsgrunnnlag =
-          sammenligningsgrunnlagPrStatus &&
-          sammenligningsgrunnlagPrStatus.find(
-            sammenLigGr => sammenLigGr.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN,
-          );
-        const harNyttIkkeSamletSammenligningsgrunnlag =
-          sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
-
         const transformedValues = transformValues(
           {
             ...currentBeregningsgrunnlagSkjemaverdier,
@@ -285,7 +267,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
           alleAndelerIForstePeriode,
           gjeldendeAksjonspunkter,
           allePerioder,
-          harNyttIkkeSamletSammenligningsgrunnlag,
         );
 
         return transformedValues;

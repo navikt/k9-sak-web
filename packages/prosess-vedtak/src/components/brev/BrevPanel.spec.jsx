@@ -5,13 +5,27 @@ import { shallow } from 'enzyme/build';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { SelectField } from '@fpsak-frontend/form';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { BrevPanel } from './BrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 
 describe('<BrevPanel>', () => {
+  const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
+  const alleTilgjengeligeVedtaksbrev = {
+    vedtaksbrevmaler: {
+      [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
+      [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS,
+    },
+  };
+  const automatiskInnvilgelsebrevTilgjengelig = {
+    vedtaksbrevmaler: { [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE },
+  };
+  const fritekstbrevTilgjenglig = { vedtaksbrevmaler: { [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS } };
+
   it('skal forhåndsvise brev når ingen behandlingsresultat', () => {
     const wrapper = shallow(
       <BrevPanel
@@ -20,7 +34,7 @@ describe('<BrevPanel>', () => {
         sprakkode={{ kode: 'NB' }}
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
-        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK'] }}
+        tilgjengeligeVedtaksbrev={automatiskInnvilgelsebrevTilgjengelig}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -46,7 +60,7 @@ describe('<BrevPanel>', () => {
         sprakkode={{ kode: 'NB' }}
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
-        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['AUTOMATISK', 'FRITEKST'] }}
+        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
         skalBrukeOverstyrendeFritekstBrev
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -72,7 +86,7 @@ describe('<BrevPanel>', () => {
         sprakkode={{ kode: 'NB' }}
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
-        tilgjengeligeVedtaksbrev={{ vedtaksbrev: ['FRITEKST'] }}
+        tilgjengeligeVedtaksbrev={fritekstbrevTilgjenglig}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -98,7 +112,7 @@ describe('<BrevPanel>', () => {
         sprakkode={{ kode: 'NB' }}
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
-        tilgjengeligeVedtaksbrev={{ vedtaksbrev: [] }}
+        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -125,7 +139,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={{
-          vedtaksbrev: ['AUTOMATISK', 'FRITEKST'],
+          vedtaksbrevmaler: alleTilgjengeligeVedtaksbrev.vedtaksbrevmaler,
           begrunnelse: null,
           alternativeMottakere: [
             {

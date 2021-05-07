@@ -4,7 +4,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { InputField } from '@fpsak-frontend/form';
-import { formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, parseCurrencyInput, required } from '@fpsak-frontend/utils';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
@@ -33,8 +33,6 @@ AksjonspunktBehandlerFL.propTypes = {
   fieldArrayID: PropTypes.string.isRequired,
 };
 
-AksjonspunktBehandlerFL.transformValuesForFL = values =>
-  values.inntektFrilanser !== undefined ? removeSpacesFromNumber(values.inntektFrilanser) : null;
 AksjonspunktBehandlerFL.buildInitialValues = relevanteAndeler => {
   if (relevanteAndeler.length === 0) {
     return undefined;
