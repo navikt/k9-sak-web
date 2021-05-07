@@ -765,6 +765,12 @@ describe('<VedtakForm>', () => {
       skalUndertrykkeBrev: false,
       isEngangsstonad: false,
       antallBarn: undefined,
+      BEREGNING_25_PROSENT_AVVIK: undefined,
+      KONTINUERLIG_TILSYN: undefined,
+      OMSORGEN_FOR: undefined,
+      OVER_18_AAR: undefined,
+      UNNTAK_FRA_TILSYNSORDNING: undefined,
+      VILKAR_FOR_TO: undefined,
     });
   });
 
@@ -833,6 +839,12 @@ describe('<VedtakForm>', () => {
     );
     expect(model).to.eql({
       aksjonspunktKoder: ['5033'],
+      BEREGNING_25_PROSENT_AVVIK: undefined,
+      KONTINUERLIG_TILSYN: undefined,
+      OMSORGEN_FOR: undefined,
+      OVER_18_AAR: undefined,
+      UNNTAK_FRA_TILSYNSORDNING: undefined,
+      VILKAR_FOR_TO: undefined,
       sprakkode,
       antallBarn: 2,
       isEngangsstonad: true,

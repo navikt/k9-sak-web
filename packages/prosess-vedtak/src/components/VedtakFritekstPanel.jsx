@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
@@ -20,15 +19,15 @@ import styles from './vedtakAvslagPanel.less';
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
-const VedtakFritekstPanelImpl = ({ intl, begrunnelse, sprakkode, readOnly, labelTextCode }) => (
+const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode, readOnly, label }) => (
   <>
     {!readOnly && (
       <Row>
         <VerticalSpacer sixteenPx />
         <Column xs="8">
           <TextAreaField
-            name="begrunnelse"
-            label={intl.formatMessage({ id: labelTextCode })}
+            name={begrunnelseFieldName}
+            label={label}
             validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
             maxLength={1500}
             readOnly={readOnly}
@@ -56,14 +55,14 @@ const VedtakFritekstPanelImpl = ({ intl, begrunnelse, sprakkode, readOnly, label
 
 VedtakFritekstPanelImpl.defaultProps = {
   begrunnelse: null,
+  begrunnelseFieldName: 'begrunnelse',
 };
 
 VedtakFritekstPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
+  begrunnelseFieldName: PropTypes.string,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  labelTextCode: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };
-const VedtakFritekstPanel = injectIntl(VedtakFritekstPanelImpl);
-export default VedtakFritekstPanel;
+export default VedtakFritekstPanelImpl;

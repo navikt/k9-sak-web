@@ -5,7 +5,6 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { FeatureToggles } from '@k9-sak-web/types';
 
 import findStatusForVedtak from '../vedtakStatusUtlederPleiepenger';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
@@ -25,17 +24,15 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = (featureToggles: FeatureToggles) =>
-    [
-      PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG,
-      PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
-      PleiepengerBehandlingApiKeys.MEDLEMSKAP,
-      PleiepengerBehandlingApiKeys.VEDTAK_VARSEL,
-    ].concat(
-      featureToggles?.DOKUMENTDATA
-        ? [PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV, PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE]
-        : [],
-    );
+  getEndepunkter = () => [
+    PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG,
+    PleiepengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+    PleiepengerBehandlingApiKeys.MEDLEMSKAP,
+    PleiepengerBehandlingApiKeys.VEDTAK_VARSEL,
+    PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV,
+    PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 

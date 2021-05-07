@@ -7,29 +7,27 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
   sprakkode,
   readOnly,
   begrunnelse,
-  beregningErManueltFastsatt,
+  informasjonsbehovVedtaksbrev,
 }) => {
-  const tilgjengeligeInformasjonsbehov = {
-    FRITEKSTBREV: 'VedtakForm.Fritekst',
-    MANUELT_BEREGNINGSGRUNNLAG: 'VedtakForm.Fritekst.Beregningsgrunnlag',
+  const aktiverteInformasjonsbehov =
+    (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(({ type }) => type === 'FRITEKST') ?? [];
+
+  const getLabel = behov => {
+    const type = behov.kode.replace('_', ' ').toLowerCase();
+    return `Fritekstbeskrivelse av ${type}`;
   };
-
-  const aktiverteInformasjonsbehov = [];
-
-  if (beregningErManueltFastsatt) {
-    aktiverteInformasjonsbehov.push(tilgjengeligeInformasjonsbehov.MANUELT_BEREGNINGSGRUNNLAG);
-  }
 
   return (
     <>
       {aktiverteInformasjonsbehov.map(behov => (
         <VedtakFritekstPanel
-          key={behov}
+          key={behov.kode}
           intl={intl}
           readOnly={readOnly}
           sprakkode={sprakkode}
-          labelTextCode={behov}
+          label={getLabel(behov)}
           begrunnelse={begrunnelse}
+          begrunnelseFieldName={behov.kode}
         />
       ))}
     </>
@@ -41,12 +39,14 @@ InformasjonsbehovAutomatiskVedtaksbrev.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
-  beregningErManueltFastsatt: PropTypes.bool,
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
 };
 
 InformasjonsbehovAutomatiskVedtaksbrev.defaultProps = {
   begrunnelse: null,
-  beregningErManueltFastsatt: false,
+  informasjonsbehovVedtaksbrev: null,
 };
 
 export default InformasjonsbehovAutomatiskVedtaksbrev;
