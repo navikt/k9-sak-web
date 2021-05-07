@@ -14,6 +14,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
   arbeidsgiverOpplysningerPerId,
   behandling,
   readOnly,
+  bgSkalVurderes,
   vilkaarBG,
 }) => {
   if (fields.length === 0) {
@@ -25,7 +26,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
     index === aktivtBeregningsgrunnlagIndeks ? (
       <BeregningForm2
         key={fieldId}
-        readOnly={readOnly}
+        readOnly={readOnly || !bgSkalVurderes}
         fieldArrayID={fieldId}
         beregningsgrunnlag={aktivtBeregningsgrunnlag}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
