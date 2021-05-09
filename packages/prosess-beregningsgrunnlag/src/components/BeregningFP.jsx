@@ -82,7 +82,8 @@ const getBGVilkar = vilkar =>
 
 const erBGTilVurdering = (bgVilkar, beregningsgrunnlag) => {
   const stp = beregningsgrunnlag.skjæringstidspunkt;
-  const perioderTilVurdering = bgVilkar.perioder.filter(periode => !!periode.vurdersIBehandlingen);
+  const perioderTilVurdering =
+    bgVilkar && bgVilkar.perioder ? bgVilkar.perioder.filter(periode => !!periode.vurdersIBehandlingen) : [];
   return perioderTilVurdering.some(
     vkp => !moment(stp).isBefore(vkp.periode.fom) && !moment(stp).isAfter(vkp.periode.tom),
   );
