@@ -14,7 +14,7 @@ const BarnInformasjonVisning: FunctionComponent<BarnInputProps> = ({ barnet }) =
 
   return (
     <div>
-      {harSammeBosted && (
+      {typeof harSammeBosted !== 'undefined' && (
         <Normaltekst>
           <FormattedMessage
             id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}

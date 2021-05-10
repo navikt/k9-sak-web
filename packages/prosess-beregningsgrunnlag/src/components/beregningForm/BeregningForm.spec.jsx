@@ -416,6 +416,8 @@ describe('<BeregningForm>', () => {
     const expectedValues = {
       ATFLVurdering: undefined,
       undefined: '',
+      erTilVurdering: false,
+      skjæringstidspunkt: undefined,
     };
     expect(actualValues).to.deep.equal(expectedValues);
   });
