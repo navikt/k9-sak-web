@@ -38,8 +38,10 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   const medisinskVilkårAksjonspunktstatus = medisinskVilkårAksjonspunkt?.status.kode;
   const visFortsettknapp = medisinskVilkårAksjonspunktstatus === aksjonspunktStatus.OPPRETTET;
 
-  const løsAksjonspunkt = () =>
-    submitCallback([{ kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet' }]);
+  const løsAksjonspunkt = aksjonspunktArgs =>
+    submitCallback([
+      { kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet', ...aksjonspunktArgs },
+    ]);
 
   const harAksjonspunkt = !!medisinskVilkårAksjonspunktkode;
 
