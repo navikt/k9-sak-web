@@ -5,7 +5,6 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { FeatureToggles } from '@k9-sak-web/types';
 
 import findStatusForVedtak from '../vedtakStatusUtlederOmsorgspenger';
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
@@ -25,17 +24,14 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = (featureToggles: FeatureToggles) =>
-    [
-      OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG,
-      OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
-      OmsorgspengerBehandlingApiKeys.MEDLEMSKAP,
-      OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL,
-    ].concat(
-      featureToggles?.DOKUMENTDATA
-        ? [OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV, OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_HENTE]
-        : [],
-    );
+  getEndepunkter = () => [
+    OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG,
+    OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+    OmsorgspengerBehandlingApiKeys.MEDLEMSKAP,
+    OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL,
+    OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 
