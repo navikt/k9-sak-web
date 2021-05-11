@@ -69,11 +69,11 @@ const useProsessStegPaneler = (
 
       return panel;
     });
-  }, [behandling.versjon, overstyrteAksjonspunktKoder]);
+  }, [behandling.versjon, rettigheter, overstyrteAksjonspunktKoder]);
 
   const valgtPanel = useMemo(
     () => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
-    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo],
+    [behandling.versjon, rettigheter, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo],
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
