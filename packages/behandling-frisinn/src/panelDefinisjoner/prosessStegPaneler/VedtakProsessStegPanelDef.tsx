@@ -30,11 +30,8 @@ class PanelDef extends ProsessStegPanelDef {
       FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG,
       FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
       FrisinnBehandlingApiKeys.VEDTAK_VARSEL,
-    ].concat(
-      featureToggles?.DOKUMENTDATA
-        ? [FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV, FrisinnBehandlingApiKeys.DOKUMENTDATA_HENTE]
-        : [],
-    );
+      FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    ].concat(featureToggles?.DOKUMENTDATA ? [FrisinnBehandlingApiKeys.DOKUMENTDATA_HENTE] : []);
 
   getOverstyrVisningAvKomponent = () => true;
 
