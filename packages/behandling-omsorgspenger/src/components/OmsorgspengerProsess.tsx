@@ -104,9 +104,8 @@ const getLagringSideeffekter = (
     ].includes(aksjonspunktModels[0].kode);
   const visFatterVedtakModal =
     aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-  const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
 
-  if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
+  if (erRevurderingsaksjonspunkt) {
     toggleOppdatereFagsakContext(false);
   }
 
