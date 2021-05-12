@@ -64,7 +64,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
     <>
       <BehandlingPaVent
         behandling={behandling}
-        aksjonspunkter={fetchedData.aksjonspunkter}
+        aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
