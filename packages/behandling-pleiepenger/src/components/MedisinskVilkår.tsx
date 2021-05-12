@@ -38,18 +38,20 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   const medisinskVilkårAksjonspunktstatus = medisinskVilkårAksjonspunkt?.status.kode;
   const visFortsettknapp = medisinskVilkårAksjonspunktstatus === aksjonspunktStatus.OPPRETTET;
 
-  const løsAksjonspunkt = () =>
-    submitCallback([{ kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet' }]);
+  const løsAksjonspunkt = aksjonspunktArgs =>
+    submitCallback([
+      { kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet', ...aksjonspunktArgs },
+    ]);
 
   const harAksjonspunkt = !!medisinskVilkårAksjonspunktkode;
 
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.8.1/app.js"
-      jsIntegrity="sha384-c9en41SBAJKfv/4/ahyR3gcDbgqxBgTH+d+pXOHZHl7bQSQpUmNdd26J8hZDWov5"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.8.1/styles.css"
-      stylesheetIntegrity="sha384-UJ1LPovvbIeDBQQa6N38AOYYr++ZJ9toZQOz0J3erlDU2CDPPLOyooXgS57vm7VM"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.8.4/app.js"
+      jsIntegrity="sha384-Vx/ohRtzPKxGxeLVgV4JkxmJ1vI/ZZswz0MCe+k/CpEdLsBlwDFxgVS3RGx7fRxb"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.8.4/styles.css"
+      stylesheetIntegrity="sha384-jgynT0LSuHE36k4/mSrYA4w/mr7aHL+DZvguC9Ct0YEhbYu29QCHk3urP3/XcBpp"
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
