@@ -9,9 +9,11 @@ import {
   Fagsak,
   FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
+  Dokument,
 } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
+import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import {
   restApiPleiepengerHooks,
   requestPleiepengerApi,
@@ -67,6 +69,14 @@ const BehandlingPleiepengerIndex: FunctionComponent<OwnProps> = ({
   setRequestPendingMessage,
   featureToggles,
 }) => {
+  const { data: alleDokumenter = [] } = restApiHooks.useRestApi<Dokument[]>(
+    K9sakApiKeys.ALL_DOCUMENTS,
+    { saksnummer: fagsak.saksnummer },
+    {
+      keepData: true,
+    },
+  );
+
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,
