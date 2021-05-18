@@ -5,6 +5,7 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { Fagsak } from '@k9-sak-web/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 import Inntektsmelding from '../../components/Inntektsmelding';
 
@@ -13,15 +14,15 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'InntektsmeldingInfoPanel.Title';
 
-  getAksjonspunktKoder = () => ['9069'];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.INNTEKTSMELDING_MANGLER];
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getKomponent = props => <Inntektsmelding {...props} />;
 
-  getData = ({ arbeidsgiverOpplysningerPerId, alleDokumenter }) => ({
+  getData = ({ arbeidsgiverOpplysningerPerId, dokumenter }) => ({
     arbeidsgiverOpplysningerPerId,
-    alleDokumenter,
+    dokumenter,
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
