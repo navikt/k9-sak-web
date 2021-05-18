@@ -1,4 +1,7 @@
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+
 export interface SaerligSmittevernhensynProps {
+  behandlingsID: string;
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   årsakFraSoknad: string;
@@ -7,4 +10,5 @@ export interface SaerligSmittevernhensynProps {
     vilkarOppfylt: boolean;
   };
   losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => void;
+  formState: FormStateType;
 }

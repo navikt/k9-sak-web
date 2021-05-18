@@ -14,6 +14,7 @@ import {
 } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
+import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -32,6 +33,7 @@ const vilkårInnvilget: VurderteVilkår = {
 
 const uavklartPeriode = (vilkår: Vilkår): Uttaksperiode => ({
   utfall: UtfallEnum.UAVKLART,
+  fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
   vurderteVilkår: {
     vilkår: {
       ...vilkårInnvilget,
@@ -45,6 +47,7 @@ const uavklartPeriode = (vilkår: Vilkår): Uttaksperiode => ({
 
 const innvilgetPeriode: Uttaksperiode = {
   utfall: UtfallEnum.INNVILGET,
+  fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
   vurderteVilkår: {
     vilkår: vilkårInnvilget,
   },
@@ -56,6 +59,7 @@ const innvilgetPeriode: Uttaksperiode = {
 
 const nullFravær: Uttaksperiode = {
   utfall: UtfallEnum.INNVILGET,
+  fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
   vurderteVilkår: {
     vilkår: vilkårInnvilget,
   },
@@ -67,6 +71,7 @@ const nullFravær: Uttaksperiode = {
 
 const avslåttPeriode: Uttaksperiode = {
   utfall: UtfallEnum.AVSLÅTT,
+  fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
   vurderteVilkår: {
     vilkår: {
       [VilkårEnum.ARBEIDSFORHOLD]: UtfallEnum.AVSLÅTT,

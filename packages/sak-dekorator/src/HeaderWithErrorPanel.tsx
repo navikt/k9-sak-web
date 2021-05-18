@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useMemo, useCallback, useEffect, useRef, RefObject } from 'react';
+import React, { FunctionComponent, useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import BoxedListWithLinks from '@navikt/boxed-list-with-links';
 import Header from '@navikt/nap-header';
@@ -6,9 +6,7 @@ import Popover from '@navikt/nap-popover';
 import SystemButton from '@navikt/nap-system-button';
 import UserPanel from '@navikt/nap-user-panel';
 
-import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
-import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
-import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
+import { AINNTEKT_URL, AAREG_URL, RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 
 import ErrorMessagePanel from './ErrorMessagePanel';
 import Feilmelding from './feilmeldingTsType';
@@ -71,6 +69,29 @@ interface OwnProps {
   getPathToFplos: () => void;
 }
 
+const lenkerFormatertForBoxedList = [
+  {
+    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AInntekt' }),
+    href: AINNTEKT_URL,
+    isExternal: true,
+  },
+  {
+    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AAReg' }),
+    href: AAREG_URL,
+    isExternal: true,
+  },
+  {
+    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Rettskilde' }),
+    href: RETTSKILDE_URL,
+    isExternal: true,
+  },
+  {
+    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Systemrutine' }),
+    href: SYSTEMRUTINE_URL,
+    isExternal: true,
+  },
+];
+
 /**
  * HeaderWithErrorPanel
  *
@@ -93,31 +114,6 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
     setSiteHeight(fixedHeaderRef.current.clientHeight);
   }, [errorMessages.length]);
 
-  const iconLinks = useMemo(
-    () => [
-      {
-        url: RETTSKILDE_URL,
-        icon: rettskildeneIkonUrl,
-        text: intl.formatMessage({ id: 'HeaderWithErrorPanel.Rettskilde' }),
-      },
-      {
-        url: SYSTEMRUTINE_URL,
-        icon: systemrutineIkonUrl,
-        text: intl.formatMessage({ id: 'HeaderWithErrorPanel.Systemrutine' }),
-      },
-    ],
-    [],
-  );
-
-  const lenkerFormatertForBoxedList = useMemo(
-    () =>
-      iconLinks.map(link => ({
-        name: link.text,
-        href: link.url,
-        isExternal: true,
-      })),
-    [],
-  );
   const popperPropsChildren = useCallback(
     () => (
       <BoxedListWithLinks

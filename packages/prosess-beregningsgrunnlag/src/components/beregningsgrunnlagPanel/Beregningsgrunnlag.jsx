@@ -23,12 +23,9 @@ import beregningStyles from './beregningsgrunnlag.less';
 // Variables
 // ------------------------------------------------------------------------------------------ //
 
-export const TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING = 'begrunnDekningsgradEndring';
-
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-  VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
 
 // ------------------------------------------------------------------------------------------ //
@@ -48,9 +45,6 @@ const finnAksjonspunktForATFL = gjeldendeAksjonspunkter =>
       ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS ||
       ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   );
-
-const finnAksjonspunktForVurderDekningsgrad = gjeldendeAksjonspunkter =>
-  gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
 
 const finnAlleAndelerIFørstePeriode = allePerioder => {
   if (allePerioder && allePerioder.length > 0) {
@@ -214,12 +208,8 @@ const Beregningsgrunnlag = BeregningsgrunnlagImpl;
 
 Beregningsgrunnlag.buildInitialValues = gjeldendeAksjonspunkter => {
   const aksjonspunktATFL = finnAksjonspunktForATFL(gjeldendeAksjonspunkter);
-  const aksjonspunktVurderDekninsgrad = finnAksjonspunktForVurderDekningsgrad(gjeldendeAksjonspunkter);
   return {
     ATFLVurdering: aksjonspunktATFL ? aksjonspunktATFL.begrunnelse : '',
-    [TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING]: aksjonspunktVurderDekninsgrad
-      ? aksjonspunktVurderDekninsgrad.begrunnelse
-      : '',
   };
 };
 

@@ -31,6 +31,7 @@ export type VurderteVilkår = Map<Vilkår, Utfalltype>;
 export type Uttaksperiode = {
   periode: string; // fom/tom
   delvisFravær?: string; // Duration
+  fraværÅrsak: string;
   utfall: Utfalltype;
   utbetalingsgrad: number;
   vurderteVilkår: {
@@ -51,5 +52,12 @@ export type Nøkkeltall = {
   smittevernTid: string; // Duration
   migrertData: boolean;
 };
+
+export const FraværÅrsakEnum = stringEnum({
+  STENGT_SKOLE_ELLER_BARNEHAGE: 'STENGT_SKOLE_ELLER_BARNEHAGE',
+  SMITTEVERNHENSYN: 'SMITTEVERNHENSYN',
+  ORDINÆRT_FRAVÆR: 'ORDINÆRT_FRAVÆR',
+  UDEFINERT: 'UDEFINERT',
+});
 
 export default Uttaksperiode;

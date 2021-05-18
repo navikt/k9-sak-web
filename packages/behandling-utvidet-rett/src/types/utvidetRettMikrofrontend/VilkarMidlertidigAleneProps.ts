@@ -1,3 +1,4 @@
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface VilkarMidlertidigAleneProps {
@@ -9,6 +10,7 @@ export interface VilkarMidlertidigAleneProps {
   vedtakFattetVilkarOppfylt: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   losAksjonspunkt: (VilkarMidlertidigGrunnlagForBeslutt) => void;
+  formState: FormStateType;
 }
 
 export interface VilkarMidlertidigAleneDato {

@@ -1,4 +1,5 @@
 import fagsakTsType from '@k9-sak-web/types/src/fagsakTsType';
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 import { InformasjonTilLesemodus } from './informasjonTilLesemodus';
 
@@ -12,4 +13,5 @@ export interface OmsorgenForProps {
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   barn: string[];
   losAksjonspunkt: (harOmsorgen, begrunnelse) => void;
+  formState: FormStateType;
 }

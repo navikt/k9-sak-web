@@ -3,6 +3,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling } from '@k9-sak-web/types';
 import fagsakTsType from '@k9-sak-web/types/src/fagsakTsType';
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
@@ -12,15 +13,27 @@ import {
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
 
-const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
-  isReadOnly: boolean,
+interface PropTypes {
+  isReadOnly: boolean;
+  submitCallback: any;
+  angitteBarn: { personIdent: string }[];
+  behandling: Behandling;
+  aksjonspunktInformasjon: AksjonspunktInformasjon;
+  vilkarInformasjon: VilkarInformasjon;
+  fagsaksType: fagsakTsType;
+  FormState: FormStateType;
+}
+
+const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
+  isReadOnly,
   submitCallback,
-  behandling: Behandling,
+  behandling,
   angitteBarn,
-  aksjonspunktInformasjon: AksjonspunktInformasjon,
-  vilkarInformasjon: VilkarInformasjon,
-  fagsaksType: fagsakTsType,
-) => {
+  aksjonspunktInformasjon,
+  vilkarInformasjon,
+  fagsaksType,
+  FormState,
+}: PropTypes) => {
   let objektTilMikrofrontend = {};
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
   const { vilkar, status } = vilkarInformasjon;
@@ -61,6 +74,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = (
             },
           ]);
         },
+        formState: FormState,
       } as OmsorgenForProps,
     };
   }

@@ -6,7 +6,7 @@ import { BehandlingAppKontekst, Aksjonspunkt } from '@k9-sak-web/types';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
-import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
+import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 
 const initializeOmsorgenFor = (
   elementId,
@@ -40,7 +40,8 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
-  const omsorgenForAksjonspunktkode = findAksjonspunktkode(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
+  const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
+  const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
   const readOnlyArgument = omsorgenForAksjonspunktkode === undefined ? true : readOnly;
 
   const løsAksjonspunkt = omsorgsperioder =>
@@ -49,10 +50,10 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
   return (
     <MicroFrontend
       id={omsorgenForAppID}
-      jsSrc="/k9/microfrontend/omsorgen-for/0.0.3/app.js"
-      jsIntegrity="sha384-4Zh4LEDOCvxm1A4GrAlsWVOYjTBre5+nyhNkw6qwLZTkpVEtijeqCpj0GSJ3Fn2q"
-      stylesheetSrc="/k9/microfrontend/omsorgen-for/0.0.3/styles.css"
-      stylesheetIntegrity="sha384-tXoSD9YNdC3yGs0mQ9xW1ko3OocvGjS068Jj6aSSmpw7Jb8Cv84oFr7M9w6+cSdH"
+      jsSrc="/k9/microfrontend/omsorgen-for/0.0.6/app.js"
+      jsIntegrity="sha384-A9S86CZHP2YflBUrr2aY3bukU3mA6TbKshadNGjhzcOb/qSVCvNd4KOYBQAtnHj+"
+      stylesheetSrc="/k9/microfrontend/omsorgen-for/0.0.6/styles.css"
+      stylesheetIntegrity="sha384-mrmomnx+L8nv4g7P+hsbpbXQNOmlMyx33DdRzd9JvB2GBKsBaE0wRbgTSWDM5VA4"
       onReady={() =>
         initializeOmsorgenFor(
           omsorgenForAppID,

@@ -1,19 +1,24 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { VilkarResultPicker, ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt, FastsattOpptjening, Opptjening, SubmitCallback, Vilkårresultat } from '@k9-sak-web/types';
+import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkårresultat, Vilkarperiode } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
 import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import OpptjeningVilkarView from './OpptjeningVilkarView';
 import VilkarFields from './VilkarFields';
 
 const FORM_NAME = 'OpptjeningVilkarForm';
+
+const midlertidigInaktiv = {
+  TYPE_A: '7847A',
+  TYPE_B: '7847B',
+};
 
 interface VilkårField {
   erVilkarOk: boolean;
@@ -25,14 +30,14 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   behandlingId: number;
   vilkårsresultat: Vilkårresultat;
   behandlingVersjon: number;
-  fastsattOpptjening: FastsattOpptjening;
   isApOpen: boolean;
   lovReferanse?: string;
   readOnly: boolean;
   readOnlySubmitButton: boolean;
   status: string;
   submitCallback: (props: SubmitCallback[]) => void;
-  vilkårIndex: number;
+  periodeIndex: number;
+  vilkårPerioder: Vilkarperiode[];
   opptjeninger: Opptjening[];
   vilkarFields: VilkårField[];
 }
@@ -54,7 +59,6 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
   behandlingId,
   behandlingVersjon,
   erVilkarOk,
-  fastsattOpptjening,
   isApOpen,
   lovReferanse,
   originalErVilkarOk,
@@ -63,8 +67,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
   dirty,
   handleSubmit,
   form,
-  vilkårIndex,
-  opptjeninger,
+  periodeIndex,
+  vilkårPerioder,
   vilkarFields,
 }) => {
   const formProps = useMemo(
@@ -76,7 +80,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
   );
 
   const isFormComplete = () => {
-    const isAllTabsCreated = Array.isArray(opptjeninger) && opptjeninger.length === vilkarFields?.length;
+    const isAllTabsCreated = Array.isArray(vilkårPerioder) && vilkårPerioder.length === vilkarFields?.length;
     return isAllTabsCreated
       ? !vilkarFields.some(vilkarField => !vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined)
       : false;
@@ -96,23 +100,25 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
       behandlingVersjon={behandlingVersjon}
       originalErVilkarOk={originalErVilkarOk}
       isPeriodisertFormComplete={isFormComplete()}
-      rendreFakta={() => (
-        <>
-          <VerticalSpacer sixteenPx />
-          <OpptjeningVilkarView
-            months={fastsattOpptjening.opptjeningperiode.måneder}
-            days={fastsattOpptjening.opptjeningperiode.dager}
-            fastsattOpptjeningActivities={fastsattOpptjening.fastsattOpptjeningAktivitetList}
-            opptjeningFomDate={fastsattOpptjening.opptjeningFom}
-            opptjeningTomDate={fastsattOpptjening.opptjeningTom}
-          />
-        </>
-      )}
     >
       <Element>
-        <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
+        <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
       </Element>
-      <VilkarFields erVilkarOk={erVilkarOk} readOnly={readOnly} fieldPrefix={`vilkarFields[${vilkårIndex}]`} />
+
+      <VerticalSpacer eightPx />
+      <RadioGroupField name="innvilgelseMerknadKode" validate={[required]}>
+        <RadioOption
+          label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
+          value={midlertidigInaktiv.TYPE_A}
+        />
+        <RadioOption
+          label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
+          value={midlertidigInaktiv.TYPE_B}
+        />
+      </RadioGroupField>
+      <VerticalSpacer eightPx />
+
+      <VilkarFields erVilkarOk={erVilkarOk} readOnly={readOnly} fieldPrefix={`vilkarFields[${periodeIndex}]`} />
     </ProsessPanelTemplate>
   );
 };
@@ -131,22 +137,32 @@ export const buildInitialValues = createSelector(
 
 interface Values {
   vilkarFields: VilkårField[];
+  innvilgelseMerknadKode: string;
 }
 
-const transformValues = (values: Values, aksjonspunkter: Aksjonspunkt[], opptjeninger: Opptjening[]) => ({
-  vilkårPerioder: values.vilkarFields.map((vilkarField, index) => ({
+const transformValues = (
+  values: Values,
+  aksjonspunkter: Aksjonspunkt[],
+  vilkårPerioder: Vilkarperiode[],
+  opptjeninger: Opptjening[],
+) => ({
+  vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => ({
     ...vilkarField,
-    opptjeningFom:
-      Array.isArray(opptjeninger) && opptjeninger[index] && opptjeninger[index].fastsattOpptjening.opptjeningFom,
-    opptjeningTom:
-      Array.isArray(opptjeninger) && opptjeninger[index] && opptjeninger[index].fastsattOpptjening.opptjeningTom,
+    innvilgelseMerknadKode: values.innvilgelseMerknadKode,
+    periode: Array.isArray(vilkårPerioder) && vilkårPerioder[index] ? vilkårPerioder[index].periode : {},
   })),
+  opptjeningPerioder: Array.isArray(opptjeninger)
+    ? opptjeninger.map(opptjening => ({
+        fom: opptjening.fastsattOpptjening.opptjeningFom,
+        tom: opptjening.fastsattOpptjening.opptjeningTom,
+      }))
+    : [],
   ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon.kode : null },
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {
-  const { aksjonspunkter, submitCallback, vilkårIndex, opptjeninger } = initialOwnProps;
-  const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter, opptjeninger)]);
+  const { aksjonspunkter, submitCallback, periodeIndex, vilkårPerioder, opptjeninger } = initialOwnProps;
+  const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter, vilkårPerioder, opptjeninger)]);
 
   const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
@@ -159,7 +175,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarA
       FORM_NAME,
       ownProps.behandlingId,
       ownProps.behandlingVersjon,
-    )(state, `vilkarFields[${vilkårIndex}].erVilkarOk`),
+    )(state, `vilkarFields[${periodeIndex}].erVilkarOk`),
     lovReferanse: ownProps.lovReferanse,
     vilkarFields: behandlingFormValueSelector(
       FORM_NAME,

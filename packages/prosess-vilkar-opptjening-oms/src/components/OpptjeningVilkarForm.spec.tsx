@@ -4,30 +4,22 @@ import { shallow } from 'enzyme';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import opptjeningAktivitetKlassifisering from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/kodeverk/opptjeningAktivitetKlassifisering';
-import { Aksjonspunkt, FastsattOpptjening, Vilkårresultat } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkårresultat } from '@k9-sak-web/types';
 
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';
-import OpptjeningVilkarView from './OpptjeningVilkarView';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
-const fastsattOpptjening = {
-  opptjeningperiode: {
-    måneder: 2,
-    dager: 3,
+const periode = {
+  avslagKode: '1035',
+  begrunnelse: null,
+  merknadParametere: {
+    antattGodkjentArbeid: 'P9D',
+    antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<2020-03-27, 2020-04-04 [1]> = [[2020-03-27, 2020-04-04]]',
   },
-  fastsattOpptjeningAktivitetList: [
-    {
-      fom: '2018-01-01',
-      tom: '2018-04-04',
-      klasse: {
-        kode: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
-      },
-    },
-  ],
-  opptjeningFom: '2018-01-01',
-  opptjeningTom: '2018-10-01',
-} as FastsattOpptjening;
+  periode: { fom: '2020-04-24', tom: '2020-04-24' },
+  vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+  vurdersIBehandlingen: true,
+};
 
 describe('<OpptjeningVilkarForm>', () => {
   it('skal vise OpptjeningVilkarAksjonspunktPanel når en har aksjonspunkt', () => {
@@ -54,36 +46,14 @@ describe('<OpptjeningVilkarForm>', () => {
         }
         status="test"
         lovReferanse="Dette er en lovreferanse"
-        fastsattOpptjening={fastsattOpptjening}
         vilkårsresultat={{} as Vilkårresultat}
-        vilkårIndex={0}
+        periodeIndex={0}
+        vilkårPerioder={[periode]}
         opptjeninger={[]}
       />,
     );
 
     const aksjonspunktPanel = wrapper.find(OpptjeningVilkarAksjonspunktPanel);
     expect(aksjonspunktPanel).toHaveLength(1);
-  });
-
-  it('skal vise OpptjeningVilkarView når en ikke har aksjonspunkt', () => {
-    const wrapper = shallow(
-      <OpptjeningVilkarForm
-        readOnlySubmitButton
-        readOnly
-        isAksjonspunktOpen={false}
-        submitCallback={sinon.spy()}
-        behandlingId={1}
-        behandlingVersjon={2}
-        aksjonspunkter={[]}
-        status="test"
-        lovReferanse="Dette er en lovreferanse"
-        fastsattOpptjening={fastsattOpptjening}
-        vilkårsresultat={{} as Vilkårresultat}
-        vilkårIndex={0}
-        opptjeninger={[]}
-      />,
-    );
-    const vilkarView = wrapper.find(OpptjeningVilkarView);
-    expect(vilkarView).toHaveLength(1);
   });
 });

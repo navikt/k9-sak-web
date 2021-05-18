@@ -15,7 +15,6 @@ import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingRe
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import {
@@ -81,15 +80,30 @@ export class VedtakForm extends Component {
       tilbakekrevingvalg,
       simuleringResultat,
       vilkar,
-      beregningErManueltFastsatt,
       tilgjengeligeVedtaksbrev,
+      informasjonsbehovVedtaksbrev,
       dokumentdata,
       brødtekst,
       overskrift,
       begrunnelse,
       overstyrtMottaker,
+      KONTINUERLIG_TILSYN,
+      OMSORGEN_FOR,
+      VILKAR_FOR_TO,
+      UNNTAK_FRA_TILSYNSORDNING,
+      BEREGNING_25_PROSENT_AVVIK,
+      OVER_18_AAR,
       ...formProps
     } = this.props;
+
+    const informasjonsbehovValues = {
+      KONTINUERLIG_TILSYN,
+      OMSORGEN_FOR,
+      VILKAR_FOR_TO,
+      UNNTAK_FRA_TILSYNSORDNING,
+      BEREGNING_25_PROSENT_AVVIK,
+      OVER_18_AAR,
+    };
 
     return (
       <>
@@ -151,7 +165,8 @@ export class VedtakForm extends Component {
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             dokumentdata={dokumentdata}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-            beregningErManueltFastsatt={beregningErManueltFastsatt}
+            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+            informasjonsbehovValues={informasjonsbehovValues}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             previewCallback={previewCallback}
             formProps={formProps}
@@ -173,11 +188,10 @@ export class VedtakForm extends Component {
                   >
                     {intl.formatMessage({
                       id:
-                        !skalBrukeOverstyrendeFritekstBrev &&
-                        (aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL) ||
-                          aksjonspunktKoder.includes(aksjonspunktCodes.FORESLA_VEDTAK_MANUELT))
-                          ? 'VedtakForm.FattVedtak'
-                          : 'VedtakForm.TilGodkjenning',
+                        aksjonspunkter &&
+                        aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+                          ? 'VedtakForm.TilGodkjenning'
+                          : 'VedtakForm.FattVedtak',
                     })}
                   </Hovedknapp>
                 )}
@@ -210,10 +224,18 @@ VedtakForm.propTypes = {
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
+  informasjonsbehovVedtaksbrev: PropTypes.shape({
+    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
+  }),
   dokumentdata: PropTypes.shape(),
+  KONTINUERLIG_TILSYN: PropTypes.string,
+  OMSORGEN_FOR: PropTypes.string,
+  VILKAR_FOR_TO: PropTypes.string,
+  UNNTAK_FRA_TILSYNSORDNING: PropTypes.string,
+  BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
+  OVER_18_AAR: PropTypes.string,
   ...formPropTypes,
 };
 
@@ -224,6 +246,12 @@ VedtakForm.defaultProps = {
   skalBrukeOverstyrendeFritekstBrev: false,
   tilgjengeligeVedtaksbrev: undefined,
   dokumentdata: undefined,
+  KONTINUERLIG_TILSYN: undefined,
+  OMSORGEN_FOR: undefined,
+  VILKAR_FOR_TO: undefined,
+  UNNTAK_FRA_TILSYNSORDNING: undefined,
+  BEREGNING_25_PROSENT_AVVIK: undefined,
+  OVER_18_AAR: undefined,
 };
 
 export const buildInitialValues = createSelector(
@@ -265,6 +293,12 @@ export const buildInitialValues = createSelector(
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
     overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
     begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
+    KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
+    OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
+    VILKAR_FOR_TO: dokumentdata?.VILKAR_FOR_TO,
+    UNNTAK_FRA_TILSYNSORDNING: dokumentdata?.UNNTAK_FRA_TILSYNSORDNING,
+    BEREGNING_25_PROSENT_AVVIK: dokumentdata?.BEREGNING_25_PROSENT_AVVIK,
+    OVER_18_AAR: dokumentdata?.OVER_18_AAR,
   }),
 );
 
@@ -287,6 +321,23 @@ const transformValues = (values, tilgjengeligeVedtaksbrev) =>
     tilgjengeligeVedtaksbrev,
   }));
 
+const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, tilgjengeligeVedtaksbrev) => {
+  const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
+  return values.aksjonspunktKoder.map(apCode => ({
+    kode: apCode,
+    overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+    fritekstbrev: {
+      brødtekst: values.brødtekst,
+      overskrift: values.overskrift,
+    },
+    skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+    skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+    isVedtakSubmission,
+    begrunnelserMedInformasjonsbehov: begrunnelser,
+    tilgjengeligeVedtaksbrev,
+  }));
+};
+
 const erArsakTypeBehandlingEtterKlage = createSelector(
   [ownProps => ownProps.behandlingArsaker],
   (behandlingArsakTyper = []) =>
@@ -300,28 +351,58 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
       ),
 );
 
+const harPotensieltFlereInformasjonsbehov = informasjonsbehovVedtaksbrev => {
+  if (informasjonsbehovVedtaksbrev) {
+    const { informasjonsbehov } = informasjonsbehovVedtaksbrev;
+    return informasjonsbehov.length > 0;
+  }
+  return false;
+};
+
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values =>
-    initialOwnProps.submitCallback(transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev));
-  return (state, ownProps) => ({
-    onSubmit,
-    initialValues: buildInitialValues(ownProps),
-    ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
-      state,
-      'antallBarn',
-      'aksjonspunktKoder',
-      'skalBrukeOverstyrendeFritekstBrev',
-      'skalUndertrykkeBrev',
-      'brødtekst',
-      'overskrift',
-      'begrunnelse',
-      'overstyrtMottaker',
-    ),
-    behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
-    behandlingStatusKode: ownProps.behandlingStatus.kode,
-    aksjonspunktKoder: getAksjonspunktKoder(ownProps),
-    erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
-  });
+  const onSubmit = values => {
+    const { informasjonsbehovVedtaksbrev, submitCallback } = initialOwnProps;
+    if (harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)) {
+      const transformedValuesForFlereInformasjonsbehov = transformValuesForFlereInformasjonsbehov(
+        values,
+        informasjonsbehovVedtaksbrev.informasjonsbehov,
+        initialOwnProps.tilgjengeligeVedtaksbrev,
+      );
+      return submitCallback(transformedValuesForFlereInformasjonsbehov);
+    }
+    const transformedValues = transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev);
+    return submitCallback(transformedValues);
+  };
+  return (state, ownProps) => {
+    const { informasjonsbehovVedtaksbrev } = initialOwnProps;
+    const informasjonsbehovFieldNames = [];
+    if (harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)) {
+      informasjonsbehovVedtaksbrev.informasjonsbehov.forEach(({ kode }) => {
+        informasjonsbehovFieldNames.push(kode);
+      });
+    }
+
+    return {
+      onSubmit,
+      initialValues: buildInitialValues(ownProps),
+      ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
+        state,
+        'antallBarn',
+        'aksjonspunktKoder',
+        'skalBrukeOverstyrendeFritekstBrev',
+        'skalUndertrykkeBrev',
+        'brødtekst',
+        'overskrift',
+        'begrunnelse',
+        'overstyrtMottaker',
+        ...informasjonsbehovFieldNames,
+      ),
+      behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
+      behandlingStatusKode: ownProps.behandlingStatus.kode,
+      aksjonspunktKoder: getAksjonspunktKoder(ownProps),
+      erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
+    };
+  };
 };
 
 const mapDispatchToProps = dispatch => ({

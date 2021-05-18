@@ -1,7 +1,14 @@
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { finnesTilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 function lagDokumentdata(aksjonspunktModell) {
+  if (
+    aksjonspunktModell.tilgjengeligeVedtaksbrev &&
+    !finnesTilgjengeligeVedtaksbrev(aksjonspunktModell.tilgjengeligeVedtaksbrev)
+  )
+    return null;
+
   const vedtaksbrevmaler = aksjonspunktModell.tilgjengeligeVedtaksbrev?.vedtaksbrevmaler;
 
   if (aksjonspunktModell.skalUndertrykkeBrev) {
@@ -23,13 +30,18 @@ function lagDokumentdata(aksjonspunktModell) {
         : {}),
     };
   }
-  return {
+
+  const dokumentdata = {
     [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.AUTOMATISK,
     [dokumentdatatype.VEDTAKSBREV_MAL]: vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK],
     ...(aksjonspunktModell.overstyrtMottaker
       ? { [dokumentdatatype.OVERSTYRT_MOTTAKER]: aksjonspunktModell.overstyrtMottaker }
       : {}),
   };
+  aksjonspunktModell.begrunnelserMedInformasjonsbehov?.forEach(({ kode, begrunnelse }) => {
+    dokumentdata[kode] = begrunnelse;
+  });
+  return dokumentdata;
 }
 
 export default lagDokumentdata;

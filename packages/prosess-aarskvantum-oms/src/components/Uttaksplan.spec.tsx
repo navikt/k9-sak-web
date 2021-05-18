@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArbeidsforholdV2, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
+import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { shallowWithIntl } from '../../i18n';
 import Uttaksplan from './Uttaksplan';
 import Aktivitet from '../dto/Aktivitet';
@@ -23,6 +24,7 @@ describe('Uttaksplan', () => {
       {
         utfall: UtfallEnum.AVSLÅTT,
         periode: '2020-03-01/2020-03-31',
+        fraværÅrsak: FraværÅrsakEnum.UDEFINERT,
         hjemler: [],
         utbetalingsgrad: 0,
         vurderteVilkår: {

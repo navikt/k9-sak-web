@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VurderOgFastsettSN, { VurderOgFastsettSNImpl } from './VurderOgFastsettSN';
 import VurderVarigEndretEllerNyoppstartetSN2, {
@@ -8,6 +7,7 @@ import VurderVarigEndretEllerNyoppstartetSN2, {
   varigEndringRadioname,
 } from './VurderVarigEndretEllerNyoppstartetSN';
 import FastsettSN2, { begrunnelseFieldname as fastsettingBegrunnelse, fastsettInntektFieldname } from './FastsettSN';
+import shallowWithIntl from '../../../i18n';
 
 const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
@@ -128,7 +128,7 @@ describe('<VurderOgFastsettSN>', () => {
       begrunnelse: 'Ok.',
       bruttoBeregningsgrunnlag: 360000,
     };
-    expect(transformedValues).to.deep.equal([expectedTransformedValues]);
+    expect(transformedValues).to.deep.equal(expectedTransformedValues);
   });
 
   it('Skal teste at transformValues setter korrekte values når det er vurdert at det ikke er varig endret næring', () => {
@@ -148,7 +148,7 @@ describe('<VurderOgFastsettSN>', () => {
       erVarigEndretNaering: false,
       [fastsettInntektFieldname]: undefined,
     };
-    expect(transformedValues).to.deep.equal([expectedTransformedValues]);
+    expect(transformedValues).to.deep.equal(expectedTransformedValues);
   });
 
   it('Skal teste at transformValues setter korrekte values når det er vurdert at det er varig endret næring og inntekt er fastsatt', () => {
@@ -164,14 +164,12 @@ describe('<VurderOgFastsettSN>', () => {
       [fastsettInntektFieldname]: '650 000',
     };
     const transformedValues = VurderOgFastsettSN.transformValues(values, [vurderEndring]);
-    const expectedTransformedValues = [
-      {
-        kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-        begrunnelse: 'Ok varig endring.',
-        erVarigEndretNaering: true,
-        bruttoBeregningsgrunnlag: 650000,
-      },
-    ];
+    const expectedTransformedValues = {
+      kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+      begrunnelse: 'Ok varig endring.',
+      erVarigEndretNaering: true,
+      bruttoBeregningsgrunnlag: 650000,
+    };
     expect(transformedValues).to.deep.equal(expectedTransformedValues);
   });
 });

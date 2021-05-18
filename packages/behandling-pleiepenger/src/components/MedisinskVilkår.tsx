@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import findAksjonspunktkode from '../microfrontend/utils/findAksjonspunktkode';
+import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
 
 const initializeMedisinskVilkår = (
@@ -14,6 +15,7 @@ const initializeMedisinskVilkår = (
   behandlingUuid: string,
   løsAksjonspunkt,
   readOnly,
+  visFortsettknapp,
 ) => {
   (window as any).renderMedisinskVilkarApp(elementId, {
     httpErrorHandler: httpErrorHandlerFn,
@@ -21,6 +23,7 @@ const initializeMedisinskVilkår = (
     behandlingUuid,
     onFinished: løsAksjonspunkt,
     readOnly,
+    visFortsettknapp,
   });
 };
 
@@ -30,19 +33,25 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
-  const medisinskVilkårAksjonspunktkode = findAksjonspunktkode(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
-  const løsAksjonspunkt = () =>
-    submitCallback([{ kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet' }]);
+  const medisinskVilkårAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
+  const medisinskVilkårAksjonspunktkode = medisinskVilkårAksjonspunkt?.definisjon.kode;
+  const medisinskVilkårAksjonspunktstatus = medisinskVilkårAksjonspunkt?.status.kode;
+  const visFortsettknapp = medisinskVilkårAksjonspunktstatus === aksjonspunktStatus.OPPRETTET;
+
+  const løsAksjonspunkt = aksjonspunktArgs =>
+    submitCallback([
+      { kode: medisinskVilkårAksjonspunktkode, begrunnelse: 'Sykdom er behandlet', ...aksjonspunktArgs },
+    ]);
 
   const harAksjonspunkt = !!medisinskVilkårAksjonspunktkode;
 
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.7.7/app.js"
-      jsIntegrity="sha384-AVQGmdWFcT2kjsMwRSOEcnIbstp5xHm2kOaR3P864ztXC8ohtmURW1+/1MYqU4ga"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.7.7/styles.css"
-      stylesheetIntegrity="sha384-5MYdvevCXNdkeo7PgDEjBhsvEMMeuUJHJP32I2rj64HeaaaYaJa2JanAMtMgEsN3"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.8.4/app.js"
+      jsIntegrity="sha384-Vx/ohRtzPKxGxeLVgV4JkxmJ1vI/ZZswz0MCe+k/CpEdLsBlwDFxgVS3RGx7fRxb"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.8.4/styles.css"
+      stylesheetIntegrity="sha384-jgynT0LSuHE36k4/mSrYA4w/mr7aHL+DZvguC9Ct0YEhbYu29QCHk3urP3/XcBpp"
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
@@ -62,6 +71,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           uuid,
           løsAksjonspunkt,
           readOnly || !harAksjonspunkt,
+          visFortsettknapp,
         )
       }
     />
