@@ -20,7 +20,7 @@ jobs:
           echo "NAMESPACE=${{ github.event.client_payload.slash_command.arg2 }}" >> $GITHUB_ENV
 
       - name: Sjekk ut kode
-        uses: actions/checkout@v2.3.4
+        uses: uses: actions/checkout@v2
         with:
           ref: ${{ env.TAG }}
 
