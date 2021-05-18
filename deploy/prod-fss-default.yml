@@ -61,6 +61,8 @@ spec:
       value: "http://k9-sak"
     - name: OMSORGEN_FOR_FRONTEND_URL
       value: "http://k9-sak"
+    - name: PSB_INNTEKTSMELDING_FRONTEND_URL
+      value: "http://k9-sak"
 
     # Feature-flag
     - name: VARSELTEKST

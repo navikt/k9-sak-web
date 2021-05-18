@@ -58,9 +58,9 @@ export default ({
   return (
     <MicroFrontend
       id={inntektsmeldingAppId}
-      jsSrc="http://localhost:8081/main.js"
+      jsSrc="/k9/microfrontend/psb-inntektsmelding/0.0.1/app.js"
       jsIntegrity=""
-      stylesheetSrc="http://localhost:8081/styles.css"
+      stylesheetSrc="/k9/microfrontend/psb-inntektsmelding/0.0.1/styles.css"
       stylesheetIntegrity=""
       onReady={() =>
         initializeInntektsmeldingApp(
