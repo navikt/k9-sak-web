@@ -173,6 +173,11 @@ describe('<PleiepengerFakta>', () => {
         harAksjonspunkt: false,
         tekst: 'Sykdom',
       },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Inntektsmelding',
+      },
     ]);
   });
 
