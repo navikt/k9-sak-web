@@ -153,6 +153,7 @@ describe('<PleiepengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={[]}
       />,
     );
 
@@ -206,6 +207,7 @@ describe('<PleiepengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={[]}
       />,
     );
 
@@ -243,6 +245,7 @@ describe('<PleiepengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={[]}
       />,
     );
 
