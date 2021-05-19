@@ -153,6 +153,7 @@ describe('<PleiepengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={[]}
       />,
     );
 
@@ -172,6 +173,11 @@ describe('<PleiepengerFakta>', () => {
         erAktiv: false,
         harAksjonspunkt: false,
         tekst: 'Sykdom',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Inntektsmelding',
       },
     ]);
   });
@@ -201,6 +207,7 @@ describe('<PleiepengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={[]}
       />,
     );
 
@@ -238,6 +245,7 @@ describe('<PleiepengerFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={[]}
       />,
     );
 
