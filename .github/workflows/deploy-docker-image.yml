@@ -9,6 +9,7 @@ on:
       - master
 env:
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/k9-sak-web
+  IMAGE_BASE_CR: ghcr.io/${{ github.repository }}
   CLUSTER: dev-fss
   NAMESPACE: default
 jobs:
@@ -51,17 +52,15 @@ jobs:
       - name: Sette Docker-navn og -tag
         run: |
           echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
-          echo "IMAGE=$IMAGE_BASE:$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Bygg og laste opp docker-image
         run: |
           docker pull nginx:1.17.8-alpine
-          docker build --tag ${IMAGE} --tag ${IMAGE_BASE}:latest --label "version=${TAG}" .
-          echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
-          docker push ${IMAGE_BASE}:latest
-          docker push ${IMAGE}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          docker build --tag ${IMAGE_BASE}:${TAG} --tag ${IMAGE_BASE}:latest --tag ${IMAGE_BASE_CR}:${TAG} --tag ${IMAGE_BASE_CR}:latest --label "version=${TAG}"  .
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login --username "x-access-token" --password-stdin ghcr.io
+          docker push ${IMAGE_BASE_CR} --all-tags
+          docker push ${IMAGE_BASE} --all-tags
 
       - name: Lukk gamle issues
         uses: actions/github-script@v3
