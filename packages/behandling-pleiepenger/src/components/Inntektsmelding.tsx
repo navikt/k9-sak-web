@@ -30,7 +30,7 @@ const initializeInntektsmeldingApp = (
   });
 };
 
-const inntektsmeldingAppId = 'medisinskVilkårApp';
+const inntektsmeldingAppId = 'inntektsmeldingApp';
 export default ({
   behandling,
   readOnly,
