@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Sette opp Node
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2
         with:
           node-version: 12.x
 
@@ -31,7 +31,7 @@ jobs:
           echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
 
       - name: Cache node modules
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -102,18 +102,16 @@ jobs:
              });
 
       - name: Trigger verdikjede test
-        if: success()
         shell: bash
         run: |
           curl -XPOST -u "x-access-token:${{secrets.GA_P_TOKEN}}" \
-          -H "Accept: application/vnd.github.everest-preview+json" \
-          -H "Content-Type: application/json" \
-          https://api.github.com/repos/navikt/k9-verdikjede/dispatches \
-          --data '{"event_type": "saksbehandling-verdikjede",
-                   "client_payload": {
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/navikt/k9-verdikjede/actions/workflows/build.yml/dispatches \
+          -d '{"ref":"master",
+                  "inputs":{
                       "trigger": "${{ github.repository }}",
                       "version": "${{ env.TAG }}",
-                      "image": "${{ env.IMAGE }}"
+                      "issue_number": "${{ steps.createdeployissue.outputs.number }}"
                   }}'
 
       - name: Trigg deploy til dev-fss
