@@ -12790,10 +12790,10 @@ nav-frontend-skjema-style@2.2.2:
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-2.2.2.tgz#6468e0dd16c5d5448997e1a071812ccddd415f93"
   integrity sha512-9rOQfmsGnMPm4bzhV8Nkl6NcG8d6elCsDo9oHyfxrohWA3uMD9EpDpBPNN2+CdOAaygq83i1ETS6nz1BeuyXzw==
 
-nav-frontend-skjema@3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-3.2.3.tgz#94c226d1d80fcddb3cea7f2e9c738cdbf352bb0c"
-  integrity sha512-d3uJmGyZag5HUnSRVXOqXrFVo/uReaMbZgbu3Klg8wvIcK71KvoTi79SQ4GYYJqLB2AkeC/exlwjJdhk3KgSxQ==
+nav-frontend-skjema@3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-3.2.5.tgz#cea0553fbeec8b3381e29d19a33a89e05ac85ab6"
+  integrity sha512-v3culmYZJGgAA3qYegU9z1I30IACRktY+mYN2rlvzGrYWShUotPwuhcbKr5WNcSETP3uTsbuOj2+fvAbCPnTqw==
 
 nav-frontend-snakkeboble-style@1.1.1:
   version "1.1.1"
