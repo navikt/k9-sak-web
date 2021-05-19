@@ -22,6 +22,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
       fields.push(initialValueObject);
     });
   }
+  const aksjonspunkterForBG = bgSkalVurderes ? gjeldendeAksjonspunkter : [];
   return fields.map((fieldId, index) =>
     index === aktivtBeregningsgrunnlagIndeks ? (
       <BeregningForm2
@@ -29,7 +30,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
         readOnly={readOnly || !bgSkalVurderes}
         fieldArrayID={fieldId}
         beregningsgrunnlag={aktivtBeregningsgrunnlag}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        gjeldendeAksjonspunkter={aksjonspunkterForBG}
         relevanteStatuser={relevanteStatuser}
         submitCallback={submitCallback}
         readOnlySubmitButton={readOnlySubmitButton}

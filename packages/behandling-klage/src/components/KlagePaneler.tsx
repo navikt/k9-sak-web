@@ -58,7 +58,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   <>
     <BehandlingPaVent
       behandling={behandling}
-      aksjonspunkter={fetchedData.aksjonspunkter}
+      aksjonspunkter={fetchedData?.aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={settPaVent}
       hentBehandling={hentBehandling}
