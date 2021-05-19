@@ -58,9 +58,9 @@ export default ({
   return (
     <MicroFrontend
       id={inntektsmeldingAppId}
-      jsSrc="/k9/microfrontend/psb-inntektsmelding/0.0.1/app.js"
+      jsSrc="/k9/microfrontend/psb-inntektsmelding/0.0.2/app.js"
       jsIntegrity="sha384-xBmGIxtodl5RWkn4SIZGczUYY0SvpTV43sk6M8lIbbO8CL+dr1cNWMu3DtXPKkG2"
-      stylesheetSrc="/k9/microfrontend/psb-inntektsmelding/0.0.1/styles.css"
+      stylesheetSrc="/k9/microfrontend/psb-inntektsmelding/0.0.2/styles.css"
       stylesheetIntegrity="sha384-jgx+iEfpo88pWQNc6GX8J2wbMnbsNUXWCGrMy4biV4iLJIL0hJLXX8zZMvuWVoZI"
       onReady={() =>
         initializeInntektsmeldingApp(
