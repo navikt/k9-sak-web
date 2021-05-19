@@ -22,7 +22,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
     smittevernAktiviteter[0]?.vurderteVilkår.vilkår.SMITTEVERN === UtfallEnum.INNVILGET;
   const behandlingsID = behandling.id.toString();
 
-  if (aksjonspunkt !== undefined && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
+  if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
     const isAksjonspunktOpen = aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
@@ -32,7 +32,6 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
         behandlingsID,
         aksjonspunktLost,
         lesemodus: !isAksjonspunktOpen,
-        årsakFraSoknad: 'Årsak',
         informasjonTilLesemodus: {
           begrunnelse: aksjonspunkt.begrunnelse,
           vilkarOppfylt: erFravaerSaerligSmittevern,
