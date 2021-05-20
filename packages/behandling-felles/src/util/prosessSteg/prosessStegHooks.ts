@@ -43,6 +43,8 @@ const useProsessStegPaneler = (
     }
   }, [behandling.versjon]);
 
+  const harSkriverettigheter = rettigheter.writeAccess.isEnabled && rettigheter.writeAccess.employeeHasAccess;
+
   const prosessStegPaneler = useMemo(() => {
     const paneler = utledProsessStegPaneler(
       prosessStegPanelDefinisjoner,
@@ -69,11 +71,11 @@ const useProsessStegPaneler = (
 
       return panel;
     });
-  }, [behandling.versjon, overstyrteAksjonspunktKoder]);
+  }, [behandling.versjon, harSkriverettigheter, overstyrteAksjonspunktKoder]);
 
   const valgtPanel = useMemo(
     () => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
-    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo],
+    [behandling.versjon, harSkriverettigheter, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo],
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
