@@ -31,7 +31,7 @@ export default ({ behandling, readOnly }) => {
           tilsynAppId,
           httpErrorHandlerCaller,
           findEndpointsForMicrofrontend(behandling.links, [
-            { rel: 'sykdom-tilsyn', desiredName: 'tilsyn' }, // TODO: Riktig rel
+            { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' }, // TODO: Riktig rel
           ]),
           readOnly,
         )
