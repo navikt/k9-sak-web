@@ -3,10 +3,15 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import React from 'react';
 import Uttak from '../../components/Uttak';
+import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder }) => (
-    <Uttak uuid={behandling.uuid} uttaksperioder={uttaksperioder?.perioder} />
+  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId }) => (
+    <Uttak
+      uuid={behandling.uuid}
+      uttaksperioder={uttaksperioder?.perioder}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+    />
   );
 
   getAksjonspunktKoder = () => [];
@@ -22,8 +27,11 @@ class PanelDef extends ProsessStegPanelDef {
     return vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ uttak }) => ({
+  getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
+
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId }) => ({
     uttaksperioder: uttak,
+    arbeidsgiverOpplysningerPerId,
   });
 }
 
