@@ -9,7 +9,7 @@
     "@fpsak-frontend/sak-visittkort": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "nav-frontend-lenkepanel": "^1.0.75",
+    "nav-frontend-lenkepanel": "^1.1.2",
     "nav-frontend-lenkepanel-style": "^1.0.2",
     "nav-frontend-typografi": "2.0.37",
     "nav-frontend-typografi-style": "1.1.1",
