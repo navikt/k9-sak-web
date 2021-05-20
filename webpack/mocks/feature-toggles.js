@@ -13,10 +13,6 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
-  {
-    key: 'SAERLIGSMITTEVERNAKSJONSPUNKT',
-    value: process.env.SAERLIGSMITTEVERNAKSJONSPUNKT,
-  },
 ];
 
 module.exports = function (app) {
