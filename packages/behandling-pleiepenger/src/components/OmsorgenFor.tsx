@@ -50,10 +50,10 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
   return (
     <MicroFrontend
       id={omsorgenForAppID}
-      jsSrc="/k9/microfrontend/omsorgen-for/0.0.6/app.js"
-      jsIntegrity="sha384-A9S86CZHP2YflBUrr2aY3bukU3mA6TbKshadNGjhzcOb/qSVCvNd4KOYBQAtnHj+"
-      stylesheetSrc="/k9/microfrontend/omsorgen-for/0.0.6/styles.css"
-      stylesheetIntegrity="sha384-mrmomnx+L8nv4g7P+hsbpbXQNOmlMyx33DdRzd9JvB2GBKsBaE0wRbgTSWDM5VA4"
+      jsSrc="/k9/microfrontend/omsorgen-for/0.0.7/app.js"
+      jsIntegrity="sha384-Psp28Yo1Kz8fJ47S6Dw9RH/ko3/WKbTf7fa6uCHf5EpaxLCMTBUYC6a5P0OF3pQM"
+      stylesheetSrc="/k9/microfrontend/omsorgen-for/0.0.7/styles.css"
+      stylesheetIntegrity="sha384-3uSZs3lCTYJO4mzRqb+62oyYClv1uSgafnlpblN71dyphBr0Xl2Af57JuZlb2ocj"
       onReady={() =>
         initializeOmsorgenFor(
           omsorgenForAppID,
