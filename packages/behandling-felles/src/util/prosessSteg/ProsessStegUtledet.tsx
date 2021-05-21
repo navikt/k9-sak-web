@@ -187,12 +187,9 @@ export class ProsessStegUtledet {
 
   paneler: ProsessStegPanelUtledet[];
 
-  stansetAvTidligereAvslag: boolean;
-
   constructor(prosessStegDef: ProsessStegDef, paneler: ProsessStegPanelUtledet[]) {
     this.prosessStegDef = prosessStegDef;
     this.paneler = paneler;
-    this.stansetAvTidligereAvslag = false;
   }
 
   public getUrlKode = (): string => this.prosessStegDef.getUrlKode();
@@ -203,15 +200,7 @@ export class ProsessStegUtledet {
 
   private harMinstEttDelPanelStatus = (vuType: string): boolean => this.paneler.some(p => p.getStatus() === vuType);
 
-  public setStansetAvTidligereAvslag = (stanset: boolean) => {
-    this.stansetAvTidligereAvslag = stanset;
-  };
-
   public getStatus = () => {
-    if (this.stansetAvTidligereAvslag) {
-      return vilkarUtfallType.IKKE_VURDERT;
-    }
-
     const harStatusIkkeVurdert = this.harMinstEttDelPanelStatus(vilkarUtfallType.IKKE_VURDERT);
     const harStatusOppfylt = this.harMinstEttDelPanelStatus(vilkarUtfallType.OPPFYLT);
     const tempStatus =
