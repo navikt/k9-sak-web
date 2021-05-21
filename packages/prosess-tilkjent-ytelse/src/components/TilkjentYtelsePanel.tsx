@@ -123,7 +123,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
         <Tilbaketrekkpanel
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
-          readOnly
+          readOnly={readOnly}
           vurderTilbaketrekkAP={vurderTilbaketrekkAP}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
