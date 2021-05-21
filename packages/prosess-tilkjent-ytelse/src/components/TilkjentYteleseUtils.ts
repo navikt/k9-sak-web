@@ -11,16 +11,18 @@ const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length
 export const createVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   if (!andel) return '';
 
-  const arbeidsgiver = arbeidsgiverOpplysningerPerId[andel.arbeidsgiverOrgnr];
-  if (arbeidsgiver) {
-    return arbeidsgiver.navn;
+  let identifikator;
+  if (andel.arbeidsgiverOrgnr) {
+    identifikator = andel.arbeidsgiverOrgnr;
+  } else if (andel.arbeidsgiver?.arbeidsgiverOrgnr) {
+    identifikator = andel.arbeidsgiver.arbeidsgiverOrgnr;
+  } else if (andel.arbeidsgiver?.identifikator) {
+    identifikator = andel.arbeidsgiver.identifikator;
   }
 
-  if (!andel.arbeidsgiver || !(andel.arbeidsgiver.arbeidsgiverOrgnr || andel.arbeidsgiver.identifikator)) {
+  if (!identifikator) {
     return andel.aktivitetStatus ? getKodeverknavn(andel.aktivitetStatus) : '';
   }
-
-  const identifikator = andel.arbeidsgiver.arbeidsgiverOrgnr || andel.arbeidsgiver.identifikator;
 
   const navn =
     arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[identifikator]
