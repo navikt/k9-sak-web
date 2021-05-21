@@ -3,7 +3,7 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Behandling, Aksjonspunkt, Vilkar, Fagsak } from '@k9-sak-web/types';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import Rettigheter from '../../types/rettigheterTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import {
@@ -65,9 +65,9 @@ const useProsessStegPaneler = (
 
       if (
         !forrigePanel ||
-        urlKode === aksjonspunktCodes.AVREGNING ||
-        urlKode === aksjonspunktCodes.SIMULERING ||
-        urlKode === aksjonspunktCodes.VEDTAK
+        urlKode === prosessStegCodes.AVREGNING ||
+        urlKode === prosessStegCodes.SIMULERING ||
+        urlKode === prosessStegCodes.VEDTAK
       ) {
         return panel;
       }
